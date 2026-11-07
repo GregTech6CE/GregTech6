@@ -3,7 +3,6 @@ package gregtech.content.material.catalog;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.MaterialDefinition;
-import gregtech.engine.material.MaterialFacts;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +37,10 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Andesite")
-                        .source("etfuturum", "Et Futurum")
-                        .tools(1, 2.5F, 16L, 1)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Andesite")
+                .source("etfuturum", "Et Futurum")
+                .tools(1, 2.5F, 16L, 1)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8505, "Basalt")
                 .displayName("Basalt")
@@ -65,18 +62,16 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Basalt")
-                        .source("netherlicious", "Netherlicious")
-                        .tools(1, 3.0F, 32L, 2)
-                        .composition(
-                                16L,
-                                new MaterialFacts.Part("Peridot", 648648000L),
-                                new MaterialFacts.Part("Calcite", 1945944000L),
-                                new MaterialFacts.Part("Flint", 5189184000L),
-                                new MaterialFacts.Part("DarkAshes", 2594592000L))
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Basalt")
+                .source("netherlicious", "Netherlicious")
+                .tools(1, 3.0F, 32L, 2)
+                .composition(
+                        16L,
+                        new MaterialDefinition.Part("Peridot", 648648000L),
+                        new MaterialDefinition.Part("Calcite", 1945944000L),
+                        new MaterialDefinition.Part("Flint", 5189184000L),
+                        new MaterialDefinition.Part("DarkAshes", 2594592000L))
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9184, "Blueschist")
                 .displayName("Blueschist")
@@ -95,11 +90,9 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Blueschist")
-                        .tools(1, 2.0F, 24L, 1)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Blueschist")
+                .tools(1, 2.0F, 24L, 1)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9185, "Bluestone")
                 .displayName("Bluestone")
@@ -118,10 +111,8 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Bluestone")
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Bluestone")
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9186, "Chert")
                 .displayName("Chert")
@@ -140,11 +131,9 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Chert")
-                        .tools(1, 2.0F, 16L, 0)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Chert")
+                .tools(1, 2.0F, 16L, 0)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8501, "Concrete")
                 .displayName("Concrete")
@@ -166,13 +155,11 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MELTING,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Concrete")
-                        .tools(1, 2.5F, 32L, 0)
-                        .smelting("Stone", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("Stone", 648648000L))
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Concrete")
+                .tools(1, 2.5F, 32L, 0)
+                .smelting("Stone", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("Stone", 648648000L))
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9187, "Dacite")
                 .displayName("Dacite")
@@ -191,11 +178,9 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Dacite")
-                        .tools(1, 2.0F, 16L, 1)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Dacite")
+                .tools(1, 2.0F, 16L, 1)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9248, "Deepslate")
                 .displayName("Deepslate")
@@ -214,12 +199,10 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Deepslate")
-                        .source("etfuturum", "Et Futurum")
-                        .tools(1, 2.0F, 32L, 1)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Deepslate")
+                .source("etfuturum", "Et Futurum")
+                .tools(1, 2.0F, 32L, 1)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8511, "Diorite")
                 .displayName("Diorite")
@@ -238,12 +221,10 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Diorite")
-                        .source("etfuturum", "Et Futurum")
-                        .tools(1, 2.5F, 16L, 1)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Diorite")
+                .source("etfuturum", "Et Futurum")
+                .tools(1, 2.5F, 16L, 1)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8504, "Endstone")
                 .displayName("Endstone")
@@ -263,13 +244,11 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Endstone")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 3.0F, 16L, 1)
-                        .byproducts("Helium3", "Beryllium")
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Endstone")
+                .source("minecraft", "Minecraft")
+                .tools(1, 3.0F, 16L, 1)
+                .byproducts("Helium3", "Beryllium")
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9171, "Greenschist")
                 .displayName("Greenschist")
@@ -288,11 +267,9 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Greenschist")
-                        .tools(1, 2.0F, 24L, 1)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Greenschist")
+                .tools(1, 2.0F, 24L, 1)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9218, "Kimberlite")
                 .displayName("Kimberlite")
@@ -311,11 +288,9 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Kimberlite")
-                        .tools(1, 2.0F, 24L, 2)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Kimberlite")
+                .tools(1, 2.0F, 24L, 2)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9177, "Komatiite")
                 .displayName("Komatiite")
@@ -337,17 +312,15 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Komatiite")
-                        .tools(1, 3.0F, 32L, 2)
-                        .composition(
-                                12L,
-                                new MaterialFacts.Part("Peridot", 648648000L),
-                                new MaterialFacts.Part("MagnesiumCarbonate", 1297296000L),
-                                new MaterialFacts.Part("Flint", 3891888000L),
-                                new MaterialFacts.Part("DarkAshes", 1945944000L))
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Komatiite")
+                .tools(1, 3.0F, 32L, 2)
+                .composition(
+                        12L,
+                        new MaterialDefinition.Part("Peridot", 648648000L),
+                        new MaterialDefinition.Part("MagnesiumCarbonate", 1297296000L),
+                        new MaterialDefinition.Part("Flint", 3891888000L),
+                        new MaterialDefinition.Part("DarkAshes", 1945944000L))
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9189, "Limestone")
                 .displayName("Limestone")
@@ -371,14 +344,12 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MELTING,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Limestone")
-                        .tools(1, 2.5F, 16L, 1)
-                        .smelting("Calcite", 324324000L)
-                        .composition(1L, new MaterialFacts.Part("Calcite", 648648000L))
-                        .byproducts("Calcite", "Phosphorite")
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Limestone")
+                .tools(1, 2.5F, 16L, 1)
+                .smelting("Calcite", 324324000L)
+                .composition(1L, new MaterialDefinition.Part("Calcite", 648648000L))
+                .byproducts("Calcite", "Phosphorite")
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8521, "Livingrock")
                 .displayName("Livingrock")
@@ -397,12 +368,10 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Livingrock")
-                        .source("Botania", "Botania")
-                        .tools(1, 5.0F, 128L, 2)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Livingrock")
+                .source("Botania", "Botania")
+                .tools(1, 5.0F, 128L, 2)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -429,18 +398,16 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MELTING,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Marble")
-                        .source("Redpower", "Redpower")
-                        .tools(1, 2.5F, 16L, 1)
-                        .smelting("Calcite", 432432000L)
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("Magnesium", 648648000L),
-                                new MaterialFacts.Part("Calcite", 4540536000L))
-                        .byproducts("Calcite")
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Marble")
+                .source("Redpower", "Redpower")
+                .tools(1, 2.5F, 16L, 1)
+                .smelting("Calcite", 432432000L)
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("Magnesium", 648648000L),
+                        new MaterialDefinition.Part("Calcite", 4540536000L))
+                .byproducts("Calcite")
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8516, "MarsSand")
                 .displayName("Mars Sand")
@@ -459,12 +426,10 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Mars Sand")
-                        .source("GalacticraftCore", "Galacticraft")
-                        .tools(1, 3.0F, 16L, 1)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Mars Sand")
+                .source("GalacticraftCore", "Galacticraft")
+                .tools(1, 3.0F, 16L, 1)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8503, "NetherBrick")
                 .displayName("Nether Brick")
@@ -483,13 +448,11 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("BrickNether")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 2.0F, 24L, 1)
-                        .pulverizing("Netherrack", 648648000L)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("BrickNether")
+                .source("minecraft", "Minecraft")
+                .tools(1, 2.0F, 24L, 1)
+                .pulverizing("Netherrack", 648648000L)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8502, "Netherrack")
                 .displayName("Netherrack")
@@ -510,14 +473,12 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MELTING,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Netherrack")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 2.0F, 8L, 0)
-                        .smelting("NetherBrick", 648648000L)
-                        .byproducts("Sulfur")
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Netherrack")
+                .source("minecraft", "Minecraft")
+                .tools(1, 2.0F, 8L, 0)
+                .smelting("NetherBrick", 648648000L)
+                .byproducts("Sulfur")
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9219, "Prismarine")
                 .displayName("Prismarine")
@@ -536,13 +497,11 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Prismarine")
-                        .source("etfuturum", "Et Futurum")
-                        .tools(1, 4.0F, 48L, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("PrismarineLight")
-                        .build())
+                .localName("Prismarine")
+                .source("etfuturum", "Et Futurum")
+                .tools(1, 4.0F, 48L, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("PrismarineLight")
                 .build());
         result.add(MaterialDefinition.builder(9220, "PrismarineDark")
                 .displayName("PrismarineDark")
@@ -561,12 +520,10 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("PrismarineDark")
-                        .source("etfuturum", "Et Futurum")
-                        .tools(1, 4.0F, 48L, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("PrismarineDark")
+                .source("etfuturum", "Et Futurum")
+                .tools(1, 4.0F, 48L, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9000, "Pumice")
                 .displayName("Pumice")
@@ -588,17 +545,15 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Pumice")
-                        .tools(1, 3.0F, 32L, 2)
-                        .composition(
-                                11L,
-                                new MaterialFacts.Part("Peridot", 1945944000L),
-                                new MaterialFacts.Part("MagnesiumCarbonate", 1297296000L),
-                                new MaterialFacts.Part("Flint", 2594592000L),
-                                new MaterialFacts.Part("DarkAshes", 1297296000L))
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Pumice")
+                .tools(1, 3.0F, 32L, 2)
+                .composition(
+                        11L,
+                        new MaterialDefinition.Part("Peridot", 1945944000L),
+                        new MaterialDefinition.Part("MagnesiumCarbonate", 1297296000L),
+                        new MaterialDefinition.Part("Flint", 2594592000L),
+                        new MaterialDefinition.Part("DarkAshes", 1297296000L))
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9180, "Quartzite")
                 .displayName("Quartzite")
@@ -619,13 +574,11 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MELTING,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Quartzite")
-                        .tools(1, 1.7F, 32L, 1)
-                        .smelting("SiliconDioxide", 648648000L)
-                        .byproducts("CertusQuartz", "Barite", "Hematite")
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Quartzite")
+                .tools(1, 1.7F, 32L, 1)
+                .smelting("SiliconDioxide", 648648000L)
+                .byproducts("CertusQuartz", "Barite", "Hematite")
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9190, "Shale")
                 .displayName("Shale")
@@ -647,16 +600,14 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Shale")
-                        .tools(1, 2.0F, 16L, 0)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Calcite", 1297296000L),
-                                new MaterialFacts.Part("MilkyQuartz", 648648000L),
-                                new MaterialFacts.Part("Clay", 648648000L))
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Shale")
+                .tools(1, 2.0F, 16L, 0)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Calcite", 1297296000L),
+                        new MaterialDefinition.Part("MilkyQuartz", 648648000L),
+                        new MaterialDefinition.Part("Clay", 648648000L))
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8528, "SkyStone")
                 .displayName("Sky Stone")
@@ -678,12 +629,10 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Sky Stone")
-                        .source("appliedenergistics2", "Applied Energistics")
-                        .tools(1, 5.0F, 64L, 2)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Sky Stone")
+                .source("appliedenergistics2", "Applied Energistics")
+                .tools(1, 5.0F, 64L, 2)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9222, "Slate")
                 .displayName("Slate")
@@ -702,11 +651,9 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Slate")
-                        .tools(1, 2.0F, 16L, 0)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Slate")
+                .tools(1, 2.0F, 16L, 0)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8500, "Stone")
                 .displayName("Stone")
@@ -725,12 +672,10 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("Stone")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 2.0F, 16L, 1)
-                        .forms("DUSTS", "MOLTEN", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Stone")
+                .source("minecraft", "Minecraft")
+                .tools(1, 2.0F, 16L, 1)
+                .forms("DUSTS", "MOLTEN", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9261, "TitanRock")
                 .displayName("TitanRock")
@@ -749,12 +694,10 @@ public final class StoneMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE)
-                .facts(MaterialFacts.builder()
-                        .localName("TitanRock")
-                        .source("ExtraPlanets", "Extra Planets")
-                        .tools(1, 5.0F, 128L, 1)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("TitanRock")
+                .source("ExtraPlanets", "Extra Planets")
+                .tools(1, 5.0F, 128L, 1)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 }

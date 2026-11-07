@@ -3,7 +3,6 @@ package gregtech.content.material.catalog;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.MaterialDefinition;
-import gregtech.engine.material.MaterialFacts;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,18 +43,16 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Acacia")
-                        .tools(1, 2.5F, 24L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Acacia")
+                .tools(1, 2.5F, 24L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8418, "Bamboo")
                 .displayName("Bamboo")
@@ -80,19 +77,17 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Bamboo")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 2.0F, 32L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 324324000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Bamboo")
+                .source("minecraft", "Minecraft")
+                .tools(1, 2.0F, 32L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 324324000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9301, "Birch")
                 .displayName("Birch")
@@ -116,18 +111,16 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Birch")
-                        .tools(1, 2.5F, 24L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Birch")
+                .tools(1, 2.5F, 24L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9315, "BlueMahoe")
                 .displayName("Blue Mahoe")
@@ -151,18 +144,16 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Blue Mahoe")
-                        .tools(1, 3.0F, 24L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Blue Mahoe")
+                .tools(1, 3.0F, 24L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9409, "BlueSpruce")
                 .displayName("Blue Spruce")
@@ -186,18 +177,16 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Blue Spruce")
-                        .tools(1, 3.0F, 24L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Blue Spruce")
+                .tools(1, 3.0F, 24L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9344, "Cherrywood")
                 .displayName("Cherrywood")
@@ -221,20 +210,18 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Cherrywood")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 2.5F, 24L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Cherry")
-                        .build())
+                .classifications("wood_family")
+                .localName("Cherrywood")
+                .source("minecraft", "Minecraft")
+                .tools(1, 2.5F, 24L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Cherry")
                 .build());
         result.add(MaterialDefinition.builder(9317, "Cinnamonwood")
                 .displayName("Cinnawood")
@@ -258,19 +245,17 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Cinnawood")
-                        .source("harvestcraft", "HarvestCraft")
-                        .tools(1, 1.5F, 16L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Cinnawood")
+                .source("harvestcraft", "HarvestCraft")
+                .tools(1, 1.5F, 16L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9318, "Coconutwood")
                 .displayName("Coconutwood")
@@ -294,19 +279,17 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Coconut")
-                        .tools(1, 3.0F, 16L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Coconut")
-                        .build())
+                .classifications("wood_family")
+                .localName("Coconut")
+                .tools(1, 3.0F, 16L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Coconut")
                 .build());
         result.add(MaterialDefinition.builder(9306, "Crimsonwood")
                 .displayName("Crimsonwood")
@@ -330,20 +313,18 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Crimsonwood")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 2.5F, 24L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Crimson")
-                        .build())
+                .classifications("wood_family")
+                .localName("Crimsonwood")
+                .source("minecraft", "Minecraft")
+                .tools(1, 2.5F, 24L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Crimson")
                 .build());
         result.add(MaterialDefinition.builder(9305, "DarkOak")
                 .displayName("Dark Oak")
@@ -367,18 +348,16 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Dark Oak")
-                        .tools(1, 3.5F, 32L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Dark Oak")
+                .tools(1, 3.5F, 32L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8290, "Dreamwood")
                 .displayName("Dreamwood")
@@ -402,19 +381,17 @@ public final class WoodMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MELTING,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Dreamwood")
-                        .source("Botania", "Botania")
-                        .tools(1, 4.0F, 128L, 1)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 324324000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Dreamwood")
+                .source("Botania", "Botania")
+                .tools(1, 4.0F, 128L, 1)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 324324000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8296, "Greatwood")
                 .displayName("Greatwood")
@@ -438,19 +415,17 @@ public final class WoodMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MELTING,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Greatwood")
-                        .source("Thaumcraft", "Thaumcraft")
-                        .tools(1, 6.0F, 64L, 1)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 324324000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Greatwood")
+                .source("Thaumcraft", "Thaumcraft")
+                .tools(1, 6.0F, 64L, 1)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 324324000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9316, "Hazel")
                 .displayName("Hazel")
@@ -474,18 +449,16 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Hazel")
-                        .tools(1, 2.5F, 16L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Hazel")
+                .tools(1, 2.5F, 16L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9303, "Junglewood")
                 .displayName("Junglewood")
@@ -509,19 +482,17 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Junglewood")
-                        .tools(1, 2.0F, 16L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Jungle")
-                        .build())
+                .classifications("wood_family")
+                .localName("Junglewood")
+                .tools(1, 2.0F, 16L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Jungle")
                 .build());
         result.add(MaterialDefinition.builder(8289, "Livingwood")
                 .displayName("Livingwood")
@@ -545,19 +516,17 @@ public final class WoodMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MELTING,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Livingwood")
-                        .source("Botania", "Botania")
-                        .tools(1, 4.0F, 64L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 324324000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Livingwood")
+                .source("Botania", "Botania")
+                .tools(1, 4.0F, 64L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 324324000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -584,19 +553,17 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Mangrove")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 2.0F, 24L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Mangrove")
+                .source("minecraft", "Minecraft")
+                .tools(1, 2.0F, 24L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9313, "Maple")
                 .displayName("Maple")
@@ -620,18 +587,16 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Maple")
-                        .tools(1, 3.0F, 24L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Maple")
+                .tools(1, 3.0F, 24L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9300, "Oak")
                 .displayName("Oak")
@@ -655,18 +620,16 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Oak")
-                        .tools(1, 3.0F, 32L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Oak")
+                .tools(1, 3.0F, 32L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9319, "Rainbowood")
                 .displayName("Rainbowood")
@@ -691,18 +654,16 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Rainbowood")
-                        .tools(1, 4.0F, 64L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Rainbowood")
+                .tools(1, 4.0F, 64L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8297, "Silverwood")
                 .displayName("Silverwood")
@@ -725,19 +686,17 @@ public final class WoodMaterials {
                         MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Silverwood")
-                        .source("Thaumcraft", "Thaumcraft")
-                        .tools(1, 8.0F, 128L, 1)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 0L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Silverwood")
+                .source("Thaumcraft", "Thaumcraft")
+                .tools(1, 8.0F, 128L, 1)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 0L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9302, "Spruce")
                 .displayName("Spruce")
@@ -761,18 +720,16 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Spruce")
-                        .tools(1, 3.0F, 24L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Spruce")
+                .tools(1, 3.0F, 24L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9307, "Warpedwood")
                 .displayName("Warped Wood")
@@ -796,20 +753,18 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Warped Wood")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 3.5F, 32L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Warped")
-                        .build())
+                .classifications("wood_family")
+                .localName("Warped Wood")
+                .source("minecraft", "Minecraft")
+                .tools(1, 3.5F, 32L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Warped")
                 .build());
         result.add(MaterialDefinition.builder(9314, "Willow")
                 .displayName("Willow")
@@ -833,18 +788,16 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Willow")
-                        .tools(1, 2.0F, 16L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Willow")
+                .tools(1, 2.0F, 16L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8221, "Wood")
                 .displayName("Wood")
@@ -869,19 +822,17 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Wood")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 2.0F, 16L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("Wood")
+                .source("minecraft", "Minecraft")
+                .tools(1, 2.0F, 16L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9308, "WoodCompressed")
                 .displayName("Compressed Wood")
@@ -905,20 +856,18 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Compressed Wood")
-                        .tools(1, 1.5F, 8L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .pulverizing("Wood", 648648000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Compressed")
-                        .build())
+                .classifications("wood_family")
+                .localName("Compressed Wood")
+                .tools(1, 1.5F, 8L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .pulverizing("Wood", 648648000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Compressed")
                 .build());
         result.add(MaterialDefinition.builder(9309, "WoodDead")
                 .displayName("Dead Wood")
@@ -942,19 +891,17 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Dead Wood")
-                        .tools(1, 1.5F, 8L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Dead")
-                        .build())
+                .classifications("wood_family")
+                .localName("Dead Wood")
+                .tools(1, 1.5F, 8L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Dead")
                 .build());
         result.add(MaterialDefinition.builder(9312, "WoodFrozen")
                 .displayName("Frozen Wood")
@@ -978,19 +925,17 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Frozen Wood")
-                        .tools(1, 1.0F, 8L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Frozen")
-                        .build())
+                .classifications("wood_family")
+                .localName("Frozen Wood")
+                .tools(1, 1.0F, 8L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Frozen")
                 .build());
         result.add(MaterialDefinition.builder(9311, "WoodMossy")
                 .displayName("Mossy Wood")
@@ -1014,19 +959,17 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Mossy Wood")
-                        .tools(1, 1.5F, 8L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Mossy")
-                        .build())
+                .classifications("wood_family")
+                .localName("Mossy Wood")
+                .tools(1, 1.5F, 8L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Mossy")
                 .build());
         result.add(MaterialDefinition.builder(8267, "WoodPolished")
                 .displayName("WoodPolished")
@@ -1049,17 +992,15 @@ public final class WoodMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("WoodPolished")
-                        .tools(1, 3.0F, 24L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("WoodPolished")
+                .tools(1, 3.0F, 24L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9310, "WoodRotten")
                 .displayName("Rotten Wood")
@@ -1083,19 +1024,17 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("Rotten Wood")
-                        .tools(1, 1.0F, 8L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Rotten")
-                        .build())
+                .classifications("wood_family")
+                .localName("Rotten Wood")
+                .tools(1, 1.0F, 8L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Rotten")
                 .build());
     }
 
@@ -1123,19 +1062,17 @@ public final class WoodMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("WoodRubber")
-                        .source("IC2", "IndustrialCraft 2")
-                        .tools(1, 1.5F, 12L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .smelting("Ashes", 324324000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("WoodRubber")
+                .source("IC2", "IndustrialCraft 2")
+                .tools(1, 1.5F, 12L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .smelting("Ashes", 324324000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8222, "WoodTreated")
                 .displayName("WoodTreated")
@@ -1158,18 +1095,16 @@ public final class WoodMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.UUM,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .classifications("wood_family")
-                        .localName("WoodSealed")
-                        .source("ImmersiveEngineering", "Immersive Engineering")
-                        .tools(1, 3.0F, 24L, 0)
-                        .fuel(100L, "Ashes", 72072000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .classifications("wood_family")
+                .localName("WoodSealed")
+                .source("ImmersiveEngineering", "Immersive Engineering")
+                .tools(1, 3.0F, 24L, 0)
+                .fuel(100L, "Ashes", 72072000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 }

@@ -37,7 +37,7 @@ public final class DynamiteMixerRecipes {
         GTMaterial dynamite = GTMaterialRegistry.get("Dynamite").resolve();
         Set<GTMaterial> sources = new LinkedHashSet<>();
         for (var definition : MaterialDefinitions.all())
-            if (definition.facts().classifications().contains("wood_family")) sources.add(GTMaterialRegistry.get(definition.name()));
+            if (definition.classifications().contains("wood_family")) sources.add(GTMaterialRegistry.get(definition.name()));
         sources.add(GTMaterialRegistry.get("Bark").resolve());
         sources.add(GTMaterialRegistry.get("Paper").resolve());
         for (GTMaterial source : sources) {

@@ -107,4 +107,22 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
             default -> List.of();
         };
     }
+
+    public List<MaterialProcessDeclaration<?>> processes() {
+        String scenario = System.getProperty("material.metadata.scenario");
+        var key = new MaterialProcessKey<>(new DataKey(addonId(), "throw_into_water"), String.class);
+        return switch (scenario) {
+            case "processes" ->
+                List.of(new MaterialProcessDeclaration<>("Iron", key, java.util.Set.of(new FormKey("dust")), "wet"));
+            case "processNamespaceFailure" ->
+                List.of(new MaterialProcessDeclaration<>(
+                        "Iron",
+                        new MaterialProcessKey<>(new DataKey("another_addon", "throw_into_water"), String.class),
+                        java.util.Set.of(),
+                        "wet"));
+            case "processUnknownMaterialFailure" ->
+                List.of(new MaterialProcessDeclaration<>("MissingMaterial", key, java.util.Set.of(), "wet"));
+            default -> List.of();
+        };
+    }
 }

@@ -3,7 +3,6 @@ package gregtech.content.material.catalog;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.MaterialDefinition;
-import gregtech.engine.material.MaterialFacts;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +30,7 @@ public final class SpecialMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ANTIMATTER, MaterialProperty.ELEMENT, MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("Anti-Copper").build())
+                .localName("Anti-Copper")
                 .build());
         result.add(MaterialDefinition.builder(4020, "AntiHelium")
                 .displayName("Anti-Helium")
@@ -43,7 +42,7 @@ public final class SpecialMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ANTIMATTER, MaterialProperty.ELEMENT, MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("Anti-Helium").build())
+                .localName("Anti-Helium")
                 .build());
         result.add(MaterialDefinition.builder(4010, "AntiHydrogen")
                 .displayName("Anti-Hydrogen")
@@ -55,7 +54,7 @@ public final class SpecialMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ANTIMATTER, MaterialProperty.ELEMENT, MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("Anti-Hydrogen").build())
+                .localName("Anti-Hydrogen")
                 .build());
         result.add(MaterialDefinition.builder(4260, "AntiIron")
                 .displayName("Anti-Iron")
@@ -67,7 +66,7 @@ public final class SpecialMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ANTIMATTER, MaterialProperty.ELEMENT, MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("Anti-Iron").build())
+                .localName("Anti-Iron")
                 .build());
         result.add(MaterialDefinition.builder(4002, "AntiNeutrino")
                 .displayName("Anti-Neutrino")
@@ -80,7 +79,7 @@ public final class SpecialMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("Anti-Neutrino").build())
+                .localName("Anti-Neutrino")
                 .build());
         result.add(MaterialDefinition.builder(4003, "AntiNeutron")
                 .displayName("Anti-Neutron")
@@ -93,7 +92,7 @@ public final class SpecialMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("Anti-Neutron").build())
+                .localName("Anti-Neutron")
                 .build());
         result.add(MaterialDefinition.builder(4001, "AntiPhoton")
                 .displayName("Anti-Photon")
@@ -106,7 +105,7 @@ public final class SpecialMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("Anti-Photon").build())
+                .localName("Anti-Photon")
                 .build());
         result.add(MaterialDefinition.builder(4004, "AntiProton")
                 .displayName("Anti-Proton")
@@ -119,7 +118,7 @@ public final class SpecialMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("Anti-Proton").build())
+                .localName("Anti-Proton")
                 .build());
         result.add(MaterialDefinition.builder(9223, "Blackstone")
                 .displayName("Blackstone")
@@ -135,11 +134,9 @@ public final class SpecialMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.STONE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Blackstone")
-                        .tools(1, 5.0F, 64L, 1)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Blackstone")
+                .tools(1, 5.0F, 64L, 1)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(5, "Electron")
                 .displayName("Electron")
@@ -152,7 +149,7 @@ public final class SpecialMaterials {
                 .atomicProperties(0, 1, 0, 0)
                 .alpha(0)
                 .properties(MaterialProperty.HIDDEN, MaterialProperty.PARTICLE)
-                .facts(MaterialFacts.builder().localName("Electron").build())
+                .localName("Electron")
                 .build());
         result.add(MaterialDefinition.builder(4000, "Magic")
                 .displayName("Magic")
@@ -165,14 +162,12 @@ public final class SpecialMaterials {
                 .atomicProperties(0, 0, 0, -1)
                 .alpha(0)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.HIDDEN, MaterialProperty.MAGICAL)
-                .facts(MaterialFacts.builder()
-                        .localName("Ma")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .correctedToolStats()
-                        .tools(3, 10.0F, 5120L, 5)
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Ma")
-                        .build())
+                .localName("Ma")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .correctedToolStats()
+                .tools(3, 10.0F, 5120L, 5)
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Ma")
                 .build());
         result.add(MaterialDefinition.builder(9901, "MudBrick")
                 .displayName("Mud Brick")
@@ -192,7 +187,7 @@ public final class SpecialMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder().localName("Mud Brick").build())
+                .localName("Mud Brick")
                 .build());
         result.add(MaterialDefinition.builder(2, "Neutrino")
                 .displayName("Neutrino")
@@ -205,7 +200,7 @@ public final class SpecialMaterials {
                 .atomicProperties(0, 0, 0, 0)
                 .alpha(0)
                 .properties(MaterialProperty.HIDDEN, MaterialProperty.PARTICLE)
-                .facts(MaterialFacts.builder().localName("Neutrino").build())
+                .localName("Neutrino")
                 .build());
         result.add(MaterialDefinition.builder(3, "Neutron")
                 .displayName("Neutron")
@@ -218,7 +213,7 @@ public final class SpecialMaterials {
                 .atomicProperties(0, 0, 1, 0)
                 .alpha(0)
                 .properties(MaterialProperty.HIDDEN, MaterialProperty.PARTICLE)
-                .facts(MaterialFacts.builder().localName("Neutron").build())
+                .localName("Neutron")
                 .build());
         result.add(MaterialDefinition.builder(1, "Photon")
                 .displayName("Photon")
@@ -231,7 +226,7 @@ public final class SpecialMaterials {
                 .atomicProperties(0, 0, 0, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN, MaterialProperty.PARTICLE)
-                .facts(MaterialFacts.builder().localName("Photon").build())
+                .localName("Photon")
                 .build());
     }
 
@@ -254,19 +249,17 @@ public final class SpecialMaterials {
                         MaterialProperty.GENERATE_PLATE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Porcelain")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Ceramic", 1297296000L),
-                                new MaterialFacts.Part("SiliconDioxide", 648648000L),
-                                new MaterialFacts.Part("PotassiumFeldspar", 648648000L))
-                        .forms("DUSTS", "PLANTS", "PLATES")
-                        .processing("Compressing", "Porcelain", 0L)
-                        .processing("Bending", "Porcelain", 0L)
-                        .processing("Forging", "Porcelain", 0L)
-                        .processing("Smashing", "Porcelain", 0L)
-                        .build())
+                .localName("Porcelain")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Ceramic", 1297296000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 648648000L),
+                        new MaterialDefinition.Part("PotassiumFeldspar", 648648000L))
+                .forms("DUSTS", "PLANTS", "PLATES")
+                .processing("Compressing", "Porcelain", 0L)
+                .processing("Bending", "Porcelain", 0L)
+                .processing("Forging", "Porcelain", 0L)
+                .processing("Smashing", "Porcelain", 0L)
                 .build());
         result.add(MaterialDefinition.builder(4005, "Positron")
                 .displayName("Positron")
@@ -279,10 +272,8 @@ public final class SpecialMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("Positron")
-                        .aliases("AntiElectron")
-                        .build())
+                .localName("Positron")
+                .aliases("AntiElectron")
                 .build());
         result.add(MaterialDefinition.builder(4, "Proton")
                 .displayName("Proton")
@@ -295,7 +286,7 @@ public final class SpecialMaterials {
                 .atomicProperties(1, 0, 0, 0)
                 .alpha(0)
                 .properties(MaterialProperty.HIDDEN, MaterialProperty.PARTICLE)
-                .facts(MaterialFacts.builder().localName("Proton").build())
+                .localName("Proton")
                 .build());
         result.add(MaterialDefinition.builder(9903, "Purpur")
                 .displayName("Purpur")
@@ -315,7 +306,7 @@ public final class SpecialMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder().localName("Purpur").build())
+                .localName("Purpur")
                 .build());
         result.add(MaterialDefinition.builder(9902, "RedNetherBrick")
                 .displayName("Red Nether Brick")
@@ -335,7 +326,7 @@ public final class SpecialMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder().localName("Red Nether Brick").build())
+                .localName("Red Nether Brick")
                 .build());
         result.add(MaterialDefinition.builder(8472, "Sculk")
                 .displayName("Sculk")
@@ -347,12 +338,10 @@ public final class SpecialMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Sculk")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 2.0F, 16L, 1)
-                        .forms("DUSTS", "PLANTS", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Sculk")
+                .source("minecraft", "Minecraft")
+                .tools(1, 2.0F, 16L, 1)
+                .forms("DUSTS", "PLANTS", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9900, "Tuff")
                 .displayName("Tuff")
@@ -372,7 +361,7 @@ public final class SpecialMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.STONE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder().localName("Tuff").build())
+                .localName("Tuff")
                 .build());
     }
 }

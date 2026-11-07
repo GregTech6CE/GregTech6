@@ -3,7 +3,6 @@ package gregtech.content.material.catalog;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.MaterialDefinition;
-import gregtech.engine.material.MaterialFacts;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,30 +78,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Adamantine")
-                        .source("Metallurgy", "Metallurgy")
-                        .tools(3, 10.0F, 4500L, 5)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Adamantium", 1945944000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts("GraniticMineralSand")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Adamantine")
+                .source("Metallurgy", "Metallurgy")
+                .tools(3, 10.0F, 4500L, 5)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Adamantium", 1945944000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts("GraniticMineralSand")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9830, "Air")
                 .displayName("Air")
@@ -115,15 +112,13 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Air")
-                        .composition(
-                                52L,
-                                new MaterialFacts.Part("Nitrogen", 25945920000L),
-                                new MaterialFacts.Part("Oxygen", 7135128000L),
-                                new MaterialFacts.Part("Argon", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .build())
+                .localName("Air")
+                .composition(
+                        52L,
+                        new MaterialDefinition.Part("Nitrogen", 25945920000L),
+                        new MaterialDefinition.Part("Oxygen", 7135128000L),
+                        new MaterialDefinition.Part("Argon", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9101, "Almandine")
                 .displayName("Almandine")
@@ -148,20 +143,18 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("GarnetRed")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 128L, 2)
-                        .smelting("Almandine", 0L)
-                        .composition(
-                                20L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Iron", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 5837832000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Grossular", "Pyrope", "Spessartine", "Andradite", "Uvarovite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("GarnetRed")
+                .correctedToolStats()
+                .tools(3, 7.0F, 128L, 2)
+                .smelting("Almandine", 0L)
+                .composition(
+                        20L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Iron", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 5837832000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Grossular", "Pyrope", "Spessartine", "Andradite", "Uvarovite")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8622, "AluminiumAlloy")
                 .displayName("Aluminium Alloy")
@@ -196,30 +189,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Aluminium Alloy")
-                        .source("RotaryCraft", "RotaryCraft")
-                        .correctedToolStats()
-                        .tools(2, 10.0F, 128L, 2)
-                        .composition(
-                                45L,
-                                new MaterialFacts.Part("Aluminium", 29189160000L),
-                                new MaterialFacts.Part("Silicon", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Aluminium Alloy")
+                .source("RotaryCraft", "RotaryCraft")
+                .correctedToolStats()
+                .tools(2, 10.0F, 128L, 2)
+                .composition(
+                        45L,
+                        new MaterialDefinition.Part("Aluminium", 29189160000L),
+                        new MaterialDefinition.Part("Silicon", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8700, "AluminiumBrass")
                 .displayName("Aluminium Brass")
@@ -254,30 +245,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("AluminumBrass")
-                        .source("TConstruct", "Tinkers Construct")
-                        .tools(2, 6.0F, 64L, 2)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Aluminium", 1945944000L),
-                                new MaterialFacts.Part("Copper", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("AluminumBrass")
+                .source("TConstruct", "Tinkers Construct")
+                .tools(2, 6.0F, 64L, 2)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Aluminium", 1945944000L),
+                        new MaterialDefinition.Part("Copper", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8010, "AluminiumFluoride")
                 .displayName("Aluminium Fluoride")
@@ -296,15 +285,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Aluminium Fluoride")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Aluminium", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 1945944000L))
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
-                        .aliases("AlF3")
-                        .build())
+                .localName("Aluminium Fluoride")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Aluminium", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 1945944000L))
+                .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
+                .aliases("AlF3")
                 .build());
         result.add(MaterialDefinition.builder(8702, "Alumite")
                 .displayName("Alumite")
@@ -338,31 +325,29 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Alumite")
-                        .source("TConstruct", "Tinkers Construct")
-                        .tools(2, 1.5F, 64L, 3)
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("WroughtIron", 1297296000L),
-                                new MaterialFacts.Part("Obsidian", 11675664000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Alumite")
+                .source("TConstruct", "Tinkers Construct")
+                .tools(2, 1.5F, 64L, 3)
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("WroughtIron", 1297296000L),
+                        new MaterialDefinition.Part("Obsidian", 11675664000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8417, "Amazonite")
                 .displayName("Amazonite")
@@ -387,18 +372,16 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Amazonite")
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("Amazonite", 0L)
-                        .composition(
-                                26L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("SiliconDioxide", 11675664000L),
-                                new MaterialFacts.Part("Potassium", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Amazonite")
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("Amazonite", 0L)
+                .composition(
+                        26L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialDefinition.Part("Potassium", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8310, "Amber")
                 .displayName("Amber")
@@ -419,13 +402,11 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_PLATE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Amber")
-                        .source("Thaumcraft", "Thaumcraft")
-                        .tools(3, 4.0F, 256L, 3)
-                        .multipliers(2, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Amber")
+                .source("Thaumcraft", "Thaumcraft")
+                .tools(3, 4.0F, 256L, 3)
+                .multipliers(2, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8313, "Amethyst")
                 .displayName("Amethyst")
@@ -450,17 +431,15 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Amethyst")
-                        .source("BiomesOPlenty", "Biomes O' Plenty")
-                        .tools(3, 6.0F, 128L, 3)
-                        .smelting("Amethyst", 0L)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("SiliconDioxide", 2594592000L),
-                                new MaterialFacts.Part("Iron", 648648000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Amethyst")
+                .source("BiomesOPlenty", "Biomes O' Plenty")
+                .tools(3, 6.0F, 128L, 3)
+                .smelting("Amethyst", 0L)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("SiliconDioxide", 2594592000L),
+                        new MaterialDefinition.Part("Iron", 648648000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8025, "Ammonia")
                 .displayName("Ammonia")
@@ -478,15 +457,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ammonia")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Nitrogen", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 1945944000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("NH3")
-                        .build())
+                .localName("Ammonia")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Nitrogen", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 1945944000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("NH3")
                 .build());
         result.add(MaterialDefinition.builder(9102, "Andradite")
                 .displayName("Andradite")
@@ -511,20 +488,18 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("GarnetYellow")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 128L, 2)
-                        .smelting("Andradite", 0L)
-                        .composition(
-                                20L,
-                                new MaterialFacts.Part("Calcium", 1945944000L),
-                                new MaterialFacts.Part("Iron", 1297296000L),
-                                new MaterialFacts.Part("SiliconDioxide", 5837832000L),
-                                new MaterialFacts.Part("Oxygen", 3891888000L))
-                        .byproducts("Almandine", "Grossular", "Pyrope", "Spessartine", "Uvarovite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("GarnetYellow")
+                .correctedToolStats()
+                .tools(3, 7.0F, 128L, 2)
+                .smelting("Andradite", 0L)
+                .composition(
+                        20L,
+                        new MaterialDefinition.Part("Calcium", 1945944000L),
+                        new MaterialDefinition.Part("Iron", 1297296000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 5837832000L),
+                        new MaterialDefinition.Part("Oxygen", 3891888000L))
+                .byproducts("Almandine", "Grossular", "Pyrope", "Spessartine", "Uvarovite")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8640, "AnnealedCopper")
                 .displayName("Annealed Copper")
@@ -559,29 +534,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Annealed Copper")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .correctedToolStats()
-                        .tools(2, 4.0F, 64L, 0)
-                        .pulverizing("Copper", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("Copper", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS",
-                                "WIRES")
-                        .build())
+                .localName("Annealed Copper")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .correctedToolStats()
+                .tools(2, 4.0F, 64L, 0)
+                .pulverizing("Copper", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("Copper", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS",
+                        "WIRES")
                 .build());
         result.add(MaterialDefinition.builder(8209, "Apatite")
                 .displayName("Apatite")
@@ -607,18 +580,16 @@ public final class CompoundMaterials {
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Apatite")
-                        .source("Forestry", "Forestry")
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Calcium", 3243240000L),
-                                new MaterialFacts.Part("Phosphate", 1945944000L),
-                                new MaterialFacts.Part("Chlorine", 648648000L))
-                        .byproducts("Phosphorite", "BluePhosphorus", "BlueFluorite", "Phosphate")
-                        .multipliers(4, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Apatite")
+                .source("Forestry", "Forestry")
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Calcium", 3243240000L),
+                        new MaterialDefinition.Part("Phosphate", 1945944000L),
+                        new MaterialDefinition.Part("Chlorine", 648648000L))
+                .byproducts("Phosphorite", "BluePhosphorus", "BlueFluorite", "Phosphate")
+                .multipliers(4, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8323, "Aquamarine")
                 .displayName("Aquamarine")
@@ -644,28 +615,19 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Aquamarine")
-                        .correctedToolStats()
-                        .tools(3, 9.0F, 128L, 2)
-                        .smelting("Beryllium", 18018000L)
-                        .composition(
-                                29L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Beryllium", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 11675664000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts(
-                                "Alumina",
-                                "Beryllium",
-                                "Emerald",
-                                "Morganite",
-                                "Goshenite",
-                                "Bixbite",
-                                "Heliodor",
-                                "Maxixe")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Aquamarine")
+                .correctedToolStats()
+                .tools(3, 9.0F, 128L, 2)
+                .smelting("Beryllium", 18018000L)
+                .composition(
+                        29L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts(
+                        "Alumina", "Beryllium", "Emerald", "Morganite", "Goshenite", "Bixbite", "Heliodor", "Maxixe")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -693,15 +655,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Aqua Regia")
-                        .source("factorization", "Factorization")
-                        .composition(
-                                13L,
-                                new MaterialFacts.Part("NitricAcid", 3243240000L),
-                                new MaterialFacts.Part("HydrochloricAcid", 5189184000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Aqua Regia")
+                .source("factorization", "Factorization")
+                .composition(
+                        13L,
+                        new MaterialDefinition.Part("NitricAcid", 3243240000L),
+                        new MaterialDefinition.Part("HydrochloricAcid", 5189184000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8615, "ArsenicBronze")
                 .displayName("Arsenic Bronze")
@@ -736,29 +696,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Arsenic Bronze")
-                        .tools(3, 6.0F, 480L, 2)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Arsenic", 648648000L),
-                                new MaterialFacts.Part("Bronze", 2594592000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Arsenic Bronze")
+                .tools(3, 6.0F, 480L, 2)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Arsenic", 648648000L),
+                        new MaterialDefinition.Part("Bronze", 2594592000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8614, "ArsenicCopper")
                 .displayName("Arsenic Copper")
@@ -793,29 +751,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Arsenic Copper")
-                        .tools(3, 5.5F, 448L, 2)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Copper", 1945944000L),
-                                new MaterialFacts.Part("Arsenic", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Arsenic Copper")
+                .tools(3, 5.5F, 448L, 2)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Copper", 1945944000L),
+                        new MaterialDefinition.Part("Arsenic", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8200, "Ashes")
                 .displayName("Ashes")
@@ -827,12 +783,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Ash")
-                        .source("Forestry", "Forestry")
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Ash")
-                        .build())
+                .localName("Ash")
+                .source("Forestry", "Forestry")
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Ash")
                 .build());
         result.add(MaterialDefinition.builder(8266, "Asphalt")
                 .displayName("Asphalt")
@@ -844,10 +798,8 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Asphalt")
-                        .forms("DUSTS", "MOLTEN", "PLANTS")
-                        .build())
+                .localName("Asphalt")
+                .forms("DUSTS", "MOLTEN", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8420, "Azurite")
                 .displayName("Azurite")
@@ -874,20 +826,18 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Azurite")
-                        .source("tropicraft", "Tropicraft")
-                        .smelting("Copper", 72072000L)
-                        .composition(
-                                15L,
-                                new MaterialFacts.Part("Copper", 1945944000L),
-                                new MaterialFacts.Part("CarbonTrioxide", 5189184000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L),
-                                new MaterialFacts.Part("Water", 1945944000L))
-                        .byproducts("Zircon", "Malachite", "Hafnium")
-                        .multipliers(5, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Azurite")
+                .source("tropicraft", "Tropicraft")
+                .smelting("Copper", 72072000L)
+                .composition(
+                        15L,
+                        new MaterialDefinition.Part("Copper", 1945944000L),
+                        new MaterialDefinition.Part("CarbonTrioxide", 5189184000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L),
+                        new MaterialDefinition.Part("Water", 1945944000L))
+                .byproducts("Zircon", "Malachite", "Hafnium")
+                .multipliers(5, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8303, "BalasRuby")
                 .displayName("Balas Ruby")
@@ -912,19 +862,17 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("FoolsRuby")
-                        .source("Redpower", "Redpower")
-                        .tools(3, 7.0F, 384L, 2)
-                        .smelting("BalasRuby", 0L)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Chromium", 1297296000L),
-                                new MaterialFacts.Part("Magnesium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts("Chromite", "Spinel")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("FoolsRuby")
+                .source("Redpower", "Redpower")
+                .tools(3, 7.0F, 384L, 2)
+                .smelting("BalasRuby", 0L)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Chromium", 1297296000L),
+                        new MaterialDefinition.Part("Magnesium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts("Chromite", "Spinel")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8275, "Bark")
                 .displayName("Bark")
@@ -943,16 +891,14 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Bark")
-                        .source("BinnieCore", "Binnie's Mods")
-                        .smelting("Ashes", 162162000L)
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Carbon", 3891888000L),
-                                new MaterialFacts.Part("Water", 9729720000L))
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Bark")
+                .source("BinnieCore", "Binnie's Mods")
+                .smelting("Ashes", 162162000L)
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Carbon", 3891888000L),
+                        new MaterialDefinition.Part("Water", 9729720000L))
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8247, "Basalz")
                 .displayName("Basalz")
@@ -964,13 +910,11 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Basalz")
-                        .source("ThermalExpansion", "Thermal Expansion")
-                        .correctedToolStats()
-                        .tools(1, 2.0F, 16L, 1)
-                        .forms("DUSTS", "PLANTS", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Basalz")
+                .source("ThermalExpansion", "Thermal Expansion")
+                .correctedToolStats()
+                .tools(1, 2.0F, 16L, 1)
+                .forms("DUSTS", "PLANTS", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8668, "BatteryAlloy")
                 .displayName("Battery Alloy")
@@ -1005,28 +949,26 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Battery Alloy")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Lead", 2594592000L),
-                                new MaterialFacts.Part("Antimony", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Battery Alloy")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Lead", 2594592000L),
+                        new MaterialDefinition.Part("Antimony", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8599, "Bedrock")
                 .displayName("Bedrock")
@@ -1042,12 +984,10 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.STONE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Bedrock")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 8.0F, 2048L, 5)
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Bedrock")
+                .source("minecraft", "Minecraft")
+                .tools(1, 8.0F, 2048L, 5)
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9153, "Bentonite")
                 .displayName("Bentonite")
@@ -1067,13 +1007,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Bentonite")
-                        .source("PFAAGeologica", "Per Fabrica Ad Astra")
-                        .smelting("Ceramic", 648648000L)
-                        .byproducts("ClayRed", "Palygorskite")
-                        .forms("DUSTS", "ORES", "PLANTS", "PLATES")
-                        .build())
+                .localName("Bentonite")
+                .source("PFAAGeologica", "Per Fabrica Ad Astra")
+                .smelting("Ceramic", 648648000L)
+                .byproducts("ClayRed", "Palygorskite")
+                .forms("DUSTS", "ORES", "PLANTS", "PLATES")
                 .build());
         result.add(MaterialDefinition.builder(9841, "BioFuel")
                 .displayName("Bio Fuel")
@@ -1085,11 +1023,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Bio Fuel")
-                        .source("Forestry", "Forestry")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Bio Fuel")
+                .source("Forestry", "Forestry")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8612, "BismuthBronze")
                 .displayName("Bismuth Bronze")
@@ -1123,30 +1059,28 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Bismuth Bronze")
-                        .source("terrafirmacraft", "TerraFirmaCraft")
-                        .tools(3, 8.0F, 512L, 2)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Bismuth", 648648000L),
-                                new MaterialFacts.Part("Brass", 2594592000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Bismuth Bronze")
+                .source("terrafirmacraft", "TerraFirmaCraft")
+                .tools(3, 8.0F, 512L, 2)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Bismuth", 648648000L),
+                        new MaterialDefinition.Part("Brass", 2594592000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8386, "Bixbite")
                 .displayName("Bixbite")
@@ -1172,28 +1106,19 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("ScarletEmerald")
-                        .correctedToolStats()
-                        .tools(3, 9.0F, 128L, 2)
-                        .smelting("Beryllium", 18018000L)
-                        .composition(
-                                29L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Beryllium", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 11675664000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts(
-                                "Alumina",
-                                "Beryllium",
-                                "Emerald",
-                                "Aquamarine",
-                                "Morganite",
-                                "Goshenite",
-                                "Heliodor",
-                                "Maxixe")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("ScarletEmerald")
+                .correctedToolStats()
+                .tools(3, 9.0F, 128L, 2)
+                .smelting("Beryllium", 18018000L)
+                .composition(
+                        29L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts(
+                        "Alumina", "Beryllium", "Emerald", "Aquamarine", "Morganite", "Goshenite", "Heliodor", "Maxixe")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -1220,20 +1145,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Black Aventurine")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("BlackAventurine", 0L)
-                        .byproducts(
-                                "GreenAventurine",
-                                "BrownAventurine",
-                                "YellowAventurine",
-                                "BlueAventurine",
-                                "RedAventurine")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("AventurineBlack")
-                        .build())
+                .localName("Black Aventurine")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("BlackAventurine", 0L)
+                .byproducts("GreenAventurine", "BrownAventurine", "YellowAventurine", "BlueAventurine", "RedAventurine")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("AventurineBlack")
                 .build());
         result.add(MaterialDefinition.builder(8611, "BlackBronze")
                 .displayName("Black Bronze")
@@ -1268,30 +1186,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Black Bronze")
-                        .source("terrafirmacraft", "TerraFirmaCraft")
-                        .tools(3, 12.0F, 512L, 2)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Copper", 1945944000L),
-                                new MaterialFacts.Part("Electrum", 1297296000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Black Bronze")
+                .source("terrafirmacraft", "TerraFirmaCraft")
+                .tools(3, 12.0F, 512L, 2)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Copper", 1945944000L),
+                        new MaterialDefinition.Part("Electrum", 1297296000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8434, "BlackEye")
                 .displayName("Black Eye")
@@ -1315,15 +1231,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("BlackTigerEye")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("BlackEye", 0L)
-                        .byproducts("Hematite", "TigerEye", "CatsEye", "DragonEye", "HawksEye", "TigerIron")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("TigerEyeBlack")
-                        .build())
+                .localName("BlackTigerEye")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("BlackEye", 0L)
+                .byproducts("Hematite", "TigerEye", "CatsEye", "DragonEye", "HawksEye", "TigerIron")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("TigerEyeBlack")
                 .build());
         result.add(MaterialDefinition.builder(8440, "BlackFluorite")
                 .displayName("Black Fluorite")
@@ -1348,13 +1262,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Black Fluorite")
-                        .smelting("Fluorite", 648648000L)
-                        .byproducts("WhiteFluorite", "Fluorite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("FluoriteBlack")
-                        .build())
+                .localName("Black Fluorite")
+                .smelting("Fluorite", 648648000L)
+                .byproducts("WhiteFluorite", "Fluorite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("FluoriteBlack")
                 .build());
         result.add(MaterialDefinition.builder(8631, "BlackSteel")
                 .displayName("Black Steel")
@@ -1389,31 +1301,29 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Black Steel")
-                        .source("terrafirmacraft", "TerraFirmaCraft")
-                        .tools(3, 6.5F, 768L, 2)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Nickel", 648648000L),
-                                new MaterialFacts.Part("BlackBronze", 648648000L),
-                                new MaterialFacts.Part("Steel", 1945944000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Black Steel")
+                .source("terrafirmacraft", "TerraFirmaCraft")
+                .tools(3, 6.5F, 768L, 2)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Nickel", 648648000L),
+                        new MaterialDefinition.Part("BlackBronze", 648648000L),
+                        new MaterialDefinition.Part("Steel", 1945944000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8403, "BlackVitriol")
                 .displayName("Black Vitriol")
@@ -1439,14 +1349,12 @@ public final class CompoundMaterials {
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Black Vitriol")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Black Vitriol")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8211, "Blaze")
                 .displayName("Blaze")
@@ -1462,14 +1370,12 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Blaze")
-                        .source("minecraft", "Minecraft")
-                        .correctedToolStats()
-                        .tools(1, 2.0F, 16L, 1)
-                        .fuel(4800L, "", 0L)
-                        .forms("DUSTS", "PLANTS", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Blaze")
+                .source("minecraft", "Minecraft")
+                .correctedToolStats()
+                .tools(1, 2.0F, 16L, 1)
+                .fuel(4800L, "", 0L)
+                .forms("DUSTS", "PLANTS", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8396, "BlazeQuartz")
                 .displayName("Blaze Quartz")
@@ -1488,15 +1394,13 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Blaze Quartz")
-                        .source("Botania", "Botania")
-                        .tools(1, 2.5F, 32L, 3)
-                        .smelting("SiliconDioxide", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .multipliers(2, 1)
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Blaze Quartz")
+                .source("Botania", "Botania")
+                .tools(1, 2.5F, 32L, 3)
+                .smelting("SiliconDioxide", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .multipliers(2, 1)
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8248, "Blitz")
                 .displayName("Blitz")
@@ -1508,13 +1412,11 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Blitz")
-                        .source("ThermalExpansion", "Thermal Expansion")
-                        .correctedToolStats()
-                        .tools(1, 2.0F, 16L, 1)
-                        .forms("DUSTS", "PLANTS", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Blitz")
+                .source("ThermalExpansion", "Thermal Expansion")
+                .correctedToolStats()
+                .tools(1, 2.0F, 16L, 1)
+                .forms("DUSTS", "PLANTS", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8210, "Blizz")
                 .displayName("Blizz")
@@ -1526,13 +1428,11 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Blizz")
-                        .source("ThermalExpansion", "Thermal Expansion")
-                        .correctedToolStats()
-                        .tools(1, 2.0F, 16L, 1)
-                        .forms("DUSTS", "PLANTS", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Blizz")
+                .source("ThermalExpansion", "Thermal Expansion")
+                .correctedToolStats()
+                .tools(1, 2.0F, 16L, 1)
+                .forms("DUSTS", "PLANTS", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8659, "BlueAlloy")
                 .displayName("Blue Alloy")
@@ -1567,29 +1467,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Blue Alloy")
-                        .source("Redpower", "Redpower")
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Silver", 648648000L),
-                                new MaterialFacts.Part("Nikolite", 2594592000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS",
-                                "WIRES")
-                        .build())
+                .localName("Blue Alloy")
+                .source("Redpower", "Redpower")
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Silver", 648648000L),
+                        new MaterialDefinition.Part("Nikolite", 2594592000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS",
+                        "WIRES")
                 .build());
         result.add(MaterialDefinition.builder(8450, "BlueAventurine")
                 .displayName("Blue Aventurine")
@@ -1613,20 +1511,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Blue Aventurine")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("BlueAventurine", 0L)
-                        .byproducts(
-                                "GreenAventurine",
-                                "BrownAventurine",
-                                "YellowAventurine",
-                                "BlackAventurine",
-                                "RedAventurine")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("AventurineBlue")
-                        .build())
+                .localName("Blue Aventurine")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("BlueAventurine", 0L)
+                .byproducts(
+                        "GreenAventurine", "BrownAventurine", "YellowAventurine", "BlackAventurine", "RedAventurine")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("AventurineBlue")
                 .build());
         result.add(MaterialDefinition.builder(8464, "BlueDiamond")
                 .displayName("Blue Diamond")
@@ -1651,17 +1543,15 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Blue Diamond")
-                        .source("ExtraPlanets", "Extra Planets")
-                        .correctedToolStats()
-                        .tools(3, 8.0F, 1280L, 3)
-                        .smelting("Carbon", 1297296000L)
-                        .composition(1L, new MaterialFacts.Part("Carbon", 2594592000L))
-                        .byproducts("Graphite", "Diamond")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("DiamondBlue")
-                        .build())
+                .localName("Blue Diamond")
+                .source("ExtraPlanets", "Extra Planets")
+                .correctedToolStats()
+                .tools(3, 8.0F, 1280L, 3)
+                .smelting("Carbon", 1297296000L)
+                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .byproducts("Graphite", "Diamond")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("DiamondBlue")
                 .build());
         result.add(MaterialDefinition.builder(8438, "BlueFluorite")
                 .displayName("Blue Fluorite")
@@ -1686,13 +1576,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Blue Fluorite")
-                        .smelting("Fluorite", 648648000L)
-                        .byproducts("MagentaFluorite", "BlackFluorite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("FluoriteBlue")
-                        .build())
+                .localName("Blue Fluorite")
+                .smelting("Fluorite", 648648000L)
+                .byproducts("MagentaFluorite", "BlackFluorite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("FluoriteBlue")
                 .build());
         result.add(MaterialDefinition.builder(8427, "BlueJasper")
                 .displayName("Blue Jasper")
@@ -1716,15 +1604,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Blue Jasper")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("BlueJasper", 0L)
-                        .byproducts("RedJasper", "OceanJasper", "RainforestJasper", "GreenJasper", "YellowJasper")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("JasperBlue")
-                        .build())
+                .localName("Blue Jasper")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("BlueJasper", 0L)
+                .byproducts("RedJasper", "OceanJasper", "RainforestJasper", "GreenJasper", "YellowJasper")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("JasperBlue")
                 .build());
     }
 
@@ -1752,24 +1638,16 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Blue Phosphorus")
-                        .source("Forestry", "Forestry")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Calcium", 1945944000L),
-                                new MaterialFacts.Part("Phosphate", 1297296000L))
-                        .byproducts(
-                                "Phosphorite",
-                                "Apatite",
-                                "BlueFluorite",
-                                "Phosphate",
-                                "RedPhosphorus",
-                                "WhitePhosphorus")
-                        .multipliers(3, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("PhosphorusBlue")
-                        .build())
+                .localName("Blue Phosphorus")
+                .source("Forestry", "Forestry")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Calcium", 1945944000L),
+                        new MaterialDefinition.Part("Phosphate", 1297296000L))
+                .byproducts("Phosphorite", "Apatite", "BlueFluorite", "Phosphate", "RedPhosphorus", "WhitePhosphorus")
+                .multipliers(3, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("PhosphorusBlue")
                 .build());
         result.add(MaterialDefinition.builder(8328, "BlueSapphire")
                 .displayName("Blue Sapphire")
@@ -1796,19 +1674,17 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Blue Sapphire")
-                        .source("Redpower", "Redpower")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 512L, 3)
-                        .smelting("Alumina", 486486000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Iron", 648648000L))
-                        .byproducts("Alumina", "Ruby", "GreenSapphire", "PurpleSapphire")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Blue Sapphire")
+                .source("Redpower", "Redpower")
+                .correctedToolStats()
+                .tools(3, 7.0F, 512L, 3)
+                .smelting("Alumina", 486486000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Iron", 648648000L))
+                .byproducts("Alumina", "Ruby", "GreenSapphire", "PurpleSapphire")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8632, "BlueSteel")
                 .displayName("Blue Steel")
@@ -1842,32 +1718,30 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Blue Steel")
-                        .source("terrafirmacraft", "TerraFirmaCraft")
-                        .tools(3, 7.0F, 896L, 2)
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("SterlingSilver", 648648000L),
-                                new MaterialFacts.Part("BismuthBronze", 648648000L),
-                                new MaterialFacts.Part("Steel", 1297296000L),
-                                new MaterialFacts.Part("BlackSteel", 2594592000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Blue Steel")
+                .source("terrafirmacraft", "TerraFirmaCraft")
+                .tools(3, 7.0F, 896L, 2)
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("SterlingSilver", 648648000L),
+                        new MaterialDefinition.Part("BismuthBronze", 648648000L),
+                        new MaterialDefinition.Part("Steel", 1297296000L),
+                        new MaterialDefinition.Part("BlackSteel", 2594592000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8307, "BlueTopaz")
                 .displayName("Blue Topaz")
@@ -1892,20 +1766,18 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Blue Topaz")
-                        .source("arsmagica2", "Ars Magica")
-                        .tools(3, 7.0F, 256L, 3)
-                        .smelting("BlueTopaz", 0L)
-                        .composition(
-                                13L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("SiliconDioxide", 1945944000L),
-                                new MaterialFacts.Part("Fluorine", 1297296000L),
-                                new MaterialFacts.Part("Water", 1945944000L))
-                        .byproducts("Topaz")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Blue Topaz")
+                .source("arsmagica2", "Ars Magica")
+                .tools(3, 7.0F, 256L, 3)
+                .smelting("BlueTopaz", 0L)
+                .composition(
+                        13L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 1945944000L),
+                        new MaterialDefinition.Part("Fluorine", 1297296000L),
+                        new MaterialDefinition.Part("Water", 1945944000L))
+                .byproducts("Topaz")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8404, "BlueVitriol")
                 .displayName("Blue Vitriol")
@@ -1924,15 +1796,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("RomanVitriol")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Copper", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("RomanVitriol")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Copper", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8620, "Brass")
                 .displayName("Brass")
@@ -1968,31 +1838,29 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Brass")
-                        .source("Redpower", "Redpower")
-                        .tools(2, 7.0F, 96L, 1)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Copper", 1945944000L),
-                                new MaterialFacts.Part("Zinc", 648648000L))
-                        .byproducts("Copper", "Zinc", "Arsenic")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Brass")
+                .source("Redpower", "Redpower")
+                .tools(2, 7.0F, 96L, 1)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Copper", 1945944000L),
+                        new MaterialDefinition.Part("Zinc", 648648000L))
+                .byproducts("Copper", "Zinc", "Arsenic")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8471, "Breeze")
                 .displayName("Breeze")
@@ -2004,13 +1872,11 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Breeze")
-                        .source("minecraft", "Minecraft")
-                        .correctedToolStats()
-                        .tools(1, 2.0F, 16L, 1)
-                        .forms("DUSTS", "PLANTS", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Breeze")
+                .source("minecraft", "Minecraft")
+                .correctedToolStats()
+                .tools(1, 2.0F, 16L, 1)
+                .forms("DUSTS", "PLANTS", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8610, "Bronze")
                 .displayName("Bronze")
@@ -2046,32 +1912,30 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Bronze")
-                        .source("IC2", "IndustrialCraft 2")
-                        .tools(3, 5.5F, 448L, 2)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Copper", 1945944000L),
-                                new MaterialFacts.Part("Tin", 648648000L))
-                        .byproducts("Copper", "Tin", "Arsenic")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .build())
+                .localName("Bronze")
+                .source("IC2", "IndustrialCraft 2")
+                .tools(3, 5.5F, 448L, 2)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Copper", 1945944000L),
+                        new MaterialDefinition.Part("Tin", 648648000L))
+                .byproducts("Copper", "Tin", "Arsenic")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8446, "BrownAventurine")
                 .displayName("Brown Aventurine")
@@ -2095,20 +1959,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Brown Aventurine")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("BrownAventurine", 0L)
-                        .byproducts(
-                                "GreenAventurine",
-                                "YellowAventurine",
-                                "BlackAventurine",
-                                "BlueAventurine",
-                                "RedAventurine")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("AventurineBrown")
-                        .build())
+                .localName("Brown Aventurine")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("BrownAventurine", 0L)
+                .byproducts("GreenAventurine", "YellowAventurine", "BlackAventurine", "BlueAventurine", "RedAventurine")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("AventurineBrown")
                 .build());
         result.add(MaterialDefinition.builder(9866, "Butane")
                 .displayName("Butane")
@@ -2120,10 +1977,8 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Butane")
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
-                        .build())
+                .localName("Butane")
+                .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8274, "CalciumSulfate")
                 .displayName("Calcium Sulfate")
@@ -2141,16 +1996,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("CalciumSulphate")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Calcium", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("CaSO4")
-                        .build())
+                .localName("CalciumSulphate")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Calcium", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("CaSO4")
                 .build());
         result.add(MaterialDefinition.builder(9836, "CarbonDioxide")
                 .displayName("Carbon Dioxide")
@@ -2168,15 +2021,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Carbon Dioxide")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Carbon", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("CO2")
-                        .build())
+                .localName("Carbon Dioxide")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Carbon", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("CO2")
                 .build());
         result.add(MaterialDefinition.builder(9838, "CarbonMonoxide")
                 .displayName("Carbon Monoxide")
@@ -2194,15 +2045,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Carbon Monoxide")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Carbon", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("CO")
-                        .build())
+                .localName("Carbon Monoxide")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Carbon", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("CO")
                 .build());
         result.add(MaterialDefinition.builder(9843, "CarbonTrioxide")
                 .displayName("Carbon Trioxide")
@@ -2221,15 +2070,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Carbon Trioxide")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Carbon", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("CO3")
-                        .build())
+                .localName("Carbon Trioxide")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Carbon", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("CO3")
                 .build());
         result.add(MaterialDefinition.builder(8003, "Carborundum")
                 .displayName("Carborundum")
@@ -2264,30 +2111,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Carborundum")
-                        .source("ihl", "IHL")
-                        .tools(3, 8.0F, 256L, 3)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Silicon", 648648000L),
-                                new MaterialFacts.Part("Carbon", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("SiC")
-                        .build())
+                .localName("Carborundum")
+                .source("ihl", "IHL")
+                .tools(3, 8.0F, 256L, 3)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Silicon", 648648000L),
+                        new MaterialDefinition.Part("Carbon", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("SiC")
                 .build());
     }
 
@@ -2310,11 +2155,9 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_PLATE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Carminite")
-                        .tools(3, 7.0F, 384L, 3)
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Carminite")
+                .tools(3, 7.0F, 384L, 3)
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8803, "CastIron")
                 .displayName("Cast Iron")
@@ -2349,27 +2192,25 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cast Iron")
-                        .source("steamcraft2", "Steamcraft 2")
-                        .correctedToolStats()
-                        .tools(3, 6.0F, 256L, 2)
-                        .pulverizing("Iron", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("Iron", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("IronCast")
-                        .build())
+                .localName("Cast Iron")
+                .source("steamcraft2", "Steamcraft 2")
+                .correctedToolStats()
+                .tools(3, 6.0F, 256L, 2)
+                .pulverizing("Iron", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("Iron", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("IronCast")
                 .build());
         result.add(MaterialDefinition.builder(8431, "CatsEye")
                 .displayName("Cat's Eye")
@@ -2393,15 +2234,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("GreenTigerEye")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("CatsEye", 0L)
-                        .byproducts("Hematite", "TigerEye", "DragonEye", "HawksEye", "BlackEye", "TigerIron")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("TigerEyeGreen")
-                        .build())
+                .localName("GreenTigerEye")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("CatsEye", 0L)
+                .byproducts("Hematite", "TigerEye", "DragonEye", "HawksEye", "BlackEye", "TigerIron")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("TigerEyeGreen")
                 .build());
         result.add(MaterialDefinition.builder(8605, "CdInAgAlloy")
                 .displayName("Cd-In-Ag-Alloy")
@@ -2436,30 +2275,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cd-In-Ag-Alloy")
-                        .source("RotaryCraft", "RotaryCraft")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Cadmium", 648648000L),
-                                new MaterialFacts.Part("Indium", 648648000L),
-                                new MaterialFacts.Part("Silver", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Cd_In_Ag_Alloy")
-                        .build())
+                .localName("Cd-In-Ag-Alloy")
+                .source("RotaryCraft", "RotaryCraft")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Cadmium", 648648000L),
+                        new MaterialDefinition.Part("Indium", 648648000L),
+                        new MaterialDefinition.Part("Silver", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Cd_In_Ag_Alloy")
                 .build());
         result.add(MaterialDefinition.builder(8225, "Ceramic")
                 .displayName("Ceramic")
@@ -2478,19 +2315,17 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ceramic")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .composition(
-                                18L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("SiliconDioxide", 7783776000L))
-                        .forms("DUSTS", "PLANTS", "PLATES")
-                        .processing("Compressing", "Ceramic", 0L)
-                        .processing("Bending", "Ceramic", 0L)
-                        .processing("Forging", "Ceramic", 0L)
-                        .processing("Smashing", "Ceramic", 0L)
-                        .build())
+                .localName("Ceramic")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .composition(
+                        18L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 7783776000L))
+                .forms("DUSTS", "PLANTS", "PLATES")
+                .processing("Compressing", "Ceramic", 0L)
+                .processing("Bending", "Ceramic", 0L)
+                .processing("Forging", "Ceramic", 0L)
+                .processing("Smashing", "Ceramic", 0L)
                 .build());
         result.add(MaterialDefinition.builder(8347, "CertusQuartz")
                 .displayName("Certus Quartz")
@@ -2514,16 +2349,14 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Certus Quartz")
-                        .source("appliedenergistics2", "Applied Energistics")
-                        .tools(1, 5.0F, 32L, 3)
-                        .smelting("SiliconDioxide", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .byproducts("MilkyQuartz", "Barite")
-                        .multipliers(2, 1)
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Certus Quartz")
+                .source("appliedenergistics2", "Applied Energistics")
+                .tools(1, 5.0F, 32L, 3)
+                .smelting("SiliconDioxide", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .byproducts("MilkyQuartz", "Barite")
+                .multipliers(2, 1)
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8336, "Charcoal")
                 .displayName("Charcoal")
@@ -2545,14 +2378,12 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Charcoal")
-                        .source("minecraft", "Minecraft")
-                        .fuel(1600L, "Ashes", 162162000L)
-                        .smelting("Carbon", 324324000L)
-                        .composition(1L, new MaterialFacts.Part("Carbon", 648648000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Charcoal")
+                .source("minecraft", "Minecraft")
+                .fuel(1600L, "Ashes", 162162000L)
+                .smelting("Carbon", 324324000L)
+                .composition(1L, new MaterialDefinition.Part("Carbon", 648648000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8348, "ChargedCertusQuartz")
                 .displayName("Charged Certus Quartz")
@@ -2576,18 +2407,16 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Charged Certus Quartz")
-                        .source("appliedenergistics2", "Applied Energistics")
-                        .correctedToolStats()
-                        .tools(1, 5.0F, 32L, 3)
-                        .smelting("SiliconDioxide", 648648000L)
-                        .pulverizing("CertusQuartz", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .byproducts("MilkyQuartz", "Barite")
-                        .multipliers(2, 1)
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Charged Certus Quartz")
+                .source("appliedenergistics2", "Applied Energistics")
+                .correctedToolStats()
+                .tools(1, 5.0F, 32L, 3)
+                .smelting("SiliconDioxide", 648648000L)
+                .pulverizing("CertusQuartz", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .byproducts("MilkyQuartz", "Barite")
+                .multipliers(2, 1)
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9780, "Cheese")
                 .displayName("Cheese")
@@ -2599,11 +2428,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Cheese")
-                        .source("GalacticraftCore", "Galacticraft")
-                        .forms("DUSTS", "INGOTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Cheese")
+                .source("GalacticraftCore", "Galacticraft")
+                .forms("DUSTS", "INGOTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9781, "Chili")
                 .displayName("Chili")
@@ -2615,10 +2442,8 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Chili")
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Chili")
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8400, "ChloroauricAcid")
                 .displayName("Chloroauric Acid")
@@ -2637,15 +2462,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Chloroauric Acid")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Gold", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 2594592000L),
-                                new MaterialFacts.Part("Hydrogen", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Chloroauric Acid")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Gold", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 2594592000L),
+                        new MaterialDefinition.Part("Hydrogen", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8401, "ChloroplatinicAcid")
                 .displayName("Chloroplatinic Acid")
@@ -2664,15 +2487,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Chloroplatinic Acid")
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Platinum", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 3891888000L),
-                                new MaterialFacts.Part("Hydrogen", 1297296000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Chloroplatinic Acid")
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Platinum", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 3891888000L),
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9783, "Chocolate")
                 .displayName("Chocolate")
@@ -2690,15 +2511,13 @@ public final class CompoundMaterials {
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Chocolate")
-                        .source("harvestcraft", "HarvestCraft")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Cocoa", 648648000L),
-                                new MaterialFacts.Part("Sugar", 648648000L))
-                        .forms("DUSTS", "INGOTS", "PLANTS")
-                        .build())
+                .localName("Chocolate")
+                .source("harvestcraft", "HarvestCraft")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Cocoa", 648648000L),
+                        new MaterialDefinition.Part("Sugar", 648648000L))
+                .forms("DUSTS", "INGOTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8685, "ChromiumDioxide")
                 .displayName("Chromium Dioxide")
@@ -2733,28 +2552,26 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Chromium Dioxide")
-                        .tools(3, 11.0F, 256L, 3)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Chromium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("CrO2")
-                        .build())
+                .localName("Chromium Dioxide")
+                .tools(3, 11.0F, 256L, 3)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Chromium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("CrO2")
                 .build());
         result.add(MaterialDefinition.builder(9785, "Cinnamon")
                 .displayName("Cinnamon")
@@ -2766,11 +2583,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Cinnamon")
-                        .source("harvestcraft", "HarvestCraft")
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Cinnamon")
+                .source("harvestcraft", "HarvestCraft")
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -2790,13 +2605,11 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Brick")
-                        .correctedToolStats()
-                        .tools(0, 1.0F, 1L, 0)
-                        .composition(1L, new MaterialFacts.Part("Ceramic", 648648000L))
-                        .aliases("Brick")
-                        .build())
+                .localName("Brick")
+                .correctedToolStats()
+                .tools(0, 1.0F, 1L, 0)
+                .composition(1L, new MaterialDefinition.Part("Ceramic", 648648000L))
+                .aliases("Brick")
                 .build());
         result.add(MaterialDefinition.builder(8276, "ClayBrown")
                 .displayName("ClayBrown")
@@ -2816,13 +2629,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("ClayBrown")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .smelting("Ceramic", 648648000L)
-                        .byproducts("Clay", "ClayRed")
-                        .forms("DUSTS", "ORES", "PLANTS", "PLATES")
-                        .build())
+                .localName("ClayBrown")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .smelting("Ceramic", 648648000L)
+                .byproducts("Clay", "ClayRed")
+                .forms("DUSTS", "ORES", "PLANTS", "PLATES")
                 .build());
         result.add(MaterialDefinition.builder(8455, "ClayRed")
                 .displayName("ClayRed")
@@ -2842,13 +2653,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("ClayRed")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .smelting("Ceramic", 648648000L)
-                        .byproducts("Bentonite", "ClayBrown")
-                        .forms("DUSTS", "ORES", "PLANTS", "PLATES")
-                        .build())
+                .localName("ClayRed")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .smelting("Ceramic", 648648000L)
+                .byproducts("Bentonite", "ClayBrown")
+                .forms("DUSTS", "ORES", "PLANTS", "PLATES")
                 .build());
         result.add(MaterialDefinition.builder(8334, "Coal")
                 .displayName("Coal")
@@ -2870,15 +2679,13 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Coal")
-                        .source("minecraft", "Minecraft")
-                        .fuel(1600L, "DarkAshes", 162162000L)
-                        .smelting("Carbon", 324324000L)
-                        .composition(1L, new MaterialFacts.Part("Carbon", 648648000L))
-                        .byproducts("Lignite", "Sulfur")
-                        .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Coal")
+                .source("minecraft", "Minecraft")
+                .fuel(1600L, "DarkAshes", 162162000L)
+                .smelting("Carbon", 324324000L)
+                .composition(1L, new MaterialDefinition.Part("Carbon", 648648000L))
+                .byproducts("Lignite", "Sulfur")
+                .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8349, "CoalCoke")
                 .displayName("Coal Coke")
@@ -2900,16 +2707,14 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Coke")
-                        .source("Railcraft", "Railcraft")
-                        .correctedToolStats()
-                        .tools(0, 1.0F, 1L, 0)
-                        .fuel(3200L, "DarkAshes", 72072000L)
-                        .smelting("Carbon", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("Carbon", 648648000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Coke")
+                .source("Railcraft", "Railcraft")
+                .correctedToolStats()
+                .tools(0, 1.0F, 1L, 0)
+                .fuel(3200L, "DarkAshes", 72072000L)
+                .smelting("Carbon", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("Carbon", 648648000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8621, "CobaltBrass")
                 .displayName("Cobalt Brass")
@@ -2944,31 +2749,29 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cobalt Brass")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 8.0F, 256L, 2)
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Brass", 4540536000L),
-                                new MaterialFacts.Part("Aluminium", 648648000L),
-                                new MaterialFacts.Part("Cobalt", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Cobalt Brass")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 8.0F, 256L, 2)
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Brass", 4540536000L),
+                        new MaterialDefinition.Part("Aluminium", 648648000L),
+                        new MaterialDefinition.Part("Cobalt", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8229, "CobaltHexahydrate")
                 .displayName("Cobalt Hexahydrate")
@@ -2987,14 +2790,12 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cobalt Hexahydrate")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Cobalt", 648648000L),
-                                new MaterialFacts.Part("Water", 3891888000L))
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Cobalt Hexahydrate")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Cobalt", 648648000L),
+                        new MaterialDefinition.Part("Water", 3891888000L))
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9782, "Cocoa")
                 .displayName("Cocoa")
@@ -3006,11 +2807,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Cocoa")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Cocoa")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9784, "Coffee")
                 .displayName("Coffee")
@@ -3022,11 +2821,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("CoffeeDust")
-                        .source("IC2", "IndustrialCraft 2")
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("CoffeeDust")
+                .source("IC2", "IndustrialCraft 2")
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8727, "ConductiveIron")
                 .displayName("Conductive Iron")
@@ -3061,29 +2858,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Conductive Iron")
-                        .source("EnderIO", "Ender IO")
-                        .correctedToolStats()
-                        .tools(3, 6.0F, 384L, 2)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("WroughtIron", 648648000L),
-                                new MaterialFacts.Part("Redstone", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Conductive Iron")
+                .source("EnderIO", "Ender IO")
+                .correctedToolStats()
+                .tools(3, 6.0F, 384L, 2)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("WroughtIron", 648648000L),
+                        new MaterialDefinition.Part("Redstone", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8662, "Constantan")
                 .displayName("Constantan")
@@ -3118,30 +2913,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cupronickel")
-                        .source("ImmersiveEngineering", "Immersive Engineering")
-                        .tools(3, 6.0F, 64L, 1)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Copper", 648648000L),
-                                new MaterialFacts.Part("Nickel", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Cupronickel")
+                .source("ImmersiveEngineering", "Immersive Engineering")
+                .tools(3, 6.0F, 64L, 1)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Copper", 648648000L),
+                        new MaterialDefinition.Part("Nickel", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9883, "ConstructionFoam")
                 .displayName("Construction Foam")
@@ -3153,11 +2946,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Construction Foam")
-                        .source("IC2", "IndustrialCraft 2")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "DUSTS", "PLANTS")
-                        .build())
+                .localName("Construction Foam")
+                .source("IC2", "IndustrialCraft 2")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8800, "CosmicNeutronium")
                 .displayName("Cosmic Neutronium")
@@ -3188,25 +2979,23 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Cosmic Neutronium")
-                        .source("Avaritia", "Avaritia")
-                        .tools(3, 50.0F, 100000L, 10)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Cosmic Neutronium")
+                .source("Avaritia", "Avaritia")
+                .tools(3, 50.0F, 100000L, 10)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8322, "Craponite")
                 .displayName("Craponite")
@@ -3226,12 +3015,10 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_PLATE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Craponite")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 7.0F, 256L, 2)
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Craponite")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 7.0F, 256L, 2)
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8799, "CrystalMatrix")
                 .displayName("Crystal Matrix")
@@ -3264,29 +3051,27 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Crystal Matrix")
-                        .source("Avaritia", "Avaritia")
-                        .tools(3, 20.0F, 25600L, 4)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Diamond", 12972960000L),
-                                new MaterialFacts.Part("NetherStar", 1297296000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Crystal Matrix")
+                .source("Avaritia", "Avaritia")
+                .tools(3, 20.0F, 25600L, 4)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Diamond", 12972960000L),
+                        new MaterialDefinition.Part("NetherStar", 1297296000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
     }
 
@@ -3321,25 +3106,23 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Cyanite")
-                        .source("BigReactors", "Big Reactors")
-                        .byproducts("Lead", "Radium", "RareEarth")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Cyanite")
+                .source("BigReactors", "Big Reactors")
+                .byproducts("Lead", "Radium", "RareEarth")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8408, "CyanVitriol")
                 .displayName("Cyan Vitriol")
@@ -3358,15 +3141,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("SolutionNickelSulfate")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Nickel", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("SolutionNickelSulfate")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Nickel", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8634, "DamascusSteel")
                 .displayName("Damascus Steel")
@@ -3401,31 +3182,29 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Damascus Steel")
-                        .source("Metallurgy", "Metallurgy")
-                        .tools(3, 8.0F, 1280L, 2)
-                        .composition(
-                                50L,
-                                new MaterialFacts.Part("Steel", 32432400000L),
-                                new MaterialFacts.Part("Vanadium", 648648000L),
-                                new MaterialFacts.Part("Tungsten", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Damascus Steel")
+                .source("Metallurgy", "Metallurgy")
+                .tools(3, 8.0F, 1280L, 2)
+                .composition(
+                        50L,
+                        new MaterialDefinition.Part("Steel", 32432400000L),
+                        new MaterialDefinition.Part("Vanadium", 648648000L),
+                        new MaterialDefinition.Part("Tungsten", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8201, "DarkAshes")
                 .displayName("Dark Ashes")
@@ -3437,11 +3216,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DarkAsh")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("DarkAsh")
-                        .build())
+                .localName("DarkAsh")
+                .forms("DUSTS", "PLANTS")
+                .aliases("DarkAsh")
                 .build());
         result.add(MaterialDefinition.builder(8300, "Diamond")
                 .displayName("Diamond")
@@ -3466,16 +3243,14 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Diamond")
-                        .source("minecraft", "Minecraft")
-                        .correctedToolStats()
-                        .tools(3, 8.0F, 1280L, 3)
-                        .smelting("Carbon", 1297296000L)
-                        .composition(1L, new MaterialFacts.Part("Carbon", 2594592000L))
-                        .byproducts("Graphite", "PinkDiamond")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Diamond")
+                .source("minecraft", "Minecraft")
+                .correctedToolStats()
+                .tools(3, 8.0F, 1280L, 3)
+                .smelting("Carbon", 1297296000L)
+                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .byproducts("Graphite", "PinkDiamond")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8423, "DiamondIndustrial")
                 .displayName("DiamondIndustrial")
@@ -3500,13 +3275,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("DiamondIndustrial")
-                        .tools(3, 9.0F, 1440L, 3)
-                        .smelting("Carbon", 1297296000L)
-                        .composition(1L, new MaterialFacts.Part("Carbon", 2594592000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("DiamondIndustrial")
+                .tools(3, 9.0F, 1440L, 3)
+                .smelting("Carbon", 1297296000L)
+                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9863, "Diesel")
                 .displayName("Diesel")
@@ -3518,10 +3291,8 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Diesel")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Diesel")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8325, "Dioptase")
                 .displayName("Dioptase")
@@ -3546,18 +3317,16 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Dioptase")
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("Dioptase", 0L)
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("SiliconDioxide", 1945944000L),
-                                new MaterialFacts.Part("Copper", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L),
-                                new MaterialFacts.Part("Water", 1945944000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Dioptase")
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("Dioptase", 0L)
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("SiliconDioxide", 1945944000L),
+                        new MaterialDefinition.Part("Copper", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L),
+                        new MaterialDefinition.Part("Water", 1945944000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9844, "DisulfuricAcid")
                 .displayName("Disulfuric Acid")
@@ -3576,16 +3345,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Disulfuric Acid")
-                        .composition(
-                                11L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 4540536000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .aliases("H2S2O7")
-                        .build())
+                .localName("Disulfuric Acid")
+                .composition(
+                        11L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 4540536000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
+                .aliases("H2S2O7")
                 .build());
         result.add(MaterialDefinition.builder(8432, "DragonEye")
                 .displayName("Dragon Eye")
@@ -3609,15 +3376,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("RedTigerEye")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("DragonEye", 0L)
-                        .byproducts("Hematite", "TigerEye", "CatsEye", "HawksEye", "BlackEye", "TigerIron")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("TigerEyeRed")
-                        .build())
+                .localName("RedTigerEye")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("DragonEye", 0L)
+                .byproducts("Hematite", "TigerEye", "CatsEye", "HawksEye", "BlackEye", "TigerIron")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("TigerEyeRed")
                 .build());
         result.add(MaterialDefinition.builder(8756, "Duralumin")
                 .displayName("Duralumin")
@@ -3651,29 +3416,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Duralumin")
-                        .source("GalaxySpace", "Galaxy Space")
-                        .tools(3, 10.0F, 512L, 2)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Aluminium", 648648000L),
-                                new MaterialFacts.Part("Copper", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Duralumin")
+                .source("GalaxySpace", "Galaxy Space")
+                .tools(3, 10.0F, 512L, 2)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Aluminium", 648648000L),
+                        new MaterialDefinition.Part("Copper", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8751, "Duranium")
                 .displayName("Duranium")
@@ -3710,31 +3473,29 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Duranium")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 8.0F, 1280L, 4)
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("DuraniumElemental", 4540536000L),
-                                new MaterialFacts.Part("Magnesium", 648648000L))
-                        .byproducts("TritaniumDioxide", "Trinium")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("DuraniumAlloy")
-                        .build())
+                .localName("Duranium")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 8.0F, 1280L, 4)
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("DuraniumElemental", 4540536000L),
+                        new MaterialDefinition.Part("Magnesium", 648648000L))
+                .byproducts("TritaniumDioxide", "Trinium")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("DuraniumAlloy")
                 .build());
     }
 
@@ -3749,12 +3510,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeBlack")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Black")
-                        .build())
+                .localName("DyeBlack")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Black")
                 .build());
         result.add(MaterialDefinition.builder(8254, "DyeBlue")
                 .displayName("DyeBlue")
@@ -3766,12 +3525,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeBlue")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Blue")
-                        .build())
+                .localName("DyeBlue")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Blue")
                 .build());
         result.add(MaterialDefinition.builder(8253, "DyeBrown")
                 .displayName("DyeBrown")
@@ -3783,12 +3540,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeBrown")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Brown")
-                        .build())
+                .localName("DyeBrown")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Brown")
                 .build());
         result.add(MaterialDefinition.builder(8256, "DyeCyan")
                 .displayName("DyeCyan")
@@ -3800,12 +3555,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeCyan")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Cyan")
-                        .build())
+                .localName("DyeCyan")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Cyan")
                 .build());
         result.add(MaterialDefinition.builder(8258, "DyeGray")
                 .displayName("DyeGray")
@@ -3817,12 +3570,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeGray")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Gray")
-                        .build())
+                .localName("DyeGray")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Gray")
                 .build());
         result.add(MaterialDefinition.builder(8252, "DyeGreen")
                 .displayName("DyeGreen")
@@ -3834,12 +3585,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeGreen")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Green")
-                        .build())
+                .localName("DyeGreen")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Green")
                 .build());
         result.add(MaterialDefinition.builder(8262, "DyeLightBlue")
                 .displayName("Light Blue")
@@ -3851,12 +3600,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeLightBlue")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("LightBlue")
-                        .build())
+                .localName("DyeLightBlue")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("LightBlue")
                 .build());
         result.add(MaterialDefinition.builder(8257, "DyeLightGray")
                 .displayName("Light Gray")
@@ -3868,12 +3615,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeLightGray")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("LightGray")
-                        .build())
+                .localName("DyeLightGray")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("LightGray")
                 .build());
         result.add(MaterialDefinition.builder(8260, "DyeLime")
                 .displayName("DyeLime")
@@ -3885,12 +3630,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeLime")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Lime")
-                        .build())
+                .localName("DyeLime")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "FOILS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Lime")
                 .build());
         result.add(MaterialDefinition.builder(8263, "DyeMagenta")
                 .displayName("DyeMagenta")
@@ -3902,12 +3645,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeMagenta")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Magenta")
-                        .build())
+                .localName("DyeMagenta")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Magenta")
                 .build());
         result.add(MaterialDefinition.builder(8264, "DyeOrange")
                 .displayName("DyeOrange")
@@ -3919,12 +3660,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeOrange")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Orange")
-                        .build())
+                .localName("DyeOrange")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Orange")
                 .build());
         result.add(MaterialDefinition.builder(8259, "DyePink")
                 .displayName("DyePink")
@@ -3936,12 +3675,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyePink")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Pink")
-                        .build())
+                .localName("DyePink")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Pink")
                 .build());
         result.add(MaterialDefinition.builder(8255, "DyePurple")
                 .displayName("DyePurple")
@@ -3953,12 +3690,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyePurple")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Purple")
-                        .build())
+                .localName("DyePurple")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Purple")
                 .build());
         result.add(MaterialDefinition.builder(8251, "DyeRed")
                 .displayName("DyeRed")
@@ -3970,12 +3705,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeRed")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Red")
-                        .build())
+                .localName("DyeRed")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Red")
                 .build());
         result.add(MaterialDefinition.builder(8265, "DyeWhite")
                 .displayName("DyeWhite")
@@ -3987,12 +3720,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeWhite")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("White")
-                        .build())
+                .localName("DyeWhite")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("White")
                 .build());
     }
 
@@ -4007,12 +3738,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("DyeYellow")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Yellow")
-                        .build())
+                .localName("DyeYellow")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Yellow")
                 .build());
         result.add(MaterialDefinition.builder(8249, "Dynamite")
                 .displayName("Dynamite")
@@ -4031,14 +3760,12 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Dynamite")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Glyceryl", 648648000L),
-                                new MaterialFacts.Part("Wood", 648648000L))
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Dynamite")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Glyceryl", 648648000L),
+                        new MaterialDefinition.Part("Wood", 648648000L))
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8747, "Efrine")
                 .displayName("Efrine")
@@ -4071,27 +3798,25 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Efrine")
-                        .source("netherlicious", "Netherlicious")
-                        .tools(3, 9.0F, 500L, 3)
-                        .byproducts("Soulsand", "Beryllium", "Pentlandite", "Zircon", "GreenFluorite")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Efrine")
+                .source("netherlicious", "Netherlicious")
+                .tools(3, 9.0F, 500L, 3)
+                .byproducts("Soulsand", "Beryllium", "Pentlandite", "Zircon", "GreenFluorite")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8730, "ElectricalSteel")
                 .displayName("Electrical Steel")
@@ -4126,29 +3851,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Electrical Steel")
-                        .source("EnderIO", "Ender IO")
-                        .correctedToolStats()
-                        .tools(3, 6.0F, 512L, 2)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Steel", 648648000L),
-                                new MaterialFacts.Part("Silicon", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Electrical Steel")
+                .source("EnderIO", "Ender IO")
+                .correctedToolStats()
+                .tools(3, 6.0F, 512L, 2)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Steel", 648648000L),
+                        new MaterialDefinition.Part("Silicon", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8658, "ElectrotineAlloy")
                 .displayName("Electrotine Alloy")
@@ -4183,29 +3906,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Electrotine Alloy")
-                        .source("ProjRed|Core", "Project Red")
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("WroughtIron", 648648000L),
-                                new MaterialFacts.Part("Nikolite", 5189184000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS",
-                                "WIRES")
-                        .build())
+                .localName("Electrotine Alloy")
+                .source("ProjRed|Core", "Project Red")
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("WroughtIron", 648648000L),
+                        new MaterialDefinition.Part("Nikolite", 5189184000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS",
+                        "WIRES")
                 .build());
         result.add(MaterialDefinition.builder(8600, "Electrum")
                 .displayName("Electrum")
@@ -4241,33 +3962,31 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Electrum")
-                        .source("ThermalExpansion", "Thermal Expansion")
-                        .tools(3, 12.0F, 64L, 2)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Silver", 648648000L),
-                                new MaterialFacts.Part("Gold", 648648000L))
-                        .byproducts("Gold", "Silver")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .build())
+                .localName("Electrum")
+                .source("ThermalExpansion", "Thermal Expansion")
+                .tools(3, 12.0F, 64L, 2)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Silver", 648648000L),
+                        new MaterialDefinition.Part("Gold", 648648000L))
+                .byproducts("Gold", "Silver")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8722, "ElvenElementium")
                 .displayName("Elven Elementium")
@@ -4301,26 +4020,24 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Elementium")
-                        .source("Botania", "Botania")
-                        .tools(3, 14.0F, 512L, 3)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Elementium")
+                .source("Botania", "Botania")
+                .tools(3, 14.0F, 512L, 3)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8399, "ElvenQuartz")
                 .displayName("Elven Quartz")
@@ -4338,15 +4055,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Elven Quartz")
-                        .source("Botania", "Botania")
-                        .tools(1, 2.5F, 64L, 3)
-                        .smelting("SiliconDioxide", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .multipliers(2, 1)
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Elven Quartz")
+                .source("Botania", "Botania")
+                .tools(1, 2.5F, 64L, 3)
+                .smelting("SiliconDioxide", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .multipliers(2, 1)
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8301, "Emerald")
                 .displayName("Emerald")
@@ -4372,29 +4087,20 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Emerald")
-                        .source("minecraft", "Minecraft")
-                        .correctedToolStats()
-                        .tools(3, 9.0F, 128L, 2)
-                        .smelting("Beryllium", 18018000L)
-                        .composition(
-                                29L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Beryllium", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 11675664000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts(
-                                "Alumina",
-                                "Beryllium",
-                                "Aquamarine",
-                                "Morganite",
-                                "Goshenite",
-                                "Bixbite",
-                                "Heliodor",
-                                "Maxixe")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Emerald")
+                .source("minecraft", "Minecraft")
+                .correctedToolStats()
+                .tools(3, 9.0F, 128L, 2)
+                .smelting("Beryllium", 18018000L)
+                .composition(
+                        29L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts(
+                        "Alumina", "Beryllium", "Aquamarine", "Morganite", "Goshenite", "Bixbite", "Heliodor", "Maxixe")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8319, "EnderEye")
                 .displayName("EnderEye")
@@ -4417,16 +4123,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_PLATE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("EnderEye")
-                        .source("minecraft", "Minecraft")
-                        .tools(3, 1.0F, 16L, 1)
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("EnderPearl", 5837832000L),
-                                new MaterialFacts.Part("Blaze", 648648000L))
-                        .forms("DUSTS", "GEMS", "LENSES", "PLANTS", "PLATES", "PROJECTILES")
-                        .build())
+                .localName("EnderEye")
+                .source("minecraft", "Minecraft")
+                .tools(3, 1.0F, 16L, 1)
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("EnderPearl", 5837832000L),
+                        new MaterialDefinition.Part("Blaze", 648648000L))
+                .forms("DUSTS", "GEMS", "LENSES", "PLANTS", "PLATES", "PROJECTILES")
                 .build());
         result.add(MaterialDefinition.builder(8710, "Enderium")
                 .displayName("Enderium")
@@ -4460,30 +4164,28 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Enderium")
-                        .source("ThermalExpansion", "Thermal Expansion")
-                        .tools(3, 8.0F, 256L, 3)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("EnderiumBase", 648648000L),
-                                new MaterialFacts.Part("EnderPearl", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Enderium")
+                .source("ThermalExpansion", "Thermal Expansion")
+                .tools(3, 8.0F, 256L, 3)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("EnderiumBase", 648648000L),
+                        new MaterialDefinition.Part("EnderPearl", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8729, "EnderiumBase")
                 .displayName("Enderium Base")
@@ -4518,30 +4220,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Enderium Base")
-                        .source("EnderIO", "Ender IO")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Tin", 1297296000L),
-                                new MaterialFacts.Part("Silver", 648648000L),
-                                new MaterialFacts.Part("Platinum", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Enderium Base")
+                .source("EnderIO", "Ender IO")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Tin", 1297296000L),
+                        new MaterialDefinition.Part("Silver", 648648000L),
+                        new MaterialDefinition.Part("Platinum", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8318, "EnderPearl")
                 .displayName("EnderPearl")
@@ -4565,18 +4265,16 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Ender")
-                        .source("minecraft", "Minecraft")
-                        .tools(3, 1.0F, 16L, 1)
-                        .composition(
-                                10L,
-                                new MaterialFacts.Part("Beryllium", 648648000L),
-                                new MaterialFacts.Part("Potassium", 2594592000L),
-                                new MaterialFacts.Part("Nitrogen", 3243240000L),
-                                new MaterialFacts.Part("Magic", 3891888000L))
-                        .forms("DUSTS", "GEMS", "LENSES", "PLANTS", "PLATES", "PROJECTILES")
-                        .build())
+                .localName("Ender")
+                .source("minecraft", "Minecraft")
+                .tools(3, 1.0F, 16L, 1)
+                .composition(
+                        10L,
+                        new MaterialDefinition.Part("Beryllium", 648648000L),
+                        new MaterialDefinition.Part("Potassium", 2594592000L),
+                        new MaterialDefinition.Part("Nitrogen", 3243240000L),
+                        new MaterialDefinition.Part("Magic", 3891888000L))
+                .forms("DUSTS", "GEMS", "LENSES", "PLANTS", "PLATES", "PROJECTILES")
                 .build());
         result.add(MaterialDefinition.builder(8299, "EnergiumCyan")
                 .displayName("EnergiumCyan")
@@ -4600,14 +4298,12 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("EnergiumCyan")
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Sapphire", 2594592000L),
-                                new MaterialFacts.Part("Nikolite", 3243240000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("EnergiumCyan")
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Sapphire", 2594592000L),
+                        new MaterialDefinition.Part("Nikolite", 3243240000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8298, "EnergiumRed")
                 .displayName("EnergiumRed")
@@ -4631,15 +4327,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("EnergiumRed")
-                        .source("IC2", "IndustrialCraft 2")
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Sapphire", 2594592000L),
-                                new MaterialFacts.Part("Redstone", 3243240000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("EnergiumRed")
+                .source("IC2", "IndustrialCraft 2")
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Sapphire", 2594592000L),
+                        new MaterialDefinition.Part("Redstone", 3243240000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -4654,11 +4348,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Ethanol")
-                        .source("Forestry", "Forestry")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Ethanol")
+                .source("Forestry", "Forestry")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9868, "Ethylene")
                 .displayName("Ethylene")
@@ -4670,10 +4362,8 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Ethylene")
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
-                        .build())
+                .localName("Ethylene")
+                .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8421, "Eudialyte")
                 .displayName("Eudialyte")
@@ -4697,21 +4387,19 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.ORE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Eudialyte")
-                        .composition(
-                                130L,
-                                new MaterialFacts.Part("Zircon", 11675664000L),
-                                new MaterialFacts.Part("Pyrolusite", 1945944000L),
-                                new MaterialFacts.Part("Sodium", 9729720000L),
-                                new MaterialFacts.Part("Calcium", 3891888000L),
-                                new MaterialFacts.Part("Chlorine", 648648000L),
-                                new MaterialFacts.Part("SiliconDioxide", 48648600000L),
-                                new MaterialFacts.Part("Oxygen", 7783776000L))
-                        .byproducts("Zircon", "RareEarth", "Hafnium", "Lead")
-                        .multipliers(5, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Eudialyte")
+                .composition(
+                        130L,
+                        new MaterialDefinition.Part("Zircon", 11675664000L),
+                        new MaterialDefinition.Part("Pyrolusite", 1945944000L),
+                        new MaterialDefinition.Part("Sodium", 9729720000L),
+                        new MaterialDefinition.Part("Calcium", 3891888000L),
+                        new MaterialDefinition.Part("Chlorine", 648648000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 48648600000L),
+                        new MaterialDefinition.Part("Oxygen", 7783776000L))
+                .byproducts("Zircon", "RareEarth", "Hafnium", "Lead")
+                .multipliers(5, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8017, "FerricChloride")
                 .displayName("Ferric Chloride")
@@ -4729,15 +4417,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ferric Chloride")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 1945944000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("FeCl3")
-                        .build())
+                .localName("Ferric Chloride")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 1945944000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("FeCl3")
                 .build());
         result.add(MaterialDefinition.builder(8035, "FerricOxyhydroxide")
                 .displayName("Ferric Oxyhydroxide")
@@ -4757,17 +4443,15 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ferric Oxyhydroxide")
-                        .smelting("Hematite", 231660000L)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L),
-                                new MaterialFacts.Part("Hydrogen", 1945944000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("FeO3H3")
-                        .build())
+                .localName("Ferric Oxyhydroxide")
+                .smelting("Hematite", 231660000L)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L),
+                        new MaterialDefinition.Part("Hydrogen", 1945944000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("FeO3H3")
                 .build());
         result.add(MaterialDefinition.builder(8030, "FerrousChloride")
                 .displayName("Ferrous Chloride")
@@ -4786,15 +4470,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ferrous Chloride")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 1297296000L))
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
-                        .aliases("FeCl2")
-                        .build())
+                .localName("Ferrous Chloride")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 1297296000L))
+                .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
+                .aliases("FeCl2")
                 .build());
         result.add(MaterialDefinition.builder(8675, "FierySteel")
                 .displayName("Fiery Steel")
@@ -4828,30 +4510,28 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Fiery")
-                        .source("TwilightForest", "Twilight Forest")
-                        .tools(3, 9.0F, 1024L, 4)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Steel", 648648000L),
-                                new MaterialFacts.Part("Magic", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Fiery")
+                .source("TwilightForest", "Twilight Forest")
+                .tools(3, 9.0F, 1024L, 4)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Steel", 648648000L),
+                        new MaterialDefinition.Part("Magic", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8698, "Fireleaf")
                 .displayName("Fireleaf")
@@ -4886,30 +4566,28 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Fireleaf")
-                        .source("TwilightForest", "Twilight Forest")
-                        .tools(2, 12.0F, 288L, 4)
-                        .smelting("FierySteel", 162162000L)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Steel", 648648000L),
-                                new MaterialFacts.Part("Magic", 1297296000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Fireleaf")
+                .source("TwilightForest", "Twilight Forest")
+                .tools(2, 12.0F, 288L, 4)
+                .smelting("FierySteel", 162162000L)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Steel", 648648000L),
+                        new MaterialDefinition.Part("Magic", 1297296000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8342, "Firestone")
                 .displayName("Firestone")
@@ -4925,13 +4603,11 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Firestone")
-                        .source("Railcraft", "Railcraft")
-                        .tools(3, 6.0F, 1280L, 3)
-                        .byproducts("NetherQuartz", "RedPhosphorus", "RedFluorite")
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Firestone")
+                .source("Railcraft", "Railcraft")
+                .tools(3, 6.0F, 1280L, 3)
+                .byproducts("NetherQuartz", "RedPhosphorus", "RedFluorite")
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9711, "FishCooked")
                 .displayName("FishCooked")
@@ -4943,11 +4619,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("FishCooked")
-                        .source("Mariculture", "Mariculture")
-                        .forms("DUSTS", "INGOTS", "PLANTS")
-                        .build())
+                .localName("FishCooked")
+                .source("Mariculture", "Mariculture")
+                .forms("DUSTS", "INGOTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9871, "FishOil")
                 .displayName("Fish Oil")
@@ -4959,11 +4633,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Fish Oil")
-                        .source("Mariculture", "Mariculture")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Fish Oil")
+                .source("Mariculture", "Mariculture")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9712, "FishRaw")
                 .displayName("FishRaw")
@@ -4980,13 +4652,11 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("FishRaw")
-                        .source("Mariculture", "Mariculture")
-                        .smelting("FishCooked", 648648000L)
-                        .forms("DUSTS", "INGOTS", "PLANTS")
-                        .processing("Forging", "FishCooked", 648648000L)
-                        .build())
+                .localName("FishRaw")
+                .source("Mariculture", "Mariculture")
+                .smelting("FishCooked", 648648000L)
+                .forms("DUSTS", "INGOTS", "PLANTS")
+                .processing("Forging", "FishCooked", 648648000L)
                 .build());
         result.add(MaterialDefinition.builder(9713, "FishRotten")
                 .displayName("FishRotten")
@@ -4998,11 +4668,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("FishRotten")
-                        .source("Mariculture", "Mariculture")
-                        .forms("DUSTS", "INGOTS", "PLANTS")
-                        .build())
+                .localName("FishRotten")
+                .source("Mariculture", "Mariculture")
+                .forms("DUSTS", "INGOTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8697, "FlamascusSteel")
                 .displayName("Flamascus Steel")
@@ -5036,30 +4704,28 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Flamascus Steel")
-                        .source("TwilightForest", "Twilight Forest")
-                        .tools(3, 12.0F, 1280L, 4)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("DamascusSteel", 648648000L),
-                                new MaterialFacts.Part("Magic", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Flamascus Steel")
+                .source("TwilightForest", "Twilight Forest")
+                .tools(3, 12.0F, 1280L, 4)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("DamascusSteel", 648648000L),
+                        new MaterialDefinition.Part("Magic", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8002, "Flint")
                 .displayName("Flint")
@@ -5085,15 +4751,13 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Flint")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 2.5F, 48L, 1)
-                        .smelting("SiliconDioxide", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .byproducts("Obsidian")
-                        .forms("ARMORS", "DUSTS", "GEMS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Flint")
+                .source("minecraft", "Minecraft")
+                .tools(1, 2.5F, 48L, 1)
+                .smelting("SiliconDioxide", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .byproducts("Obsidian")
+                .forms("ARMORS", "DUSTS", "GEMS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -5120,17 +4784,15 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Fluix")
-                        .source("appliedenergistics2", "Applied Energistics")
-                        .smelting("SiliconDioxide", 648648000L)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("SiliconDioxide", 1297296000L),
-                                new MaterialFacts.Part("Redstone", 648648000L))
-                        .multipliers(2, 1)
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Fluix")
+                .source("appliedenergistics2", "Applied Energistics")
+                .smelting("SiliconDioxide", 648648000L)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("SiliconDioxide", 1297296000L),
+                        new MaterialDefinition.Part("Redstone", 648648000L))
+                .multipliers(2, 1)
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9215, "Fluorite")
                 .displayName("Fluorite")
@@ -5155,23 +4817,21 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Fluorite")
-                        .source("RotaryCraft", "RotaryCraft")
-                        .byproducts("GreenFluorite", "OrangeFluorite")
-                        .forms(
-                                "ARMORS",
-                                "DUSTS",
-                                "GEMS",
-                                "INGOTS",
-                                "MOLTEN",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("CaF2")
-                        .build())
+                .localName("Fluorite")
+                .source("RotaryCraft", "RotaryCraft")
+                .byproducts("GreenFluorite", "OrangeFluorite")
+                .forms(
+                        "ARMORS",
+                        "DUSTS",
+                        "GEMS",
+                        "INGOTS",
+                        "MOLTEN",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("CaF2")
                 .build());
         result.add(MaterialDefinition.builder(9803, "FreshWater")
                 .displayName("Fresh Water")
@@ -5184,14 +4844,12 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Fresh Water")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Fresh Water")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9880, "FryingOilHot")
                 .displayName("FryingOilHot")
@@ -5203,10 +4861,8 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("FryingOilHot")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("FryingOilHot")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8735, "GaiaSpirit")
                 .displayName("Gaia Spirit")
@@ -5239,25 +4895,23 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Gaia Spirit")
-                        .source("Botania", "Botania")
-                        .tools(3, 20.0F, 2048L, 4)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Gaia Spirit")
+                .source("Botania", "Botania")
+                .tools(3, 20.0F, 2048L, 4)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8001, "Glass")
                 .displayName("Glass")
@@ -5281,13 +4935,11 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Glass")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 1.0F, 1L, 0)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Glass")
+                .source("minecraft", "Minecraft")
+                .tools(1, 1.0F, 1L, 0)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8341, "Glowstone")
                 .displayName("Glowstone")
@@ -5312,29 +4964,27 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Glowstone")
-                        .source("minecraft", "Minecraft")
-                        .composition(
-                                10L,
-                                new MaterialFacts.Part("Phosphorite", 3243240000L),
-                                new MaterialFacts.Part("Gold", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 648648000L),
-                                new MaterialFacts.Part("Helium", 648648000L))
-                        .byproducts("Redstone", "Gold", "YellowFluorite")
-                        .multipliers(4, 1)
-                        .forms(
-                                "ARMORS",
-                                "DUSTS",
-                                "GEMS",
-                                "LENSES",
-                                "MOLTEN",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Glowstone")
+                .source("minecraft", "Minecraft")
+                .composition(
+                        10L,
+                        new MaterialDefinition.Part("Phosphorite", 3243240000L),
+                        new MaterialDefinition.Part("Gold", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 648648000L),
+                        new MaterialDefinition.Part("Helium", 648648000L))
+                .byproducts("Redstone", "Gold", "YellowFluorite")
+                .multipliers(4, 1)
+                .forms(
+                        "ARMORS",
+                        "DUSTS",
+                        "GEMS",
+                        "LENSES",
+                        "MOLTEN",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9881, "Glue")
                 .displayName("Glue")
@@ -5346,11 +4996,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Glue")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Glue")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9828, "Glycerol")
                 .displayName("Glycerol")
@@ -5368,15 +5016,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Glycerol")
-                        .composition(
-                                14L,
-                                new MaterialFacts.Part("Carbon", 1945944000L),
-                                new MaterialFacts.Part("Hydrogen", 5189184000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Glycerol")
+                .composition(
+                        14L,
+                        new MaterialDefinition.Part("Carbon", 1945944000L),
+                        new MaterialDefinition.Part("Hydrogen", 5189184000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9821, "Glyceryl")
                 .displayName("Glyceryl")
@@ -5394,16 +5040,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Glyceryl")
-                        .composition(
-                                20L,
-                                new MaterialFacts.Part("Carbon", 1945944000L),
-                                new MaterialFacts.Part("Hydrogen", 3243240000L),
-                                new MaterialFacts.Part("Nitrogen", 1945944000L),
-                                new MaterialFacts.Part("Oxygen", 5837832000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Glyceryl")
+                .composition(
+                        20L,
+                        new MaterialDefinition.Part("Carbon", 1945944000L),
+                        new MaterialDefinition.Part("Hydrogen", 3243240000L),
+                        new MaterialDefinition.Part("Nitrogen", 1945944000L),
+                        new MaterialDefinition.Part("Oxygen", 5837832000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8385, "Goshenite")
                 .displayName("Goshenite")
@@ -5429,28 +5073,19 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Goshenite")
-                        .correctedToolStats()
-                        .tools(3, 9.0F, 128L, 2)
-                        .smelting("Beryllium", 18018000L)
-                        .composition(
-                                29L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Beryllium", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 11675664000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts(
-                                "Alumina",
-                                "Beryllium",
-                                "Emerald",
-                                "Aquamarine",
-                                "Morganite",
-                                "Bixbite",
-                                "Heliodor",
-                                "Maxixe")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Goshenite")
+                .correctedToolStats()
+                .tools(3, 9.0F, 128L, 2)
+                .smelting("Beryllium", 18018000L)
+                .composition(
+                        29L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts(
+                        "Alumina", "Beryllium", "Emerald", "Aquamarine", "Morganite", "Bixbite", "Heliodor", "Maxixe")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8518, "Granite")
                 .displayName("Granite")
@@ -5474,16 +5109,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Granite")
-                        .tools(1, 3.0F, 64L, 1)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Biotite", 648648000L),
-                                new MaterialFacts.Part("PotassiumFeldspar", 648648000L),
-                                new MaterialFacts.Part("Flint", 648648000L))
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Granite")
+                .tools(1, 3.0F, 64L, 1)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Biotite", 648648000L),
+                        new MaterialDefinition.Part("PotassiumFeldspar", 648648000L),
+                        new MaterialDefinition.Part("Flint", 648648000L))
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8508, "GraniteBlack")
                 .displayName("GraniteBlack")
@@ -5507,16 +5140,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("GraniteBlack")
-                        .tools(1, 3.0F, 64L, 3)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Biotite", 648648000L),
-                                new MaterialFacts.Part("PotassiumFeldspar", 648648000L),
-                                new MaterialFacts.Part("Flint", 648648000L))
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("GraniteBlack")
+                .tools(1, 3.0F, 64L, 3)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Biotite", 648648000L),
+                        new MaterialDefinition.Part("PotassiumFeldspar", 648648000L),
+                        new MaterialDefinition.Part("Flint", 648648000L))
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8507, "GraniteRed")
                 .displayName("GraniteRed")
@@ -5540,16 +5171,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("GraniteRed")
-                        .tools(1, 3.0F, 64L, 3)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Biotite", 648648000L),
-                                new MaterialFacts.Part("PotassiumFeldspar", 648648000L),
-                                new MaterialFacts.Part("Flint", 648648000L))
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("GraniteRed")
+                .tools(1, 3.0F, 64L, 3)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Biotite", 648648000L),
+                        new MaterialDefinition.Part("PotassiumFeldspar", 648648000L),
+                        new MaterialDefinition.Part("Flint", 648648000L))
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9175, "Graphene")
                 .displayName("Graphene")
@@ -5584,13 +5213,11 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Graphene")
-                        .smelting("Carbon", 324324000L)
-                        .pulverizing("Carbon", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("Carbon", 648648000L))
-                        .forms("ARMORS", "FOILS", "PARTS", "PLATES", "PROJECTILES", "STICKS", "WIRES")
-                        .build())
+                .localName("Graphene")
+                .smelting("Carbon", 324324000L)
+                .pulverizing("Carbon", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("Carbon", 648648000L))
+                .forms("ARMORS", "FOILS", "PARTS", "PLATES", "PROJECTILES", "STICKS", "WIRES")
                 .build());
     }
 
@@ -5612,15 +5239,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Gray Vitriol")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Manganese", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Gray Vitriol")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Manganese", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8448, "GreenAventurine")
                 .displayName("Green Aventurine")
@@ -5644,20 +5269,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Aventurine")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("GreenAventurine", 0L)
-                        .byproducts(
-                                "BrownAventurine",
-                                "YellowAventurine",
-                                "BlackAventurine",
-                                "BlueAventurine",
-                                "RedAventurine")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("AventurineGreen")
-                        .build())
+                .localName("Aventurine")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("GreenAventurine", 0L)
+                .byproducts("BrownAventurine", "YellowAventurine", "BlackAventurine", "BlueAventurine", "RedAventurine")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("AventurineGreen")
                 .build());
         result.add(MaterialDefinition.builder(8465, "GreenDiamond")
                 .displayName("Green Diamond")
@@ -5682,17 +5300,15 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Green Diamond")
-                        .source("ExtraPlanets", "Extra Planets")
-                        .correctedToolStats()
-                        .tools(3, 8.0F, 1280L, 3)
-                        .smelting("Carbon", 1297296000L)
-                        .composition(1L, new MaterialFacts.Part("Carbon", 2594592000L))
-                        .byproducts("Graphite", "Diamond")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("DiamondGreen")
-                        .build())
+                .localName("Green Diamond")
+                .source("ExtraPlanets", "Extra Planets")
+                .correctedToolStats()
+                .tools(3, 8.0F, 1280L, 3)
+                .smelting("Carbon", 1297296000L)
+                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .byproducts("Graphite", "Diamond")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("DiamondGreen")
                 .build());
         result.add(MaterialDefinition.builder(8439, "GreenFluorite")
                 .displayName("Green Fluorite")
@@ -5717,13 +5333,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Green Fluorite")
-                        .smelting("Fluorite", 648648000L)
-                        .byproducts("YellowFluorite", "BlueFluorite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("FluoriteGreen")
-                        .build())
+                .localName("Green Fluorite")
+                .smelting("Fluorite", 648648000L)
+                .byproducts("YellowFluorite", "BlueFluorite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("FluoriteGreen")
                 .build());
         result.add(MaterialDefinition.builder(8428, "GreenJasper")
                 .displayName("Green Jasper")
@@ -5747,15 +5361,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Green Jasper")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("GreenJasper", 0L)
-                        .byproducts("RedJasper", "OceanJasper", "RainforestJasper", "BlueJasper", "YellowJasper")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("JasperGreen")
-                        .build())
+                .localName("Green Jasper")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("GreenJasper", 0L)
+                .byproducts("RedJasper", "OceanJasper", "RainforestJasper", "BlueJasper", "YellowJasper")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("JasperGreen")
                 .build());
         result.add(MaterialDefinition.builder(8305, "GreenSapphire")
                 .displayName("Green Sapphire")
@@ -5782,19 +5394,17 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Green Sapphire")
-                        .source("Redpower", "Redpower")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 512L, 3)
-                        .smelting("Alumina", 486486000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Magnesium", 648648000L))
-                        .byproducts("Alumina", "Ruby", "YellowSapphire", "BlueSapphire")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Green Sapphire")
+                .source("Redpower", "Redpower")
+                .correctedToolStats()
+                .tools(3, 7.0F, 512L, 3)
+                .smelting("Alumina", 486486000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Magnesium", 648648000L))
+                .byproducts("Alumina", "Ruby", "YellowSapphire", "BlueSapphire")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8405, "GreenVitriol")
                 .displayName("Green Vitriol")
@@ -5813,15 +5423,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Green Vitriol")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Green Vitriol")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9119, "Grossular")
                 .displayName("Grossular")
@@ -5846,20 +5454,18 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("GarnetOrange")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 128L, 2)
-                        .smelting("Grossular", 0L)
-                        .composition(
-                                20L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Calcium", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 5837832000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Almandine", "Pyrope", "Spessartine", "Andradite", "Uvarovite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("GarnetOrange")
+                .correctedToolStats()
+                .tools(3, 7.0F, 128L, 2)
+                .smelting("Grossular", 0L)
+                .composition(
+                        20L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Calcium", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 5837832000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Almandine", "Pyrope", "Spessartine", "Andradite", "Uvarovite")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8220, "Gunpowder")
                 .displayName("Gunpowder")
@@ -5878,16 +5484,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Gunpowder")
-                        .source("minecraft", "Minecraft")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Carbon", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("SodiumNitrate", 648648000L))
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Gunpowder")
+                .source("minecraft", "Minecraft")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Carbon", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("SodiumNitrate", 648648000L))
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8433, "HawksEye")
                 .displayName("Hawk's Eye")
@@ -5911,15 +5515,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("BlueTigerEye")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("HawksEye", 0L)
-                        .byproducts("Hematite", "TigerEye", "CatsEye", "DragonEye", "BlackEye", "TigerIron")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("TigerEyeBlue")
-                        .build())
+                .localName("BlueTigerEye")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("HawksEye", 0L)
+                .byproducts("Hematite", "TigerEye", "CatsEye", "DragonEye", "BlackEye", "TigerIron")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("TigerEyeBlue")
                 .build());
         result.add(MaterialDefinition.builder(9796, "Hazelnut")
                 .displayName("Hazelnut")
@@ -5931,11 +5533,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Hazelnut")
-                        .source("BinnieCore", "Binnie's Mods")
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Hazelnut")
+                .source("BinnieCore", "Binnie's Mods")
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9812, "HeavyWater")
                 .displayName("Heavy Water")
@@ -5948,15 +5548,13 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Heavy Water")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Deuterium", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .aliases("D2O")
-                        .build())
+                .localName("Heavy Water")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Deuterium", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
+                .aliases("D2O")
                 .build());
         result.add(MaterialDefinition.builder(8384, "Heliodor")
                 .displayName("Heliodor")
@@ -5982,28 +5580,19 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Heliodor")
-                        .correctedToolStats()
-                        .tools(3, 9.0F, 128L, 2)
-                        .smelting("Beryllium", 18018000L)
-                        .composition(
-                                29L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Beryllium", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 11675664000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts(
-                                "Alumina",
-                                "Beryllium",
-                                "Emerald",
-                                "Aquamarine",
-                                "Morganite",
-                                "Goshenite",
-                                "Bixbite",
-                                "Maxixe")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Heliodor")
+                .correctedToolStats()
+                .tools(3, 9.0F, 128L, 2)
+                .smelting("Beryllium", 18018000L)
+                .composition(
+                        29L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts(
+                        "Alumina", "Beryllium", "Emerald", "Aquamarine", "Morganite", "Goshenite", "Bixbite", "Maxixe")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9839, "HeliumNeon")
                 .displayName("Helium-Neon")
@@ -6021,15 +5610,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Helium-Neon")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Helium", 648648000L),
-                                new MaterialFacts.Part("Neon", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("HeNe")
-                        .build())
+                .localName("Helium-Neon")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Helium", 648648000L),
+                        new MaterialDefinition.Part("Neon", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("HeNe")
                 .build());
         result.add(MaterialDefinition.builder(9873, "HempOil")
                 .displayName("Hemp Oil")
@@ -6041,11 +5628,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Hemp Oil")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Hemp Oil")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
     }
 
@@ -6074,16 +5659,14 @@ public final class CompoundMaterials {
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Hexafluorosilicic Acid")
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Silicon", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 3891888000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .aliases("H2SiF6")
-                        .build())
+                .localName("Hexafluorosilicic Acid")
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Silicon", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 3891888000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
+                .aliases("H2SiF6")
                 .build());
         result.add(MaterialDefinition.builder(9805, "HolyWater")
                 .displayName("Holy Water")
@@ -6096,15 +5679,13 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Holy Water")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Holy Water")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9791, "Honey")
                 .displayName("Honey")
@@ -6116,11 +5697,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Honey")
-                        .source("Forestry", "Forestry")
-                        .forms("CONTAINERS", "DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Honey")
+                .source("Forestry", "Forestry")
+                .forms("CONTAINERS", "DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9793, "Honeydew")
                 .displayName("Honeydew")
@@ -6132,11 +5711,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Honeydew")
-                        .source("Forestry", "Forestry")
-                        .forms("CONTAINERS", "DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Honeydew")
+                .source("Forestry", "Forestry")
+                .forms("CONTAINERS", "DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8797, "HSSE")
                 .displayName("HSS-E")
@@ -6171,33 +5748,31 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("HSS-E")
-                        .source("gregtech", "GregTech 5 Unofficial")
-                        .tools(3, 10.0F, 5120L, 4)
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("HSSG", 3891888000L),
-                                new MaterialFacts.Part("Cobalt", 648648000L),
-                                new MaterialFacts.Part("Manganese", 648648000L),
-                                new MaterialFacts.Part("Silicon", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .build())
+                .localName("HSS-E")
+                .source("gregtech", "GregTech 5 Unofficial")
+                .tools(3, 10.0F, 5120L, 4)
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("HSSG", 3891888000L),
+                        new MaterialDefinition.Part("Cobalt", 648648000L),
+                        new MaterialDefinition.Part("Manganese", 648648000L),
+                        new MaterialDefinition.Part("Silicon", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8796, "HSSG")
                 .displayName("HSS-G")
@@ -6232,33 +5807,31 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("HSS-G")
-                        .source("gregtech", "GregTech 5 Unofficial")
-                        .tools(3, 10.0F, 4000L, 3)
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Tungstensteel", 3243240000L),
-                                new MaterialFacts.Part("Chromium", 648648000L),
-                                new MaterialFacts.Part("Molybdenum", 1297296000L),
-                                new MaterialFacts.Part("Vanadium", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .build())
+                .localName("HSS-G")
+                .source("gregtech", "GregTech 5 Unofficial")
+                .tools(3, 10.0F, 4000L, 3)
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Tungstensteel", 3243240000L),
+                        new MaterialDefinition.Part("Chromium", 648648000L),
+                        new MaterialDefinition.Part("Molybdenum", 1297296000L),
+                        new MaterialDefinition.Part("Vanadium", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8798, "HSSS")
                 .displayName("HSS-S")
@@ -6293,32 +5866,30 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("HSS-S")
-                        .source("gregtech", "GregTech 5 Unofficial")
-                        .tools(3, 14.0F, 3000L, 4)
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("HSSG", 3891888000L),
-                                new MaterialFacts.Part("Osmiridium", 1297296000L),
-                                new MaterialFacts.Part("Iridium", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .build())
+                .localName("HSS-S")
+                .source("gregtech", "GregTech 5 Unofficial")
+                .tools(3, 14.0F, 3000L, 4)
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("HSSG", 3891888000L),
+                        new MaterialDefinition.Part("Osmiridium", 1297296000L),
+                        new MaterialDefinition.Part("Iridium", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8335, "HydratedCoal")
                 .displayName("Hydrated Coal")
@@ -6337,14 +5908,12 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Hydrated Coal")
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("Coal", 5189184000L),
-                                new MaterialFacts.Part("Water", 648648000L))
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Hydrated Coal")
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("Coal", 5189184000L),
+                        new MaterialDefinition.Part("Water", 648648000L))
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9826, "HydrochloricAcid")
                 .displayName("Hydrochloric Acid")
@@ -6362,15 +5931,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Hydrochloric Acid")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Hydrogen", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("HCl")
-                        .build())
+                .localName("Hydrochloric Acid")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("HCl")
                 .build());
         result.add(MaterialDefinition.builder(8007, "HydrogenBorate")
                 .displayName("Hydrogen Borate")
@@ -6389,17 +5956,15 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("BoricAcid")
-                        .source("ihl", "IHL")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Hydrogen", 1945944000L),
-                                new MaterialFacts.Part("Boron", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("H3BO3")
-                        .build())
+                .localName("BoricAcid")
+                .source("ihl", "IHL")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Hydrogen", 1945944000L),
+                        new MaterialDefinition.Part("Boron", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("H3BO3")
                 .build());
         result.add(MaterialDefinition.builder(9829, "HydrogenFluoride")
                 .displayName("Hydrogen Fluoride")
@@ -6417,15 +5982,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Hydrogen Fluoride")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Hydrogen", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("HF")
-                        .build())
+                .localName("Hydrogen Fluoride")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("HF")
                 .build());
         result.add(MaterialDefinition.builder(9809, "HydrogenPeroxide")
                 .displayName("Hydrogen Peroxide")
@@ -6442,16 +6005,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Hydrogen Peroxide")
-                        .source("ihl", "IHL")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .aliases("H2O2")
-                        .build())
+                .localName("Hydrogen Peroxide")
+                .source("ihl", "IHL")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
+                .aliases("H2O2")
                 .build());
         result.add(MaterialDefinition.builder(8024, "HydrosulfuricAcid")
                 .displayName("Hydrosulfuric Acid")
@@ -6469,15 +6030,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Hydrosulfuric Acid")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("H2S")
-                        .build())
+                .localName("Hydrosulfuric Acid")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("H2S")
                 .build());
         result.add(MaterialDefinition.builder(9802, "Ice")
                 .displayName("Ice")
@@ -6502,26 +6061,15 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ice")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 2.0F, 4L, 0)
-                        .smelting("Water", 648648000L)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "CONTAINERS",
-                                "DUSTS",
-                                "GEMS",
-                                "LENSES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Ice")
+                .source("minecraft", "Minecraft")
+                .tools(1, 2.0F, 4L, 0)
+                .smelting("Water", 648648000L)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("ARMORS", "CONTAINERS", "DUSTS", "GEMS", "LENSES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -6560,30 +6108,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Invar")
-                        .source("ThermalExpansion", "Thermal Expansion")
-                        .tools(3, 6.0F, 256L, 2)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("WroughtIron", 1297296000L),
-                                new MaterialFacts.Part("Nickel", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Invar")
+                .source("ThermalExpansion", "Thermal Expansion")
+                .tools(3, 6.0F, 256L, 2)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("WroughtIron", 1297296000L),
+                        new MaterialDefinition.Part("Nickel", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8645, "IronMagnetic")
                 .displayName("IronMagnetic")
@@ -6617,32 +6163,30 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("IronMagnetic")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .correctedToolStats()
-                        .tools(3, 6.0F, 256L, 2)
-                        .smelting("Iron", 648648000L)
-                        .pulverizing("Iron", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("Iron", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .processing("Bending", "Iron", 648648000L)
-                        .processing("Compressing", "Iron", 648648000L)
-                        .processing("Smashing", "Iron", 648648000L)
-                        .processing("Working", "Iron", 648648000L)
-                        .processing("Forging", "Iron", 648648000L)
-                        .build())
+                .localName("IronMagnetic")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .correctedToolStats()
+                .tools(3, 6.0F, 256L, 2)
+                .smelting("Iron", 648648000L)
+                .pulverizing("Iron", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("Iron", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .processing("Bending", "Iron", 648648000L)
+                .processing("Compressing", "Iron", 648648000L)
+                .processing("Smashing", "Iron", 648648000L)
+                .processing("Working", "Iron", 648648000L)
+                .processing("Forging", "Iron", 648648000L)
                 .build());
         result.add(MaterialDefinition.builder(8672, "Ironwood")
                 .displayName("Ironwood")
@@ -6676,27 +6220,25 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("IronWood")
-                        .source("TwilightForest", "Twilight Forest")
-                        .tools(2, 6.5F, 512L, 2)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("IronWood")
-                        .build())
+                .localName("IronWood")
+                .source("TwilightForest", "Twilight Forest")
+                .tools(2, 6.5F, 512L, 2)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("IronWood")
                 .build());
         result.add(MaterialDefinition.builder(8321, "Jade")
                 .displayName("Jade")
@@ -6717,13 +6259,11 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_PLATE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Jade")
-                        .source("erebus", "Erebus")
-                        .tools(3, 8.0F, 512L, 2)
-                        .byproducts("Mica", "Biotite", "Talc", "Asbestos")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Jade")
+                .source("erebus", "Erebus")
+                .tools(3, 8.0F, 512L, 2)
+                .byproducts("Mica", "Biotite", "Talc", "Asbestos")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8664, "Kanthal")
                 .displayName("Kanthal")
@@ -6758,31 +6298,29 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Kanthal")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 6.0F, 64L, 2)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("WroughtIron", 648648000L),
-                                new MaterialFacts.Part("Aluminium", 648648000L),
-                                new MaterialFacts.Part("Chromium", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Kanthal")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 6.0F, 64L, 2)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("WroughtIron", 648648000L),
+                        new MaterialDefinition.Part("Aluminium", 648648000L),
+                        new MaterialDefinition.Part("Chromium", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9167, "Kaolinite")
                 .displayName("Kaolinite")
@@ -6802,13 +6340,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Kaolinite")
-                        .source("PFAAGeologica", "Per Fabrica Ad Astra")
-                        .smelting("Ceramic", 648648000L)
-                        .byproducts("ClayBrown", "Clay")
-                        .forms("DUSTS", "ORES", "PLANTS", "PLATES")
-                        .build())
+                .localName("Kaolinite")
+                .source("PFAAGeologica", "Per Fabrica Ad Astra")
+                .smelting("Ceramic", 648648000L)
+                .byproducts("ClayBrown", "Clay")
+                .forms("DUSTS", "ORES", "PLANTS", "PLATES")
                 .build());
         result.add(MaterialDefinition.builder(9862, "Kerosine")
                 .displayName("Kerosine")
@@ -6820,10 +6356,8 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Kerosine")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Kerosine")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8674, "Knightmetal")
                 .displayName("Knightmetal")
@@ -6857,30 +6391,28 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("KnightMetal")
-                        .source("TwilightForest", "Twilight Forest")
-                        .tools(3, 8.0F, 512L, 3)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Steel", 1297296000L),
-                                new MaterialFacts.Part("Magic", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("KnightMetal")
+                .source("TwilightForest", "Twilight Forest")
+                .tools(3, 8.0F, 512L, 3)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Steel", 1297296000L),
+                        new MaterialDefinition.Part("Magic", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8332, "Lapis")
                 .displayName("Lapis")
@@ -6905,28 +6437,17 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Lapis")
-                        .source("minecraft", "Minecraft")
-                        .composition(
-                                16L,
-                                new MaterialFacts.Part("Lazurite", 7783776000L),
-                                new MaterialFacts.Part("Sodalite", 1297296000L),
-                                new MaterialFacts.Part("Pyrite", 648648000L),
-                                new MaterialFacts.Part("Calcite", 648648000L))
-                        .byproducts("Lazurite", "Sodalite", "Pyrite")
-                        .multipliers(5, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "GEMS",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Lapis")
+                .source("minecraft", "Minecraft")
+                .composition(
+                        16L,
+                        new MaterialDefinition.Part("Lazurite", 7783776000L),
+                        new MaterialDefinition.Part("Sodalite", 1297296000L),
+                        new MaterialDefinition.Part("Pyrite", 648648000L),
+                        new MaterialDefinition.Part("Calcite", 648648000L))
+                .byproducts("Lazurite", "Sodalite", "Pyrite")
+                .multipliers(5, 1)
+                .forms("ARMORS", "DENSEPLATES", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9886, "Latex")
                 .displayName("Latex")
@@ -6938,10 +6459,8 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Latex")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Latex")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9810, "Lava")
                 .displayName("Lava")
@@ -6953,12 +6472,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Lava")
-                        .source("minecraft", "Minecraft")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .processing("Solidifying", "Obsidian", 648648000L)
-                        .build())
+                .localName("Lava")
+                .source("minecraft", "Minecraft")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
+                .processing("Solidifying", "Obsidian", 648648000L)
                 .build());
         result.add(MaterialDefinition.builder(8330, "Lazurite")
                 .displayName("Lazurite")
@@ -6984,27 +6501,16 @@ public final class CompoundMaterials {
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Lazurite")
-                        .composition(
-                                28L,
-                                new MaterialFacts.Part("Alumina", 3891888000L),
-                                new MaterialFacts.Part("SiliconDioxide", 3891888000L),
-                                new MaterialFacts.Part("Calcium", 5189184000L),
-                                new MaterialFacts.Part("Sodium", 5189184000L))
-                        .byproducts("Sodalite", "Lapis")
-                        .multipliers(5, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "GEMS",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Lazurite")
+                .composition(
+                        28L,
+                        new MaterialDefinition.Part("Alumina", 3891888000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 3891888000L),
+                        new MaterialDefinition.Part("Calcium", 5189184000L),
+                        new MaterialDefinition.Part("Sodium", 5189184000L))
+                .byproducts("Sodalite", "Lapis")
+                .multipliers(5, 1)
+                .forms("ARMORS", "DENSEPLATES", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8241, "Leather")
                 .displayName("Leather")
@@ -7021,11 +6527,9 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Leather")
-                        .source("minecraft", "Minecraft")
-                        .smelting("Ashes", 72072000L)
-                        .build())
+                .localName("Leather")
+                .source("minecraft", "Minecraft")
+                .smelting("Ashes", 72072000L)
                 .build());
         result.add(MaterialDefinition.builder(8337, "Lignite")
                 .displayName("Lignite")
@@ -7045,18 +6549,16 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Lignite")
-                        .source("UndergroundBiomes", "Underground Biomes")
-                        .fuel(800L, "DarkAshes", 162162000L)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Carbon", 1297296000L),
-                                new MaterialFacts.Part("Water", 2594592000L),
-                                new MaterialFacts.Part("DarkAshes", 648648000L))
-                        .byproducts("Coal", "Sulfur", "Germanium")
-                        .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Lignite")
+                .source("UndergroundBiomes", "Underground Biomes")
+                .fuel(800L, "DarkAshes", 162162000L)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Carbon", 1297296000L),
+                        new MaterialDefinition.Part("Water", 2594592000L),
+                        new MaterialDefinition.Part("DarkAshes", 648648000L))
+                .byproducts("Coal", "Sulfur", "Germanium")
+                .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8365, "LigniteCoke")
                 .displayName("Lignite Coke")
@@ -7076,15 +6578,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Lignite Coke")
-                        .fuel(1600L, "DarkAshes", 72072000L)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Carbon", 1297296000L),
-                                new MaterialFacts.Part("DarkAshes", 648648000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Lignite Coke")
+                .fuel(1600L, "DarkAshes", 72072000L)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Carbon", 1297296000L),
+                        new MaterialDefinition.Part("DarkAshes", 648648000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -7099,11 +6599,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Lin Oil")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Lin Oil")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8033, "LithiumChlorate")
                 .displayName("Lithium Chlorate")
@@ -7121,16 +6619,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Lithium Chlorate")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Lithium", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
-                        .aliases("LiClO3")
-                        .build())
+                .localName("Lithium Chlorate")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Lithium", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
+                .aliases("LiClO3")
                 .build());
         result.add(MaterialDefinition.builder(8032, "LithiumHydroxide")
                 .displayName("Lithium Hydroxide")
@@ -7149,16 +6645,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Lithium Hydroxide")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Lithium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 648648000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("LiOH")
-                        .build())
+                .localName("Lithium Hydroxide")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Lithium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 648648000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("LiOH")
                 .build());
         result.add(MaterialDefinition.builder(8034, "LithiumPerchlorate")
                 .displayName("Lithium Perchlorate")
@@ -7176,16 +6670,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Lithium Perchlorate")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Lithium", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
-                        .aliases("LiClO4")
-                        .build())
+                .localName("Lithium Perchlorate")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Lithium", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
+                .aliases("LiClO4")
                 .build());
         result.add(MaterialDefinition.builder(8223, "LiveRoot")
                 .displayName("LiveRoot")
@@ -7203,15 +6695,13 @@ public final class CompoundMaterials {
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("LiveRoot")
-                        .source("TwilightForest", "Twilight Forest")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Wood", 1945944000L),
-                                new MaterialFacts.Part("Magic", 648648000L))
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("LiveRoot")
+                .source("TwilightForest", "Twilight Forest")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Wood", 1945944000L),
+                        new MaterialDefinition.Part("Magic", 648648000L))
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9882, "Lubricant")
                 .displayName("Lubricant")
@@ -7223,11 +6713,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Lubricant")
-                        .source("RotaryCraft", "RotaryCraft")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Lubricant")
+                .source("RotaryCraft", "RotaryCraft")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8709, "Lumium")
                 .displayName("Lumium")
@@ -7262,30 +6750,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Lumium")
-                        .source("ThermalExpansion", "Thermal Expansion")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Tin", 1945944000L),
-                                new MaterialFacts.Part("Silver", 648648000L),
-                                new MaterialFacts.Part("Glowstone", 2594592000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Lumium")
+                .source("ThermalExpansion", "Thermal Expansion")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Tin", 1945944000L),
+                        new MaterialDefinition.Part("Silver", 648648000L),
+                        new MaterialDefinition.Part("Glowstone", 2594592000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8444, "MagentaFluorite")
                 .displayName("Magenta Fluorite")
@@ -7310,13 +6796,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Magenta Fluorite")
-                        .smelting("Fluorite", 648648000L)
-                        .byproducts("PinkFluorite", "BlueFluorite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("FluoriteMagenta")
-                        .build())
+                .localName("Magenta Fluorite")
+                .smelting("Fluorite", 648648000L)
+                .byproducts("PinkFluorite", "BlueFluorite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("FluoriteMagenta")
                 .build());
         result.add(MaterialDefinition.builder(8665, "Magnalium")
                 .displayName("Magnalium")
@@ -7351,31 +6835,29 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Magnalium")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 6.0F, 256L, 2)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Magnesium", 648648000L),
-                                new MaterialFacts.Part("Aluminium", 1297296000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .build())
+                .localName("Magnalium")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 6.0F, 256L, 2)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Magnesium", 648648000L),
+                        new MaterialDefinition.Part("Aluminium", 1297296000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8278, "ManaDiamond")
                 .displayName("Mana Diamond")
@@ -7399,18 +6881,16 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Mana Diamond")
-                        .source("Botania", "Botania")
-                        .tools(3, 10.0F, 1280L, 3)
-                        .smelting("Carbon", 1297296000L)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Carbon", 2594592000L),
-                                new MaterialFacts.Part("Magic", 648648000L))
-                        .byproducts("Graphite", "Diamond")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Mana Diamond")
+                .source("Botania", "Botania")
+                .tools(3, 10.0F, 1280L, 3)
+                .smelting("Carbon", 1297296000L)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Carbon", 2594592000L),
+                        new MaterialDefinition.Part("Magic", 648648000L))
+                .byproducts("Graphite", "Diamond")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8720, "Manasteel")
                 .displayName("Manasteel")
@@ -7444,29 +6924,27 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Manasteel")
-                        .source("Botania", "Botania")
-                        .tools(3, 12.0F, 256L, 3)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Magic", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Manasteel")
+                .source("Botania", "Botania")
+                .tools(3, 12.0F, 256L, 3)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Magic", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8031, "ManganeseChloride")
                 .displayName("Manganese Chloride")
@@ -7484,15 +6962,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Manganese Chloride")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Manganese", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 1297296000L))
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
-                        .aliases("MnCl2")
-                        .build())
+                .localName("Manganese Chloride")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Manganese", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 1297296000L))
+                .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
+                .aliases("MnCl2")
                 .build());
         result.add(MaterialDefinition.builder(8387, "Maxixe")
                 .displayName("Maxixe")
@@ -7518,28 +6994,26 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Maxixe")
-                        .correctedToolStats()
-                        .tools(3, 9.0F, 128L, 2)
-                        .smelting("Beryllium", 18018000L)
-                        .composition(
-                                29L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Beryllium", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 11675664000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts(
-                                "Alumina",
-                                "Beryllium",
-                                "Emerald",
-                                "Aquamarine",
-                                "Morganite",
-                                "Goshenite",
-                                "Bixbite",
-                                "Heliodor")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Maxixe")
+                .correctedToolStats()
+                .tools(3, 9.0F, 128L, 2)
+                .smelting("Beryllium", 18018000L)
+                .composition(
+                        29L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts(
+                        "Alumina",
+                        "Beryllium",
+                        "Emerald",
+                        "Aquamarine",
+                        "Morganite",
+                        "Goshenite",
+                        "Bixbite",
+                        "Heliodor")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9701, "MeatCooked")
                 .displayName("MeatCooked")
@@ -7551,11 +7025,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Meat")
-                        .source("MineFactoryReloaded", "MineFactory Reloaded")
-                        .forms("DUSTS", "INGOTS", "PLANTS")
-                        .build())
+                .localName("Meat")
+                .source("MineFactoryReloaded", "MineFactory Reloaded")
+                .forms("DUSTS", "INGOTS", "PLANTS")
                 .build());
     }
 
@@ -7575,13 +7047,11 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("MeatRaw")
-                        .source("MineFactoryReloaded", "MineFactory Reloaded")
-                        .smelting("MeatCooked", 648648000L)
-                        .forms("DUSTS", "INGOTS", "PLANTS")
-                        .processing("Forging", "MeatCooked", 648648000L)
-                        .build())
+                .localName("MeatRaw")
+                .source("MineFactoryReloaded", "MineFactory Reloaded")
+                .smelting("MeatCooked", 648648000L)
+                .forms("DUSTS", "INGOTS", "PLANTS")
+                .processing("Forging", "MeatCooked", 648648000L)
                 .build());
         result.add(MaterialDefinition.builder(9710, "MeatRotten")
                 .displayName("MeatRotten")
@@ -7593,11 +7063,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("MeatRotten")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "INGOTS", "PLANTS")
-                        .build())
+                .localName("MeatRotten")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "INGOTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9832, "Methane")
                 .displayName("Methane")
@@ -7615,15 +7083,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Methane")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Carbon", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 2594592000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("CH4")
-                        .build())
+                .localName("Methane")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Carbon", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 2594592000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("CH4")
                 .build());
         result.add(MaterialDefinition.builder(9833, "MethaneIce")
                 .displayName("Methane Ice")
@@ -7641,14 +7107,12 @@ public final class CompoundMaterials {
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Methane Ice")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Methane", 648648000L),
-                                new MaterialFacts.Part("Ice", 1297296000L))
-                        .forms("CONTAINERS", "DUSTS", "PLANTS")
-                        .build())
+                .localName("Methane Ice")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Methane", 648648000L),
+                        new MaterialDefinition.Part("Ice", 1297296000L))
+                .forms("CONTAINERS", "DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9790, "Milk")
                 .displayName("Milk")
@@ -7660,11 +7124,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Milk")
-                        .source("minecraft", "Minecraft")
-                        .forms("CONTAINERS", "DUSTS", "PLANTS")
-                        .build())
+                .localName("Milk")
+                .source("minecraft", "Minecraft")
+                .forms("CONTAINERS", "DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8445, "MilkyQuartz")
                 .displayName("Milky Quartz")
@@ -7683,15 +7145,13 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Milky Quartz")
-                        .tools(1, 2.5F, 32L, 3)
-                        .smelting("SiliconDioxide", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .byproducts("CertusQuartz", "Barite")
-                        .multipliers(2, 1)
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Milky Quartz")
+                .tools(1, 2.5F, 32L, 3)
+                .smelting("SiliconDioxide", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .byproducts("CertusQuartz", "Barite")
+                .multipliers(2, 1)
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9794, "Mint")
                 .displayName("Mint")
@@ -7703,10 +7163,8 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Mint")
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Mint")
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8338, "Monazite")
                 .displayName("Monazite")
@@ -7731,16 +7189,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Monazite")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("RareEarth", 648648000L),
-                                new MaterialFacts.Part("Phosphate", 648648000L))
-                        .byproducts("Thorium", "Neodymium", "RareEarth")
-                        .multipliers(2, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Monazite")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("RareEarth", 648648000L),
+                        new MaterialDefinition.Part("Phosphate", 648648000L))
+                .byproducts("Thorium", "Neodymium", "RareEarth")
+                .multipliers(2, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8324, "Morganite")
                 .displayName("Morganite")
@@ -7766,28 +7222,19 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Morganite")
-                        .correctedToolStats()
-                        .tools(3, 9.0F, 128L, 2)
-                        .smelting("Beryllium", 18018000L)
-                        .composition(
-                                29L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Beryllium", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 11675664000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts(
-                                "Alumina",
-                                "Beryllium",
-                                "Emerald",
-                                "Aquamarine",
-                                "Goshenite",
-                                "Bixbite",
-                                "Heliodor",
-                                "Maxixe")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Morganite")
+                .correctedToolStats()
+                .tools(3, 9.0F, 128L, 2)
+                .smelting("Beryllium", 18018000L)
+                .composition(
+                        29L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Beryllium", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts(
+                        "Alumina", "Beryllium", "Emerald", "Aquamarine", "Goshenite", "Bixbite", "Heliodor", "Maxixe")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8647, "NeodymiumMagnetic")
                 .displayName("NeodymiumMagnetic")
@@ -7821,32 +7268,30 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("NeodymiumMagnetic")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .correctedToolStats()
-                        .tools(3, 6.0F, 512L, 3)
-                        .smelting("Neodymium", 648648000L)
-                        .pulverizing("Neodymium", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("Neodymium", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .processing("Bending", "Iron", 648648000L)
-                        .processing("Compressing", "Neodymium", 648648000L)
-                        .processing("Smashing", "Neodymium", 648648000L)
-                        .processing("Working", "Neodymium", 648648000L)
-                        .processing("Forging", "Neodymium", 648648000L)
-                        .build())
+                .localName("NeodymiumMagnetic")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .correctedToolStats()
+                .tools(3, 6.0F, 512L, 3)
+                .smelting("Neodymium", 648648000L)
+                .pulverizing("Neodymium", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("Neodymium", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .processing("Bending", "Iron", 648648000L)
+                .processing("Compressing", "Neodymium", 648648000L)
+                .processing("Smashing", "Neodymium", 648648000L)
+                .processing("Working", "Neodymium", 648648000L)
+                .processing("Forging", "Neodymium", 648648000L)
                 .build());
         result.add(MaterialDefinition.builder(8745, "Netherite")
                 .displayName("Netherite")
@@ -7881,30 +7326,28 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Netherite")
-                        .source("netheriteplus", "Netherite Plus")
-                        .tools(2, 10.0F, 500L, 4)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Gold", 2594592000L),
-                                new MaterialFacts.Part("AncientDebris", 2594592000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Netherite")
+                .source("netheriteplus", "Netherite Plus")
+                .tools(2, 10.0F, 500L, 4)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Gold", 2594592000L),
+                        new MaterialDefinition.Part("AncientDebris", 2594592000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8746, "NetherizedDiamond")
                 .displayName("Netherized Diamond")
@@ -7937,30 +7380,28 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Netherized Diamond")
-                        .source("netheriteplus", "Netherite Plus")
-                        .tools(3, 12.0F, 2560L, 4)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Netherite", 648648000L),
-                                new MaterialFacts.Part("Diamond", 2594592000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "GEMS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Netherized Diamond")
+                .source("netheriteplus", "Netherite Plus")
+                .tools(3, 12.0F, 2560L, 4)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Netherite", 648648000L),
+                        new MaterialDefinition.Part("Diamond", 2594592000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "GEMS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8346, "NetherQuartz")
                 .displayName("Nether Quartz")
@@ -7984,16 +7425,14 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Nether Quartz")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 2.5F, 32L, 3)
-                        .smelting("SiliconDioxide", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .byproducts("Barite", "Efrine", "WhiteFluorite")
-                        .multipliers(2, 1)
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Nether Quartz")
+                .source("minecraft", "Minecraft")
+                .tools(1, 2.5F, 32L, 3)
+                .smelting("SiliconDioxide", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .byproducts("Barite", "Efrine", "WhiteFluorite")
+                .multipliers(2, 1)
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8320, "NetherStar")
                 .displayName("Nether Star")
@@ -8013,12 +7452,10 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_PLATE,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Nether Star")
-                        .source("minecraft", "Minecraft")
-                        .tools(3, 8.0F, 5120L, 4)
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Nether Star")
+                .source("minecraft", "Minecraft")
+                .tools(3, 8.0F, 5120L, 4)
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8663, "Nichrome")
                 .displayName("Nichrome")
@@ -8053,30 +7490,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Nichrome")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 6.0F, 64L, 2)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Nickel", 2594592000L),
-                                new MaterialFacts.Part("Chromium", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Nichrome")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 6.0F, 64L, 2)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Nickel", 2594592000L),
+                        new MaterialDefinition.Part("Chromium", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
     }
 
@@ -8115,28 +7550,26 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("TeslatineAlloy")
-                        .source("Redpower", "Redpower")
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Silicon", 648648000L),
-                                new MaterialFacts.Part("Nikolite", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("TeslatineAlloy")
+                .source("Redpower", "Redpower")
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Silicon", 648648000L),
+                        new MaterialDefinition.Part("Nikolite", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8340, "Nikolite")
                 .displayName("Nikolite")
@@ -8161,30 +7594,28 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Electrotine")
-                        .source("Redpower", "Redpower")
-                        .tools(0, 1.0F, 1L, 0)
-                        .composition(
-                                10L,
-                                new MaterialFacts.Part("Sodalite", 3243240000L),
-                                new MaterialFacts.Part("Copper", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 648648000L),
-                                new MaterialFacts.Part("Argon", 648648000L))
-                        .byproducts("Copper", "RareEarth", "Azurite", "Arsenic")
-                        .multipliers(4, 1)
-                        .forms(
-                                "ARMORS",
-                                "DUSTS",
-                                "GEMS",
-                                "LENSES",
-                                "MOLTEN",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Electrotine")
+                .source("Redpower", "Redpower")
+                .tools(0, 1.0F, 1L, 0)
+                .composition(
+                        10L,
+                        new MaterialDefinition.Part("Sodalite", 3243240000L),
+                        new MaterialDefinition.Part("Copper", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 648648000L),
+                        new MaterialDefinition.Part("Argon", 648648000L))
+                .byproducts("Copper", "RareEarth", "Azurite", "Arsenic")
+                .multipliers(4, 1)
+                .forms(
+                        "ARMORS",
+                        "DUSTS",
+                        "GEMS",
+                        "LENSES",
+                        "MOLTEN",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8689, "NiobiumTitanium")
                 .displayName("Niobium Titanium")
@@ -8219,27 +7650,25 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Niobium Titanium")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Niobium", 648648000L),
-                                new MaterialFacts.Part("Titanium", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Niobium Titanium")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Niobium", 648648000L),
+                        new MaterialDefinition.Part("Titanium", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9825, "NitricAcid")
                 .displayName("Nitric Acid")
@@ -8258,16 +7687,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Nitric Acid")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Hydrogen", 648648000L),
-                                new MaterialFacts.Part("Nitrogen", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .aliases("HNO3")
-                        .build())
+                .localName("Nitric Acid")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialDefinition.Part("Nitrogen", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
+                .aliases("HNO3")
                 .build());
         result.add(MaterialDefinition.builder(9820, "NitroCarbon")
                 .displayName("Nitro Carbon")
@@ -8292,15 +7719,13 @@ public final class CompoundMaterials {
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Nitro Carbon")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Nitrogen", 648648000L),
-                                new MaterialFacts.Part("Carbon", 648648000L))
-                        .forms("CONTAINERS", "PLANTS")
-                        .build())
+                .localName("Nitro Carbon")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Nitrogen", 648648000L),
+                        new MaterialDefinition.Part("Carbon", 648648000L))
+                .forms("CONTAINERS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9861, "NitroFuel")
                 .displayName("Nitro-Fuel")
@@ -8313,15 +7738,13 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Nitro-Fuel")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Glyceryl", 648648000L),
-                                new MaterialFacts.Part("Fuel", 2594592000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Nitro-Fuel")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Glyceryl", 648648000L),
+                        new MaterialDefinition.Part("Fuel", 2594592000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9831, "NitrogenDioxide")
                 .displayName("Nitrogen Dioxide")
@@ -8339,15 +7762,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Nitrogen Dioxide")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Nitrogen", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("NO2")
-                        .build())
+                .localName("Nitrogen Dioxide")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Nitrogen", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("NO2")
                 .build());
         result.add(MaterialDefinition.builder(9837, "NitrogenMonoxide")
                 .displayName("Nitrogen Monoxide")
@@ -8365,15 +7786,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Nitrogen Monoxide")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Nitrogen", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("NO")
-                        .build())
+                .localName("Nitrogen Monoxide")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Nitrogen", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("NO")
                 .build());
         result.add(MaterialDefinition.builder(9876, "NutOil")
                 .displayName("Nut Oil")
@@ -8385,11 +7804,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Nut Oil")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Nut Oil")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8214, "Obsidian")
                 .displayName("Obsidian")
@@ -8415,20 +7832,18 @@ public final class CompoundMaterials {
                         MaterialProperty.MAGICAL,
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Obsidian")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 3.0F, 32L, 3)
-                        .smelting("Lava", 648648000L)
-                        .composition(
-                                64L,
-                                new MaterialFacts.Part("Magnesium", 648648000L),
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("SiliconDioxide", 3891888000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts("Peridot", "MagnesiumCarbonate")
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Obsidian")
+                .source("minecraft", "Minecraft")
+                .tools(1, 3.0F, 32L, 3)
+                .smelting("Lava", 648648000L)
+                .composition(
+                        64L,
+                        new MaterialDefinition.Part("Magnesium", 648648000L),
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 3891888000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts("Peridot", "MagnesiumCarbonate")
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8425, "OceanJasper")
                 .displayName("Ocean Jasper")
@@ -8452,15 +7867,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ocean Jasper")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("OceanJasper", 0L)
-                        .byproducts("RedJasper", "RainforestJasper", "BlueJasper", "GreenJasper", "YellowJasper")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("JasperOcean")
-                        .build())
+                .localName("Ocean Jasper")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("OceanJasper", 0L)
+                .byproducts("RedJasper", "RainforestJasper", "BlueJasper", "GreenJasper", "YellowJasper")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("JasperOcean")
                 .build());
         result.add(MaterialDefinition.builder(9850, "Oil")
                 .displayName("Oil")
@@ -8472,11 +7885,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Oil")
-                        .source("BuildCraft|Core", "BuildCraft")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Oil")
+                .source("BuildCraft|Core", "BuildCraft")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9877, "OliveOil")
                 .displayName("Olive Oil")
@@ -8488,11 +7899,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Olive Oil")
-                        .source("harvestcraft", "HarvestCraft")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Olive Oil")
+                .source("harvestcraft", "HarvestCraft")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8416, "OnyxBlack")
                 .displayName("OnyxBlack")
@@ -8517,13 +7926,11 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Onyx")
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("OnyxBlack", 0L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Onyx")
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("OnyxBlack", 0L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8415, "OnyxRed")
                 .displayName("OnyxRed")
@@ -8548,13 +7955,11 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("OnyxRed")
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("OnyxRed", 0L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("OnyxRed")
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("OnyxRed", 0L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -8582,14 +7987,12 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Opal")
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("Opal", 0L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .byproducts("Tanzanite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Opal")
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("Opal", 0L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .byproducts("Tanzanite")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8443, "OrangeFluorite")
                 .displayName("Orange Fluorite")
@@ -8614,13 +8017,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Orange Fluorite")
-                        .smelting("Fluorite", 648648000L)
-                        .byproducts("YellowFluorite", "RedFluorite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("FluoriteOrange")
-                        .build())
+                .localName("Orange Fluorite")
+                .smelting("Fluorite", 648648000L)
+                .byproducts("YellowFluorite", "RedFluorite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("FluoriteOrange")
                 .build());
         result.add(MaterialDefinition.builder(8314, "OrangeSapphire")
                 .displayName("Orange Sapphire")
@@ -8647,18 +8048,16 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Orange Sapphire")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 512L, 3)
-                        .smelting("Alumina", 486486000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Copper", 648648000L))
-                        .byproducts("Alumina", "Ruby", "GreenSapphire", "BlueSapphire")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Orange Sapphire")
+                .correctedToolStats()
+                .tools(3, 7.0F, 512L, 3)
+                .smelting("Alumina", 486486000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Copper", 648648000L))
+                .byproducts("Alumina", "Ruby", "GreenSapphire", "BlueSapphire")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8682, "Osmiridium")
                 .displayName("Osmiridium")
@@ -8693,30 +8092,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Osmiridium")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 11.0F, 3840L, 4)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("OsmiumElemental", 648648000L),
-                                new MaterialFacts.Part("Iridium", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Osmiridium")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 11.0F, 3840L, 4)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("OsmiumElemental", 648648000L),
+                        new MaterialDefinition.Part("Iridium", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9154, "Palygorskite")
                 .displayName("Palygorskite")
@@ -8736,13 +8133,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("FullersEarth")
-                        .source("PFAAGeologica", "Per Fabrica Ad Astra")
-                        .smelting("Ceramic", 648648000L)
-                        .byproducts("Kaolinite", "Bentonite")
-                        .forms("DUSTS", "ORES", "PLANTS", "PLATES")
-                        .build())
+                .localName("FullersEarth")
+                .source("PFAAGeologica", "Per Fabrica Ad Astra")
+                .smelting("Ceramic", 648648000L)
+                .byproducts("Kaolinite", "Bentonite")
+                .forms("DUSTS", "ORES", "PLANTS", "PLATES")
                 .build());
         result.add(MaterialDefinition.builder(8216, "Paper")
                 .displayName("Paper")
@@ -8754,11 +8149,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Paper")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "MULTIPLATES", "PLANTS")
-                        .build())
+                .localName("Paper")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "MULTIPLATES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8360, "Peat")
                 .displayName("Peat")
@@ -8774,12 +8167,10 @@ public final class CompoundMaterials {
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Peat")
-                        .source("Forestry", "Forestry")
-                        .fuel(2000L, "Ashes", 324324000L)
-                        .forms("DUSTS", "INGOTS", "MULTIINGOTS", "PLANTS")
-                        .build())
+                .localName("Peat")
+                .source("Forestry", "Forestry")
+                .fuel(2000L, "Ashes", 324324000L)
+                .forms("DUSTS", "INGOTS", "MULTIINGOTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8311, "Peridot")
                 .displayName("Peridot")
@@ -8804,19 +8195,17 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Olivine")
-                        .source("BiomesOPlenty", "Biomes O' Plenty")
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("Peridot", 0L)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("SiliconDioxide", 1297296000L),
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Magnesium", 1297296000L))
-                        .byproducts("Obsidian", "MagnesiumCarbonate")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Olivine")
+                .source("BiomesOPlenty", "Biomes O' Plenty")
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("Peridot", 0L)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("SiliconDioxide", 1297296000L),
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Magnesium", 1297296000L))
+                .byproducts("Obsidian", "MagnesiumCarbonate")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8277, "PetrifiedWood")
                 .displayName("Petrified Wood")
@@ -8836,14 +8225,12 @@ public final class CompoundMaterials {
                         MaterialProperty.STONE,
                         MaterialProperty.UNIT,
                         MaterialProperty.WOOD)
-                .facts(MaterialFacts.builder()
-                        .localName("Petrified Wood")
-                        .source("erebus", "Erebus")
-                        .tools(1, 2.0F, 24L, 1)
-                        .fuel(50L, "", 0L)
-                        .composition(1L, new MaterialFacts.Part("Wood", 648648000L))
-                        .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Petrified Wood")
+                .source("erebus", "Erebus")
+                .tools(1, 2.0F, 24L, 1)
+                .fuel(50L, "", 0L)
+                .composition(1L, new MaterialDefinition.Part("Wood", 648648000L))
+                .forms("DUSTS", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8390, "PetroleumCoke")
                 .displayName("Petroleum Coke")
@@ -8864,18 +8251,16 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("PetCoke")
-                        .correctedToolStats()
-                        .tools(0, 1.0F, 1L, 0)
-                        .fuel(6400L, "DarkAshes", 72072000L)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Carbon", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L))
-                        .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("PetCoke")
-                        .build())
+                .localName("PetCoke")
+                .correctedToolStats()
+                .tools(0, 1.0F, 1L, 0)
+                .fuel(6400L, "DarkAshes", 72072000L)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Carbon", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                .forms("ARMORS", "DUSTS", "GEMS", "INGOTS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("PetCoke")
                 .build());
         result.add(MaterialDefinition.builder(8226, "Phosphorite")
                 .displayName("Phosphorite")
@@ -8901,22 +8286,14 @@ public final class CompoundMaterials {
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Phosphorite")
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Calcium", 3243240000L),
-                                new MaterialFacts.Part("Phosphate", 1945944000L),
-                                new MaterialFacts.Part("Fluorine", 648648000L))
-                        .byproducts(
-                                "Phosphorus",
-                                "Apatite",
-                                "YellowFluorite",
-                                "Phosphate",
-                                "RedPhosphorus",
-                                "WhitePhosphorus")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Phosphorite")
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Calcium", 3243240000L),
+                        new MaterialDefinition.Part("Phosphate", 1945944000L),
+                        new MaterialDefinition.Part("Fluorine", 648648000L))
+                .byproducts("Phosphorus", "Apatite", "YellowFluorite", "Phosphate", "RedPhosphorus", "WhitePhosphorus")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8208, "Phosphorus")
                 .displayName("Phosphorus")
@@ -8941,23 +8318,15 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Phosphorous")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Calcium", 1945944000L),
-                                new MaterialFacts.Part("Phosphate", 1297296000L))
-                        .byproducts(
-                                "Phosphorite",
-                                "Apatite",
-                                "YellowFluorite",
-                                "Phosphate",
-                                "RedPhosphorus",
-                                "WhitePhosphorus")
-                        .multipliers(3, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Phosphorous")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Calcium", 1945944000L),
+                        new MaterialDefinition.Part("Phosphate", 1297296000L))
+                .byproducts("Phosphorite", "Apatite", "YellowFluorite", "Phosphate", "RedPhosphorus", "WhitePhosphorus")
+                .multipliers(3, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8424, "PinkDiamond")
                 .displayName("Pink Diamond")
@@ -8982,15 +8351,13 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Pink Diamond")
-                        .tools(3, 12.0F, 1600L, 3)
-                        .smelting("Carbon", 1297296000L)
-                        .composition(1L, new MaterialFacts.Part("Carbon", 2594592000L))
-                        .byproducts("Graphite", "Diamond")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("DiamondPink")
-                        .build())
+                .localName("Pink Diamond")
+                .tools(3, 12.0F, 1600L, 3)
+                .smelting("Carbon", 1297296000L)
+                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .byproducts("Graphite", "Diamond")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("DiamondPink")
                 .build());
         result.add(MaterialDefinition.builder(8437, "PinkFluorite")
                 .displayName("Pink Fluorite")
@@ -9015,13 +8382,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Pink Fluorite")
-                        .smelting("Fluorite", 648648000L)
-                        .byproducts("WhiteFluorite", "RedFluorite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("FluoritePink")
-                        .build())
+                .localName("Pink Fluorite")
+                .smelting("Fluorite", 648648000L)
+                .byproducts("WhiteFluorite", "RedFluorite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("FluoritePink")
                 .build());
         result.add(MaterialDefinition.builder(8407, "PinkVitriol")
                 .displayName("Pink Vitriol")
@@ -9040,15 +8405,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Pink Vitriol")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Magnesium", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Pink Vitriol")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Magnesium", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
     }
 
@@ -9078,31 +8441,29 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Plastic")
-                        .source("MineFactoryReloaded", "MineFactory Reloaded")
-                        .tools(1, 3.0F, 256L, 1)
-                        .smelting("Plastic", 432432000L)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Carbon", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 1297296000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS",
-                                "WIRES")
-                        .build())
+                .localName("Plastic")
+                .source("MineFactoryReloaded", "MineFactory Reloaded")
+                .tools(1, 3.0F, 256L, 1)
+                .smelting("Plastic", 432432000L)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Carbon", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS",
+                        "WIRES")
                 .build());
         result.add(MaterialDefinition.builder(8023, "PotassiumAluminate")
                 .displayName("Potassium Aluminate")
@@ -9120,16 +8481,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Potassium Aluminate")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Potassium", 648648000L),
-                                new MaterialFacts.Part("Aluminium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("KAlO2")
-                        .build())
+                .localName("Potassium Aluminate")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Potassium", 648648000L),
+                        new MaterialDefinition.Part("Aluminium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("KAlO2")
                 .build());
         result.add(MaterialDefinition.builder(8232, "PotassiumBisulfate")
                 .displayName("Potassium Bisulfate")
@@ -9147,17 +8506,15 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("PotassiumBisulphate")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Potassium", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("KHSO4")
-                        .build())
+                .localName("PotassiumBisulphate")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Potassium", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("KHSO4")
                 .build());
         result.add(MaterialDefinition.builder(8020, "PotassiumCarbonate")
                 .displayName("Potassium Carbonate")
@@ -9175,15 +8532,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Potassium Carbonate")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Potassium", 1297296000L),
-                                new MaterialFacts.Part("CarbonTrioxide", 2594592000L))
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
-                        .aliases("K2CO3")
-                        .build())
+                .localName("Potassium Carbonate")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Potassium", 1297296000L),
+                        new MaterialDefinition.Part("CarbonTrioxide", 2594592000L))
+                .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
+                .aliases("K2CO3")
                 .build());
         result.add(MaterialDefinition.builder(8036, "PotassiumFluoride")
                 .displayName("Potassium Fluoride")
@@ -9202,15 +8557,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Potassium Fluoride")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Potassium", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 648648000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("KF")
-                        .build())
+                .localName("Potassium Fluoride")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Potassium", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 648648000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("KF")
                 .build());
         result.add(MaterialDefinition.builder(8038, "PotassiumHeptafluorotantalate")
                 .displayName("Potassium Heptafluorotantalate")
@@ -9228,16 +8581,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Potassium Heptafluorotantalate")
-                        .composition(
-                                10L,
-                                new MaterialFacts.Part("Potassium", 1297296000L),
-                                new MaterialFacts.Part("Tantalum", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 4540536000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("K2TaF7")
-                        .build())
+                .localName("Potassium Heptafluorotantalate")
+                .composition(
+                        10L,
+                        new MaterialDefinition.Part("Potassium", 1297296000L),
+                        new MaterialDefinition.Part("Tantalum", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 4540536000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("K2TaF7")
                 .build());
         result.add(MaterialDefinition.builder(8015, "PotassiumHydroxide")
                 .displayName("Potassium Hydroxide")
@@ -9256,16 +8607,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Potassium Hydroxide")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Potassium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 648648000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("KOH")
-                        .build())
+                .localName("Potassium Hydroxide")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Potassium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 648648000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("KOH")
                 .build());
         result.add(MaterialDefinition.builder(8022, "PotassiumPersulfate")
                 .displayName("Potassium Persulfate")
@@ -9283,16 +8632,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("PotassiumPersulphate")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Potassium", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("KSO4")
-                        .build())
+                .localName("PotassiumPersulphate")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Potassium", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("KSO4")
                 .build());
         result.add(MaterialDefinition.builder(8233, "PotassiumPyrosulfate")
                 .displayName("Potassium Pyrosulfate")
@@ -9310,16 +8657,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("PotassiumPyrosulphate")
-                        .composition(
-                                11L,
-                                new MaterialFacts.Part("Potassium", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 4540536000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("K2S2O7")
-                        .build())
+                .localName("PotassiumPyrosulphate")
+                .composition(
+                        11L,
+                        new MaterialDefinition.Part("Potassium", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 4540536000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("K2S2O7")
                 .build());
         result.add(MaterialDefinition.builder(8271, "PotassiumSulfate")
                 .displayName("Potassium Sulfate")
@@ -9337,16 +8682,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("PotassiumSulphate")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Potassium", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("K2SO4")
-                        .build())
+                .localName("PotassiumSulphate")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Potassium", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("K2SO4")
                 .build());
         result.add(MaterialDefinition.builder(8272, "PotassiumSulfide")
                 .displayName("Potassium Sulfide")
@@ -9364,15 +8707,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("PotassiumSulphide")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Potassium", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("K2S")
-                        .build())
+                .localName("PotassiumSulphide")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Potassium", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("K2S")
                 .build());
         result.add(MaterialDefinition.builder(8021, "PotassiumSulfite")
                 .displayName("Potassium Sulfite")
@@ -9390,16 +8731,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("PotassiumSulphite")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Potassium", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("K2SO3")
-                        .build())
+                .localName("PotassiumSulphite")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Potassium", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("K2SO3")
                 .build());
         result.add(MaterialDefinition.builder(9709, "Potato")
                 .displayName("Potato")
@@ -9411,11 +8750,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Potato")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Potato")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9865, "Propane")
                 .displayName("Propane")
@@ -9427,10 +8764,8 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Propane")
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
-                        .build())
+                .localName("Propane")
+                .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9867, "Propylene")
                 .displayName("Propylene")
@@ -9442,10 +8777,8 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Propylene")
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
-                        .build())
+                .localName("Propylene")
+                .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
                 .build());
     }
 
@@ -9475,18 +8808,16 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Purple Sapphire")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 512L, 3)
-                        .smelting("Alumina", 486486000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Vanadium", 648648000L))
-                        .byproducts("Alumina", "Ruby", "GreenSapphire", "BlueSapphire")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Purple Sapphire")
+                .correctedToolStats()
+                .tools(3, 7.0F, 512L, 3)
+                .smelting("Alumina", 486486000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Vanadium", 648648000L))
+                .byproducts("Alumina", "Ruby", "GreenSapphire", "BlueSapphire")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8197, "PVC")
                 .displayName("PVC")
@@ -9505,31 +8836,29 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("PVC")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .tools(1, 3.0F, 256L, 1)
-                        .smelting("PVC", 432432000L)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Carbon", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 1297296000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS",
-                                "WIRES")
-                        .build())
+                .localName("PVC")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .tools(1, 3.0F, 256L, 1)
+                .smelting("PVC", 432432000L)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Carbon", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS",
+                        "WIRES")
                 .build());
         result.add(MaterialDefinition.builder(9127, "Pyrope")
                 .displayName("Pyrope")
@@ -9554,20 +8883,18 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("GarnetPurple")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 128L, 2)
-                        .smelting("Pyrope", 0L)
-                        .composition(
-                                20L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Magnesium", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 5837832000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Almandine", "Grossular", "Spessartine", "Andradite", "Uvarovite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("GarnetPurple")
+                .correctedToolStats()
+                .tools(3, 7.0F, 128L, 2)
+                .smelting("Pyrope", 0L)
+                .composition(
+                        20L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Magnesium", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 5837832000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Almandine", "Grossular", "Spessartine", "Andradite", "Uvarovite")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8426, "RainforestJasper")
                 .displayName("Rainforest Jasper")
@@ -9591,15 +8918,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Rainforest Jasper")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("RainforestJasper", 0L)
-                        .byproducts("RedJasper", "OceanJasper", "BlueJasper", "GreenJasper", "YellowJasper")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("JasperRainforest")
-                        .build())
+                .localName("Rainforest Jasper")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("RainforestJasper", 0L)
+                .byproducts("RedJasper", "OceanJasper", "BlueJasper", "GreenJasper", "YellowJasper")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("JasperRainforest")
                 .build());
         result.add(MaterialDefinition.builder(8660, "RedAlloy")
                 .displayName("Red Alloy")
@@ -9634,29 +8959,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Red Alloy")
-                        .source("Redpower", "Redpower")
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Copper", 648648000L),
-                                new MaterialFacts.Part("Redstone", 2594592000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS",
-                                "WIRES")
-                        .build())
+                .localName("Red Alloy")
+                .source("Redpower", "Redpower")
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Copper", 648648000L),
+                        new MaterialDefinition.Part("Redstone", 2594592000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS",
+                        "WIRES")
                 .build());
         result.add(MaterialDefinition.builder(8451, "RedAventurine")
                 .displayName("Red Aventurine")
@@ -9680,20 +9003,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Red Aventurine")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("RedAventurine", 0L)
-                        .byproducts(
-                                "GreenAventurine",
-                                "BrownAventurine",
-                                "YellowAventurine",
-                                "BlackAventurine",
-                                "BlueAventurine")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("AventurineRed")
-                        .build())
+                .localName("Red Aventurine")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("RedAventurine", 0L)
+                .byproducts(
+                        "GreenAventurine", "BrownAventurine", "YellowAventurine", "BlackAventurine", "BlueAventurine")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("AventurineRed")
                 .build());
         result.add(MaterialDefinition.builder(8467, "RedDiamond")
                 .displayName("Red Diamond")
@@ -9718,17 +9035,15 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Red Diamond")
-                        .source("ExtraPlanets", "Extra Planets")
-                        .correctedToolStats()
-                        .tools(3, 8.0F, 1280L, 3)
-                        .smelting("Carbon", 1297296000L)
-                        .composition(1L, new MaterialFacts.Part("Carbon", 2594592000L))
-                        .byproducts("Graphite", "Diamond")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("DiamondRed")
-                        .build())
+                .localName("Red Diamond")
+                .source("ExtraPlanets", "Extra Planets")
+                .correctedToolStats()
+                .tools(3, 8.0F, 1280L, 3)
+                .smelting("Carbon", 1297296000L)
+                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .byproducts("Graphite", "Diamond")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("DiamondRed")
                 .build());
         result.add(MaterialDefinition.builder(8436, "RedFluorite")
                 .displayName("Red Fluorite")
@@ -9753,13 +9068,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Red Fluorite")
-                        .smelting("Fluorite", 648648000L)
-                        .byproducts("PinkFluorite", "MagentaFluorite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("FluoriteRed")
-                        .build())
+                .localName("Red Fluorite")
+                .smelting("Fluorite", 648648000L)
+                .byproducts("PinkFluorite", "MagentaFluorite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("FluoriteRed")
                 .build());
         result.add(MaterialDefinition.builder(8309, "RedJasper")
                 .displayName("Red Jasper")
@@ -9783,16 +9096,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Jasper")
-                        .source("terrafirmacraft", "TerraFirmaCraft")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("RedJasper", 0L)
-                        .byproducts("OceanJasper", "RainforestJasper", "BlueJasper", "GreenJasper", "YellowJasper")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Jasper")
-                        .build())
+                .localName("Jasper")
+                .source("terrafirmacraft", "TerraFirmaCraft")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("RedJasper", 0L)
+                .byproducts("OceanJasper", "RainforestJasper", "BlueJasper", "GreenJasper", "YellowJasper")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Jasper")
                 .build());
         result.add(MaterialDefinition.builder(8459, "RedPhosphorus")
                 .displayName("Red Phosphorus")
@@ -9817,24 +9128,16 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Red Phosphorus")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Calcium", 1945944000L),
-                                new MaterialFacts.Part("Phosphate", 1297296000L))
-                        .byproducts(
-                                "Phosphorite",
-                                "Apatite",
-                                "RedFluorite",
-                                "Phosphate",
-                                "BluePhosphorus",
-                                "WhitePhosphorus")
-                        .multipliers(3, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("PhosphorusRed")
-                        .build())
+                .localName("Red Phosphorus")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Calcium", 1945944000L),
+                        new MaterialDefinition.Part("Phosphate", 1297296000L))
+                .byproducts("Phosphorite", "Apatite", "RedFluorite", "Phosphate", "BluePhosphorus", "WhitePhosphorus")
+                .multipliers(3, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("PhosphorusRed")
                 .build());
         result.add(MaterialDefinition.builder(8395, "RedQuartz")
                 .displayName("Red Quartz")
@@ -9853,15 +9156,13 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Red Quartz")
-                        .source("Botania", "Botania")
-                        .tools(1, 2.5F, 32L, 3)
-                        .smelting("SiliconDioxide", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .multipliers(2, 1)
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Red Quartz")
+                .source("Botania", "Botania")
+                .tools(1, 2.5F, 32L, 3)
+                .smelting("SiliconDioxide", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .multipliers(2, 1)
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8104, "RedSand")
                 .displayName("Red Sand")
@@ -9878,13 +9179,11 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Red Sand")
-                        .source("minecraft", "Minecraft")
-                        .smelting("Glass", 648648000L)
-                        .forms("DUSTS", "PLANTS")
-                        .processing("Forging", "Glass", 648648000L)
-                        .build())
+                .localName("Red Sand")
+                .source("minecraft", "Minecraft")
+                .smelting("Glass", 648648000L)
+                .forms("DUSTS", "PLANTS")
+                .processing("Forging", "Glass", 648648000L)
                 .build());
         result.add(MaterialDefinition.builder(8633, "RedSteel")
                 .displayName("Red Steel")
@@ -9919,32 +9218,30 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Red Steel")
-                        .source("terrafirmacraft", "TerraFirmaCraft")
-                        .tools(3, 7.5F, 1024L, 2)
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("RoseGold", 648648000L),
-                                new MaterialFacts.Part("Brass", 648648000L),
-                                new MaterialFacts.Part("Steel", 1297296000L),
-                                new MaterialFacts.Part("BlackSteel", 2594592000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Red Steel")
+                .source("terrafirmacraft", "TerraFirmaCraft")
+                .tools(3, 7.5F, 1024L, 2)
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("RoseGold", 648648000L),
+                        new MaterialDefinition.Part("Brass", 648648000L),
+                        new MaterialDefinition.Part("Steel", 1297296000L),
+                        new MaterialDefinition.Part("BlackSteel", 2594592000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8333, "Redstone")
                 .displayName("Redstone")
@@ -9969,20 +9266,18 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Redstone")
-                        .source("minecraft", "Minecraft")
-                        .tools(0, 1.0F, 1L, 0)
-                        .composition(
-                                10L,
-                                new MaterialFacts.Part("Pyrite", 3243240000L),
-                                new MaterialFacts.Part("Mercury", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 648648000L),
-                                new MaterialFacts.Part("Ruby", 648648000L))
-                        .byproducts("Cinnabar", "RareEarth", "Glowstone")
-                        .multipliers(4, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Redstone")
+                .source("minecraft", "Minecraft")
+                .tools(0, 1.0F, 1L, 0)
+                .composition(
+                        10L,
+                        new MaterialDefinition.Part("Pyrite", 3243240000L),
+                        new MaterialDefinition.Part("Mercury", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 648648000L),
+                        new MaterialDefinition.Part("Ruby", 648648000L))
+                .byproducts("Cinnabar", "RareEarth", "Glowstone")
+                .multipliers(4, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8733, "RedstoneAlloy")
                 .displayName("Redstone Alloy")
@@ -10018,28 +9313,26 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Redstone Alloy")
-                        .source("EnderIO", "Ender IO")
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Silicon", 648648000L),
-                                new MaterialFacts.Part("Redstone", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Redstone Alloy")
+                .source("EnderIO", "Ender IO")
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Silicon", 648648000L),
+                        new MaterialDefinition.Part("Redstone", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
     }
 
@@ -10061,15 +9354,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Red Vitriol")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Cobalt", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Red Vitriol")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Cobalt", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8602, "RoseGold")
                 .displayName("Rose Gold")
@@ -10104,30 +9395,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tumbaga")
-                        .source("terrafirmacraft", "TerraFirmaCraft")
-                        .tools(3, 14.0F, 128L, 2)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Copper", 648648000L),
-                                new MaterialFacts.Part("Gold", 2594592000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Tumbaga")
+                .source("terrafirmacraft", "TerraFirmaCraft")
+                .tools(3, 14.0F, 128L, 2)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Copper", 648648000L),
+                        new MaterialDefinition.Part("Gold", 2594592000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8217, "Rubber")
                 .displayName("Rubber")
@@ -10154,31 +9443,29 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Rubber")
-                        .source("IC2", "IndustrialCraft 2")
-                        .tools(1, 3.0F, 256L, 0)
-                        .smelting("Rubber", 432432000L)
-                        .composition(
-                                13L,
-                                new MaterialFacts.Part("Carbon", 3243240000L),
-                                new MaterialFacts.Part("Hydrogen", 5189184000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS",
-                                "WIRES")
-                        .build())
+                .localName("Rubber")
+                .source("IC2", "IndustrialCraft 2")
+                .tools(1, 3.0F, 256L, 0)
+                .smelting("Rubber", 432432000L)
+                .composition(
+                        13L,
+                        new MaterialDefinition.Part("Carbon", 3243240000L),
+                        new MaterialDefinition.Part("Hydrogen", 5189184000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS",
+                        "WIRES")
                 .build());
         result.add(MaterialDefinition.builder(8302, "Ruby")
                 .displayName("Ruby")
@@ -10205,19 +9492,17 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ruby")
-                        .source("Redpower", "Redpower")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 512L, 3)
-                        .smelting("Alumina", 486486000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Chromium", 648648000L))
-                        .byproducts("Alumina", "OrangeSapphire", "GreenSapphire", "BlueSapphire")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Ruby")
+                .source("Redpower", "Redpower")
+                .correctedToolStats()
+                .tools(3, 7.0F, 512L, 3)
+                .smelting("Alumina", 486486000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Chromium", 648648000L))
+                .byproducts("Alumina", "OrangeSapphire", "GreenSapphire", "BlueSapphire")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9705, "Rye")
                 .displayName("Rye")
@@ -10229,11 +9514,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Rye")
-                        .source("harvestcraft", "HarvestCraft")
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Rye")
+                .source("harvestcraft", "HarvestCraft")
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8100, "Sand")
                 .displayName("Sand")
@@ -10250,13 +9533,11 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Sand")
-                        .source("minecraft", "Minecraft")
-                        .smelting("Glass", 648648000L)
-                        .forms("DUSTS", "PLANTS")
-                        .processing("Forging", "Glass", 648648000L)
-                        .build())
+                .localName("Sand")
+                .source("minecraft", "Minecraft")
+                .smelting("Glass", 648648000L)
+                .forms("DUSTS", "PLANTS")
+                .processing("Forging", "Glass", 648648000L)
                 .build());
         result.add(MaterialDefinition.builder(8304, "Sapphire")
                 .displayName("Sapphire")
@@ -10283,16 +9564,14 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Saphire")
-                        .source("Redpower", "Redpower")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 512L, 3)
-                        .smelting("Alumina", 486486000L)
-                        .composition(6L, new MaterialFacts.Part("Alumina", 3243240000L))
-                        .byproducts("Alumina", "Ruby", "GreenSapphire", "BlueSapphire")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Saphire")
+                .source("Redpower", "Redpower")
+                .correctedToolStats()
+                .tools(3, 7.0F, 512L, 3)
+                .smelting("Alumina", 486486000L)
+                .composition(6L, new MaterialDefinition.Part("Alumina", 3243240000L))
+                .byproducts("Alumina", "Ruby", "GreenSapphire", "BlueSapphire")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9806, "SeaWater")
                 .displayName("Sea Water")
@@ -10305,14 +9584,12 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Sea Water")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Sea Water")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9872, "SeedOil")
                 .displayName("Seed Oil")
@@ -10324,11 +9601,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Seed Oil")
-                        .source("Forestry", "Forestry")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Seed Oil")
+                .source("Forestry", "Forestry")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9811, "SemiheavyWater")
                 .displayName("Semiheavy Water")
@@ -10341,16 +9616,14 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Semiheavy Water")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Hydrogen", 648648000L),
-                                new MaterialFacts.Part("Deuterium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .aliases("HDO")
-                        .build())
+                .localName("Semiheavy Water")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialDefinition.Part("Deuterium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
+                .aliases("HDO")
                 .build());
         result.add(MaterialDefinition.builder(8708, "Signalum")
                 .displayName("Signalum")
@@ -10385,30 +9658,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Signalum")
-                        .source("ThermalExpansion", "Thermal Expansion")
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("Copper", 648648000L),
-                                new MaterialFacts.Part("Silver", 1297296000L),
-                                new MaterialFacts.Part("RedAlloy", 3243240000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Signalum")
+                .source("ThermalExpansion", "Thermal Expansion")
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("Copper", 648648000L),
+                        new MaterialDefinition.Part("Silver", 1297296000L),
+                        new MaterialDefinition.Part("RedAlloy", 3243240000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8102, "SluiceSand")
                 .displayName("Sluice Sand")
@@ -10420,11 +9691,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Sluice Sand")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Sluice Sand")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8397, "SmokeyQuartz")
                 .displayName("Smokey Quartz")
@@ -10443,15 +9712,13 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("QuartzSmoky")
-                        .source("Botania", "Botania")
-                        .tools(1, 2.5F, 32L, 3)
-                        .smelting("SiliconDioxide", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .multipliers(2, 1)
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("QuartzSmoky")
+                .source("Botania", "Botania")
+                .tools(1, 2.5F, 32L, 3)
+                .smelting("SiliconDioxide", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .multipliers(2, 1)
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9801, "Snow")
                 .displayName("Snow")
@@ -10470,16 +9737,14 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Snow")
-                        .source("minecraft", "Minecraft")
-                        .smelting("Water", 648648000L)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Snow")
+                .source("minecraft", "Minecraft")
+                .smelting("Water", 648648000L)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8331, "Sodalite")
                 .displayName("Sodalite")
@@ -10505,27 +9770,16 @@ public final class CompoundMaterials {
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sodalite")
-                        .composition(
-                                11L,
-                                new MaterialFacts.Part("Alumina", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 1945944000L),
-                                new MaterialFacts.Part("Sodium", 2594592000L),
-                                new MaterialFacts.Part("Chlorine", 648648000L))
-                        .byproducts("Lazurite", "Lapis")
-                        .multipliers(5, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "GEMS",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Sodalite")
+                .composition(
+                        11L,
+                        new MaterialDefinition.Part("Alumina", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 1945944000L),
+                        new MaterialDefinition.Part("Sodium", 2594592000L),
+                        new MaterialDefinition.Part("Chlorine", 648648000L))
+                .byproducts("Lazurite", "Lapis")
+                .multipliers(5, 1)
+                .forms("ARMORS", "DENSEPLATES", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -10546,16 +9800,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sodium Aluminate")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Sodium", 648648000L),
-                                new MaterialFacts.Part("Aluminium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("NaAlO2")
-                        .build())
+                .localName("Sodium Aluminate")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Sodium", 648648000L),
+                        new MaterialDefinition.Part("Aluminium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("NaAlO2")
                 .build());
         result.add(MaterialDefinition.builder(8230, "SodiumBisulfate")
                 .displayName("Sodium Bisulfate")
@@ -10573,18 +9825,16 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("SodiumBisulphate")
-                        .source("ihl", "IHL")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Sodium", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("NaHSO4")
-                        .build())
+                .localName("SodiumBisulphate")
+                .source("ihl", "IHL")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Sodium", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("NaHSO4")
                 .build());
         result.add(MaterialDefinition.builder(8013, "SodiumCarbonate")
                 .displayName("Sodium Carbonate")
@@ -10602,15 +9852,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sodium Carbonate")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Sodium", 1297296000L),
-                                new MaterialFacts.Part("CarbonTrioxide", 2594592000L))
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
-                        .aliases("Na2CO3")
-                        .build())
+                .localName("Sodium Carbonate")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Sodium", 1297296000L),
+                        new MaterialDefinition.Part("CarbonTrioxide", 2594592000L))
+                .forms("DUSTS", "INGOTS", "MOLTEN", "PLANTS")
+                .aliases("Na2CO3")
                 .build());
         result.add(MaterialDefinition.builder(8037, "SodiumFluoride")
                 .displayName("Sodium Fluoride")
@@ -10629,15 +9877,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sodium Fluoride")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Sodium", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 648648000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("NaF")
-                        .build())
+                .localName("Sodium Fluoride")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Sodium", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 648648000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("NaF")
                 .build());
         result.add(MaterialDefinition.builder(8268, "SodiumHydroxide")
                 .displayName("Sodium Hydroxide")
@@ -10656,17 +9902,15 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sodium Hydroxide")
-                        .source("ihl", "IHL")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Sodium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 648648000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("NaOH")
-                        .build())
+                .localName("Sodium Hydroxide")
+                .source("ihl", "IHL")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Sodium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 648648000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("NaOH")
                 .build());
         result.add(MaterialDefinition.builder(9822, "SodiumPersulfate")
                 .displayName("Sodium Persulfate")
@@ -10684,16 +9928,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("SodiumPersulphate")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Sodium", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("NaSO4")
-                        .build())
+                .localName("SodiumPersulphate")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Sodium", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("NaSO4")
                 .build());
         result.add(MaterialDefinition.builder(8231, "SodiumPyrosulfate")
                 .displayName("Sodium Pyrosulfate")
@@ -10711,16 +9953,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("SodiumPyrosulphate")
-                        .composition(
-                                11L,
-                                new MaterialFacts.Part("Sodium", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 4540536000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Na2S2O7")
-                        .build())
+                .localName("SodiumPyrosulphate")
+                .composition(
+                        11L,
+                        new MaterialDefinition.Part("Sodium", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 4540536000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("Na2S2O7")
                 .build());
         result.add(MaterialDefinition.builder(8270, "SodiumSulfate")
                 .displayName("Sodium Sulfate")
@@ -10738,16 +9978,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("SodiumSulphate")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Sodium", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Na2SO4")
-                        .build())
+                .localName("SodiumSulphate")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Sodium", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("Na2SO4")
                 .build());
         result.add(MaterialDefinition.builder(9823, "SodiumSulfide")
                 .displayName("Sodium Sulfide")
@@ -10765,15 +10003,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("SodiumSulphide")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Sodium", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Na2S")
-                        .build())
+                .localName("SodiumSulphide")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Sodium", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("Na2S")
                 .build());
         result.add(MaterialDefinition.builder(8269, "SodiumSulfite")
                 .displayName("Sodium Sulfite")
@@ -10791,16 +10027,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("SodiumSulphite")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Sodium", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Na2SO3")
-                        .build())
+                .localName("SodiumSulphite")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Sodium", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("Na2SO3")
                 .build());
         result.add(MaterialDefinition.builder(8669, "SolderingAlloy")
                 .displayName("Soldering Alloy")
@@ -10835,29 +10069,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Soldering Alloy")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .composition(
-                                10L,
-                                new MaterialFacts.Part("Tin", 5837832000L),
-                                new MaterialFacts.Part("Antimony", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS",
-                                "WIRES")
-                        .build())
+                .localName("Soldering Alloy")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .composition(
+                        10L,
+                        new MaterialDefinition.Part("Tin", 5837832000L),
+                        new MaterialDefinition.Part("Antimony", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS",
+                        "WIRES")
                 .build());
         result.add(MaterialDefinition.builder(8732, "Soularium")
                 .displayName("Soularium")
@@ -10891,28 +10123,26 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Soularium")
-                        .source("EnderIO", "Ender IO")
-                        .tools(3, 15.0F, 128L, 2)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Soulsand", 5837832000L),
-                                new MaterialFacts.Part("Gold", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Soularium")
+                .source("EnderIO", "Ender IO")
+                .tools(3, 15.0F, 128L, 2)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Soulsand", 5837832000L),
+                        new MaterialDefinition.Part("Gold", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9779, "SoylentGreen")
                 .displayName("Soylent Green")
@@ -10924,11 +10154,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Soylent Green")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .forms("DUSTS", "INGOTS", "PLANTS")
-                        .build())
+                .localName("Soylent Green")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .forms("DUSTS", "INGOTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9129, "Spessartine")
                 .displayName("Spessartine")
@@ -10953,20 +10181,18 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Garnet")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 128L, 2)
-                        .smelting("Spessartine", 0L)
-                        .composition(
-                                20L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Manganese", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 5837832000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Almandine", "Grossular", "Pyrope", "Andradite", "Uvarovite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Garnet")
+                .correctedToolStats()
+                .tools(3, 7.0F, 128L, 2)
+                .smelting("Spessartine", 0L)
+                .composition(
+                        20L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Manganese", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 5837832000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Almandine", "Grossular", "Pyrope", "Andradite", "Uvarovite")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8326, "Spinel")
                 .displayName("Spinel")
@@ -10991,18 +10217,16 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Spinel")
-                        .tools(3, 7.0F, 384L, 2)
-                        .smelting("Spinel", 0L)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Magnesium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .byproducts("Alumina", "BalasRuby")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Spinel")
+                .tools(3, 7.0F, 384L, 2)
+                .smelting("Spinel", 0L)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Magnesium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .byproducts("Alumina", "BalasRuby")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -11041,33 +10265,31 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Stainless Steel")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 7.0F, 480L, 2)
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("WroughtIron", 2594592000L),
-                                new MaterialFacts.Part("Invar", 1945944000L),
-                                new MaterialFacts.Part("Chromium", 648648000L),
-                                new MaterialFacts.Part("Manganese", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .build())
+                .localName("Stainless Steel")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 7.0F, 480L, 2)
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("WroughtIron", 2594592000L),
+                        new MaterialDefinition.Part("Invar", 1945944000L),
+                        new MaterialDefinition.Part("Chromium", 648648000L),
+                        new MaterialDefinition.Part("Manganese", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8402, "StannicChloride")
                 .displayName("Stannic Chloride")
@@ -11086,14 +10308,12 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Stannic Chloride")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Tin", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 2594592000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Stannic Chloride")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Tin", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 2594592000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9814, "Steam")
                 .displayName("Steam")
@@ -11110,14 +10330,12 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Steam")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
-                        .build())
+                .localName("Steam")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8630, "Steel")
                 .displayName("Steel")
@@ -11153,30 +10371,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Steel")
-                        .source("Railcraft", "Railcraft")
-                        .tools(3, 6.0F, 512L, 2)
-                        .composition(1L, new MaterialFacts.Part("WroughtIron", 648648000L))
-                        .byproducts("Hematite")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .build())
+                .localName("Steel")
+                .source("Railcraft", "Railcraft")
+                .tools(3, 6.0F, 512L, 2)
+                .composition(1L, new MaterialDefinition.Part("WroughtIron", 648648000L))
+                .byproducts("Hematite")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8673, "Steeleaf")
                 .displayName("Steeleaf")
@@ -11211,30 +10427,28 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Steeleaf")
-                        .source("TwilightForest", "Twilight Forest")
-                        .tools(2, 8.0F, 144L, 3)
-                        .smelting("Steel", 162162000L)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Steel", 648648000L),
-                                new MaterialFacts.Part("Magic", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Steeleaf")
+                .source("TwilightForest", "Twilight Forest")
+                .tools(2, 8.0F, 144L, 3)
+                .smelting("Steel", 162162000L)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Steel", 648648000L),
+                        new MaterialDefinition.Part("Magic", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8651, "SteelGalvanized")
                 .displayName("SteelGalvanized")
@@ -11269,31 +10483,29 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("SteelGalvanized")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 7.0F, 768L, 2)
-                        .smelting("Steel", 648648000L)
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Steel", 5837832000L),
-                                new MaterialFacts.Part("Zinc", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .processing("Forging", "Steel", 648648000L)
-                        .build())
+                .localName("SteelGalvanized")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 7.0F, 768L, 2)
+                .smelting("Steel", 648648000L)
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Steel", 5837832000L),
+                        new MaterialDefinition.Part("Zinc", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .processing("Forging", "Steel", 648648000L)
                 .build());
         result.add(MaterialDefinition.builder(8646, "SteelMagnetic")
                 .displayName("SteelMagnetic")
@@ -11327,32 +10539,30 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("SteelMagnetic")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .correctedToolStats()
-                        .tools(3, 6.0F, 512L, 2)
-                        .smelting("Steel", 648648000L)
-                        .pulverizing("Steel", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("Steel", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .processing("Bending", "Steel", 648648000L)
-                        .processing("Compressing", "Steel", 648648000L)
-                        .processing("Smashing", "Steel", 648648000L)
-                        .processing("Working", "Steel", 648648000L)
-                        .processing("Forging", "Steel", 648648000L)
-                        .build())
+                .localName("SteelMagnetic")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .correctedToolStats()
+                .tools(3, 6.0F, 512L, 2)
+                .smelting("Steel", 648648000L)
+                .pulverizing("Steel", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("Steel", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .processing("Bending", "Steel", 648648000L)
+                .processing("Compressing", "Steel", 648648000L)
+                .processing("Smashing", "Steel", 648648000L)
+                .processing("Working", "Steel", 648648000L)
+                .processing("Forging", "Steel", 648648000L)
                 .build());
         result.add(MaterialDefinition.builder(8601, "SterlingSilver")
                 .displayName("Sterling Silver")
@@ -11387,30 +10597,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sterling Silver")
-                        .source("terrafirmacraft", "TerraFirmaCraft")
-                        .tools(3, 13.0F, 128L, 2)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Copper", 648648000L),
-                                new MaterialFacts.Part("Silver", 2594592000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Sterling Silver")
+                .source("terrafirmacraft", "TerraFirmaCraft")
+                .tools(3, 13.0F, 128L, 2)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Copper", 648648000L),
+                        new MaterialDefinition.Part("Silver", 2594592000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9703, "Sugar")
                 .displayName("Sugar")
@@ -11428,16 +10636,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sugar")
-                        .source("minecraft", "Minecraft")
-                        .composition(
-                                45L,
-                                new MaterialFacts.Part("Carbon", 7783776000L),
-                                new MaterialFacts.Part("Hydrogen", 14270256000L),
-                                new MaterialFacts.Part("Oxygen", 7135128000L))
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Sugar")
+                .source("minecraft", "Minecraft")
+                .composition(
+                        45L,
+                        new MaterialDefinition.Part("Carbon", 7783776000L),
+                        new MaterialDefinition.Part("Hydrogen", 14270256000L),
+                        new MaterialDefinition.Part("Oxygen", 7135128000L))
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9824, "SulfuricAcid")
                 .displayName("Sulfuric Acid")
@@ -11456,17 +10662,15 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("SulphuricAcid")
-                        .source("factorization", "Factorization")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .aliases("H2SO4")
-                        .build())
+                .localName("SulphuricAcid")
+                .source("factorization", "Factorization")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
+                .aliases("H2SO4")
                 .build());
         result.add(MaterialDefinition.builder(9875, "SunflowerOil")
                 .displayName("Sunflower Oil")
@@ -11478,11 +10682,9 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Sunflower Oil")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Sunflower Oil")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8393, "SunnyQuartz")
                 .displayName("Sunny Quartz")
@@ -11501,15 +10703,13 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sunny Quartz")
-                        .source("Botania", "Botania")
-                        .tools(1, 2.5F, 32L, 3)
-                        .smelting("SiliconDioxide", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("SiliconDioxide", 648648000L))
-                        .multipliers(2, 1)
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Sunny Quartz")
+                .source("Botania", "Botania")
+                .tools(1, 2.5F, 32L, 3)
+                .smelting("SiliconDioxide", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("SiliconDioxide", 648648000L))
+                .multipliers(2, 1)
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9516, "Superconductor")
                 .displayName("Superconductor")
@@ -11540,7 +10740,7 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder().localName("Superconductor").build())
+                .localName("Superconductor")
                 .build());
         result.add(MaterialDefinition.builder(8802, "TantalumHafniumCarbide")
                 .displayName("Tantalum Hafnium Carbide")
@@ -11576,31 +10776,29 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tantalum Hafnium Carbide")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(0, 1.0F, 1L, 2)
-                        .composition(
-                                10L,
-                                new MaterialFacts.Part("Tantalum", 2594592000L),
-                                new MaterialFacts.Part("Hafnium", 648648000L),
-                                new MaterialFacts.Part("Carbon", 3243240000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ta4HfC5")
-                        .build())
+                .localName("Tantalum Hafnium Carbide")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(0, 1.0F, 1L, 2)
+                .composition(
+                        10L,
+                        new MaterialDefinition.Part("Tantalum", 2594592000L),
+                        new MaterialDefinition.Part("Hafnium", 648648000L),
+                        new MaterialDefinition.Part("Carbon", 3243240000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ta4HfC5")
                 .build());
         result.add(MaterialDefinition.builder(8308, "Tanzanite")
                 .displayName("Tanzanite")
@@ -11625,20 +10823,18 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tanzanite")
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("Tanzanite", 0L)
-                        .composition(
-                                44L,
-                                new MaterialFacts.Part("Alumina", 9729720000L),
-                                new MaterialFacts.Part("SiliconDioxide", 11675664000L),
-                                new MaterialFacts.Part("Calcium", 2594592000L),
-                                new MaterialFacts.Part("Water", 1945944000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts("Opal")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Tanzanite")
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("Tanzanite", 0L)
+                .composition(
+                        44L,
+                        new MaterialDefinition.Part("Alumina", 9729720000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialDefinition.Part("Calcium", 2594592000L),
+                        new MaterialDefinition.Part("Water", 1945944000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts("Opal")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -11653,10 +10849,8 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Tea")
-                        .forms("DUSTS", "PLANTS")
-                        .build())
+                .localName("Tea")
+                .forms("DUSTS", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8196, "Teflon")
                 .displayName("Teflon")
@@ -11675,31 +10869,29 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Polymer")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .tools(1, 3.0F, 256L, 1)
-                        .smelting("Teflon", 432432000L)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Carbon", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 1297296000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS",
-                                "WIRES")
-                        .build())
+                .localName("Polymer")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .tools(1, 3.0F, 256L, 1)
+                .smelting("Teflon", 432432000L)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Carbon", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS",
+                        "WIRES")
                 .build());
         result.add(MaterialDefinition.builder(8721, "Terrasteel")
                 .displayName("Terrasteel")
@@ -11733,25 +10925,23 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Terrasteel")
-                        .source("Botania", "Botania")
-                        .tools(3, 16.0F, 2048L, 4)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Terrasteel")
+                .source("Botania", "Botania")
+                .tools(3, 16.0F, 2048L, 4)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8679, "Thaumium")
                 .displayName("Thaumium")
@@ -11786,31 +10976,29 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Thaumium")
-                        .source("Thaumcraft", "Thaumcraft")
-                        .tools(3, 12.0F, 256L, 3)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Magic", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Thaumium")
+                .source("Thaumcraft", "Thaumcraft")
+                .tools(3, 12.0F, 256L, 3)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Magic", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8430, "TigerEye")
                 .displayName("Tiger Eye")
@@ -11834,15 +11022,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("YellowTigerEye")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("TigerEye", 0L)
-                        .byproducts("Hematite", "CatsEye", "DragonEye", "HawksEye", "BlackEye", "TigerIron")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("TigerEyeYellow")
-                        .build())
+                .localName("YellowTigerEye")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("TigerEye", 0L)
+                .byproducts("Hematite", "CatsEye", "DragonEye", "HawksEye", "BlackEye", "TigerIron")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("TigerEyeYellow")
                 .build());
         result.add(MaterialDefinition.builder(8435, "TigerIron")
                 .displayName("Tiger Iron")
@@ -11866,14 +11052,12 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tiger Iron")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("TigerIron", 0L)
-                        .byproducts("Hematite", "TigerEye", "CatsEye", "DragonEye", "HawksEye", "BlackEye")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Tiger Iron")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("TigerIron", 0L)
+                .byproducts("Hematite", "TigerEye", "CatsEye", "DragonEye", "HawksEye", "BlackEye")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8667, "TinAlloy")
                 .displayName("Tin Alloy")
@@ -11909,30 +11093,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tin Alloy")
-                        .source("Railcraft", "Railcraft")
-                        .tools(3, 6.5F, 96L, 2)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Tin", 648648000L),
-                                new MaterialFacts.Part("WroughtIron", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Tin Alloy")
+                .source("Railcraft", "Railcraft")
+                .tools(3, 6.5F, 96L, 2)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Tin", 648648000L),
+                        new MaterialDefinition.Part("WroughtIron", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8793, "TitaniumIridium")
                 .displayName("Titanium Iridium")
@@ -11967,16 +11149,14 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Iritanium")
-                        .source("advancedRocketry", "Advanced Rocketry")
-                        .tools(3, 8.0F, 7680L, 4)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Iridium", 648648000L),
-                                new MaterialFacts.Part("Titanium", 648648000L))
-                        .aliases("Iritanium")
-                        .build())
+                .localName("Iritanium")
+                .source("advancedRocketry", "Advanced Rocketry")
+                .tools(3, 8.0F, 7680L, 4)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Iridium", 648648000L),
+                        new MaterialDefinition.Part("Titanium", 648648000L))
+                .aliases("Iritanium")
                 .build());
         result.add(MaterialDefinition.builder(8413, "TitaniumTetrachloride")
                 .displayName("Titanium Tetrachloride")
@@ -11995,15 +11175,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Titanium Tetrachloride")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Titanium", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 2594592000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .aliases("TiCl4")
-                        .build())
+                .localName("Titanium Tetrachloride")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Titanium", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 2594592000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
+                .aliases("TiCl4")
                 .build());
         result.add(MaterialDefinition.builder(8306, "Topaz")
                 .displayName("Topaz")
@@ -12028,20 +11206,18 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Topaz")
-                        .source("BiomesOPlenty", "Biomes O' Plenty")
-                        .tools(3, 7.0F, 256L, 3)
-                        .smelting("Topaz", 0L)
-                        .composition(
-                                13L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("SiliconDioxide", 1945944000L),
-                                new MaterialFacts.Part("Fluorine", 1297296000L),
-                                new MaterialFacts.Part("Water", 1945944000L))
-                        .byproducts("BlueTopaz")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Topaz")
+                .source("BiomesOPlenty", "Biomes O' Plenty")
+                .tools(3, 7.0F, 256L, 3)
+                .smelting("Topaz", 0L)
+                .composition(
+                        13L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 1945944000L),
+                        new MaterialDefinition.Part("Fluorine", 1297296000L),
+                        new MaterialDefinition.Part("Water", 1945944000L))
+                .byproducts("BlueTopaz")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8684, "Trinaquadalloy")
                 .displayName("Trinaquadalloy")
@@ -12076,29 +11252,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("NaquadahAlloy")
-                        .tools(3, 14.0F, 20480L, 5)
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Trinium", 3891888000L),
-                                new MaterialFacts.Part("Naquadah", 1297296000L),
-                                new MaterialFacts.Part("Carbon", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("NaquadahAlloy")
+                .tools(3, 14.0F, 20480L, 5)
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Trinium", 3891888000L),
+                        new MaterialDefinition.Part("Naquadah", 1297296000L),
+                        new MaterialDefinition.Part("Carbon", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8790, "Trinitanium")
                 .displayName("Trinitanium")
@@ -12134,29 +11308,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Trinitanium")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 16.0F, 5120L, 4)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Trinium", 1297296000L),
-                                new MaterialFacts.Part("Titanium", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Trinitanium")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 16.0F, 5120L, 4)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Trinium", 1297296000L),
+                        new MaterialDefinition.Part("Titanium", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8752, "Tritanium")
                 .displayName("Tritanium")
@@ -12192,31 +11364,29 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tritanium")
-                        .source("mo", "Matter Overdrive")
-                        .tools(3, 12.0F, 2560L, 5)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("TritaniumElemental", 1945944000L),
-                                new MaterialFacts.Part("DuraniumElemental", 648648000L))
-                        .byproducts("DiduraniumTrioxide", "Trinium")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("TritaniumAlloy")
-                        .build())
+                .localName("Tritanium")
+                .source("mo", "Matter Overdrive")
+                .tools(3, 12.0F, 2560L, 5)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("TritaniumElemental", 1945944000L),
+                        new MaterialDefinition.Part("DuraniumElemental", 648648000L))
+                .byproducts("DiduraniumTrioxide", "Trinium")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("TritaniumAlloy")
                 .build());
         result.add(MaterialDefinition.builder(9813, "TritiatedWater")
                 .displayName("Tritiated Water")
@@ -12229,15 +11399,13 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Tritiated Water")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Tritium", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .aliases("T2O")
-                        .build())
+                .localName("Tritiated Water")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Tritium", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
+                .aliases("T2O")
                 .build());
         result.add(MaterialDefinition.builder(8638, "TungstenCarbide")
                 .displayName("Tungsten Carbide")
@@ -12273,30 +11441,28 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Carbide")
-                        .source("ReactorCraft", "ReactorCraft")
-                        .tools(3, 10.0F, 5120L, 4)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Tungsten", 648648000L),
-                                new MaterialFacts.Part("Carbon", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .build())
+                .localName("Carbide")
+                .source("ReactorCraft", "ReactorCraft")
+                .tools(3, 10.0F, 5120L, 4)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Tungsten", 648648000L),
+                        new MaterialDefinition.Part("Carbon", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
                 .build());
     }
 
@@ -12333,29 +11499,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("TungstenSintered")
-                        .source("RotaryCraft", "RotaryCraft")
-                        .tools(3, 8.0F, 5120L, 3)
-                        .composition(1L, new MaterialFacts.Part("Tungsten", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .processing("Forging", "TungstenSintered", 648648000L)
-                        .processing("Cutting", "TungstenSintered", 648648000L)
-                        .processing("Working", "TungstenSintered", 648648000L)
-                        .processing("Smashing", "TungstenSintered", 648648000L)
-                        .build())
+                .localName("TungstenSintered")
+                .source("RotaryCraft", "RotaryCraft")
+                .tools(3, 8.0F, 5120L, 3)
+                .composition(1L, new MaterialDefinition.Part("Tungsten", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
+                .processing("Forging", "TungstenSintered", 648648000L)
+                .processing("Cutting", "TungstenSintered", 648648000L)
+                .processing("Working", "TungstenSintered", 648648000L)
+                .processing("Smashing", "TungstenSintered", 648648000L)
                 .build());
         result.add(MaterialDefinition.builder(8635, "Tungstensteel")
                 .displayName("Tungstensteel")
@@ -12391,32 +11555,30 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("TungstenSteel")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 10.0F, 5120L, 4)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Steel", 648648000L),
-                                new MaterialFacts.Part("Tungsten", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .aliases("TungstenSteel")
-                        .build())
+                .localName("TungstenSteel")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 10.0F, 5120L, 4)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Steel", 648648000L),
+                        new MaterialDefinition.Part("Tungsten", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
+                .aliases("TungstenSteel")
                 .build());
         result.add(MaterialDefinition.builder(8027, "TungsticAcid")
                 .displayName("Tungstic Acid")
@@ -12437,17 +11599,15 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tungstic Acid")
-                        .smelting("TungstenTrioxide", 370656000L)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Tungsten", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("H2WO4")
-                        .build())
+                .localName("Tungstic Acid")
+                .smelting("TungstenTrioxide", 370656000L)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Tungsten", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("DUSTS", "PLANTS")
+                .aliases("H2WO4")
                 .build());
         result.add(MaterialDefinition.builder(8666, "Ultimet")
                 .displayName("Ultimet")
@@ -12482,32 +11642,30 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ultimet")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 8.0F, 1024L, 3)
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Cobalt", 3243240000L),
-                                new MaterialFacts.Part("Nickel", 648648000L),
-                                new MaterialFacts.Part("Chromium", 1297296000L),
-                                new MaterialFacts.Part("Molybdenum", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Ultimet")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 8.0F, 1024L, 3)
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Cobalt", 3243240000L),
+                        new MaterialDefinition.Part("Nickel", 648648000L),
+                        new MaterialDefinition.Part("Chromium", 1297296000L),
+                        new MaterialDefinition.Part("Molybdenum", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9012, "Uranium235Hexafluoride")
                 .displayName("Uranium-235 Hexafluoride")
@@ -12520,15 +11678,13 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Uranium-235 Hexafluoride")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Uranium235", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 3891888000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("U235F6")
-                        .build())
+                .localName("Uranium-235 Hexafluoride")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Uranium235", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 3891888000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("U235F6")
                 .build());
         result.add(MaterialDefinition.builder(9011, "Uranium235Tetrafluoride")
                 .displayName("Uranium-235 Tetrafluoride")
@@ -12545,15 +11701,13 @@ public final class CompoundMaterials {
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Uranium-235 Tetrafluoride")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Uranium235", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 2594592000L))
-                        .forms("DUSTS", "MOLTEN", "PLANTS")
-                        .aliases("U235F4")
-                        .build())
+                .localName("Uranium-235 Tetrafluoride")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Uranium235", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 2594592000L))
+                .forms("DUSTS", "MOLTEN", "PLANTS")
+                .aliases("U235F4")
                 .build());
         result.add(MaterialDefinition.builder(9010, "Uranium238Hexafluoride")
                 .displayName("Uranium-238 Hexafluoride")
@@ -12566,15 +11720,13 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Uranium-238 Hexafluoride")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Uranium", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 3891888000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("U238F6")
-                        .build())
+                .localName("Uranium-238 Hexafluoride")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Uranium", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 3891888000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("U238F6")
                 .build());
         result.add(MaterialDefinition.builder(9009, "Uranium238Tetrafluoride")
                 .displayName("Uranium-238 Tetrafluoride")
@@ -12591,15 +11743,13 @@ public final class CompoundMaterials {
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Uranium-238 Tetrafluoride")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Uranium", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 2594592000L))
-                        .forms("DUSTS", "MOLTEN", "PLANTS")
-                        .aliases("U238F4")
-                        .build())
+                .localName("Uranium-238 Tetrafluoride")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Uranium", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 2594592000L))
+                .forms("DUSTS", "MOLTEN", "PLANTS")
+                .aliases("U238F4")
                 .build());
         result.add(MaterialDefinition.builder(9008, "UraniumHexafluoride")
                 .displayName("Uranium Hexafluoride")
@@ -12612,15 +11762,13 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Uranium Hexafluoride")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Uranium", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 3891888000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("UF6")
-                        .build())
+                .localName("Uranium Hexafluoride")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Uranium", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 3891888000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("UF6")
                 .build());
         result.add(MaterialDefinition.builder(9007, "UraniumTetrafluoride")
                 .displayName("Uranium Tetrafluoride")
@@ -12637,15 +11785,13 @@ public final class CompoundMaterials {
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Uranium Tetrafluoride")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Uranium", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 2594592000L))
-                        .forms("DUSTS", "MOLTEN", "PLANTS")
-                        .aliases("UF4")
-                        .build())
+                .localName("Uranium Tetrafluoride")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Uranium", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 2594592000L))
+                .forms("DUSTS", "MOLTEN", "PLANTS")
+                .aliases("UF4")
                 .build());
         result.add(MaterialDefinition.builder(9135, "Uvarovite")
                 .displayName("Uvarovite")
@@ -12670,20 +11816,18 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("GarnetGreen")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 128L, 2)
-                        .smelting("Uvarovite", 0L)
-                        .composition(
-                                20L,
-                                new MaterialFacts.Part("Calcium", 1945944000L),
-                                new MaterialFacts.Part("Chromium", 1297296000L),
-                                new MaterialFacts.Part("SiliconDioxide", 5837832000L),
-                                new MaterialFacts.Part("Oxygen", 3891888000L))
-                        .byproducts("Almandine", "Grossular", "Pyrope", "Spessartine", "Andradite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("GarnetGreen")
+                .correctedToolStats()
+                .tools(3, 7.0F, 128L, 2)
+                .smelting("Uvarovite", 0L)
+                .composition(
+                        20L,
+                        new MaterialDefinition.Part("Calcium", 1945944000L),
+                        new MaterialDefinition.Part("Chromium", 1297296000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 5837832000L),
+                        new MaterialDefinition.Part("Oxygen", 3891888000L))
+                .byproducts("Almandine", "Grossular", "Pyrope", "Spessartine", "Andradite")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8686, "VanadiumGallium")
                 .displayName("Vanadium-Gallium")
@@ -12718,27 +11862,25 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Vanadium-Gallium")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Vanadium", 1945944000L),
-                                new MaterialFacts.Part("Gallium", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Vanadium-Gallium")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Vanadium", 1945944000L),
+                        new MaterialDefinition.Part("Gallium", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8653, "VanadiumSteel")
                 .displayName("VanadiumSteel")
@@ -12773,29 +11915,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("VanadiumSteel")
-                        .tools(3, 7.0F, 512L, 3)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Steel", 2594592000L),
-                                new MaterialFacts.Part("Vanadium", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("VanadiumSteel")
+                .tools(3, 7.0F, 512L, 3)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Steel", 2594592000L),
+                        new MaterialDefinition.Part("Vanadium", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8706, "Vibramantium")
                 .displayName("Vibramantium")
@@ -12830,29 +11970,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Vibramantium")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 1000.0F, 5120L, 15)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Vibranium", 648648000L),
-                                new MaterialFacts.Part("Adamantium", 1945944000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Vibramantium")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 1000.0F, 5120L, 15)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Vibranium", 648648000L),
+                        new MaterialDefinition.Part("Adamantium", 1945944000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8705, "VibraniumSilver")
                 .displayName("Vibranium Silver")
@@ -12887,28 +12025,26 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Vibranium Silver")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 100.0F, 512L, 9)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Vibranium", 648648000L),
-                                new MaterialFacts.Part("Silver", 1945944000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Vibranium Silver")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 100.0F, 512L, 9)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Vibranium", 648648000L),
+                        new MaterialDefinition.Part("Silver", 1945944000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
     }
 
@@ -12946,29 +12082,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Vibranium Steel")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 50.0F, 2048L, 10)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Vibranium", 648648000L),
-                                new MaterialFacts.Part("Steel", 1945944000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Vibranium Steel")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 50.0F, 2048L, 10)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Vibranium", 648648000L),
+                        new MaterialDefinition.Part("Steel", 1945944000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8726, "VibrantAlloy")
                 .displayName("Vibrant Alloy")
@@ -13002,25 +12136,23 @@ public final class CompoundMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("PhasedGold")
-                        .source("EnderIO", "Ender IO")
-                        .correctedToolStats()
-                        .tools(3, 12.5F, 64L, 2)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("PhasedGold")
+                .source("EnderIO", "Ender IO")
+                .correctedToolStats()
+                .tools(3, 12.5F, 64L, 2)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8412, "VitriolOfClay")
                 .displayName("Vitriol Of Clay")
@@ -13039,15 +12171,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Vitriol Of Clay")
-                        .composition(
-                                17L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Sulfur", 1945944000L),
-                                new MaterialFacts.Part("Oxygen", 5837832000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Vitriol Of Clay")
+                .composition(
+                        17L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Sulfur", 1945944000L),
+                        new MaterialDefinition.Part("Oxygen", 5837832000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9800, "Water")
                 .displayName("Water")
@@ -13064,17 +12194,15 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Water")
-                        .source("minecraft", "Minecraft")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .aliases("H2O")
-                        .processing("Solidifying", "Ice", 648648000L)
-                        .build())
+                .localName("Water")
+                .source("minecraft", "Minecraft")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
+                .aliases("H2O")
+                .processing("Solidifying", "Ice", 648648000L)
                 .build());
         result.add(MaterialDefinition.builder(9808, "WaterDistilled")
                 .displayName("WaterDistilled")
@@ -13091,16 +12219,14 @@ public final class CompoundMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("WaterDistilled")
-                        .source("IC2", "IndustrialCraft 2")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .aliases("DistWater")
-                        .build())
+                .localName("WaterDistilled")
+                .source("IC2", "IndustrialCraft 2")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
+                .aliases("DistWater")
                 .build());
         result.add(MaterialDefinition.builder(8235, "Wax")
                 .displayName("Wax")
@@ -13118,11 +12244,9 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_NUGGET,
                         MaterialProperty.INGOT,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Wax")
-                        .source("Forestry", "Forestry")
-                        .forms("DUSTS", "FOILS", "INGOTS", "PARTS", "PLANTS", "PLATES")
-                        .build())
+                .localName("Wax")
+                .source("Forestry", "Forestry")
+                .forms("DUSTS", "FOILS", "INGOTS", "PARTS", "PLANTS", "PLATES")
                 .build());
         result.add(MaterialDefinition.builder(8236, "WaxBee")
                 .displayName("WaxBee")
@@ -13140,11 +12264,9 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_NUGGET,
                         MaterialProperty.INGOT,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("BeesWax")
-                        .source("Forestry", "Forestry")
-                        .forms("DUSTS", "FOILS", "INGOTS", "PARTS", "PLANTS", "PLATES")
-                        .build())
+                .localName("BeesWax")
+                .source("Forestry", "Forestry")
+                .forms("DUSTS", "FOILS", "INGOTS", "PARTS", "PLANTS", "PLATES")
                 .build());
         result.add(MaterialDefinition.builder(8238, "WaxParaffin")
                 .displayName("WaxParaffin")
@@ -13162,10 +12284,8 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_NUGGET,
                         MaterialProperty.INGOT,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("ParaffinWax")
-                        .forms("DUSTS", "FOILS", "INGOTS", "PARTS", "PLANTS", "PLATES")
-                        .build())
+                .localName("ParaffinWax")
+                .forms("DUSTS", "FOILS", "INGOTS", "PARTS", "PLANTS", "PLATES")
                 .build());
         result.add(MaterialDefinition.builder(8239, "WaxPlant")
                 .displayName("WaxPlant")
@@ -13183,11 +12303,9 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_NUGGET,
                         MaterialProperty.INGOT,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("WaxPlant")
-                        .source("harvestcraft", "HarvestCraft")
-                        .forms("DUSTS", "FOILS", "INGOTS", "PARTS", "PLANTS", "PLATES")
-                        .build())
+                .localName("WaxPlant")
+                .source("harvestcraft", "HarvestCraft")
+                .forms("DUSTS", "FOILS", "INGOTS", "PARTS", "PLANTS", "PLATES")
                 .build());
         result.add(MaterialDefinition.builder(9702, "Wheat")
                 .displayName("Wheat")
@@ -13199,12 +12317,10 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Flour")
-                        .source("minecraft", "Minecraft")
-                        .forms("DUSTS", "PLANTS")
-                        .aliases("Flour")
-                        .build())
+                .localName("Flour")
+                .source("minecraft", "Minecraft")
+                .forms("DUSTS", "PLANTS")
+                .aliases("Flour")
                 .build());
         result.add(MaterialDefinition.builder(8441, "WhiteFluorite")
                 .displayName("White Fluorite")
@@ -13229,13 +12345,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("White Fluorite")
-                        .smelting("Fluorite", 648648000L)
-                        .byproducts("BlackFluorite", "Fluorite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("FluoriteWhite")
-                        .build())
+                .localName("White Fluorite")
+                .smelting("Fluorite", 648648000L)
+                .byproducts("BlackFluorite", "Fluorite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("FluoriteWhite")
                 .build());
         result.add(MaterialDefinition.builder(8460, "WhitePhosphorus")
                 .displayName("White Phosphorus")
@@ -13260,24 +12374,16 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("White Phosphorus")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Calcium", 1945944000L),
-                                new MaterialFacts.Part("Phosphate", 1297296000L))
-                        .byproducts(
-                                "Phosphorite",
-                                "Apatite",
-                                "WhiteFluorite",
-                                "Phosphate",
-                                "RedPhosphorus",
-                                "BluePhosphorus")
-                        .multipliers(3, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("PhosphorusWhite")
-                        .build())
+                .localName("White Phosphorus")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Calcium", 1945944000L),
+                        new MaterialDefinition.Part("Phosphate", 1297296000L))
+                .byproducts("Phosphorite", "Apatite", "WhiteFluorite", "Phosphate", "RedPhosphorus", "BluePhosphorus")
+                .multipliers(3, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("PhosphorusWhite")
                 .build());
         result.add(MaterialDefinition.builder(8409, "WhiteVitriol")
                 .displayName("White Vitriol")
@@ -13296,15 +12402,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("White Vitriol")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Zinc", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("White Vitriol")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Zinc", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8447, "YellowAventurine")
                 .displayName("Yellow Aventurine")
@@ -13328,20 +12432,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Yellow Aventurine")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("YellowAventurine", 0L)
-                        .byproducts(
-                                "GreenAventurine",
-                                "BrownAventurine",
-                                "BlackAventurine",
-                                "BlueAventurine",
-                                "RedAventurine")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("AventurineYellow")
-                        .build())
+                .localName("Yellow Aventurine")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("YellowAventurine", 0L)
+                .byproducts("GreenAventurine", "BrownAventurine", "BlackAventurine", "BlueAventurine", "RedAventurine")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("AventurineYellow")
                 .build());
         result.add(MaterialDefinition.builder(8468, "YellowDiamond")
                 .displayName("Yellow Diamond")
@@ -13366,17 +12463,15 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Yellow Diamond")
-                        .source("ExtraPlanets", "Extra Planets")
-                        .correctedToolStats()
-                        .tools(3, 8.0F, 1280L, 3)
-                        .smelting("Carbon", 1297296000L)
-                        .composition(1L, new MaterialFacts.Part("Carbon", 2594592000L))
-                        .byproducts("Graphite", "Diamond")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("DiamondYellow")
-                        .build())
+                .localName("Yellow Diamond")
+                .source("ExtraPlanets", "Extra Planets")
+                .correctedToolStats()
+                .tools(3, 8.0F, 1280L, 3)
+                .smelting("Carbon", 1297296000L)
+                .composition(1L, new MaterialDefinition.Part("Carbon", 2594592000L))
+                .byproducts("Graphite", "Diamond")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("DiamondYellow")
                 .build());
     }
 
@@ -13404,13 +12499,11 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Yellow Fluorite")
-                        .smelting("Fluorite", 648648000L)
-                        .byproducts("GreenFluorite", "OrangeFluorite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("FluoriteYellow")
-                        .build())
+                .localName("Yellow Fluorite")
+                .smelting("Fluorite", 648648000L)
+                .byproducts("GreenFluorite", "OrangeFluorite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("FluoriteYellow")
                 .build());
         result.add(MaterialDefinition.builder(8429, "YellowJasper")
                 .displayName("Yellow Jasper")
@@ -13434,15 +12527,13 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Yellow Jasper")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 256L, 2)
-                        .smelting("YellowJasper", 0L)
-                        .byproducts("RedJasper", "OceanJasper", "RainforestJasper", "BlueJasper", "GreenJasper")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("JasperYellow")
-                        .build())
+                .localName("Yellow Jasper")
+                .correctedToolStats()
+                .tools(3, 7.0F, 256L, 2)
+                .smelting("YellowJasper", 0L)
+                .byproducts("RedJasper", "OceanJasper", "RainforestJasper", "BlueJasper", "GreenJasper")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("JasperYellow")
                 .build());
         result.add(MaterialDefinition.builder(8315, "YellowSapphire")
                 .displayName("Yellow Sapphire")
@@ -13469,18 +12560,16 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Yellow Sapphire")
-                        .correctedToolStats()
-                        .tools(3, 7.0F, 512L, 3)
-                        .smelting("Alumina", 486486000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Rutile", 648648000L))
-                        .byproducts("Alumina", "Ruby", "GreenSapphire", "BlueSapphire")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Yellow Sapphire")
+                .correctedToolStats()
+                .tools(3, 7.0F, 512L, 3)
+                .smelting("Alumina", 486486000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Rutile", 648648000L))
+                .byproducts("Alumina", "Ruby", "GreenSapphire", "BlueSapphire")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8687, "YttriumBariumCuprate")
                 .displayName("Yttrium-Barium-Cuprate")
@@ -13515,29 +12604,27 @@ public final class CompoundMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Yttrium-Barium-Cuprate")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Yttrium", 648648000L),
-                                new MaterialFacts.Part("Barium", 1297296000L),
-                                new MaterialFacts.Part("Copper", 1945944000L),
-                                new MaterialFacts.Part("Oxygen", 4540536000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Yttrium-Barium-Cuprate")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Yttrium", 648648000L),
+                        new MaterialDefinition.Part("Barium", 1297296000L),
+                        new MaterialDefinition.Part("Copper", 1945944000L),
+                        new MaterialDefinition.Part("Oxygen", 4540536000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8419, "Zircon")
                 .displayName("Zircon")
@@ -13563,20 +12650,18 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Zircon")
-                        .source("tropicraft", "Tropicraft")
-                        .tools(3, 8.0F, 384L, 2)
-                        .smelting("Zirconium", 72072000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Zirconium", 648648000L),
-                                new MaterialFacts.Part("SiliconDioxide", 1945944000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .byproducts("Rutile", "Hafnium", "Uraninite")
-                        .multipliers(2, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Zircon")
+                .source("tropicraft", "Tropicraft")
+                .tools(3, 8.0F, 384L, 2)
+                .smelting("Zirconium", 72072000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Zirconium", 648648000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 1945944000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .byproducts("Rutile", "Hafnium", "Uraninite")
+                .multipliers(2, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 }

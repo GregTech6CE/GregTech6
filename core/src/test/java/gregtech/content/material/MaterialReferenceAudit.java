@@ -1,5 +1,6 @@
 package gregtech.content.material;
 
+import gregtech.api.addon.material.MaterialTarget;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.generated.MaterialForms;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -52,20 +53,35 @@ final class MaterialReferenceAudit {
         for (var definition : MaterialDefinitions.all()) {
             if (definition.id() > 0)
                 refs.add(new Reference("catalog", definition.name(), "owner", definition.name(), definition.id()));
-            var facts = definition.facts();
             int slot = 0;
-            for (var part : facts.composition())
+            for (var part : definition.composition().parts())
                 refs.add(new Reference("catalog", definition.name(), "component[" + slot++ + "]", part.material(), 0));
-            for (String target : facts.byproducts())
+            for (String target : definition.byproducts())
                 refs.add(new Reference("catalog", definition.name(), "byproduct", target, 0));
-            for (var target : new gregtech.engine.material.MaterialFacts.Target[] {
-                facts.burning(), facts.crushing(), facts.smelting(), facts.pulverizing()
+            for (var target : new MaterialTarget[] {
+                definition
+                        .fuel()
+                        .flatMap(gregtech.api.addon.material.FuelRule::residue)
+                        .orElse(null),
+                definition.crushing(),
+                definition.smelting(),
+                definition.pulverizing()
             })
                 if (target != null)
-                    refs.add(new Reference("catalog", definition.name(), "target", target.material(), 0));
-            for (var target : facts.processing().values())
-                refs.add(new Reference("catalog", definition.name(), "processing", target.material(), 0));
-            for (String target : facts.members())
+                    refs.add(new Reference(
+                            "catalog",
+                            definition.name(),
+                            "target",
+                            target.material().name(),
+                            0));
+            for (var target : definition.processing().values())
+                refs.add(new Reference(
+                        "catalog",
+                        definition.name(),
+                        "processing",
+                        target.material().name(),
+                        0));
+            for (String target : definition.members())
                 refs.add(new Reference("catalog", definition.name(), "member", target, 0));
         }
         return refs;

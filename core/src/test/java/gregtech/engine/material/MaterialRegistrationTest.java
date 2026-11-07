@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialSentinels;
+import gregtech.content.material.MaterialDefinitions;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -70,9 +71,7 @@ class MaterialRegistrationTest {
     void invalidReferencesAndIncompleteCompositionsFailBeforeLinksAreWritten() {
         var iron = new GTMaterial(260, "Iron", "Iron", 0);
         var invalid = MaterialDefinition.builder(261, "Test")
-                .facts(MaterialFacts.builder()
-                        .composition(2, new MaterialFacts.Part("Iron", 1), new MaterialFacts.Part("TypoCopper", 1))
-                        .build())
+                .composition(2, new MaterialDefinition.Part("Iron", 1), new MaterialDefinition.Part("TypoCopper", 1))
                 .build();
         var target = new GTMaterial(261, "Test", "Test", 0);
         var index = Map.of("Iron", iron, "Test", target);
@@ -80,20 +79,30 @@ class MaterialRegistrationTest {
                 IllegalArgumentException.class, () -> MaterialLinker.validate(List.of(invalid), index::get));
         assertTrue(error.getMessage().contains("Test / composition -> TypoCopper"));
         assertFalse(target.hasComposition());
-        assertThrows(IllegalArgumentException.class, () -> new MaterialFacts.Part("Iron", 0));
+        assertThrows(IllegalArgumentException.class, () -> new MaterialDefinition.Part("Iron", 0));
         assertThrows(
                 IllegalArgumentException.class,
-                () -> MaterialFacts.builder()
-                        .composition(0, new MaterialFacts.Part("Iron", 1))
+                () -> MaterialDefinition.builder(1, "InvalidDivider")
+                        .composition(0, new MaterialDefinition.Part("Iron", 1))
                         .build());
-        var a = MaterialDefinition.builder(-1, "AnyA")
-                .facts(MaterialFacts.builder().group().members("AnyB").build())
-                .build();
-        var b = MaterialDefinition.builder(-1, "AnyB")
-                .facts(MaterialFacts.builder().group().members("AnyA").build())
-                .build();
+        var a = MaterialDefinition.builder(-1, "AnyA").group().members("AnyB").build();
+        var b = MaterialDefinition.builder(-1, "AnyB").group().members("AnyA").build();
         var groups = Map.of("AnyA", new GTMaterial(-1, "AnyA", "A", 0), "AnyB", new GTMaterial(-1, "AnyB", "B", 0));
         assertThrows(IllegalArgumentException.class, () -> MaterialLinker.validate(List.of(a, b), groups::get));
+    }
+
+    @Test
+    void declarationRecordsExposeDomainGroupsInsteadOfFlatFields() {
+        assertEquals(9, MaterialDefinition.class.getRecordComponents().length);
+        assertFalse(java.util.Arrays.stream(MaterialDefinition.class.getRecordComponents())
+                .anyMatch(component -> component.getName().equals("facts")));
+        var definition = MaterialDefinitions.find("Iron");
+        assertNotNull(definition);
+        assertEquals("Iron", definition.identity().name());
+        assertEquals(definition.identity().id(), definition.id());
+        var graphite = MaterialDefinitions.find("Graphite");
+        assertFalse(graphite.composition().parts().isEmpty());
+        assertTrue(graphite.composition().divider() > 0);
     }
 
     @Test
@@ -104,13 +113,13 @@ class MaterialRegistrationTest {
             String language = Files.readString(
                     root.resolve("core/src/main/resources/assets/gt6ce/lang").resolve(file));
             for (var definition : gregtech.content.material.MaterialDefinitions.all()) {
-                if (definition.facts().group()) continue;
+                if (definition.group()) continue;
                 String key = "material.gt6ce." + definition.name().toLowerCase(java.util.Locale.ROOT);
                 assertTrue(language.contains("\"" + key + "\""), definition.name() + " lacks " + key + " in " + file);
             }
         }
         var almandine = gregtech.content.material.MaterialDefinitions.find("Almandine");
-        assertTrue(almandine.facts().forms().contains("ORES"));
+        assertTrue(almandine.forms().contains("ORES"));
     }
 
     @Test
@@ -133,7 +142,10 @@ class MaterialRegistrationTest {
                 "relationUnknownTagFailure",
                 "relationNamespaceFailure",
                 "relationUnknownGroupFailure",
-                "relationGroupCycleFailure")) {
+                "relationGroupCycleFailure",
+                "processes",
+                "processNamespaceFailure",
+                "processUnknownMaterialFailure")) {
             var root = Path.of("").toAbsolutePath();
             if (!Files.isDirectory(root.resolve("core"))) root = root.getParent();
             var output = root.resolve("work/material-system-refactor/02/lifecycle-" + scenario + ".log");

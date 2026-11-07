@@ -31,7 +31,7 @@ public final class MaterialViews {
         var tagFacts = new LinkedHashMap<DataKey, TagFacts>();
         for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
             var definition = MaterialDefinitions.find(material.getName());
-            if (!material.isValid() || definition != null && definition.facts().group()) continue;
+            if (!material.isValid() || definition != null && definition.group()) continue;
             var builder = MaterialMetadata.builder()
                     .property(MaterialProperties.MELTING_POINT, material.getMeltingPoint())
                     .property(MaterialProperties.BOILING_POINT, material.getBoilingPoint())
@@ -40,7 +40,7 @@ public final class MaterialViews {
             for (var flag : material.getProperties())
                 builder.flag(new DataKey("gt6ce", flag.name().toLowerCase(java.util.Locale.ROOT)));
             if (definition != null)
-                for (String tag : definition.facts().classifications()) {
+                for (String tag : definition.classifications()) {
                     var key = new DataKey("gt6ce", tag);
                     builder.tag(key);
                     tagFacts.putIfAbsent(key, new TagFacts("gt6ce", Set.of()));
@@ -138,13 +138,13 @@ public final class MaterialViews {
 
         var groupFacts = new LinkedHashMap<MaterialGroupKey, GroupFacts>();
         for (var definition : MaterialDefinitions.all()) {
-            if (!definition.facts().group()) continue;
+            if (!definition.group()) continue;
             var key = groupKey(definition.name());
             var groupMaterials = new LinkedHashSet<MaterialKey>();
             var includedGroups = new LinkedHashSet<MaterialGroupKey>();
-            for (var member : definition.facts().members()) {
+            for (var member : definition.members()) {
                 var memberDefinition = MaterialDefinitions.find(member);
-                if (memberDefinition != null && memberDefinition.facts().group()) {
+                if (memberDefinition != null && memberDefinition.group()) {
                     includedGroups.add(groupKey(memberDefinition.name()));
                     continue;
                 }
@@ -191,6 +191,57 @@ public final class MaterialViews {
                             entry.getKey(),
                             entry.getValue().displayName(),
                             resolveGroupMembers(entry.getKey(), groupFacts, groups, new LinkedHashSet<>())));
+
+        var processTypes = new LinkedHashMap<DataKey, Class<?>>();
+        var processRules = new LinkedHashMap<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>>();
+        for (var material : materials.keySet()) processRules.put(material, new LinkedHashMap<>());
+        for (var material : materials.keySet()) {
+            var definition = MaterialDefinitions.find(material.name());
+            if (definition == null) continue;
+            definition.processes().rules().forEach((key, rules) -> {
+                registerProcessType(processTypes, key, "built-in catalog");
+                for (var rule : rules) addProcessRule(processRules.get(material), key, rule);
+            });
+        }
+        for (var submission : AddonMaterials.processDeclarations()) {
+            var declaration = submission.declaration();
+            requireNamespace(submission.addonId(), declaration.process().id());
+            GTMaterial material = GTMaterialRegistry.get(declaration.materialName());
+            if (!material.isValid())
+                throw new IllegalArgumentException("Addon '" + submission.addonId()
+                        + "' process uses unknown material '" + declaration.materialName() + "'");
+            var key = new MaterialKey(material.getName());
+            registerProcessType(processTypes, declaration.process(), "addon '" + submission.addonId() + "'");
+            addProcessRule(
+                    processRules.get(key),
+                    declaration.process(),
+                    new MaterialProcessRule<>(declaration.forms(), declaration.value()));
+        }
+        var immutableProcesses =
+                new LinkedHashMap<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>>();
+        processRules.forEach((material, byProcess) -> {
+            var copied = new LinkedHashMap<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>();
+            byProcess.forEach((key, rules) -> copied.put(key, List.copyOf(rules)));
+            immutableProcesses.put(material, Map.copyOf(copied));
+        });
+        MaterialProcessesView processView = new MaterialProcessesView() {
+            public <T> List<MaterialProcessRule<T>> find(MaterialKey material, MaterialProcessKey<T> process) {
+                Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> byProcess =
+                        immutableProcesses.getOrDefault(java.util.Objects.requireNonNull(material), Map.of());
+                List<MaterialProcessRule<?>> rules =
+                        byProcess.getOrDefault(java.util.Objects.requireNonNull(process), List.of());
+                return rules.stream()
+                        .map(rule -> new MaterialProcessRule<T>(
+                                rule.forms(), process.type().cast(rule.value())))
+                        .toList();
+            }
+
+            public Set<MaterialProcessKey<?>> keys(MaterialKey material) {
+                return immutableProcesses
+                        .getOrDefault(java.util.Objects.requireNonNull(material), Map.of())
+                        .keySet();
+            }
+        };
         var immutableTags = new LinkedHashMap<DataKey, Set<MaterialKey>>();
         tagMembers.forEach((key, value) -> immutableTags.put(key, Set.copyOf(value)));
         var immutableMaterialTags = new LinkedHashMap<MaterialKey, Set<DataKey>>();
@@ -235,12 +286,31 @@ public final class MaterialViews {
             public List<MaterialView> materials() {
                 return ordered;
             }
+
+            public MaterialProcessesView processes() {
+                return processView;
+            }
         };
     }
 
     private static void requireNamespace(String addonId, DataKey key) {
         if (!addonId.equals(key.namespace()))
             throw new IllegalArgumentException("Addon '" + addonId + "' cannot declare key " + key);
+    }
+
+    private static void registerProcessType(Map<DataKey, Class<?>> types, MaterialProcessKey<?> key, String source) {
+        var previous = types.putIfAbsent(key.id(), key.type());
+        if (previous != null && previous != key.type())
+            throw new IllegalArgumentException(
+                    "Material process '" + key.id() + "' from " + source + " has conflicting value types");
+    }
+
+    private static void addProcessRule(
+            Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> rules,
+            MaterialProcessKey<?> key,
+            MaterialProcessRule<?> rule) {
+        List<MaterialProcessRule<?>> current = rules.computeIfAbsent(key, ignored -> new java.util.ArrayList<>());
+        if (!current.contains(rule)) current.add(rule);
     }
 
     private static MaterialGroupKey groupKey(String name) {

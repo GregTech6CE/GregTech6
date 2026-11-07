@@ -9,9 +9,16 @@ public final class MaterialProcessingTargets {
     public static String[] of(String materialName, String kind) {
         var definition = MaterialDefinitions.find(GTMaterial.sanitize(materialName));
         if (definition == null) return null;
-        var target = definition.facts().processing().get(kind);
-        return target == null ? null : new String[] {target.material().equals(definition.name()) ? "" : target.material(), Long.toString(target.amount())};
+        var target = definition.processing().get(kind);
+        return target == null
+                ? null
+                : new String[] {
+                    target.material().name().equals(definition.name())
+                            ? ""
+                            : target.material().name(),
+                    Long.toString(target.amount())
+                };
     }
-    public static int size() { return MaterialDefinitions.all().stream().mapToInt(d -> d.facts().processing().size()).sum(); }
+    public static int size() { return MaterialDefinitions.all().stream().mapToInt(d -> d.processing().size()).sum(); }
     public static int rowCount() { return size(); }
 }

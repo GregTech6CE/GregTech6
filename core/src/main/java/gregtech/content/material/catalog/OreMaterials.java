@@ -3,7 +3,6 @@ package gregtech.content.material.catalog;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.MaterialDefinition;
-import gregtech.engine.material.MaterialFacts;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,17 +45,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("NaturalAluminum")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Aluminium", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Bauxite", "Alumina", "AluminiumHydroxide")
-                        .forms("DUSTS", "INGOTS", "ORES", "PLANTS")
-                        .aliases("Al2O3")
-                        .build())
+                .localName("NaturalAluminum")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Aluminium", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Bauxite", "Alumina", "AluminiumHydroxide")
+                .forms("DUSTS", "INGOTS", "ORES", "PLANTS")
+                .aliases("Al2O3")
                 .build());
         result.add(MaterialDefinition.builder(8014, "AluminiumHydroxide")
                 .displayName("Aluminium Hydroxide")
@@ -78,18 +75,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Gibbsite")
-                        .smelting("Alumina", 231660000L)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Aluminium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L),
-                                new MaterialFacts.Part("Hydrogen", 1945944000L))
-                        .byproducts("Bauxite", "Ilmenite", "Hematite", "Alumina")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("AlO3H3")
-                        .build())
+                .localName("Gibbsite")
+                .smelting("Alumina", 231660000L)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Aluminium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L),
+                        new MaterialDefinition.Part("Hydrogen", 1945944000L))
+                .byproducts("Bauxite", "Ilmenite", "Hematite", "Alumina")
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("AlO3H3")
                 .build());
         result.add(MaterialDefinition.builder(9162, "Alunite")
                 .displayName("Alunite")
@@ -110,18 +105,16 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Alunite")
-                        .composition(
-                                61L,
-                                new MaterialFacts.Part("Alumina", 9729720000L),
-                                new MaterialFacts.Part("PotassiumHydroxide", 3891888000L),
-                                new MaterialFacts.Part("SulfurTrioxide", 10378368000L),
-                                new MaterialFacts.Part("Water", 9729720000L),
-                                new MaterialFacts.Part("Oxygen", 5837832000L))
-                        .byproducts("Quartzite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Alunite")
+                .composition(
+                        61L,
+                        new MaterialDefinition.Part("Alumina", 9729720000L),
+                        new MaterialDefinition.Part("PotassiumHydroxide", 3891888000L),
+                        new MaterialDefinition.Part("SulfurTrioxide", 10378368000L),
+                        new MaterialDefinition.Part("Water", 9729720000L),
+                        new MaterialDefinition.Part("Oxygen", 5837832000L))
+                .byproducts("Quartzite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9216, "Arsenopyrite")
                 .displayName("Arsenopyrite")
@@ -143,18 +136,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Arsenopyrite")
-                        .tools(0, 1.0F, 1L, 0)
-                        .smelting("Arsenic", 162162000L)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Arsenic", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L))
-                        .byproducts("Gold", "Realgar", "OrangeFluorite", "Cassiterite", "Huebnerite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Arsenopyrite")
+                .tools(0, 1.0F, 1L, 0)
+                .smelting("Arsenic", 162162000L)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Arsenic", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                .byproducts("Gold", "Realgar", "OrangeFluorite", "Cassiterite", "Huebnerite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9103, "Asbestos")
                 .displayName("Asbestos")
@@ -176,18 +167,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Chrysotile")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .composition(
-                                18L,
-                                new MaterialFacts.Part("Magnesium", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 3891888000L),
-                                new MaterialFacts.Part("Water", 3891888000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Mica", "Biotite", "Talc", "Jade")
-                        .forms("DUSTS", "INGOTS", "ORES", "PLANTS", "PLATES")
-                        .build())
+                .localName("Chrysotile")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .composition(
+                        18L,
+                        new MaterialDefinition.Part("Magnesium", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 3891888000L),
+                        new MaterialDefinition.Part("Water", 3891888000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Mica", "Biotite", "Talc", "Jade")
+                .forms("DUSTS", "INGOTS", "ORES", "PLANTS", "PLATES")
                 .build());
         result.add(MaterialDefinition.builder(9160, "Barite")
                 .displayName("Barite")
@@ -210,17 +199,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Barite")
-                        .smelting("Barium", 72072000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Barium", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts("CertusQuartz", "Quartzite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Barite")
+                .smelting("Barium", 72072000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Barium", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts("CertusQuartz", "Quartzite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9003, "BasalticMineralSand")
                 .displayName("Basaltic Mineral Sand")
@@ -240,16 +227,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Basaltic Mineral Sand")
-                        .tools(0, 1.0F, 1L, 0)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Iron", 1945944000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts("Hematite", "Gold", "Basalt")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Basaltic Mineral Sand")
+                .tools(0, 1.0F, 1L, 0)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Iron", 1945944000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts("Hematite", "Gold", "Basalt")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9144, "Bastnasite")
                 .displayName("Bastnasite")
@@ -271,19 +256,17 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Bastnasite")
-                        .smelting("Cerium", 72072000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Cerium", 648648000L),
-                                new MaterialFacts.Part("Carbon", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Monazite", "RareEarth", "Neodymium")
-                        .multipliers(3, 1)
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Bastnasite")
+                .smelting("Cerium", 72072000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Cerium", 648648000L),
+                        new MaterialDefinition.Part("Carbon", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Monazite", "RareEarth", "Neodymium")
+                .multipliers(3, 1)
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9105, "Bauxite")
                 .displayName("Bauxite")
@@ -303,17 +286,15 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Bauxite")
-                        .tools(0, 1.0F, 1L, 2)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Rutile", 648648000L),
-                                new MaterialFacts.Part("Ilmenite", 1297296000L),
-                                new MaterialFacts.Part("Alumina", 1297296000L))
-                        .byproducts("Kaolinite", "Ilmenite", "Hematite", "Alumina", "AluminiumHydroxide")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Bauxite")
+                .tools(0, 1.0F, 1L, 2)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Rutile", 648648000L),
+                        new MaterialDefinition.Part("Ilmenite", 1297296000L),
+                        new MaterialDefinition.Part("Alumina", 1297296000L))
+                .byproducts("Kaolinite", "Ilmenite", "Hematite", "Alumina", "AluminiumHydroxide")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9141, "Biotite")
                 .displayName("Biotite")
@@ -334,18 +315,16 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Biotite")
-                        .composition(
-                                45L,
-                                new MaterialFacts.Part("Potassium", 1297296000L),
-                                new MaterialFacts.Part("Magnesium", 3891888000L),
-                                new MaterialFacts.Part("Alumina", 9729720000L),
-                                new MaterialFacts.Part("Fluorine", 2594592000L),
-                                new MaterialFacts.Part("SiliconDioxide", 11675664000L))
-                        .byproducts("Mica", "Vermiculite", "Asbestos", "Perlite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Biotite")
+                .composition(
+                        45L,
+                        new MaterialDefinition.Part("Potassium", 1297296000L),
+                        new MaterialDefinition.Part("Magnesium", 3891888000L),
+                        new MaterialDefinition.Part("Alumina", 9729720000L),
+                        new MaterialDefinition.Part("Fluorine", 2594592000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L))
+                .byproducts("Mica", "Vermiculite", "Asbestos", "Perlite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9221, "Bischofite")
                 .displayName("Bischofite")
@@ -365,14 +344,12 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Bischofite")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("MagnesiumChloride", 1945944000L),
-                                new MaterialFacts.Part("Water", 3891888000L))
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Bischofite")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("MagnesiumChloride", 1945944000L),
+                        new MaterialDefinition.Part("Water", 3891888000L))
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8219, "Bone")
                 .displayName("Bone")
@@ -394,14 +371,12 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Fossil")
-                        .source("minecraft", "Minecraft")
-                        .tools(1, 4.0F, 64L, 1)
-                        .composition(8L, new MaterialFacts.Part("Calcium", 648648000L))
-                        .multipliers(4, 1)
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Fossil")
+                .source("minecraft", "Minecraft")
+                .tools(1, 4.0F, 64L, 1)
+                .composition(8L, new MaterialDefinition.Part("Calcium", 648648000L))
+                .multipliers(4, 1)
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9139, "Borax")
                 .displayName("Borax")
@@ -421,18 +396,16 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Borax")
-                        .composition(
-                                43L,
-                                new MaterialFacts.Part("Sodium", 1297296000L),
-                                new MaterialFacts.Part("Boron", 2594592000L),
-                                new MaterialFacts.Part("Water", 19459440000L),
-                                new MaterialFacts.Part("Oxygen", 4540536000L))
-                        .byproducts("Boron", "Salt")
-                        .multipliers(2, 1)
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Borax")
+                .composition(
+                        43L,
+                        new MaterialDefinition.Part("Sodium", 1297296000L),
+                        new MaterialDefinition.Part("Boron", 2594592000L),
+                        new MaterialDefinition.Part("Water", 19459440000L),
+                        new MaterialDefinition.Part("Oxygen", 4540536000L))
+                .byproducts("Boron", "Salt")
+                .multipliers(2, 1)
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9210, "Bromargyrite")
                 .displayName("Bromargyrite")
@@ -454,16 +427,14 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Bromargyrite")
-                        .smelting("Silver", 216216000L)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Silver", 648648000L),
-                                new MaterialFacts.Part("Bromine", 648648000L))
-                        .byproducts("Pyrolusite", "Silver", "Chromite", "Smithsonite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Bromargyrite")
+                .smelting("Silver", 216216000L)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Silver", 648648000L),
+                        new MaterialDefinition.Part("Bromine", 648648000L))
+                .byproducts("Pyrolusite", "Silver", "Chromite", "Smithsonite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9106, "BrownLimonite")
                 .displayName("Brown Limonite")
@@ -484,18 +455,16 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Brown Limonite")
-                        .tools(0, 1.0F, 1L, 0)
-                        .smelting("Hematite", 324324000L)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .byproducts("Malachite", "YellowLimonite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Brown Limonite")
+                .tools(0, 1.0F, 1L, 0)
+                .smelting("Hematite", 324324000L)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .byproducts("Malachite", "YellowLimonite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
     }
 
@@ -519,16 +488,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Valerite")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Calcium", 648648000L),
-                                new MaterialFacts.Part("CarbonTrioxide", 2594592000L))
-                        .byproducts("Malachite")
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("CaCO3")
-                        .build())
+                .localName("Valerite")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Calcium", 648648000L),
+                        new MaterialDefinition.Part("CarbonTrioxide", 2594592000L))
+                .byproducts("Malachite")
+                .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("CaCO3")
                 .build());
         result.add(MaterialDefinition.builder(8028, "CalciumChloride")
                 .displayName("Calcium Chloride")
@@ -549,15 +516,13 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Calcium Chloride")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Calcium", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 1297296000L))
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("CaCl2")
-                        .build())
+                .localName("Calcium Chloride")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Calcium", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 1297296000L))
+                .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("CaCl2")
                 .build());
         result.add(MaterialDefinition.builder(9108, "Cassiterite")
                 .displayName("Cassiterite")
@@ -579,25 +544,23 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("CassiteriteSand")
-                        .smelting("Tin", 486486000L)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Tin", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .byproducts(
-                                "Molybdenite",
-                                "Wolframite",
-                                "WhiteFluorite",
-                                "Arsenopyrite",
-                                "Stannite",
-                                "Sperrylite",
-                                "Huebnerite",
-                                "Apatite")
-                        .multipliers(2, 1)
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("CassiteriteSand")
+                .smelting("Tin", 486486000L)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Tin", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .byproducts(
+                        "Molybdenite",
+                        "Wolframite",
+                        "WhiteFluorite",
+                        "Arsenopyrite",
+                        "Stannite",
+                        "Sperrylite",
+                        "Huebnerite",
+                        "Apatite")
+                .multipliers(2, 1)
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9110, "Celestine")
                 .displayName("Celestine")
@@ -620,17 +583,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Celestine")
-                        .smelting("Strontium", 72072000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Strontium", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts("Strontium", "Sulfur")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Celestine")
+                .smelting("Strontium", 72072000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Strontium", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts("Strontium", "Sulfur")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9111, "Chalcopyrite")
                 .displayName("Chalcopyrite")
@@ -652,18 +613,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Chalcopyrite")
-                        .tools(0, 1.0F, 1L, 0)
-                        .smelting("Copper", 144144000L)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Copper", 648648000L),
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 1297296000L))
-                        .byproducts("Pyrite", "Cobaltite", "Cadmium", "Gold", "Sperrylite", "Stannite", "Indium")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Chalcopyrite")
+                .tools(0, 1.0F, 1L, 0)
+                .smelting("Copper", 144144000L)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Copper", 648648000L),
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 1297296000L))
+                .byproducts("Pyrite", "Cobaltite", "Cadmium", "Gold", "Sperrylite", "Stannite", "Indium")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9113, "Chromite")
                 .displayName("Chromite")
@@ -685,18 +644,16 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Chromite")
-                        .tools(0, 1.0F, 1L, 0)
-                        .smelting("Chromium", 144144000L)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Chromium", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts("Pyrolusite", "Hematite", "MagnesiumCarbonate", "Bromargyrite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Chromite")
+                .tools(0, 1.0F, 1L, 0)
+                .smelting("Chromium", 144144000L)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Chromium", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts("Pyrolusite", "Hematite", "MagnesiumCarbonate", "Bromargyrite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9114, "Cinnabar")
                 .displayName("Cinnabar")
@@ -719,17 +676,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cinnabar")
-                        .source("Thaumcraft", "Thaumcraft")
-                        .smelting("Mercury", 216216000L)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Mercury", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L))
-                        .byproducts("Redstone", "Sulfur", "Glowstone", "Selenium")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Cinnabar")
+                .source("Thaumcraft", "Thaumcraft")
+                .smelting("Mercury", 216216000L)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Mercury", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                .byproducts("Redstone", "Sulfur", "Glowstone", "Selenium")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(8215, "Clay")
                 .displayName("Clay")
@@ -751,17 +706,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Clay")
-                        .source("minecraft", "Minecraft")
-                        .smelting("Ceramic", 648648000L)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Ceramic", 1297296000L),
-                                new MaterialFacts.Part("Water", 648648000L))
-                        .byproducts("Kaolinite", "Palygorskite")
-                        .forms("DUSTS", "ORES", "PLANTS", "PLATES")
-                        .build())
+                .localName("Clay")
+                .source("minecraft", "Minecraft")
+                .smelting("Ceramic", 648648000L)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Ceramic", 1297296000L),
+                        new MaterialDefinition.Part("Water", 648648000L))
+                .byproducts("Kaolinite", "Palygorskite")
+                .forms("DUSTS", "ORES", "PLANTS", "PLATES")
                 .build());
         result.add(MaterialDefinition.builder(9115, "Cobaltite")
                 .displayName("Cobaltite")
@@ -783,18 +736,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cobaltite")
-                        .tools(0, 1.0F, 1L, 0)
-                        .smelting("Cobalt", 162162000L)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Cobalt", 648648000L),
-                                new MaterialFacts.Part("Arsenic", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L))
-                        .byproducts("Cobalt", "Realgar", "OrangeFluorite", "Pentlandite", "YellowLimonite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Cobaltite")
+                .tools(0, 1.0F, 1L, 0)
+                .smelting("Cobalt", 162162000L)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Cobalt", 648648000L),
+                        new MaterialDefinition.Part("Arsenic", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                .byproducts("Cobalt", "Realgar", "OrangeFluorite", "Pentlandite", "YellowLimonite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9247, "Coltan")
                 .displayName("Coltan")
@@ -815,16 +766,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Coltan")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Tantalite", 648648000L),
-                                new MaterialFacts.Part("Columbite", 648648000L))
-                        .byproducts("Columbite", "Tantalite", "Pyrolusite", "Ilmenite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Coltan")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Tantalite", 648648000L),
+                        new MaterialDefinition.Part("Columbite", 648648000L))
+                .byproducts("Columbite", "Tantalite", "Pyrolusite", "Ilmenite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9246, "Columbite")
                 .displayName("Columbite")
@@ -845,16 +794,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Columbite")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("NiobiumPentoxide", 4540536000L),
-                                new MaterialFacts.Part("Pyrolusite", 648648000L))
-                        .byproducts("Tantalite", "Coltan", "Pyrolusite", "Ilmenite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Columbite")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("NiobiumPentoxide", 4540536000L),
+                        new MaterialDefinition.Part("Pyrolusite", 648648000L))
+                .byproducts("Tantalite", "Coltan", "Pyrolusite", "Ilmenite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9116, "Cooperite")
                 .displayName("Cooperite")
@@ -876,18 +823,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sheldonite")
-                        .smelting("Platinum", 216216000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Platinum", 1945944000L),
-                                new MaterialFacts.Part("Nickel", 648648000L),
-                                new MaterialFacts.Part("Palladium", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L))
-                        .byproducts("Palladium", "Nickel", "Iridium")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Sheldonite")
+                .smelting("Platinum", 216216000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Platinum", 1945944000L),
+                        new MaterialDefinition.Part("Nickel", 648648000L),
+                        new MaterialDefinition.Part("Palladium", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                .byproducts("Palladium", "Nickel", "Iridium")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9852, "CrudeOil")
                 .displayName("Crude Oil")
@@ -905,11 +850,9 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Crude Oil")
-                        .fuel(12000L, "", 0L)
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Crude Oil")
+                .fuel(12000L, "", 0L)
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8009, "Cryolite")
                 .displayName("Cryolite")
@@ -931,16 +874,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cryolite")
-                        .composition(
-                                10L,
-                                new MaterialFacts.Part("Sodium", 1945944000L),
-                                new MaterialFacts.Part("Aluminium", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 3891888000L))
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("Na3AlF6")
-                        .build())
+                .localName("Cryolite")
+                .composition(
+                        10L,
+                        new MaterialDefinition.Part("Sodium", 1945944000L),
+                        new MaterialDefinition.Part("Aluminium", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 3891888000L))
+                .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("Na3AlF6")
                 .build());
         result.add(MaterialDefinition.builder(8006, "Datolite")
                 .displayName("Datolite")
@@ -962,17 +903,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Datolite")
-                        .composition(
-                                18L,
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Calcium", 1297296000L),
-                                new MaterialFacts.Part("Boron", 1297296000L),
-                                new MaterialFacts.Part("Silicon", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 6486480000L))
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Datolite")
+                .composition(
+                        18L,
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Calcium", 1297296000L),
+                        new MaterialDefinition.Part("Boron", 1297296000L),
+                        new MaterialDefinition.Part("Silicon", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 6486480000L))
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
     }
 
@@ -996,16 +935,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Diatomite")
-                        .composition(
-                                10L,
-                                new MaterialFacts.Part("Flint", 5189184000L),
-                                new MaterialFacts.Part("Hematite", 648648000L),
-                                new MaterialFacts.Part("Sapphire", 648648000L))
-                        .byproducts("Mica", "Opal", "Biotite", "Perlite", "Sapphire")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Diatomite")
+                .composition(
+                        10L,
+                        new MaterialDefinition.Part("Flint", 5189184000L),
+                        new MaterialDefinition.Part("Hematite", 648648000L),
+                        new MaterialDefinition.Part("Sapphire", 648648000L))
+                .byproducts("Mica", "Opal", "Biotite", "Perlite", "Sapphire")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9198, "DiduraniumTrioxide")
                 .displayName("Diduranium Trioxide")
@@ -1026,16 +963,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Diduranium Trioxide")
-                        .tools(0, 1.0F, 1L, 4)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("DuraniumElemental", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("TritaniumDioxide", "Trinium")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Diduranium Trioxide")
+                .tools(0, 1.0F, 1L, 4)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("DuraniumElemental", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("TritaniumDioxide", "Trinium")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9203, "DuraniumHexaastatide")
                 .displayName("Duranium Hexaastatide")
@@ -1056,16 +991,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Duranium Hexaastatide")
-                        .tools(0, 1.0F, 1L, 4)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("DuraniumElemental", 648648000L),
-                                new MaterialFacts.Part("Astatine", 3891888000L))
-                        .byproducts("DiduraniumTrioxide", "Astatine")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Duranium Hexaastatide")
+                .tools(0, 1.0F, 1L, 4)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("DuraniumElemental", 648648000L),
+                        new MaterialDefinition.Part("Astatine", 3891888000L))
+                .byproducts("DiduraniumTrioxide", "Astatine")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9201, "DuraniumHexabromide")
                 .displayName("Duranium Hexabromide")
@@ -1086,16 +1019,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Duranium Hexabromide")
-                        .tools(0, 1.0F, 1L, 4)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("DuraniumElemental", 648648000L),
-                                new MaterialFacts.Part("Bromine", 3891888000L))
-                        .byproducts("DiduraniumTrioxide", "Bromargyrite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Duranium Hexabromide")
+                .tools(0, 1.0F, 1L, 4)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("DuraniumElemental", 648648000L),
+                        new MaterialDefinition.Part("Bromine", 3891888000L))
+                .byproducts("DiduraniumTrioxide", "Bromargyrite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9200, "DuraniumHexachloride")
                 .displayName("Duranium Hexachloride")
@@ -1116,16 +1047,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Duranium Hexachloride")
-                        .tools(0, 1.0F, 1L, 4)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("DuraniumElemental", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 3891888000L))
-                        .byproducts("DiduraniumTrioxide", "Salt", "Sylvite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Duranium Hexachloride")
+                .tools(0, 1.0F, 1L, 4)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("DuraniumElemental", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 3891888000L))
+                .byproducts("DiduraniumTrioxide", "Salt", "Sylvite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9199, "DuraniumHexafluoride")
                 .displayName("Duranium Hexafluoride")
@@ -1146,16 +1075,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Duranium Hexafluoride")
-                        .tools(0, 1.0F, 1L, 4)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("DuraniumElemental", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 3891888000L))
-                        .byproducts("DiduraniumTrioxide", "PinkFluorite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Duranium Hexafluoride")
+                .tools(0, 1.0F, 1L, 4)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("DuraniumElemental", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 3891888000L))
+                .byproducts("DiduraniumTrioxide", "PinkFluorite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9202, "DuraniumHexaiodide")
                 .displayName("Duranium Hexaiodide")
@@ -1176,16 +1103,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Duranium Hexaiodide")
-                        .tools(0, 1.0F, 1L, 4)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("DuraniumElemental", 648648000L),
-                                new MaterialFacts.Part("Iodine", 3891888000L))
-                        .byproducts("DiduraniumTrioxide", "IodineSalt")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Duranium Hexaiodide")
+                .tools(0, 1.0F, 1L, 4)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("DuraniumElemental", 648648000L),
+                        new MaterialDefinition.Part("Iodine", 3891888000L))
+                .byproducts("DiduraniumTrioxide", "IodineSalt")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9194, "Ferberite")
                 .displayName("Ferberite")
@@ -1206,17 +1131,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ferberite")
-                        .tools(0, 1.0F, 1L, 3)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("TungstenTrioxide", 2594592000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .byproducts("Tungstate", "Hematite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Ferberite")
+                .tools(0, 1.0F, 1L, 3)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("TungstenTrioxide", 2594592000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .byproducts("Tungstate", "Hematite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9117, "Galena")
                 .displayName("Galena")
@@ -1238,18 +1161,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Galena")
-                        .source("factorization", "Factorization")
-                        .smelting("Lead", 216216000L)
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("Lead", 1945944000L),
-                                new MaterialFacts.Part("Silver", 1945944000L),
-                                new MaterialFacts.Part("Sulfur", 1297296000L))
-                        .byproducts("Sphalerite", "Silver", "Lead", "Selenium", "RedFluorite", "Calcite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Galena")
+                .source("factorization", "Factorization")
+                .smelting("Lead", 216216000L)
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("Lead", 1945944000L),
+                        new MaterialDefinition.Part("Silver", 1945944000L),
+                        new MaterialDefinition.Part("Sulfur", 1297296000L))
+                .byproducts("Sphalerite", "Silver", "Lead", "Selenium", "RedFluorite", "Calcite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9005, "GarnetSand")
                 .displayName("Garnet Sand")
@@ -1271,18 +1192,16 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Garnet Sand")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Almandine", 648648000L),
-                                new MaterialFacts.Part("Andradite", 648648000L),
-                                new MaterialFacts.Part("Grossular", 648648000L),
-                                new MaterialFacts.Part("Pyrope", 648648000L),
-                                new MaterialFacts.Part("Spessartine", 648648000L),
-                                new MaterialFacts.Part("Uvarovite", 648648000L))
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Garnet Sand")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Almandine", 648648000L),
+                        new MaterialDefinition.Part("Andradite", 648648000L),
+                        new MaterialDefinition.Part("Grossular", 648648000L),
+                        new MaterialDefinition.Part("Pyrope", 648648000L),
+                        new MaterialDefinition.Part("Spessartine", 648648000L),
+                        new MaterialDefinition.Part("Uvarovite", 648648000L))
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9118, "Garnierite")
                 .displayName("Garnierite")
@@ -1304,17 +1223,15 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Garnierite")
-                        .tools(0, 1.0F, 1L, 0)
-                        .smelting("Nickel", 486486000L)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Nickel", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .byproducts("Nickel", "Sperrylite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Garnierite")
+                .tools(0, 1.0F, 1L, 0)
+                .smelting("Nickel", 486486000L)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Nickel", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .byproducts("Nickel", "Sperrylite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9150, "Glauconite")
                 .displayName("Glauconite")
@@ -1335,18 +1252,16 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("GlauconiteSand")
-                        .composition(
-                                23L,
-                                new MaterialFacts.Part("Alumina", 6486480000L),
-                                new MaterialFacts.Part("Potassium", 648648000L),
-                                new MaterialFacts.Part("Magnesium", 1297296000L),
-                                new MaterialFacts.Part("Water", 1945944000L),
-                                new MaterialFacts.Part("Oxygen", 4540536000L))
-                        .byproducts("Sodium", "Alumina", "Hematite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("GlauconiteSand")
+                .composition(
+                        23L,
+                        new MaterialDefinition.Part("Alumina", 6486480000L),
+                        new MaterialDefinition.Part("Potassium", 648648000L),
+                        new MaterialDefinition.Part("Magnesium", 1297296000L),
+                        new MaterialDefinition.Part("Water", 1945944000L),
+                        new MaterialDefinition.Part("Oxygen", 4540536000L))
+                .byproducts("Sodium", "Alumina", "Hematite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9004, "GraniticMineralSand")
                 .displayName("Granitic Mineral Sand")
@@ -1366,16 +1281,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Granitic Mineral Sand")
-                        .tools(0, 1.0F, 1L, 0)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Iron", 1945944000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts("Hematite", "Gold", "GraniteBlack")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Granitic Mineral Sand")
+                .tools(0, 1.0F, 1L, 0)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Iron", 1945944000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts("Hematite", "Gold", "GraniteBlack")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9174, "Graphite")
                 .displayName("Graphite")
@@ -1398,14 +1311,12 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Graphite")
-                        .tools(1, 5.0F, 32L, 2)
-                        .smelting("Carbon", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("Carbon", 648648000L))
-                        .byproducts("Carbon")
-                        .forms("DUSTS", "ORES", "PLANTS", "STICKS")
-                        .build())
+                .localName("Graphite")
+                .tools(1, 5.0F, 32L, 2)
+                .smelting("Carbon", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("Carbon", 648648000L))
+                .byproducts("Carbon")
+                .forms("DUSTS", "ORES", "PLANTS", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9161, "Gypsum")
                 .displayName("Gypsum")
@@ -1426,15 +1337,13 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Gypsum")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("CalciumSulfate", 3891888000L),
-                                new MaterialFacts.Part("Water", 3891888000L))
-                        .byproducts("Trona", "Mirabilite", "Asbestos", "Talc", "Sulfur")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Gypsum")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("CalciumSulfate", 3891888000L),
+                        new MaterialDefinition.Part("Water", 3891888000L))
+                .byproducts("Trona", "Mirabilite", "Asbestos", "Talc", "Sulfur")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
     }
 
@@ -1458,17 +1367,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("BandedIron")
-                        .tools(0, 1.0F, 1L, 0)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Iron", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Ilmenite", "GraniticMineralSand", "Pyrolusite", "ClayRed")
-                        .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("Fe2O3")
-                        .build())
+                .localName("BandedIron")
+                .tools(0, 1.0F, 1L, 0)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Iron", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Ilmenite", "GraniticMineralSand", "Pyrolusite", "ClayRed")
+                .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("Fe2O3")
                 .build());
         result.add(MaterialDefinition.builder(9195, "Huebnerite")
                 .displayName("Huebnerite")
@@ -1489,18 +1396,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Gyubnera")
-                        .tools(0, 1.0F, 1L, 3)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Manganese", 648648000L),
-                                new MaterialFacts.Part("TungstenTrioxide", 2594592000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .byproducts(
-                                "Wolframite", "Molybdenite", "GreenFluorite", "Arsenopyrite", "Cassiterite", "Topaz")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Gyubnera")
+                .tools(0, 1.0F, 1L, 3)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Manganese", 648648000L),
+                        new MaterialDefinition.Part("TungstenTrioxide", 2594592000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .byproducts("Wolframite", "Molybdenite", "GreenFluorite", "Arsenopyrite", "Cassiterite", "Topaz")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9120, "Ilmenite")
                 .displayName("Ilmenite")
@@ -1521,17 +1425,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Illmenite")
-                        .tools(0, 1.0F, 1L, 2)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Titanium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Rutile", "Hematite", "MagnesiumCarbonate", "Pyrolusite")
-                        .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
-                        .build())
+                .localName("Illmenite")
+                .tools(0, 1.0F, 1L, 2)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Titanium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Rutile", "Hematite", "MagnesiumCarbonate", "Pyrolusite")
+                .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8242, "IodineSalt")
                 .displayName("Iodine Salt")
@@ -1553,17 +1455,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Iodine Salt")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Potassium", 648648000L),
-                                new MaterialFacts.Part("Iodine", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Salt", "Sylvite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("KIO3")
-                        .build())
+                .localName("Iodine Salt")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Potassium", 648648000L),
+                        new MaterialDefinition.Part("Iodine", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Salt", "Sylvite")
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("KIO3")
                 .build());
         result.add(MaterialDefinition.builder(9213, "Kesterite")
                 .displayName("Kesterite")
@@ -1585,18 +1485,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Kesterite")
-                        .smelting("Copper", 72072000L)
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("Copper", 1297296000L),
-                                new MaterialFacts.Part("Zinc", 648648000L),
-                                new MaterialFacts.Part("Tin", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 2594592000L))
-                        .byproducts("Germanium", "Pyrite", "Stannite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Kesterite")
+                .smelting("Copper", 72072000L)
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("Copper", 1297296000L),
+                        new MaterialDefinition.Part("Zinc", 648648000L),
+                        new MaterialDefinition.Part("Tin", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 2594592000L))
+                .byproducts("Germanium", "Pyrite", "Stannite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9166, "Kyanite")
                 .displayName("Kyanite")
@@ -1617,15 +1515,13 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Kyanite")
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("SiliconDioxide", 1945944000L))
-                        .byproducts("Quartzite", "Lepidolite", "Spodumene")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Kyanite")
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 1945944000L))
+                .byproducts("Quartzite", "Lepidolite", "Spodumene")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9149, "Lepidolite")
                 .displayName("Lepidolite")
@@ -1646,18 +1542,16 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Lepidolite")
-                        .composition(
-                                22L,
-                                new MaterialFacts.Part("Alumina", 6486480000L),
-                                new MaterialFacts.Part("Potassium", 648648000L),
-                                new MaterialFacts.Part("Lithium", 1945944000L),
-                                new MaterialFacts.Part("Fluorine", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 3891888000L))
-                        .byproducts("LithiumChloride", "Caesium", "Rubidium")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Lepidolite")
+                .composition(
+                        22L,
+                        new MaterialDefinition.Part("Alumina", 6486480000L),
+                        new MaterialDefinition.Part("Potassium", 648648000L),
+                        new MaterialDefinition.Part("Lithium", 1945944000L),
+                        new MaterialDefinition.Part("Fluorine", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 3891888000L))
+                .byproducts("LithiumChloride", "Caesium", "Rubidium")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8029, "LithiumChloride")
                 .displayName("Lithium Chloride")
@@ -1678,16 +1572,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Lithium Chloride")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Lithium", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 648648000L))
-                        .byproducts("Lithium")
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("LiCl")
-                        .build())
+                .localName("Lithium Chloride")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Lithium", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 648648000L))
+                .byproducts("Lithium")
+                .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("LiCl")
                 .build());
         result.add(MaterialDefinition.builder(8016, "MagnesiumCarbonate")
                 .displayName("Magnesium Carbonate")
@@ -1708,16 +1600,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Magnesite")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Magnesium", 648648000L),
-                                new MaterialFacts.Part("CarbonTrioxide", 2594592000L))
-                        .byproducts("Cobaltite", "Pyrolusite")
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("MgCO3")
-                        .build())
+                .localName("Magnesite")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Magnesium", 648648000L),
+                        new MaterialDefinition.Part("CarbonTrioxide", 2594592000L))
+                .byproducts("Cobaltite", "Pyrolusite")
+                .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("MgCO3")
                 .build());
         result.add(MaterialDefinition.builder(8018, "MagnesiumChloride")
                 .displayName("Magnesium Chloride")
@@ -1738,15 +1628,13 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Magnesium Chloride")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Magnesium", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 1297296000L))
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("MgCl2")
-                        .build())
+                .localName("Magnesium Chloride")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Magnesium", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 1297296000L))
+                .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("MgCl2")
                 .build());
         result.add(MaterialDefinition.builder(9122, "Magnetite")
                 .displayName("Magnetite")
@@ -1766,16 +1654,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Magnetite")
-                        .tools(0, 1.0F, 1L, 0)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Iron", 1945944000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts("Hematite", "Gold", "Stone")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Magnetite")
+                .tools(0, 1.0F, 1L, 0)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Iron", 1945944000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts("Hematite", "Gold", "Stone")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9156, "Malachite")
                 .displayName("Malachite")
@@ -1797,19 +1683,17 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Malachite")
-                        .smelting("Copper", 108108000L)
-                        .composition(
-                                10L,
-                                new MaterialFacts.Part("Copper", 1297296000L),
-                                new MaterialFacts.Part("CarbonTrioxide", 2594592000L),
-                                new MaterialFacts.Part("Hydrogen", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .byproducts("Copper", "BrownLimonite", "Calcite", "Azurite", "Arsenic")
-                        .multipliers(5, 1)
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Malachite")
+                .smelting("Copper", 108108000L)
+                .composition(
+                        10L,
+                        new MaterialDefinition.Part("Copper", 1297296000L),
+                        new MaterialDefinition.Part("CarbonTrioxide", 2594592000L),
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .byproducts("Copper", "BrownLimonite", "Calcite", "Azurite", "Arsenic")
+                .multipliers(5, 1)
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9158, "Mica")
                 .displayName("Mica")
@@ -1830,17 +1714,15 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Mica")
-                        .composition(
-                                39L,
-                                new MaterialFacts.Part("Alumina", 9729720000L),
-                                new MaterialFacts.Part("Potassium", 1297296000L),
-                                new MaterialFacts.Part("SiliconDioxide", 11675664000L),
-                                new MaterialFacts.Part("Fluorine", 2594592000L))
-                        .byproducts("Vermiculite", "Asbestos", "Biotite", "Perlite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Mica")
+                .composition(
+                        39L,
+                        new MaterialDefinition.Part("Alumina", 9729720000L),
+                        new MaterialDefinition.Part("Potassium", 1297296000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialDefinition.Part("Fluorine", 2594592000L))
+                .byproducts("Vermiculite", "Asbestos", "Biotite", "Perlite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9157, "Mirabilite")
                 .displayName("Mirabilite")
@@ -1860,15 +1742,13 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Mirabilite")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("SodiumSulfate", 4540536000L),
-                                new MaterialFacts.Part("Water", 19459440000L))
-                        .byproducts("Trona", "Gypsum")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Mirabilite")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("SodiumSulfate", 4540536000L),
+                        new MaterialDefinition.Part("Water", 19459440000L))
+                .byproducts("Trona", "Gypsum")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9123, "Molybdenite")
                 .displayName("Molybdenite")
@@ -1890,16 +1770,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Molybdenite")
-                        .smelting("Molybdenum", 162162000L)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Molybdenum", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 1297296000L))
-                        .byproducts("Powellite", "Scheelite", "Rhenium", "Wulfenite", "OsmiumElemental")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Molybdenite")
+                .smelting("Molybdenum", 162162000L)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Molybdenum", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 1297296000L))
+                .byproducts("Powellite", "Scheelite", "Rhenium", "Wulfenite", "OsmiumElemental")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -1923,15 +1801,13 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Niobium Pentoxide")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Niobium", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 3243240000L))
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("Nb2O5")
-                        .build())
+                .localName("Niobium Pentoxide")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Niobium", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 3243240000L))
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("Nb2O5")
                 .build());
         result.add(MaterialDefinition.builder(8206, "Niter")
                 .displayName("Niter")
@@ -1953,16 +1829,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Nitre")
-                        .source("ThermalExpansion", "Thermal Expansion")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("PotassiumNitrate", 648648000L),
-                                new MaterialFacts.Part("SodiumNitrate", 648648000L))
-                        .byproducts("PotassiumNitrate", "SodiumNitrate")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Nitre")
+                .source("ThermalExpansion", "Thermal Expansion")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("PotassiumNitrate", 648648000L),
+                        new MaterialDefinition.Part("SodiumNitrate", 648648000L))
+                .byproducts("PotassiumNitrate", "SodiumNitrate")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9851, "OilSand")
                 .displayName("Oil Sand")
@@ -1980,12 +1854,10 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Oilsands")
-                        .fuel(6000L, "", 0L)
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("Oilsands")
-                        .build())
+                .localName("Oilsands")
+                .fuel(6000L, "", 0L)
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("Oilsands")
                 .build());
         result.add(MaterialDefinition.builder(9853, "OilShale")
                 .displayName("Oil Shale")
@@ -2007,17 +1879,15 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Oilshale")
-                        .fuel(400L, "Stone", 324324000L)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Calcite", 1297296000L),
-                                new MaterialFacts.Part("MilkyQuartz", 648648000L),
-                                new MaterialFacts.Part("Clay", 648648000L))
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("Oilshale")
-                        .build())
+                .localName("Oilshale")
+                .fuel(400L, "Stone", 324324000L)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Calcite", 1297296000L),
+                        new MaterialDefinition.Part("MilkyQuartz", 648648000L),
+                        new MaterialDefinition.Part("Clay", 648648000L))
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("Oilshale")
                 .build());
         result.add(MaterialDefinition.builder(9145, "Pentlandite")
                 .displayName("Pentlandite")
@@ -2039,17 +1909,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Pentlandite")
-                        .tools(0, 1.0F, 1L, 0)
-                        .smelting("Nickel", 216216000L)
-                        .composition(
-                                17L,
-                                new MaterialFacts.Part("Nickel", 5837832000L),
-                                new MaterialFacts.Part("Sulfur", 5189184000L))
-                        .byproducts("Hematite", "Sulfur", "Cobaltite", "Sperrylite", "Gypsum")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Pentlandite")
+                .tools(0, 1.0F, 1L, 0)
+                .smelting("Nickel", 216216000L)
+                .composition(
+                        17L,
+                        new MaterialDefinition.Part("Nickel", 5837832000L),
+                        new MaterialDefinition.Part("Sulfur", 5189184000L))
+                .byproducts("Hematite", "Sulfur", "Cobaltite", "Sperrylite", "Gypsum")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9138, "Perlite")
                 .displayName("Perlite")
@@ -2069,16 +1937,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Perlite")
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Obsidian", 648648000L),
-                                new MaterialFacts.Part("Water", 648648000L))
-                        .byproducts("Peridot", "MagnesiumCarbonate")
-                        .multipliers(8, 1)
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Perlite")
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Obsidian", 648648000L),
+                        new MaterialDefinition.Part("Water", 648648000L))
+                .byproducts("Peridot", "MagnesiumCarbonate")
+                .multipliers(8, 1)
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8207, "Phosphate")
                 .displayName("Phosphate")
@@ -2100,22 +1966,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Phosphate")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Phosphor", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts(
-                                "Phosphorus",
-                                "Apatite",
-                                "YellowFluorite",
-                                "Phosphorite",
-                                "RedPhosphorus",
-                                "WhitePhosphorus")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("PO4")
-                        .build())
+                .localName("Phosphate")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Phosphor", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts(
+                        "Phosphorus", "Apatite", "YellowFluorite", "Phosphorite", "RedPhosphorus", "WhitePhosphorus")
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("PO4")
                 .build());
         result.add(MaterialDefinition.builder(9197, "Pinalite")
                 .displayName("Pinalite")
@@ -2137,19 +1996,17 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Pinalite")
-                        .tools(0, 1.0F, 1L, 3)
-                        .smelting("TungstenTrioxide", 235872000L)
-                        .composition(
-                                11L,
-                                new MaterialFacts.Part("Lead", 1945944000L),
-                                new MaterialFacts.Part("TungstenTrioxide", 2594592000L),
-                                new MaterialFacts.Part("Chlorine", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .byproducts("Tungstate", "Lead")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Pinalite")
+                .tools(0, 1.0F, 1L, 3)
+                .smelting("TungstenTrioxide", 235872000L)
+                .composition(
+                        11L,
+                        new MaterialDefinition.Part("Lead", 1945944000L),
+                        new MaterialDefinition.Part("TungstenTrioxide", 2594592000L),
+                        new MaterialDefinition.Part("Chlorine", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .byproducts("Tungstate", "Lead")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9155, "Pitchblende")
                 .displayName("Pitchblende")
@@ -2171,17 +2028,15 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Pitchblende")
-                        .smelting("Uranium", 129729600L)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Uraninite", 1945944000L),
-                                new MaterialFacts.Part("Thorium", 648648000L),
-                                new MaterialFacts.Part("Lead", 648648000L))
-                        .byproducts("Lead", "Radium", "RareEarth", "Thorium")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Pitchblende")
+                .smelting("Uranium", 129729600L)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Uraninite", 1945944000L),
+                        new MaterialDefinition.Part("Thorium", 648648000L),
+                        new MaterialDefinition.Part("Lead", 648648000L))
+                .byproducts("Lead", "Radium", "RareEarth", "Thorium")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8103, "PlatinumGroupSludge")
                 .displayName("Platinum Group Sludge")
@@ -2199,11 +2054,9 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Platinum Group Sludge")
-                        .source("gregtech", "GregTech 5 Unofficial")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Platinum Group Sludge")
+                .source("gregtech", "GregTech 5 Unofficial")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9147, "Pollucite")
                 .displayName("Pollucite")
@@ -2224,18 +2077,16 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Pollucite")
-                        .composition(
-                                26L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Caesium", 1297296000L),
-                                new MaterialFacts.Part("SiliconDioxide", 7783776000L),
-                                new MaterialFacts.Part("Water", 3891888000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .byproducts("Zeolite", "Caesium", "Rubidium")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Pollucite")
+                .composition(
+                        26L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Caesium", 1297296000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 7783776000L),
+                        new MaterialDefinition.Part("Water", 3891888000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .byproducts("Zeolite", "Caesium", "Rubidium")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9140, "PotassiumFeldspar")
                 .displayName("Potassium Feldspar")
@@ -2257,16 +2108,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Potassium Feldspar")
-                        .composition(
-                                26L,
-                                new MaterialFacts.Part("Potassium", 1297296000L),
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("SiliconDioxide", 11675664000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Potassium Feldspar")
+                .composition(
+                        26L,
+                        new MaterialDefinition.Part("Potassium", 1297296000L),
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 11675664000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8205, "PotassiumNitrate")
                 .displayName("Potassium Nitrate")
@@ -2288,19 +2137,17 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Saltpeter")
-                        .source("Railcraft", "Railcraft")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Potassium", 648648000L),
-                                new MaterialFacts.Part("Nitrogen", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("SodiumNitrate", "Niter")
-                        .multipliers(3, 1)
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("KNO3")
-                        .build())
+                .localName("Saltpeter")
+                .source("Railcraft", "Railcraft")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Potassium", 648648000L),
+                        new MaterialDefinition.Part("Nitrogen", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("SodiumNitrate", "Niter")
+                .multipliers(3, 1)
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("KNO3")
                 .build());
         result.add(MaterialDefinition.builder(9124, "Powellite")
                 .displayName("Powellite")
@@ -2322,17 +2169,15 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Powellite")
-                        .smelting("Molybdenum", 72072000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Calcium", 648648000L),
-                                new MaterialFacts.Part("Molybdenum", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts("Molybdenite", "Scheelite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Powellite")
+                .smelting("Molybdenum", 72072000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Calcium", 648648000L),
+                        new MaterialDefinition.Part("Molybdenum", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts("Molybdenite", "Scheelite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9125, "Pyrite")
                 .displayName("Pyrite")
@@ -2353,16 +2198,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Pyrite")
-                        .tools(0, 1.0F, 1L, 0)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 1297296000L))
-                        .byproducts("Sulfur", "Phosphorus", "Hematite", "Stannite", "Selenium")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Pyrite")
+                .tools(0, 1.0F, 1L, 0)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 1297296000L))
+                .byproducts("Sulfur", "Phosphorus", "Hematite", "Stannite", "Selenium")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
     }
 
@@ -2387,17 +2230,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Pyrolusite")
-                        .smelting("Manganese", 486486000L)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Manganese", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .byproducts("Bromargyrite", "Hematite", "Chromite")
-                        .forms("DUSTS", "INGOTS", "ORES", "PLANTS")
-                        .aliases("MnO2")
-                        .build())
+                .localName("Pyrolusite")
+                .smelting("Manganese", 486486000L)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Manganese", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .byproducts("Bromargyrite", "Hematite", "Chromite")
+                .forms("DUSTS", "INGOTS", "ORES", "PLANTS")
+                .aliases("MnO2")
                 .build());
         result.add(MaterialDefinition.builder(9006, "QuartzSand")
                 .displayName("Quartz Sand")
@@ -2419,16 +2260,14 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Quartz Sand")
-                        .smelting("SiliconDioxide", 216216000L)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("CertusQuartz", 648648000L),
-                                new MaterialFacts.Part("MilkyQuartz", 648648000L))
-                        .byproducts("CertusQuartz", "Quartzite", "Barite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Quartz Sand")
+                .smelting("SiliconDioxide", 216216000L)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("CertusQuartz", 648648000L),
+                        new MaterialDefinition.Part("MilkyQuartz", 648648000L))
+                .byproducts("CertusQuartz", "Quartzite", "Barite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9271, "Quicklime")
                 .displayName("Quicklime")
@@ -2449,14 +2288,12 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Quicklime")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Calcium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Quicklime")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Calcium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9100, "RareEarth")
                 .displayName("Rare Earth")
@@ -2474,11 +2311,9 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Rare Earth")
-                        .source("ThermalExpansion", "Thermal Expansion")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Rare Earth")
+                .source("ThermalExpansion", "Thermal Expansion")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9109, "Realgar")
                 .displayName("Realgar")
@@ -2500,17 +2335,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Realgar")
-                        .tools(0, 1.0F, 1L, 0)
-                        .smelting("Arsenic", 216216000L)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Arsenic", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L))
-                        .byproducts("Cobaltite", "Arsenopyrite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Realgar")
+                .tools(0, 1.0F, 1L, 0)
+                .smelting("Arsenic", 216216000L)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Arsenic", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                .byproducts("Cobaltite", "Arsenopyrite")
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9196, "Russellite")
                 .displayName("Russellite")
@@ -2531,18 +2364,16 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Russellite")
-                        .tools(0, 1.0F, 1L, 3)
-                        .smelting("TungstenTrioxide", 288288000L)
-                        .composition(
-                                9L,
-                                new MaterialFacts.Part("Bismuth", 1297296000L),
-                                new MaterialFacts.Part("TungstenTrioxide", 2594592000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Tungstate", "Bismuth")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Russellite")
+                .tools(0, 1.0F, 1L, 3)
+                .smelting("TungstenTrioxide", 288288000L)
+                .composition(
+                        9L,
+                        new MaterialDefinition.Part("Bismuth", 1297296000L),
+                        new MaterialDefinition.Part("TungstenTrioxide", 2594592000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Tungstate", "Bismuth")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9192, "Rutile")
                 .displayName("Rutile")
@@ -2563,18 +2394,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Rutile")
-                        .source("Mariculture", "Mariculture")
-                        .tools(0, 1.0F, 1L, 2)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Titanium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .byproducts("Hematite", "Zircon")
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("TiO2")
-                        .build())
+                .localName("Rutile")
+                .source("Mariculture", "Mariculture")
+                .tools(0, 1.0F, 1L, 2)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Titanium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .byproducts("Hematite", "Zircon")
+                .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("TiO2")
                 .build());
         result.add(MaterialDefinition.builder(8204, "Salt")
                 .displayName("Salt")
@@ -2595,17 +2424,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Salt")
-                        .source("harvestcraft", "HarvestCraft")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Sodium", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 648648000L))
-                        .byproducts("Sylvite", "IodineSalt", "Borax")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("NaCl")
-                        .build())
+                .localName("Salt")
+                .source("harvestcraft", "HarvestCraft")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Sodium", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 648648000L))
+                .byproducts("Sylvite", "IodineSalt", "Borax")
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("NaCl")
                 .build());
         result.add(MaterialDefinition.builder(9128, "Scheelite")
                 .displayName("Scheelite")
@@ -2626,17 +2453,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("CalciumTungstate")
-                        .tools(0, 1.0F, 1L, 3)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Calcium", 648648000L),
-                                new MaterialFacts.Part("TungstenTrioxide", 2594592000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .byproducts("Pyrolusite", "Molybdenite", "Calcite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("CalciumTungstate")
+                .tools(0, 1.0F, 1L, 3)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Calcium", 648648000L),
+                        new MaterialDefinition.Part("TungstenTrioxide", 2594592000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .byproducts("Pyrolusite", "Molybdenite", "Calcite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8000, "SiliconDioxide")
                 .displayName("Silicon Dioxide")
@@ -2657,16 +2482,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Silicon Dioxide")
-                        .source("IC2", "IndustrialCraft 2")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Silicon", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("SiO2")
-                        .build())
+                .localName("Silicon Dioxide")
+                .source("IC2", "IndustrialCraft 2")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Silicon", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("SiO2")
                 .build());
         result.add(MaterialDefinition.builder(9211, "Smithsonite")
                 .displayName("Smithsonite")
@@ -2688,17 +2511,15 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Smithsonite")
-                        .smelting("Zinc", 108108000L)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Zinc", 648648000L),
-                                new MaterialFacts.Part("Carbon", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Zinc", "Bromargyrite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Smithsonite")
+                .smelting("Zinc", 108108000L)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Zinc", 648648000L),
+                        new MaterialDefinition.Part("Carbon", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Zinc", "Bromargyrite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8039, "SodiumHydrogencarbonate")
                 .displayName("Sodium Hydrogencarbonate")
@@ -2719,19 +2540,17 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Soda")
-                        .source("SaltMod", "Salty Mod")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Sodium", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 648648000L),
-                                new MaterialFacts.Part("Carbon", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("Mirabilite", "Gypsum", "Trona")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("NaHCO3")
-                        .build())
+                .localName("Soda")
+                .source("SaltMod", "Salty Mod")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Sodium", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialDefinition.Part("Carbon", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("Mirabilite", "Gypsum", "Trona")
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("NaHCO3")
                 .build());
         result.add(MaterialDefinition.builder(8019, "SodiumNitrate")
                 .displayName("Sodium Nitrate")
@@ -2753,18 +2572,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sodium Nitrate")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Sodium", 648648000L),
-                                new MaterialFacts.Part("Nitrogen", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .byproducts("PotassiumNitrate", "Niter")
-                        .multipliers(3, 1)
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("NaNO3")
-                        .build())
+                .localName("Sodium Nitrate")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Sodium", 648648000L),
+                        new MaterialDefinition.Part("Nitrogen", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .byproducts("PotassiumNitrate", "Niter")
+                .multipliers(3, 1)
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("NaNO3")
                 .build());
         result.add(MaterialDefinition.builder(8101, "Soulsand")
                 .displayName("Soulsand")
@@ -2782,13 +2599,11 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Soulsand")
-                        .source("minecraft", "Minecraft")
-                        .byproducts("Coal", "NetherQuartz", "Niter")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("SoulSand")
-                        .build())
+                .localName("Soulsand")
+                .source("minecraft", "Minecraft")
+                .byproducts("Coal", "NetherQuartz", "Niter")
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("SoulSand")
                 .build());
         result.add(MaterialDefinition.builder(9212, "Sperrylite")
                 .displayName("Sperrylite")
@@ -2810,16 +2625,14 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Sperrylite")
-                        .smelting("Platinum", 162162000L)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Platinum", 648648000L),
-                                new MaterialFacts.Part("Arsenic", 1297296000L))
-                        .byproducts("Antimony", "Copper", "Hematite", "Rhodium", "Cooperite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Sperrylite")
+                .smelting("Platinum", 162162000L)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Platinum", 648648000L),
+                        new MaterialDefinition.Part("Arsenic", 1297296000L))
+                .byproducts("Antimony", "Copper", "Hematite", "Rhodium", "Cooperite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
     }
 
@@ -2844,17 +2657,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sphalerite")
-                        .source("HardcoreEnderExpansion", "Hardcore Ender Expansion")
-                        .smelting("Zinc", 216216000L)
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Zinc", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 648648000L))
-                        .byproducts("Cadmium", "Gallium", "Zinc", "Kesterite", "Selenium", "Indium")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Sphalerite")
+                .source("HardcoreEnderExpansion", "Hardcore Ender Expansion")
+                .smelting("Zinc", 216216000L)
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Zinc", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 648648000L))
+                .byproducts("Cadmium", "Gallium", "Zinc", "Kesterite", "Selenium", "Indium")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9146, "Spodumene")
                 .displayName("Spodumene")
@@ -2875,17 +2686,15 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Spodumene")
-                        .composition(
-                                20L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Lithium", 1297296000L),
-                                new MaterialFacts.Part("SiliconDioxide", 7783776000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .byproducts("Alumina", "LithiumChloride")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Spodumene")
+                .composition(
+                        20L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Lithium", 1297296000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 7783776000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .byproducts("Alumina", "LithiumChloride")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9214, "Stannite")
                 .displayName("Stannite")
@@ -2907,18 +2716,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Stannite")
-                        .smelting("Copper", 72072000L)
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("Copper", 1297296000L),
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Tin", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 2594592000L))
-                        .byproducts("Germanium", "Pyrite", "Kesterite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Stannite")
+                .smelting("Copper", 72072000L)
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("Copper", 1297296000L),
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Tin", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 2594592000L))
+                .byproducts("Germanium", "Pyrite", "Kesterite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9131, "Stibnite")
                 .displayName("Stibnite")
@@ -2940,24 +2747,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Stibnite")
-                        .smelting("Antimony", 162162000L)
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Antimony", 1297296000L),
-                                new MaterialFacts.Part("Sulfur", 1945944000L))
-                        .byproducts(
-                                "Antimony",
-                                "Realgar",
-                                "Cinnabar",
-                                "Galena",
-                                "Arsenopyrite",
-                                "Pyrite",
-                                "Barite",
-                                "Calcite")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Stibnite")
+                .smelting("Antimony", 162162000L)
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Antimony", 1297296000L),
+                        new MaterialDefinition.Part("Sulfur", 1945944000L))
+                .byproducts("Antimony", "Realgar", "Cinnabar", "Galena", "Arsenopyrite", "Pyrite", "Barite", "Calcite")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9193, "Stolzite")
                 .displayName("Stolzite")
@@ -2979,18 +2776,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Raspite")
-                        .tools(0, 1.0F, 1L, 3)
-                        .smelting("TungstenTrioxide", 432432000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Lead", 648648000L),
-                                new MaterialFacts.Part("TungstenTrioxide", 2594592000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .byproducts("Tungstate", "Lead")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Raspite")
+                .tools(0, 1.0F, 1L, 3)
+                .smelting("TungstenTrioxide", 432432000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Lead", 648648000L),
+                        new MaterialDefinition.Part("TungstenTrioxide", 2594592000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .byproducts("Tungstate", "Lead")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8203, "Sylvite")
                 .displayName("Sylvite")
@@ -3011,16 +2806,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("RockSalt")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Potassium", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 648648000L))
-                        .byproducts("IodineSalt", "Salt")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("KCl")
-                        .build())
+                .localName("RockSalt")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Potassium", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 648648000L))
+                .byproducts("IodineSalt", "Salt")
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("KCl")
                 .build());
         result.add(MaterialDefinition.builder(9169, "Talc")
                 .displayName("Talc")
@@ -3042,16 +2835,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Soapstone")
-                        .composition(
-                                21L,
-                                new MaterialFacts.Part("Magnesium", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 7783776000L),
-                                new MaterialFacts.Part("Water", 1945944000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Soapstone")
+                .composition(
+                        21L,
+                        new MaterialDefinition.Part("Magnesium", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 7783776000L),
+                        new MaterialDefinition.Part("Water", 1945944000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9148, "Tantalite")
                 .displayName("Tantalite")
@@ -3072,16 +2863,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Tantalite")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("TantalumPentoxide", 4540536000L),
-                                new MaterialFacts.Part("Pyrolusite", 648648000L))
-                        .byproducts("Columbite", "Coltan", "Pyrolusite", "Ilmenite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Tantalite")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("TantalumPentoxide", 4540536000L),
+                        new MaterialDefinition.Part("Pyrolusite", 648648000L))
+                .byproducts("Columbite", "Coltan", "Pyrolusite", "Ilmenite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8462, "TantalumPentoxide")
                 .displayName("Tantalum Pentoxide")
@@ -3102,15 +2891,13 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tantalum Pentoxide")
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Tantalum", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 3243240000L))
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("Ta2O5")
-                        .build())
+                .localName("Tantalum Pentoxide")
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Tantalum", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 3243240000L))
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("Ta2O5")
                 .build());
         result.add(MaterialDefinition.builder(9132, "Tetrahedrite")
                 .displayName("Tetrahedrite")
@@ -3132,18 +2919,16 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tetrahedrite")
-                        .smelting("Copper", 162162000L)
-                        .composition(
-                                8L,
-                                new MaterialFacts.Part("Copper", 1945944000L),
-                                new MaterialFacts.Part("Antimony", 648648000L),
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Sulfur", 1945944000L))
-                        .byproducts("Copper", "Antimony", "Zinc", "Kesterite", "Arsenic")
-                        .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .build())
+                .localName("Tetrahedrite")
+                .smelting("Copper", 162162000L)
+                .composition(
+                        8L,
+                        new MaterialDefinition.Part("Copper", 1945944000L),
+                        new MaterialDefinition.Part("Antimony", 648648000L),
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Sulfur", 1945944000L))
+                .byproducts("Copper", "Antimony", "Zinc", "Kesterite", "Arsenic")
+                .forms("ARMORS", "DUSTS", "GEMS", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(9204, "TritaniumDioxide")
                 .displayName("Tritanium Dioxide")
@@ -3164,16 +2949,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Tritanium Dioxide")
-                        .tools(0, 1.0F, 1L, 4)
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("TritaniumElemental", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .byproducts("DiduraniumTrioxide", "Trinium")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Tritanium Dioxide")
+                .tools(0, 1.0F, 1L, 4)
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("TritaniumElemental", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .byproducts("DiduraniumTrioxide", "Trinium")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9209, "TritaniumHexaastatide")
                 .displayName("Tritanium Hexaastatide")
@@ -3194,16 +2977,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Tritanium Hexaastatide")
-                        .tools(0, 1.0F, 1L, 4)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("TritaniumElemental", 648648000L),
-                                new MaterialFacts.Part("Astatine", 3891888000L))
-                        .byproducts("TritaniumDioxide", "Astatine")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Tritanium Hexaastatide")
+                .tools(0, 1.0F, 1L, 4)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("TritaniumElemental", 648648000L),
+                        new MaterialDefinition.Part("Astatine", 3891888000L))
+                .byproducts("TritaniumDioxide", "Astatine")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9207, "TritaniumHexabromide")
                 .displayName("Tritanium Hexabromide")
@@ -3224,16 +3005,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Tritanium Hexabromide")
-                        .tools(0, 1.0F, 1L, 4)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("TritaniumElemental", 648648000L),
-                                new MaterialFacts.Part("Bromine", 3891888000L))
-                        .byproducts("TritaniumDioxide", "Bromargyrite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Tritanium Hexabromide")
+                .tools(0, 1.0F, 1L, 4)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("TritaniumElemental", 648648000L),
+                        new MaterialDefinition.Part("Bromine", 3891888000L))
+                .byproducts("TritaniumDioxide", "Bromargyrite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9206, "TritaniumHexachloride")
                 .displayName("Tritanium Hexachloride")
@@ -3254,16 +3033,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Tritanium Hexachloride")
-                        .tools(0, 1.0F, 1L, 4)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("TritaniumElemental", 648648000L),
-                                new MaterialFacts.Part("Chlorine", 3891888000L))
-                        .byproducts("TritaniumDioxide", "Salt", "Sylvite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Tritanium Hexachloride")
+                .tools(0, 1.0F, 1L, 4)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("TritaniumElemental", 648648000L),
+                        new MaterialDefinition.Part("Chlorine", 3891888000L))
+                .byproducts("TritaniumDioxide", "Salt", "Sylvite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9205, "TritaniumHexafluoride")
                 .displayName("Tritanium Hexafluoride")
@@ -3284,16 +3061,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Tritanium Hexafluoride")
-                        .tools(0, 1.0F, 1L, 4)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("TritaniumElemental", 648648000L),
-                                new MaterialFacts.Part("Fluorine", 3891888000L))
-                        .byproducts("TritaniumDioxide", "MagentaFluorite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Tritanium Hexafluoride")
+                .tools(0, 1.0F, 1L, 4)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("TritaniumElemental", 648648000L),
+                        new MaterialDefinition.Part("Fluorine", 3891888000L))
+                .byproducts("TritaniumDioxide", "MagentaFluorite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
     }
 
@@ -3317,16 +3092,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Tritanium Hexaiodide")
-                        .tools(0, 1.0F, 1L, 4)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("TritaniumElemental", 648648000L),
-                                new MaterialFacts.Part("Iodine", 3891888000L))
-                        .byproducts("TritaniumDioxide", "IodineSalt")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Tritanium Hexaiodide")
+                .tools(0, 1.0F, 1L, 4)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("TritaniumElemental", 648648000L),
+                        new MaterialDefinition.Part("Iodine", 3891888000L))
+                .byproducts("TritaniumDioxide", "IodineSalt")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9159, "Trona")
                 .displayName("Trona")
@@ -3347,15 +3120,13 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Trona")
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("SodiumCarbonate", 3891888000L),
-                                new MaterialFacts.Part("Water", 3891888000L))
-                        .byproducts("Mirabilite", "Gypsum", "SodiumHydrogencarbonate")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Trona")
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("SodiumCarbonate", 3891888000L),
+                        new MaterialDefinition.Part("Water", 3891888000L))
+                .byproducts("Mirabilite", "Gypsum", "SodiumHydrogencarbonate")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9133, "Tungstate")
                 .displayName("Tungstate")
@@ -3376,17 +3147,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tungstate")
-                        .tools(0, 1.0F, 1L, 3)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Lithium", 1297296000L),
-                                new MaterialFacts.Part("TungstenTrioxide", 2594592000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .byproducts("Pyrolusite", "Silver", "LithiumChloride")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Tungstate")
+                .tools(0, 1.0F, 1L, 3)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Lithium", 1297296000L),
+                        new MaterialDefinition.Part("TungstenTrioxide", 2594592000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .byproducts("Pyrolusite", "Silver", "LithiumChloride")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(8026, "TungstenTrioxide")
                 .displayName("Tungsten Trioxide")
@@ -3407,15 +3176,13 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("TungstenOxide")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Tungsten", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("WO3")
-                        .build())
+                .localName("TungstenOxide")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Tungsten", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .forms("DUSTS", "INGOTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("WO3")
                 .build());
         result.add(MaterialDefinition.builder(9134, "Uraninite")
                 .displayName("Uraninite")
@@ -3436,16 +3203,14 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Uraninite")
-                        .smelting("Uranium", 216216000L)
-                        .composition(
-                                1L,
-                                new MaterialFacts.Part("Uranium", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .byproducts("Lead", "Radium", "RareEarth", "Thorium")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Uraninite")
+                .smelting("Uranium", 216216000L)
+                .composition(
+                        1L,
+                        new MaterialDefinition.Part("Uranium", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .byproducts("Lead", "Radium", "RareEarth", "Thorium")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9143, "VanadiumMagnetite")
                 .displayName("Vanadium Magnetite")
@@ -3466,16 +3231,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Ferrovanadium")
-                        .composition(
-                                2L,
-                                new MaterialFacts.Part("Magnetite", 648648000L),
-                                new MaterialFacts.Part("VanadiumPentoxide", 648648000L))
-                        .byproducts("Magnetite", "VanadiumPentoxide")
-                        .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("Ferrovanadium")
-                        .build())
+                .localName("Ferrovanadium")
+                .composition(
+                        2L,
+                        new MaterialDefinition.Part("Magnetite", 648648000L),
+                        new MaterialDefinition.Part("VanadiumPentoxide", 648648000L))
+                .byproducts("Magnetite", "VanadiumPentoxide")
+                .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("Ferrovanadium")
                 .build());
         result.add(MaterialDefinition.builder(8234, "VanadiumPentoxide")
                 .displayName("Vanadium Pentoxide")
@@ -3498,16 +3261,14 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Vanadium Pentoxide")
-                        .smelting("Vanadium", 92664000L)
-                        .composition(
-                                7L,
-                                new MaterialFacts.Part("Vanadium", 1297296000L),
-                                new MaterialFacts.Part("Oxygen", 3243240000L))
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .aliases("V2O5")
-                        .build())
+                .localName("Vanadium Pentoxide")
+                .smelting("Vanadium", 92664000L)
+                .composition(
+                        7L,
+                        new MaterialDefinition.Part("Vanadium", 1297296000L),
+                        new MaterialDefinition.Part("Oxygen", 3243240000L))
+                .forms("DUSTS", "ORES", "PLANTS")
+                .aliases("V2O5")
                 .build());
         result.add(MaterialDefinition.builder(9152, "Vermiculite")
                 .displayName("Vermiculite")
@@ -3528,18 +3289,16 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Vermiculite")
-                        .composition(
-                                39L,
-                                new MaterialFacts.Part("Alumina", 6486480000L),
-                                new MaterialFacts.Part("Iron", 1945944000L),
-                                new MaterialFacts.Part("SiliconDioxide", 7783776000L),
-                                new MaterialFacts.Part("Water", 7783776000L),
-                                new MaterialFacts.Part("Hydrogen", 1297296000L))
-                        .byproducts("Mica", "Asbestos", "Biotite", "Diatomite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Vermiculite")
+                .composition(
+                        39L,
+                        new MaterialDefinition.Part("Alumina", 6486480000L),
+                        new MaterialDefinition.Part("Iron", 1945944000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 7783776000L),
+                        new MaterialDefinition.Part("Water", 7783776000L),
+                        new MaterialDefinition.Part("Hydrogen", 1297296000L))
+                .byproducts("Mica", "Asbestos", "Biotite", "Diatomite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9217, "Wolframite")
                 .displayName("Wolframite")
@@ -3560,17 +3319,15 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Wolframite")
-                        .tools(0, 1.0F, 1L, 3)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Magnesium", 648648000L),
-                                new MaterialFacts.Part("TungstenTrioxide", 2594592000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .byproducts("Tungstate", "Hematite", "Stannite", "MagnesiumCarbonate")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Wolframite")
+                .tools(0, 1.0F, 1L, 3)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Magnesium", 648648000L),
+                        new MaterialDefinition.Part("TungstenTrioxide", 2594592000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .byproducts("Tungstate", "Hematite", "Stannite", "MagnesiumCarbonate")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9164, "Wollastonite")
                 .displayName("Wollastonite")
@@ -3591,16 +3348,14 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Wollastonite")
-                        .composition(
-                                5L,
-                                new MaterialFacts.Part("Calcium", 648648000L),
-                                new MaterialFacts.Part("SiliconDioxide", 1945944000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .byproducts("Hematite", "MagnesiumCarbonate", "Pyrolusite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Wollastonite")
+                .composition(
+                        5L,
+                        new MaterialDefinition.Part("Calcium", 648648000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 1945944000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .byproducts("Hematite", "MagnesiumCarbonate", "Pyrolusite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9136, "Wulfenite")
                 .displayName("Wulfenite")
@@ -3622,17 +3377,15 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Wulfenite")
-                        .smelting("Molybdenum", 72072000L)
-                        .composition(
-                                6L,
-                                new MaterialFacts.Part("Lead", 648648000L),
-                                new MaterialFacts.Part("Molybdenum", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 2594592000L))
-                        .byproducts("Powellite", "Scheelite", "Molybdenite", "Galena")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Wulfenite")
+                .smelting("Molybdenum", 72072000L)
+                .composition(
+                        6L,
+                        new MaterialDefinition.Part("Lead", 648648000L),
+                        new MaterialDefinition.Part("Molybdenum", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 2594592000L))
+                .byproducts("Powellite", "Scheelite", "Molybdenite", "Galena")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9137, "YellowLimonite")
                 .displayName("Yellow Limonite")
@@ -3653,18 +3406,16 @@ public final class OreMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("BogIron")
-                        .tools(0, 1.0F, 1L, 0)
-                        .smelting("Hematite", 324324000L)
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Iron", 648648000L),
-                                new MaterialFacts.Part("Hydrogen", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .byproducts("Nickel", "BrownLimonite", "Cobaltite")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("BogIron")
+                .tools(0, 1.0F, 1L, 0)
+                .smelting("Hematite", 324324000L)
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Iron", 648648000L),
+                        new MaterialDefinition.Part("Hydrogen", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .byproducts("Nickel", "BrownLimonite", "Cobaltite")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9165, "Zeolite")
                 .displayName("Zeolite")
@@ -3685,18 +3436,16 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
-                .facts(MaterialFacts.builder()
-                        .localName("Zeolite")
-                        .composition(
-                                26L,
-                                new MaterialFacts.Part("Alumina", 3243240000L),
-                                new MaterialFacts.Part("Sodium", 1297296000L),
-                                new MaterialFacts.Part("SiliconDioxide", 7783776000L),
-                                new MaterialFacts.Part("Water", 3891888000L),
-                                new MaterialFacts.Part("Oxygen", 648648000L))
-                        .byproducts("Pollucite", "Salt")
-                        .forms("DUSTS", "ORES", "PLANTS")
-                        .build())
+                .localName("Zeolite")
+                .composition(
+                        26L,
+                        new MaterialDefinition.Part("Alumina", 3243240000L),
+                        new MaterialDefinition.Part("Sodium", 1297296000L),
+                        new MaterialDefinition.Part("SiliconDioxide", 7783776000L),
+                        new MaterialDefinition.Part("Water", 3891888000L),
+                        new MaterialDefinition.Part("Oxygen", 648648000L))
+                .byproducts("Pollucite", "Salt")
+                .forms("DUSTS", "ORES", "PLANTS")
                 .build());
     }
 }

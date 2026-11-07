@@ -1,6 +1,7 @@
 package gregtech.content.material;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialToolHelper;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 
@@ -16,7 +17,7 @@ public final class SourceMaterialToolStats {
                 && definition.id() == material.getId()
                 && GTMaterialRegistry.get(material.getId()) == material
                 && GTMaterialRegistry.get(material.getName()) == material
-                && definition.facts().correctedToolStats()
-                && definition.facts().tools().matches(material);
+                && definition.correctedToolStats()
+                && definition.tools().equals(MaterialToolHelper.profile(material));
     }
 }

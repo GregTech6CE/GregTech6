@@ -18,9 +18,8 @@ import java.util.function.BiConsumer;
 public final class GTMaterialRegistry {
     private GTMaterialRegistry() {}
 
-    private static BiConsumer<Boolean, String> logSink =
-            (warning, message) -> System.getLogger("gt6ce.materials")
-                    .log(warning ? System.Logger.Level.WARNING : System.Logger.Level.INFO, message);
+    private static BiConsumer<Boolean, String> logSink = (warning, message) -> System.getLogger("gt6ce.materials")
+            .log(warning ? System.Logger.Level.WARNING : System.Logger.Level.INFO, message);
     public static final int MAX_MATERIALS = 10000;
     public static final int ADDON_ID_START = MAX_MATERIALS;
 
@@ -80,7 +79,7 @@ public final class GTMaterialRegistry {
     /** Internal compatibility entry; never opens registration or replaces an existing identity. */
     public static GTMaterial registerDefinition(MaterialDefinition definition) {
         requireDefinitions(definition.name());
-        if (definition.facts().group()) throw new IllegalArgumentException("Groups belong to the built-in catalog");
+        if (definition.group()) throw new IllegalArgumentException("Groups belong to the built-in catalog");
         return install(definition, definition.id(), MaterialRegistryState.Mode.BUILTIN);
     }
 
@@ -96,18 +95,16 @@ public final class GTMaterialRegistry {
     /** Host-assigned addon identity; shared declarations are merged by AddonMaterials before this call. */
     public static GTMaterial installAddonMaterial(MaterialDefinition definition, int id) {
         requireDefinitions(definition.name());
-        if (definition.facts().group())
-            throw new IllegalArgumentException("Addon definitions cannot install legacy groups");
+        if (definition.group()) throw new IllegalArgumentException("Addon definitions cannot install legacy groups");
         return install(definition, id, MaterialRegistryState.Mode.ADDON);
     }
 
     private static GTMaterial install(MaterialDefinition definition, int id, MaterialRegistryState.Mode mode) {
-        var facts = definition.facts();
         // Construct and validate the complete scalar object before any registry index is changed.
         GTMaterial material = new GTMaterial(
                         id,
                         definition.name(),
-                        facts.localName().isEmpty() ? definition.displayName() : facts.localName(),
+                        definition.localName().isEmpty() ? definition.displayName() : definition.localName(),
                         definition.color())
                 .setDisplayName(definition.displayName())
                 .put(definition.properties().toArray(MaterialProperty[]::new))
@@ -116,14 +113,15 @@ public final class GTMaterialRegistry {
                 .setAlpha(definition.alpha())
                 .setStats(definition.meltingPointKelvin(), definition.boilingPointKelvin(), definition.density())
                 .setTooltipChemical(definition.chemicalFormula());
-        if (!facts.tools().equals(MaterialFacts.EMPTY.tools()))
+        if (!definition.tools().equals(new MaterialToolProfile(0, 1F, 0, 0)))
             material.setToolStats(
-                    facts.tools().types(),
-                    facts.tools().speed(),
-                    facts.tools().durability(),
-                    facts.tools().quality());
-        if (!facts.sourceId().isEmpty()) material.setSourceMod(ModData.of(facts.sourceId(), facts.sourceName()));
-        return STATE.install(material, mode, facts.aliases());
+                    definition.tools().types(),
+                    definition.tools().speed(),
+                    definition.tools().durability(),
+                    definition.tools().quality());
+        if (!definition.sourceId().isEmpty())
+            material.setSourceMod(ModData.of(definition.sourceId(), definition.sourceName()));
+        return STATE.install(material, mode, definition.aliases());
     }
 
     public static String registeredNameIgnoringCase(String name) {
@@ -218,9 +216,7 @@ public final class GTMaterialRegistry {
                     install(
                             definition,
                             definition.id(),
-                            definition.facts().group()
-                                    ? MaterialRegistryState.Mode.GROUP
-                                    : MaterialRegistryState.Mode.BUILTIN);
+                            definition.group() ? MaterialRegistryState.Mode.GROUP : MaterialRegistryState.Mode.BUILTIN);
                 coreMaterials = Set.copyOf(STATE.materials);
                 catalogInstalled = true;
                 AddonMaterials.installDefinitions();

@@ -9,6 +9,7 @@ import gregtech.api.addon.material.MaterialDeclaration;
 import gregtech.api.addon.material.MaterialFormRequest;
 import gregtech.api.addon.material.MaterialGroupDeclaration;
 import gregtech.api.addon.material.MaterialMetadataDeclaration;
+import gregtech.api.addon.material.MaterialProcessDeclaration;
 import gregtech.api.addon.material.MaterialTagDeclaration;
 import gregtech.api.addon.material.PrefixCondition;
 import gregtech.api.addon.material.PrefixDeclaration;
@@ -82,16 +83,18 @@ public final class AddonMaterials {
     private static final TreeMap<String, Submission> QUEUE = new TreeMap<>();
     private static final Map<GTMaterial, List<String>> OWNERS = new IdentityHashMap<>();
 
-    public record MetadataSubmission(
-            String addonId, MaterialMetadataDeclaration declaration) {}
+    public record MetadataSubmission(String addonId, MaterialMetadataDeclaration declaration) {}
 
     public record TagSubmission(String addonId, MaterialTagDeclaration declaration) {}
 
     public record GroupSubmission(String addonId, MaterialGroupDeclaration declaration) {}
 
+    public record ProcessSubmission(String addonId, MaterialProcessDeclaration<?> declaration) {}
+
     private static final List<MetadataSubmission> METADATA = new ArrayList<>();
     private static final List<TagSubmission> TAGS = new ArrayList<>();
     private static final List<GroupSubmission> GROUPS = new ArrayList<>();
+    private static final List<ProcessSubmission> PROCESSES = new ArrayList<>();
 
     public static List<MetadataSubmission> metadataDeclarations() {
         return List.copyOf(METADATA);
@@ -103,6 +106,10 @@ public final class AddonMaterials {
 
     public static List<GroupSubmission> groupDeclarations() {
         return List.copyOf(GROUPS);
+    }
+
+    public static List<ProcessSubmission> processDeclarations() {
+        return List.copyOf(PROCESSES);
     }
 
     private static boolean collected;
@@ -202,6 +209,8 @@ public final class AddonMaterials {
                     TAGS.add(new TagSubmission(contributor.addonId(), tag));
                 for (var group : List.copyOf(contributor.materialGroups()))
                     GROUPS.add(new GroupSubmission(contributor.addonId(), group));
+                for (var process : List.copyOf(contributor.processes()))
+                    PROCESSES.add(new ProcessSubmission(contributor.addonId(), process));
             } catch (RuntimeException | Error failure) {
                 throw AddonFailures.of(
                         "Addon material contributor failed: "
@@ -599,8 +608,7 @@ public final class AddonMaterials {
     public static void publishOreVeins() {
         var queued = new ArrayList<AddonOreVeins.Submission>();
         for (Submission submission : snapshot()) {
-            queued.add(new AddonOreVeins.Submission(
-                    submission.addonId, submission.veins, submission.smallOres));
+            queued.add(new AddonOreVeins.Submission(submission.addonId, submission.veins, submission.smallOres));
         }
         AddonOreVeins.publish(queued);
     }
@@ -786,8 +794,7 @@ public final class AddonMaterials {
                 if (!material.isValid())
                     throw new IllegalStateException("Addon '" + submission.addonId + "' form '" + request.prefixName()
                             + " / " + request.materialName() + "' uses an unknown material");
-                if (!MaterialItemDefinitions.candidatePrefixes()
-                        .contains(prefix))
+                if (!MaterialItemDefinitions.candidatePrefixes().contains(prefix))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' form '"
                             + prefix.getName() + " / " + material.resolve().getName()
                             + "' is not a generated form");

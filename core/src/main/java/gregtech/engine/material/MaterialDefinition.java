@@ -1,109 +1,282 @@
 package gregtech.engine.material;
 
+import gregtech.api.addon.material.FuelRule;
+import gregtech.api.addon.material.MaterialKey;
+import gregtech.api.addon.material.MaterialProcessKey;
+import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialProcessRule;
+import gregtech.api.addon.material.MaterialTarget;
+import gregtech.api.addon.material.OreProcessingRule;
 import gregtech.api.material.AtomicProperties;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
+import gregtech.api.material.MaterialToolProfile;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
-/** Named material registration parameters for built-in and imported materials. */
+/** Canonical material declaration grouped by stable identity, physical facts and owned relations. */
 public record MaterialDefinition(
-        int id,
-        String name,
-        String displayName,
-        int color,
-        MaterialTextureSet texture,
-        int meltingPointKelvin,
-        int boilingPointKelvin,
-        float density,
-        String chemicalFormula,
+        Identity identity,
+        Presentation presentation,
+        PhysicalProperties physical,
         Set<MaterialProperty> properties,
-        AtomicProperties atomicProperties,
-        int alpha,
-        MaterialFacts facts) {
+        Source source,
+        MaterialToolProfile tools,
+        Composition composition,
+        Relations relations,
+        Processes processes) {
     public MaterialDefinition {
-        Objects.requireNonNull(name, "Material name");
-        Objects.requireNonNull(displayName, "Material display name");
-        Objects.requireNonNull(facts, "Material facts");
-        Objects.requireNonNull(chemicalFormula, "Chemical formula");
-        Objects.requireNonNull(atomicProperties, "Atomic properties");
-        if (alpha < 0 || alpha > 255) throw new IllegalArgumentException("Alpha must be 0..255");
+        Objects.requireNonNull(identity, "identity");
+        Objects.requireNonNull(presentation, "presentation");
+        Objects.requireNonNull(physical, "physical");
+        Objects.requireNonNull(source, "source");
+        Objects.requireNonNull(tools, "tools");
+        Objects.requireNonNull(composition, "composition");
+        Objects.requireNonNull(relations, "relations");
+        Objects.requireNonNull(processes, "processes");
         properties = Set.copyOf(properties);
-        if ((id <= 0 || id >= 10_000) && !(id == -1 && facts.group()))
-            throw new IllegalArgumentException("Material ID must be 1..9999: " + id);
-        if (!name.matches(facts.group() ? "[A-Za-z][A-Za-z0-9_/]*" : "[A-Za-z][A-Za-z0-9_]*"))
-            throw new IllegalArgumentException("Use a stable, readable material name: " + name);
-        if (displayName.isBlank() || (color & 0xFF000000) != 0)
-            throw new IllegalArgumentException("Material requires a display name and RGB color: " + name);
-        if (meltingPointKelvin < 0 || boilingPointKelvin < 0 || !Float.isFinite(density) || density < 0)
-            throw new IllegalArgumentException("Invalid physical properties for " + name);
+        if ((identity.id() <= 0 || identity.id() >= 10_000) && !(identity.id() == -1 && relations.group()))
+            throw new IllegalArgumentException("Material ID must be 1..9999: " + identity.name());
+        if (!identity.name().matches(relations.group() ? "[A-Za-z][A-Za-z0-9_/]*" : "[A-Za-z][A-Za-z0-9_]*"))
+            throw new IllegalArgumentException("Use a stable, readable material name: " + identity.name());
+        if (presentation.displayName().isBlank() || (presentation.color() & 0xFF000000) != 0)
+            throw new IllegalArgumentException("Material requires a display name and RGB color: " + identity.name());
+        if (presentation.alpha() < 0 || presentation.alpha() > 255)
+            throw new IllegalArgumentException("Alpha must be 0..255");
+        if (physical.meltingPointKelvin() < 0
+                || physical.boilingPointKelvin() < 0
+                || !Float.isFinite(physical.density())
+                || physical.density() < 0)
+            throw new IllegalArgumentException("Invalid physical properties for " + identity.name());
     }
 
-    public MaterialDefinition(
-            int id,
-            String name,
-            String displayName,
-            int color,
-            MaterialTextureSet texture,
-            int melt,
-            int boil,
-            float density,
-            String formula,
-            Set<MaterialProperty> properties,
-            AtomicProperties atoms,
-            int alpha) {
-        this(
-                id,
-                name,
-                displayName,
-                color,
-                texture,
-                melt,
-                boil,
-                density,
-                formula,
-                properties,
-                atoms,
-                alpha,
-                MaterialFacts.EMPTY);
+    public int id() {
+        return identity.id();
+    }
+
+    public String name() {
+        return identity.name();
+    }
+
+    public String localName() {
+        return identity.localName();
+    }
+
+    public List<String> aliases() {
+        return identity.aliases();
+    }
+
+    public String displayName() {
+        return presentation.displayName();
+    }
+
+    public int color() {
+        return presentation.color();
+    }
+
+    public MaterialTextureSet texture() {
+        return presentation.texture();
+    }
+
+    public int meltingPointKelvin() {
+        return physical.meltingPointKelvin();
+    }
+
+    public int boilingPointKelvin() {
+        return physical.boilingPointKelvin();
+    }
+
+    public float density() {
+        return physical.density();
+    }
+
+    public String chemicalFormula() {
+        return presentation.chemicalFormula();
+    }
+
+    public AtomicProperties atomicProperties() {
+        return physical.atomicProperties();
+    }
+
+    public int alpha() {
+        return presentation.alpha();
+    }
+
+    public String sourceId() {
+        return source.id();
+    }
+
+    public String sourceName() {
+        return source.name();
+    }
+
+    public boolean correctedToolStats() {
+        return source.correctedToolStats();
+    }
+
+    public boolean group() {
+        return relations.group();
+    }
+
+    public Set<String> forms() {
+        return relations.forms();
+    }
+
+    public Set<String> classifications() {
+        return relations.classifications();
+    }
+
+    public List<String> members() {
+        return relations.members();
+    }
+
+    public MaterialTarget smelting() {
+        return first(MaterialProcessKeys.SMELTING);
+    }
+
+    public MaterialTarget crushing() {
+        return first(MaterialProcessKeys.CRUSHING);
+    }
+
+    public MaterialTarget pulverizing() {
+        return first(MaterialProcessKeys.PULVERIZING);
+    }
+
+    public Optional<FuelRule> fuel() {
+        return Optional.ofNullable(first(MaterialProcessKeys.FUEL));
+    }
+
+    public List<String> byproducts() {
+        OreProcessingRule rule = first(MaterialProcessKeys.ORE_PROCESSING);
+        return rule == null
+                ? List.of()
+                : rule.byproducts().stream().map(MaterialKey::name).toList();
+    }
+
+    public int oreMultiplier() {
+        OreProcessingRule rule = first(MaterialProcessKeys.ORE_PROCESSING);
+        return rule == null ? 1 : rule.oreMultiplier();
+    }
+
+    public int processingMultiplier() {
+        OreProcessingRule rule = first(MaterialProcessKeys.ORE_PROCESSING);
+        return rule == null ? 1 : rule.processingMultiplier();
+    }
+
+    public Map<String, MaterialTarget> processing() {
+        var result = new LinkedHashMap<String, MaterialTarget>();
+        for (var entry : processes.rules().entrySet()) {
+            String kind = MaterialProcessKeys.legacyTargetName(entry.getKey());
+            if (kind.isEmpty()) continue;
+            List<MaterialProcessRule<?>> rules = entry.getValue();
+            if (!rules.isEmpty() && rules.get(0).value() instanceof MaterialTarget target) result.put(kind, target);
+        }
+        return Map.copyOf(result);
+    }
+
+    private <T> T first(MaterialProcessKey<T> key) {
+        List<MaterialProcessRule<T>> rules = processes.find(key);
+        return rules.isEmpty() ? null : rules.get(0).value();
+    }
+
+    public record Identity(int id, String name, String localName, List<String> aliases) {
+        public Identity {
+            Objects.requireNonNull(name, "name");
+            Objects.requireNonNull(localName, "localName");
+            aliases = List.copyOf(aliases);
+        }
+    }
+
+    public record Presentation(
+            String displayName, int color, MaterialTextureSet texture, int alpha, String chemicalFormula) {
+        public Presentation {
+            Objects.requireNonNull(displayName, "displayName");
+            Objects.requireNonNull(chemicalFormula, "chemicalFormula");
+        }
+    }
+
+    public record PhysicalProperties(
+            int meltingPointKelvin, int boilingPointKelvin, float density, AtomicProperties atomicProperties) {
+        public PhysicalProperties {
+            Objects.requireNonNull(atomicProperties, "atomicProperties");
+        }
+    }
+
+    public record Source(String id, String name, boolean correctedToolStats) {
+        public Source {
+            Objects.requireNonNull(id, "id");
+            Objects.requireNonNull(name, "name");
+        }
+    }
+
+    public record Composition(long divider, List<Part> parts) {
+        public Composition {
+            parts = List.copyOf(parts);
+            if (divider < 0 || (!parts.isEmpty() && divider == 0))
+                throw new IllegalArgumentException("Invalid composition divider");
+            long total = 0;
+            for (Part part : parts) total = Math.addExact(total, part.amount());
+        }
+    }
+
+    public record Relations(boolean group, Set<String> forms, Set<String> classifications, List<String> members) {
+        public Relations {
+            forms = Set.copyOf(forms);
+            classifications = Set.copyOf(classifications);
+            members = List.copyOf(members);
+        }
+    }
+
+    public record Processes(Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> rules) {
+        public Processes {
+            var copied = new LinkedHashMap<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>();
+            rules.forEach((key, values) -> {
+                for (MaterialProcessRule<?> rule : values)
+                    if (!key.type().isInstance(rule.value()))
+                        throw new IllegalArgumentException("Process value type mismatch for " + key.id());
+                copied.put(key, List.copyOf(values));
+            });
+            rules = Map.copyOf(copied);
+        }
+
+        @SuppressWarnings("unchecked")
+        public <T> List<MaterialProcessRule<T>> find(MaterialProcessKey<T> key) {
+            return (List<MaterialProcessRule<T>>) (List<?>) rules.getOrDefault(key, List.of());
+        }
+    }
+
+    public record Part(String material, long amount) {
+        public Part {
+            requireKey(material);
+            if (amount <= 0) throw new IllegalArgumentException("Component amount must be positive: " + material);
+        }
+    }
+
+    private static void requireKey(String key) {
+        if (key == null
+                || key.isBlank()
+                || !gregtech.api.material.GTMaterial.sanitize(key).equals(key))
+            throw new IllegalArgumentException("Expected canonical material key: " + key);
+    }
+
+    private static MaterialTarget target(String material, long amount) {
+        return new MaterialTarget(new MaterialKey(material), amount);
     }
 
     public static Builder builder(int id, String name) {
         return new Builder(id, name);
     }
 
-    /** Compatibility with definitions written before atomic properties were exposed. */
-    public MaterialDefinition(
-            int id,
-            String name,
-            String displayName,
-            int color,
-            MaterialTextureSet texture,
-            int meltingPointKelvin,
-            int boilingPointKelvin,
-            float density,
-            String chemicalFormula,
-            Set<MaterialProperty> properties) {
-        this(
-                id,
-                name,
-                displayName,
-                color,
-                texture,
-                meltingPointKelvin,
-                boilingPointKelvin,
-                density,
-                chemicalFormula,
-                properties,
-                AtomicProperties.GT6_DEFAULT,
-                255,
-                MaterialFacts.EMPTY);
-    }
-
     public static final class Builder {
         private final int id;
         private final String name;
+        private String localName = "";
         private String displayName;
         private int color = 0xFFFFFF;
         private MaterialTextureSet texture = MaterialTextureSet.DULL;
@@ -113,8 +286,18 @@ public record MaterialDefinition(
         private String formula = "";
         private AtomicProperties atoms = AtomicProperties.GT6_DEFAULT;
         private int alpha = 255;
-        private MaterialFacts facts = MaterialFacts.EMPTY;
         private final EnumSet<MaterialProperty> properties = EnumSet.noneOf(MaterialProperty.class);
+        private String sourceId = "", sourceName = "";
+        private boolean group, corrected;
+        private MaterialToolProfile tools = new MaterialToolProfile(0, 1F, 0, 0);
+        private long burnTime, divider;
+        private MaterialTarget burning, crushing, smelting, pulverizing;
+        private List<Part> composition = List.of();
+        private List<String> byproducts = List.of(), aliases = List.of(), members = List.of();
+        private int oreMultiplier = 1, processingMultiplier = 1;
+        private Set<String> forms = Set.of();
+        private Set<String> classifications = Set.of();
+        private final Map<String, MaterialTarget> processing = new LinkedHashMap<>();
 
         private Builder(int id, String name) {
             this.id = id;
@@ -122,8 +305,8 @@ public record MaterialDefinition(
             this.displayName = name;
         }
 
-        public Builder facts(MaterialFacts value) {
-            facts = value;
+        public Builder localName(String name) {
+            localName = name;
             return this;
         }
 
@@ -189,21 +372,133 @@ public record MaterialDefinition(
             return properties(MaterialProperty.LIQUID);
         }
 
+        public Builder source(String id, String name) {
+            sourceId = id;
+            sourceName = name;
+            return this;
+        }
+
+        public Builder group() {
+            group = true;
+            return this;
+        }
+
+        public Builder correctedToolStats() {
+            corrected = true;
+            return this;
+        }
+
+        public Builder tools(int types, float speed, long durability, int quality) {
+            tools = new MaterialToolProfile(types, speed, durability, quality);
+            return this;
+        }
+
+        public Builder fuel(long ticks, String ash, long amount) {
+            burnTime = ticks;
+            burning = ash.isEmpty() ? null : target(ash, amount);
+            return this;
+        }
+
+        public Builder crushing(String name, long amount) {
+            crushing = target(name, amount);
+            return this;
+        }
+
+        public Builder smelting(String name, long amount) {
+            smelting = target(name, amount);
+            return this;
+        }
+
+        public Builder pulverizing(String name, long amount) {
+            pulverizing = target(name, amount);
+            return this;
+        }
+
+        public Builder composition(long value, Part... parts) {
+            divider = value;
+            composition = List.of(parts);
+            return this;
+        }
+
+        public Builder byproducts(String... names) {
+            byproducts = List.of(names);
+            return this;
+        }
+
+        public Builder multipliers(int ore, int processing) {
+            oreMultiplier = ore;
+            processingMultiplier = processing;
+            return this;
+        }
+
+        public Builder forms(String... names) {
+            forms = Set.of(names);
+            return this;
+        }
+
+        public Builder classifications(String... names) {
+            classifications = Set.of(names);
+            return this;
+        }
+
+        public Builder aliases(String... names) {
+            aliases = List.of(names);
+            return this;
+        }
+
+        public Builder members(String... names) {
+            members = List.of(names);
+            return this;
+        }
+
+        public Builder processing(String kind, String name, long amount) {
+            MaterialProcessKeys.legacyTarget(kind);
+            MaterialTarget target = target(name, amount);
+            if (processing.putIfAbsent(kind, target) != null)
+                throw new IllegalArgumentException("Duplicate processing target: " + kind);
+            return this;
+        }
+
         public MaterialDefinition build() {
+            var processRules = new LinkedHashMap<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>();
+            addTarget(processRules, MaterialProcessKeys.SMELTING, smelting);
+            addTarget(processRules, MaterialProcessKeys.CRUSHING, crushing);
+            addTarget(processRules, MaterialProcessKeys.PULVERIZING, pulverizing);
+            if (burnTime > 0 || burning != null)
+                addProcess(
+                        processRules, MaterialProcessKeys.FUEL, new FuelRule(burnTime, Optional.ofNullable(burning)));
+            if (!byproducts.isEmpty() || oreMultiplier != 1 || processingMultiplier != 1)
+                addProcess(
+                        processRules,
+                        MaterialProcessKeys.ORE_PROCESSING,
+                        new OreProcessingRule(
+                                byproducts.stream().map(MaterialKey::new).toList(),
+                                oreMultiplier,
+                                processingMultiplier));
+            processing.forEach(
+                    (kind, target) -> addTarget(processRules, MaterialProcessKeys.legacyTarget(kind), target));
             return new MaterialDefinition(
-                    id,
-                    name,
-                    displayName,
-                    color,
-                    texture,
-                    meltingPointKelvin,
-                    boilingPointKelvin,
-                    density,
-                    formula,
+                    new Identity(id, name, localName, aliases),
+                    new Presentation(displayName, color, texture, alpha, formula),
+                    new PhysicalProperties(meltingPointKelvin, boilingPointKelvin, density, atoms),
                     properties,
-                    atoms,
-                    alpha,
-                    facts);
+                    new Source(sourceId, sourceName, corrected),
+                    tools,
+                    new Composition(divider, composition),
+                    new Relations(group, forms, classifications, members),
+                    new Processes(processRules));
+        }
+
+        private static void addTarget(
+                Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> rules,
+                MaterialProcessKey<MaterialTarget> key,
+                MaterialTarget target) {
+            if (target != null) addProcess(rules, key, target);
+        }
+
+        private static <T> void addProcess(
+                Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> rules, MaterialProcessKey<T> key, T value) {
+            rules.computeIfAbsent(key, ignored -> new ArrayList<>()).add(MaterialProcessRule.anyForm(value));
         }
     }
 }

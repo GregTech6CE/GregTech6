@@ -75,6 +75,9 @@ public interface AddonMaterialContributor {
     /** Substitution group declarations owned by this addon. Defaults to none. */
     default List<MaterialGroupDeclaration> materialGroups() { return List.of(); }
 
+    /** Typed, addon-namespaced process rules. Defaults to none. */
+    default List<MaterialProcessDeclaration<?>> processes() { return List.of(); }
+
     /** Other cross-material links. New materials still belong in {@link #materials()}. */
     default void link() {}
 }

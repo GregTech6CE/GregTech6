@@ -62,4 +62,73 @@ class MaterialViewTest {
         assertEquals(Set.of(new MaterialKey("Iron")), group.materials());
         assertThrows(UnsupportedOperationException.class, () -> group.materials().clear());
     }
+
+    @Test
+    void processDeclarationsAreTypedAndImmutable() {
+        var process = new MaterialProcessKey<>(new DataKey("test_addon", "throw_into_water"), String.class);
+        var forms = new java.util.HashSet<FormKey>();
+        forms.add(new FormKey("dust"));
+        var declaration = new MaterialProcessDeclaration<>("Iron", process, forms, "swim");
+        forms.clear();
+        assertEquals(Set.of(new FormKey("dust")), declaration.forms());
+        assertThrows(UnsupportedOperationException.class, () -> declaration.forms().clear());
+        @SuppressWarnings("rawtypes")
+        MaterialProcessKey integerProcess =
+                new MaterialProcessKey<>(new DataKey("test_addon", "throw_into_water"), Integer.class);
+        @SuppressWarnings("unchecked")
+        var invalid = assertThrows(
+                IllegalArgumentException.class,
+                () -> new MaterialProcessDeclaration("Iron", integerProcess, Set.of(), "wrong"));
+        assertTrue(invalid.getMessage().contains("type mismatch"));
+    }
+
+    @Test
+    void processViewSupportsFormSpecificQueries() {
+        var iron = new MaterialKey("Iron");
+        var dust = new FormKey("dust");
+        var process = new MaterialProcessKey<>(new DataKey("test_addon", "throw_into_water"), String.class);
+        var rule = new MaterialProcessRule<>(Set.of(dust), "wet");
+        MaterialProcessesView view = new MaterialProcessesView() {
+            public <T> java.util.List<MaterialProcessRule<T>> find(
+                    MaterialKey material, MaterialProcessKey<T> key) {
+                if (!material.equals(iron) || !key.equals(process)) return java.util.List.of();
+                @SuppressWarnings("unchecked")
+                var typed = (MaterialProcessRule<T>) rule;
+                return java.util.List.of(typed);
+            }
+
+            public Set<MaterialProcessKey<?>> keys(MaterialKey material) {
+                return material.equals(iron) ? Set.of(process) : Set.of();
+            }
+        };
+        assertEquals("wet", view.find(iron, dust, process).get(0).value());
+        assertTrue(view.find(iron, new FormKey("ingot"), process).isEmpty());
+        assertTrue(view.supports(iron, process));
+    }
+
+    @Test
+    void oldCatalogImplementersExplicitlyRejectProcessViews() {
+        MaterialCatalogView legacy = new MaterialCatalogView() {
+            public long revision() {
+                return 1;
+            }
+
+            public java.util.Optional<MaterialKey> resolve(String name) {
+                return java.util.Optional.empty();
+            }
+
+            public MaterialTagsView tags() {
+                return null;
+            }
+
+            public java.util.Optional<MaterialView> find(MaterialKey key) {
+                return java.util.Optional.empty();
+            }
+
+            public java.util.List<MaterialView> materials() {
+                return java.util.List.of();
+            }
+        };
+        assertThrows(UnsupportedOperationException.class, legacy::processes);
+    }
 }

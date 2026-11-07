@@ -50,7 +50,7 @@ public final class MaterialLifecycleProbe {
             check(GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.DEFINITIONS);
             return;
         }
-        if (scenario.startsWith("metadata") || scenario.startsWith("relation")) {
+        if (scenario.startsWith("metadata") || scenario.startsWith("relation") || scenario.startsWith("process")) {
             System.setProperty("material.metadata.scenario", scenario);
             var spi = java.nio.file.Files.createTempDirectory("gt6ce-material-metadata-");
             var service = spi.resolve("META-INF/services/" + AddonMaterialContributor.class.getName());
@@ -147,6 +147,10 @@ public final class MaterialLifecycleProbe {
                 .orElseThrow();
         check(group.members().contains(new MaterialKey("Iron")));
         check(!MaterialViews.catalog().resolve("AnyIron").isPresent());
+        var graphiteSmelting =
+                MaterialViews.catalog().processes().find(new MaterialKey("Graphite"), MaterialProcessKeys.SMELTING);
+        check(graphiteSmelting.size() == 1);
+        check(graphiteSmelting.get(0).value().equals(new MaterialTarget(new MaterialKey("Carbon"), 648648000L)));
         if (scenario.equals("metadata")) {
             check(MaterialViews.catalog()
                             .find(new MaterialKey("MetadataMaterial"))
@@ -182,6 +186,15 @@ public final class MaterialLifecycleProbe {
                     .orElseThrow()
                     .members()
                     .contains(new MaterialKey("Steel")));
+        }
+        if (scenario.equals("processes")) {
+            var key = new MaterialProcessKey<>(new DataKey("metadata_test", "throw_into_water"), String.class);
+            var rules = MaterialViews.catalog().processes().find(new MaterialKey("Iron"), new FormKey("dust"), key);
+            check(rules.size() == 1 && rules.get(0).value().equals("wet"));
+            check(MaterialViews.catalog()
+                    .processes()
+                    .find(new MaterialKey("Iron"), new FormKey("ingot"), key)
+                    .isEmpty());
         }
         rejects(() -> GTMaterialRegistry.registerDefinition(shared));
         rejects(() -> GTMaterialRegistry.installAddonMaterial(shared, 10001));

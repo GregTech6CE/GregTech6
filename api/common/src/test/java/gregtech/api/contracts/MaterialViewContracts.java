@@ -28,10 +28,19 @@ final class MaterialViewContracts {
                         java.util.Set.of(key),
                         java.util.Set.of()));
             }
+            public List<MaterialProcessDeclaration<?>> processes() {
+                return List.of(new MaterialProcessDeclaration<>(
+                        "Iron",
+                        new MaterialProcessKey<>(new DataKey("consumer", "inspection"), Boolean.class),
+                        java.util.Set.of(new FormKey("dust")),
+                        Boolean.TRUE));
+            }
         };
         if (contributor.metadata().size() != 1) throw new AssertionError("metadata SPI");
-        if (contributor.materialTags().size() != 1 || contributor.materialGroups().size() != 1)
-            throw new AssertionError("tag and group SPI");
+        if (contributor.materialTags().size() != 1
+                || contributor.materialGroups().size() != 1
+                || contributor.processes().size() != 1)
+            throw new AssertionError("tag, group and process SPI");
         try { GregTechMaterials.catalog(); throw new AssertionError("unbound host must fail"); }
         catch (IllegalStateException expected) { }
     }

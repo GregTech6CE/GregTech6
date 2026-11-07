@@ -27,7 +27,7 @@ public final class MaterialForms {
         if (material == MaterialSentinels.EMPTY) return Set.of("EMPTY");
         var definition = MaterialDefinitions.find(material.getName());
         if (definition == null || definition.id() != material.getId()) return Set.of();
-        return definition.facts().forms();
+        return definition.forms();
     }
 
     /**
@@ -44,7 +44,7 @@ public final class MaterialForms {
     public static int count(String flag) {
         int total = 0;
         for (var definition : MaterialDefinitions.all())
-            if (definition.facts().forms().contains(flag)) total++;
+            if (definition.forms().contains(flag)) total++;
         return total;
     }
 

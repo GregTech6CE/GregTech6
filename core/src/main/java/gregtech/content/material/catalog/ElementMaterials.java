@@ -3,7 +3,6 @@ package gregtech.content.material.catalog;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.MaterialDefinition;
-import gregtech.engine.material.MaterialFacts;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,24 +59,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Ac")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ac")
-                        .build())
+                .localName("Ac")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ac")
                 .build());
         result.add(MaterialDefinition.builder(2220, "Adamantium")
                 .displayName("Adamantium")
@@ -106,31 +103,29 @@ public final class ElementMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ad")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 10.0F, 5120L, 5)
-                        .crushing("Adamantine", 648648000L)
-                        .multipliers(2, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .aliases("Ad")
-                        .build())
+                .localName("Ad")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 10.0F, 5120L, 5)
+                .crushing("Adamantine", 648648000L)
+                .multipliers(2, 1)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
+                .aliases("Ad")
                 .build());
         result.add(MaterialDefinition.builder(130, "Aluminium")
                 .displayName("Aluminium")
@@ -165,31 +160,29 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Al")
-                        .source("TConstruct", "Tinkers Construct")
-                        .tools(2, 10.0F, 128L, 2)
-                        .crushing("Alumina", 648648000L)
-                        .multipliers(2, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .aliases("Al")
-                        .build())
+                .localName("Al")
+                .source("TConstruct", "Tinkers Construct")
+                .tools(2, 10.0F, 128L, 2)
+                .crushing("Alumina", 648648000L)
+                .multipliers(2, 1)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
+                .aliases("Al")
                 .build());
         result.add(MaterialDefinition.builder(950, "Americium")
                 .displayName("Americium")
@@ -222,26 +215,24 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Am")
-                        .tools(3, 4.0F, 256L, 2)
-                        .byproducts("Lead", "Radium", "RareEarth")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Am")
-                        .build())
+                .localName("Am")
+                .tools(3, 4.0F, 256L, 2)
+                .byproducts("Lead", "Radium", "RareEarth")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Am")
                 .build());
         result.add(MaterialDefinition.builder(951, "Americium241")
                 .displayName("Americium-241")
@@ -273,25 +264,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Am-241")
-                        .tools(3, 4.0F, 256L, 2)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Am_241")
-                        .build())
+                .localName("Am-241")
+                .tools(3, 4.0F, 256L, 2)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Am_241")
                 .build());
         result.add(MaterialDefinition.builder(952, "Americium242")
                 .displayName("Americium-242")
@@ -323,25 +312,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Am-242")
-                        .tools(3, 4.0F, 256L, 2)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Am_242")
-                        .build())
+                .localName("Am-242")
+                .tools(3, 4.0F, 256L, 2)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Am_242")
                 .build());
         result.add(MaterialDefinition.builder(8744, "AncientDebris")
                 .displayName("Ancient Debris")
@@ -373,27 +360,25 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Ancient")
-                        .source("netheriteplus", "Netherite Plus")
-                        .tools(0, 1.0F, 16L, 3)
-                        .byproducts("Soulsand", "Efrine", "Huebnerite", "Firestone")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .build())
+                .localName("Ancient")
+                .source("netheriteplus", "Netherite Plus")
+                .tools(0, 1.0F, 16L, 3)
+                .byproducts("Soulsand", "Efrine", "Huebnerite", "Firestone")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(510, "Antimony")
                 .displayName("Antimony")
@@ -427,28 +412,25 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sb")
-                        .byproducts(
-                                "Zinc", "Realgar", "Cinnabar", "Galena", "Arsenopyrite", "Pyrite", "Barite", "Calcite")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Sb")
-                        .build())
+                .localName("Sb")
+                .byproducts("Zinc", "Realgar", "Cinnabar", "Galena", "Arsenopyrite", "Pyrite", "Barite", "Calcite")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Sb")
                 .build());
         result.add(MaterialDefinition.builder(180, "Argon")
                 .displayName("Argon")
@@ -462,11 +444,9 @@ public final class ElementMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ar")
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("Ar")
-                        .build())
+                .localName("Ar")
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("Ar")
                 .build());
         result.add(MaterialDefinition.builder(330, "Arsenic")
                 .displayName("Arsenic")
@@ -499,25 +479,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("As")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("As")
-                        .build())
+                .localName("As")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("As")
                 .build());
         result.add(MaterialDefinition.builder(850, "Astatine")
                 .displayName("Astatine")
@@ -549,27 +527,25 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("At")
-                        .forms(
-                                "ARMORS",
-                                "CONTAINERS_GAS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "GASES",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("At")
-                        .build())
+                .localName("At")
+                .forms(
+                        "ARMORS",
+                        "CONTAINERS_GAS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "GASES",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("At")
                 .build());
         result.add(MaterialDefinition.builder(560, "Barium")
                 .displayName("Barium")
@@ -602,25 +578,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ba")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ba")
-                        .build())
+                .localName("Ba")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ba")
                 .build());
         result.add(MaterialDefinition.builder(970, "Berkelium")
                 .displayName("Berkelium")
@@ -651,24 +625,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Bk")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Bk")
-                        .build())
+                .localName("Bk")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Bk")
                 .build());
         result.add(MaterialDefinition.builder(40, "Beryllium")
                 .displayName("Beryllium")
@@ -702,36 +674,27 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Be")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(2, 14.0F, 64L, 2)
-                        .byproducts(
-                                "Alumina",
-                                "Emerald",
-                                "Aquamarine",
-                                "Morganite",
-                                "Goshenite",
-                                "Bixbite",
-                                "Heliodor",
-                                "Maxixe")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Be")
-                        .build())
+                .localName("Be")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(2, 14.0F, 64L, 2)
+                .byproducts(
+                        "Alumina", "Emerald", "Aquamarine", "Morganite", "Goshenite", "Bixbite", "Heliodor", "Maxixe")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Be")
                 .build());
         result.add(MaterialDefinition.builder(41, "Beryllium7")
                 .displayName("Beryllium-7")
@@ -763,25 +726,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Be-7")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Be_7")
-                        .build())
+                .localName("Be-7")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Be_7")
                 .build());
     }
 
@@ -816,25 +777,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Be-8")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Be_8")
-                        .build())
+                .localName("Be-8")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Be_8")
                 .build());
         result.add(MaterialDefinition.builder(9840, "Biomass")
                 .displayName("Biomass")
@@ -846,11 +805,9 @@ public final class ElementMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("BioMass")
-                        .source("Forestry", "Forestry")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("BioMass")
+                .source("Forestry", "Forestry")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(830, "Bismuth")
                 .displayName("Bismuth")
@@ -883,29 +840,27 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Bi")
-                        .source("terrafirmacraft", "TerraFirmaCraft")
-                        .tools(2, 6.0F, 64L, 1)
-                        .byproducts("Russellite", "Galena", "Kesterite")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Bi")
-                        .build())
+                .localName("Bi")
+                .source("terrafirmacraft", "TerraFirmaCraft")
+                .tools(2, 6.0F, 64L, 1)
+                .byproducts("Russellite", "Galena", "Kesterite")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Bi")
                 .build());
         result.add(MaterialDefinition.builder(1070, "Bohrium")
                 .displayName("Bohrium")
@@ -936,24 +891,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Bh")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Bh")
-                        .build())
+                .localName("Bh")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Bh")
                 .build());
         result.add(MaterialDefinition.builder(50, "Boron")
                 .displayName("Boron")
@@ -986,25 +939,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("B")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("B")
-                        .build())
+                .localName("B")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("B")
                 .build());
         result.add(MaterialDefinition.builder(51, "Boron11")
                 .displayName("Boron-11")
@@ -1036,25 +987,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("B-11")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("B_11")
-                        .build())
+                .localName("B-11")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("B_11")
                 .build());
         result.add(MaterialDefinition.builder(350, "Bromine")
                 .displayName("Bromine")
@@ -1068,11 +1017,9 @@ public final class ElementMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Br")
-                        .forms("CONTAINERS_FLUID", "LIQUID")
-                        .aliases("Br")
-                        .build())
+                .localName("Br")
+                .forms("CONTAINERS_FLUID", "LIQUID")
+                .aliases("Br")
                 .build());
         result.add(MaterialDefinition.builder(480, "Cadmium")
                 .displayName("Cadmium")
@@ -1106,25 +1053,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cd")
-                        .byproducts("Chalcopyrite", "Sphalerite", "Selenium")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Cd")
-                        .build())
+                .localName("Cd")
+                .byproducts("Chalcopyrite", "Sphalerite", "Selenium")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Cd")
                 .build());
         result.add(MaterialDefinition.builder(550, "Caesium")
                 .displayName("Caesium")
@@ -1157,25 +1102,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cs")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Cs")
-                        .build())
+                .localName("Cs")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Cs")
                 .build());
         result.add(MaterialDefinition.builder(200, "Calcium")
                 .displayName("Calcium")
@@ -1208,25 +1151,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ca")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ca")
-                        .build())
+                .localName("Ca")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ca")
                 .build());
         result.add(MaterialDefinition.builder(980, "Californium")
                 .displayName("Californium")
@@ -1257,24 +1198,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Cf")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Cf")
-                        .build())
+                .localName("Cf")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Cf")
                 .build());
         result.add(MaterialDefinition.builder(60, "Carbon")
                 .displayName("Carbon")
@@ -1292,12 +1231,10 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("C")
-                        .fuel(800L, "", 0L)
-                        .forms("DUSTS", "MOLTEN", "ORES", "PLANTS", "STICKS")
-                        .aliases("C")
-                        .build())
+                .localName("C")
+                .fuel(800L, "", 0L)
+                .forms("DUSTS", "MOLTEN", "ORES", "PLANTS", "STICKS")
+                .aliases("C")
                 .build());
         result.add(MaterialDefinition.builder(61, "Carbon13")
                 .displayName("Carbon-13")
@@ -1314,12 +1251,10 @@ public final class ElementMaterials {
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.MELTING)
-                .facts(MaterialFacts.builder()
-                        .localName("C-13")
-                        .fuel(800L, "", 0L)
-                        .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("C_13")
-                        .build())
+                .localName("C-13")
+                .fuel(800L, "", 0L)
+                .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("C_13")
                 .build());
         result.add(MaterialDefinition.builder(62, "Carbon14")
                 .displayName("Carbon-14")
@@ -1336,12 +1271,10 @@ public final class ElementMaterials {
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.MELTING)
-                .facts(MaterialFacts.builder()
-                        .localName("C-14")
-                        .fuel(800L, "", 0L)
-                        .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("C_14")
-                        .build())
+                .localName("C-14")
+                .fuel(800L, "", 0L)
+                .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("C_14")
                 .build());
         result.add(MaterialDefinition.builder(580, "Cerium")
                 .displayName("Cerium")
@@ -1374,24 +1307,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ce")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ce")
-                        .build())
+                .localName("Ce")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ce")
                 .build());
     }
 
@@ -1408,11 +1339,9 @@ public final class ElementMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cl")
-                        .forms("CONTAINERS_FLUID", "GASES")
-                        .aliases("Cl")
-                        .build())
+                .localName("Cl")
+                .forms("CONTAINERS_FLUID", "GASES")
+                .aliases("Cl")
                 .build());
         result.add(MaterialDefinition.builder(240, "Chromium")
                 .displayName("Chromium")
@@ -1446,28 +1375,26 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cr")
-                        .tools(3, 11.0F, 256L, 3)
-                        .byproducts("Chromite", "Hematite", "MagnesiumCarbonate")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Cr")
-                        .build())
+                .localName("Cr")
+                .tools(3, 11.0F, 256L, 3)
+                .byproducts("Chromite", "Hematite", "MagnesiumCarbonate")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Cr")
                 .build());
         result.add(MaterialDefinition.builder(270, "Cobalt")
                 .displayName("Cobalt")
@@ -1501,28 +1428,26 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Co")
-                        .source("TConstruct", "Tinkers Construct")
-                        .tools(3, 5.0F, 256L, 3)
-                        .byproducts("Cobaltite", "Realgar", "OrangeFluorite", "Pentlandite", "YellowLimonite")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Co")
-                        .build())
+                .localName("Co")
+                .source("TConstruct", "Tinkers Construct")
+                .tools(3, 5.0F, 256L, 3)
+                .byproducts("Cobaltite", "Realgar", "OrangeFluorite", "Pentlandite", "YellowLimonite")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Co")
                 .build());
         result.add(MaterialDefinition.builder(278, "Cobalt60")
                 .displayName("Cobalt-60")
@@ -1555,26 +1480,24 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Co-60")
-                        .tools(3, 5.0F, 256L, 3)
-                        .byproducts("Cobaltite", "Realgar", "OrangeFluorite", "Pentlandite", "YellowLimonite")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Co_60")
-                        .build())
+                .localName("Co-60")
+                .tools(3, 5.0F, 256L, 3)
+                .byproducts("Cobaltite", "Realgar", "OrangeFluorite", "Pentlandite", "YellowLimonite")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Co_60")
                 .build());
         result.add(MaterialDefinition.builder(1120, "Copernicium")
                 .displayName("Copernicium")
@@ -1605,24 +1528,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Cn")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Cn")
-                        .build())
+                .localName("Cn")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Cn")
                 .build());
         result.add(MaterialDefinition.builder(290, "Copper")
                 .displayName("Copper")
@@ -1656,30 +1577,28 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Cu")
-                        .source("minecraft", "Minecraft")
-                        .tools(2, 4.0F, 64L, 0)
-                        .byproducts("Cobaltite", "Gold", "Nickel", "Malachite", "Arsenic")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .aliases("Cu")
-                        .build())
+                .localName("Cu")
+                .source("minecraft", "Minecraft")
+                .tools(2, 4.0F, 64L, 0)
+                .byproducts("Cobaltite", "Gold", "Nickel", "Malachite", "Arsenic")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
+                .aliases("Cu")
                 .build());
         result.add(MaterialDefinition.builder(9870, "Creosote")
                 .displayName("Creosote Oil")
@@ -1691,11 +1610,9 @@ public final class ElementMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Creosote Oil")
-                        .source("Railcraft", "Railcraft")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Creosote Oil")
+                .source("Railcraft", "Railcraft")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(960, "Curium")
                 .displayName("Curium")
@@ -1726,24 +1643,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Cm")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Cm")
-                        .build())
+                .localName("Cm")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Cm")
                 .build());
         result.add(MaterialDefinition.builder(1100, "Darmstadtium")
                 .displayName("Darmstadtium")
@@ -1755,24 +1670,22 @@ public final class ElementMaterials {
                 .atomicProperties(110, 110, 171, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.GENERATE_DUST, MaterialProperty.MELTING)
-                .facts(MaterialFacts.builder()
-                        .localName("Ds")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ds")
-                        .build())
+                .localName("Ds")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ds")
                 .build());
         result.add(MaterialDefinition.builder(11, "Deuterium")
                 .displayName("Deuterium")
@@ -1785,11 +1698,9 @@ public final class ElementMaterials {
                 .atomicProperties(1, 1, 1, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("D")
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("D")
-                        .build())
+                .localName("D")
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("D")
                 .build());
         result.add(MaterialDefinition.builder(1050, "Dubnium")
                 .displayName("Dubnium")
@@ -1820,24 +1731,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Db")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Db")
-                        .build())
+                .localName("Db")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Db")
                 .build());
         result.add(MaterialDefinition.builder(1450, "DuraniumElemental")
                 .displayName("DuraniumElemental")
@@ -1855,13 +1764,11 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Dn")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .byproducts("TritaniumDioxide", "Trinium")
-                        .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("Dn")
-                        .build())
+                .localName("Dn")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .byproducts("TritaniumDioxide", "Trinium")
+                .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("Dn")
                 .build());
         result.add(MaterialDefinition.builder(660, "Dysprosium")
                 .displayName("Dysprosium")
@@ -1893,24 +1800,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Dy")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Dy")
-                        .build())
+                .localName("Dy")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Dy")
                 .build());
         result.add(MaterialDefinition.builder(990, "Einsteinium")
                 .displayName("Einsteinium")
@@ -1941,24 +1846,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Es")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Es")
-                        .build())
+                .localName("Es")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Es")
                 .build());
         result.add(MaterialDefinition.builder(680, "Erbium")
                 .displayName("Erbium")
@@ -1990,24 +1893,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Er")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Er")
-                        .build())
+                .localName("Er")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Er")
                 .build());
     }
 
@@ -2042,24 +1943,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Eu")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Eu")
-                        .build())
+                .localName("Eu")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Eu")
                 .build());
         result.add(MaterialDefinition.builder(1170, "Farnsium")
                 .displayName("Farnsium")
@@ -2072,24 +1971,22 @@ public final class ElementMaterials {
                 .atomicProperties(117, 117, 177, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.GENERATE_DUST, MaterialProperty.MELTING)
-                .facts(MaterialFacts.builder()
-                        .localName("Fa")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Fa")
-                        .build())
+                .localName("Fa")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Fa")
                 .build());
         result.add(MaterialDefinition.builder(1000, "Fermium")
                 .displayName("Fermium")
@@ -2120,24 +2017,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Fm")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Fm")
-                        .build())
+                .localName("Fm")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Fm")
                 .build());
         result.add(MaterialDefinition.builder(1140, "Flerovium")
                 .displayName("Flerovium")
@@ -2168,24 +2063,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Fl")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Fl")
-                        .build())
+                .localName("Fl")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Fl")
                 .build());
         result.add(MaterialDefinition.builder(1148, "Flerovium298")
                 .displayName("Flerovium-298")
@@ -2216,24 +2109,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Fl-298")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Fl_298")
-                        .build())
+                .localName("Fl-298")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Fl_298")
                 .build());
         result.add(MaterialDefinition.builder(90, "Fluorine")
                 .displayName("Fluorine")
@@ -2251,14 +2142,12 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("F")
-                        .source("RotaryCraft", "RotaryCraft")
-                        .crushing("Fluorite", 648648000L)
-                        .multipliers(2, 1)
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("F")
-                        .build())
+                .localName("F")
+                .source("RotaryCraft", "RotaryCraft")
+                .crushing("Fluorite", 648648000L)
+                .multipliers(2, 1)
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("F")
                 .build());
         result.add(MaterialDefinition.builder(870, "Francium")
                 .displayName("Francium")
@@ -2289,25 +2178,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Fr")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Fr")
-                        .build())
+                .localName("Fr")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Fr")
                 .build());
         result.add(MaterialDefinition.builder(9860, "Fuel")
                 .displayName("Fuel")
@@ -2319,11 +2206,9 @@ public final class ElementMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("FuelOil")
-                        .source("BuildCraft|Core", "BuildCraft")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("FuelOil")
+                .source("BuildCraft|Core", "BuildCraft")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(640, "Gadolinium")
                 .displayName("Gadolinium")
@@ -2355,24 +2240,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Gd")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Gd")
-                        .build())
+                .localName("Gd")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Gd")
                 .build());
         result.add(MaterialDefinition.builder(310, "Gallium")
                 .displayName("Gallium")
@@ -2406,25 +2289,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ga")
-                        .byproducts("Zinc", "Selenium")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ga")
-                        .build())
+                .localName("Ga")
+                .byproducts("Zinc", "Selenium")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ga")
                 .build());
         result.add(MaterialDefinition.builder(320, "Germanium")
                 .displayName("Germanium")
@@ -2460,29 +2341,27 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ge")
-                        .source("Mekanism", "Mekanism")
-                        .tools(2, 6.0F, 256L, 2)
-                        .byproducts("Hematite", "Tin", "Chromite")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ge")
-                        .build())
+                .localName("Ge")
+                .source("Mekanism", "Mekanism")
+                .tools(2, 6.0F, 256L, 2)
+                .byproducts("Hematite", "Tin", "Chromite")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ge")
                 .build());
         result.add(MaterialDefinition.builder(790, "Gold")
                 .displayName("Gold")
@@ -2517,30 +2396,28 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Au")
-                        .source("minecraft", "Minecraft")
-                        .tools(3, 12.5F, 64L, 2)
-                        .byproducts("Copper", "Nickel", "Cinnabar")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .aliases("Au")
-                        .build())
+                .localName("Au")
+                .source("minecraft", "Minecraft")
+                .tools(3, 12.5F, 64L, 2)
+                .byproducts("Copper", "Nickel", "Cinnabar")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
+                .aliases("Au")
                 .build());
         result.add(MaterialDefinition.builder(791, "Gold198")
                 .displayName("Gold-198")
@@ -2572,25 +2449,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Au-198")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Au_198")
-                        .build())
+                .localName("Au-198")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Au_198")
                 .build());
         result.add(MaterialDefinition.builder(3720, "Gravitonium")
                 .displayName("Gravitonium")
@@ -2607,11 +2482,9 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Gt")
-                        .forms("CONTAINERS", "PLANTS")
-                        .aliases("Gt")
-                        .build())
+                .localName("Gt")
+                .forms("CONTAINERS", "PLANTS")
+                .aliases("Gt")
                 .build());
         result.add(MaterialDefinition.builder(720, "Hafnium")
                 .displayName("Hafnium")
@@ -2645,25 +2518,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Hf")
-                        .byproducts("Zircon")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Hf")
-                        .build())
+                .localName("Hf")
+                .byproducts("Zircon")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Hf")
                 .build());
     }
 
@@ -2697,24 +2568,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Hs")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Hs")
-                        .build())
+                .localName("Hs")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Hs")
                 .build());
         result.add(MaterialDefinition.builder(20, "Helium")
                 .displayName("Helium")
@@ -2728,11 +2597,9 @@ public final class ElementMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("He")
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("He")
-                        .build())
+                .localName("He")
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("He")
                 .build());
         result.add(MaterialDefinition.builder(21, "Helium3")
                 .displayName("Helium-3")
@@ -2745,11 +2612,9 @@ public final class ElementMaterials {
                 .atomicProperties(2, 2, 1, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("He-3")
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("He_3")
-                        .build())
+                .localName("He-3")
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("He_3")
                 .build());
         result.add(MaterialDefinition.builder(670, "Holmium")
                 .displayName("Holmium")
@@ -2782,24 +2647,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ho")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ho")
-                        .build())
+                .localName("Ho")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ho")
                 .build());
         result.add(MaterialDefinition.builder(10, "Hydrogen")
                 .displayName("Hydrogen")
@@ -2813,11 +2676,9 @@ public final class ElementMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("H")
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("H")
-                        .build())
+                .localName("H")
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("H")
                 .build());
         result.add(MaterialDefinition.builder(490, "Indium")
                 .displayName("Indium")
@@ -2851,26 +2712,24 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("In")
-                        .source("ReactorCraft", "ReactorCraft")
-                        .byproducts("Selenium")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("In")
-                        .build())
+                .localName("In")
+                .source("ReactorCraft", "ReactorCraft")
+                .byproducts("Selenium")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("In")
                 .build());
         result.add(MaterialDefinition.builder(530, "Iodine")
                 .displayName("Iodine")
@@ -2888,12 +2747,10 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("I")
-                        .source("Forestry", "Forestry")
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PROJECTILES")
-                        .aliases("I")
-                        .build())
+                .localName("I")
+                .source("Forestry", "Forestry")
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PROJECTILES")
+                .aliases("I")
                 .build());
         result.add(MaterialDefinition.builder(770, "Iridium")
                 .displayName("Iridium")
@@ -2927,29 +2784,27 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ir")
-                        .source("IC2", "IndustrialCraft 2")
-                        .tools(3, 6.0F, 5120L, 4)
-                        .byproducts("Platinum", "OsmiumElemental", "Rhodium")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ir")
-                        .build())
+                .localName("Ir")
+                .source("IC2", "IndustrialCraft 2")
+                .tools(3, 6.0F, 5120L, 4)
+                .byproducts("Platinum", "OsmiumElemental", "Rhodium")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ir")
                 .build());
         result.add(MaterialDefinition.builder(260, "Iron")
                 .displayName("Iron")
@@ -2984,31 +2839,29 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Fe")
-                        .source("minecraft", "Minecraft")
-                        .tools(3, 6.0F, 256L, 2)
-                        .crushing("Hematite", 648648000L)
-                        .multipliers(3, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .aliases("Fe")
-                        .build())
+                .localName("Fe")
+                .source("minecraft", "Minecraft")
+                .tools(3, 6.0F, 256L, 2)
+                .crushing("Hematite", 648648000L)
+                .multipliers(3, 1)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
+                .aliases("Fe")
                 .build());
         result.add(MaterialDefinition.builder(360, "Krypton")
                 .displayName("Krypton")
@@ -3022,11 +2875,9 @@ public final class ElementMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Kr")
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("Kr")
-                        .build())
+                .localName("Kr")
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("Kr")
                 .build());
         result.add(MaterialDefinition.builder(570, "Lanthanium")
                 .displayName("Lanthanium")
@@ -3059,24 +2910,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("La")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("La")
-                        .build())
+                .localName("La")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("La")
                 .build());
         result.add(MaterialDefinition.builder(1030, "Lawrencium")
                 .displayName("Lawrencium")
@@ -3107,24 +2956,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Lr")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Lr")
-                        .build())
+                .localName("Lr")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Lr")
                 .build());
         result.add(MaterialDefinition.builder(820, "Lead")
                 .displayName("Lead")
@@ -3158,29 +3005,27 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Pb")
-                        .source("factorization", "Factorization")
-                        .tools(2, 8.0F, 64L, 1)
-                        .byproducts("Silver", "Sulfur")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Pb")
-                        .build())
+                .localName("Pb")
+                .source("factorization", "Factorization")
+                .tools(2, 8.0F, 64L, 1)
+                .byproducts("Silver", "Sulfur")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Pb")
                 .build());
         result.add(MaterialDefinition.builder(30, "Lithium")
                 .displayName("Lithium")
@@ -3214,28 +3059,26 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Li")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .fuel(2000L, "", 0L)
-                        .byproducts("LithiumChloride")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Li")
-                        .build())
+                .localName("Li")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .fuel(2000L, "", 0L)
+                .byproducts("LithiumChloride")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Li")
                 .build());
         result.add(MaterialDefinition.builder(31, "Lithium6")
                 .displayName("Lithium-6")
@@ -3267,26 +3110,24 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Li-6")
-                        .fuel(2000L, "", 0L)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Li_6")
-                        .build())
+                .localName("Li-6")
+                .fuel(2000L, "", 0L)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Li_6")
                 .build());
     }
 
@@ -3301,24 +3142,22 @@ public final class ElementMaterials {
                 .atomicProperties(116, 116, 177, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.GENERATE_DUST, MaterialProperty.MELTING)
-                .facts(MaterialFacts.builder()
-                        .localName("Lv")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Lv")
-                        .build())
+                .localName("Lv")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Lv")
                 .build());
         result.add(MaterialDefinition.builder(710, "Lutetium")
                 .displayName("Lutetium")
@@ -3350,24 +3189,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Lu")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Lu")
-                        .build())
+                .localName("Lu")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Lu")
                 .build());
         result.add(MaterialDefinition.builder(120, "Magnesium")
                 .displayName("Magnesium")
@@ -3402,27 +3239,25 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Mg")
-                        .fuel(800L, "", 0L)
-                        .byproducts("Peridot", "MagnesiumCarbonate")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Mg")
-                        .build())
+                .localName("Mg")
+                .fuel(800L, "", 0L)
+                .byproducts("Peridot", "MagnesiumCarbonate")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Mg")
                 .build());
         result.add(MaterialDefinition.builder(250, "Manganese")
                 .displayName("Manganese")
@@ -3456,27 +3291,25 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Mn")
-                        .tools(3, 7.0F, 256L, 2)
-                        .byproducts("Pyrolusite", "Hematite", "Chromite")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Mn")
-                        .build())
+                .localName("Mn")
+                .tools(3, 7.0F, 256L, 2)
+                .byproducts("Pyrolusite", "Hematite", "Chromite")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Mn")
                 .build());
         result.add(MaterialDefinition.builder(1090, "Meitnerium")
                 .displayName("Meitnerium")
@@ -3488,24 +3321,22 @@ public final class ElementMaterials {
                 .atomicProperties(109, 109, 167, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.GENERATE_DUST, MaterialProperty.MELTING)
-                .facts(MaterialFacts.builder()
-                        .localName("Mt")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Mt")
-                        .build())
+                .localName("Mt")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Mt")
                 .build());
         result.add(MaterialDefinition.builder(1010, "Mendelevium")
                 .displayName("Mendelevium")
@@ -3536,24 +3367,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Md")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Md")
-                        .build())
+                .localName("Md")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Md")
                 .build());
         result.add(MaterialDefinition.builder(800, "Mercury")
                 .displayName("Mercury")
@@ -3586,25 +3415,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Hg")
-                        .source("Thaumcraft", "Thaumcraft")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Hg")
-                        .build())
+                .localName("Hg")
+                .source("Thaumcraft", "Thaumcraft")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Hg")
                 .build());
         result.add(MaterialDefinition.builder(420, "Molybdenum")
                 .displayName("Molybdenum")
@@ -3638,27 +3465,25 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Mo")
-                        .tools(3, 7.0F, 512L, 2)
-                        .byproducts("Powellite", "Scheelite", "Rhenium", "Wulfenite", "OsmiumElemental")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Mo")
-                        .build())
+                .localName("Mo")
+                .tools(3, 7.0F, 512L, 2)
+                .byproducts("Powellite", "Scheelite", "Rhenium", "Wulfenite", "OsmiumElemental")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Mo")
                 .build());
         result.add(MaterialDefinition.builder(1150, "Moscovium")
                 .displayName("Moscovium")
@@ -3670,24 +3495,22 @@ public final class ElementMaterials {
                 .atomicProperties(115, 115, 174, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.GENERATE_DUST, MaterialProperty.MELTING)
-                .facts(MaterialFacts.builder()
-                        .localName("Mc")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Mc")
-                        .build())
+                .localName("Mc")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Mc")
                 .build());
         result.add(MaterialDefinition.builder(1740, "Naquadah")
                 .displayName("Naquadah")
@@ -3706,29 +3529,27 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Nq")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 6.0F, 1280L, 4)
-                        .byproducts("DuraniumHexachloride", "TritaniumHexafluoride")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Nq")
-                        .build())
+                .localName("Nq")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 6.0F, 1280L, 4)
+                .byproducts("DuraniumHexachloride", "TritaniumHexafluoride")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Nq")
                 .build());
         result.add(MaterialDefinition.builder(1741, "NaquadahEnriched")
                 .displayName("Naquadah-Enriched")
@@ -3746,30 +3567,28 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MELTING)
-                .facts(MaterialFacts.builder()
-                        .localName("Nq-528")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 6.0F, 1280L, 4)
-                        .crushing("Naquadah", 648648000L)
-                        .byproducts("Naquadah", "DuraniumHexafluoride")
-                        .multipliers(2, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Nq_528")
-                        .build())
+                .localName("Nq-528")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 6.0F, 1280L, 4)
+                .crushing("Naquadah", 648648000L)
+                .byproducts("Naquadah", "DuraniumHexafluoride")
+                .multipliers(2, 1)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Nq_528")
                 .build());
         result.add(MaterialDefinition.builder(1742, "Naquadria")
                 .displayName("Naquadria")
@@ -3787,30 +3606,28 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.MELTING)
-                .facts(MaterialFacts.builder()
-                        .localName("Nq-522")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 1.0F, 512L, 4)
-                        .crushing("Naquadah", 648648000L)
-                        .byproducts("Naquadah", "TritaniumHexafluoride")
-                        .multipliers(4, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Nq_522")
-                        .build())
+                .localName("Nq-522")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 1.0F, 512L, 4)
+                .crushing("Naquadah", 648648000L)
+                .byproducts("Naquadah", "TritaniumHexafluoride")
+                .multipliers(4, 1)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Nq_522")
                 .build());
         result.add(MaterialDefinition.builder(600, "Neodymium")
                 .displayName("Neodymium")
@@ -3844,28 +3661,26 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Nd")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .tools(3, 6.0F, 512L, 3)
-                        .byproducts("Monazite", "RareEarth")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Nd")
-                        .build())
+                .localName("Nd")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .tools(3, 6.0F, 512L, 3)
+                .byproducts("Monazite", "RareEarth")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Nd")
                 .build());
         result.add(MaterialDefinition.builder(100, "Neon")
                 .displayName("Neon")
@@ -3879,11 +3694,9 @@ public final class ElementMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ne")
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("Ne")
-                        .build())
+                .localName("Ne")
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("Ne")
                 .build());
         result.add(MaterialDefinition.builder(930, "Neptunium")
                 .displayName("Neptunium")
@@ -3915,24 +3728,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Np")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Np")
-                        .build())
+                .localName("Np")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Np")
                 .build());
     }
 
@@ -3969,28 +3780,26 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ni")
-                        .source("ThermalExpansion", "Thermal Expansion")
-                        .tools(2, 6.0F, 64L, 2)
-                        .byproducts("Cobaltite", "Cooperite", "Hematite", "Pentlandite")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ni")
-                        .build())
+                .localName("Ni")
+                .source("ThermalExpansion", "Thermal Expansion")
+                .tools(2, 6.0F, 64L, 2)
+                .byproducts("Cobaltite", "Cooperite", "Hematite", "Pentlandite")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ni")
                 .build());
         result.add(MaterialDefinition.builder(1130, "Nihonium")
                 .displayName("Nihonium")
@@ -4002,24 +3811,22 @@ public final class ElementMaterials {
                 .atomicProperties(113, 113, 171, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.GENERATE_DUST, MaterialProperty.MELTING)
-                .facts(MaterialFacts.builder()
-                        .localName("Nh")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Nh")
-                        .build())
+                .localName("Nh")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Nh")
                 .build());
         result.add(MaterialDefinition.builder(410, "Niobium")
                 .displayName("Niobium")
@@ -4053,27 +3860,25 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Nb")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .crushing("Columbite", 648648000L)
-                        .multipliers(2, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Nb")
-                        .build())
+                .localName("Nb")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .crushing("Columbite", 648648000L)
+                .multipliers(2, 1)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Nb")
                 .build());
         result.add(MaterialDefinition.builder(70, "Nitrogen")
                 .displayName("Nitrogen")
@@ -4087,11 +3892,9 @@ public final class ElementMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("N")
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("N")
-                        .build())
+                .localName("N")
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("N")
                 .build());
         result.add(MaterialDefinition.builder(1020, "Nobelium")
                 .displayName("Nobelium")
@@ -4122,24 +3925,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("No")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("No")
-                        .build())
+                .localName("No")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("No")
                 .build());
         result.add(MaterialDefinition.builder(1180, "Oganesson")
                 .displayName("Oganesson")
@@ -4151,24 +3952,22 @@ public final class ElementMaterials {
                 .atomicProperties(118, 118, 176, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.GENERATE_DUST, MaterialProperty.MELTING)
-                .facts(MaterialFacts.builder()
-                        .localName("Og")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Og")
-                        .build())
+                .localName("Og")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Og")
                 .build());
         result.add(MaterialDefinition.builder(760, "OsmiumElemental")
                 .displayName("Osmium")
@@ -4202,29 +4001,27 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Os")
-                        .tools(3, 16.0F, 1280L, 4)
-                        .byproducts("Iridium", "Platinum", "Ruthenium")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .aliases("Os", "Osmium")
-                        .build())
+                .localName("Os")
+                .tools(3, 16.0F, 1280L, 4)
+                .byproducts("Iridium", "Platinum", "Ruthenium")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
+                .aliases("Os", "Osmium")
                 .build());
         result.add(MaterialDefinition.builder(80, "Oxygen")
                 .displayName("Oxygen")
@@ -4238,11 +4035,9 @@ public final class ElementMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("O")
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("O")
-                        .build())
+                .localName("O")
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("O")
                 .build());
         result.add(MaterialDefinition.builder(460, "Palladium")
                 .displayName("Palladium")
@@ -4276,26 +4071,24 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Pd")
-                        .tools(3, 8.0F, 512L, 2)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Pd")
-                        .build())
+                .localName("Pd")
+                .tools(3, 8.0F, 512L, 2)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Pd")
                 .build());
         result.add(MaterialDefinition.builder(9864, "Petrol")
                 .displayName("Petrol")
@@ -4307,10 +4100,8 @@ public final class ElementMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Gasoline")
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
-                        .build())
+                .localName("Gasoline")
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(150, "Phosphor")
                 .displayName("Phosphor")
@@ -4330,19 +4121,11 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("P")
-                        .fuel(1000L, "", 0L)
-                        .byproducts(
-                                "Phosphorus",
-                                "Apatite",
-                                "YellowFluorite",
-                                "Phosphate",
-                                "RedPhosphorus",
-                                "WhitePhosphorus")
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PROJECTILES")
-                        .aliases("P")
-                        .build())
+                .localName("P")
+                .fuel(1000L, "", 0L)
+                .byproducts("Phosphorus", "Apatite", "YellowFluorite", "Phosphate", "RedPhosphorus", "WhitePhosphorus")
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PROJECTILES")
+                .aliases("P")
                 .build());
         result.add(MaterialDefinition.builder(780, "Platinum")
                 .displayName("Platinum")
@@ -4376,30 +4159,28 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Pt")
-                        .source("ThermalExpansion", "Thermal Expansion")
-                        .tools(3, 15.0F, 64L, 2)
-                        .byproducts("Nickel", "Iridium", "Palladium")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .aliases("Pt")
-                        .build())
+                .localName("Pt")
+                .source("ThermalExpansion", "Thermal Expansion")
+                .tools(3, 15.0F, 64L, 2)
+                .byproducts("Nickel", "Iridium", "Palladium")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
+                .aliases("Pt")
                 .build());
         result.add(MaterialDefinition.builder(940, "Plutonium")
                 .displayName("Plutonium")
@@ -4432,27 +4213,25 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Pu")
-                        .source("IC2", "IndustrialCraft 2")
-                        .tools(3, 6.0F, 512L, 3)
-                        .byproducts("Lead", "Radium", "RareEarth")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Pu")
-                        .build())
+                .localName("Pu")
+                .source("IC2", "IndustrialCraft 2")
+                .tools(3, 6.0F, 512L, 3)
+                .byproducts("Lead", "Radium", "RareEarth")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Pu")
                 .build());
         result.add(MaterialDefinition.builder(946, "Plutonium238")
                 .displayName("Plutonium-238")
@@ -4484,26 +4263,24 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Pu-238")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .tools(3, 6.0F, 512L, 3)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Pu_238")
-                        .build())
+                .localName("Pu-238")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .tools(3, 6.0F, 512L, 3)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Pu_238")
                 .build());
         result.add(MaterialDefinition.builder(947, "Plutonium239")
                 .displayName("Plutonium-239")
@@ -4535,25 +4312,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Pu-239")
-                        .tools(3, 6.0F, 512L, 3)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Pu_239")
-                        .build())
+                .localName("Pu-239")
+                .tools(3, 6.0F, 512L, 3)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Pu_239")
                 .build());
     }
 
@@ -4588,26 +4363,24 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Pu-240")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .tools(3, 6.0F, 512L, 3)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Pu_240")
-                        .build())
+                .localName("Pu-240")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .tools(3, 6.0F, 512L, 3)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Pu_240")
                 .build());
         result.add(MaterialDefinition.builder(943, "Plutonium241")
                 .displayName("Plutonium-241")
@@ -4639,25 +4412,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Pu-241")
-                        .tools(3, 6.0F, 512L, 3)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Pu_241")
-                        .build())
+                .localName("Pu-241")
+                .tools(3, 6.0F, 512L, 3)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Pu_241")
                 .build());
         result.add(MaterialDefinition.builder(945, "Plutonium243")
                 .displayName("Plutonium-243")
@@ -4689,25 +4460,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Pu-243")
-                        .tools(3, 6.0F, 512L, 3)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Pu_243")
-                        .build())
+                .localName("Pu-243")
+                .tools(3, 6.0F, 512L, 3)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Pu_243")
                 .build());
         result.add(MaterialDefinition.builder(840, "Polonium")
                 .displayName("Polonium")
@@ -4738,24 +4507,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Po")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Po")
-                        .build())
+                .localName("Po")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Po")
                 .build());
         result.add(MaterialDefinition.builder(190, "Potassium")
                 .displayName("Potassium")
@@ -4788,26 +4555,24 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("K")
-                        .source("Railcraft", "Railcraft")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("K")
-                        .build())
+                .localName("K")
+                .source("Railcraft", "Railcraft")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("K")
                 .build());
         result.add(MaterialDefinition.builder(590, "Praseodymium")
                 .displayName("Praseodymium")
@@ -4839,24 +4604,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Pr")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Pr")
-                        .build())
+                .localName("Pr")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Pr")
                 .build());
         result.add(MaterialDefinition.builder(610, "Promethium")
                 .displayName("Promethium")
@@ -4887,24 +4650,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Pm")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Pm")
-                        .build())
+                .localName("Pm")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Pm")
                 .build());
         result.add(MaterialDefinition.builder(910, "Protactinium")
                 .displayName("Protactinium")
@@ -4935,24 +4696,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Pa")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Pa")
-                        .build())
+                .localName("Pa")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Pa")
                 .build());
         result.add(MaterialDefinition.builder(880, "Radium")
                 .displayName("Radium")
@@ -4984,25 +4743,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Ra")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ra")
-                        .build())
+                .localName("Ra")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ra")
                 .build());
         result.add(MaterialDefinition.builder(860, "Radon")
                 .displayName("Radon")
@@ -5015,11 +4772,9 @@ public final class ElementMaterials {
                 .atomicProperties(86, 86, 134, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("Rn")
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("Rn")
-                        .build())
+                .localName("Rn")
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("Rn")
                 .build());
         result.add(MaterialDefinition.builder(750, "Rhenium")
                 .displayName("Rhenium")
@@ -5053,25 +4808,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Re")
-                        .byproducts("Chalcopyrite", "Molybdenite")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Re")
-                        .build())
+                .localName("Re")
+                .byproducts("Chalcopyrite", "Molybdenite")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Re")
                 .build());
         result.add(MaterialDefinition.builder(450, "Rhodium")
                 .displayName("Rhodium")
@@ -5104,24 +4857,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Rh")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Rh")
-                        .build())
+                .localName("Rh")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Rh")
                 .build());
         result.add(MaterialDefinition.builder(1110, "Roentgenium")
                 .displayName("Roentgenium")
@@ -5133,24 +4884,22 @@ public final class ElementMaterials {
                 .atomicProperties(111, 111, 169, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.GENERATE_DUST, MaterialProperty.MELTING)
-                .facts(MaterialFacts.builder()
-                        .localName("Rg")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Rg")
-                        .build())
+                .localName("Rg")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Rg")
                 .build());
         result.add(MaterialDefinition.builder(370, "Rubidium")
                 .displayName("Rubidium")
@@ -5183,25 +4932,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Rb")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Rb")
-                        .build())
+                .localName("Rb")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Rb")
                 .build());
         result.add(MaterialDefinition.builder(440, "Ruthenium")
                 .displayName("Ruthenium")
@@ -5234,24 +4981,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ru")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ru")
-                        .build())
+                .localName("Ru")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ru")
                 .build());
     }
 
@@ -5285,24 +5030,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Rf")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Rf")
-                        .build())
+                .localName("Rf")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Rf")
                 .build());
         result.add(MaterialDefinition.builder(9815, "SaltedWater")
                 .displayName("Salted Water")
@@ -5320,14 +5063,12 @@ public final class ElementMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Saltedwater")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Water", 1945944000L),
-                                new MaterialFacts.Part("Sylvite", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .build())
+                .localName("Saltedwater")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Water", 1945944000L),
+                        new MaterialDefinition.Part("Sylvite", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
                 .build());
         result.add(MaterialDefinition.builder(9804, "Saltwater")
                 .displayName("Saltwater")
@@ -5345,15 +5086,13 @@ public final class ElementMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("SaltWater")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Water", 1945944000L),
-                                new MaterialFacts.Part("Salt", 648648000L))
-                        .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
-                        .aliases("SaltWater")
-                        .build())
+                .localName("SaltWater")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Water", 1945944000L),
+                        new MaterialDefinition.Part("Salt", 648648000L))
+                .forms("CONTAINERS", "CONTAINERS_FLUID", "LIQUID", "PLANTS")
+                .aliases("SaltWater")
                 .build());
         result.add(MaterialDefinition.builder(620, "Samarium")
                 .displayName("Samarium")
@@ -5385,24 +5124,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sm")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Sm")
-                        .build())
+                .localName("Sm")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Sm")
                 .build());
         result.add(MaterialDefinition.builder(210, "Scandium")
                 .displayName("Scandium")
@@ -5435,24 +5172,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sc")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Sc")
-                        .build())
+                .localName("Sc")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Sc")
                 .build());
         result.add(MaterialDefinition.builder(1060, "Seaborgium")
                 .displayName("Seaborgium")
@@ -5483,24 +5218,22 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Sg")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Sg")
-                        .build())
+                .localName("Sg")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Sg")
                 .build());
         result.add(MaterialDefinition.builder(340, "Selenium")
                 .displayName("Selenium")
@@ -5518,12 +5251,10 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Se")
-                        .byproducts("Pyrite", "Galena", "Sphalerite", "Indium", "Gallium", "Cadmium")
-                        .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PROJECTILES")
-                        .aliases("Se")
-                        .build())
+                .localName("Se")
+                .byproducts("Pyrite", "Galena", "Sphalerite", "Indium", "Gallium", "Cadmium")
+                .forms("DUSTS", "GEMS", "ORES", "PLANTS", "PROJECTILES")
+                .aliases("Se")
                 .build());
         result.add(MaterialDefinition.builder(140, "Silicon")
                 .displayName("Silicon")
@@ -5558,26 +5289,24 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Si")
-                        .source("appliedenergistics2", "Applied Energistics")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Si")
-                        .build())
+                .localName("Si")
+                .source("appliedenergistics2", "Applied Energistics")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Si")
                 .build());
         result.add(MaterialDefinition.builder(470, "Silver")
                 .displayName("Silver")
@@ -5611,30 +5340,28 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ag")
-                        .source("Redpower", "Redpower")
-                        .tools(3, 10.0F, 64L, 2)
-                        .byproducts("Lead", "Sulfur", "Bromargyrite")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .aliases("Ag")
-                        .build())
+                .localName("Ag")
+                .source("Redpower", "Redpower")
+                .tools(3, 10.0F, 64L, 2)
+                .byproducts("Lead", "Sulfur", "Bromargyrite")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
+                .aliases("Ag")
                 .build());
         result.add(MaterialDefinition.builder(110, "Sodium")
                 .displayName("Sodium")
@@ -5667,26 +5394,24 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Na")
-                        .fuel(4000L, "", 0L)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Na")
-                        .build())
+                .localName("Na")
+                .fuel(4000L, "", 0L)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Na")
                 .build());
         result.add(MaterialDefinition.builder(380, "Strontium")
                 .displayName("Strontium")
@@ -5719,25 +5444,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sr")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Sr")
-                        .build())
+                .localName("Sr")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Sr")
                 .build());
         result.add(MaterialDefinition.builder(160, "Sulfur")
                 .displayName("Sulfur")
@@ -5756,22 +5479,20 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("S")
-                        .source("Railcraft", "Railcraft")
-                        .fuel(1000L, "", 0L)
-                        .byproducts(
-                                "Pyrite",
-                                "Sphalerite",
-                                "Cinnabar",
-                                "Chalcopyrite",
-                                "Arsenopyrite",
-                                "Galena",
-                                "Stibnite",
-                                "Gypsum")
-                        .forms("DUSTS", "GEMS", "MOLTEN", "ORES", "PLANTS", "PROJECTILES")
-                        .aliases("S")
-                        .build())
+                .localName("S")
+                .source("Railcraft", "Railcraft")
+                .fuel(1000L, "", 0L)
+                .byproducts(
+                        "Pyrite",
+                        "Sphalerite",
+                        "Cinnabar",
+                        "Chalcopyrite",
+                        "Arsenopyrite",
+                        "Galena",
+                        "Stibnite",
+                        "Gypsum")
+                .forms("DUSTS", "GEMS", "MOLTEN", "ORES", "PLANTS", "PROJECTILES")
+                .aliases("S")
                 .build());
         result.add(MaterialDefinition.builder(9834, "SulfurDioxide")
                 .displayName("Sulfur Dioxide")
@@ -5788,15 +5509,13 @@ public final class ElementMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("SulphurDioxide")
-                        .composition(
-                                3L,
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1297296000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("SO2")
-                        .build())
+                .localName("SulphurDioxide")
+                .composition(
+                        3L,
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1297296000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("SO2")
                 .build());
         result.add(MaterialDefinition.builder(9835, "SulfurTrioxide")
                 .displayName("Sulfur Trioxide")
@@ -5813,15 +5532,13 @@ public final class ElementMaterials {
                         MaterialProperty.GAS,
                         MaterialProperty.LIQUID,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("SulphurTrioxide")
-                        .composition(
-                                4L,
-                                new MaterialFacts.Part("Sulfur", 648648000L),
-                                new MaterialFacts.Part("Oxygen", 1945944000L))
-                        .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
-                        .aliases("SO3")
-                        .build())
+                .localName("SulphurTrioxide")
+                .composition(
+                        4L,
+                        new MaterialDefinition.Part("Sulfur", 648648000L),
+                        new MaterialDefinition.Part("Oxygen", 1945944000L))
+                .forms("CONTAINERS", "CONTAINERS_GAS", "GASES", "PLANTS")
+                .aliases("SO3")
                 .build());
         result.add(MaterialDefinition.builder(730, "Tantalum")
                 .displayName("Tantalum")
@@ -5855,27 +5572,25 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ta")
-                        .source("hbm", "HBM's Nuclear Tech Mod")
-                        .crushing("Tantalite", 648648000L)
-                        .multipliers(2, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ta")
-                        .build())
+                .localName("Ta")
+                .source("hbm", "HBM's Nuclear Tech Mod")
+                .crushing("Tantalite", 648648000L)
+                .multipliers(2, 1)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ta")
                 .build());
     }
 
@@ -5910,25 +5625,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Tc")
-                        .tools(3, 10.0F, 1280L, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Tc")
-                        .build())
+                .localName("Tc")
+                .tools(3, 10.0F, 1280L, 1)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Tc")
                 .build());
         result.add(MaterialDefinition.builder(520, "Tellurium")
                 .displayName("Tellurium")
@@ -5961,25 +5674,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Te")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Te")
-                        .build())
+                .localName("Te")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Te")
                 .build());
         result.add(MaterialDefinition.builder(650, "Terbium")
                 .displayName("Terbium")
@@ -6011,24 +5722,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tb")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Tb")
-                        .build())
+                .localName("Tb")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Tb")
                 .build());
         result.add(MaterialDefinition.builder(810, "Thallium")
                 .displayName("Thallium")
@@ -6060,24 +5769,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tl")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Tl")
-                        .build())
+                .localName("Tl")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Tl")
                 .build());
         result.add(MaterialDefinition.builder(900, "Thorium")
                 .displayName("Thorium")
@@ -6110,27 +5817,25 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("Th")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 6.0F, 512L, 2)
-                        .byproducts("Lead", "Radium", "RareEarth")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Th")
-                        .build())
+                .localName("Th")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 6.0F, 512L, 2)
+                .byproducts("Lead", "Radium", "RareEarth")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Th")
                 .build());
         result.add(MaterialDefinition.builder(690, "Thulium")
                 .displayName("Thulium")
@@ -6162,24 +5867,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tm")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Tm")
-                        .build())
+                .localName("Tm")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Tm")
                 .build());
         result.add(MaterialDefinition.builder(500, "Tin")
                 .displayName("Tin")
@@ -6214,36 +5917,34 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Sn")
-                        .source("IC2", "IndustrialCraft 2")
-                        .byproducts(
-                                "Molybdenite",
-                                "Wolframite",
-                                "BlackFluorite",
-                                "Arsenopyrite",
-                                "Stannite",
-                                "Sperrylite",
-                                "Huebnerite",
-                                "Apatite")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Sn")
-                        .build())
+                .localName("Sn")
+                .source("IC2", "IndustrialCraft 2")
+                .byproducts(
+                        "Molybdenite",
+                        "Wolframite",
+                        "BlackFluorite",
+                        "Arsenopyrite",
+                        "Stannite",
+                        "Sperrylite",
+                        "Huebnerite",
+                        "Apatite")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Sn")
                 .build());
         result.add(MaterialDefinition.builder(220, "Titanium")
                 .displayName("Titanium")
@@ -6279,31 +5980,29 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ti")
-                        .source("Mariculture", "Mariculture")
-                        .tools(3, 8.0F, 2560L, 3)
-                        .crushing("Rutile", 648648000L)
-                        .multipliers(2, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .aliases("Ti")
-                        .build())
+                .localName("Ti")
+                .source("Mariculture", "Mariculture")
+                .tools(3, 8.0F, 2560L, 3)
+                .crushing("Rutile", 648648000L)
+                .multipliers(2, 1)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
+                .aliases("Ti")
                 .build());
         result.add(MaterialDefinition.builder(1260, "Trinium")
                 .displayName("Trinium")
@@ -6329,29 +6028,27 @@ public final class ElementMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Ke")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 12.0F, 2560L, 4)
-                        .byproducts("Tin", "Rutile", "Hematite", "DuraniumHexaiodide")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Ke")
-                        .build())
+                .localName("Ke")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 12.0F, 2560L, 4)
+                .byproducts("Tin", "Rutile", "Hematite", "DuraniumHexaiodide")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Ke")
                 .build());
         result.add(MaterialDefinition.builder(1250, "TritaniumElemental")
                 .displayName("TritaniumElemental")
@@ -6369,13 +6066,11 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Tn")
-                        .source("mo", "Matter Overdrive")
-                        .byproducts("DiduraniumTrioxide", "Trinium")
-                        .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
-                        .aliases("Tn")
-                        .build())
+                .localName("Tn")
+                .source("mo", "Matter Overdrive")
+                .byproducts("DiduraniumTrioxide", "Trinium")
+                .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
+                .aliases("Tn")
                 .build());
         result.add(MaterialDefinition.builder(12, "Tritium")
                 .displayName("Tritium")
@@ -6388,11 +6083,9 @@ public final class ElementMaterials {
                 .atomicProperties(1, 1, 2, 0)
                 .alpha(255)
                 .properties(MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID)
-                .facts(MaterialFacts.builder()
-                        .localName("T")
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("T")
-                        .build())
+                .localName("T")
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("T")
                 .build());
         result.add(MaterialDefinition.builder(740, "Tungsten")
                 .displayName("Tungsten")
@@ -6428,31 +6121,29 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("W")
-                        .source("Redpower", "Redpower")
-                        .tools(3, 8.0F, 5120L, 3)
-                        .crushing("Scheelite", 648648000L)
-                        .multipliers(2, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PARTS",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .aliases("W")
-                        .build())
+                .localName("W")
+                .source("Redpower", "Redpower")
+                .tools(3, 8.0F, 5120L, 3)
+                .crushing("Scheelite", 648648000L)
+                .multipliers(2, 1)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PARTS",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
+                .aliases("W")
                 .build());
         result.add(MaterialDefinition.builder(920, "Uranium")
                 .displayName("Uranium")
@@ -6485,30 +6176,28 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("U")
-                        .source("IC2", "IndustrialCraft 2")
-                        .tools(3, 6.0F, 512L, 3)
-                        .crushing("Uraninite", 648648000L)
-                        .byproducts("Lead", "Radium", "RareEarth")
-                        .multipliers(2, 1)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("U_238")
-                        .build())
+                .localName("U")
+                .source("IC2", "IndustrialCraft 2")
+                .tools(3, 6.0F, 512L, 3)
+                .crushing("Uraninite", 648648000L)
+                .byproducts("Lead", "Radium", "RareEarth")
+                .multipliers(2, 1)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("U_238")
                 .build());
         result.add(MaterialDefinition.builder(922, "Uranium233")
                 .displayName("Uranium-233")
@@ -6540,25 +6229,23 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("U-233")
-                        .tools(3, 6.0F, 512L, 3)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("U_233")
-                        .build())
+                .localName("U-233")
+                .tools(3, 6.0F, 512L, 3)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("U_233")
                 .build());
         result.add(MaterialDefinition.builder(921, "Uranium235")
                 .displayName("Uranium-235")
@@ -6590,27 +6277,25 @@ public final class ElementMaterials {
                         MaterialProperty.METAL,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD)
-                .facts(MaterialFacts.builder()
-                        .localName("U-235")
-                        .source("IC2", "IndustrialCraft 2")
-                        .tools(3, 6.0F, 512L, 3)
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("U_235")
-                        .build())
+                .localName("U-235")
+                .source("IC2", "IndustrialCraft 2")
+                .tools(3, 6.0F, 512L, 3)
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("U_235")
                 .build());
     }
 
@@ -6646,25 +6331,23 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("V")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("V")
-                        .build())
+                .localName("V")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("V")
                 .build());
         result.add(MaterialDefinition.builder(1520, "Vibranium")
                 .displayName("Vibranium")
@@ -6681,13 +6364,11 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Vb")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .tools(3, 1000.0F, 512L, 15)
-                        .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
-                        .aliases("Vb")
-                        .build())
+                .localName("Vb")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .tools(3, 1000.0F, 512L, 15)
+                .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
+                .aliases("Vb")
                 .build());
         result.add(MaterialDefinition.builder(8643, "WroughtIron")
                 .displayName("Wrought Iron")
@@ -6723,27 +6404,25 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("WrougtIron")
-                        .source("terrafirmacraft", "TerraFirmaCraft")
-                        .tools(3, 6.0F, 384L, 2)
-                        .pulverizing("Iron", 648648000L)
-                        .composition(1L, new MaterialFacts.Part("Iron", 648648000L))
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "PARTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "RAILS",
-                                "STICKS")
-                        .build())
+                .localName("WrougtIron")
+                .source("terrafirmacraft", "TerraFirmaCraft")
+                .tools(3, 6.0F, 384L, 2)
+                .pulverizing("Iron", 648648000L)
+                .composition(1L, new MaterialDefinition.Part("Iron", 648648000L))
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "PARTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "RAILS",
+                        "STICKS")
                 .build());
         result.add(MaterialDefinition.builder(540, "Xenon")
                 .displayName("Xenon")
@@ -6757,11 +6436,9 @@ public final class ElementMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ELEMENT, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Xe")
-                        .forms("CONTAINERS_GAS", "GASES")
-                        .aliases("Xe")
-                        .build())
+                .localName("Xe")
+                .forms("CONTAINERS_GAS", "GASES")
+                .aliases("Xe")
                 .build());
         result.add(MaterialDefinition.builder(700, "Ytterbium")
                 .displayName("Ytterbium")
@@ -6794,24 +6471,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Yb")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Yb")
-                        .build())
+                .localName("Yb")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Yb")
                 .build());
         result.add(MaterialDefinition.builder(390, "Yttrium")
                 .displayName("Yttrium")
@@ -6844,24 +6519,22 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Y")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Y")
-                        .build())
+                .localName("Y")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Y")
                 .build());
         result.add(MaterialDefinition.builder(300, "Zinc")
                 .displayName("Zinc")
@@ -6895,27 +6568,25 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Zn")
-                        .source("gt6ce", "GregTech 6 Community Edition")
-                        .byproducts("Tin", "Gallium")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "MOLTEN",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Zn")
-                        .build())
+                .localName("Zn")
+                .source("gt6ce", "GregTech 6 Community Edition")
+                .byproducts("Tin", "Gallium")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "MOLTEN",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Zn")
                 .build());
         result.add(MaterialDefinition.builder(400, "Zirconium")
                 .displayName("Zirconium")
@@ -6949,29 +6620,27 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
-                .facts(MaterialFacts.builder()
-                        .localName("Zr")
-                        .source("tropicraft", "Tropicraft")
-                        .tools(3, 8.0F, 1280L, 3)
-                        .byproducts("Rutile", "Hafnium")
-                        .forms(
-                                "ARMORS",
-                                "DENSEPLATES",
-                                "DUSTS",
-                                "FOILS",
-                                "GEMS",
-                                "INGOTS",
-                                "INGOTS_HOT",
-                                "LENSES",
-                                "MULTIINGOTS",
-                                "MULTIPLATES",
-                                "ORES",
-                                "PLANTS",
-                                "PLATES",
-                                "PROJECTILES",
-                                "STICKS")
-                        .aliases("Zr")
-                        .build())
+                .localName("Zr")
+                .source("tropicraft", "Tropicraft")
+                .tools(3, 8.0F, 1280L, 3)
+                .byproducts("Rutile", "Hafnium")
+                .forms(
+                        "ARMORS",
+                        "DENSEPLATES",
+                        "DUSTS",
+                        "FOILS",
+                        "GEMS",
+                        "INGOTS",
+                        "INGOTS_HOT",
+                        "LENSES",
+                        "MULTIINGOTS",
+                        "MULTIPLATES",
+                        "ORES",
+                        "PLANTS",
+                        "PLATES",
+                        "PROJECTILES",
+                        "STICKS")
+                .aliases("Zr")
                 .build());
     }
 }

@@ -39,7 +39,7 @@ public final class MaterialDefinitions {
                 throw new IllegalArgumentException("Duplicate canonical ID: " + definition.id());
         }
         for (var definition : ALL) {
-            for (var alias : definition.facts().aliases()) {
+            for (var alias : definition.aliases()) {
                 if (result.putIfAbsent(alias, definition) != null)
                     throw new IllegalArgumentException(
                             "Conflicting catalog alias: " + alias + " -> " + definition.name());

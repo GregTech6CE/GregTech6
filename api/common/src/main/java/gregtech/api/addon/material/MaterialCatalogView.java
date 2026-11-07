@@ -12,4 +12,8 @@ public interface MaterialCatalogView {
     MaterialTagsView tags();
     java.util.Optional<MaterialView> find(MaterialKey key);
     java.util.List<MaterialView> materials();
+    /** Immutable process rules captured with this definition view. */
+    default MaterialProcessesView processes() {
+        throw new UnsupportedOperationException("This material catalog does not expose process views");
+    }
 }

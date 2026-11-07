@@ -2,7 +2,6 @@ package gregtech.content.material.catalog;
 
 import gregtech.api.material.MaterialProperty;
 import gregtech.engine.material.MaterialDefinition;
-import gregtech.engine.material.MaterialFacts;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +31,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyAmber")
-                        .group()
-                        .build())
+                .localName("AnyAmber")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyAmethyst")
                 .displayName("AnyAmethyst")
@@ -47,11 +44,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyAmethyst")
-                        .group()
-                        .members("Amethyst")
-                        .build())
+                .localName("AnyAmethyst")
+                .group()
+                .members("Amethyst")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyAshes")
                 .displayName("AnyAshes")
@@ -63,11 +58,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyAshes")
-                        .group()
-                        .members("Ashes", "DarkAshes")
-                        .build())
+                .localName("AnyAshes")
+                .group()
+                .members("Ashes", "DarkAshes")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyAventurine")
                 .displayName("AnyAventurine")
@@ -79,10 +72,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyAventurine")
-                        .group()
-                        .build())
+                .localName("AnyAventurine")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyBlackSteel")
                 .displayName("AnyBlackSteel")
@@ -94,11 +85,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyBlackSteel")
-                        .group()
-                        .members("BlackSteel")
-                        .build())
+                .localName("AnyBlackSteel")
+                .group()
+                .members("BlackSteel")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyBlaze")
                 .displayName("AnyBlaze")
@@ -110,7 +99,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnyBlaze").group().build())
+                .localName("AnyBlaze")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyBlueSteel")
                 .displayName("AnyBlueSteel")
@@ -122,11 +112,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyBlueSteel")
-                        .group()
-                        .members("BlueSteel")
-                        .build())
+                .localName("AnyBlueSteel")
+                .group()
+                .members("BlueSteel")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyBronze")
                 .displayName("AnyBronze")
@@ -138,7 +126,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnyBronze").group().build())
+                .localName("AnyBronze")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyCalcite")
                 .displayName("AnyCalcite")
@@ -150,11 +139,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyCalcite")
-                        .group()
-                        .members("Calcite", "Limestone", "Marble")
-                        .build())
+                .localName("AnyCalcite")
+                .group()
+                .members("Calcite", "Limestone", "Marble")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyCarbon")
                 .displayName("AnyCarbon")
@@ -166,11 +153,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyCarbon")
-                        .group()
-                        .members("Carbon", "Graphite")
-                        .build())
+                .localName("AnyCarbon")
+                .group()
+                .members("Carbon", "Graphite")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyClay")
                 .displayName("AnyClay")
@@ -182,11 +167,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyClay")
-                        .group()
-                        .members("Clay")
-                        .build())
+                .localName("AnyClay")
+                .group()
+                .members("Clay")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyCoal/Carbon")
                 .displayName("AnyCoal/Carbon")
@@ -198,11 +181,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyCoal/Carbon")
-                        .group()
-                        .members("Carbon", "Charcoal", "Coal", "CoalCoke", "Graphite")
-                        .build())
+                .localName("AnyCoal/Carbon")
+                .group()
+                .members("Carbon", "Charcoal", "Coal", "CoalCoke", "Graphite")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyCopper")
                 .displayName("AnyCopper")
@@ -214,11 +195,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyCopper")
-                        .group()
-                        .members("AnnealedCopper", "Copper")
-                        .build())
+                .localName("AnyCopper")
+                .group()
+                .members("AnnealedCopper", "Copper")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyDefaultWood")
                 .displayName("AnyDefaultWood")
@@ -230,35 +209,33 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyDefaultWood")
-                        .group()
-                        .members(
-                                "Acacia",
-                                "Birch",
-                                "BlueMahoe",
-                                "BlueSpruce",
-                                "Cherrywood",
-                                "Cinnamonwood",
-                                "Coconutwood",
-                                "Crimsonwood",
-                                "DarkOak",
-                                "Hazel",
-                                "Junglewood",
-                                "Mangrove",
-                                "Maple",
-                                "Oak",
-                                "Rainbowood",
-                                "Spruce",
-                                "Warpedwood",
-                                "Willow",
-                                "Wood",
-                                "WoodCompressed",
-                                "WoodDead",
-                                "WoodFrozen",
-                                "WoodMossy",
-                                "WoodRotten")
-                        .build())
+                .localName("AnyDefaultWood")
+                .group()
+                .members(
+                        "Acacia",
+                        "Birch",
+                        "BlueMahoe",
+                        "BlueSpruce",
+                        "Cherrywood",
+                        "Cinnamonwood",
+                        "Coconutwood",
+                        "Crimsonwood",
+                        "DarkOak",
+                        "Hazel",
+                        "Junglewood",
+                        "Mangrove",
+                        "Maple",
+                        "Oak",
+                        "Rainbowood",
+                        "Spruce",
+                        "Warpedwood",
+                        "Willow",
+                        "Wood",
+                        "WoodCompressed",
+                        "WoodDead",
+                        "WoodFrozen",
+                        "WoodMossy",
+                        "WoodRotten")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyDiamond")
                 .displayName("AnyDiamond")
@@ -270,18 +247,16 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyDiamond")
-                        .group()
-                        .members(
-                                "BlueDiamond",
-                                "Diamond",
-                                "DiamondIndustrial",
-                                "GreenDiamond",
-                                "PinkDiamond",
-                                "RedDiamond",
-                                "YellowDiamond")
-                        .build())
+                .localName("AnyDiamond")
+                .group()
+                .members(
+                        "BlueDiamond",
+                        "Diamond",
+                        "DiamondIndustrial",
+                        "GreenDiamond",
+                        "PinkDiamond",
+                        "RedDiamond",
+                        "YellowDiamond")
                 .build());
     }
 
@@ -296,7 +271,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnyEmerald").group().build())
+                .localName("AnyEmerald")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyFlour")
                 .displayName("AnyFlour")
@@ -308,11 +284,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyFlour")
-                        .group()
-                        .members("Potato", "Rye", "Wheat")
-                        .build())
+                .localName("AnyFlour")
+                .group()
+                .members("Potato", "Rye", "Wheat")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyFlourOrGrains")
                 .displayName("AnyFlourOrGrains")
@@ -324,11 +298,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyFlourOrGrains")
-                        .group()
-                        .members("Potato")
-                        .build())
+                .localName("AnyFlourOrGrains")
+                .group()
+                .members("Potato")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyFluorite")
                 .displayName("AnyFluorite")
@@ -340,21 +312,19 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyFluorite")
-                        .group()
-                        .members(
-                                "Fluorite",
-                                "RedFluorite",
-                                "PinkFluorite",
-                                "BlueFluorite",
-                                "GreenFluorite",
-                                "BlackFluorite",
-                                "WhiteFluorite",
-                                "YellowFluorite",
-                                "OrangeFluorite",
-                                "MagentaFluorite")
-                        .build())
+                .localName("AnyFluorite")
+                .group()
+                .members(
+                        "Fluorite",
+                        "RedFluorite",
+                        "PinkFluorite",
+                        "BlueFluorite",
+                        "GreenFluorite",
+                        "BlackFluorite",
+                        "WhiteFluorite",
+                        "YellowFluorite",
+                        "OrangeFluorite",
+                        "MagentaFluorite")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyGarnet")
                 .displayName("AnyGarnet")
@@ -366,7 +336,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnyGarnet").group().build())
+                .localName("AnyGarnet")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyGlowstone")
                 .displayName("AnyGlowstone")
@@ -378,7 +349,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnyGlowstone").group().build())
+                .localName("AnyGlowstone")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyGrains")
                 .displayName("AnyGrains")
@@ -390,7 +362,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnyGrains").group().build())
+                .localName("AnyGrains")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyHardPlastic")
                 .displayName("AnyHardPlastic")
@@ -402,11 +375,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyHardPlastic")
-                        .group()
-                        .members("PVC")
-                        .build())
+                .localName("AnyHardPlastic")
+                .group()
+                .members("PVC")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyIron")
                 .displayName("AnyIron")
@@ -418,11 +389,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyIron")
-                        .group()
-                        .members("CastIron", "Iron", "WroughtIron")
-                        .build())
+                .localName("AnyIron")
+                .group()
+                .members("CastIron", "Iron", "WroughtIron")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyIronOrSteel")
                 .displayName("AnyIronOrSteel")
@@ -434,11 +403,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyIronOrSteel")
-                        .group()
-                        .members("CastIron", "Iron", "Knightmetal", "Steel", "WroughtIron")
-                        .build())
+                .localName("AnyIronOrSteel")
+                .group()
+                .members("CastIron", "Iron", "Knightmetal", "Steel", "WroughtIron")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyIronSteel")
                 .displayName("AnyIron-Steel")
@@ -450,11 +417,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyIron-Steel")
-                        .group()
-                        .members("Knightmetal", "Steel")
-                        .build())
+                .localName("AnyIron-Steel")
+                .group()
+                .members("Knightmetal", "Steel")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyJasper")
                 .displayName("AnyJasper")
@@ -466,7 +431,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnyJasper").group().build())
+                .localName("AnyJasper")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyMagicalWood")
                 .displayName("AnyMagicalWood")
@@ -478,11 +444,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyMagicalWood")
-                        .group()
-                        .members("Dreamwood", "Greatwood", "Livingwood", "Rainbowood", "Silverwood")
-                        .build())
+                .localName("AnyMagicalWood")
+                .group()
+                .members("Dreamwood", "Greatwood", "Livingwood", "Rainbowood", "Silverwood")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyMagicIron")
                 .displayName("AnyMagicIron")
@@ -494,11 +458,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyMagicIron")
-                        .group()
-                        .members("FierySteel", "Manasteel", "Thaumium")
-                        .build())
+                .localName("AnyMagicIron")
+                .group()
+                .members("FierySteel", "Manasteel", "Thaumium")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyMetal")
                 .displayName("AnyMetal")
@@ -510,7 +472,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnyMetal").group().build())
+                .localName("AnyMetal")
+                .group()
                 .build());
     }
 
@@ -525,37 +488,35 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyNormalWood")
-                        .group()
-                        .members(
-                                "Acacia",
-                                "Bamboo",
-                                "Birch",
-                                "BlueMahoe",
-                                "BlueSpruce",
-                                "Cherrywood",
-                                "Cinnamonwood",
-                                "Coconutwood",
-                                "Crimsonwood",
-                                "DarkOak",
-                                "Hazel",
-                                "Junglewood",
-                                "Mangrove",
-                                "Maple",
-                                "Oak",
-                                "Rainbowood",
-                                "Spruce",
-                                "Warpedwood",
-                                "Willow",
-                                "Wood",
-                                "WoodCompressed",
-                                "WoodDead",
-                                "WoodFrozen",
-                                "WoodMossy",
-                                "WoodRotten",
-                                "WoodRubber")
-                        .build())
+                .localName("AnyNormalWood")
+                .group()
+                .members(
+                        "Acacia",
+                        "Bamboo",
+                        "Birch",
+                        "BlueMahoe",
+                        "BlueSpruce",
+                        "Cherrywood",
+                        "Cinnamonwood",
+                        "Coconutwood",
+                        "Crimsonwood",
+                        "DarkOak",
+                        "Hazel",
+                        "Junglewood",
+                        "Mangrove",
+                        "Maple",
+                        "Oak",
+                        "Rainbowood",
+                        "Spruce",
+                        "Warpedwood",
+                        "Willow",
+                        "Wood",
+                        "WoodCompressed",
+                        "WoodDead",
+                        "WoodFrozen",
+                        "WoodMossy",
+                        "WoodRotten",
+                        "WoodRubber")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyPhosphorus")
                 .displayName("AnyPhosphorus")
@@ -567,11 +528,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyPhosphorus")
-                        .group()
-                        .members("BluePhosphorus", "Phosphorus", "RedPhosphorus", "WhitePhosphorus")
-                        .build())
+                .localName("AnyPhosphorus")
+                .group()
+                .members("BluePhosphorus", "Phosphorus", "RedPhosphorus", "WhitePhosphorus")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyPlastic")
                 .displayName("AnyPlastic")
@@ -583,11 +542,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyPlastic")
-                        .group()
-                        .members("PVC", "Plastic", "Teflon")
-                        .build())
+                .localName("AnyPlastic")
+                .group()
+                .members("PVC", "Plastic", "Teflon")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyPrismarine")
                 .displayName("AnyPrismarine")
@@ -599,11 +556,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyPrismarine")
-                        .group()
-                        .members("Prismarine", "PrismarineDark")
-                        .build())
+                .localName("AnyPrismarine")
+                .group()
+                .members("Prismarine", "PrismarineDark")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyRedSteel")
                 .displayName("AnyRedSteel")
@@ -615,11 +570,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyRedSteel")
-                        .group()
-                        .members("RedSteel")
-                        .build())
+                .localName("AnyRedSteel")
+                .group()
+                .members("RedSteel")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyRubber")
                 .displayName("AnyRubber")
@@ -631,11 +584,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyRubber")
-                        .group()
-                        .members("Rubber")
-                        .build())
+                .localName("AnyRubber")
+                .group()
+                .members("Rubber")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnySalt")
                 .displayName("AnySalt")
@@ -647,11 +598,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnySalt")
-                        .group()
-                        .members("CalciumChloride", "LithiumChloride", "MagnesiumChloride", "Salt", "Sylvite")
-                        .build())
+                .localName("AnySalt")
+                .group()
+                .members("CalciumChloride", "LithiumChloride", "MagnesiumChloride", "Salt", "Sylvite")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnySand")
                 .displayName("AnySand")
@@ -663,11 +612,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnySand")
-                        .group()
-                        .members("RedSand", "Sand")
-                        .build())
+                .localName("AnySand")
+                .group()
+                .members("RedSand", "Sand")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnySapphire")
                 .displayName("AnySapphire")
@@ -679,7 +626,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnySapphire").group().build())
+                .localName("AnySapphire")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnySilicon")
                 .displayName("AnySilicon")
@@ -691,11 +639,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnySilicon")
-                        .group()
-                        .members("Silicon")
-                        .build())
+                .localName("AnySilicon")
+                .group()
+                .members("Silicon")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnySiliconDioxide")
                 .displayName("AnySiliconDioxide")
@@ -707,11 +653,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnySiliconDioxide")
-                        .group()
-                        .members("Flint", "Glass", "Quartzite", "RedSand", "Sand", "SiliconDioxide")
-                        .build())
+                .localName("AnySiliconDioxide")
+                .group()
+                .members("Flint", "Glass", "Quartzite", "RedSand", "Sand", "SiliconDioxide")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnySteel")
                 .displayName("AnySteel")
@@ -723,7 +667,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnySteel").group().build())
+                .localName("AnySteel")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyStone")
                 .displayName("AnyStone")
@@ -735,7 +680,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnyStone").group().build())
+                .localName("AnyStone")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyThaumicCrystal")
                 .displayName("AnyThaumicCrystal")
@@ -747,10 +693,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyThaumicCrystal")
-                        .group()
-                        .build())
+                .localName("AnyThaumicCrystal")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyTigerEye")
                 .displayName("AnyTigerEye")
@@ -762,7 +706,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnyTigerEye").group().build())
+                .localName("AnyTigerEye")
+                .group()
                 .build());
     }
 
@@ -777,11 +722,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyTreatedWood")
-                        .group()
-                        .members("WoodPolished", "WoodTreated")
-                        .build())
+                .localName("AnyTreatedWood")
+                .group()
+                .members("WoodPolished", "WoodTreated")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyTungsten")
                 .displayName("AnyTungsten")
@@ -793,11 +736,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyTungsten")
-                        .group()
-                        .members("Tungsten", "TungstenSintered")
-                        .build())
+                .localName("AnyTungsten")
+                .group()
+                .members("Tungsten", "TungstenSintered")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyUntreatedWood")
                 .displayName("AnyUntreatedWood")
@@ -809,41 +750,39 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyUntreatedWood")
-                        .group()
-                        .members(
-                                "Acacia",
-                                "Bamboo",
-                                "Birch",
-                                "BlueMahoe",
-                                "BlueSpruce",
-                                "Cherrywood",
-                                "Cinnamonwood",
-                                "Coconutwood",
-                                "Crimsonwood",
-                                "DarkOak",
-                                "Dreamwood",
-                                "Greatwood",
-                                "Hazel",
-                                "Junglewood",
-                                "Livingwood",
-                                "Mangrove",
-                                "Maple",
-                                "Oak",
-                                "Rainbowood",
-                                "Silverwood",
-                                "Spruce",
-                                "Warpedwood",
-                                "Willow",
-                                "Wood",
-                                "WoodCompressed",
-                                "WoodDead",
-                                "WoodFrozen",
-                                "WoodMossy",
-                                "WoodRotten",
-                                "WoodRubber")
-                        .build())
+                .localName("AnyUntreatedWood")
+                .group()
+                .members(
+                        "Acacia",
+                        "Bamboo",
+                        "Birch",
+                        "BlueMahoe",
+                        "BlueSpruce",
+                        "Cherrywood",
+                        "Cinnamonwood",
+                        "Coconutwood",
+                        "Crimsonwood",
+                        "DarkOak",
+                        "Dreamwood",
+                        "Greatwood",
+                        "Hazel",
+                        "Junglewood",
+                        "Livingwood",
+                        "Mangrove",
+                        "Maple",
+                        "Oak",
+                        "Rainbowood",
+                        "Silverwood",
+                        "Spruce",
+                        "Warpedwood",
+                        "Willow",
+                        "Wood",
+                        "WoodCompressed",
+                        "WoodDead",
+                        "WoodFrozen",
+                        "WoodMossy",
+                        "WoodRotten",
+                        "WoodRubber")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyWax")
                 .displayName("AnyWax")
@@ -855,7 +794,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("AnyWax").group().build())
+                .localName("AnyWax")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyWood")
                 .displayName("AnyWood")
@@ -867,35 +807,33 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyWood")
-                        .group()
-                        .members(
-                                "Acacia",
-                                "Birch",
-                                "BlueMahoe",
-                                "BlueSpruce",
-                                "Cherrywood",
-                                "Cinnamonwood",
-                                "Coconutwood",
-                                "Crimsonwood",
-                                "DarkOak",
-                                "Hazel",
-                                "Junglewood",
-                                "Mangrove",
-                                "Maple",
-                                "Oak",
-                                "Rainbowood",
-                                "Spruce",
-                                "Warpedwood",
-                                "Willow",
-                                "Wood",
-                                "WoodCompressed",
-                                "WoodDead",
-                                "WoodFrozen",
-                                "WoodMossy",
-                                "WoodRotten")
-                        .build())
+                .localName("AnyWood")
+                .group()
+                .members(
+                        "Acacia",
+                        "Birch",
+                        "BlueMahoe",
+                        "BlueSpruce",
+                        "Cherrywood",
+                        "Cinnamonwood",
+                        "Coconutwood",
+                        "Crimsonwood",
+                        "DarkOak",
+                        "Hazel",
+                        "Junglewood",
+                        "Mangrove",
+                        "Maple",
+                        "Oak",
+                        "Rainbowood",
+                        "Spruce",
+                        "Warpedwood",
+                        "Willow",
+                        "Wood",
+                        "WoodCompressed",
+                        "WoodDead",
+                        "WoodFrozen",
+                        "WoodMossy",
+                        "WoodRotten")
                 .build());
         result.add(MaterialDefinition.builder(-1, "AnyWoodOrPlastic")
                 .displayName("AnyWoodOrPlastic")
@@ -907,35 +845,33 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("AnyWoodOrPlastic")
-                        .group()
-                        .members(
-                                "Acacia",
-                                "Birch",
-                                "BlueMahoe",
-                                "BlueSpruce",
-                                "Cherrywood",
-                                "Cinnamonwood",
-                                "Coconutwood",
-                                "Crimsonwood",
-                                "DarkOak",
-                                "Hazel",
-                                "Junglewood",
-                                "Mangrove",
-                                "Maple",
-                                "Oak",
-                                "PetrifiedWood",
-                                "Rainbowood",
-                                "Spruce",
-                                "Warpedwood",
-                                "Willow",
-                                "WoodCompressed",
-                                "WoodDead",
-                                "WoodFrozen",
-                                "WoodMossy",
-                                "WoodRotten")
-                        .build())
+                .localName("AnyWoodOrPlastic")
+                .group()
+                .members(
+                        "Acacia",
+                        "Birch",
+                        "BlueMahoe",
+                        "BlueSpruce",
+                        "Cherrywood",
+                        "Cinnamonwood",
+                        "Coconutwood",
+                        "Crimsonwood",
+                        "DarkOak",
+                        "Hazel",
+                        "Junglewood",
+                        "Mangrove",
+                        "Maple",
+                        "Oak",
+                        "PetrifiedWood",
+                        "Rainbowood",
+                        "Spruce",
+                        "Warpedwood",
+                        "Willow",
+                        "WoodCompressed",
+                        "WoodDead",
+                        "WoodFrozen",
+                        "WoodMossy",
+                        "WoodRotten")
                 .build());
         result.add(MaterialDefinition.builder(-1, "Hexorium")
                 .displayName("Hexorium")
@@ -947,7 +883,8 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder().localName("Hexorium").group().build())
+                .localName("Hexorium")
+                .group()
                 .build());
         result.add(MaterialDefinition.builder(-1, "Quartz")
                 .displayName("Quartz")
@@ -959,11 +896,9 @@ public final class GroupMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(MaterialProperty.HIDDEN)
-                .facts(MaterialFacts.builder()
-                        .localName("Quartz")
-                        .group()
-                        .members("Quartzite")
-                        .build())
+                .localName("Quartz")
+                .group()
+                .members("Quartzite")
                 .build());
     }
 }

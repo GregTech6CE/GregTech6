@@ -159,53 +159,128 @@ public final class GTMaterial {
         return tooltipChemical;
     }
 
+    GTMaterial rawTargetPulverMaterial() {
+        return targetPulverMaterial.resolve();
+    }
+
+    long rawTargetPulverAmount() {
+        return targetPulverAmount;
+    }
+
+    GTMaterial rawTargetCrushingMaterial() {
+        return targetCrushingMaterial.resolve();
+    }
+
+    long rawTargetCrushingAmount() {
+        return targetCrushingAmount;
+    }
+
+    GTMaterial rawTargetSmeltingMaterial() {
+        return targetSmeltingMaterial.resolve();
+    }
+
+    long rawTargetSmeltingAmount() {
+        return targetSmeltingAmount;
+    }
+
+    long rawFurnaceBurnTime() {
+        return furnaceBurnTime;
+    }
+
+    @Nullable GTMaterial rawTargetBurningMaterial() {
+        return targetBurningMaterial == null ? null : targetBurningMaterial.resolve();
+    }
+
+    long rawTargetBurningAmount() {
+        return targetBurningAmount;
+    }
+
+    int rawOreMultiplier() {
+        return oreMultiplier;
+    }
+
+    int rawOreProcessingMultiplier() {
+        return oreProcessingMultiplier;
+    }
+
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public int getToolTypes() {
+        return MaterialToolHelper.legacyTypes(this);
+    }
+
+    int rawToolTypes() {
         return toolTypes;
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public int getToolQuality() {
+        return MaterialToolHelper.legacyQuality(this);
+    }
+
+    int rawToolQuality() {
         return toolQuality;
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public float getToolSpeed() {
+        return MaterialToolHelper.legacySpeed(this);
+    }
+
+    float rawToolSpeed() {
         return toolSpeed;
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public long getToolDurability() {
+        return MaterialToolHelper.legacyDurability(this);
+    }
+
+    long rawToolDurability() {
         return toolDurability;
     }
 
     /** GT6 {@code mFurnaceBurnTime}. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public long getFurnaceBurnTime() {
-        return furnaceBurnTime;
+        return FuelMaterialHelper.legacyBurnTime(this);
     }
 
     /** Resolved on read; null when no burning target was set. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public @Nullable GTMaterial getTargetBurningMaterial() {
-        return targetBurningMaterial == null ? null : targetBurningMaterial.resolve();
+        return FuelMaterialHelper.legacyResidue(this);
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public long getTargetBurningAmount() {
-        return targetBurningAmount;
+        return FuelMaterialHelper.legacyResidueAmount(this);
     }
 
     /** GT6 {@code mByProducts}; ordered ore-processing byproducts, resolved on read. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public List<GTMaterial> getByProducts() {
-        if (byProducts.isEmpty()) return List.of();
-        List<GTMaterial> resolved = new ArrayList<>(byProducts.size());
-        for (GTMaterial material : byProducts) {
-            resolved.add(material.resolve());
-        }
-        return List.copyOf(resolved);
+        return OreProcessingMaterialHelper.legacyByproducts(this);
+    }
+
+    List<GTMaterial> rawByProducts() {
+        return List.copyOf(byProducts);
     }
 
     /** Ordinary material recycling, distinct from ore crushing (GT6 mTargetPulver); resolved on read. */
-    public GTMaterial getTargetPulverMaterial() { return targetPulverMaterial.resolve(); }
-    public long getTargetPulverAmount() { return targetPulverAmount; }
+    @Deprecated(since = "1.5.0", forRemoval = false)
+    public GTMaterial getTargetPulverMaterial() {
+        return PulverizationMaterialHelper.legacyTarget(this);
+    }
+
+    @Deprecated(since = "1.5.0", forRemoval = false)
+    public long getTargetPulverAmount() {
+        return PulverizationMaterialHelper.legacyAmount(this);
+    }
     /**
      * Null material means this; a negative amount is stored as zero. The material is stored as
      * declared and resolved by the getter, so a later registration of it stays visible.
      */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setPulver(@Nullable GTMaterial material, long amount) {
         checkMutable();
         targetPulverMaterial = material == null ? this : material;
@@ -214,31 +289,37 @@ public final class GTMaterial {
     }
 
     /** Resolved on read; a registration applied after {@link #setCrushing} is still visible. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial getTargetCrushingMaterial() {
-        return targetCrushingMaterial.resolve();
+        return CrushingMaterialHelper.legacyTarget(this);
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public long getTargetCrushingAmount() {
-        return targetCrushingAmount;
+        return CrushingMaterialHelper.legacyAmount(this);
     }
 
     /** Resolved on read; a registration applied after {@link #setSmelting} is still visible. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial getTargetSmeltingMaterial() {
-        return targetSmeltingMaterial.resolve();
+        return SmeltingMaterialHelper.legacyTarget(this);
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public long getTargetSmeltingAmount() {
-        return targetSmeltingAmount;
+        return SmeltingMaterialHelper.legacyAmount(this);
     }
 
     /** GT6 {@code mOreMultiplier}. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public byte getOreMultiplier() {
-        return oreMultiplier;
+        return (byte) OreProcessingMaterialHelper.legacyOreMultiplier(this);
     }
 
     /** GT6 {@code mOreProcessingMultiplier}. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public byte getOreProcessingMultiplier() {
-        return oreProcessingMultiplier;
+        return (byte) OreProcessingMaterialHelper.legacyProcessingMultiplier(this);
     }
 
     public boolean hasToolStats() {
@@ -417,6 +498,7 @@ public final class GTMaterial {
     }
 
     /** {@code qual(toolTypes, speed, durability, quality)} in GT6. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setToolStats(int toolTypes, float toolSpeed, long toolDurability, int toolQuality) {
         checkMutable();
         this.toolTypes = toolTypes;
@@ -432,6 +514,7 @@ public final class GTMaterial {
      * and tool types are clamped to 0..3; the quality is clamped to 0..15. Source tool-generation
      * flags are handled by the separate material form policy.
      */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setToolQuality(int toolQuality) {
         checkMutable();
         return setToolStats(Math.max(0, Math.min(3, this.toolTypes)), this.toolSpeed,
@@ -439,6 +522,7 @@ public final class GTMaterial {
     }
 
     /** GT6 {@code setFurnaceBurnTime}; a negative value is stored as zero. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setFurnaceBurnTime(long burnTime) {
         checkMutable();
         this.furnaceBurnTime = Math.max(0L, burnTime);
@@ -446,6 +530,7 @@ public final class GTMaterial {
     }
 
     /** GT6 {@code setBurning}; ash left after burning one item-worth of this material. A negative amount is zero. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setBurning(@Nullable GTMaterial material, long amount) {
         checkMutable();
         this.targetBurningMaterial = material;
@@ -475,6 +560,7 @@ public final class GTMaterial {
      * GT6 {@code setCrushing}; result of crushing this. Amount 0 disables; null material means this.
      * A negative amount is stored as zero.
      */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setCrushing(@Nullable GTMaterial material, long amount) {
         checkMutable();
         this.targetCrushingMaterial = material == null ? this : material;
@@ -486,6 +572,7 @@ public final class GTMaterial {
      * GT6 {@code setSmelting}; result of smelting this. Amount 0 disables; null material means this.
      * A negative amount is stored as zero.
      */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setSmelting(@Nullable GTMaterial material, long amount) {
         checkMutable();
         this.targetSmeltingMaterial = material == null ? this : material;
@@ -497,6 +584,7 @@ public final class GTMaterial {
     }
 
     /** Drops the smelting target and its {@link MaterialProperty#MELTING} flag. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial clearSmeltingTarget() {
         checkMutable();
         this.targetSmeltingMaterial = this;
@@ -506,6 +594,7 @@ public final class GTMaterial {
     }
 
     /** GT6 {@code setOreMultiplier}; crushed-ore output multiplier, clamped to 1..127. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setOreMultiplier(int multiplier) {
         checkMutable();
         this.oreMultiplier = (byte) Math.min(Byte.MAX_VALUE, Math.max(1, multiplier));
@@ -513,6 +602,7 @@ public final class GTMaterial {
     }
 
     /** GT6 {@code setOreProcessingMultiplier}; ore-processing output multiplier, clamped to 1..127. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setOreProcessingMultiplier(int multiplier) {
         checkMutable();
         this.oreProcessingMultiplier = (byte) Math.min(Byte.MAX_VALUE, Math.max(1, multiplier));
