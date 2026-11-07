@@ -56,19 +56,22 @@ public final class HandFamilyRecipesTests {
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
-    public static void autoclaveSteamScalesWithToolQuality(GameTestHelper helper) {
-        // CertusQuartz is CRYSTALLISABLE and carries the whole gem ladder.
+    public static void autoclaveCountedBatchResolves(GameTestHelper helper) {
+        // Source row Loader_Recipes_Handlers:441: dustSmall 32 + ST.tag(5) -> gemLegendary,
+        // steam 819200 scaled by toolQuality+1.
         GTMaterial quartz = GTMaterialRegistry.get("CertusQuartz").resolve();
-        ItemStack tiny = stack(MaterialPrefix.dustSmall, "CertusQuartz", 1);
-        ItemStack tag = new ItemStack(gregtech.content.registry.GTTechnological.selectorTag(0));
-        int expectedSteam = Math.multiplyExact(25600, quartz.getToolQuality() + 1);
+        ItemStack tiny = stack(MaterialPrefix.dustSmall, "CertusQuartz", 32);
+        ItemStack tag = new ItemStack(gregtech.content.registry.GTTechnological.selectorTag(5));
+        int expectedSteam = Math.multiplyExact(819200, quartz.getToolQuality() + 1);
         FluidStack steam = GTFluids.stack("Steam", expectedSteam);
         helper.assertTrue(steam != null && !steam.isEmpty(), "steam is registered");
         Recipe row = MachineRecipeMaps.Autoclave.findRecipe(
                 List.of(tiny, tag), List.of(steam), false,
                 MachineRecipeMaps.Autoclave.mInputItemsCount, MachineRecipeMaps.Autoclave.mOutputItemsCount);
         helper.assertTrue(row != null,
-                "a small quartz dust and circuit 0 start the crystal ladder");
+                "32 small quartz dusts with circuit 5 grow a legendary gem");
+        helper.assertTrue(row.mInputs[0].getCount() == 32,
+                "the counted row consumes the declared 32-item batch");
         helper.assertTrue(hasFluidInput(row, steam),
                 "steam is scaled by toolQuality+1 (RecipeMapHandlerPrefix:218)");
         helper.succeed();
