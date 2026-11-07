@@ -63,13 +63,15 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
     }
     @Override public boolean coverSupportsPossible(){return hasControlPanels();}
     @Override public boolean coverPossible(Direction side){return hasOriginalConverter()||isSolar()|| (isBatteryBox()?batteryEnergy.buffer()>spec.outputRate():isElectricTransformer()&&transformerControl.running());}
+    /** Mirrors the tool actions in {@code EnergyNodeBlock.use}; unhandled tools fall through to the cover. */
     @Override public boolean consumesTool(ItemStack tool){
         if(gregtech.content.cover.PanelCoverHost.blockConsumesTool(this,tool))return true;
-        return GTToolHelper.isMonkeyWrench(tool)
-                ||GTToolHelper.isSoftHammer(tool)
-                ||GTToolHelper.isMagnifyingGlass(tool)
-                ||GTToolHelper.matchesTool(tool,GTToolType.PLUNGER)
-                ||GTToolHelper.matchesTool(tool,GTToolType.CROWBAR);
+        if(isOriginalMotor()&&(GTToolHelper.isMonkeyWrench(tool)||GTToolHelper.isMagnifyingGlass(tool)))return true;
+        if(isInvertible()&&(isRotationTransformer()||isElectricTransformer()
+                ?GTToolHelper.isMonkeyWrench(tool):GTToolHelper.isSoftHammer(tool)))return true;
+        if(isTurbine()&&GTToolHelper.matchesTool(tool,GTToolType.PLUNGER))return true;
+        if(isTurbine()&&hasRotor()&&GTToolHelper.matchesTool(tool,GTToolType.CROWBAR))return true;
+        return isBatteryBox()&&GTToolHelper.matchesTool(tool,GTToolType.CROWBAR);
     }
     @Override public boolean attachCover(Direction side,net.minecraft.world.item.ItemStack stack){
         var panel=gregtech.content.cover.PanelCover.of(stack);
