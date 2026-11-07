@@ -1,4 +1,5 @@
 package gregtech.engine.recipe;
+import gregtech.engine.stack.StackCompat;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.Item;
@@ -681,11 +682,7 @@ public class RecipeMap {
                 for (int j = 0; j < tOutputs.length; j++) {
                     ItemStack out = tOutputs[j];
 
-//? if >=1.21.1 {
-/*                    if (!out.isEmpty() && ItemStack.isSameItemSameComponents(in, out)) {
-*///?} else {
-                    if (!out.isEmpty() && ItemStack.isSameItemSameTags(in, out)) {
-//?}
+                    if (!out.isEmpty() && StackCompat.sameItem(in, out)) {
 
                         if (in.getCount() >= out.getCount()) {
                             in.shrink(out.getCount());
@@ -931,11 +928,7 @@ public class RecipeMap {
             int needed = in.getCount();
             for (ItemStack s : items) {
 
-//? if >=1.21.1 {
-/*                if (!empty(s) && ItemStack.isSameItemSameComponents(in, s)) {
-*///?} else {
-                if (!empty(s) && ItemStack.isSameItemSameTags(in, s)) {
-//?}
+                if (!empty(s) && StackCompat.sameItem(in, s)) {
 
                     int take = Math.min(needed, s.getCount());
                     s.shrink(take); needed -= take;

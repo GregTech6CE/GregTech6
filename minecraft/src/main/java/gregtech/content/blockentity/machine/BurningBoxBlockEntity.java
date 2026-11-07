@@ -14,6 +14,7 @@ import gregtech.engine.tool.GTToolType;
 import gregtech.content.block.machine.BurningBoxBlock;
 import gregtech.content.blockentity.machine.GTFacingMachineBlockEntity;
 import gregtech.content.data.GregTechTags;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -249,22 +250,14 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         if (stack == null || stack.isEmpty()) return true;
         ItemStack ashSlot = inventory.getStackInSlot(1);
         if (ashSlot.isEmpty()) return true;
-//? if >=1.21.1 {
-        /*return ItemStack.isSameItemSameComponents(ashSlot, stack)
-*///?} else {
-        return ItemStack.isSameItemSameTags(ashSlot, stack)
-//?}
+        return StackCompat.sameItem(ashSlot, stack)
                 && ashSlot.getCount() + stack.getCount() <= ashSlot.getMaxStackSize();
     }
 
     private void queueAsh(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return;
         if (pendingAsh == null) pendingAsh = stack.copy();
-//? if >=1.21.1 {
-        /*else if (ItemStack.isSameItemSameComponents(pendingAsh, stack))
-*///?} else {
-        else if (ItemStack.isSameItemSameTags(pendingAsh, stack))
-//?}
+        else if (StackCompat.sameItem(pendingAsh, stack))
             pendingAsh.grow(stack.getCount());
         else flushPendingAsh();
     }
@@ -363,11 +356,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
             }
             return InteractionResult.PASS;
         }
-//? if >=1.21.1 {
-        /*if (ItemStack.isSameItemSameComponents(fuelSlot, held)) {
-*///?} else {
-        if (ItemStack.isSameItemSameTags(fuelSlot, held)) {
-//?}
+        if (StackCompat.sameItem(fuelSlot, held)) {
             int space = fuelSlot.getMaxStackSize() - fuelSlot.getCount();
             if (space > 0) {
                 int moved = Math.min(space, held.getCount());

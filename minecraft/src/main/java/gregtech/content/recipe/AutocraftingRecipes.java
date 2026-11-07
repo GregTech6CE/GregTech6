@@ -9,6 +9,7 @@ import gregtech.content.data.CraftingBlueprintData;
 import gregtech.content.data.UsbDataCable;
 import gregtech.content.data.UsbDataMedia;
 import gregtech.content.tool.CraftingToolDefinitions;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -98,11 +99,7 @@ public final class AutocraftingRecipes {
 
     public static boolean containsInput(Level level, BlockEntity machine, ItemStack program, ItemStack stack) {
         for (ItemStack cell : blueprint(level, machine, program))
-//? if >=1.21.1 {
-        /*if (ItemStack.isSameItemSameComponents(cell, stack)) return true;
-*///?} else {
-        if (ItemStack.isSameItemSameTags(cell, stack)) return true;
-//?}
+        if (StackCompat.sameItem(cell, stack)) return true;
         return false;
     }
 
@@ -141,11 +138,7 @@ public final class AutocraftingRecipes {
         var grouped = AutocraftingRules.inputs(Arrays.asList(pattern), ItemStack::isEmpty,
                 s -> s.getItem() instanceof gregtech.content.item.GTToolItem
                 || s.getItem() instanceof gregtech.content.item.ElectricToolItem,
-//? if >=1.21.1 {
-                /*ItemStack::isSameItemSameComponents, AutocraftingRecipes::infinite);
-*///?} else {
-                ItemStack::isSameItemSameTags, AutocraftingRecipes::infinite);
-//?}
+                StackCompat::sameItem, AutocraftingRecipes::infinite);
         if (grouped == null || grouped.isEmpty()) return null;
         var owner = new AbstractContainerMenu(null, 0) {
 
@@ -218,11 +211,7 @@ public final class AutocraftingRecipes {
             ItemStack container = cell.getCraftingRemainingItem();
             if (!container.isEmpty()) outputs.add(new AutocraftingRules.Amount<>(container, container.getCount()));
         }
-//? if >=1.21.1 {
-        /*var plan = AutocraftingRules.optimize(grouped, outputs, ItemStack::isSameItemSameComponents);
-*///?} else {
-        var plan = AutocraftingRules.optimize(grouped, outputs, ItemStack::isSameItemSameTags);
-//?}
+        var plan = AutocraftingRules.optimize(grouped, outputs, StackCompat::sameItem);
         if (plan.outputs().isEmpty()) return null;
         var inputs = new ArrayList<ItemStack>();
         var catalysts = new ArrayList<Integer>();

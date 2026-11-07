@@ -1,4 +1,5 @@
 package gregtech.engine.machine;
+import gregtech.engine.stack.StackCompat;
 
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -48,11 +49,7 @@ public class MachineItemHandler extends ItemStackHandler {
         for (int i = outIdx; i < getSlots(); i++) {
             ItemStack existing = getStackInSlot(i);
 
-//? if >=1.21.1 {
-/*            if (ItemStack.isSameItemSameComponents(existing, stack)) {
-*///?} else {
-            if (ItemStack.isSameItemSameTags(existing, stack)) {
-//?}
+            if (StackCompat.sameItem(existing, stack)) {
 
                 int space = Math.min(getSlotLimit(i), existing.getMaxStackSize()) - existing.getCount();
                 if (space > 0) {
@@ -98,11 +95,7 @@ public class MachineItemHandler extends ItemStackHandler {
         for (int i = 0; i < inputCount; i++) {
             ItemStack existing = getStackInSlot(i);
             if (existing.isEmpty()) continue;
-//? if >=1.21.1 {
-/*            if (ItemStack.isSameItemSameComponents(existing, stack)) return i == slot;
-*///?} else {
-            if (ItemStack.isSameItemSameTags(existing, stack)) return i == slot;
-//?}
+            if (StackCompat.sameItem(existing, stack)) return i == slot;
         }
         return true;
     }

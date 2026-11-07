@@ -1,25 +1,21 @@
 package gregtech.content.recipe;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
-import gregtech.engine.recipe.Recipe;
-import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
 import gregtech.content.registry.GTItems;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
+import gregtech.platform.Mc;
 import gregtech.util.OM;
-import net.minecraft.world.item.ItemStack;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * GT6's Mortar handler block: {@code Loader_Recipes_Handlers:79-112}.
@@ -40,38 +36,49 @@ import java.util.List;
 public final class MortarGrindingRecipes {
 
     /** One registered grinding route, for tests and reports. */
-    public record Entry(String input, RecipeMap map, Recipe recipe) {
-    }
+    public record Entry(String input, RecipeMap map, Recipe recipe) {}
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
-    private static final List<String> SKIPPED = List.of(
-            "six external-form rows (:84-89) bind actual items through ExternalOreProcessing after tags");
+    private static final List<String> SKIPPED =
+            List.of("six external-form rows (:84-89) bind actual items through ExternalOreProcessing after tags");
 
     /** Rows gated on MORTAR; the original rockGt row is handled separately. */
     private static final List<String> PLAIN_ROWS = List.of(
-            "crushedPurified", "crushedPurifiedTiny", "crushedCentrifuged", "crushedCentrifugedTiny",
-            "scrapGt", "billet", "chunkGt", "nugget", "plateTiny", "plateGemTiny", "round", "screw", "bolt",
-            "wireFine", "toolHeadArrow", "toolHeadRawArrow", "gemChipped");
+            "crushedPurified",
+            "crushedPurifiedTiny",
+            "crushedCentrifuged",
+            "crushedCentrifugedTiny",
+            "scrapGt",
+            "billet",
+            "chunkGt",
+            "nugget",
+            "plateTiny",
+            "plateGemTiny",
+            "round",
+            "screw",
+            "bolt",
+            "wireFine",
+            "toolHeadArrow",
+            "toolHeadRawArrow",
+            "gemChipped");
 
     /**
      * The gem ladder: GT6 only grinds a gem row when the material has no finer gem form (or is
      * brittle/food), so a real gem is not destroyed by accident.
      */
     private static final List<String[]> GEM_ROWS = List.of(
-            new String[]{"gemFlawed", "gemChipped"},
-            new String[]{"gem", "gemFlawed"},
-            new String[]{"gemFlawless", "gem"},
-            new String[]{"gemExquisite", "gemFlawless"},
-            new String[]{"gemLegendary", "gemExquisite"});
+            new String[] {"gemFlawed", "gemChipped"},
+            new String[] {"gem", "gemFlawed"},
+            new String[] {"gemFlawless", "gem"},
+            new String[] {"gemExquisite", "gemFlawless"},
+            new String[] {"gemLegendary", "gemExquisite"});
 
     /** Rows gated on {@code MORTAR} plus {@code Or(BRITTLE, FOOD, WOOD)}. */
-    private static final List<String> WOOD_ROWS = List.of(
-            "stick", "stickLong", "ingot", "plate", "plateGem");
+    private static final List<String> WOOD_ROWS = List.of("stick", "stickLong", "ingot", "plate", "plateGem");
 
     private static boolean registered;
 
-    private MortarGrindingRecipes() {
-    }
+    private MortarGrindingRecipes() {}
 
     public static List<Entry> entries() {
         return Collections.unmodifiableList(ENTRIES);
@@ -84,8 +91,9 @@ public final class MortarGrindingRecipes {
     public static int register() {
         if (registered) throw new IllegalStateException("Mortar grinding recipes registered twice");
         registered = true;
-        for (var entry : java.util.Map.of(net.minecraft.world.item.Items.CLAY_BALL, 1,
-                net.minecraft.world.item.Items.CLAY, 4).entrySet()) {
+        for (var entry : java.util.Map.of(
+                        net.minecraft.world.item.Items.CLAY_BALL, 1, net.minecraft.world.item.Items.CLAY, 4)
+                .entrySet()) {
             var input = new ItemStack(entry.getKey());
             var output = OM.dust(GTMaterialRegistry.get("Clay"), entry.getValue() * GTValues.U);
             var recipe = MachineRecipeMaps.Mortar.addRecipe1(true, 16, 16L * entry.getValue(), input, output);
@@ -98,20 +106,22 @@ public final class MortarGrindingRecipes {
             grind(material, "rockGt");
             if (!gregtech.content.material.MaterialProcessingProperties.isMortarGrindable(material)) continue;
             for (String row : PLAIN_ROWS) grind(material, row);
-            boolean brittleOrFood = gregtech.content.material.MaterialProcessingProperties.isBrittle(material) || MaterialWorkability.isFood(material);
+            boolean brittleOrFood = gregtech.content.material.MaterialProcessingProperties.isBrittle(material)
+                    || MaterialWorkability.isFood(material);
             for (String[] row : GEM_ROWS) {
-                if (brittleOrFood || GTItems.getStack(prefixOf(row[1]), material, 1).isEmpty()) grind(material, row[0]);
+                if (brittleOrFood
+                        || GTItems.getStack(prefixOf(row[1]), material, 1).isEmpty()) grind(material, row[0]);
             }
             if (brittleOrFood || material.has(MaterialProperty.WOOD)) {
                 for (String row : WOOD_ROWS) grind(material, row);
             }
         }
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 mortar grinding recipes ({} GT6 rows skipped: {})",
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 mortar grinding recipes ({} GT6 rows skipped: {})",
-//?}
-                ENTRIES.size(), SKIPPED.size(), SKIPPED);
+        Mc.logger()
+                .info(
+                        "Registered {} GT6 mortar grinding recipes ({} GT6 rows skipped: {})",
+                        ENTRIES.size(),
+                        SKIPPED.size(),
+                        SKIPPED);
         return ENTRIES.size();
     }
 
@@ -130,11 +140,7 @@ public final class MortarGrindingRecipes {
                 true, new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, null, duration, 16, 0);
         if (template == null) return;
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
-                template,
-                0,
-                material,
-                units,
-                gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
+                template, 0, material, units, gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
         rule.source(input, units);
         ENTRIES.add(new Entry(prefixName, MachineRecipeMaps.Mortar, rule.publish(MachineRecipeMaps.Mortar)));
     }

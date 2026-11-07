@@ -1,10 +1,6 @@
 package gregtech.content.recipe;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.api.material.GTMaterial;
@@ -26,6 +22,7 @@ import gregtech.content.registry.GTFluidPipes;
 import gregtech.content.registry.GTItemPipes;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -129,11 +126,7 @@ public final class PipeRecipes {
             // smithable (weldable) ones: carbon, plastic, rubber and treated wood pack too.
             bundle(material, fluid);
         }
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 pipe welding rows ({} GT6 rows skipped: {})",
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 pipe welding rows ({} GT6 rows skipped: {})",
-//?}
+        Mc.logger().info("Registered {} GT6 pipe welding rows ({} GT6 rows skipped: {})",
                 ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }

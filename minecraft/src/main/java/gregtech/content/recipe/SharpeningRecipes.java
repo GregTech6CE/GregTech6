@@ -1,23 +1,19 @@
 package gregtech.content.recipe;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
-import gregtech.engine.recipe.Recipe;
-import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
-import net.minecraft.world.item.ItemStack;
-
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
+import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * GT6's Sharpening (grindstone) handler block: {@code Loader_Recipes_Handlers:396-415}.
@@ -43,44 +39,42 @@ import java.util.List;
 public final class SharpeningRecipes {
 
     /** One registered sharpening row, for tests and reports. */
-    public record Entry(String route, RecipeMap map, Recipe recipe) {
-    }
+    public record Entry(String route, RecipeMap map, Recipe recipe) {}
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
-    private static final List<String> SKIPPED = List.of(
-            "GT6's COATED.NOT condition on the grinding rows (:113-127) has no port counterpart;"
+    private static final List<String> SKIPPED =
+            List.of("GT6's COATED.NOT condition on the grinding rows (:113-127) has no port counterpart;"
                     + " ANTIMATTER.NOT is applied");
 
     /** Raw head → finished head, EU 16 with multiplier 16. */
     private static final List<String[]> TOOL_HEAD_ROWS = List.of(
-            new String[]{"toolHeadRawArrow", "toolHeadArrow"},
-            new String[]{"toolHeadRawSaw", "toolHeadSaw"},
-            new String[]{"toolHeadRawChisel", "toolHeadChisel"},
-            new String[]{"toolHeadRawSword", "toolHeadSword"},
-            new String[]{"toolHeadRawPickaxe", "toolHeadPickaxe"},
-            new String[]{"toolHeadRawShovel", "toolHeadShovel"},
-            new String[]{"toolHeadRawSpade", "toolHeadSpade"},
-            new String[]{"toolHeadRawUniversalSpade", "toolHeadUniversalSpade"},
-            new String[]{"toolHeadRawAxe", "toolHeadAxe"},
-            new String[]{"toolHeadRawAxeDouble", "toolHeadAxeDouble"},
-            new String[]{"toolHeadRawHoe", "toolHeadHoe"},
-            new String[]{"toolHeadRawSense", "toolHeadSense"},
-            new String[]{"toolHeadRawPlow", "toolHeadPlow"});
+            new String[] {"toolHeadRawArrow", "toolHeadArrow"},
+            new String[] {"toolHeadRawSaw", "toolHeadSaw"},
+            new String[] {"toolHeadRawChisel", "toolHeadChisel"},
+            new String[] {"toolHeadRawSword", "toolHeadSword"},
+            new String[] {"toolHeadRawPickaxe", "toolHeadPickaxe"},
+            new String[] {"toolHeadRawShovel", "toolHeadShovel"},
+            new String[] {"toolHeadRawSpade", "toolHeadSpade"},
+            new String[] {"toolHeadRawUniversalSpade", "toolHeadUniversalSpade"},
+            new String[] {"toolHeadRawAxe", "toolHeadAxe"},
+            new String[] {"toolHeadRawAxeDouble", "toolHeadAxeDouble"},
+            new String[] {"toolHeadRawHoe", "toolHeadHoe"},
+            new String[] {"toolHeadRawSense", "toolHeadSense"},
+            new String[] {"toolHeadRawPlow", "toolHeadPlow"});
 
     /** Grinding rows, EU 16 with multiplier 256; the 4th field marks pulverized remains. */
     private static final List<String[]> GRINDING_ROWS = List.of(
-            new String[]{"nugget", "round", "1", "T"},
-            new String[]{"plateGem", "lens", "1", "T"},
-            new String[]{"gem", "stick", "1", "T"},
-            new String[]{"ingot", "stick", "1", "T"},
-            new String[]{"billet", "stick", "1", "T"},
-            new String[]{"gemChipped", "toolHeadArrow", "2", "T"},
-            new String[]{"rockGt", "toolHeadArrow", "8", "T"});
+            new String[] {"nugget", "round", "1", "T"},
+            new String[] {"plateGem", "lens", "1", "T"},
+            new String[] {"gem", "stick", "1", "T"},
+            new String[] {"ingot", "stick", "1", "T"},
+            new String[] {"billet", "stick", "1", "T"},
+            new String[] {"gemChipped", "toolHeadArrow", "2", "T"},
+            new String[] {"rockGt", "toolHeadArrow", "8", "T"});
 
     private static boolean registered;
 
-    private SharpeningRecipes() {
-    }
+    private SharpeningRecipes() {}
 
     public static List<Entry> entries() {
         return Collections.unmodifiableList(ENTRIES);
@@ -100,17 +94,19 @@ public final class SharpeningRecipes {
                 sharpen(material, row[0], 1, row[1], Integer.parseInt(row[2]), 256, "T".equals(row[3]));
             }
         }
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 sharpening recipes ({} notes: {})",
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 sharpening recipes ({} notes: {})",
-//?}
-                ENTRIES.size(), SKIPPED.size(), SKIPPED);
+        Mc.logger()
+                .info("Registered {} GT6 sharpening recipes ({} notes: {})", ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }
 
-    private static void sharpen(GTMaterial material, String inName, int inAmount, String outName, int outCount,
-            long multiplier, boolean pulverizedRemains) {
+    private static void sharpen(
+            GTMaterial material,
+            String inName,
+            int inAmount,
+            String outName,
+            int outCount,
+            long multiplier,
+            boolean pulverizedRemains) {
         MaterialPrefix in = gregtech.engine.prefix.PrefixRegistry.byName(inName);
         MaterialPrefix out = gregtech.engine.prefix.PrefixRegistry.byName(outName);
         if (in == null || out == null) return;
@@ -121,16 +117,16 @@ public final class SharpeningRecipes {
         long unitsOut = out.getMaterialWeight() * outCount;
         long units = Math.max(unitsIn, unitsOut);
         // GT6 RecipeMapHandlerPrefix#getCosts with the row's multiplier (16 for tool heads, 256 for grinding).
-        long duration = Math.max(1, (units * multiplier * (material.getToolQuality() + 1)
-                + GTValues.U - 1) / GTValues.U);
+        long duration =
+                Math.max(1, (units * multiplier * (material.getToolQuality() + 1) + GTValues.U - 1) / GTValues.U);
         ItemStack remains = pulverizedRemains && unitsIn > unitsOut
-                ? MortarGrindingRecipes.pulverize(material, unitsIn - unitsOut) : ItemStack.EMPTY;
+                ? MortarGrindingRecipes.pulverize(material, unitsIn - unitsOut)
+                : ItemStack.EMPTY;
         // GT6's grinding rows call chances(10000, 7500): the pulverized remainder is 75%.
-        ItemStack[] outputs = remains.isEmpty()
-                ? new ItemStack[] {output} : new ItemStack[] {output, remains};
+        ItemStack[] outputs = remains.isEmpty() ? new ItemStack[] {output} : new ItemStack[] {output, remains};
         long[] chances = remains.isEmpty() ? null : new long[] {10000, 7500};
-        var template = RecipeMap.make(
-                true, new ItemStack[] {input}, outputs, null, chances, null, null, duration, 16, 0);
+        var template =
+                RecipeMap.make(true, new ItemStack[] {input}, outputs, null, chances, null, null, duration, 16, 0);
         if (template == null) return;
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
                 template,
@@ -140,7 +136,9 @@ public final class SharpeningRecipes {
                 gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
         rule.source(input, unitsIn);
         Recipe recipe = rule.publish(MachineRecipeMaps.Sharpening);
-        ENTRIES.add(new Entry(inName + " x" + inAmount + " -> " + outName + " x" + outCount
-                + (remains.isEmpty() ? "" : " + remains"), MachineRecipeMaps.Sharpening, recipe));
+        ENTRIES.add(new Entry(
+                inName + " x" + inAmount + " -> " + outName + " x" + outCount + (remains.isEmpty() ? "" : " + remains"),
+                MachineRecipeMaps.Sharpening,
+                recipe));
     }
 }

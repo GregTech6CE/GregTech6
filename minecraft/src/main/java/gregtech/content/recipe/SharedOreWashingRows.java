@@ -16,6 +16,7 @@ import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -110,11 +111,7 @@ public final class SharedOreWashingRows {
  }
  private static boolean sameItem(ItemStack a,ItemStack b){
   if(a==null||b==null||a.isEmpty()||b.isEmpty())return false;
-//? if >=1.21.1 {
-  /*return ItemStack.isSameItemSameComponents(a,b);
-*///?} else {
-  return ItemStack.isSameItemSameTags(a,b);
-//?}
+  return StackCompat.sameItem(a,b);
  }
  private static boolean sameFluids(FluidStack[] a,FluidStack[] b){
   if(a.length!=b.length)return false;

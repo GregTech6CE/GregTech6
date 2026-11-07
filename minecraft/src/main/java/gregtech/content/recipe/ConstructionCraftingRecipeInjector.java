@@ -11,6 +11,7 @@ import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTToolItems;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.tool.GTToolType;
+import gregtech.platform.Mc;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
@@ -82,11 +83,7 @@ public final class ConstructionCraftingRecipeInjector {
         GregTech.LOGGER.info("Registered {} GT6 construction crafting rows ({} skipped)",
 //?}
                 added, SKIPPED.size());
-//? if >=1.21.1 {
-        /*for (String reason : SKIPPED) com.mojang.logging.LogUtils.getLogger().debug("[gregtech] construction row skipped: {}", reason);
-*///?} else {
-        for (String reason : SKIPPED) GregTech.LOGGER.debug("[gregtech] construction row skipped: {}", reason);
-//?}
+        for (String reason : SKIPPED) Mc.logger().debug("[gregtech] construction row skipped: {}", reason);
     }
 
     /** The sixteen colour pairs of one family: GT6's {@code BlockColored} metas. */

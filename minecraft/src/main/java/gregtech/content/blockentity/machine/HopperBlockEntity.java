@@ -6,6 +6,7 @@ import gregtech.content.block.machine.HopperBlock;
 import gregtech.client.gui.HopperContainerMenu;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTMenuTypes;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -157,11 +158,7 @@ public class HopperBlockEntity extends BlockEntity
                         if (!slotHas(j)) continue;
                         int maxSize = Math.min(stackLimit, inventory.get(j).getMaxStackSize());
                         if (slotHas(i)) {
-//? if >=1.21.1 {
-                            /*if (inventory.get(i).getCount() < maxSize && ItemStack.isSameItemSameComponents(inventory.get(i), inventory.get(j))) {
-*///?} else {
-                            if (inventory.get(i).getCount() < maxSize && ItemStack.isSameItemSameTags(inventory.get(i), inventory.get(j))) {
-//?}
+                            if (inventory.get(i).getCount() < maxSize && StackCompat.sameItem(inventory.get(i), inventory.get(j))) {
                                 tMovedItems += moveInternal(j, i);
                                 if (inventory.get(i).getCount() >= maxSize) break;
                             }
@@ -372,11 +369,7 @@ public class HopperBlockEntity extends BlockEntity
             // Merge into existing partial stacks of the same type
             for (int i = 0; i < invsize() && !stack.isEmpty(); i++) {
                 ItemStack existing = inventory.get(i);
-//? if >=1.21.1 {
-                /*if (existing.isEmpty() || !ItemStack.isSameItemSameComponents(existing, stack)) continue;
-*///?} else {
-                if (existing.isEmpty() || !ItemStack.isSameItemSameTags(existing, stack)) continue;
-//?}
+                if (existing.isEmpty() || !StackCompat.sameItem(existing, stack)) continue;
                 int limit = Math.min(getSlotLimitFor(i), existing.getMaxStackSize());
                 int space = limit - existing.getCount();
                 if (space <= 0) continue;
@@ -415,11 +408,7 @@ public class HopperBlockEntity extends BlockEntity
             int moved = src.getCount();
             return moved;
         }
-//? if >=1.21.1 {
-        /*if (ItemStack.isSameItemSameComponents(src, dst)) {
-*///?} else {
-        if (ItemStack.isSameItemSameTags(src, dst)) {
-//?}
+        if (StackCompat.sameItem(src, dst)) {
             int space = dst.getMaxStackSize() - dst.getCount();
             int moved = Math.min(src.getCount(), space);
             if (moved > 0) {
@@ -450,11 +439,7 @@ public class HopperBlockEntity extends BlockEntity
         int limit = getSlotLimitFor(slot);
         ItemStack existing = inventory.get(slot);
         if (!existing.isEmpty()) {
-//? if >=1.21.1 {
-            /*if (!ItemStack.isSameItemSameComponents(existing, stack)) return stack;
-*///?} else {
-            if (!ItemStack.isSameItemSameTags(existing, stack)) return stack;
-//?}
+            if (!StackCompat.sameItem(existing, stack)) return stack;
             int space = Math.min(limit, existing.getMaxStackSize()) - existing.getCount();
             if (space <= 0) return stack;
             int toInsert = Math.min(stack.getCount(), space);

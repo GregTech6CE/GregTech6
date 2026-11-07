@@ -8,6 +8,7 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.registry.GTItems;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -308,11 +309,7 @@ public final class StoneVariantRecipes {
     }
 
     private static void report() {
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 masonry rows {} ({} skipped: {})",
-*///?} else {
-        gregtech.GregTech.LOGGER.info("Registered {} GT6 masonry rows {} ({} skipped: {})",
-//?}
+        Mc.logger().info("Registered {} GT6 masonry rows {} ({} skipped: {})",
                 ENTRIES.size(), COUNTS, SKIPPED.size(), SKIPPED);
     }
 }

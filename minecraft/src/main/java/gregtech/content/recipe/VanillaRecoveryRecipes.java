@@ -8,6 +8,7 @@ import gregtech.engine.recipe.*;
 import gregtech.engine.recipe.*;
 import gregtech.content.data.*;
 import gregtech.content.registry.GTItems;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.world.item.*;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
@@ -63,11 +64,7 @@ public final class VanillaRecoveryRecipes {
                 duration += (c.getValue()*work+GTValues.U-1)/GTValues.U;
             }
             if (!complete || outputs.size() > MachineRecipeMaps.Shredder.mOutputItemsCount) continue;
-//? if >=1.21.1 {
-            /*if (outputs.size() == 1 && ItemStack.isSameItemSameComponents(stack,outputs.get(0)) && outputs.get(0).getCount() == 1) continue;
-*///?} else {
-            if (outputs.size() == 1 && ItemStack.isSameItemSameTags(stack,outputs.get(0)) && outputs.get(0).getCount() == 1) continue;
-//?}
+            if (outputs.size() == 1 && StackCompat.sameItem(stack,outputs.get(0)) && outputs.get(0).getCount() == 1) continue;
             var recipe = new Recipe(new ItemStack[]{stack}, outputs.toArray(ItemStack[]::new), null,null,null,null,Math.max(1,duration),16,0).withMaterialRecovery();
             // Existing explicit GT6 processing recipes keep priority and their special yields.
             if (MachineRecipeMaps.Shredder.addRecipe(recipe) != null) RECIPES.add(recipe);

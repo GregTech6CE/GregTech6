@@ -1,5 +1,6 @@
 package gregtech.compat.jade;
 
+import gregtech.engine.stack.StackCompat;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.world.item.ItemStack;
@@ -12,11 +13,7 @@ final class JadeItemSummary {
     void add(ItemStack stack) {
         if (stack.isEmpty()) return;
         for (var entry : entries) {
-//? if >=1.21.1 {
-            /*boolean same = ItemStack.isSameItemSameComponents(entry.icon, stack);
-*///?} else {
-            boolean same = ItemStack.isSameItemSameTags(entry.icon, stack);
-//?}
+            boolean same = StackCompat.sameItem(entry.icon, stack);
             if (same) {
                 entry.count += stack.getCount();
                 return;

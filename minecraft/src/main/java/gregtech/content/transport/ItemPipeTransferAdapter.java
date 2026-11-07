@@ -1,4 +1,5 @@
 package gregtech.content.transport;
+import gregtech.engine.stack.StackCompat;
 
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -31,11 +32,7 @@ public final class ItemPipeTransferAdapter {
             public ItemStack stack(int slot) { return current[0].getStackInSlot(slot); }
             public int count(ItemStack stack) { return stack.getCount(); }
             public ItemStack copyWithCount(ItemStack stack, int count) { return stack.copyWithCount(count); }
-//? if >=1.21.1 {
-            /*public boolean same(ItemStack first, ItemStack second) { return ItemStack.isSameItemSameComponents(first, second); }
-*///?} else {
-            public boolean same(ItemStack first, ItemStack second) { return ItemStack.isSameItemSameTags(first, second); }
-//?}
+            public boolean same(ItemStack first, ItemStack second) { return StackCompat.sameItem(first, second); }
             public ItemStack insert(int slot, ItemStack stack, boolean simulate) { return current[0].insertItem(slot, stack, simulate); }
         };
         var result = probe ? ItemPipeTransfer.simulate(offered, port) : ItemPipeTransfer.transfer(offered, port);

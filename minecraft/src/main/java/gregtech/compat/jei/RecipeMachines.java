@@ -17,6 +17,7 @@ import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 
 import gregtech.content.registry.GTToolBlocks;
+import gregtech.engine.stack.StackCompat;
 
 import net.minecraft.world.item.ItemStack;
 
@@ -228,11 +229,7 @@ public final class RecipeMachines {
 
     private static boolean sameStack(ItemStack existing, ItemStack stack) {
 
-//? if >=1.21.1 {
-/*        return ItemStack.isSameItemSameComponents(existing, stack);
-*///?} else {
-        return ItemStack.isSameItemSameTags(existing, stack);
-//?}
+        return StackCompat.sameItem(existing, stack);
 
     }
 

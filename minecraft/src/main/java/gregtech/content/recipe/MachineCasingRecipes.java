@@ -1,22 +1,18 @@
 package gregtech.content.recipe;
 
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
-import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
-import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding;
-import gregtech.engine.recipe.MaterialUnitRecipe;
-import gregtech.engine.recipe.Recipe;
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.recipe.MaterialUnitRecipe;
+import gregtech.engine.recipe.Recipe;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -36,10 +32,11 @@ public final class MachineCasingRecipes {
     private record Grade(MaterialPrefix plates, BlockMaterialPrefix casing, long units) {}
 
     private static final Grade[] GRADES = {
-            new Grade(MaterialPrefix.plate, BlockMaterialPrefix.casingMachine, 8),
-            new Grade(MaterialPrefix.plateDouble, BlockMaterialPrefix.casingMachineDouble, 14),
-            new Grade(MaterialPrefix.plateQuadruple, BlockMaterialPrefix.casingMachineQuadruple, 26),
-            new Grade(MaterialPrefix.plateDense, BlockMaterialPrefix.casingMachineDense, 56)};
+        new Grade(MaterialPrefix.plate, BlockMaterialPrefix.casingMachine, 8),
+        new Grade(MaterialPrefix.plateDouble, BlockMaterialPrefix.casingMachineDouble, 14),
+        new Grade(MaterialPrefix.plateQuadruple, BlockMaterialPrefix.casingMachineQuadruple, 26),
+        new Grade(MaterialPrefix.plateDense, BlockMaterialPrefix.casingMachineDense, 56)
+    };
 
     private MachineCasingRecipes() {}
 
@@ -56,27 +53,23 @@ public final class MachineCasingRecipes {
             }
             if (count > before) materials++;
         }
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 machine casing welds for {} materials", count, materials);
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 machine casing welds for {} materials", count, materials);
-//?}
+        Mc.logger().info("Registered {} GT6 machine casing welds for {} materials", count, materials);
         return count;
     }
 
     private static int casing(GTMaterial material, Grade grade, boolean longRod) {
         ItemStack plates = GTItems.getStack(grade.plates(), material, 6);
-        ItemStack rod = GTItems.getStack(longRod ? MaterialPrefix.stickLong : MaterialPrefix.stick, material,
-                longRod ? 2 : 4);
+        ItemStack rod =
+                GTItems.getStack(longRod ? MaterialPrefix.stickLong : MaterialPrefix.stick, material, longRod ? 2 : 4);
         ItemStack output = GTBlocks.getStack(grade.casing(), material);
         if (plates.isEmpty() || rod.isEmpty() || output.isEmpty()) return 0;
         long ticks = MaterialWorkability.isFurnace(material)
-                ? 16L * grade.units()                                        // easy pass: fixed duration
-                : 64L * grade.units() * (material.getToolQuality() + 1);     // hard pass: multiplier 64
+                ? 16L * grade.units() // easy pass: fixed duration
+                : 64L * grade.units() * (material.getToolQuality() + 1); // hard pass: multiplier 64
         // The source handler scales the plate batch by the form's material units; the rod input
         // stays a template slot (equivalent rods are admitted by the ordinary matcher).
-        var template = new Recipe(new ItemStack[] {plates, rod}, new ItemStack[] {output},
-                null, null, null, null, ticks, 16, 0);
+        var template = new Recipe(
+                new ItemStack[] {plates, rod}, new ItemStack[] {output}, null, null, null, null, ticks, 16, 0);
         long required = Math.multiplyExact(grade.plates().getMaterialWeight(), 6);
         var rule = new MaterialUnitRecipe(template, 0, material, required, Rounding.WHOLE_OUTPUTS);
         rule.source(plates, grade.plates().getMaterialWeight());

@@ -9,6 +9,7 @@ import gregtech.GregTech;
 
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
+import gregtech.platform.Mc;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -209,11 +210,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
         } finally {
             if (Integer.getInteger("gregtech.materialScale", 0) > 0) {
                 Runtime runtime = Runtime.getRuntime();
-//? if >=1.21.1 {
-/*                com.mojang.logging.LogUtils.getLogger().info("JEI_SCALE recipes {} ms {} items {} heapMb {}",
-*///?} else {
-                GregTech.LOGGER.info("JEI_SCALE recipes {} ms {} items {} heapMb {}",
-//?}
+                Mc.logger().info("JEI_SCALE recipes {} ms {} items {} heapMb {}",
                         shown, (System.nanoTime() - started) / 1_000_000L,
                         net.minecraft.core.registries.BuiltInRegistries.ITEM.size(),
                         (runtime.totalMemory() - runtime.freeMemory()) / 1_048_576L);

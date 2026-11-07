@@ -3,13 +3,10 @@ package gregtech.content.recipe;
 import gregtech.content.recipe.BatteryCellRecipeRows.Fill;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.engine.recipe.Recipe;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.registry.GTTechnological;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -86,11 +83,7 @@ public final class BatteryCellRecipes {
             if (recipe != null) ENTRIES.add(fill.empty() + " + " + fluid.getAmount() + " mB "
                     + fluid.getFluid().getFluidType().getDescriptionId() + " -> " + fill.filled());
         }
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 battery cell filling recipes ({} skipped: {})",
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 battery cell filling recipes ({} skipped: {})",
-//?}
+        Mc.logger().info("Registered {} GT6 battery cell filling recipes ({} skipped: {})",
                 ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }

@@ -1,28 +1,22 @@
 package gregtech.content.recipe;
 
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.data.generated.RecyclablePrefixes;
+import gregtech.content.registry.GTItems;
+import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
-import gregtech.content.data.MachineRecipeMaps;
-import gregtech.content.data.MaterialPrefix;
-import gregtech.content.data.generated.MaterialWorkability;
-import gregtech.content.data.generated.RecyclablePrefixes;
-import gregtech.content.registry.GTItems;
-import net.minecraft.world.item.ItemStack;
-
+import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * GT6's generic shredder (recycling) rows: {@code Loader_Recipes_Handlers:152-155}.
@@ -49,9 +43,13 @@ public final class ShredderRecyclingRecipes {
 
     private ShredderRecyclingRecipes() {}
 
-    public static List<Entry> entries() { return Collections.unmodifiableList(ENTRIES); }
+    public static List<Entry> entries() {
+        return Collections.unmodifiableList(ENTRIES);
+    }
 
-    public static List<String> skipped() { return Collections.unmodifiableList(SKIPPED); }
+    public static List<String> skipped() {
+        return Collections.unmodifiableList(SKIPPED);
+    }
 
     public static int register() {
         if (registered) throw new IllegalStateException("Shredder recycling recipes registered twice");
@@ -60,18 +58,21 @@ public final class ShredderRecyclingRecipes {
         for (String name : RecyclablePrefixes.NAMES) {
             MaterialPrefix prefix = PrefixRegistry.byName(name);
             if (prefix == null) {
-                var blockPrefix = java.util.Optional.ofNullable(gregtech.content.data.MaterialPrefixes.all().get(name))
-                        .map(gregtech.content.data.MaterialPrefixes.Entry::getBlockDelegate).orElse(null);
+                var blockPrefix = java.util.Optional.ofNullable(
+                                gregtech.content.data.MaterialPrefixes.all().get(name))
+                        .map(gregtech.content.data.MaterialPrefixes.Entry::getBlockDelegate)
+                        .orElse(null);
                 if (blockPrefix == null) missing.add(name);
-                else for (var material : GTMaterialRegistry.allMaterials()) {
-                    if (material.has(MaterialProperty.ANTIMATTER)) continue;
-                    var input = gregtech.content.registry.GTBlocks.getStack(blockPrefix, material);
-                    recycle(material, name, blockPrefix.getMaterialWeight(), input);
-                }
+                else
+                    for (var material : GTMaterialRegistry.allMaterials()) {
+                        if (material.has(MaterialProperty.ANTIMATTER)) continue;
+                        var input = gregtech.content.registry.GTBlocks.getStack(blockPrefix, material);
+                        recycle(material, name, blockPrefix.getMaterialWeight(), input);
+                    }
                 continue;
             }
             for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
-                if (material.has(MaterialProperty.ANTIMATTER)) continue;   // GT6: ANTIMATTER.NOT
+                if (material.has(MaterialProperty.ANTIMATTER)) continue; // GT6: ANTIMATTER.NOT
                 recycle(material, prefix);
             }
         }
@@ -85,12 +86,12 @@ public final class ShredderRecyclingRecipes {
             }
         }
         if (!missing.isEmpty()) SKIPPED.add("prefixes the port does not have: " + missing);
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 shredder recycling recipes ({} prefixes missing: {})",
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 shredder recycling recipes ({} prefixes missing: {})",
-//?}
-                ENTRIES.size(), missing.size(), missing);
+        Mc.logger()
+                .info(
+                        "Registered {} GT6 shredder recycling recipes ({} prefixes missing: {})",
+                        ENTRIES.size(),
+                        missing.size(),
+                        missing);
         return ENTRIES.size();
     }
 
@@ -102,20 +103,16 @@ public final class ShredderRecyclingRecipes {
     private static void recycle(GTMaterial material, String name, long units, ItemStack input) {
         if (input.isEmpty()) return;
         ItemStack output = MortarGrindingRecipes.pulverize(material, units);
-        if (output.isEmpty()) return;                                       // GT6's no-dust family is a no-op
+        if (output.isEmpty()) return; // GT6's no-dust family is a no-op
         // Two GT6 passes: multiplier 256 for hard materials, 16 for MORTAR grindable ones.
         long multiplier = gregtech.content.material.MaterialProcessingProperties.isMortarGrindable(material) ? 16 : 256;
-        long duration = Math.max(1, (units * multiplier * (material.getToolQuality() + 1)
-                + GTValues.U - 1) / GTValues.U);
+        long duration =
+                Math.max(1, (units * multiplier * (material.getToolQuality() + 1) + GTValues.U - 1) / GTValues.U);
         var template = RecipeMap.make(
                 true, new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, null, duration, 16, 0);
         if (template == null) return;
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
-                template,
-                0,
-                material,
-                units,
-                gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
+                template, 0, material, units, gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
         rule.source(input, units);
         ENTRIES.add(new Entry(name, rule.publish(MachineRecipeMaps.Shredder)));
     }

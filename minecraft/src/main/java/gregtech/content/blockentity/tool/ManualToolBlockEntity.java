@@ -3,6 +3,7 @@ package gregtech.content.blockentity.tool;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -226,17 +227,10 @@ public class ManualToolBlockEntity extends BlockEntity {
                 }
                 return;
             }
-//? if >=1.21.1 {
-            /*if (!ItemStack.isSameItemSameComponents(lastHeld, held)) {
+            if (!StackCompat.sameItem(lastHeld, held)) {
                 progress = 0;
                 lastHeld = held.copyWithCount(1);
             }
-*///?} else {
-            if (!ItemStack.isSameItemSameTags(lastHeld, held)) {
-                progress = 0;
-                lastHeld = held.copyWithCount(1);
-            }
-//?}
             if (!player.getAbilities().instabuild && ++progress < gregtech.engine.tool.ManualWorkRules.GRIND_CLICKS) return;
             int enchantmentXp = removableEnchantmentXp(held);
             if (enchantmentXp > 0) {

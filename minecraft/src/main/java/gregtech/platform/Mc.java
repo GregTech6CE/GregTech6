@@ -27,16 +27,11 @@ import java.lang.StackWalker.Option;
  * Platform shim. NeoForge has a class with the same name and the same methods.
  * Each method keeps the behavior of the Forge call it replaces.
  */
-
-/**
- * Platform shim. Forge has a class with the same name and the same methods.
- * Each method keeps the behavior of the NeoForge call it replaces.
- */
 public final class Mc {
     private Mc() {}
 
 
-/** Names the logger after the calling class, as {@code LogUtils.getLogger()} did. */
+    /** 1.20.1 returns the mod logger; 1.21.1 names the logger after the calling class. */
     public static Logger logger() {
 //? if >=1.21.1 {
 /*        Class<?> caller = StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE)
@@ -47,7 +42,7 @@ public final class Mc {
 //?}
     }
 
-    /** {@link GregTech#id} lowercases the path. The NeoForge shim does not. */
+    /** The Forge path is lowercased by {@code GregTech.id}; the NeoForge path is not. */
     public static ResourceLocation gregtechId(String path) {
 //? if >=1.21.1 {
 /*        return ResourceLocation.fromNamespaceAndPath("gt6ce", path);

@@ -3,6 +3,7 @@ package gregtech.content.blockentity;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.content.block.wood.TreeHoleBlock;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -96,11 +97,7 @@ public class SapBagBlockEntity extends BlockEntity implements IFluidHandler {
             if (!resin.isEmpty()) {
                 if (stored.isEmpty()) {
                     setStored(resin);
-//? if >=1.21.1 {
-                /*} else if (ItemStack.isSameItemSameComponents(stored, resin)
-*///?} else {
-                } else if (ItemStack.isSameItemSameTags(stored, resin)
-//?}
+                } else if (StackCompat.sameItem(stored, resin)
                         && stored.getCount() + resin.getCount() <= Math.min(64, stored.getMaxStackSize())) {
                     stored.grow(resin.getCount());
                     contentsChanged();

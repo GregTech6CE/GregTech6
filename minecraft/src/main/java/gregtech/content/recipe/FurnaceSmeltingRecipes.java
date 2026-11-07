@@ -1,28 +1,22 @@
 package gregtech.content.recipe;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
-import gregtech.engine.machine.crucible.CrucibleMath;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
-import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialGroups;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
 import gregtech.content.registry.GTItems;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.prefix.PrefixRegistry;
+import gregtech.platform.Mc;
 import gregtech.util.OM;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * GT6's furnace smelting rows for ore-processing forms: {@code Loader_Recipes_Furnace:137-166} and
@@ -52,36 +46,67 @@ import java.util.List;
 public final class FurnaceSmeltingRecipes {
     /** One row of GT6's listener list: prefix, fixed target amount in units (-1 = the prefix's own) and exp flag. */
     private record Row(String prefix, long fixedAmount, boolean exp) {
-        static Row of(String prefix) { return new Row(prefix, -1, false); }
-        static Row exp(String prefix) { return new Row(prefix, -1, true); }
-        static Row fixed(String prefix, long units) { return new Row(prefix, units, true); }
+        static Row of(String prefix) {
+            return new Row(prefix, -1, false);
+        }
+
+        static Row exp(String prefix) {
+            return new Row(prefix, -1, true);
+        }
+
+        static Row fixed(String prefix, long units) {
+            return new Row(prefix, units, true);
+        }
     }
 
     /** GT6 {@code Loader_Recipes_Furnace:137-166}, in the original's order. */
     private static final List<Row> ROWS = List.of(
             Row.of("scrapGt"),
-            Row.of("dust"), Row.of("dustSmall"), Row.of("dustTiny"),
-            Row.of("gemChipped"), Row.of("gemFlawed"), Row.of("gem"), Row.of("gemFlawless"),
-            Row.of("gemExquisite"), Row.of("gemLegendary"),
-            Row.exp("rockGt"), Row.exp("rawOreChunk"),
+            Row.of("dust"),
+            Row.of("dustSmall"),
+            Row.of("dustTiny"),
+            Row.of("gemChipped"),
+            Row.of("gemFlawed"),
+            Row.of("gem"),
+            Row.of("gemFlawless"),
+            Row.of("gemExquisite"),
+            Row.of("gemLegendary"),
+            Row.exp("rockGt"),
+            Row.exp("rawOreChunk"),
             Row.fixed("oreRaw", GTValues.U),
-            Row.fixed("chunk", GTValues.U * 2), Row.fixed("rubble", GTValues.U * 2),
-            Row.fixed("pebbles", GTValues.U * 3), Row.fixed("cluster", GTValues.U * 3),
-            Row.exp("cleanGravel"), Row.exp("dirtyGravel"), Row.exp("crystalline"), Row.exp("reduced"),
-            Row.exp("crushed"), Row.exp("crushedTiny"),
-            Row.exp("crushedPurified"), Row.exp("crushedPurifiedTiny"),
-            Row.exp("crushedCentrifuged"), Row.exp("crushedCentrifugedTiny"));
+            Row.fixed("chunk", GTValues.U * 2),
+            Row.fixed("rubble", GTValues.U * 2),
+            Row.fixed("pebbles", GTValues.U * 3),
+            Row.fixed("cluster", GTValues.U * 3),
+            Row.exp("cleanGravel"),
+            Row.exp("dirtyGravel"),
+            Row.exp("crystalline"),
+            Row.exp("reduced"),
+            Row.exp("crushed"),
+            Row.exp("crushedTiny"),
+            Row.exp("crushedPurified"),
+            Row.exp("crushedPurifiedTiny"),
+            Row.exp("crushedCentrifuged"),
+            Row.exp("crushedCentrifugedTiny"));
 
     /** GT6 {@code Loader_Recipes_Furnace:168-177}: clay-family forms that fire into ceramic ones. */
     private static final String[][] CERAMIC_ROWS = {
-            {"dust", "dust"}, {"dustSmall", "dustSmall"}, {"dustTiny", "dustTiny"}, {"dustDiv72", "dustDiv72"},
-            {"plate", "plate"}, {"plateTiny", "plateTiny"}, {"plateCurved", "plateCurved"}};
+        {"dust", "dust"},
+        {"dustSmall", "dustSmall"},
+        {"dustTiny", "dustTiny"},
+        {"dustDiv72", "dustDiv72"},
+        {"plate", "plate"},
+        {"plateTiny", "plateTiny"},
+        {"plateCurved", "plateCurved"}
+    };
 
     private static final List<String> SKIPPED = new ArrayList<>();
     private static final List<Entry> ENTRIES = new ArrayList<>();
 
     public record CookingData(float experience, boolean food) {}
+
     private static final java.util.Map<Item, CookingData> COOKING = new java.util.IdentityHashMap<>();
+
     public static java.util.Optional<CookingData> cooking(Item item) {
         var own = COOKING.get(item);
         if (own != null) return java.util.Optional.of(own);
@@ -97,9 +122,13 @@ public final class FurnaceSmeltingRecipes {
     public record Entry(String prefix, GTMaterial material, ItemStack input, ItemStack output) {}
 
     /** Every registered row, for tests and reports. */
-    public static List<Entry> entries() { return Collections.unmodifiableList(ENTRIES); }
+    public static List<Entry> entries() {
+        return Collections.unmodifiableList(ENTRIES);
+    }
 
-    public static List<String> skipped() { return Collections.unmodifiableList(SKIPPED); }
+    public static List<String> skipped() {
+        return Collections.unmodifiableList(SKIPPED);
+    }
 
     public static int register() {
         if (registered) throw new IllegalStateException("Furnace smelting recipes registered twice");
@@ -117,12 +146,12 @@ public final class FurnaceSmeltingRecipes {
         glass();
         ceramic();
         ClayMoldRecipes.register();
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 furnace smelting rows ({} GT6 rows skipped: {})",
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 furnace smelting rows ({} GT6 rows skipped: {})",
-//?}
-                ENTRIES.size(), SKIPPED.size(), SKIPPED);
+        Mc.logger()
+                .info(
+                        "Registered {} GT6 furnace smelting rows ({} GT6 rows skipped: {})",
+                        ENTRIES.size(),
+                        SKIPPED.size(),
+                        SKIPPED);
         return ENTRIES.size();
     }
 
@@ -145,8 +174,7 @@ public final class FurnaceSmeltingRecipes {
 
         ItemStack output = OM.ingot(smelting, target);
         if (output.isEmpty()) return;
-        long experience = row.exp()
-                ? FurnaceSmeltingRules.experience(target, material.getToolQuality()) : 0;
+        long experience = row.exp() ? FurnaceSmeltingRules.experience(target, material.getToolQuality()) : 0;
         boolean food = MaterialWorkability.isFood(material);
         // GT6 passes aRemoveOthers = !RUNNING, and RUNNING is true while the loader registers.
         if (MachineRecipeMaps.add_smelting(input, output, experience, false, food, !food)) {
@@ -160,12 +188,20 @@ public final class FurnaceSmeltingRecipes {
         for (String name : List.of("Glass", "Sand", "RedSand", "EndSandWhite")) {
             var material = GTMaterialRegistry.get(name);
             if (material == null || !material.isValid()) continue;
-            glassRow("dust", material, GTItems.getStack(MaterialPrefix.dust, material, 1), new ItemStack(Items.GLASS_PANE));
+            glassRow(
+                    "dust",
+                    material,
+                    GTItems.getStack(MaterialPrefix.dust, material, 1),
+                    new ItemStack(Items.GLASS_PANE));
         }
         // Requested port extension: Glass is one unit of SiO2; preserve that 1 U -> 1 U ratio.
         var silica = GTMaterialRegistry.get("SiliconDioxide");
         glassRow("dust", silica, GTItems.getStack(MaterialPrefix.dust, silica, 1), new ItemStack(Items.GLASS_PANE));
-        glassRow("bottle", GTMaterialRegistry.get("Glass"), new ItemStack(Items.GLASS_BOTTLE), new ItemStack(Items.GLASS_PANE));
+        glassRow(
+                "bottle",
+                GTMaterialRegistry.get("Glass"),
+                new ItemStack(Items.GLASS_BOTTLE),
+                new ItemStack(Items.GLASS_PANE));
     }
 
     private static void glassRow(String prefix, GTMaterial material, ItemStack input, ItemStack output) {

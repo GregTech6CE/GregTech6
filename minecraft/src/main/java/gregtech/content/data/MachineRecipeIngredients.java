@@ -1,9 +1,5 @@
 package gregtech.content.data;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.content.recipe.ElectricalCraftingRules;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.api.material.GTMaterial;
@@ -23,6 +19,7 @@ import gregtech.content.item.MaterialItem;
 *///?} else {
 import gregtech.content.registry.GTFluidPipes;
 import gregtech.content.registry.GTWires;
+import gregtech.platform.Mc;
 //?}
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -555,25 +552,13 @@ public final class MachineRecipeIngredients {
         if (validated) return;
         validated = true;
         if (SUBSTITUTIONS.isEmpty()) {
-//? if >=1.21.1 {
-            /*com.mojang.logging.LogUtils.getLogger().info("Machine crafting recipes: all original GT6 ingredients resolved exactly");
-*///?} else {
-            GregTech.LOGGER.info("Machine crafting recipes: all original GT6 ingredients resolved exactly");
-//?}
+            Mc.logger().info("Machine crafting recipes: all original GT6 ingredients resolved exactly");
             return;
         }
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().warn("Machine crafting recipes: {} ingredient substitutions (port lacks the exact form):",
-*///?} else {
-        GregTech.LOGGER.warn("Machine crafting recipes: {} ingredient substitutions (port lacks the exact form):",
-//?}
+        Mc.logger().warn("Machine crafting recipes: {} ingredient substitutions (port lacks the exact form):",
                 SUBSTITUTIONS.size());
         SUBSTITUTIONS.forEach((requested, used) ->
-//? if >=1.21.1 {
-                /*com.mojang.logging.LogUtils.getLogger().warn("   {} -> {}", requested, used));
-*///?} else {
-                GregTech.LOGGER.warn("   {} -> {}", requested, used));
-//?}
+                Mc.logger().warn("   {} -> {}", requested, used));
     }
 
     /** Test/DI hook: forget cached registry indexes. */

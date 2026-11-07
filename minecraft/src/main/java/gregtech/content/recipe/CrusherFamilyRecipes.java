@@ -1,26 +1,19 @@
 package gregtech.content.recipe;
 
-import gregtech.content.recipe.CrusherFamilyRecipeRows.Row;
-
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.recipe.CrusherFamilyRecipeRows.Row;
+import gregtech.content.registry.GTItems;
+import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
-import gregtech.content.data.MachineRecipeMaps;
-import gregtech.content.data.MaterialPrefix;
-import gregtech.content.registry.GTItems;
-import net.minecraft.world.item.ItemStack;
-
+import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * GT6's Crusher handler rows: {@code Loader_Recipes_Handlers:64,69-77}.
@@ -42,17 +35,19 @@ public final class CrusherFamilyRecipes {
                     + " Loader_Recipes_OreProcessing#pulverizeMulti");
 
     /** GT6 row: input and output pair with the row's material multiplier. */
-
-
     private static final List<Row> ROWS = CrusherFamilyRecipeRows.ROWS;
 
     private static boolean registered;
 
     private CrusherFamilyRecipes() {}
 
-    public static List<Entry> entries() { return Collections.unmodifiableList(ENTRIES); }
+    public static List<Entry> entries() {
+        return Collections.unmodifiableList(ENTRIES);
+    }
 
-    public static List<String> skipped() { return SKIPPED; }
+    public static List<String> skipped() {
+        return SKIPPED;
+    }
 
     public static int register() {
         if (registered) throw new IllegalStateException("Crusher family registered twice");
@@ -61,25 +56,22 @@ public final class CrusherFamilyRecipes {
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
             for (Row row : ROWS) crush(material, row);
         }
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 crusher rows ({} notes: {})",
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 crusher rows ({} notes: {})",
-//?}
-                ENTRIES.size(), SKIPPED.size(), SKIPPED);
+        Mc.logger().info("Registered {} GT6 crusher rows ({} notes: {})", ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }
 
     private static void crush(GTMaterial material, Row row) {
         ItemStack input = GTItems.getStack(row.input(), material, 1);
         if (input.isEmpty()) return;
-        ItemStack output = row.output() != null ? GTItems.getStack(row.output(), material, row.outCount())
+        ItemStack output = row.output() != null
+                ? GTItems.getStack(row.output(), material, row.outCount())
                 : MortarGrindingRecipes.pulverize(material, row.input().getMaterialWeight());
         if (output.isEmpty()) return;
-        long units = Math.max(row.input().getMaterialWeight(),
+        long units = Math.max(
+                row.input().getMaterialWeight(),
                 row.output() == null ? 0 : row.output().getMaterialWeight() * row.outCount());
-        long duration = Math.max(1, (units * row.multiplier() * (material.getToolQuality() + 1)
-                + GTValues.U - 1) / GTValues.U);
+        long duration =
+                Math.max(1, (units * row.multiplier() * (material.getToolQuality() + 1) + GTValues.U - 1) / GTValues.U);
         // One rule per (material, input form): every equivalent item of that form is admitted,
         // and the batch is derived from the form's material units instead of a fixed count.
         var template = RecipeMap.make(
@@ -93,8 +85,9 @@ public final class CrusherFamilyRecipes {
                 gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
         rule.source(input, row.input().getMaterialWeight());
         Recipe recipe = rule.publish(MachineRecipeMaps.Crusher);
-        ENTRIES.add(new Entry(row.input().getName()
-                + " -> " + (row.output() == null ? "remains" : row.output().getName() + " x" + row.outCount()),
+        ENTRIES.add(new Entry(
+                row.input().getName() + " -> "
+                        + (row.output() == null ? "remains" : row.output().getName() + " x" + row.outCount()),
                 recipe));
     }
 }

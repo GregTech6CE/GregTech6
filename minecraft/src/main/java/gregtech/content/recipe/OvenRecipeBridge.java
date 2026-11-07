@@ -7,6 +7,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import gregtech.GregTech;
 //?}
 import gregtech.content.data.MachineRecipeMaps;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -474,11 +475,7 @@ public final class OvenRecipeBridge {
         // Re-applying the bridge must also retain its own exact iron-scrap rewrite.
         var ironScrap = vanillaRawIronOutput();
         if (!ironScrap.isEmpty() && output.getCount() == ironScrap.getCount()
-//? if >=1.21.1 {
-                /*&& ItemStack.isSameItemSameComponents(output, ironScrap)
-*///?} else {
-                && ItemStack.isSameItemSameTags(output, ironScrap)
-//?}
+                && StackCompat.sameItem(output, ironScrap)
                 && java.util.Arrays.stream(inputs).allMatch(stack -> stack.is(net.minecraft.world.item.Items.RAW_IRON))) return true;
         if (recipe instanceof AbstractCookingRecipe cookingRecipe
                 && cookingRecipe.category() == CookingBookCategory.FOOD) return true;

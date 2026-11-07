@@ -12,6 +12,7 @@ import gregtech.util.GTPlacementCode;
 import gregtech.content.data.GregTechConstants;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -193,11 +194,7 @@ public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity imple
             pendingAsh = stack.copy();
             return;
         }
-//? if >=1.21.1 {
-        /*if (ItemStack.isSameItemSameComponents(pendingAsh, stack)) {
-*///?} else {
-        if (ItemStack.isSameItemSameTags(pendingAsh, stack)) {
-//?}
+        if (StackCompat.sameItem(pendingAsh, stack)) {
             pendingAsh.grow(stack.getCount());
             pendingAsh.setCount(Math.min(SLOT_LIMIT, pendingAsh.getCount()));
         } else {
@@ -225,11 +222,7 @@ public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity imple
         if (ash.isEmpty()) {
             return stack.getCount() <= SLOT_LIMIT;
         }
-//? if >=1.21.1 {
-        /*if (!ItemStack.isSameItemSameComponents(ash, stack)) {
-*///?} else {
-        if (!ItemStack.isSameItemSameTags(ash, stack)) {
-//?}
+        if (!StackCompat.sameItem(ash, stack)) {
             return false;
         }
         return ash.getCount() + stack.getCount() <= SLOT_LIMIT;
@@ -344,11 +337,7 @@ public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity imple
             }
             return InteractionResult.PASS;
         }
-//? if >=1.21.1 {
-        /*if (ItemStack.isSameItemSameComponents(fuel, held)) {
-*///?} else {
-        if (ItemStack.isSameItemSameTags(fuel, held)) {
-//?}
+        if (StackCompat.sameItem(fuel, held)) {
             int space = SLOT_LIMIT - fuel.getCount();
             if (space > 0) {
                 int moved = Math.min(space, held.getCount());

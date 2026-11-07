@@ -1,4 +1,5 @@
 package gregtech.engine.recipe;
+import gregtech.engine.stack.StackCompat;
 
 import java.util.*;
 import net.minecraft.world.item.ItemStack;
@@ -251,11 +252,7 @@ public final class RecipeInputs {
     }
 
     private static boolean sameItem(ItemStack a, ItemStack b) {
-//? if >=1.21.1 {
-        /*return ItemStack.isSameItemSameComponents(a, b);
-*///?} else {
-        return ItemStack.isSameItemSameTags(a, b);
-//?}
+        return StackCompat.sameItem(a, b);
     }
     public static boolean sameFluid(FluidStack available, FluidStack required) {
 //? if >=1.21.1 {

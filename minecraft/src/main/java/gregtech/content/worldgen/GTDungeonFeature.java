@@ -21,6 +21,11 @@ import gregtech.content.worldgen.dungeon.GTDungeonChunkRoomWorkshop;
 import gregtech.content.worldgen.dungeon.GTDungeonData;
 import gregtech.content.worldgen.dungeon.GTDungeonLayout;
 import gregtech.content.worldgen.dungeon.GTDungeonSharedState;
+import gregtech.platform.Mc;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -34,11 +39,6 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Port of GT6's {@code WorldgenDungeonGT} ({@code gregapi/worldgen/dungeon/WorldgenDungeonGT.java},
@@ -65,6 +65,7 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's static cell types ({@code WorldgenDungeonGT:57-66}). */
     public static final GTDungeonChunk CORRIDOR = new GTDungeonChunkCorridor();
+
     public static final GTDungeonChunk CORRIDOR3 = new GTDungeonChunkCorridor3();
     public static final GTDungeonChunk CORRIDOR4 = new GTDungeonChunkCorridor4();
     public static final GTDungeonChunk ENTRANCE = new GTDungeonChunkEntrance();
@@ -82,13 +83,12 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
 
     /** GT6's {@code DEAD_END} list, minus the three portal rooms of mods the port does not have. */
     public static final List<GTDungeonChunk> DEAD_END = List.of(
-            new GTDungeonChunkRoomStorage(),
-            new GTDungeonChunkRoomPortalNether(),
-            new GTDungeonChunkRoomPortalEnd());
+            new GTDungeonChunkRoomStorage(), new GTDungeonChunkRoomPortalNether(), new GTDungeonChunkRoomPortalEnd());
 
     public static boolean roomEnabled(GTDungeonChunk room) {
         if (room instanceof GTDungeonChunkRoomWorkshop) return gregtech.GregTechConfig.Rule.WORKSHOP.enabled();
-        if (room instanceof GTDungeonChunkRoomMiningBedrock) return gregtech.GregTechConfig.Rule.MINING_BEDROCK.enabled();
+        if (room instanceof GTDungeonChunkRoomMiningBedrock)
+            return gregtech.GregTechConfig.Rule.MINING_BEDROCK.enabled();
         if (room instanceof GTDungeonChunkRoomLibraryNormal) return gregtech.GregTechConfig.Rule.LIBRARY.enabled();
         if (room instanceof GTDungeonChunkRoomFarmMobs) return gregtech.GregTechConfig.Rule.FARM_MOBS.enabled();
         if (room instanceof GTDungeonChunkRoomFarmCrop) return gregtech.GregTechConfig.Rule.FARM_CROP.enabled();
@@ -130,8 +130,16 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /** Builds one cell of the dungeon; also the entry point the tests drive directly. */
-    public static boolean generateCell(WorldGenLevel level, ChunkPos anchor, byte[][] cells, int i, int j,
-                                       int offsetY, int color, StoneType[] rocks, long seed) {
+    public static boolean generateCell(
+            WorldGenLevel level,
+            ChunkPos anchor,
+            byte[][] cells,
+            int i,
+            int j,
+            int offsetY,
+            int color,
+            StoneType[] rocks,
+            long seed) {
         byte kind = cells[i][j];
         GTDungeonSharedState dungeonPlan = GTDungeonSharedState.create(cells, seed);
         GTDungeonChunkRoomFarmMobs.Footprint farm = GTDungeonChunkRoomFarmMobs.footprint(cells, dungeonPlan);
@@ -146,10 +154,25 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
         for (int key = 0; key < KEY_COUNT; key++) keyIds[key] = keySeed(seed, key);
         ItemStack[] keyStacks = new ItemStack[KEY_COUNT];
         for (int key = 0; key < KEY_COUNT; key++) keyStacks[key] = keyStack(keyIds, key);
-        GTDungeonData data = new GTDungeonData(level, minX, y, minZ, rocks[0], rocks[1], color, cells, i, j,
-                connections, keyIds, keyStacks, shared == null ? new boolean[KEY_COUNT] : shared.keysBefore(),
-                new HashSet<>(), shared == null ? new HashSet<>() : new HashSet<>(shared.tagsBefore()),
-                cellRandom, shared);
+        GTDungeonData data = new GTDungeonData(
+                level,
+                minX,
+                y,
+                minZ,
+                rocks[0],
+                rocks[1],
+                color,
+                cells,
+                i,
+                j,
+                connections,
+                keyIds,
+                keyStacks,
+                shared == null ? new boolean[KEY_COUNT] : shared.keysBefore(),
+                new HashSet<>(),
+                shared == null ? new HashSet<>() : new HashSet<>(shared.tagsBefore()),
+                cellRandom,
+                shared);
         boolean generated = false;
         if (kind > 0) {
             // GT6 removes a random entry from the candidate list until one accepts the cell.
@@ -168,8 +191,10 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
             if (!generated) generated = tryGenerate(ROOM_EMPTY, data);
         } else if (kind < 0) {
             generated = switch (kind) {
-                case GTDungeonLayout.CORRIDOR -> connections == 4 ? tryGenerate(CORRIDOR4, data)
-                        : connections == 3 ? tryGenerate(CORRIDOR3, data) : tryGenerate(CORRIDOR, data);
+                case GTDungeonLayout.CORRIDOR ->
+                    connections == 4
+                            ? tryGenerate(CORRIDOR4, data)
+                            : connections == 3 ? tryGenerate(CORRIDOR3, data) : tryGenerate(CORRIDOR, data);
                 case GTDungeonLayout.ENTRANCE -> tryGenerate(ENTRANCE, data);
                 case GTDungeonLayout.BARRACKS -> tryGenerate(BARRACKS, data);
                 default -> false;
@@ -181,20 +206,30 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
             if (farm.isOuter(i, j)) {
                 // The target chunk owns its own 16x16 shell. GT6's cross-cell writes become a separate
                 // deterministic pass, so another chunk never has to be loaded or modified here.
-                platformData = new GTDungeonData(level, minX, y, minZ, rocks[0], rocks[1], color,
-                        cells, i, j, connections, keyIds, keyStacks, data.generatedKeys,
-                        data.lightUpdates, data.tags,
-                        RandomSource.create(cellSeed(seed ^ FARM_PLATFORM_SALT, i, j)), shared);
+                platformData = new GTDungeonData(
+                        level,
+                        minX,
+                        y,
+                        minZ,
+                        rocks[0],
+                        rocks[1],
+                        color,
+                        cells,
+                        i,
+                        j,
+                        connections,
+                        keyIds,
+                        keyStacks,
+                        data.generatedKeys,
+                        data.lightUpdates,
+                        data.tags,
+                        RandomSource.create(cellSeed(seed ^ FARM_PLATFORM_SALT, i, j)),
+                        shared);
                 try {
                     GTDungeonChunkRoomFarmMobs.generateOuterPlatform(platformData);
                     generated = true;
                 } catch (Throwable error) {
-//? if >=1.21.1 {
-                    /*com.mojang.logging.LogUtils.getLogger().warn("[gregtech] dungeon mob farm outer cell {}/{} failed: {}",
-*///?} else {
-                    gregtech.GregTech.LOGGER.warn("[gregtech] dungeon mob farm outer cell {}/{} failed: {}",
-//?}
-                            i, j, error.toString());
+                    Mc.logger().warn("[gregtech] dungeon mob farm outer cell {}/{} failed: {}", i, j, error.toString());
                     return generated;
                 }
             }
@@ -208,12 +243,7 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
         try {
             return chunk.generate(data);
         } catch (Throwable error) {
-//? if >=1.21.1 {
-            /*com.mojang.logging.LogUtils.getLogger().warn("[gregtech] dungeon cell {} failed: {}",
-*///?} else {
-            gregtech.GregTech.LOGGER.warn("[gregtech] dungeon cell {} failed: {}",
-//?}
-                    chunk.id(), error.toString());
+            Mc.logger().warn("[gregtech] dungeon cell {} failed: {}", chunk.id(), error.toString());
             return false;
         }
     }
@@ -247,12 +277,13 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
      * generates the dungeon cell by cell, see {@link GTDungeonLayout}).</p>
      */
     public static ItemStack keyStack(long[] keyIds, int index) {
-        int type = RandomSource.create(keyIds[index]).nextInt(GTDungeonKeys.all().size());
+        int type =
+                RandomSource.create(keyIds[index]).nextInt(GTDungeonKeys.all().size());
         return GTDungeonKeys.stack(type, keyIds[index], index);
     }
 
     /** Registry key of the configured feature ({@code worldgen/configured_feature/gt_dungeon.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeon"));
+            ResourceKey.create(
+                    Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeon"));
 }

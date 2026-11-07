@@ -3,10 +3,6 @@ package gregtech.content.recipe;
 import gregtech.content.recipe.AutoclaveRecipeRows.Row;
 
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
@@ -19,6 +15,7 @@ import gregtech.content.data.generated.MaterialWorkability;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
+import gregtech.platform.Mc;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -70,11 +67,7 @@ public final class AutoclaveRecipes {
             if (!MaterialWorkability.isCrystallisable(material)) continue;
             for (Row row : ROWS) crystallise(material, row);
         }
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 autoclave crystallisation recipes ({} notes: {})",
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 autoclave crystallisation recipes ({} notes: {})",
-//?}
+        Mc.logger().info("Registered {} GT6 autoclave crystallisation recipes ({} notes: {})",
                 ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }

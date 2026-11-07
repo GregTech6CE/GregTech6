@@ -14,6 +14,7 @@ import gregtech.content.recipe.ToolShapedRecipe;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTToolItems;
+import gregtech.platform.Mc;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -102,11 +103,7 @@ public final class StoneCraftingRecipeInjector {
         GregTech.LOGGER.info("Registered {} GT6 masonry crafting rows for {} rock types ({} skipped)",
 //?}
                 added, StoneType.values().length, SKIPPED.size());
-//? if >=1.21.1 {
-        /*for (String reason : SKIPPED) com.mojang.logging.LogUtils.getLogger().debug("[gregtech] masonry row skipped: {}", reason);
-*///?} else {
-        for (String reason : SKIPPED) GregTech.LOGGER.debug("[gregtech] masonry row skipped: {}", reason);
-//?}
+        for (String reason : SKIPPED) Mc.logger().debug("[gregtech] masonry row skipped: {}", reason);
     }
 
     /** Every row of one rock type, exactly in GT6's order. */

@@ -6,6 +6,7 @@ import gregtech.content.block.misc.PileBlock;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.MaterialItem;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -173,11 +174,7 @@ public class PileBlockEntity extends BlockEntity {
     /** True when both piles hold the very same stack - GT6's {@code ST.equal} in its column walk. */
     public boolean sameContents(PileBlockEntity other) {
         if (stored.isEmpty() || other.stored.isEmpty()) return false;
-//? if >=1.21.1 {
-        /*return ItemStack.isSameItemSameComponents(stored, other.stored);
-*///?} else {
-        return ItemStack.isSameItemSameTags(stored, other.stored);
-//?}
+        return StackCompat.sameItem(stored, other.stored);
     }
 
     /**

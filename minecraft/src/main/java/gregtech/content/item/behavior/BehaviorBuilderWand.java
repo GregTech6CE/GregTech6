@@ -1,4 +1,5 @@
 package gregtech.content.item.behavior;
+import gregtech.engine.stack.StackCompat;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -130,11 +131,7 @@ public final class BehaviorBuilderWand {
     private static boolean isNativeEmptyBucket(ItemStack stack) {
         if (stack.getCount() != 1) return false;
         var bucket = new ItemStack(net.minecraft.world.item.Items.BUCKET);
-//? if >=1.21.1 {
-        /*return ItemStack.isSameItemSameComponents(stack, bucket);
-*///?} else {
-        return ItemStack.isSameItemSameTags(stack, bucket);
-//?}
+        return StackCompat.sameItem(stack, bucket);
     }
 
     /** The copied source owns the loader transaction, not the held wand. */

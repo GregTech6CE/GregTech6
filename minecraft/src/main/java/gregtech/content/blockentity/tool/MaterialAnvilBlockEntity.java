@@ -5,6 +5,7 @@ import gregtech.engine.recipe.*;
 import gregtech.engine.tool.*;
 import gregtech.content.block.tool.MaterialAnvilBlock;
 import gregtech.content.data.MachineRecipeMaps;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.*;
@@ -35,11 +36,7 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements gregt
                         || MachineRecipeMaps.AnvilBendBig.containsInput(stack));
         }
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-//? if >=1.21.1 {
-            /*if (!isItemValid(slot,stack) || !work[slot].isEmpty() && !ItemStack.isSameItemSameComponents(stack,work[slot])) return stack.copy();
-*///?} else {
-            if (!isItemValid(slot,stack) || !work[slot].isEmpty() && !ItemStack.isSameItemSameTags(stack,work[slot])) return stack.copy();
-//?}
+            if (!isItemValid(slot,stack) || !work[slot].isEmpty() && !StackCompat.sameItem(stack,work[slot])) return stack.copy();
             int count=Math.min(stack.getCount(),Math.min(64,stack.getMaxStackSize())-work[slot].getCount());
             if(count<=0)return stack.copy();
             if(!simulate) {
@@ -108,11 +105,7 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements gregt
         } else if (work[slot].isEmpty()) {
             work[slot] = held.copy();
             if (!player.getAbilities().instabuild) held.setCount(0);
-//? if >=1.21.1 {
-        /*} else if (ItemStack.isSameItemSameComponents(held, work[slot])) {
-*///?} else {
-        } else if (ItemStack.isSameItemSameTags(held, work[slot])) {
-//?}
+        } else if (StackCompat.sameItem(held, work[slot])) {
             int amount = Math.min(held.getCount(), work[slot].getMaxStackSize() - work[slot].getCount());
             work[slot].grow(amount);
             if (!player.getAbilities().instabuild) held.shrink(amount);

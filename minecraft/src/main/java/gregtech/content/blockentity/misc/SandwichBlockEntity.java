@@ -10,6 +10,7 @@ import gregtech.content.registry.GTBlockEntities;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.content.registry.GTDecorBlocks;
+import gregtech.engine.stack.StackCompat;
 //?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -124,11 +125,7 @@ public final class SandwichBlockEntity extends BlockEntity {
     public int addIngredient(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return 0;
         var top = topIngredient();
-//? if >=1.21.1 {
-        /*if (!top.isEmpty() && ItemStack.isSameItemSameComponents(top, stack)) return 0;
-*///?} else {
-        if (!top.isEmpty() && ItemStack.isSameItemSameTags(top, stack)) return 0;
-//?}
+        if (!top.isEmpty() && StackCompat.sameItem(top, stack)) return 0;
         int amount = baseQuantity();
         ItemStack remainder = stack.getCraftingRemainingItem();
         if (!remainder.isEmpty() && (remainder.is(Items.GLASS_BOTTLE)

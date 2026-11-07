@@ -2,6 +2,7 @@ package gregtech.client.gui;
 
 import gregtech.content.block.misc.AdvancedCraftingTableBlockEntity;
 import gregtech.content.registry.GTMenuTypes;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.*;
 import net.minecraft.world.inventory.*;
@@ -173,16 +174,9 @@ public final class AdvancedCraftingMenu extends AbstractContainerMenu {
             } else setCarried(combined);
         }
     }
-//? if >=1.21.1 {
-    /*private static boolean fits(ItemStack held, ItemStack result) {
-        return (held.isEmpty() || ItemStack.isSameItemSameComponents(held,
-                result)) && held.getCount() + result.getCount() <= result.getMaxStackSize();
-    }
-*///?} else {
     private static boolean fits(ItemStack held, ItemStack result) {
-        return (held.isEmpty() || ItemStack.isSameItemSameTags(held, result)) && held.getCount() + result.getCount() <= result.getMaxStackSize();
+        return (held.isEmpty() || StackCompat.sameItem(held, result)) && held.getCount() + result.getCount() <= result.getMaxStackSize();
     }
-//?}
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         if (index<0 || index >= slots.size() || index >= RESULT && index <= STORE) return ItemStack.EMPTY;

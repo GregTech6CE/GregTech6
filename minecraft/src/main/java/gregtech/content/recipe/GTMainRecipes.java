@@ -4,6 +4,7 @@ import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -209,17 +210,9 @@ public final class GTMainRecipes {
                 "GT6_Main:395-403 Thaumcraft / LootBags mod bags (other mods)"}) {
             SKIPPED.add(reason);
         }
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("GT6 main-class rows: {} registered, {} skipped",
-*///?} else {
-        gregtech.GregTech.LOGGER.info("GT6 main-class rows: {} registered, {} skipped",
-//?}
+        Mc.logger().info("GT6 main-class rows: {} registered, {} skipped",
                 ENTRIES.size(), SKIPPED.size());
-//? if >=1.21.1 {
-        /*for (String skip : SKIPPED) com.mojang.logging.LogUtils.getLogger().info("  skipped: {}", skip);
-*///?} else {
-        for (String skip : SKIPPED) gregtech.GregTech.LOGGER.info("  skipped: {}", skip);
-//?}
+        for (String skip : SKIPPED) Mc.logger().info("  skipped: {}", skip);
         return ENTRIES.size();
     }
 

@@ -1,4 +1,5 @@
 package gregtech.engine.recipe;
+import gregtech.engine.stack.StackCompat;
 
 import com.mojang.logging.LogUtils;
 import java.util.*;
@@ -785,11 +786,7 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
         for (int i = 0; i < items.size(); i++) {
             var a = cached.items.get(i); var b = items.get(i);
             if (a.isEmpty() != b.isEmpty()) return false;
-//? if >=1.21.1 {
-            /*if (!ItemStack.isSameItemSameComponents(a, b)) return false;
-*///?} else {
-            if (!ItemStack.isSameItemSameTags(a, b)) return false;
-//?}
+            if (!StackCompat.sameItem(a, b)) return false;
         }
         for (int i = 0; i < fluids.size(); i++) {
             var a = cached.fluids.get(i); var b = fluids.get(i);

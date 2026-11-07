@@ -1,9 +1,5 @@
 package gregtech.content.recipe;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
@@ -11,6 +7,7 @@ import gregtech.content.food.GTFoodItems;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -83,11 +80,7 @@ public final class FoodItemRecipes {
         packaging();
         registered += CannedFoodRecipes.register();
         registered += BottleMachineRecipes.register();
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 food item recipes ({} rows recorded as not expressible: {})",
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 food item recipes ({} rows recorded as not expressible: {})",
-//?}
+        Mc.logger().info("Registered {} GT6 food item recipes ({} rows recorded as not expressible: {})",
                 registered, SKIPPED.size(), SKIPPED);
         return registered;
     }

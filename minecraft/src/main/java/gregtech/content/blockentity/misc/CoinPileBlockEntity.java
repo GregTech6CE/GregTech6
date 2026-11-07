@@ -3,6 +3,7 @@ package gregtech.content.blockentity.misc;
 import gregtech.content.block.misc.CoinPileBlock;
 import gregtech.content.tool.CoinGeometry;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -179,11 +180,7 @@ public class CoinPileBlockEntity extends BlockEntity {
         if (face < 0 || face >= FACES) return 0;
         if (faces[face] >= FACE_STACK_SIZE) return 0;
         if (!CoinPileBlock.isCoin(held)) return 0;
-//? if >=1.21.1 {
-        /*if (!coin.isEmpty() && !ItemStack.isSameItemSameComponents(coin, held)) return 0;
-*///?} else {
-        if (!coin.isEmpty() && !ItemStack.isSameItemSameTags(coin, held)) return 0;
-//?}
+        if (!coin.isEmpty() && !StackCompat.sameItem(coin, held)) return 0;
         if (coin.isEmpty()) storeCoin(held.copyWithCount(1));
         faces[face]++;
         setChanged();
@@ -198,11 +195,7 @@ public class CoinPileBlockEntity extends BlockEntity {
      */
     public int absorbDroppedCoins(ItemStack dropped) {
         if (!CoinPileBlock.isCoin(dropped) || dropped.getCount() <= 0) return 0;
-//? if >=1.21.1 {
-        /*if (!coin.isEmpty() && !ItemStack.isSameItemSameComponents(coin, dropped)) return 0;
-*///?} else {
-        if (!coin.isEmpty() && !ItemStack.isSameItemSameTags(coin, dropped)) return 0;
-//?}
+        if (!coin.isEmpty() && !StackCompat.sameItem(coin, dropped)) return 0;
         int moved = Math.min(dropped.getCount(), FACES * FACE_STACK_SIZE - total());
         if (moved <= 0) return 0;
         if (coin.isEmpty()) storeCoin(dropped.copyWithCount(1));
@@ -253,11 +246,7 @@ public class CoinPileBlockEntity extends BlockEntity {
     public boolean bindCoin(ItemStack stack) {
         if (!CoinPileBlock.isCoin(stack)) return false;
         ItemStack bound = stack.copyWithCount(1);
-//? if >=1.21.1 {
-        /*if (!coin.isEmpty() && !ItemStack.isSameItemSameComponents(coin, bound)) return false;
-*///?} else {
-        if (!coin.isEmpty() && !ItemStack.isSameItemSameTags(coin, bound)) return false;
-//?}
+        if (!coin.isEmpty() && !StackCompat.sameItem(coin, bound)) return false;
         if (coin.isEmpty()) {
             storeCoin(bound);
             setChanged();

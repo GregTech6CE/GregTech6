@@ -2,6 +2,7 @@ package gregtech.content.recipe;
 
 import gregtech.content.tool.WoodenBucketCatalog;
 import gregtech.engine.fluid.PortableFluidContainerSpec;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -55,11 +56,7 @@ final class FiniteCraftingVessels {
                 var after = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
                 if (!sameFluid(drained, required) || drained.getAmount() != amount
                         || before.getAmount() - after.getAmount() != amount) continue;
-//? if >=1.21.1 {
-                /*if (result.stream().noneMatch(existing -> ItemStack.isSameItemSameComponents(existing, filled)))
-*///?} else {
-                if (result.stream().noneMatch(existing -> ItemStack.isSameItemSameTags(existing, filled)))
-//?}
+                if (result.stream().noneMatch(existing -> StackCompat.sameItem(existing, filled)))
                     result.add(filled);
             }
         }

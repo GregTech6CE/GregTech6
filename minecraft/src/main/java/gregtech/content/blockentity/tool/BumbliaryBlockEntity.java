@@ -9,6 +9,7 @@ import gregtech.content.bumble.BumbleWorkplace;
 import gregtech.content.bumble.GTBumbleProducts;
 import gregtech.content.bumble.GTBumbleSpecies;
 import gregtech.content.data.GregTechConstants;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -475,11 +476,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     private void addProductToCombSlots(ItemStack product) {
         for (int slot : layout.combs()) {
             ItemStack existing = inventory.getStackInSlot(slot);
-//? if >=1.21.1 {
-            /*if (existing.isEmpty() || !ItemStack.isSameItemSameComponents(existing, product)) continue;
-*///?} else {
-            if (existing.isEmpty() || !ItemStack.isSameItemSameTags(existing, product)) continue;
-//?}
+            if (existing.isEmpty() || !StackCompat.sameItem(existing, product)) continue;
             if (addStackToSlot(slot, product)) return;
         }
         for (int slot : layout.combs()) if (addStackToSlot(slot, product)) return;
@@ -554,11 +551,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
             return true;
         }
         int limit = Math.min(Math.max(1, existing.getMaxStackSize()), inventory.getSlotLimit(slot));
-//? if >=1.21.1 {
-        /*if (ItemStack.isSameItemSameComponents(existing, stack) && existing.getCount() + stack.getCount() <= limit) {
-*///?} else {
-        if (ItemStack.isSameItemSameTags(existing, stack) && existing.getCount() + stack.getCount() <= limit) {
-//?}
+        if (StackCompat.sameItem(existing, stack) && existing.getCount() + stack.getCount() <= limit) {
             inventory.setStackInSlot(slot, existing.copyWithCount(existing.getCount() + stack.getCount()));
             return true;
         }

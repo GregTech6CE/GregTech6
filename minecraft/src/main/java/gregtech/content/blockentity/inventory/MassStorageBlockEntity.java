@@ -7,6 +7,7 @@ import gregtech.engine.inventory.MassStorageMaterialForms;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.content.item.behavior.BehaviorDuctTape;
+import gregtech.engine.stack.StackCompat;
 //?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -44,11 +45,7 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
 //?}
     public static final long CAPACITY = gregtech.content.storage.OriginalStorageTooltipData.MASS_CAPACITY;
     private final gregtech.engine.inventory.BulkStorageState<ItemStack> storage =
-//? if >=1.21.1 {
-            /*new gregtech.engine.inventory.BulkStorageState<>(CAPACITY, ItemStack::isSameItemSameComponents, stack -> stack.copyWithCount(1));
-*///?} else {
-            new gregtech.engine.inventory.BulkStorageState<>(CAPACITY, ItemStack::isSameItemSameTags, stack -> stack.copyWithCount(1));
-//?}
+            new gregtech.engine.inventory.BulkStorageState<>(CAPACITY, StackCompat::sameItem, stack -> stack.copyWithCount(1));
     private int mode;
     private boolean inventoryChanged = true;
     /** Material below one stored template item; persisted so nugget insertion never loses matter. */
@@ -187,11 +184,7 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
     private boolean matches(ItemStack stack) {
         if (stack.isEmpty()) return false;
         ItemStack key = template();
-//? if >=1.21.1 {
-        /*return key.isEmpty() || ItemStack.isSameItemSameComponents(key, stack)
-*///?} else {
-        return key.isEmpty() || ItemStack.isSameItemSameTags(key, stack)
-//?}
+        return key.isEmpty() || StackCompat.sameItem(key, stack)
                 || MassStorageMaterialForms.compatibleUnits(key, stack) > 0;
     }
 
@@ -207,11 +200,7 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
             if (!simulate && accepted > 0) markUpdated();
             return accepted;
         }
-//? if >=1.21.1 {
-        /*boolean exact = ItemStack.isSameItemSameComponents(key, stack);
-*///?} else {
-        boolean exact = ItemStack.isSameItemSameTags(key, stack);
-//?}
+        boolean exact = StackCompat.sameItem(key, stack);
         long templateUnits = MassStorageMaterialForms.templateUnits(key);
         if (exact && templateUnits == 0) {
             long accepted = storage.insert(stack, stack.getCount(), simulate);

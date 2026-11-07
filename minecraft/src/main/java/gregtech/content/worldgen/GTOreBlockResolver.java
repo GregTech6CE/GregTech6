@@ -9,6 +9,7 @@ import gregtech.content.block.OreBlock;
 import gregtech.content.block.OreHostStone;
 import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.StoneVariant;
+import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -142,11 +143,7 @@ public final class GTOreBlockResolver {
         }
         if (found == null || found == NO_BLOCK) {
             if (MISSING_LOGGED.add(cacheKey)) {
-//? if >=1.21.1 {
-                /*LogUtils.getLogger().warn("[worldgen] No '{}' block registered for material '{}' — skipping ore placement",
-*///?} else {
-                GregTech.LOGGER.warn("[worldgen] No '{}' block registered for material '{}' — skipping ore placement",
-//?}
+                Mc.logger().warn("[worldgen] No '{}' block registered for material '{}' — skipping ore placement",
                         basePrefix, materialName);
             }
             return null;

@@ -1,24 +1,18 @@
 package gregtech.content.recipe;
 
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
-import gregtech.engine.recipe.Recipe;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.data.generated.MaterialWorkability;
 import gregtech.content.registry.GTItems;
-import net.minecraft.world.item.ItemStack;
-
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.recipe.Recipe;
+import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * GT6's Anvil shredding rows: {@code Loader_Recipes_Handlers:157-172}
@@ -46,15 +40,28 @@ public final class AnvilShreddingRecipes {
             "eight external-prefix rows (:158-165) bind actual external items through ExternalOreProcessing after tags");
 
     /** GT6 row; {@code selfCrush} mirrors GT6's selfcrush() condition, {@code mortar} its MORTAR flag. */
-    private record Row(MaterialPrefix input, MaterialPrefix output, int outCount,
-                       MaterialPrefix byproduct, int byproductCount, boolean selfCrush, boolean mortar) {}
+    private record Row(
+            MaterialPrefix input,
+            MaterialPrefix output,
+            int outCount,
+            MaterialPrefix byproduct,
+            int byproductCount,
+            boolean selfCrush,
+            boolean mortar) {}
 
     private static final List<Row> ROWS = List.of(
             new Row(MaterialPrefix.rockGt, MaterialPrefix.dustSmall, 9, null, 0, false, false),
             new Row(MaterialPrefix.oreRaw, MaterialPrefix.crushed, 1, MaterialPrefix.crushedTiny, 6, true, true),
             new Row(MaterialPrefix.crushed, MaterialPrefix.dust, 1, MaterialPrefix.dustDiv72, 9, false, true),
             new Row(MaterialPrefix.crushedPurified, MaterialPrefix.dust, 1, MaterialPrefix.dustDiv72, 18, false, true),
-            new Row(MaterialPrefix.crushedCentrifuged, MaterialPrefix.dust, 1, MaterialPrefix.dustDiv72, 27, false, true),
+            new Row(
+                    MaterialPrefix.crushedCentrifuged,
+                    MaterialPrefix.dust,
+                    1,
+                    MaterialPrefix.dustDiv72,
+                    27,
+                    false,
+                    true),
             new Row(MaterialPrefix.crushedTiny, MaterialPrefix.dustDiv72, 9, null, 0, false, true),
             new Row(MaterialPrefix.crushedPurifiedTiny, MaterialPrefix.dustDiv72, 10, null, 0, false, true),
             new Row(MaterialPrefix.crushedCentrifugedTiny, MaterialPrefix.dustDiv72, 11, null, 0, false, true));
@@ -63,9 +70,13 @@ public final class AnvilShreddingRecipes {
 
     private AnvilShreddingRecipes() {}
 
-    public static List<Entry> entries() { return Collections.unmodifiableList(ENTRIES); }
+    public static List<Entry> entries() {
+        return Collections.unmodifiableList(ENTRIES);
+    }
 
-    public static List<String> skipped() { return SKIPPED; }
+    public static List<String> skipped() {
+        return SKIPPED;
+    }
 
     public static int register() {
         if (registered) throw new IllegalStateException("Anvil shredding recipes registered twice");
@@ -74,12 +85,12 @@ public final class AnvilShreddingRecipes {
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
             for (Row row : ROWS) grind(material, row);
         }
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 anvil shredding recipes ({} notes: {})",
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 anvil shredding recipes ({} notes: {})",
-//?}
-                ENTRIES.size(), SKIPPED.size(), SKIPPED);
+        Mc.logger()
+                .info(
+                        "Registered {} GT6 anvil shredding recipes ({} notes: {})",
+                        ENTRIES.size(),
+                        SKIPPED.size(),
+                        SKIPPED);
         return ENTRIES.size();
     }
 
@@ -89,14 +100,17 @@ public final class AnvilShreddingRecipes {
         ItemStack input = GTItems.getStack(row.input(), material, 1);
         GTMaterial target = material.getTargetPulverMaterial().resolve();
         ItemStack output = GTItems.getStack(row.output(), target, row.outCount());
-        ItemStack byproduct = row.byproduct() == null ? ItemStack.EMPTY
+        ItemStack byproduct = row.byproduct() == null
+                ? ItemStack.EMPTY
                 : GTItems.getStack(row.byproduct(), target, row.byproductCount());
         if (input.isEmpty() || output.isEmpty()) return;
         if (row.byproduct() != null && byproduct.isEmpty()) return;
         // OP.setOreStats stores oreRaw mAmount=-1 and mWeight=2U. Handler costs use mAmount,
         // hence this row is governed by its15U/8 outputs (30*(quality+1)), not ore weight2U.
-        long inputUnits = row.input() == MaterialPrefix.oreRaw ? -1 : row.input().getMaterialWeight();
-        long units = Math.max(inputUnits,
+        long inputUnits =
+                row.input() == MaterialPrefix.oreRaw ? -1 : row.input().getMaterialWeight();
+        long units = Math.max(
+                inputUnits,
                 row.output().getMaterialWeight() * row.outCount()
                         + (row.byproduct() == null ? 0 : row.byproduct().getMaterialWeight() * row.byproductCount()));
         // GT6 Row 16 EU/t with multiplier 16 on the shredding handler.
@@ -104,12 +118,22 @@ public final class AnvilShreddingRecipes {
         // GT6's ST.emptySlot() second input (the second anvil slot has to stay empty). RecipeMap#make
         // rejects an empty stack ("declared input failed to resolve"), so the recipe is built directly
         // the way AnvilRecipeDefinitions does it — the anvil's 2-item minimum counts slots, not entries.
-        Recipe recipe = new Recipe(new ItemStack[]{input, ItemStack.EMPTY},
-                byproduct.isEmpty() ? new ItemStack[]{output} : new ItemStack[]{output, byproduct},
-                null, null, null, null, duration, 16, 0);
+        Recipe recipe = new Recipe(
+                new ItemStack[] {input, ItemStack.EMPTY},
+                byproduct.isEmpty() ? new ItemStack[] {output} : new ItemStack[] {output, byproduct},
+                null,
+                null,
+                null,
+                null,
+                duration,
+                16,
+                0);
         if (MachineRecipeMaps.Anvil.addRecipe(recipe) != null) {
-            ENTRIES.add(new Entry(row.input().getName() + " -> " + row.output().getName() + " x" + row.outCount()
-                    + (byproduct.isEmpty() ? "" : " + " + row.byproduct().getName() + " x" + row.byproductCount()),
+            ENTRIES.add(new Entry(
+                    row.input().getName() + " -> " + row.output().getName() + " x" + row.outCount()
+                            + (byproduct.isEmpty()
+                                    ? ""
+                                    : " + " + row.byproduct().getName() + " x" + row.byproductCount()),
                     recipe));
         }
     }

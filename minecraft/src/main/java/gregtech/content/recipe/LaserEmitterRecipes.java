@@ -8,6 +8,7 @@ import gregtech.GregTech;
 import gregtech.engine.recipe.Recipe;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.registry.GTTechnological;
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -76,11 +77,7 @@ public final class LaserEmitterRecipes {
                     new FluidStack[]{fluid}, null, 128, 16, 0));
             if (recipe != null) ENTRIES.add(gas[0] + " -> " + gas[1]);
         }
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 laser emitter filling recipes ({} skipped: {})",
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 laser emitter filling recipes ({} skipped: {})",
-//?}
+        Mc.logger().info("Registered {} GT6 laser emitter filling recipes ({} skipped: {})",
                 ENTRIES.size(), SKIPPED.size(), SKIPPED);
         return ENTRIES.size();
     }

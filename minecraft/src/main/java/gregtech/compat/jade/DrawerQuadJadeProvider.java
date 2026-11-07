@@ -2,6 +2,7 @@ package gregtech.compat.jade;
 
 import gregtech.content.block.inventory.DrawerQuadBlock;
 import gregtech.content.blockentity.inventory.DrawerQuadBlockEntity;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -79,11 +80,7 @@ public enum DrawerQuadJadeProvider implements
             if (stack.isEmpty()) continue;
             ItemStack match = null;
             for (ItemStack existing : stacks) {
-//? if >=1.21.1 {
-                /*if (ItemStack.isSameItemSameComponents(existing, stack)) {
-*///?} else {
-                if (ItemStack.isSameItemSameTags(existing, stack)) {
-//?}
+                if (StackCompat.sameItem(existing, stack)) {
                     match = existing;
                     break;
                 }

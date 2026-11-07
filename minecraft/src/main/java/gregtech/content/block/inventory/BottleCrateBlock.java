@@ -7,6 +7,7 @@ import gregtech.engine.GTWaterloggable;
 import gregtech.api.material.*;
 
 import gregtech.content.blockentity.inventory.BottleCrateBlockEntity;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -147,11 +148,7 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
         return -1;
     }
     private static boolean fits(ItemStack existing, ItemStack stack) {
-//? if >=1.21.1 {
-        /*return !existing.isEmpty() && ItemStack.isSameItemSameComponents(existing, stack)
-*///?} else {
-        return !existing.isEmpty() && ItemStack.isSameItemSameTags(existing, stack)
-//?}
+        return !existing.isEmpty() && StackCompat.sameItem(existing, stack)
                 && existing.getCount() + stack.getCount() <= existing.getMaxStackSize();
     }
 

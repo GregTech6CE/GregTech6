@@ -1,5 +1,6 @@
 package gregtech.engine.material;
 
+import gregtech.engine.stack.StackCompat;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -18,11 +19,7 @@ public final class MaterialIngredientCandidates {
             var sameItem = byItem.computeIfAbsent(candidate.getItem(), ignored -> new ArrayList<>());
             boolean duplicate = false;
             for (var existing : sameItem) {
-//? if >=1.21.1 {
-                /*boolean sameData = ItemStack.isSameItemSameComponents(existing, candidate);
-*///?} else {
-                boolean sameData = ItemStack.isSameItemSameTags(existing, candidate);
-//?}
+                boolean sameData = StackCompat.sameItem(existing, candidate);
                 if (sameData && existing.getCount() == candidate.getCount()) {
                     duplicate = true;
                     break;

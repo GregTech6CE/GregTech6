@@ -1,4 +1,5 @@
 package gregtech.content.world;
+import gregtech.engine.stack.StackCompat;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -66,11 +67,7 @@ public class GarbageData extends SavedData {
     public void trash(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return;
         for (Entry entry : items) {
-//? if >=1.21.1 {
-            /*if (ItemStack.isSameItemSameComponents(entry.template, stack)) {
-*///?} else {
-            if (ItemStack.isSameItemSameTags(entry.template, stack)) {
-//?}
+            if (StackCompat.sameItem(entry.template, stack)) {
                 entry.count += stack.getCount();
                 setDirty();
                 return;

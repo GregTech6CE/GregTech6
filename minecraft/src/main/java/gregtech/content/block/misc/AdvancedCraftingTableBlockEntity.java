@@ -2,6 +2,7 @@ package gregtech.content.block.misc;
 
 import gregtech.engine.inventory.BlockContents;
 import gregtech.client.gui.HopperContainerMenu;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.*;
@@ -114,13 +115,8 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
     public void storeGrid() {
         for (int i = 21; i < 30; i++) {
             ItemStack rest = inventory.getStackInSlot(i).copy();
-//? if >=1.21.1 {
-            /*for (int slot : STORAGE) if (ItemStack.isSameItemSameComponents(rest, inventory.getStackInSlot(slot))) rest = inventory.insertItem(slot,
-                    rest, false);
-*///?} else {
-            for (int slot : STORAGE) if (ItemStack.isSameItemSameTags(rest, inventory.getStackInSlot(slot))) rest = inventory.insertItem(slot, rest,
+            for (int slot : STORAGE) if (StackCompat.sameItem(rest, inventory.getStackInSlot(slot))) rest = inventory.insertItem(slot, rest,
                     false);
-//?}
             for (int slot : STORAGE) if (inventory.getStackInSlot(slot).isEmpty()) rest = inventory.insertItem(slot, rest, false);
             inventory.setStackInSlot(i, rest);
         }
@@ -196,11 +192,7 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
         if (a.getItem() instanceof gregtech.content.item.GTToolItem) return gregtech.engine.tool.GTToolHelper.isUsable(a)
                 && gregtech.engine.tool.GTToolHelper.isUsable(b)
                 && gregtech.engine.tool.GTToolHelper.getHead(a) == gregtech.engine.tool.GTToolHelper.getHead(b);
-//? if >=1.21.1 {
-        /*return ItemStack.isSameItemSameComponents(a, b);
-*///?} else {
-        return ItemStack.isSameItemSameTags(a, b);
-//?}
+        return StackCompat.sameItem(a, b);
     }
 
     private static int source(ItemStack[] state, ItemStack wanted, int gridSlot) {
@@ -301,13 +293,8 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
 
     private static ItemStack put(ItemStack[] state, int slot, ItemStack stack) {
         if (stack.isEmpty()) return ItemStack.EMPTY;
-//? if >=1.21.1 {
-        /*ItemStack there = state[slot];
-        if (!there.isEmpty() && !ItemStack.isSameItemSameComponents(there, stack)) return stack;
-*///?} else {
         ItemStack there = state[slot];
-        if (!there.isEmpty() && !ItemStack.isSameItemSameTags(there, stack)) return stack;
-//?}
+        if (!there.isEmpty() && !StackCompat.sameItem(there, stack)) return stack;
         int n = Math.min(stack.getCount(), Math.min(64, stack.getMaxStackSize()) - there.getCount());
         if (n <= 0) return stack;
         state[slot] = stack.copyWithCount(there.getCount() + n);

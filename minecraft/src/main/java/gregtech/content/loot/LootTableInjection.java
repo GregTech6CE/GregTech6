@@ -4,6 +4,7 @@ package gregtech.content.loot;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.GregTech;
+import gregtech.platform.Mc;
 //?}
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -129,11 +130,7 @@ public final class LootTableInjection {
             }
         }
         if (rows > 0) event.getTable().addPool(pool.build());
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("GT loot: {} rows added to {} ({})", rows, event.getName(), category);
-*///?} else {
-        GregTech.LOGGER.info("GT loot: {} rows added to {} ({})", rows, event.getName(), category);
-//?}
+        Mc.logger().info("GT loot: {} rows added to {} ({})", rows, event.getName(), category);
     }
 //? if >=1.21.1 {
 

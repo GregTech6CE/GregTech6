@@ -2,6 +2,7 @@ package gregtech.content.logistics;
 
 import gregtech.engine.inventory.MassStorageMaterialForms;
 import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -261,11 +262,7 @@ public final class LogisticsItemRouter {
                 // Its simulated insert, not that count, determines room; it can also
                 // accept another GT6 form of the same material.
                 if (!destination.bulkStorage && !occupied.isEmpty()
-//? if >=1.21.1 {
-                        /*&& !ItemStack.isSameItemSameComponents(occupied, available)) continue;
-*///?} else {
-                        && !ItemStack.isSameItemSameTags(occupied, available)) continue;
-//?}
+                        && !StackCompat.sameItem(occupied, available)) continue;
                 int maximumFinal = Math.min(outputMaximum,
                         Math.min(available.getMaxStackSize(), destination.items.getSlotLimit(destinationSlot)));
                 int occupiedCount = destination.bulkStorage ? 0 : occupied.getCount();

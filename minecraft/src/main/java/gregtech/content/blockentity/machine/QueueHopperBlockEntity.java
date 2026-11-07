@@ -6,6 +6,7 @@ import gregtech.content.block.machine.QueueHopperBlock;
 import gregtech.client.gui.HopperContainerMenu;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTMenuTypes;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -173,11 +174,7 @@ public class QueueHopperBlockEntity extends BlockEntity
                         ItemStack src = inventory.get(i - 1);
                         if (!slotHas(i)) {
                             tMovedItems += moveInternal(i - 1, i);
-//? if >=1.21.1 {
-                        /*} else if (ItemStack.isSameItemSameComponents(src, inventory.get(i))) {
-*///?} else {
-                        } else if (ItemStack.isSameItemSameTags(src, inventory.get(i))) {
-//?}
+                        } else if (StackCompat.sameItem(src, inventory.get(i))) {
                             int space = Math.min(limit, inventory.get(i).getMaxStackSize()) - inventory.get(i).getCount();
                             if (space > 0) {
                                 int toMove = Math.min(src.getCount(), space);
@@ -367,11 +364,7 @@ public class QueueHopperBlockEntity extends BlockEntity
         for (int srcSlot = 0; srcSlot < source.getSlots() && space > 0; srcSlot++) {
             ItemStack simExtract = source.extractItem(srcSlot, space, true);
             if (simExtract.isEmpty()) continue;
-//? if >=1.21.1 {
-            /*if (!existing.isEmpty() && !ItemStack.isSameItemSameComponents(existing, simExtract)) continue;
-*///?} else {
-            if (!existing.isEmpty() && !ItemStack.isSameItemSameTags(existing, simExtract)) continue;
-//?}
+            if (!existing.isEmpty() && !StackCompat.sameItem(existing, simExtract)) continue;
 
             // An empty slot has no item-specific limit until the source is known.
             int itemSpace = Math.min(limit, simExtract.getMaxStackSize()) - existing.getCount();
@@ -453,11 +446,7 @@ public class QueueHopperBlockEntity extends BlockEntity
         int limit = getSlotLimitFor(slot);
         ItemStack existing = inventory.get(0);
         if (!existing.isEmpty()) {
-//? if >=1.21.1 {
-            /*if (!ItemStack.isSameItemSameComponents(existing, stack)) return stack;
-*///?} else {
-            if (!ItemStack.isSameItemSameTags(existing, stack)) return stack;
-//?}
+            if (!StackCompat.sameItem(existing, stack)) return stack;
             int space = Math.min(limit, existing.getMaxStackSize()) - existing.getCount();
             if (space <= 0) return stack;
             int toInsert = Math.min(stack.getCount(), space);

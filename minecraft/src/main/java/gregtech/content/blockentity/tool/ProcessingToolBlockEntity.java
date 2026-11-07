@@ -7,6 +7,7 @@ import gregtech.engine.recipe.*;
 import gregtech.content.block.tool.ProcessingToolBlock;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.*;
 import net.minecraft.nbt.*;
 import net.minecraft.world.InteractionHand;
@@ -237,13 +238,8 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
             var out = recipe.mOutputs[i];
             if (out == null || out.isEmpty()) continue;
             var present = items.getStackInSlot(recipes.mInputItemsCount + i);
-//? if >=1.21.1 {
-            /*if ((!present.isEmpty() && !ItemStack.isSameItemSameComponents(present,
+            if ((!present.isEmpty() && !StackCompat.sameItem(present,
                     out)) || present.getCount() + out.getCount() > out.getMaxStackSize()) return false;
-*///?} else {
-            if ((!present.isEmpty() && !ItemStack.isSameItemSameTags(present,
-                    out)) || present.getCount() + out.getCount() > out.getMaxStackSize()) return false;
-//?}
         }
         for (int i = 0; i < recipe.mFluidOutputs.length; i++) {
             var out = recipe.mFluidOutputs[i];

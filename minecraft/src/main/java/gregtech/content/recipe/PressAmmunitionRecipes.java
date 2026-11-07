@@ -1,27 +1,20 @@
 package gregtech.content.recipe;
 
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialProperty;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.material.Materials;
 import gregtech.content.recipe.PressAmmunitionRecipeRows.PressRow;
 import gregtech.content.recipe.PressAmmunitionRecipeRows.UnboxRow;
-
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.GregTech;
-//?}
-import gregtech.api.material.GTMaterial;
+import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
-import gregtech.content.data.MachineRecipeMaps;
-import gregtech.content.data.MaterialPrefix;
-import gregtech.content.registry.GTItems;
-import gregtech.content.material.Materials;
-import net.minecraft.world.item.ItemStack;
-
+import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.item.ItemStack;
 
 /** Original two-stage ammunition: shafts/charged casings are consumed, only actual press shapes are catalysts. */
 public final class PressAmmunitionRecipes {
@@ -32,38 +25,38 @@ public final class PressAmmunitionRecipes {
     private static final List<String> SKIPPED = List.of();
 
     /** GT6 Press rows: (input prefix, input count, consumed EMPTY-form prefix, output prefix, ticks). */
-
-
     private static final List<PressRow> PRESS_ROWS = PressAmmunitionRecipeRows.PRESS_ROWS;
 
     /** GT6 Unboxinator rows: arrow heads/bullet metal and the EMPTY shaft/casing are recovered. */
-
-
     private static final List<UnboxRow> UNBOX_ROWS = PressAmmunitionRecipeRows.UNBOX_ROWS;
 
     private static boolean registered;
 
     private PressAmmunitionRecipes() {}
 
-    public static List<Entry> entries() { return Collections.unmodifiableList(ENTRIES); }
+    public static List<Entry> entries() {
+        return Collections.unmodifiableList(ENTRIES);
+    }
 
-    public static List<String> skipped() { return SKIPPED; }
+    public static List<String> skipped() {
+        return SKIPPED;
+    }
 
     public static int register() {
         if (registered) throw new IllegalStateException("Ammunition recipes registered twice");
         registered = true;
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
-            if (material.has(MaterialProperty.ANTIMATTER)) continue;   // GT6: ANTIMATTER.NOT on every row
-            if (material.getName().equals("Empty")) continue;          // GT6: MT.Empty.NOT
+            if (material.has(MaterialProperty.ANTIMATTER)) continue; // GT6: ANTIMATTER.NOT on every row
+            if (material.getName().equals("Empty")) continue; // GT6: MT.Empty.NOT
             for (PressRow row : PRESS_ROWS) press(material, row);
             for (UnboxRow row : UNBOX_ROWS) unbox(material, row);
         }
-//? if >=1.21.1 {
-        /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 ammunition recipes ({} GT6 rows skipped: {})",
-*///?} else {
-        GregTech.LOGGER.info("Registered {} GT6 ammunition recipes ({} GT6 rows skipped: {})",
-//?}
-                ENTRIES.size(), SKIPPED.size(), SKIPPED);
+        Mc.logger()
+                .info(
+                        "Registered {} GT6 ammunition recipes ({} GT6 rows skipped: {})",
+                        ENTRIES.size(),
+                        SKIPPED.size(),
+                        SKIPPED);
         return ENTRIES.size();
     }
 
@@ -74,8 +67,11 @@ public final class PressAmmunitionRecipes {
         if (input.isEmpty() || output.isEmpty() || component.isEmpty()) return;
         Recipe recipe = MachineRecipeMaps.Press.addRecipe2(true, 16, row.ticks(), input, component, output);
         if (recipe != null) {
-            ENTRIES.add(new Entry(row.input().getName() + " x" + row.inCount() + " -> "
-                    + row.output().getName(), MachineRecipeMaps.Press, recipe));
+            ENTRIES.add(new Entry(
+                    row.input().getName() + " x" + row.inCount() + " -> "
+                            + row.output().getName(),
+                    MachineRecipeMaps.Press,
+                    recipe));
         }
     }
 
@@ -88,9 +84,10 @@ public final class PressAmmunitionRecipes {
         if (component.isEmpty()) return;
         Recipe recipe = MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, input, dust, component);
         if (recipe != null) {
-            ENTRIES.add(new Entry(row.input().getName() + " -> " + row.output().getName()
-                    + " x" + row.outCount(), MachineRecipeMaps.Unboxinator, recipe));
+            ENTRIES.add(new Entry(
+                    row.input().getName() + " -> " + row.output().getName() + " x" + row.outCount(),
+                    MachineRecipeMaps.Unboxinator,
+                    recipe));
         }
     }
-
 }

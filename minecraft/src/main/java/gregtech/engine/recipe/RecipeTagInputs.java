@@ -7,12 +7,18 @@ final class RecipeTagInputs {
     private RecipeTagInputs() {}
 
     static boolean covers(Recipe existing, Recipe candidate) {
-        if (existing.mFakeRecipe || existing.hasItemInputGuards() || existing.hasSameItemInputPredicates()
-                || candidate.hasItemInputGuards() || candidate.hasSameItemInputPredicates()
+        if (existing.mFakeRecipe
+                || existing.hasItemInputGuards()
+                || existing.hasSameItemInputPredicates()
+                || candidate.hasItemInputGuards()
+                || candidate.hasSameItemInputPredicates()
                 || existing.mInputs.length != candidate.mInputs.length
                 || existing.mFluidInputs.length != candidate.mFluidInputs.length) return false;
         return pair(0, new boolean[candidate.mInputs.length], (a, b) -> itemCovers(existing, a, candidate, b))
-                && pair(0, new boolean[candidate.mFluidInputs.length], (a, b) -> fluidCovers(existing, a, candidate, b));
+                && pair(
+                        0,
+                        new boolean[candidate.mFluidInputs.length],
+                        (a, b) -> fluidCovers(existing, a, candidate, b));
     }
 
     private static boolean itemCovers(Recipe a, int ai, Recipe b, int bi) {
@@ -30,11 +36,7 @@ final class RecipeTagInputs {
             } else {
                 // Fluid tags must not change concrete-item collision rules. Equal-material
                 // aliases may deliberately have distinct outputs (e.g. legacy wood species).
-//? if >=1.21.1 {
-                /*if (!net.minecraft.world.item.ItemStack.isSameItemSameComponents(required, stack)) return false;
-*///?} else {
-                if (!net.minecraft.world.item.ItemStack.isSameItemSameTags(required, stack)) return false;
-//?}
+                if (!net.minecraft.world.item.StackCompat.sameItem(required, stack)) return false;
             }
         }
         return true;
