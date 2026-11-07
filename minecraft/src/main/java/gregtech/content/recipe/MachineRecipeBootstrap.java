@@ -94,6 +94,7 @@ public final class MachineRecipeBootstrap {
         register("GTMainRecipes", GTMainRecipes::register);
         register("GTMaterialDataRecipes", GTMaterialDataRecipes::register);
         register("FoodItemRecipes", FoodItemRecipes::register);
+        register("CookingOilRecipes", CookingOilRecipes::register);
 
         // One typed producer per source table; each row names its source loader and ordinal.
         // Explicit priority and condition-aware collisions decide ties, not this registration order.

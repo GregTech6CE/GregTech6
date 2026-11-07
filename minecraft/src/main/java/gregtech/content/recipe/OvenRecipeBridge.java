@@ -217,6 +217,7 @@ public final class OvenRecipeBridge {
 //?}
         for (gregtech.engine.recipe.Recipe gt : ordered) {
             if (!gt.mEnabled || gt.mHidden) continue;
+            if (hasFluidInput(gt)) continue;   // the vanilla furnace has no fluid tank
             ItemStack input = firstStack(gt.mInputs);
             ItemStack output = firstStack(gt.mOutputs);
             if (input.isEmpty() || output.isEmpty() || input.getCount() != 1) continue;
@@ -375,6 +376,7 @@ public final class OvenRecipeBridge {
         int added = 0;
         for (var row : MachineRecipeMaps.Furnace.mRecipeList) {
             if (!row.mEnabled || row.mHidden) continue;
+            if (hasFluidInput(row)) continue;   // the vanilla smoker/blast furnace has no fluid tank
             var input = firstStack(row.mInputs); var output = firstStack(row.mOutputs);
             if (input.isEmpty() || output.isEmpty() || input.getCount() != 1) continue;
             var metadata = gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem());
@@ -422,6 +424,12 @@ public final class OvenRecipeBridge {
             }
         }
         return ItemStack.EMPTY;
+    }
+
+    /** A row that consumes a fluid cannot live in the vanilla furnace or smoker/blast furnace. */
+    private static boolean hasFluidInput(gregtech.engine.recipe.Recipe row) {
+        for (var fluid : row.mFluidInputs) if (fluid != null && !fluid.isEmpty()) return true;
+        return false;
     }
 
     /** Replaces a cooking recipe's result, keeping id, ingredient, experience and time. */

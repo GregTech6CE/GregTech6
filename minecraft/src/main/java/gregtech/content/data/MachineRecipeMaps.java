@@ -492,8 +492,25 @@ public class MachineRecipeMaps {
      */
     public static boolean add_smelting(ItemStack aInput, ItemStack aOutput, float aEXP, boolean aRemoveOthers, boolean aSmoker, boolean aBlast) {
         if (invalid(aInput) || invalid(aOutput)) return false;
-        if (aRemoveOthers) rem_smelting(aInput);
+        if (aRemoveOthers) removePlainSmelting(aInput);
         return Furnace.addRecipe1(true, 16, 16, aInput, neverFurnaceOutput(aOutput)) != null;
+    }
+
+    /**
+     * Replaces the plain rows for an input but keeps fluid-consuming variants: a cooking-oil row
+     * ({@link gregtech.content.recipe.CookingOilRecipes}) is a distinct recipe with its own tank
+     * input, so the vanilla mirror pass must not erase it while adding the plain row back.
+     */
+    private static void removePlainSmelting(ItemStack aInput) {
+        var pool = Furnace.mRecipeItemMap.get(aInput.getItem());
+        if (pool == null) return;
+        var plain = new java.util.ArrayList<gregtech.engine.recipe.Recipe>();
+        for (var row : pool) {
+            boolean fluid = false;
+            for (var stack : row.mFluidInputs) if (stack != null && !stack.isEmpty()) { fluid = true; break; }
+            if (!fluid) plain.add(row);
+        }
+        if (!plain.isEmpty()) Furnace.removeAll(plain);
     }
 
     /**
