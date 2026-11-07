@@ -15,7 +15,8 @@ public final class PaintState {
 
     public boolean paint(int color) {
         color &= 0xFFFFFF;
-        if (color == rgb) return false;
+        // White is also the unpainted default, so an unpainted target still changes by painting white.
+        if (painted && color == rgb) return false;
         rgb = color;
         painted = true;
         return true;
