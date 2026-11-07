@@ -26,6 +26,24 @@ public final class PaintingRules {
         return name.toString();
     }
 
+    /** Further GT6 materials upstream registers as dyes (LoaderOreDictReRegistrations:560-575). */
+    private static final java.util.Map<String, String> EXTRA_DYE_MATERIALS = java.util.Map.ofEntries(
+            java.util.Map.entry("Carbon", "black"),
+            java.util.Map.entry("Graphite", "gray"),
+            java.util.Map.entry("Ashes", "light_gray"),
+            java.util.Map.entry("DarkAshes", "gray"),
+            java.util.Map.entry("Cocoa", "brown"),
+            java.util.Map.entry("Coffee", "brown"),
+            java.util.Map.entry("Chocolate", "brown"),
+            java.util.Map.entry("BrownLimonite", "brown"),
+            java.util.Map.entry("YellowLimonite", "yellow"));
+
+    /** Vanilla dye colour a GT6 material acts as, or null when it is not a dye material. */
+    public static String dyeColor(String materialName) {
+        for (Dye dye : DYES) if (materialName.equals(dyeMaterial(dye.id()))) return dye.id();
+        return EXTRA_DYE_MATERIALS.get(materialName);
+    }
+
     public static final java.util.List<Dye> DYES = java.util.List.of(
             new Dye(0, "black", 0x202020),
             new Dye(1, "red", 0xFF0000),

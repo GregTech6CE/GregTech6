@@ -96,6 +96,25 @@ public final class MaterialTagPack extends AbstractPackResources {
         add(tags,"forge","items","slimeballs","minecraft:slime_ball");
         for (String sandstone : java.util.List.of("sandstone","cut_sandstone","smooth_sandstone","red_sandstone","cut_red_sandstone","smooth_red_sandstone"))
             add(tags,"forge","items","sandstone","minecraft:"+sandstone);
+        // GT6 ore-dictionary identities that modern loaders publish under different tag names.
+        // The referenced tag exists in each loader's own data pack.
+//? if >=1.21.1 {
+        /*add(tags,"gt6ce","item","glass_colorless","#c:glass_blocks/colorless");
+        add(tags,"gt6ce","item","leathers","#c:leathers");
+        add(tags,"gt6ce","item","wooden_chests","#c:chests/wooden");
+*///?} else {
+        add(tags,"gt6ce","items","glass_colorless","#forge:glass/colorless");
+        add(tags,"gt6ce","items","leathers","#forge:leather");
+        add(tags,"gt6ce","items","wooden_chests","#forge:chests/wooden");
+//?}
+        add(tags,"gt6ce","items","glass_colorless","minecraft:glass");
+        add(tags,"gt6ce","items","leathers","minecraft:leather");
+        add(tags,"gt6ce","items","wooden_chests","minecraft:chest");
+        add(tags,"gt6ce","items","wooden_chests","minecraft:trapped_chest");
+        // GT6 craftingHardenedClay: the plain and sixteen coloured terracotta blocks.
+        add(tags,"gt6ce","items","crafting_hardened_clay","minecraft:terracotta");
+        for (var dyeColor : net.minecraft.world.item.DyeColor.values())
+            add(tags,"gt6ce","items","crafting_hardened_clay","minecraft:"+dyeColor.getName()+"_terracotta");
         var moldForms=gregtech.content.recipe.ClayMoldCatalog.FORMS.stream()
                 .collect(java.util.stream.Collectors.groupingBy(f -> f.prefix().equals("casingSmall") ? "itemCasing" : f.prefix()));
         var byMaterial=new TreeMap<String,Set<String>>();
@@ -158,6 +177,9 @@ public final class MaterialTagPack extends AbstractPackResources {
 *///?} else {
                         add(tags,"gt6ce","items","ammunition/sticks_wood",id.toString());
 //?}
+                    // Forge's wooden-rod convention (GT6 stickWood); sealed sticks keep their own identity.
+                    if(form.prefix()==MaterialPrefix.stick && wood && !material.getName().equals("WoodTreated"))
+                        add(tags,"forge","items","rods/wooden",id.toString());
                     // One-way convenience conversion; vanilla sticks must not match their own recipe.
                     if(form.prefix()==MaterialPrefix.stick && wood && item != Items.STICK)
                         add(tags,"gt6ce","items","convertible_wooden_rods",id.toString());
@@ -638,10 +660,7 @@ public final class MaterialTagPack extends AbstractPackResources {
     /** Vanilla dye colour of a GT6 dye dust, or null for every other form. */
     private static String dyeTagColor(MaterialEquivalence.Form form) {
         if (form.prefix() != MaterialPrefix.dust) return null;
-        String material = form.material().getName();
-        for (var dye : gregtech.content.tool.PaintingRules.DYES)
-            if (material.equals(gregtech.content.tool.PaintingRules.dyeMaterial(dye.id()))) return dye.id();
-        return null;
+        return gregtech.content.tool.PaintingRules.dyeColor(form.material().getName());
     }
 
     /** Aggregate tag value list for one material (forms + its blocks). */

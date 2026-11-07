@@ -55,7 +55,7 @@ public final class UtilityCraftingRows {
                 "Rf|Cs",
                 Map.of(
                         'R',
-                        "item:minecraft:redstone",
+                        "tag:gt6ce:technology/redstone",
                         'C',
                         "mat:plateCurved",
                         'f',
@@ -106,7 +106,7 @@ public final class UtilityCraftingRows {
                         'T',
                         "mat:screw",
                         'C',
-                        "item:minecraft:redstone",
+                        "tag:gt6ce:technology/redstone",
                         'd',
                         "item:gt6ce:tool_screwdriver")));
         // GT6's metalset in Loader_MultiTileEntities. One canonical locker per material.
@@ -122,8 +122,9 @@ public final class UtilityCraftingRows {
                             "mat:stick",
                             'd',
                             "item:gt6ce:tool_screwdriver",
+                            // Loader_MultiTileEntities:138 uses OD.craftingLeather; GT6 also takes modded leather.
                             'L',
-                            "item:minecraft:leather",
+                            "tag:gt6ce:leathers",
                             'C',
                             "item:gt6ce:chest_" + spec.suffix(),
                             'T',

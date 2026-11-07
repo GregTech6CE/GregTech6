@@ -51,6 +51,7 @@ import java.util.TreeMap;
  * <ul>
  *   <li>{@code item:<id>} — a concrete item id.</li>
  *   <li>{@code tag:<id>} — a tag id (used for vanilla/ore-dictionary references).</li>
+ *   <li>{@code <spec>;<spec>} — alternatives, e.g. a vanilla item plus the fluid-container form.</li>
  *   <li>{@code block:<prefix>[@<Material>]} — material casing/storage block of the machine's material.</li>
  *   <li>{@code mat:<prefix>[@<Material>]} — material item form (plate, gear, screw, ...).</li>
  *   <li>{@code pipe:<size>[@<Material>]} — GT6 fluid pipe block.</li>
@@ -115,6 +116,12 @@ public final class MachineRecipeIngredients {
      * @param tier     port tier of the machine (1-based)
      */
     public static Object resolve(String spec, GTMaterial material, int tier) {
+        if (spec.indexOf(';') >= 0) {
+            var alternatives = new ArrayList<Object>();
+            for (var part : spec.split(";"))
+                if (!part.isBlank()) alternatives.add(resolve(part, material, tier));
+            return alternatives.size() == 1 ? alternatives.get(0) : alternatives;
+        }
         int colon = spec.indexOf(':');
         if (colon < 0) return itemStackFallback(material);
         String kind = spec.substring(0, colon);

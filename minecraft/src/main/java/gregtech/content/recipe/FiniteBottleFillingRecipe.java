@@ -361,6 +361,15 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
     /** The lubricant recipe explicitly accepts both source fluids; other keys remain exact. */
     private static net.minecraft.world.level.material.Fluid[] acceptedFluids(String fluidKey) {
         var primary = gregtech.content.food.GTDrinks.fluidForField(fluidKey);
+        // Not every container1000 key is a drink row: GT6's honey container names its fluid directly.
+        if (primary == null) {
+            var registered = gregtech.content.registry.GTFluids.still(fluidKey);
+//? if >=1.21.1 {
+            /*primary = registered != null && registered.isBound() ? registered.get() : null;
+*///?} else {
+            primary = registered != null && registered.isPresent() ? registered.get() : null;
+//?}
+        }
         if (!"Lubricant".equals(fluidKey)) return new net.minecraft.world.level.material.Fluid[]{primary};
         var alternate = gregtech.content.registry.GTFluids.still("Lubricant");
 //? if >=1.21.1 {

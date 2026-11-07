@@ -1486,7 +1486,7 @@ public final class OriginalSurvivalRecipes {
                     "WGW|YXY|WPW",
                     Map.of(
                             'G',
-                            "item:minecraft:glass",
+                            "tag:gt6ce:glass_colorless",
                             'P',
                             "mat:plateDouble@TinAlloy",
                             'W',
@@ -1502,7 +1502,7 @@ public final class OriginalSurvivalRecipes {
                     "WGW|YXY|WPW",
                     Map.of(
                             'G',
-                            "item:minecraft:glass",
+                            "tag:gt6ce:glass_colorless",
                             'P',
                             "mat:plateDouble@TinAlloy",
                             'W',
