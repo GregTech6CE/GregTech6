@@ -9,10 +9,7 @@ import gregtech.content.registry.GTItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-//? if >=1.21.1 {
-/*import net.minecraft.resources.ResourceLocation;
-*///?} else {
-//?}
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

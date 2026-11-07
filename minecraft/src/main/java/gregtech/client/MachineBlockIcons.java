@@ -1,7 +1,6 @@
 package gregtech.client;
+
 import gregtech.engine.mod.GregTechIdentity;
-
-
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 
@@ -11,11 +10,9 @@ public final class MachineBlockIcons {
 
     public static ResourceLocation burningBoxVariant(Direction facing, boolean active, boolean brick) {
         String shell = brick ? "brick" : "solid";
-//? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machine/burning_box_" + shell + "/"
-*///?} else {
-        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machine/burning_box_" + shell + "/"
-//?}
-                + facing.getSerializedName() + (active ? "_on" : "_off")).toLowerCase());
+        return ResourceLocation.fromNamespaceAndPath(
+                GregTechIdentity.REGISTRY_NAMESPACE,
+                ("block/machine/burning_box_" + shell + "/" + facing.getSerializedName() + (active ? "_on" : "_off"))
+                        .toLowerCase());
     }
 }
