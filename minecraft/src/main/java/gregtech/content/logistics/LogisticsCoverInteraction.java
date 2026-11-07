@@ -204,11 +204,7 @@ public final class LogisticsCoverInteraction {
         if (installed.isEmpty()) return InteractionResult.PASS;
         LogisticsCoverType installedType = LogisticsCoverType.of(installed);
         if (installedType == null) return InteractionResult.PASS;
-//? if >=1.21.1 {
-        /*if (GTToolHelper.isMagnifyingGlass(held)) {
-*///?} else {
         if (GTToolHelper.isMagnifyingGlass(held)) {
-//?}
             if (!level.isClientSide) describe(player, installed);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -242,11 +238,7 @@ public final class LogisticsCoverInteraction {
                     else clearItemFilter(covers, face);
                 }
                 if (!crowbar) describe(player, installed);
-//? if >=1.21.1 {
-                /*GTToolHelper.damageForUse(held, 1, player);
-*///?} else {
                 GTToolHelper.damageForUse(held, 1, player);
-//?}
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }

@@ -579,11 +579,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
                 && gregtech.content.item.behavior.ItemBehaviors.isIgniter(held)
                 && machine.consumesTool(held)) return InteractionResult.PASS;
 
-//? if >=1.21.1 {
-/*        if (!level.isClientSide) {
-*///?} else {
         if (!level.isClientSide) {
-//?}
 
 
 

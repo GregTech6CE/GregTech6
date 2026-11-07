@@ -23,11 +23,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
  * GT6 wrench combat rules that lived in {@code GT_Tool_Wrench}:
  * doubled damage against golems, doubled hurt cooldown and the higher swing exhaustion.
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-*///?} else {
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
-//?}
 public final class GTToolCombatEvents {
     private GTToolCombatEvents() {}
 

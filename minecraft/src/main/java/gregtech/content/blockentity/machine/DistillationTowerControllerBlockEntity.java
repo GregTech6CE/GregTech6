@@ -2,9 +2,6 @@ package gregtech.content.blockentity.machine;
 
 import gregtech.engine.multiblock.MultiblockLayout.Role;
 
-//? if >=1.21.1 {
-//?} else {
-//?}
 import gregtech.content.multiblock.LargeMachineLayouts;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;

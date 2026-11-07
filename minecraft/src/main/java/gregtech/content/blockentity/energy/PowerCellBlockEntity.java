@@ -19,11 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 /** No energy-net emission: GT6's placed power cells are passive, not battery boxes. */
 public final class PowerCellBlockEntity extends BlockEntity {
     private long charge;
-//? if >=1.21.1 {
-    /*public PowerCellBlockEntity(BlockPos pos,BlockState state){super(GTBlockEntities.POWER_CELL.get(),pos,state);charge=spec().capacity();}
-*///?} else {
     public PowerCellBlockEntity(BlockPos pos,BlockState state){super(GTBlockEntities.POWER_CELL.get(),pos,state);charge=spec().capacity();}
-//?}
     public PowerCellSpec spec(){return ((PowerCellBlock)getBlockState().getBlock()).spec();}
     public long stored(){return charge;}
     public void setCharge(long value){
