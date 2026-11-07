@@ -67,7 +67,8 @@ public final class GTMultiItems {
         // tools/extract_gt6_bottles.py; ids whose fluid the port does not have keep the plain item.
         String bottleFluid = gregtech.content.food.GTBottles.fluidKeyOf(id);
         if (bottleFluid != null && !"food".equals(category) && !"cans".equals(category))
-            return new gregtech.content.item.BottleItem(bottleFluid, props);
+            return new gregtech.content.item.BottleItem(
+                    bottleFluid, gregtech.content.food.GTBottles.amountOf(id), props);
         return switch (id) {
             case "printed_pages", "many_printed_pages" ->
                     new gregtech.content.item.PrintedPagesItem(id.equals("many_printed_pages"), props);

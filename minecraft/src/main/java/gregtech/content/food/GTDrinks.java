@@ -25,7 +25,7 @@ import java.util.Map;
  *
  * <p>GT6 registers every drinkable fluid in {@code Loader_Fluids} as a {@code FoodStatDrink}, which puts the
  * entry into {@code DrinksGT.REGISTER} keyed by the fluid's name ({@code FoodStatDrink.java:46-52}); a
- * GT6 bottle (250&nbsp;mB of that fluid, {@code MultiItemBottles}) reads it through {@code FoodStatFluid}.
+ * GT6 bottle (its source portion, {@code MultiItemBottles}) reads it through {@code FoodStatFluid}.
  * The port keys the same table by {@link Fluid}, generated from {@code Loader_Fluids.java} into
  * {@link GTDrinksGen} (345 rows; the fluid is resolved through {@link RegisteredFluids#get(String)}, which
  * carries GT6's own {@code FL} field names).
@@ -165,9 +165,13 @@ public final class GTDrinks {
 
     /** Canonical potions and the original drink registry only; never arbitrary tank fluids. */
     public static boolean canDrink(Player player, FluidStack stack) {
-        if (stack == null || stack.getAmount() < 250) return false;
+        if (stack == null || stack.isEmpty()) return false;
+        var bottle = gregtech.engine.fluid.PotionBottleHandler.filled(stack);
+        int portion = bottle.getItem() instanceof gregtech.content.item.BottleItem item
+                ? item.amount() : 250;
+        if (stack.getAmount() < portion) return false;
         Row row = rowFor(stack);
-        boolean potion = !gregtech.engine.fluid.PotionBottleHandler.filled(stack).isEmpty();
+        boolean potion = !bottle.isEmpty();
         return (row != null || potion) && player.canEat(potion || gregtech.GregTechConfig.Rule.ALWAYS_DRINK.enabled()
                 || row != null && row.alwaysEdible());
     }
