@@ -2,6 +2,7 @@ package gregtech.content.recipe;
 import gregtech.engine.mod.GregTechIdentity;
 //? if >=1.21.1 {
 /*import com.mojang.serialization.*;
+import gregtech.content.registry.GTFluids;
 import net.minecraft.core.*;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.*;
