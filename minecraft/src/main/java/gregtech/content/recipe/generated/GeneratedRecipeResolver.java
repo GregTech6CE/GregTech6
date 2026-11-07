@@ -1,17 +1,14 @@
 package gregtech.content.recipe.generated;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.engine.material.MaterialStackItemHelper;
 import gregtech.api.material.GTValues;
-import gregtech.engine.recipe.RecipeMap;
-import gregtech.content.data.RegisteredFluids;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.RegisteredFluids;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTTechnological;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialStackItemHelper;
 import gregtech.util.OM;
-import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -23,228 +20,41 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.RegistryObject;
 //?}
-import org.slf4j.Logger;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
- * Runtime resolver for the remaining transpiled GT6 tables.
+ * Source-spec utilities shared by the portable, hand-written recipe families.
  *
- * <p>Unresolved inputs and outputs are skipped and counted. Missing tokens may
- * come from optional content or an incomplete local definition/lookup; the
- * legacy log label does not decide which. {@link #loadAll()} reports these
- * tokens, while recipe-map validation and collisions still determine which
- * submitted rows are ultimately available.</p>
+ * <p>The transpiled loader tables no longer produce rows here: every one of them is transcribed
+ * as typed {@link gregtech.engine.recipe.chem.ChemRecipe} rows and published by
+ * {@link ChemRecipeResolver}. What remains are the small lookups the hand-written families use
+ * for one-off source expressions, such as a loot row's single item spec.</p>
  */
 public final class GeneratedRecipeResolver {
-    private static final Logger LOGGER = LogUtils.getLogger();
-
-    private static final Map<String, RecipeMap> MAPS = new HashMap<>();
     private static final Map<String, MaterialPrefix> PREFIXES = new HashMap<>();
-    /** Distinct content tokens (material/fluid, amount stripped) that failed to resolve. */
-    private static final java.util.Set<String> MISSING = new java.util.TreeSet<>();
-    private static int added, skipped;
 
     private GeneratedRecipeResolver() {}
 
     /**
-     * Entry point called by MachineRecipeBootstrap after the explicit chains.
-     * <p>
-     * Every transpiled GT6 loader has its own generated class; they all feed the same resolver, so
-     * a recipe that names content this port does not register is skipped and recorded instead of
-     * being guessed at.
-     * </p>
+     * Resolve one source item spec ({@code i:<prefix>:<material>:<count>},
+     * {@code tech:<item>:<count>}, {@code v:<vanilla item>:<count>}, ...) to a stack.
+     *
+     * @return the stack, or {@code null} when the spec cannot be resolved
      */
-    public static void loadAll() {
-        added = 0;
-        skipped = 0;
-        MISSING.clear();
-        SET_STATS.clear();
-        load("other", () -> GeneratedRecipeSink.emitSource(GeneratedRecipeResolver::registerOtherSource, GTOtherGen::load));
-        // Loader_Recipes_Other's nested prefix loops are outside what the transpiler emits.
-        load("other_compounds", GTCompoundMixerRows::load);
-        load("food", GTFoodGen::load);
-        load("extruder", GTExtruderGen::load);
-        load("vanilla", GTVanillaGen::load);
-        load("temporary", GTTemporaryGen::load);
-        // Imported tables are startup-only. Overlay/tag reload restores their captured baseline.
-        load("ores", () -> GTOresGen.load(gregtech.GregTechConfig.easyU235Extraction()));
-//? if >=1.21.1 {
-        /*load("technology", GTTechnologyRecipes::load);
-        load("combs", GTCombGen::load);
-*///?} else {
-        load("combs", GTCombGen::load);
-        load("technology", GTTechnologyRecipes::load);
-//?}
-
-        LOGGER.info("[gregtech] Transpiled GT6 recipes: {} added, {} skipped (missing content)", added, skipped);
-        if (!MISSING.isEmpty()) {
-            LOGGER.info("[gregtech] accepted-missing content ({}): {}",
-                    MISSING.size(), String.join(", ", MISSING));
-        }
+    public static ItemStack resolveSpec(String spec) {
+        return resolveItem(spec);
     }
 
-    /** One transpiled GT6 loader's outcome, for the coverage tests and the round reports. */
-    public record SetStats(String set, int added, int skipped) {}
-
-    private static final java.util.List<SetStats> SET_STATS = new java.util.ArrayList<>();
-
-    /** Per-loader transpile results of {@link #loadAll()}. */
-    public static java.util.List<SetStats> setStats() {
-        return java.util.List.copyOf(SET_STATS);
-    }
-
-    private static void load(String set, Runnable loader) {
-        int beforeAdded = added;
-        int beforeSkipped = skipped;
-        GeneratedRecipeSink.emitSource(GeneratedRecipeResolver::registerSource,loader);
-        SET_STATS.add(new SetStats(set, added - beforeAdded, skipped - beforeSkipped));
-    }
-
-    /** Loader_Recipes_Other:424-433: modern blocks replace legacy metadata variants. */
-    private static void registerOtherSource(boolean optimize, String map, long eut, long ticks, long[] chances,
-            String[] in, String[] fluidIn, String[] fluidOut, String[] out) {
-        registerSource(optimize, map, eut, ticks, chances, in, fluidIn, fluidOut, out);
-    }
-
-    /** Record the failing spec (trailing amount stripped) for the audit summary. */
-    private static void recordMissing(String spec) {
-        int i = spec.lastIndexOf(':');
-        MISSING.add(i > 0 ? spec.substring(0, i) : spec);
-    }
-
-    /** Number of rows for which recipe-map registration returned a non-null result. */
-    public static int addedRecipes() { return added; }
-
-    /** Number of rows skipped in resolution or rejected by recipe-map registration. */
-    public static int skippedRecipes() { return skipped; }
-
-    /** Distinct content tokens (material/fluid/prefix, amount stripped) that failed to resolve. */
-    public static java.util.Set<String> missingContent() {
-        return java.util.Collections.unmodifiableSet(MISSING);
-    }
-
-    static void register(String mapName, long eut, long dur, long[] chances,
-                         String[] itemIn, String[] fluidIn, String[] fluidOut, String[] itemOut) {
-        registerSource(false, mapName, eut, dur, chances, itemIn, fluidIn, fluidOut, itemOut);
-    }
-
-    static void registerSource(boolean optimize, String mapName, long eut, long dur, long[] chances,
-            String[] itemIn, String[] fluidIn, String[] fluidOut, String[] itemOut) {
-        // The explicit five-form family preserves real dust blocks and all source groups.
-        // Do not import the obsolete single row through the legacy blockDust -> dust fallback.
-        if (gregtech.content.recipe.ConcreteMixerRecipes.isLegacyImport(mapName, eut, dur,
-                itemIn, fluidIn, fluidOut, itemOut)) { skipped++; return; }
-        // GT6 1.7 treated these metadata variants as ordinary stone. Modern Minecraft assigns
-        // them distinct materials; explicit native rows are registered before the import.
-        if ((mapName.equals("Lathe") || mapName.equals("Extruder")) && itemIn.length > 0
-                && itemIn[0].matches("v:(polished_)?(granite|diorite|andesite):[0-9]+")
-                && java.util.Arrays.stream(itemOut).anyMatch(spec -> spec.contains(":Stone:")
-                        || spec.equals("v:stone:1") || spec.equals("v:stone_bricks:1"))) {
-            skipped++;
-            return;
-        }
-        RecipeMap map = map(mapName);
-        if (map == null) { skipped++; LOGGER.debug("[gregtech] chem skip (no map): {}", mapName); return; }
-
-        List<ItemStack> inputs = mapName.equals("Centrifuge") ? resolveCentrifugeInputs(itemIn) : resolveItems(itemIn);
-        List<FluidStack> fIn = resolveFluids(fluidIn);
-        List<FluidStack> fOut = resolveFluids(fluidOut);
-        CentrifugeOutputs cOutputs = mapName.equals("Centrifuge") ? resolveCentrifugeOutputs(itemOut) : null;
-        List<ItemStack> outputs = cOutputs == null ? resolveItems(itemOut) : cOutputs.items();
-        // RecipeMap.make trims chances to output length. An unresolved Sticky tail must keep
-        // the exact pre-existing one-output/two-chance raw row, not normalize it accidentally.
-        boolean sourceOptimize = cOutputs == null ? optimize : cOutputs.useSourceOptimize(optimize);
-        if (inputs == null || fIn == null || fOut == null || outputs == null) {
-            skipped++;
-            LOGGER.debug("[gregtech] chem skip ({}): in={} fIn={} fOut={} out={}", mapName,
-                    inputs == null ? String.join("|", itemIn) : "ok",
-                    fIn == null ? String.join("|", fluidIn) : "ok",
-                    fOut == null ? String.join("|", fluidOut) : "ok",
-                    outputs == null ? String.join("|", itemOut) : "ok");
-            return;
-        }
-
-        var candidate = sourceOptimize
-                ? RecipeMap.make(true, inputs.toArray(RecipeMap.ZL_IS), outputs.toArray(RecipeMap.ZL_IS),
-                    null, chances, fIn.toArray(RecipeMap.ZL_FS), fOut.toArray(RecipeMap.ZL_FS), dur, eut, 0)
-                : new gregtech.engine.recipe.Recipe(inputs.toArray(RecipeMap.ZL_IS), outputs.toArray(RecipeMap.ZL_IS),
-                    null, chances, fIn.toArray(RecipeMap.ZL_FS), fOut.toArray(RecipeMap.ZL_FS), dur, eut, 0);
-        if (candidate == null) { skipped++; return; }
-        for (int index = 0; index < itemIn.length; index++) {
-            String[] token = itemIn[index].split(":");
-            // GT6 marks catalyst inputs with a count of 0 (ST.amount(0, x), IL.X.get(0)):
-            // they gate the recipe without being consumed.
-            boolean catalyst = token.length == 4 && token[0].equals("i") && token[3].equals("0")
-                    || token.length == 3 && token[0].equals("tech") && token[2].equals("0")
-                    || token.length == 3 && token[0].equals("v") && token[2].equals("0")
-                    || token.length == 3 && token[0].equals("cell") && token[2].equals("0")
-                    // The second part of a selector token is its circuit index, not a count.
-                    || token.length == 2 && token[0].equals("tag");
-            if (catalyst) candidate.withCatalystInputs(index);
-        }
-        var recipe = map.addRecipe(candidate);
-        if (recipe != null) added++;
-        else skipped++;
-    }
-
-    /** Reviewed C default outputs only. Related explicit foreign forms and a changed vanilla
-     * target composition defer to the existing selector; no global unification target is changed.
+    /**
+     * Resolves a fluid spec ({@code m:<material>:<mb>}, {@code f:<registry name>:<mb>}, {@code w:<mb>})
+     * for the hand-ported packs that reuse this loader's grammar.
+     *
+     * @return the fluid, or null when the referenced content is absent
      */
-    private static ItemStack sourceCentrifugeItem(String[] parts) {
-        if (parts.length != 4 || !parts[3].matches("[1-9][0-9]*")) return null;
-        final int count;
-        try { count = Integer.parseInt(parts[3]); }
-        catch (NumberFormatException invalid) { return null; }
-        var binding = gregtech.content.recipe.SourceCentrifugeItemOutputs.binding(parts[1], parts[2]);
-        String fallback = gregtech.content.recipe.SourceCentrifugeItemOutputs.fallback(binding, count);
-        if (fallback == null) return null;
-        GTMaterial material = material(binding.materialName());
-        if (material == null) return null;
-        ItemStack target = resolveItem("v:" + binding.vanillaPath() + ":" + count);
-        var form = target == null ? null : gregtech.engine.material.MaterialEquivalence.form(target);
-        boolean core = material.isValid() && material.resolve() == material
-                && GTMaterialRegistry.isCoreMaterial(material)
-                && !gregtech.engine.addon.AddonMaterials.owns(material);
-        boolean targetMatches = form != null && form.material().resolve() == material
-                && form.prefix().getName().equals(binding.prefixName());
-        boolean external = gregtech.engine.addon.AddonMaterials.acceptedForms().stream().anyMatch(f ->
-                f.materialName().equals(binding.materialName()) && f.prefixName().equals(binding.prefixName()));
-        // A foreign direct material form is public identity even without an explicit composition.
-        if (!external) for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
-            var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
-            if (id == null || id.getNamespace().equals("gt6ce") || id.getNamespace().equals("minecraft")) continue;
-            if (item instanceof gregtech.engine.material.MaterialFormItem direct
-                    && direct.getPrefix() != null && direct.getMaterial() != null
-                    && direct.getPrefix().getName().equals(binding.prefixName())
-                    && direct.getMaterial().resolve() == material) {
-                external = true;
-                break;
-            }
-        }
-        if (!external) for (var entry : gregtech.engine.material.ItemMaterialRegistry.entries().entrySet()) {
-            var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(entry.getKey());
-            if (id == null || id.getNamespace().equals("gt6ce") || id.getNamespace().equals("minecraft")) continue;
-            var declaredForm = gregtech.engine.material.MaterialEquivalence.form(new ItemStack(entry.getKey()));
-            if (declaredForm != null && declaredForm.prefix().getName().equals(binding.prefixName())
-                    && declaredForm.material().resolve() == material) {
-                external = true;
-                break;
-            }
-            var explicit = entry.getValue();
-            if ((explicit.prefix() == null || explicit.prefix().getName().equals(binding.prefixName()))
-                    && explicit.components().stream().anyMatch(c -> c.material().resolve() == material)) {
-                external = true;
-                break;
-            }
-        }
-        return gregtech.content.recipe.SourceCentrifugeItemOutputs.useDefault(binding,
-                material.getId(), material.getName(), core, targetMatches, external)
-                ? target : resolveItem(fallback);
+    public static FluidStack resolveFluidSpec(String spec) {
+        return resolveFluid(spec);
     }
 
     /** Additive exact original-U dust token. Legacy omd thousandths and item counts are unchanged.
@@ -266,122 +76,6 @@ public final class GeneratedRecipeResolver {
         return material == null ? null : OM.dust(material, ratio[0].longValueExact());
     }
 
-    /**
-     * Resolve one transpiled item spec ({@code i:<prefix>:<material>:<count>},
-     * {@code tech:<item>:<count>}, {@code v:<vanilla item>:<count>}, …) to a stack.
-     *
-     * <p>Public so other generated data can reuse the same grammar — the GT loot rows
-     * ({@code GTLootGen}) and their tests do.</p>
-     *
-     * @return the stack, or {@code null} when the spec cannot be resolved
-     */
-    public static ItemStack resolveSpec(String spec) {
-        return resolveItem(spec);
-    }
-
-    /**
-     * Resolves a fluid spec ({@code m:<material>:<mb>}, {@code f:<registry name>:<mb>}, {@code w:<mb>})
-     * for the hand-ported packs that reuse this loader's grammar (e.g. {@code GTMainRecipes}).
-     *
-     * @return the fluid, or null when the referenced content is absent
-     */
-    public static FluidStack resolveFluidSpec(String spec) {
-        return resolveFluid(spec);
-    }
-
-    /** Only the two named C optional tails use this path. Every pre-existing descriptor and
-     * every non-C resolver retains the old all-or-nothing output resolution. No tag inference. */
-    record CentrifugeOutputs(List<ItemStack> items, boolean preserveLegacyPrefix) {
-        boolean useSourceOptimize(boolean requested) { return requested && !preserveLegacyPrefix; }
-    }
-    private static CentrifugeOutputs resolveCentrifugeOutputs(String[] specs) {
-        return resolveCentrifugeOutputs(specs, SourceCentrifugeOptionalItemOutputs::resolve,
-                GeneratedRecipeResolver::recordMissing);
-    }
-    /** Package-local isolated test seam; supplied policy/diagnostics do not mutate global tables. */
-    static CentrifugeOutputs resolveCentrifugeOutputs(String[] specs,
-            java.util.function.Function<gregtech.content.recipe.SourceCentrifugeOptionalBindings.Plan,
-                    SourceCentrifugeOptionalItemOutputs.Result> optionalResolution,
-            java.util.function.Consumer<String> missing) {
-        if (java.util.Arrays.stream(specs).noneMatch(s -> s.startsWith("copt:"))) return new CentrifugeOutputs(resolveItems(specs), false);
-        List<ItemStack> out = new ArrayList<>();
-        for (int index = 0; index < specs.length; index++) {
-            String spec = specs[index];
-            if (!spec.startsWith("copt:")) {
-                ItemStack stack = resolveItem(spec);
-                if (stack == null || stack.isEmpty()) { missing.accept(spec); return new CentrifugeOutputs(null, false); }
-                out.add(stack);
-                continue;
-            }
-            String[] parts = spec.split(":", -1);
-            // Both pinned source calls have one known output followed by one optional amount1 tail.
-            if (parts.length != 3 || !parts[2].equals("1") || index != specs.length - 1 || out.size() != 1) {
-                missing.accept(spec); return new CentrifugeOutputs(null, false);
-            }
-            var plan = gregtech.content.recipe.SourceCentrifugeOptionalBindings.Plan.fromToken(parts[1]);
-            if (plan == null) { missing.accept(spec); return new CentrifugeOutputs(null, false); }
-            var resolved = optionalResolution.apply(plan);
-            switch (resolved.action()) {
-                case DEFER_ROW -> { missing.accept(spec); return new CentrifugeOutputs(null, false); }
-                case OMIT_OPTIONAL_TAIL -> { missing.accept(spec); return new CentrifugeOutputs(out, true); }
-                case APPEND -> out.add(resolved.stack());
-            }
-        }
-        return new CentrifugeOutputs(out, false);
-    }
-
-    /** Only the eight named source calls use cbd; {@code i:blockDust} resolves through the ordinary
-     * block-prefix path. No table sweep/removal: an unavailable exact block simply prevents this
-     * producer's submission.
-     */
-    private static List<ItemStack> resolveCentrifugeInputs(String[] specs) {
-        if (java.util.Arrays.stream(specs).noneMatch(s -> s.startsWith("cbd:"))) return resolveItems(specs);
-        if (specs.length != 1) { for (String s : specs) recordMissing(s); return null; }
-        String spec = specs[0];
-        String[] parts = spec.split(":", -1);
-        if (parts.length != 3 || !parts[2].equals("1")) { recordMissing(spec); return null; }
-        var binding = gregtech.content.recipe.SourceCentrifugeBlockDustInputs.binding(parts[1]);
-        GTMaterial selected = binding == null ? null : material(parts[1]);
-        if (selected == null || !selected.isValid()) { recordMissing(spec); return null; }
-        GTMaterial canonical = selected.resolve();
-        ItemStack stack = gregtech.content.registry.GTBlocks.getStack(
-                gregtech.engine.prefix.BlockMaterialPrefix.blockDust, canonical);
-        if (stack == null || stack.isEmpty()) { recordMissing(spec); return null; }
-        boolean typed = stack.getItem() instanceof net.minecraft.world.item.BlockItem item
-                && item.getBlock() instanceof gregtech.content.block.MaterialBlockLike form
-                && form.prefix() == gregtech.engine.prefix.BlockMaterialPrefix.blockDust
-                && form.material() != null && form.material().resolve() == canonical;
-        var itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
-        boolean registry = typed && itemId != null && itemId.getNamespace().equals("gt6ce")
-                && stack.getItem() instanceof net.minecraft.world.item.BlockItem item
-                && item.getBlock().asItem() == stack.getItem()
-                && itemId.equals(net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(item.getBlock()));
-        boolean plain = stack.getCount() == 1 && !stack.isDamaged();
-//? if >=1.21.1 {
-        /*plain &= stack.getComponentsPatch().isEmpty();*/
-//?} else {
-        plain &= !stack.hasTag();
-//?}
-        var facts = new gregtech.content.recipe.SourceCentrifugeBlockDustInputs.Facts(true, typed,
-                registry, plain, gregtech.engine.material.GTMaterialRegistry.isCoreMaterial(canonical)
-                && !gregtech.engine.addon.AddonMaterials.owns(canonical), canonical.getName(), canonical.getId());
-        if (gregtech.content.recipe.SourceCentrifugeBlockDustInputs.decide(binding, facts)
-                != gregtech.content.recipe.SourceCentrifugeBlockDustInputs.Decision.PRESENT) {
-            recordMissing(spec); return null;
-        }
-        return java.util.List.of(stack.copy());
-    }
-
-    private static List<ItemStack> resolveItems(String[] specs) {
-        List<ItemStack> out = new ArrayList<>();
-        for (String spec : specs) {
-            ItemStack stack = resolveItem(spec);
-            if (stack == null || stack.isEmpty()) { recordMissing(spec); return null; }
-            out.add(stack);
-        }
-        return out;
-    }
-
     /** @return resolved stack, or null/empty when the referenced content is absent. */
     private static ItemStack resolveItem(String spec) {
         String[] parts = spec.split(":");
@@ -401,11 +95,11 @@ public final class GeneratedRecipeResolver {
                         ? gregtech.content.material.Materials.Empty : material(parts[2]);
 
                 if (material == null) return null;
-                // Keep a visible stack; register() separately marks GT6 count-zero inputs as catalysts.
+                // Keep a visible stack; the typed resolver marks GT6 count-zero inputs as catalysts.
                 int count = Math.max(1, Integer.parseInt(parts[3]));
                 MaterialPrefix prefix = prefix(parts[1]);
                 if (prefix == null) {
-                    // GT6's block forms (OP.blockGem/blockIngot/blockPlate/…) are blocks in the port
+                    // GT6's block forms (OP.blockGem/blockIngot/blockPlate/...) are blocks in the port
                     // (BlockPrefixRegistry), so an item-prefix miss falls through to them instead of
                     // dropping the recipe row.
                     gregtech.engine.prefix.BlockMaterialPrefix block =
@@ -419,7 +113,7 @@ public final class GeneratedRecipeResolver {
                 }
                 return MaterialStackItemHelper.mat(prefix, material, count);
             }
-            // GT6 written books (`ST.book("Manual_Printer", …)`, Loader_Books) — content/book/GTBooks.
+            // GT6 written books (`ST.book("Manual_Printer", ...)`, Loader_Books) — content/book/GTBooks.
             case "book" -> {
                 return gregtech.content.book.GTBooks.bookStack(parts[1]);
             }
@@ -438,17 +132,12 @@ public final class GeneratedRecipeResolver {
                 return (item == null || item == net.minecraft.world.item.Items.AIR)
                         ? null : new ItemStack(item, Integer.parseInt(parts[2]));
             }
-            // GT6 fluid cells: represented by the registered FluidItems
-            // (1000 mB unit), e.g. "cell:Water:2"
+            // GT6 fluid cells: represented by the registered FluidItems (1000 mB unit).
             case "cell" -> {
                 var fluidItem = gregtech.content.registry.GTFluidItems.get(parts[1]);
                 return fluidItem == null ? null : new ItemStack(fluidItem, Integer.parseInt(parts[2]));
             }
             // GT6 technological items (IL.<Name>), e.g. "tech:extruder_shape_plate:1".
-            // PLenty of IL.* names are not technological items: the generator modules and the food /
-            // clay items are multi-items registered under their display-name id, and a few map onto
-            // vanilla items, so the alias table is consulted and then the item registry (which also
-            // accepts the "minecraft:" namespace).
             case "tech" -> {
                 String id = gregtech.content.registry.GTTechnological.ALIASES
                         .getOrDefault(parts[1], parts[1]);
@@ -480,14 +169,57 @@ public final class GeneratedRecipeResolver {
         }
     }
 
-    private static List<FluidStack> resolveFluids(String[] specs) {
-        List<FluidStack> out = new ArrayList<>();
-        for (String spec : specs) {
-            FluidStack stack = resolveFluid(spec);
-            if (stack == null) { recordMissing(spec); return null; }
-            out.add(stack);
+    /** Reviewed source defaults for the three pinned centrifuge item selectors. */
+    private static ItemStack sourceCentrifugeItem(String[] parts) {
+        if (parts.length != 4 || !parts[3].matches("[1-9][0-9]*")) return null;
+        final int count;
+        try { count = Integer.parseInt(parts[3]); }
+        catch (NumberFormatException invalid) { return null; }
+        var binding = gregtech.content.recipe.SourceCentrifugeItemOutputs.binding(parts[1], parts[2]);
+        String fallback = gregtech.content.recipe.SourceCentrifugeItemOutputs.fallback(binding, count);
+        if (fallback == null) return null;
+        GTMaterial material = material(binding.materialName());
+        if (material == null) return null;
+        ItemStack target = resolveItem("v:" + binding.vanillaPath() + ":" + count);
+        var form = target == null ? null : gregtech.engine.material.MaterialEquivalence.form(target);
+        boolean core = material.isValid() && material.resolve() == material
+                && GTMaterialRegistry.isCoreMaterial(material)
+                && !gregtech.engine.addon.AddonMaterials.owns(material);
+        boolean targetMatches = form != null && form.material().resolve() == material
+                && form.prefix().getName().equals(binding.prefixName());
+        boolean external = externalForm(binding);
+        return gregtech.content.recipe.SourceCentrifugeItemOutputs.useDefault(binding,
+                material.getId(), material.getName(), core, targetMatches, external)
+                ? target : resolveItem(fallback);
+    }
+
+    /** A foreign direct material form is public identity even without an explicit composition. */
+    private static boolean externalForm(gregtech.content.recipe.SourceCentrifugeItemOutputs.Binding binding) {
+        if (gregtech.engine.addon.AddonMaterials.acceptedForms().stream().anyMatch(f ->
+                f.materialName().equals(binding.materialName()) && f.prefixName().equals(binding.prefixName())))
+            return true;
+        GTMaterial material = material(binding.materialName());
+        if (material == null) return false;
+        for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
+            var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
+            if (id == null || id.getNamespace().equals("gt6ce") || id.getNamespace().equals("minecraft")) continue;
+            if (item instanceof gregtech.engine.material.MaterialFormItem direct
+                    && direct.getPrefix() != null && direct.getMaterial() != null
+                    && direct.getPrefix().getName().equals(binding.prefixName())
+                    && direct.getMaterial().resolve() == material) return true;
         }
-        return out;
+        for (var entry : gregtech.engine.material.ItemMaterialRegistry.entries().entrySet()) {
+            var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(entry.getKey());
+            if (id == null || id.getNamespace().equals("gt6ce") || id.getNamespace().equals("minecraft")) continue;
+            var declaredForm = gregtech.engine.material.MaterialEquivalence.form(new ItemStack(entry.getKey()));
+            if (declaredForm != null && declaredForm.prefix().getName().equals(binding.prefixName())
+                    && declaredForm.material().resolve() == material) return true;
+            var explicit = entry.getValue();
+            if ((explicit.prefix() == null || explicit.prefix().getName().equals(binding.prefixName()))
+                    && explicit.components().stream().anyMatch(c -> c.material().resolve() == material))
+                return true;
+        }
+        return false;
     }
 
     /** @return resolved fluid, or null when the referenced content is absent. */
@@ -638,19 +370,5 @@ public final class GeneratedRecipeResolver {
             }
         }
         return PREFIXES.get(name);
-    }
-
-    private static RecipeMap map(String fieldName) {
-        if (MAPS.isEmpty()) {
-            for (Field field : MachineRecipeMaps.class.getFields()) {
-                if (RecipeMap.class.isAssignableFrom(field.getType())) {
-                    try {
-                        MAPS.put(field.getName(), (RecipeMap) field.get(null));
-                    } catch (IllegalAccessException ignored) {
-                    }
-                }
-            }
-        }
-        return MAPS.get(fieldName);
     }
 }

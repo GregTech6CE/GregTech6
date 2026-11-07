@@ -99,13 +99,19 @@ public final class GTChemRecipesTests {
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
     public static void chemistryLedgerPublishesSourceRows(GameTestHelper helper) {
-        helper.assertTrue(ChemRecipeResolver.count(ChemOutcome.PUBLISHED)
-                        + ChemRecipeResolver.count(ChemOutcome.SUBSTITUTED) > 250,
-                "the chemistry family publishes its source rows");
-        helper.assertTrue(ChemRecipeResolver.count(ChemOutcome.VALIDATION_FAILED) == 0,
-                "no chemistry row failed validation");
+        // The shared ledger also carries the other typed source tables; this test owns chemistry.
+        int chemistryPublished = 0, chemistryInvalid = 0;
+        for (var result : ChemRecipeResolver.results()) {
+            if (!result.source().contains("Loader_Recipes_Chem")) continue;
+            if (result.outcome() == ChemOutcome.PUBLISHED || result.outcome() == ChemOutcome.SUBSTITUTED)
+                chemistryPublished++;
+            if (result.outcome() == ChemOutcome.VALIDATION_FAILED) chemistryInvalid++;
+        }
+        helper.assertTrue(chemistryPublished > 250, "the chemistry family publishes its source rows");
+        helper.assertTrue(chemistryInvalid == 0, "no chemistry row failed validation");
         boolean cryolite = false, blaze = false, alf3 = false;
         for (var result : ChemRecipeResolver.results()) {
+            if (!result.source().contains("Loader_Recipes_Chem")) continue;
             if (result.outcome() != ChemOutcome.PUBLISHED && result.outcome() != ChemOutcome.SUBSTITUTED) continue;
             if (result.source().endsWith(":103") || result.source().endsWith(":104")
                     || result.source().endsWith(":105") || result.source().endsWith(":106")) cryolite = true;

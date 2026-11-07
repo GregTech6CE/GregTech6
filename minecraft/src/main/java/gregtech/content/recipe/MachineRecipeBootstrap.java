@@ -4,7 +4,6 @@ import gregtech.engine.mod.SetupOnce;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.content.nuclear.ReactorRodRecipes;
 import gregtech.content.tool.AnvilRecipeDefinitions;
-import gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import gregtech.content.data.FuelRecipeMaps;
 import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
@@ -101,10 +100,20 @@ public final class MachineRecipeBootstrap {
         register("GTMaterialDataRecipes", GTMaterialDataRecipes::register);
         register("FoodItemRecipes", FoodItemRecipes::register);
 
-        // The source chemistry family is the only producer for those maps' original rows.
+        // One typed producer per source table; each row names its source loader and ordinal.
+        // The order is the transpiled tables' previous load order, so collisions resolve the same way.
         runStep("GTChemRecipes", gregtech.content.recipe.generated.GTChemRecipes::register);
-        // Imported rows only fill gaps; never run these before the explicit recipes.
-        runStep("imported recipe tables", GeneratedRecipeResolver::loadAll);
+        runStep("GTOtherRecipes", gregtech.content.recipe.generated.GTOtherRecipes::register);
+        runStep("GTCompoundMixerRecipes", gregtech.content.recipe.generated.GTCompoundMixerRecipes::register);
+        runStep("GTFoodRecipes", gregtech.content.recipe.generated.GTFoodRecipes::register);
+        runStep("GTExtruderRecipes", gregtech.content.recipe.generated.GTExtruderRecipes::register);
+        runStep("GTVanillaRecipes", gregtech.content.recipe.generated.GTVanillaRecipes::register);
+        runStep("GTTemporaryRecipes", gregtech.content.recipe.generated.GTTemporaryRecipes::register);
+        runStep("GTOreRecipes", () -> gregtech.content.recipe.generated.GTOreRecipes
+                .register(gregtech.GregTechConfig.easyU235Extraction()));
+        // Comb and technology rows live inside GT6 item classes, outside the loader tables.
+        runStep("GTCombRecipes", gregtech.content.recipe.generated.GTCombRecipes::register);
+        runStep("GTTechnologyRecipes", gregtech.content.recipe.generated.GTTechnologyRecipes::register);
         gregtech.engine.recipe.RecipeDiagnostics.report();
         RecipeDump.afterRegistration();
     }
