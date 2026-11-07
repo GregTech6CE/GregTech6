@@ -89,10 +89,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
     }
 
     public PipeSpec spec() { return spec; }
-//? if >=1.21.1 {
-//?} else {
+
     @Override public String pipeSizeName() { return spec.size().name(); }
-//?}
 
     @Override
 //? if >=1.21.1 {
@@ -107,12 +105,6 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
                     ToolInteractionSpec.ConnectionKind.FLUID) : null;
 //?}
     }
-//? if >=1.21.1 {
-
-    /*@Override
-    public String pipeSizeName(){return spec.size().name();}
-*///?} else {
-//?}
 
     /**
      * The clicked face is the one the pipe links on placement. Only the server consumes it

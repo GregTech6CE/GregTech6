@@ -1,18 +1,11 @@
 package gregtech.content.block.energy;
 
-//? if >=1.21.1 {
-/*import gregtech.engine.tool.GTToolHelper;
-*///?} else {
-//?}
+import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.energy.WireSpec;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.engine.tool.GTToolHelper;
-//?}
 import gregtech.content.blockentity.energy.ElectricWireBlockEntity;
 import gregtech.util.GTEntityHelper;
 import java.util.List;

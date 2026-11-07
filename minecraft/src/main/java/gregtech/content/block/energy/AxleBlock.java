@@ -1,19 +1,12 @@
 package gregtech.content.block.energy;
 
-//? if >=1.21.1 {
-/*import gregtech.engine.tool.GTToolHelper;
-*///?} else {
-//?}
+import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.energy.AxleSpec;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.engine.tool.GTToolHelper;
-//?}
 import gregtech.content.blockentity.energy.AxleBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
