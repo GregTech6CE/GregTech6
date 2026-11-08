@@ -11,6 +11,7 @@ import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.stack.StackData;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -228,11 +229,10 @@ final class SourceOreCrushingAdapter {
                 net.minecraft.world.item.component.BlockItemStateProperties.EMPTY).properties();
         if (properties.containsKey("stone")) host = properties.get("stone");
         if (properties.containsKey("broken")) mode = properties.get("broken");
-        var custom = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-        CompoundTag tag = custom == null ? null : custom.copyTag();
+        CompoundTag tag = StackData.read(stack);
         if (host == null && tag != null) host = legacyHost(tag);
 *///?} else {
-        CompoundTag tag = stack.getTag();
+        CompoundTag tag = StackData.read(stack);
         if (tag != null) {
             host = legacyHost(tag);
             if (tag.contains("BlockStateTag") && !tag.contains("BlockStateTag", Tag.TAG_COMPOUND)) knownMode = false;

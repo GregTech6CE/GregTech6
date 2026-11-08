@@ -25,6 +25,20 @@ public final class StackData {
 //?}
     }
 
+    /** Whether the stack carries free-form custom data. */
+    public static boolean hasCustomData(ItemStack stack) {
+        return has(stack);
+    }
+
+    /** Whether the stack carries any non-default data; 1.20.1 has only the tag. */
+    public static boolean hasAnyData(ItemStack stack) {
+//? if >=1.21.1 {
+/*        return !stack.getComponentsPatch().isEmpty();
+*///?} else {
+        return stack.hasTag();
+//?}
+    }
+
     /** The stack's data, or null when it carries none. */
     public static CompoundTag read(ItemStack stack) {
 //? if >=1.21.1 {

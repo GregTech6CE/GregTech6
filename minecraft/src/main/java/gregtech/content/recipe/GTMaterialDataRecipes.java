@@ -11,6 +11,7 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTItems;
+import gregtech.engine.stack.StackData;
 import gregtech.platform.Mc;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -152,13 +153,7 @@ public final class GTMaterialDataRecipes {
     @Nullable
     public static CompoundTag usbData(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return null;
-
-//? if >=1.21.1 {
-/*        CompoundTag tag = gregtech.content.data.UsbDataMedia.tag(stack);
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
-
+        CompoundTag tag = StackData.read(stack);
         if (tag == null || !tag.contains(NBT_USB_DATA)) return null;
         CompoundTag data = tag.getCompound(NBT_USB_DATA);
         return data.isEmpty() ? null : data;
@@ -185,23 +180,12 @@ public final class GTMaterialDataRecipes {
     /** A copy of the stick carrying GT6's material data, written the way the scanner writes it. */
     public static ItemStack withMaterialData(ItemStack usb, GTMaterial material) {
         ItemStack out = usb.copyWithCount(1);
-
-//? if >=1.21.1 {
-/*        CompoundTag tag = gregtech.content.data.UsbDataMedia.tagOrEmpty(out);
-*///?} else {
-        CompoundTag tag = out.getOrCreateTag();
-//?}
-
         CompoundTag data = new CompoundTag();
         gregtech.engine.material.StoredMaterial.writeName(data, NBT_REPLICATOR_DATA, material);
-        tag.put(NBT_USB_DATA, data);
-        tag.putByte(NBT_USB_TIER, (byte) USB_TIER);
-
-//? if >=1.21.1 {
-/*        gregtech.content.data.UsbDataMedia.store(out,tag);
-*///?} else {
-//?}
-
+        StackData.update(out, tag -> {
+            tag.put(NBT_USB_DATA, data);
+            tag.putByte(NBT_USB_TIER, (byte) USB_TIER);
+        });
         return out;
     }
 
@@ -262,13 +246,7 @@ public final class GTMaterialDataRecipes {
     @Nullable
     public static CompoundTag driveSlot(ItemStack stack, int slot) {
         if (slot < 0 || slot >= DRIVE_SLOTS) return null;
-
-//? if >=1.21.1 {
-/*        CompoundTag tag = stack == null ? null : gregtech.content.data.UsbDataMedia.tag(stack);
-*///?} else {
-        CompoundTag tag = stack == null ? null : stack.getTag();
-//?}
-
+        CompoundTag tag = stack == null ? null : StackData.read(stack);
         if (tag == null || !tag.contains(NBT_USB_DRIVE)) return null;
         CompoundTag drive = tag.getCompound(NBT_USB_DRIVE);
         if (!drive.contains(slotDataKey(slot))) return null;
@@ -290,13 +268,7 @@ public final class GTMaterialDataRecipes {
         if (tier <= 0) return null;
         CompoundTag data = driveSlot(drive, slot);
         if (data == null) return null;
-
-//? if >=1.21.1 {
-/*        CompoundTag tag = gregtech.content.data.UsbDataMedia.tag(drive);
-*///?} else {
-        CompoundTag tag = drive.getTag();
-//?}
-
+        CompoundTag tag = StackData.read(drive);
         int fileTier = tag != null && tag.getCompound(NBT_USB_DRIVE).contains(slotTierKey(slot))
                 ? tag.getCompound(NBT_USB_DRIVE).getByte(slotTierKey(slot)) : 0;
         if (fileTier > tier) return null;
@@ -328,13 +300,7 @@ public final class GTMaterialDataRecipes {
      */
     public static int writeMaterialData(ItemStack drive, GTMaterial material) {
         if (!isDrive(drive) || material == null || !material.isValid()) return -1;
-
-//? if >=1.21.1 {
-/*        CompoundTag tag = gregtech.content.data.UsbDataMedia.tagOrEmpty(drive);
-*///?} else {
-        CompoundTag tag = drive.getOrCreateTag();
-//?}
-
+        CompoundTag tag = StackData.readOrEmpty(drive);
         CompoundTag driveTag = tag.getCompound(NBT_USB_DRIVE);
         for (int slot = 0; slot < DRIVE_SLOTS; slot++) {
             if (driveTag.contains(slotDataKey(slot)) && !driveTag.getCompound(slotDataKey(slot)).isEmpty()) {
@@ -345,12 +311,7 @@ public final class GTMaterialDataRecipes {
             driveTag.put(slotDataKey(slot), data);
             driveTag.putByte(slotTierKey(slot), (byte) DRIVE_FILE_TIER);
             tag.put(NBT_USB_DRIVE, driveTag);
-
-//? if >=1.21.1 {
-/*            gregtech.content.data.UsbDataMedia.store(drive, tag);
-*///?} else {
-//?}
-
+            StackData.write(drive, tag);
             return slot;
         }
         return -1;

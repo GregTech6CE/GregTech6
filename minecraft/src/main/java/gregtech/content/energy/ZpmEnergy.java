@@ -19,7 +19,7 @@ public final class ZpmEnergy {
 /*        if(!isModule(stack))return 0;
         return ZpmWorkRules.charge(stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getLong(KEY));
 *///?} else {
-        if(!isModule(stack)||!StackData.has(stack))return 0;
+        if(!isModule(stack)||!StackData.hasAnyData(stack))return 0;
         return ZpmWorkRules.charge(StackData.readOrEmpty(stack).getCompound("BlockEntityTag").getLong(KEY));
 //?}
     }

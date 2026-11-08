@@ -5,6 +5,7 @@ package gregtech.content.item.behavior;
 *///?} else {
 import gregtech.content.item.behavior.ItemBehaviors.Outcome;
 //?}
+import gregtech.engine.stack.StackData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -44,20 +45,15 @@ public final class BehaviorRemote {
     /** GT6's non-toggle binding path used by powered drills. A full remote is skipped. */
     public static boolean addCoords(ItemStack stack, Level level, BlockPos pos) {
         if (level.isClientSide) return false;
-//? if >=1.21.1 {
-        /*var coords = getCoords(gregtech.platform.neoforge.StackCustomData.read(stack), level);
-*///?} else {
-        var coords = getCoords(stack.getTag(), level);
-//?}
+        var coords = getCoords(StackData.read(stack), level);
         if (coords.size() >= MAX_COORDS) return false;
         if (coords.contains(pos)) return true;
         if (target(level, pos) == null) return false;
         coords.add(pos.immutable());
+        StackData.update(stack, tag -> setCoords(tag, level, coords));
 //? if >=1.21.1 {
-        /*gregtech.platform.neoforge.StackCustomData.update(stack, tag -> setCoords(tag, level, coords));
-        level.playSound(null, pos, net.minecraft.sounds.SoundEvents.NOTE_BLOCK_PLING.value(),
+        /*level.playSound(null, pos, net.minecraft.sounds.SoundEvents.NOTE_BLOCK_PLING.value(),
 *///?} else {
-        setCoords(stack.getOrCreateTag(), level, coords);
         level.playSound(null, pos, net.minecraft.sounds.SoundEvents.NOTE_BLOCK_PLING.get(),
 //?}
                 net.minecraft.sounds.SoundSource.BLOCKS, .5F, 1F);
@@ -190,13 +186,8 @@ public final class BehaviorRemote {
         if (!ItemBehaviors.mayEdit(level, player, pos)) return Outcome.refused(stack);
 //?}
 
-//? if >=1.21.1 {
-        /*CompoundTag tag = gregtech.platform.neoforge.StackCustomData.read(stack);
+        CompoundTag tag = StackData.readOrEmpty(stack);
         // UT.NBT.getNBT
-*///?} else {
-        CompoundTag tag = stack.getOrCreateTag();
-        // UT.NBT.getNBT
-//?}
         List<BlockPos> coords = getCoords(tag, level);
         if (coords.contains(pos)) {
             message(player, "Coordinates removed!");
@@ -209,12 +200,8 @@ public final class BehaviorRemote {
         } else {
             message(player, "This cannot be added!");
         }
-//? if >=1.21.1 {
-        /*gregtech.platform.neoforge.StackCustomData.update(stack, nbt -> setCoords(nbt, level, coords));
-        //
-*///?} else {
         setCoords(tag, level, coords);
-//?}
+        StackData.write(stack, tag);
         return Outcome.acted(stack);
     }
 
@@ -245,14 +232,8 @@ public final class BehaviorRemote {
         if (level.isClientSide) return Outcome.refused(stack);
         if (player == null) return Outcome.refused(stack);
         if (player.isShiftKeyDown()) return Outcome.refused(stack);
-//? if >=1.21.1 {
-        /*CompoundTag tag = gregtech.platform.neoforge.StackCustomData.read(stack);
-        if (tag.isEmpty()) return Outcome.refused(stack);
-        //
-*///?} else {
-        CompoundTag tag = stack.getTag();
+        CompoundTag tag = StackData.read(stack);
         if (tag == null) return Outcome.refused(stack);
-//?}
 
         List<BlockPos> kept = new ArrayList<>();
         for (BlockPos coords : getCoords(tag, level)) {
@@ -264,12 +245,8 @@ public final class BehaviorRemote {
                 kept.add(coords);
             }
         }
-//? if >=1.21.1 {
-        /*gregtech.platform.neoforge.StackCustomData.update(stack, nbt -> setCoords(nbt, level, kept));
-        //
-*///?} else {
         setCoords(tag, level, kept);
-//?}
+        StackData.write(stack, tag);
         return Outcome.acted(stack);
     }
 

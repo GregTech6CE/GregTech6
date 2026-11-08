@@ -31,7 +31,7 @@ public final class CoverStackData {
     }
 
     public static boolean has(ItemStack stack) {
-        return StackData.has(stack);
+        return StackData.hasAnyData(stack);
     }
 
     public static CompoundTag read(ItemStack stack) {

@@ -52,11 +52,11 @@ public enum MachineCoverSpec {
     }
 
     public static boolean inverted(ItemStack stack) {
-        return StackData.has(stack) && StackData.read(stack).getBoolean("gt.cover.inverted");
+        return StackData.hasAnyData(stack) && StackData.read(stack).getBoolean("gt.cover.inverted");
     }
 
     public static boolean strong(ItemStack stack) {
-        return StackData.has(stack) && StackData.read(stack).getBoolean("gt.cover.strong");
+        return StackData.hasAnyData(stack) && StackData.read(stack).getBoolean("gt.cover.strong");
     }
 
     /** The caller supplies state and clock; this predicate cannot validate their source. */

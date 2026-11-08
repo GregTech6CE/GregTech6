@@ -263,7 +263,7 @@ public final class PanelCoverRuntime {
             if (c == null || !c.supportsMode() || stopped) continue;
             if (panel == PanelCover.REDSTONE) c.setMode(incoming(side));
             else if (restore) c.setMode(value(stack) & 15);
-            if (panel == PanelCover.BUTTONS && StackData.has(stack)) {
+            if (panel == PanelCover.BUTTONS && StackData.hasAnyData(stack)) {
                 int ticks = StackData.getInt(stack, COUNTDOWN, 0);
                 if (ticks > 1) {
                     StackData.putInt(stack, COUNTDOWN, --ticks);

@@ -1,17 +1,18 @@
 package gregtech.content.tool;
 
 import com.google.gson.Gson;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.AABB;
+import gregtech.engine.stack.StackData;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
 
 /** GT6 MultiTileEntityCoin's two 16x16 mint bit planes and world render bounds. */
 public final class CoinGeometry {
@@ -35,16 +36,14 @@ public final class CoinGeometry {
                 throw new IllegalStateException("Invalid GT6 coin shape");
             short[][] rows = new short[2][16];
             for (int plane = 0; plane < 2; plane++)
-                for (int row = 0; row < 16; row++)
-                    rows[plane][row] = (short) data[plane][row];
+                for (int row = 0; row < 16; row++) rows[plane][row] = (short) data[plane][row];
             return new MintPattern(rows);
         } catch (java.io.IOException error) {
             throw new ExceptionInInitializerError(error);
         }
     }
 
-    private CoinGeometry() {
-    }
+    private CoinGeometry() {}
 
     public static MintPattern defaultPattern() {
         return DEFAULT_PATTERN;
@@ -52,12 +51,7 @@ public final class CoinGeometry {
 
     /** True only when the stack carries at least one GT6 die row; other coin NBT keeps the default mint. */
     public static boolean hasCustomPattern(ItemStack coin) {
-//? if >=1.21.1 {
-        /*var data = coin.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-        CompoundTag tag = data == null ? null : data.copyTag();
-*///?} else {
-        CompoundTag tag = coin.getTag();
-//?}
+        CompoundTag tag = StackData.read(coin);
         if (tag == null) return false;
         for (int plane = 0; plane < 2; plane++)
             for (int row = 0; row < 16; row++)
@@ -67,12 +61,7 @@ public final class CoinGeometry {
 
     /** An untagged registered coin uses GT6's default; a die-struck coin uses its NBT bit planes. */
     public static MintPattern pattern(ItemStack coin) {
-//? if >=1.21.1 {
-        /*var data = coin.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-        CompoundTag tag = data == null ? null : data.copyTag();
-*///?} else {
-        CompoundTag tag = coin.getTag();
-//?}
+        CompoundTag tag = StackData.read(coin);
         if (tag == null) return DEFAULT_PATTERN;
         boolean hasPattern = false;
         short[][] rows = new short[2][16];
@@ -88,8 +77,7 @@ public final class CoinGeometry {
         if (!hasPattern) return DEFAULT_PATTERN;
         StringBuilder bits = new StringBuilder(32);
         for (int plane = 0; plane < 2; plane++)
-            for (int row = 0; row < 16; row++)
-                bits.append((char) (rows[plane][row] & 0xFFFF));
+            for (int row = 0; row < 16; row++) bits.append((char) (rows[plane][row] & 0xFFFF));
         synchronized (CUSTOM_PATTERNS) {
             return CUSTOM_PATTERNS.computeIfAbsent(bits.toString(), ignored -> new MintPattern(rows));
         }
@@ -110,13 +98,14 @@ public final class CoinGeometry {
     /** Immutable die raster; box lists are built only for stack heights actually rendered. */
     public static final class MintPattern {
         private final short[][] rows = new short[2][16];
+
         @SuppressWarnings("unchecked")
         private final List<AABB>[] pixels = (List<AABB>[]) new List<?>[17];
+
         private List<AABB> inventoryPixels;
 
         private MintPattern(short[][] source) {
-            for (int plane = 0; plane < 2; plane++)
-                System.arraycopy(source[plane], 0, rows[plane], 0, 16);
+            for (int plane = 0; plane < 2; plane++) System.arraycopy(source[plane], 0, rows[plane], 0, 16);
             pixels[0] = List.of();
         }
 
@@ -128,13 +117,19 @@ public final class CoinGeometry {
             int height = Math.max(0, Math.min(16, count));
             if (pixels[height] != null) return pixels[height];
             var boxes = new ArrayList<AABB>();
-            for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) {
-                int depth = pixelDepth(x, z);
-                // GT6 suppresses fully cut-away pixels.
-                if (depth == 3) continue;
-                boxes.add(new AABB(x / 64.0, depth / 64.0, z / 64.0,
-                        (x + 1) / 64.0, height / 16.0 - depth / 64.0, (z + 1) / 64.0));
-            }
+            for (int x = 0; x < 16; x++)
+                for (int z = 0; z < 16; z++) {
+                    int depth = pixelDepth(x, z);
+                    // GT6 suppresses fully cut-away pixels.
+                    if (depth == 3) continue;
+                    boxes.add(new AABB(
+                            x / 64.0,
+                            depth / 64.0,
+                            z / 64.0,
+                            (x + 1) / 64.0,
+                            height / 16.0 - depth / 64.0,
+                            (z + 1) / 64.0));
+                }
             return pixels[height] = List.copyOf(boxes);
         }
 
@@ -142,12 +137,13 @@ public final class CoinGeometry {
         public synchronized List<AABB> inventoryPixelBoxes() {
             if (inventoryPixels != null) return inventoryPixels;
             var boxes = new ArrayList<AABB>();
-            for (int x = 0; x < 16; x++) for (int z = 0; z < 16; z++) {
-                int depth = pixelDepth(x, z);
-                if (depth == 3) continue;
-                boxes.add(new AABB(x / 16.0, 7 / 16.0, z / 16.0,
-                        (x + 1) / 16.0, (9 - depth / 4.0) / 16.0, (z + 1) / 16.0));
-            }
+            for (int x = 0; x < 16; x++)
+                for (int z = 0; z < 16; z++) {
+                    int depth = pixelDepth(x, z);
+                    if (depth == 3) continue;
+                    boxes.add(new AABB(
+                            x / 16.0, 7 / 16.0, z / 16.0, (x + 1) / 16.0, (9 - depth / 4.0) / 16.0, (z + 1) / 16.0));
+                }
             return inventoryPixels = List.copyOf(boxes);
         }
 
@@ -186,5 +182,4 @@ public final class CoinGeometry {
             default -> 1.0F - y;
         };
     }
-
 }

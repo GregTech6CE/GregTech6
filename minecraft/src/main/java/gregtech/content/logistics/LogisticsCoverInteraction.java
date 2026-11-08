@@ -1,11 +1,11 @@
 package gregtech.content.logistics;
 
 //? if >=1.21.1 {
-/*import gregtech.platform.neoforge.StackCustomData;
-import net.minecraft.core.HolderLookup;
+/*import net.minecraft.core.HolderLookup;
 
 *///?} else {
 //?}
+import gregtech.engine.stack.StackData;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import net.minecraft.core.Direction;
@@ -36,42 +36,36 @@ public final class LogisticsCoverInteraction {
     }
 
     public static int value(ItemStack cover) {
-//? if >=1.21.1 {
-        /*return StackCustomData.read(cover).getInt(VALUE);
-*///?} else {
-        return cover.hasTag() ? cover.getTag().getInt(VALUE) : 0;
-//?}
+        return StackData.getInt(cover, VALUE, 0);
     }
 
     public static int targetStackSize(ItemStack cover) {
         return (value(cover) >> 2) & 127;
     }
 
-//? if >=1.21.1 {
-    /*public static ItemStack itemFilter(ItemStack cover, HolderLookup.Provider lookup) {
-        var tag = StackCustomData.read(cover);
-        return tag.contains(ITEM_FILTER)
-                ? ItemStack.parseOptional(lookup, tag.getCompound(ITEM_FILTER)) : ItemStack.EMPTY;
-*///?} else {
-    public static ItemStack itemFilter(ItemStack cover) {
-        return cover.hasTag() && cover.getTag().contains(ITEM_FILTER)
-                ? ItemStack.of(cover.getTag().getCompound(ITEM_FILTER)) : ItemStack.EMPTY;
-//?}
+    public static ItemStack itemFilter(ItemStack cover, net.minecraft.core.HolderLookup.Provider lookup) {
+        var tag = StackData.read(cover);
+        return tag != null && tag.contains(ITEM_FILTER)
+                ? gregtech.engine.stack.NbtCompat.readItem(tag.getCompound(ITEM_FILTER), lookup)
+                : ItemStack.EMPTY;
     }
+//? if >=1.21.1 {
+//?} else {
+    public static ItemStack itemFilter(ItemStack cover) { return itemFilter(cover, null); }
+//?}
 
     /** GT6 fluid logistics covers store a sample fluid under {@code gt.filter.fluid}. */
-//? if >=1.21.1 {
-    /*public static FluidStack fluidFilter(ItemStack cover, HolderLookup.Provider lookup) {
-        var tag = StackCustomData.read(cover);
-        return tag.contains(FLUID_FILTER)
-                ? FluidStack.parseOptional(lookup, tag.getCompound(FLUID_FILTER)) : FluidStack.EMPTY;
-*///?} else {
-    public static FluidStack fluidFilter(ItemStack cover) {
-        if (cover == null || !cover.hasTag() || !cover.getTag().contains(FLUID_FILTER)) return FluidStack.EMPTY;
-        FluidStack filter = FluidStack.loadFluidStackFromNBT(cover.getTag().getCompound(FLUID_FILTER));
+    public static FluidStack fluidFilter(ItemStack cover, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (cover == null) return FluidStack.EMPTY;
+        var tag = StackData.read(cover);
+        if (tag == null || !tag.contains(FLUID_FILTER)) return FluidStack.EMPTY;
+        FluidStack filter = gregtech.engine.stack.NbtCompat.readFluid(tag.getCompound(FLUID_FILTER), lookup);
         return filter == null ? FluidStack.EMPTY : filter;
-//?}
     }
+//? if >=1.21.1 {
+//?} else {
+    public static FluidStack fluidFilter(ItemStack cover) { return fluidFilter(cover, null); }
+//?}
 
     /** Matches current item and damage only; legacy metadata variants may now live in stack data. */
     public static boolean matches(ItemStack filter, ItemStack candidate) {
@@ -83,16 +77,11 @@ public final class LogisticsCoverInteraction {
         ItemStack cover = covers.get(face);
         var type = LogisticsCoverType.of(cover);
         if (template.isEmpty() || type == null || !type.filtered()
-//? if >=1.21.1 {
-                /*|| type.channel() != LogisticsCoverType.Channel.ITEM || !itemFilter(cover, covers.registries()).isEmpty())
+                || type.channel() != LogisticsCoverType.Channel.ITEM || !itemFilter(cover, lookup(covers)).isEmpty())
             return false;
-        StackCustomData.update(cover,
-                tag -> tag.put(ITEM_FILTER, template.copyWithCount(1).save(covers.registries())));
-*///?} else {
-                || type.channel() != LogisticsCoverType.Channel.ITEM || !itemFilter(cover).isEmpty())
-            return false;
-        cover.getOrCreateTag().put(ITEM_FILTER, template.copyWithCount(1).save(new CompoundTag()));
-//?}
+        StackData.update(cover,
+                tag -> tag.put(ITEM_FILTER, gregtech.engine.stack.NbtCompat.saveItem(
+                        template.copyWithCount(1), lookup(covers))));
         covers.changed();
         return true;
     }
@@ -102,11 +91,7 @@ public final class LogisticsCoverInteraction {
         var type = LogisticsCoverType.of(cover);
         if (type == null || !type.filtered() || type.channel() != LogisticsCoverType.Channel.ITEM)
             return false;
-//? if >=1.21.1 {
-        /*StackCustomData.update(cover, tag -> tag.remove(ITEM_FILTER));
-*///?} else {
-        if (cover.hasTag()) cover.getTag().remove(ITEM_FILTER);
-//?}
+        StackData.remove(cover, ITEM_FILTER);
         covers.changed();
         return true;
     }
@@ -117,16 +102,11 @@ public final class LogisticsCoverInteraction {
         var type = LogisticsCoverType.of(cover);
         if (sample == null || sample.isEmpty() || type == null || !type.filtered()
                 || type.channel() != LogisticsCoverType.Channel.FLUID
-//? if >=1.21.1 {
-                /*|| StackCustomData.read(cover).contains(FLUID_FILTER))
+                || StackData.readOrEmpty(cover).contains(FLUID_FILTER))
             return false;
-        StackCustomData.update(cover,
-                tag -> tag.put(FLUID_FILTER, sample.copy().save(covers.registries())));
-*///?} else {
-                || cover.getOrCreateTag().contains(FLUID_FILTER))
-            return false;
-        cover.getOrCreateTag().put(FLUID_FILTER, sample.copy().writeToNBT(new CompoundTag()));
-//?}
+        StackData.update(cover,
+                tag -> tag.put(FLUID_FILTER, gregtech.engine.stack.NbtCompat.saveFluid(
+                        sample.copy(), lookup(covers))));
         covers.changed();
         return true;
     }
@@ -136,11 +116,7 @@ public final class LogisticsCoverInteraction {
         var type = LogisticsCoverType.of(cover);
         if (type == null || !type.filtered() || type.channel() != LogisticsCoverType.Channel.FLUID)
             return false;
-//? if >=1.21.1 {
-        /*StackCustomData.update(cover, tag -> tag.remove(FLUID_FILTER));
-*///?} else {
-        if (cover.hasTag()) cover.getTag().remove(FLUID_FILTER);
-//?}
+        StackData.remove(cover, FLUID_FILTER);
         covers.changed();
         return true;
     }
@@ -151,12 +127,7 @@ public final class LogisticsCoverInteraction {
         if (type == null || !type.usesPriority())
             return false;
         int previousValue = value(cover);
-//? if >=1.21.1 {
-        /*StackCustomData.update(cover,
-                tag -> tag.putInt(VALUE, (previousValue & ~3) | ((previousValue + 1) & 3)));
-*///?} else {
-        cover.getOrCreateTag().putInt(VALUE, (previousValue & ~3) | ((previousValue + 1) & 3));
-//?}
+        StackData.putInt(cover, VALUE, (previousValue & ~3) | ((previousValue + 1) & 3));
         covers.changed();
         return true;
     }
@@ -168,11 +139,7 @@ public final class LogisticsCoverInteraction {
             return false;
         int previousValue = value(cover);
         int nextTargetSize = (targetStackSize(cover) + 1) % 65;
-//? if >=1.21.1 {
-        /*StackCustomData.update(cover, tag -> tag.putInt(VALUE, (previousValue & 3) | (nextTargetSize << 2)));
-*///?} else {
-        cover.getOrCreateTag().putInt(VALUE, (previousValue & 3) | (nextTargetSize << 2));
-//?}
+        StackData.putInt(cover, VALUE, (previousValue & 3) | (nextTargetSize << 2));
         covers.changed();
         return true;
     }
@@ -246,5 +213,13 @@ public final class LogisticsCoverInteraction {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return InteractionResult.PASS;
+    }
+
+    private static net.minecraft.core.HolderLookup.Provider lookup(LogisticsCovers covers) {
+//? if >=1.21.1 {
+/*        return covers.registries();
+*///?} else {
+        return null;
+//?}
     }
 }

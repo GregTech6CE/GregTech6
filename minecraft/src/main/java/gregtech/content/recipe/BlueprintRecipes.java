@@ -5,6 +5,7 @@
 package gregtech.content.recipe;
 
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.stack.StackData;
 import gregtech.content.data.CraftingBlueprintData;
 import gregtech.content.data.UsbDataCable;
 import gregtech.content.data.UsbDataMedia;
@@ -65,15 +66,10 @@ public final class BlueprintRecipes {
         if (pattern.length == 0) return null;
         ItemStack written = usb.copyWithCount(1);
         var data = CraftingBlueprintData.write(level, pattern);
-//? if >=1.21.1 {
-        /*gregtech.platform.neoforge.StackCustomData.update(written, tag -> {
+        StackData.update(written, tag -> {
             tag.put("gt.usb.data", data);
             tag.putByte("gt.usb.tier", (byte) 1);
         });
-*///?} else {
-        written.getOrCreateTag().put("gt.usb.data", data);
-        written.getOrCreateTag().putByte("gt.usb.tier", (byte) 1);
-//?}
         return exact(new Recipe(
                 new ItemStack[]{blueprint.copyWithCount(1), usb.copyWithCount(1)},
                 new ItemStack[]{written, blueprint.copyWithCount(1)},
