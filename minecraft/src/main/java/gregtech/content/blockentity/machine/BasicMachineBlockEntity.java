@@ -75,9 +75,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 //? if >=1.21.1 {
-/*public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
+/*public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.fluid.FluidToolTarget, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
 *///?} else {
-public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
+public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.fluid.FluidToolTarget, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ItemBehaviors.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {
 //?}
     private static final String NBT_INVENTORY = "gt.inventory";
     private static final String NBT_TANKS_IN = "gt.tanks_input";
@@ -1059,6 +1059,16 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override
     public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
         return inventory == null ? FluidStack.EMPTY : inventory.drain(maxDrain, action);
+    }
+
+    /**
+     * Funnel and nozzle access is separate from the facing capability: funnels only fill the
+     * input tanks, taps and nozzles drain outputs first and then fall back to the inputs.
+     */
+    @Override
+    public IFluidHandler fluidToolHandler(Direction side, boolean filling) {
+        if (isRemoved() || inventory == null) return null;
+        return filling ? inventory.toolFillHandler() : inventory.toolDrainHandler();
     }
 
     // ── IEnergyBlock ──────────────────────────────────────────────────────

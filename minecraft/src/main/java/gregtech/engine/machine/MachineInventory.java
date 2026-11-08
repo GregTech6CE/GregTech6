@@ -203,6 +203,109 @@ public final class MachineInventory implements IFluidHandler {
         return FluidStack.EMPTY;
     }
 
+    /**
+     * Attachment access drains outputs before inputs, as Original's tap and nozzle do.
+     * Kept apart from {@link #drain}: pipes must never pull a recipe input through the capability.
+     */
+    public FluidStack toolDrain(FluidStack resource, FluidAction action) {
+        for (var tank : tanksOutput) {
+            FluidStack drained = tank.drain(resource, action);
+            if (!drained.isEmpty()) return drained;
+        }
+        for (var tank : tanksInput) {
+            FluidStack drained = tank.drain(resource, action);
+            if (!drained.isEmpty()) return drained;
+        }
+        return FluidStack.EMPTY;
+    }
+
+    public FluidStack toolDrain(int maxDrain, FluidAction action) {
+        for (var tank : tanksOutput) {
+            FluidStack drained = tank.drain(maxDrain, action);
+            if (!drained.isEmpty()) return drained;
+        }
+        for (var tank : tanksInput) {
+            FluidStack drained = tank.drain(maxDrain, action);
+            if (!drained.isEmpty()) return drained;
+        }
+        return FluidStack.EMPTY;
+    }
+
+    /** Input-only view for cap nozzles and funnels; attachments bypass the facing capability. */
+    public IFluidHandler toolFillHandler() {
+        return toolFillView;
+    }
+
+    /** Drain-only view ordered output first, then input; the attachment filters gas and liquid. */
+    public IFluidHandler toolDrainHandler() {
+        return toolDrainView;
+    }
+
+    private FluidTankGT toolTank(int index) {
+        if (index < 0) return null;
+        if (index < tanksOutput.length) return tanksOutput[index];
+        int input = index - tanksOutput.length;
+        return input < tanksInput.length ? tanksInput[input] : null;
+    }
+
+    private final IFluidHandler toolFillView = new IFluidHandler() {
+        public int getTanks() { return tanksInput.length; }
+
+        public @NotNull FluidStack getFluidInTank(int tank) {
+            return tank >= 0 && tank < tanksInput.length ? tanksInput[tank].getFluid() : FluidStack.EMPTY;
+        }
+
+        public int getTankCapacity(int tank) {
+            return tank >= 0 && tank < tanksInput.length ? tanksInput[tank].getCapacity() : 0;
+        }
+
+        public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+            return MachineInventory.this.isFluidValid(tank, stack);
+        }
+
+        public int fill(FluidStack resource, FluidAction action) {
+            return MachineInventory.this.fill(resource, action);
+        }
+
+        public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+
+        public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+    };
+
+    private final IFluidHandler toolDrainView = new IFluidHandler() {
+        public int getTanks() { return tanksOutput.length + tanksInput.length; }
+
+        public @NotNull FluidStack getFluidInTank(int tank) {
+            FluidTankGT found = toolTank(tank);
+            return found == null ? FluidStack.EMPTY : found.getFluid();
+        }
+
+        public int getTankCapacity(int tank) {
+            FluidTankGT found = toolTank(tank);
+            return found == null ? 0 : found.getCapacity();
+        }
+
+        public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
+            return false;
+        }
+
+        public int fill(FluidStack resource, FluidAction action) {
+            return 0;
+        }
+
+        public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
+            return toolDrain(resource, action);
+        }
+
+        public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
+            return toolDrain(maxDrain, action);
+        }
+    };
+
     /** One-slot input that only accepts vanilla potion items. */
     private static final class PotionInput extends MachineItemHandler {
         PotionInput(Runnable onChanged) { super(1, 1, onChanged); }
