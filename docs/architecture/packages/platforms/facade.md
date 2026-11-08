@@ -13,10 +13,14 @@
 | 门面 | 所在包 | 职责 | 吸收的差异 |
 | --- | --- | --- | --- |
 | `GTToolHelper` | `engine.tool` | 工具谓词、耐久、采集规则 | NBT 与数据组件、电动工具类型 |
+| `StackCompat` | `engine.stack` | 物品/流体身份比较、流体 handler | 数据组件、流体能力 |
+| `StackData` | `engine.stack` | 物品自定义数据读写 | NBT 与数据组件 |
+| `NbtCompat` | `engine.stack` | 物品/流体栈 NBT | provider 签名、序列化形状 |
+| `HandlerNbt` | `engine.stack` | `ItemStackHandler` NBT | provider 签名 |
 | `CoverStackData` | `content.cover` | 覆盖板栈数据读写 | NBT 与数据组件 |
 | `ContentRegistrar` | `content.registry` | 加载器中立的物品/方块注册视图 | 注册 API |
 
-表中是代表入口；完整判断标准见[跨版本指南](../../versions.md)的“区分与归属”。
+表中是代表入口；完整判断标准见[Stonecutter 设计](../../stonecutter/design.md#判断准则)，完整清单与归属见[共享门面](../../stonecutter/design.md#共享门面)。
 
 `Mc` 是平台 shim；共享代码使用其 `logger()` 和物品/方块/流体注册表辅助方法。
 

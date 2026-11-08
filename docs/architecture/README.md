@@ -33,3 +33,5 @@ API 独立编译，不依赖实现；core 不依赖 Minecraft。content 定义�
 例如新增机器：公开扩展需求先考虑 API；参数和布局属于 content；耗能/进度/产出规则属于 engine；Block/BlockEntity 承载世界状态；bootstrap 与平台注册接入生命周期；network 同步；client 展示。并非每次改动都要新建所有层，先复用现有路径。
 
 继续读[包职责索引](packages/README.md)，只展开当前任务对应专题。资源与生成输入另见[资源指南](resources.md)。
+
+跨版本要求见[跨版本要求与入口](versions.md)；Stonecutter 的三层设计、用法与具体调用例子见[设计](stonecutter/design.md)、[用法](stonecutter/usage.md)、[示例索引](stonecutter/examples/README.md)。

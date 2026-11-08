@@ -8,7 +8,7 @@
 | 确定源码、测试、工具或文档放哪里 | [文件与产物归属](development/repository-layout.md) |
 | 理解源码分层与依赖方向 | [架构](architecture/README.md) |
 | 修改材料、配方、机器或其他领域代码 | [包职责索引](architecture/packages/README.md) |
-| 处理 Forge / NeoForge 差异 | [跨版本修改](architecture/versions.md) |
+| 处理 Forge / NeoForge 差异 | [跨版本要求与入口](architecture/versions.md) |
 | 修改资源、生成表或许可声明 | [资源与生成内容](architecture/resources.md) |
 | 选择检查、运行命令和记录结果证据 | [验证与验收](development/validation/README.md) |
 | 开发附属、SDK 或 KubeJS 扩展 | [附属 API](ADDON_API.zh-CN.md) |
