@@ -15,6 +15,7 @@ import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTWires;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialEquivalence;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.PrefixRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -53,6 +54,7 @@ public final class HandMaterialCraftingRecipes {
             // Loader_OreProcessing:181-192 shapeless rows. Their conditions are per row, not the
             // CraftFrom family's COATED.NOT, so they run before the coated filter.
             shapeless(rows, material, empty);
+            machineCasings(rows, material);
             var profile = SourceLatheMaterialProfiles.find(material);
             if (profile != null && profile.coated()) continue;
             handForms(rows, material);
@@ -125,6 +127,29 @@ public final class HandMaterialCraftingRecipes {
                             "Y", form("plate", material, plate),
                             "w", WRENCH), copy(gear, 1));
 
+        // GT6's CraftFrom rows give stone materials a gear from four rocks or four sticks around
+        // four stone blocks. Stone and Bedrock themselves keep no row. The port models the stone
+        // prefix as the material's smooth block, not an item prefix.
+        if (material.has(MaterialProperty.STONE) && !gear.isEmpty()
+                && !material.getName().equals("Stone") && !material.getName().equals("Bedrock")) {
+            var stone = StoneAndToolSurvivalRecipes.smoothStoneBlocks().get(material);
+            if (stone != null && !stone.isEmpty()) {
+                var rock = mat("rockGt", material);
+                if (!rock.isEmpty())
+                    put(rows, "craft/gear_stone_rock/" + m, List.of("XYX", "YfY", "XYX"),
+                            Map.of("X", form("rockGt", material, rock),
+                                    "Y", item(stone),
+                                    "f", FILE), copy(gear, 1));
+                if (!stick.isEmpty())
+                    put(rows, "craft/gear_stone_stick/" + m, List.of("XYX", "YfY", "XYX"),
+                            Map.of("X", form("stick", material, stick),
+                                    "Y", item(stone),
+                                    "f", FILE), copy(gear, 1));
+            }
+        }
+        // GT6's plank -> small gear row is covered for treated wood by the treated-wood gear
+        // pattern; the port has no per-material plank item for other woods.
+
         // one stick saws into two bolts; wood and coated materials keep their own rows.
         var bolt = mat("bolt", material);
         if (!material.has(MaterialProperty.WOOD) && !bolt.isEmpty() && !stick.isEmpty())
@@ -188,6 +213,31 @@ public final class HandMaterialCraftingRecipes {
         gemStick(rows, material, "stick", "gemExquisite", 4, stick, new String[] {"s ", "fX"});
         gemStick(rows, material, "stick", "gemLegendary", 8, stick, new String[] {"s ", "fX"});
 
+        // GT6's CraftFrom rows also file gems and ingots into a lens, sticks and arrow heads.
+        var lens = mat("lens", material);
+        if (!lens.isEmpty() && !plateGem.isEmpty())
+            put(rows, "craft/lens/" + m, List.of("X ", " f"),
+                    Map.of("X", form("plateGem", material, plateGem), "f", FILE), copy(lens, 1));
+        var ingot = mat("ingot", material);
+        if (!stick.isEmpty() && !ingot.isEmpty())
+            put(rows, "craft/stick_ingot/" + m, List.of("X ", " f"),
+                    Map.of("X", form("ingot", material, ingot), "f", FILE), copy(stick, 1));
+        var billet = mat("billet", material);
+        if (!stick.isEmpty() && !billet.isEmpty())
+            put(rows, "craft/stick_billet/" + m, List.of("X ", " f"),
+                    Map.of("X", form("billet", material, billet), "f", FILE), copy(stick, 1));
+        var arrowHead = mat("toolHeadArrow", material);
+        if (!arrowHead.isEmpty()) {
+            var chips = mat("gemChipped", material);
+            if (!chips.isEmpty())
+                put(rows, "craft/arrow_head_chipped/" + m, List.of("X ", " f"),
+                        Map.of("X", form("gemChipped", material, chips), "f", FILE), copy(arrowHead, 2));
+            var arrowRock = mat("rockGt", material);
+            if (material.has(MaterialProperty.STONE) && !arrowRock.isEmpty())
+                put(rows, "craft/arrow_head_rock/" + m, List.of("X ", " f"),
+                        Map.of("X", form("rockGt", material, arrowRock), "f", FILE), copy(arrowHead, 8));
+        }
+
         // cart wheels: two rings around a stick, hammered and wrenched.
         var wheels = mat("minecartWheels", material);
         if (!wheels.isEmpty() && !ring.isEmpty() && !stick.isEmpty())
@@ -196,6 +246,32 @@ public final class HandMaterialCraftingRecipes {
                             "S", form("stick", material, stick),
                             "h", HAMMER,
                             "w", WRENCH), copy(wheels, 1));
+    }
+
+    /**
+     * GT6's {@code OreProcessing_CraftFrom} rows also give the four machine-casing grades a
+     * workbench row (six plates, two long rods and a wrench), separate from the Welder family.
+     * GT6 only excludes ANTIMATTER here, so coated materials keep these rows.
+     */
+    private static void machineCasings(Map<ResourceLocation, JsonObject> rows, GTMaterial material) {
+        String m = slug(material);
+        var rods = mat("stickLong", material);
+        if (rods.isEmpty()) return;
+        for (var grade : List.of(
+                Map.entry("plate", BlockMaterialPrefix.casingMachine),
+                Map.entry("plateDouble", BlockMaterialPrefix.casingMachineDouble),
+                Map.entry("plateQuadruple", BlockMaterialPrefix.casingMachineQuadruple),
+                Map.entry("plateDense", BlockMaterialPrefix.casingMachineDense))) {
+            var plates = mat(grade.getKey(), material);
+            var output = GTBlocks.getStack(grade.getValue(), material);
+            if (plates.isEmpty() || output.isEmpty()) continue;
+            put(rows, "craft/casing_machine/" + MaterialPrefix.camelToSnake(grade.getKey()) + "/" + m,
+                    List.of("YXX", "XwX", "XXY"),
+                    Map.of("X", form(grade.getKey(), material, plates),
+                            "Y", form("stickLong", material, rods),
+                            "w", WRENCH),
+                    copy(output, 1));
+        }
     }
 
     /**

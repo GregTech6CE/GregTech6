@@ -67,6 +67,27 @@ public final class CraftingRecipeIssueSmokeTests {
         helper.succeed();
     }
 
+    // Checks the restored file/casing hand rows (lens, sticks, arrow heads, stone gears and
+    // machine casings) exist for at least one material.
+    @GameTest(template = "test_empty", batch = "crafting_issue_smoke", timeoutTicks = 600)
+    public static void restoredHandFileAndCasingRowsExist(GameTestHelper helper) {
+        var ids = allRecipes(helper).stream().map(found -> found.id().toString()).toList();
+        for (var prefix : List.of(
+                "gt6ce:hand_material/craft/lens/",
+                "gt6ce:hand_material/craft/stick_ingot/",
+                "gt6ce:hand_material/craft/stick_billet/",
+                "gt6ce:hand_material/craft/arrow_head_chipped/",
+                "gt6ce:hand_material/craft/arrow_head_rock/",
+                "gt6ce:hand_material/craft/gear_stone_rock/",
+                "gt6ce:hand_material/craft/gear_stone_stick/",
+                "gt6ce:hand_material/craft/casing_machine/plate/",
+                "gt6ce:hand_material/craft/casing_machine/plate_double/",
+                "gt6ce:hand_material/craft/casing_machine/plate_quadruple/",
+                "gt6ce:hand_material/craft/casing_machine/plate_dense/"))
+            helper.assertTrue(ids.stream().anyMatch(id -> id.startsWith(prefix)), "missing " + prefix);
+        helper.succeed();
+    }
+
     // Runs all rows of one level, collecting every failure before aborting the test.
     private static void runLevel(GameTestHelper helper, String level, RowCheck check) {
         var rows = loadRows();
