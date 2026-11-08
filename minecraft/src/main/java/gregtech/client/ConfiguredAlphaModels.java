@@ -45,7 +45,9 @@ public final class ConfiguredAlphaModels {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void models(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
-        models.replaceAll((id, model) -> enabled(id.getNamespace()) ? model : new Cutout(model));
+        // Keep the missing sentinel unwrapped so identity checks in BakedModelMap.find stay valid.
+        BakedModel missing = models.missing();
+        models.replaceAll((id, model) -> model == missing || enabled(id.getNamespace()) ? model : new Cutout(model));
         // Rebuild after the alpha pass so the tool renderer sees the final wrapped models.
         GTToolModelResolver.rebuild(models);
     }

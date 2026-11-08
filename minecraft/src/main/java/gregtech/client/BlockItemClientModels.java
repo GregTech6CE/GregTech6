@@ -12,6 +12,9 @@ public final class BlockItemClientModels {
 
     /** Replace the inventory model of the block's item. */
     public static void aliasBlockItem(BakedModelMap models, Block block, BakedModel itemModel) {
+        if (block.asItem() == net.minecraft.world.item.Items.AIR) {
+            return;
+        }
         ResourceLocation itemId = Mc.itemId(block.asItem());
         if (itemId != null) {
             models.put(itemId, "inventory", itemModel);

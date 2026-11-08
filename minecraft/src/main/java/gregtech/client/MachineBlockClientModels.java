@@ -127,13 +127,9 @@ public final class MachineBlockClientModels {
             BakedModel itemModel = BlockItemClientModels.asBlockItem(tintedItemInner);
 
             models.put(blockId, "", worldModel);
-            models.put(blockId, "waterlogged=false", worldModel);
-            models.put(blockId, "waterlogged=true", worldModel);
             for (Direction facing : Direction.Plane.HORIZONTAL) {
                 for (boolean lit : new boolean[]{false, true}) {
                     models.put(blockId, blockVariant(facing, lit), worldModel);
-                    models.put(blockId, blockVariantW(facing, lit, false), worldModel);
-                    models.put(blockId, blockVariantW(facing, lit, true), worldModel);
 
                     ResourceLocation sharedId = MachineBlockIcons.burningBoxVariant(facing, lit, brick);
                     BakedModel shared = lit ? activeBase.get(facing) : idleBase.get(facing);
@@ -189,13 +185,9 @@ public final class MachineBlockClientModels {
             BakedModel itemModel = BlockItemClientModels.asBlockItem(tintedItemInner);
 
             models.put(blockId, "", worldModel);
-            models.put(blockId, "waterlogged=false", worldModel);
-            models.put(blockId, "waterlogged=true", worldModel);
             for (Direction facing : Direction.Plane.HORIZONTAL) {
                 for (boolean lit : new boolean[]{false, true}) {
                     models.put(blockId, blockVariant(facing, lit), worldModel);
-                    models.put(blockId, blockVariantW(facing, lit, false), worldModel);
-                    models.put(blockId, blockVariantW(facing, lit, true), worldModel);
                 }
             }
             models.put(blockId, "inventory", itemModel);
@@ -314,9 +306,5 @@ public final class MachineBlockClientModels {
 
     private static String blockVariant(Direction facing, boolean lit) {
         return "facing=" + facing.getSerializedName() + ",lit=" + lit;
-    }
-
-    private static String blockVariantW(Direction facing, boolean lit, boolean waterlogged) {
-        return "facing=" + facing.getSerializedName() + ",lit=" + lit + ",waterlogged=" + waterlogged;
     }
 }

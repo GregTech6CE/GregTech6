@@ -10,11 +10,11 @@ import net.minecraft.server.packs.repository.PackSource;
 import net.neoforged.neoforge.client.model.geometry.IGeometryLoader;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackSelectionConfig;
+import java.util.Optional;
 *///?} else {
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.model.geometry.IGeometryLoader;
 //?}
-import java.util.Optional;
 
 /** Loader-specific pack and geometry-loader wiring kept in one place. */
 public final class ClientPackFacade {

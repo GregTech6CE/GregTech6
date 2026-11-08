@@ -6,7 +6,6 @@ import gregtech.content.registry.GTBlocks;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
