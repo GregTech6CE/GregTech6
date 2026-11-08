@@ -1,9 +1,9 @@
 package gregtech.engine.machine;
 
-import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.MaterialStackItemHelper;
+import java.util.List;
 import java.util.Optional;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -39,26 +39,22 @@ public final class FurnaceFuelHelper {
         } else {
             container = container.copyWithCount(1);
         }
-        return Optional.of(new FuelBurnResult(heat, container, ashByproduct(fuel)));
+        var ashes = ashByproducts(fuel);
+        if (ashes.isEmpty()) return Optional.empty();
+        ItemStack byproduct = ashes.get().isEmpty() ? null : ashes.get().get(0);
+        return Optional.of(new FuelBurnResult(heat, container, byproduct));
     }
 
-    @Nullable
-    private static ItemStack ashByproduct(ItemStack fuel) {
-        return ItemMaterialRegistry.get(fuel)
-                .flatMap(data -> {
-                    GTMaterial material = data.material().resolve();
-                    GTMaterial ash = material.getTargetBurningMaterial();
-                    long amount = material.getTargetBurningAmount();
-                    if (ash == null || !ash.isValid() || amount <= 0) {
-                        return Optional.empty();
-                    }
-                    int count = MaterialFuelRules.ashTinyCount(material, data.amount());
-                    if (count <= 0) {
-                        return Optional.empty();
-                    }
-                    ItemStack stack = MaterialStackItemHelper.createStack(MaterialPrefix.dustTiny, ash, count);
-                    return stack.isEmpty() ? Optional.empty() : Optional.of(stack);
-                })
-                .orElse(null);
+    private static Optional<List<ItemStack>> ashByproducts(ItemStack fuel) {
+        var data = ItemMaterialRegistry.get(fuel).orElse(null);
+        if (data == null) return Optional.of(List.of());
+        var piles = MaterialFuelRules.ashResidues(data.components());
+        if (piles.isEmpty()) return Optional.empty();
+        var stacks = piles.get().stream()
+                .map(pile ->
+                        MaterialStackItemHelper.createStack(MaterialPrefix.dustTiny, pile.material(), pile.tinyDust()))
+                .filter(stack -> !stack.isEmpty())
+                .toList();
+        return Optional.of(stacks);
     }
 }

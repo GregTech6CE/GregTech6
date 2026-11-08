@@ -1,6 +1,8 @@
 package gregtech.gametest;
 
 import gregtech.api.addon.material.MaterialInfoTool;
+import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.material.MaterialFormKind;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.PulverizationMaterialHelper;
@@ -71,6 +73,33 @@ public final class MaterialBaselineTests {
         helper.assertFalse(dust.isEmpty(), "host generated the requested dust form");
         helper.assertTrue(find(MachineRecipeMaps.Centrifuge, List.of(dust), List.of()) != null, "SPI decomposition is queryable");
         observe(helper, "spi_dust", dust);
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void registeredFormsPublishItemBlockAndFluidBindings(GameTestHelper helper) {
+        var iron = new MaterialKey("Iron");
+        var ironBindings = GregTechMaterials.formBindings().find(iron);
+        helper.assertTrue(
+                ironBindings.stream().anyMatch(binding -> binding.kind() == MaterialFormKind.ITEM),
+                "iron has a registered item binding");
+        helper.assertTrue(
+                ironBindings.stream()
+                        .anyMatch(binding -> binding.id().equals("minecraft:iron_ingot")),
+                "explicit vanilla iron ingot is part of the same form inventory");
+        helper.assertTrue(
+                ironBindings.stream().anyMatch(binding -> binding.kind() == MaterialFormKind.BLOCK),
+                "iron has a registered block binding");
+        var hydrogenBindings = GregTechMaterials.formBindings().find(new MaterialKey("Hydrogen"));
+        helper.assertTrue(
+                hydrogenBindings.stream().anyMatch(binding -> binding.kind() == MaterialFormKind.FLUID),
+                "hydrogen has a registered fluid binding");
+        helper.assertTrue(
+                GregTechMaterials.forms().rules(iron).stream()
+                        .anyMatch(rule -> rule.kind() == MaterialFormKind.ITEM
+                                && GregTechMaterials.formBindings()
+                                        .present(iron, rule.form())),
+                "allowed item rules intersect native bindings");
         helper.succeed();
     }
 

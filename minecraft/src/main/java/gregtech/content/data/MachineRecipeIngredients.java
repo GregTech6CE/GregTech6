@@ -251,7 +251,8 @@ public final class MachineRecipeIngredients {
     private static Object pipeIngredient(String sizeName, GTMaterial target, GTMaterial machineMaterial) {
         if (sizeName.startsWith("any_") && target.resolve() == gregtech.content.material.Materials.Copper.resolve()) {
             var choices = new java.util.ArrayList<Object>();
-            for (var material : gregtech.content.data.MaterialGroups.Cu.getReRegistrations()) {
+            for (var material : gregtech.content.data.MaterialGroups.members(
+                    gregtech.content.data.MaterialGroups.Cu)) {
                 Item pipe = pipeItem(sizeName.substring(4), material);
                 if (pipe != null) choices.add(Map.of("item", net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(pipe).toString()));
             }

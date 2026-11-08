@@ -4,6 +4,7 @@ package gregtech.api.addon.material;
 
 import gregtech.api.addon.AddonNames;
 import gregtech.api.addon.InstalledService;
+import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialToolProfile;
 import java.util.Objects;
 import java.util.Optional;
@@ -56,6 +57,54 @@ public final class MaterialInfoTool {
         return HOST.isBound() ? host().composition(material) : Optional.empty();
     }
 
+    /** Live auxiliary state used by legacy material facades until the definition snapshot freezes. */
+    @ApiStatus.Internal
+    public static Optional<MaterialToolProfile> currentTool(MaterialKey material) {
+        Objects.requireNonNull(material, "material");
+        return HOST.isBound() ? host().currentTool(material) : Optional.empty();
+    }
+
+    /** Resolves the legacy host identity for compatibility projections only. */
+    @ApiStatus.Internal
+    public static Optional<GTMaterial> findMaterial(MaterialKey material) {
+        Objects.requireNonNull(material, "material");
+        return HOST.isBound() ? host().findMaterial(material) : Optional.empty();
+    }
+
+    @ApiStatus.Internal
+    public static Optional<MaterialComposition> currentComposition(MaterialKey material) {
+        Objects.requireNonNull(material, "material");
+        return HOST.isBound() ? host().currentComposition(material) : Optional.empty();
+    }
+
+    @ApiStatus.Internal
+    public static <T> Optional<MaterialProcessRule<T>> currentProcess(
+            MaterialKey material, MaterialProcessKey<T> process) {
+        Objects.requireNonNull(material, "material");
+        Objects.requireNonNull(process, "process");
+        return HOST.isBound() ? host().currentProcess(material, process) : Optional.empty();
+    }
+
+    @ApiStatus.Internal
+    public static void updateTool(MaterialKey material, MaterialToolProfile profile) {
+        host().updateTool(Objects.requireNonNull(material, "material"), Objects.requireNonNull(profile, "profile"));
+    }
+
+    @ApiStatus.Internal
+    public static void updateComposition(MaterialKey material, Optional<MaterialComposition> composition) {
+        host().updateComposition(
+                Objects.requireNonNull(material, "material"), Objects.requireNonNull(composition, "composition"));
+    }
+
+    @ApiStatus.Internal
+    public static <T> void updateProcess(
+            MaterialKey material, MaterialProcessKey<T> process, Optional<MaterialProcessRule<T>> rule) {
+        host().updateProcess(
+                Objects.requireNonNull(material, "material"),
+                Objects.requireNonNull(process, "process"),
+                Objects.requireNonNull(rule, "rule"));
+    }
+
     /** Empty before the host installs or before the definition snapshot is frozen. */
     @Deprecated(since = "1.7.0", forRemoval = false)
     public static Optional<MaterialToolProfile> frozenTool(MaterialKey material) {
@@ -73,6 +122,36 @@ public final class MaterialInfoTool {
         Optional<MaterialToolProfile> tool(MaterialKey material);
 
         Optional<MaterialComposition> composition(MaterialKey material);
+
+        default Optional<GTMaterial> findMaterial(MaterialKey material) {
+            return Optional.empty();
+        }
+
+        default Optional<MaterialToolProfile> currentTool(MaterialKey material) {
+            return tool(material);
+        }
+
+        default Optional<MaterialComposition> currentComposition(MaterialKey material) {
+            return composition(material);
+        }
+
+        default <T> Optional<MaterialProcessRule<T>> currentProcess(
+                MaterialKey material, MaterialProcessKey<T> process) {
+            return Optional.empty();
+        }
+
+        default void updateTool(MaterialKey material, MaterialToolProfile profile) {
+            throw new UnsupportedOperationException("This material info host is read-only");
+        }
+
+        default void updateComposition(MaterialKey material, Optional<MaterialComposition> composition) {
+            throw new UnsupportedOperationException("This material info host is read-only");
+        }
+
+        default <T> void updateProcess(
+                MaterialKey material, MaterialProcessKey<T> process, Optional<MaterialProcessRule<T>> rule) {
+            throw new UnsupportedOperationException("This material info host is read-only");
+        }
     }
 
     /** Typed writes only; no untyped fact bag or arbitrary mutable property map. */

@@ -82,7 +82,7 @@ public final class WoodMaterials {
                 .localName("Bamboo")
                 .source("minecraft", "Minecraft")
                 .tools(1, 2.0F, 32L, 0)
-                .fuel(100L, "Ashes", 72072000L)
+                .fuel(100L, "Ashes", 162162000L)
                 .smelting("Ashes", 324324000L)
                 .composition(
                         21L,
@@ -386,7 +386,7 @@ public final class WoodMaterials {
                 .localName("Dreamwood")
                 .source("Botania", "Botania")
                 .tools(1, 4.0F, 128L, 1)
-                .fuel(100L, "Ashes", 72072000L)
+                .fuel(400L, "Ashes", 162162000L)
                 .smelting("Ashes", 324324000L)
                 .composition(
                         21L,
@@ -420,7 +420,7 @@ public final class WoodMaterials {
                 .localName("Greatwood")
                 .source("Thaumcraft", "Thaumcraft")
                 .tools(1, 6.0F, 64L, 1)
-                .fuel(100L, "Ashes", 72072000L)
+                .fuel(400L, "Ashes", 162162000L)
                 .smelting("Ashes", 324324000L)
                 .composition(
                         21L,
@@ -521,7 +521,7 @@ public final class WoodMaterials {
                 .localName("Livingwood")
                 .source("Botania", "Botania")
                 .tools(1, 4.0F, 64L, 0)
-                .fuel(100L, "Ashes", 72072000L)
+                .fuel(200L, "Ashes", 162162000L)
                 .smelting("Ashes", 324324000L)
                 .composition(
                         21L,
@@ -691,7 +691,7 @@ public final class WoodMaterials {
                 .localName("Silverwood")
                 .source("Thaumcraft", "Thaumcraft")
                 .tools(1, 8.0F, 128L, 1)
-                .fuel(100L, "Ashes", 72072000L)
+                .fuel(800L, "", 0L)
                 .smelting("Ashes", 0L)
                 .composition(
                         21L,
@@ -1067,7 +1067,7 @@ public final class WoodMaterials {
                 .localName("WoodRubber")
                 .source("IC2", "IndustrialCraft 2")
                 .tools(1, 1.5F, 12L, 0)
-                .fuel(100L, "Ashes", 72072000L)
+                .fuel(50L, "Ashes", 162162000L)
                 .smelting("Ashes", 324324000L)
                 .composition(
                         21L,

@@ -23,8 +23,8 @@ class GregTechAddonsTest {
     void apiVersionCodeMatchesTheMajorAndMinorParts() {
         assertEquals(GregTechAddons.apiMajor() * 1000 + GregTechAddons.apiMinor(), GregTechAddons.apiVersion());
         assertEquals(1, GregTechAddons.apiMajor());
-        assertEquals(7, GregTechAddons.apiMinor());
-        assertEquals(1007, GregTechAddons.apiVersion());
+        assertEquals(8, GregTechAddons.apiMinor());
+        assertEquals(1008, GregTechAddons.apiVersion());
     }
 
     @Test

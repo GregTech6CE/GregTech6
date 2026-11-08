@@ -27,7 +27,7 @@ public record MaterialInfoDefinition(
     public static MaterialInfoDefinition empty() {
         return new MaterialInfoDefinition(
                 Tooling.none(),
-                new Composition(0, List.of()),
+                new Composition(0, List.of(), false),
                 new Relations(false, Set.of(), Set.of(), List.of()),
                 new Processes(Map.of()));
     }
@@ -46,13 +46,17 @@ public record MaterialInfoDefinition(
         }
     }
 
-    public record Composition(long divider, List<MaterialInfoDefinition.Part> parts) {
+    public record Composition(long divider, List<MaterialInfoDefinition.Part> parts, boolean crucible) {
         public Composition {
             parts = List.copyOf(parts);
             if (divider < 0 || (!parts.isEmpty() && divider == 0))
                 throw new IllegalArgumentException("Invalid composition divider");
             long total = 0;
             for (MaterialInfoDefinition.Part part : parts) total = Math.addExact(total, part.amount());
+        }
+
+        public Composition(long divider, List<MaterialInfoDefinition.Part> parts) {
+            this(divider, parts, false);
         }
     }
 

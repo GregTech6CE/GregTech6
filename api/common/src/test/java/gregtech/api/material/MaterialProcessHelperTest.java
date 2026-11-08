@@ -16,6 +16,7 @@ class MaterialProcessHelperTest {
     void helpersMirrorLegacyMaterialFieldsDuringMigration() {
         var iron = new GTMaterial(1, "Iron", "Fe", 0xFFFFFF);
         var ash = new GTMaterial(2, "Ashes", "Ashes", 0xFFFFFF);
+        MaterialInfoTestHost.reset(iron, ash);
         iron.setSmelting(null, GTValues.U)
                 .setCrushing(iron, GTValues.U2)
                 .setPulver(iron, GTValues.U)

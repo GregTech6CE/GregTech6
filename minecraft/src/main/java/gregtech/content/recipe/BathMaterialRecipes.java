@@ -135,7 +135,8 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
 
     private static Set<GTMaterial> group(GTMaterial group, String... extraMembers) {
         Set<GTMaterial> materials = new LinkedHashSet<>();
-        for (GTMaterial material : group.getReRegistrations()) if (material != null && material.isValid()) materials.add(material.resolve());
+        for (GTMaterial material : MaterialGroups.members(group))
+            if (material != null && material.isValid()) materials.add(material.resolve());
         for (String name : extraMembers) {
             GTMaterial material = GTMaterialRegistry.get(name);
             if (material.isValid()) materials.add(material);

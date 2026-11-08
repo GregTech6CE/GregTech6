@@ -3,6 +3,7 @@
 package gregtech.api.material;
 
 import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.material.MaterialInfoTool;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.addon.material.MaterialProcessRule;
@@ -16,12 +17,10 @@ public final class OreProcessingMaterialHelper {
     @Deprecated(since = "1.7.0", forRemoval = false)
     public static OreProcessingRule rule(GTMaterial material) {
         if (material == null || !material.isValid()) return new OreProcessingRule(List.of(), 1, 1);
-        List<MaterialKey> byproducts = legacyByproducts(material).stream()
-                .map(value -> new MaterialKey(value.resolve().getName()))
-                .toList();
-        int oreMultiplier = legacyOreMultiplier(material);
-        int processingMultiplier = legacyProcessingMultiplier(material);
-        return new OreProcessingRule(byproducts, Math.max(1, oreMultiplier), Math.max(1, processingMultiplier));
+        return MaterialInfoTool.currentProcess(
+                        new MaterialKey(material.resolve().getName()), MaterialProcessKeys.ORE_PROCESSING)
+                .map(MaterialProcessRule::value)
+                .orElseGet(() -> new OreProcessingRule(List.of(), 1, 1));
     }
 
     public static OreProcessingRule rule(MaterialKey material) {
@@ -32,14 +31,17 @@ public final class OreProcessingMaterialHelper {
     }
 
     static List<GTMaterial> legacyByproducts(GTMaterial material) {
-        return material.rawByProducts().stream().map(GTMaterial::resolve).toList();
+        return rule(material).byproducts().stream()
+                .flatMap(key -> MaterialInfoTool.findMaterial(key).stream())
+                .map(GTMaterial::resolve)
+                .toList();
     }
 
     static int legacyOreMultiplier(GTMaterial material) {
-        return material.rawOreMultiplier();
+        return rule(material).oreMultiplier();
     }
 
     static int legacyProcessingMultiplier(GTMaterial material) {
-        return material.rawOreProcessingMultiplier();
+        return rule(material).processingMultiplier();
     }
 }

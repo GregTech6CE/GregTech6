@@ -19,6 +19,10 @@ public interface MaterialCatalogView {
     default MaterialFormRulesView forms() {
         throw new UnsupportedOperationException("This material catalog does not expose form rules");
     }
+    /** Native bindings published after item, block and fluid registration. */
+    default MaterialFormsView formBindings() {
+        throw new UnsupportedOperationException("This material catalog does not expose registered forms");
+    }
     /** Immutable process rules captured with this definition view. */
     default MaterialProcessesView processes() {
         throw new UnsupportedOperationException("This material catalog does not expose process views");

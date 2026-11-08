@@ -1,7 +1,14 @@
 package gregtech.content.data;
 
+import gregtech.api.addon.material.DataKey;
+import gregtech.api.addon.material.MaterialGroupKey;
+import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialViews;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Generic "Any X" unification materials from GregTech 6 ANY.java.
@@ -12,6 +19,27 @@ public class MaterialGroups {
 
     private static GTMaterial any(String name) {
         return GTMaterialRegistry.requireInstalled(name);
+    }
+
+    /** Stable key for the group represented by a compatibility {@code Any*} symbol. */
+    public static MaterialGroupKey key(GTMaterial group) {
+        return new MaterialGroupKey(new DataKey("gt6ce", group.getName().toLowerCase(java.util.Locale.ROOT)));
+    }
+
+    /** Canonical members from the published definition view, never a second group table. */
+    public static Set<GTMaterial> members(GTMaterial group) {
+        var view = MaterialViews.catalog().tags().group(key(group)).orElse(null);
+        if (view == null) return Set.of();
+        var result = new LinkedHashSet<GTMaterial>();
+        for (MaterialKey member : view.members()) {
+            GTMaterial material = GTMaterialRegistry.get(member.name());
+            if (material.isValid()) result.add(material.resolve());
+        }
+        return Collections.unmodifiableSet(new LinkedHashSet<>(result));
+    }
+
+    public static boolean contains(GTMaterial group, GTMaterial material) {
+        return material != null && members(group).contains(material.resolve());
     }
 
     public static final GTMaterial Glowstone = any("AnyGlowstone"),

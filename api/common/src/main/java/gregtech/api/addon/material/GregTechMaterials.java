@@ -53,6 +53,11 @@ public final class GregTechMaterials {
         return catalog().forms();
     }
 
+    /** Native item, block and fluid bindings from the most recently published content generation. */
+    public static MaterialFormsView formBindings() {
+        return catalog().formBindings();
+    }
+
     @Deprecated(since = "1.7.0", forRemoval = false)
     public interface Catalog {
         /** Old hosts fail explicitly, preserving source and binary compatibility for implementers. */

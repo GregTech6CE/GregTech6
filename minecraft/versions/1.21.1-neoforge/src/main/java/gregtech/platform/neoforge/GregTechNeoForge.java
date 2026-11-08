@@ -142,6 +142,7 @@ public final class GregTechNeoForge {
         VanillaWoodProcessingRecipes.registerMaterials();
         PanelMaterialRegistration.register();
         TransportMaterialRegistration.register();
+        gregtech.engine.material.MaterialFormContent.publish();
         MachineRecipeMaps.bootstrap();
         GTBumbleBeeRecipes.register();
         LOGGER.info(

@@ -20,11 +20,6 @@ import java.util.*;
 /** Native material/form identity for the original hand conversions; generic material tags are insufficient. */
 public final class CraftingMaterialForms {
     private CraftingMaterialForms() {}
-    private static final Map<String, String> COMMON = Map.ofEntries(
-            Map.entry("ingot", "ingots"), Map.entry("nugget", "nuggets"), Map.entry("gem", "gems"),
-            Map.entry("dust", "dusts"), Map.entry("dustSmall", "small_dusts"), Map.entry("dustTiny", "tiny_dusts"),
-            Map.entry("plate", "plates"), Map.entry("stick", "rods"), Map.entry("oreRaw", "raw_materials"),
-            Map.entry("ore", "ores"), Map.entry("rawOreChunk", "raw_ore_chunks"));
     private static Map<Form, List<Item>> aliases = Map.of();
     private static Map<String, String> materialNames = Map.of();
     private static Map<String, String> prefixNames = Map.of();
@@ -202,7 +197,7 @@ public final class CraftingMaterialForms {
         String material = materialNames.get(path.substring(slash + 1));
         if (material == null) return null;
         String group = path.substring(0, slash), prefix = prefixNames.get(group);
-        if (prefix == null) for (var entry : COMMON.entrySet()) if (entry.getValue().equals(group)) { prefix = entry.getKey(); break; }
+        if (prefix == null) prefix = MaterialEquivalence.prefixForCommonGroup(group);
         return prefix == null ? null : new Form(prefix, material);
     }
 
@@ -225,7 +220,7 @@ public final class CraftingMaterialForms {
         var nativePrefix = PrefixRegistry.byName(expected.prefix());
         if (nativePrefix != null && !nativePrefix.getName().equals(expected.prefix()))
             addTag(choices, "gt6ce:" + MaterialPrefix.camelToSnake(nativePrefix.getName()) + "/" + material);
-        String common = COMMON.get(expected.prefix());
+        String common = MaterialEquivalence.commonGroup(expected.prefix());
         if (common != null) {
             addTag(choices, "forge:" + common + "/" + material);
             addTag(choices, "c:" + common + "/" + material);

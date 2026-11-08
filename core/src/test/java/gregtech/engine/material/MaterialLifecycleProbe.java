@@ -196,6 +196,17 @@ public final class MaterialLifecycleProbe {
         check(group.members().contains(new MaterialKey("Iron")));
         check(!MaterialViews.catalog().resolve("AnyIron").isPresent());
         check(MaterialViews.catalog().forms().allows(new MaterialKey("Graphite"), new FormKey("dust")));
+        check(MaterialViews.catalog().forms().rules(new MaterialKey("Graphite")).stream()
+                .anyMatch(rule -> rule.form().equals(new FormKey("dust"))
+                        && rule.kind() == MaterialFormKind.ITEM
+                        && rule.materialUnits() > 0));
+        check(MaterialViews.catalog().forms().rules(new MaterialKey("Iron")).stream()
+                .anyMatch(rule ->
+                        rule.form().equals(new FormKey("blockIngot")) && rule.kind() == MaterialFormKind.BLOCK));
+        check(MaterialViews.catalog()
+                .formBindings()
+                .find(new MaterialKey("Iron"))
+                .isEmpty());
         var graphiteSmelting =
                 MaterialViews.catalog().processes().find(new MaterialKey("Graphite"), MaterialProcessKeys.SMELTING);
         check(graphiteSmelting.size() == 1);

@@ -4,6 +4,7 @@ package gregtech.api.material;
 
 import gregtech.api.addon.material.FuelRule;
 import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.material.MaterialInfoTool;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.addon.material.MaterialProcessRule;
@@ -18,14 +19,9 @@ public final class FuelMaterialHelper {
     @Deprecated(since = "1.7.0", forRemoval = false)
     public static Optional<FuelRule> rule(GTMaterial material) {
         if (material == null || !material.isValid()) return Optional.empty();
-        long burnTime = legacyBurnTime(material);
-        GTMaterial residue = legacyResidue(material);
-        long residueAmount = legacyResidueAmount(material);
-        Optional<MaterialTarget> output = residue != null && residue.isValid() && residueAmount > 0
-                ? Optional.of(
-                        new MaterialTarget(new MaterialKey(residue.resolve().getName()), residueAmount))
-                : Optional.empty();
-        return burnTime > 0 || output.isPresent() ? Optional.of(new FuelRule(burnTime, output)) : Optional.empty();
+        return MaterialInfoTool.currentProcess(
+                new MaterialKey(material.resolve().getName()), MaterialProcessKeys.FUEL)
+                .map(MaterialProcessRule::value);
     }
 
     public static Optional<FuelRule> rule(MaterialKey material) {
@@ -35,14 +31,18 @@ public final class FuelMaterialHelper {
     }
 
     static long legacyBurnTime(GTMaterial material) {
-        return material.rawFurnaceBurnTime();
+        return rule(material).map(FuelRule::burnTime).orElse(0L);
     }
 
     static @Nullable GTMaterial legacyResidue(GTMaterial material) {
-        return material.rawTargetBurningMaterial();
+        return rule(material)
+                .flatMap(FuelRule::residue)
+                .flatMap(target -> MaterialInfoTool.findMaterial(target.material()))
+                .map(GTMaterial::resolve)
+                .orElse(null);
     }
 
     static long legacyResidueAmount(GTMaterial material) {
-        return material.rawTargetBurningAmount();
+        return rule(material).flatMap(FuelRule::residue).map(MaterialTarget::amount).orElse(0L);
     }
 }

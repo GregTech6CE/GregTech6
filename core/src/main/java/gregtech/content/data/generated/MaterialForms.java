@@ -4,6 +4,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.content.material.MaterialDefinitions;
 import gregtech.engine.addon.AddonMaterials;
+import gregtech.engine.material.MaterialInfoRegistry;
 import java.util.List;
 import java.util.Set;
 
@@ -48,13 +49,12 @@ public final class MaterialForms {
             "WIRES");
 
     /** One line per material: {@code <GT6 id or normalised name>|<FLAG>,<FLAG>,…}. */
-    /** Canonical per-material form facts; no ID-first/name-fallback import at runtime. */
+    /** Canonical per-material form facts from the published auxiliary snapshot. */
     public static Set<String> of(GTMaterial material) {
         if (material == null) return Set.of();
         if (material == MaterialSentinels.EMPTY) return Set.of("EMPTY");
-        var definition = MaterialDefinitions.find(material.getName());
-        if (definition == null || definition.id() != material.getId()) return Set.of();
-        return MaterialDefinitions.info(material.getName()).relations().forms();
+        if (!material.isValid()) return Set.of();
+        return MaterialInfoRegistry.relations(material.resolve().getName()).forms();
     }
 
     /**

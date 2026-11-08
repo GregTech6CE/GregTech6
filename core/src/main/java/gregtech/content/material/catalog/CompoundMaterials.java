@@ -1011,6 +1011,10 @@ public final class CompoundMaterials {
                 .localName("Bentonite")
                 .source("PFAAGeologica", "Per Fabrica Ad Astra")
                 .smelting("Ceramic", 648648000L)
+                .composition(
+                        18L,
+                        new MaterialInfoDefinition.Part("SodiumHydroxide", 648648000L),
+                        new MaterialInfoDefinition.Part("Clay", 11675664000L))
                 .byproducts("ClayRed", "Palygorskite")
                 .forms("DUSTS", "ORES", "PLANTS", "PLATES")
                 .build());

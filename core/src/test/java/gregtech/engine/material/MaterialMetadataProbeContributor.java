@@ -241,6 +241,12 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
                         MaterialProcessKey.multiple(new DataKey(addonId(), "typed_process"), String.class),
                         new MaterialProcessRule<>(java.util.Set.of(new FormKey("definitelyNotAPrefix")), "typed"));
                 return;
+            case "infoProcessMissingFormFailure":
+                registrar.registerProcess(
+                        new MaterialKey("Iron"),
+                        MaterialProcessKey.multiple(new DataKey(addonId(), "typed_process"), String.class),
+                        new MaterialProcessRule<>(java.util.Set.of(new FormKey("plateGem")), "typed"));
+                return;
             case "info":
                 break;
             default:

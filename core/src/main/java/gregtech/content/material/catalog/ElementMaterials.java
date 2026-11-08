@@ -4120,7 +4120,6 @@ public final class ElementMaterials {
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
-                        MaterialProperty.MELTING,
                         MaterialProperty.UUM)
                 .localName("P")
                 .fuel(1000L, "", 0L)

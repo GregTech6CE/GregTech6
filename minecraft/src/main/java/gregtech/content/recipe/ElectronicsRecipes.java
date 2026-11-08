@@ -34,7 +34,7 @@ public final class ElectronicsRecipes {
             if (i == 0) {
                 var copper = new LinkedHashSet<GTMaterial>();
                 copper.add(Materials.Copper);
-                copper.addAll(MaterialGroups.Cu.getReRegistrations());
+                copper.addAll(MaterialGroups.members(MaterialGroups.Cu));
                 for (var material : copper) if (material != null && material.isValid())
                     engrave(wiring[i], material.getName());
             } else engrave(wiring[i], conductors[i]);
@@ -171,7 +171,7 @@ public final class ElectronicsRecipes {
         }
         if (group != null) {
             gems.add(group.resolve());
-            gems.addAll(group.getReRegistrations());
+            gems.addAll(MaterialGroups.members(group));
         }
         for (var gem : gems) {
             if (gem == null || !gem.isValid() || (group == MaterialGroups.Sapphire && gem.resolve() == Materials.Ruby.resolve())) continue;

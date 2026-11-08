@@ -6,7 +6,6 @@ import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.api.addon.material.MaterialTarget;
 import gregtech.api.addon.material.OreProcessingRule;
 import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialComponent;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -82,37 +81,9 @@ final class MaterialLinker {
 
     static void link(
             MaterialDefinition.Declaration declaration, GTMaterial material, Function<String, GTMaterial> lookup) {
-        MaterialDefinition definition = declaration.material();
         var info = declaration.info();
-        var fuel = fuel(declaration);
-        material.setFurnaceBurnTime(fuel.map(FuelRule::burnTime).orElse(0L));
-        fuel.flatMap(FuelRule::residue)
-                .ifPresent(target ->
-                        material.setBurning(lookup.apply(target.material().name()), target.amount()));
-        var crushing = first(declaration, MaterialProcessKeys.CRUSHING);
-        if (crushing != null)
-            material.setCrushing(lookup.apply(crushing.material().name()), crushing.amount());
-        var smelting = first(declaration, MaterialProcessKeys.SMELTING);
-        if (smelting != null)
-            material.setSmelting(lookup.apply(smelting.material().name()), smelting.amount());
-        var pulverizing = first(declaration, MaterialProcessKeys.PULVERIZING);
-        if (pulverizing != null)
-            material.setPulver(lookup.apply(pulverizing.material().name()), pulverizing.amount());
-        if (!info.composition().parts().isEmpty())
-            material.setComposition(
-                    info.composition().divider(),
-                    info.composition().parts().stream()
-                            .map(part -> MaterialComponent.of(lookup.apply(part.material()), part.amount()))
-                            .toArray(MaterialComponent[]::new));
-        var oreProcessing = oreProcessing(declaration);
-        if (oreProcessing != null)
-            material.addOreByProducts(oreProcessing.byproducts().stream()
-                    .map(key -> requireReal(definition.name(), "ore processing byproduct", key.name(), lookup))
-                    .toArray(GTMaterial[]::new));
         material.addReRegistrationToThis(
                 info.relations().members().stream().map(lookup).toArray(GTMaterial[]::new));
-        material.setOreMultiplier(oreProcessing == null ? 1 : oreProcessing.oreMultiplier())
-                .setOreProcessingMultiplier(oreProcessing == null ? 1 : oreProcessing.processingMultiplier());
     }
 
     private static Optional<FuelRule> fuel(MaterialDefinition.Declaration declaration) {

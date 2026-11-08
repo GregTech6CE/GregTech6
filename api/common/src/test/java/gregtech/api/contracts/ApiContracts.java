@@ -338,6 +338,7 @@ public final class ApiContracts {
         } catch (IllegalStateException expected) {
             check(expected.getMessage().contains("not installed"), "Missing material info host diagnostic");
         }
+        gregtech.api.material.MaterialInfoTestHost.reset(material);
         check(material.setOreMultiplier(0).getOreMultiplier() == 1, "Ore multiplier must stay at least 1");
         for (int multiplier : new int[] {200, 256, Integer.MAX_VALUE}) {
             check(
@@ -353,6 +354,7 @@ public final class ApiContracts {
 
         GTMaterial alias = new GTMaterial(2, "Alias", "Alias", 0xFFFFFF);
         GTMaterial canonical = new GTMaterial(3, "Canonical", "Canonical", 0xFFFFFF);
+        gregtech.api.material.MaterialInfoTestHost.reset(material, alias, canonical);
         material.setCrushing(alias, GTValues.U);
         alias.setRegistration(canonical);
         check(

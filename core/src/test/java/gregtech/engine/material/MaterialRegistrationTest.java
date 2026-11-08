@@ -186,10 +186,67 @@ class MaterialRegistrationTest {
     }
 
     @Test
+    void legacyMaterialClassHasNoSecondAuxiliaryStorage() {
+        var fieldNames = java.util.Arrays.stream(GTMaterial.class.getDeclaredFields())
+                .map(java.lang.reflect.Field::getName)
+                .collect(java.util.stream.Collectors.toSet());
+        for (String removed : List.of(
+                "compositionDivider",
+                "compositionComponents",
+                "toolTypes",
+                "toolSpeed",
+                "toolDurability",
+                "toolQuality",
+                "furnaceBurnTime",
+                "targetBurningMaterial",
+                "targetBurningAmount",
+                "byProducts",
+                "targetPulverMaterial",
+                "targetPulverAmount",
+                "targetCrushingMaterial",
+                "targetCrushingAmount",
+                "targetSmeltingMaterial",
+                "targetSmeltingAmount",
+                "oreMultiplier",
+                "oreProcessingMultiplier")) assertFalse(fieldNames.contains(removed), removed);
+    }
+
+    @Test
     void fluidPhaseCorrectionsArePartOfCanonicalDefinitions() {
         assertTrue(MaterialDefinitions.find("Mercury").properties().contains(MaterialProperty.LIQUID));
         assertTrue(MaterialDefinitions.find("Sulfur").properties().contains(MaterialProperty.MOLTEN));
         assertTrue(MaterialDefinitions.find("HydrochloricAcid").properties().contains(MaterialProperty.GAS));
+    }
+
+    @Test
+    void capabilityFlagsUseOneOrderIndependentClosureAndRejectConflicts() {
+        var gas = MaterialDefinition.builder(261, "TestGas")
+                .properties(MaterialProperty.GAS)
+                .build()
+                .material();
+        assertTrue(gas.properties().contains(MaterialProperty.LIQUID));
+        var decomposable = MaterialDefinition.builder(262, "TestCompound")
+                .properties(MaterialProperty.CENTRIFUGE)
+                .build()
+                .material();
+        assertTrue(decomposable.properties().contains(MaterialProperty.DECOMPOSABLE));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> MaterialDefinition.builder(263, "Conflict")
+                        .properties(MaterialProperty.FLAMMABLE, MaterialProperty.UNBURNABLE)
+                        .build());
+    }
+
+    @Test
+    void reviewedBentoniteCompositionAndPhosphorMeltingFollowThePinnedSource() {
+        var bentonite = MaterialDefinitions.info("Bentonite").composition();
+        assertEquals(18, bentonite.divider());
+        assertEquals(
+                List.of(
+                        new MaterialInfoDefinition.Part("SodiumHydroxide", 648648000L),
+                        new MaterialInfoDefinition.Part("Clay", 11675664000L)),
+                bentonite.parts());
+        assertFalse(MaterialDefinitions.find("Phosphor").properties().contains(MaterialProperty.MELTING));
     }
 
     @Test
@@ -234,6 +291,7 @@ class MaterialRegistrationTest {
                 "infoProcessFormAlias",
                 "infoProcessSingleConflictFailure",
                 "infoProcessMultiple",
+                "infoProcessMissingFormFailure",
                 "infoProcessUnknownFormFailure",
                 "relations",
                 "relationTagCycleFailure",

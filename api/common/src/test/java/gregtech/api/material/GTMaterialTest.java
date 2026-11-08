@@ -29,6 +29,7 @@ class GTMaterialTest {
     @Test
     void oreMultiplierClampsInsteadOfOverflowingAByte() {
         GTMaterial material = new GTMaterial(1, "Test", "Test", 0xFFFFFF);
+        MaterialInfoTestHost.reset(material);
         assertEquals(1, material.setOreMultiplier(0).getOreMultiplier());
         assertEquals(Byte.MAX_VALUE, material.setOreMultiplier(200).getOreMultiplier());
         assertEquals(Byte.MAX_VALUE, material.setOreMultiplier(256).getOreMultiplier());
@@ -38,6 +39,7 @@ class GTMaterialTest {
     @Test
     void oreProcessingMultiplierHasTheSameClamp() {
         GTMaterial material = new GTMaterial(1, "Test", "Test", 0xFFFFFF);
+        MaterialInfoTestHost.reset(material);
         assertEquals(1, material.setOreProcessingMultiplier(0).getOreProcessingMultiplier());
         assertEquals(Byte.MAX_VALUE, material.setOreProcessingMultiplier(300).getOreProcessingMultiplier());
     }
@@ -46,6 +48,7 @@ class GTMaterialTest {
     void compositionDropsInvalidComponentsAndDerivesTheDivider() {
         GTMaterial material = new GTMaterial(1, "Test", "Test", 0xFFFFFF);
         GTMaterial iron = new GTMaterial(2, "Iron", "Iron", 0xFFFFFF);
+        MaterialInfoTestHost.reset(material, iron);
         material.setComposition(0, new MaterialComponent(iron, GTValues.U), new MaterialComponent(null, GTValues.U));
 
         assertTrue(material.hasComposition());
@@ -77,6 +80,7 @@ class GTMaterialTest {
         GTMaterial alias = new GTMaterial(2, "Alias", "Alias", 0xFFFFFF);
         GTMaterial target = new GTMaterial(3, "Target", "Target", 0xFFFFFF);
         GTMaterial material = new GTMaterial(1, "Test", "Test", 0xFFFFFF);
+        MaterialInfoTestHost.reset(material, alias, target);
         alias.setTooltipChemical("Alias");
         target.setTooltipChemical("Target");
 

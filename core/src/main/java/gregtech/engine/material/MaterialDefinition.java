@@ -32,7 +32,7 @@ public record MaterialDefinition(
         Objects.requireNonNull(presentation, "presentation");
         Objects.requireNonNull(physical, "physical");
         Objects.requireNonNull(source, "source");
-        properties = Set.copyOf(properties);
+        properties = MaterialPropertyRules.normalize(properties);
         if ((identity.id() <= 0 || identity.id() >= 10_000) && identity.id() != -1)
             throw new IllegalArgumentException("Material ID must be 1..9999: " + identity.name());
         if (!identity.name().matches("[A-Za-z][A-Za-z0-9_/]*"))
@@ -359,6 +359,11 @@ public record MaterialDefinition(
 
         public Declaration build() {
             var processRules = new LinkedHashMap<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>();
+            if (!group) {
+                if (smelting == null) smelting = target(name, gregtech.api.material.GTValues.U);
+                if (crushing == null) crushing = target(name, gregtech.api.material.GTValues.U);
+                if (pulverizing == null) pulverizing = target(name, gregtech.api.material.GTValues.U);
+            }
             addTarget(processRules, MaterialProcessKeys.SMELTING, smelting);
             addTarget(processRules, MaterialProcessKeys.CRUSHING, crushing);
             addTarget(processRules, MaterialProcessKeys.PULVERIZING, pulverizing);
@@ -383,7 +388,7 @@ public record MaterialDefinition(
                     new Source(sourceId, sourceName));
             var info = new MaterialInfoDefinition(
                     new MaterialInfoDefinition.Tooling(tools, corrected),
-                    new MaterialInfoDefinition.Composition(divider, composition),
+                    new MaterialInfoDefinition.Composition(divider, composition, false),
                     new MaterialInfoDefinition.Relations(group, forms, classifications, members),
                     new MaterialInfoDefinition.Processes(processRules));
             return new Declaration(material, info);

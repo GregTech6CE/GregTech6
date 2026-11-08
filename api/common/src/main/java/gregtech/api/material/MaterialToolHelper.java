@@ -13,12 +13,9 @@ public final class MaterialToolHelper {
     @Deprecated(since = "1.7.0", forRemoval = false)
     public static MaterialToolProfile profile(GTMaterial material) {
         if (material == null || !material.isValid()) return new MaterialToolProfile(0, 1F, 0, 0);
-        return MaterialInfoTool.frozenTool(new MaterialKey(material.resolve().getName()))
-                .orElseGet(() -> new MaterialToolProfile(
-                        legacyTypes(material),
-                        legacySpeed(material),
-                        legacyDurability(material),
-                        legacyQuality(material)));
+        if (material.resolve().getName().indexOf('/') >= 0) return new MaterialToolProfile(0, 1F, 0, 0);
+        return MaterialInfoTool.currentTool(new MaterialKey(material.resolve().getName()))
+                .orElseGet(() -> new MaterialToolProfile(0, 1F, 0, 0));
     }
 
     /** Frozen indexed query by canonical material key. */
@@ -27,18 +24,18 @@ public final class MaterialToolHelper {
     }
 
     static int legacyTypes(GTMaterial material) {
-        return material.rawToolTypes();
+        return profile(material).types();
     }
 
     static int legacyQuality(GTMaterial material) {
-        return material.rawToolQuality();
+        return profile(material).quality();
     }
 
     static float legacySpeed(GTMaterial material) {
-        return material.rawToolSpeed();
+        return profile(material).speed();
     }
 
     static long legacyDurability(GTMaterial material) {
-        return material.rawToolDurability();
+        return profile(material).durability();
     }
 }

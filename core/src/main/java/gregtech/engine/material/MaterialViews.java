@@ -2,6 +2,7 @@ package gregtech.engine.material;
 
 import gregtech.api.addon.material.*;
 import gregtech.api.material.GTMaterial;
+import gregtech.content.data.FluidCatalog;
 import gregtech.content.material.MaterialDefinitions;
 import gregtech.engine.addon.AddonMaterials;
 import java.util.LinkedHashMap;
@@ -27,6 +28,11 @@ public final class MaterialViews {
     private record GroupSubmission(String addonId, MaterialGroupDeclaration declaration) {}
 
     private static MaterialCatalogView published;
+    private static volatile MaterialFormsView formBindings = new MaterialFormsView() {
+        public Set<MaterialFormBinding> find(MaterialKey material) {
+            return Set.of();
+        }
+    };
 
     static void publish() {
         var builders = new LinkedHashMap<MaterialKey, MaterialMetadata.Builder>();
@@ -236,8 +242,15 @@ public final class MaterialViews {
                             resolveGroupMembers(entry.getKey(), groupFacts, groups, new LinkedHashSet<>())));
 
         var formRules = new LinkedHashMap<MaterialKey, Set<FormKey>>();
+        var typedFormRules = new LinkedHashMap<MaterialKey, Set<MaterialFormRule>>();
         var allForms = new LinkedHashSet<FormKey>();
-        for (var material : materials.keySet()) formRules.put(material, new LinkedHashSet<>());
+        for (var material : materials.keySet()) {
+            formRules.put(material, new LinkedHashSet<>());
+            typedFormRules.put(material, new LinkedHashSet<>());
+        }
+        var requestedForms = new LinkedHashSet<String>();
+        for (var request : AddonMaterials.acceptedForms())
+            requestedForms.add(request.materialName() + '\0' + request.prefixName());
         for (var definition : MaterialItemDefinitions.all()) {
             GTMaterial material = definition.material().resolve();
             if (!material.isValid()) continue;
@@ -246,10 +259,70 @@ public final class MaterialViews {
             var form = new FormKey(definition.prefix().getName());
             formRules.get(materialKey).add(form);
             allForms.add(form);
+            typedFormRules
+                    .get(materialKey)
+                    .add(new MaterialFormRule(
+                            form,
+                            MaterialFormKind.ITEM,
+                            definition.prefix().getMaterialWeight(),
+                            requestedForms.contains(materialKey.name() + '\0' + form.name()),
+                            "material item definition"));
+        }
+        for (var definition : MaterialBlockDefinitions.all()) {
+            GTMaterial material = definition.material().resolve();
+            if (!material.isValid()) continue;
+            var materialKey = new MaterialKey(material.getName());
+            if (!typedFormRules.containsKey(materialKey)) continue;
+            typedFormRules
+                    .get(materialKey)
+                    .add(new MaterialFormRule(
+                            new FormKey(definition.prefix().getName()),
+                            MaterialFormKind.BLOCK,
+                            definition.prefix().getMaterialWeight(),
+                            false,
+                            "material block definition"));
+        }
+        for (var materialKey : typedFormRules.keySet()) {
+            GTMaterial material = GTMaterialRegistry.get(materialKey.name());
+            if (material.has(gregtech.api.material.MaterialProperty.MOLTEN))
+                typedFormRules
+                        .get(materialKey)
+                        .add(new MaterialFormRule(
+                                new FormKey("molten"), MaterialFormKind.FLUID, 0, false, "canonical MOLTEN flag"));
+            if (material.has(gregtech.api.material.MaterialProperty.GAS))
+                typedFormRules
+                        .get(materialKey)
+                        .add(new MaterialFormRule(
+                                new FormKey("gas"), MaterialFormKind.FLUID, 0, false, "canonical GAS flag"));
+            if (material.has(gregtech.api.material.MaterialProperty.LIQUID))
+                typedFormRules
+                        .get(materialKey)
+                        .add(new MaterialFormRule(
+                                new FormKey("liquid"), MaterialFormKind.FLUID, 0, false, "canonical LIQUID flag"));
+        }
+        for (var entry : FluidCatalog.all().values()) {
+            String materialName = entry.materialKey() == null
+                    ? FluidCatalog.boundMaterial(entry.registryName())
+                    : entry.materialKey();
+            if (materialName == null) continue;
+            GTMaterial material = GTMaterialRegistry.get(materialName);
+            if (!material.isValid()) continue;
+            var materialKey = new MaterialKey(material.getName());
+            if (!typedFormRules.containsKey(materialKey)) continue;
+            String form = entry.textureMode() == FluidCatalog.FluidTextureMode.GENERIC_MOLTEN
+                    ? "molten"
+                    : entry.gas() ? "gas" : "liquid";
+            var rule = new MaterialFormRule(new FormKey(form), MaterialFormKind.FLUID, 0, false, "fluid catalog");
+            if (typedFormRules.get(materialKey).stream()
+                    .anyMatch(existing -> existing.kind() == MaterialFormKind.FLUID
+                            && existing.form().equals(rule.form()))) continue;
+            typedFormRules.get(materialKey).add(rule);
         }
         var immutableFormRules = new LinkedHashMap<MaterialKey, Set<FormKey>>();
         formRules.forEach((material, forms) -> immutableFormRules.put(material, Set.copyOf(forms)));
         var immutableAllForms = Set.copyOf(allForms);
+        var immutableTypedForms = new LinkedHashMap<MaterialKey, Set<MaterialFormRule>>();
+        typedFormRules.forEach((material, forms) -> immutableTypedForms.put(material, Set.copyOf(forms)));
         MaterialFormRulesView formView = new MaterialFormRulesView() {
             public Set<FormKey> forms() {
                 return immutableAllForms;
@@ -260,7 +333,18 @@ public final class MaterialViews {
             }
 
             public boolean allows(MaterialKey material, FormKey form) {
-                return forms(material).contains(java.util.Objects.requireNonNull(form));
+                return rules(material).stream()
+                        .anyMatch(rule -> rule.form().equals(java.util.Objects.requireNonNull(form)));
+            }
+
+            public Set<MaterialFormRule> rules() {
+                return immutableTypedForms.values().stream()
+                        .flatMap(Set::stream)
+                        .collect(java.util.stream.Collectors.toUnmodifiableSet());
+            }
+
+            public Set<MaterialFormRule> rules(MaterialKey material) {
+                return immutableTypedForms.getOrDefault(java.util.Objects.requireNonNull(material), Set.of());
             }
         };
 
@@ -312,6 +396,7 @@ public final class MaterialViews {
             addProcessRule(
                     processRules.get(key), process, MaterialInfoRegistry.normalizeProcessRule(source, process, rule));
         }
+        validateProcessForms(processRules, immutableTypedForms);
         validateProcessCardinality(processRules);
         var immutableProcesses =
                 new LinkedHashMap<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>>();
@@ -389,6 +474,10 @@ public final class MaterialViews {
                 return formView;
             }
 
+            public MaterialFormsView formBindings() {
+                return formBindings;
+            }
+
             public MaterialProcessesView processes() {
                 return processView;
             }
@@ -425,6 +514,21 @@ public final class MaterialViews {
             if (key.cardinality() == MaterialProcessCardinality.SINGLE && rules.size() != 1)
                 throw new IllegalArgumentException("Material " + material.name() + " single-valued process " + key.id()
                         + " must have exactly one rule, found " + rules.size());
+        }));
+    }
+
+    private static void validateProcessForms(
+            Map<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>> processRules,
+            Map<MaterialKey, Set<MaterialFormRule>> formRules) {
+        processRules.forEach((material, byProcess) -> byProcess.forEach((process, rules) -> {
+            var allowed = formRules.getOrDefault(material, Set.of()).stream()
+                    .map(MaterialFormRule::form)
+                    .collect(java.util.stream.Collectors.toSet());
+            for (var rule : rules)
+                for (var form : rule.forms())
+                    if (!allowed.contains(form))
+                        throw new IllegalArgumentException("Material " + material.name() + " process " + process.id()
+                                + " names missing form '" + form.name() + "'");
         }));
     }
 
@@ -501,5 +605,27 @@ public final class MaterialViews {
             throw new IllegalStateException(
                     "Material catalog is not ready (" + GTMaterialRegistry.registrationPhase() + ")");
         return published;
+    }
+
+    /** Publishes registered native forms after the platform registry has finished binding content. */
+    public static synchronized void publishContent(List<MaterialFormBinding> bindings) {
+        if (GTMaterialRegistry.registrationPhase() != GTMaterialRegistry.RegistrationPhase.READY || published == null)
+            throw new IllegalStateException("Material definitions must be READY before content bindings");
+        var byMaterial = new LinkedHashMap<MaterialKey, Set<MaterialFormBinding>>();
+        for (var material : published.materials()) byMaterial.put(material.key(), new LinkedHashSet<>());
+        for (var binding : bindings) {
+            var values = byMaterial.get(binding.material());
+            if (values == null)
+                throw new IllegalArgumentException("Native form binding uses unknown material "
+                        + binding.material().name());
+            values.add(binding);
+        }
+        var immutable = new LinkedHashMap<MaterialKey, Set<MaterialFormBinding>>();
+        byMaterial.forEach((material, values) -> immutable.put(material, Set.copyOf(values)));
+        formBindings = new MaterialFormsView() {
+            public Set<MaterialFormBinding> find(MaterialKey material) {
+                return immutable.getOrDefault(java.util.Objects.requireNonNull(material), Set.of());
+            }
+        };
     }
 }

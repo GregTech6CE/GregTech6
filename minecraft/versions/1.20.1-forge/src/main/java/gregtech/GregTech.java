@@ -69,6 +69,7 @@ public class GregTech {
             gregtech.content.registry.GTProjectiles.registerDispensers();
             gregtech.content.registry.GTDungeonBlocks.registerPotPlants();
             initialize("material linking", new MaterialLinkBootstrap(), new MaterialItemRegistration());
+            gregtech.engine.material.MaterialFormContent.publish();
             gregtech.content.recipe.ForgePotionBrewing.registerExtraIngredients();
             gregtech.content.recipe.MachineRecipeBootstrap.load();
             gregtech.api.addon.GregTechAddons.dispatchRecipesReady(

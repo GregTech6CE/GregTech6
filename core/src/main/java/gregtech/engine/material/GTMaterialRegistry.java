@@ -4,6 +4,7 @@ import gregtech.api.material.*;
 import gregtech.api.mod.ModData;
 import gregtech.content.data.ModReferences;
 import gregtech.content.material.MaterialDefinitions;
+import gregtech.engine.addon.AddonCoreServices;
 import gregtech.engine.addon.AddonMaterials;
 import java.util.Collection;
 import java.util.Comparator;
@@ -120,13 +121,6 @@ public final class GTMaterialRegistry {
                 .setAlpha(definition.alpha())
                 .setStats(definition.meltingPointKelvin(), definition.boilingPointKelvin(), definition.density())
                 .setTooltipChemical(definition.chemicalFormula());
-        var tooling = declaration.info().tooling();
-        if (!tooling.profile().equals(new MaterialToolProfile(0, 1F, 0, 0)))
-            material.setToolStats(
-                    tooling.profile().types(),
-                    tooling.profile().speed(),
-                    tooling.profile().durability(),
-                    tooling.profile().quality());
         if (!definition.sourceId().isEmpty())
             material.setSourceMod(ModData.of(definition.sourceId(), definition.sourceName()));
         MaterialInfoRegistry.validateInstall(declaration);
@@ -215,6 +209,7 @@ public final class GTMaterialRegistry {
         rejectFailed();
         if (phase == RegistrationPhase.READY) return;
         if (initializing) throw new IllegalStateException("Reentrant material initialization (" + phase + ")");
+        AddonCoreServices.bind();
         initializing = true;
         try {
             AddonMaterials.collectContributors();

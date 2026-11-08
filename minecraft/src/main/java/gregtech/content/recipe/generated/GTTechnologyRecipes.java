@@ -57,9 +57,9 @@ public final class GTTechnologyRecipes {
      * phosphorus sentinel are both expanded, so no group is reduced to one representative.
      */
     private static void matches(List<ChemRecipe> rows) {
-        Set<GTMaterial> phosphorus = new LinkedHashSet<>(MaterialGroups.Phosphorus.getReRegistrations());
+        Set<GTMaterial> phosphorus = new LinkedHashSet<>(MaterialGroups.members(MaterialGroups.Phosphorus));
         phosphorus.add(gregtech.content.data.generated.GT6Materials.Elements.P);
-        for (GTMaterial wood : MaterialGroups.Wood.getReRegistrations()) {
+        for (GTMaterial wood : MaterialGroups.members(MaterialGroups.Wood)) {
             if (!MaterialPrefix.bolt.isValidFor(wood.resolve())) continue;
             for (GTMaterial material : phosphorus) {
                 if (material == null || !MaterialPrefix.dust.isValidFor(material.resolve())) continue;

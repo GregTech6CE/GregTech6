@@ -11,16 +11,10 @@ import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialMetadataDeclaration;
 import gregtech.api.addon.material.MaterialProcessCardinality;
 import gregtech.api.addon.material.MaterialProcessKey;
-import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.api.addon.material.MaterialTagDeclaration;
-import gregtech.api.material.CrushingMaterialHelper;
-import gregtech.api.material.FuelMaterialHelper;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialToolProfile;
-import gregtech.api.material.OreProcessingMaterialHelper;
-import gregtech.api.material.PulverizationMaterialHelper;
-import gregtech.api.material.SmeltingMaterialHelper;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.prefix.PrefixRegistry;
 import java.util.ArrayList;
@@ -76,7 +70,7 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
 
     private record CompositionSubmission(String addonId, MaterialKey material, MaterialComposition composition) {}
 
-    private record PublishedMaterialInfo(MaterialInfoDefinition definition, boolean compositionCrucible) {}
+    private record PublishedMaterialInfo(MaterialInfoDefinition definition) {}
 
     private record Snapshot(
             Map<MaterialKey, PublishedMaterialInfo> materials, Map<String, MaterialInfoDefinition.Relations> groups) {}
@@ -84,7 +78,6 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
     private static final class MutableMaterialInfo {
         private MaterialInfoDefinition.Tooling tooling;
         private MaterialInfoDefinition.Composition composition;
-        private boolean compositionCrucible;
         private MaterialInfoDefinition.Relations relations;
         private final LinkedHashMap<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> processes;
 
@@ -98,7 +91,7 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         private PublishedMaterialInfo freeze() {
             var definition = new MaterialInfoDefinition(
                     tooling, composition, relations, new MaterialInfoDefinition.Processes(processes));
-            return new PublishedMaterialInfo(definition, compositionCrucible);
+            return new PublishedMaterialInfo(definition);
         }
 
         private static LinkedHashMap<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> copyProcesses(
@@ -108,9 +101,9 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
             return copy;
         }
 
-        private void replaceProcess(MaterialProcessKey<?> key, Optional<?> value) {
+        private void replaceProcess(MaterialProcessKey<?> key, Optional<? extends MaterialProcessRule<?>> value) {
             processes.remove(key);
-            value.ifPresent(result -> processes.put(key, List.of(MaterialProcessRule.anyForm(result))));
+            value.ifPresent(rule -> processes.put(key, List.of(rule)));
         }
     }
 
@@ -142,55 +135,48 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
     static void freeze() {
         if (snapshot != null) return;
         registrationsClosed = true;
-        captureLinkedFacts();
+        normalizeLinkedFlags();
+        validateLinkedToolRegistrations();
         var published = new LinkedHashMap<MaterialKey, PublishedMaterialInfo>();
         MATERIALS.forEach((key, info) -> published.put(key, info.freeze()));
         snapshot = new Snapshot(Map.copyOf(published), Map.copyOf(GROUP_RELATIONS));
     }
 
-    /** Preserve the legacy SPI's crucible permission separately from its final linked composition. */
+    private static void normalizeLinkedFlags() {
+        for (var entry : MATERIALS.entrySet()) {
+            GTMaterial material = GTMaterialRegistry.get(entry.getKey().name());
+            if (!material.isValid()) continue;
+            Set<gregtech.api.material.MaterialProperty> normalized =
+                    MaterialPropertyRules.normalize(material.getProperties());
+            for (var flag : normalized) if (!material.has(flag)) material.put(flag);
+            boolean decomposition = material.has(gregtech.api.material.MaterialProperty.CENTRIFUGE)
+                    || material.has(gregtech.api.material.MaterialProperty.ELECTROLYSER);
+            if (decomposition
+                    && AddonMaterials.owns(material)
+                    && entry.getValue().composition.parts().isEmpty())
+                throw new IllegalArgumentException(
+                        "Addon material '" + material.getName() + "' declares decomposition without a composition");
+        }
+    }
+
+    private static void validateLinkedToolRegistrations() {
+        for (ToolSubmission submission : ADDON_TOOLS) {
+            GTMaterial material = requireOwned(submission.addonId(), submission.material(), "tool profile");
+            MaterialInfoDefinition.Tooling linked = MATERIALS.get(new MaterialKey(material.getName())).tooling;
+            if (!linked.profile().equals(submission.profile()))
+                throw new IllegalArgumentException("Addon '" + submission.addonId() + "' tool profile for '"
+                        + material.getName() + "' conflicts with the linked profile");
+        }
+    }
+
+    /** Preserve the legacy SPI's crucible permission on the one authoritative composition. */
     public static void recordLinkedComposition(GTMaterial material, boolean crucible) {
         if (snapshot != null) throw new IllegalStateException("Material auxiliary registrations are frozen");
         var key = new MaterialKey(material.resolve().getName());
         var info = MATERIALS.get(key);
         if (info == null) throw new IllegalArgumentException("Unknown material auxiliary declaration: " + key.name());
-        info.compositionCrucible = crucible;
-    }
-
-    private static MaterialToolProfile linkedTool(GTMaterial material) {
-        return new MaterialToolProfile(
-                material.getToolTypes(),
-                material.getToolSpeed(),
-                material.getToolDurability(),
-                material.getToolQuality());
-    }
-
-    private static void captureLinkedFacts() {
-        // Legacy callbacks still write the runtime model until every auxiliary domain migrates.
-        for (ToolSubmission submission : ADDON_TOOLS) {
-            GTMaterial material = requireOwned(submission.addonId(), submission.material(), "tool profile");
-            if (!linkedTool(material).equals(submission.profile()))
-                throw new IllegalArgumentException("Addon '" + submission.addonId() + "' tool profile for '"
-                        + material.getName() + "' conflicts with the linked profile");
-        }
-        for (var entry : MATERIALS.entrySet()) {
-            GTMaterial material = GTMaterialRegistry.get(entry.getKey().name());
-            if (!material.isValid()) continue;
-            var info = entry.getValue();
-            info.tooling = new MaterialInfoDefinition.Tooling(linkedTool(material), info.tooling.correctedToolStats());
-            info.composition = new MaterialInfoDefinition.Composition(
-                    material.getCompositionDivider(),
-                    material.getCompositionComponents().stream()
-                            .map(part -> new MaterialInfoDefinition.Part(
-                                    part.material().resolve().getName(), part.amount()))
-                            .toList());
-            info.replaceProcess(MaterialProcessKeys.SMELTING, SmeltingMaterialHelper.target(material));
-            info.replaceProcess(MaterialProcessKeys.CRUSHING, CrushingMaterialHelper.target(material));
-            info.replaceProcess(MaterialProcessKeys.PULVERIZING, PulverizationMaterialHelper.target(material));
-            info.replaceProcess(MaterialProcessKeys.FUEL, FuelMaterialHelper.rule(material));
-            info.replaceProcess(
-                    MaterialProcessKeys.ORE_PROCESSING, Optional.of(OreProcessingMaterialHelper.rule(material)));
-        }
+        info.composition =
+                new MaterialInfoDefinition.Composition(info.composition.divider(), info.composition.parts(), crucible);
     }
 
     static void closeRegistrations() {
@@ -214,11 +200,6 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
                 throw new IllegalArgumentException("Addon '" + submission.addonId() + "' tool profile for '"
                         + material.getName() + "' conflicts with the existing profile");
             info.tooling = new MaterialInfoDefinition.Tooling(submission.profile(), info.tooling.correctedToolStats());
-            material.setToolStats(
-                    submission.profile().types(),
-                    submission.profile().speed(),
-                    submission.profile().durability(),
-                    submission.profile().quality());
         }
     }
 
@@ -297,15 +278,117 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         var parts = composition.parts().stream()
                 .map(part -> new MaterialComposition.Part(part.material(), part.amount()))
                 .toList();
-        return Optional.of(new MaterialComposition(
-                material.name(), composition.divider(), parts, published.get().compositionCrucible()));
+        return Optional.of(
+                new MaterialComposition(material.name(), composition.divider(), parts, composition.crucible()));
     }
 
     public static MaterialInfoDefinition.Composition compositionDefinition(MaterialKey key) {
         var published = publishedMaterial(key, true);
         return published.isEmpty()
-                ? new MaterialInfoDefinition.Composition(0, List.of())
+                ? new MaterialInfoDefinition.Composition(0, List.of(), false)
                 : published.get().definition().composition();
+    }
+
+    @Override
+    public Optional<MaterialToolProfile> currentTool(MaterialKey key) {
+        var ready = snapshot;
+        if (ready != null) {
+            var published = ready.materials().get(key);
+            return published == null
+                    ? Optional.empty()
+                    : Optional.of(published.definition().toolProfile());
+        }
+        var current = MATERIALS.get(key);
+        return current == null ? Optional.empty() : Optional.of(current.tooling.profile());
+    }
+
+    @Override
+    public Optional<GTMaterial> findMaterial(MaterialKey key) {
+        GTMaterial material = GTMaterialRegistry.get(key.name());
+        return material.isValid() ? Optional.of(material.resolve()) : Optional.empty();
+    }
+
+    @Override
+    public Optional<MaterialComposition> currentComposition(MaterialKey material) {
+        var ready = snapshot;
+        MaterialInfoDefinition.Composition composition;
+        if (ready != null) {
+            var published = ready.materials().get(material);
+            if (published == null) return Optional.empty();
+            composition = published.definition().composition();
+        } else {
+            var current = MATERIALS.get(material);
+            if (current == null) return Optional.empty();
+            composition = current.composition;
+        }
+        if (composition.parts().isEmpty()) return Optional.empty();
+        return Optional.of(new MaterialComposition(
+                material.name(),
+                composition.divider(),
+                composition.parts().stream()
+                        .map(part -> new MaterialComposition.Part(part.material(), part.amount()))
+                        .toList(),
+                composition.crucible()));
+    }
+
+    @Override
+    public <T> Optional<MaterialProcessRule<T>> currentProcess(MaterialKey material, MaterialProcessKey<T> process) {
+        var ready = snapshot;
+        if (ready != null) {
+            var published = ready.materials().get(material);
+            return published == null
+                    ? Optional.empty()
+                    : published.definition().processes().findSingle(process);
+        }
+        var current = MATERIALS.get(material);
+        if (current == null) return Optional.empty();
+        var rules = current.processes.get(process);
+        if (rules == null || rules.size() != 1) return Optional.empty();
+        MaterialProcessRule<?> rule = rules.get(0);
+        return process.type().isInstance(rule.value())
+                ? Optional.of(
+                        new MaterialProcessRule<>(rule.forms(), process.type().cast(rule.value())))
+                : Optional.empty();
+    }
+
+    @Override
+    public void updateTool(MaterialKey material, MaterialToolProfile profile) {
+        requireMutable(material);
+        var info = MATERIALS.get(material);
+        info.tooling = new MaterialInfoDefinition.Tooling(profile, info.tooling.correctedToolStats());
+    }
+
+    @Override
+    public void updateComposition(MaterialKey material, Optional<MaterialComposition> composition) {
+        requireMutable(material);
+        if (composition.isEmpty()) {
+            MATERIALS.get(material).composition = new MaterialInfoDefinition.Composition(0, List.of(), false);
+            return;
+        }
+        MaterialComposition value = composition.get();
+        if (!material.name().equals(value.material()))
+            throw new IllegalArgumentException("Composition key and material name disagree: " + material.name());
+        MATERIALS.get(material).composition = new MaterialInfoDefinition.Composition(
+                value.divider(),
+                value.parts().stream()
+                        .map(part -> new MaterialInfoDefinition.Part(part.material(), part.amount()))
+                        .toList(),
+                value.crucible());
+    }
+
+    @Override
+    public <T> void updateProcess(
+            MaterialKey material, MaterialProcessKey<T> process, Optional<MaterialProcessRule<T>> rule) {
+        requireMutable(material);
+        if (rule.isPresent() && !process.type().isInstance(rule.get().value()))
+            throw new IllegalArgumentException("Process value type mismatch for " + process.id());
+        MATERIALS.get(material).replaceProcess(process, rule);
+    }
+
+    private static void requireMutable(MaterialKey material) {
+        if (snapshot != null) throw new IllegalStateException("Material auxiliary registrations are frozen");
+        if (!MATERIALS.containsKey(material))
+            throw new IllegalArgumentException("Unknown material auxiliary declaration: " + material.name());
     }
 
     public static MaterialInfoDefinition.Relations relations(MaterialKey key) {

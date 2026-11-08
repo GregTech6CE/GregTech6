@@ -286,6 +286,10 @@ public final class GTFluids {
         return ENTRY_BY_TYPE_ID.get(typeId);
     }
 
+    public static Map<ResourceLocation, RegisteredFluids.FluidEntry> entries() {
+        return Map.copyOf(ENTRY_BY_TYPE_ID);
+    }
+
     /**
      * The GT6 {@link RegisteredFluids.FluidEntry} of a registered fluid, still or flowing.
      *

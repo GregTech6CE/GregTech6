@@ -338,7 +338,7 @@ public final class GTChemRecipes {
     private static Set<GTMaterial> group(GTMaterial group) {
         Set<GTMaterial> out = new LinkedHashSet<>();
         if (group != null && group.isValid()) out.add(group.resolve());
-        if (group != null) for (GTMaterial material : group.getReRegistrations()) {
+        if (group != null) for (GTMaterial material : gregtech.content.data.MaterialGroups.members(group)) {
             if (material != null && material.isValid()) out.add(material.resolve());
         }
         return out;

@@ -71,8 +71,8 @@ public final class MaterialTagPack extends AbstractPackResources {
                 (path,id)->addInputGroup(tags,"items",path,id),
                 (path,id)->addInputGroup(tags,"fluids",path,id));
         gregtech.content.recipe.MaterialUnitInputTags.tags((path,id)->addInputGroup(tags,"items",path,id));
-        var copperMaterials=MaterialGroups.Cu.getReRegistrations().stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
-        var ironMaterials=MaterialGroups.Iron.getReRegistrations().stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
+        var copperMaterials=MaterialGroups.members(MaterialGroups.Cu).stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
+        var ironMaterials=MaterialGroups.members(MaterialGroups.Iron).stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
         // Per-material tag: every form of one material (gear, rod, ingot, dust, block, fluid, unit...)
         // shares "gt6ce:material/<material>", which is what recipe filtering and pack scripts want.
         // Per-form tags drop the "items" directory from their name: the tag is
@@ -158,7 +158,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                     boolean wood=gregtech.content.tool.OriginalToolMaterials.inFamily(material,"Wood")
                             || java.util.stream.Stream.of(MaterialGroups.Wood, MaterialGroups.WoodNormal,
                                     MaterialGroups.WoodMagical, MaterialGroups.WoodTreated)
-                            .flatMap(group -> group.getReRegistrations().stream()).anyMatch(member -> member.resolve() == material);
+                            .flatMap(group -> MaterialGroups.members(group).stream()).anyMatch(member -> member.resolve() == material);
                     boolean plastic=gregtech.content.tool.OriginalToolMaterials.inFamily(material,"Plastic");
                     if(form.prefix()==MaterialPrefix.stick && wood)
                         add(tags,"gt6ce","items","ammunition/sticks_wood",id.toString());
@@ -371,12 +371,12 @@ public final class MaterialTagPack extends AbstractPackResources {
         }
         // GT6 ANY.Iron includes ten iron/steel materials, not just vanilla iron.
         var ironScrews = tags.computeIfAbsent(tagPath("gt6ce:tags/items/screws/any_iron_or_steel.json"), k -> new TreeSet<>());
-        for (var material : MaterialGroups.Iron.getReRegistrations()) {
+        for (var material : MaterialGroups.members(MaterialGroups.Iron)) {
             String path = "screws/" + MaterialEquivalence.materialName(material.resolve());
             if (tags.containsKey(tagPath("forge:tags/items/" + path + ".json"))) ironScrews.add("#forge:" + path);
         }
         var ironDoublePlates=tags.computeIfAbsent(tagPath("gt6ce:tags/items/plate_double/any_iron_or_steel.json"),k->new TreeSet<>());
-        for(var material:MaterialGroups.Iron.getReRegistrations()) {
+        for(var material:MaterialGroups.members(MaterialGroups.Iron)) {
             String path="plate_double/"+MaterialEquivalence.materialName(material.resolve());
             if(tags.containsKey(tagPath("gt6ce:tags/items/"+path+".json")))ironDoublePlates.add("#gt6ce:"+path);
         }
@@ -513,7 +513,7 @@ public final class MaterialTagPack extends AbstractPackResources {
         if (prefix != MaterialPrefix.toolHeadRawPickaxe && prefix != MaterialPrefix.toolHeadPickaxe) return false;
         var resolved = material.resolve();
         if ("Enori".equals(resolved.getName())) return true;
-        return MaterialGroups.Iron.getReRegistrations().stream().anyMatch(m -> m.resolve() == resolved);
+        return MaterialGroups.contains(MaterialGroups.Iron, resolved);
     }
 
     /** Owned items and explicitly registered compositions only. Tag-derived data must not re-enter this pack. */

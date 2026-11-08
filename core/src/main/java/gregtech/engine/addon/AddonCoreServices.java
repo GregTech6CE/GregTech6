@@ -17,12 +17,15 @@ import java.util.List;
 /** SPDX-License-Identifier: LGPL-3.0-or-later. Installs the core addon entry. Call this before material initialization. */
 public final class AddonCoreServices {
     private static final GregTechMaterials.Catalog MATERIALS = new Materials();
+    private static boolean bound;
 
     private AddonCoreServices() {}
 
-    public static void bind() {
+    public static synchronized void bind() {
+        if (bound) return;
         AddonRuntime.bind(new Services());
         MaterialInfoTool.bindHost(MaterialInfoRegistry.host());
+        bound = true;
     }
 
     private static final class Services implements AddonRuntime.Services {

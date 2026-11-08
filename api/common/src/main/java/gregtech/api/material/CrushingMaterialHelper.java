@@ -3,6 +3,7 @@
 package gregtech.api.material;
 
 import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.material.MaterialInfoTool;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.addon.material.MaterialProcessRule;
@@ -16,23 +17,27 @@ public final class CrushingMaterialHelper {
     @Deprecated(since = "1.7.0", forRemoval = false)
     public static Optional<MaterialTarget> target(GTMaterial material) {
         if (material == null || !material.isValid()) return Optional.empty();
-        GTMaterial target = legacyTarget(material);
-        long amount = legacyAmount(material);
-        if (!target.isValid() || amount <= 0) return Optional.empty();
-        return Optional.of(new MaterialTarget(new MaterialKey(target.getName()), amount));
+        return MaterialInfoTool.currentProcess(
+                        new MaterialKey(material.resolve().getName()), MaterialProcessKeys.CRUSHING)
+                .map(MaterialProcessRule::value)
+                .filter(target -> target.amount() > 0);
     }
 
     public static Optional<MaterialTarget> target(MaterialKey material) {
         return GregTechMaterials.processes()
                 .findSingle(material, MaterialProcessKeys.CRUSHING)
-                .map(MaterialProcessRule::value);
+                .map(MaterialProcessRule::value)
+                .filter(target -> target.amount() > 0);
     }
 
     static GTMaterial legacyTarget(GTMaterial material) {
-        return material.rawTargetCrushingMaterial().resolve();
+        return target(material)
+                .flatMap(value -> MaterialInfoTool.findMaterial(value.material()))
+                .map(GTMaterial::resolve)
+                .orElse(material.resolve());
     }
 
     static long legacyAmount(GTMaterial material) {
-        return material.rawTargetCrushingAmount();
+        return target(material).map(MaterialTarget::amount).orElse(0L);
     }
 }

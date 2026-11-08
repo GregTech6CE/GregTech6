@@ -59,7 +59,8 @@ public final class ConcreteMixerRecipes {
 
     private static Set<GTMaterial> members(GTMaterial group) {
         Set<GTMaterial> result = new LinkedHashSet<>();
-        for (GTMaterial material : group.getReRegistrations()) if (material.isValid()) result.add(material.resolve());
+        for (GTMaterial material : MaterialGroups.members(group))
+            if (material.isValid()) result.add(material.resolve());
         return result;
     }
 
