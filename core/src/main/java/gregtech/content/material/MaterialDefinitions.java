@@ -3,7 +3,6 @@ package gregtech.content.material;
 import gregtech.content.material.catalog.*;
 import gregtech.engine.material.MaterialDefinition;
 import gregtech.engine.material.MaterialInfoDefinition;
-
 import java.util.*;
 
 /** Pure, ordered canonical declarations. Loading this directory never installs runtime materials. */

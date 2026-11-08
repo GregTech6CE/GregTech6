@@ -5,7 +5,6 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.material.MaterialDefinitions;
 import gregtech.engine.addon.AddonMaterials;
-
 import java.util.*;
 
 /** Captures intrinsic definitions after every legal addon callback, independent of later native content. */
