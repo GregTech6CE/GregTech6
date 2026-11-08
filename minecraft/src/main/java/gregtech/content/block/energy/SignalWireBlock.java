@@ -300,6 +300,12 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
     public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,
             LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         GTWaterloggable.updateShape(state, level, pos);
+        // Ports are explicit and outlive the neighbor, so the state never changes
+        // when it goes away; the client model still needs the new neighbor size.
+        if (level.isClientSide()) {
+            var be = level.getBlockEntity(pos);
+            if (be != null) be.requestModelDataUpdate();
+        }
         return super.updateShape(state, side, neighbor, level, pos, neighborPos);
     }
 
