@@ -54,7 +54,7 @@ public final class MaterialForms {
         if (material == null) return Set.of();
         if (material == MaterialSentinels.EMPTY) return Set.of("EMPTY");
         if (!material.isValid()) return Set.of();
-        return MaterialInfoRegistry.relations(material.resolve().getName()).forms();
+        return MaterialInfoRegistry.formsForPublication(material.resolve().getName());
     }
 
     /**

@@ -142,6 +142,10 @@ public final class MaterialLifecycleProbe {
             check(MaterialInfoTool.tool(new MaterialKey("Iron")).isEmpty());
             check(MaterialInfoTool.frozenTool(new MaterialKey("Iron")).isEmpty());
             check(MaterialInfoTool.composition(new MaterialKey("Iron")).isEmpty());
+            check(MaterialInfoTool.currentTool(new MaterialKey("Iron")).isEmpty());
+            check(MaterialInfoTool.currentComposition(new MaterialKey("Water")).isEmpty());
+            check(MaterialInfoTool.currentProcess(new MaterialKey("Graphite"), MaterialProcessKeys.SMELTING)
+                    .isEmpty());
             check(MaterialToolHelper.profile(new MaterialKey("Iron")).isEmpty());
             return;
         }

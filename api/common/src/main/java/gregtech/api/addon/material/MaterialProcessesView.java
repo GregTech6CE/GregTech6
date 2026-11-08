@@ -5,8 +5,14 @@ package gregtech.api.addon.material;
 import java.util.List;
 import java.util.Set;
 
-/** Immutable queries over material process rules. Process membership does not invent recipes. */
+/**
+ * Immutable queries over material process rules. Process membership does not invent recipes.
+ * Returned rule values must be treated as immutable.
+ */
 public interface MaterialProcessesView {
+    /**
+     * Returns matching rules. Their values are live caller-owned objects and must not be modified.
+     */
     <T> List<MaterialProcessRule<T>> find(MaterialKey material, MaterialProcessKey<T> process);
 
     /**

@@ -6,9 +6,10 @@ import gregtech.api.addon.AddonNames;
 import gregtech.api.addon.InstalledService;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialToolProfile;
+import org.jetbrains.annotations.ApiStatus;
+
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Lifecycle-bound registration and read entry for material auxiliary data.
@@ -170,6 +171,9 @@ public final class MaterialInfoTool {
 
         Registrar registerGroup(MaterialGroupDeclaration declaration);
 
+        /**
+         * Registers a typed process rule. The rule value must be treated as immutable after this call.
+         */
         <T> Registrar registerProcess(MaterialKey material, MaterialProcessKey<T> process, MaterialProcessRule<T> rule);
 
         default <T> Registrar registerProcess(MaterialProcessDeclaration<T> declaration) {

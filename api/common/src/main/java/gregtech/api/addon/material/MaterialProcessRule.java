@@ -6,7 +6,8 @@ import java.util.Set;
 
 /**
  * One process rule with an immutable form set. The process-specific value remains caller-owned and
- * is not deep-frozen. An empty form set means the rule is not form-specific.
+ * is not deep-frozen; callers must treat it as immutable and must not mutate it after registration.
+ * An empty form set means the rule is not form-specific.
  */
 public record MaterialProcessRule<T>(Set<FormKey> forms, T value) {
     public MaterialProcessRule {

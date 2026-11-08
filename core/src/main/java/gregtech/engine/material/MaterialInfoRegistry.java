@@ -1,30 +1,13 @@
 package gregtech.engine.material;
 
 import gregtech.api.addon.AddonNames;
-import gregtech.api.addon.material.DataKey;
-import gregtech.api.addon.material.FormKey;
-import gregtech.api.addon.material.MaterialComposition;
-import gregtech.api.addon.material.MaterialFormRequest;
-import gregtech.api.addon.material.MaterialGroupDeclaration;
-import gregtech.api.addon.material.MaterialInfoTool;
-import gregtech.api.addon.material.MaterialKey;
-import gregtech.api.addon.material.MaterialMetadataDeclaration;
-import gregtech.api.addon.material.MaterialProcessCardinality;
-import gregtech.api.addon.material.MaterialProcessKey;
-import gregtech.api.addon.material.MaterialProcessRule;
-import gregtech.api.addon.material.MaterialTagDeclaration;
+import gregtech.api.addon.material.*;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialToolProfile;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.prefix.PrefixRegistry;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+
+import java.util.*;
 
 /** One mutable auxiliary-info entry per canonical material and one frozen publication snapshot. */
 public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
@@ -291,6 +274,8 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
 
     @Override
     public Optional<MaterialToolProfile> currentTool(MaterialKey key) {
+        if (GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.FAILED)
+            return Optional.empty();
         var ready = snapshot;
         if (ready != null) {
             var published = ready.materials().get(key);
@@ -310,6 +295,8 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
 
     @Override
     public Optional<MaterialComposition> currentComposition(MaterialKey material) {
+        if (GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.FAILED)
+            return Optional.empty();
         var ready = snapshot;
         MaterialInfoDefinition.Composition composition;
         if (ready != null) {
@@ -333,6 +320,8 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
 
     @Override
     public <T> Optional<MaterialProcessRule<T>> currentProcess(MaterialKey material, MaterialProcessKey<T> process) {
+        if (GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.FAILED)
+            return Optional.empty();
         var ready = snapshot;
         if (ready != null) {
             var published = ready.materials().get(material);
@@ -414,6 +403,15 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
             if (published != null) return published.definition().relations();
         }
         return ready.groups().getOrDefault(name, emptyRelations());
+    }
+
+    /**
+     * Internal form lookup used while the catalog and legacy prefix predicates are being published.
+     * Returns no facts after a failed material lifecycle.
+     */
+    public static Set<String> formsForPublication(String name) {
+        if (GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.FAILED) return Set.of();
+        return relationsForPublication(name).forms();
     }
 
     public static MaterialInfoDefinition.Processes processes(MaterialKey key) {
