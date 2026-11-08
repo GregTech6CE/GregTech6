@@ -42,17 +42,55 @@ configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
         }
     }
     spotlessProject.apply plugin: 'com.diffplug.spotless'
-    def javaSources = spotlessProject.fileTree(spotlessProject.projectDir) {
-        include 'src/**/*.java'
-        exclude '**/generated/**'
-    }
+    // Root the trees at the Java source directories. Scanning src/**/*.java walks every
+    // resource file first, and core carries tens of thousands of them: several seconds per
+    // resolution, repeated for every up-to-date check.
+    def srcDir = spotlessProject.file('src')
+    def javaRoots = (srcDir.isDirectory() ? srcDir.listFiles() : new File[0])
+            .findAll { new File(it, 'java').isDirectory() }
+            .collect { new File(it, 'java') }
+    def javaSources = spotlessProject.files(javaRoots.collect { File root ->
+        spotlessProject.fileTree(root) {
+            include '**/*.java'
+            exclude '**/generated/**'
+        }
+    })
     // Stonecutter keeps one version's code inside block comments. A formatter cannot
-    // see through those comments, so marked files wait for the per-node pass. Resolve the
-    // marker scan lazily; otherwise every Gradle invocation reads the whole source tree.
+    // see through those comments, so marked files wait for the per-node pass. Ask git for
+    // the marked files instead of reading every source: the scan runs on each check and a
+    // full content read costs seconds on Windows. Untracked files are not in the index, so
+    // only those are read directly. Resolve lazily; ordinary invocations never scan.
     def stonecutterPaths = spotlessProject.provider {
-        javaSources
-                .filter { File file -> file.getText('UTF-8').contains('//?') }
-                .files.collect { spotlessProject.relativePath(it) }
+        def root = spotlessProject.projectDir
+        def marked = new LinkedHashSet<String>()
+        def scanContents = {
+            javaSources.filter { File file -> file.getText('UTF-8').contains('//?') }
+                    .files.each { File file -> marked << spotlessProject.relativePath(file) }
+            marked
+        }
+        try {
+            def grep = spotlessProject.providers.exec {
+                workingDir root
+                commandLine 'git', 'grep', '-l', '-F', '--', '//?', ':(glob)src/**/*.java'
+                ignoreExitValue = true
+            }
+            // git grep: 0 found matches, 1 found none, anything else means git failed.
+            if (grep.result.get().exitValue > 1) return scanContents()
+            grep.standardOutput.asText.get().readLines().each { marked << it }
+            def untracked = spotlessProject.providers.exec {
+                workingDir root
+                commandLine 'git', 'ls-files', '--others', '--exclude-standard', '--', ':(glob)src/**/*.java'
+                ignoreExitValue = true
+            }
+            if (untracked.result.get().exitValue != 0) return scanContents()
+            untracked.standardOutput.asText.get().readLines().each { String path ->
+                File file = new File(root, path)
+                if (file.isFile() && file.getText('UTF-8').contains('//?')) marked << path
+            }
+            marked
+        } catch (Exception ignored) {
+            scanContents()
+        }
     }
     spotlessProject.spotless {
         if (spotlessRatchet) ratchetFrom spotlessRatchet
