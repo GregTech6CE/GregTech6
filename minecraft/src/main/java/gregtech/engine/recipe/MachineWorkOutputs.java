@@ -86,28 +86,16 @@ public final class MachineWorkOutputs {
     public List<FluidStack> inspectionFluids(int limit) {
         return fluids.stream().filter(stack -> !stack.isEmpty()).limit(Math.max(0, limit)).map(FluidStack::copy).toList();
     }
-//? if >=1.21.1 {
-    /*public CompoundTag save(net.minecraft.core.HolderLookup.Provider lookup) {
-        Object codecLookup=lookup;
-*///?} else {
-    public CompoundTag save() {
-        Object codecLookup=null;
-//?}
+    public CompoundTag save(net.minecraft.core.HolderLookup.Provider lookup) {
         var tag=new CompoundTag(); var itemList=new ListTag(); var fluidList=new ListTag();
-        for(var stack:items) if(!stack.isEmpty()) itemList.add(gregtech.engine.stack.NbtCompat.saveItem(stack,codecLookup));
-        for(var stack:fluids) if(!stack.isEmpty()) fluidList.add(gregtech.engine.stack.NbtCompat.saveFluid(stack,codecLookup));
+        for(var stack:items) if(!stack.isEmpty()) itemList.add(gregtech.engine.stack.NbtCompat.saveItem(stack,lookup));
+        for(var stack:fluids) if(!stack.isEmpty()) fluidList.add(gregtech.engine.stack.NbtCompat.saveFluid(stack,lookup));
         tag.put("items",itemList); tag.put("fluids",fluidList); return tag;
     }
-//? if >=1.21.1 {
-    /*public static MachineWorkOutputs load(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        Object codecLookup=lookup;
-*///?} else {
-    public static MachineWorkOutputs load(CompoundTag tag) {
-        Object codecLookup=null;
-//?}
+    public static MachineWorkOutputs load(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         var result=new MachineWorkOutputs();
-        for(var data:tag.getList("items",10)) result.items.add(gregtech.engine.stack.NbtCompat.readItem((CompoundTag)data,codecLookup));
-        for(var data:tag.getList("fluids",10)) result.fluids.add(gregtech.engine.stack.NbtCompat.readFluid((CompoundTag)data,codecLookup));
+        for(var data:tag.getList("items",10)) result.items.add(gregtech.engine.stack.NbtCompat.readItem((CompoundTag)data,lookup));
+        for(var data:tag.getList("fluids",10)) result.fluids.add(gregtech.engine.stack.NbtCompat.readFluid((CompoundTag)data,lookup));
         return result;
     }
 }

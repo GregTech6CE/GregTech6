@@ -212,34 +212,30 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
 //? if >=1.21.1 {
     /*@Override public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup);
+        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
 *///?} else {
     @Override public void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
+        net.minecraft.core.HolderLookup.Provider codecLookup=null;
 //?}
         var job=new CompoundTag();job.putLong("charge",chargeRemaining);job.putLong("totalCharge",chargeTotal);
         job.putLong("progress",progress);job.putLong("duration",duration);job.putLong("outputEU",outputEU);
         job.putBoolean("passive",passive);job.putBoolean("processing",processing);
-//? if >=1.21.1 {
-        /*if(products!=null)job.put("products",products.save(lookup));
-*///?} else {
-        if(products!=null)job.put("products",products.save());
-//?}
+        if(products!=null)job.put("products",products.save(codecLookup));
         tag.put("gt.fusion",job);
     }
 //? if >=1.21.1 {
     /*@Override public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);var job=tag.getCompound("gt.fusion");
+        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
 *///?} else {
     @Override public void load(CompoundTag tag) {
         super.load(tag);var job=tag.getCompound("gt.fusion");
+        net.minecraft.core.HolderLookup.Provider codecLookup=null;
 //?}
         chargeTotal=Math.max(0,job.getLong("totalCharge"));chargeRemaining=Math.max(0,Math.min(chargeTotal,job.getLong("charge")));
         duration=Math.max(0,job.getLong("duration"));progress=Math.max(0,Math.min(duration,job.getLong("progress")));
-//? if >=1.21.1 {
-        /*outputEU=Math.max(0,job.getLong("outputEU"));products=job.contains("products")?MachineWorkOutputs.load(job.getCompound("products"),lookup):null;
-*///?} else {
-        outputEU=Math.max(0,job.getLong("outputEU"));products=job.contains("products")?MachineWorkOutputs.load(job.getCompound("products")):null;
-//?}
+        outputEU=Math.max(0,job.getLong("outputEU"));products=job.contains("products")?MachineWorkOutputs.load(job.getCompound("products"),codecLookup):null;
         continuousRecipe=null;running=completed=false;
         // Restore only an explicit saved latch, never infer processing from a waiting job.
         // tickFusion validates the real structure before this latch can permit any work.

@@ -3,6 +3,7 @@ package gregtech.engine.tool;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.tool.MaterialToolEnchantments;
 import gregtech.engine.material.MaterialFormItem;
+import gregtech.engine.stack.StackData;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -15,7 +16,6 @@ import net.minecraft.world.level.Level;
 //? if >=1.21.1 {
 /*import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 *///?} else {
@@ -30,12 +30,11 @@ public final class MaterialEnchantmentStacks {
     public static void applyAmmo(ItemStack stack, Level level) {
         if (!(stack.getItem() instanceof MaterialFormItem form) || !form.getPrefix().hasEmptyAmmunitionForm()
                 || !form.getMaterial().isValid() || "Empty".equals(form.getMaterial().getName())) return;
+        if (StackData.getBoolean(stack, AMMO_APPLIED, false)) return;
 //? if >=1.21.1 {
-        /*if (stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().getBoolean(AMMO_APPLIED)) return;
-        var enchants = new ItemEnchantments.Mutable(stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY));
+        /*var enchants = new ItemEnchantments.Mutable(stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY));
         var registry = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
 *///?} else {
-        if (stack.hasTag() && stack.getTag().getBoolean(AMMO_APPLIED)) return;
         var enchants = EnchantmentHelper.getEnchantments(stack);
 //?}
         int multiplier = form.getPrefix() == MaterialPrefix.bulletGtLarge ? 3 : form.getPrefix() == MaterialPrefix.bulletGtMedium ? 2 : 1;
@@ -51,11 +50,10 @@ public final class MaterialEnchantmentStacks {
         }
 //? if >=1.21.1 {
         /*stack.set(DataComponents.ENCHANTMENTS, enchants.toImmutable());
-        CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> tag.putBoolean(AMMO_APPLIED, true));
 *///?} else {
         EnchantmentHelper.setEnchantments(enchants, stack);
-        stack.getOrCreateTag().putBoolean(AMMO_APPLIED, true);
 //?}
+        StackData.putBoolean(stack, AMMO_APPLIED, true);
     }
 
     public static int level(ItemStack stack, String name, Level level) {
@@ -118,10 +116,12 @@ public final class MaterialEnchantmentStacks {
             if (changed != null) stack.set(component, changed.toImmutable());
         }
 *///?} else {
-        if (!stack.hasTag()) return;
+        var tag = StackData.read(stack);
+        if (tag == null) return;
+        boolean rewritten = false;
         for (String key : new String[] {"Enchantments", "StoredEnchantments"}) {
-            if (!stack.getTag().contains(key, 9)) continue;
-            var list = stack.getTag().getList(key, 10);
+            if (!tag.contains(key, 9)) continue;
+            var list = tag.getList(key, 10);
             boolean changed = false;
             var enchants = new java.util.LinkedHashMap<String, Integer>();
             for (int i = 0; i < list.size(); i++) {
@@ -136,9 +136,11 @@ public final class MaterialEnchantmentStacks {
                     var entry = new net.minecraft.nbt.CompoundTag();
                     entry.putString("id", id); entry.putShort("lvl", value.shortValue()); updated.add(entry);
                 });
-                stack.getTag().put(key, updated);
+                tag.put(key, updated);
+                rewritten = true;
             }
         }
+        if (rewritten) StackData.write(stack, tag);
 //?}
     }
 }

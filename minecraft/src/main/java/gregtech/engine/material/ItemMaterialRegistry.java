@@ -4,6 +4,7 @@ import gregtech.api.material.GTValues;
 import gregtech.api.material.*;
 
 import gregtech.content.data.MaterialPrefix;
+import gregtech.engine.stack.StackData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -91,12 +92,11 @@ public final class ItemMaterialRegistry {
             if (loot == null || !loot.getBoolean("GTLootGenerated")) return true;
 //?}
         }
+        var tag = StackData.read(stack);
+        if (tag != null && (hasStoredBlockEntityData(stack, tag.getCompound("BlockEntityTag"))
+                || tag.contains("Items") || tag.contains("EntityTag") || tag.contains("ChargedProjectiles"))) return true;
 //? if >=1.21.1 {
-        /*var data = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-        var tag = data == null ? null : data.copyTag();
-        if (tag != null && (hasStoredBlockEntityData(stack, tag.getCompound("BlockEntityTag")) || tag.contains("Items")
-                || tag.contains("EntityTag") || tag.contains("ChargedProjectiles"))) return true;
-        var blockData = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+/*        var blockData = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
         return (blockData != null && hasStoredBlockEntityData(stack, blockData.copyTag()))
                 || stack.has(net.minecraft.core.component.DataComponents.ENTITY_DATA)
                 || stack.has(net.minecraft.core.component.DataComponents.BUCKET_ENTITY_DATA)
@@ -106,9 +106,7 @@ public final class ItemMaterialRegistry {
                     && !stack.get(net.minecraft.core.component.DataComponents.CONTAINER).equals(
                             net.minecraft.world.item.component.ItemContainerContents.EMPTY));
 *///?} else {
-        var tag = stack.getTag();
-        return tag != null && (hasStoredBlockEntityData(stack, tag.getCompound("BlockEntityTag"))
-                || tag.contains("Items") || tag.contains("EntityTag") || tag.contains("ChargedProjectiles"));
+        return false;
 //?}
     }
 

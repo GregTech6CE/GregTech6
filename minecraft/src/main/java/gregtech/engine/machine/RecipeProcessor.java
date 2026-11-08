@@ -382,7 +382,7 @@ public final class RecipeProcessor {
      * Writes the job under its unchanged flat keys. {@code lookup} is the 1.21 registry provider
      * (typed as {@link Object} because that type does not exist on 1.20.1) and may be null.
      */
-    public void save(CompoundTag tag, @Nullable Object lookup) {
+    public void save(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         tag.putLong(NBT_PROGRESS, progress);
         tag.putLong(NBT_MAX_PROGRESS, totalWork);
         tag.putInt(NBT_PARALLEL, parallel);
@@ -396,16 +396,12 @@ public final class RecipeProcessor {
             tag.remove(NBT_RECIPE_DETAILS);
         }
         if (pendingOutputs != null) {
-//? if >=1.21.1 {
-            /*tag.put(NBT_PENDING_OUTPUTS, pendingOutputs.save((net.minecraft.core.HolderLookup.Provider) lookup));
-*///?} else {
-            tag.put(NBT_PENDING_OUTPUTS, pendingOutputs.save());
-//?}
+            tag.put(NBT_PENDING_OUTPUTS, pendingOutputs.save(lookup));
         }
     }
 
     /** Reads the job; the caller clears startup energy after this, exactly like the original order. */
-    public void load(CompoundTag tag, @Nullable Object lookup) {
+    public void load(CompoundTag tag, @Nullable net.minecraft.core.HolderLookup.Provider lookup) {
         if (tag.contains(NBT_PROGRESS)) progress = tag.getLong(NBT_PROGRESS);
         if (tag.contains(NBT_MAX_PROGRESS)) totalWork = tag.getLong(NBT_MAX_PROGRESS);
         if (tag.contains(NBT_PARALLEL)) parallel = Math.max(1, tag.getInt(NBT_PARALLEL));
@@ -418,11 +414,7 @@ public final class RecipeProcessor {
             if (power >= 0 && duration > 0)
                 recipeDetails = new RecipeDetails(power, duration);
         }
-//? if >=1.21.1 {
-        /*if (tag.contains(NBT_PENDING_OUTPUTS)) pendingOutputs = MachineWorkOutputs.load(tag.getCompound(NBT_PENDING_OUTPUTS), (net.minecraft.core.HolderLookup.Provider) lookup);
-*///?} else {
-        if (tag.contains(NBT_PENDING_OUTPUTS)) pendingOutputs = MachineWorkOutputs.load(tag.getCompound(NBT_PENDING_OUTPUTS));
-//?}
+        if (tag.contains(NBT_PENDING_OUTPUTS)) pendingOutputs = MachineWorkOutputs.load(tag.getCompound(NBT_PENDING_OUTPUTS), lookup);
         // Old saves never recorded their consumed job; do not invent outputs.
         if (totalWork > 0 && pendingOutputs == null) {
             progress = 0;

@@ -10,6 +10,7 @@ import gregtech.content.block.machine.SolidBurningBoxBlock;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
+import gregtech.engine.stack.StackData;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.item.GTToolItem;
@@ -37,27 +38,21 @@ public final class GTToolHelper {
 
     public static ItemStack write(ItemStack stack, GTMaterial head, GTMaterial handle) {
 
-//? if >=1.21.1 {
-/**///?} else {
-        CompoundTag root = stack.getOrCreateTag();
-//?}
-
         CompoundTag stats = new CompoundTag();
         // This writer creates new tools; loaded unversioned stacks are never stamped or rewritten.
         if (defaultManualItem(stack) && canonicalBuiltinMaterial(head))
             stats.putInt(SOURCE_TOOL_STATS_VERSION, 1);
 
+        stats.putString(KEY_HEAD, head.getName());
+        stats.putString(KEY_HANDLE, handle.getName());
+        StackData.update(stack, tag -> tag.put(ROOT, stats));
+
 //? if >=1.21.1 {
-/*        stats.putString(KEY_HEAD, head.getName());stats.putString(KEY_HANDLE, handle.getName());
-        net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA,stack,tag->tag.put(ROOT,stats));
-        stack.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE,computeMaxDurability(stack.getItem() instanceof GTToolItem tool?tool.toolType():getType(stack),head));
+/*        stack.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE,computeMaxDurability(stack.getItem() instanceof GTToolItem tool?tool.toolType():getType(stack),head));
         stack.set(net.minecraft.core.component.DataComponents.DAMAGE,0);
         if(stack.getItem() instanceof GTToolItem tool)stack.set(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,tool.getDefaultAttributeModifiers(stack).withTooltip(false));
         GTToolEnchantments.applyCurrent(stack);
 *///?} else {
-        stats.putString(KEY_HEAD, head.getName());
-        stats.putString(KEY_HANDLE, handle.getName());
-        root.put(ROOT, stats);
         stack.setDamageValue(0);
         stack.hideTooltipPart(ItemStack.TooltipPart.MODIFIERS);
         GTToolEnchantments.apply(stack);
@@ -691,18 +686,8 @@ public final class GTToolHelper {
 
     @Nullable
     private static CompoundTag stats(ItemStack stack) {
-
-//? if >=1.21.1 {
-/*        var data=stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-        if(data==null)return null;CompoundTag root=data.copyTag();
-        return root.contains(ROOT,net.minecraft.nbt.Tag.TAG_COMPOUND)?root.getCompound(ROOT):null;
-*///?} else {
-        if (!stack.hasTag()) {
-            return null;
-        }
-        CompoundTag root = stack.getTag();
-        return root != null && root.contains(ROOT) ? root.getCompound(ROOT) : null;
-//?}
-
+        CompoundTag root = StackData.read(stack);
+        return root != null && root.contains(ROOT, net.minecraft.nbt.Tag.TAG_COMPOUND)
+                ? root.getCompound(ROOT) : null;
     }
 }

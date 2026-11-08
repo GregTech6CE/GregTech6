@@ -54,14 +54,14 @@ public final class FluidDisplayBinding {
         if (!(carrierItem instanceof FluidDisplayItem)) return ItemStack.EMPTY;
         var displayStack = new ItemStack(carrierItem);
         var payloadData = gregtech.content.data.UsbDataMedia.tagOrEmpty(displayStack);
-        payloadData.put(TAG, fluid.save(lookup));
+        payloadData.put(TAG, gregtech.engine.stack.NbtCompat.saveFluid(fluid, lookup));
         gregtech.content.data.UsbDataMedia.store(displayStack, payloadData);
         return displayStack;
     }
 
     public static FluidStack resolve(HolderLookup.Provider lookup, ItemStack stack) {
         if (!(stack.getItem() instanceof FluidDisplayItem carrierItem)) return FluidStack.EMPTY;
-        if (hasPayload(stack)) return FluidStack.parseOptional(lookup, gregtech.content.data.UsbDataMedia.tag(stack).getCompound(TAG));
+        if (hasPayload(stack)) return gregtech.engine.stack.NbtCompat.readFluid(gregtech.content.data.UsbDataMedia.tag(stack).getCompound(TAG), lookup);
         if (carrierItem.fluidEntry().isVanillaLava()) return new FluidStack(net.minecraft.world.level.material.Fluids.LAVA, 1000);
         var itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
         var fluidId = ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(),
@@ -78,6 +78,7 @@ public final class FluidDisplayBinding {
 import gregtech.content.item.FluidItem;
 import gregtech.content.registry.GTFluidItems;
 import gregtech.content.data.RegisteredFluids;
+import gregtech.engine.stack.StackData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -92,7 +93,8 @@ public final class FluidDisplayBinding {
     }
 
     public static boolean hasPayload(ItemStack stack) {
-        return stack.hasTag() && stack.getTag().contains(TAG, 10);
+        var tag = StackData.read(stack);
+        return tag != null && tag.contains(TAG, 10);
     }
 
     public static ItemStack display(FluidStack fluid) {
@@ -101,13 +103,14 @@ public final class FluidDisplayBinding {
         if (carrierItem == null) carrierItem = GTFluidItems.getFirst();
         if (carrierItem == null) return ItemStack.EMPTY;
         var stack = new ItemStack(carrierItem);
-        stack.getOrCreateTag().put(TAG, fluid.writeToNBT(new CompoundTag()));
+        StackData.update(stack, tag -> tag.put(TAG, gregtech.engine.stack.NbtCompat.saveFluid(fluid, null)));
         return stack;
     }
 
     public static FluidStack resolve(ItemStack stack) {
         if (!(stack.getItem() instanceof FluidItem carrierItem)) return FluidStack.EMPTY;
-        if (hasPayload(stack)) return FluidStack.loadFluidStackFromNBT(stack.getTag().getCompound(TAG));
+        var data = StackData.read(stack);
+        if (data != null && data.contains(TAG, 10)) return gregtech.engine.stack.NbtCompat.readFluid(data.getCompound(TAG), null);
         if (carrierItem.fluidEntry().isVanillaLava()) return new FluidStack(net.minecraft.world.level.material.Fluids.LAVA, 1000);
         var itemId = ForgeRegistries.ITEMS.getKey(stack.getItem());
         var fluidId = ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(),
