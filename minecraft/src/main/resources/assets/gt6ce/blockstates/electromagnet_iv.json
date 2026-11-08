@@ -8,43 +8,53 @@
     },
     "facing=east,active=false": {
       "model": "gt6ce:block/machine/energy/electromagnet_iv",
-      "y": 90
+      "y": 90,
+      "uvlock": true
     },
     "facing=east,active=true": {
       "model": "gt6ce:block/machine/energy/electromagnet_iv_active",
-      "y": 90
+      "y": 90,
+      "uvlock": true
     },
     "facing=south,active=false": {
       "model": "gt6ce:block/machine/energy/electromagnet_iv",
-      "y": 180
+      "y": 180,
+      "uvlock": true
     },
     "facing=south,active=true": {
       "model": "gt6ce:block/machine/energy/electromagnet_iv_active",
-      "y": 180
+      "y": 180,
+      "uvlock": true
     },
     "facing=west,active=false": {
       "model": "gt6ce:block/machine/energy/electromagnet_iv",
-      "y": 270
+      "y": 270,
+      "uvlock": true
     },
     "facing=west,active=true": {
       "model": "gt6ce:block/machine/energy/electromagnet_iv_active",
-      "y": 270
+      "y": 270,
+      "uvlock": true
     },
     "facing=up,active=false": {
       "model": "gt6ce:block/machine/energy/electromagnet_iv",
-      "x": 270
+      "x": 270,
+      "uvlock": true
     },
     "facing=up,active=true": {
       "model": "gt6ce:block/machine/energy/electromagnet_iv_active",
-      "x": 270
+      "x": 270,
+      "uvlock": true
     },
     "facing=down,active=false": {
       "model": "gt6ce:block/machine/energy/electromagnet_iv",
-      "x": 90
+      "x": 90,
+      "uvlock": true
     },
     "facing=down,active=true": {
       "model": "gt6ce:block/machine/energy/electromagnet_iv_active",
-      "x": 90
+      "x": 90,
+      "uvlock": true
     }
   }
 }

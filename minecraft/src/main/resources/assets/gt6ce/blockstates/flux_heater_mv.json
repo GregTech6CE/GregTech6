@@ -5,69 +5,84 @@
     },
     "activity=0,facing=east": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv",
-      "y": 90
+      "y": 90,
+      "uvlock": true
     },
     "activity=0,facing=south": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv",
-      "y": 180
+      "y": 180,
+      "uvlock": true
     },
     "activity=0,facing=west": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv",
-      "y": 270
+      "y": 270,
+      "uvlock": true
     },
     "activity=0,facing=up": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv",
-      "x": 270
+      "x": 270,
+      "uvlock": true
     },
     "activity=0,facing=down": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv",
-      "x": 90
+      "x": 90,
+      "uvlock": true
     },
     "activity=1,facing=north": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv_active"
     },
     "activity=1,facing=east": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv_active",
-      "y": 90
+      "y": 90,
+      "uvlock": true
     },
     "activity=1,facing=south": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv_active",
-      "y": 180
+      "y": 180,
+      "uvlock": true
     },
     "activity=1,facing=west": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv_active",
-      "y": 270
+      "y": 270,
+      "uvlock": true
     },
     "activity=1,facing=up": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv_active",
-      "x": 270
+      "x": 270,
+      "uvlock": true
     },
     "activity=1,facing=down": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv_active",
-      "x": 90
+      "x": 90,
+      "uvlock": true
     },
     "activity=2,facing=north": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv_active"
     },
     "activity=2,facing=east": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv_active",
-      "y": 90
+      "y": 90,
+      "uvlock": true
     },
     "activity=2,facing=south": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv_active",
-      "y": 180
+      "y": 180,
+      "uvlock": true
     },
     "activity=2,facing=west": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv_active",
-      "y": 270
+      "y": 270,
+      "uvlock": true
     },
     "activity=2,facing=up": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv_active",
-      "x": 270
+      "x": 270,
+      "uvlock": true
     },
     "activity=2,facing=down": {
       "model": "gt6ce:block/machine/energy/flux_heater_mv_active",
-      "x": 90
+      "x": 90,
+      "uvlock": true
     }
   }
 }
