@@ -999,12 +999,7 @@ public final class OriginalHandCraftingRows {
         result.addProperty("count", output.getCount());
         // Tool outputs carry their head and handle materials; item identity alone loses both.
 //? if >=1.21.1 {
-        /*if (output.getItem() instanceof gregtech.content.item.GTToolItem) {
-            var lookup = gregtech.engine.tool.GTToolEnchantments.currentLookup();
-            if (lookup == null) lookup = net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
-            result = ItemStack.CODEC.encodeStart(lookup.createSerializationContext(JsonOps.INSTANCE), output)
-                    .getOrThrow().getAsJsonObject();
-        }
+        /*result = OriginalCraftingJson.result(id("recipe/hand/" + path + ".json"), output);
 *///?} else {
         if (output.hasTag()) result.addProperty("nbt", output.getTag().toString());
 //?}

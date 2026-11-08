@@ -121,6 +121,7 @@ public final class RecipePublishing {
         private final List<Entry> entries;
         private Map<ResourceLocation, byte[]> resources;
         private ResourcePrefixIndex index;
+        private boolean generating;
 
         //? if >=1.21.1 {
         /*NativeRecipePack(net.minecraft.server.packs.PackLocationInfo info, String description, List<Entry> entries) {
@@ -137,26 +138,38 @@ public final class RecipePublishing {
 
         private synchronized Map<ResourceLocation, byte[]> data() {
             if (resources != null) return resources;
-            var owned = new LinkedHashMap<ResourceLocation, String>();
-            var generated = new TreeMap<ResourceLocation, byte[]>();
-            for (var entry : entries) {
-                var local = new LinkedHashMap<ResourceLocation, byte[]>();
-                entry.contributor().contribute(local);
-                for (var row : local.entrySet()) {
-                    var previous = owned.putIfAbsent(row.getKey(), entry.owner());
-                    if (previous != null)
-                        throw new IllegalStateException("Duplicate dynamic recipe " + row.getKey() + " from "
-                                + previous + " and " + entry.owner());
-                    generated.put(row.getKey(), row.getValue());
+            if (generating) throw new IllegalStateException("Recursive recipe generation: " + description);
+            generating = true;
+            try {
+                var owned = new LinkedHashMap<ResourceLocation, String>();
+                var generated = new TreeMap<ResourceLocation, byte[]>();
+                for (var entry : entries) {
+                    var local = new LinkedHashMap<ResourceLocation, byte[]>();
+                    try {
+                        entry.contributor().contribute(local);
+                    } catch (RuntimeException failure) {
+                        com.mojang.logging.LogUtils.getLogger().error(
+                                "Failed to generate {} recipes from {}", description, entry.owner(), failure);
+                        throw failure;
+                    }
+                    for (var row : local.entrySet()) {
+                        var previous = owned.putIfAbsent(row.getKey(), entry.owner());
+                        if (previous != null)
+                            throw new IllegalStateException("Duplicate dynamic recipe " + row.getKey() + " from "
+                                    + previous + " and " + entry.owner());
+                        generated.put(row.getKey(), row.getValue());
+                    }
                 }
+                com.mojang.logging.LogUtils.getLogger()
+                        .info("[gregtech] {} datapack: {} rows", description, generated.size());
+                var index = new ResourcePrefixIndex();
+                for (var id : generated.keySet()) index.add(id);
+                this.index = index;
+                resources = generated;
+                return resources;
+            } finally {
+                generating = false;
             }
-            com.mojang.logging.LogUtils.getLogger()
-                    .info("[gregtech] {} datapack: {} rows", description, generated.size());
-            var index = new ResourcePrefixIndex();
-            for (var id : generated.keySet()) index.add(id);
-            this.index = index;
-            resources = generated;
-            return resources;
         }
 
         @Override
@@ -173,7 +186,7 @@ public final class RecipePublishing {
 
         @Override
         public IoSupplier<InputStream> getResource(PackType type, ResourceLocation id) {
-            if (type != PackType.SERVER_DATA) return null;
+            if (type != PackType.SERVER_DATA || !recipePath(id.getPath())) return null;
             byte[] bytes = data().get(id);
             return bytes == null ? null : () -> new ByteArrayInputStream(bytes);
         }
@@ -181,12 +194,21 @@ public final class RecipePublishing {
         @Override
         public void listResources(
                 PackType type, String namespace, String path, PackResources.ResourceOutput output) {
-            if (type != PackType.SERVER_DATA) return;
+            if (type != PackType.SERVER_DATA || !recipePath(path)) return;
             var data = data();
             for (var id : index.under(namespace, path)) {
                 byte[] bytes = data.get(id);
                 if (bytes != null) output.accept(id, () -> new ByteArrayInputStream(bytes));
             }
+        }
+
+        private static boolean recipePath(String path) {
+//? if >=1.21.1 {
+            /*String root = "recipe";
+*///?} else {
+            String root = "recipes";
+//?}
+            return path.isEmpty() || path.equals(root) || path.startsWith(root + "/");
         }
 
         @Override

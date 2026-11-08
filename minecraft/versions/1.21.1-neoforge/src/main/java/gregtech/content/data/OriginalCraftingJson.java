@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.mojang.serialization.JsonOps;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -13,18 +14,44 @@ import net.minecraft.world.item.crafting.*;
 public final class OriginalCraftingJson {
     private OriginalCraftingJson() {}
 
-    private static JsonObject recipe(String type, String group, CraftingBookCategory category, ItemStack output) {
-        if (output.isEmpty() || !output.getComponentsPatch().isEmpty())
-            throw new IllegalArgumentException("Original grid output must be a plain registered stack");
+    private static JsonObject recipe(
+            ResourceLocation id, String type, String group, CraftingBookCategory category, ItemStack output) {
         var json = new JsonObject();
         json.addProperty("type", type);
         json.addProperty("group", group);
         json.addProperty("category", category.name().toLowerCase(Locale.ROOT));
-        var result = new JsonObject();
-        result.addProperty("id", BuiltInRegistries.ITEM.getKey(output.getItem()).toString());
-        result.addProperty("count", output.getCount());
-        json.add("result", result);
+        json.add("result", result(id, output));
         return json;
+    }
+
+    /** Preserve serializable components, including those attached by other mods when stacks are constructed. */
+    public static JsonObject result(ResourceLocation id, ItemStack output) {
+        try {
+            var lookup = gregtech.engine.tool.GTToolEnchantments.currentLookup();
+            if (lookup == null)
+                lookup = net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
+            var result = ItemStack.CODEC
+                    .encodeStart(lookup.createSerializationContext(JsonOps.INSTANCE), output)
+                    .getOrThrow()
+                    .getAsJsonObject();
+            var customData = output.getComponentsPatch().get(DataComponents.CUSTOM_DATA);
+            // JSON numbers lose NBT widths and array types; the vanilla codec also accepts SNBT.
+            if (customData != null && customData.isPresent())
+                result.getAsJsonObject("components")
+                        .addProperty(
+                                "minecraft:custom_data",
+                                customData.get().copyTag().toString());
+            return result;
+        } catch (RuntimeException failure) {
+            throw new IllegalArgumentException(
+                    "Cannot encode crafting output for " + id + ": "
+                            + BuiltInRegistries.ITEM.getKey(output.getItem()) + " x" + output.getCount()
+                            + ", component types="
+                            + output.getComponentsPatch().entrySet().stream()
+                                    .map(entry -> BuiltInRegistries.DATA_COMPONENT_TYPE.getKey(entry.getKey()))
+                                    .toList(),
+                    failure);
+        }
     }
 
     public static void shapeless(
@@ -112,7 +139,11 @@ public final class OriginalCraftingJson {
             String material,
             String placement) {
         var json = recipe(
-                sourcePermission ? "gt6ce:tool_shapeless" : "minecraft:crafting_shapeless", group, category, output);
+                id,
+                sourcePermission ? "gt6ce:tool_shapeless" : "minecraft:crafting_shapeless",
+                group,
+                category,
+                output);
         var values = new JsonArray();
         if (sourcePermission) json.addProperty("gregtech_autocraftable", autocraftable);
         if (!input.isEmpty()) {
@@ -140,7 +171,7 @@ public final class OriginalCraftingJson {
             String[] pattern,
             Map<Character, Ingredient> ingredients,
             boolean mirror) {
-        var json = recipe("gt6ce:tool_shaped", group, category, output);
+        var json = recipe(id, "gt6ce:tool_shaped", group, category, output);
         var rows = new JsonArray();
         var keys = new JsonObject();
         var used = new LinkedHashSet<Character>();
