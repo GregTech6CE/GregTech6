@@ -1,5 +1,6 @@
 package gregtech.content.data;
 
+import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.tool.ClubRockCrushing;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -8,6 +9,7 @@ import gregtech.engine.tool.GTToolType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.event.level.BlockEvent;
@@ -86,12 +88,31 @@ public final class ToolBlockConversionEvents {
     }
 
     /**
+     * GT6 {@code BlocksGT.openableCrowbar}: vanilla storage blocks and the GT block forms a
+     * crowbar unpacks. Material crates are absent because the port opens them by interaction.
+     */
+    private static boolean isUnboxable(Block block) {
+        if (block == Blocks.IRON_BLOCK || block == Blocks.GOLD_BLOCK || block == Blocks.LAPIS_BLOCK
+                || block == Blocks.DIAMOND_BLOCK || block == Blocks.EMERALD_BLOCK
+                || block == Blocks.REDSTONE_BLOCK || block == Blocks.COAL_BLOCK) return true;
+        if (!(block instanceof MaterialBlockLike materialBlock)) return false;
+        return switch (materialBlock.prefix().getName()) {
+            case "blockRaw", "blockGem", "blockDust", "blockIngot", "blockPlate", "blockPlateGem" -> true;
+            default -> false;
+        };
+    }
+
+    /**
      * GT6's {@code convertBlockDrops} core: the block itself converts when the map has a recipe
      * for it (blocks with a block entity never do), otherwise each drop converts individually.
      */
     public static Result convert(ServerLevel level, BlockState state, List<ItemStack> drops, ItemStack tool) {
         Conversion conversion = conversionFor(tool);
         if (conversion == null) return new Result(List.copyOf(drops), 0, false);
+        // GT6's crowbar and universal spade only unpack blocks in BlocksGT.openableCrowbar; other
+        // blocks keep their ordinary drops. Material crates open by interaction in the port.
+        if (conversion.map() == MachineRecipeMaps.Unboxinator && !isUnboxable(state.getBlock()))
+            return new Result(List.copyOf(drops), 0, false);
 
         if (conversion.club()) {
             // GT_Tool_Club returns 0 conversions for its own rows: the block-break cost pays for them.
