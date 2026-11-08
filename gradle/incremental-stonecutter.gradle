@@ -1,0 +1,71 @@
+import org.gradle.api.Action
+import org.gradle.api.Task
+import org.gradle.api.tasks.Sync
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+
+// Stonecutter's generate task is a plain Sync: whenever one shared source changes it
+// rewrites the complete generated tree, which is thousands of files. On a large tree that
+// copy dominates the edit-build cycle. Keep the task, its declared inputs and outputs and
+// the Sync contract, but replace the copy action with an incremental sync that only writes
+// files whose prepared source changed. A manifest records the source stamps already
+// materialized so unchanged files are skipped without reading their contents.
+def syncStonecutter = { Sync task, File manifestFile ->
+    File destination = task.destinationDir
+    // Later source roots win, matching the Sync's INCLUDE duplicates strategy: the prepared
+    // cache is listed after the raw source tree, so its processed files replace the originals.
+    Map<String, File> effective = new LinkedHashMap<>()
+    task.source.visit { details ->
+        if (!details.directory) effective.put(details.relativePath.pathString, details.file)
+    }
+
+    Map<String, String> previous = [:]
+    if (manifestFile.isFile()) {
+        manifestFile.eachLine('UTF-8') { line ->
+            int split = line.indexOf('\t')
+            if (split > 0) previous[line.substring(0, split)] = line.substring(split + 1)
+        }
+    }
+
+    int copied = 0
+    int removed = 0
+    Map<String, String> current = new LinkedHashMap<>()
+    effective.each { String path, File source ->
+        String stamp = "${source.length()}\t${source.lastModified()}"
+        current[path] = stamp
+        File target = new File(destination, path)
+        if (previous[path] == stamp && target.isFile() && target.length() == source.length()) return
+        target.parentFile?.mkdirs()
+        Files.copy(source.toPath(), target.toPath(),
+                StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES)
+        copied++
+    }
+
+    // Sync semantics: outputs whose source disappeared must not survive.
+    if (destination.isDirectory()) {
+        destination.eachFileRecurse { File file ->
+            if (!file.isFile()) return
+            String path = destination.toPath().relativize(file.toPath()).toString().replace('\\', '/')
+            if (!effective.containsKey(path)) {
+                file.delete()
+                removed++
+            }
+        }
+    }
+
+    manifestFile.parentFile?.mkdirs()
+    manifestFile.withWriter('UTF-8') { writer ->
+        current.each { String path, String stamp -> writer.write("${path}\t${stamp}\n") }
+    }
+    task.logger.lifecycle("Stonecutter sync ${task.name}: ${copied} copied, ${removed} removed, ${effective.size()} total.")
+}
+
+tasks.withType(Sync).matching { it.name.startsWith('stonecutterGenerate') }.configureEach { Sync task ->
+    def manifestFile = task.project.layout.buildDirectory.file("tmp/stonecutter-sync/${task.name}.txt")
+    task.setActions([new Action<Task>() {
+        @Override
+        void execute(Task ignored) {
+            syncStonecutter(task, manifestFile.get().asFile)
+        }
+    }])
+}

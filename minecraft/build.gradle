@@ -18,6 +18,7 @@ apply from: rootProject.file(project.name.endsWith('neoforge')
         ? 'gradle/platform-neoforge.gradle' : 'gradle/platform-forge.gradle')
 apply from: rootProject.file('gradle/addon-sdk.gradle')
 apply from: rootProject.file('gradle/compact-model-json.gradle')
+apply from: rootProject.file('gradle/incremental-stonecutter.gradle')
 
 // The external sample is a consumer fixture, not part of the mod's source tree.
 sourceSets.matching { it.name != 'addonSample' }.configureEach { sources ->
