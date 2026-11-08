@@ -92,10 +92,32 @@ configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
             scanContents()
         }
     }
+    // The ratchet already limits local checks to files changed since the default branch,
+    // but the task still fingerprints every source file. Feed it the changed set directly
+    // so the up-to-date check has almost nothing to hash. Any git failure falls back to the
+    // complete tree, so a broken repository can never turn the check into a no-op.
+    def ratchetTargets = spotlessRatchet ? spotlessProject.provider {
+        try {
+            def diff = spotlessProject.providers.exec {
+                workingDir spotlessProject.projectDir
+                commandLine 'git', '-c', 'core.quotepath=false', 'diff', '--name-only',
+                        '--diff-filter=ACMR', '--relative', spotlessRatchet, '--', ':(glob)src/**/*.java'
+                ignoreExitValue = true
+            }
+            if (diff.result.get().exitValue == 0) {
+                return diff.standardOutput.asText.get().readLines()
+                        .findAll { String path -> path }
+                        .collect { String path -> new File(spotlessProject.projectDir, path) }
+                        .findAll { File file -> file.isFile() }
+            }
+        } catch (Exception ignored) {
+            // Fall through to the complete tree.
+        }
+        javaSources.files as List
+    } : null
     spotlessProject.spotless {
-        if (spotlessRatchet) ratchetFrom spotlessRatchet
         java {
-            target javaSources
+            target ratchetTargets != null ? spotlessProject.files(ratchetTargets) : javaSources
             targetExclude stonecutterPaths
             palantirJavaFormat('2.103.0')
         }
