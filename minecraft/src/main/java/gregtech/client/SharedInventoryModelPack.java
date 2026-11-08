@@ -65,30 +65,16 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     public static void packs(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.CLIENT_RESOURCES) return;
         event.addRepositorySource(output -> {
-//? if >=1.21.1 {
-            /*var location = new PackLocationInfo("gt6ce:shared_inventory", Component.literal("GregTech shared inventory models"), PackSource.BUILT_IN, Optional.empty());
-            var pack = Pack.readMetaAndCreate(location, new Pack.ResourcesSupplier() {
-                public PackResources openPrimary(PackLocationInfo info) { return new SharedInventoryModelPack(info); }
-                public PackResources openFull(PackLocationInfo info, Pack.Metadata metadata) { return new SharedInventoryModelPack(info); }
-            }, PackType.CLIENT_RESOURCES, new PackSelectionConfig(true, Pack.Position.BOTTOM, true));
-*///?} else {
-            var pack = Pack.readMetaAndCreate("gt6ce:shared_inventory", Component.literal("GregTech shared inventory models"), true,
-                    SharedInventoryModelPack::new, PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, PackSource.BUILT_IN);
-//?}
+            Pack pack = ClientPackFacade.createSharedInventoryPack();
             if (pack != null) output.accept(pack);
         });
     }
 
     @SubscribeEvent
     public static void loaders(ModelEvent.RegisterGeometryLoaders event) {
-//? if >=1.21.1 {
-        /*event.register(ResourceLocation.fromNamespaceAndPath(gregtech.engine.mod.GregTechIdentity.MOD_ID, "shared_inventory"),
-                (net.neoforged.neoforge.client.model.geometry.IGeometryLoader<Reference>)
-                        (json, context) -> new Reference(ResourceLocation.parse(json.get("parent").getAsString())));
-*///?} else {
-        event.register("shared_inventory", (net.minecraftforge.client.model.geometry.IGeometryLoader<Reference>)
-                (json, context) -> new Reference(ResourceLocation.tryParse(json.get("parent").getAsString())));
-//?}
+        ClientPackFacade.registerGeometryLoader(event,
+                ResourceLocation.fromNamespaceAndPath(gregtech.engine.mod.GregTechIdentity.MOD_ID, "shared_inventory"),
+                (json, context) -> new Reference(ResourceLocation.parse(json.get("parent").getAsString())));
     }
 
     private synchronized Map<ResourceLocation, byte[]> data() {
@@ -358,7 +344,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     @Override
     public synchronized void close() { resources = null; namespaces = null; }
 
-    private record Reference(ResourceLocation parent) implements IUnbakedGeometry<Reference> {
+    record Reference(ResourceLocation parent) implements IUnbakedGeometry<Reference> {
         @Override
         public net.minecraft.client.resources.model.BakedModel bake(IGeometryBakingContext context,
                 net.minecraft.client.resources.model.ModelBaker baker,
