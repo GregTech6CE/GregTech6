@@ -4,6 +4,7 @@ import gregtech.api.material.*;
 import gregtech.engine.material.MaterialPresentation;
 
 import gregtech.engine.energy.item.IItemEnergy;
+import gregtech.engine.stack.StackData;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -98,11 +99,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
 
     public boolean monkeyWrenchMode(ItemStack stack) {
 
-//? if >=1.21.1 {
-/*        return toolName.equals("Wrench") && gregtech.platform.neoforge.StackCustomData.read(stack).getBoolean("gt.monkey_wrench");
-*///?} else {
-        return toolName.equals("Wrench") && stack.hasTag() && stack.getTag().getBoolean("gt.monkey_wrench");
-//?}
+        return toolName.equals("Wrench") && StackData.getBoolean(stack,"gt.monkey_wrench",false);
 
     }
 
@@ -165,11 +162,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
         } else if (level.getBlockEntity(pos) != null) return net.minecraft.world.InteractionResult.PASS;
         if (!level.isClientSide) {
 
-//? if >=1.21.1 {
-/*            boolean mode=!monkeyWrenchMode(stack);gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putBoolean("gt.monkey_wrench",mode));
-*///?} else {
-            stack.getOrCreateTag().putBoolean("gt.monkey_wrench", !monkeyWrenchMode(stack));
-//?}
+            StackData.putBoolean(stack,"gt.monkey_wrench",!monkeyWrenchMode(stack));
 
             player.getInventory().setChanged();
             player.displayClientMessage(net.minecraft.network.chat.Component.translatable(monkeyWrenchMode(stack)
@@ -208,11 +201,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
                 || user instanceof net.minecraft.world.entity.player.Player player && player.getAbilities().instabuild) return;
         long stored = getEnergyStored(stack, GregTechTags.Energy.EU);
 
-//? if >=1.21.1 {
-/*        gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putLong("gt.charge",stored-Math.min(stored,amount)));
-*///?} else {
-        stack.getOrCreateTag().putLong("gt.charge", stored - Math.min(stored, amount));
-//?}
+        StackData.update(stack,tag->tag.putLong("gt.charge",stored-Math.min(stored,amount)));
 
         applyWear(stack, amount, user);
         if (user instanceof net.minecraft.world.entity.player.Player player) player.getInventory().setChanged();
@@ -242,11 +231,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
                                          int slot, boolean selected) {
         super.inventoryTick(stack, level, entity, slot, selected);
 
-//? if >=1.21.1 {
-/*        if(!level.isClientSide) gregtech.engine.tool.GTToolEnchantments.apply(stack,level.registryAccess());
-*///?} else {
-        if(!level.isClientSide) gregtech.engine.tool.GTToolEnchantments.apply(stack);
-//?}
+        if(!level.isClientSide) gregtech.engine.tool.GTToolEnchantments.apply(stack,level.registryAccess());
 
         if (!level.isClientSide && entity instanceof net.minecraft.world.entity.LivingEntity user) finishBrokenTool(stack, user);
     }
@@ -258,12 +243,12 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
 
 //? if >=1.21.1 {
 /*        var result=new ItemStack(this);
-        gregtech.platform.neoforge.StackCustomData.update(result,tag->{var stats=new CompoundTag();stats.putString("head",material.getName());stats.putString("handle",definition().handleMaterial());tag.put("GT.ToolStats",stats);tag.putLong("gt.capacity",batteryCapacity);});
+        StackData.update(result,tag->{var stats=new CompoundTag();stats.putString("head",material.getName());stats.putString("handle",definition().handleMaterial());tag.put("GT.ToolStats",stats);tag.putLong("gt.capacity",batteryCapacity);});
         result.remove(net.minecraft.core.component.DataComponents.MAX_DAMAGE);result.remove(net.minecraft.core.component.DataComponents.DAMAGE);
 *///?} else {
         var result=gregtech.engine.tool.GTToolHelper.write(new ItemStack(this),material,
                 gregtech.engine.material.GTMaterialRegistry.get(definition().handleMaterial()));
-        result.getOrCreateTag().putLong("gt.capacity",batteryCapacity);
+        StackData.update(result,tag->tag.putLong("gt.capacity",batteryCapacity));
 //?}
 
         return result;
@@ -285,11 +270,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
 
     @Override public net.minecraft.network.chat.Component getName(ItemStack stack) {
 
-//? if >=1.21.1 {
-/*        return gregtech.platform.neoforge.StackCustomData.read(stack).contains("GT.ToolStats")
-*///?} else {
-        return stack.hasTag() && stack.getTag().contains("GT.ToolStats")
-//?}
+        return StackData.readOrEmpty(stack).contains("GT.ToolStats")
 
                 ? net.minecraft.network.chat.Component.translatable("item.gt6ce.electric_tool.named",
                     MaterialPresentation.name(headMaterial(stack)),super.getName(stack)) : super.getName(stack);
@@ -347,12 +328,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
         long stored = getEnergyStored(stack, GregTechTags.Energy.EU);
         if (!hasEnergyForUse(stack)) return false;
 
-//? if >=1.21.1 {
-/*        gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putLong("gt.charge",stored-energyPerUse));
-*///?} else {
-        CompoundTag tag = stack.getOrCreateTag();
-        tag.putLong("gt.charge", stored - energyPerUse);
-//?}
+        StackData.update(stack,tag->tag.putLong("gt.charge",stored-energyPerUse));
 
         applyWear(stack, energyPerUse, user);
         return true;
@@ -376,11 +352,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
     public long getEnergyCapacity(ItemStack stack, GregTechTags.Tag energyType) {
         if(energyType!=GregTechTags.Energy.EU) return 0;
 
-//? if >=1.21.1 {
-/*        long configured=gregtech.platform.neoforge.StackCustomData.read(stack).getLong("gt.capacity");
-*///?} else {
-        long configured=stack.hasTag()?stack.getTag().getLong("gt.capacity"):0;
-//?}
+        long configured=StackData.readOrEmpty(stack).getLong("gt.capacity");
 
         return configured>0?configured:capacity;
     }
@@ -389,11 +361,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
     public long getEnergyStored(ItemStack stack, GregTechTags.Tag energyType) {
         if (energyType != GregTechTags.Energy.EU) return 0;
 
-//? if >=1.21.1 {
-/*        CompoundTag tag = gregtech.platform.neoforge.StackCustomData.read(stack);
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
+        CompoundTag tag = StackData.read(stack);
 
         return tag != null ? Math.max(0,Math.min(tag.getLong("gt.charge"),getEnergyCapacity(stack,energyType))) : 0;
     }
@@ -415,12 +383,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
         long accepted = Math.min(Math.min(64, amount), Math.max(1, space / size));
         if (doInject && accepted > 0) {
 
-//? if >=1.21.1 {
-/*            long charge=stored+Math.min(space,accepted*size);gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putLong("gt.charge",charge));
-*///?} else {
-            CompoundTag tag = stack.getOrCreateTag();
-            tag.putLong("gt.charge", stored + Math.min(space, accepted * size));
-//?}
+            long charge=stored+Math.min(space,accepted*size);StackData.update(stack,tag->tag.putLong("gt.charge",charge));
 
         }
         return accepted;

@@ -8,6 +8,7 @@ import gregtech.engine.material.MaterialPresentation;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.stack.StackData;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.content.blockentity.OreBlockEntity;
@@ -127,8 +128,8 @@ public class OreBlock extends Block implements MaterialBlockLike {
         /*return "true".equals(stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_STATE,
                 net.minecraft.world.item.component.BlockItemStateProperties.EMPTY).properties().get(BROKEN.getName()));
 *///?} else {
-        CompoundTag stateTag = stack.getTagElement("BlockStateTag");
-        return stateTag != null && "true".equals(stateTag.getString(BROKEN.getName()));
+        var data = StackData.read(stack);
+        return data != null && "true".equals(data.getCompound("BlockStateTag").getString(BROKEN.getName()));
 //?}
     }
 
@@ -209,17 +210,19 @@ public class OreBlock extends Block implements MaterialBlockLike {
         stack.set(net.minecraft.core.component.DataComponents.BLOCK_STATE, properties);
         // Modern host state is an item component, with no fictitious stored block entity.
 *///?} else {
-        CompoundTag stateTag = new CompoundTag();
-        stateTag.putString(STONE.getName(), stone.id());
-        if (broken) stateTag.putString(BROKEN.getName(), "true");
-        stack.addTagElement("BlockStateTag", stateTag);
-        if (!broken) {
-            // Only intact ore predates the block-state migration. New broken ore has no legacy
-            // entity, so do not mark it as a filled container in material recovery.
-            CompoundTag entityTag = new CompoundTag();
-            entityTag.putString(OreBlockEntity.TAG_STONE, stone.id());
-            stack.addTagElement("BlockEntityTag", entityTag);
-        }
+        StackData.update(stack, tag -> {
+            CompoundTag stateTag = new CompoundTag();
+            stateTag.putString(STONE.getName(), stone.id());
+            if (broken) stateTag.putString(BROKEN.getName(), "true");
+            tag.put("BlockStateTag", stateTag);
+            if (!broken) {
+                // Only intact ore predates the block-state migration. New broken ore has no legacy
+                // entity, so do not mark it as a filled container in material recovery.
+                CompoundTag entityTag = new CompoundTag();
+                entityTag.putString(OreBlockEntity.TAG_STONE, stone.id());
+                tag.put("BlockEntityTag", entityTag);
+            }
+        });
 //?}
         return stack;
     }
@@ -240,22 +243,13 @@ public class OreBlock extends Block implements MaterialBlockLike {
         /*var properties = stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_STATE,
                 net.minecraft.world.item.component.BlockItemStateProperties.EMPTY).properties();
         if (properties.containsKey(STONE.getName())) return OreHostStone.byId(properties.get(STONE.getName()));
-        var data = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+*///?}
+        CompoundTag data = StackData.read(stack);
         if (data != null) {
-            CompoundTag legacy = data.copyTag();
-            CompoundTag stateTag = legacy.getCompound("BlockStateTag");
+            CompoundTag stateTag = data.getCompound("BlockStateTag");
             if (stateTag.contains(STONE.getName())) return OreHostStone.byId(stateTag.getString(STONE.getName()));
-            CompoundTag entityTag = legacy.getCompound("BlockEntityTag");
+            CompoundTag entityTag = data.getCompound("BlockEntityTag");
             if (entityTag.contains("stone")) return OreHostStone.byId(entityTag.getString("stone"));
-*///?} else {
-        CompoundTag stateTag = stack.getTagElement("BlockStateTag");
-        if (stateTag != null && stateTag.contains(STONE.getName())) {
-            return OreHostStone.byId(stateTag.getString(STONE.getName()));
-        }
-        CompoundTag entityTag = stack.getTagElement("BlockEntityTag");
-        if (entityTag != null) {
-            return OreHostStone.byId(entityTag.getString(OreBlockEntity.TAG_STONE));
-//?}
         }
         return OreHostStone.STONE;
     }

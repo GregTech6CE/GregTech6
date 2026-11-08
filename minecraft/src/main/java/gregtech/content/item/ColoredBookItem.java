@@ -21,6 +21,7 @@ package gregtech.content.item;
 
 import gregtech.api.material.*;
 import gregtech.content.book.ColoredBookRules;
+import gregtech.engine.stack.StackData;
 import net.minecraft.world.item.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
@@ -41,7 +42,8 @@ public final class ColoredBookItem extends WrittenBookItem {
     /** GT6 UT.Books.display leaves an untitled, empty cover closed. */
     @Override public net.minecraft.world.InteractionResultHolder<ItemStack> use(net.minecraft.world.level.Level level,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand){
         var stack=player.getItemInHand(hand);
-        if(!stack.hasTag()||stack.getTag().getString("title").isBlank())return net.minecraft.world.InteractionResultHolder.pass(stack);
+        var tag=StackData.read(stack);
+        if(tag==null||tag.getString("title").isBlank())return net.minecraft.world.InteractionResultHolder.pass(stack);
         return super.use(level,player,hand);
     }
 //?}
@@ -49,13 +51,13 @@ public final class ColoredBookItem extends WrittenBookItem {
 //? if >=1.21.1 {
     /*@Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,List<Component> tooltip,TooltipFlag flag){
         var content=stack.get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT);String title=content==null?"":content.title().raw();String author=content==null?"":content.author();
-        var data=stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-        if(data!=null&&data.copyTag().contains("gt.book.title"))title=data.copyTag().getString("gt.book.title");
+        var data=StackData.read(stack);
+        if(data!=null&&data.contains("gt.book.title"))title=data.getString("gt.book.title");
 *///?} else {
     /** Ordinary GT6 covers have no vanilla written-book glint. */
     @Override public boolean isFoil(ItemStack stack){return stack.isEnchanted();}
     @Override public void appendHoverText(ItemStack stack,net.minecraft.world.level.Level level,List<Component> tooltip,TooltipFlag flag){
-        var tag=stack.getTag();String title=tag==null?"":tag.getString(tag.contains("gt.book.title")?"gt.book.title":"title");String author=tag==null?"":tag.getString("author");
+        var tag=StackData.read(stack);String title=tag==null?"":tag.getString(tag.contains("gt.book.title")?"gt.book.title":"title");String author=tag==null?"":tag.getString("author");
 //?}
         if(title.isBlank())tooltip.add(Component.translatable("gt6ce.book.empty").withStyle(ChatFormatting.AQUA));
         else {tooltip.add(Component.literal(title).withStyle(ChatFormatting.AQUA));if(!author.isBlank())tooltip.add(Component.translatable("book.byAuthor",author).withStyle(ChatFormatting.AQUA));}

@@ -3,6 +3,7 @@ package gregtech.content.block.tool;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.engine.tool.ToolInteractionSpec;
+import gregtech.engine.stack.StackData;
 import gregtech.content.blockentity.tool.CoinMoldBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -96,12 +97,8 @@ public final class CoinMoldBlock extends ShapedToolBlock implements EntityBlock 
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer,
             ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
-//? if >=1.21.1 {
-        /*CompoundTag config = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
-                net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("GT6CoinMold");
-*///?} else {
-        CompoundTag config = stack.getTagElement("GT6CoinMold");
-//?}
+        CompoundTag tag = StackData.read(stack);
+        CompoundTag config = tag != null && tag.contains("GT6CoinMold") ? tag.getCompound("GT6CoinMold") : null;
         if (config != null && level.getBlockEntity(pos) instanceof CoinMoldBlockEntity mold)
         mold.loadItemConfig(config);
     }
@@ -132,15 +129,7 @@ public final class CoinMoldBlock extends ShapedToolBlock implements EntityBlock 
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         ItemStack item = new ItemStack(this);
         if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof CoinMoldBlockEntity mold)
-//? if >=1.21.1 {
-        /*{
-            var data = new CompoundTag();
-            data.put("GT6CoinMold", mold.saveItemConfig());
-            item.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(data));
-        }
-*///?} else {
-        item.addTagElement("GT6CoinMold", mold.saveItemConfig());
-//?}
+        StackData.update(item, tag -> tag.put("GT6CoinMold", mold.saveItemConfig()));
         return List.of(item);
     }
 

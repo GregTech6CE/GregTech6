@@ -1,6 +1,7 @@
 package gregtech.content.item;
 
 import gregtech.engine.energy.item.IItemEnergy;
+import gregtech.engine.stack.StackData;
 import gregtech.content.block.energy.ChemicalBatteryBlock;
 import gregtech.content.energy.PortableBatterySpec;
 import gregtech.content.data.GregTechTags;
@@ -17,20 +18,13 @@ public class ChemicalBatteryItem extends BlockItem implements IItemEnergy {
     public static final String CHARGE="gt.charge";
     public ChemicalBatteryItem(ChemicalBatteryBlock block){super(block,new Properties().stacksTo(16));}
     public PortableBatterySpec spec(){return ((ChemicalBatteryBlock)getBlock()).spec();}
-//? if >=1.21.1 {
-    /*public long stored(ItemStack stack){return Math.max(0,Math.min(spec().capacity(),gregtech.platform.neoforge.StackCustomData.read(stack).getLong(CHARGE)));}
-*///?} else {
-    public long stored(ItemStack stack){return stack.hasTag()?Math.max(0,Math.min(spec().capacity(),stack.getTag().getLong(CHARGE))):0;}
-//?}
+    public long stored(ItemStack stack){return Math.max(0,Math.min(spec().capacity(),StackData.readOrEmpty(stack).getLong(CHARGE)));}
     public void setCharge(ItemStack stack,long energy){
         long charge=Math.max(0,Math.min(spec().capacity(),energy));
+        StackData.update(stack,tag->{if(charge==0)tag.remove(CHARGE);else tag.putLong(CHARGE,charge);});
 //? if >=1.21.1 {
-        /*gregtech.platform.neoforge.StackCustomData.update(stack,tag->{if(charge==0)tag.remove(CHARGE);else tag.putLong(CHARGE,charge);});
-        stack.set(net.minecraft.core.component.DataComponents.MAX_STACK_SIZE,charge>0?1:16);
-*///?} else {
-        if(charge==0) {if(stack.hasTag()) {stack.getTag().remove(CHARGE);if(stack.getTag().isEmpty())stack.setTag(null);}}
-        else stack.getOrCreateTag().putLong(CHARGE,charge);
-//?}
+        /*stack.set(net.minecraft.core.component.DataComponents.MAX_STACK_SIZE,charge>0?1:16);
+*///?}
     }
 //? if >=1.21.1 {
     /*@Override public int getMaxStackSize(ItemStack stack){return stored(stack)>0?1:Math.min(16,stack.getOrDefault(net.minecraft.core.component.DataComponents.MAX_STACK_SIZE,16));}

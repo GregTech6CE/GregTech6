@@ -1,14 +1,11 @@
 package gregtech.content.item;
 import gregtech.platform.Mc;
+import gregtech.engine.stack.StackData;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.StackCustomData;
-*///?} else {
-//?}
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -81,22 +78,14 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
         tag.putInt(TAG_MAX_HEALTH, maxHealth);
         tag.putBoolean(TAG_DEPLETED, false);
         if(definition!=null)tag.putLong("gt.reactor_life",definition.life());
-//? if >=1.21.1 {
-        /*stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.of(tag));
-*///?} else {
-        stack.setTag(tag);
-//?}
+        StackData.write(stack, tag);
         return stack;
     }
 
     /** Read fuel type from NBT. */
     public static FuelType getFuelType(ItemStack stack) {
         if (!(stack.getItem() instanceof FuelRodItem)) return FuelType.NONE;
-//? if >=1.21.1 {
-        /*CompoundTag tag = StackCustomData.read(stack);
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
+        CompoundTag tag = StackData.read(stack);
         if (tag == null) return FuelType.NONE;
         try { return FuelType.valueOf(tag.getString(TAG_FUEL_TYPE)); }
         catch (IllegalArgumentException e) { return FuelType.NONE; }
@@ -105,52 +94,33 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
     /** Read remaining health from NBT. */
     public static int getHealth(ItemStack stack) {
         if (!(stack.getItem() instanceof FuelRodItem)) return 0;
-//? if >=1.21.1 {
-        /*CompoundTag tag = StackCustomData.read(stack);
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
+        CompoundTag tag = StackData.read(stack);
         return tag != null ? tag.getInt(TAG_HEALTH) : 0;
     }
 
     /** Read max health from NBT. */
     public static int getMaxHealth(ItemStack stack) {
         if (!(stack.getItem() instanceof FuelRodItem)) return 0;
-//? if >=1.21.1 {
-        /*CompoundTag tag = StackCustomData.read(stack);
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
+        CompoundTag tag = StackData.read(stack);
         return tag != null ? tag.getInt(TAG_MAX_HEALTH) : 0;
     }
 
     /** Whether this rod is depleted. */
     public static boolean isDepleted(ItemStack stack) {
         if (!(stack.getItem() instanceof FuelRodItem)) return true;
-//? if >=1.21.1 {
-        /*CompoundTag tag = StackCustomData.read(stack);
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
+        CompoundTag tag = StackData.read(stack);
         return tag != null && tag.getBoolean(TAG_DEPLETED);
     }
 
     /** Reduce health, mark depleted at 0. Returns true if rod was consumed. */
     public static boolean consumeHealth(ItemStack stack, int amount) {
         if (!(stack.getItem() instanceof FuelRodItem)) return false;
-//? if >=1.21.1 {
-        /*CompoundTag tag = StackCustomData.read(stack);
-*///?} else {
-        CompoundTag tag = stack.getOrCreateTag();
-//?}
+        CompoundTag tag = StackData.readOrEmpty(stack);
         int health = tag.getInt(TAG_HEALTH);
         health = Math.max(0, health - amount);
         tag.putInt(TAG_HEALTH, health);
         if (health <= 0) tag.putBoolean(TAG_DEPLETED, true);
-//? if >=1.21.1 {
-        /*stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.of(tag));
-*///?} else {
-//?}
+        StackData.write(stack, tag);
         return health <= 0;
     }
 
@@ -183,11 +153,7 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
                 tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.neutrons", definition.self(), definition.emission(), definition.maximum(), definition.divisor()));
             return;
         }
-//? if >=1.21.1 {
-        /*CompoundTag tag = StackCustomData.read(stack);
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
+        CompoundTag tag = StackData.read(stack);
         if (tag == null) {tooltip.add(Component.translatable("gt.tooltip.reactor.legacy_rod"));return;}
         int health = tag.getInt(TAG_HEALTH);
         int max = tag.getInt(TAG_MAX_HEALTH);

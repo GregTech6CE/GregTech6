@@ -1,6 +1,7 @@
 package gregtech.engine.tool;
 
 import gregtech.content.tool.MaterialToolEnchantments;
+import gregtech.engine.stack.StackData;
 //? if >=1.21.1 {
 /*import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
@@ -12,8 +13,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
-/*import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.item.enchantment.Enchantment;
+/*import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 *///?} else {
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -45,7 +45,7 @@ public final class GTToolEnchantments {
     }
     public static void apply(ItemStack stack, HolderLookup.Provider lookup) {
         if (stack.isEmpty()) return;
-        var data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        var data = StackData.readOrEmpty(stack);
         if (!data.contains(GTToolHelper.ROOT)) return;
         var registry = lookup.lookupOrThrow(Registries.ENCHANTMENT);
         var existing = stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
@@ -71,8 +71,8 @@ public final class GTToolEnchantments {
         }
 *///?} else {
     public static void apply(ItemStack stack) {
-        if (stack.isEmpty() || !stack.hasTag() || !stack.getTag().contains(GTToolHelper.ROOT)
-                || stack.getTag().getBoolean(APPLIED)) return;
+        var data = StackData.readOrEmpty(stack);
+        if (stack.isEmpty() || !data.contains(GTToolHelper.ROOT) || data.getBoolean(APPLIED)) return;
         var enchantments = EnchantmentHelper.getEnchantments(stack);
         for (var entry : java.util.List.copyOf(enchantments.entrySet())) {
             var id = BuiltInRegistries.ENCHANTMENT.getKey(entry.getKey());
@@ -101,11 +101,18 @@ public final class GTToolEnchantments {
         }
 //? if >=1.21.1 {
         /*stack.set(DataComponents.ENCHANTMENTS, enchantments.toImmutable());
-        CustomData.update(DataComponents.CUSTOM_DATA, stack, tag -> { tag.remove("gt.material_enchantments.v1"); tag.putBoolean(APPLIED, true); });
 *///?} else {
         EnchantmentHelper.setEnchantments(enchantments, stack);
-        stack.getOrCreateTag().remove("gt.material_enchantments.v1");
-        stack.getOrCreateTag().putBoolean(APPLIED, true);
 //?}
+        StackData.update(stack, tag -> {
+            tag.remove("gt.material_enchantments.v1");
+            tag.putBoolean(APPLIED, true);
+        });
     }
+//? if >=1.21.1 {
+//?} else {
+    public static void apply(ItemStack stack, net.minecraft.core.HolderLookup.Provider lookup) {
+        apply(stack);
+    }
+//?}
 }

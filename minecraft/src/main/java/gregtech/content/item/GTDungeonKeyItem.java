@@ -1,5 +1,6 @@
 package gregtech.content.item;
 
+import gregtech.engine.stack.StackData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -64,22 +65,13 @@ public class GTDungeonKeyItem extends Item {
 
     /** GT6's {@code Behavior_Key}: the {@code gt.key} id of the stack, {@code 0} for a blank key. */
     public static long keyId(ItemStack stack) {
-//? if >=1.21.1 {
-        /*var data = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-        CompoundTag tag = data == null ? null : data.copyTag();
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
+        CompoundTag tag = StackData.read(stack);
         return tag == null ? 0L : tag.getLong(NBT_KEY);
     }
 
     /** GT6's {@code UT.NBT.setNumber(tNBT, NBT_KEY, aKeyID)}. */
     public static void setKeyId(ItemStack stack, long keyId) {
-//? if >=1.21.1 {
-        /*net.minecraft.world.item.component.CustomData.update(net.minecraft.core.component.DataComponents.CUSTOM_DATA, stack, tag -> tag.putLong(NBT_KEY, keyId));
-*///?} else {
-        stack.getOrCreateTag().putLong(NBT_KEY, keyId);
-//?}
+        StackData.update(stack, tag -> tag.putLong(NBT_KEY, keyId));
     }
 
     /** GT6's {@code getWithNameAndNBT}'s name part: the vanilla custom name of a stack. */
@@ -87,8 +79,11 @@ public class GTDungeonKeyItem extends Item {
 //? if >=1.21.1 {
         /*stack.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, Component.literal(name));
 *///?} else {
-        stack.getOrCreateTagElement(NBT_DISPLAY).putString(NBT_NAME,
-                Component.Serializer.toJson(Component.literal(name)));
+        StackData.update(stack, tag -> {
+            CompoundTag display = tag.getCompound(NBT_DISPLAY);
+            display.putString(NBT_NAME, Component.Serializer.toJson(Component.literal(name)));
+            tag.put(NBT_DISPLAY, display);
+        });
 //?}
         return stack;
     }

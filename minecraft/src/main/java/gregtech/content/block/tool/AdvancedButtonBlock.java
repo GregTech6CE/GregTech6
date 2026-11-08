@@ -8,6 +8,7 @@ import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.tool.ToolInteractions;
+import gregtech.engine.stack.StackData;
 import gregtech.content.block.machine.MachineRotationType;
 import gregtech.content.blockentity.tool.AdvancedButtonBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
@@ -97,12 +98,8 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
             ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (level.getBlockEntity(pos) instanceof AdvancedButtonBlockEntity button) {
-//? if >=1.21.1 {
-            /*CompoundTag config = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
-                    net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("GT6Button");
-*///?} else {
-            CompoundTag config = stack.getTagElement("GT6Button");
-//?}
+            CompoundTag tag = StackData.read(stack);
+            CompoundTag config = tag != null && tag.contains("GT6Button") ? tag.getCompound("GT6Button") : null;
             if (config != null) button.loadItemConfig(config);
         }
     }
@@ -215,15 +212,7 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         ItemStack item = new ItemStack(this);
         if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AdvancedButtonBlockEntity button)
-//? if >=1.21.1 {
-        /*{
-            var data = new CompoundTag();
-            data.put("GT6Button", button.saveItemConfig());
-            item.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(data));
-        }
-*///?} else {
-        item.addTagElement("GT6Button", button.saveItemConfig());
-//?}
+        StackData.update(item, tag -> tag.put("GT6Button", button.saveItemConfig()));
         return List.of(item);
     }
 
