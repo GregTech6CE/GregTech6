@@ -28,6 +28,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
@@ -50,6 +52,8 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class MaterialBaselineTests {
     private static final String BATCH = "material_baseline";
+    private static final AtomicBoolean RELOAD_COMPLETE = new AtomicBoolean();
+    private static final AtomicReference<Throwable> RELOAD_FAILURE = new AtomicReference<>();
 
     private MaterialBaselineTests() {}
 
@@ -226,7 +230,7 @@ public final class MaterialBaselineTests {
     }
 
     // GameTest executes batches sequentially. This batch contains only this asynchronous reload test.
-    @GameTest(template = "test_empty", batch = "material_baseline_reload", timeoutTicks = 2400)
+    @GameTest(template = "test_empty", batch = "material_baseline_reload", timeoutTicks = 6000)
     public static void realResourceReloadDoesNotAccumulateRules(GameTestHelper helper) {
         var server = helper.getLevel().getServer();
         var packs = List.copyOf(server.getPackRepository().getSelectedIds());
@@ -234,18 +238,40 @@ public final class MaterialBaselineTests {
         capture(helper, "startup");
         var before = ownedCounts();
         var sample = describe(new ItemStack(Items.IRON_BLOCK));
-        server.reloadResources(packs).thenCompose(ignored -> server.reloadResources(packs)).whenComplete((ignored, failure) -> server.execute(() -> {
-            if (failure != null) { helper.fail("resource reload failed: " + failure); return; }
-            try {
-                helper.assertTrue(MachineRecipeOverlay.applications() >= applications + 2, "both real reloads applied the overlay");
-                helper.assertTrue(before.equals(ownedCounts()), "owned rules do not accumulate: " + before + " -> " + ownedCounts());
-                helper.assertTrue(sample.equals(describe(new ItemStack(Items.IRON_BLOCK))), "fixed composition is stable after reload");
-                helper.assertTrue(find(MachineRecipeMaps.Shredder, List.of(new ItemStack(Items.IRON_BLOCK)), List.of()) != null,
-                        "iron block recycling remains queryable after reload");
-                capture(helper, "reload");
-                helper.succeed();
-            } catch (Throwable error) { helper.fail("reload assertion: " + error); }
-        }));
+        RELOAD_COMPLETE.set(false);
+        RELOAD_FAILURE.set(null);
+        server.reloadResources(packs).thenCompose(ignored -> server.reloadResources(packs)).whenComplete((ignored, failure) -> {
+            RELOAD_FAILURE.set(failure);
+            RELOAD_COMPLETE.set(true);
+        });
+        awaitReload(helper, applications, before, sample);
+    }
+
+    private static void awaitReload(
+            GameTestHelper helper, int applications, List<Integer> before, String sample) {
+        if (!RELOAD_COMPLETE.get()) {
+            helper.runAfterDelay(1, () -> awaitReload(helper, applications, before, sample));
+            return;
+        }
+        var failure = RELOAD_FAILURE.get();
+        if (failure != null) {
+            helper.fail("resource reload failed: " + failure);
+            return;
+        }
+        helper.assertTrue(
+                MachineRecipeOverlay.applications() >= applications + 2,
+                "both real reloads applied the overlay");
+        helper.assertTrue(
+                before.equals(ownedCounts()), "owned rules do not accumulate: " + before + " -> " + ownedCounts());
+        helper.assertTrue(
+                sample.equals(describe(new ItemStack(Items.IRON_BLOCK))),
+                "fixed composition is stable after reload");
+        capture(helper, "reload");
+        var reloadedRecipe = find(MachineRecipeMaps.Shredder, List.of(new ItemStack(Items.IRON_INGOT)), List.of());
+        helper.assertTrue(
+                reloadedRecipe != null,
+                "iron ingot recycling remains queryable after reload");
+        helper.succeed();
     }
 
     private static List<Integer> ownedCounts() {

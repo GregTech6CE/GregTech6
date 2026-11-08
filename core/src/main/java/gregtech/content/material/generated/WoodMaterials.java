@@ -6,6 +6,7 @@ import gregtech.engine.material.GTMaterialRegistry;
 /** Compatibility symbols for the migrated GT6 import. Definitions live in content.material.catalog. */
 public final class WoodMaterials {
     private WoodMaterials() {}
+
     public static final GTMaterial Wood = GTMaterialRegistry.requireInstalled("Wood");
     public static final GTMaterial WoodTreated = GTMaterialRegistry.requireInstalled("WoodTreated");
     public static final GTMaterial WoodPolished = GTMaterialRegistry.requireInstalled("WoodPolished");

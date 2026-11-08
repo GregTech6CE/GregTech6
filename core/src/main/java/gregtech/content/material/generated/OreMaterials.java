@@ -6,6 +6,7 @@ import gregtech.engine.material.GTMaterialRegistry;
 /** Compatibility symbols for the migrated GT6 import. Definitions live in content.material.catalog. */
 public final class OreMaterials {
     private OreMaterials() {}
+
     public static final GTMaterial SiliconDioxide = GTMaterialRegistry.requireInstalled("SiliconDioxide");
     public static final GTMaterial Datolite = GTMaterialRegistry.requireInstalled("Datolite");
     public static final GTMaterial VanadiumPentoxide = GTMaterialRegistry.requireInstalled("VanadiumPentoxide");
@@ -27,7 +28,8 @@ public final class OreMaterials {
     public static final GTMaterial LithiumChloride = GTMaterialRegistry.requireInstalled("LithiumChloride");
     public static final GTMaterial Salt = GTMaterialRegistry.requireInstalled("Salt");
     public static final GTMaterial SodiumNitrate = GTMaterialRegistry.requireInstalled("SodiumNitrate");
-    public static final GTMaterial SodiumHydrogencarbonate = GTMaterialRegistry.requireInstalled("SodiumHydrogencarbonate");
+    public static final GTMaterial SodiumHydrogencarbonate =
+            GTMaterialRegistry.requireInstalled("SodiumHydrogencarbonate");
     public static final GTMaterial Cryolite = GTMaterialRegistry.requireInstalled("Cryolite");
     public static final GTMaterial IodineSalt = GTMaterialRegistry.requireInstalled("IodineSalt");
     public static final GTMaterial Sylvite = GTMaterialRegistry.requireInstalled("Sylvite");

@@ -6,6 +6,7 @@ import gregtech.engine.material.GTMaterialRegistry;
 /** Compatibility symbols for the migrated GT6 import. Definitions live in content.material.catalog. */
 public final class ElementMaterials {
     private ElementMaterials() {}
+
     public static final GTMaterial Hydrogen = GTMaterialRegistry.requireInstalled("Hydrogen");
     public static final GTMaterial Deuterium = GTMaterialRegistry.requireInstalled("Deuterium");
     public static final GTMaterial Tritium = GTMaterialRegistry.requireInstalled("Tritium");

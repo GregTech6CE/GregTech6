@@ -25,7 +25,6 @@ import gregtech.content.material.VanillaMaterialCorrections;
 import gregtech.content.material.VanillaUnificationLoader;
 import gregtech.content.multiblock.PlainStructureBlocks;
 import gregtech.content.recipe.DiggableRecipes;
-import gregtech.content.recipe.FermenterFoodRecipes;
 import gregtech.content.recipe.GTBumbleBeeRecipes;
 import gregtech.content.recipe.MachineRecipeBootstrap;
 import gregtech.content.recipe.PanelMaterialRegistration;

@@ -6,6 +6,7 @@ import gregtech.engine.material.GTMaterialRegistry;
 /** Compatibility symbols for the migrated GT6 import. Definitions live in content.material.catalog. */
 public final class CompoundMaterials {
     private CompoundMaterials() {}
+
     public static final GTMaterial Black = GTMaterialRegistry.requireInstalled("DyeBlack");
     public static final GTMaterial Red = GTMaterialRegistry.requireInstalled("DyeRed");
     public static final GTMaterial Green = GTMaterialRegistry.requireInstalled("DyeGreen");
@@ -98,7 +99,8 @@ public final class CompoundMaterials {
     public static final GTMaterial PotassiumCarbonate = GTMaterialRegistry.requireInstalled("PotassiumCarbonate");
     public static final GTMaterial PotassiumAluminate = GTMaterialRegistry.requireInstalled("PotassiumAluminate");
     public static final GTMaterial PotassiumFluoride = GTMaterialRegistry.requireInstalled("PotassiumFluoride");
-    public static final GTMaterial PotassiumHeptafluorotantalate = GTMaterialRegistry.requireInstalled("PotassiumHeptafluorotantalate");
+    public static final GTMaterial PotassiumHeptafluorotantalate =
+            GTMaterialRegistry.requireInstalled("PotassiumHeptafluorotantalate");
     public static final GTMaterial ChloroauricAcid = GTMaterialRegistry.requireInstalled("ChloroauricAcid");
     public static final GTMaterial ChloroplatinicAcid = GTMaterialRegistry.requireInstalled("ChloroplatinicAcid");
     public static final GTMaterial StannicChloride = GTMaterialRegistry.requireInstalled("StannicChloride");
@@ -113,10 +115,14 @@ public final class CompoundMaterials {
     public static final GTMaterial VitriolOfClay = GTMaterialRegistry.requireInstalled("VitriolOfClay");
     public static final GTMaterial UraniumTetrafluoride = GTMaterialRegistry.requireInstalled("UraniumTetrafluoride");
     public static final GTMaterial UraniumHexafluoride = GTMaterialRegistry.requireInstalled("UraniumHexafluoride");
-    public static final GTMaterial Uranium238Tetrafluoride = GTMaterialRegistry.requireInstalled("Uranium238Tetrafluoride");
-    public static final GTMaterial Uranium238Hexafluoride = GTMaterialRegistry.requireInstalled("Uranium238Hexafluoride");
-    public static final GTMaterial Uranium235Tetrafluoride = GTMaterialRegistry.requireInstalled("Uranium235Tetrafluoride");
-    public static final GTMaterial Uranium235Hexafluoride = GTMaterialRegistry.requireInstalled("Uranium235Hexafluoride");
+    public static final GTMaterial Uranium238Tetrafluoride =
+            GTMaterialRegistry.requireInstalled("Uranium238Tetrafluoride");
+    public static final GTMaterial Uranium238Hexafluoride =
+            GTMaterialRegistry.requireInstalled("Uranium238Hexafluoride");
+    public static final GTMaterial Uranium235Tetrafluoride =
+            GTMaterialRegistry.requireInstalled("Uranium235Tetrafluoride");
+    public static final GTMaterial Uranium235Hexafluoride =
+            GTMaterialRegistry.requireInstalled("Uranium235Hexafluoride");
     public static final GTMaterial AquaRegia = GTMaterialRegistry.requireInstalled("AquaRegia");
     public static final GTMaterial CobaltHexahydrate = GTMaterialRegistry.requireInstalled("CobaltHexahydrate");
     public static final GTMaterial MethaneIce = GTMaterialRegistry.requireInstalled("MethaneIce");
@@ -330,7 +336,8 @@ public final class CompoundMaterials {
     public static final GTMaterial NeodymiumMagnetic = GTMaterialRegistry.requireInstalled("NeodymiumMagnetic");
     public static final GTMaterial SteelGalvanized = GTMaterialRegistry.requireInstalled("SteelGalvanized");
     public static final GTMaterial TungstenSintered = GTMaterialRegistry.requireInstalled("TungstenSintered");
-    public static final GTMaterial TantalumHafniumCarbide = GTMaterialRegistry.requireInstalled("TantalumHafniumCarbide");
+    public static final GTMaterial TantalumHafniumCarbide =
+            GTMaterialRegistry.requireInstalled("TantalumHafniumCarbide");
     public static final GTMaterial RedAlloy = GTMaterialRegistry.requireInstalled("RedAlloy");
     public static final GTMaterial BlueAlloy = GTMaterialRegistry.requireInstalled("BlueAlloy");
     public static final GTMaterial RedstoneAlloy = GTMaterialRegistry.requireInstalled("RedstoneAlloy");

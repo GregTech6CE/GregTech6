@@ -6,6 +6,7 @@ import gregtech.engine.material.GTMaterialRegistry;
 /** Compatibility symbols for the migrated GT6 import. Definitions live in content.material.catalog. */
 public final class StoneMaterials {
     private StoneMaterials() {}
+
     public static final GTMaterial Stone = GTMaterialRegistry.requireInstalled("Stone");
     public static final GTMaterial Concrete = GTMaterialRegistry.requireInstalled("Concrete");
     public static final GTMaterial Netherrack = GTMaterialRegistry.requireInstalled("Netherrack");

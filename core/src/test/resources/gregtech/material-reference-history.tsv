@@ -8,6 +8,7 @@ forms	adamite	owner	adamite	0	RETIRED	MT.java:4044 unused/deprecated；上游即
 forms	adluorite	owner	adluorite	0	RETIRED	MT.java:4045 unused/deprecated；上游即非可用材料
 forms	advancedalloy	owner	advancedalloy	0	RETIRED	MT.java:4066 unused/deprecated；上游即非可用材料
 forms	agate	owner	agate	0	RETIRED	MT.java:4046 unused/deprecated；上游即非可用材料
+forms	amberdominican	owner	amberdominican	0	RETIRED	DominicanAmber 的导入别名随 Fossils and Archeology 材料一并退役，见 docs/decisions/parity/material-removal.md
 forms	ametrine	owner	ametrine	0	RETIRED	MT.java:1475 valgem(0)；未分配有效材料 ID
 forms	ammonium	owner	ammonium	0	RETIRED	MT.java:4047 unused/deprecated；上游即非可用材料
 forms	angelite	owner	angelite	0	RETIRED	MT.java:1472 valgem(0)；未分配有效材料 ID
