@@ -36,12 +36,13 @@
 | Draconic Evolution、Avaritia 熔融流体 | 停注 `molten.draconium`、`molten.draconiumawakened`、`molten.infinity`。 | 对应材料停注，见[材料移除](material-removal.md)。 |
 | 无来源/无消费端材料熔融流体 | 停注 `molten.bedrockium`、`molten.crystallinepinkslime`、`molten.unstable`。 | 对应材料停注，见[材料移除](material-removal.md)。 |
 | GT 水目录项（奥卡姆剃刀） | 删除 `Water` 目录项、`fluid_item_water` 物品与 `VANILLA_WATER` 贴图模式；配方中的 `Water` 字段改指 `minecraft:water`，材料 `Water` 不再生成 GT 流体。 | 原版已有水，GT 目录项只是原版水的别名；保留目录项会继续产生重复的流体物品与语言键。 |
-| 热温泉水、河水、海水（奥卡姆剃刀） | 停注 `watergeothermal`、`riverwater`、`seawater`，删除海洋/河流水体温替换特性 `gt_water_bodies`、地热泉 `overworld.fluid.water` 及其方块、模型、贴图与语言键；`minecraft:water` 流体标签不再追加 GT 水体。相关配方改指原版水或删除重复行：电解、干燥、蒸馏保留 `w:` 行，海水电解、干燥保留 `Saltwater` 行；`watergeothermal` 的重水离心、燃料与再生饮品行随流体删除。 | 三种流体都是原版水的变体；世界生成直接保留原版水，避免整块替换与地图模组不贴合，也去掉热泉水独有的重水与再生效果。 |
+| 河水、海水 | 停注 `riverwater`、`seawater`，删除海洋／河流水体替换特性 `gt_water_bodies`；世界生成保留原版水。旧存档的两种水方块映射为 `minecraft:water`，保留 `level`，对应源流体和流动流体也映射到原版水。 | 普通水保持统一，避免删除注册后旧水域变成空气。Forge 使用缺失注册映射，NeoForge 使用注册别名，不恢复水行为 mixin。已经保存为空气的区块无法凭空恢复，需使用损坏前备份。 |
+| 地热水 | 保留 `watergeothermal` 及 `overworld.fluid.water` 地热泉，恢复贴图、饮用／浸泡效果、锅炉用水、热交换与化学加工用途。 | 地热水有独立用途，不参与普通水统一，不应随海水／河水删除。 |
 | 淡水 | 停注材料生成流体 `freshwater`；材料 `FreshWater` 保留但不再生成流体。 | 没有世界生成、物品来源或配方消费端。 |
 | 氦离子、氮离子 | 停注 `heliumplasma`、`nitrogenplasma`。 | 端口没有达到等离子相温度的配方；`heliumplasma` 的离心绑定在 293 K 下不可达，`nitrogenplasma` 没有引用。 |
 | 无产出且不可熔炼的熔融金属流体 | 停注 `molten.al2o3`、`molten.cryolite`、`molten.lithiumchloride`、`molten.lithiumchlorate`、`molten.aluminiumfluoride`。 | 按 `RecipeDump` 核对：255 条生成熔融流体中 148 条有配方产出，107 条无配方产出；其中只有这 5 条同时没有 `MELTING` 可熔炼物品。`molten.al2o3` 是 `molten.alumina` 的静态重复项，配方使用后者；其余 4 条是只有 `MOLTEN` 旗标、没有熔点的熔盐。 |
 
-本次复核使用 `RecipeDump` 的静态与 overlay 快照（93 张图、128,858 条）核对熔融流体的配方产出；坩埚动态熔炼不算配方产出，因此只删除同时没有可熔炼物品形态的 5 条。水类流体删除后，`GTWaterParity`、`GTWorldWaterFluid`、`VanillaWaterlogging`、`WaterFamilyIdentity`、`WaterFluidClientExtensions`、`WorldWaterBlockColors` 及 10 个水体 mixin 一并移除，`minecraft:water` 流体标签文件不再需要。
+本次复核使用 `RecipeDump` 的静态与 overlay 快照（93 张图、128,858 条）核对熔融流体的配方产出；坩埚动态熔炼不算配方产出，因此只删除同时没有可熔炼物品形态的 5 条。海水、河水统一后，`GTWaterParity`、`GTWorldWaterFluid`、`VanillaWaterlogging`、`WaterFamilyIdentity`、`WaterFluidClientExtensions`、`WorldWaterBlockColors` 及 10 个水体 mixin 一并移除，`minecraft:water` 流体标签文件不再需要。
 
 随材料停注不再生成的流体共 113 条，包括 110 条 `molten.*`、`ectoplasm`、`martianvitriol` 和 `uumatter`。[类型C](https://github.com/GregTech6CE/GregTech6/issues/251) 的 `molten.brass`、`molten.zinc`、`molten.calcite` 静态声明已删除，但材料生成器以同一 ID 重建，不属于流体移除；属性改由材料熔点与亮度 10 决定。
 

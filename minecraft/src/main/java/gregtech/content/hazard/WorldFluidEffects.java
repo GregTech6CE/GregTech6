@@ -86,7 +86,7 @@ public final class WorldFluidEffects {
     }
 
     // ---------------------------------------------------------------------------------------------
-    // The five fluids the port puts into the world (Loader_Fluids.WORLD_FLUID_PATHS)
+    // The six fluids the port puts into the world (Loader_Fluids.WORLD_FLUID_PATHS)
     // ---------------------------------------------------------------------------------------------
 
     public static final String EXTRA_HEAVY_OIL = "liquid_extra_heavy_oil";
@@ -94,6 +94,7 @@ public final class WorldFluidEffects {
     public static final String MEDIUM_OIL = "liquid_medium_oil";
     public static final String LIGHT_OIL = "liquid_light_oil";
     public static final String NATURAL_GAS = "gas_natural_gas";
+    public static final String GEOTHERMAL_WATER = "watergeothermal";
 
     /** GT6 {@code BlockBaseFluid} / {@code BlockWaterlike}: {@code SERVER_TIME % 20 == 0}. */
     public static final int DROWN_INTERVAL = 20;
@@ -117,11 +118,16 @@ public final class WorldFluidEffects {
     /** Recorded, not applied: GT6 gets these three from Immersive Engineering ({@code GT_API}). */
     public static final List<String> OIL_IE_EFFECTS = List.of("flammable 300/1", "sticky 300/1", "slippery 300/1");
 
+    private static final List<EffectRow> GEOTHERMAL_BATHING = List.of(
+            new EffectRow(MobEffects.REGENERATION, 100, 0, "Loader_Blocks regeneration 100/0"),
+            new EffectRow(MobEffects.DAMAGE_RESISTANCE, 2400, 2, "Loader_Blocks resistance 2400/2"));
+
     /** Which fluids have a bathing row, and their rows. */
     public static List<EffectRow> bathingRows(Fluid fluid) {
         String path = path(fluid);
         return switch (path) {
             case EXTRA_HEAVY_OIL, HEAVY_OIL, MEDIUM_OIL, LIGHT_OIL -> OIL_BATHING;
+            case GEOTHERMAL_WATER -> GEOTHERMAL_BATHING;
             default -> List.of();
         };
     }
@@ -238,8 +244,8 @@ public final class WorldFluidEffects {
         return path.endsWith("_flowing") ? path.substring(0, path.length() - "_flowing".length()) : path;
     }
 
-    /** Every fluid of the port's five world-fluid blocks, for the coverage assertion in the test. */
+    /** Every fluid of the port's six world-fluid blocks, for the coverage assertion in the test. */
     public static List<String> worldFluidPaths() {
-        return List.of(EXTRA_HEAVY_OIL, HEAVY_OIL, MEDIUM_OIL, LIGHT_OIL, NATURAL_GAS);
+        return List.of(EXTRA_HEAVY_OIL, HEAVY_OIL, MEDIUM_OIL, LIGHT_OIL, NATURAL_GAS, GEOTHERMAL_WATER);
     }
 }

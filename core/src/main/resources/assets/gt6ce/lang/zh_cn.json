@@ -1,4 +1,10 @@
 {
+  "gt.drink.watergeothermal": "Fresh from the Geothermal Hot Spring!",
+  "fluid_type.gt6ce.watergeothermal": "热温泉水",
+  "fluid.watergeothermal": "热温泉水",
+  "fluid.gt6ce.watergeothermal": "热温泉水",
+  "block.gt6ce.watergeothermal": "地热水",
+  "block.gt6ce.fluid_spring_watergeothermal": "液体泉",
   "block.gt6ce.block_ore_anthracite": "无烟煤",
   "item.gt6ce.pebble_stone": "石子",
   "item.gt6ce.canned_meat": "肉罐头",

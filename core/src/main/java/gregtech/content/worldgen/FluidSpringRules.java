@@ -21,6 +21,7 @@ public final class FluidSpringRules {
                     "overworld.fluid.oil.medium", "gt6ce:liquid_medium_oil", "gt6ce:liquid_medium_oil", 400, 2, 6000),
             new Spring("overworld.fluid.oil.light", "gt6ce:liquid_light_oil", "gt6ce:liquid_light_oil", 400, 2, 6000),
             new Spring("overworld.fluid.gas.natural", "gt6ce:gas_natural_gas", "gt6ce:gas_natural_gas", 200, 1, 3000),
+            new Spring("overworld.fluid.water", "gt6ce:watergeothermal", "gt6ce:watergeothermal", 100, 3, 500),
             new Spring("overworld.fluid.lava", "minecraft:lava", "minecraft:lava", 200, 1, 1000));
 
     public static Spring byFluid(String id) {

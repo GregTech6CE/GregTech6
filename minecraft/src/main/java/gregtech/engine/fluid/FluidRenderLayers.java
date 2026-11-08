@@ -24,7 +24,7 @@ import java.util.Set;
  * <p>The layer is named here as a string instead of a {@code RenderType} because
  * {@code net.minecraft.client.renderer.RenderType} is {@code @OnlyIn(Dist.CLIENT)} while this class
  * is common. The client maps the name back through {@link #isTranslucent} and calls
- * {@code ItemBlockRenderTypes.setRenderLayer(fluid, RenderType.translucent())} for all ten
+ * {@code ItemBlockRenderTypes.setRenderLayer(fluid, RenderType.translucent())} for all twelve
  * source/flowing world-fluid entries from {@code GregTechClient.clientSetup}.
  */
 public final class FluidRenderLayers {
@@ -33,7 +33,12 @@ public final class FluidRenderLayers {
 
     /** GT6's other world-placed {@code BlockBaseFluid}s also use render pass 1. */
     private static final List<String> WORLD_SPRINGS = List.of(
-            "liquid_extra_heavy_oil", "liquid_heavy_oil", "liquid_medium_oil", "liquid_light_oil", "gas_natural_gas");
+            "liquid_extra_heavy_oil",
+            "liquid_heavy_oil",
+            "liquid_medium_oil",
+            "liquid_light_oil",
+            "gas_natural_gas",
+            "watergeothermal");
 
     private FluidRenderLayers() {}
 

@@ -442,7 +442,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
     private static boolean isWater(net.minecraft.world.level.material.Fluid fluid) {
         if (fluid == net.minecraft.world.level.material.Fluids.WATER) return true;
         var key = Mc.fluidId(fluid);
-        return key != null && java.util.Set.of("ic2distilledwater","ice").contains(key.getPath());
+        return key != null && java.util.Set.of("ic2distilledwater", "watergeothermal", "ice").contains(key.getPath());
     }
 
 //? if >=1.21.1 {

@@ -1,4 +1,8 @@
 {
+  "fluid_type.gt6ce.watergeothermal": "Hot Spring Water",
+  "fluid.gt6ce.watergeothermal": "Hot Spring Water",
+  "block.gt6ce.watergeothermal": "Geothermal Water",
+  "block.gt6ce.fluid_spring_watergeothermal": "Fluid Spring",
   "block.gt6ce.block_ore_anthracite": "Anthracite Coal",
   "item.gt6ce.pebble_stone": "Stone Rock",
   "item.gt6ce.canned_meat": "Canned Meat",

@@ -209,6 +209,7 @@ public final class GTDrinksGen {
             new DrinkNutritionRows.Row("tea", 2, 0.2f, 0, 30, 0, 0, 0, 0, false, false, "drink", false, false, false, List.of()),
             new DrinkNutritionRows.Row("vinegar", 2, 0.2f, 30, 0, 0, 20, 0, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.heal.id", 1, 1, 70))),
 
+            new DrinkNutritionRows.Row("watergeothermal", 1, 0.1f, 0, 0, 0, 0, 0, 0, false, false, "drink", false, true, false, List.of(new DrinkNutritionRows.Effect("Potion.regeneration.id", 100, 1, 20))),
             new DrinkNutritionRows.Row("whitegrapesmoothie", 4, 0.2f, 0, 0, 5, 20, 0, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 200, 1, 60))),
             new DrinkNutritionRows.Row("wine", 2, 0.2f, 30, 0, 0, 10, 0, 0, false, false, "drink", false, false, false, List.of(new DrinkNutritionRows.Effect("Potion.heal.id", 1, 0, 60))));
     public static final List<String> SKIPPED = List.of();

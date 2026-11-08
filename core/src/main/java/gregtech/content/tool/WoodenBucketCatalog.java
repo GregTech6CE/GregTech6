@@ -35,7 +35,7 @@ public final class WoodenBucketCatalog {
 
     public static final List<Content> CONTENTS = List.of(
             new Content("empty", "Empty", 0, List.of()),
-            new Content("water", "Water", 1, List.of("DistW", "MnWtr", "Mineralsoda", "Soda")),
+            new Content("water", "Water", 1, List.of("DistW", "MnWtr", "Mineralsoda", "Soda", "Water_Geothermal")),
             new Content("milk", "Milk (you cannot drink out of Buckets!)", 2, List.of("Milk")),
             new Content("latex", "Latex", 3, List.of("Latex")),
             new Content("creosote", "Creosote Oil", 4, List.of("Oil_Creosote")),

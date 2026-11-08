@@ -146,7 +146,6 @@ class MaterialCatalogTest {
                 "water",
                 "riverwater",
                 "seawater",
-                "watergeothermal",
                 "heliumplasma",
                 "nitrogenplasma",
                 "freshwater",
@@ -161,6 +160,10 @@ class MaterialCatalogTest {
                     id);
         }
         assertNull(gregtech.content.data.FluidCatalog.get("Water"));
+        assertEquals(
+                "watergeothermal",
+                gregtech.content.data.FluidCatalog.get("Water_Geothermal").registryName());
+        assertNotNull(gregtech.content.worldgen.FluidSpringRules.byFluid("gt6ce:watergeothermal"));
         assertTrue(gregtech.content.data.FluidCatalog.get("Lava").usesVanillaFluid());
         assertEquals(
                 gregtech.content.data.FluidCatalog.FluidTextureMode.DEDICATED,

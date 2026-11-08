@@ -500,6 +500,9 @@ public class FluidCatalog {
             DistW =
                     fluid("DistW", "ic2distilledwater")
                             .withFlags(FluidFlags.LIQUID | FluidFlags.FOOD | FluidFlags.WATER | FluidFlags.BATH),
+            Water_Geothermal =
+                    fluid("Water_Geothermal", "watergeothermal")
+                            .withFlags(FluidFlags.FOOD | FluidFlags.WATER | FluidFlags.BATH | FluidFlags.THERMOS),
             MnWtr = fluid("MnWtr", "potion.mineralwater").withFlags(FluidFlags.FOOD | FluidFlags.WATER),
             Ice =
                     fluid("Ice", "ice")

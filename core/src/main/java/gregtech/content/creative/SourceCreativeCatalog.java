@@ -868,6 +868,7 @@ public final class SourceCreativeCatalog {
         ITEMS.put("fluid_spring_liquid_medium_oil", new Entry("untyped", 1121));
         ITEMS.put("fluid_spring_liquid_light_oil", new Entry("untyped", 1121));
         ITEMS.put("fluid_spring_gas_natural_gas", new Entry("untyped", 1121));
+        ITEMS.put("fluid_spring_watergeothermal", new Entry("untyped", 1121));
         ITEMS.put("fluid_spring_lava", new Entry("untyped", 1121));
 
         ITEMS.put("flux_dynamo_lv", new Entry("dynamos", 475));
