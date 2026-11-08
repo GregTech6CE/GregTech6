@@ -233,7 +233,7 @@ public final class MaterialBaselineTests {
         helper.succeed();
     }
 
-    // GameTest executes batches sequentially. This batch contains only this asynchronous reload test.
+    // GameTest runs batches sequentially, so the asynchronous reload cannot overlap other tests.
     @GameTest(template = "test_empty", batch = "material_baseline_reload", timeoutTicks = 6000)
     public static void realResourceReloadDoesNotAccumulateRules(GameTestHelper helper) {
         var server = helper.getLevel().getServer();

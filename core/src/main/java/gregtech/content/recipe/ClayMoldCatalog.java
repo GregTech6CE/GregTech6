@@ -39,7 +39,7 @@ public final class ClayMoldCatalog {
                 return switch (family) {
                     case "AnyStone" -> FactoryFamilies.STONE.contains(material.resolve());
                     case "AnyWax" -> FactoryFamilies.WAX.contains(material.resolve());
-                    // ANY:145 nests ANY.Plastic; original re-registration propagates that family.
+                    // Upstream ANY.WoodPlastic re-registers ANY.Plastic members, so plastic also matches here.
                     case "AnyWoodPlastic" -> MaterialGroups.contains(MaterialGroups.Plastic, material);
                     default -> false;
                 };
