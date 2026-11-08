@@ -70,8 +70,7 @@ public final class SourceOreInputForms {
                 || form.getPrefix() != prefix
                 || form.getMaterial().resolve() != material) return true; // uncertain provenance retains legacy
         String name = material.getName();
-        if (AddonMaterials.acceptedForms().stream()
-                .anyMatch(f -> f.materialName().equals(name) && f.prefixName().equals(prefix.getName()))) return true;
+        if (AddonMaterials.accepts(name, prefix.getName())) return true;
         return false; // only a manufactured builtin legacy ore input lacking source generation evidence
     }
     /** Source MT Stone8500 -> stone factory G_STONE, without ORES. Missing profile rows are UNKNOWN.
@@ -87,9 +86,7 @@ public final class SourceOreInputForms {
         if (evidence != Evidence.NO || AddonMaterials.owns(material) || !GTMaterialRegistry.isCoreMaterial(material))
             return canonical;
         String name = material.getName();
-        if (AddonMaterials.acceptedForms().stream()
-                .anyMatch(f -> f.materialName().equals(name) && f.prefixName().equals(prefix.getName())))
-            return canonical;
+        if (AddonMaterials.accepts(name, prefix.getName())) return canonical;
         if (!canonical.isEmpty()
                 && !BuiltInRegistries.ITEM
                         .getKey(canonical.getItem())

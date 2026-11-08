@@ -120,6 +120,7 @@ public final class RecipePublishing {
         private final String description;
         private final List<Entry> entries;
         private Map<ResourceLocation, byte[]> resources;
+        private ResourcePrefixIndex index;
 
         //? if >=1.21.1 {
         /*NativeRecipePack(net.minecraft.server.packs.PackLocationInfo info, String description, List<Entry> entries) {
@@ -151,6 +152,9 @@ public final class RecipePublishing {
             }
             com.mojang.logging.LogUtils.getLogger()
                     .info("[gregtech] {} datapack: {} rows", description, generated.size());
+            var index = new ResourcePrefixIndex();
+            for (var id : generated.keySet()) index.add(id);
+            this.index = index;
             resources = generated;
             return resources;
         }
@@ -178,10 +182,11 @@ public final class RecipePublishing {
         public void listResources(
                 PackType type, String namespace, String path, PackResources.ResourceOutput output) {
             if (type != PackType.SERVER_DATA) return;
-            data().forEach((id, bytes) -> {
-                if (id.getNamespace().equals(namespace) && id.getPath().startsWith(path + "/"))
-                    output.accept(id, () -> new ByteArrayInputStream(bytes));
-            });
+            var data = data();
+            for (var id : index.under(namespace, path)) {
+                byte[] bytes = data.get(id);
+                if (bytes != null) output.accept(id, () -> new ByteArrayInputStream(bytes));
+            }
         }
 
         @Override
@@ -195,6 +200,7 @@ public final class RecipePublishing {
         @Override
         public void close() {
             resources = null;
+            index = null;
         }
     }
 }

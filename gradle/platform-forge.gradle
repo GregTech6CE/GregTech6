@@ -125,6 +125,8 @@ minecraft {
             workingDirectory project.file(project.findProperty('gameTestDirectory') ?: 'build/gametest-run')
             jvmArgs "-Xmx${project.findProperty('gameTestHeap') ?: '3g'}"
             property 'forge.enabledGameTestNamespaces', 'gt6ce'
+            // The shared debug level floods the test log; the run only needs the test summary.
+            property 'forge.logging.console.level', 'info'
             mods { "${mod_id}" { source sourceSets.test } }
         }
     }

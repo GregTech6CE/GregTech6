@@ -24,9 +24,7 @@ public final class SourceGemGradeResolver {
         // Honour a canonical external target or an explicitly accepted extra-form declaration first.
         ItemStack canonical = GTItems.getStack(prefix, material, count);
         final String materialName = material.getName();
-        boolean requested = AddonMaterials.acceptedForms().stream()
-                .anyMatch(f ->
-                        f.materialName().equals(materialName) && f.prefixName().equals(prefix.getName()));
+        boolean requested = AddonMaterials.accepts(materialName, prefix.getName());
         if (!canonical.isEmpty()
                 && (requested
                         || !BuiltInRegistries.ITEM

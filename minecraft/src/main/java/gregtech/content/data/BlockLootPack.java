@@ -33,6 +33,7 @@ import java.util.*;
 //?}
 public final class BlockLootPack extends AbstractPackResources {
     private Map<ResourceLocation, byte[]> resources;
+    private ResourcePrefixIndex index;
 //? if >=1.21.1 {
     /*public BlockLootPack(PackLocationInfo info) {
         super(info);
@@ -105,6 +106,9 @@ public final class BlockLootPack extends AbstractPackResources {
 //?}
                     gson.toJson(Map.of("replace", false, "values", values)).getBytes(StandardCharsets.UTF_8));
         });
+        var index = new ResourcePrefixIndex();
+        for (var id : result.keySet()) index.add(id);
+        this.index = index;
         resources = Collections.unmodifiableMap(result);
         return resources;
     }
@@ -127,9 +131,12 @@ public final class BlockLootPack extends AbstractPackResources {
     }
 
     public void listResources(PackType type, String ns, String path, ResourceOutput out) {
-        if (type == PackType.SERVER_DATA) data().forEach((id, bytes) -> {
-            if (id.getNamespace().equals(ns) && id.getPath().startsWith(path+"/")) out.accept(id, () -> new ByteArrayInputStream(bytes));
-        });
+        if (type != PackType.SERVER_DATA) return;
+        var data = data();
+        for (var id : index.under(ns, path)) {
+            byte[] bytes = data.get(id);
+            if (bytes != null) out.accept(id, () -> new ByteArrayInputStream(bytes));
+        }
     }
 
     public Set<String> getNamespaces(PackType type) {
@@ -138,5 +145,6 @@ public final class BlockLootPack extends AbstractPackResources {
 
     public void close() {
         resources = null;
+        index = null;
     }
 }

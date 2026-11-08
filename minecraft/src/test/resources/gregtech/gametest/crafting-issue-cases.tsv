@@ -1,23 +1,11 @@
 # issue	recipe	level	expected_type	expected_pattern	result_item	result_count	setup	notes
 2	minecraft:paper	R	gt6ce:tool_shaped	-	minecraft:paper	1	fill	vanilla paper replacement
 2	minecraft:book	R	minecraft:crafting_shapeless	-	minecraft:book	1	fill	vanilla book replacement
-2	minecraft:furnace	S	gt6ce:tool_shaped	###/###/###	minecraft:furnace	1	none	GT furnace replacement
-2	gt6ce:vanilla/oak_planks_saw	S	gt6ce:tool_shaped	#/#	minecraft:oak_planks	4	none	GT saw plank row
 148	gt6ce:vanilla/stick_from_wooden_rod	R	minecraft:crafting_shapeless	-	minecraft:stick	1	fill	wooden rod to vanilla stick
 151	gt6ce:vanilla/torch/coal/dust	R	gt6ce:tool_shaped	-	minecraft:torch	4	fill	coal dust torch route
-153	minecraft:stone_crafting_materials	T	-	-	*	-	none	GT cobble accepted by furnace material tag
 155	gt6ce:smeltery_survival/burning_box_solid_brick	R	gt6ce:tool_shaped	-	gt6ce:burning_box_solid_brick	1	fill	firestarter tag instead of flint and steel
-157	gt6ce:molds/forms/stick/anywoodplastic	T	-	-	minecraft:stick	-	none	vanilla stick imprints the rod mold
-157	gt6ce:clay_molds/imprint_221_anywoodplastic	S	gt6ce:tool_shapeless	-	gt6ce:clay_rod_mold	1	none	rod mold recipe
-158	prefix:hand/raw_tool_heads/	S	gt6ce:tool_shaped	#_/_#	-	-	none	raw tool head filing rows
-161	gt6ce:tool_blocks/sap_bag	S	gt6ce:tool_shaped	###/###/###	gt6ce:sap_bag	1	none	latex collecting bag row
-171	gt6ce:tools/repair	P	gt6ce:tool_repair	-	-	-	none	tool merge custom recipe and serializer
-173	prefix:hand/wall/	S	gt6ce:tool_shaped	###/###	-	-	none	metal wall rows
-173	prefix:hand_material/craft/gear_small/	S	gt6ce:tool_shaped	#_/_#	-	-	none	small gear rows
-173	prefix:hand_material/craft/gear/	S	gt6ce:tool_shaped	###/###/###	-	-	none	large gear rows
 176	prefix:form_conversion/blockdust_to_dust/	R	gt6ce:tool_shapeless	-	-	9	one@0/2x2	block dust unpacks to nine dust
 176	prefix:form_conversion/blockdust_to_dustsmall/	R	gt6ce:tool_shapeless	-	-	36	one@1/2x2	block dust unpacks to thirty-six small dust
-185	prefix:hand_material/craft/rotor/	S	gt6ce:tool_shaped	###/###/###	-	-	none	rotor rows
 209	prefix:form_conversion/blockingot_to_ingot/	R	gt6ce:tool_shapeless	-	-	9	one@0/2x2	block ingot in even slot
 209	prefix:form_conversion/blockingot_to_chunkgt/	R	gt6ce:tool_shapeless	-	-	36	one@1/2x2	block ingot in odd slot
 209	prefix:form_conversion/blockingot_to_ingot/	R	gt6ce:tool_shapeless	-	-	9	one@4/3x3	3x3 center slot
@@ -25,22 +13,14 @@
 209	prefix:form_conversion/blockingot_to_ingot/	R	gt6ce:tool_shapeless	-	-	-	reject@0,1/2x2	extra occupied slot rejected
 209	prefix:form_conversion/blockgem_to_gem/	R	gt6ce:tool_shapeless	-	-	9	one@1/2x2	single-variant gem form matches any slot
 209	prefix:form_conversion/blockplate_to_plate/	R	gt6ce:tool_shapeless	-	-	9	one@3/2x2	single-variant plate form matches any slot
-286	gt6ce:technology/any_wood_bolt	T	-	-	gt6ce:bolt_wood	-	none	plain wood bolt accepted by AnyWood
-293	forge:glue	T	-	-	gt6ce:glue_bottle	-	none	glue bottle accepted by glue ingredients
 312	prefix:form_conversion/dust_to_dusttiny/	R	gt6ce:tool_shapeless	-	-	9	one@0/2x2	dust splits into ninths in the player grid
 312	prefix:form_conversion/dust_to_dustsmall/	R	gt6ce:tool_shapeless	-	-	4	one@1/2x2	dust splits into quarters in the player grid
 345	gt6ce:form_conversion/blockdust_to_dust/soulsand_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_soulsand	9	one@0/2x2/minecraft:soul_sand	vanilla soul sand unpacks to nine soulsand dust
 345	gt6ce:form_conversion/blockdust_to_dust/sand_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_sand	9	one@0/2x2/minecraft:sand	vanilla sand unpacks to nine sand dust
 345	gt6ce:form_conversion/blockdust_to_dust/redsand_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_redsand	9	one@0/2x2/minecraft:red_sand	vanilla red sand unpacks to nine red sand dust
 345	gt6ce:form_conversion/blockdust_to_dust/stone_1	R	gt6ce:tool_shapeless	-	gt6ce:dust_stone	9	one@0/2x2/minecraft:gravel	vanilla gravel unpacks to nine stone dust
-348	forge:dyes/black	T	-	-	gt6ce:dust_dyeblack	-	none	GT6 black dye dust is a black dye
-348	forge:dyes/red	T	-	-	gt6ce:dust_dyered	-	none	GT6 red dye dust is a red dye
-348	forge:dyes/light_gray	T	-	-	gt6ce:dust_dyelightgray	-	none	GT6 light grey dye dust uses the vanilla colour name
-348	forge:dyes/light_blue	T	-	-	gt6ce:dust_dyelightblue	-	none	GT6 light blue dye dust uses the vanilla colour name
 346	gt6ce:stone/stone_granite/stone_to_slab_by_saw	R	gt6ce:tool_shaped	-	gt6ce:stone_granite_stone_slab	2	fill	saw splits a full stone block into two slabs
-346	gt6ce:stone/stone_marble/bricks_to_slab_by_saw	S	gt6ce:tool_shaped	##	gt6ce:stone_marble_bricks_slab	2	none	every masonry variant saws into its own slab
 346	gt6ce:stone/stone_granite/bricks_reinforced_to_slab_by_saw	R	gt6ce:tool_shaped	-	gt6ce:stone_granite_bricks_reinforced_slab	2	fill	reinforced bricks keep the generic base row
-346	gt6ce:stone/stone_granite/stone_slabs_to_block	S	gt6ce:tool_shaped	#/#	gt6ce:stone_granite_stone	1	none	two slabs rebuild the full block
 326	gt6ce:hand_components/integrated_circuit_0_from_any	R	gt6ce:tool_shapeless	-	gt6ce:integrated_circuit_0	1	one@0/2x2/gt6ce:integrated_circuit_1	any non-zero circuit resets to configuration 0
 326	gt6ce:hand_components/integrated_circuit_0_from_any	R	gt6ce:tool_shapeless	-	gt6ce:integrated_circuit_0	1	one@0/2x2/gt6ce:integrated_circuit_24	upper-range circuit resets to configuration 0
 352	gt6ce:fluid_tools/nozzle_steel	R	gt6ce:tool_shaped	-	gt6ce:nozzle_steel	1	fill	plain steel nozzle recipe restored

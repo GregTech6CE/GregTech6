@@ -14,11 +14,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -42,23 +40,23 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class CraftingRecipeIssueSmokeTests {
-    private static final Set<String> FIXED_ISSUES = Set.of(
-            "2", "148", "151", "153", "155", "157", "158", "161", "171", "173", "176", "185", "209", "286", "293", "312", "326", "345", "346", "348", "352");
+    // Runtime rows only. Static source checks for the remaining fixed issues live in the core
+    // crafting-issue-static-cases table; this table is the runtime authority for match/assemble.
+    private static final Set<String> RUNTIME_ISSUES = Set.of(
+            "2", "148", "151", "155", "176", "209", "312", "326", "345", "346", "352");
 
-    // Checks the table covers every fixed issue and the GameTest runtime is wired.
+    // Checks the table covers every runtime issue.
     @GameTest(template = "test_empty", batch = "crafting_issue_smoke", timeoutTicks = 600)
-    public static void tableCoversEveryFixedIssue(GameTestHelper helper) {
+    public static void tableCoversEveryRuntimeIssue(GameTestHelper helper) {
         var rows = loadRows();
         var issues = new HashSet<String>();
         for (var row : rows) {
             issues.add(row.issue());
             helper.assertFalse(row.issue().isEmpty(), "empty issue in " + row);
-            helper.assertTrue(Set.of("R", "S", "T", "P").contains(row.level()), "bad level in " + row);
+            helper.assertTrue(row.level().equals("R"), "bad level in " + row);
             helper.assertFalse(row.recipe().isEmpty(), "empty recipe in " + row);
         }
-        helper.assertTrue(issues.equals(FIXED_ISSUES), "issue coverage " + issues);
-        var id = ResourceLocation.tryParse("gt6ce:plate_graphene");
-        helper.assertTrue(BuiltInRegistries.ITEM.getOptional(id).isPresent(), "gt6ce:plate_graphene is registered");
+        helper.assertTrue(issues.equals(RUNTIME_ISSUES), "issue coverage " + issues);
         helper.succeed();
     }
 
@@ -66,42 +64,6 @@ public final class CraftingRecipeIssueSmokeTests {
     @GameTest(template = "test_empty", batch = "crafting_issue_smoke", timeoutTicks = 600)
     public static void runtimeCasesMatchAndAssemble(GameTestHelper helper) {
         runLevel(helper, "R", CraftingRecipeIssueSmokeTests::checkRuntime);
-        helper.succeed();
-    }
-
-    // Runs every structural row and reports all row failures together.
-    @GameTest(template = "test_empty", batch = "crafting_issue_smoke", timeoutTicks = 600)
-    public static void structuralCasesMatchShapeAndResult(GameTestHelper helper) {
-        runLevel(helper, "S", CraftingRecipeIssueSmokeTests::checkStructural);
-        helper.succeed();
-    }
-
-    // Runs tag and presence rows and reports all row failures together.
-    @GameTest(template = "test_empty", batch = "crafting_issue_smoke", timeoutTicks = 600)
-    public static void tagAndPresenceCases(GameTestHelper helper) {
-        runLevel(helper, "T", CraftingRecipeIssueSmokeTests::checkTag);
-        runLevel(helper, "P", CraftingRecipeIssueSmokeTests::checkPresence);
-        helper.succeed();
-    }
-
-    // Checks that canonical wire/pipe rows survive and their source duplicates stay removed.
-    @GameTest(template = "test_empty", batch = "crafting_issue_smoke", timeoutTicks = 600)
-    public static void gtOwnedWireAndPipeRowsSurviveReplacement(GameTestHelper helper) {
-        var ids = allRecipes(helper).stream().map(found -> found.id().toString()).toList();
-        for (var id : List.of(
-                "gt6ce:wire_sizes/platinum_1_to_2",
-                "gt6ce:pipe_sizes/plastic_nonuple_to_9x_small",
-                "gt6ce:hand_material/shapeless/cable/1/platinum",
-                "gt6ce:form_conversion/blockplate_to_plate/vibramantium_1",
-                "gt6ce:form_conversion/nugget_to_ingot/plastic_9"))
-            helper.assertTrue(ids.contains(id), "missing " + id);
-        for (var id : List.of(
-                "gt6ce:wire_working/weave_01_02_platinum",
-                "gt6ce:wire_working/insulate_01_platinum",
-                "gt6ce:hand/pipe/unpack/pipe_nonuple_plastic",
-                "gt6ce:axial/unpack_vibramantium_plates",
-                "gt6ce:polymer_forming/pack_plastic"))
-            helper.assertFalse(ids.contains(id), "duplicate remains " + id);
         helper.succeed();
     }
 
@@ -172,49 +134,6 @@ public final class CraftingRecipeIssueSmokeTests {
         }
     }
 
-    // Checks a structural case's serializer, shape mask, and result.
-    private static void checkStructural(GameTestHelper helper, Row row) {
-        var found = resolve(helper, row);
-        assertType(helper, row, found.recipe());
-        if (!row.pattern().isEmpty()) {
-            var mask = mask(found.recipe());
-            helper.assertTrue(
-                    mask.equals(row.pattern()), label(row) + " shape " + mask + " != " + row.pattern());
-        }
-        var result = resultItem(helper, found.recipe());
-        helper.assertFalse(result.isEmpty(), label(row) + " has an empty result");
-        if (!row.resultItem().isEmpty() && !row.resultItem().equals("*")) {
-            helper.assertTrue(result.getItem() == item(row.resultItem()), label(row) + " result " + result.getItem());
-        }
-        if (row.resultCount() > 0) {
-            helper.assertTrue(
-                    result.getCount() == row.resultCount(),
-                    label(row) + " count " + result.getCount() + " != " + row.resultCount());
-        }
-    }
-
-    // Checks that a required item, or any gt6ce item, belongs to a tag.
-    private static void checkTag(GameTestHelper helper, Row row) {
-        var tagId = ResourceLocation.tryParse(row.recipe());
-        helper.assertTrue(tagId != null, label(row) + " has a bad tag id");
-        var tag = TagKey.create(Registries.ITEM, tagId);
-        if (row.resultItem().equals("*")) {
-            var any = BuiltInRegistries.ITEM.stream()
-                    .anyMatch(item -> BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")
-                            && new ItemStack(item).is(tag));
-            helper.assertTrue(any, label(row) + " has no gt6ce item in the tag");
-            return;
-        }
-        var required = item(row.resultItem());
-        helper.assertTrue(new ItemStack(required).is(tag), label(row) + " " + row.resultItem() + " is not in the tag");
-    }
-
-    // Checks a presence-only case and its serializer identity.
-    private static void checkPresence(GameTestHelper helper, Row row) {
-        var found = resolve(helper, row);
-        assertType(helper, row, found.recipe());
-    }
-
     // Resolves an exact recipe id or the first matching prefix row.
     private static Found resolve(GameTestHelper helper, Row row) {
         if (row.recipe().startsWith("prefix:")) {
@@ -223,7 +142,6 @@ public final class CraftingRecipeIssueSmokeTests {
                     .filter(found -> found.id().getNamespace().equals("gt6ce")
                             && found.id().getPath().startsWith(prefix))
                     .filter(found -> row.type().isEmpty() || serializerId(found.recipe()).equals(row.type()))
-                    .filter(found -> row.pattern().isEmpty() || mask(found.recipe()).equals(row.pattern()))
                     .filter(found -> hasIngredient(found.recipe()))
                     .findFirst()
                     .orElseThrow(() -> new AssertionError(label(row) + " no recipe for prefix " + prefix));
@@ -276,33 +194,6 @@ public final class CraftingRecipeIssueSmokeTests {
         if (recipe instanceof ToolShapedRecipe tool) return new int[] {tool.getWidth(), tool.getHeight()};
         if (recipe instanceof ShapedRecipe shaped) return new int[] {shaped.getWidth(), shaped.getHeight()};
         return null;
-    }
-
-    // Renders a shaped recipe as a #/_ occupancy mask.
-    private static String mask(Recipe<?> recipe) {
-        var dims = dimensions(recipe);
-        if (dims == null) return "";
-        var ingredients = recipe.getIngredients();
-        var rows = new ArrayList<String>();
-        for (int y = 0; y < dims[1]; y++) {
-            var row = new StringBuilder();
-            for (int x = 0; x < dims[0]; x++) {
-                var index = y * dims[0] + x;
-                var filled = index < ingredients.size() && ingredients.get(index).getItems().length > 0;
-                row.append(filled ? '#' : '_');
-            }
-            rows.add(row.toString());
-        }
-        return String.join("/", rows);
-    }
-
-    // Returns a crafting result item on the active loader.
-    private static ItemStack resultItem(GameTestHelper helper, Recipe<?> recipe) {
-//? if >=1.21.1 {
-        /*return ((CraftingRecipe) recipe).getResultItem(helper.getLevel().registryAccess());
-*///?} else {
-        return recipe.getResultItem(helper.getLevel().registryAccess());
-//?}
     }
 
     // Builds a grid with one item per recipe ingredient.

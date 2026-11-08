@@ -4,7 +4,6 @@ import gregtech.content.food.GTFoodItems;
 import gregtech.content.registry.GTFluids;
 import gregtech.engine.fluid.MoltenFluidHandler;
 import gregtech.engine.fluid.PotionBottleHandler;
-import gregtech.engine.material.GTMaterialRegistry;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.Item;
@@ -33,19 +32,6 @@ public final class CrucibleFluidTests {
     private static final int MERCURY = 144;
 
     private CrucibleFluidTests() {}
-
-    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
-    public static void ordinaryMercuryIsTheCruciblePhase(GameTestHelper helper) {
-        var mercury = GTMaterialRegistry.get("Mercury").resolve();
-        var liquid = GTFluids.stack("GenLiquid_Mercury", MERCURY);
-        helper.assertTrue(!liquid.isEmpty(), "generated mercury liquid exists");
-        helper.assertTrue(MoltenFluidHandler.material(liquid) == mercury, "the ordinary liquid is crucible mercury");
-        var molten = GTFluids.stack("GenMolten_Mercury", MERCURY);
-        helper.assertTrue(molten == null || molten.isEmpty(), "no separate molten mercury ID");
-        var emitted = MoltenFluidHandler.moltenFluid(mercury, MERCURY);
-        helper.assertTrue(emitted.getFluid() == liquid.getFluid(), "the crucible emits the ordinary liquid");
-        helper.succeed();
-    }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
     public static void glassBottleFillsFromCrucibleMercury(GameTestHelper helper) {

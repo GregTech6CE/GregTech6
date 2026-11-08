@@ -38,6 +38,7 @@ import java.util.*;
 //?}
 public final class MaterialTagPack extends AbstractPackResources {
     private Map<ResourceLocation,byte[]> resources;
+    private ResourcePrefixIndex index;
 //? if >=1.21.1 {
     /*public MaterialTagPack(PackLocationInfo info) { super(info); }
 *///?} else {
@@ -470,6 +471,9 @@ public final class MaterialTagPack extends AbstractPackResources {
                 "replace",false,"values",List.of("minecraft:feather",
                         Map.of("id","#forge:feathers","required",false),
                         Map.of("id","#c:feathers","required",false)))).getBytes(StandardCharsets.UTF_8));
+        var index = new ResourcePrefixIndex();
+        for (var id : result.keySet()) index.add(id);
+        this.index = index;
         resources=Collections.unmodifiableMap(result); return resources;
 //? if >=1.21.1 {
     /*}
@@ -583,16 +587,16 @@ public final class MaterialTagPack extends AbstractPackResources {
     public void listResources(PackType type,String ns,String path,ResourceOutput out) {
         // This pack contains only tags; data-map and recipe scans cannot return any entries.
         if (type != PackType.SERVER_DATA || !(path.equals("tags") || path.startsWith("tags/"))) return;
-        String prefix = path + "/";
-        data().forEach((id, bytes) -> {
-            if (id.getNamespace().equals(ns) && id.getPath().startsWith(prefix))
-                out.accept(id, () -> new ByteArrayInputStream(bytes));
-        });
+        var data = data();
+        for (var id : index.under(ns, path)) {
+            byte[] bytes = data.get(id);
+            if (bytes != null) out.accept(id, () -> new ByteArrayInputStream(bytes));
+        }
     }
 //? if >=1.21.1 {
     /*public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("forge","c","gt6ce","minecraft"):Set.of(); }
 *///?} else {
     public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("forge","gt6ce","minecraft"):Set.of(); }
 //?}
-    public void close() { resources=null; }
+    public void close() { resources=null; index=null; }
 }
