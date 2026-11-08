@@ -23,7 +23,7 @@
 | --- | --- |
 | 理解三层结构、内容分类与归属 | [Stonecutter 设计](stonecutter/design.md) |
 | 查 `//?` 写法、输入目录、生成结果与验证命令 | [Stonecutter 用法](stonecutter/usage.md) |
-| 处理具体调用点（BlockEntity、NBT、CompoundTag、Trivial） | [示例索引](stonecutter/examples/README.md) |
+| 处理具体调用点（BlockEntity、NBT、CompoundTag、Fluid、Provider、Trivial） | [分类索引](stonecutter/categories.md) |
 | 查平台门面、Forge/NeoForge 节点入口与验收 | [平台边界](packages/platforms.md) |
 | 执行双平台编译、格式与 GameTest | [验证与验收](../development/validation/README.md) |
 
@@ -46,7 +46,7 @@
 ## 已知需要单独检查的边界
 
 - Forge 使用 Java 17、NeoForge 使用 Java 21；共享代码不能无条件使用只在 21 可用的特性。
-- 物品 NBT 与数据组件、资源标识构造、注册与能力 API 存在差异，沿已有适配处理；具体做法见 [NBT](stonecutter/examples/NBT.md) 与 [CompoundTag](stonecutter/examples/CompoundTag.md)。
+- 物品 NBT 与数据组件、资源标识构造、注册与能力 API 存在差异，沿已有适配处理；具体做法见 [Provider](stonecutter/Provider/README.md) 与 [CompoundTag](stonecutter/CompoundTag/README.md)。
 - 两版本数据包目录命名不同，不能把一边 JSON 路径直接拷给另一边。
 - 共享构建对完整 JSON 文档中的 composite loader 名称进行转换；这不是所有资源格式都会自动迁移的保证。
 - 两平台的发行任务和产物区别见[组装检查](../development/validation/checks/assemble.md#产物位置)；游戏侧 API 在平台编译/重映射阶段接入。
