@@ -81,32 +81,24 @@ public final class ComponentCoverStorage {
         for (var side : Direction.values())
             gregtech.engine.inventory.BlockContents.drop(host.coverOwner(), remove(side));
     }
-//? if >=1.21.1 {
-    /*public void save(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public void save(CompoundTag tag) {
-//?}
+    public void save(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         if(covers==null)return;
-//? if >=1.21.1 {
-        /*for(var side:Direction.values())if(!get(side).isEmpty())tag.put("gt_cover_"+side.ordinal(),get(side).save(lookup));
-*///?} else {
-        for(var side:Direction.values())if(!get(side).isEmpty())tag.put("gt_cover_"+side.ordinal(),get(side).save(new CompoundTag()));
-//?}
+        for(var side:Direction.values())if(!get(side).isEmpty())tag.put("gt_cover_"+side.ordinal(),gregtech.engine.stack.NbtCompat.saveItem(get(side),lookup));
     }
 //? if >=1.21.1 {
-    /*public void load(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public void load(CompoundTag tag) {
+//?} else {
+    public void save(CompoundTag tag) { save(tag, null); }
 //?}
+    public void load(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         for(var side:Direction.values()) {
             var key="gt_cover_"+side.ordinal();
-//? if >=1.21.1 {
-            /*if(tag.contains(key)){if(covers==null){covers=new ItemStack[6];java.util.Arrays.fill(covers,ItemStack.EMPTY);}covers[side.ordinal()]=ItemStack.parseOptional(lookup,tag.getCompound(key));}
-*///?} else {
-            if(tag.contains(key)){if(covers==null){covers=new ItemStack[6];java.util.Arrays.fill(covers,ItemStack.EMPTY);}covers[side.ordinal()]=ItemStack.of(tag.getCompound(key));}
-//?}
+            if(tag.contains(key)){if(covers==null){covers=new ItemStack[6];java.util.Arrays.fill(covers,ItemStack.EMPTY);}covers[side.ordinal()]=gregtech.engine.stack.NbtCompat.readItem(tag.getCompound(key),lookup);}
             else if(covers!=null)covers[side.ordinal()]=ItemStack.EMPTY;
         }
         panels.loaded();
     }
+//? if >=1.21.1 {
+//?} else {
+    public void load(CompoundTag tag) { load(tag, null); }
+//?}
 }

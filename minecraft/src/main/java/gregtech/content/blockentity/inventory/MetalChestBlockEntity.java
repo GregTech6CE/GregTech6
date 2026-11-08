@@ -95,16 +95,14 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     }
 //? if >=1.21.1 {
     /*@Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
+        net.minecraft.core.HolderLookup.Provider codecLookup = lookup;
 *///?} else {
     @Override public CompoundTag getUpdateTag() {
+        net.minecraft.core.HolderLookup.Provider codecLookup = null;
 //?}
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("Open", openers.getOpenerCount() > 0);
-//? if >=1.21.1 {
-        /*componentCovers.save(tag,lookup);
-*///?} else {
-        componentCovers.save(tag);
-//?}
+        componentCovers.save(tag, codecLookup);
         return tag;
     }
 //? if >=1.21.1 {
@@ -259,14 +257,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
 //?} else {
     private LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> inventory);
 
-//?}
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        componentCovers.save(tag,lookup);
-        tag.put("Inventory", inventory.serializeNBT(lookup));
-*///?} else {
     public <T> @org.jetbrains.annotations.NotNull LazyOptional<T> getCapability(
             @org.jetbrains.annotations.NotNull Capability<T> capability, @Nullable Direction side) {
         if (capability == ForgeCapabilities.ITEM_HANDLER)
@@ -289,35 +280,49 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
         super.reviveCaps();
         itemCap = LazyOptional.of(() -> inventory);
     }
+//?}
 
+//? if >=1.21.1 {
+    /*@Override
+    protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag,lookup);
+        componentCovers.save(tag,lookup);
+        saveData(tag, lookup);
+    }
+*///?} else {
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         componentCovers.save(tag);
-        tag.put("Inventory", inventory.serializeNBT());
+        saveData(tag, null);
+    }
 //?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        tag.put("Inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
         tag.putBoolean("GTLootGenerated", lootGenerated);
         if (dungeonLoot != null) tag.putString("gt.dungeonloot", dungeonLoot.toString());
         tag.putLong("GTDungeonLootSeed", dungeonLootSeed);
     }
 
-    @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+    /*@Override
+    protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
         componentCovers.load(tag,lookup);
+        loadData(tag, lookup);
+    }
 *///?} else {
+    @Override
     public void load(CompoundTag tag) {
         super.load(tag);
         componentCovers.load(tag);
+        loadData(tag, null);
+    }
 //?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         CompoundTag storedInventory = tag.getCompound("Inventory").copy();
         storedInventory.putInt("Size", 54);
-//? if >=1.21.1 {
-        /*inventory.deserializeNBT(lookup,storedInventory);
-*///?} else {
-        inventory.deserializeNBT(storedInventory);
-//?}
+        gregtech.engine.stack.HandlerNbt.load(inventory, storedInventory, lookup);
         lootGenerated = tag.getBoolean("GTLootGenerated");
         dungeonLoot = tag.contains("gt.dungeonloot") ? net.minecraft.resources.ResourceLocation.tryParse(tag.getString("gt.dungeonloot")) : null;
         dungeonLootSeed = tag.getLong("GTDungeonLootSeed");

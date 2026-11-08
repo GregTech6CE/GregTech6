@@ -178,14 +178,18 @@ public class BookShelfBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        inventory.deserializeNBT(lookup,tag.getCompound("inventory"));
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
+        loadData(tag, lookup);
+    }
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
-        inventory.deserializeNBT(tag.getCompound("inventory"));
+        loadData(tag, null);
+    }
 //?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound("inventory"), lookup);
         frontLoot = tag.contains("gt.dungeonloot.front") ? net.minecraft.resources.ResourceLocation.tryParse(tag.getString("gt.dungeonloot.front")) : null;
         backLoot = tag.contains("gt.dungeonloot.back") ? net.minecraft.resources.ResourceLocation.tryParse(tag.getString("gt.dungeonloot.back")) : null;
         lootSeed = tag.getLong("gt.shelf.loot.seed");
@@ -194,14 +198,18 @@ public class BookShelfBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        tag.put("inventory", inventory.serializeNBT(lookup));
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
+        saveData(tag, lookup);
+    }
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.put("inventory", inventory.serializeNBT());
+        saveData(tag, null);
+    }
 //?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        tag.put("inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
         if (frontLoot != null) tag.putString("gt.dungeonloot.front", frontLoot.toString());
         if (backLoot != null) tag.putString("gt.dungeonloot.back", backLoot.toString());
         tag.putLong("gt.shelf.loot.seed", lootSeed);

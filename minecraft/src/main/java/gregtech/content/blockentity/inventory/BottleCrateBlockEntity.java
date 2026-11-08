@@ -95,50 +95,49 @@ public class BottleCrateBlockEntity extends BlockEntity {
 //? if >=1.21.1 {
     /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
-        tag.put("gt_bottles", items.serializeNBT(lookup));
+        saveData(tag, lookup);
+    }
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.put("gt_bottles", items.serializeNBT());
+        saveData(tag, null);
+    }
 //?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        tag.put("gt_bottles", gregtech.engine.stack.HandlerNbt.save(items, lookup));
     }
 
     @Override
 //? if >=1.21.1 {
     /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
+        loadData(tag, lookup);
+    }
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
+        loadData(tag, null);
+    }
 //?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         removedInventory = null;
         CompoundTag inventory = tag.getCompound("gt_bottles").copy();
         inventory.putInt("Size", SLOTS);
-//? if >=1.21.1 {
-        /*items.deserializeNBT(lookup, inventory);
-*///?} else {
-        items.deserializeNBT(inventory);
-//?}
+        gregtech.engine.stack.HandlerNbt.load(items, inventory, lookup);
     }
 
     /** Preserve a snapshot for vanilla playerDestroy, which requests loot after onRemove. */
     public void detachInventory() {
         if (removedInventory != null) return;
-//? if >=1.21.1 {
-        /*removedInventory = saveWithoutMetadata(level.registryAccess());
-*///?} else {
-        removedInventory = saveWithoutMetadata();
-//?}
+        removedInventory = gregtech.engine.stack.NbtCompat.saveWithoutMetadata(this, level.registryAccess());
         for (int slot = 0; slot < SLOTS; slot++) items.setStackInSlot(slot, ItemStack.EMPTY);
     }
 
     public ItemStack packedStack() {
         ItemStack result = new ItemStack(getBlockState().getBlock());
-//? if >=1.21.1 {
-        /*CompoundTag data = removedInventory == null ? saveWithoutMetadata(level.registryAccess()) : removedInventory.copy();
-*///?} else {
-        CompoundTag data = removedInventory == null ? saveWithoutMetadata() : removedInventory.copy();
-//?}
+        CompoundTag data = removedInventory == null
+                ? gregtech.engine.stack.NbtCompat.saveWithoutMetadata(this, level.registryAccess())
+                : removedInventory.copy();
         if (!data.getCompound("gt_bottles").getList("Items", 10).isEmpty()) {
 //? if >=1.21.1 {
             /*data.putString("id","gt6ce:bottle_crate");

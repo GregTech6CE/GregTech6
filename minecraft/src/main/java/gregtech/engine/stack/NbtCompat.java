@@ -80,6 +80,16 @@ public final class NbtCompat {
 //?}
     }
 
+    /** A block entity snapshot without metadata; 1.20.1 ignores the lookup. */
+    public static CompoundTag saveWithoutMetadata(net.minecraft.world.level.block.entity.BlockEntity blockEntity,
+            HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+/*        return blockEntity.saveWithoutMetadata(provider(lookup));
+*///?} else {
+        return blockEntity.saveWithoutMetadata();
+//?}
+    }
+
 //? if >=1.21.1 {
     /*private static HolderLookup.Provider provider(HolderLookup.Provider lookup) {
         return java.util.Objects.requireNonNull(lookup, "stack codec needs the registry lookup");

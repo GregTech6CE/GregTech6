@@ -84,13 +84,23 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
     @Override public long getEnergyStored(GregTechTags.Tag t,Direction s){return t==GregTechTags.Energy.QU?totalEnergy():0;}
     @Override public long getEnergyCapacity(GregTechTags.Tag t,Direction s){return t==GregTechTags.Energy.QU?ZpmEnergy.CAPACITY+ZpmEnergy.PACKET*320:0;}
 //? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){super.saveAdditional(t,lookup);t.put("gt.zpm.inventory",inventory.serializeNBT(lookup));t.putLong("gt.zpm.buffer",buffer);t.putBoolean("gt.stopped",stopped);}
-    @Override protected void loadAdditional(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){super.loadAdditional(t,lookup);if(t.contains("gt.zpm.inventory"))inventory.deserializeNBT(lookup,t.getCompound("gt.zpm.inventory"));buffer=gregtech.engine.energy.ZpmWorkRules.savedBuffer(t.getLong("gt.zpm.buffer"));stopped=t.getBoolean("gt.stopped");}
+    /*@Override protected void saveAdditional(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){super.saveAdditional(t,lookup);saveData(t,lookup);}
+    @Override protected void loadAdditional(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){super.loadAdditional(t,lookup);loadData(t,lookup);}
 *///?} else {
     @Override public <T> LazyOptional<T> getCapability(Capability<T> c,Direction s){return c==ForgeCapabilities.ITEM_HANDLER&&!isRemoved()?items.cast():super.getCapability(c,s);}
     @Override public void invalidateCaps(){super.invalidateCaps();items.invalidate();}
     @Override public void reviveCaps(){super.reviveCaps();items=LazyOptional.of(()->inventory);}
-    @Override protected void saveAdditional(CompoundTag t){super.saveAdditional(t);t.put("gt.zpm.inventory",inventory.serializeNBT());t.putLong("gt.zpm.buffer",buffer);t.putBoolean("gt.stopped",stopped);}
-    @Override public void load(CompoundTag t){super.load(t);if(t.contains("gt.zpm.inventory"))inventory.deserializeNBT(t.getCompound("gt.zpm.inventory"));buffer=gregtech.engine.energy.ZpmWorkRules.savedBuffer(t.getLong("gt.zpm.buffer"));stopped=t.getBoolean("gt.stopped");}
+    @Override protected void saveAdditional(CompoundTag t){super.saveAdditional(t);saveData(t,null);}
+    @Override public void load(CompoundTag t){super.load(t);loadData(t,null);}
 //?}
+    private void saveData(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){
+        t.put("gt.zpm.inventory",gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
+        t.putLong("gt.zpm.buffer",buffer);
+        t.putBoolean("gt.stopped",stopped);
+    }
+    private void loadData(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){
+        if(t.contains("gt.zpm.inventory"))gregtech.engine.stack.HandlerNbt.load(inventory, t.getCompound("gt.zpm.inventory"), lookup);
+        buffer=gregtech.engine.energy.ZpmWorkRules.savedBuffer(t.getLong("gt.zpm.buffer"));
+        stopped=t.getBoolean("gt.stopped");
+    }
 }

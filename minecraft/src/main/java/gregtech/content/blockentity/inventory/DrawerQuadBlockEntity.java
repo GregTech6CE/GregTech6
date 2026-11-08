@@ -108,37 +108,40 @@ public class DrawerQuadBlockEntity extends BlockEntity implements BlockContents 
     }
 //? if >=1.21.1 {
     /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup); tag.put("Inventory", inventory.serializeNBT(lookup)); tag.putBoolean("SidedAccess", sidedAccess);
-        ListTag extras = new ListTag(); for (ItemStack stack : overflow) extras.add(stack.saveOptional(lookup)); tag.put("LegacyOverflow", extras);
+        super.saveAdditional(tag,lookup);
+        saveData(tag, lookup);
+    }
 *///?} else {
     @Override protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag); tag.put("Inventory", inventory.serializeNBT()); tag.putBoolean("SidedAccess", sidedAccess);
-        ListTag extras = new ListTag(); for (ItemStack stack : overflow) extras.add(stack.save(new CompoundTag())); tag.put("LegacyOverflow", extras);
+        super.saveAdditional(tag);
+        saveData(tag, null);
+    }
 //?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        tag.put("Inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup)); tag.putBoolean("SidedAccess", sidedAccess);
+        ListTag extras = new ListTag(); for (ItemStack stack : overflow) extras.add(gregtech.engine.stack.NbtCompat.saveItem(stack, lookup)); tag.put("LegacyOverflow", extras);
     }
 //? if >=1.21.1 {
     /*@Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup); loading = true;
+        super.loadAdditional(tag,lookup);
+        loadData(tag, lookup);
+    }
 *///?} else {
     @Override public void load(CompoundTag tag) {
-        super.load(tag); loading = true;
+        super.load(tag);
+        loadData(tag, null);
+    }
 //?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        loading = true;
         try {
             inventory.setSize(SLOT_COUNT); overflow.clear(); sidedAccess = tag.getBoolean("SidedAccess");
             if (tag.contains("Inventory", 10)) {
-//? if >=1.21.1 {
-                /*CompoundTag data = tag.getCompound("Inventory").copy(); data.putInt("Size", SLOT_COUNT); inventory.deserializeNBT(lookup,data);
-*///?} else {
-                CompoundTag data = tag.getCompound("Inventory").copy(); data.putInt("Size", SLOT_COUNT); inventory.deserializeNBT(data);
-//?}
+                CompoundTag data = tag.getCompound("Inventory").copy(); data.putInt("Size", SLOT_COUNT); gregtech.engine.stack.HandlerNbt.load(inventory, data, lookup);
             } else {
                 ListTag old = tag.getList("gt.compartments", 10);
                 for (int page = 0; page < Math.min(4, old.size()); page++) {
-//? if >=1.21.1 {
-                    /*ItemStack item = ItemStack.parseOptional(lookup,old.getCompound(page).getCompound("item"));
-*///?} else {
-                    ItemStack item = ItemStack.of(old.getCompound(page).getCompound("item"));
-//?}
+                    ItemStack item = gregtech.engine.stack.NbtCompat.readItem(old.getCompound(page).getCompound("item"), lookup);
                     long count = Math.max(0, Math.min(4096, old.getCompound(page).getLong("count")));
                     if (item.isEmpty()) continue;
                     int slot = page * PAGE_SIZE;
@@ -149,11 +152,7 @@ public class DrawerQuadBlockEntity extends BlockEntity implements BlockContents 
                     }
                 }
             }
-//? if >=1.21.1 {
-            /*for (var element : tag.getList("LegacyOverflow", 10)) { ItemStack stack = ItemStack.parseOptional(lookup,(CompoundTag)element); if (!stack.isEmpty()) overflow.add(stack); }
-*///?} else {
-            for (var element : tag.getList("LegacyOverflow", 10)) { ItemStack stack = ItemStack.of((CompoundTag)element); if (!stack.isEmpty()) overflow.add(stack); }
-//?}
+            for (var element : tag.getList("LegacyOverflow", 10)) { ItemStack stack = gregtech.engine.stack.NbtCompat.readItem((CompoundTag)element, lookup); if (!stack.isEmpty()) overflow.add(stack); }
         } finally { loading = false; }
         resetCapabilities(); refillLegacyOverflow();
     }

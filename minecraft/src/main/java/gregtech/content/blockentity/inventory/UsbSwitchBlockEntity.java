@@ -289,50 +289,44 @@ public class UsbSwitchBlockEntity extends BlockEntity
     /*@Override
     protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
+        saveData(tag, lookup);
+    }
 *///?} else {
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
+        saveData(tag, null);
+    }
 //?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         tag.putInt("gt.mode", mode);
-//? if >=1.21.1 {
-        /*tag.put("gt_switch", items.serializeNBT(lookup));
-*///?} else {
-        tag.put("gt_switch", items.serializeNBT());
-//?}
+        tag.put("gt_switch", gregtech.engine.stack.HandlerNbt.save(items, lookup));
         for (Direction side : Direction.values()) {
             ItemStack cover = covers[side.ordinal()];
-//? if >=1.21.1 {
-            /*if (!cover.isEmpty()) tag.put("gt_cover_" + side.ordinal(), cover.save(lookup));
-*///?} else {
-            if (!cover.isEmpty()) tag.put("gt_cover_" + side.ordinal(), cover.save(new CompoundTag()));
-//?}
+            if (!cover.isEmpty()) tag.put("gt_cover_" + side.ordinal(), gregtech.engine.stack.NbtCompat.saveItem(cover, lookup));
         }
     }
 //? if >=1.21.1 {
     /*@Override
     protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
+        loadData(tag, lookup);
+    }
 *///?} else {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
+        loadData(tag, null);
+    }
 //?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         mode = gregtech.content.data.UsbDataRules.mode(tag.getInt("gt.mode"));
         CompoundTag inventory = tag.getCompound("gt_switch").copy();
         inventory.putInt("Size", items.getSlots());
-//? if >=1.21.1 {
-        /*items.deserializeNBT(lookup, inventory);
-*///?} else {
-        items.deserializeNBT(inventory);
-//?}
+        gregtech.engine.stack.HandlerNbt.load(items, inventory, lookup);
         for (Direction side : Direction.values()) {
             String key = "gt_cover_" + side.ordinal();
-//? if >=1.21.1 {
-            /*covers[side.ordinal()] = tag.contains(key) ? ItemStack.parseOptional(lookup, tag.getCompound(key)) : ItemStack.EMPTY;
-*///?} else {
-            covers[side.ordinal()] = tag.contains(key) ? ItemStack.of(tag.getCompound(key)) : ItemStack.EMPTY;
-//?}
+            covers[side.ordinal()] = tag.contains(key) ? gregtech.engine.stack.NbtCompat.readItem(tag.getCompound(key), lookup) : ItemStack.EMPTY;
         }
         panels.loaded();
     }

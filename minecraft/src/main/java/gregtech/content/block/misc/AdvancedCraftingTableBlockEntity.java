@@ -452,23 +452,14 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
-        tag.put("Inventory", inventory.serializeNBT(lookup));
-        tag.putInt("Modes", modes());
+        saveData(tag, lookup);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
-        loading = true;
-        try {
-            var data = tag.getCompound("Inventory").copy();
-            data.putInt("Size", SIZE);
-            inventory.deserializeNBT(lookup, data);
-            inventory.setStackInSlot(31, ItemStack.EMPTY);
-            inventory.setStackInSlot(32, ItemStack.EMPTY);
-        } finally {
-            loading = false;
-        }
+        loadData(tag, lookup);
+    }
 *///?} else {
     private void resetCapabilities() {
         itemCap.invalidate();
@@ -501,24 +492,31 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.put("Inventory", inventory.serializeNBT());
-        tag.putInt("Modes", modes());
+        saveData(tag, null);
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
+        loadData(tag, null);
+    }
+//?}
+    private void saveData(CompoundTag tag, HolderLookup.Provider lookup) {
+        tag.put("Inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
+        tag.putInt("Modes", modes());
+    }
+
+    private void loadData(CompoundTag tag, HolderLookup.Provider lookup) {
         loading = true;
         try {
             var data = tag.getCompound("Inventory").copy();
             data.putInt("Size", SIZE);
-            inventory.deserializeNBT(data);
+            gregtech.engine.stack.HandlerNbt.load(inventory, data, lookup);
             inventory.setStackInSlot(31, ItemStack.EMPTY);
             inventory.setStackInSlot(32, ItemStack.EMPTY);
         } finally {
             loading = false;
         }
-//?}
         int mode = tag.getInt("Modes");
         blocked16 = (mode & 1) != 0;
         blocked36 = (mode & 2) != 0;

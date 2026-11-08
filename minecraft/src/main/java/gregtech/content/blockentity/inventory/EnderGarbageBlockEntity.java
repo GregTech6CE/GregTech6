@@ -176,51 +176,60 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
     public IFluidHandler fluidHandler() {
         return isRemoved() ? null : fluidVoid;
     }
-    // ── NBT ──────────────────────────────────────────────────────────────
 *///?} else {
     private final LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> insertOnly);
     private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> fluidVoid);
-//?}
 
     @Override
-//? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag, lookup);
-        tag.put("Inventory", inventory.serializeNBT(lookup));
-*///?} else {
     public <T> @org.jetbrains.annotations.NotNull LazyOptional<T> getCapability(
             @org.jetbrains.annotations.NotNull Capability<T> capability, @Nullable Direction side) {
         if (capability == ForgeCapabilities.ITEM_HANDLER) return itemCap.cast();
         if (capability == ForgeCapabilities.FLUID_HANDLER) return fluidCap.cast();
         return super.getCapability(capability, side);
-//?}
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag, lookup);
-        if (tag.contains("Inventory")) inventory.deserializeNBT(lookup, tag.getCompound("Inventory"));
-*///?} else {
     public void invalidateCaps() {
         super.invalidateCaps();
         itemCap.invalidate();
         fluidCap.invalidate();
     }
+//?}
 
     // ── NBT ──────────────────────────────────────────────────────────────
 
+//? if >=1.21.1 {
+    /*@Override
+    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
+        saveData(tag, lookup);
+    }
+*///?} else {
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.put("Inventory", inventory.serializeNBT());
+        saveData(tag, null);
+    }
+//?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        tag.put("Inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
     }
 
+//? if >=1.21.1 {
+    /*@Override
+    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
+        loadData(tag, lookup);
+    }
+*///?} else {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        if (tag.contains("Inventory")) inventory.deserializeNBT(tag.getCompound("Inventory"));
+        loadData(tag, null);
+    }
 //?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (tag.contains("Inventory")) gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound("Inventory"), lookup);
     }
 
     @Override
