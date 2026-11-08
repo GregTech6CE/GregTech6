@@ -33,20 +33,22 @@ public final class BakedModelMap {
         return models.get(new ModelResourceLocation(id, variant));
     }
 
-    /** 1.20.1 may keep a plain {@link ResourceLocation} key for {@code RegisterAdditional} entries. */
+    /** 1.20.1 keeps a plain {@link ResourceLocation} key for {@code RegisterAdditional} entries. */
     public BakedModel getPlain(ResourceLocation id) {
         return models.get(id);
     }
 
     /** Resolve a shared model without treating the bakery missing sentinel as success. */
     public BakedModel find(ResourceLocation id) {
+        // 1.20.1 RegisterAdditional stores plain keys; prefer them before block/item variants.
+        BakedModel plain = getPlain(id);
+        if (isUsable(plain)) return plain;
         // "standalone" is the 1.21.1 RegisterAdditional variant; the other keys cover block/item models.
         for (String variant : new String[]{"standalone", "", "inventory", "normal"}) {
             BakedModel model = get(id, variant);
             if (isUsable(model)) return model;
         }
-        BakedModel model = getPlain(id);
-        return isUsable(model) ? model : null;
+        return null;
     }
 
     public boolean isUsable(BakedModel model) {
