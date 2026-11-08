@@ -1,5 +1,7 @@
 package gregtech.content.material;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
@@ -7,17 +9,14 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.recipe.MaterialRecoveryRules;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 class MaterialBaselineTest {
     @BeforeAll

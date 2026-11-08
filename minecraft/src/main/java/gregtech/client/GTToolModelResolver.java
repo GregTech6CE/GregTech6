@@ -1,37 +1,27 @@
 package gregtech.client;
 
+import com.mojang.logging.LogUtils;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.prefix.PrefixRegistry;
-import com.mojang.logging.LogUtils;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.resources.ResourceLocation;
-import org.slf4j.Logger;
-
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.Nullable;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.resources.ResourceLocation;
+import org.slf4j.Logger;
 
 /** Bake-time cache for tool layer models (iconsets + shared material icons). */
 public final class GTToolModelResolver {
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final String[] VARIANTS = {"", "inventory", "normal"};
 
-    private static Map<ResourceLocation, BakedModel> iconsetModels = Map.of();
-    private static Map<ResourceLocation, BakedModel> materialModels = Map.of();
-    @Nullable
-    private static BakedModel missingModel;
+    private static volatile Map<ResourceLocation, BakedModel> iconsetModels = Map.of();
+    private static volatile Map<ResourceLocation, BakedModel> materialModels = Map.of();
 
     private GTToolModelResolver() {}
 
-//? if >=1.21.1 {
-    /*public static void rebuild(Map<ModelResourceLocation, BakedModel> models, @Nullable BakedModel missing) {
-*///?} else {
-    public static void rebuild(Map<ResourceLocation, BakedModel> models, @Nullable BakedModel missing) {
-//?}
-        missingModel = missing;
+    public static void rebuild(BakedModelMap models) {
         Map<ResourceLocation, BakedModel> iconsets = new HashMap<>();
         Map<ResourceLocation, BakedModel> materials = new HashMap<>();
 
@@ -49,18 +39,14 @@ public final class GTToolModelResolver {
 
         iconsetModels = Map.copyOf(iconsets);
         materialModels = Map.copyOf(materials);
-        LOGGER.info("[gregtech] Tool model cache: {} iconset layers, {} material icons",
-                iconsetModels.size(), materialModels.size());
+        LOGGER.info(
+                "[gregtech] Tool model cache: {} iconset layers, {} material icons",
+                iconsetModels.size(),
+                materialModels.size());
     }
 
-    private static void cacheIconset(Map<ResourceLocation, BakedModel> out,
-//? if >=1.21.1 {
-                                     /*Map<ModelResourceLocation, BakedModel> models,
-*///?} else {
-                                     Map<ResourceLocation, BakedModel> models,
-//?}
-                                     ResourceLocation id) {
-        BakedModel model = lookup(models, id);
+    private static void cacheIconset(Map<ResourceLocation, BakedModel> out, BakedModelMap models, ResourceLocation id) {
+        BakedModel model = models.find(id);
         if (model != null) {
             out.put(id, model);
         }
@@ -88,28 +74,5 @@ public final class GTToolModelResolver {
             }
         }
         return null;
-    }
-
-    @Nullable
-//? if >=1.21.1 {
-    /*private static BakedModel lookup(Map<ModelResourceLocation, BakedModel> models, ResourceLocation id) {
-*///?} else {
-    private static BakedModel lookup(Map<ResourceLocation, BakedModel> models, ResourceLocation id) {
-//?}
-        for (String variant : VARIANTS) {
-            BakedModel model = models.get(new ModelResourceLocation(id, variant));
-            if (isValid(model)) {
-                return model;
-            }
-        }
-//? if >=1.21.1 {
-        /*return isValid(models.get(ModelResourceLocation.standalone(id))) ? models.get(ModelResourceLocation.standalone(id)) : null;
-*///?} else {
-        return isValid(models.get(id)) ? models.get(id) : null;
-//?}
-    }
-
-    private static boolean isValid(@Nullable BakedModel model) {
-        return model != null && model != missingModel;
     }
 }

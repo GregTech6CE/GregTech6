@@ -1,16 +1,15 @@
 package gregtech.engine.material;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import gregtech.api.addon.material.*;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.MaterialTestFixture;
 import gregtech.engine.prefix.BlockMaterialPrefix;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 class MaterialFormCatalogTest {
     @BeforeAll

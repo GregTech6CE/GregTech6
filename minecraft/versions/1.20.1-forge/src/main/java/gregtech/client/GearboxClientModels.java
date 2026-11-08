@@ -4,9 +4,6 @@ import com.mojang.logging.LogUtils;
 import gregtech.GregTech;
 import gregtech.content.block.energy.GearboxBlock;
 import gregtech.content.registry.GTGearboxes;
-import java.util.Map;
-import net.minecraft.client.renderer.block.BlockModelShaper;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,7 +22,7 @@ public final class GearboxClientModels {
 
     @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
-        Map<ResourceLocation, BakedModel> models = event.getModels();
+        BakedModelMap models = BakedModelMap.of(event.getModels());
         BlockItemModelHelper.captureFromVanillaBlockItem(models);
         GearboxBakedModel shared = new GearboxBakedModel();
         int replaced = 0;
@@ -35,7 +32,7 @@ public final class GearboxClientModels {
             ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
             if (id == null) continue;
             for (BlockState state : block.getStateDefinition().getPossibleStates()) {
-                models.put(BlockModelShaper.stateToModelLocation(id, state), shared);
+                models.putState(id, state, shared);
                 replaced++;
             }
             // Inventory JSON uses the original fresh six-sided housing.

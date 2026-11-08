@@ -14,8 +14,6 @@ import gregtech.engine.energy.WireSpec;
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.engine.machine.PipeSpec;
 import java.util.Locale;
-import java.util.Map;
-import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -45,7 +43,7 @@ public final class PipeWireClientModels {
 
     @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
-        Map<ResourceLocation, BakedModel> models = event.getModels();
+        BakedModelMap models = BakedModelMap.of(event.getModels());
         BlockItemModelHelper.captureFromVanillaBlockItem(models);
         int replaced = 0;
 
@@ -129,13 +127,13 @@ public final class PipeWireClientModels {
         LOGGER.info("[{}] Dynamic pipe/wire models: {} state variants replaced", GregTech.NAMESPACE, replaced);
     }
 
-    private static int replace(Map<ResourceLocation, BakedModel> models, Block block, BakedModel model) {
+    private static int replace(BakedModelMap models, Block block, BakedModel model) {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
         if (id == null) return 0;
-        BlockItemClientModels.aliasItemInventory(models, id, BlockItemClientModels.asBlockItem(model));
+        BlockItemClientModels.aliasBlockItem(models, block, BlockItemClientModels.asBlockItem(model));
         int count = 0;
         for (BlockState state : block.getStateDefinition().getPossibleStates()) {
-            models.put(BlockModelShaper.stateToModelLocation(id, state), model);
+            models.putState(id, state, model);
             count++;
         }
         return count;

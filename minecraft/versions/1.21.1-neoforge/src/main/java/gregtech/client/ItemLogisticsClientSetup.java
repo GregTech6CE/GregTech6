@@ -3,12 +3,9 @@ package gregtech.client;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTItemPipes;
 import gregtech.content.transport.HopperRegistries;
-import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -88,21 +85,15 @@ public final class ItemLogisticsClientSetup {
     public static void additional(ModelEvent.RegisterAdditional event) {
         for (String type : new String[] {"hopper", "queuehopper"})
             for (Direction face : Direction.values())
-                event.register(
-                        ModelResourceLocation.standalone(id("block/machine/" + type + "_" + face.getSerializedName())));
+                ClientModelEvents.registerAdditional(
+                        event, id("block/machine/" + type + "_" + face.getSerializedName()));
     }
 
     @SubscribeEvent
     public static void models(ModelEvent.ModifyBakingResult event) {
-        var models = event.getModels();
-        ItemTransforms transforms = ItemTransforms.NO_TRANSFORMS;
-        for (String path : new String[] {"iron_block", "stone", "dirt"}) {
-            var model = models.get(ModelResourceLocation.inventory(ResourceLocation.withDefaultNamespace(path)));
-            if (model != null && model.isGui3d() && model.getTransforms() != ItemTransforms.NO_TRANSFORMS) {
-                transforms = model.getTransforms();
-                break;
-            }
-        }
+        BakedModelMap models = BakedModelMap.of(event.getModels());
+        BlockItemModelHelper.captureFromVanillaBlockItem(models);
+        ItemTransforms transforms = BlockItemModelHelper.blockItemTransforms();
         for (var entry : GTItemPipes.all()) {
             var block = entry.get();
             var spec = block.spec();
@@ -118,10 +109,7 @@ public final class ItemLogisticsClientSetup {
                             0,
                             overlay)
                     .itemTransforms(transforms);
-            var key = BuiltInRegistries.BLOCK.getKey(block);
-            for (var state : block.getStateDefinition().getPossibleStates())
-                models.put(BlockModelShaper.stateToModelLocation(key, state), model);
-            models.put(ModelResourceLocation.inventory(key), model);
+            BlockItemClientModels.alias(models, block, model, model);
         }
         for (var block : gregtech.content.registry.AddonPipeRegistration.itemBlocks()) {
             var spec = block.spec();
@@ -137,16 +125,12 @@ public final class ItemLogisticsClientSetup {
                             0,
                             overlay)
                     .itemTransforms(transforms);
-            var key = BuiltInRegistries.BLOCK.getKey(block);
-            for (var state : block.getStateDefinition().getPossibleStates())
-                models.put(BlockModelShaper.stateToModelLocation(key, state), model);
-            models.put(ModelResourceLocation.inventory(key), model);
+            BlockItemClientModels.alias(models, block, model, model);
         }
         for (String type : new String[] {"hopper", "queuehopper"}) {
             java.util.Map<Direction, BakedModel> faces = new java.util.EnumMap<>(Direction.class);
             for (Direction face : Direction.values()) {
-                var model = models.get(
-                        ModelResourceLocation.standalone(id("block/machine/" + type + "_" + face.getSerializedName())));
+                var model = models.find(id("block/machine/" + type + "_" + face.getSerializedName()));
                 if (model != null) faces.put(face, model);
             }
             if (faces.size() != 6) {
@@ -159,10 +143,7 @@ public final class ItemLogisticsClientSetup {
             if (type.equals("hopper")) HopperRegistries.hoppers().forEach(e -> blocks.add(e.get()));
             else HopperRegistries.queues().forEach(e -> blocks.add(e.get()));
             for (var block : blocks) {
-                var key = BuiltInRegistries.BLOCK.getKey(block);
-                for (var state : block.getStateDefinition().getPossibleStates())
-                    models.put(BlockModelShaper.stateToModelLocation(key, state), model);
-                models.put(ModelResourceLocation.inventory(key), model);
+                BlockItemClientModels.alias(models, block, model, model);
             }
         }
     }

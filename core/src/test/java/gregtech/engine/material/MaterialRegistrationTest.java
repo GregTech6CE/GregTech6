@@ -1,5 +1,7 @@
 package gregtech.engine.material;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import gregtech.api.addon.material.DataKey;
 import gregtech.api.addon.material.MaterialProcessCardinality;
 import gregtech.api.addon.material.MaterialProcessKey;
@@ -8,8 +10,6 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.content.material.MaterialDefinitions;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class MaterialRegistrationTest {
     @Test

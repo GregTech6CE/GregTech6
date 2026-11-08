@@ -2,8 +2,6 @@ package gregtech.client;
 
 import gregtech.content.registry.GTFluidSprings;
 import gregtech.content.blockentity.FluidSpringBlockEntity;
-import net.minecraft.client.renderer.block.BlockModelShaper;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -45,13 +43,16 @@ public final class FluidSpringClient {
         return id != null && BuiltInRegistries.FLUID.containsKey(id) ? BuiltInRegistries.FLUID.get(id) : Fluids.WATER;
     }
     @SubscribeEvent public static void models(ModelEvent.ModifyBakingResult event) {
+        BakedModelMap models = BakedModelMap.of(event.getModels());
         for (var block : GTFluidSprings.allBlocks()) {
             var fluid = ((gregtech.content.block.FluidSpringBlock) block).spring();
             var output = fluid == null ? Fluids.WATER : BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluid.fluidId()));
-            var id = BlockModelShaper.stateToModelLocation(block.defaultBlockState());
-            event.getModels().computeIfPresent(id, (key, model) -> new FluidSpringBakedModel(model, output));
-            var item = ModelResourceLocationCompat.inventory(BuiltInRegistries.BLOCK.getKey(block));
-            event.getModels().computeIfPresent(item, (key, model) -> new FluidSpringBakedModel(model, output));
+            var blockId = BuiltInRegistries.BLOCK.getKey(block);
+            // FluidSpringBlock has no state properties, so its only blockstate variant is "".
+            var stateModel = models.get(blockId, "");
+            if (stateModel != null) models.put(blockId, "", new FluidSpringBakedModel(stateModel, output));
+            var itemModel = models.get(blockId, "inventory");
+            if (itemModel != null) models.put(blockId, "inventory", new FluidSpringBakedModel(itemModel, output));
         }
     }
     @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event) {

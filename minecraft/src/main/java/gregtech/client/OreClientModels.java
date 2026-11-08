@@ -1,16 +1,13 @@
 package gregtech.client;
 import gregtech.engine.mod.GregTechIdentity;
 
-
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.block.OreBlock;
 import gregtech.content.registry.GTBlocks;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
@@ -18,13 +15,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import org.slf4j.Logger;
 
@@ -56,28 +51,16 @@ public final class OreClientModels {
 
     @SubscribeEvent
     public static void registerTemplate(ModelEvent.RegisterAdditional event) {
-//? if >=1.21.1 {
-        /*event.register(ModelResourceLocation.standalone(TEMPLATE));
-*///?} else {
-        event.register(TEMPLATE);
-//?}
+        ClientModelEvents.registerAdditional(event, TEMPLATE);
     }
 
     @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
-//? if >=1.21.1 {
-        /*Map<ModelResourceLocation, BakedModel> models = event.getModels();
-*///?} else {
-        Map<ResourceLocation, BakedModel> models = event.getModels();
-//?}
+        BakedModelMap models = BakedModelMap.of(event.getModels());
         BlockItemModelHelper.captureFromVanillaBlockItem(models);
-        BakedModel template = BakedModelLookup.find(models, TEMPLATE);
+        BakedModel template = models.find(TEMPLATE);
         if (template == null) {
-//? if >=1.21.1 {
-            /*LOGGER.error("[{}] vanilla stone model missing — ore models not replaced", "gt6ce");
-*///?} else {
             LOGGER.error("[{}] vanilla stone model missing — ore models not replaced", GregTechIdentity.REGISTRY_NAMESPACE);
-//?}
             return;
         }
 
@@ -89,29 +72,23 @@ public final class OreClientModels {
         for (var entry : GTBlocks.allEntries()) {
 //? if >=1.21.1 {
             /*if (!entry.isBound() || !(entry.get() instanceof OreBlock ore)) continue;
-            ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(ore);
 *///?} else {
             if (!entry.isPresent() || !(entry.get() instanceof OreBlock ore)) continue;
-            ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(ore);
 //?}
+            ResourceLocation blockId = Mc.blockId(ore);
             if (blockId == null) continue;
 
             ResourceLocation overlay = resolveOverlayTexture(ore, overlayCache);
             OreBakedModel model = sharedModels.computeIfAbsent(overlay, texture -> new OreBakedModel(template, texture));
             for (BlockState state : ore.getStateDefinition().getPossibleStates()) {
-                models.put(BlockModelShaper.stateToModelLocation(blockId, state),
-                        model.stoneModel(OreBlock.stoneOf(state), OreBlock.isBroken(state)));
+                models.putState(blockId, state, model.stoneModel(OreBlock.stoneOf(state), OreBlock.isBroken(state)));
                 states++;
             }
-            models.put(new ModelResourceLocation(blockId, "inventory"), model);
+            models.put(blockId, "inventory", model);
             mapped++;
         }
         LOGGER.info("[{}] Ore model replacement: {} ore blocks, {} state models from {} shared models",
-//? if >=1.21.1 {
-                /*"gt6ce", mapped, states, sharedModels.size());
-*///?} else {
                 GregTechIdentity.REGISTRY_NAMESPACE, mapped, states, sharedModels.size());
-//?}
     }
 
     /**
@@ -124,19 +101,9 @@ public final class OreClientModels {
         String cacheKey = primary.folder() + "/" + file;
         return cache.computeIfAbsent(cacheKey, key -> {
             for (MaterialTextureSet set : new MaterialTextureSet[]{primary, MaterialTextureSet.DULL, MaterialTextureSet.METALLIC}) {
-//? if >=1.21.1 {
-                /*ResourceLocation texture = ResourceLocation.fromNamespaceAndPath("gt6ce",
-*///?} else {
-                ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE,
-//?}
-                        "block/material_icons/" + set.folder() + "/" + file);
-//? if >=1.21.1 {
-                /*ResourceLocation file_png = ResourceLocation.fromNamespaceAndPath("gt6ce",
-*///?} else {
-                ResourceLocation file_png = ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE,
-//?}
-                        "textures/block/material_icons/" + set.folder() + "/" + file + ".png");
-                if (Minecraft.getInstance().getResourceManager().getResource(file_png).isPresent()) {
+                ResourceLocation texture = Mc.gregtechId("block/material_icons/" + set.folder() + "/" + file);
+                ResourceLocation filePng = Mc.gregtechId("textures/block/material_icons/" + set.folder() + "/" + file + ".png");
+                if (Minecraft.getInstance().getResourceManager().getResource(filePng).isPresent()) {
                     return texture;
                 }
             }

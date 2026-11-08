@@ -2,7 +2,6 @@ package gregtech.client;
 
 import gregtech.content.item.PortableFluidContainerItem;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
@@ -23,12 +22,14 @@ public final class PortableFluidItemModels {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void models(ModelEvent.ModifyBakingResult event) {
+        BakedModelMap models = BakedModelMap.of(event.getModels());
         for (var item : BuiltInRegistries.ITEM) {
             if (!(item instanceof PortableFluidContainerItem vessel)
                     || !PortableFluidItemModel.supports(vessel.spec().shapeId())) continue;
-            var id = new ModelResourceLocation(BuiltInRegistries.ITEM.getKey(item), "inventory");
-            event.getModels().computeIfPresent(id, (key, model) ->
-                    new PortableFluidItemModel(model, vessel.spec().shapeId()));
+            var id = BuiltInRegistries.ITEM.getKey(item);
+            var model = models.get(id, "inventory");
+            if (model == null) continue;
+            models.put(id, "inventory", new PortableFluidItemModel(model, vessel.spec().shapeId()));
         }
     }
 }

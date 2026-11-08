@@ -1,10 +1,7 @@
 package gregtech.client;
 
 import gregtech.content.registry.GTSignalWires;
-import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -41,16 +38,9 @@ public final class SignalWireClientSetup {
 
     @SubscribeEvent
     public static void models(ModelEvent.ModifyBakingResult event) {
-        var models = event.getModels();
-        ItemTransforms fallbackTransforms = ItemTransforms.NO_TRANSFORMS;
-        for (String fallbackPath : new String[] {"iron_block", "stone", "dirt"}) {
-            var model =
-                    models.get(ModelResourceLocation.inventory(ResourceLocation.withDefaultNamespace(fallbackPath)));
-            if (model != null && model.isGui3d() && model.getTransforms() != ItemTransforms.NO_TRANSFORMS) {
-                fallbackTransforms = model.getTransforms();
-                break;
-            }
-        }
+        BakedModelMap models = BakedModelMap.of(event.getModels());
+        BlockItemModelHelper.captureFromVanillaBlockItem(models);
+        ItemTransforms fallbackTransforms = BlockItemModelHelper.blockItemTransforms();
         var wireTexture = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/wire");
         var rubberTexture = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/rubber/pipeside");
         for (var wireEntry : GTSignalWires.all()) {
@@ -66,10 +56,7 @@ public final class SignalWireClientSetup {
                                     null)
                             : new PipeWireBakedModel(1, wireTexture, 0, wireTexture, 0, 0, null))
                     .itemTransforms(fallbackTransforms);
-            var blockId = BuiltInRegistries.BLOCK.getKey(block);
-            for (var wireState : block.getStateDefinition().getPossibleStates())
-                models.put(BlockModelShaper.stateToModelLocation(blockId, wireState), model);
-            models.put(ModelResourceLocation.inventory(blockId), model);
+            BlockItemClientModels.alias(models, block, model, model);
         }
     }
 }

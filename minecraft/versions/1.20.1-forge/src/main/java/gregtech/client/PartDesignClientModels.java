@@ -3,10 +3,8 @@ package gregtech.client;
 import com.mojang.logging.LogUtils;
 import gregtech.GregTech;
 import gregtech.content.multiblock.PartDesigns;
-import java.util.Map;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,14 +26,15 @@ public final class PartDesignClientModels {
     public static void register(ModelEvent.RegisterAdditional event) {
         for (var folder : PartDesigns.folders().entrySet()) {
             for (int design = 1; design <= folder.getValue(); design++)
-                event.register(
+                ClientModelEvents.registerAdditional(
+                        event,
                         ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, modelPath(folder.getKey(), design)));
         }
     }
 
     @SubscribeEvent
     public static void bake(ModelEvent.ModifyBakingResult event) {
-        Map<ResourceLocation, BakedModel> models = event.getModels();
+        BakedModelMap models = BakedModelMap.of(event.getModels());
         int wrapped = 0;
         int missing = 0;
         for (String path : PartDesigns.paths()) {
@@ -51,10 +50,11 @@ public final class PartDesignClientModels {
                 if (designs[design] == null) missing++;
             }
             for (BlockState state : block.getStateDefinition().getPossibleStates()) {
-                ResourceLocation key = BlockModelShaper.stateToModelLocation(id, state);
-                BakedModel original = models.get(key);
+                // Same variant string that BakedModelMap.putState writes.
+                String variant = BlockModelShaper.statePropertiesToString(state.getValues());
+                BakedModel original = models.get(id, variant);
                 if (original == null || original instanceof PartDesignBakedModel) continue;
-                models.put(key, new PartDesignBakedModel(original, designs));
+                models.put(id, variant, new PartDesignBakedModel(original, designs));
                 wrapped++;
             }
         }
@@ -65,13 +65,8 @@ public final class PartDesignClientModels {
                 missing);
     }
 
-    private static BakedModel lookup(Map<ResourceLocation, BakedModel> models, String folder, int design) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, modelPath(folder, design));
-        for (String variant : new String[] {"", "inventory"}) {
-            BakedModel model = models.get(new ModelResourceLocation(id, variant));
-            if (model != null) return model;
-        }
-        return models.get(id);
+    private static BakedModel lookup(BakedModelMap models, String folder, int design) {
+        return models.find(ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, modelPath(folder, design)));
     }
 
     private static String modelPath(String folder, int design) {

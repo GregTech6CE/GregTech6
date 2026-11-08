@@ -6,7 +6,6 @@ import gregtech.engine.machine.MachineRegistry;
 import java.util.EnumMap;
 import java.util.Map;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -33,14 +32,14 @@ public final class HopperClientModels {
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
         for (String type : HOPPER_TYPES) {
             for (Direction facing : Direction.values()) {
-                event.register(HopperIcons.sharedModelLocation(type, facing));
+                ClientModelEvents.registerAdditional(event, HopperIcons.sharedModelLocation(type, facing));
             }
         }
     }
 
     @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
-        Map<ResourceLocation, BakedModel> models = event.getModels();
+        BakedModelMap models = BakedModelMap.of(event.getModels());
 
         int hoppers = aliasHoppers(models, MachineRegistry.hoppers(), "hopper");
         int queueHoppers = aliasHoppers(models, MachineRegistry.queueHoppers(), "queuehopper");
@@ -49,9 +48,7 @@ public final class HopperClientModels {
     }
 
     private static <T extends Block> int aliasHoppers(
-            Map<ResourceLocation, BakedModel> models,
-            Iterable<net.minecraftforge.registries.RegistryObject<T>> blocks,
-            String texPath) {
+            BakedModelMap models, Iterable<net.minecraftforge.registries.RegistryObject<T>> blocks, String texPath) {
         // Collect per-facing shared models
         Map<Direction, BakedModel> byFacing = new EnumMap<>(Direction.class);
         for (Direction facing : Direction.values()) {
@@ -82,34 +79,20 @@ public final class HopperClientModels {
             if (blockId == null) continue;
 
             // Alias base model
-            models.put(new ModelResourceLocation(blockId, ""), worldModel);
+            models.put(blockId, "", worldModel);
             // Cover every state, including waterlogged hoppers.
             for (var state : block.getStateDefinition().getPossibleStates()) {
-                models.put(
-                        net.minecraft.client.renderer.block.BlockModelShaper.stateToModelLocation(blockId, state),
-                        worldModel);
+                models.putState(blockId, state, worldModel);
             }
             // Alias item inventory
-            ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(block.asItem());
-            if (itemId == null) {
-                itemId = blockId;
-            }
-            BlockItemClientModels.aliasItemInventory(models, itemId, itemModel);
+            BlockItemClientModels.aliasBlockItem(models, block, itemModel);
             aliased++;
         }
         return aliased;
     }
 
     @Nullable
-    private static BakedModel lookupFacingModel(
-            Map<ResourceLocation, BakedModel> models, String type, Direction facing) {
-        ResourceLocation modelId = HopperIcons.sharedModelLocation(type, facing);
-        for (String variant : new String[] {"", "inventory", "normal"}) {
-            BakedModel model = models.get(new ModelResourceLocation(modelId, variant));
-            if (model != null) {
-                return model;
-            }
-        }
-        return models.get(modelId);
+    private static BakedModel lookupFacingModel(BakedModelMap models, String type, Direction facing) {
+        return models.find(HopperIcons.sharedModelLocation(type, facing));
     }
 }

@@ -107,12 +107,7 @@ public final class GTDungeonGenerator {
 
     /** Builds one cell of the dungeon; called by the structure piece that covers this chunk. */
     public static boolean generateCell(
-            WorldGenLevel level,
-            ChunkPos anchor,
-            GTDungeonLayout.Plan dungeonPlan,
-            int i,
-            int j,
-            long seed) {
+            WorldGenLevel level, ChunkPos anchor, GTDungeonLayout.Plan dungeonPlan, int i, int j, long seed) {
         byte[][] cells = dungeonPlan.cells();
         // A saved piece can outlive a config change that shrinks the layout; skip rather than crash.
         if (i < 0 || j < 0 || i >= cells.length || j >= cells[i].length) return false;
@@ -256,7 +251,8 @@ public final class GTDungeonGenerator {
      * generates the dungeon cell by cell, see {@link GTDungeonLayout}).</p>
      */
     public static ItemStack keyStack(long[] keyIds, int index) {
-        int type = RandomSource.create(keyIds[index]).nextInt(GTDungeonKeys.all().size());
+        int type =
+                RandomSource.create(keyIds[index]).nextInt(GTDungeonKeys.all().size());
         return GTDungeonKeys.stack(type, keyIds[index], index);
     }
 }

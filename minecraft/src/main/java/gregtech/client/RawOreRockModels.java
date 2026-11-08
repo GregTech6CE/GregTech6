@@ -5,7 +5,6 @@ import gregtech.content.blockentity.RockBlockEntity;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -38,11 +37,7 @@ public final class RawOreRockModels {
     @SubscribeEvent
     public static void register(ModelEvent.RegisterAdditional event) {
         for (var ground : RockBlock.Ground.values()) {
-//? if >=1.21.1 {
-            /*event.register(ModelResourceLocation.standalone(marker(ground)));
-*///?} else {
-            event.register(marker(ground));
-//?}
+            ClientModelEvents.registerAdditional(event, marker(ground));
         }
     }
 
@@ -64,12 +59,15 @@ public final class RawOreRockModels {
 
     @SubscribeEvent
     public static void bake(ModelEvent.ModifyBakingResult event) {
+        BakedModelMap models = BakedModelMap.of(event.getModels());
+        ResourceLocation rockId = ResourceLocation.fromNamespaceAndPath("gt6ce", "rock");
         for (var ground : RockBlock.Ground.values()) {
-            var single = BakedModelLookup.find(event.getModels(), marker(ground));
+            var single = models.find(marker(ground));
             if (single == null) continue;
-            var id = new ModelResourceLocation(ResourceLocation.fromNamespaceAndPath("gt6ce", "rock"),
-                    "ground=" + ground.getSerializedName());
-            event.getModels().computeIfPresent(id, (key, normal) -> new MarkerModel(normal, single));
+            var variant = "ground=" + ground.getSerializedName();
+            var normal = models.get(rockId, variant);
+            if (normal == null) continue;
+            models.put(rockId, variant, new MarkerModel(normal, single));
         }
     }
 

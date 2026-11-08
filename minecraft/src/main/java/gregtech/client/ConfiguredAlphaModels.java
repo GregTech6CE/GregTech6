@@ -44,14 +44,10 @@ public final class ConfiguredAlphaModels {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void models(ModelEvent.ModifyBakingResult event) {
-        event.getModels().replaceAll((id, model) -> {
-//? if >=1.21.1 {
-            /*String namespace = id.id().getNamespace();
-*///?} else {
-            String namespace = id.getNamespace();
-//?}
-            return enabled(namespace) ? model : new Cutout(model);
-        });
+        BakedModelMap models = BakedModelMap.of(event.getModels());
+        models.replaceAll((id, model) -> enabled(id.getNamespace()) ? model : new Cutout(model));
+        // Rebuild after the alpha pass so the tool renderer sees the final wrapped models.
+        GTToolModelResolver.rebuild(models);
     }
 
     /** Keep the original model geometry and replace only its blended render pass. */

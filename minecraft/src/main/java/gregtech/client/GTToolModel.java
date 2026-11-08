@@ -4,7 +4,6 @@ import gregtech.engine.mod.GregTechIdentity;
 import gregtech.content.registry.GTToolItems;
 import gregtech.platform.Mc;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -22,10 +21,8 @@ import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.core.registries.BuiltInRegistries;
 //?}
-
-import java.util.Map;
 
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -40,45 +37,34 @@ public final class GTToolModel {
     @SubscribeEvent
     public static void registerIconsetModels(ModelEvent.RegisterAdditional event) {
         for (ResourceLocation icon : ToolIconSets.allRegisteredIcons()) {
-//? if >=1.21.1 {
-            /*event.register(ModelResourceLocation.standalone(iconsetModelId(icon)));
-            event.register(ModelResourceLocation.standalone(iconsetOverlayModelId(icon)));
-*///?} else {
-            event.register(iconsetModelId(icon));
-            event.register(iconsetOverlayModelId(icon));
-//?}
+            ClientModelEvents.registerAdditional(event, iconsetModelId(icon));
+            ClientModelEvents.registerAdditional(event, iconsetOverlayModelId(icon));
         }
     }
 
     @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
-//? if >=1.21.1 {
-        /*Map<ModelResourceLocation, BakedModel> models = event.getModels();
-        GTToolModelResolver.rebuild(models, models.get(ModelResourceLocation.standalone(net.minecraft.client.resources.model.ModelBakery.MISSING_MODEL_LOCATION)));
-*///?} else {
-        Map<ResourceLocation, BakedModel> models = event.getModels();
-        GTToolModelResolver.rebuild(models, models.get(net.minecraft.client.resources.model.ModelBakery.MISSING_MODEL_LOCATION));
-//?}
+        BakedModelMap models = BakedModelMap.of(event.getModels());
 
         for (var entry : GTToolItems.all().entrySet()) {
             ResourceLocation itemId = Mc.itemId(entry.getValue().get());
             if (itemId == null) {
                 continue;
             }
-            ModelResourceLocation inventory = ModelResourceLocationCompat.inventory(itemId);
-            BakedModel base = models.get(inventory);
+            BakedModel base = models.get(itemId, "inventory");
             if (base != null) {
-                models.put(inventory, new GTToolBakedModel(base));
+                models.put(itemId, "inventory", new GTToolBakedModel(base));
             }
         }
 //? if >=1.21.1 {
         /*for(var holder:gregtech.content.registry.GTElectricItems.tools()) {
-            var id=BuiltInRegistries.ITEM.getKey(holder.get());var inventory=ModelResourceLocationCompat.inventory(id);
+            var id=BuiltInRegistries.ITEM.getKey(holder.get());
 *///?} else {
         for(var holder:gregtech.content.registry.GTElectricItems.all()) {
-            var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(holder.get());var inventory=ModelResourceLocationCompat.inventory(id);
+            var id=BuiltInRegistries.ITEM.getKey(holder.get());
 //?}
-            var base=models.get(inventory);if(base!=null)models.put(inventory,new GTToolBakedModel(base));
+            var base=models.get(id, "inventory");
+            if(base!=null)models.put(id, "inventory", new GTToolBakedModel(base));
         }
     }
 
