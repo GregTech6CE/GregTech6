@@ -8,7 +8,9 @@ import gregtech.api.addon.material.MaterialTarget;
 import gregtech.api.addon.material.OreProcessingRule;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("deprecation")
 class MaterialProcessHelperTest {
