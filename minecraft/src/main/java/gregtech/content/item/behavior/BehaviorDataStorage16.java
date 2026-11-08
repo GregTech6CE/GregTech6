@@ -1,12 +1,12 @@
 package gregtech.content.item.behavior;
 
 import gregtech.content.recipe.GTMaterialDataRecipes;
+import gregtech.engine.stack.StackData;
+import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-
-import java.util.List;
 
 /**
  * GT6 {@code gregtech.items.behaviors.Behavior_DataStorage16} — the tooltip of a USB <em>drive</em>, the
@@ -36,11 +36,7 @@ public final class BehaviorDataStorage16 {
     /** The drive's sixteen slot lines, or the two one-line states above. */
     public static void tooltip(ItemStack stack, List<Component> lines) {
         if (stack == null || stack.isEmpty()) return;
-//? if >=1.21.1 {
-        /*CompoundTag tag = gregtech.content.data.UsbDataMedia.tag(stack);
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
+        CompoundTag tag = StackData.read(stack);
         if (tag == null || !tag.contains(GTMaterialDataRecipes.NBT_USB_DRIVE)) {
             lines.add(Component.translatable("gt.tooltip.usb.formatted").withStyle(ChatFormatting.AQUA));
             return;

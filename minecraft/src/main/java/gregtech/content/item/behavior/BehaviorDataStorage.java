@@ -2,12 +2,12 @@ package gregtech.content.item.behavior;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.recipe.GTMaterialDataRecipes;
+import gregtech.engine.stack.StackData;
+import java.util.List;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
 import net.minecraft.world.item.ItemStack;
-
-import java.util.List;
 
 /**
  * GT6 {@code gregtech.items.behaviors.Behavior_DataStorage} — the tooltip of a USB <em>stick</em>, the
@@ -40,17 +40,13 @@ public final class BehaviorDataStorage {
     public static void tooltip(ItemStack stack, List<Component> lines) {
         if (stack == null || stack.isEmpty()) return;
 
-//? if >=1.21.1 {
-/*        CompoundTag tag = gregtech.content.data.UsbDataMedia.tag(stack);
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
+        CompoundTag tag = StackData.read(stack);
 
-        if (tag == null) return;                              // GT6: `if (aStack.hasTagCompound())`
+        if (tag == null) return; // GT6: `if (aStack.hasTagCompound())`
         CompoundTag data = GTMaterialDataRecipes.usbData(stack);
-        if (data != null) dataTooltip(data, lines, true);     // — the verbose form
-        lines.add(Component.translatable("gt.tooltip.usb.tier",
-                String.valueOf(tag.getByte(GTMaterialDataRecipes.NBT_USB_TIER)))
+        if (data != null) dataTooltip(data, lines, true); // — the verbose form
+        lines.add(Component.translatable(
+                        "gt.tooltip.usb.tier", String.valueOf(tag.getByte(GTMaterialDataRecipes.NBT_USB_TIER)))
                 .withStyle(ChatFormatting.DARK_GRAY));
     }
 
@@ -62,11 +58,11 @@ public final class BehaviorDataStorage {
      * The source estimate (65536 QU per nucleon) is distinct from raw recipe work.
      */
     public static void dataTooltip(CompoundTag data, List<Component> lines, boolean allDetails) {
-        gregtech.content.cover.CanvasData.tooltip(data,lines);
-        if(gregtech.content.data.VisualDocumentData.tooltip(data,lines,allDetails))return;
+        gregtech.content.cover.CanvasData.tooltip(data, lines);
+        if (gregtech.content.data.VisualDocumentData.tooltip(data, lines, allDetails)) return;
         if (data == null || !data.contains(GTMaterialDataRecipes.NBT_REPLICATOR_DATA)) return;
-        GTMaterial material = gregtech.engine.material.StoredMaterial
-                .read(data, GTMaterialDataRecipes.NBT_REPLICATOR_DATA);
+        GTMaterial material =
+                gregtech.engine.material.StoredMaterial.read(data, GTMaterialDataRecipes.NBT_REPLICATOR_DATA);
         if (!material.isValid()) return;
         Component name = gregtech.engine.material.MaterialPresentation.name(material);
         if (!material.has(gregtech.api.material.MaterialProperty.UUM)) {
@@ -77,19 +73,26 @@ public final class BehaviorDataStorage {
             return;
         }
         if (!allDetails) {
-            lines.add(Component.translatable("gt.tooltip.usb.material_short", name,
-                    String.valueOf(material.getNeutrons()), String.valueOf(material.getProtons()),
-                    String.valueOf(replicatorEnergy(material))).withStyle(ChatFormatting.AQUA));
+            lines.add(Component.translatable(
+                            "gt.tooltip.usb.material_short",
+                            name,
+                            String.valueOf(material.getNeutrons()),
+                            String.valueOf(material.getProtons()),
+                            String.valueOf(replicatorEnergy(material)))
+                    .withStyle(ChatFormatting.AQUA));
             return;
         }
-        lines.add(Component.translatable("gt.tooltip.usb.material_data", name)
-                .withStyle(ChatFormatting.AQUA));
+        lines.add(Component.translatable("gt.tooltip.usb.material_data", name).withStyle(ChatFormatting.AQUA));
         lines.add(Component.translatable("gt.tooltip.usb.replicable_hint").withStyle(ChatFormatting.AQUA));
         boolean antimatter = material.has(gregtech.api.material.MaterialProperty.ANTIMATTER);
-        lines.add(body(antimatter ? "gt.tooltip.usb.neutral_antimatter" : "gt.tooltip.usb.neutral_matter",
-                String.valueOf(material.getNeutrons()), ChatFormatting.YELLOW));
-        lines.add(body(antimatter ? "gt.tooltip.usb.charged_antimatter" : "gt.tooltip.usb.charged_matter",
-                String.valueOf(material.getProtons()), ChatFormatting.RED));
+        lines.add(body(
+                antimatter ? "gt.tooltip.usb.neutral_antimatter" : "gt.tooltip.usb.neutral_matter",
+                String.valueOf(material.getNeutrons()),
+                ChatFormatting.YELLOW));
+        lines.add(body(
+                antimatter ? "gt.tooltip.usb.charged_antimatter" : "gt.tooltip.usb.charged_matter",
+                String.valueOf(material.getProtons()),
+                ChatFormatting.RED));
         lines.add(body("gt.tooltip.usb.energy", replicatorEnergy(material) + " QU", ChatFormatting.AQUA));
     }
 
@@ -99,7 +102,8 @@ public final class BehaviorDataStorage {
     }
 
     private static Component body(String key, String value, ChatFormatting valueStyle) {
-        return Component.translatable(key).withStyle(ChatFormatting.WHITE)
+        return Component.translatable(key)
+                .withStyle(ChatFormatting.WHITE)
                 .append(Component.literal(value).withStyle(valueStyle));
     }
 }

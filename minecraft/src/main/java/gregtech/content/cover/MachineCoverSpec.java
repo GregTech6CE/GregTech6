@@ -1,4 +1,5 @@
 package gregtech.content.cover;
+import gregtech.engine.stack.StackData;
 import gregtech.platform.Mc;
 
 import net.minecraft.world.item.ItemStack;
@@ -49,23 +50,14 @@ public enum MachineCoverSpec {
             if (spec.id.equals(key.getPath())) return spec;
         return null;
     }
-//? if >=1.21.1 {
-    /*public static boolean inverted(ItemStack stack) {
-        return CoverStackData.has(stack) && CoverStackData.read(stack).getBoolean("gt.cover.inverted");
-    }
 
-    public static boolean strong(ItemStack stack) {
-        return CoverStackData.has(stack) && CoverStackData.read(stack).getBoolean("gt.cover.strong");
-    }
-*///?} else {
     public static boolean inverted(ItemStack stack) {
-        return stack.hasTag() && stack.getTag().getBoolean("gt.cover.inverted");
+        return StackData.has(stack) && StackData.read(stack).getBoolean("gt.cover.inverted");
     }
 
     public static boolean strong(ItemStack stack) {
-        return stack.hasTag() && stack.getTag().getBoolean("gt.cover.strong");
+        return StackData.has(stack) && StackData.read(stack).getBoolean("gt.cover.strong");
     }
-//?}
 
     /** The caller supplies state and clock; this predicate cannot validate their source. */
     public boolean allows(State state, int signal, boolean inverted, long timer) {

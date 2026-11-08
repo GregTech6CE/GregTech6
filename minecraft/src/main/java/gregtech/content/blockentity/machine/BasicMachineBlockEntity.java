@@ -700,11 +700,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if(level!=null&&level.isClientSide)return true;
         String key=cutter?"gt.cover.strong":"gt.cover.inverted";
 
-//? if >=1.21.1 {
-/*        var tag=gregtech.content.cover.CoverStackData.readOrEmpty(stack);tag.putBoolean(key,!tag.getBoolean(key));gregtech.content.cover.CoverStackData.write(stack,tag);setChanged();
-*///?} else {
-        var tag=stack.getOrCreateTag();tag.putBoolean(key,!tag.getBoolean(key));setChanged();
-//?}
+        var tag=gregtech.content.cover.CoverStackData.readOrEmpty(stack);tag.putBoolean(key,!tag.getBoolean(key));gregtech.content.cover.CoverStackData.write(stack,tag);setChanged();
 
         if(level!=null)level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
         updateCoverSignals();return true;
@@ -725,11 +721,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             int tag = gregtech.content.cover.CoverItems.selectorTag(cover);
             if (tag >= 0) return tag;
 
-//? if >=1.21.1 {
-/*            CompoundTag nbt = gregtech.content.cover.CoverStackData.read(cover);
-*///?} else {
-            CompoundTag nbt = cover.getTag();
-//?}
+            CompoundTag nbt = gregtech.content.cover.CoverStackData.read(cover);
 
             if (nbt != null && nbt.contains("gt.circuit")) return nbt.getInt("gt.circuit");
             return -1; // selector present but not configured
@@ -1271,11 +1263,11 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //? if >=1.21.1 {
 /*    public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup);
-        Object codecLookup=lookup;
+        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
 *///?} else {
     public void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        Object codecLookup=null;
+        net.minecraft.core.HolderLookup.Provider codecLookup=null;
 //?}
 
         if(sourceRequiresIgnition())tag.putByte(gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT,(byte)sourceIgnitionTicks);
@@ -1284,27 +1276,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         tag.putInt("gt.external_signals",packedExternalSignals());
         tag.putLong("gt.cover_ticks",coverTicks);
         if (inventory != null)
-
-//? if >=1.21.1 {
-/*            tag.put(NBT_INVENTORY, inventory.items().serializeNBT(lookup));
-*///?} else {
-            tag.put(NBT_INVENTORY, inventory.items().serializeNBT());
-//?}
+            tag.put(NBT_INVENTORY, gregtech.engine.stack.HandlerNbt.save(inventory.items(), codecLookup));
 
         if (inventory.potionInput() != null)
-//? if >=1.21.1 {
-/*            tag.put("gt.potion_input", inventory.potionInput().serializeNBT(lookup));
-*///?} else {
-            tag.put("gt.potion_input", inventory.potionInput().serializeNBT());
-//?}
+            tag.put("gt.potion_input", gregtech.engine.stack.HandlerNbt.save(inventory.potionInput(), codecLookup));
 
         if (recipeMap == MachineRecipeMaps.Autocrafter || !autocraftingProgram.getStackInSlot(0).isEmpty())
-
-//? if >=1.21.1 {
-/*            tag.put("gt.autocrafting.program", autocraftingProgram.serializeNBT(lookup));
-*///?} else {
-            tag.put("gt.autocrafting.program", autocraftingProgram.serializeNBT());
-//?}
+            tag.put("gt.autocrafting.program", gregtech.engine.stack.HandlerNbt.save(autocraftingProgram, codecLookup));
 
         tag.putLong(NBT_ENERGY, energyPort.stored());
         processor.save(tag, codecLookup);
@@ -1414,22 +1392,18 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //? if >=1.21.1 {
 /*    public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
-        Object codecLookup=lookup;
+        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
-        Object codecLookup=null;
+        net.minecraft.core.HolderLookup.Provider codecLookup=null;
 //?}
 
         if (tag.contains("gt.autocrafting.program", 10)) {
             CompoundTag savedProgram = tag.getCompound("gt.autocrafting.program").copy();
             savedProgram.putInt("Size", 1);
 
-//? if >=1.21.1 {
-/*            autocraftingProgram.deserializeNBT(lookup, savedProgram);
-*///?} else {
-            autocraftingProgram.deserializeNBT(savedProgram);
-//?}
+            gregtech.engine.stack.HandlerNbt.load(autocraftingProgram, savedProgram, codecLookup);
 
         }
         sourceIgnitionTicks=Math.max(0,tag.getByte(gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT));
@@ -1447,20 +1421,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (inventory == null) {
             // Called before setSpec — defer
         } else if (tag.contains(NBT_INVENTORY)) {
-
-//? if >=1.21.1 {
-/*            inventory.items().deserializeNBT(lookup,tag.getCompound(NBT_INVENTORY));
-*///?} else {
-            inventory.items().deserializeNBT(tag.getCompound(NBT_INVENTORY));
-//?}
-
+            gregtech.engine.stack.HandlerNbt.load(inventory.items(), tag.getCompound(NBT_INVENTORY), codecLookup);
         }
         if (inventory != null && inventory.potionInput() != null && tag.contains("gt.potion_input")) {
-//? if >=1.21.1 {
-/*            inventory.potionInput().deserializeNBT(lookup, tag.getCompound("gt.potion_input"));
-*///?} else {
-            inventory.potionInput().deserializeNBT(tag.getCompound("gt.potion_input"));
-//?}
+            gregtech.engine.stack.HandlerNbt.load(inventory.potionInput(), tag.getCompound("gt.potion_input"), codecLookup);
         }
         if (inventory != null) {
             for (int i = 0; i < inventory.tanksInput().length; i++)

@@ -108,24 +108,12 @@ public final class CoinMoldBlockEntity extends BlockEntity {
                 MaterialEquivalence.form(plate).material(), 1);
         if (coin.isEmpty()) return false;
 
-//? if >=1.21.1 {
-//?} else {
-        if (pattern.unique()) coin.getOrCreateTag().putBoolean(gregtech.content.tool.CoinStampPattern.UNIQUE, true);
-//?}
+        if (pattern.unique()) gregtech.engine.stack.StackData.putBoolean(coin, gregtech.content.tool.CoinStampPattern.UNIQUE, true);
         // GT6 writes every row, including zero rows. Otherwise a blank custom die is
         // indistinguishable from an untagged registered coin using the default relief.
-//? if >=1.21.1 {
-        /*CompoundTag coinTag = coin.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
-                net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
-        if (pattern.unique()) coinTag.putBoolean(gregtech.content.tool.CoinStampPattern.UNIQUE, true);
-*///?} else {
-        CompoundTag coinTag = coin.getOrCreateTag();
-//?}
+        CompoundTag coinTag = gregtech.engine.stack.StackData.readOrEmpty(coin);
         pattern.write(coinTag::putShort);
-//? if >=1.21.1 {
-        /*coin.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(coinTag));
-*///?} else {
-//?}
+        gregtech.engine.stack.StackData.write(coin, coinTag);
         inventory.setStackInSlot(0, coin);
         return true;
     }
@@ -164,32 +152,34 @@ public final class CoinMoldBlockEntity extends BlockEntity {
 //? if >=1.21.1 {
     /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
+        saveData(tag, lookup);
+    }
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
+        saveData(tag, null);
+    }
 //?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         tag.put("Pattern", saveItemConfig());
-//? if >=1.21.1 {
-        /*tag.put("Inventory", inventory.serializeNBT(lookup));
-*///?} else {
-        tag.put("Inventory", inventory.serializeNBT());
-//?}
+        tag.put("Inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
     }
 
     @Override
 //? if >=1.21.1 {
     /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
+        loadData(tag, lookup);
+    }
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
+        loadData(tag, null);
+    }
 //?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         if (tag.contains("Pattern")) loadItemConfig(tag.getCompound("Pattern"));
-//? if >=1.21.1 {
-        /*if (tag.contains("Inventory")) inventory.deserializeNBT(lookup, tag.getCompound("Inventory"));
-*///?} else {
-        if (tag.contains("Inventory")) inventory.deserializeNBT(tag.getCompound("Inventory"));
-//?}
+        if (tag.contains("Inventory")) gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound("Inventory"), lookup);
     }
 
 //? if >=1.21.1 {

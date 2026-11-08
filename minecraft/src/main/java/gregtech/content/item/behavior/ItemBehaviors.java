@@ -1,4 +1,5 @@
 package gregtech.content.item.behavior;
+import gregtech.engine.stack.StackData;
 import gregtech.platform.Mc;
 
 import net.minecraft.core.BlockPos;
@@ -428,11 +429,7 @@ public final class ItemBehaviors {
          */
         public long remaining(ItemStack stack) {
             if (isFull(stack)) return uses;
-//? if >=1.21.1 {
-            /*CompoundTag tag = gregtech.content.cover.CoverStackData.read(stack);
-*///?} else {
-            CompoundTag tag = stack.getTag();
-//?}
+            CompoundTag tag = StackData.read(stack);
             return tag == null ? 0L : tag.getLong(key);
         }
 
@@ -445,17 +442,12 @@ public final class ItemBehaviors {
             if (!isFull(stack)) return stack;
 //? if >=1.21.1 {
             /*ItemStack next = stack.transmuteCopy(used.getItem());
-            CompoundTag tag = gregtech.content.cover.CoverStackData.readOrEmpty(stack);
 *///?} else {
             ItemStack next = new ItemStack(used.getItem(), stack.getCount());
-            CompoundTag tag = stack.hasTag() ? stack.getTag().copy() : new CompoundTag();
 //?}
+            CompoundTag tag = StackData.readOrEmpty(stack);
             tag.putLong(key, uses);
-//? if >=1.21.1 {
-            /*gregtech.content.cover.CoverStackData.write(next,tag);
-*///?} else {
-            next.setTag(tag);
-//?}
+            StackData.write(next,tag);
             return next;
         }
 
@@ -471,18 +463,10 @@ public final class ItemBehaviors {
         public ItemStack spent(ItemStack stack, long amount) {
             long left = gregtech.content.tool.ConsumableRules.remainingAfter(remaining(stack),amount);
             if (left <= 0) return usedUp(stack);
-//? if >=1.21.1 {
-            /*CompoundTag tag = gregtech.content.cover.CoverStackData.readOrEmpty(stack);
-*///?} else {
-            CompoundTag tag = stack.hasTag() ? stack.getTag().copy() : new CompoundTag();
-//?}
+            CompoundTag tag = StackData.readOrEmpty(stack);
             tag.putLong(key, left);
             ItemStack next = stack.copy();
-//? if >=1.21.1 {
-            /*gregtech.content.cover.CoverStackData.write(next,tag);
-*///?} else {
-            next.setTag(tag);
-//?}
+            StackData.write(next,tag);
             return next;
         }
 
@@ -492,11 +476,7 @@ public final class ItemBehaviors {
          * {@code tNBT.removeTag}/{@code func_150996_a} pair — or one of it is consumed.
          */
         public ItemStack usedUp(ItemStack stack) {
-//? if >=1.21.1 {
-            /*CompoundTag tag = gregtech.content.cover.CoverStackData.readOrEmpty(stack);
-*///?} else {
-            CompoundTag tag = stack.hasTag() ? stack.getTag().copy() : new CompoundTag();
-//?}
+            CompoundTag tag = StackData.readOrEmpty(stack);
             tag.remove(key);
             if (empty.isEmpty()) {
                 ItemStack next = stack.copy();
@@ -505,11 +485,10 @@ public final class ItemBehaviors {
             }
 //? if >=1.21.1 {
             /*ItemStack next = stack.transmuteCopy(empty.getItem());
-            gregtech.content.cover.CoverStackData.write(next,tag);
 *///?} else {
             ItemStack next = new ItemStack(empty.getItem(), stack.getCount());
-            if (!tag.isEmpty()) next.setTag(tag);
 //?}
+            StackData.write(next,tag);
             return next;
         }
     }

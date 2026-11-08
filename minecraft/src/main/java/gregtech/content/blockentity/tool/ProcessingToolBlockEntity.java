@@ -442,27 +442,24 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
     /*@Override
     protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
-        tag.put("gt.items", items.serializeNBT(lookup));
-        var list = new ListTag();
-        for (var tank : allTanks()) {
-            var data = new CompoundTag();
-            tank.writeToNBT(data, lookup);
-            list.add(data);
-        }
-        tag.put("gt.tanks", list);
+        saveData(tag, lookup);
+    }
 *///?} else {
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.put("gt.items", items.serializeNBT());
+        saveData(tag, null);
+    }
+//?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        tag.put("gt.items", gregtech.engine.stack.HandlerNbt.save(items, lookup));
         var list = new ListTag();
         for (var tank : allTanks()) {
             var data = new CompoundTag();
-            tank.writeToNBT(data);
+            gregtech.engine.stack.NbtCompat.writeTank(tank, data, lookup);
             list.add(data);
         }
         tag.put("gt.tanks", list);
-//?}
     }
     /** Preserve legacy overflow for draining, but never restore the obsolete million-litre capacity. */
     private CompoundTag restoredTank(CompoundTag saved, int index) {
@@ -475,19 +472,21 @@ public final class ProcessingToolBlockEntity extends BlockEntity implements Bloc
     /*@Override
     protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
-        if (tag.contains("gt.items")) items.deserializeNBT(lookup, tag.getCompound("gt.items"));
-        var list = tag.getList("gt.tanks", 10);
-        var tanks = allTanks();
-        for (int i = 0; i < tanks.size() && i < list.size(); i++) tanks.get(i).readFromNBT(restoredTank(list.getCompound(i), i), lookup);
+        loadData(tag, lookup);
+    }
 *///?} else {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        if (tag.contains("gt.items")) items.deserializeNBT(tag.getCompound("gt.items"));
+        loadData(tag, null);
+    }
+//?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (tag.contains("gt.items")) gregtech.engine.stack.HandlerNbt.load(items, tag.getCompound("gt.items"), lookup);
         var list = tag.getList("gt.tanks", 10);
         var tanks = allTanks();
-        for (int i = 0; i < tanks.size() && i < list.size(); i++) tanks.get(i).readFromNBT(restoredTank(list.getCompound(i), i));
-//?}
+        for (int i = 0; i < tanks.size() && i < list.size(); i++)
+            gregtech.engine.stack.NbtCompat.readTank(tanks.get(i), restoredTank(list.getCompound(i), i), lookup);
     }
 //? if >=1.21.1 {
     /*@Override
