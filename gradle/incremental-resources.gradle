@@ -13,9 +13,20 @@ import java.nio.file.Files
 @CacheableTask
 abstract class IncrementalProcessResources extends ProcessResources {
     private FileTree trackedSource
+    private FileTree fingerprintSource
+
+    /** Fingerprint these directories instead of the copy spec's filtered source tree. */
+    void fingerprintFrom(FileTree tree) {
+        fingerprintSource = tree
+    }
+
     @Override @InputFiles @SkipWhenEmpty @IgnoreEmptyDirectories @PathSensitive(PathSensitivity.RELATIVE)
     FileTree getSource() {
-        if (trackedSource == null) trackedSource = super.getSource()
+        // SourceSet.resources carries an exclude spec that asks javaSource.contains(file)
+        // for every resource file, which stats the Java roots once per file. The copy spec
+        // keeps that filter; fingerprint the plain directories instead. A file the filter
+        // would drop only causes a spurious run, never a missing output.
+        if (trackedSource == null) trackedSource = fingerprintSource ?: super.getSource()
         trackedSource
     }
 
@@ -52,7 +63,7 @@ abstract class IncrementalProcessResources extends ProcessResources {
 }
 
 tasks.replace('processResources', IncrementalProcessResources).configure {
-    from sourceSets.main.resources
+    fingerprintFrom(project.files(sourceSets.main.resources.srcDirs).asFileTree)
     into layout.buildDirectory.dir('resources/main')
 }
 
