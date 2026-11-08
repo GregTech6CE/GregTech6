@@ -190,6 +190,8 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
                         "wet"));
             case "processUnknownMaterialFailure" ->
                 List.of(new MaterialProcessDeclaration<>("MissingMaterial", key, java.util.Set.of(), "wet"));
+            case "processGroupMaterialFailure" ->
+                List.of(new MaterialProcessDeclaration<>("AnyIron", key, java.util.Set.of(), "wet"));
             default -> List.of();
         };
     }

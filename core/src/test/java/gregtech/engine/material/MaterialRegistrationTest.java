@@ -1,7 +1,5 @@
 package gregtech.engine.material;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import gregtech.api.addon.material.DataKey;
 import gregtech.api.addon.material.MaterialProcessCardinality;
 import gregtech.api.addon.material.MaterialProcessKey;
@@ -10,6 +8,8 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.content.material.MaterialDefinitions;
+import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class MaterialRegistrationTest {
     @Test
@@ -214,6 +215,9 @@ class MaterialRegistrationTest {
     @Test
     void fluidPhaseCorrectionsArePartOfCanonicalDefinitions() {
         assertTrue(MaterialDefinitions.find("Mercury").properties().contains(MaterialProperty.LIQUID));
+        assertTrue(MaterialDefinitions.find("Carbon").properties().contains(MaterialProperty.MOLTEN));
+        assertTrue(MaterialDefinitions.find("NitricAcid").properties().contains(MaterialProperty.LIQUID));
+        assertTrue(MaterialDefinitions.find("Alumina").properties().contains(MaterialProperty.MOLTEN));
         assertTrue(MaterialDefinitions.find("Sulfur").properties().contains(MaterialProperty.MOLTEN));
         assertTrue(MaterialDefinitions.find("HydrochloricAcid").properties().contains(MaterialProperty.GAS));
     }
@@ -305,7 +309,8 @@ class MaterialRegistrationTest {
                 "processMultiple",
                 "processUnknownFormFailure",
                 "processNamespaceFailure",
-                "processUnknownMaterialFailure")) {
+                "processUnknownMaterialFailure",
+                "processGroupMaterialFailure")) {
             var root = Path.of("").toAbsolutePath();
             if (!Files.isDirectory(root.resolve("core"))) root = root.getParent();
             var output = root.resolve("work/material-system-refactor/02/lifecycle-" + scenario + ".log");

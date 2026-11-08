@@ -2,13 +2,13 @@
 
 package gregtech.api.material;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import gregtech.api.addon.material.FuelRule;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialTarget;
 import gregtech.api.addon.material.OreProcessingRule;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 @SuppressWarnings("deprecation")
 class MaterialProcessHelperTest {
@@ -52,5 +52,16 @@ class MaterialProcessHelperTest {
         assertEquals(8F, iron.getToolSpeed());
         assertEquals(128, iron.getToolDurability());
         assertEquals(2, iron.getToolQuality());
+    }
+
+    @Test
+    void clearedSmeltingTargetDoesNotRestoreTheDefaultUnit() {
+        var iron = new GTMaterial(1, "Iron", "Fe", 0xFFFFFF);
+        MaterialInfoTestHost.reset(iron);
+
+        iron.setSmelting(iron, GTValues.U).clearSmeltingTarget();
+
+        assertTrue(SmeltingMaterialHelper.target(iron).isEmpty());
+        assertEquals(0L, iron.getTargetSmeltingAmount());
     }
 }

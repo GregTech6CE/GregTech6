@@ -46,6 +46,7 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("NaturalAluminum")
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .composition(
@@ -517,6 +518,7 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Calcium Chloride")
                 .composition(
                         3L,
@@ -875,6 +877,7 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Cryolite")
                 .composition(
                         10L,
@@ -1368,6 +1371,7 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("BandedIron")
                 .tools(0, 1.0F, 1L, 0)
                 .composition(
@@ -1573,6 +1577,7 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Lithium Chloride")
                 .composition(
                         2L,
@@ -1601,6 +1606,7 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Magnesite")
                 .composition(
                         5L,
@@ -1629,6 +1635,7 @@ public final class OreMaterials {
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Magnesium Chloride")
                 .composition(
                         3L,
@@ -3232,6 +3239,7 @@ public final class OreMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.ORE,
                         MaterialProperty.UNIT)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Ferrovanadium")
                 .composition(
                         2L,

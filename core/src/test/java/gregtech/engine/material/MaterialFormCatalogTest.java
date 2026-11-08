@@ -1,19 +1,16 @@
 package gregtech.engine.material;
 
-import gregtech.api.addon.material.FormKey;
-import gregtech.api.addon.material.MaterialFormKind;
-import gregtech.api.addon.material.MaterialFormRule;
-import gregtech.api.addon.material.MaterialKey;
+import gregtech.api.addon.material.*;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.MaterialTestFixture;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MaterialFormCatalogTest {
     @BeforeAll
@@ -41,8 +38,8 @@ class MaterialFormCatalogTest {
     @Test
     void quartzFamilyKeepsGemPlateAndStickRules() {
         var rules = rules("NetherQuartz");
-        for (var prefix : Set.of(
-                MaterialPrefix.gem, MaterialPrefix.plateGem, MaterialPrefix.stick, MaterialPrefix.arrowGtWood)) {
+        for (var prefix :
+                Set.of(MaterialPrefix.gem, MaterialPrefix.plateGem, MaterialPrefix.stick, MaterialPrefix.arrowGtWood)) {
             var rule = rule(rules, prefix.getName());
             assertEquals(MaterialFormKind.ITEM, rule.kind());
             assertEquals(prefix.getMaterialWeight(), rule.materialUnits());
@@ -59,6 +56,13 @@ class MaterialFormCatalogTest {
         var block = rule(rules, BlockMaterialPrefix.blockIngot.getName());
         assertEquals(MaterialFormKind.BLOCK, block.kind());
         assertEquals(BlockMaterialPrefix.blockIngot.getMaterialWeight(), block.materialUnits());
+        assertFalse(MaterialViews.catalog()
+                .forms()
+                .forms(new MaterialKey("Iron"))
+                .contains(new FormKey(BlockMaterialPrefix.blockIngot.getName())));
+        assertFalse(MaterialViews.catalog()
+                .forms()
+                .allows(new MaterialKey("Iron"), new FormKey(BlockMaterialPrefix.blockIngot.getName())));
     }
 
     @Test
@@ -66,6 +70,18 @@ class MaterialFormCatalogTest {
         var gem = rule(rules("Tantalum"), MaterialPrefix.gem.getName());
         assertEquals(MaterialFormKind.ITEM, gem.kind());
         assertEquals(MaterialPrefix.gem.getMaterialWeight(), gem.materialUnits());
+    }
+
+    @Test
+    void bindingKindMustMatchAnExistingDefinitionRule() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> MaterialViews.publishContent(List.of(new MaterialFormBinding(
+                        new MaterialKey("Iron"),
+                        new FormKey(MaterialPrefix.ingot.getName()),
+                        MaterialFormKind.BLOCK,
+                        "gt6ce:invalid_ingot_block",
+                        1))));
     }
 
     private static Set<MaterialFormRule> rules(String material) {

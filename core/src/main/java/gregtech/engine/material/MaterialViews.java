@@ -5,12 +5,8 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.material.MaterialDefinitions;
 import gregtech.engine.addon.AddonMaterials;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+
+import java.util.*;
 
 /** Captures intrinsic definitions after every legal addon callback, independent of later native content. */
 public final class MaterialViews {
@@ -333,8 +329,7 @@ public final class MaterialViews {
             }
 
             public boolean allows(MaterialKey material, FormKey form) {
-                return rules(material).stream()
-                        .anyMatch(rule -> rule.form().equals(java.util.Objects.requireNonNull(form)));
+                return forms(material).contains(java.util.Objects.requireNonNull(form));
             }
 
             public Set<MaterialFormRule> rules() {
@@ -370,10 +365,14 @@ public final class MaterialViews {
                 throw new IllegalArgumentException("Addon '" + submission.addonId()
                         + "' process uses unknown material '" + declaration.materialName() + "'");
             var key = new MaterialKey(material.getName());
+            var targetRules = processRules.get(key);
+            if (targetRules == null)
+                throw new IllegalArgumentException("Addon '" + submission.addonId() + "' process uses non-material '"
+                        + declaration.materialName() + "'");
             String source = "addon '" + submission.addonId() + "'";
             registerProcessType(processTypes, declaration.process(), source);
             addProcessRule(
-                    processRules.get(key),
+                    targetRules,
                     declaration.process(),
                     MaterialInfoRegistry.normalizeProcessRule(
                             source,
@@ -387,14 +386,17 @@ public final class MaterialViews {
                         "Addon '" + submission.addonId() + "' process uses unknown material '"
                                 + submission.material().name() + "'");
             var key = new MaterialKey(material.getName());
+            var targetRules = processRules.get(key);
+            if (targetRules == null)
+                throw new IllegalArgumentException("Addon '" + submission.addonId() + "' process uses non-material '"
+                        + submission.material().name() + "'");
             String source = "addon '" + submission.addonId() + "'";
             registerProcessType(processTypes, submission.process(), source);
             @SuppressWarnings("unchecked")
             var process = (MaterialProcessKey<Object>) submission.process();
             @SuppressWarnings("unchecked")
             var rule = (MaterialProcessRule<Object>) submission.rule();
-            addProcessRule(
-                    processRules.get(key), process, MaterialInfoRegistry.normalizeProcessRule(source, process, rule));
+            addProcessRule(targetRules, process, MaterialInfoRegistry.normalizeProcessRule(source, process, rule));
         }
         validateProcessForms(processRules, immutableTypedForms);
         validateProcessCardinality(processRules);
@@ -618,6 +620,12 @@ public final class MaterialViews {
             if (values == null)
                 throw new IllegalArgumentException("Native form binding uses unknown material "
                         + binding.material().name());
+            var matchingRules = published.forms().rules(binding.material()).stream()
+                    .filter(rule -> rule.form().equals(binding.form()))
+                    .toList();
+            if (!matchingRules.isEmpty() && matchingRules.stream().noneMatch(rule -> rule.kind() == binding.kind()))
+                throw new IllegalArgumentException("Native form binding kind conflicts with definition rule: "
+                        + binding.material().name() + " / " + binding.form().name() + " / " + binding.kind());
             values.add(binding);
         }
         var immutable = new LinkedHashMap<MaterialKey, Set<MaterialFormBinding>>();

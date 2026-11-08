@@ -3,12 +3,8 @@ package gregtech.content.material;
 import gregtech.content.material.catalog.*;
 import gregtech.engine.material.MaterialDefinition;
 import gregtech.engine.material.MaterialInfoDefinition;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 /** Pure, ordered canonical declarations. Loading this directory never installs runtime materials. */
 public final class MaterialDefinitions {
@@ -22,13 +18,13 @@ public final class MaterialDefinitions {
 
     private static List<MaterialDefinition.Declaration> collect() {
         var result = new ArrayList<MaterialDefinition.Declaration>();
-        ElementMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
-        CompoundMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
-        OreMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
-        StoneMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
-        WoodMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
-        SpecialMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
-        GroupMaterials.definitions().stream().map(MaterialPhaseFlags::apply).forEach(result::add);
+        result.addAll(ElementMaterials.definitions());
+        result.addAll(CompoundMaterials.definitions());
+        result.addAll(OreMaterials.definitions());
+        result.addAll(StoneMaterials.definitions());
+        result.addAll(WoodMaterials.definitions());
+        result.addAll(SpecialMaterials.definitions());
+        result.addAll(GroupMaterials.definitions());
         result.sort(Comparator.comparing(MaterialDefinition.Declaration::name));
         return List.copyOf(result);
     }

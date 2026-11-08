@@ -6,7 +6,6 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialToolProfile;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.prefix.PrefixRegistry;
-
 import java.util.*;
 
 /** One mutable auxiliary-info entry per canonical material and one frozen publication snapshot. */

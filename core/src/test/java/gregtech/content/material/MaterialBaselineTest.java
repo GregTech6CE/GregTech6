@@ -1,7 +1,5 @@
 package gregtech.content.material;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
@@ -9,14 +7,17 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.recipe.MaterialRecoveryRules;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class MaterialBaselineTest {
     @BeforeAll
@@ -39,10 +40,10 @@ class MaterialBaselineTest {
         Files.createDirectories(service.getParent());
         Files.writeString(service, MaterialBaselineTestAddon.class.getName() + "\n");
         runSnapshot(output.resolve("addon"), spi);
-        String addon = Files.readString(output.resolve("addon/materials.tsv"));
-        String base = Files.readString(output.resolve("first/materials.tsv"));
-        assertFalse(base.contains("BaselineCompound"));
-        String row = addon.lines()
+        var addon = Files.readAllLines(output.resolve("addon/materials.tsv"));
+        var base = Files.readAllLines(output.resolve("first/materials.tsv"));
+        assertTrue(base.stream().noneMatch(line -> line.contains("BaselineCompound")));
+        String row = addon.stream()
                 .filter(line -> line.startsWith("material_baseline_test:BaselineCompound\t"))
                 .findFirst()
                 .orElseThrow();
@@ -51,9 +52,9 @@ class MaterialBaselineTest {
         assertTrue(row.contains("core:Iron=" + GTValues.U * 2 + ",core:Copper=" + GTValues.U), row);
         assertEquals(
                 base,
-                addon.lines()
+                addon.stream()
                         .filter(line -> !line.startsWith("material_baseline_test:"))
-                        .collect(java.util.stream.Collectors.joining("\n", "", "\n")));
+                        .toList());
     }
 
     private static void runSnapshot(Path output, Path spi) throws Exception {

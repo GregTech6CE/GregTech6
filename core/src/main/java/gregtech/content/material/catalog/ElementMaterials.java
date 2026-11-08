@@ -104,6 +104,7 @@ public final class ElementMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Ad")
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .tools(3, 10.0F, 5120L, 5)
@@ -1232,6 +1233,7 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("C")
                 .fuel(800L, "", 0L)
                 .forms("DUSTS", "MOLTEN", "ORES", "PLANTS", "STICKS")
@@ -1252,6 +1254,7 @@ public final class ElementMaterials {
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.MELTING)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("C-13")
                 .fuel(800L, "", 0L)
                 .forms("DUSTS", "MOLTEN", "ORES", "PLANTS")
@@ -3416,6 +3419,7 @@ public final class ElementMaterials {
                         MaterialProperty.SMITHABLE,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Hg")
                 .source("Thaumcraft", "Thaumcraft")
                 .forms(
@@ -5479,6 +5483,7 @@ public final class ElementMaterials {
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("S")
                 .source("Railcraft", "Railcraft")
                 .fuel(1000L, "", 0L)

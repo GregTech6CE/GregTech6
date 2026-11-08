@@ -104,6 +104,10 @@ public final class MaterialBaselineTests {
                                 && GregTechMaterials.formBindings()
                                         .present(iron, rule.form())),
                 "allowed item rules intersect native bindings");
+        helper.assertTrue(
+                "ores".equals(MaterialEquivalence.commonGroup("ore"))
+                        && "raw_ore_chunks".equals(MaterialEquivalence.commonGroup("rawOreChunk")),
+                "external ore tag names remain mapped");
         helper.succeed();
     }
 

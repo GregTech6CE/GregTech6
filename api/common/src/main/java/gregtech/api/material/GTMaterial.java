@@ -2,23 +2,12 @@
 
 package gregtech.api.material;
 
-import gregtech.api.addon.material.FuelRule;
-import gregtech.api.addon.material.MaterialComposition;
-import gregtech.api.addon.material.MaterialInfoTool;
-import gregtech.api.addon.material.MaterialKey;
-import gregtech.api.addon.material.MaterialProcessKeys;
-import gregtech.api.addon.material.MaterialProcessRule;
-import gregtech.api.addon.material.MaterialTarget;
-import gregtech.api.addon.material.OreProcessingRule;
+import gregtech.api.addon.material.*;
 import gregtech.api.mod.ModData;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.Nullable;
+
+import java.util.*;
 
 /**
  * Core material definition, analogous to GregTech {@code OreDictMaterial}.
@@ -667,7 +656,8 @@ public final class GTMaterial {
     }
 
     private long targetAmount(gregtech.api.addon.material.MaterialProcessKey<MaterialTarget> process) {
-        return currentTarget(process).map(MaterialTarget::amount).orElse(GTValues.U);
+        long fallback = process == MaterialProcessKeys.SMELTING ? 0L : GTValues.U;
+        return currentTarget(process).map(MaterialTarget::amount).orElse(fallback);
     }
 
     private GTMaterial updateTarget(

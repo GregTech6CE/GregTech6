@@ -135,6 +135,9 @@ public final class MaterialLifecycleProbe {
                 check(failure.getMessage().contains("tool profile")
                         && failure.getMessage().contains("MetadataMaterial")
                         && failure.getMessage().contains("metadata_test"));
+            if (scenario.equals("processGroupMaterialFailure"))
+                check(failure.getMessage().contains("unknown material")
+                        && failure.getMessage().contains("AnyIron"));
             rejects(GTMaterialRegistry::init);
             rejects(() -> GTMaterialRegistry.get("Iron"));
             rejects(GTMaterialRegistry::allMaterials);

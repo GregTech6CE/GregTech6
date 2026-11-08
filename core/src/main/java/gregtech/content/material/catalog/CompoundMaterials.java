@@ -286,6 +286,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Aluminium Fluoride")
                 .composition(
                         4L,
@@ -656,6 +657,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Aqua Regia")
                 .source("factorization", "Factorization")
                 .composition(
@@ -1801,6 +1803,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("RomanVitriol")
                 .composition(
                         6L,
@@ -2467,6 +2470,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Chloroauric Acid")
                 .composition(
                         6L,
@@ -2492,6 +2496,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Chloroplatinic Acid")
                 .composition(
                         9L,
@@ -3146,6 +3151,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("SolutionNickelSulfate")
                 .composition(
                         6L,
@@ -3350,6 +3356,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Disulfuric Acid")
                 .composition(
                         11L,
@@ -4822,6 +4829,7 @@ public final class CompoundMaterials {
                         MaterialProperty.MELTING,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Fluorite")
                 .source("RotaryCraft", "RotaryCraft")
                 .byproducts("GreenFluorite", "OrangeFluorite")
@@ -4969,6 +4977,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Glowstone")
                 .source("minecraft", "Minecraft")
                 .composition(
@@ -5244,6 +5253,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Gray Vitriol")
                 .composition(
                         6L,
@@ -5428,6 +5438,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Green Vitriol")
                 .composition(
                         6L,
@@ -5664,6 +5675,7 @@ public final class CompoundMaterials {
                         MaterialProperty.MAGICAL,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Hexafluorosilicic Acid")
                 .composition(
                         9L,
@@ -6624,6 +6636,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Lithium Chlorate")
                 .composition(
                         5L,
@@ -6967,6 +6980,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Manganese Chloride")
                 .composition(
                         3L,
@@ -7599,6 +7613,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.TOOL_HEAD,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Electrotine")
                 .source("Redpower", "Redpower")
                 .tools(0, 1.0F, 1L, 0)
@@ -7692,6 +7707,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Nitric Acid")
                 .composition(
                         5L,
@@ -8410,6 +8426,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Pink Vitriol")
                 .composition(
                         6L,
@@ -9359,6 +9376,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Red Vitriol")
                 .composition(
                         6L,
@@ -9857,6 +9875,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Sodium Carbonate")
                 .composition(
                         6L,
@@ -10313,6 +10332,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Stannic Chloride")
                 .composition(
                         5L,
@@ -10667,6 +10687,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("SulphuricAcid")
                 .source("factorization", "Factorization")
                 .composition(
@@ -11180,6 +11201,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Titanium Tetrachloride")
                 .composition(
                         5L,
@@ -11706,6 +11728,7 @@ public final class CompoundMaterials {
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Uranium-235 Tetrafluoride")
                 .composition(
                         5L,
@@ -11748,6 +11771,7 @@ public final class CompoundMaterials {
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Uranium-238 Tetrafluoride")
                 .composition(
                         5L,
@@ -11790,6 +11814,7 @@ public final class CompoundMaterials {
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT)
+                .properties(MaterialProperty.MOLTEN)
                 .localName("Uranium Tetrafluoride")
                 .composition(
                         5L,
@@ -12176,6 +12201,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("Vitriol Of Clay")
                 .composition(
                         17L,
@@ -12407,6 +12433,7 @@ public final class CompoundMaterials {
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
+                .liquid()
                 .localName("White Vitriol")
                 .composition(
                         6L,
