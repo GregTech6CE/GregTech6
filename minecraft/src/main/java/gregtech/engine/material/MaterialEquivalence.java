@@ -20,7 +20,8 @@ public final class MaterialEquivalence {
         Map.entry("dustSmall","small_dusts"),Map.entry("dustTiny","tiny_dusts"),Map.entry("gem","gems"),
         Map.entry("plate","plates"),Map.entry("stick","rods"),Map.entry("stickLong","long_rods"),
         Map.entry("gearGt","gears"),Map.entry("ring","rings"),Map.entry("bolt","bolts"),Map.entry("screw","screws"),
-        Map.entry("foil","foils"),Map.entry("wireGt01","wires"),Map.entry("oreRaw","raw_materials"));
+        Map.entry("foil","foils"),Map.entry("wireGt01","wires"),Map.entry("oreRaw","raw_materials"),
+        Map.entry("ore","ores"),Map.entry("rawOreChunk","raw_ore_chunks"));
     private MaterialEquivalence() {}
     public static Form form(ItemStack stack) {
         if(stack.getItem() instanceof gregtech.engine.material.MaterialFormItem m) return new Form(m.getPrefix(),m.getMaterial().resolve());
@@ -54,6 +55,17 @@ public final class MaterialEquivalence {
 
     public static String tagPath(Form f) {
         return forms(f).path();
+    }
+
+    /** Canonical common tag group for a material prefix, or null when no common group is defined. */
+    public static String commonGroup(String prefix) {
+        return COMMON.get(prefix);
+    }
+
+    /** Reverse lookup used when reading a common tag group back into a prefix identity. */
+    public static String prefixForCommonGroup(String group) {
+        for (var entry : COMMON.entrySet()) if (entry.getValue().equals(group)) return entry.getKey();
+        return null;
     }
     /** Check the canonical Forge form tag and the established alternate material spellings. */
     public static boolean hasForgeTag(ItemStack candidate, String path) {

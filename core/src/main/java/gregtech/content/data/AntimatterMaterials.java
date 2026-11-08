@@ -2,7 +2,6 @@ package gregtech.content.data;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
-import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.GTMaterialRegistry;
 
 /**
@@ -13,30 +12,25 @@ import gregtech.engine.material.GTMaterialRegistry;
 public class AntimatterMaterials {
     protected AntimatterMaterials() {}
 
-    private static boolean initialized = false;
-
     private static GTMaterial create(int id, String name) {
-        return GTMaterialRegistry.createMaterial(id, name, name, 0xFFFFFF).put(MaterialProperty.HIDDEN);
+        return GTMaterialRegistry.requireInstalled(name);
     }
 
     private static GTMaterial element(int id, String name, int color, MaterialProperty... props) {
-        return create(id, name)
-                .put(MaterialProperty.ELEMENT, MaterialProperty.ANTIMATTER)
-                .setTextureSet(MaterialTextureSet.DULL)
-                .setStats(1000, 2000, 1.0F);
+        return create(id, name);
     }
 
     /** Subatomic anti-particles. */
     public static GTMaterial y,
-            Photon = y = create(4001, "Anti-Photon").setTooltipChemical("y").hide(),
+            Photon = y = create(4001, "Anti-Photon"),
             v,
-            Neutrino = v = create(4002, "Anti-Neutrino").setTooltipChemical("v").hide(),
+            Neutrino = v = create(4002, "Anti-Neutrino"),
             n,
-            Neutron = n = create(4003, "Anti-Neutron").setTooltipChemical("n").hide(),
+            Neutron = n = create(4003, "Anti-Neutron"),
             p,
-            Proton = p = create(4004, "Anti-Proton").setTooltipChemical("p").hide(),
+            Proton = p = create(4004, "Anti-Proton"),
             e,
-            Positron = e = create(4005, "Positron").setTooltipChemical("e").hide();
+            Positron = e = create(4005, "Positron");
 
     /** Representative anti-elements (GT6 uses 4010+). */
     public static GTMaterial H,
@@ -47,12 +41,4 @@ public class AntimatterMaterials {
             Iron = Fe = element(4260, "Anti-Iron", 0xC8C8C8),
             Cu,
             Copper = Cu = element(4290, "Anti-Copper", 0xFF6400);
-
-    public static void register() {
-        if (initialized) {
-            return;
-        }
-        initialized = true;
-        GTMaterialRegistry.registerAlias("AntiElectron", "Positron");
-    }
 }

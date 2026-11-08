@@ -219,7 +219,7 @@ public final class FurnaceSmeltingRecipes {
             SKIPPED.add("clay family rows: the port has no Ceramic material");
             return;
         }
-        for (GTMaterial material : MaterialGroups.Clay.getReRegistrations()) {
+        for (GTMaterial material : MaterialGroups.members(MaterialGroups.Clay)) {
             if (material == null || !material.isValid()) continue;
             for (String[] pair : CERAMIC_ROWS) {
                 MaterialPrefix from = PrefixRegistry.byName(pair[0]);

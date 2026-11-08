@@ -2,6 +2,8 @@ package gregtech.content.material;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
+import gregtech.content.block.stone.StoneType;
+import gregtech.content.material.generated.CompoundMaterials;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import java.util.EnumSet;
@@ -224,8 +226,9 @@ public final class SourceLatheMaterialProfiles {
     /** Apply the existing official role and retain provenance only for the three audited granites.
      * No original snapshot is overwritten, and an already-added STONE flag is never adopted.
      */
-    public static void applyOfficialStoneRole(gregtech.content.block.stone.StoneType stone) {
-        if (GTMaterialRegistry.registrationPhase() != GTMaterialRegistry.RegistrationPhase.READY)
+    public static void applyOfficialStoneRole(StoneType stone) {
+        if (GTMaterialRegistry.registrationPhase() != GTMaterialRegistry.RegistrationPhase.READY
+                && GTMaterialRegistry.registrationPhase() != GTMaterialRegistry.RegistrationPhase.FINALIZING)
             throw new IllegalStateException("Official stone roles require a linked catalog");
         GTMaterial material = stone.material();
         boolean granite = material == generatedGranite(stone);
@@ -242,11 +245,11 @@ public final class SourceLatheMaterialProfiles {
             OFFICIAL_STONE_TRANSITIONS.put(material, new StoneTransition(Set.copyOf(expected)));
     }
 
-    private static GTMaterial generatedGranite(gregtech.content.block.stone.StoneType stone) {
+    private static GTMaterial generatedGranite(StoneType stone) {
         return switch (stone) {
-            case GRANITE_RED -> gregtech.content.material.generated.CompoundMaterials.GraniteRed;
-            case GRANITE_BLACK -> gregtech.content.material.generated.CompoundMaterials.GraniteBlack;
-            case GRANITE -> gregtech.content.material.generated.CompoundMaterials.Granite;
+            case GRANITE_RED -> CompoundMaterials.GraniteRed;
+            case GRANITE_BLACK -> CompoundMaterials.GraniteBlack;
+            case GRANITE -> CompoundMaterials.Granite;
             default -> null;
         };
     }

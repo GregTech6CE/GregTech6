@@ -11,8 +11,7 @@ public final class TechnologyIngredients {
 
     public record Family(String tag, MaterialPrefix prefix, GTMaterial group) {
         public boolean accepts(MaterialPrefix form, GTMaterial material) {
-            return form == prefix
-                    && group.getReRegistrations().stream().anyMatch(m -> m.resolve() == material.resolve());
+            return form == prefix && MaterialGroups.contains(group, material);
         }
     }
 
@@ -65,7 +64,7 @@ public final class TechnologyIngredients {
     public static boolean pistonIngot(MaterialPrefix prefix, GTMaterial material) {
         if (prefix != MaterialPrefix.ingot) return false;
         for (var group : List.of(MaterialGroups.Fe, MaterialGroups._Steel, MaterialGroups._Bronze))
-            if (group.getReRegistrations().stream().anyMatch(m -> m.resolve() == material.resolve())) return true;
+            if (MaterialGroups.contains(group, material)) return true;
         return PISTON_METALS.stream()
                 .map(gregtech.content.recipe.generated.GTMaterialFields::materialOf)
                 .filter(java.util.Objects::nonNull)

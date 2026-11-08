@@ -1,39 +1,77 @@
 package gregtech.content.material;
 
-import gregtech.content.data.AntimatterMaterials;
-import gregtech.content.data.ImportedMaterialData;
-import gregtech.content.data.MaterialGroups;
-import gregtech.content.data.generated.GT6Materials;
-import gregtech.content.data.generated.MaterialCompositionData;
-import gregtech.content.data.generated.MaterialModTags;
-import gregtech.content.data.generated.MaterialRegistryExtras;
+import gregtech.content.material.catalog.*;
+import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialInfoDefinition;
 
-/** Ordered built-in material definitions and linking passes. Called once by GTMaterialRegistry.init(). */
+import java.util.*;
+
+/** Pure, ordered canonical declarations. Loading this directory never installs runtime materials. */
 public final class MaterialDefinitions {
     private MaterialDefinitions() {}
 
-    public static void declare() {
-        // Force nested holders to load, mirroring MT.init() in GT6.
-        ImportedMaterialData.NULL.getClass();
-        ImportedMaterialData.DATA.DYE_MATERIALS[0].getClass();
-        ImportedMaterialData.Ma.getClass();
-        ParticleMaterials.declare();
-        AntimatterMaterials.register();
-        GT6Materials.touchAll();
-        SupplementalMaterials.declare();
+    private static final List<MaterialDefinition.Declaration> DECLARATIONS = collect();
+    private static final List<MaterialDefinition> ALL =
+            DECLARATIONS.stream().map(MaterialDefinition.Declaration::material).toList();
+    private static final Map<String, MaterialDefinition> BY_NAME = index();
+    private static final Map<String, MaterialInfoDefinition> INFO = indexInfo();
+
+    private static List<MaterialDefinition.Declaration> collect() {
+        var result = new ArrayList<MaterialDefinition.Declaration>();
+        result.addAll(ElementMaterials.definitions());
+        result.addAll(CompoundMaterials.definitions());
+        result.addAll(OreMaterials.definitions());
+        result.addAll(StoneMaterials.definitions());
+        result.addAll(WoodMaterials.definitions());
+        result.addAll(SpecialMaterials.definitions());
+        result.addAll(GroupMaterials.definitions());
+        result.sort(Comparator.comparing(MaterialDefinition.Declaration::name));
+        return List.copyOf(result);
     }
 
-    public static void link() {
-        GT6Materials.applyOreProcessing();
-        MaterialModTags.apply();
-        MaterialRegistryExtras.apply();
-        MaterialCompositionData.apply();
-        gregtech.content.data.generated.MaterialDecompositionData.apply();
-        gregtech.content.data.generated.MaterialDataFacts.apply();
-        MaterialFormCorrections.apply();
-        SourceMaterialToolStats.apply();
-        SupplementalMaterials.link();
-        MaterialGroups.init();
+    private static Map<String, MaterialDefinition> index() {
+        var result = new LinkedHashMap<String, MaterialDefinition>();
+        var ids = new HashSet<Integer>();
+        for (var definition : ALL) {
+            if (result.putIfAbsent(definition.name(), definition) != null)
+                throw new IllegalArgumentException("Duplicate canonical declaration: " + definition.name());
+            if (definition.id() > 0 && !ids.add(definition.id()))
+                throw new IllegalArgumentException("Duplicate canonical ID: " + definition.id());
+        }
+        for (var definition : ALL) {
+            for (var alias : definition.aliases()) {
+                if (result.putIfAbsent(alias, definition) != null)
+                    throw new IllegalArgumentException(
+                            "Conflicting catalog alias: " + alias + " -> " + definition.name());
+            }
+        }
+        return Map.copyOf(result);
+    }
+
+    private static Map<String, MaterialInfoDefinition> indexInfo() {
+        var result = new LinkedHashMap<String, MaterialInfoDefinition>();
+        for (var declaration : DECLARATIONS) result.put(declaration.name(), declaration.info());
+        return Map.copyOf(result);
+    }
+
+    public static List<MaterialDefinition> all() {
+        return ALL;
+    }
+
+    public static List<MaterialDefinition.Declaration> declarations() {
+        return DECLARATIONS;
+    }
+
+    public static MaterialDefinition find(String name) {
+        return BY_NAME.get(name);
+    }
+
+    public static MaterialInfoDefinition info(String name) {
+        return INFO.getOrDefault(name, MaterialInfoDefinition.empty());
+    }
+
+    /** Recipe-family snapshots remain explicit, after all built-in facts and before addon callbacks. */
+    public static void captureDefaults() {
         SourceLatheMaterialProfiles.captureDefaults();
     }
 }

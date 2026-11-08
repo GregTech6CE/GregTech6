@@ -199,7 +199,7 @@ public final class PolarizerMaterialRecipes {
 
     private static void addGroup(GTMaterial group, String outputName, String... sourceMembers) {
         Set<GTMaterial> materials = new LinkedHashSet<>();
-        for (GTMaterial material : group.getReRegistrations())
+        for (GTMaterial material : MaterialGroups.members(group))
             if (material != null && material.isValid()) materials.add(material.resolve());
         // ANY includes Enori; use its registered form if available, never invent an item.
         for (String name : sourceMembers) {

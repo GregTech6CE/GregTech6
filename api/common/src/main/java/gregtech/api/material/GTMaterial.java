@@ -2,16 +2,12 @@
 
 package gregtech.api.material;
 
+import gregtech.api.addon.material.*;
 import gregtech.api.mod.ModData;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.Nullable;
+
+import java.util.*;
 
 /**
  * Core material definition, analogous to GregTech {@code OreDictMaterial}.
@@ -20,15 +16,17 @@ import org.jspecify.annotations.Nullable;
  * {@link gregtech.api.addon.material.MaterialDeclaration} and read them through
  * {@link gregtech.api.addon.material.GregTechMaterials.Material}.
  * <p>
- * Internal: not part of the addon contract. The setters are for host initialization and are not
- * thread-safe; addons must not configure shared materials. A frozen instance (the sentinels in
- * {@link MaterialSentinels}) rejects every mutator with {@link IllegalStateException}.
+ * Internal compatibility model. The canonical authoring model is
+ * {@code MaterialDefinition}; new addon reads use immutable catalog views. The setters are for host
+ * initialization and are not thread-safe. Every material is frozen before the registry becomes
+ * READY, and a frozen instance rejects every mutator with {@link IllegalStateException}.
  * <p>
  * Material-to-material links are stored as declared and resolved by the getters, so a
  * {@link #setRegistration(GTMaterial)} applied after the link is still visible. Registration
  * cycles are rejected when they are created.
  */
 @ApiStatus.Internal
+@Deprecated(since = "1.7.0", forRemoval = false)
 public final class GTMaterial {
     public static final int INVALID_ID = -1;
     public static final int NULL_ID = 0;
@@ -48,30 +46,7 @@ public final class GTMaterial {
     private int boilingPoint = 1000;
     private float density = 1.0F;
     private String tooltipChemical = "";
-    private long compositionDivider;
-    private final List<MaterialComponent> compositionComponents = new ArrayList<>();
-    private int toolTypes = 0;
-    private int toolQuality = 0;
-    private float toolSpeed = 1.0F;
-    private long toolDurability = 0;
-    /** GT6 {@code mFurnaceBurnTime}; HU = value * CS.EU_PER_FURNACE_TICK. */
-    private long furnaceBurnTime = 0;
-    private GTMaterial targetBurningMaterial;
-    private long targetBurningAmount = 0;
-    /** GT6 {@code mByProducts}; ordered list of ore-processing byproduct materials. */
-    private final List<GTMaterial> byProducts = new ArrayList<>();
-    /** GT6 {@code mTargetCrushing}; default is (this, U). */
-    private GTMaterial targetPulverMaterial;
-    private long targetPulverAmount = GTValues.U;
-    private GTMaterial targetCrushingMaterial;
-    private long targetCrushingAmount;
-    /** GT6 {@code mTargetSmelting}; default is (this, U). */
-    private GTMaterial targetSmeltingMaterial;
-    private long targetSmeltingAmount;
-    /** GT6 {@code mOreMultiplier}; crushed-ore output multiplier. */
-    private byte oreMultiplier = 1;
-    /** GT6 {@code mOreProcessingMultiplier}. */
-    private byte oreProcessingMultiplier = 1;
+
     private final Set<MaterialProperty> properties = EnumSet.noneOf(MaterialProperty.class);
     private final Set<GTMaterial> reRegistrations = new HashSet<>();
     private final Set<GTMaterial> aliasesToThis = new HashSet<>();
@@ -85,11 +60,6 @@ public final class GTMaterial {
         this.displayName = this.localName;
         this.color = color;
         this.targetRegistration = this;
-        this.targetPulverMaterial = this;
-        this.targetCrushingMaterial = this;
-        this.targetCrushingAmount = GTValues.U;
-        this.targetSmeltingMaterial = this;
-        this.targetSmeltingAmount = GTValues.U;
     }
 
     public static String sanitize(String name) {
@@ -102,12 +72,29 @@ public final class GTMaterial {
         return id;
     }
 
-    public AtomicProperties getAtomicProperties() { return atomicProperties; }
-    public long getProtons() { return atomicProperties.protons(); }
-    public long getElectrons() { return atomicProperties.electrons(); }
-    public long getNeutrons() { return atomicProperties.neutrons(); }
-    public long getMass() { return atomicProperties.mass(); }
-    public int getAlpha() { return alpha; }
+    public AtomicProperties getAtomicProperties() {
+        return atomicProperties;
+    }
+
+    public long getProtons() {
+        return atomicProperties.protons();
+    }
+
+    public long getElectrons() {
+        return atomicProperties.electrons();
+    }
+
+    public long getNeutrons() {
+        return atomicProperties.neutrons();
+    }
+
+    public long getMass() {
+        return atomicProperties.mass();
+    }
+
+    public int getAlpha() {
+        return alpha;
+    }
 
     public GTMaterial setAtomicProperties(AtomicProperties value) {
         checkMutable();
@@ -159,90 +146,128 @@ public final class GTMaterial {
         return tooltipChemical;
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public int getToolTypes() {
-        return toolTypes;
+        return MaterialToolHelper.legacyTypes(this);
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public int getToolQuality() {
-        return toolQuality;
+        return MaterialToolHelper.legacyQuality(this);
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public float getToolSpeed() {
-        return toolSpeed;
+        return MaterialToolHelper.legacySpeed(this);
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public long getToolDurability() {
-        return toolDurability;
+        return MaterialToolHelper.legacyDurability(this);
     }
 
     /** GT6 {@code mFurnaceBurnTime}. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public long getFurnaceBurnTime() {
-        return furnaceBurnTime;
+        return currentTarget(MaterialProcessKeys.FUEL).map(FuelRule::burnTime).orElse(0L);
     }
 
     /** Resolved on read; null when no burning target was set. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public @Nullable GTMaterial getTargetBurningMaterial() {
-        return targetBurningMaterial == null ? null : targetBurningMaterial.resolve();
+        return currentTarget(MaterialProcessKeys.FUEL)
+                .flatMap(FuelRule::residue)
+                .flatMap(target -> MaterialInfoTool.findMaterial(target.material()))
+                .map(GTMaterial::resolve)
+                .orElse(null);
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public long getTargetBurningAmount() {
-        return targetBurningAmount;
+        return currentTarget(MaterialProcessKeys.FUEL)
+                .flatMap(FuelRule::residue)
+                .map(MaterialTarget::amount)
+                .orElse(0L);
     }
 
     /** GT6 {@code mByProducts}; ordered ore-processing byproducts, resolved on read. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public List<GTMaterial> getByProducts() {
-        if (byProducts.isEmpty()) return List.of();
-        List<GTMaterial> resolved = new ArrayList<>(byProducts.size());
-        for (GTMaterial material : byProducts) {
-            resolved.add(material.resolve());
-        }
-        return List.copyOf(resolved);
+        return currentTarget(MaterialProcessKeys.ORE_PROCESSING)
+                .map(OreProcessingRule::byproducts)
+                .orElse(List.of())
+                .stream()
+                .flatMap(key -> MaterialInfoTool.findMaterial(key).stream())
+                .map(GTMaterial::resolve)
+                .toList();
     }
 
     /** Ordinary material recycling, distinct from ore crushing (GT6 mTargetPulver); resolved on read. */
-    public GTMaterial getTargetPulverMaterial() { return targetPulverMaterial.resolve(); }
-    public long getTargetPulverAmount() { return targetPulverAmount; }
+    @Deprecated(since = "1.5.0", forRemoval = false)
+    public GTMaterial getTargetPulverMaterial() {
+        return targetOrSelf(MaterialProcessKeys.PULVERIZING);
+    }
+
+    @Deprecated(since = "1.5.0", forRemoval = false)
+    public long getTargetPulverAmount() {
+        return targetAmount(MaterialProcessKeys.PULVERIZING);
+    }
     /**
      * Null material means this; a negative amount is stored as zero. The material is stored as
      * declared and resolved by the getter, so a later registration of it stays visible.
      */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setPulver(@Nullable GTMaterial material, long amount) {
         checkMutable();
-        targetPulverMaterial = material == null ? this : material;
-        targetPulverAmount = Math.max(0, amount);
-        return this;
+        return updateTarget(MaterialProcessKeys.PULVERIZING, material, amount);
     }
 
     /** Resolved on read; a registration applied after {@link #setCrushing} is still visible. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial getTargetCrushingMaterial() {
-        return targetCrushingMaterial.resolve();
+        return targetOrSelf(MaterialProcessKeys.CRUSHING);
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public long getTargetCrushingAmount() {
-        return targetCrushingAmount;
+        return targetAmount(MaterialProcessKeys.CRUSHING);
     }
 
     /** Resolved on read; a registration applied after {@link #setSmelting} is still visible. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial getTargetSmeltingMaterial() {
-        return targetSmeltingMaterial.resolve();
+        return targetOrSelf(MaterialProcessKeys.SMELTING);
     }
 
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public long getTargetSmeltingAmount() {
-        return targetSmeltingAmount;
+        return targetAmount(MaterialProcessKeys.SMELTING);
     }
 
     /** GT6 {@code mOreMultiplier}. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public byte getOreMultiplier() {
-        return oreMultiplier;
+        return (byte) (int) currentTarget(MaterialProcessKeys.ORE_PROCESSING)
+                .map(OreProcessingRule::oreMultiplier)
+                .orElse(1);
     }
 
     /** GT6 {@code mOreProcessingMultiplier}. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public byte getOreProcessingMultiplier() {
-        return oreProcessingMultiplier;
+        return (byte) (int) currentTarget(MaterialProcessKeys.ORE_PROCESSING)
+                .map(OreProcessingRule::processingMultiplier)
+                .orElse(1);
     }
 
     public boolean hasToolStats() {
-        return toolTypes > 0;
+        return tool().types() > 0;
+    }
+
+    /** @deprecated Read tool data through {@link MaterialToolHelper#profile(MaterialKey)}. */
+    @Deprecated(since = "1.7.0", forRemoval = false)
+    public MaterialToolProfile tool() {
+        return MaterialToolHelper.profile(this);
     }
 
     public Set<MaterialProperty> getProperties() {
@@ -354,24 +379,27 @@ public final class GTMaterial {
     }
 
     public boolean hasComposition() {
-        return !compositionComponents.isEmpty();
+        return infoKey().flatMap(MaterialInfoTool::currentComposition).isPresent();
     }
 
     public long getCompositionDivider() {
-        return compositionDivider;
+        return infoKey()
+                .flatMap(MaterialInfoTool::currentComposition)
+                .map(MaterialComposition::divider)
+                .orElse(0L);
     }
 
     /** Composition with each component's material resolved through {@link #resolve()}. */
     public List<MaterialComponent> getCompositionComponents() {
-        if (compositionComponents.isEmpty()) return List.of();
-        List<MaterialComponent> resolved = new ArrayList<>(compositionComponents.size());
-        for (MaterialComponent component : compositionComponents) {
-            GTMaterial material = component.material().resolve();
-            resolved.add(material == component.material()
-                    ? component
-                    : new MaterialComponent(material, component.amount()));
-        }
-        return List.copyOf(resolved);
+        return infoKey()
+                .flatMap(MaterialInfoTool::currentComposition)
+                .map(MaterialComposition::parts)
+                .orElse(List.of())
+                .stream()
+                .flatMap(part -> MaterialInfoTool.findMaterial(new MaterialKey(part.material()))
+                        .stream()
+                        .map(material -> new MaterialComponent(material.resolve(), part.amount())))
+                .toList();
     }
 
     public boolean isValid() {
@@ -385,22 +413,31 @@ public final class GTMaterial {
      */
     public GTMaterial setComposition(long divider, MaterialComponent... components) {
         checkMutable();
-        compositionComponents.clear();
+        var parts = new java.util.ArrayList<MaterialComposition.Part>();
         if (components != null) {
             for (MaterialComponent component : components) {
-                if (component != null && component.material().isValid()) {
-                    compositionComponents.add(component);
+                if (component != null && component.material().isValid() && component.amount() > 0) {
+                    parts.add(new MaterialComposition.Part(
+                            component.material().resolve().getName(), component.amount()));
                 }
             }
         }
-        if (divider <= 0 && !compositionComponents.isEmpty()) {
+        if (parts.isEmpty()) {
+            MaterialInfoTool.updateComposition(materialKey(), java.util.Optional.empty());
+            return this;
+        }
+        if (divider <= 0) {
             long total = 0;
-            for (MaterialComponent component : compositionComponents) {
-                total += component.amount();
-            }
+            for (var component : parts) total = Math.addExact(total, component.amount());
             divider = Math.max(1L, total / GTValues.U);
         }
-        compositionDivider = divider;
+        boolean crucible = MaterialInfoTool.currentComposition(materialKey())
+                .map(MaterialComposition::crucible)
+                .orElse(false);
+        MaterialInfoTool.updateComposition(
+                materialKey(),
+                java.util.Optional.of(
+                        new MaterialComposition(materialKey().name(), divider, parts, crucible)));
         return this;
     }
 
@@ -417,12 +454,11 @@ public final class GTMaterial {
     }
 
     /** {@code qual(toolTypes, speed, durability, quality)} in GT6. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setToolStats(int toolTypes, float toolSpeed, long toolDurability, int toolQuality) {
         checkMutable();
-        this.toolTypes = toolTypes;
-        this.toolSpeed = toolSpeed;
-        this.toolDurability = toolDurability;
-        this.toolQuality = toolQuality;
+        MaterialInfoTool.updateTool(
+                materialKey(), new MaterialToolProfile(toolTypes, toolSpeed, toolDurability, toolQuality));
         return this;
     }
 
@@ -432,25 +468,36 @@ public final class GTMaterial {
      * and tool types are clamped to 0..3; the quality is clamped to 0..15. Source tool-generation
      * flags are handled by the separate material form policy.
      */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setToolQuality(int toolQuality) {
         checkMutable();
-        return setToolStats(Math.max(0, Math.min(3, this.toolTypes)), this.toolSpeed,
-                Math.max(1L, this.toolDurability), Math.max(0, Math.min(15, toolQuality)));
+        MaterialToolProfile profile = tool();
+        return setToolStats(
+                Math.max(0, Math.min(3, profile.types())),
+                profile.speed(),
+                Math.max(1L, profile.durability()),
+                Math.max(0, Math.min(15, toolQuality)));
     }
 
     /** GT6 {@code setFurnaceBurnTime}; a negative value is stored as zero. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setFurnaceBurnTime(long burnTime) {
         checkMutable();
-        this.furnaceBurnTime = Math.max(0L, burnTime);
-        return this;
+        FuelRule current = currentTarget(MaterialProcessKeys.FUEL).orElse(new FuelRule(0L, java.util.Optional.empty()));
+        return updateFuel(new FuelRule(Math.max(0L, burnTime), current.residue()));
     }
 
     /** GT6 {@code setBurning}; ash left after burning one item-worth of this material. A negative amount is zero. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setBurning(@Nullable GTMaterial material, long amount) {
         checkMutable();
-        this.targetBurningMaterial = material;
-        this.targetBurningAmount = Math.max(0L, amount);
-        return this;
+        FuelRule current = currentTarget(MaterialProcessKeys.FUEL).orElse(new FuelRule(0L, java.util.Optional.empty()));
+        long residueAmount = Math.max(0L, amount);
+        var residue = material != null && residueAmount > 0
+                ? java.util.Optional.of(new MaterialTarget(
+                        new MaterialKey(material.resolve().getName()), residueAmount))
+                : java.util.Optional.<MaterialTarget>empty();
+        return updateFuel(new FuelRule(current.burnTime(), residue));
     }
 
     /** GT6 {@code ores}; appends ordered ore-processing byproducts. */
@@ -464,59 +511,76 @@ public final class GTMaterial {
     public void addOreByProducts(GTMaterial... materials) {
         checkMutable();
         if (materials == null) return;
+        OreProcessingRule current = currentTarget(MaterialProcessKeys.ORE_PROCESSING)
+                .orElse(new OreProcessingRule(List.of(), 1, 1));
+        var byproducts = new java.util.ArrayList<>(current.byproducts());
         for (GTMaterial material : materials) {
-            if (material != null) {
-                byProducts.add(material);
-            }
+            if (material != null)
+                byproducts.add(new MaterialKey(material.resolve().getName()));
         }
+        updateProcess(
+                MaterialProcessKeys.ORE_PROCESSING,
+                new OreProcessingRule(byproducts, current.oreMultiplier(), current.processingMultiplier()));
     }
 
     /**
      * GT6 {@code setCrushing}; result of crushing this. Amount 0 disables; null material means this.
      * A negative amount is stored as zero.
      */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setCrushing(@Nullable GTMaterial material, long amount) {
         checkMutable();
-        this.targetCrushingMaterial = material == null ? this : material;
-        this.targetCrushingAmount = Math.max(0L, amount);
-        return this;
+        return updateTarget(MaterialProcessKeys.CRUSHING, material, amount);
     }
 
     /**
      * GT6 {@code setSmelting}; result of smelting this. Amount 0 disables; null material means this.
      * A negative amount is stored as zero.
      */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setSmelting(@Nullable GTMaterial material, long amount) {
         checkMutable();
-        this.targetSmeltingMaterial = material == null ? this : material;
-        this.targetSmeltingAmount = Math.max(0L, amount);
-        if (this.targetSmeltingAmount > 0) {
-            put(MaterialProperty.MELTING);
-        }
+        long targetAmount = Math.max(0L, amount);
+        updateTarget(MaterialProcessKeys.SMELTING, material, targetAmount);
+        if (targetAmount > 0) put(MaterialProperty.MELTING);
         return this;
     }
 
     /** Drops the smelting target and its {@link MaterialProperty#MELTING} flag. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial clearSmeltingTarget() {
         checkMutable();
-        this.targetSmeltingMaterial = this;
-        this.targetSmeltingAmount = 0;
+        updateProcess(MaterialProcessKeys.SMELTING, null);
         this.properties.remove(MaterialProperty.MELTING);
         return this;
     }
 
     /** GT6 {@code setOreMultiplier}; crushed-ore output multiplier, clamped to 1..127. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setOreMultiplier(int multiplier) {
         checkMutable();
-        this.oreMultiplier = (byte) Math.min(Byte.MAX_VALUE, Math.max(1, multiplier));
-        return this;
+        OreProcessingRule current = currentTarget(MaterialProcessKeys.ORE_PROCESSING)
+                .orElse(new OreProcessingRule(List.of(), 1, 1));
+        return updateProcess(
+                MaterialProcessKeys.ORE_PROCESSING,
+                new OreProcessingRule(
+                        current.byproducts(),
+                        Math.min(Byte.MAX_VALUE, Math.max(1, multiplier)),
+                        current.processingMultiplier()));
     }
 
     /** GT6 {@code setOreProcessingMultiplier}; ore-processing output multiplier, clamped to 1..127. */
+    @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial setOreProcessingMultiplier(int multiplier) {
         checkMutable();
-        this.oreProcessingMultiplier = (byte) Math.min(Byte.MAX_VALUE, Math.max(1, multiplier));
-        return this;
+        OreProcessingRule current = currentTarget(MaterialProcessKeys.ORE_PROCESSING)
+                .orElse(new OreProcessingRule(List.of(), 1, 1));
+        return updateProcess(
+                MaterialProcessKeys.ORE_PROCESSING,
+                new OreProcessingRule(
+                        current.byproducts(),
+                        current.oreMultiplier(),
+                        Math.min(Byte.MAX_VALUE, Math.max(1, multiplier))));
     }
 
     public GTMaterial put(MaterialProperty... flags) {
@@ -565,12 +629,73 @@ public final class GTMaterial {
         return put(MaterialProperty.HIDDEN);
     }
 
+    private MaterialKey materialKey() {
+        return new MaterialKey(resolve().getName());
+    }
+
+    private java.util.Optional<MaterialKey> infoKey() {
+        try {
+            return java.util.Optional.of(materialKey());
+        } catch (IllegalArgumentException ignored) {
+            return java.util.Optional.empty();
+        }
+    }
+
+    private <T> java.util.Optional<T> currentTarget(
+            gregtech.api.addon.material.MaterialProcessKey<T> process) {
+        return infoKey()
+                .flatMap(key -> MaterialInfoTool.currentProcess(key, process))
+                .map(MaterialProcessRule::value);
+    }
+
+    private GTMaterial targetOrSelf(gregtech.api.addon.material.MaterialProcessKey<MaterialTarget> process) {
+        return currentTarget(process)
+                .flatMap(target -> MaterialInfoTool.findMaterial(target.material()))
+                .map(GTMaterial::resolve)
+                .orElse(this);
+    }
+
+    private long targetAmount(gregtech.api.addon.material.MaterialProcessKey<MaterialTarget> process) {
+        long fallback = process == MaterialProcessKeys.SMELTING ? 0L : GTValues.U;
+        return currentTarget(process).map(MaterialTarget::amount).orElse(fallback);
+    }
+
+    private GTMaterial updateTarget(
+            gregtech.api.addon.material.MaterialProcessKey<MaterialTarget> process,
+            @Nullable GTMaterial target,
+            long amount) {
+        GTMaterial resolved = target == null ? this : target.resolve();
+        updateProcess(
+                process,
+                new MaterialTarget(new MaterialKey(resolved.getName()), Math.max(0L, amount)));
+        return this;
+    }
+
+    private <T> GTMaterial updateProcess(
+            gregtech.api.addon.material.MaterialProcessKey<T> process, @Nullable T value) {
+        MaterialInfoTool.updateProcess(
+                materialKey(),
+                process,
+                value == null
+                        ? java.util.Optional.empty()
+                        : java.util.Optional.of(MaterialProcessRule.anyForm(value)));
+        return this;
+    }
+
+    private GTMaterial updateFuel(FuelRule rule) {
+        if (rule.burnTime() <= 0 && rule.residue().isEmpty()) {
+            return updateProcess(MaterialProcessKeys.FUEL, null);
+        }
+        return updateProcess(MaterialProcessKeys.FUEL, rule);
+    }
+
     public String getTranslationKey() {
         return "material.gt6ce." + name.toLowerCase(Locale.ROOT);
     }
 
-    /** Freezes every mutator; only {@link MaterialSentinels} uses this, after initialization. */
-    GTMaterial freeze() {
+    /** Freezes every mutator before the material registry becomes READY. */
+    @ApiStatus.Internal
+    public GTMaterial freeze() {
         frozen = true;
         return this;
     }

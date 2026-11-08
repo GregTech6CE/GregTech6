@@ -16,7 +16,7 @@ import java.util.Set;
  * {@link GregTechMaterials}.
  *
  * @param id numeric material id; declarations from {@link #builder(String)} use 0, meaning the host assigns the
- *           real id at startup. Read it back with {@code GregTechMaterials.find(name).id()}.
+ *           real id at startup. Read it back from {@code GregTechMaterials.catalog()}.
  * @param features generated forms and processing opt-ins; see {@link Feature}
  * @param oreByproducts ore-processing byproducts in GregTech's order; the first is the wash byproduct
  */

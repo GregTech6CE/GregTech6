@@ -3,28 +3,68 @@
 package gregtech.api.addon.material;
 
 import gregtech.api.addon.AddonRuntime;
+import gregtech.api.material.MaterialToolHelper;
+import gregtech.api.material.MaterialToolProfile;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Read-only material handles. The material table itself stays inside GregTech.
- * This is the recommended read entry for addons; materials are declared through
- * {@link MaterialDeclaration}.
+ * Material catalog entry. Immutable definition snapshots through {@link #catalog()} are the
+ * recommended read path; the legacy {@link Material} handles remain for compatibility. Materials
+ * are declared through {@link MaterialDeclaration}.
  */
 public final class GregTechMaterials {
     private GregTechMaterials() {}
 
     /** The named material, or {@link #invalid()} when the name is unknown. Never null. */
-    public static Material find(String name) { return AddonRuntime.services().materials().find(name); }
+    @Deprecated(since = "1.7.0", forRemoval = false)
+    public static Material find(String name) {
+        return AddonRuntime.services().materials().find(name);
+    }
 
-    public static Material find(int id) { return AddonRuntime.services().materials().find(id); }
+    @Deprecated(since = "1.7.0", forRemoval = false)
+    public static Material find(int id) {
+        return AddonRuntime.services().materials().find(id);
+    }
 
     /** The sentinel returned for an unknown name or id. {@link Material#valid()} is false. */
-    public static Material invalid() { return AddonRuntime.services().materials().invalid(); }
+    @Deprecated(since = "1.7.0", forRemoval = false)
+    public static Material invalid() {
+        return AddonRuntime.services().materials().invalid();
+    }
 
-    public static Iterable<Material> all() { return AddonRuntime.services().materials().all(); }
+    @Deprecated(since = "1.7.0", forRemoval = false)
+    public static Iterable<Material> all() {
+        return AddonRuntime.services().materials().all();
+    }
 
+    /** Immutable definition view. Requires a host supporting API 1.5 and completed material bootstrap. */
+    public static MaterialCatalogView catalog() {
+        return AddonRuntime.services().materials().catalog();
+    }
+
+    /** Immutable process rules from the current definition view. */
+    public static MaterialProcessesView processes() {
+        return catalog().processes();
+    }
+
+    /** Immutable definition-time form rules from the current definition view. */
+    public static MaterialFormRulesView forms() {
+        return catalog().forms();
+    }
+
+    /** Native item, block and fluid bindings from the most recently published content generation. */
+    public static MaterialFormsView formBindings() {
+        return catalog().formBindings();
+    }
+
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public interface Catalog {
+        /** Old hosts fail explicitly, preserving source and binary compatibility for implementers. */
+        default MaterialCatalogView catalog() {
+            throw new UnsupportedOperationException("Material definition views require a supporting host");
+        }
+
         Material find(String name);
 
         Material find(int id);
@@ -34,9 +74,18 @@ public final class GregTechMaterials {
         Iterable<Material> all();
     }
 
-    /** One material after aliases and links have resolved. */
+    /**
+     * Compatibility material handle after aliases and links have resolved.
+     *
+     * @deprecated New reads use {@link MaterialCatalogView} and {@link MaterialView}.
+     */
+    @Deprecated(since = "1.7.0", forRemoval = false)
     public interface Material {
         String name();
+
+        default MaterialKey key() {
+            return new MaterialKey(name());
+        }
 
         int id();
 
@@ -66,6 +115,11 @@ public final class GregTechMaterials {
 
         /** Material-table tool durability. Not converted. */
         long toolDurability();
+
+        @Deprecated(since = "1.7.0", forRemoval = false)
+        default MaterialToolProfile tool() {
+            return MaterialToolHelper.profile(key()).orElseGet(() -> new MaterialToolProfile(0, 1F, 0, 0));
+        }
 
         List<Component> composition();
 
@@ -115,13 +169,16 @@ public final class GregTechMaterials {
             if (units == null || units.isEmpty()) return EMPTY;
             var copy = new ArrayList<Component>();
             for (Component unit : units) {
-                if (unit == null || unit.material() == null || unit.material().isEmpty() || unit.amount() <= 0) continue;
+                if (unit == null || unit.material() == null || unit.material().isEmpty() || unit.amount() <= 0)
+                    continue;
                 copy.add(new Component(unit.material(), unit.amount()));
             }
             if (copy.isEmpty()) return EMPTY;
             return new StackComposition(prefix, copy);
         }
 
-        public boolean present() { return !units.isEmpty(); }
+        public boolean present() {
+            return !units.isEmpty();
+        }
     }
 }

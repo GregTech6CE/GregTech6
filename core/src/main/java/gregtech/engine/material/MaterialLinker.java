@@ -1,0 +1,123 @@
+package gregtech.engine.material;
+
+import gregtech.api.addon.material.FuelRule;
+import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialProcessRule;
+import gregtech.api.addon.material.MaterialTarget;
+import gregtech.api.addon.material.OreProcessingRule;
+import gregtech.api.material.GTMaterial;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+
+/** Checks the complete keyed graph before applying any of its associations. */
+final class MaterialLinker {
+    private MaterialLinker() {}
+
+    static void validate(List<MaterialDefinition.Declaration> declarations, Function<String, GTMaterial> lookup) {
+        for (var declaration : declarations) {
+            var definition = declaration.material();
+            var info = declaration.info();
+            var owner = lookup.apply(definition.name());
+            if (owner == null) throw new IllegalArgumentException("Missing definition owner: " + definition.name());
+            for (var part : info.composition().parts()) {
+                GTMaterial target = require(definition.name(), "composition", part.material(), lookup);
+                if (!target.isValid() || target == owner)
+                    throw new IllegalArgumentException(
+                            "Invalid composition of " + definition.name() + ": " + part.material());
+            }
+            for (var name : info.relations().members()) require(definition.name(), "group member", name, lookup);
+            MaterialTarget burning =
+                    fuel(declaration).flatMap(FuelRule::residue).orElse(null);
+            for (var target : new MaterialTarget[] {
+                burning,
+                first(declaration, MaterialProcessKeys.CRUSHING),
+                first(declaration, MaterialProcessKeys.SMELTING),
+                first(declaration, MaterialProcessKeys.PULVERIZING)
+            })
+                if (target != null)
+                    requireReal(definition.name(), "target", target.material().name(), lookup);
+            var oreProcessing = oreProcessing(declaration);
+            if (oreProcessing != null)
+                for (var byproduct : oreProcessing.byproducts())
+                    requireReal(definition.name(), "ore processing byproduct", byproduct.name(), lookup);
+            for (var target : processing(declaration).values())
+                requireReal(definition.name(), "processing", target.material().name(), lookup);
+        }
+        var groups = new java.util.HashMap<String, List<String>>();
+        for (var declaration : declarations)
+            if (declaration.info().relations().group())
+                groups.put(declaration.name(), declaration.info().relations().members());
+        var complete = new java.util.HashSet<String>();
+        for (var group : groups.keySet()) visit(group, groups, new java.util.HashSet<>(), complete);
+    }
+
+    private static void visit(
+            String group,
+            java.util.Map<String, List<String>> groups,
+            java.util.Set<String> path,
+            java.util.Set<String> complete) {
+        if (complete.contains(group) || !groups.containsKey(group)) return;
+        if (!path.add(group)) throw new IllegalArgumentException("Material group cycle: " + group);
+        for (var member : groups.get(group)) visit(member, groups, path, complete);
+        path.remove(group);
+        complete.add(group);
+    }
+
+    private static GTMaterial require(String owner, String field, String name, Function<String, GTMaterial> lookup) {
+        GTMaterial target = lookup.apply(name);
+        if (target == null)
+            throw new IllegalArgumentException("Unknown material reference: " + owner + " / " + field + " -> " + name);
+        return target;
+    }
+
+    private static GTMaterial requireReal(
+            String owner, String field, String name, Function<String, GTMaterial> lookup) {
+        GTMaterial target = require(owner, field, name, lookup);
+        if (!target.isValid())
+            throw new IllegalArgumentException("Invalid material reference: " + owner + " / " + field + " -> " + name);
+        return target;
+    }
+
+    static void link(
+            MaterialDefinition.Declaration declaration, GTMaterial material, Function<String, GTMaterial> lookup) {
+        var info = declaration.info();
+        material.addReRegistrationToThis(
+                info.relations().members().stream().map(lookup).toArray(GTMaterial[]::new));
+    }
+
+    private static Optional<FuelRule> fuel(MaterialDefinition.Declaration declaration) {
+        return Optional.ofNullable(first(declaration, MaterialProcessKeys.FUEL));
+    }
+
+    private static <T> T first(
+            MaterialDefinition.Declaration declaration, gregtech.api.addon.material.MaterialProcessKey<T> key) {
+        return declaration
+                .info()
+                .processes()
+                .findSingle(key)
+                .map(MaterialProcessRule::value)
+                .orElse(null);
+    }
+
+    private static OreProcessingRule oreProcessing(MaterialDefinition.Declaration declaration) {
+        return declaration
+                .info()
+                .processes()
+                .findSingle(MaterialProcessKeys.ORE_PROCESSING)
+                .map(MaterialProcessRule::value)
+                .orElse(null);
+    }
+
+    private static java.util.Map<String, MaterialTarget> processing(MaterialDefinition.Declaration declaration) {
+        var result = new java.util.LinkedHashMap<String, MaterialTarget>();
+        var rulesByKey = declaration.info().processes().rules();
+        for (var entry : rulesByKey.entrySet()) {
+            String kind = MaterialProcessKeys.legacyTargetName(entry.getKey()).orElse(null);
+            if (kind == null) continue;
+            var rules = entry.getValue();
+            if (!rules.isEmpty() && rules.get(0).value() instanceof MaterialTarget target) result.put(kind, target);
+        }
+        return result;
+    }
+}

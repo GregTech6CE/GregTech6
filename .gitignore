@@ -50,8 +50,6 @@ replay_pid*
 
 # Legacy local planning locations; new task notes should use work/<task>/.
 /docs/card-plans/
-/docs/supersymmetry-*.md
-
 # Avoid blanket *.jar, *.json, *.log or generated/ rules: the Wrapper,
 # game assets, documented fixtures and checked-in catalogs are sources.
 # Keep docs/operations/records/ versioned.

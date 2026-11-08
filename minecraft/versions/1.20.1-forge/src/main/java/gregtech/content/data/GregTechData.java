@@ -30,6 +30,5 @@ public final class GregTechData {
         TranslationKeys.bootstrap();
         BlockIcons.bootstrap();
         ModReferences.UNKNOWN.getClass(); // ensure MD static holder
-        MaterialGroups.Glowstone.getClass(); // ensure ANY static holder
     }
 }

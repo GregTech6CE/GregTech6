@@ -1,0 +1,4064 @@
+# Historical import references before canonical migration; runtime does not parse this file.
+composition	Adamantine	component[0]	Ad	0	ALIAS
+composition	Adamantine	component[1]	O	0	ALIAS
+composition	Adamantine	owner	Adamantine	0	VALID
+composition	Air	component[0]	N	0	ALIAS
+composition	Air	component[1]	O	0	ALIAS
+composition	Air	component[2]	Ar	0	ALIAS
+composition	Air	owner	Air	0	VALID
+composition	Al2O3	component[0]	Al	0	ALIAS
+composition	Al2O3	component[1]	O	0	ALIAS
+composition	Al2O3	owner	Al2O3	0	ALIAS
+composition	AlF3	component[0]	Al	0	ALIAS
+composition	AlF3	component[1]	F	0	ALIAS
+composition	AlF3	owner	AlF3	0	ALIAS
+composition	AlO3H3	component[0]	Al	0	ALIAS
+composition	AlO3H3	component[1]	O	0	ALIAS
+composition	AlO3H3	component[2]	H	0	ALIAS
+composition	AlO3H3	owner	AlO3H3	0	ALIAS
+composition	Almandine	component[0]	Al2O3	0	ALIAS
+composition	Almandine	component[1]	Fe	0	ALIAS
+composition	Almandine	component[2]	SiO2	0	ALIAS
+composition	Almandine	component[3]	O	0	ALIAS
+composition	Almandine	owner	Almandine	0	VALID
+composition	AluminiumAlloy	component[0]	Al	0	ALIAS
+composition	AluminiumAlloy	component[1]	Si	0	ALIAS
+composition	AluminiumAlloy	owner	AluminiumAlloy	0	VALID
+composition	AluminiumBrass	component[0]	Al	0	ALIAS
+composition	AluminiumBrass	component[1]	Cu	0	ALIAS
+composition	AluminiumBrass	owner	AluminiumBrass	0	VALID
+composition	Alumite	component[0]	Al2O3	0	ALIAS
+composition	Alumite	component[1]	WroughtIron	0	VALID
+composition	Alumite	component[2]	Obsidian	0	VALID
+composition	Alumite	owner	Alumite	0	VALID
+composition	Alunite	component[0]	Al2O3	0	ALIAS
+composition	Alunite	component[1]	KOH	0	ALIAS
+composition	Alunite	component[2]	SO3	0	ALIAS
+composition	Alunite	component[3]	H2O	0	ALIAS
+composition	Alunite	component[4]	O	0	ALIAS
+composition	Alunite	owner	Alunite	0	VALID
+composition	Amazonite	component[0]	Al2O3	0	ALIAS
+composition	Amazonite	component[1]	SiO2	0	ALIAS
+composition	Amazonite	component[2]	K	0	ALIAS
+composition	Amazonite	component[3]	O	0	ALIAS
+composition	Amazonite	owner	Amazonite	0	VALID
+composition	Amethyst	component[0]	SiO2	0	ALIAS
+composition	Amethyst	component[1]	Fe	0	ALIAS
+composition	Amethyst	owner	Amethyst	0	VALID
+composition	Andradite	component[0]	Ca	0	ALIAS
+composition	Andradite	component[1]	Fe	0	ALIAS
+composition	Andradite	component[2]	SiO2	0	ALIAS
+composition	Andradite	component[3]	O	0	ALIAS
+composition	Andradite	owner	Andradite	0	VALID
+composition	AnnealedCopper	component[0]	Cu	0	ALIAS
+composition	AnnealedCopper	owner	AnnealedCopper	0	VALID
+composition	Apatite	component[0]	Ca	0	ALIAS
+composition	Apatite	component[1]	PO4	0	ALIAS
+composition	Apatite	component[2]	Cl	0	ALIAS
+composition	Apatite	owner	Apatite	0	VALID
+composition	AquaRegia	component[0]	HNO3	0	ALIAS
+composition	AquaRegia	component[1]	HCl	0	ALIAS
+composition	AquaRegia	owner	AquaRegia	0	VALID
+composition	Aquamarine	component[0]	Al2O3	0	ALIAS
+composition	Aquamarine	component[1]	Be	0	ALIAS
+composition	Aquamarine	component[2]	SiO2	0	ALIAS
+composition	Aquamarine	component[3]	O	0	ALIAS
+composition	Aquamarine	owner	Aquamarine	0	VALID
+composition	ArsenicBronze	component[0]	As	0	ALIAS
+composition	ArsenicBronze	component[1]	Bronze	0	VALID
+composition	ArsenicBronze	owner	ArsenicBronze	0	VALID
+composition	ArsenicCopper	component[0]	Cu	0	ALIAS
+composition	ArsenicCopper	component[1]	As	0	ALIAS
+composition	ArsenicCopper	owner	ArsenicCopper	0	VALID
+composition	Arsenopyrite	component[0]	Fe	0	ALIAS
+composition	Arsenopyrite	component[1]	As	0	ALIAS
+composition	Arsenopyrite	component[2]	S	0	ALIAS
+composition	Arsenopyrite	owner	Arsenopyrite	0	VALID
+composition	Asbestos	component[0]	Mg	0	ALIAS
+composition	Asbestos	component[1]	SiO2	0	ALIAS
+composition	Asbestos	component[2]	H2O	0	ALIAS
+composition	Asbestos	component[3]	O	0	ALIAS
+composition	Asbestos	owner	Asbestos	0	VALID
+composition	Azurite	component[0]	Cu	0	ALIAS
+composition	Azurite	component[1]	CO3	0	ALIAS
+composition	Azurite	component[2]	O	0	ALIAS
+composition	Azurite	component[3]	H2O	0	ALIAS
+composition	Azurite	owner	Azurite	0	VALID
+composition	BalasRuby	component[0]	Cr	0	ALIAS
+composition	BalasRuby	component[1]	Mg	0	ALIAS
+composition	BalasRuby	component[2]	O	0	ALIAS
+composition	BalasRuby	owner	BalasRuby	0	VALID
+composition	Bamboo	component[0]	C	0	ALIAS
+composition	Bamboo	component[1]	H2O	0	ALIAS
+composition	Bamboo	owner	Bamboo	0	VALID
+composition	Barite	component[0]	Ba	0	ALIAS
+composition	Barite	component[1]	S	0	ALIAS
+composition	Barite	component[2]	O	0	ALIAS
+composition	Barite	owner	Barite	0	VALID
+composition	Bark	component[0]	C	0	ALIAS
+composition	Bark	component[1]	H2O	0	ALIAS
+composition	Bark	owner	Bark	0	VALID
+composition	Basalt	component[0]	Peridot	0	VALID
+composition	Basalt	component[1]	CaCO3	0	ALIAS
+composition	Basalt	component[2]	Flint	0	VALID
+composition	Basalt	component[3]	DarkAsh	0	ALIAS
+composition	Basalt	owner	Basalt	0	VALID
+composition	BasalticMineralSand	component[0]	Fe	0	ALIAS
+composition	BasalticMineralSand	component[1]	O	0	ALIAS
+composition	BasalticMineralSand	owner	BasalticMineralSand	0	VALID
+composition	Bastnasite	component[0]	Ce	0	ALIAS
+composition	Bastnasite	component[1]	C	0	ALIAS
+composition	Bastnasite	component[2]	F	0	ALIAS
+composition	Bastnasite	component[3]	O	0	ALIAS
+composition	Bastnasite	owner	Bastnasite	0	VALID
+composition	BatteryAlloy	component[0]	Pb	0	ALIAS
+composition	BatteryAlloy	component[1]	Sb	0	ALIAS
+composition	BatteryAlloy	owner	BatteryAlloy	0	VALID
+composition	Bauxite	component[0]	TiO2	0	ALIAS
+composition	Bauxite	component[1]	Ilmenite	0	VALID
+composition	Bauxite	component[2]	Al2O3	0	ALIAS
+composition	Bauxite	owner	Bauxite	0	VALID
+composition	Biotite	component[0]	K	0	ALIAS
+composition	Biotite	component[1]	Mg	0	ALIAS
+composition	Biotite	component[2]	Al2O3	0	ALIAS
+composition	Biotite	component[3]	F	0	ALIAS
+composition	Biotite	component[4]	SiO2	0	ALIAS
+composition	Biotite	owner	Biotite	0	VALID
+composition	Bischofite	component[0]	MgCl2	0	ALIAS
+composition	Bischofite	component[1]	H2O	0	ALIAS
+composition	Bischofite	owner	Bischofite	0	VALID
+composition	BismuthBronze	component[0]	Bi	0	ALIAS
+composition	BismuthBronze	component[1]	Brass	0	VALID
+composition	BismuthBronze	owner	BismuthBronze	0	VALID
+composition	Bixbite	component[0]	Al2O3	0	ALIAS
+composition	Bixbite	component[1]	Be	0	ALIAS
+composition	Bixbite	component[2]	SiO2	0	ALIAS
+composition	Bixbite	component[3]	O	0	ALIAS
+composition	Bixbite	owner	Bixbite	0	VALID
+composition	BlackBronze	component[0]	Cu	0	ALIAS
+composition	BlackBronze	component[1]	Electrum	0	VALID
+composition	BlackBronze	owner	BlackBronze	0	VALID
+composition	BlackSteel	component[0]	Ni	0	ALIAS
+composition	BlackSteel	component[1]	BlackBronze	0	VALID
+composition	BlackSteel	component[2]	Steel	0	VALID
+composition	BlackSteel	owner	BlackSteel	0	VALID
+composition	BlackVitriol	component[0]	Fe	0	ALIAS
+composition	BlackVitriol	component[1]	S	0	ALIAS
+composition	BlackVitriol	owner	BlackVitriol	0	VALID
+composition	BlazeQuartz	component[0]	SiO2	0	ALIAS
+composition	BlazeQuartz	owner	BlazeQuartz	0	VALID
+composition	BlueAlloy	component[0]	Ag	0	ALIAS
+composition	BlueAlloy	component[1]	Nikolite	0	VALID
+composition	BlueAlloy	owner	BlueAlloy	0	VALID
+composition	BlueSapphire	component[0]	Al2O3	0	ALIAS
+composition	BlueSapphire	component[1]	Fe	0	ALIAS
+composition	BlueSapphire	owner	BlueSapphire	0	VALID
+composition	BlueSteel	component[0]	SterlingSilver	0	VALID
+composition	BlueSteel	component[1]	BismuthBronze	0	VALID
+composition	BlueSteel	component[2]	Steel	0	VALID
+composition	BlueSteel	component[3]	BlackSteel	0	VALID
+composition	BlueSteel	owner	BlueSteel	0	VALID
+composition	BlueTopaz	component[0]	Al2O3	0	ALIAS
+composition	BlueTopaz	component[1]	SiO2	0	ALIAS
+composition	BlueTopaz	component[2]	F	0	ALIAS
+composition	BlueTopaz	component[3]	H2O	0	ALIAS
+composition	BlueTopaz	owner	BlueTopaz	0	VALID
+composition	BlueVitriol	component[0]	Cu	0	ALIAS
+composition	BlueVitriol	component[1]	S	0	ALIAS
+composition	BlueVitriol	component[2]	O	0	ALIAS
+composition	BlueVitriol	owner	BlueVitriol	0	VALID
+composition	Bone	component[0]	Ca	0	ALIAS
+composition	Bone	owner	Bone	0	VALID
+composition	Borax	component[0]	Na	0	ALIAS
+composition	Borax	component[1]	B	0	ALIAS
+composition	Borax	component[2]	H2O	0	ALIAS
+composition	Borax	component[3]	O	0	ALIAS
+composition	Borax	owner	Borax	0	VALID
+composition	Brass	component[0]	Cu	0	ALIAS
+composition	Brass	component[1]	Zn	0	ALIAS
+composition	Brass	owner	Brass	0	VALID
+composition	Brick	component[0]	Ceramic	0	VALID
+composition	Brick	owner	Brick	0	ALIAS
+composition	Bromargyrite	component[0]	Ag	0	ALIAS
+composition	Bromargyrite	component[1]	Br	0	ALIAS
+composition	Bromargyrite	owner	Bromargyrite	0	VALID
+composition	Bronze	component[0]	Cu	0	ALIAS
+composition	Bronze	component[1]	Sn	0	ALIAS
+composition	Bronze	owner	Bronze	0	VALID
+composition	BrownLimonite	component[0]	Fe	0	ALIAS
+composition	BrownLimonite	component[1]	H	0	ALIAS
+composition	BrownLimonite	component[2]	O	0	ALIAS
+composition	BrownLimonite	owner	BrownLimonite	0	VALID
+composition	CH4	component[0]	C	0	ALIAS
+composition	CH4	component[1]	H	0	ALIAS
+composition	CH4	owner	CH4	0	ALIAS
+composition	CO	component[0]	C	0	ALIAS
+composition	CO	component[1]	O	0	ALIAS
+composition	CO	owner	CO	0	ALIAS
+composition	CO2	component[0]	C	0	ALIAS
+composition	CO2	component[1]	O	0	ALIAS
+composition	CO2	owner	CO2	0	ALIAS
+composition	CO3	component[0]	C	0	ALIAS
+composition	CO3	component[1]	O	0	ALIAS
+composition	CO3	owner	CO3	0	ALIAS
+composition	CaCO3	component[0]	Ca	0	ALIAS
+composition	CaCO3	component[1]	CO3	0	ALIAS
+composition	CaCO3	owner	CaCO3	0	ALIAS
+composition	CaCl2	component[0]	Ca	0	ALIAS
+composition	CaCl2	component[1]	Cl	0	ALIAS
+composition	CaCl2	owner	CaCl2	0	ALIAS
+composition	CaSO4	component[0]	Ca	0	ALIAS
+composition	CaSO4	component[1]	S	0	ALIAS
+composition	CaSO4	component[2]	O	0	ALIAS
+composition	CaSO4	owner	CaSO4	0	ALIAS
+composition	Cassiterite	component[0]	Sn	0	ALIAS
+composition	Cassiterite	component[1]	O	0	ALIAS
+composition	Cassiterite	owner	Cassiterite	0	VALID
+composition	Cd_In_Ag_Alloy	component[0]	Cd	0	ALIAS
+composition	Cd_In_Ag_Alloy	component[1]	In	0	ALIAS
+composition	Cd_In_Ag_Alloy	component[2]	Ag	0	ALIAS
+composition	Cd_In_Ag_Alloy	owner	Cd_In_Ag_Alloy	0	ALIAS
+composition	Celestine	component[0]	Sr	0	ALIAS
+composition	Celestine	component[1]	S	0	ALIAS
+composition	Celestine	component[2]	O	0	ALIAS
+composition	Celestine	owner	Celestine	0	VALID
+composition	Ceramic	component[0]	Al2O3	0	ALIAS
+composition	Ceramic	component[1]	SiO2	0	ALIAS
+composition	Ceramic	owner	Ceramic	0	VALID
+composition	CertusQuartz	component[0]	SiO2	0	ALIAS
+composition	CertusQuartz	owner	CertusQuartz	0	VALID
+composition	Chalcopyrite	component[0]	Cu	0	ALIAS
+composition	Chalcopyrite	component[1]	Fe	0	ALIAS
+composition	Chalcopyrite	component[2]	S	0	ALIAS
+composition	Chalcopyrite	owner	Chalcopyrite	0	VALID
+composition	Charcoal	component[0]	C	0	ALIAS
+composition	Charcoal	owner	Charcoal	0	VALID
+composition	ChargedCertusQuartz	component[0]	SiO2	0	ALIAS
+composition	ChargedCertusQuartz	owner	ChargedCertusQuartz	0	VALID
+composition	ChloroauricAcid	component[0]	Au	0	ALIAS
+composition	ChloroauricAcid	component[1]	Cl	0	ALIAS
+composition	ChloroauricAcid	component[2]	H	0	ALIAS
+composition	ChloroauricAcid	owner	ChloroauricAcid	0	VALID
+composition	ChloroplatinicAcid	component[0]	Pt	0	ALIAS
+composition	ChloroplatinicAcid	component[1]	Cl	0	ALIAS
+composition	ChloroplatinicAcid	component[2]	H	0	ALIAS
+composition	ChloroplatinicAcid	owner	ChloroplatinicAcid	0	VALID
+composition	Chocolate	component[0]	Cocoa	0	VALID
+composition	Chocolate	component[1]	Sugar	0	VALID
+composition	Chocolate	owner	Chocolate	0	VALID
+composition	Chromite	component[0]	Fe	0	ALIAS
+composition	Chromite	component[1]	Cr	0	ALIAS
+composition	Chromite	component[2]	O	0	ALIAS
+composition	Chromite	owner	Chromite	0	VALID
+composition	ChromiumDioxide	component[0]	Cr	0	ALIAS
+composition	ChromiumDioxide	component[1]	O	0	ALIAS
+composition	ChromiumDioxide	owner	ChromiumDioxide	0	VALID
+composition	Cinnabar	component[0]	Hg	0	ALIAS
+composition	Cinnabar	component[1]	S	0	ALIAS
+composition	Cinnabar	owner	Cinnabar	0	VALID
+composition	Clay	component[0]	Ceramic	0	VALID
+composition	Clay	component[1]	H2O	0	ALIAS
+composition	Clay	owner	Clay	0	VALID
+composition	Coal	component[0]	C	0	ALIAS
+composition	Coal	owner	Coal	0	VALID
+composition	CoalCoke	component[0]	C	0	ALIAS
+composition	CoalCoke	owner	CoalCoke	0	VALID
+composition	CobaltBrass	component[0]	Brass	0	VALID
+composition	CobaltBrass	component[1]	Al	0	ALIAS
+composition	CobaltBrass	component[2]	Co	0	ALIAS
+composition	CobaltBrass	owner	CobaltBrass	0	VALID
+composition	CobaltHexahydrate	component[0]	Co	0	ALIAS
+composition	CobaltHexahydrate	component[1]	H2O	0	ALIAS
+composition	CobaltHexahydrate	owner	CobaltHexahydrate	0	VALID
+composition	Cobaltite	component[0]	Co	0	ALIAS
+composition	Cobaltite	component[1]	As	0	ALIAS
+composition	Cobaltite	component[2]	S	0	ALIAS
+composition	Cobaltite	owner	Cobaltite	0	VALID
+composition	Coltan	component[0]	Tantalite	0	VALID
+composition	Coltan	component[1]	Columbite	0	VALID
+composition	Coltan	owner	Coltan	0	VALID
+composition	Columbite	component[0]	Nb2O5	0	ALIAS
+composition	Columbite	component[1]	MnO2	0	ALIAS
+composition	Columbite	owner	Columbite	0	VALID
+composition	Concrete	component[0]	Stone	0	VALID
+composition	Concrete	owner	Concrete	0	VALID
+composition	ConductiveIron	component[0]	WroughtIron	0	VALID
+composition	ConductiveIron	component[1]	Redstone	0	VALID
+composition	ConductiveIron	owner	ConductiveIron	0	VALID
+composition	Constantan	component[0]	Cu	0	ALIAS
+composition	Constantan	component[1]	Ni	0	ALIAS
+composition	Constantan	owner	Constantan	0	VALID
+composition	Cooperite	component[0]	Pt	0	ALIAS
+composition	Cooperite	component[1]	Ni	0	ALIAS
+composition	Cooperite	component[2]	Pd	0	ALIAS
+composition	Cooperite	component[3]	S	0	ALIAS
+composition	Cooperite	owner	Cooperite	0	VALID
+composition	CrystalMatrix	component[0]	Diamond	0	VALID
+composition	CrystalMatrix	component[1]	NetherStar	0	VALID
+composition	CrystalMatrix	owner	CrystalMatrix	0	VALID
+composition	CyanVitriol	component[0]	Ni	0	ALIAS
+composition	CyanVitriol	component[1]	S	0	ALIAS
+composition	CyanVitriol	component[2]	O	0	ALIAS
+composition	CyanVitriol	owner	CyanVitriol	0	VALID
+composition	D2O	component[0]	D	0	ALIAS
+composition	D2O	component[1]	O	0	ALIAS
+composition	D2O	owner	D2O	0	ALIAS
+composition	DamascusSteel	component[0]	Steel	0	VALID
+composition	DamascusSteel	component[1]	V	0	ALIAS
+composition	DamascusSteel	component[2]	W	0	ALIAS
+composition	DamascusSteel	owner	DamascusSteel	0	VALID
+composition	Datolite	component[0]	H	0	ALIAS
+composition	Datolite	component[1]	Ca	0	ALIAS
+composition	Datolite	component[2]	B	0	ALIAS
+composition	Datolite	component[3]	Si	0	ALIAS
+composition	Datolite	component[4]	O	0	ALIAS
+composition	Datolite	owner	Datolite	0	VALID
+composition	Diamond	component[0]	C	0	ALIAS
+composition	Diamond	owner	Diamond	0	VALID
+composition	DiamondBlue	component[0]	C	0	ALIAS
+composition	DiamondBlue	owner	DiamondBlue	0	ALIAS
+composition	DiamondGreen	component[0]	C	0	ALIAS
+composition	DiamondGreen	owner	DiamondGreen	0	ALIAS
+composition	DiamondIndustrial	component[0]	C	0	ALIAS
+composition	DiamondIndustrial	owner	DiamondIndustrial	0	VALID
+composition	DiamondPink	component[0]	C	0	ALIAS
+composition	DiamondPink	owner	DiamondPink	0	ALIAS
+composition	DiamondRed	component[0]	C	0	ALIAS
+composition	DiamondRed	owner	DiamondRed	0	ALIAS
+composition	DiamondYellow	component[0]	C	0	ALIAS
+composition	DiamondYellow	owner	DiamondYellow	0	ALIAS
+composition	Diatomite	component[0]	Flint	0	VALID
+composition	Diatomite	component[1]	Fe2O3	0	ALIAS
+composition	Diatomite	component[2]	Sapphire	0	VALID
+composition	Diatomite	owner	Diatomite	0	VALID
+composition	DiduraniumTrioxide	component[0]	Dn	0	ALIAS
+composition	DiduraniumTrioxide	component[1]	O	0	ALIAS
+composition	DiduraniumTrioxide	owner	DiduraniumTrioxide	0	VALID
+composition	Dioptase	component[0]	SiO2	0	ALIAS
+composition	Dioptase	component[1]	Cu	0	ALIAS
+composition	Dioptase	component[2]	O	0	ALIAS
+composition	Dioptase	component[3]	H2O	0	ALIAS
+composition	Dioptase	owner	Dioptase	0	VALID
+composition	DistWater	component[0]	H	0	ALIAS
+composition	DistWater	component[1]	O	0	ALIAS
+composition	DistWater	owner	DistWater	0	ALIAS
+composition	Dreamwood	component[0]	C	0	ALIAS
+composition	Dreamwood	component[1]	H2O	0	ALIAS
+composition	Dreamwood	owner	Dreamwood	0	VALID
+composition	Duralumin	component[0]	Al	0	ALIAS
+composition	Duralumin	component[1]	Cu	0	ALIAS
+composition	Duralumin	owner	Duralumin	0	VALID
+composition	DuraniumAlloy	component[0]	Dn	0	ALIAS
+composition	DuraniumAlloy	component[1]	Mg	0	ALIAS
+composition	DuraniumAlloy	owner	DuraniumAlloy	0	ALIAS
+composition	DuraniumHexaastatide	component[0]	Dn	0	ALIAS
+composition	DuraniumHexaastatide	component[1]	At	0	ALIAS
+composition	DuraniumHexaastatide	owner	DuraniumHexaastatide	0	VALID
+composition	DuraniumHexabromide	component[0]	Dn	0	ALIAS
+composition	DuraniumHexabromide	component[1]	Br	0	ALIAS
+composition	DuraniumHexabromide	owner	DuraniumHexabromide	0	VALID
+composition	DuraniumHexachloride	component[0]	Dn	0	ALIAS
+composition	DuraniumHexachloride	component[1]	Cl	0	ALIAS
+composition	DuraniumHexachloride	owner	DuraniumHexachloride	0	VALID
+composition	DuraniumHexafluoride	component[0]	Dn	0	ALIAS
+composition	DuraniumHexafluoride	component[1]	F	0	ALIAS
+composition	DuraniumHexafluoride	owner	DuraniumHexafluoride	0	VALID
+composition	DuraniumHexaiodide	component[0]	Dn	0	ALIAS
+composition	DuraniumHexaiodide	component[1]	I	0	ALIAS
+composition	DuraniumHexaiodide	owner	DuraniumHexaiodide	0	VALID
+composition	Dynamite	component[0]	Glyceryl	0	VALID
+composition	Dynamite	component[1]	Wood	0	VALID
+composition	Dynamite	owner	Dynamite	0	VALID
+composition	ElectricalSteel	component[0]	Steel	0	VALID
+composition	ElectricalSteel	component[1]	Si	0	ALIAS
+composition	ElectricalSteel	owner	ElectricalSteel	0	VALID
+composition	ElectrotineAlloy	component[0]	WroughtIron	0	VALID
+composition	ElectrotineAlloy	component[1]	Nikolite	0	VALID
+composition	ElectrotineAlloy	owner	ElectrotineAlloy	0	VALID
+composition	Electrum	component[0]	Ag	0	ALIAS
+composition	Electrum	component[1]	Au	0	ALIAS
+composition	Electrum	owner	Electrum	0	VALID
+composition	ElvenQuartz	component[0]	SiO2	0	ALIAS
+composition	ElvenQuartz	owner	ElvenQuartz	0	VALID
+composition	Emerald	component[0]	Al2O3	0	ALIAS
+composition	Emerald	component[1]	Be	0	ALIAS
+composition	Emerald	component[2]	SiO2	0	ALIAS
+composition	Emerald	component[3]	O	0	ALIAS
+composition	Emerald	owner	Emerald	0	VALID
+composition	EnderEye	component[0]	EnderPearl	0	VALID
+composition	EnderEye	component[1]	Blaze	0	VALID
+composition	EnderEye	owner	EnderEye	0	VALID
+composition	EnderPearl	component[0]	Be	0	ALIAS
+composition	EnderPearl	component[1]	K	0	ALIAS
+composition	EnderPearl	component[2]	N	0	ALIAS
+composition	EnderPearl	component[3]	Ma	0	ALIAS
+composition	EnderPearl	owner	EnderPearl	0	VALID
+composition	Enderium	component[0]	EnderiumBase	0	VALID
+composition	Enderium	component[1]	EnderPearl	0	VALID
+composition	Enderium	owner	Enderium	0	VALID
+composition	EnderiumBase	component[0]	Sn	0	ALIAS
+composition	EnderiumBase	component[1]	Ag	0	ALIAS
+composition	EnderiumBase	component[2]	Pt	0	ALIAS
+composition	EnderiumBase	owner	EnderiumBase	0	VALID
+composition	EnergiumCyan	component[0]	Sapphire	0	VALID
+composition	EnergiumCyan	component[1]	Nikolite	0	VALID
+composition	EnergiumCyan	owner	EnergiumCyan	0	VALID
+composition	EnergiumRed	component[0]	Sapphire	0	VALID
+composition	EnergiumRed	component[1]	Redstone	0	VALID
+composition	EnergiumRed	owner	EnergiumRed	0	VALID
+composition	Eudialyte	component[0]	Zircon	0	VALID
+composition	Eudialyte	component[1]	MnO2	0	ALIAS
+composition	Eudialyte	component[2]	Na	0	ALIAS
+composition	Eudialyte	component[3]	Ca	0	ALIAS
+composition	Eudialyte	component[4]	Cl	0	ALIAS
+composition	Eudialyte	component[5]	SiO2	0	ALIAS
+composition	Eudialyte	component[6]	O	0	ALIAS
+composition	Eudialyte	owner	Eudialyte	0	VALID
+composition	Fe2O3	component[0]	Fe	0	ALIAS
+composition	Fe2O3	component[1]	O	0	ALIAS
+composition	Fe2O3	owner	Fe2O3	0	ALIAS
+composition	FeCl2	component[0]	Fe	0	ALIAS
+composition	FeCl2	component[1]	Cl	0	ALIAS
+composition	FeCl2	owner	FeCl2	0	ALIAS
+composition	FeCl3	component[0]	Fe	0	ALIAS
+composition	FeCl3	component[1]	Cl	0	ALIAS
+composition	FeCl3	owner	FeCl3	0	ALIAS
+composition	FeO3H3	component[0]	Fe	0	ALIAS
+composition	FeO3H3	component[1]	O	0	ALIAS
+composition	FeO3H3	component[2]	H	0	ALIAS
+composition	FeO3H3	owner	FeO3H3	0	ALIAS
+composition	Ferberite	component[0]	Fe	0	ALIAS
+composition	Ferberite	component[1]	WO3	0	ALIAS
+composition	Ferberite	component[2]	O	0	ALIAS
+composition	Ferberite	owner	Ferberite	0	VALID
+composition	Ferrovanadium	component[0]	Magnetite	0	VALID
+composition	Ferrovanadium	component[1]	V2O5	0	ALIAS
+composition	Ferrovanadium	owner	Ferrovanadium	0	ALIAS
+composition	FierySteel	component[0]	Steel	0	VALID
+composition	FierySteel	component[1]	Ma	0	ALIAS
+composition	FierySteel	owner	FierySteel	0	VALID
+composition	Fireleaf	component[0]	Steel	0	VALID
+composition	Fireleaf	component[1]	Ma	0	ALIAS
+composition	Fireleaf	owner	Fireleaf	0	VALID
+composition	FlamascusSteel	component[0]	DamascusSteel	0	VALID
+composition	FlamascusSteel	component[1]	Ma	0	ALIAS
+composition	FlamascusSteel	owner	FlamascusSteel	0	VALID
+composition	Flint	component[0]	SiO2	0	ALIAS
+composition	Flint	owner	Flint	0	VALID
+composition	Fluix	component[0]	SiO2	0	ALIAS
+composition	Fluix	component[1]	Redstone	0	VALID
+composition	Fluix	owner	Fluix	0	VALID
+composition	FreshWater	component[0]	H	0	ALIAS
+composition	FreshWater	component[1]	O	0	ALIAS
+composition	FreshWater	owner	FreshWater	0	VALID
+composition	Galena	component[0]	Pb	0	ALIAS
+composition	Galena	component[1]	Ag	0	ALIAS
+composition	Galena	component[2]	S	0	ALIAS
+composition	Galena	owner	Galena	0	VALID
+composition	GarnetSand	component[0]	Almandine	0	VALID
+composition	GarnetSand	component[1]	Andradite	0	VALID
+composition	GarnetSand	component[2]	Grossular	0	VALID
+composition	GarnetSand	component[3]	Pyrope	0	VALID
+composition	GarnetSand	component[4]	Spessartine	0	VALID
+composition	GarnetSand	component[5]	Uvarovite	0	VALID
+composition	GarnetSand	owner	GarnetSand	0	VALID
+composition	Garnierite	component[0]	Ni	0	ALIAS
+composition	Garnierite	component[1]	O	0	ALIAS
+composition	Garnierite	owner	Garnierite	0	VALID
+composition	Glass	component[0]	SiO2	0	ALIAS
+composition	Glass	owner	Glass	0	VALID
+composition	Glauconite	component[0]	Al2O3	0	ALIAS
+composition	Glauconite	component[1]	K	0	ALIAS
+composition	Glauconite	component[2]	Mg	0	ALIAS
+composition	Glauconite	component[3]	H2O	0	ALIAS
+composition	Glauconite	component[4]	O	0	ALIAS
+composition	Glauconite	owner	Glauconite	0	VALID
+composition	Glowstone	component[0]	Phosphorite	0	VALID
+composition	Glowstone	component[1]	Au	0	ALIAS
+composition	Glowstone	component[2]	SiO2	0	ALIAS
+composition	Glowstone	component[3]	He	0	ALIAS
+composition	Glowstone	owner	Glowstone	0	VALID
+composition	Glycerol	component[0]	C	0	ALIAS
+composition	Glycerol	component[1]	H	0	ALIAS
+composition	Glycerol	component[2]	O	0	ALIAS
+composition	Glycerol	owner	Glycerol	0	VALID
+composition	Glyceryl	component[0]	C	0	ALIAS
+composition	Glyceryl	component[1]	H	0	ALIAS
+composition	Glyceryl	component[2]	N	0	ALIAS
+composition	Glyceryl	component[3]	O	0	ALIAS
+composition	Glyceryl	owner	Glyceryl	0	VALID
+composition	Goshenite	component[0]	Al2O3	0	ALIAS
+composition	Goshenite	component[1]	Be	0	ALIAS
+composition	Goshenite	component[2]	SiO2	0	ALIAS
+composition	Goshenite	component[3]	O	0	ALIAS
+composition	Goshenite	owner	Goshenite	0	VALID
+composition	Granite	component[0]	Biotite	0	VALID
+composition	Granite	component[1]	PotassiumFeldspar	0	VALID
+composition	Granite	component[2]	Flint	0	VALID
+composition	Granite	owner	Granite	0	VALID
+composition	GraniteBlack	component[0]	Biotite	0	VALID
+composition	GraniteBlack	component[1]	PotassiumFeldspar	0	VALID
+composition	GraniteBlack	component[2]	Flint	0	VALID
+composition	GraniteBlack	owner	GraniteBlack	0	VALID
+composition	GraniteRed	component[0]	Biotite	0	VALID
+composition	GraniteRed	component[1]	PotassiumFeldspar	0	VALID
+composition	GraniteRed	component[2]	Flint	0	VALID
+composition	GraniteRed	owner	GraniteRed	0	VALID
+composition	GraniticMineralSand	component[0]	Fe	0	ALIAS
+composition	GraniticMineralSand	component[1]	O	0	ALIAS
+composition	GraniticMineralSand	owner	GraniticMineralSand	0	VALID
+composition	Graphene	component[0]	C	0	ALIAS
+composition	Graphene	owner	Graphene	0	VALID
+composition	Graphite	component[0]	C	0	ALIAS
+composition	Graphite	owner	Graphite	0	VALID
+composition	GrayVitriol	component[0]	Mn	0	ALIAS
+composition	GrayVitriol	component[1]	S	0	ALIAS
+composition	GrayVitriol	component[2]	O	0	ALIAS
+composition	GrayVitriol	owner	GrayVitriol	0	VALID
+composition	Greatwood	component[0]	C	0	ALIAS
+composition	Greatwood	component[1]	H2O	0	ALIAS
+composition	Greatwood	owner	Greatwood	0	VALID
+composition	GreenSapphire	component[0]	Al2O3	0	ALIAS
+composition	GreenSapphire	component[1]	Mg	0	ALIAS
+composition	GreenSapphire	owner	GreenSapphire	0	VALID
+composition	GreenVitriol	component[0]	Fe	0	ALIAS
+composition	GreenVitriol	component[1]	S	0	ALIAS
+composition	GreenVitriol	component[2]	O	0	ALIAS
+composition	GreenVitriol	owner	GreenVitriol	0	VALID
+composition	Grossular	component[0]	Al2O3	0	ALIAS
+composition	Grossular	component[1]	Ca	0	ALIAS
+composition	Grossular	component[2]	SiO2	0	ALIAS
+composition	Grossular	component[3]	O	0	ALIAS
+composition	Grossular	owner	Grossular	0	VALID
+composition	Gunpowder	component[0]	C	0	ALIAS
+composition	Gunpowder	component[1]	S	0	ALIAS
+composition	Gunpowder	component[2]	NaNO3	0	ALIAS
+composition	Gunpowder	owner	Gunpowder	0	VALID
+composition	Gypsum	component[0]	CaSO4	0	ALIAS
+composition	Gypsum	component[1]	H2O	0	ALIAS
+composition	Gypsum	owner	Gypsum	0	VALID
+composition	H2O	component[0]	H	0	ALIAS
+composition	H2O	component[1]	O	0	ALIAS
+composition	H2O	owner	H2O	0	ALIAS
+composition	H2O2	component[0]	H	0	ALIAS
+composition	H2O2	component[1]	O	0	ALIAS
+composition	H2O2	owner	H2O2	0	ALIAS
+composition	H2S	component[0]	H	0	ALIAS
+composition	H2S	component[1]	S	0	ALIAS
+composition	H2S	owner	H2S	0	ALIAS
+composition	H2S2O7	component[0]	H	0	ALIAS
+composition	H2S2O7	component[1]	S	0	ALIAS
+composition	H2S2O7	component[2]	O	0	ALIAS
+composition	H2S2O7	owner	H2S2O7	0	ALIAS
+composition	H2SO4	component[0]	H	0	ALIAS
+composition	H2SO4	component[1]	S	0	ALIAS
+composition	H2SO4	component[2]	O	0	ALIAS
+composition	H2SO4	owner	H2SO4	0	ALIAS
+composition	H2SiF6	component[0]	H	0	ALIAS
+composition	H2SiF6	component[1]	Si	0	ALIAS
+composition	H2SiF6	component[2]	F	0	ALIAS
+composition	H2SiF6	owner	H2SiF6	0	ALIAS
+composition	H2WO4	component[0]	H	0	ALIAS
+composition	H2WO4	component[1]	W	0	ALIAS
+composition	H2WO4	component[2]	O	0	ALIAS
+composition	H2WO4	owner	H2WO4	0	ALIAS
+composition	H3BO3	component[0]	H	0	ALIAS
+composition	H3BO3	component[1]	B	0	ALIAS
+composition	H3BO3	component[2]	O	0	ALIAS
+composition	H3BO3	owner	H3BO3	0	ALIAS
+composition	HCl	component[0]	H	0	ALIAS
+composition	HCl	component[1]	Cl	0	ALIAS
+composition	HCl	owner	HCl	0	ALIAS
+composition	HDO	component[0]	H	0	ALIAS
+composition	HDO	component[1]	D	0	ALIAS
+composition	HDO	component[2]	O	0	ALIAS
+composition	HDO	owner	HDO	0	ALIAS
+composition	HF	component[0]	H	0	ALIAS
+composition	HF	component[1]	F	0	ALIAS
+composition	HF	owner	HF	0	ALIAS
+composition	HNO3	component[0]	H	0	ALIAS
+composition	HNO3	component[1]	N	0	ALIAS
+composition	HNO3	component[2]	O	0	ALIAS
+composition	HNO3	owner	HNO3	0	ALIAS
+composition	HSSE	component[0]	HSSG	0	VALID
+composition	HSSE	component[1]	Co	0	ALIAS
+composition	HSSE	component[2]	Mn	0	ALIAS
+composition	HSSE	component[3]	Si	0	ALIAS
+composition	HSSE	owner	HSSE	0	VALID
+composition	HSSG	component[0]	TungstenSteel	0	ALIAS
+composition	HSSG	component[1]	Cr	0	ALIAS
+composition	HSSG	component[2]	Mo	0	ALIAS
+composition	HSSG	component[3]	V	0	ALIAS
+composition	HSSG	owner	HSSG	0	VALID
+composition	HSSS	component[0]	HSSG	0	VALID
+composition	HSSS	component[1]	Osmiridium	0	VALID
+composition	HSSS	component[2]	Ir	0	ALIAS
+composition	HSSS	owner	HSSS	0	VALID
+composition	HeNe	component[0]	He	0	ALIAS
+composition	HeNe	component[1]	Ne	0	ALIAS
+composition	HeNe	owner	HeNe	0	ALIAS
+composition	Heliodor	component[0]	Al2O3	0	ALIAS
+composition	Heliodor	component[1]	Be	0	ALIAS
+composition	Heliodor	component[2]	SiO2	0	ALIAS
+composition	Heliodor	component[3]	O	0	ALIAS
+composition	Heliodor	owner	Heliodor	0	VALID
+composition	HolyWater	component[0]	H	0	ALIAS
+composition	HolyWater	component[1]	O	0	ALIAS
+composition	HolyWater	owner	HolyWater	0	VALID
+composition	Huebnerite	component[0]	Mn	0	ALIAS
+composition	Huebnerite	component[1]	WO3	0	ALIAS
+composition	Huebnerite	component[2]	O	0	ALIAS
+composition	Huebnerite	owner	Huebnerite	0	VALID
+composition	HydratedCoal	component[0]	Coal	0	VALID
+composition	HydratedCoal	component[1]	H2O	0	ALIAS
+composition	HydratedCoal	owner	HydratedCoal	0	VALID
+composition	Ice	component[0]	H	0	ALIAS
+composition	Ice	component[1]	O	0	ALIAS
+composition	Ice	owner	Ice	0	VALID
+composition	Ilmenite	component[0]	Fe	0	ALIAS
+composition	Ilmenite	component[1]	Ti	0	ALIAS
+composition	Ilmenite	component[2]	O	0	ALIAS
+composition	Ilmenite	owner	Ilmenite	0	VALID
+composition	Invar	component[0]	WroughtIron	0	VALID
+composition	Invar	component[1]	Ni	0	ALIAS
+composition	Invar	owner	Invar	0	VALID
+composition	Iridiron	component[0]	Ir	0	ALIAS
+composition	Iridiron	component[1]	Fe	0	ALIAS
+composition	Iridiron	owner	Iridiron	0	RETIRED
+composition	IridironReinforced	component[0]	Ir	0	ALIAS
+composition	IridironReinforced	component[1]	Fe	0	ALIAS
+composition	IridironReinforced	owner	IridironReinforced	0	RETIRED
+composition	Iritanium	component[0]	Ir	0	ALIAS
+composition	Iritanium	component[1]	Ti	0	ALIAS
+composition	Iritanium	owner	Iritanium	0	ALIAS
+composition	IronCast	component[0]	Fe	0	ALIAS
+composition	IronCast	owner	IronCast	0	ALIAS
+composition	IronMagnetic	component[0]	Fe	0	ALIAS
+composition	IronMagnetic	owner	IronMagnetic	0	VALID
+composition	K2CO3	component[0]	K	0	ALIAS
+composition	K2CO3	component[1]	CO3	0	ALIAS
+composition	K2CO3	owner	K2CO3	0	ALIAS
+composition	K2S	component[0]	K	0	ALIAS
+composition	K2S	component[1]	S	0	ALIAS
+composition	K2S	owner	K2S	0	ALIAS
+composition	K2S2O7	component[0]	K	0	ALIAS
+composition	K2S2O7	component[1]	S	0	ALIAS
+composition	K2S2O7	component[2]	O	0	ALIAS
+composition	K2S2O7	owner	K2S2O7	0	ALIAS
+composition	K2SO3	component[0]	K	0	ALIAS
+composition	K2SO3	component[1]	S	0	ALIAS
+composition	K2SO3	component[2]	O	0	ALIAS
+composition	K2SO3	owner	K2SO3	0	ALIAS
+composition	K2SO4	component[0]	K	0	ALIAS
+composition	K2SO4	component[1]	S	0	ALIAS
+composition	K2SO4	component[2]	O	0	ALIAS
+composition	K2SO4	owner	K2SO4	0	ALIAS
+composition	K2TaF7	component[0]	K	0	ALIAS
+composition	K2TaF7	component[1]	Ta	0	ALIAS
+composition	K2TaF7	component[2]	F	0	ALIAS
+composition	K2TaF7	owner	K2TaF7	0	ALIAS
+composition	KAlO2	component[0]	K	0	ALIAS
+composition	KAlO2	component[1]	Al	0	ALIAS
+composition	KAlO2	component[2]	O	0	ALIAS
+composition	KAlO2	owner	KAlO2	0	ALIAS
+composition	KCl	component[0]	K	0	ALIAS
+composition	KCl	component[1]	Cl	0	ALIAS
+composition	KCl	owner	KCl	0	ALIAS
+composition	KF	component[0]	K	0	ALIAS
+composition	KF	component[1]	F	0	ALIAS
+composition	KF	owner	KF	0	ALIAS
+composition	KHSO4	component[0]	K	0	ALIAS
+composition	KHSO4	component[1]	H	0	ALIAS
+composition	KHSO4	component[2]	S	0	ALIAS
+composition	KHSO4	component[3]	O	0	ALIAS
+composition	KHSO4	owner	KHSO4	0	ALIAS
+composition	KIO3	component[0]	K	0	ALIAS
+composition	KIO3	component[1]	I	0	ALIAS
+composition	KIO3	component[2]	O	0	ALIAS
+composition	KIO3	owner	KIO3	0	ALIAS
+composition	KNO3	component[0]	K	0	ALIAS
+composition	KNO3	component[1]	N	0	ALIAS
+composition	KNO3	component[2]	O	0	ALIAS
+composition	KNO3	owner	KNO3	0	ALIAS
+composition	KOH	component[0]	K	0	ALIAS
+composition	KOH	component[1]	O	0	ALIAS
+composition	KOH	component[2]	H	0	ALIAS
+composition	KOH	owner	KOH	0	ALIAS
+composition	KSO4	component[0]	K	0	ALIAS
+composition	KSO4	component[1]	S	0	ALIAS
+composition	KSO4	component[2]	O	0	ALIAS
+composition	KSO4	owner	KSO4	0	ALIAS
+composition	Kanthal	component[0]	WroughtIron	0	VALID
+composition	Kanthal	component[1]	Al	0	ALIAS
+composition	Kanthal	component[2]	Cr	0	ALIAS
+composition	Kanthal	owner	Kanthal	0	VALID
+composition	Kesterite	component[0]	Cu	0	ALIAS
+composition	Kesterite	component[1]	Zn	0	ALIAS
+composition	Kesterite	component[2]	Sn	0	ALIAS
+composition	Kesterite	component[3]	S	0	ALIAS
+composition	Kesterite	owner	Kesterite	0	VALID
+composition	Knightmetal	component[0]	Steel	0	VALID
+composition	Knightmetal	component[1]	Ma	0	ALIAS
+composition	Knightmetal	owner	Knightmetal	0	VALID
+composition	Komatiite	component[0]	Peridot	0	VALID
+composition	Komatiite	component[1]	MgCO3	0	ALIAS
+composition	Komatiite	component[2]	Flint	0	VALID
+composition	Komatiite	component[3]	DarkAsh	0	ALIAS
+composition	Komatiite	owner	Komatiite	0	VALID
+composition	Kyanite	component[0]	Al2O3	0	ALIAS
+composition	Kyanite	component[1]	SiO2	0	ALIAS
+composition	Kyanite	owner	Kyanite	0	VALID
+composition	Lapis	component[0]	Lazurite	0	VALID
+composition	Lapis	component[1]	Sodalite	0	VALID
+composition	Lapis	component[2]	Pyrite	0	VALID
+composition	Lapis	component[3]	CaCO3	0	ALIAS
+composition	Lapis	owner	Lapis	0	VALID
+composition	Lazurite	component[0]	Al2O3	0	ALIAS
+composition	Lazurite	component[1]	SiO2	0	ALIAS
+composition	Lazurite	component[2]	Ca	0	ALIAS
+composition	Lazurite	component[3]	Na	0	ALIAS
+composition	Lazurite	owner	Lazurite	0	VALID
+composition	Lepidolite	component[0]	Al2O3	0	ALIAS
+composition	Lepidolite	component[1]	K	0	ALIAS
+composition	Lepidolite	component[2]	Li	0	ALIAS
+composition	Lepidolite	component[3]	F	0	ALIAS
+composition	Lepidolite	component[4]	O	0	ALIAS
+composition	Lepidolite	owner	Lepidolite	0	VALID
+composition	LiCl	component[0]	Li	0	ALIAS
+composition	LiCl	component[1]	Cl	0	ALIAS
+composition	LiCl	owner	LiCl	0	ALIAS
+composition	LiClO3	component[0]	Li	0	ALIAS
+composition	LiClO3	component[1]	Cl	0	ALIAS
+composition	LiClO3	component[2]	O	0	ALIAS
+composition	LiClO3	owner	LiClO3	0	ALIAS
+composition	LiClO4	component[0]	Li	0	ALIAS
+composition	LiClO4	component[1]	Cl	0	ALIAS
+composition	LiClO4	component[2]	O	0	ALIAS
+composition	LiClO4	owner	LiClO4	0	ALIAS
+composition	LiOH	component[0]	Li	0	ALIAS
+composition	LiOH	component[1]	O	0	ALIAS
+composition	LiOH	component[2]	H	0	ALIAS
+composition	LiOH	owner	LiOH	0	ALIAS
+composition	Lignite	component[0]	C	0	ALIAS
+composition	Lignite	component[1]	H2O	0	ALIAS
+composition	Lignite	component[2]	DarkAsh	0	ALIAS
+composition	Lignite	owner	Lignite	0	VALID
+composition	LigniteCoke	component[0]	C	0	ALIAS
+composition	LigniteCoke	component[1]	DarkAsh	0	ALIAS
+composition	LigniteCoke	owner	LigniteCoke	0	VALID
+composition	Limestone	component[0]	CaCO3	0	ALIAS
+composition	Limestone	owner	Limestone	0	VALID
+composition	LiveRoot	component[0]	Wood	0	VALID
+composition	LiveRoot	component[1]	Ma	0	ALIAS
+composition	LiveRoot	owner	LiveRoot	0	VALID
+composition	Livingwood	component[0]	C	0	ALIAS
+composition	Livingwood	component[1]	H2O	0	ALIAS
+composition	Livingwood	owner	Livingwood	0	VALID
+composition	Lumium	component[0]	Sn	0	ALIAS
+composition	Lumium	component[1]	Ag	0	ALIAS
+composition	Lumium	component[2]	Glowstone	0	VALID
+composition	Lumium	owner	Lumium	0	VALID
+composition	Magnalium	component[0]	Mg	0	ALIAS
+composition	Magnalium	component[1]	Al	0	ALIAS
+composition	Magnalium	owner	Magnalium	0	VALID
+composition	Magnetite	component[0]	Fe	0	ALIAS
+composition	Magnetite	component[1]	O	0	ALIAS
+composition	Magnetite	owner	Magnetite	0	VALID
+composition	Malachite	component[0]	Cu	0	ALIAS
+composition	Malachite	component[1]	CO3	0	ALIAS
+composition	Malachite	component[2]	H	0	ALIAS
+composition	Malachite	component[3]	O	0	ALIAS
+composition	Malachite	owner	Malachite	0	VALID
+composition	ManaDiamond	component[0]	C	0	ALIAS
+composition	ManaDiamond	component[1]	Ma	0	ALIAS
+composition	ManaDiamond	owner	ManaDiamond	0	VALID
+composition	Manasteel	component[0]	Fe	0	ALIAS
+composition	Manasteel	component[1]	Ma	0	ALIAS
+composition	Manasteel	owner	Manasteel	0	VALID
+composition	Marble	component[0]	Mg	0	ALIAS
+composition	Marble	component[1]	CaCO3	0	ALIAS
+composition	Marble	owner	Marble	0	VALID
+composition	Maxixe	component[0]	Al2O3	0	ALIAS
+composition	Maxixe	component[1]	Be	0	ALIAS
+composition	Maxixe	component[2]	SiO2	0	ALIAS
+composition	Maxixe	component[3]	O	0	ALIAS
+composition	Maxixe	owner	Maxixe	0	VALID
+composition	MethaneIce	component[0]	CH4	0	ALIAS
+composition	MethaneIce	component[1]	Ice	0	VALID
+composition	MethaneIce	owner	MethaneIce	0	VALID
+composition	MgCO3	component[0]	Mg	0	ALIAS
+composition	MgCO3	component[1]	CO3	0	ALIAS
+composition	MgCO3	owner	MgCO3	0	ALIAS
+composition	MgCl2	component[0]	Mg	0	ALIAS
+composition	MgCl2	component[1]	Cl	0	ALIAS
+composition	MgCl2	owner	MgCl2	0	ALIAS
+composition	Mica	component[0]	Al2O3	0	ALIAS
+composition	Mica	component[1]	K	0	ALIAS
+composition	Mica	component[2]	SiO2	0	ALIAS
+composition	Mica	component[3]	F	0	ALIAS
+composition	Mica	owner	Mica	0	VALID
+composition	MilkyQuartz	component[0]	SiO2	0	ALIAS
+composition	MilkyQuartz	owner	MilkyQuartz	0	VALID
+composition	Mirabilite	component[0]	Na2SO4	0	ALIAS
+composition	Mirabilite	component[1]	H2O	0	ALIAS
+composition	Mirabilite	owner	Mirabilite	0	VALID
+composition	MnCl2	component[0]	Mn	0	ALIAS
+composition	MnCl2	component[1]	Cl	0	ALIAS
+composition	MnCl2	owner	MnCl2	0	ALIAS
+composition	MnO2	component[0]	Mn	0	ALIAS
+composition	MnO2	component[1]	O	0	ALIAS
+composition	MnO2	owner	MnO2	0	ALIAS
+composition	Molybdenite	component[0]	Mo	0	ALIAS
+composition	Molybdenite	component[1]	S	0	ALIAS
+composition	Molybdenite	owner	Molybdenite	0	VALID
+composition	Monazite	component[0]	RareEarth	0	VALID
+composition	Monazite	component[1]	PO4	0	ALIAS
+composition	Monazite	owner	Monazite	0	VALID
+composition	Morganite	component[0]	Al2O3	0	ALIAS
+composition	Morganite	component[1]	Be	0	ALIAS
+composition	Morganite	component[2]	SiO2	0	ALIAS
+composition	Morganite	component[3]	O	0	ALIAS
+composition	Morganite	owner	Morganite	0	VALID
+composition	NH3	component[0]	N	0	ALIAS
+composition	NH3	component[1]	H	0	ALIAS
+composition	NH3	owner	NH3	0	ALIAS
+composition	NO	component[0]	N	0	ALIAS
+composition	NO	component[1]	O	0	ALIAS
+composition	NO	owner	NO	0	ALIAS
+composition	NO2	component[0]	N	0	ALIAS
+composition	NO2	component[1]	O	0	ALIAS
+composition	NO2	owner	NO2	0	ALIAS
+composition	Na2CO3	component[0]	Na	0	ALIAS
+composition	Na2CO3	component[1]	CO3	0	ALIAS
+composition	Na2CO3	owner	Na2CO3	0	ALIAS
+composition	Na2S	component[0]	Na	0	ALIAS
+composition	Na2S	component[1]	S	0	ALIAS
+composition	Na2S	owner	Na2S	0	ALIAS
+composition	Na2S2O7	component[0]	Na	0	ALIAS
+composition	Na2S2O7	component[1]	S	0	ALIAS
+composition	Na2S2O7	component[2]	O	0	ALIAS
+composition	Na2S2O7	owner	Na2S2O7	0	ALIAS
+composition	Na2SO3	component[0]	Na	0	ALIAS
+composition	Na2SO3	component[1]	S	0	ALIAS
+composition	Na2SO3	component[2]	O	0	ALIAS
+composition	Na2SO3	owner	Na2SO3	0	ALIAS
+composition	Na2SO4	component[0]	Na	0	ALIAS
+composition	Na2SO4	component[1]	S	0	ALIAS
+composition	Na2SO4	component[2]	O	0	ALIAS
+composition	Na2SO4	owner	Na2SO4	0	ALIAS
+composition	Na3AlF6	component[0]	Na	0	ALIAS
+composition	Na3AlF6	component[1]	Al	0	ALIAS
+composition	Na3AlF6	component[2]	F	0	ALIAS
+composition	Na3AlF6	owner	Na3AlF6	0	ALIAS
+composition	NaAlO2	component[0]	Na	0	ALIAS
+composition	NaAlO2	component[1]	Al	0	ALIAS
+composition	NaAlO2	component[2]	O	0	ALIAS
+composition	NaAlO2	owner	NaAlO2	0	ALIAS
+composition	NaCl	component[0]	Na	0	ALIAS
+composition	NaCl	component[1]	Cl	0	ALIAS
+composition	NaCl	owner	NaCl	0	ALIAS
+composition	NaF	component[0]	Na	0	ALIAS
+composition	NaF	component[1]	F	0	ALIAS
+composition	NaF	owner	NaF	0	ALIAS
+composition	NaHCO3	component[0]	Na	0	ALIAS
+composition	NaHCO3	component[1]	H	0	ALIAS
+composition	NaHCO3	component[2]	C	0	ALIAS
+composition	NaHCO3	component[3]	O	0	ALIAS
+composition	NaHCO3	owner	NaHCO3	0	ALIAS
+composition	NaHSO4	component[0]	Na	0	ALIAS
+composition	NaHSO4	component[1]	H	0	ALIAS
+composition	NaHSO4	component[2]	S	0	ALIAS
+composition	NaHSO4	component[3]	O	0	ALIAS
+composition	NaHSO4	owner	NaHSO4	0	ALIAS
+composition	NaNO3	component[0]	Na	0	ALIAS
+composition	NaNO3	component[1]	N	0	ALIAS
+composition	NaNO3	component[2]	O	0	ALIAS
+composition	NaNO3	owner	NaNO3	0	ALIAS
+composition	NaOH	component[0]	Na	0	ALIAS
+composition	NaOH	component[1]	O	0	ALIAS
+composition	NaOH	component[2]	H	0	ALIAS
+composition	NaOH	owner	NaOH	0	ALIAS
+composition	NaSO4	component[0]	Na	0	ALIAS
+composition	NaSO4	component[1]	S	0	ALIAS
+composition	NaSO4	component[2]	O	0	ALIAS
+composition	NaSO4	owner	NaSO4	0	ALIAS
+composition	Nb2O5	component[0]	Nb	0	ALIAS
+composition	Nb2O5	component[1]	O	0	ALIAS
+composition	Nb2O5	owner	Nb2O5	0	ALIAS
+composition	NeodymiumMagnetic	component[0]	Nd	0	ALIAS
+composition	NeodymiumMagnetic	owner	NeodymiumMagnetic	0	VALID
+composition	NetherQuartz	component[0]	SiO2	0	ALIAS
+composition	NetherQuartz	owner	NetherQuartz	0	VALID
+composition	Netherite	component[0]	Au	0	ALIAS
+composition	Netherite	component[1]	AncientDebris	0	VALID
+composition	Netherite	owner	Netherite	0	VALID
+composition	NetherizedDiamond	component[0]	Netherite	0	VALID
+composition	NetherizedDiamond	component[1]	Diamond	0	VALID
+composition	NetherizedDiamond	owner	NetherizedDiamond	0	VALID
+composition	Nichrome	component[0]	Ni	0	ALIAS
+composition	Nichrome	component[1]	Cr	0	ALIAS
+composition	Nichrome	owner	Nichrome	0	VALID
+composition	NikolineAlloy	component[0]	Si	0	ALIAS
+composition	NikolineAlloy	component[1]	Nikolite	0	VALID
+composition	NikolineAlloy	owner	NikolineAlloy	0	VALID
+composition	Nikolite	component[0]	Sodalite	0	VALID
+composition	Nikolite	component[1]	Cu	0	ALIAS
+composition	Nikolite	component[2]	SiO2	0	ALIAS
+composition	Nikolite	component[3]	Ar	0	ALIAS
+composition	Nikolite	owner	Nikolite	0	VALID
+composition	NiobiumTitanium	component[0]	Nb	0	ALIAS
+composition	NiobiumTitanium	component[1]	Ti	0	ALIAS
+composition	NiobiumTitanium	owner	NiobiumTitanium	0	VALID
+composition	Niter	component[0]	KNO3	0	ALIAS
+composition	Niter	component[1]	NaNO3	0	ALIAS
+composition	Niter	owner	Niter	0	VALID
+composition	NitroCarbon	component[0]	N	0	ALIAS
+composition	NitroCarbon	component[1]	C	0	ALIAS
+composition	NitroCarbon	owner	NitroCarbon	0	VALID
+composition	NitroFuel	component[0]	Glyceryl	0	VALID
+composition	NitroFuel	component[1]	Fuel	0	VALID
+composition	NitroFuel	owner	NitroFuel	0	VALID
+composition	Obsidian	component[0]	Mg	0	ALIAS
+composition	Obsidian	component[1]	Fe	0	ALIAS
+composition	Obsidian	component[2]	SiO2	0	ALIAS
+composition	Obsidian	component[3]	O	0	ALIAS
+composition	Obsidian	owner	Obsidian	0	VALID
+composition	Oilshale	component[0]	CaCO3	0	ALIAS
+composition	Oilshale	component[1]	MilkyQuartz	0	VALID
+composition	Oilshale	component[2]	Clay	0	VALID
+composition	Oilshale	owner	Oilshale	0	ALIAS
+composition	OnyxBlack	component[0]	SiO2	0	ALIAS
+composition	OnyxBlack	owner	OnyxBlack	0	VALID
+composition	OnyxRed	component[0]	SiO2	0	ALIAS
+composition	OnyxRed	owner	OnyxRed	0	VALID
+composition	Opal	component[0]	SiO2	0	ALIAS
+composition	Opal	owner	Opal	0	VALID
+composition	OrangeSapphire	component[0]	Al2O3	0	ALIAS
+composition	OrangeSapphire	component[1]	Cu	0	ALIAS
+composition	OrangeSapphire	owner	OrangeSapphire	0	VALID
+composition	Osmiridium	component[0]	Os	0	ALIAS
+composition	Osmiridium	component[1]	Ir	0	ALIAS
+composition	Osmiridium	owner	Osmiridium	0	VALID
+composition	OsmiumTetroxide	component[0]	Os	0	ALIAS
+composition	OsmiumTetroxide	component[1]	O	0	ALIAS
+composition	OsmiumTetroxide	owner	OsmiumTetroxide	0	RETIRED
+composition	PO4	component[0]	P	0	ALIAS
+composition	PO4	component[1]	O	0	ALIAS
+composition	PO4	owner	PO4	0	ALIAS
+composition	PVC	component[0]	C	0	ALIAS
+composition	PVC	component[1]	H	0	ALIAS
+composition	PVC	owner	PVC	0	VALID
+composition	Pentlandite	component[0]	Ni	0	ALIAS
+composition	Pentlandite	component[1]	S	0	ALIAS
+composition	Pentlandite	owner	Pentlandite	0	VALID
+composition	Peridot	component[0]	SiO2	0	ALIAS
+composition	Peridot	component[1]	Fe	0	ALIAS
+composition	Peridot	component[2]	Mg	0	ALIAS
+composition	Peridot	owner	Peridot	0	VALID
+composition	Perlite	component[0]	Obsidian	0	VALID
+composition	Perlite	component[1]	H2O	0	ALIAS
+composition	Perlite	owner	Perlite	0	VALID
+composition	PetCoke	component[0]	C	0	ALIAS
+composition	PetCoke	component[1]	S	0	ALIAS
+composition	PetCoke	owner	PetCoke	0	ALIAS
+composition	PetrifiedWood	component[0]	Wood	0	VALID
+composition	PetrifiedWood	owner	PetrifiedWood	0	VALID
+composition	Petrotheum	component[0]	Clay	0	VALID
+composition	Petrotheum	component[1]	Obsidian	0	VALID
+composition	Petrotheum	component[2]	Redstone	0	VALID
+composition	Petrotheum	component[3]	Basalz	0	VALID
+composition	Petrotheum	owner	Petrotheum	0	RETIRED
+composition	Phosphorite	component[0]	Ca	0	ALIAS
+composition	Phosphorite	component[1]	PO4	0	ALIAS
+composition	Phosphorite	component[2]	F	0	ALIAS
+composition	Phosphorite	owner	Phosphorite	0	VALID
+composition	Phosphorus	component[0]	Ca	0	ALIAS
+composition	Phosphorus	component[1]	PO4	0	ALIAS
+composition	Phosphorus	owner	Phosphorus	0	VALID
+composition	PhosphorusBlue	component[0]	Ca	0	ALIAS
+composition	PhosphorusBlue	component[1]	PO4	0	ALIAS
+composition	PhosphorusBlue	owner	PhosphorusBlue	0	ALIAS
+composition	PhosphorusRed	component[0]	Ca	0	ALIAS
+composition	PhosphorusRed	component[1]	PO4	0	ALIAS
+composition	PhosphorusRed	owner	PhosphorusRed	0	ALIAS
+composition	PhosphorusWhite	component[0]	Ca	0	ALIAS
+composition	PhosphorusWhite	component[1]	PO4	0	ALIAS
+composition	PhosphorusWhite	owner	PhosphorusWhite	0	ALIAS
+composition	Pinalite	component[0]	Pb	0	ALIAS
+composition	Pinalite	component[1]	WO3	0	ALIAS
+composition	Pinalite	component[2]	Cl	0	ALIAS
+composition	Pinalite	component[3]	O	0	ALIAS
+composition	Pinalite	owner	Pinalite	0	VALID
+composition	PinkVitriol	component[0]	Mg	0	ALIAS
+composition	PinkVitriol	component[1]	S	0	ALIAS
+composition	PinkVitriol	component[2]	O	0	ALIAS
+composition	PinkVitriol	owner	PinkVitriol	0	VALID
+composition	Pitchblende	component[0]	Uraninite	0	VALID
+composition	Pitchblende	component[1]	Th	0	ALIAS
+composition	Pitchblende	component[2]	Pb	0	ALIAS
+composition	Pitchblende	owner	Pitchblende	0	VALID
+composition	Plastic	component[0]	C	0	ALIAS
+composition	Plastic	component[1]	H	0	ALIAS
+composition	Plastic	owner	Plastic	0	VALID
+composition	Pollucite	component[0]	Al2O3	0	ALIAS
+composition	Pollucite	component[1]	Cs	0	ALIAS
+composition	Pollucite	component[2]	SiO2	0	ALIAS
+composition	Pollucite	component[3]	H2O	0	ALIAS
+composition	Pollucite	component[4]	O	0	ALIAS
+composition	Pollucite	owner	Pollucite	0	VALID
+composition	Porcelain	component[0]	Ceramic	0	VALID
+composition	Porcelain	component[1]	SiO2	0	ALIAS
+composition	Porcelain	component[2]	PotassiumFeldspar	0	VALID
+composition	Porcelain	owner	Porcelain	0	VALID
+composition	PotassiumFeldspar	component[0]	K	0	ALIAS
+composition	PotassiumFeldspar	component[1]	Al2O3	0	ALIAS
+composition	PotassiumFeldspar	component[2]	SiO2	0	ALIAS
+composition	PotassiumFeldspar	component[3]	O	0	ALIAS
+composition	PotassiumFeldspar	owner	PotassiumFeldspar	0	VALID
+composition	Powellite	component[0]	Ca	0	ALIAS
+composition	Powellite	component[1]	Mo	0	ALIAS
+composition	Powellite	component[2]	O	0	ALIAS
+composition	Powellite	owner	Powellite	0	VALID
+composition	Pumice	component[0]	Peridot	0	VALID
+composition	Pumice	component[1]	MgCO3	0	ALIAS
+composition	Pumice	component[2]	Flint	0	VALID
+composition	Pumice	component[3]	DarkAsh	0	ALIAS
+composition	Pumice	owner	Pumice	0	VALID
+composition	PurpleSapphire	component[0]	Al2O3	0	ALIAS
+composition	PurpleSapphire	component[1]	V	0	ALIAS
+composition	PurpleSapphire	owner	PurpleSapphire	0	VALID
+composition	Pyrite	component[0]	Fe	0	ALIAS
+composition	Pyrite	component[1]	S	0	ALIAS
+composition	Pyrite	owner	Pyrite	0	VALID
+composition	Pyrope	component[0]	Al2O3	0	ALIAS
+composition	Pyrope	component[1]	Mg	0	ALIAS
+composition	Pyrope	component[2]	SiO2	0	ALIAS
+composition	Pyrope	component[3]	O	0	ALIAS
+composition	Pyrope	owner	Pyrope	0	VALID
+composition	Pyrotheum	component[0]	Coal	0	VALID
+composition	Pyrotheum	component[1]	S	0	ALIAS
+composition	Pyrotheum	component[2]	Redstone	0	VALID
+composition	Pyrotheum	component[3]	Blaze	0	VALID
+composition	Pyrotheum	owner	Pyrotheum	0	RETIRED
+composition	QuartzSand	component[0]	CertusQuartz	0	VALID
+composition	QuartzSand	component[1]	MilkyQuartz	0	VALID
+composition	QuartzSand	owner	QuartzSand	0	VALID
+composition	Quicklime	component[0]	Ca	0	ALIAS
+composition	Quicklime	component[1]	O	0	ALIAS
+composition	Quicklime	owner	Quicklime	0	VALID
+composition	Realgar	component[0]	As	0	ALIAS
+composition	Realgar	component[1]	S	0	ALIAS
+composition	Realgar	owner	Realgar	0	VALID
+composition	RedAlloy	component[0]	Cu	0	ALIAS
+composition	RedAlloy	component[1]	Redstone	0	VALID
+composition	RedAlloy	owner	RedAlloy	0	VALID
+composition	RedQuartz	component[0]	SiO2	0	ALIAS
+composition	RedQuartz	owner	RedQuartz	0	VALID
+composition	RedSteel	component[0]	RoseGold	0	VALID
+composition	RedSteel	component[1]	Brass	0	VALID
+composition	RedSteel	component[2]	Steel	0	VALID
+composition	RedSteel	component[3]	BlackSteel	0	VALID
+composition	RedSteel	owner	RedSteel	0	VALID
+composition	RedVitriol	component[0]	Co	0	ALIAS
+composition	RedVitriol	component[1]	S	0	ALIAS
+composition	RedVitriol	component[2]	O	0	ALIAS
+composition	RedVitriol	owner	RedVitriol	0	VALID
+composition	Redstone	component[0]	Pyrite	0	VALID
+composition	Redstone	component[1]	Hg	0	ALIAS
+composition	Redstone	component[2]	SiO2	0	ALIAS
+composition	Redstone	component[3]	Ruby	0	VALID
+composition	Redstone	owner	Redstone	0	VALID
+composition	RedstoneAlloy	component[0]	Si	0	ALIAS
+composition	RedstoneAlloy	component[1]	Redstone	0	VALID
+composition	RedstoneAlloy	owner	RedstoneAlloy	0	VALID
+composition	RoseGold	component[0]	Cu	0	ALIAS
+composition	RoseGold	component[1]	Au	0	ALIAS
+composition	RoseGold	owner	RoseGold	0	VALID
+composition	Rubber	component[0]	C	0	ALIAS
+composition	Rubber	component[1]	H	0	ALIAS
+composition	Rubber	owner	Rubber	0	VALID
+composition	Ruby	component[0]	Al2O3	0	ALIAS
+composition	Ruby	component[1]	Cr	0	ALIAS
+composition	Ruby	owner	Ruby	0	VALID
+composition	Russellite	component[0]	Bi	0	ALIAS
+composition	Russellite	component[1]	WO3	0	ALIAS
+composition	Russellite	component[2]	O	0	ALIAS
+composition	Russellite	owner	Russellite	0	VALID
+composition	SO2	component[0]	S	0	ALIAS
+composition	SO2	component[1]	O	0	ALIAS
+composition	SO2	owner	SO2	0	ALIAS
+composition	SO3	component[0]	S	0	ALIAS
+composition	SO3	component[1]	O	0	ALIAS
+composition	SO3	owner	SO3	0	ALIAS
+composition	SaltWater	component[0]	H2O	0	ALIAS
+composition	SaltWater	component[1]	NaCl	0	ALIAS
+composition	SaltWater	owner	SaltWater	0	ALIAS
+composition	SaltedWater	component[0]	H2O	0	ALIAS
+composition	SaltedWater	component[1]	KCl	0	ALIAS
+composition	SaltedWater	owner	SaltedWater	0	VALID
+composition	Sapphire	component[0]	Al2O3	0	ALIAS
+composition	Sapphire	owner	Sapphire	0	VALID
+composition	Scheelite	component[0]	Ca	0	ALIAS
+composition	Scheelite	component[1]	WO3	0	ALIAS
+composition	Scheelite	component[2]	O	0	ALIAS
+composition	Scheelite	owner	Scheelite	0	VALID
+composition	SeaWater	component[0]	H	0	ALIAS
+composition	SeaWater	component[1]	O	0	ALIAS
+composition	SeaWater	owner	SeaWater	0	VALID
+composition	Shale	component[0]	CaCO3	0	ALIAS
+composition	Shale	component[1]	MilkyQuartz	0	VALID
+composition	Shale	component[2]	Clay	0	VALID
+composition	Shale	owner	Shale	0	VALID
+composition	SiC	component[0]	Si	0	ALIAS
+composition	SiC	component[1]	C	0	ALIAS
+composition	SiC	owner	SiC	0	ALIAS
+composition	SiO2	component[0]	Si	0	ALIAS
+composition	SiO2	component[1]	O	0	ALIAS
+composition	SiO2	owner	SiO2	0	ALIAS
+composition	Signalum	component[0]	Cu	0	ALIAS
+composition	Signalum	component[1]	Ag	0	ALIAS
+composition	Signalum	component[2]	RedAlloy	0	VALID
+composition	Signalum	owner	Signalum	0	VALID
+composition	Silverwood	component[0]	C	0	ALIAS
+composition	Silverwood	component[1]	H2O	0	ALIAS
+composition	Silverwood	owner	Silverwood	0	VALID
+composition	Smithsonite	component[0]	Zn	0	ALIAS
+composition	Smithsonite	component[1]	C	0	ALIAS
+composition	Smithsonite	component[2]	O	0	ALIAS
+composition	Smithsonite	owner	Smithsonite	0	VALID
+composition	SmokeyQuartz	component[0]	SiO2	0	ALIAS
+composition	SmokeyQuartz	owner	SmokeyQuartz	0	VALID
+composition	Snow	component[0]	H	0	ALIAS
+composition	Snow	component[1]	O	0	ALIAS
+composition	Snow	owner	Snow	0	VALID
+composition	Sodalite	component[0]	Al2O3	0	ALIAS
+composition	Sodalite	component[1]	SiO2	0	ALIAS
+composition	Sodalite	component[2]	Na	0	ALIAS
+composition	Sodalite	component[3]	Cl	0	ALIAS
+composition	Sodalite	owner	Sodalite	0	VALID
+composition	SodiumPeroxide	component[0]	Na	0	ALIAS
+composition	SodiumPeroxide	component[1]	O	0	ALIAS
+composition	SodiumPeroxide	owner	SodiumPeroxide	0	RETIRED
+composition	SolderingAlloy	component[0]	Sn	0	ALIAS
+composition	SolderingAlloy	component[1]	Sb	0	ALIAS
+composition	SolderingAlloy	owner	SolderingAlloy	0	VALID
+composition	Soularium	component[0]	SoulSand	0	ALIAS
+composition	Soularium	component[1]	Au	0	ALIAS
+composition	Soularium	owner	Soularium	0	VALID
+composition	Sperrylite	component[0]	Pt	0	ALIAS
+composition	Sperrylite	component[1]	As	0	ALIAS
+composition	Sperrylite	owner	Sperrylite	0	VALID
+composition	Spessartine	component[0]	Al2O3	0	ALIAS
+composition	Spessartine	component[1]	Mn	0	ALIAS
+composition	Spessartine	component[2]	SiO2	0	ALIAS
+composition	Spessartine	component[3]	O	0	ALIAS
+composition	Spessartine	owner	Spessartine	0	VALID
+composition	Sphalerite	component[0]	Zn	0	ALIAS
+composition	Sphalerite	component[1]	S	0	ALIAS
+composition	Sphalerite	owner	Sphalerite	0	VALID
+composition	Spinel	component[0]	Al2O3	0	ALIAS
+composition	Spinel	component[1]	Mg	0	ALIAS
+composition	Spinel	component[2]	O	0	ALIAS
+composition	Spinel	owner	Spinel	0	VALID
+composition	Spodumene	component[0]	Al2O3	0	ALIAS
+composition	Spodumene	component[1]	Li	0	ALIAS
+composition	Spodumene	component[2]	SiO2	0	ALIAS
+composition	Spodumene	component[3]	O	0	ALIAS
+composition	Spodumene	owner	Spodumene	0	VALID
+composition	StainlessSteel	component[0]	WroughtIron	0	VALID
+composition	StainlessSteel	component[1]	Invar	0	VALID
+composition	StainlessSteel	component[2]	Cr	0	ALIAS
+composition	StainlessSteel	component[3]	Mn	0	ALIAS
+composition	StainlessSteel	owner	StainlessSteel	0	VALID
+composition	StannicChloride	component[0]	Sn	0	ALIAS
+composition	StannicChloride	component[1]	Cl	0	ALIAS
+composition	StannicChloride	owner	StannicChloride	0	VALID
+composition	Stannite	component[0]	Cu	0	ALIAS
+composition	Stannite	component[1]	Fe	0	ALIAS
+composition	Stannite	component[2]	Sn	0	ALIAS
+composition	Stannite	component[3]	S	0	ALIAS
+composition	Stannite	owner	Stannite	0	VALID
+composition	Steam	component[0]	H	0	ALIAS
+composition	Steam	component[1]	O	0	ALIAS
+composition	Steam	owner	Steam	0	VALID
+composition	Steel	component[0]	WroughtIron	0	VALID
+composition	Steel	owner	Steel	0	VALID
+composition	SteelGalvanized	component[0]	Steel	0	VALID
+composition	SteelGalvanized	component[1]	Zn	0	ALIAS
+composition	SteelGalvanized	owner	SteelGalvanized	0	VALID
+composition	SteelMagnetic	component[0]	Steel	0	VALID
+composition	SteelMagnetic	owner	SteelMagnetic	0	VALID
+composition	Steeleaf	component[0]	Steel	0	VALID
+composition	Steeleaf	component[1]	Ma	0	ALIAS
+composition	Steeleaf	owner	Steeleaf	0	VALID
+composition	SterlingSilver	component[0]	Cu	0	ALIAS
+composition	SterlingSilver	component[1]	Ag	0	ALIAS
+composition	SterlingSilver	owner	SterlingSilver	0	VALID
+composition	Stibnite	component[0]	Sb	0	ALIAS
+composition	Stibnite	component[1]	S	0	ALIAS
+composition	Stibnite	owner	Stibnite	0	VALID
+composition	Stolzite	component[0]	Pb	0	ALIAS
+composition	Stolzite	component[1]	WO3	0	ALIAS
+composition	Stolzite	component[2]	O	0	ALIAS
+composition	Stolzite	owner	Stolzite	0	VALID
+composition	Sugar	component[0]	C	0	ALIAS
+composition	Sugar	component[1]	H	0	ALIAS
+composition	Sugar	component[2]	O	0	ALIAS
+composition	Sugar	owner	Sugar	0	VALID
+composition	SunnyQuartz	component[0]	SiO2	0	ALIAS
+composition	SunnyQuartz	owner	SunnyQuartz	0	VALID
+composition	T2O	component[0]	T	0	ALIAS
+composition	T2O	component[1]	O	0	ALIAS
+composition	T2O	owner	T2O	0	ALIAS
+composition	Ta2O5	component[0]	Ta	0	ALIAS
+composition	Ta2O5	component[1]	O	0	ALIAS
+composition	Ta2O5	owner	Ta2O5	0	ALIAS
+composition	Ta4HfC5	component[0]	Ta	0	ALIAS
+composition	Ta4HfC5	component[1]	Hf	0	ALIAS
+composition	Ta4HfC5	component[2]	C	0	ALIAS
+composition	Ta4HfC5	owner	Ta4HfC5	0	ALIAS
+composition	Talc	component[0]	Mg	0	ALIAS
+composition	Talc	component[1]	SiO2	0	ALIAS
+composition	Talc	component[2]	H2O	0	ALIAS
+composition	Talc	component[3]	O	0	ALIAS
+composition	Talc	owner	Talc	0	VALID
+composition	Tantalite	component[0]	Ta2O5	0	ALIAS
+composition	Tantalite	component[1]	MnO2	0	ALIAS
+composition	Tantalite	owner	Tantalite	0	VALID
+composition	Tanzanite	component[0]	Al2O3	0	ALIAS
+composition	Tanzanite	component[1]	SiO2	0	ALIAS
+composition	Tanzanite	component[2]	Ca	0	ALIAS
+composition	Tanzanite	component[3]	H2O	0	ALIAS
+composition	Tanzanite	component[4]	O	0	ALIAS
+composition	Tanzanite	owner	Tanzanite	0	VALID
+composition	Teflon	component[0]	C	0	ALIAS
+composition	Teflon	component[1]	H	0	ALIAS
+composition	Teflon	owner	Teflon	0	VALID
+composition	Tetrahedrite	component[0]	Cu	0	ALIAS
+composition	Tetrahedrite	component[1]	Sb	0	ALIAS
+composition	Tetrahedrite	component[2]	Fe	0	ALIAS
+composition	Tetrahedrite	component[3]	S	0	ALIAS
+composition	Tetrahedrite	owner	Tetrahedrite	0	VALID
+composition	Thaumium	component[0]	Fe	0	ALIAS
+composition	Thaumium	component[1]	Ma	0	ALIAS
+composition	Thaumium	owner	Thaumium	0	VALID
+composition	TiCl4	component[0]	Ti	0	ALIAS
+composition	TiCl4	component[1]	Cl	0	ALIAS
+composition	TiCl4	owner	TiCl4	0	ALIAS
+composition	TiO2	component[0]	Ti	0	ALIAS
+composition	TiO2	component[1]	O	0	ALIAS
+composition	TiO2	owner	TiO2	0	ALIAS
+composition	TinAlloy	component[0]	Sn	0	ALIAS
+composition	TinAlloy	component[1]	WroughtIron	0	VALID
+composition	TinAlloy	owner	TinAlloy	0	VALID
+composition	Topaz	component[0]	Al2O3	0	ALIAS
+composition	Topaz	component[1]	SiO2	0	ALIAS
+composition	Topaz	component[2]	F	0	ALIAS
+composition	Topaz	component[3]	H2O	0	ALIAS
+composition	Topaz	owner	Topaz	0	VALID
+composition	Trinaquadalloy	component[0]	Ke	0	ALIAS
+composition	Trinaquadalloy	component[1]	Nq	0	ALIAS
+composition	Trinaquadalloy	component[2]	C	0	ALIAS
+composition	Trinaquadalloy	owner	Trinaquadalloy	0	VALID
+composition	Trinitanium	component[0]	Ke	0	ALIAS
+composition	Trinitanium	component[1]	Ti	0	ALIAS
+composition	Trinitanium	owner	Trinitanium	0	VALID
+composition	TritaniumAlloy	component[0]	Tn	0	ALIAS
+composition	TritaniumAlloy	component[1]	Dn	0	ALIAS
+composition	TritaniumAlloy	owner	TritaniumAlloy	0	ALIAS
+composition	TritaniumDioxide	component[0]	Tn	0	ALIAS
+composition	TritaniumDioxide	component[1]	O	0	ALIAS
+composition	TritaniumDioxide	owner	TritaniumDioxide	0	VALID
+composition	TritaniumHexaastatide	component[0]	Tn	0	ALIAS
+composition	TritaniumHexaastatide	component[1]	At	0	ALIAS
+composition	TritaniumHexaastatide	owner	TritaniumHexaastatide	0	VALID
+composition	TritaniumHexabromide	component[0]	Tn	0	ALIAS
+composition	TritaniumHexabromide	component[1]	Br	0	ALIAS
+composition	TritaniumHexabromide	owner	TritaniumHexabromide	0	VALID
+composition	TritaniumHexachloride	component[0]	Tn	0	ALIAS
+composition	TritaniumHexachloride	component[1]	Cl	0	ALIAS
+composition	TritaniumHexachloride	owner	TritaniumHexachloride	0	VALID
+composition	TritaniumHexafluoride	component[0]	Tn	0	ALIAS
+composition	TritaniumHexafluoride	component[1]	F	0	ALIAS
+composition	TritaniumHexafluoride	owner	TritaniumHexafluoride	0	VALID
+composition	TritaniumHexaiodide	component[0]	Tn	0	ALIAS
+composition	TritaniumHexaiodide	component[1]	I	0	ALIAS
+composition	TritaniumHexaiodide	owner	TritaniumHexaiodide	0	VALID
+composition	Trona	component[0]	Na2CO3	0	ALIAS
+composition	Trona	component[1]	H2O	0	ALIAS
+composition	Trona	owner	Trona	0	VALID
+composition	Tungstate	component[0]	Li	0	ALIAS
+composition	Tungstate	component[1]	WO3	0	ALIAS
+composition	Tungstate	component[2]	O	0	ALIAS
+composition	Tungstate	owner	Tungstate	0	VALID
+composition	TungstenCarbide	component[0]	W	0	ALIAS
+composition	TungstenCarbide	component[1]	C	0	ALIAS
+composition	TungstenCarbide	owner	TungstenCarbide	0	VALID
+composition	TungstenSintered	component[0]	W	0	ALIAS
+composition	TungstenSintered	owner	TungstenSintered	0	VALID
+composition	TungstenSteel	component[0]	Steel	0	VALID
+composition	TungstenSteel	component[1]	W	0	ALIAS
+composition	TungstenSteel	owner	TungstenSteel	0	ALIAS
+composition	U235F4	component[0]	U_235	0	ALIAS
+composition	U235F4	component[1]	F	0	ALIAS
+composition	U235F4	owner	U235F4	0	ALIAS
+composition	U235F6	component[0]	U_235	0	ALIAS
+composition	U235F6	component[1]	F	0	ALIAS
+composition	U235F6	owner	U235F6	0	ALIAS
+composition	U238F4	component[0]	U_238	0	ALIAS
+composition	U238F4	component[1]	F	0	ALIAS
+composition	U238F4	owner	U238F4	0	ALIAS
+composition	U238F6	component[0]	U_238	0	ALIAS
+composition	U238F6	component[1]	F	0	ALIAS
+composition	U238F6	owner	U238F6	0	ALIAS
+composition	UF4	component[0]	U_238	0	ALIAS
+composition	UF4	component[1]	F	0	ALIAS
+composition	UF4	owner	UF4	0	ALIAS
+composition	UF6	component[0]	U_238	0	ALIAS
+composition	UF6	component[1]	F	0	ALIAS
+composition	UF6	owner	UF6	0	ALIAS
+composition	Ultimet	component[0]	Co	0	ALIAS
+composition	Ultimet	component[1]	Ni	0	ALIAS
+composition	Ultimet	component[2]	Cr	0	ALIAS
+composition	Ultimet	component[3]	Mo	0	ALIAS
+composition	Ultimet	owner	Ultimet	0	VALID
+composition	Uraninite	component[0]	U_238	0	ALIAS
+composition	Uraninite	component[1]	O	0	ALIAS
+composition	Uraninite	owner	Uraninite	0	VALID
+composition	Uvarovite	component[0]	Ca	0	ALIAS
+composition	Uvarovite	component[1]	Cr	0	ALIAS
+composition	Uvarovite	component[2]	SiO2	0	ALIAS
+composition	Uvarovite	component[3]	O	0	ALIAS
+composition	Uvarovite	owner	Uvarovite	0	VALID
+composition	V2O5	component[0]	V	0	ALIAS
+composition	V2O5	component[1]	O	0	ALIAS
+composition	V2O5	owner	V2O5	0	ALIAS
+composition	VanadiumGallium	component[0]	V	0	ALIAS
+composition	VanadiumGallium	component[1]	Ga	0	ALIAS
+composition	VanadiumGallium	owner	VanadiumGallium	0	VALID
+composition	VanadiumSteel	component[0]	Steel	0	VALID
+composition	VanadiumSteel	component[1]	V	0	ALIAS
+composition	VanadiumSteel	owner	VanadiumSteel	0	VALID
+composition	Vermiculite	component[0]	Al2O3	0	ALIAS
+composition	Vermiculite	component[1]	Fe	0	ALIAS
+composition	Vermiculite	component[2]	SiO2	0	ALIAS
+composition	Vermiculite	component[3]	H2O	0	ALIAS
+composition	Vermiculite	component[4]	H	0	ALIAS
+composition	Vermiculite	owner	Vermiculite	0	VALID
+composition	Vibramantium	component[0]	Vb	0	ALIAS
+composition	Vibramantium	component[1]	Ad	0	ALIAS
+composition	Vibramantium	owner	Vibramantium	0	VALID
+composition	VibraniumSilver	component[0]	Vb	0	ALIAS
+composition	VibraniumSilver	component[1]	Ag	0	ALIAS
+composition	VibraniumSilver	owner	VibraniumSilver	0	VALID
+composition	VibraniumSteel	component[0]	Vb	0	ALIAS
+composition	VibraniumSteel	component[1]	Steel	0	VALID
+composition	VibraniumSteel	owner	VibraniumSteel	0	VALID
+composition	Vinteum	component[0]	Ma	0	ALIAS
+composition	Vinteum	owner	Vinteum	0	RETIRED
+composition	VinteumPurified	component[0]	Ma	0	ALIAS
+composition	VinteumPurified	owner	VinteumPurified	0	RETIRED
+composition	Vis	component[0]	Ma	0	ALIAS
+composition	Vis	owner	Vis	0	RETIRED
+composition	VitriolOfClay	component[0]	Al2O3	0	ALIAS
+composition	VitriolOfClay	component[1]	S	0	ALIAS
+composition	VitriolOfClay	component[2]	O	0	ALIAS
+composition	VitriolOfClay	owner	VitriolOfClay	0	VALID
+composition	WO3	component[0]	W	0	ALIAS
+composition	WO3	component[1]	O	0	ALIAS
+composition	WO3	owner	WO3	0	ALIAS
+composition	WhiteVitriol	component[0]	Zn	0	ALIAS
+composition	WhiteVitriol	component[1]	S	0	ALIAS
+composition	WhiteVitriol	component[2]	O	0	ALIAS
+composition	WhiteVitriol	owner	WhiteVitriol	0	VALID
+composition	Wolframite	component[0]	Mg	0	ALIAS
+composition	Wolframite	component[1]	WO3	0	ALIAS
+composition	Wolframite	component[2]	O	0	ALIAS
+composition	Wolframite	owner	Wolframite	0	VALID
+composition	Wollastonite	component[0]	Ca	0	ALIAS
+composition	Wollastonite	component[1]	SiO2	0	ALIAS
+composition	Wollastonite	component[2]	O	0	ALIAS
+composition	Wollastonite	owner	Wollastonite	0	VALID
+composition	Wood	component[0]	C	0	ALIAS
+composition	Wood	component[1]	H2O	0	ALIAS
+composition	Wood	owner	Wood	0	VALID
+composition	WoodPolished	component[0]	C	0	ALIAS
+composition	WoodPolished	component[1]	H2O	0	ALIAS
+composition	WoodPolished	owner	WoodPolished	0	VALID
+composition	WoodRubber	component[0]	C	0	ALIAS
+composition	WoodRubber	component[1]	H2O	0	ALIAS
+composition	WoodRubber	owner	WoodRubber	0	VALID
+composition	WoodTreated	component[0]	C	0	ALIAS
+composition	WoodTreated	component[1]	H2O	0	ALIAS
+composition	WoodTreated	owner	WoodTreated	0	VALID
+composition	WroughtIron	component[0]	Fe	0	ALIAS
+composition	WroughtIron	owner	WroughtIron	0	VALID
+composition	Wulfenite	component[0]	Pb	0	ALIAS
+composition	Wulfenite	component[1]	Mo	0	ALIAS
+composition	Wulfenite	component[2]	O	0	ALIAS
+composition	Wulfenite	owner	Wulfenite	0	VALID
+composition	YellowLimonite	component[0]	Fe	0	ALIAS
+composition	YellowLimonite	component[1]	H	0	ALIAS
+composition	YellowLimonite	component[2]	O	0	ALIAS
+composition	YellowLimonite	owner	YellowLimonite	0	VALID
+composition	YellowSapphire	component[0]	Al2O3	0	ALIAS
+composition	YellowSapphire	component[1]	TiO2	0	ALIAS
+composition	YellowSapphire	owner	YellowSapphire	0	VALID
+composition	YttriumBariumCuprate	component[0]	Y	0	ALIAS
+composition	YttriumBariumCuprate	component[1]	Ba	0	ALIAS
+composition	YttriumBariumCuprate	component[2]	Cu	0	ALIAS
+composition	YttriumBariumCuprate	component[3]	O	0	ALIAS
+composition	YttriumBariumCuprate	owner	YttriumBariumCuprate	0	VALID
+composition	Zeolite	component[0]	Al2O3	0	ALIAS
+composition	Zeolite	component[1]	Na	0	ALIAS
+composition	Zeolite	component[2]	SiO2	0	ALIAS
+composition	Zeolite	component[3]	H2O	0	ALIAS
+composition	Zeolite	component[4]	O	0	ALIAS
+composition	Zeolite	owner	Zeolite	0	VALID
+composition	Zircon	component[0]	Zr	0	ALIAS
+composition	Zircon	component[1]	SiO2	0	ALIAS
+composition	Zircon	component[2]	O	0	ALIAS
+composition	Zircon	owner	Zircon	0	VALID
+decomposition	Adamantine	owner	Adamantine	8784	VALID
+decomposition	Almandine	owner	Almandine	9101	VALID
+decomposition	Alumina	owner	Alumina	8008	VALID
+decomposition	AluminiumAlloy	owner	AluminiumAlloy	8622	VALID
+decomposition	AluminiumBrass	owner	AluminiumBrass	8700	VALID
+decomposition	AluminiumFluoride	owner	AluminiumFluoride	8010	VALID
+decomposition	AluminiumHydroxide	owner	AluminiumHydroxide	8014	VALID
+decomposition	Alumite	owner	Alumite	8702	VALID
+decomposition	Alunite	owner	Alunite	9162	VALID
+decomposition	Amazonite	owner	Amazonite	8417	VALID
+decomposition	Amethyst	owner	Amethyst	8313	VALID
+decomposition	Ammonia	owner	Ammonia	8025	VALID
+decomposition	Andradite	owner	Andradite	9102	VALID
+decomposition	AnnealedCopper	owner	AnnealedCopper	8640	VALID
+decomposition	Apatite	owner	Apatite	8209	VALID
+decomposition	AquaRegia	owner	AquaRegia	9827	VALID
+decomposition	Aquamarine	owner	Aquamarine	8323	VALID
+decomposition	ArsenicBronze	owner	ArsenicBronze	8615	VALID
+decomposition	ArsenicCopper	owner	ArsenicCopper	8614	VALID
+decomposition	Arsenopyrite	owner	Arsenopyrite	9216	VALID
+decomposition	Asbestos	owner	Asbestos	9103	VALID
+decomposition	Azurite	owner	Azurite	8420	VALID
+decomposition	BalasRuby	owner	BalasRuby	8303	VALID
+decomposition	Barite	owner	Barite	9160	VALID
+decomposition	Basalt	owner	Basalt	8505	VALID
+decomposition	BasalticMineralSand	owner	BasalticMineralSand	9003	VALID
+decomposition	Bastnasite	owner	Bastnasite	9144	VALID
+decomposition	BatteryAlloy	owner	BatteryAlloy	8668	VALID
+decomposition	Bauxite	owner	Bauxite	9105	VALID
+decomposition	Bentonite	owner	Bentonite	9153	VALID
+decomposition	Biotite	owner	Biotite	9141	VALID
+decomposition	Bischofite	owner	Bischofite	9221	VALID
+decomposition	BismuthBronze	owner	BismuthBronze	8612	VALID
+decomposition	Bixbite	owner	Bixbite	8386	VALID
+decomposition	BlackAventurine	owner	BlackAventurine	8449	VALID
+decomposition	BlackBronze	owner	BlackBronze	8611	VALID
+decomposition	BlackEye	owner	BlackEye	8434	VALID
+decomposition	BlackFluorite	owner	BlackFluorite	8440	VALID
+decomposition	BlackSteel	owner	BlackSteel	8631	VALID
+decomposition	BlackVitriol	owner	BlackVitriol	8403	VALID
+decomposition	BlueAlloy	owner	BlueAlloy	8659	VALID
+decomposition	BlueAventurine	owner	BlueAventurine	8450	VALID
+decomposition	BlueDiamond	owner	BlueDiamond	8464	VALID
+decomposition	BlueFluorite	owner	BlueFluorite	8438	VALID
+decomposition	BlueJasper	owner	BlueJasper	8427	VALID
+decomposition	BluePhosphorus	owner	BluePhosphorus	8458	VALID
+decomposition	BlueSapphire	owner	BlueSapphire	8328	VALID
+decomposition	BlueSteel	owner	BlueSteel	8632	VALID
+decomposition	BlueTopaz	owner	BlueTopaz	8307	VALID
+decomposition	BlueVitriol	owner	BlueVitriol	8404	VALID
+decomposition	Bone	owner	Bone	8219	VALID
+decomposition	Borax	owner	Borax	9139	VALID
+decomposition	Brass	owner	Brass	8620	VALID
+decomposition	Bromargyrite	owner	Bromargyrite	9210	VALID
+decomposition	Bronze	owner	Bronze	8610	VALID
+decomposition	BrownAventurine	owner	BrownAventurine	8446	VALID
+decomposition	BrownLimonite	owner	BrownLimonite	9106	VALID
+decomposition	Butane	owner	Butane	9866	VALID
+decomposition	Calcite	owner	Calcite	9107	VALID
+decomposition	CalciumChloride	owner	CalciumChloride	8028	VALID
+decomposition	CalciumSulfate	owner	CalciumSulfate	8274	VALID
+decomposition	CarbonDioxide	owner	CarbonDioxide	9836	VALID
+decomposition	CarbonMonoxide	owner	CarbonMonoxide	9838	VALID
+decomposition	CarbonTrioxide	owner	CarbonTrioxide	9843	VALID
+decomposition	Carborundum	owner	Carborundum	8003	VALID
+decomposition	Cassiterite	owner	Cassiterite	9108	VALID
+decomposition	CastIron	owner	CastIron	8803	VALID
+decomposition	CatsEye	owner	CatsEye	8431	VALID
+decomposition	CdInAgAlloy	owner	CdInAgAlloy	8605	VALID
+decomposition	Celestine	owner	Celestine	9110	VALID
+decomposition	Ceramic	owner	Ceramic	8225	VALID
+decomposition	Chalcopyrite	owner	Chalcopyrite	9111	VALID
+decomposition	Charcoal	owner	Charcoal	8336	VALID
+decomposition	ChloroauricAcid	owner	ChloroauricAcid	8400	VALID
+decomposition	ChloroplatinicAcid	owner	ChloroplatinicAcid	8401	VALID
+decomposition	Chocolate	owner	Chocolate	9783	VALID
+decomposition	Chromite	owner	Chromite	9113	VALID
+decomposition	ChromiumDioxide	owner	ChromiumDioxide	8685	VALID
+decomposition	Cinnabar	owner	Cinnabar	9114	VALID
+decomposition	Clay	owner	Clay	8215	VALID
+decomposition	ClayBrown	owner	ClayBrown	8276	VALID
+decomposition	ClayRed	owner	ClayRed	8455	VALID
+decomposition	Coal	owner	Coal	8334	VALID
+decomposition	CoalCoke	owner	CoalCoke	8349	VALID
+decomposition	CobaltBrass	owner	CobaltBrass	8621	VALID
+decomposition	CobaltHexahydrate	owner	CobaltHexahydrate	8229	VALID
+decomposition	Cobaltite	owner	Cobaltite	9115	VALID
+decomposition	Coltan	owner	Coltan	9247	VALID
+decomposition	Columbite	owner	Columbite	9246	VALID
+decomposition	ConductiveIron	owner	ConductiveIron	8727	VALID
+decomposition	Constantan	owner	Constantan	8662	VALID
+decomposition	Cooperite	owner	Cooperite	9116	VALID
+decomposition	Cryolite	owner	Cryolite	8009	VALID
+decomposition	CrystalMatrix	owner	CrystalMatrix	8799	VALID
+decomposition	CyanVitriol	owner	CyanVitriol	8408	VALID
+decomposition	DamascusSteel	owner	DamascusSteel	8634	VALID
+decomposition	Datolite	owner	Datolite	8006	VALID
+decomposition	Diamantine	owner	Diamantine	8377	RETIRED
+decomposition	Diamond	owner	Diamond	8300	VALID
+decomposition	DiamondIndustrial	owner	DiamondIndustrial	8423	VALID
+decomposition	Diatomite	owner	Diatomite	9001	VALID
+decomposition	DiduraniumTrioxide	owner	DiduraniumTrioxide	9198	VALID
+decomposition	Dioptase	owner	Dioptase	8325	VALID
+decomposition	DisulfuricAcid	owner	DisulfuricAcid	9844	VALID
+decomposition	DragonEye	owner	DragonEye	8432	VALID
+decomposition	Duralumin	owner	Duralumin	8756	VALID
+decomposition	Duranium	owner	Duranium	8751	VALID
+decomposition	DuraniumHexaastatide	owner	DuraniumHexaastatide	9203	VALID
+decomposition	DuraniumHexabromide	owner	DuraniumHexabromide	9201	VALID
+decomposition	DuraniumHexachloride	owner	DuraniumHexachloride	9200	VALID
+decomposition	DuraniumHexafluoride	owner	DuraniumHexafluoride	9199	VALID
+decomposition	DuraniumHexaiodide	owner	DuraniumHexaiodide	9202	VALID
+decomposition	ElectricalSteel	owner	ElectricalSteel	8730	VALID
+decomposition	ElectrotineAlloy	owner	ElectrotineAlloy	8658	VALID
+decomposition	Electrum	owner	Electrum	8600	VALID
+decomposition	ElvenElementium	owner	ElvenElementium	8722	VALID
+decomposition	Emeradic	owner	Emeradic	8379	RETIRED
+decomposition	Emerald	owner	Emerald	8301	VALID
+decomposition	EnderEye	owner	EnderEye	8319	VALID
+decomposition	EnderPearl	owner	EnderPearl	8318	VALID
+decomposition	Enderium	owner	Enderium	8710	VALID
+decomposition	EnderiumBase	owner	EnderiumBase	8729	VALID
+decomposition	EnergiumCyan	owner	EnergiumCyan	8299	VALID
+decomposition	EnergiumRed	owner	EnergiumRed	8298	VALID
+decomposition	Enori	owner	Enori	8380	RETIRED
+decomposition	Ethylene	owner	Ethylene	9868	VALID
+decomposition	Eudialyte	owner	Eudialyte	8421	VALID
+decomposition	Ferberite	owner	Ferberite	9194	VALID
+decomposition	FerricChloride	owner	FerricChloride	8017	VALID
+decomposition	FerricOxyhydroxide	owner	FerricOxyhydroxide	8035	VALID
+decomposition	FerrousChloride	owner	FerrousChloride	8030	VALID
+decomposition	FierySteel	owner	FierySteel	8675	VALID
+decomposition	Fireleaf	owner	Fireleaf	8698	VALID
+decomposition	FlamascusSteel	owner	FlamascusSteel	8697	VALID
+decomposition	Flint	owner	Flint	8002	VALID
+decomposition	Fluorite	owner	Fluorite	9215	VALID
+decomposition	GaiaSpirit	owner	GaiaSpirit	8735	VALID
+decomposition	Galena	owner	Galena	9117	VALID
+decomposition	GarnetSand	owner	GarnetSand	9005	VALID
+decomposition	Garnierite	owner	Garnierite	9118	VALID
+decomposition	Glass	owner	Glass	8001	VALID
+decomposition	Glauconite	owner	Glauconite	9150	VALID
+decomposition	Glowstone	owner	Glowstone	8341	VALID
+decomposition	Glycerol	owner	Glycerol	9828	VALID
+decomposition	Glyceryl	owner	Glyceryl	9821	VALID
+decomposition	Goshenite	owner	Goshenite	8385	VALID
+decomposition	Granite	owner	Granite	8518	VALID
+decomposition	GraniteBlack	owner	GraniteBlack	8508	VALID
+decomposition	GraniteRed	owner	GraniteRed	8507	VALID
+decomposition	GraniticMineralSand	owner	GraniticMineralSand	9004	VALID
+decomposition	Graphene	owner	Graphene	9175	VALID
+decomposition	Graphite	owner	Graphite	9174	VALID
+decomposition	GrayVitriol	owner	GrayVitriol	8410	VALID
+decomposition	GreenAventurine	owner	GreenAventurine	8448	VALID
+decomposition	GreenDiamond	owner	GreenDiamond	8465	VALID
+decomposition	GreenFluorite	owner	GreenFluorite	8439	VALID
+decomposition	GreenJasper	owner	GreenJasper	8428	VALID
+decomposition	GreenSapphire	owner	GreenSapphire	8305	VALID
+decomposition	GreenVitriol	owner	GreenVitriol	8405	VALID
+decomposition	Grossular	owner	Grossular	9119	VALID
+decomposition	Gypsum	owner	Gypsum	9161	VALID
+decomposition	HSSE	owner	HSSE	8797	VALID
+decomposition	HSSG	owner	HSSG	8796	VALID
+decomposition	HSSS	owner	HSSS	8798	VALID
+decomposition	HawksEye	owner	HawksEye	8433	VALID
+decomposition	HeavyWater	owner	HeavyWater	9812	VALID
+decomposition	Heliodor	owner	Heliodor	8384	VALID
+decomposition	HeliumNeon	owner	HeliumNeon	9839	VALID
+decomposition	Hematite	owner	Hematite	9104	VALID
+decomposition	HexafluorosilicicAcid	owner	HexafluorosilicicAcid	8011	VALID
+decomposition	Huebnerite	owner	Huebnerite	9195	VALID
+decomposition	HydratedCoal	owner	HydratedCoal	8335	VALID
+decomposition	HydrochloricAcid	owner	HydrochloricAcid	9826	VALID
+decomposition	HydrogenBorate	owner	HydrogenBorate	8007	VALID
+decomposition	HydrogenFluoride	owner	HydrogenFluoride	9829	VALID
+decomposition	HydrogenPeroxide	owner	HydrogenPeroxide	9809	VALID
+decomposition	HydrosulfuricAcid	owner	HydrosulfuricAcid	8024	VALID
+decomposition	Ilmenite	owner	Ilmenite	9120	VALID
+decomposition	Invar	owner	Invar	8661	VALID
+decomposition	IodineSalt	owner	IodineSalt	8242	VALID
+decomposition	Ironwood	owner	Ironwood	8672	VALID
+decomposition	Kanthal	owner	Kanthal	8664	VALID
+decomposition	Kaolinite	owner	Kaolinite	9167	VALID
+decomposition	Kesterite	owner	Kesterite	9213	VALID
+decomposition	Knightmetal	owner	Knightmetal	8674	VALID
+decomposition	Komatiite	owner	Komatiite	9177	VALID
+decomposition	Kyanite	owner	Kyanite	9166	VALID
+decomposition	Lapis	owner	Lapis	8332	VALID
+decomposition	Lazurite	owner	Lazurite	8330	VALID
+decomposition	Lepidolite	owner	Lepidolite	9149	VALID
+decomposition	Lignite	owner	Lignite	8337	VALID
+decomposition	LigniteCoke	owner	LigniteCoke	8365	VALID
+decomposition	Limestone	owner	Limestone	9189	VALID
+decomposition	LithiumChlorate	owner	LithiumChlorate	8033	VALID
+decomposition	LithiumChloride	owner	LithiumChloride	8029	VALID
+decomposition	LithiumHydroxide	owner	LithiumHydroxide	8032	VALID
+decomposition	LithiumPerchlorate	owner	LithiumPerchlorate	8034	VALID
+decomposition	LiveRoot	owner	LiveRoot	8223	VALID
+decomposition	Lumium	owner	Lumium	8709	VALID
+decomposition	MagentaFluorite	owner	MagentaFluorite	8444	VALID
+decomposition	Magnalium	owner	Magnalium	8665	VALID
+decomposition	MagnesiumCarbonate	owner	MagnesiumCarbonate	8016	VALID
+decomposition	MagnesiumChloride	owner	MagnesiumChloride	8018	VALID
+decomposition	Magnetite	owner	Magnetite	9122	VALID
+decomposition	Malachite	owner	Malachite	9156	VALID
+decomposition	ManaDiamond	owner	ManaDiamond	8278	VALID
+decomposition	Manasteel	owner	Manasteel	8720	VALID
+decomposition	ManganeseChloride	owner	ManganeseChloride	8031	VALID
+decomposition	Marble	owner	Marble	8506	VALID
+decomposition	Maxixe	owner	Maxixe	8387	VALID
+decomposition	Methane	owner	Methane	9832	VALID
+decomposition	MethaneIce	owner	MethaneIce	9833	VALID
+decomposition	Mica	owner	Mica	9158	VALID
+decomposition	Mirabilite	owner	Mirabilite	9157	VALID
+decomposition	Molybdenite	owner	Molybdenite	9123	VALID
+decomposition	Monazite	owner	Monazite	8338	VALID
+decomposition	Morganite	owner	Morganite	8324	VALID
+decomposition	Netherite	owner	Netherite	8745	VALID
+decomposition	NetherizedDiamond	owner	NetherizedDiamond	8746	VALID
+decomposition	Nichrome	owner	Nichrome	8663	VALID
+decomposition	NikolineAlloy	owner	NikolineAlloy	8737	VALID
+decomposition	Nikolite	owner	Nikolite	8340	VALID
+decomposition	NiobiumPentoxide	owner	NiobiumPentoxide	8461	VALID
+decomposition	NiobiumTitanium	owner	NiobiumTitanium	8689	VALID
+decomposition	Niter	owner	Niter	8206	VALID
+decomposition	NitricAcid	owner	NitricAcid	9825	VALID
+decomposition	NitroCarbon	owner	NitroCarbon	9820	VALID
+decomposition	NitrogenDioxide	owner	NitrogenDioxide	9831	VALID
+decomposition	NitrogenMonoxide	owner	NitrogenMonoxide	9837	VALID
+decomposition	Obsidian	owner	Obsidian	8214	VALID
+decomposition	OceanJasper	owner	OceanJasper	8425	VALID
+decomposition	OilShale	owner	OilShale	9853	VALID
+decomposition	OnyxBlack	owner	OnyxBlack	8416	VALID
+decomposition	OnyxRed	owner	OnyxRed	8415	VALID
+decomposition	Opal	owner	Opal	8312	VALID
+decomposition	OrangeFluorite	owner	OrangeFluorite	8443	VALID
+decomposition	OrangeSapphire	owner	OrangeSapphire	8314	VALID
+decomposition	Osmiridium	owner	Osmiridium	8682	VALID
+decomposition	Palis	owner	Palis	8376	RETIRED
+decomposition	Palygorskite	owner	Palygorskite	9154	VALID
+decomposition	Pentlandite	owner	Pentlandite	9145	VALID
+decomposition	Peridot	owner	Peridot	8311	VALID
+decomposition	Perlite	owner	Perlite	9138	VALID
+decomposition	PetroleumCoke	owner	PetroleumCoke	8390	VALID
+decomposition	Petrotheum	owner	Petrotheum	8245	RETIRED
+decomposition	Phosphate	owner	Phosphate	8207	VALID
+decomposition	Phosphorite	owner	Phosphorite	8226	VALID
+decomposition	Phosphorus	owner	Phosphorus	8208	VALID
+decomposition	Pinalite	owner	Pinalite	9197	VALID
+decomposition	PinkDiamond	owner	PinkDiamond	8424	VALID
+decomposition	PinkFluorite	owner	PinkFluorite	8437	VALID
+decomposition	PinkVitriol	owner	PinkVitriol	8407	VALID
+decomposition	Pitchblende	owner	Pitchblende	9155	VALID
+decomposition	Pollucite	owner	Pollucite	9147	VALID
+decomposition	Porcelain	owner	Porcelain	8273	VALID
+decomposition	PotassiumAluminate	owner	PotassiumAluminate	8023	VALID
+decomposition	PotassiumBisulfate	owner	PotassiumBisulfate	8232	VALID
+decomposition	PotassiumCarbonate	owner	PotassiumCarbonate	8020	VALID
+decomposition	PotassiumFeldspar	owner	PotassiumFeldspar	9140	VALID
+decomposition	PotassiumFluoride	owner	PotassiumFluoride	8036	VALID
+decomposition	PotassiumHeptafluorotantalate	owner	PotassiumHeptafluorotantalate	8038	VALID
+decomposition	PotassiumHydroxide	owner	PotassiumHydroxide	8015	VALID
+decomposition	PotassiumNitrate	owner	PotassiumNitrate	8205	VALID
+decomposition	PotassiumPersulfate	owner	PotassiumPersulfate	8022	VALID
+decomposition	PotassiumPyrosulfate	owner	PotassiumPyrosulfate	8233	VALID
+decomposition	PotassiumSulfate	owner	PotassiumSulfate	8271	VALID
+decomposition	PotassiumSulfide	owner	PotassiumSulfide	8272	VALID
+decomposition	PotassiumSulfite	owner	PotassiumSulfite	8021	VALID
+decomposition	Powellite	owner	Powellite	9124	VALID
+decomposition	Propane	owner	Propane	9865	VALID
+decomposition	Propylene	owner	Propylene	9867	VALID
+decomposition	Pumice	owner	Pumice	9000	VALID
+decomposition	PurpleSapphire	owner	PurpleSapphire	8383	VALID
+decomposition	Pyrite	owner	Pyrite	9125	VALID
+decomposition	Pyrolusite	owner	Pyrolusite	9126	VALID
+decomposition	Pyrope	owner	Pyrope	9127	VALID
+decomposition	Pyrotheum	owner	Pyrotheum	8212	RETIRED
+decomposition	QuartzSand	owner	QuartzSand	9006	VALID
+decomposition	Quicklime	owner	Quicklime	9271	VALID
+decomposition	RainforestJasper	owner	RainforestJasper	8426	VALID
+decomposition	Realgar	owner	Realgar	9109	VALID
+decomposition	RedAlloy	owner	RedAlloy	8660	VALID
+decomposition	RedAventurine	owner	RedAventurine	8451	VALID
+decomposition	RedDiamond	owner	RedDiamond	8467	VALID
+decomposition	RedFluorite	owner	RedFluorite	8436	VALID
+decomposition	RedJasper	owner	RedJasper	8309	VALID
+decomposition	RedPhosphorus	owner	RedPhosphorus	8459	VALID
+decomposition	RedSteel	owner	RedSteel	8633	VALID
+decomposition	RedVitriol	owner	RedVitriol	8406	VALID
+decomposition	Redstone	owner	Redstone	8333	VALID
+decomposition	RedstoneAlloy	owner	RedstoneAlloy	8733	VALID
+decomposition	Redstonia	owner	Redstonia	8375	RETIRED
+decomposition	RoseGold	owner	RoseGold	8602	VALID
+decomposition	Ruby	owner	Ruby	8302	VALID
+decomposition	Russellite	owner	Russellite	9196	VALID
+decomposition	Rutile	owner	Rutile	9192	VALID
+decomposition	Salt	owner	Salt	8204	VALID
+decomposition	SaltedWater	owner	SaltedWater	9815	VALID
+decomposition	Saltwater	owner	Saltwater	9804	VALID
+decomposition	Sapphire	owner	Sapphire	8304	VALID
+decomposition	Scheelite	owner	Scheelite	9128	VALID
+decomposition	SemiheavyWater	owner	SemiheavyWater	9811	VALID
+decomposition	Shale	owner	Shale	9190	VALID
+decomposition	Signalum	owner	Signalum	8708	VALID
+decomposition	SiliconDioxide	owner	SiliconDioxide	8000	VALID
+decomposition	SkyStone	owner	SkyStone	8528	VALID
+decomposition	Smithsonite	owner	Smithsonite	9211	VALID
+decomposition	Sodalite	owner	Sodalite	8331	VALID
+decomposition	SodiumAluminate	owner	SodiumAluminate	8012	VALID
+decomposition	SodiumBisulfate	owner	SodiumBisulfate	8230	VALID
+decomposition	SodiumCarbonate	owner	SodiumCarbonate	8013	VALID
+decomposition	SodiumFluoride	owner	SodiumFluoride	8037	VALID
+decomposition	SodiumHydrogencarbonate	owner	SodiumHydrogencarbonate	8039	VALID
+decomposition	SodiumHydroxide	owner	SodiumHydroxide	8268	VALID
+decomposition	SodiumNitrate	owner	SodiumNitrate	8019	VALID
+decomposition	SodiumPersulfate	owner	SodiumPersulfate	9822	VALID
+decomposition	SodiumPyrosulfate	owner	SodiumPyrosulfate	8231	VALID
+decomposition	SodiumSulfate	owner	SodiumSulfate	8270	VALID
+decomposition	SodiumSulfide	owner	SodiumSulfide	9823	VALID
+decomposition	SodiumSulfite	owner	SodiumSulfite	8269	VALID
+decomposition	SolderingAlloy	owner	SolderingAlloy	8669	VALID
+decomposition	Soularium	owner	Soularium	8732	VALID
+decomposition	Sperrylite	owner	Sperrylite	9212	VALID
+decomposition	Spessartine	owner	Spessartine	9129	VALID
+decomposition	Sphalerite	owner	Sphalerite	9130	VALID
+decomposition	Spinel	owner	Spinel	8326	VALID
+decomposition	Spodumene	owner	Spodumene	9146	VALID
+decomposition	StainlessSteel	owner	StainlessSteel	8636	VALID
+decomposition	StannicChloride	owner	StannicChloride	8402	VALID
+decomposition	Stannite	owner	Stannite	9214	VALID
+decomposition	Steam	owner	Steam	9814	VALID
+decomposition	Steel	owner	Steel	8630	VALID
+decomposition	SteelGalvanized	owner	SteelGalvanized	8651	VALID
+decomposition	Steeleaf	owner	Steeleaf	8673	VALID
+decomposition	SterlingSilver	owner	SterlingSilver	8601	VALID
+decomposition	Stibnite	owner	Stibnite	9131	VALID
+decomposition	Stolzite	owner	Stolzite	9193	VALID
+decomposition	Sugar	owner	Sugar	9703	VALID
+decomposition	SulfurDioxide	owner	SulfurDioxide	9834	VALID
+decomposition	SulfurTrioxide	owner	SulfurTrioxide	9835	VALID
+decomposition	SulfuricAcid	owner	SulfuricAcid	9824	VALID
+decomposition	Sylvite	owner	Sylvite	8203	VALID
+decomposition	Talc	owner	Talc	9169	VALID
+decomposition	Tantalite	owner	Tantalite	9148	VALID
+decomposition	TantalumHafniumCarbide	owner	TantalumHafniumCarbide	8802	VALID
+decomposition	TantalumPentoxide	owner	TantalumPentoxide	8462	VALID
+decomposition	Tanzanite	owner	Tanzanite	8308	VALID
+decomposition	Terrasteel	owner	Terrasteel	8721	VALID
+decomposition	Tetrahedrite	owner	Tetrahedrite	9132	VALID
+decomposition	Thaumium	owner	Thaumium	8679	VALID
+decomposition	TigerEye	owner	TigerEye	8430	VALID
+decomposition	TigerIron	owner	TigerIron	8435	VALID
+decomposition	TinAlloy	owner	TinAlloy	8667	VALID
+decomposition	TitaniumIridium	owner	TitaniumIridium	8793	VALID
+decomposition	TitaniumTetrachloride	owner	TitaniumTetrachloride	8413	VALID
+decomposition	Topaz	owner	Topaz	8306	VALID
+decomposition	Trinaquadalloy	owner	Trinaquadalloy	8684	VALID
+decomposition	Trinitanium	owner	Trinitanium	8790	VALID
+decomposition	Tritanium	owner	Tritanium	8752	VALID
+decomposition	TritaniumDioxide	owner	TritaniumDioxide	9204	VALID
+decomposition	TritaniumHexaastatide	owner	TritaniumHexaastatide	9209	VALID
+decomposition	TritaniumHexabromide	owner	TritaniumHexabromide	9207	VALID
+decomposition	TritaniumHexachloride	owner	TritaniumHexachloride	9206	VALID
+decomposition	TritaniumHexafluoride	owner	TritaniumHexafluoride	9205	VALID
+decomposition	TritaniumHexaiodide	owner	TritaniumHexaiodide	9208	VALID
+decomposition	TritiatedWater	owner	TritiatedWater	9813	VALID
+decomposition	Trona	owner	Trona	9159	VALID
+decomposition	Tungstate	owner	Tungstate	9133	VALID
+decomposition	TungstenCarbide	owner	TungstenCarbide	8638	VALID
+decomposition	TungstenSintered	owner	TungstenSintered	8652	VALID
+decomposition	TungstenTrioxide	owner	TungstenTrioxide	8026	VALID
+decomposition	Tungstensteel	owner	Tungstensteel	8635	VALID
+decomposition	TungsticAcid	owner	TungsticAcid	8027	VALID
+decomposition	Ultimet	owner	Ultimet	8666	VALID
+decomposition	Uraninite	owner	Uraninite	9134	VALID
+decomposition	Uranium235Hexafluoride	owner	Uranium235Hexafluoride	9012	VALID
+decomposition	Uranium235Tetrafluoride	owner	Uranium235Tetrafluoride	9011	VALID
+decomposition	Uranium238Hexafluoride	owner	Uranium238Hexafluoride	9010	VALID
+decomposition	Uranium238Tetrafluoride	owner	Uranium238Tetrafluoride	9009	VALID
+decomposition	UraniumHexafluoride	owner	UraniumHexafluoride	9008	VALID
+decomposition	UraniumTetrafluoride	owner	UraniumTetrafluoride	9007	VALID
+decomposition	Uvarovite	owner	Uvarovite	9135	VALID
+decomposition	VanadiumGallium	owner	VanadiumGallium	8686	VALID
+decomposition	VanadiumMagnetite	owner	VanadiumMagnetite	9143	VALID
+decomposition	VanadiumPentoxide	owner	VanadiumPentoxide	8234	VALID
+decomposition	VanadiumSteel	owner	VanadiumSteel	8653	VALID
+decomposition	Vermiculite	owner	Vermiculite	9152	VALID
+decomposition	Vibramantium	owner	Vibramantium	8706	VALID
+decomposition	VibraniumSilver	owner	VibraniumSilver	8705	VALID
+decomposition	VibraniumSteel	owner	VibraniumSteel	8704	VALID
+decomposition	VibrantAlloy	owner	VibrantAlloy	8726	VALID
+decomposition	Vinteum	owner	Vinteum	8316	RETIRED
+decomposition	VinteumPurified	owner	VinteumPurified	8327	RETIRED
+decomposition	VitriolOfClay	owner	VitriolOfClay	8412	VALID
+decomposition	VoidCrystal	owner	VoidCrystal	8378	RETIRED
+decomposition	Water	owner	Water	9800	VALID
+decomposition	WaterDistilled	owner	WaterDistilled	9808	VALID
+decomposition	WhiteFluorite	owner	WhiteFluorite	8441	VALID
+decomposition	WhitePhosphorus	owner	WhitePhosphorus	8460	VALID
+decomposition	WhiteVitriol	owner	WhiteVitriol	8409	VALID
+decomposition	Wolframite	owner	Wolframite	9217	VALID
+decomposition	Wollastonite	owner	Wollastonite	9164	VALID
+decomposition	WroughtIron	owner	WroughtIron	8643	VALID
+decomposition	Wulfenite	owner	Wulfenite	9136	VALID
+decomposition	YellowAventurine	owner	YellowAventurine	8447	VALID
+decomposition	YellowDiamond	owner	YellowDiamond	8468	VALID
+decomposition	YellowFluorite	owner	YellowFluorite	8442	VALID
+decomposition	YellowJasper	owner	YellowJasper	8429	VALID
+decomposition	YellowLimonite	owner	YellowLimonite	9137	VALID
+decomposition	YellowSapphire	owner	YellowSapphire	8315	VALID
+decomposition	YttriumBariumCuprate	owner	YttriumBariumCuprate	8687	VALID
+decomposition	Zeolite	owner	Zeolite	9165	VALID
+decomposition	Zircon	owner	Zircon	8419	VALID
+forms	10	owner		10	VALID
+forms	100	owner		100	VALID
+forms	1000	owner		1000	VALID
+forms	1010	owner		1010	VALID
+forms	1020	owner		1020	VALID
+forms	1030	owner		1030	VALID
+forms	1040	owner		1040	VALID
+forms	1050	owner		1050	VALID
+forms	1060	owner		1060	VALID
+forms	1070	owner		1070	VALID
+forms	1080	owner		1080	VALID
+forms	1090	owner		1090	VALID
+forms	11	owner		11	VALID
+forms	110	owner		110	VALID
+forms	1100	owner		1100	VALID
+forms	1110	owner		1110	VALID
+forms	1120	owner		1120	VALID
+forms	1130	owner		1130	VALID
+forms	1140	owner		1140	VALID
+forms	1148	owner		1148	VALID
+forms	1150	owner		1150	VALID
+forms	1160	owner		1160	VALID
+forms	1170	owner		1170	VALID
+forms	1180	owner		1180	VALID
+forms	12	owner		12	VALID
+forms	120	owner		120	VALID
+forms	1250	owner		1250	VALID
+forms	1260	owner		1260	VALID
+forms	130	owner		130	VALID
+forms	140	owner		140	VALID
+forms	1450	owner		1450	VALID
+forms	150	owner		150	VALID
+forms	1520	owner		1520	VALID
+forms	160	owner		160	VALID
+forms	170	owner		170	VALID
+forms	1740	owner		1740	VALID
+forms	1741	owner		1741	VALID
+forms	1742	owner		1742	VALID
+forms	180	owner		180	VALID
+forms	190	owner		190	VALID
+forms	20	owner		20	VALID
+forms	200	owner		200	VALID
+forms	21	owner		21	VALID
+forms	210	owner		210	VALID
+forms	220	owner		220	VALID
+forms	2220	owner		2220	VALID
+forms	230	owner		230	VALID
+forms	240	owner		240	VALID
+forms	250	owner		250	VALID
+forms	260	owner		260	VALID
+forms	270	owner		270	VALID
+forms	278	owner		278	VALID
+forms	280	owner		280	VALID
+forms	290	owner		290	VALID
+forms	30	owner		30	VALID
+forms	300	owner		300	VALID
+forms	31	owner		31	VALID
+forms	310	owner		310	VALID
+forms	320	owner		320	VALID
+forms	330	owner		330	VALID
+forms	340	owner		340	VALID
+forms	350	owner		350	VALID
+forms	360	owner		360	VALID
+forms	370	owner		370	VALID
+forms	3720	owner		3720	VALID
+forms	380	owner		380	VALID
+forms	390	owner		390	VALID
+forms	40	owner		40	VALID
+forms	400	owner		400	VALID
+forms	41	owner		41	VALID
+forms	410	owner		410	VALID
+forms	42	owner		42	VALID
+forms	420	owner		420	VALID
+forms	430	owner		430	VALID
+forms	440	owner		440	VALID
+forms	450	owner		450	VALID
+forms	460	owner		460	VALID
+forms	470	owner		470	VALID
+forms	480	owner		480	VALID
+forms	490	owner		490	VALID
+forms	50	owner		50	VALID
+forms	500	owner		500	VALID
+forms	51	owner		51	VALID
+forms	510	owner		510	VALID
+forms	520	owner		520	VALID
+forms	530	owner		530	VALID
+forms	540	owner		540	VALID
+forms	550	owner		550	VALID
+forms	560	owner		560	VALID
+forms	570	owner		570	VALID
+forms	580	owner		580	VALID
+forms	590	owner		590	VALID
+forms	60	owner		60	VALID
+forms	600	owner		600	VALID
+forms	61	owner		61	VALID
+forms	610	owner		610	VALID
+forms	62	owner		62	VALID
+forms	620	owner		620	VALID
+forms	630	owner		630	VALID
+forms	640	owner		640	VALID
+forms	650	owner		650	VALID
+forms	660	owner		660	VALID
+forms	670	owner		670	VALID
+forms	680	owner		680	VALID
+forms	690	owner		690	VALID
+forms	70	owner		70	VALID
+forms	700	owner		700	VALID
+forms	710	owner		710	VALID
+forms	720	owner		720	VALID
+forms	730	owner		730	VALID
+forms	740	owner		740	VALID
+forms	750	owner		750	VALID
+forms	760	owner		760	VALID
+forms	770	owner		770	VALID
+forms	780	owner		780	VALID
+forms	790	owner		790	VALID
+forms	791	owner		791	VALID
+forms	80	owner		80	VALID
+forms	800	owner		800	VALID
+forms	8000	owner		8000	VALID
+forms	8001	owner		8001	VALID
+forms	8002	owner		8002	VALID
+forms	8003	owner		8003	VALID
+forms	8006	owner		8006	VALID
+forms	8007	owner		8007	VALID
+forms	8008	owner		8008	VALID
+forms	8009	owner		8009	VALID
+forms	8010	owner		8010	VALID
+forms	8011	owner		8011	VALID
+forms	8012	owner		8012	VALID
+forms	8013	owner		8013	VALID
+forms	8014	owner		8014	VALID
+forms	8015	owner		8015	VALID
+forms	8016	owner		8016	VALID
+forms	8017	owner		8017	VALID
+forms	8018	owner		8018	VALID
+forms	8019	owner		8019	VALID
+forms	8020	owner		8020	VALID
+forms	8021	owner		8021	VALID
+forms	8022	owner		8022	VALID
+forms	8023	owner		8023	VALID
+forms	8024	owner		8024	VALID
+forms	8025	owner		8025	VALID
+forms	8026	owner		8026	VALID
+forms	8027	owner		8027	VALID
+forms	8028	owner		8028	VALID
+forms	8029	owner		8029	VALID
+forms	8030	owner		8030	VALID
+forms	8031	owner		8031	VALID
+forms	8032	owner		8032	VALID
+forms	8033	owner		8033	VALID
+forms	8034	owner		8034	VALID
+forms	8035	owner		8035	VALID
+forms	8036	owner		8036	VALID
+forms	8037	owner		8037	VALID
+forms	8038	owner		8038	VALID
+forms	8039	owner		8039	VALID
+forms	810	owner		810	VALID
+forms	8100	owner		8100	VALID
+forms	8101	owner		8101	VALID
+forms	8102	owner		8102	VALID
+forms	8103	owner		8103	VALID
+forms	8104	owner		8104	VALID
+forms	8196	owner		8196	VALID
+forms	8197	owner		8197	VALID
+forms	820	owner		820	VALID
+forms	8200	owner		8200	VALID
+forms	8201	owner		8201	VALID
+forms	8203	owner		8203	VALID
+forms	8204	owner		8204	VALID
+forms	8205	owner		8205	VALID
+forms	8206	owner		8206	VALID
+forms	8207	owner		8207	VALID
+forms	8208	owner		8208	VALID
+forms	8209	owner		8209	VALID
+forms	8210	owner		8210	VALID
+forms	8211	owner		8211	VALID
+forms	8212	owner		8212	RETIRED
+forms	8213	owner		8213	RETIRED
+forms	8214	owner		8214	VALID
+forms	8215	owner		8215	VALID
+forms	8216	owner		8216	VALID
+forms	8217	owner		8217	VALID
+forms	8218	owner		8218	VALID
+forms	8219	owner		8219	VALID
+forms	8220	owner		8220	VALID
+forms	8221	owner		8221	VALID
+forms	8222	owner		8222	VALID
+forms	8223	owner		8223	VALID
+forms	8224	owner		8224	VALID
+forms	8225	owner		8225	VALID
+forms	8226	owner		8226	VALID
+forms	8229	owner		8229	VALID
+forms	8230	owner		8230	VALID
+forms	8231	owner		8231	VALID
+forms	8232	owner		8232	VALID
+forms	8233	owner		8233	VALID
+forms	8234	owner		8234	VALID
+forms	8235	owner		8235	VALID
+forms	8236	owner		8236	VALID
+forms	8238	owner		8238	VALID
+forms	8239	owner		8239	VALID
+forms	8242	owner		8242	VALID
+forms	8245	owner		8245	RETIRED
+forms	8246	owner		8246	RETIRED
+forms	8247	owner		8247	VALID
+forms	8248	owner		8248	VALID
+forms	8249	owner		8249	VALID
+forms	8250	owner		8250	VALID
+forms	8251	owner		8251	VALID
+forms	8252	owner		8252	VALID
+forms	8253	owner		8253	VALID
+forms	8254	owner		8254	VALID
+forms	8255	owner		8255	VALID
+forms	8256	owner		8256	VALID
+forms	8257	owner		8257	VALID
+forms	8258	owner		8258	VALID
+forms	8259	owner		8259	VALID
+forms	8260	owner		8260	VALID
+forms	8261	owner		8261	VALID
+forms	8262	owner		8262	VALID
+forms	8263	owner		8263	VALID
+forms	8264	owner		8264	VALID
+forms	8265	owner		8265	VALID
+forms	8266	owner		8266	VALID
+forms	8267	owner		8267	VALID
+forms	8268	owner		8268	VALID
+forms	8269	owner		8269	VALID
+forms	8270	owner		8270	VALID
+forms	8271	owner		8271	VALID
+forms	8272	owner		8272	VALID
+forms	8273	owner		8273	VALID
+forms	8274	owner		8274	VALID
+forms	8275	owner		8275	VALID
+forms	8276	owner		8276	VALID
+forms	8277	owner		8277	VALID
+forms	8278	owner		8278	VALID
+forms	8289	owner		8289	VALID
+forms	8290	owner		8290	VALID
+forms	8296	owner		8296	VALID
+forms	8297	owner		8297	VALID
+forms	8298	owner		8298	VALID
+forms	8299	owner		8299	VALID
+forms	830	owner		830	VALID
+forms	8300	owner		8300	VALID
+forms	8301	owner		8301	VALID
+forms	8302	owner		8302	VALID
+forms	8303	owner		8303	VALID
+forms	8304	owner		8304	VALID
+forms	8305	owner		8305	VALID
+forms	8306	owner		8306	VALID
+forms	8307	owner		8307	VALID
+forms	8308	owner		8308	VALID
+forms	8309	owner		8309	VALID
+forms	8310	owner		8310	VALID
+forms	8311	owner		8311	VALID
+forms	8312	owner		8312	VALID
+forms	8313	owner		8313	VALID
+forms	8314	owner		8314	VALID
+forms	8315	owner		8315	VALID
+forms	8316	owner		8316	RETIRED
+forms	8318	owner		8318	VALID
+forms	8319	owner		8319	VALID
+forms	8320	owner		8320	VALID
+forms	8321	owner		8321	VALID
+forms	8322	owner		8322	VALID
+forms	8323	owner		8323	VALID
+forms	8324	owner		8324	VALID
+forms	8325	owner		8325	VALID
+forms	8326	owner		8326	VALID
+forms	8327	owner		8327	RETIRED
+forms	8328	owner		8328	VALID
+forms	8330	owner		8330	VALID
+forms	8331	owner		8331	VALID
+forms	8332	owner		8332	VALID
+forms	8333	owner		8333	VALID
+forms	8334	owner		8334	VALID
+forms	8335	owner		8335	VALID
+forms	8336	owner		8336	VALID
+forms	8337	owner		8337	VALID
+forms	8338	owner		8338	VALID
+forms	8340	owner		8340	VALID
+forms	8341	owner		8341	VALID
+forms	8346	owner		8346	VALID
+forms	8347	owner		8347	VALID
+forms	8348	owner		8348	VALID
+forms	8349	owner		8349	VALID
+forms	8360	owner		8360	VALID
+forms	8365	owner		8365	VALID
+forms	8375	owner		8375	RETIRED
+forms	8376	owner		8376	RETIRED
+forms	8377	owner		8377	RETIRED
+forms	8378	owner		8378	RETIRED
+forms	8379	owner		8379	RETIRED
+forms	8380	owner		8380	RETIRED
+forms	8383	owner		8383	VALID
+forms	8384	owner		8384	VALID
+forms	8385	owner		8385	VALID
+forms	8386	owner		8386	VALID
+forms	8387	owner		8387	VALID
+forms	8389	owner		8389	VALID
+forms	8390	owner		8390	VALID
+forms	8393	owner		8393	VALID
+forms	8395	owner		8395	VALID
+forms	8396	owner		8396	VALID
+forms	8397	owner		8397	VALID
+forms	8398	owner		8398	VALID
+forms	8399	owner		8399	VALID
+forms	840	owner		840	VALID
+forms	8400	owner		8400	VALID
+forms	8401	owner		8401	VALID
+forms	8402	owner		8402	VALID
+forms	8403	owner		8403	VALID
+forms	8404	owner		8404	VALID
+forms	8405	owner		8405	VALID
+forms	8406	owner		8406	VALID
+forms	8407	owner		8407	VALID
+forms	8408	owner		8408	VALID
+forms	8409	owner		8409	VALID
+forms	8410	owner		8410	VALID
+forms	8412	owner		8412	VALID
+forms	8413	owner		8413	VALID
+forms	8415	owner		8415	VALID
+forms	8416	owner		8416	VALID
+forms	8417	owner		8417	VALID
+forms	8418	owner		8418	VALID
+forms	8419	owner		8419	VALID
+forms	8420	owner		8420	VALID
+forms	8421	owner		8421	VALID
+forms	8422	owner		8422	VALID
+forms	8423	owner		8423	VALID
+forms	8424	owner		8424	VALID
+forms	8425	owner		8425	VALID
+forms	8426	owner		8426	VALID
+forms	8427	owner		8427	VALID
+forms	8428	owner		8428	VALID
+forms	8429	owner		8429	VALID
+forms	8430	owner		8430	VALID
+forms	8431	owner		8431	VALID
+forms	8432	owner		8432	VALID
+forms	8433	owner		8433	VALID
+forms	8434	owner		8434	VALID
+forms	8435	owner		8435	VALID
+forms	8436	owner		8436	VALID
+forms	8437	owner		8437	VALID
+forms	8438	owner		8438	VALID
+forms	8439	owner		8439	VALID
+forms	8440	owner		8440	VALID
+forms	8441	owner		8441	VALID
+forms	8442	owner		8442	VALID
+forms	8443	owner		8443	VALID
+forms	8444	owner		8444	VALID
+forms	8445	owner		8445	VALID
+forms	8446	owner		8446	VALID
+forms	8447	owner		8447	VALID
+forms	8448	owner		8448	VALID
+forms	8449	owner		8449	VALID
+forms	8450	owner		8450	VALID
+forms	8451	owner		8451	VALID
+forms	8452	owner		8452	RETIRED
+forms	8453	owner		8453	RETIRED
+forms	8455	owner		8455	VALID
+forms	8458	owner		8458	VALID
+forms	8459	owner		8459	VALID
+forms	8460	owner		8460	VALID
+forms	8461	owner		8461	VALID
+forms	8462	owner		8462	VALID
+forms	8464	owner		8464	VALID
+forms	8465	owner		8465	VALID
+forms	8467	owner		8467	VALID
+forms	8468	owner		8468	VALID
+forms	8470	owner		8470	VALID
+forms	8471	owner		8471	VALID
+forms	850	owner		850	VALID
+forms	8500	owner		8500	VALID
+forms	8501	owner		8501	VALID
+forms	8502	owner		8502	VALID
+forms	8503	owner		8503	VALID
+forms	8504	owner		8504	VALID
+forms	8505	owner		8505	VALID
+forms	8506	owner		8506	VALID
+forms	8507	owner		8507	VALID
+forms	8508	owner		8508	VALID
+forms	8511	owner		8511	VALID
+forms	8516	owner		8516	VALID
+forms	8518	owner		8518	VALID
+forms	8521	owner		8521	VALID
+forms	8528	owner		8528	VALID
+forms	8599	owner		8599	VALID
+forms	860	owner		860	VALID
+forms	8600	owner		8600	VALID
+forms	8601	owner		8601	VALID
+forms	8602	owner		8602	VALID
+forms	8605	owner		8605	VALID
+forms	8610	owner		8610	VALID
+forms	8611	owner		8611	VALID
+forms	8612	owner		8612	VALID
+forms	8614	owner		8614	VALID
+forms	8615	owner		8615	VALID
+forms	8620	owner		8620	VALID
+forms	8621	owner		8621	VALID
+forms	8622	owner		8622	VALID
+forms	8630	owner		8630	VALID
+forms	8631	owner		8631	VALID
+forms	8632	owner		8632	VALID
+forms	8633	owner		8633	VALID
+forms	8634	owner		8634	VALID
+forms	8635	owner		8635	VALID
+forms	8636	owner		8636	VALID
+forms	8638	owner		8638	VALID
+forms	8640	owner		8640	VALID
+forms	8643	owner		8643	VALID
+forms	8645	owner		8645	VALID
+forms	8646	owner		8646	VALID
+forms	8647	owner		8647	VALID
+forms	8651	owner		8651	VALID
+forms	8652	owner		8652	VALID
+forms	8653	owner		8653	VALID
+forms	8658	owner		8658	VALID
+forms	8659	owner		8659	VALID
+forms	8660	owner		8660	VALID
+forms	8661	owner		8661	VALID
+forms	8662	owner		8662	VALID
+forms	8663	owner		8663	VALID
+forms	8664	owner		8664	VALID
+forms	8665	owner		8665	VALID
+forms	8666	owner		8666	VALID
+forms	8667	owner		8667	VALID
+forms	8668	owner		8668	VALID
+forms	8669	owner		8669	VALID
+forms	8672	owner		8672	VALID
+forms	8673	owner		8673	VALID
+forms	8674	owner		8674	VALID
+forms	8675	owner		8675	VALID
+forms	8679	owner		8679	VALID
+forms	8682	owner		8682	VALID
+forms	8684	owner		8684	VALID
+forms	8685	owner		8685	VALID
+forms	8686	owner		8686	VALID
+forms	8687	owner		8687	VALID
+forms	8689	owner		8689	VALID
+forms	8697	owner		8697	VALID
+forms	8698	owner		8698	VALID
+forms	870	owner		870	VALID
+forms	8700	owner		8700	VALID
+forms	8702	owner		8702	VALID
+forms	8704	owner		8704	VALID
+forms	8705	owner		8705	VALID
+forms	8706	owner		8706	VALID
+forms	8708	owner		8708	VALID
+forms	8709	owner		8709	VALID
+forms	8710	owner		8710	VALID
+forms	8717	owner		8717	VALID
+forms	8720	owner		8720	VALID
+forms	8721	owner		8721	VALID
+forms	8722	owner		8722	VALID
+forms	8726	owner		8726	VALID
+forms	8727	owner		8727	VALID
+forms	8729	owner		8729	VALID
+forms	8730	owner		8730	VALID
+forms	8732	owner		8732	VALID
+forms	8733	owner		8733	VALID
+forms	8735	owner		8735	VALID
+forms	8737	owner		8737	VALID
+forms	8744	owner		8744	VALID
+forms	8745	owner		8745	VALID
+forms	8746	owner		8746	VALID
+forms	8751	owner		8751	VALID
+forms	8752	owner		8752	VALID
+forms	8756	owner		8756	VALID
+forms	8784	owner		8784	VALID
+forms	8790	owner		8790	VALID
+forms	8791	owner		8791	VALID
+forms	8792	owner		8792	VALID
+forms	8795	owner		8795	RETIRED
+forms	8796	owner		8796	VALID
+forms	8797	owner		8797	VALID
+forms	8798	owner		8798	VALID
+forms	8799	owner		8799	VALID
+forms	880	owner		880	VALID
+forms	8800	owner		8800	VALID
+forms	8801	owner		8801	VALID
+forms	8802	owner		8802	VALID
+forms	8803	owner		8803	VALID
+forms	8805	owner		8805	RETIRED
+forms	8813	owner		8813	RETIRED
+forms	890	owner		890	VALID
+forms	90	owner		90	VALID
+forms	900	owner		900	VALID
+forms	9000	owner		9000	VALID
+forms	9001	owner		9001	VALID
+forms	9003	owner		9003	VALID
+forms	9004	owner		9004	VALID
+forms	9005	owner		9005	VALID
+forms	9006	owner		9006	VALID
+forms	9007	owner		9007	VALID
+forms	9008	owner		9008	VALID
+forms	9009	owner		9009	VALID
+forms	9010	owner		9010	VALID
+forms	9011	owner		9011	VALID
+forms	9012	owner		9012	VALID
+forms	910	owner		910	VALID
+forms	9100	owner		9100	VALID
+forms	9101	owner		9101	VALID
+forms	9102	owner		9102	VALID
+forms	9103	owner		9103	VALID
+forms	9104	owner		9104	VALID
+forms	9105	owner		9105	VALID
+forms	9106	owner		9106	VALID
+forms	9107	owner		9107	VALID
+forms	9108	owner		9108	VALID
+forms	9109	owner		9109	VALID
+forms	9110	owner		9110	VALID
+forms	9111	owner		9111	VALID
+forms	9113	owner		9113	VALID
+forms	9114	owner		9114	VALID
+forms	9115	owner		9115	VALID
+forms	9116	owner		9116	VALID
+forms	9117	owner		9117	VALID
+forms	9118	owner		9118	VALID
+forms	9119	owner		9119	VALID
+forms	9120	owner		9120	VALID
+forms	9122	owner		9122	VALID
+forms	9123	owner		9123	VALID
+forms	9124	owner		9124	VALID
+forms	9125	owner		9125	VALID
+forms	9126	owner		9126	VALID
+forms	9127	owner		9127	VALID
+forms	9128	owner		9128	VALID
+forms	9129	owner		9129	VALID
+forms	9130	owner		9130	VALID
+forms	9131	owner		9131	VALID
+forms	9132	owner		9132	VALID
+forms	9133	owner		9133	VALID
+forms	9134	owner		9134	VALID
+forms	9135	owner		9135	VALID
+forms	9136	owner		9136	VALID
+forms	9137	owner		9137	VALID
+forms	9138	owner		9138	VALID
+forms	9139	owner		9139	VALID
+forms	9140	owner		9140	VALID
+forms	9141	owner		9141	VALID
+forms	9143	owner		9143	VALID
+forms	9144	owner		9144	VALID
+forms	9145	owner		9145	VALID
+forms	9146	owner		9146	VALID
+forms	9147	owner		9147	VALID
+forms	9148	owner		9148	VALID
+forms	9149	owner		9149	VALID
+forms	9150	owner		9150	VALID
+forms	9152	owner		9152	VALID
+forms	9153	owner		9153	VALID
+forms	9154	owner		9154	VALID
+forms	9155	owner		9155	VALID
+forms	9156	owner		9156	VALID
+forms	9157	owner		9157	VALID
+forms	9158	owner		9158	VALID
+forms	9159	owner		9159	VALID
+forms	9160	owner		9160	VALID
+forms	9161	owner		9161	VALID
+forms	9162	owner		9162	VALID
+forms	9164	owner		9164	VALID
+forms	9165	owner		9165	VALID
+forms	9166	owner		9166	VALID
+forms	9167	owner		9167	VALID
+forms	9169	owner		9169	VALID
+forms	9171	owner		9171	VALID
+forms	9174	owner		9174	VALID
+forms	9175	owner		9175	VALID
+forms	9177	owner		9177	VALID
+forms	9180	owner		9180	VALID
+forms	9184	owner		9184	VALID
+forms	9185	owner		9185	VALID
+forms	9186	owner		9186	VALID
+forms	9187	owner		9187	VALID
+forms	9188	owner		9188	VALID
+forms	9189	owner		9189	VALID
+forms	9190	owner		9190	VALID
+forms	9192	owner		9192	VALID
+forms	9193	owner		9193	VALID
+forms	9194	owner		9194	VALID
+forms	9195	owner		9195	VALID
+forms	9196	owner		9196	VALID
+forms	9197	owner		9197	VALID
+forms	9198	owner		9198	VALID
+forms	9199	owner		9199	VALID
+forms	920	owner		920	VALID
+forms	9200	owner		9200	VALID
+forms	9201	owner		9201	VALID
+forms	9202	owner		9202	VALID
+forms	9203	owner		9203	VALID
+forms	9204	owner		9204	VALID
+forms	9205	owner		9205	VALID
+forms	9206	owner		9206	VALID
+forms	9207	owner		9207	VALID
+forms	9208	owner		9208	VALID
+forms	9209	owner		9209	VALID
+forms	921	owner		921	VALID
+forms	9210	owner		9210	VALID
+forms	9211	owner		9211	VALID
+forms	9212	owner		9212	VALID
+forms	9213	owner		9213	VALID
+forms	9214	owner		9214	VALID
+forms	9215	owner		9215	VALID
+forms	9216	owner		9216	VALID
+forms	9217	owner		9217	VALID
+forms	9218	owner		9218	VALID
+forms	9219	owner		9219	VALID
+forms	922	owner		922	VALID
+forms	9220	owner		9220	VALID
+forms	9221	owner		9221	VALID
+forms	9222	owner		9222	VALID
+forms	9223	owner		9223	VALID
+forms	9224	owner		9224	RETIRED
+forms	9225	owner		9225	RETIRED
+forms	9226	owner		9226	RETIRED
+forms	9228	owner		9228	RETIRED
+forms	9239	owner		9239	RETIRED
+forms	9246	owner		9246	VALID
+forms	9247	owner		9247	VALID
+forms	9248	owner		9248	VALID
+forms	9261	owner		9261	VALID
+forms	9271	owner		9271	VALID
+forms	930	owner		930	VALID
+forms	9300	owner		9300	VALID
+forms	9301	owner		9301	VALID
+forms	9302	owner		9302	VALID
+forms	9303	owner		9303	VALID
+forms	9304	owner		9304	VALID
+forms	9305	owner		9305	VALID
+forms	9306	owner		9306	VALID
+forms	9307	owner		9307	VALID
+forms	9308	owner		9308	VALID
+forms	9309	owner		9309	VALID
+forms	9310	owner		9310	VALID
+forms	9311	owner		9311	VALID
+forms	9312	owner		9312	VALID
+forms	9313	owner		9313	VALID
+forms	9314	owner		9314	VALID
+forms	9315	owner		9315	VALID
+forms	9316	owner		9316	VALID
+forms	9317	owner		9317	VALID
+forms	9318	owner		9318	VALID
+forms	9319	owner		9319	VALID
+forms	9344	owner		9344	VALID
+forms	9372	owner		9372	VALID
+forms	940	owner		940	VALID
+forms	9409	owner		9409	VALID
+forms	942	owner		942	VALID
+forms	943	owner		943	VALID
+forms	945	owner		945	VALID
+forms	946	owner		946	VALID
+forms	947	owner		947	VALID
+forms	950	owner		950	VALID
+forms	951	owner		951	VALID
+forms	952	owner		952	VALID
+forms	960	owner		960	VALID
+forms	970	owner		970	VALID
+forms	9700	owner		9700	VALID
+forms	9701	owner		9701	VALID
+forms	9702	owner		9702	VALID
+forms	9703	owner		9703	VALID
+forms	9705	owner		9705	VALID
+forms	9709	owner		9709	VALID
+forms	9710	owner		9710	VALID
+forms	9711	owner		9711	VALID
+forms	9712	owner		9712	VALID
+forms	9713	owner		9713	VALID
+forms	9779	owner		9779	VALID
+forms	9780	owner		9780	VALID
+forms	9781	owner		9781	VALID
+forms	9782	owner		9782	VALID
+forms	9783	owner		9783	VALID
+forms	9784	owner		9784	VALID
+forms	9785	owner		9785	VALID
+forms	9790	owner		9790	VALID
+forms	9791	owner		9791	VALID
+forms	9792	owner		9792	VALID
+forms	9793	owner		9793	VALID
+forms	9794	owner		9794	VALID
+forms	9796	owner		9796	VALID
+forms	980	owner		980	VALID
+forms	9800	owner		9800	VALID
+forms	9801	owner		9801	VALID
+forms	9802	owner		9802	VALID
+forms	9803	owner		9803	VALID
+forms	9804	owner		9804	VALID
+forms	9805	owner		9805	VALID
+forms	9806	owner		9806	VALID
+forms	9808	owner		9808	VALID
+forms	9809	owner		9809	VALID
+forms	9810	owner		9810	VALID
+forms	9811	owner		9811	VALID
+forms	9812	owner		9812	VALID
+forms	9813	owner		9813	VALID
+forms	9814	owner		9814	VALID
+forms	9815	owner		9815	VALID
+forms	9820	owner		9820	VALID
+forms	9821	owner		9821	VALID
+forms	9822	owner		9822	VALID
+forms	9823	owner		9823	VALID
+forms	9824	owner		9824	VALID
+forms	9825	owner		9825	VALID
+forms	9826	owner		9826	VALID
+forms	9827	owner		9827	VALID
+forms	9828	owner		9828	VALID
+forms	9829	owner		9829	VALID
+forms	9830	owner		9830	VALID
+forms	9831	owner		9831	VALID
+forms	9832	owner		9832	VALID
+forms	9833	owner		9833	VALID
+forms	9834	owner		9834	VALID
+forms	9835	owner		9835	VALID
+forms	9836	owner		9836	VALID
+forms	9837	owner		9837	VALID
+forms	9838	owner		9838	VALID
+forms	9839	owner		9839	VALID
+forms	9840	owner		9840	VALID
+forms	9841	owner		9841	VALID
+forms	9842	owner		9842	VALID
+forms	9843	owner		9843	VALID
+forms	9844	owner		9844	VALID
+forms	9850	owner		9850	VALID
+forms	9851	owner		9851	VALID
+forms	9852	owner		9852	VALID
+forms	9853	owner		9853	VALID
+forms	9860	owner		9860	VALID
+forms	9861	owner		9861	VALID
+forms	9862	owner		9862	VALID
+forms	9863	owner		9863	VALID
+forms	9864	owner		9864	VALID
+forms	9865	owner		9865	VALID
+forms	9866	owner		9866	VALID
+forms	9867	owner		9867	VALID
+forms	9868	owner		9868	VALID
+forms	9870	owner		9870	VALID
+forms	9871	owner		9871	VALID
+forms	9872	owner		9872	VALID
+forms	9873	owner		9873	VALID
+forms	9874	owner		9874	VALID
+forms	9875	owner		9875	VALID
+forms	9876	owner		9876	VALID
+forms	9877	owner		9877	VALID
+forms	9880	owner		9880	VALID
+forms	9881	owner		9881	VALID
+forms	9882	owner		9882	VALID
+forms	9883	owner		9883	VALID
+forms	9884	owner		9884	RETIRED
+forms	9885	owner		9885	RETIRED
+forms	9886	owner		9886	VALID
+forms	990	owner		990	VALID
+forms	ac	owner	ac	0	ALIAS
+forms	acacia	owner	acacia	0	ALIAS
+forms	ad	owner	ad	0	ALIAS
+forms	adamantine	owner	adamantine	0	ALIAS
+forms	adamite	owner	adamite	0	RETIRED
+forms	adluorite	owner	adluorite	0	RETIRED
+forms	advancedalloy	owner	advancedalloy	0	RETIRED
+forms	ag	owner	ag	0	ALIAS
+forms	agate	owner	agate	0	RETIRED
+forms	air	owner	air	0	ALIAS
+forms	al	owner	al	0	ALIAS
+forms	al2o3	owner	al2o3	0	ALIAS
+forms	alf3	owner	alf3	0	ALIAS
+forms	almandine	owner	almandine	0	ALIAS
+forms	alo3h3	owner	alo3h3	0	ALIAS
+forms	aluminiumalloy	owner	aluminiumalloy	0	ALIAS
+forms	aluminiumbrass	owner	aluminiumbrass	0	ALIAS
+forms	alumite	owner	alumite	0	ALIAS
+forms	alunite	owner	alunite	0	ALIAS
+forms	am	owner	am	0	ALIAS
+forms	am241	owner	am241	0	ALIAS
+forms	am242	owner	am242	0	ALIAS
+forms	amazonite	owner	amazonite	0	ALIAS
+forms	amber	owner	amber	0	ALIAS
+forms	amberdominican	owner	amberdominican	0	ALIAS
+forms	amethyst	owner	amethyst	0	ALIAS
+forms	ametrine	owner	ametrine	0	RETIRED
+forms	ammonium	owner	ammonium	0	RETIRED
+forms	ancientdebris	owner	ancientdebris	0	ALIAS
+forms	andesite	owner	andesite	0	ALIAS
+forms	andradite	owner	andradite	0	ALIAS
+forms	angelite	owner	angelite	0	RETIRED
+forms	annealedcopper	owner	annealedcopper	0	ALIAS
+forms	apatite	owner	apatite	0	ALIAS
+forms	aquamarine	owner	aquamarine	0	ALIAS
+forms	aquaregia	owner	aquaregia	0	ALIAS
+forms	ar	owner	ar	0	ALIAS
+forms	arsenicbronze	owner	arsenicbronze	0	ALIAS
+forms	arseniccopper	owner	arseniccopper	0	ALIAS
+forms	arsenopyrite	owner	arsenopyrite	0	ALIAS
+forms	as	owner	as	0	ALIAS
+forms	asbestos	owner	asbestos	0	ALIAS
+forms	ash	owner	ash	0	ALIAS
+forms	asphalt	owner	asphalt	0	ALIAS
+forms	at	owner	at	0	ALIAS
+forms	au	owner	au	0	ALIAS
+forms	au198	owner	au198	0	ALIAS
+forms	australium	owner	australium	0	RETIRED
+forms	aventurineblack	owner	aventurineblack	0	ALIAS
+forms	aventurineblue	owner	aventurineblue	0	ALIAS
+forms	aventurinebrown	owner	aventurinebrown	0	ALIAS
+forms	aventurinegreen	owner	aventurinegreen	0	ALIAS
+forms	aventurinered	owner	aventurinered	0	ALIAS
+forms	aventurineyellow	owner	aventurineyellow	0	ALIAS
+forms	azurite	owner	azurite	0	ALIAS
+forms	b	owner	b	0	ALIAS
+forms	b11	owner	b11	0	ALIAS
+forms	ba	owner	ba	0	ALIAS
+forms	balasruby	owner	balasruby	0	ALIAS
+forms	bamboo	owner	bamboo	0	ALIAS
+forms	barite	owner	barite	0	ALIAS
+forms	bark	owner	bark	0	ALIAS
+forms	basalt	owner	basalt	0	ALIAS
+forms	basalticmineralsand	owner	basalticmineralsand	0	ALIAS
+forms	basalz	owner	basalz	0	ALIAS
+forms	basanite	owner	basanite	0	RETIRED
+forms	bastnasite	owner	bastnasite	0	ALIAS
+forms	batteryalloy	owner	batteryalloy	0	ALIAS
+forms	bauxite	owner	bauxite	0	ALIAS
+forms	be	owner	be	0	ALIAS
+forms	be7	owner	be7	0	ALIAS
+forms	be8	owner	be8	0	ALIAS
+forms	bedrock	owner	bedrock	0	ALIAS
+forms	bentonite	owner	bentonite	0	ALIAS
+forms	bh	owner	bh	0	ALIAS
+forms	bi	owner	bi	0	ALIAS
+forms	biofuel	owner	biofuel	0	ALIAS
+forms	biomass	owner	biomass	0	ALIAS
+forms	biotite	owner	biotite	0	ALIAS
+forms	birch	owner	birch	0	ALIAS
+forms	bischofite	owner	bischofite	0	ALIAS
+forms	bismuthbronze	owner	bismuthbronze	0	ALIAS
+forms	bitumen	owner	bitumen	0	RETIRED
+forms	bixbite	owner	bixbite	0	ALIAS
+forms	bk	owner	bk	0	ALIAS
+forms	black	owner	black	0	ALIAS
+forms	blackberyl	owner	blackberyl	0	RETIRED
+forms	blackbronze	owner	blackbronze	0	ALIAS
+forms	blacksteel	owner	blacksteel	0	ALIAS
+forms	blackstone	owner	blackstone	0	ALIAS
+forms	blackvitriol	owner	blackvitriol	0	ALIAS
+forms	blaze	owner	blaze	0	ALIAS
+forms	blazequartz	owner	blazequartz	0	ALIAS
+forms	blitz	owner	blitz	0	ALIAS
+forms	blizz	owner	blizz	0	ALIAS
+forms	bloodstone	owner	bloodstone	0	RETIRED
+forms	blue	owner	blue	0	ALIAS
+forms	bluealloy	owner	bluealloy	0	ALIAS
+forms	bluemahoe	owner	bluemahoe	0	ALIAS
+forms	bluesapphire	owner	bluesapphire	0	ALIAS
+forms	blueschist	owner	blueschist	0	ALIAS
+forms	bluespruce	owner	bluespruce	0	ALIAS
+forms	bluesteel	owner	bluesteel	0	ALIAS
+forms	bluestone	owner	bluestone	0	ALIAS
+forms	bluetopaz	owner	bluetopaz	0	ALIAS
+forms	bluevitriol	owner	bluevitriol	0	ALIAS
+forms	bone	owner	bone	0	ALIAS
+forms	borax	owner	borax	0	ALIAS
+forms	br	owner	br	0	ALIAS
+forms	brass	owner	brass	0	ALIAS
+forms	breeze	owner	breeze	0	ALIAS
+forms	bromargyrite	owner	bromargyrite	0	ALIAS
+forms	bronze	owner	bronze	0	ALIAS
+forms	brown	owner	brown	0	ALIAS
+forms	brownlimonite	owner	brownlimonite	0	ALIAS
+forms	butane	owner	butane	0	ALIAS
+forms	c	owner	c	0	ALIAS
+forms	c13	owner	c13	0	ALIAS
+forms	c14	owner	c14	0	ALIAS
+forms	ca	owner	ca	0	ALIAS
+forms	cacl2	owner	cacl2	0	ALIAS
+forms	caco3	owner	caco3	0	ALIAS
+forms	caf2	owner	caf2	0	ALIAS
+forms	carminite	owner	carminite	0	ALIAS
+forms	carnelian	owner	carnelian	0	RETIRED
+forms	caso4	owner	caso4	0	ALIAS
+forms	cassiterite	owner	cassiterite	0	ALIAS
+forms	cd	owner	cd	0	ALIAS
+forms	cdinagalloy	owner	cdinagalloy	0	ALIAS
+forms	ce	owner	ce	0	ALIAS
+forms	celestine	owner	celestine	0	ALIAS
+forms	ceramic	owner	ceramic	0	ALIAS
+forms	certusquartz	owner	certusquartz	0	ALIAS
+forms	cf	owner	cf	0	ALIAS
+forms	ch4	owner	ch4	0	ALIAS
+forms	chalcopyrite	owner	chalcopyrite	0	ALIAS
+forms	chalk	owner	chalk	0	RETIRED
+forms	charcoal	owner	charcoal	0	ALIAS
+forms	chargedcertusquartz	owner	chargedcertusquartz	0	ALIAS
+forms	charoite	owner	charoite	0	RETIRED
+forms	cheese	owner	cheese	0	ALIAS
+forms	cherry	owner	cherry	0	ALIAS
+forms	chert	owner	chert	0	ALIAS
+forms	chestnut	owner	chestnut	0	RETIRED
+forms	chili	owner	chili	0	ALIAS
+forms	chloroauricacid	owner	chloroauricacid	0	ALIAS
+forms	chloroplatinicacid	owner	chloroplatinicacid	0	ALIAS
+forms	chocolate	owner	chocolate	0	ALIAS
+forms	chromite	owner	chromite	0	ALIAS
+forms	chromiumdioxide	owner	chromiumdioxide	0	ALIAS
+forms	chrysocolla	owner	chrysocolla	0	RETIRED
+forms	chrysoprase	owner	chrysoprase	0	RETIRED
+forms	cinnabar	owner	cinnabar	0	ALIAS
+forms	cinnamon	owner	cinnamon	0	ALIAS
+forms	citrine	owner	citrine	0	RETIRED
+forms	citrus	owner	citrus	0	RETIRED
+forms	cl	owner	cl	0	ALIAS
+forms	clay	owner	clay	0	ALIAS
+forms	claybrown	owner	claybrown	0	ALIAS
+forms	clayred	owner	clayred	0	ALIAS
+forms	cm	owner	cm	0	ALIAS
+forms	cmbsteel	owner	cmbsteel	0	RETIRED
+forms	cn	owner	cn	0	ALIAS
+forms	co2	owner	co2	0	ALIAS
+forms	co3	owner	co3	0	ALIAS
+forms	co60	owner	co60	0	ALIAS
+forms	coal	owner	coal	0	ALIAS
+forms	coalcoke	owner	coalcoke	0	ALIAS
+forms	cobaltbrass	owner	cobaltbrass	0	ALIAS
+forms	cobalthexahydrate	owner	cobalthexahydrate	0	ALIAS
+forms	cobaltite	owner	cobaltite	0	ALIAS
+forms	cocoa	owner	cocoa	0	ALIAS
+forms	coconut	owner	coconut	0	ALIAS
+forms	coffee	owner	coffee	0	ALIAS
+forms	coltan	owner	coltan	0	ALIAS
+forms	columbite	owner	columbite	0	ALIAS
+forms	compressed	owner	compressed	0	ALIAS
+forms	concrete	owner	concrete	0	ALIAS
+forms	conductiveiron	owner	conductiveiron	0	ALIAS
+forms	constantan	owner	constantan	0	ALIAS
+forms	constructionfoam	owner	constructionfoam	0	ALIAS
+forms	cooperite	owner	cooperite	0	ALIAS
+forms	coral	owner	coral	0	RETIRED
+forms	cosmicneutronium	owner	cosmicneutronium	0	ALIAS
+forms	cr	owner	cr	0	ALIAS
+forms	craponite	owner	craponite	0	ALIAS
+forms	creosote	owner	creosote	0	ALIAS
+forms	crimson	owner	crimson	0	ALIAS
+forms	crudeoil	owner	crudeoil	0	ALIAS
+forms	crystalflux	owner	crystalflux	0	RETIRED
+forms	crystalmatrix	owner	crystalmatrix	0	ALIAS
+forms	cs	owner	cs	0	ALIAS
+forms	cu	owner	cu	0	ALIAS
+forms	cyan	owner	cyan	0	ALIAS
+forms	cyanite	owner	cyanite	0	ALIAS
+forms	cyanvitriol	owner	cyanvitriol	0	ALIAS
+forms	d	owner	d	0	ALIAS
+forms	d2o	owner	d2o	0	ALIAS
+forms	dacite	owner	dacite	0	ALIAS
+forms	daffergon	owner	daffergon	0	RETIRED
+forms	damascussteel	owner	damascussteel	0	ALIAS
+forms	darkash	owner	darkash	0	ALIAS
+forms	darkoak	owner	darkoak	0	ALIAS
+forms	darkstone	owner	darkstone	0	RETIRED
+forms	datolite	owner	datolite	0	ALIAS
+forms	db	owner	db	0	ALIAS
+forms	dead	owner	dead	0	ALIAS
+forms	deepslate	owner	deepslate	0	ALIAS
+forms	demonite	owner	demonite	0	RETIRED
+forms	diamantine	owner	diamantine	0	RETIRED
+forms	diamond	owner	diamond	0	ALIAS
+forms	diamondblue	owner	diamondblue	0	ALIAS
+forms	diamondgreen	owner	diamondgreen	0	ALIAS
+forms	diamondindustrial	owner	diamondindustrial	0	ALIAS
+forms	diamondpink	owner	diamondpink	0	ALIAS
+forms	diamondred	owner	diamondred	0	ALIAS
+forms	diamondyellow	owner	diamondyellow	0	ALIAS
+forms	diatomite	owner	diatomite	0	ALIAS
+forms	diduraniumtrioxide	owner	diduraniumtrioxide	0	ALIAS
+forms	diesel	owner	diesel	0	ALIAS
+forms	dineutronium	owner	dineutronium	0	RETIRED
+forms	dioptase	owner	dioptase	0	ALIAS
+forms	diorite	owner	diorite	0	ALIAS
+forms	distwater	owner	distwater	0	ALIAS
+forms	dn	owner	dn	0	ALIAS
+forms	dolomite	owner	dolomite	0	RETIRED
+forms	draconic	owner	draconic	0	RETIRED
+forms	draconium	owner	draconium	0	ALIAS
+forms	draconiumawakened	owner	draconiumawakened	0	ALIAS
+forms	dreamwood	owner	dreamwood	0	ALIAS
+forms	ds	owner	ds	0	ALIAS
+forms	dumortierite	owner	dumortierite	0	RETIRED
+forms	duralumin	owner	duralumin	0	ALIAS
+forms	duraniumalloy	owner	duraniumalloy	0	ALIAS
+forms	duraniumhexaastatide	owner	duraniumhexaastatide	0	ALIAS
+forms	duraniumhexabromide	owner	duraniumhexabromide	0	ALIAS
+forms	duraniumhexachloride	owner	duraniumhexachloride	0	ALIAS
+forms	duraniumhexafluoride	owner	duraniumhexafluoride	0	ALIAS
+forms	duraniumhexaiodide	owner	duraniumhexaiodide	0	ALIAS
+forms	durasteel	owner	durasteel	0	RETIRED
+forms	dy	owner	dy	0	ALIAS
+forms	dynamite	owner	dynamite	0	ALIAS
+forms	efrine	owner	efrine	0	ALIAS
+forms	elder	owner	elder	0	RETIRED
+forms	electricalsteel	owner	electricalsteel	0	ALIAS
+forms	electrotinealloy	owner	electrotinealloy	0	ALIAS
+forms	electrum	owner	electrum	0	ALIAS
+forms	elvenelementium	owner	elvenelementium	0	ALIAS
+forms	elvenquartz	owner	elvenquartz	0	ALIAS
+forms	emeradic	owner	emeradic	0	RETIRED
+forms	emerald	owner	emerald	0	ALIAS
+forms	empty	owner	empty	0	ALIAS
+forms	endereye	owner	endereye	0	ALIAS
+forms	enderium	owner	enderium	0	ALIAS
+forms	enderiumbase	owner	enderiumbase	0	ALIAS
+forms	enderpearl	owner	enderpearl	0	ALIAS
+forms	endstone	owner	endstone	0	ALIAS
+forms	energiumcyan	owner	energiumcyan	0	ALIAS
+forms	energiumred	owner	energiumred	0	ALIAS
+forms	enori	owner	enori	0	RETIRED
+forms	er	owner	er	0	ALIAS
+forms	es	owner	es	0	ALIAS
+forms	ethanol	owner	ethanol	0	ALIAS
+forms	ethylene	owner	ethylene	0	ALIAS
+forms	eu	owner	eu	0	ALIAS
+forms	eudialyte	owner	eudialyte	0	ALIAS
+forms	euphemium	owner	euphemium	0	RETIRED
+forms	f	owner	f	0	ALIAS
+forms	fa	owner	fa	0	ALIAS
+forms	fe	owner	fe	0	ALIAS
+forms	fe2o3	owner	fe2o3	0	ALIAS
+forms	fecl2	owner	fecl2	0	ALIAS
+forms	fecl3	owner	fecl3	0	ALIAS
+forms	feo3h3	owner	feo3h3	0	ALIAS
+forms	ferberite	owner	ferberite	0	ALIAS
+forms	ferrovanadium	owner	ferrovanadium	0	ALIAS
+forms	fierysteel	owner	fierysteel	0	ALIAS
+forms	fig	owner	fig	0	RETIRED
+forms	fireleaf	owner	fireleaf	0	ALIAS
+forms	firestone	owner	firestone	0	ALIAS
+forms	fishcooked	owner	fishcooked	0	ALIAS
+forms	fishoil	owner	fishoil	0	ALIAS
+forms	fishraw	owner	fishraw	0	ALIAS
+forms	fishrotten	owner	fishrotten	0	ALIAS
+forms	fl	owner	fl	0	ALIAS
+forms	fl298	owner	fl298	0	ALIAS
+forms	flamascussteel	owner	flamascussteel	0	ALIAS
+forms	flint	owner	flint	0	ALIAS
+forms	fluix	owner	fluix	0	ALIAS
+forms	fluoriteblack	owner	fluoriteblack	0	ALIAS
+forms	fluoriteblue	owner	fluoriteblue	0	ALIAS
+forms	fluoritegreen	owner	fluoritegreen	0	ALIAS
+forms	fluoritemagenta	owner	fluoritemagenta	0	ALIAS
+forms	fluoriteorange	owner	fluoriteorange	0	ALIAS
+forms	fluoritepink	owner	fluoritepink	0	ALIAS
+forms	fluoritered	owner	fluoritered	0	ALIAS
+forms	fluoritewhite	owner	fluoritewhite	0	ALIAS
+forms	fluoriteyellow	owner	fluoriteyellow	0	ALIAS
+forms	fm	owner	fm	0	ALIAS
+forms	fr	owner	fr	0	ALIAS
+forms	freshwater	owner	freshwater	0	ALIAS
+forms	frozen	owner	frozen	0	ALIAS
+forms	fryingoilhot	owner	fryingoilhot	0	ALIAS
+forms	fuel	owner	fuel	0	ALIAS
+forms	ga	owner	ga	0	ALIAS
+forms	gabbro	owner	gabbro	0	RETIRED
+forms	gaiaspirit	owner	gaiaspirit	0	ALIAS
+forms	galena	owner	galena	0	ALIAS
+forms	garnetsand	owner	garnetsand	0	ALIAS
+forms	garnierite	owner	garnierite	0	ALIAS
+forms	gd	owner	gd	0	ALIAS
+forms	ge	owner	ge	0	ALIAS
+forms	glass	owner	glass	0	ALIAS
+forms	glauconite	owner	glauconite	0	ALIAS
+forms	glowstone	owner	glowstone	0	ALIAS
+forms	glue	owner	glue	0	ALIAS
+forms	glycerol	owner	glycerol	0	ALIAS
+forms	glyceryl	owner	glyceryl	0	ALIAS
+forms	gneiss	owner	gneiss	0	RETIRED
+forms	goshenite	owner	goshenite	0	ALIAS
+forms	granite	owner	granite	0	ALIAS
+forms	graniteblack	owner	graniteblack	0	ALIAS
+forms	granitered	owner	granitered	0	ALIAS
+forms	graniticmineralsand	owner	graniticmineralsand	0	ALIAS
+forms	graphene	owner	graphene	0	ALIAS
+forms	graphite	owner	graphite	0	ALIAS
+forms	gray	owner	gray	0	ALIAS
+forms	grayvitriol	owner	grayvitriol	0	ALIAS
+forms	greatwood	owner	greatwood	0	ALIAS
+forms	green	owner	green	0	ALIAS
+forms	greensapphire	owner	greensapphire	0	ALIAS
+forms	greenschist	owner	greenschist	0	ALIAS
+forms	greenvitriol	owner	greenvitriol	0	ALIAS
+forms	grossular	owner	grossular	0	ALIAS
+forms	gt	owner	gt	0	ALIAS
+forms	gunpowder	owner	gunpowder	0	ALIAS
+forms	gypsum	owner	gypsum	0	ALIAS
+forms	h	owner	h	0	ALIAS
+forms	h2o	owner	h2o	0	ALIAS
+forms	h2o2	owner	h2o2	0	ALIAS
+forms	h2s	owner	h2s	0	ALIAS
+forms	h2s2o7	owner	h2s2o7	0	ALIAS
+forms	h2sif6	owner	h2sif6	0	ALIAS
+forms	h2so4	owner	h2so4	0	ALIAS
+forms	h2wo4	owner	h2wo4	0	ALIAS
+forms	h3bo3	owner	h3bo3	0	ALIAS
+forms	hazel	owner	hazel	0	ALIAS
+forms	hazelnut	owner	hazelnut	0	ALIAS
+forms	hcl	owner	hcl	0	ALIAS
+forms	hdo	owner	hdo	0	ALIAS
+forms	he	owner	he	0	ALIAS
+forms	he3	owner	he3	0	ALIAS
+forms	heliodor	owner	heliodor	0	ALIAS
+forms	hempoil	owner	hempoil	0	ALIAS
+forms	hene	owner	hene	0	ALIAS
+forms	hexoriumblack	owner	hexoriumblack	0	RETIRED
+forms	hexoriumblue	owner	hexoriumblue	0	RETIRED
+forms	hexoriumgreen	owner	hexoriumgreen	0	RETIRED
+forms	hexoriumred	owner	hexoriumred	0	RETIRED
+forms	hexoriumwhite	owner	hexoriumwhite	0	RETIRED
+forms	hg	owner	hg	0	ALIAS
+forms	hno3	owner	hno3	0	ALIAS
+forms	ho	owner	ho	0	ALIAS
+forms	holywater	owner	holywater	0	ALIAS
+forms	honey	owner	honey	0	ALIAS
+forms	honeydew	owner	honeydew	0	ALIAS
+forms	hs	owner	hs	0	ALIAS
+forms	hsse	owner	hsse	0	ALIAS
+forms	hssg	owner	hssg	0	ALIAS
+forms	hsss	owner	hsss	0	ALIAS
+forms	huebnerite	owner	huebnerite	0	ALIAS
+forms	hydratedcoal	owner	hydratedcoal	0	ALIAS
+forms	i	owner	i	0	ALIAS
+forms	ice	owner	ice	0	ALIAS
+forms	ilmenite	owner	ilmenite	0	ALIAS
+forms	in	owner	in	0	ALIAS
+forms	infinity	owner	infinity	0	ALIAS
+forms	infusedgold	owner	infusedgold	0	RETIRED
+forms	invar	owner	invar	0	ALIAS
+forms	invisium	owner	invisium	0	RETIRED
+forms	ir	owner	ir	0	ALIAS
+forms	iridiron	owner	iridiron	0	RETIRED
+forms	iridironreinforced	owner	iridironreinforced	0	RETIRED
+forms	iritanium	owner	iritanium	0	ALIAS
+forms	ironcast	owner	ironcast	0	ALIAS
+forms	ironmagnetic	owner	ironmagnetic	0	ALIAS
+forms	ironsharp	owner	ironsharp	0	RETIRED
+forms	ironwood	owner	ironwood	0	ALIAS
+forms	irridantreinforced	owner	irridantreinforced	0	RETIRED
+forms	irridanturanium	owner	irridanturanium	0	RETIRED
+forms	jade	owner	jade	0	ALIAS
+forms	jasper	owner	jasper	0	ALIAS
+forms	jasperblue	owner	jasperblue	0	ALIAS
+forms	jaspergreen	owner	jaspergreen	0	ALIAS
+forms	jasperocean	owner	jasperocean	0	ALIAS
+forms	jasperrainforest	owner	jasperrainforest	0	ALIAS
+forms	jasperyellow	owner	jasperyellow	0	ALIAS
+forms	jet	owner	jet	0	RETIRED
+forms	jungle	owner	jungle	0	ALIAS
+forms	k	owner	k	0	ALIAS
+forms	k2co3	owner	k2co3	0	ALIAS
+forms	k2s	owner	k2s	0	ALIAS
+forms	k2s2o7	owner	k2s2o7	0	ALIAS
+forms	k2so3	owner	k2so3	0	ALIAS
+forms	k2so4	owner	k2so4	0	ALIAS
+forms	k2taf7	owner	k2taf7	0	ALIAS
+forms	kalo2	owner	kalo2	0	ALIAS
+forms	kanthal	owner	kanthal	0	ALIAS
+forms	kaolinite	owner	kaolinite	0	ALIAS
+forms	kcl	owner	kcl	0	ALIAS
+forms	ke	owner	ke	0	ALIAS
+forms	kerosine	owner	kerosine	0	ALIAS
+forms	kesterite	owner	kesterite	0	ALIAS
+forms	kf	owner	kf	0	ALIAS
+forms	khso4	owner	khso4	0	ALIAS
+forms	kimberlite	owner	kimberlite	0	ALIAS
+forms	kio3	owner	kio3	0	ALIAS
+forms	knightmetal	owner	knightmetal	0	ALIAS
+forms	kno3	owner	kno3	0	ALIAS
+forms	koh	owner	koh	0	ALIAS
+forms	komatiite	owner	komatiite	0	ALIAS
+forms	kr	owner	kr	0	ALIAS
+forms	kso4	owner	kso4	0	ALIAS
+forms	kunzite	owner	kunzite	0	RETIRED
+forms	kyanite	owner	kyanite	0	ALIAS
+forms	la	owner	la	0	ALIAS
+forms	labradorite	owner	labradorite	0	RETIRED
+forms	lapis	owner	lapis	0	ALIAS
+forms	lapislazuli	owner	lapislazuli	0	RETIRED
+forms	larimar	owner	larimar	0	RETIRED
+forms	latex	owner	latex	0	ALIAS
+forms	lava	owner	lava	0	ALIAS
+forms	lazurite	owner	lazurite	0	ALIAS
+forms	lepidolite	owner	lepidolite	0	ALIAS
+forms	li	owner	li	0	ALIAS
+forms	li6	owner	li6	0	ALIAS
+forms	licl	owner	licl	0	ALIAS
+forms	liclo3	owner	liclo3	0	ALIAS
+forms	liclo4	owner	liclo4	0	ALIAS
+forms	lightblue	owner	lightblue	0	ALIAS
+forms	lightgray	owner	lightgray	0	ALIAS
+forms	lignite	owner	lignite	0	ALIAS
+forms	lignitecoke	owner	lignitecoke	0	ALIAS
+forms	lime	owner	lime	0	ALIAS
+forms	limestone	owner	limestone	0	ALIAS
+forms	linoil	owner	linoil	0	ALIAS
+forms	lioh	owner	lioh	0	ALIAS
+forms	liveroot	owner	liveroot	0	ALIAS
+forms	livingrock	owner	livingrock	0	ALIAS
+forms	livingwood	owner	livingwood	0	ALIAS
+forms	lodestone	owner	lodestone	0	RETIRED
+forms	lr	owner	lr	0	ALIAS
+forms	lu	owner	lu	0	ALIAS
+forms	lubricant	owner	lubricant	0	ALIAS
+forms	luminite	owner	luminite	0	RETIRED
+forms	lumium	owner	lumium	0	ALIAS
+forms	lv	owner	lv	0	ALIAS
+forms	magenta	owner	magenta	0	ALIAS
+forms	magic	owner	magic	0	ALIAS
+forms	magnalium	owner	magnalium	0	ALIAS
+forms	magnetite	owner	magnetite	0	ALIAS
+forms	magnetizedtungsten	owner	magnetizedtungsten	0	RETIRED
+forms	mahoe	owner	mahoe	0	RETIRED
+forms	malachite	owner	malachite	0	ALIAS
+forms	manadiamond	owner	manadiamond	0	ALIAS
+forms	manaquartz	owner	manaquartz	0	ALIAS
+forms	manasteel	owner	manasteel	0	ALIAS
+forms	mangrove	owner	mangrove	0	ALIAS
+forms	maple	owner	maple	0	ALIAS
+forms	marble	owner	marble	0	ALIAS
+forms	marssand	owner	marssand	0	ALIAS
+forms	mawsitsit	owner	mawsitsit	0	RETIRED
+forms	maxixe	owner	maxixe	0	ALIAS
+forms	mc	owner	mc	0	ALIAS
+forms	md	owner	md	0	ALIAS
+forms	meatcooked	owner	meatcooked	0	ALIAS
+forms	meatraw	owner	meatraw	0	ALIAS
+forms	meatrotten	owner	meatrotten	0	ALIAS
+forms	mercassium	owner	mercassium	0	RETIRED
+forms	methaneice	owner	methaneice	0	ALIAS
+forms	mg	owner	mg	0	ALIAS
+forms	mgcl2	owner	mgcl2	0	ALIAS
+forms	mgco3	owner	mgco3	0	ALIAS
+forms	mica	owner	mica	0	ALIAS
+forms	milk	owner	milk	0	ALIAS
+forms	milkyquartz	owner	milkyquartz	0	ALIAS
+forms	mimichite	owner	mimichite	0	RETIRED
+forms	mint	owner	mint	0	ALIAS
+forms	mirabilite	owner	mirabilite	0	ALIAS
+forms	mn	owner	mn	0	ALIAS
+forms	mncl2	owner	mncl2	0	ALIAS
+forms	mno2	owner	mno2	0	ALIAS
+forms	mo	owner	mo	0	ALIAS
+forms	moissanite	owner	moissanite	0	RETIRED
+forms	molybdenite	owner	molybdenite	0	ALIAS
+forms	monazite	owner	monazite	0	ALIAS
+forms	mookaite	owner	mookaite	0	RETIRED
+forms	morganite	owner	morganite	0	ALIAS
+forms	mossy	owner	mossy	0	ALIAS
+forms	mt	owner	mt	0	ALIAS
+forms	n	owner	n	0	ALIAS
+forms	na	owner	na	0	ALIAS
+forms	na2co3	owner	na2co3	0	ALIAS
+forms	na2s	owner	na2s	0	ALIAS
+forms	na2s2o7	owner	na2s2o7	0	ALIAS
+forms	na2so3	owner	na2so3	0	ALIAS
+forms	na2so4	owner	na2so4	0	ALIAS
+forms	na3alf6	owner	na3alf6	0	ALIAS
+forms	naalo2	owner	naalo2	0	ALIAS
+forms	nacl	owner	nacl	0	ALIAS
+forms	naf	owner	naf	0	ALIAS
+forms	nahco3	owner	nahco3	0	ALIAS
+forms	nahso4	owner	nahso4	0	ALIAS
+forms	nano3	owner	nano3	0	ALIAS
+forms	naoh	owner	naoh	0	ALIAS
+forms	naso4	owner	naso4	0	ALIAS
+forms	nb	owner	nb	0	ALIAS
+forms	nb2o5	owner	nb2o5	0	ALIAS
+forms	nd	owner	nd	0	ALIAS
+forms	ne	owner	ne	0	ALIAS
+forms	neodymiummagnetic	owner	neodymiummagnetic	0	ALIAS
+forms	netherbrick	owner	netherbrick	0	ALIAS
+forms	netherite	owner	netherite	0	ALIAS
+forms	netherizeddiamond	owner	netherizeddiamond	0	ALIAS
+forms	netherquartz	owner	netherquartz	0	ALIAS
+forms	netherrack	owner	netherrack	0	ALIAS
+forms	netherstar	owner	netherstar	0	ALIAS
+forms	nh	owner	nh	0	ALIAS
+forms	nh3	owner	nh3	0	ALIAS
+forms	ni	owner	ni	0	ALIAS
+forms	nichrome	owner	nichrome	0	ALIAS
+forms	nikolinealloy	owner	nikolinealloy	0	ALIAS
+forms	nikolite	owner	nikolite	0	ALIAS
+forms	niobiumtitanium	owner	niobiumtitanium	0	ALIAS
+forms	niter	owner	niter	0	ALIAS
+forms	nitrocarbon	owner	nitrocarbon	0	ALIAS
+forms	nitrofuel	owner	nitrofuel	0	ALIAS
+forms	no2	owner	no2	0	ALIAS
+forms	np	owner	np	0	ALIAS
+forms	nq	owner	nq	0	ALIAS
+forms	nq522	owner	nq522	0	ALIAS
+forms	nq528	owner	nq528	0	ALIAS
+forms	nutoil	owner	nutoil	0	ALIAS
+forms	o	owner	o	0	ALIAS
+forms	oak	owner	oak	0	ALIAS
+forms	obsidian	owner	obsidian	0	ALIAS
+forms	obsidianflux	owner	obsidianflux	0	RETIRED
+forms	og	owner	og	0	ALIAS
+forms	oil	owner	oil	0	ALIAS
+forms	oilsands	owner	oilsands	0	ALIAS
+forms	oilshale	owner	oilshale	0	ALIAS
+forms	olive	owner	olive	0	RETIRED
+forms	oliveoil	owner	oliveoil	0	ALIAS
+forms	onyxblack	owner	onyxblack	0	ALIAS
+forms	onyxred	owner	onyxred	0	ALIAS
+forms	opal	owner	opal	0	ALIAS
+forms	orange	owner	orange	0	ALIAS
+forms	orangesapphire	owner	orangesapphire	0	ALIAS
+forms	os	owner	os	0	ALIAS
+forms	osmiridium	owner	osmiridium	0	ALIAS
+forms	osmonium	owner	osmonium	0	RETIRED
+forms	p	owner	p	0	ALIAS
+forms	pa	owner	pa	0	ALIAS
+forms	palis	owner	palis	0	RETIRED
+forms	palygorskite	owner	palygorskite	0	ALIAS
+forms	papaya	owner	papaya	0	RETIRED
+forms	paper	owner	paper	0	ALIAS
+forms	pb	owner	pb	0	ALIAS
+forms	pd	owner	pd	0	ALIAS
+forms	pear	owner	pear	0	RETIRED
+forms	peat	owner	peat	0	ALIAS
+forms	pentlandite	owner	pentlandite	0	ALIAS
+forms	peridot	owner	peridot	0	ALIAS
+forms	perlite	owner	perlite	0	ALIAS
+forms	petcoke	owner	petcoke	0	ALIAS
+forms	petrifiedwood	owner	petrifiedwood	0	ALIAS
+forms	petrol	owner	petrol	0	ALIAS
+forms	petroleum	owner	petroleum	0	RETIRED
+forms	petrotheum	owner	petrotheum	0	RETIRED
+forms	phoenixite	owner	phoenixite	0	RETIRED
+forms	phosphorite	owner	phosphorite	0	ALIAS
+forms	phosphorus	owner	phosphorus	0	ALIAS
+forms	phosphorusblue	owner	phosphorusblue	0	ALIAS
+forms	phosphorusred	owner	phosphorusred	0	ALIAS
+forms	phosphoruswhite	owner	phosphoruswhite	0	ALIAS
+forms	pietersite	owner	pietersite	0	RETIRED
+forms	pinalite	owner	pinalite	0	ALIAS
+forms	pink	owner	pink	0	ALIAS
+forms	pinkvitriol	owner	pinkvitriol	0	ALIAS
+forms	pitchblende	owner	pitchblende	0	ALIAS
+forms	plastic	owner	plastic	0	ALIAS
+forms	platinumgroupsludge	owner	platinumgroupsludge	0	ALIAS
+forms	plum	owner	plum	0	RETIRED
+forms	pm	owner	pm	0	ALIAS
+forms	po	owner	po	0	ALIAS
+forms	po4	owner	po4	0	ALIAS
+forms	pollucite	owner	pollucite	0	ALIAS
+forms	porcelain	owner	porcelain	0	ALIAS
+forms	potassiumfeldspar	owner	potassiumfeldspar	0	ALIAS
+forms	potato	owner	potato	0	ALIAS
+forms	powellite	owner	powellite	0	ALIAS
+forms	pr	owner	pr	0	ALIAS
+forms	prismarinedark	owner	prismarinedark	0	ALIAS
+forms	prismarinelight	owner	prismarinelight	0	ALIAS
+forms	propane	owner	propane	0	ALIAS
+forms	propylene	owner	propylene	0	ALIAS
+forms	pt	owner	pt	0	ALIAS
+forms	pu	owner	pu	0	ALIAS
+forms	pu238	owner	pu238	0	ALIAS
+forms	pu239	owner	pu239	0	ALIAS
+forms	pu240	owner	pu240	0	ALIAS
+forms	pu241	owner	pu241	0	ALIAS
+forms	pu243	owner	pu243	0	ALIAS
+forms	pumice	owner	pumice	0	ALIAS
+forms	purple	owner	purple	0	ALIAS
+forms	purplesapphire	owner	purplesapphire	0	ALIAS
+forms	pvc	owner	pvc	0	ALIAS
+forms	pyrite	owner	pyrite	0	ALIAS
+forms	pyrope	owner	pyrope	0	ALIAS
+forms	pyrotheum	owner	pyrotheum	0	RETIRED
+forms	quartzite	owner	quartzite	0	ALIAS
+forms	quartzsand	owner	quartzsand	0	ALIAS
+forms	quicklime	owner	quicklime	0	ALIAS
+forms	ra	owner	ra	0	ALIAS
+forms	rainbowood	owner	rainbowood	0	ALIAS
+forms	randomite	owner	randomite	0	RETIRED
+forms	rareearth	owner	rareearth	0	ALIAS
+forms	rb	owner	rb	0	ALIAS
+forms	re	owner	re	0	ALIAS
+forms	realgar	owner	realgar	0	ALIAS
+forms	red	owner	red	0	ALIAS
+forms	redalloy	owner	redalloy	0	ALIAS
+forms	redquartz	owner	redquartz	0	ALIAS
+forms	redsand	owner	redsand	0	ALIAS
+forms	redsteel	owner	redsteel	0	ALIAS
+forms	redstone	owner	redstone	0	ALIAS
+forms	redstonealloy	owner	redstonealloy	0	ALIAS
+forms	redstonia	owner	redstonia	0	RETIRED
+forms	redvitriol	owner	redvitriol	0	ALIAS
+forms	reiium	owner	reiium	0	RETIRED
+forms	rf	owner	rf	0	ALIAS
+forms	rg	owner	rg	0	ALIAS
+forms	rh	owner	rh	0	ALIAS
+forms	rhodonite	owner	rhodonite	0	RETIRED
+forms	rhyolite	owner	rhyolite	0	RETIRED
+forms	rn	owner	rn	0	ALIAS
+forms	rosegold	owner	rosegold	0	ALIAS
+forms	rotten	owner	rotten	0	ALIAS
+forms	ru	owner	ru	0	ALIAS
+forms	rubber	owner	rubber	0	ALIAS
+forms	ruby	owner	ruby	0	ALIAS
+forms	russellite	owner	russellite	0	ALIAS
+forms	rye	owner	rye	0	ALIAS
+forms	s	owner	s	0	ALIAS
+forms	saltedwater	owner	saltedwater	0	ALIAS
+forms	saltwater	owner	saltwater	0	ALIAS
+forms	sand	owner	sand	0	ALIAS
+forms	sapphire	owner	sapphire	0	ALIAS
+forms	saturnite	owner	saturnite	0	RETIRED
+forms	sb	owner	sb	0	ALIAS
+forms	sc	owner	sc	0	ALIAS
+forms	scapolite	owner	scapolite	0	RETIRED
+forms	scheelite	owner	scheelite	0	ALIAS
+forms	schrabidium	owner	schrabidium	0	RETIRED
+forms	se	owner	se	0	ALIAS
+forms	seawater	owner	seawater	0	ALIAS
+forms	seedoil	owner	seedoil	0	ALIAS
+forms	selenite	owner	selenite	0	RETIRED
+forms	sg	owner	sg	0	ALIAS
+forms	shale	owner	shale	0	ALIAS
+forms	si	owner	si	0	ALIAS
+forms	sic	owner	sic	0	ALIAS
+forms	signalum	owner	signalum	0	ALIAS
+forms	silverwood	owner	silverwood	0	ALIAS
+forms	sio2	owner	sio2	0	ALIAS
+forms	skystone	owner	skystone	0	ALIAS
+forms	slate	owner	slate	0	ALIAS
+forms	sluicesand	owner	sluicesand	0	ALIAS
+forms	sm	owner	sm	0	ALIAS
+forms	smithsonite	owner	smithsonite	0	ALIAS
+forms	smokeyquartz	owner	smokeyquartz	0	ALIAS
+forms	sn	owner	sn	0	ALIAS
+forms	snow	owner	snow	0	ALIAS
+forms	snowflakeobsidian	owner	snowflakeobsidian	0	RETIRED
+forms	so2	owner	so2	0	ALIAS
+forms	so3	owner	so3	0	ALIAS
+forms	sodalite	owner	sodalite	0	ALIAS
+forms	solderingalloy	owner	solderingalloy	0	ALIAS
+forms	soularium	owner	soularium	0	ALIAS
+forms	soulsand	owner	soulsand	0	ALIAS
+forms	soylentgreen	owner	soylentgreen	0	ALIAS
+forms	sperrylite	owner	sperrylite	0	ALIAS
+forms	spessartine	owner	spessartine	0	ALIAS
+forms	sphalerite	owner	sphalerite	0	ALIAS
+forms	spinel	owner	spinel	0	ALIAS
+forms	spodumene	owner	spodumene	0	ALIAS
+forms	spruce	owner	spruce	0	ALIAS
+forms	sr	owner	sr	0	ALIAS
+forms	stainlesssteel	owner	stainlesssteel	0	ALIAS
+forms	stannicchloride	owner	stannicchloride	0	ALIAS
+forms	stannite	owner	stannite	0	ALIAS
+forms	starconium	owner	starconium	0	RETIRED
+forms	starmetal	owner	starmetal	0	RETIRED
+forms	steam	owner	steam	0	ALIAS
+forms	steel	owner	steel	0	ALIAS
+forms	steeleaf	owner	steeleaf	0	ALIAS
+forms	steelgalvanized	owner	steelgalvanized	0	ALIAS
+forms	steelmagnetic	owner	steelmagnetic	0	ALIAS
+forms	sterlingsilver	owner	sterlingsilver	0	ALIAS
+forms	stibnite	owner	stibnite	0	ALIAS
+forms	stolzite	owner	stolzite	0	ALIAS
+forms	stone	owner	stone	0	ALIAS
+forms	sugar	owner	sugar	0	ALIAS
+forms	sunfloweroil	owner	sunfloweroil	0	ALIAS
+forms	sunnyquartz	owner	sunnyquartz	0	ALIAS
+forms	sunstone	owner	sunstone	0	RETIRED
+forms	t	owner	t	0	ALIAS
+forms	t2o	owner	t2o	0	ALIAS
+forms	ta	owner	ta	0	ALIAS
+forms	ta2o5	owner	ta2o5	0	ALIAS
+forms	ta4hfc5	owner	ta4hfc5	0	ALIAS
+forms	talc	owner	talc	0	ALIAS
+forms	tantalite	owner	tantalite	0	ALIAS
+forms	tanzanite	owner	tanzanite	0	ALIAS
+forms	tapazite	owner	tapazite	0	RETIRED
+forms	tb	owner	tb	0	ALIAS
+forms	tc	owner	tc	0	ALIAS
+forms	te	owner	te	0	ALIAS
+forms	tea	owner	tea	0	ALIAS
+forms	teflon	owner	teflon	0	ALIAS
+forms	terrasteel	owner	terrasteel	0	ALIAS
+forms	terrasteelalloyraw	owner	terrasteelalloyraw	0	RETIRED
+forms	terrasteelalloystrengthened	owner	terrasteelalloystrengthened	0	RETIRED
+forms	teslatite	owner	teslatite	0	RETIRED
+forms	tetrahedrite	owner	tetrahedrite	0	ALIAS
+forms	th	owner	th	0	ALIAS
+forms	thaumium	owner	thaumium	0	ALIAS
+forms	thyrium	owner	thyrium	0	RETIRED
+forms	ti	owner	ti	0	ALIAS
+forms	ticl4	owner	ticl4	0	ALIAS
+forms	tigereyeblack	owner	tigereyeblack	0	ALIAS
+forms	tigereyeblue	owner	tigereyeblue	0	ALIAS
+forms	tigereyegreen	owner	tigereyegreen	0	ALIAS
+forms	tigereyered	owner	tigereyered	0	ALIAS
+forms	tigereyeyellow	owner	tigereyeyellow	0	ALIAS
+forms	tigeriron	owner	tigeriron	0	ALIAS
+forms	tinalloy	owner	tinalloy	0	ALIAS
+forms	tio2	owner	tio2	0	ALIAS
+forms	titanrock	owner	titanrock	0	ALIAS
+forms	tl	owner	tl	0	ALIAS
+forms	tm	owner	tm	0	ALIAS
+forms	tn	owner	tn	0	ALIAS
+forms	topaz	owner	topaz	0	ALIAS
+forms	tourmaline	owner	tourmaline	0	RETIRED
+forms	trinaquadalloy	owner	trinaquadalloy	0	ALIAS
+forms	trinitanium	owner	trinitanium	0	ALIAS
+forms	tritaniumalloy	owner	tritaniumalloy	0	ALIAS
+forms	tritaniumdioxide	owner	tritaniumdioxide	0	ALIAS
+forms	tritaniumhexaastatide	owner	tritaniumhexaastatide	0	ALIAS
+forms	tritaniumhexabromide	owner	tritaniumhexabromide	0	ALIAS
+forms	tritaniumhexachloride	owner	tritaniumhexachloride	0	ALIAS
+forms	tritaniumhexafluoride	owner	tritaniumhexafluoride	0	ALIAS
+forms	tritaniumhexaiodide	owner	tritaniumhexaiodide	0	ALIAS
+forms	trona	owner	trona	0	ALIAS
+forms	tungstate	owner	tungstate	0	ALIAS
+forms	tungstencarbide	owner	tungstencarbide	0	ALIAS
+forms	tungstensintered	owner	tungstensintered	0	ALIAS
+forms	tungstensteel	owner	tungstensteel	0	ALIAS
+forms	turquoise	owner	turquoise	0	RETIRED
+forms	u233	owner	u233	0	ALIAS
+forms	u235	owner	u235	0	ALIAS
+forms	u235f4	owner	u235f4	0	ALIAS
+forms	u235f6	owner	u235f6	0	ALIAS
+forms	u238	owner	u238	0	ALIAS
+forms	u238f4	owner	u238f4	0	ALIAS
+forms	u238f6	owner	u238f6	0	ALIAS
+forms	uf4	owner	uf4	0	ALIAS
+forms	uf6	owner	uf6	0	ALIAS
+forms	ultimet	owner	ultimet	0	ALIAS
+forms	unakite	owner	unakite	0	RETIRED
+forms	unobtainium	owner	unobtainium	0	RETIRED
+forms	uraninite	owner	uraninite	0	ALIAS
+forms	uuamplifier	owner	uuamplifier	0	RETIRED
+forms	uumatter	owner	uumatter	0	RETIRED
+forms	uvarovite	owner	uvarovite	0	ALIAS
+forms	v	owner	v	0	ALIAS
+forms	v2o5	owner	v2o5	0	ALIAS
+forms	vanadiumgallium	owner	vanadiumgallium	0	ALIAS
+forms	vanadiumsteel	owner	vanadiumsteel	0	ALIAS
+forms	vb	owner	vb	0	ALIAS
+forms	vermiculite	owner	vermiculite	0	ALIAS
+forms	verticium	owner	verticium	0	RETIRED
+forms	vibramantium	owner	vibramantium	0	ALIAS
+forms	vibraniumsilver	owner	vibraniumsilver	0	ALIAS
+forms	vibraniumsteel	owner	vibraniumsteel	0	ALIAS
+forms	vibrantalloy	owner	vibrantalloy	0	ALIAS
+forms	vinteum	owner	vinteum	0	RETIRED
+forms	vinteumpurified	owner	vinteumpurified	0	RETIRED
+forms	vitriolofclay	owner	vitriolofclay	0	ALIAS
+forms	voidcrystal	owner	voidcrystal	0	RETIRED
+forms	w	owner	w	0	ALIAS
+forms	walnut	owner	walnut	0	RETIRED
+forms	warped	owner	warped	0	ALIAS
+forms	wax	owner	wax	0	ALIAS
+forms	waxbee	owner	waxbee	0	ALIAS
+forms	waxparaffin	owner	waxparaffin	0	ALIAS
+forms	waxplant	owner	waxplant	0	ALIAS
+forms	weidanium	owner	weidanium	0	RETIRED
+forms	wheat	owner	wheat	0	ALIAS
+forms	white	owner	white	0	ALIAS
+forms	whitevitriol	owner	whitevitriol	0	ALIAS
+forms	willow	owner	willow	0	ALIAS
+forms	wimalite	owner	wimalite	0	RETIRED
+forms	wo3	owner	wo3	0	ALIAS
+forms	wolframite	owner	wolframite	0	ALIAS
+forms	wollastonite	owner	wollastonite	0	ALIAS
+forms	wonderstone	owner	wonderstone	0	RETIRED
+forms	wood	owner	wood	0	ALIAS
+forms	woodpolished	owner	woodpolished	0	ALIAS
+forms	woodrubber	owner	woodrubber	0	ALIAS
+forms	woodtreated	owner	woodtreated	0	ALIAS
+forms	wroughtiron	owner	wroughtiron	0	ALIAS
+forms	wulfenite	owner	wulfenite	0	ALIAS
+forms	xe	owner	xe	0	ALIAS
+forms	y	owner	y	0	ALIAS
+forms	yb	owner	yb	0	ALIAS
+forms	yellow	owner	yellow	0	ALIAS
+forms	yellowlimonite	owner	yellowlimonite	0	ALIAS
+forms	yellowsapphire	owner	yellowsapphire	0	ALIAS
+forms	yttriumbariumcuprate	owner	yttriumbariumcuprate	0	ALIAS
+forms	zectium	owner	zectium	0	RETIRED
+forms	zeolite	owner	zeolite	0	ALIAS
+forms	zircon	owner	zircon	0	ALIAS
+forms	zn	owner	zn	0	ALIAS
+forms	zr	owner	zr	0	ALIAS
+processing	Ceramic	Bending.owner	Ceramic	0	VALID
+processing	Ceramic	Compressing.owner	Ceramic	0	VALID
+processing	Ceramic	Forging.owner	Ceramic	0	VALID
+processing	Ceramic	Smashing.owner	Ceramic	0	VALID
+processing	EndSandWhite	Forging.owner	EndSandWhite	0	RETIRED
+processing	EndSandWhite	Forging.target	Glass	0	VALID
+processing	FishRaw	Forging.owner	FishRaw	0	VALID
+processing	FishRaw	Forging.target	FishCooked	0	VALID
+processing	FrozenIron	Forging.owner	FrozenIron	0	RETIRED
+processing	FrozenIron	Forging.target	Fe	0	ALIAS
+processing	H2O	Solidifying.owner	H2O	0	ALIAS
+processing	H2O	Solidifying.target	Ice	0	VALID
+processing	IronMagnetic	Bending.owner	IronMagnetic	0	VALID
+processing	IronMagnetic	Bending.target	Fe	0	ALIAS
+processing	IronMagnetic	Compressing.owner	IronMagnetic	0	VALID
+processing	IronMagnetic	Compressing.target	Fe	0	ALIAS
+processing	IronMagnetic	Forging.owner	IronMagnetic	0	VALID
+processing	IronMagnetic	Forging.target	Fe	0	ALIAS
+processing	IronMagnetic	Smashing.owner	IronMagnetic	0	VALID
+processing	IronMagnetic	Smashing.target	Fe	0	ALIAS
+processing	IronMagnetic	Working.owner	IronMagnetic	0	VALID
+processing	IronMagnetic	Working.target	Fe	0	ALIAS
+processing	Lava	Solidifying.owner	Lava	0	VALID
+processing	Lava	Solidifying.target	Obsidian	0	VALID
+processing	MeatRaw	Forging.owner	MeatRaw	0	VALID
+processing	MeatRaw	Forging.target	MeatCooked	0	VALID
+processing	NeodymiumMagnetic	Bending.owner	NeodymiumMagnetic	0	VALID
+processing	NeodymiumMagnetic	Bending.target	Fe	0	ALIAS
+processing	NeodymiumMagnetic	Compressing.owner	NeodymiumMagnetic	0	VALID
+processing	NeodymiumMagnetic	Compressing.target	Nd	0	ALIAS
+processing	NeodymiumMagnetic	Forging.owner	NeodymiumMagnetic	0	VALID
+processing	NeodymiumMagnetic	Forging.target	Nd	0	ALIAS
+processing	NeodymiumMagnetic	Smashing.owner	NeodymiumMagnetic	0	VALID
+processing	NeodymiumMagnetic	Smashing.target	Nd	0	ALIAS
+processing	NeodymiumMagnetic	Working.owner	NeodymiumMagnetic	0	VALID
+processing	NeodymiumMagnetic	Working.target	Nd	0	ALIAS
+processing	Porcelain	Bending.owner	Porcelain	0	VALID
+processing	Porcelain	Compressing.owner	Porcelain	0	VALID
+processing	Porcelain	Forging.owner	Porcelain	0	VALID
+processing	Porcelain	Smashing.owner	Porcelain	0	VALID
+processing	RedSand	Forging.owner	RedSand	0	VALID
+processing	RedSand	Forging.target	Glass	0	VALID
+processing	Sand	Forging.owner	Sand	0	VALID
+processing	Sand	Forging.target	Glass	0	VALID
+processing	SteelGalvanized	Forging.owner	SteelGalvanized	0	VALID
+processing	SteelGalvanized	Forging.target	Steel	0	VALID
+processing	SteelMagnetic	Bending.owner	SteelMagnetic	0	VALID
+processing	SteelMagnetic	Bending.target	Steel	0	VALID
+processing	SteelMagnetic	Compressing.owner	SteelMagnetic	0	VALID
+processing	SteelMagnetic	Compressing.target	Steel	0	VALID
+processing	SteelMagnetic	Forging.owner	SteelMagnetic	0	VALID
+processing	SteelMagnetic	Forging.target	Steel	0	VALID
+processing	SteelMagnetic	Smashing.owner	SteelMagnetic	0	VALID
+processing	SteelMagnetic	Smashing.target	Steel	0	VALID
+processing	SteelMagnetic	Working.owner	SteelMagnetic	0	VALID
+processing	SteelMagnetic	Working.target	Steel	0	VALID
+processing	TungstenSintered	Cutting.owner	TungstenSintered	0	VALID
+processing	TungstenSintered	Forging.owner	TungstenSintered	0	VALID
+processing	TungstenSintered	Smashing.owner	TungstenSintered	0	VALID
+processing	TungstenSintered	Working.owner	TungstenSintered	0	VALID
+uum	10	owner		10	VALID
+uum	100	owner		100	VALID
+uum	110	owner		110	VALID
+uum	120	owner		120	VALID
+uum	1250	owner		1250	VALID
+uum	1260	owner		1260	VALID
+uum	130	owner		130	VALID
+uum	140	owner		140	VALID
+uum	1450	owner		1450	VALID
+uum	150	owner		150	VALID
+uum	1520	owner		1520	VALID
+uum	160	owner		160	VALID
+uum	170	owner		170	VALID
+uum	1740	owner		1740	VALID
+uum	180	owner		180	VALID
+uum	1850	owner		1850	RETIRED
+uum	1860	owner		1860	RETIRED
+uum	1870	owner		1870	RETIRED
+uum	1880	owner		1880	RETIRED
+uum	190	owner		190	VALID
+uum	20	owner		20	VALID
+uum	200	owner		200	VALID
+uum	210	owner		210	VALID
+uum	220	owner		220	VALID
+uum	2210	owner		2210	RETIRED
+uum	2220	owner		2220	VALID
+uum	230	owner		230	VALID
+uum	2390	owner		2390	RETIRED
+uum	240	owner		240	VALID
+uum	250	owner		250	VALID
+uum	260	owner		260	VALID
+uum	270	owner		270	VALID
+uum	280	owner		280	VALID
+uum	290	owner		290	VALID
+uum	30	owner		30	VALID
+uum	300	owner		300	VALID
+uum	310	owner		310	VALID
+uum	320	owner		320	VALID
+uum	330	owner		330	VALID
+uum	340	owner		340	VALID
+uum	350	owner		350	VALID
+uum	360	owner		360	VALID
+uum	370	owner		370	VALID
+uum	3720	owner		3720	VALID
+uum	380	owner		380	VALID
+uum	390	owner		390	VALID
+uum	40	owner		40	VALID
+uum	400	owner		400	VALID
+uum	410	owner		410	VALID
+uum	420	owner		420	VALID
+uum	440	owner		440	VALID
+uum	450	owner		450	VALID
+uum	460	owner		460	VALID
+uum	470	owner		470	VALID
+uum	480	owner		480	VALID
+uum	490	owner		490	VALID
+uum	50	owner		50	VALID
+uum	500	owner		500	VALID
+uum	510	owner		510	VALID
+uum	520	owner		520	VALID
+uum	530	owner		530	VALID
+uum	540	owner		540	VALID
+uum	550	owner		550	VALID
+uum	560	owner		560	VALID
+uum	570	owner		570	VALID
+uum	580	owner		580	VALID
+uum	590	owner		590	VALID
+uum	60	owner		60	VALID
+uum	600	owner		600	VALID
+uum	620	owner		620	VALID
+uum	630	owner		630	VALID
+uum	640	owner		640	VALID
+uum	650	owner		650	VALID
+uum	660	owner		660	VALID
+uum	670	owner		670	VALID
+uum	680	owner		680	VALID
+uum	690	owner		690	VALID
+uum	70	owner		70	VALID
+uum	700	owner		700	VALID
+uum	710	owner		710	VALID
+uum	720	owner		720	VALID
+uum	730	owner		730	VALID
+uum	740	owner		740	VALID
+uum	750	owner		750	VALID
+uum	760	owner		760	VALID
+uum	770	owner		770	VALID
+uum	780	owner		780	VALID
+uum	790	owner		790	VALID
+uum	80	owner		80	VALID
+uum	800	owner		800	VALID
+uum	8000	owner		8000	VALID
+uum	8001	owner		8001	VALID
+uum	8002	owner		8002	VALID
+uum	8003	owner		8003	VALID
+uum	8004	owner		8004	RETIRED
+uum	8005	owner		8005	RETIRED
+uum	8006	owner		8006	VALID
+uum	8007	owner		8007	VALID
+uum	8008	owner		8008	VALID
+uum	8009	owner		8009	VALID
+uum	8010	owner		8010	VALID
+uum	8011	owner		8011	VALID
+uum	8012	owner		8012	VALID
+uum	8013	owner		8013	VALID
+uum	8014	owner		8014	VALID
+uum	8015	owner		8015	VALID
+uum	8016	owner		8016	VALID
+uum	8017	owner		8017	VALID
+uum	8018	owner		8018	VALID
+uum	8019	owner		8019	VALID
+uum	8020	owner		8020	VALID
+uum	8021	owner		8021	VALID
+uum	8022	owner		8022	VALID
+uum	8023	owner		8023	VALID
+uum	8024	owner		8024	VALID
+uum	8025	owner		8025	VALID
+uum	8026	owner		8026	VALID
+uum	8027	owner		8027	VALID
+uum	8028	owner		8028	VALID
+uum	8029	owner		8029	VALID
+uum	8030	owner		8030	VALID
+uum	8031	owner		8031	VALID
+uum	8032	owner		8032	VALID
+uum	8033	owner		8033	VALID
+uum	8034	owner		8034	VALID
+uum	8035	owner		8035	VALID
+uum	8036	owner		8036	VALID
+uum	8037	owner		8037	VALID
+uum	8038	owner		8038	VALID
+uum	8039	owner		8039	VALID
+uum	810	owner		810	VALID
+uum	8196	owner		8196	VALID
+uum	8197	owner		8197	VALID
+uum	8198	owner		8198	RETIRED
+uum	8199	owner		8199	RETIRED
+uum	820	owner		820	VALID
+uum	8203	owner		8203	VALID
+uum	8204	owner		8204	VALID
+uum	8205	owner		8205	VALID
+uum	8206	owner		8206	VALID
+uum	8207	owner		8207	VALID
+uum	8208	owner		8208	VALID
+uum	8209	owner		8209	VALID
+uum	8215	owner		8215	VALID
+uum	8217	owner		8217	VALID
+uum	8218	owner		8218	VALID
+uum	8219	owner		8219	VALID
+uum	8220	owner		8220	VALID
+uum	8221	owner		8221	VALID
+uum	8222	owner		8222	VALID
+uum	8224	owner		8224	VALID
+uum	8225	owner		8225	VALID
+uum	8226	owner		8226	VALID
+uum	8227	owner		8227	RETIRED
+uum	8229	owner		8229	VALID
+uum	8230	owner		8230	VALID
+uum	8231	owner		8231	VALID
+uum	8232	owner		8232	VALID
+uum	8233	owner		8233	VALID
+uum	8234	owner		8234	VALID
+uum	8242	owner		8242	VALID
+uum	8243	owner		8243	RETIRED
+uum	8249	owner		8249	VALID
+uum	8267	owner		8267	VALID
+uum	8268	owner		8268	VALID
+uum	8269	owner		8269	VALID
+uum	8270	owner		8270	VALID
+uum	8271	owner		8271	VALID
+uum	8272	owner		8272	VALID
+uum	8273	owner		8273	VALID
+uum	8274	owner		8274	VALID
+uum	8275	owner		8275	VALID
+uum	8276	owner		8276	VALID
+uum	8286	owner		8286	RETIRED
+uum	8287	owner		8287	RETIRED
+uum	8291	owner		8291	RETIRED
+uum	8292	owner		8292	RETIRED
+uum	8298	owner		8298	VALID
+uum	8299	owner		8299	VALID
+uum	8300	owner		8300	VALID
+uum	8301	owner		8301	VALID
+uum	8302	owner		8302	VALID
+uum	8303	owner		8303	VALID
+uum	8304	owner		8304	VALID
+uum	8305	owner		8305	VALID
+uum	8306	owner		8306	VALID
+uum	8307	owner		8307	VALID
+uum	8308	owner		8308	VALID
+uum	8309	owner		8309	VALID
+uum	8311	owner		8311	VALID
+uum	8312	owner		8312	VALID
+uum	8313	owner		8313	VALID
+uum	8314	owner		8314	VALID
+uum	8315	owner		8315	VALID
+uum	8323	owner		8323	VALID
+uum	8324	owner		8324	VALID
+uum	8325	owner		8325	VALID
+uum	8326	owner		8326	VALID
+uum	8328	owner		8328	VALID
+uum	8330	owner		8330	VALID
+uum	8331	owner		8331	VALID
+uum	8332	owner		8332	VALID
+uum	8333	owner		8333	VALID
+uum	8334	owner		8334	VALID
+uum	8335	owner		8335	VALID
+uum	8336	owner		8336	VALID
+uum	8340	owner		8340	VALID
+uum	8341	owner		8341	VALID
+uum	8346	owner		8346	VALID
+uum	8347	owner		8347	VALID
+uum	8348	owner		8348	VALID
+uum	8349	owner		8349	VALID
+uum	8362	owner		8362	RETIRED
+uum	8363	owner		8363	RETIRED
+uum	8364	owner		8364	RETIRED
+uum	8368	owner		8368	RETIRED
+uum	8369	owner		8369	RETIRED
+uum	8370	owner		8370	RETIRED
+uum	8371	owner		8371	RETIRED
+uum	8372	owner		8372	RETIRED
+uum	8374	owner		8374	RETIRED
+uum	8375	owner		8375	RETIRED
+uum	8376	owner		8376	RETIRED
+uum	8377	owner		8377	RETIRED
+uum	8378	owner		8378	RETIRED
+uum	8379	owner		8379	RETIRED
+uum	8380	owner		8380	RETIRED
+uum	8383	owner		8383	VALID
+uum	8384	owner		8384	VALID
+uum	8385	owner		8385	VALID
+uum	8386	owner		8386	VALID
+uum	8387	owner		8387	VALID
+uum	8388	owner		8388	RETIRED
+uum	8389	owner		8389	VALID
+uum	8390	owner		8390	VALID
+uum	8393	owner		8393	VALID
+uum	8394	owner		8394	RETIRED
+uum	8395	owner		8395	VALID
+uum	8396	owner		8396	VALID
+uum	8397	owner		8397	VALID
+uum	8400	owner		8400	VALID
+uum	8401	owner		8401	VALID
+uum	8402	owner		8402	VALID
+uum	8403	owner		8403	VALID
+uum	8404	owner		8404	VALID
+uum	8405	owner		8405	VALID
+uum	8406	owner		8406	VALID
+uum	8407	owner		8407	VALID
+uum	8408	owner		8408	VALID
+uum	8409	owner		8409	VALID
+uum	8410	owner		8410	VALID
+uum	8411	owner		8411	RETIRED
+uum	8412	owner		8412	VALID
+uum	8413	owner		8413	VALID
+uum	8415	owner		8415	VALID
+uum	8416	owner		8416	VALID
+uum	8417	owner		8417	VALID
+uum	8418	owner		8418	VALID
+uum	8419	owner		8419	VALID
+uum	8420	owner		8420	VALID
+uum	8423	owner		8423	VALID
+uum	8424	owner		8424	VALID
+uum	8425	owner		8425	VALID
+uum	8426	owner		8426	VALID
+uum	8427	owner		8427	VALID
+uum	8428	owner		8428	VALID
+uum	8429	owner		8429	VALID
+uum	8430	owner		8430	VALID
+uum	8431	owner		8431	VALID
+uum	8432	owner		8432	VALID
+uum	8433	owner		8433	VALID
+uum	8434	owner		8434	VALID
+uum	8435	owner		8435	VALID
+uum	8436	owner		8436	VALID
+uum	8437	owner		8437	VALID
+uum	8438	owner		8438	VALID
+uum	8439	owner		8439	VALID
+uum	8440	owner		8440	VALID
+uum	8441	owner		8441	VALID
+uum	8442	owner		8442	VALID
+uum	8443	owner		8443	VALID
+uum	8444	owner		8444	VALID
+uum	8445	owner		8445	VALID
+uum	8446	owner		8446	VALID
+uum	8447	owner		8447	VALID
+uum	8448	owner		8448	VALID
+uum	8449	owner		8449	VALID
+uum	8450	owner		8450	VALID
+uum	8451	owner		8451	VALID
+uum	8455	owner		8455	VALID
+uum	8456	owner		8456	RETIRED
+uum	8457	owner		8457	RETIRED
+uum	8458	owner		8458	VALID
+uum	8459	owner		8459	VALID
+uum	8460	owner		8460	VALID
+uum	8461	owner		8461	VALID
+uum	8462	owner		8462	VALID
+uum	8463	owner		8463	RETIRED
+uum	8464	owner		8464	VALID
+uum	8465	owner		8465	VALID
+uum	8466	owner		8466	RETIRED
+uum	8467	owner		8467	VALID
+uum	8468	owner		8468	VALID
+uum	8600	owner		8600	VALID
+uum	8601	owner		8601	VALID
+uum	8602	owner		8602	VALID
+uum	8603	owner		8603	RETIRED
+uum	8604	owner		8604	RETIRED
+uum	8605	owner		8605	VALID
+uum	8610	owner		8610	VALID
+uum	8611	owner		8611	VALID
+uum	8613	owner		8613	RETIRED
+uum	8614	owner		8614	VALID
+uum	8615	owner		8615	VALID
+uum	8620	owner		8620	VALID
+uum	8621	owner		8621	VALID
+uum	8622	owner		8622	VALID
+uum	8630	owner		8630	VALID
+uum	8631	owner		8631	VALID
+uum	8633	owner		8633	VALID
+uum	8634	owner		8634	VALID
+uum	8635	owner		8635	VALID
+uum	8636	owner		8636	VALID
+uum	8637	owner		8637	RETIRED
+uum	8638	owner		8638	VALID
+uum	8639	owner		8639	RETIRED
+uum	8640	owner		8640	VALID
+uum	8642	owner		8642	RETIRED
+uum	8643	owner		8643	VALID
+uum	8644	owner		8644	RETIRED
+uum	8645	owner		8645	VALID
+uum	8646	owner		8646	VALID
+uum	8647	owner		8647	VALID
+uum	8649	owner		8649	RETIRED
+uum	8650	owner		8650	RETIRED
+uum	8652	owner		8652	VALID
+uum	8653	owner		8653	VALID
+uum	8654	owner		8654	RETIRED
+uum	8657	owner		8657	RETIRED
+uum	8658	owner		8658	VALID
+uum	8659	owner		8659	VALID
+uum	8660	owner		8660	VALID
+uum	8661	owner		8661	VALID
+uum	8662	owner		8662	VALID
+uum	8663	owner		8663	VALID
+uum	8664	owner		8664	VALID
+uum	8665	owner		8665	VALID
+uum	8666	owner		8666	VALID
+uum	8667	owner		8667	VALID
+uum	8668	owner		8668	VALID
+uum	8669	owner		8669	VALID
+uum	8682	owner		8682	VALID
+uum	8684	owner		8684	VALID
+uum	8685	owner		8685	VALID
+uum	8686	owner		8686	VALID
+uum	8687	owner		8687	VALID
+uum	8688	owner		8688	RETIRED
+uum	8689	owner		8689	VALID
+uum	8690	owner		8690	RETIRED
+uum	8692	owner		8692	RETIRED
+uum	8700	owner		8700	VALID
+uum	8704	owner		8704	VALID
+uum	8705	owner		8705	VALID
+uum	8706	owner		8706	VALID
+uum	8708	owner		8708	VALID
+uum	8709	owner		8709	VALID
+uum	8711	owner		8711	RETIRED
+uum	8727	owner		8727	VALID
+uum	8728	owner		8728	RETIRED
+uum	8729	owner		8729	VALID
+uum	8730	owner		8730	VALID
+uum	8733	owner		8733	VALID
+uum	8737	owner		8737	VALID
+uum	8750	owner		8750	RETIRED
+uum	8751	owner		8751	VALID
+uum	8752	owner		8752	VALID
+uum	8756	owner		8756	VALID
+uum	8757	owner		8757	RETIRED
+uum	8758	owner		8758	RETIRED
+uum	8766	owner		8766	RETIRED
+uum	8776	owner		8776	RETIRED
+uum	8780	owner		8780	RETIRED
+uum	8782	owner		8782	RETIRED
+uum	8784	owner		8784	VALID
+uum	8790	owner		8790	VALID
+uum	8793	owner		8793	VALID
+uum	8794	owner		8794	RETIRED
+uum	8796	owner		8796	VALID
+uum	8797	owner		8797	VALID
+uum	8798	owner		8798	VALID
+uum	8802	owner		8802	VALID
+uum	8803	owner		8803	VALID
+uum	8804	owner		8804	RETIRED
+uum	8808	owner		8808	RETIRED
+uum	90	owner		90	VALID
+uum	9101	owner		9101	VALID
+uum	9102	owner		9102	VALID
+uum	9103	owner		9103	VALID
+uum	9104	owner		9104	VALID
+uum	9107	owner		9107	VALID
+uum	9109	owner		9109	VALID
+uum	9110	owner		9110	VALID
+uum	9111	owner		9111	VALID
+uum	9114	owner		9114	VALID
+uum	9115	owner		9115	VALID
+uum	9116	owner		9116	VALID
+uum	9117	owner		9117	VALID
+uum	9119	owner		9119	VALID
+uum	9120	owner		9120	VALID
+uum	9123	owner		9123	VALID
+uum	9125	owner		9125	VALID
+uum	9126	owner		9126	VALID
+uum	9127	owner		9127	VALID
+uum	9128	owner		9128	VALID
+uum	9129	owner		9129	VALID
+uum	9130	owner		9130	VALID
+uum	9131	owner		9131	VALID
+uum	9132	owner		9132	VALID
+uum	9133	owner		9133	VALID
+uum	9135	owner		9135	VALID
+uum	9140	owner		9140	VALID
+uum	9145	owner		9145	VALID
+uum	9153	owner		9153	VALID
+uum	9154	owner		9154	VALID
+uum	9160	owner		9160	VALID
+uum	9161	owner		9161	VALID
+uum	9167	owner		9167	VALID
+uum	9169	owner		9169	VALID
+uum	9174	owner		9174	VALID
+uum	9175	owner		9175	VALID
+uum	9192	owner		9192	VALID
+uum	9193	owner		9193	VALID
+uum	9194	owner		9194	VALID
+uum	9195	owner		9195	VALID
+uum	9197	owner		9197	VALID
+uum	9213	owner		9213	VALID
+uum	9214	owner		9214	VALID
+uum	9215	owner		9215	VALID
+uum	9216	owner		9216	VALID
+uum	9217	owner		9217	VALID
+uum	9243	owner		9243	VALID
+uum	9271	owner		9271	VALID
+uum	9300	owner		9300	VALID
+uum	9301	owner		9301	VALID
+uum	9302	owner		9302	VALID
+uum	9303	owner		9303	VALID
+uum	9304	owner		9304	VALID
+uum	9305	owner		9305	VALID
+uum	9306	owner		9306	VALID
+uum	9307	owner		9307	VALID
+uum	9308	owner		9308	VALID
+uum	9309	owner		9309	VALID
+uum	9310	owner		9310	VALID
+uum	9311	owner		9311	VALID
+uum	9312	owner		9312	VALID
+uum	9313	owner		9313	VALID
+uum	9314	owner		9314	VALID
+uum	9315	owner		9315	VALID
+uum	9316	owner		9316	VALID
+uum	9317	owner		9317	VALID
+uum	9318	owner		9318	VALID
+uum	9319	owner		9319	VALID
+uum	9320	owner		9320	RETIRED
+uum	9321	owner		9321	RETIRED
+uum	9322	owner		9322	RETIRED
+uum	9323	owner		9323	RETIRED
+uum	9324	owner		9324	RETIRED
+uum	9325	owner		9325	RETIRED
+uum	9326	owner		9326	RETIRED
+uum	9327	owner		9327	RETIRED
+uum	9328	owner		9328	RETIRED
+uum	9329	owner		9329	RETIRED
+uum	9330	owner		9330	RETIRED
+uum	9331	owner		9331	RETIRED
+uum	9332	owner		9332	RETIRED
+uum	9333	owner		9333	RETIRED
+uum	9334	owner		9334	RETIRED
+uum	9335	owner		9335	RETIRED
+uum	9336	owner		9336	RETIRED
+uum	9337	owner		9337	RETIRED
+uum	9338	owner		9338	RETIRED
+uum	9339	owner		9339	RETIRED
+uum	9340	owner		9340	RETIRED
+uum	9341	owner		9341	RETIRED
+uum	9342	owner		9342	RETIRED
+uum	9343	owner		9343	RETIRED
+uum	9344	owner		9344	VALID
+uum	9345	owner		9345	RETIRED
+uum	9346	owner		9346	RETIRED
+uum	9347	owner		9347	RETIRED
+uum	9348	owner		9348	RETIRED
+uum	9349	owner		9349	RETIRED
+uum	9350	owner		9350	RETIRED
+uum	9351	owner		9351	RETIRED
+uum	9352	owner		9352	RETIRED
+uum	9353	owner		9353	RETIRED
+uum	9354	owner		9354	RETIRED
+uum	9355	owner		9355	RETIRED
+uum	9356	owner		9356	RETIRED
+uum	9357	owner		9357	RETIRED
+uum	9358	owner		9358	RETIRED
+uum	9359	owner		9359	RETIRED
+uum	9360	owner		9360	RETIRED
+uum	9361	owner		9361	RETIRED
+uum	9362	owner		9362	RETIRED
+uum	9363	owner		9363	RETIRED
+uum	9364	owner		9364	RETIRED
+uum	9365	owner		9365	RETIRED
+uum	9366	owner		9366	RETIRED
+uum	9367	owner		9367	RETIRED
+uum	9368	owner		9368	RETIRED
+uum	9369	owner		9369	RETIRED
+uum	9370	owner		9370	RETIRED
+uum	9371	owner		9371	RETIRED
+uum	9372	owner		9372	VALID
+uum	9373	owner		9373	RETIRED
+uum	9374	owner		9374	RETIRED
+uum	9375	owner		9375	RETIRED
+uum	9376	owner		9376	RETIRED
+uum	9377	owner		9377	RETIRED
+uum	9378	owner		9378	RETIRED
+uum	9379	owner		9379	RETIRED
+uum	9380	owner		9380	RETIRED
+uum	9381	owner		9381	RETIRED
+uum	9382	owner		9382	RETIRED
+uum	9383	owner		9383	RETIRED
+uum	9384	owner		9384	RETIRED
+uum	9385	owner		9385	RETIRED
+uum	9386	owner		9386	RETIRED
+uum	9387	owner		9387	RETIRED
+uum	9388	owner		9388	RETIRED
+uum	9389	owner		9389	RETIRED
+uum	9390	owner		9390	RETIRED
+uum	9391	owner		9391	RETIRED
+uum	9392	owner		9392	RETIRED
+uum	9393	owner		9393	RETIRED
+uum	9394	owner		9394	RETIRED
+uum	9395	owner		9395	RETIRED
+uum	9396	owner		9396	RETIRED
+uum	9397	owner		9397	RETIRED
+uum	9398	owner		9398	RETIRED
+uum	9399	owner		9399	RETIRED
+uum	9400	owner		9400	RETIRED
+uum	9401	owner		9401	RETIRED
+uum	9402	owner		9402	RETIRED
+uum	9403	owner		9403	RETIRED
+uum	9404	owner		9404	RETIRED
+uum	9405	owner		9405	RETIRED
+uum	9406	owner		9406	RETIRED
+uum	9407	owner		9407	RETIRED
+uum	9408	owner		9408	RETIRED
+uum	9409	owner		9409	VALID
+uum	9703	owner		9703	VALID
+uum	9787	owner		9787	RETIRED
+uum	9800	owner		9800	VALID
+uum	9801	owner		9801	VALID
+uum	9802	owner		9802	VALID
+uum	9803	owner		9803	VALID
+uum	9804	owner		9804	VALID
+uum	9808	owner		9808	VALID
+uum	9809	owner		9809	VALID
+uum	9814	owner		9814	VALID
+uum	9815	owner		9815	VALID
+uum	9820	owner		9820	VALID
+uum	9821	owner		9821	VALID
+uum	9822	owner		9822	VALID
+uum	9823	owner		9823	VALID
+uum	9824	owner		9824	VALID
+uum	9825	owner		9825	VALID
+uum	9826	owner		9826	VALID
+uum	9827	owner		9827	VALID
+uum	9828	owner		9828	VALID
+uum	9829	owner		9829	VALID
+uum	9830	owner		9830	VALID
+uum	9831	owner		9831	VALID
+uum	9832	owner		9832	VALID
+uum	9834	owner		9834	VALID
+uum	9835	owner		9835	VALID
+uum	9836	owner		9836	VALID
+uum	9837	owner		9837	VALID
+uum	9838	owner		9838	VALID
+uum	9839	owner		9839	VALID
+uum	9843	owner		9843	VALID
+uum	9844	owner		9844	VALID

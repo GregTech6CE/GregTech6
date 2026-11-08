@@ -22,7 +22,7 @@ public final class TransportCraftingInputs {
         if(input.kind().equals("casing")) {
             var prefix=input.name().equals("casingMachineDouble") ? gregtech.engine.prefix.BlockMaterialPrefix.casingMachineDouble : gregtech.engine.prefix.BlockMaterialPrefix.casingMachine;
             var material=input.material();
-            var materials=material.getId()<0?material.getReRegistrations():Set.of(material);
+            var materials=material.getId()<0?gregtech.content.data.MaterialGroups.members(material):Set.of(material);
             var stacks=materials.stream().map(m -> gregtech.content.registry.GTBlocks.getStack(prefix,m)).filter(stack -> !stack.isEmpty()).toList();
             return stacks.isEmpty()?Ingredient.EMPTY:Ingredient.of(stacks.stream());
         }
@@ -30,7 +30,7 @@ public final class TransportCraftingInputs {
             boolean insulated=input.kind().equals("cable");
             int size=Integer.parseInt(input.name());
             var material=input.material();
-            var targets=material.getId()<0?material.getReRegistrations():Set.of(material);
+            var targets=material.getId()<0?gregtech.content.data.MaterialGroups.members(material):Set.of(material);
             var wires=gregtech.content.registry.GTWires.all().stream().map(v -> v.get()).filter(b -> b.spec().size()==size && b.spec().insulated()==insulated
                     && targets.contains(b.spec().material())).map(b -> new ItemStack(b)).toList();
             return wires.isEmpty()?Ingredient.EMPTY:Ingredient.of(wires.stream());
@@ -38,7 +38,7 @@ public final class TransportCraftingInputs {
         var prefix=PrefixRegistry.byName(input.name());
         if(prefix==null)return Ingredient.EMPTY;
         var material=input.material();
-        var materials=material.getId()<0?material.getReRegistrations():Set.of(material);
+        var materials=material.getId()<0?gregtech.content.data.MaterialGroups.members(material):Set.of(material);
         var stacks=materials.stream().map(m->GTItems.getStack(prefix,m)).filter(s->!s.isEmpty()).toList();
         return stacks.isEmpty()?Ingredient.EMPTY:Ingredient.of(stacks.stream());
     }

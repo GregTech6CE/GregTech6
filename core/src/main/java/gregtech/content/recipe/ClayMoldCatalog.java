@@ -35,14 +35,12 @@ public final class ClayMoldCatalog {
                 default -> null;
             };
             if (group != null) {
-                if (group.getReRegistrations().stream().anyMatch(m -> m.resolve() == material.resolve())) return true;
+                if (MaterialGroups.contains(group, material)) return true;
                 return switch (family) {
                     case "AnyStone" -> FactoryFamilies.STONE.contains(material.resolve());
                     case "AnyWax" -> FactoryFamilies.WAX.contains(material.resolve());
-                    // ANY nests ANY.Plastic; original re-registration propagates that family.
-                    case "AnyWoodPlastic" ->
-                        MaterialGroups.Plastic.getReRegistrations().stream()
-                                .anyMatch(m -> m.resolve() == material.resolve());
+                    // ANY:145 nests ANY.Plastic; original re-registration propagates that family.
+                    case "AnyWoodPlastic" -> MaterialGroups.contains(MaterialGroups.Plastic, material);
                     default -> false;
                 };
             }

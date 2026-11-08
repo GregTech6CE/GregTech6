@@ -2,7 +2,6 @@ package gregtech.content.fluid;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.FluidCatalog;
-import gregtech.content.material.Materials;
 import gregtech.engine.material.GTMaterialRegistry;
 
 /** Static and material-derived fluid definitions, prepared before Forge registration. */
@@ -12,107 +11,7 @@ public final class FluidDefinitions {
     public static void prepare() {
         FluidCatalog.bootstrap();
         registerGoldenBottleFluids();
-        // Loader_Fluids creates ordinary mercury with L=144 mB per U. GT6's metal factory does not
-        // set MOLTEN, so this ordinary liquid is mercury's only phase; the generic 1000 mB quantity
-        // used by MatterRecipeLoader is still an audited mismatch.
-        gregtech.content.material.generated.ElementMaterials.Mercury.put(gregtech.api.material.MaterialProperty.LIQUID);
-        // GT6 reactor coolant isotopologues have liquid phases; retain old gas IDs for saves.
-        for (var material : java.util.List.of(
-                gregtech.content.material.generated.CompoundMaterials.SemiheavyWater,
-                gregtech.content.material.generated.CompoundMaterials.HeavyWater,
-                gregtech.content.material.generated.CompoundMaterials.TritiatedWater))
-            material.put(gregtech.api.material.MaterialProperty.LIQUID);
-
-        // GT6 fusion explicitly uses these molten phases; the element import omitted their MOLTEN flag.
-        for (var material : java.util.List.of(
-                gregtech.content.material.generated.ElementMaterials.Carbon,
-                gregtech.content.material.generated.ElementMaterials.Carbon13,
-                gregtech.content.material.generated.ElementMaterials.Adamantium))
-            material.put(gregtech.api.material.MaterialProperty.MOLTEN);
-
-        // Original MT declares these nine molten phases without MELTING. Restore only
-        // the missing state flag; the existing factory retains source temperature/density
-        // and FL.createMolten's final light level 10 (including the glowstone family).
-        for (var material : java.util.List.of(
-                Materials.Nikolite,
-                Materials.Glowstone,
-                gregtech.content.material.generated.OreMaterials.VanadiumMagnetite))
-            material.put(gregtech.api.material.MaterialProperty.MOLTEN);
-
-        // chemistry acids/salts the transpiled recipes use as fluids; the
-        // generated material data lost their state flags, so restore them
-        // before the molten/gas/liquid fluid generation below
-        for (var m : new gregtech.api.material.GTMaterial[] {
-            gregtech.content.material.Materials.TitaniumTetrachloride, gregtech.content.material.Materials.NitricAcid,
-            gregtech.content.material.Materials.SulfuricAcid, gregtech.content.material.Materials.DisulfuricAcid,
-            gregtech.content.material.Materials.HexafluorosilicicAcid, gregtech.content.material.Materials.Cryolite,
-            gregtech.content.material.Materials.LithiumChloride, gregtech.content.material.Materials.LithiumChlorate,
-            gregtech.content.material.Materials.AluminiumFluoride
-        }) {
-            if (m != null && m.resolve().isValid()) {
-                m.resolve().put(gregtech.api.material.MaterialProperty.LIQUID);
-            }
-        }
-
-        // GT6's lqudacid* factories (MT.java: Aqua Regia 9827, Chloroauric/Chloroplatinic Acid,
-        // Stannic Chloride, the whole vitriol family) give those materials a LIQUID state; the
-        // import dropped it, so the acids the chemistry tables consume had no fluid at all.
-        for (String name : new String[] {
-            "AquaRegia",
-            "ChloroauricAcid",
-            "ChloroplatinicAcid",
-            "StannicChloride",
-            "BlueVitriol",
-            "CyanVitriol",
-            "GrayVitriol",
-            "GreenVitriol",
-            "PinkVitriol",
-            "RedVitriol",
-            "WhiteVitriol",
-            "VitriolOfClay"
-        }) {
-            var material = GTMaterialRegistry.get(name);
-            if (material != null && material.resolve().isValid()) {
-                material.resolve().put(gregtech.api.material.MaterialProperty.LIQUID);
-            }
-        }
-        // MT.sulfur() is created with MELTING + MOLTEN (MT), so molten sulfur is a real
-        // GT6 fluid; the import kept the dust only.
-        var sulfur = GTMaterialRegistry.get("Sulfur");
-        if (sulfur != null && sulfur.resolve().isValid()) {
-            sulfur.resolve().put(gregtech.api.material.MaterialProperty.MOLTEN);
-        }
-        // GT6's *dcmp* compound factories (MT Al2O3, Fe2O3, CaCl2,
-        // Na2CO3, UF4 and their siblings) declare MELTING/MOLTEN, so their molten phases are
-        // real GT6 fluids that the chemistry tables consume (`m:Al2O3` …); the import kept the dust
-        // only, which left 11 chemistry recipes with an unresolvable fluid.
-        for (String name : new String[] {
-            "Alumina",
-            "Hematite",
-            "CalciumChloride",
-            "Fluorite",
-            "MagnesiumCarbonate",
-            "MagnesiumChloride",
-            "ManganeseChloride",
-            "SodiumCarbonate",
-            "UraniumTetrafluoride",
-            "Uranium235Tetrafluoride",
-            "Uranium238Tetrafluoride"
-        }) {
-            var material = GTMaterialRegistry.get(name);
-            if (material != null && material.resolve().isValid()) {
-                material.resolve().put(gregtech.api.material.MaterialProperty.MOLTEN);
-            }
-        }
-        if (gregtech.content.material.Materials.HydrochloricAcid != null
-                && gregtech.content.material.Materials.HydrochloricAcid.resolve()
-                        .isValid()) {
-            gregtech.content.material.Materials.HydrochloricAcid.resolve()
-                    .put(gregtech.api.material.MaterialProperty.GAS);
-        }
-
-        // ---- GT6 Loader_Fluids: generated molten fluids (auto-register molten.{material}) ----
-        // (after the state flags above, so the restored MOLTEN/LIQUID materials get their fluid)
+        // Phase corrections live in the canonical material definitions, before READY freezes them.
         FluidCatalog.registerGeneratedMoltenFluids(GTMaterialRegistry.allMaterials());
 
         // ---- generated gas./liquid. fluids for gaseous/liquid materials (chemistry chains) ----

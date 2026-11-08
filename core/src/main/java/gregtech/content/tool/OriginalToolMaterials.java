@@ -32,8 +32,7 @@ public final class OriginalToolMaterials {
         if (material == null || !material.has(MaterialProperty.STONE)) return false;
         return material != gregtech.content.material.generated.OreMaterials.OilShale
                 || gregtech.engine.addon.AddonMaterials.owns(material)
-                || gregtech.content.data.MaterialGroups.Stone.getReRegistrations()
-                        .contains(material);
+                || gregtech.content.data.MaterialGroups.contains(gregtech.content.data.MaterialGroups.Stone, material);
     }
 
     private static String name(GTMaterial material) {
@@ -44,7 +43,9 @@ public final class OriginalToolMaterials {
         if (material == null) return false;
         String name = name(material);
         if (name.equals(family)) return true;
-        if (material.getReRegistrations().stream().anyMatch(m -> name(m).equals(family))) return true;
+        if (material.getId() < 0
+                && gregtech.content.data.MaterialGroups.members(material).stream()
+                        .anyMatch(m -> name(m).equals(family))) return true;
         // A group stores its members; a concrete material stores its parent groups.
         if (material.getAliasesToThis().stream().anyMatch(m -> name(m).equals(family))) return true;
         return switch (family) {

@@ -21,7 +21,7 @@
 
 `build/generated/recipe-resources/` 只出现在 1.21.1 NeoForge 节点：`tools/buildtools` 把 core 中按 1.20.1 形状维护的配方与物品标签树转换为 `recipe/`、`tags/item/`，开发运行与发行 JAR 消费同一份结果。源数据、排除表与转换器纳入版本控制，生成树不纳入；输入、依赖、输出与运行命令见 [buildtools README](../../tools/buildtools/README.md)，生成树与源数据的对应关系由 `tools/recipes/audit_recipes.py --converted` 检查。
 
-例如 `MaterialRegistryExtras` 引用了历史 `tools/generate_material_metadata.py`，部分配方表引用 `tools/transpile_gt6_chem.py`。当前工作树未包含这些工具，不能把这些命令写成可直接运行的流程。需要改表时先确认上游来源与转换方式；一次性导入/再生成脚本放本机被忽略的 `work/local-tools/`，不随仓库提交。生成器不在仓库时，确需修表应说明依据、局部变更及无法重新生成的限制。
+例如部分配方表引用 `tools/transpile_gt6_chem.py`。当前工作树未包含这些工具，不能把这些命令写成可直接运行的流程。需要改表时先确认上游来源与转换方式；一次性导入/再生成脚本放本机被忽略的 `work/local-tools/`，不随仓库提交。生成器不在仓库时，确需修表应说明依据、局部变更及无法重新生成的限制。
 
 ## 数据生成与打包
 

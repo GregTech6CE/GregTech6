@@ -86,7 +86,8 @@ public final class FoodItemRecipes {
     /** Loader_Recipes_Food's ANY.Flour and raw-meat listeners, and Loader_Recipes_Crops.cropWheat. */
     private static void staples() {
         var dough = food("dough", 2);
-        for (var material : gregtech.content.data.MaterialGroups.Flour.getReRegistrations()) {
+        for (var material : gregtech.content.data.MaterialGroups.members(
+                gregtech.content.data.MaterialGroups.Flour)) {
             var flour = GTItems.getStack(MaterialPrefix.dust, material.resolve());
             if (flour.isEmpty() || dough.isEmpty()) continue;
             for (String water : new String[] {"Water", "MnWtr", "DistW"}) {
