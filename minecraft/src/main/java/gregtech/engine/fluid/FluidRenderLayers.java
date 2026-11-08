@@ -16,7 +16,7 @@ import java.util.Set;
  * {@code Fluids.WATER} and {@code Fluids.FLOWING_WATER} mapped to
  * {@code RenderType.translucent()} ({@code ItemBlockRenderTypes.java}); every fluid that is
  * not in the map falls back to {@code RenderType.solid()}
- * ({@code ItemBlockRenderTypes.java}, {@code FLUID_RENDER_TYPES} default at line 400).
+ * ({@code ItemBlockRenderTypes.java}, {@code FLUID_RENDER_TYPES} default).
  * {@code RenderType.translucent()} is what makes vanilla water see-through. GT6's original
  * {@code BlockBaseFluid} used render pass 1 for each of its world fluids, including the oil and gas
  * springs, so those placed fluid families need that layer here.

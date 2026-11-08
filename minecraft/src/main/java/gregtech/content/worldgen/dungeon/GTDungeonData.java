@@ -456,9 +456,9 @@ public final class GTDungeonData {
         BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
         if (level.getBlockEntity(pos) instanceof CoinPileBlockEntity pile) {
             for (int face = 0; face < CoinPileBlockEntity.FACES; face++) {
-                pile.setFaceCount(face, next1in3() ? next(8) : 0);          // GT6 DungeonData:170 rolls each face
+                pile.setFaceCount(face, next1in3() ? next(8) : 0);          // GT6 DungeonData rolls each face
             }
-            pile.setFaceCount(next(CoinPileBlockEntity.FACES), 1 + next(8)); // GT6 DungeonData:171 rolls the extra pile
+            pile.setFaceCount(next(CoinPileBlockEntity.FACES), 1 + next(8)); // GT6 DungeonData rolls the extra pile
             // GT6 hands the multi-tile its material through the placed NBT; the port has to set it on
             // the block entity. After the faces, so that GT6's draws above are not disturbed.
             pile.setCoin(rollCoin(ax, ay, az));

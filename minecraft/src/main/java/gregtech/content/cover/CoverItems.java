@@ -75,7 +75,7 @@ public final class CoverItems {
         if (id.startsWith("compact_electric_pump_")) return PUMP;               // IL.PUMPS[i]
         if (id.startsWith("compact_electric_conveyor_")) return CONVEYOR;       // IL.CONVEYERS[i]
         if (id.startsWith("compact_robot_arm_")) return ROBOT_ARM;              // IL.ROBOT_ARMS[i]
-        if (id.startsWith("integrated_circuit_")) return TAG_SELECTOR;          // GT6 names circuits in ItemIntegratedCircuit:87
+        if (id.startsWith("integrated_circuit_")) return TAG_SELECTOR;          // GT6 names circuits in ItemIntegratedCircuit
         if (id.equals(TAG_SELECTOR)) return TAG_SELECTOR;                       // pre- saves
         return portCoverId(id) ? id : null;
     }

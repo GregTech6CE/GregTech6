@@ -28,7 +28,7 @@ public final class GTGearboxes {
     private static final List<RegisteredBlock<GearboxBlock>> ALL_GEARBOXES = new ArrayList<>();
     private static final List<RegisteredBlock<EnergyNodeBlock>> ALL_TRANSFORMERS = new ArrayList<>();
 
-    // GT6 Loader_MultiTileEntities.kinetic(): 24778–24899. Registry names of
+    // GT6 Loader_MultiTileEntities.kinetic(). Registry names of
     // the existing variants remain stable; the source's numeric IDs are in the
     // resource generator so that rates and names can be checked against GT6.
     private static final gregtech.content.energy.GearboxCatalog.Tier[] TIERS = gregtech.content.energy.GearboxCatalog.tiers();

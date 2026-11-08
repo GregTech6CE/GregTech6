@@ -115,7 +115,7 @@ public final class BehaviorFlintAndTinder {
         /*if (ManualToolBehaviorAccess.primeTnt(level, pos, player)) return ManualToolBehaviorAccess.TNT_COST;   // GT6 ToolCompat
         if (ManualToolBehaviorAccess.lightVanillaFire(level, player, pos, side, stack)) return ManualToolBehaviorAccess.TNT_COST;
 *///?} else {
-        if (ItemBehaviors.primeTnt(level, pos, player)) return ItemBehaviors.TNT_COST;   // GT6 ToolCompat:203-207
+        if (ItemBehaviors.primeTnt(level, pos, player)) return ItemBehaviors.TNT_COST;   // GT6 ToolCompat
         if (ItemBehaviors.lightVanillaFire(level, player, pos, side, stack)) return ItemBehaviors.TNT_COST;
 //?}
         return 0L;

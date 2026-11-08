@@ -1,5 +1,6 @@
 package gregtech.content.recipe;
 
+// source-rows: the per-row MT line numbers are transcription labels.
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;

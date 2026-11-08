@@ -2,6 +2,8 @@
  * Original authors and license retained; see NOTICE and source provenance. */
 package gregtech.content.food;
 
+// source-rows: the per-row MultiItemFood line numbers are transcription labels.
+
 /** Original MultiItemFood/MultiItemBottles ingredient registrations, paired with existing port IDs. */
 public final class SandwichSourceIngredients {
     private SandwichSourceIngredients() {}

@@ -1,5 +1,5 @@
 /* Gregorius Techneticies / GregTech-6 Team; LGPL-3.0-or-later.
- * MultiTileEntityBoilerTank.onTick2 steam transfer, source line 142. */
+ * MultiTileEntityBoilerTank.onTick2 steam transfer. */
 package gregtech.engine.energy;
 
 /** Above 75% stored pressure, the source boiler transfers twice its nominal output. */

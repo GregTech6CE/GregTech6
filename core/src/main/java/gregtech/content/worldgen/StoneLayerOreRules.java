@@ -3,10 +3,8 @@ package gregtech.content.worldgen;
 import java.util.List;
 import java.util.Map;
 
-/** Restores metadata omitted from the legacy extracted table. Source: GT6 Loader_Worldgen,
- * lines 163-174, 181-192, 227-228, 266, 286, 348-354, 374-402, 459-494 and 563.
- * Keys include the complete ore declaration, so unrelated occurrences of a material are unaffected.
- */
+/** Restores metadata omitted from the legacy extracted table. Keys include the complete ore
+ * declaration, so unrelated occurrences of a material are unaffected. */
 public final class StoneLayerOreRules {
     private StoneLayerOreRules() {}
 

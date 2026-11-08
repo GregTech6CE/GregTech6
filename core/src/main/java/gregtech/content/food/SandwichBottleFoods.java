@@ -2,6 +2,7 @@
  * Original authors and license retained; see NOTICE and source provenance. */
 package gregtech.content.food;
 
+// source-rows: the per-row Loader_Fluids/MultiItemBottles line numbers are transcription labels.
 import java.util.List;
 
 /** GregTech-6 Team, LGPL-3.0-or-later: native sandwich bottles' original FoodStatDrink values. */
