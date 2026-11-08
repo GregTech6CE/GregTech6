@@ -80,43 +80,52 @@ public class BumbleHiveBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        tag.put("inventory", inventory.serializeNBT(lookup));
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
+        saveData(tag, lookup);
+    }
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.put("inventory", inventory.serializeNBT());
+        saveData(tag, null);
+    }
 //?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        tag.put("inventory", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
     }
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        if (tag.contains("inventory")) inventory.deserializeNBT(lookup,tag.getCompound("inventory"));
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
+        loadData(tag, lookup);
+    }
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
-        if (tag.contains("inventory")) inventory.deserializeNBT(tag.getCompound("inventory"));
+        loadData(tag, null);
+    }
 //?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (tag.contains("inventory")) gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound("inventory"), lookup);
     }
 
     @Override
 //? if >=1.21.1 {
     /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
         CompoundTag tag = super.getUpdateTag(lookup);
-        tag.put("inventory", inventory.serializeNBT(lookup));
+        net.minecraft.core.HolderLookup.Provider codecLookup = lookup;
 *///?} else {
     public CompoundTag getUpdateTag() {
         CompoundTag tag = super.getUpdateTag();
-        tag.put("inventory", inventory.serializeNBT());
+        net.minecraft.core.HolderLookup.Provider codecLookup = null;
 //?}
+        tag.put("inventory", gregtech.engine.stack.HandlerNbt.save(inventory, codecLookup));
         return tag;
-//? if >=1.21.1 {
-//?} else {
     }
 
+//? if >=1.21.1 {
+//?} else {
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable net.minecraft.core.Direction side) {
         if (capability == ForgeCapabilities.ITEM_HANDLER) {
@@ -124,8 +133,8 @@ public class BumbleHiveBlockEntity extends BlockEntity {
             return LazyOptional.empty();
         }
         return super.getCapability(capability, side);
-//?}
     }
+//?}
 
     /** Kept for the tests: the raw handler without the capability gate. */
     public IItemHandler rawHandler() { return inventory; }

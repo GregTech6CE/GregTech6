@@ -2,6 +2,7 @@ package gregtech.content.cover;
 
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.FluidTankGT;
+import gregtech.engine.stack.StackData;
 import gregtech.content.registry.GTFluids;
 import gregtech.util.GTEntityHelper;
 import net.minecraft.core.BlockPos;
@@ -291,7 +292,7 @@ public final class CoverUtilityBehaviors {
 //?}
         return filterPermits(!filter.isEmpty(), MachineCoverSpec.inverted(cover), stopped,
                 !candidate.isEmpty()&&filter.getItem()==candidate.getItem()
-                        &&(CoverStackData.readOrEmpty(cover).getBoolean("gt.filter.wildcard")||filter.getDamageValue()==candidate.getDamageValue()));
+                        &&(StackData.getBoolean(cover,"gt.filter.wildcard",false)||filter.getDamageValue()==candidate.getDamageValue()));
     }
 
     /**
@@ -320,15 +321,21 @@ public final class CoverUtilityBehaviors {
         return filterPermits(true, MachineCoverSpec.inverted(cover), false,
                 filter.getFluid() == candidate.getFluid());
     }
+//? if >=1.21.1 {
+//?} else {
+    public static boolean fluidFilterPermits(ItemStack cover, boolean stopped, FluidStack candidate,
+            net.minecraft.core.HolderLookup.Provider lookup) {
+        return fluidFilterPermits(cover, stopped, candidate);
+    }
+//?}
 
     /** The item stored under {@link #FILTER_ITEM_KEY}, or empty ({@code CoverFilterItem}). */
 //? if >=1.21.1 {
     /*public static ItemStack itemFilter(ItemStack cover,net.minecraft.core.HolderLookup.Provider lookup) {
-        CompoundTag tag = cover == null ? null : CoverStackData.read(cover);
 *///?} else {
     public static ItemStack itemFilter(ItemStack cover) {
-        CompoundTag tag = cover == null ? null : cover.getTag();
 //?}
+        CompoundTag tag = cover == null ? null : StackData.read(cover);
         if (tag == null || !tag.contains(FILTER_ITEM_KEY)) return ItemStack.EMPTY;
 //? if >=1.21.1 {
         /*return CoverStackData.readItem(lookup,tag.getCompound(FILTER_ITEM_KEY));
@@ -343,11 +350,10 @@ public final class CoverUtilityBehaviors {
      */
 //? if >=1.21.1 {
     /*public static FluidStack fluidFilter(ItemStack cover,net.minecraft.core.HolderLookup.Provider lookup) {
-        CompoundTag tag = cover == null ? null : CoverStackData.read(cover);
 *///?} else {
     public static FluidStack fluidFilter(ItemStack cover) {
-        CompoundTag tag = cover == null ? null : cover.getTag();
 //?}
+        CompoundTag tag = cover == null ? null : StackData.read(cover);
         if (tag == null || !tag.contains(FILTER_FLUID_KEY)) return FluidStack.EMPTY;
 //? if >=1.21.1 {
         /*FluidStack stored = gregtech.engine.fluid.FluidStackNbt.read(lookup,tag.getCompound(FILTER_FLUID_KEY));
@@ -371,11 +377,10 @@ public final class CoverUtilityBehaviors {
     public static boolean setItemFilter(ItemStack cover, ItemStack held) {
 //?}
         if (cover == null || cover.isEmpty() || held == null || held.isEmpty()) return false;
+        CompoundTag tag = StackData.readOrEmpty(cover);
 //? if >=1.21.1 {
-        /*CompoundTag tag = CoverStackData.readOrEmpty(cover);
-        var previous = itemFilter(cover, lookup);
+        /*var previous = itemFilter(cover, lookup);
 *///?} else {
-        CompoundTag tag = cover.getOrCreateTag();
         var previous = itemFilter(cover);
 //?}
         if (!previous.isEmpty() && (previous.getItem() != held.getItem()
@@ -386,13 +391,19 @@ public final class CoverUtilityBehaviors {
         specimen.setDamageValue(held.getDamageValue());
 //? if >=1.21.1 {
         /*tag.put(FILTER_ITEM_KEY, specimen.save(lookup));
-        CoverStackData.write(cover,tag);
 *///?} else {
         tag.put(FILTER_ITEM_KEY, specimen.save(new CompoundTag()));
 //?}
+        StackData.write(cover,tag);
         return true;
     }
-
+//? if >=1.21.1 {
+//?} else {
+    public static boolean setItemFilter(ItemStack cover, ItemStack held,
+            net.minecraft.core.HolderLookup.Provider lookup) {
+        return setItemFilter(cover, held);
+    }
+//?}
     /** GT6 {@code CoverFilterFluid}: the same one-shot right-click rule for a fluid. */
 //? if >=1.21.1 {
     /*public static boolean setFluidFilter(ItemStack cover, FluidStack held,net.minecraft.core.HolderLookup.Provider lookup) {
@@ -400,11 +411,7 @@ public final class CoverUtilityBehaviors {
     public static boolean setFluidFilter(ItemStack cover, FluidStack held) {
 //?}
         if (cover == null || cover.isEmpty() || held == null || held.isEmpty()) return false;
-//? if >=1.21.1 {
-        /*CompoundTag tag = CoverStackData.readOrEmpty(cover);
-*///?} else {
-        CompoundTag tag = cover.getOrCreateTag();
-//?}
+        CompoundTag tag = StackData.readOrEmpty(cover);
         if (tag.contains(FILTER_FLUID_KEY)) return false;
         CompoundTag stored = new CompoundTag();
 //? if >=1.21.1 {
@@ -413,12 +420,16 @@ public final class CoverUtilityBehaviors {
         held.copy().writeToNBT(stored);
 //?}
         tag.put(FILTER_FLUID_KEY, stored);
-//? if >=1.21.1 {
-        /*CoverStackData.write(cover,tag);
-*///?} else {
-//?}
+        StackData.write(cover,tag);
         return true;
     }
+//? if >=1.21.1 {
+//?} else {
+    public static boolean setFluidFilter(ItemStack cover, FluidStack held,
+            net.minecraft.core.HolderLookup.Provider lookup) {
+        return setFluidFilter(cover, held);
+    }
+//?}
 
     /**
      * The screwdriver toggle, GT6 {@code CoverFilterItem} / {@code CoverFilterFluid} /
@@ -430,17 +441,10 @@ public final class CoverUtilityBehaviors {
      * ({@code BasicMachineBlockEntity}).</p>
      */
     public static boolean toggleFilterMode(ItemStack cover) {
-//? if >=1.21.1 {
-        /*CompoundTag tag = CoverStackData.readOrEmpty(cover);
-*///?} else {
-        CompoundTag tag = cover.getOrCreateTag();
-//?}
+        CompoundTag tag = StackData.readOrEmpty(cover);
         boolean blacklist = !MachineCoverSpec.inverted(cover);
         tag.putBoolean("gt.cover.inverted", blacklist);
-//? if >=1.21.1 {
-        /*CoverStackData.write(cover,tag);
-*///?} else {
-//?}
+        StackData.write(cover,tag);
         return blacklist;
     }
 
@@ -451,20 +455,13 @@ public final class CoverUtilityBehaviors {
      * @return whether there was one
      */
     public static boolean clearFilter(ItemStack cover) {
-//? if >=1.21.1 {
-        /*CompoundTag tag = cover == null ? null : CoverStackData.read(cover);
-*///?} else {
-        CompoundTag tag = cover == null ? null : cover.getTag();
-//?}
+        CompoundTag tag = cover == null ? null : StackData.read(cover);
         if (tag == null) return false;
         boolean had = tag.contains(FILTER_ITEM_KEY) || tag.contains(FILTER_FLUID_KEY);
         tag.remove("gt.filter.wildcard");
         tag.remove(FILTER_ITEM_KEY);
         tag.remove(FILTER_FLUID_KEY);
-//? if >=1.21.1 {
-        /*CoverStackData.write(cover,tag);
-*///?} else {
-//?}
+        StackData.write(cover,tag);
         return had;
     }
 
@@ -792,11 +789,7 @@ public final class CoverUtilityBehaviors {
 
     /** The chisel-selected design of a texture cover, from the port's {@link #VISUAL_KEY}. */
     public static int design(ItemStack cover) {
-//? if >=1.21.1 {
-        /*CompoundTag tag = cover == null ? null : CoverStackData.read(cover);
-*///?} else {
-        CompoundTag tag = cover == null ? null : cover.getTag();
-//?}
+        CompoundTag tag = cover == null ? null : StackData.read(cover);
         return tag == null ? 0 : tag.getInt(VISUAL_KEY);
     }
 
@@ -804,11 +797,7 @@ public final class CoverUtilityBehaviors {
     public static int cycleDesign(ItemStack cover, int count) {
         if (cover == null || cover.isEmpty() || count <= 1) return design(cover);
         int next = nextDesign(design(cover), count);
-//? if >=1.21.1 {
-        /*CoverStackData.putInt(cover,VISUAL_KEY, next);
-*///?} else {
-        cover.getOrCreateTag().putInt(VISUAL_KEY, next);
-//?}
+        StackData.putInt(cover,VISUAL_KEY, next);
         return next;
     }
 

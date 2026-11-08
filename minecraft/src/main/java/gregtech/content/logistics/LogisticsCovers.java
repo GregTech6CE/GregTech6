@@ -128,18 +128,10 @@ public final class LogisticsCovers {
             owner.getLevel().sendBlockUpdated(owner.getBlockPos(), owner.getBlockState(), owner.getBlockState(), 2);
     }
 
-//? if >=1.21.1 {
-    /*public void save(CompoundTag tag, HolderLookup.Provider lookup) {
-*///?} else {
-    public void save(CompoundTag tag) {
-//?}
+    public void save(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         for (int faceIndex = 0; faceIndex < faces.length; faceIndex++)
             if (!faces[faceIndex].isEmpty()) {
-//? if >=1.21.1 {
-                /*tag.put(NBT_PREFIX + faceIndex, faces[faceIndex].save(lookup));
-*///?} else {
-                tag.put(NBT_PREFIX + faceIndex, faces[faceIndex].save(new CompoundTag()));
-//?}
+                tag.put(NBT_PREFIX + faceIndex, gregtech.engine.stack.NbtCompat.saveItem(faces[faceIndex], lookup));
                 if (LogisticsCoverType.of(faces[faceIndex]) != null
                         && LogisticsCoverType.of(faces[faceIndex]).role() == LogisticsCoverType.Role.DISPLAY) {
                     tag.putByte(NBT_PREFIX + faceIndex + ".signal", displaySignals[faceIndex]);
@@ -147,21 +139,16 @@ public final class LogisticsCovers {
                 }
             }
     }
-
 //? if >=1.21.1 {
-    /*public void load(CompoundTag tag, HolderLookup.Provider lookup) {
-*///?} else {
-    public void load(CompoundTag tag) {
+//?} else {
+    public void save(CompoundTag tag) { save(tag, null); }
 //?}
+
+    public void load(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         for (int faceIndex = 0; faceIndex < faces.length; faceIndex++)
             faces[faceIndex] = tag.contains(NBT_PREFIX + faceIndex)
-//? if >=1.21.1 {
-        /*// Version-specific branch.
-                    ? ItemStack.parseOptional(lookup, tag.getCompound(NBT_PREFIX + faceIndex)) : ItemStack.EMPTY;
-*///?} else {
-        // Version-specific branch.
-                    ? ItemStack.of(tag.getCompound(NBT_PREFIX + faceIndex)) : ItemStack.EMPTY;
-//?}
+                    ? gregtech.engine.stack.NbtCompat.readItem(tag.getCompound(NBT_PREFIX + faceIndex), lookup)
+                    : ItemStack.EMPTY;
         for (int faceIndex = 0; faceIndex < faces.length; faceIndex++) {
             var type = LogisticsCoverType.of(faces[faceIndex]);
             boolean display = type != null && type.role() == LogisticsCoverType.Role.DISPLAY;
@@ -171,6 +158,10 @@ public final class LogisticsCovers {
                     tag.getByte(NBT_PREFIX + faceIndex + ".visual"))) : 0);
         }
     }
+//? if >=1.21.1 {
+//?} else {
+    public void load(CompoundTag tag) { load(tag, null); }
+//?}
 
     public void dropAll() {
         for (int faceIndex = 0; faceIndex < faces.length; faceIndex++) {

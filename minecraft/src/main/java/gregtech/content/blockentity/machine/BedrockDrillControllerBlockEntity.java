@@ -347,18 +347,14 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
     /*@Override
     protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
-        tag.putLong("gt.drill_energy", energy);
-        tag.putInt("gt.stone_type", stoneType);
-        tag.put("gt.output", output.serializeNBT(lookup));
+        saveData(tag, lookup);
         tag.put("gt.lubricant", lubricant.writeToNBT(lookup, new CompoundTag()));
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
-        energy = Math.max(0, tag.getLong("gt.drill_energy"));
-        stoneType = Math.floorMod(tag.getInt("gt.stone_type"), StoneType.values().length + 2);
-        output.deserializeNBT(lookup, tag.getCompound("gt.output"));
+        loadData(tag, lookup);
         gregtech.engine.fluid.NativeMachineTankData.restore(lubricant, tag.getCompound("gt.lubricant"), lookup);
     }
 
@@ -369,19 +365,26 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putLong("gt.drill_energy", energy);
-        tag.putInt("gt.stone_type", stoneType);
-        tag.put("gt.output", output.serializeNBT());
+        saveData(tag, null);
         tag.put("gt.lubricant", lubricant.writeToNBT(new CompoundTag()));
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        energy = Math.max(0, tag.getLong("gt.drill_energy"));
-        stoneType = Math.floorMod(tag.getInt("gt.stone_type"), StoneType.values().length + 2);
-        output.deserializeNBT(tag.getCompound("gt.output"));
+        loadData(tag, null);
         lubricant.readFromNBT(tag.getCompound("gt.lubricant"));
     }
 //?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        tag.putLong("gt.drill_energy", energy);
+        tag.putInt("gt.stone_type", stoneType);
+        tag.put("gt.output", gregtech.engine.stack.HandlerNbt.save(output, lookup));
+    }
+
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        energy = Math.max(0, tag.getLong("gt.drill_energy"));
+        stoneType = Math.floorMod(tag.getInt("gt.stone_type"), StoneType.values().length + 2);
+        gregtech.engine.stack.HandlerNbt.load(output, tag.getCompound("gt.output"), lookup);
+    }
 }

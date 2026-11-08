@@ -44,10 +44,7 @@ import gregtech.client.gui.BehaviorMachineMenu;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-//? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup;
-*///?} else {
-//?}
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -899,30 +896,28 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 /*    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
         writeMachine(tag, lookup);
+    }
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        writeMachine(tag);
-//?}
+        writeMachine(tag, null);
     }
+//?}
 
     @Override
 //? if >=1.21.1 {
 /*    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
         readMachine(tag, lookup);
+    }
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
-        readMachine(tag);
-//?}
+        readMachine(tag, null);
     }
-
-//? if >=1.21.1 {
-/*    public void writeMachine(CompoundTag tag, HolderLookup.Provider lookup) {
-*///?} else {
-    public void writeMachine(CompoundTag tag) {
 //?}
+
+    public void writeMachine(CompoundTag tag, HolderLookup.Provider lookup) {
         tag.putLong("gt.energy", stored);
         if (declaration.energy() != null && declaration.energy().dynamic() && dynamicEnergy != null)
             tag.putString("gt.energy_type", dynamicEnergy);
@@ -934,11 +929,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             tag.putString("gt.placer", placerId.toString());
             tag.putString("gt.placer_name", placerName);
         }
-//? if >=1.21.1 {
-/*        tag.put("gt.items", items.serializeNBT(lookup));
-*///?} else {
-        tag.put("gt.items", items.serializeNBT());
-//?}
+        tag.put("gt.items", gregtech.engine.stack.HandlerNbt.save(items, lookup));
         ListTag fluids = new ListTag();
         for (Tank tank : tanks) {
             CompoundTag row = new CompoundTag();
@@ -948,18 +939,10 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             fluids.add(row);
         }
         tag.put("gt.fluids", fluids);
-//? if >=1.21.1 {
-/*        tag.put("gt.behavior", state.save(lookup));
-*///?} else {
-        tag.put("gt.behavior", state.save());
-//?}
+        tag.put("gt.behavior", state.save(lookup));
     }
 
-//? if >=1.21.1 {
-/*    public void readMachine(CompoundTag tag, HolderLookup.Provider lookup) {
-*///?} else {
-    public void readMachine(CompoundTag tag) {
-//?}
+    public void readMachine(CompoundTag tag, HolderLookup.Provider lookup) {
         capacity = BehaviorEnergyRules.readCapacity(tag.contains("gt.capacity"), tag.getLong("gt.capacity"), declaredCapacity());
         capacitySet = tag.contains("gt.capacity");
         stored = Math.max(0, Math.min(bufferCapacity(), tag.getLong("gt.energy")));
@@ -983,11 +966,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 placerId = null;
             }
         }
-//? if >=1.21.1 {
-/*        if (tag.contains("gt.items")) items.deserializeNBT(lookup, tag.getCompound("gt.items"));
-*///?} else {
-        if (tag.contains("gt.items")) items.deserializeNBT(tag.getCompound("gt.items"));
-//?}
+        if (tag.contains("gt.items")) gregtech.engine.stack.HandlerNbt.load(items, tag.getCompound("gt.items"), lookup);
         ListTag fluids = tag.getList("gt.fluids", Tag.TAG_COMPOUND);
         for (int i = 0; i < tanks.length; i++) {
             tanks[i].amount = 0;
@@ -1002,11 +981,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 tanks[i].amount = Math.min(tanks[i].capacity, amount);
             }
         }
-//? if >=1.21.1 {
-/*        if (tag.contains("gt.behavior")) state.load(lookup, tag.getCompound("gt.behavior"));
-*///?} else {
-        if (tag.contains("gt.behavior")) state.load(tag.getCompound("gt.behavior"));
-//?}
+        if (tag.contains("gt.behavior")) state.load(tag.getCompound("gt.behavior"), lookup);
     }
 
 //? if >=1.21.1 {
@@ -1789,11 +1764,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             if (clientKeys.contains(key)) clientStateDirty = true;
         }
 
-//? if >=1.21.1 {
-/*        CompoundTag save(HolderLookup.Provider lookup) {
-*///?} else {
-        CompoundTag save() {
-//?}
+        CompoundTag save(HolderLookup.Provider lookup) {
             CompoundTag tag = new CompoundTag();
             CompoundTag intTag = new CompoundTag();
             ints.forEach(intTag::putInt);
@@ -1804,11 +1775,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             CompoundTag stringTag = new CompoundTag();
             strings.forEach(stringTag::putString);
             CompoundTag itemTag = new CompoundTag();
-//? if >=1.21.1 {
-/*            items.forEach((key, stack) -> { if (!stack.isEmpty()) itemTag.put(key, stack.save(lookup)); });
-*///?} else {
-            items.forEach((key, stack) -> { if (!stack.isEmpty()) itemTag.put(key, stack.save(new CompoundTag())); });
-//?}
+            items.forEach((key, stack) -> { if (!stack.isEmpty()) itemTag.put(key, gregtech.engine.stack.NbtCompat.saveItem(stack, lookup)); });
             tag.put("i", intTag);
             tag.put("l", longTag);
             tag.put("b", boolTag);
@@ -1817,11 +1784,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             return tag;
         }
 
-//? if >=1.21.1 {
-/*        void load(HolderLookup.Provider lookup, CompoundTag tag) {
-*///?} else {
-        void load(CompoundTag tag) {
-//?}
+        void load(CompoundTag tag, HolderLookup.Provider lookup) {
             ints.clear(); longs.clear(); bools.clear(); strings.clear(); items.clear();
             CompoundTag intTag = tag.getCompound("i");
             for (String key : intTag.getAllKeys()) ints.put(key, intTag.getInt(key));
@@ -1833,11 +1796,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             for (String key : stringTag.getAllKeys()) strings.put(key, stringTag.getString(key));
             CompoundTag itemTag = tag.getCompound("t");
             for (String key : itemTag.getAllKeys()) {
-//? if >=1.21.1 {
-/*                ItemStack stack = ItemStack.parseOptional(lookup, itemTag.getCompound(key));
-*///?} else {
-                ItemStack stack = ItemStack.of(itemTag.getCompound(key));
-//?}
+                ItemStack stack = gregtech.engine.stack.NbtCompat.readItem(itemTag.getCompound(key), lookup);
                 if (!stack.isEmpty()) items.put(key, stack);
             }
         }

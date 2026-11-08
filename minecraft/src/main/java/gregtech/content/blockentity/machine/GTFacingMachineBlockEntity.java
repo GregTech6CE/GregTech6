@@ -74,30 +74,40 @@ public abstract class GTFacingMachineBlockEntity extends GTEnergyBlockEntity {
         }
     }
 
-    @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    /*@Override
+    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
-        inventory.deserializeNBT(lookup, tag.getCompound("gt.inv"));
+        loadData(tag, lookup);
+    }
 *///?} else {
+    @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        inventory.deserializeNBT(tag.getCompound("gt.inv"));
+        loadData(tag, null);
+    }
 //?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound("gt.inv"), lookup);
         if (tag.contains(GregTechConstants.NBT_EFFICIENCY)) {
             // spec is fixed per block; stored value ignored for now
         }
     }
 
-    @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+    /*@Override
+    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
-        tag.put("gt.inv", inventory.serializeNBT(lookup));
+        saveData(tag, lookup);
+    }
 *///?} else {
+    @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.put("gt.inv", inventory.serializeNBT());
+        saveData(tag, null);
+    }
 //?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        tag.put("gt.inv", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
     }
 }

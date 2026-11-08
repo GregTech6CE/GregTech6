@@ -403,27 +403,23 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
     /*@Override
     protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
+        saveData(tag, lookup);
+    }
 *///?} else {
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
+        saveData(tag, null);
+    }
 //?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         tag.putLong("gt.energy", energy);
-//? if >=1.21.1 {
-        /*tag.put("gt.items", items.serializeNBT(lookup));
+        tag.put("gt.items", gregtech.engine.stack.HandlerNbt.save(items, lookup));
         covers.save(tag, lookup);
-*///?} else {
-        tag.put("gt.items", items.serializeNBT());
-        covers.save(tag);
-//?}
         for (int i = 0; i < tanks.length; i++) {
             if (tanks[i].isEmpty()) continue;
             var saved = new CompoundTag();
-//? if >=1.21.1 {
-            /*tanks[i].writeToNBT(saved, lookup);
-*///?} else {
-            tanks[i].writeToNBT(saved);
-//?}
+            gregtech.engine.stack.NbtCompat.writeTank(tanks[i], saved, lookup);
             tag.put("gt.tank." + i, saved);
         }
         if (processors != null) {
@@ -442,35 +438,28 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
     /*@Override
     protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
+        loadData(tag, lookup);
+    }
 *///?} else {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
+        loadData(tag, null);
+    }
 //?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         energy = Math.max(0, tag.getLong("gt.energy"));
         usedProcessors = new LogisticsCpuDisplay.Usage(
                 Math.max(0, tag.getInt("gt.cpu.logic.used")),
                 Math.max(0, tag.getInt("gt.cpu.control.used")),
                 Math.max(0, tag.getInt("gt.cpu.storage.used")),
                 Math.max(0, tag.getInt("gt.cpu.conversion.used")));
-//? if >=1.21.1 {
-        /*covers.load(tag, lookup);
-*///?} else {
-        covers.load(tag);
-//?}
+        covers.load(tag, lookup);
         if (tag.contains("gt.items") && tag.getCompound("gt.items").getInt("Size") == BUFFER_SLOTS)
-//? if >=1.21.1 {
-        /*items.deserializeNBT(lookup, tag.getCompound("gt.items"));
-*///?} else {
-        items.deserializeNBT(tag.getCompound("gt.items"));
-//?}
+            gregtech.engine.stack.HandlerNbt.load(items, tag.getCompound("gt.items"), lookup);
         for (int i = 0; i < tanks.length; i++) {
             String key = "gt.tank." + i;
-//? if >=1.21.1 {
-            /*if (tag.contains(key)) tanks[i].readFromNBT(tag.getCompound(key), lookup);
-*///?} else {
-            if (tag.contains(key)) tanks[i].readFromNBT(tag.getCompound(key));
-//?}
+            if (tag.contains(key)) gregtech.engine.stack.NbtCompat.readTank(tanks[i], tag.getCompound(key), lookup);
             else tanks[i].setEmpty();
             tanks[i].setCapacity(TANK_CAPACITY);
         }

@@ -491,37 +491,28 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
 //? if >=1.21.1 {
     /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
+        saveData(tag, lookup);
+    }
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
+        saveData(tag, null);
+    }
 //?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         tag.putLong("gt.energy", energy);
         tag.putBoolean("gt.active", burning);
         tag.putInt("gt.cooldown", cooldown);
         if (fuelTank != null) {
             CompoundTag t = new CompoundTag();
-//? if >=1.21.1 {
-            /*fuelTank.writeToNBT(t, lookup);
-*///?} else {
-            fuelTank.writeToNBT(t);
-//?}
+            gregtech.engine.stack.NbtCompat.writeTank(fuelTank, t, lookup);
             tag.put("gt.tank", t);
         }
         if (inventory != null) {
-//? if >=1.21.1 {
-            /*tag.put("gt.inv", inventory.serializeNBT(lookup));
-*///?} else {
-            tag.put("gt.inv", inventory.serializeNBT());
-//?}
+            tag.put("gt.inv", gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
         }
         if (pendingAsh != null && !pendingAsh.isEmpty()) {
-            CompoundTag ash = new CompoundTag();
-//? if >=1.21.1 {
-            /*ash = (CompoundTag) pendingAsh.saveOptional(lookup);
-*///?} else {
-            pendingAsh.save(ash);
-//?}
-            tag.put("gt.pending_ash", ash);
+            tag.put("gt.pending_ash", gregtech.engine.stack.NbtCompat.saveItem(pendingAsh, lookup));
         }
     }
 
@@ -529,19 +520,20 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
 //? if >=1.21.1 {
     /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
+        loadData(tag, lookup);
+    }
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
+        loadData(tag, null);
+    }
 //?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         energy = tag.getLong("gt.energy");
         burning = tag.getBoolean("gt.active");
         cooldown = tag.getInt("gt.cooldown");
         if (fuelTank != null && tag.contains("gt.tank"))
-//? if >=1.21.1 {
-            /*fuelTank.readFromNBT(tag.getCompound("gt.tank"), lookup);
-*///?} else {
-            fuelTank.readFromNBT(tag.getCompound("gt.tank"));
-//?}
+            gregtech.engine.stack.NbtCompat.readTank(fuelTank, tag.getCompound("gt.tank"), lookup);
         if (fuelType == BurningBoxFuelType.FLUIDIZED_BED && fuelTank != null) {
             // Old saves persist the undersized rate*10 capacity. Raise its floor without
             // shrinking an existing tank or discarding any saved fluid above that floor.
@@ -549,18 +541,10 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
                     Math.max(spec.outputRate(), recipeMap.mMaxFluidInputSize)));
         }
         if (inventory != null && tag.contains("gt.inv"))
-//? if >=1.21.1 {
-            /*inventory.deserializeNBT(lookup, tag.getCompound("gt.inv"));
-*///?} else {
-            inventory.deserializeNBT(tag.getCompound("gt.inv"));
-//?}
-        if (tag.contains("gt.pending_ash"))
-//? if >=1.21.1 {
-            /*pendingAsh = ItemStack.parseOptional(lookup, tag.getCompound("gt.pending_ash"));
-        else pendingAsh = null;
-*///?} else {
-            pendingAsh = ItemStack.of(tag.getCompound("gt.pending_ash"));
-//?}
+            gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound("gt.inv"), lookup);
+        pendingAsh = tag.contains("gt.pending_ash")
+                ? gregtech.engine.stack.NbtCompat.readItem(tag.getCompound("gt.pending_ash"), lookup)
+                : null;
     }
 
     public MachineSpec spec() { return spec; }

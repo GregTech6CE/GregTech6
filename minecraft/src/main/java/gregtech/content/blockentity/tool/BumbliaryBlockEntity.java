@@ -632,57 +632,53 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        if (tag.contains(NBT_INVENTORY)) inventory.deserializeNBT(lookup,tag.getCompound(NBT_INVENTORY));
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
+        brood = NO_BROOD;
+        loadData(tag, lookup);
+    }
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
-        if (tag.contains(NBT_INVENTORY)) inventory.deserializeNBT(tag.getCompound(NBT_INVENTORY));
+        loadData(tag, null);
+    }
 //?}
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (tag.contains(NBT_INVENTORY)) gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound(NBT_INVENTORY), lookup);
         if (tag.contains(NBT_PROGRESS)) life = tag.getLong(NBT_PROGRESS);
         if (tag.contains(NBT_COOLDOWN)) countdown = tag.getLong(NBT_COOLDOWN);
-//? if >=1.21.1 {
-        /*brood = NO_BROOD;
-*///?} else {
-//?}
         if (tag.contains(NBT_INV_OUT)) {
             int size = tag.getInt(NBT_INV_OUT);
             brood = new ItemStack[Math.max(0, size)];
             for (int i = 0; i < brood.length; i++) {
                 brood[i] = tag.contains(NBT_INV_OUT + "." + i)
-//? if >=1.21.1 {
-/*// Version-specific branch.
-                        ? ItemStack.parseOptional(lookup,tag.getCompound(NBT_INV_OUT + "." + i)) : ItemStack.EMPTY;
-*///?} else {
-// Version-specific branch.
-                        ? ItemStack.of(tag.getCompound(NBT_INV_OUT + "." + i)) : ItemStack.EMPTY;
-//?}
+                        ? gregtech.engine.stack.NbtCompat.readItem(tag.getCompound(NBT_INV_OUT + "." + i), lookup)
+                        : ItemStack.EMPTY;
             }
         }
     }
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        tag.put(NBT_INVENTORY, inventory.serializeNBT(lookup));
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
+        saveData(tag, lookup);
+    }
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.put(NBT_INVENTORY, inventory.serializeNBT());
+        saveData(tag, null);
+    }
 //?}
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        tag.put(NBT_INVENTORY, gregtech.engine.stack.HandlerNbt.save(inventory, lookup));
         tag.putLong(NBT_PROGRESS, life);
         tag.putLong(NBT_COOLDOWN, countdown);
         if (brood.length > 0) {
             tag.putInt(NBT_INV_OUT, brood.length);
             for (int i = 0; i < brood.length; i++) {
                 if (brood[i] != null && !brood[i].isEmpty()) {
-//? if >=1.21.1 {
-                    /*tag.put(NBT_INV_OUT + "." + i, brood[i].saveOptional(lookup));
-*///?} else {
-                    tag.put(NBT_INV_OUT + "." + i, brood[i].save(new CompoundTag()));
-//?}
+                    tag.put(NBT_INV_OUT + "." + i, gregtech.engine.stack.NbtCompat.saveItem(brood[i], lookup));
                 }
             }
         }

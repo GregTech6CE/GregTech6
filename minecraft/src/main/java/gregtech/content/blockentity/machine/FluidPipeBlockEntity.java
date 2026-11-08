@@ -431,11 +431,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         if (id == null || held == null || held.isEmpty()) return false;
         ItemStack stack = getCover(side);
         if (CoverUtilityBehaviors.FILTER_ITEM.equals(id) || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id)) {
-//? if >=1.21.1 {
-            /*return CoverUtilityBehaviors.setItemFilter(stack, held,level.registryAccess());
-*///?} else {
-            return CoverUtilityBehaviors.setItemFilter(stack, held);
-//?}
+            return CoverUtilityBehaviors.setItemFilter(stack, held,level.registryAccess());
         }
         if (CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
 //? if >=1.21.1 {
@@ -445,11 +441,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 //?}
             if (container == null) return false;
             FluidStack fluid = container.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
-//? if >=1.21.1 {
-            /*return CoverUtilityBehaviors.setFluidFilter(stack, fluid,level.registryAccess());
-*///?} else {
-            return CoverUtilityBehaviors.setFluidFilter(stack, fluid);
-//?}
+            return CoverUtilityBehaviors.setFluidFilter(stack, fluid,level.registryAccess());
         }
         return false;
     }
@@ -1354,11 +1346,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
      * the pipe) refuses everything.</p>
      */
     public boolean coverFluidFilterPermits(Direction side, FluidStack candidate) {
-//? if >=1.21.1 {
-        /*return !coverStore.shuttered(side) && CoverUtilityBehaviors.fluidFilterPermits(getCover(side), coverStore.stopped(), candidate,level.registryAccess());
-*///?} else {
-        return !coverStore.shuttered(side) && CoverUtilityBehaviors.fluidFilterPermits(getCover(side), coverStore.stopped(), candidate);
-//?}
+        return !coverStore.shuttered(side) && CoverUtilityBehaviors.fluidFilterPermits(getCover(side), coverStore.stopped(), candidate,level.registryAccess());
     }
 
 //? if >=1.21.1 {
@@ -1382,11 +1370,11 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 //? if >=1.21.1 {
     /*protected void loadAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
-        Object codecLookup=lookup;
+        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
-        Object codecLookup=null;
+        net.minecraft.core.HolderLookup.Provider codecLookup=null;
 //?}
         temperature = tag.contains(NBT_TEMPERATURE) ? tag.getLong(NBT_TEMPERATURE) : GregTechConstants.DEF_ENV_TEMP;
         transferredAmount = tag.contains(NBT_TRANSFERRED) ? tag.getLong(NBT_TRANSFERRED) : 0;
@@ -1400,11 +1388,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                 gregtech.engine.stack.NbtCompat.readTank(tanks[i],contents,codecLookup);
             }
         }
-//? if >=1.21.1 {
-        /*loadCovers(tag,lookup);
-*///?} else {
-        loadCovers(tag);
-//?}
+        coverStore.load(tag, codecLookup);
     }
 
     /**
@@ -1412,32 +1396,16 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
      * writes nothing. Loading a tag without cover keys clears the faces, so a cover removed on the
      * server disappears on the client through {@link #handleUpdateTag} instead of lingering.
      */
-//? if >=1.21.1 {
-    /*private void saveCovers(CompoundTag tag,HolderLookup.Provider lookup) {
-        coverStore.save(tag,lookup);
-    }
-
-    private void loadCovers(CompoundTag tag,HolderLookup.Provider lookup) {
-        coverStore.load(tag,lookup);
-*///?} else {
-    private void saveCovers(CompoundTag tag) {
-        coverStore.save(tag, null);
-    }
-
-    private void loadCovers(CompoundTag tag) {
-        coverStore.load(tag, null);
-//?}
-    }
 
     @Override
 //? if >=1.21.1 {
     /*protected void saveAdditional(CompoundTag tag,HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup);
-        Object codecLookup=lookup;
+        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        Object codecLookup=null;
+        net.minecraft.core.HolderLookup.Provider codecLookup=null;
 //?}
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putLong(NBT_TRANSFERRED, transferredAmount);
@@ -1448,22 +1416,18 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             gregtech.engine.stack.NbtCompat.writeTank(tanks[i],tankTag,codecLookup);
             tag.put(NBT_TANK_PREFIX + i, tankTag);
         }
-//? if >=1.21.1 {
-        /*saveCovers(tag,lookup);
-*///?} else {
-        saveCovers(tag);
-//?}
+        coverStore.save(tag, codecLookup);
     }
 
     @Override
 //? if >=1.21.1 {
     /*public CompoundTag getUpdateTag(HolderLookup.Provider lookup) {
         CompoundTag tag = super.getUpdateTag(lookup);
-        Object codecLookup=lookup;
+        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
 *///?} else {
     public CompoundTag getUpdateTag() {
         CompoundTag tag = super.getUpdateTag();
-        Object codecLookup=null;
+        net.minecraft.core.HolderLookup.Provider codecLookup=null;
 //?}
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putLong(NBT_TRANSFERRED, transferredAmount);
@@ -1472,11 +1436,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             gregtech.engine.stack.NbtCompat.writeTank(tanks[i],tankTag,codecLookup);
             tag.put(NBT_TANK_PREFIX + i, tankTag);
         }
-//? if >=1.21.1 {
-        /*saveCovers(tag,lookup);
-*///?} else {
-        saveCovers(tag);
-//?}
+        coverStore.save(tag, codecLookup);
         return tag;
     }
 
@@ -1496,7 +1456,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 *///?} else {
     public void onDataPacket(net.minecraft.network.Connection net,
                              net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
-        if (pkt.getTag() != null) loadCovers(pkt.getTag());
+        if (pkt.getTag() != null) coverStore.load(pkt.getTag(), null);
     }
 //?}
 
@@ -1504,11 +1464,11 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 //? if >=1.21.1 {
     /*public void handleUpdateTag(CompoundTag tag,HolderLookup.Provider lookup) {
         super.handleUpdateTag(tag,lookup);
-        Object codecLookup=lookup;
+        net.minecraft.core.HolderLookup.Provider codecLookup=lookup;
 *///?} else {
     public void handleUpdateTag(CompoundTag tag) {
         super.handleUpdateTag(tag);
-        Object codecLookup=null;
+        net.minecraft.core.HolderLookup.Provider codecLookup=null;
 //?}
         if (tag.contains(NBT_TEMPERATURE)) temperature = tag.getLong(NBT_TEMPERATURE);
         if (tag.contains(NBT_TRANSFERRED)) transferredAmount = tag.getLong(NBT_TRANSFERRED);
@@ -1520,11 +1480,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                 gregtech.engine.stack.NbtCompat.readTank(tanks[i],contents,codecLookup);
             }
         }
-//? if >=1.21.1 {
-        /*loadCovers(tag,lookup);
-*///?} else {
-        loadCovers(tag);
-//?}
+        coverStore.load(tag, codecLookup);
     }
 
     // Counter lifetime is the existing native pipe tick interval, not tank occupancy.
