@@ -5,6 +5,7 @@ import gregtech.api.material.*;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.stack.StackData;
 import gregtech.content.block.OreBlock;
 import gregtech.content.registry.GTBlocks;
 import java.util.Optional;
@@ -49,14 +50,11 @@ public final class OreHostPhysics {
 /*  var properties=stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_STATE,
        net.minecraft.world.item.component.BlockItemStateProperties.EMPTY).properties();
   if(properties.containsKey(OreBlock.STONE.getName()))return properties.get(OreBlock.STONE.getName());
-  var data=stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-  if(data!=null){var tag=data.copyTag();var state=tag.getCompound("BlockStateTag");
+*///?}
+  var tag=StackData.read(stack);
+  if(tag!=null){var state=tag.getCompound("BlockStateTag");
    if(state.contains("stone"))return state.getString("stone");
    var entity=tag.getCompound("BlockEntityTag");if(entity.contains("stone"))return entity.getString("stone");}
-*///?} else {
-  var state=stack.getTagElement("BlockStateTag");if(state!=null&&state.contains("stone"))return state.getString("stone");
-  var entity=stack.getTagElement("BlockEntityTag");if(entity!=null&&entity.contains("stone"))return entity.getString("stone");
-//?}
   return null;
  }
 

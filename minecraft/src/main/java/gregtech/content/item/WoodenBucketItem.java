@@ -4,6 +4,7 @@ package gregtech.content.item;
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
 import gregtech.engine.stack.StackCompat;
+import gregtech.engine.stack.StackData;
 import gregtech.content.tool.WoodenBucketCatalog;
 import gregtech.content.tool.WoodenBucketCatalog.Band;
 import gregtech.content.tool.WoodenBucketCatalog.Content;
@@ -72,7 +73,8 @@ public final class WoodenBucketItem extends TechItem {
         /*ItemStack result = stack.transmuteCopy(item, 1);
 *///?} else {
         ItemStack result = new ItemStack(item);
-        if (stack.hasTag()) result.setTag(stack.getTag().copy());
+        var data = StackData.read(stack);
+        if (data != null) StackData.write(result, data);
 //?}
         writeFluidKey(result, "");
         return result;
@@ -80,12 +82,7 @@ public final class WoodenBucketItem extends TechItem {
 
     /** Alternate fluids sharing a sprite must round-trip without being converted to its default. */
     public Fluid containedFluid(ItemStack stack) {
-//? if >=1.21.1 {
-        /*var tag = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
-                net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
-*///?} else {
-        var tag = stack.getTag();
-//?}
+        var tag = StackData.read(stack);
         if (tag != null && tag.contains(FLUID_KEY)) {
             var id = ResourceLocation.tryParse(tag.getString(FLUID_KEY));
             var actual = id == null ? Fluids.EMPTY : BuiltInRegistries.FLUID.get(id);
@@ -95,20 +92,10 @@ public final class WoodenBucketItem extends TechItem {
     }
 
     private static void writeFluidKey(ItemStack stack, String key) {
-//? if >=1.21.1 {
-        /*var tag = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
-                net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
-*///?} else {
-        var tag = stack.hasTag() ? stack.getTag().copy() : new net.minecraft.nbt.CompoundTag();
-//?}
-        tag.remove(FLUID_KEY);
-        if (!key.isEmpty()) tag.putString(FLUID_KEY, key);
-//? if >=1.21.1 {
-        /*if (tag.isEmpty()) stack.remove(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-        else stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
-*///?} else {
-        stack.setTag(tag.isEmpty() ? null : tag);
-//?}
+        StackData.update(stack, tag -> {
+            tag.remove(FLUID_KEY);
+            if (!key.isEmpty()) tag.putString(FLUID_KEY, key);
+        });
     }
 
     public static Fluid fluid(Content content) {

@@ -1,6 +1,7 @@
 package gregtech.content.data;
 
 import gregtech.engine.data.UsbDataPort;
+import gregtech.engine.stack.StackData;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -10,23 +11,26 @@ import org.jetbrains.annotations.Nullable;
 /** GT6 USB cable item: resolves a directly adjacent port, optionally pinned to gt.usb.dir. */
 public final class UsbDataCable {
     public static final String NBT_DIRECTION = UsbDataRules.DIRECTION;
+
     private UsbDataCable() {}
 
     @Nullable
     public static CompoundTag readAdjacent(BlockEntity machine, ItemStack cable, int requestedTier) {
         return readAdjacentMatching(machine, cable, requestedTier, data -> true);
     }
+
     @Nullable
-    public static CompoundTag readAdjacentMatching(BlockEntity machine, ItemStack cable, int requestedTier,
+    public static CompoundTag readAdjacentMatching(
+            BlockEntity machine,
+            ItemStack cable,
+            int requestedTier,
             java.util.function.Predicate<CompoundTag> accepts) {
-        if (machine == null || machine.getLevel() == null || machine.isRemoved()
+        if (machine == null
+                || machine.getLevel() == null
+                || machine.isRemoved()
                 || UsbDataMedia.cableTier(cable) < requestedTier) return null;
         var level = machine.getLevel();
-//? if >=1.21.1 {
-        /*CompoundTag tag = UsbDataMedia.tag(cable);
-*///?} else {
-        CompoundTag tag = cable.getTag();
-//?}
+        CompoundTag tag = StackData.read(cable);
         if (tag != null && tag.contains(NBT_DIRECTION, 99)) {
             int index = tag.getByte(NBT_DIRECTION);
             if (index < 0 || index >= Direction.values().length) return null;
@@ -47,6 +51,7 @@ public final class UsbDataCable {
         if (level == null || !level.hasChunkAt(neighbor)) return null;
         BlockEntity target = level.getBlockEntity(neighbor);
         return target instanceof UsbDataPort port && !target.isRemoved()
-                ? port.readUsbData(side.getOpposite(), tier) : null;
+                ? port.readUsbData(side.getOpposite(), tier)
+                : null;
     }
 }

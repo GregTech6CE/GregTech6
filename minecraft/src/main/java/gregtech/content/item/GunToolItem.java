@@ -20,6 +20,7 @@
 package gregtech.content.item;
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
+import gregtech.engine.stack.StackData;
 import gregtech.engine.tool.*;
 import gregtech.content.tool.*;
 import gregtech.content.data.MaterialPrefix;
@@ -47,11 +48,11 @@ public final class GunToolItem extends GTToolItem {
  public GunToolItem(Properties properties,GTToolType type){super(properties,type);}
  public GunRules.Definition definition(){return GunRules.of(toolType().id());}
 //? if >=1.21.1 {
- /*public ItemStack ammunition(ItemStack gun,Level level){var lookup=level!=null?level.registryAccess():gregtech.engine.fluid.FluidDisplayBinding.currentLookup();return lookup==null?ItemStack.EMPTY:ItemStack.parseOptional(lookup,gregtech.platform.neoforge.StackCustomData.read(gun).getCompound("gt.ammo"));}
- private void magazine(ItemStack gun,ItemStack ammo,Level level){gregtech.platform.neoforge.StackCustomData.update(gun,t->{if(ammo.isEmpty())t.remove("gt.ammo");else t.put("gt.ammo",ammo.save(level.registryAccess()));});}
+ /*public ItemStack ammunition(ItemStack gun,Level level){var lookup=level!=null?level.registryAccess():gregtech.engine.fluid.FluidDisplayBinding.currentLookup();return lookup==null?ItemStack.EMPTY:gregtech.engine.stack.NbtCompat.readItem(StackData.readOrEmpty(gun).getCompound("gt.ammo"),lookup);}
+ private void magazine(ItemStack gun,ItemStack ammo,Level level){StackData.update(gun,t->{if(ammo.isEmpty())t.remove("gt.ammo");else t.put("gt.ammo",gregtech.engine.stack.NbtCompat.saveItem(ammo,level.registryAccess()));});}
 *///?} else {
- public ItemStack ammunition(ItemStack gun,Level level){return gun.hasTag()?ItemStack.of(gun.getTag().getCompound("gt.ammo")):ItemStack.EMPTY;}
- private void magazine(ItemStack gun,ItemStack ammo,Level level){var tag=gun.getOrCreateTag();if(ammo.isEmpty())tag.remove("gt.ammo");else tag.put("gt.ammo",ammo.save(new CompoundTag()));}
+ public ItemStack ammunition(ItemStack gun,Level level){var tag=StackData.read(gun);return tag==null?ItemStack.EMPTY:gregtech.engine.stack.NbtCompat.readItem(tag.getCompound("gt.ammo"),null);}
+ private void magazine(ItemStack gun,ItemStack ammo,Level level){StackData.update(gun,t->{if(ammo.isEmpty())t.remove("gt.ammo");else t.put("gt.ammo",gregtech.engine.stack.NbtCompat.saveItem(ammo,null));});}
 //?}
  public boolean accepts(ItemStack stack){return stack.getItem() instanceof MaterialFormItem form&&form.getPrefix()==definition().ammunition()&&!form.getMaterial().getName().equals("Empty");}
  @Override public InteractionResult onItemUseFirst(ItemStack stack,UseOnContext context){var player=context.getPlayer();if(player==null)return InteractionResult.PASS;activate(context.getLevel(),player,context.getHand());return InteractionResult.sidedSuccess(context.getLevel().isClientSide);}

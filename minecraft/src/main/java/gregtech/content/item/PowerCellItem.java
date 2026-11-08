@@ -3,6 +3,7 @@
 package gregtech.content.item;
 
 import gregtech.engine.energy.item.IItemEnergy;
+import gregtech.engine.stack.StackData;
 import gregtech.content.block.energy.PowerCellBlock;
 import gregtech.content.energy.PowerCellSpec;
 import gregtech.content.energy.ItemBatteryRules;
@@ -23,26 +24,14 @@ public final class PowerCellItem extends BlockItem implements IItemEnergy {
     public PowerCellItem(PowerCellBlock block) { super(block, new Properties().stacksTo(block.spec().filled() ? 1 : 16)); }
     public PowerCellSpec spec() { return ((PowerCellBlock) getBlock()).spec(); }
     public long stored(ItemStack stack) {
-//? if >=1.21.1 {
-        /*CompoundTag tag = gregtech.platform.neoforge.StackCustomData.read(stack);
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
+        CompoundTag tag = StackData.read(stack);
         return tag == null || !tag.contains(CHARGE) ? spec().capacity() : spec().usableRemainder(Math.max(0, tag.getLong(CHARGE)));
     }
     public void setCharge(ItemStack stack, long value) {
         long charge = spec().usableRemainder(Math.max(0, value));
-//? if >=1.21.1 {
-        /*gregtech.platform.neoforge.StackCustomData.update(stack, tag -> {
+        StackData.update(stack, tag -> {
             if (spec().filled()) tag.putLong(CHARGE, charge); else tag.remove(CHARGE);
         });
-*///?} else {
-        if (spec().filled()) stack.getOrCreateTag().putLong(CHARGE, charge);
-        else if (stack.hasTag()) {
-            stack.getTag().remove(CHARGE);
-            if (stack.getTag().isEmpty()) stack.setTag(null);
-        }
-//?}
     }
     @Override public ItemStack afterEnergyTransfer(ItemStack stack) {
         return spec().filled() && stored(stack) == 0

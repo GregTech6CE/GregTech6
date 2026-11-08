@@ -5,6 +5,7 @@
 package gregtech.content.item;
 
 import gregtech.engine.energy.item.IItemEnergy;
+import gregtech.engine.stack.StackData;
 import gregtech.engine.tool.ScannerEnergyRules;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.item.behavior.BehaviorScanner;
@@ -38,27 +39,15 @@ public final class ScannerItem extends TechItem implements IItemEnergy {
 
     private long stored(ItemStack stack) {
         if (spec.debug()) return 4000000000000000000L;
-//? if >=1.21.1 {
-        /*CompoundTag tag = gregtech.platform.neoforge.StackCustomData.read(stack);
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
+        CompoundTag tag = StackData.read(stack);
         return tag == null ? 0 : Math.max(0, tag.getLong(ScannerEnergyRules.ENERGY_KEY));
     }
 
     private void setCharge(ItemStack stack, long charge) {
-//? if >=1.21.1 {
-        /*gregtech.platform.neoforge.StackCustomData.update(stack, tag -> {
+        StackData.update(stack, tag -> {
             if (charge > 0) tag.putLong(ScannerEnergyRules.ENERGY_KEY, charge);
             else tag.remove(ScannerEnergyRules.ENERGY_KEY);
         });
-*///?} else {
-        if (charge > 0) stack.getOrCreateTag().putLong(ScannerEnergyRules.ENERGY_KEY, charge);
-        else if (stack.hasTag()) {
-            stack.getTag().remove(ScannerEnergyRules.ENERGY_KEY);
-            if (stack.getTag().isEmpty()) stack.setTag(null);
-        }
-//?}
     }
 
     /** MultiItem: discharged items stack; charged items do not. */
