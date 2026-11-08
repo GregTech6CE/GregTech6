@@ -56,7 +56,7 @@ public final class VisualDocumentData {
 //? if >=1.21.1 {
         /*output.applyComponents(book.getComponentsPatch());
 *///?} else {
-        if (book.hasTag()) output.setTag(book.getTag().copy());
+        gregtech.engine.stack.StackData.write(output, gregtech.engine.stack.StackData.read(book));
 //?}
         return output;
     }
@@ -96,11 +96,7 @@ public final class VisualDocumentData {
     }
 
     public static void pagesTooltip(ItemStack stack, List<Component> lines) {
-//? if >=1.21.1 {
-        /*CompoundTag data = UsbDataMedia.tag(stack);
-*///?} else {
-        CompoundTag data = stack.getTag();
-//?}
+        CompoundTag data = UsbDataMedia.tag(stack);
         String title = title(data);
         if (title.isBlank()) lines.add(Component.translatable("tooltip.gt6ce.ui.empty_pages").withStyle(ChatFormatting.AQUA));
         else {
@@ -141,8 +137,9 @@ public final class VisualDocumentData {
         }
         return title(data).isBlank() ? null : data;
 *///?} else {
-        if (!isBook(stack) || !stack.hasTag()) return null;
-        var data = stack.getTag().copy();
+        if (!isBook(stack)) return null;
+        var data = gregtech.engine.stack.StackData.read(stack);
+        if (data == null) return null;
         return title(data).isBlank() ? null : data;
 //?}
     }
@@ -179,7 +176,7 @@ public final class VisualDocumentData {
             return false;
         }
 *///?} else {
-        stack.setTag(data.copy());
+        gregtech.engine.stack.StackData.write(stack, data.copy());
         return true;
 //?}
     }
@@ -203,7 +200,7 @@ public final class VisualDocumentData {
         return map;
 *///?} else {
         var map = new ItemStack(Items.FILLED_MAP);
-        map.getOrCreateTag().putInt("map", id);
+        gregtech.engine.stack.StackData.putInt(map, "map", id);
         return map;
 //?}
     }

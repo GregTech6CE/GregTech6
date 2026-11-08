@@ -8,6 +8,7 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
+import gregtech.engine.stack.StackData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -54,13 +55,8 @@ public final class GTMaterialDictionary {
 
     /** The material a dictionary stack belongs to, or null. */
     public static GTMaterial materialOf(ItemStack stack) {
-//? if >=1.21.1 {
-        /*if (stack == null || stack.isEmpty() || !stack.has(net.minecraft.core.component.DataComponents.CUSTOM_DATA)) return null;
-        CompoundTag tag = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA).copyTag();
-*///?} else {
-        if (stack == null || stack.isEmpty() || !stack.hasTag()) return null;
-        CompoundTag tag = stack.getTag();
-//?}
+        if (stack == null || stack.isEmpty()) return null;
+        CompoundTag tag = StackData.read(stack);
         if (tag == null) return null;
         String mapping = tag.contains("gt.material") ? tag.getString("gt.material")
                 : tag.contains("book") ? tag.getString("book") : "";
@@ -79,28 +75,26 @@ public final class GTMaterialDictionary {
         List<String> pages = pages(material);
         if (pages.isEmpty()) return ItemStack.EMPTY;
         ItemStack stack = gregtech.content.registry.GTColoredBooks.stack(pages.size()>50?32003:32002);
-//? if >=1.21.1 {
-//?} else {
-        CompoundTag tag = stack.getOrCreateTag();
-//?}
         String title=MaterialPresentation.name(material)+" - Material Dictionary";
 //? if >=1.21.1 {
         /*var content=pages.stream().map(page->net.minecraft.server.network.Filterable.<Component>passThrough(Component.literal(page))).toList();
         stack.set(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT,new net.minecraft.world.item.component.WrittenBookContent(net.minecraft.server.network.Filterable.passThrough(title.length()>32?title.substring(0,32):title),AUTHOR,0,content,true));
         var tag=new CompoundTag();tag.putString("gt.book.title",title);tag.putString("book",mapping(material));tag.putString("gt.material",mapping(material));
-        stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.of(tag));
+        StackData.write(stack,tag);
         stack.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,Component.literal(title));
 
 *///?} else {
-        tag.putString("title", title.length()>32?title.substring(0,32):title);
-        tag.putString("gt.book.title",title);
-        tag.putString("author", AUTHOR);
-        tag.putString("book", mapping(material));
-        tag.putString("gt.material", mapping(material));
-        ListTag list = new ListTag();
-        for (String page : pages) list.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(page))));
-        tag.put("pages", list);
-        tag.putBoolean("resolved",true);
+        StackData.update(stack, tag -> {
+            tag.putString("title", title.length()>32?title.substring(0,32):title);
+            tag.putString("gt.book.title",title);
+            tag.putString("author", AUTHOR);
+            tag.putString("book", mapping(material));
+            tag.putString("gt.material", mapping(material));
+            ListTag list = new ListTag();
+            for (String page : pages) list.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(page))));
+            tag.put("pages", list);
+            tag.putBoolean("resolved",true);
+        });
         stack.setHoverName(Component.literal(MaterialPresentation.name(material) + " - Material Dictionary"));
 //?}
         return stack;

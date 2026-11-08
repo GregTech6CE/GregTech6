@@ -114,7 +114,7 @@ public final class CoverStore {
     }
 
     /** Writes each non-empty face under its flat key; {@code lookup} is the 1.21 registry provider. */
-    public void save(CompoundTag tag, Object lookup) {
+    public void save(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         if (covers == null) return;
         for (int i = 0; i < covers.length; i++) {
             if (covers[i].isEmpty()) continue;
@@ -127,7 +127,7 @@ public final class CoverStore {
      * clears the faces, so a stale client copy cannot keep a removed cover. Legacy 1.20-style
      * cover NBT inside a 1.21 tag is re-read through {@link NbtCompat#readItem}.
      */
-    public void load(CompoundTag tag, Object lookup) {
+    public void load(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         boolean present = false;
         for (int i = 0; i < 6 && !present; i++) present = tag.contains(NBT_PREFIX + i);
         if (!present) {

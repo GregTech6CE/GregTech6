@@ -16,25 +16,18 @@ public final class UsbDataMedia {
 
     private UsbDataMedia() {
     }
-//? if >=1.21.1 {
-    /*public static CompoundTag tag(ItemStack stack) {
+    public static CompoundTag tag(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return null;
-        var data = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-        return data == null ? null : data.copyTag();
+        return gregtech.engine.stack.StackData.read(stack);
     }
 
     public static CompoundTag tagOrEmpty(ItemStack stack) {
-        var tag = tag(stack);
-        return tag == null ? new CompoundTag() : tag;
+        return gregtech.engine.stack.StackData.readOrEmpty(stack);
     }
 
     public static void store(ItemStack stack, CompoundTag tag) {
-        if (tag == null || tag.isEmpty()) stack.remove(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
-        else stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
+        gregtech.engine.stack.StackData.write(stack, tag);
     }
-
-*///?} else {
-//?}
 
     public static int stickTier(ItemStack stack) {
         return tier(stack, "_stick");
@@ -65,11 +58,7 @@ public final class UsbDataMedia {
 
     /** The tier recorded on the file, or zero for a fresh/legacy untyped stick. */
     public static int stickFileTier(ItemStack stack) {
-//? if >=1.21.1 {
-        /*CompoundTag tag = stack == null ? null : tag(stack);
-*///?} else {
-        CompoundTag tag = stack == null ? null : stack.getTag();
-//?}
+        CompoundTag tag = stack == null ? null : tag(stack);
         return tag == null ? 0 : Byte.toUnsignedInt(tag.getByte(GTMaterialDataRecipes.NBT_USB_TIER));
     }
 
@@ -77,11 +66,7 @@ public final class UsbDataMedia {
 
     public static CompoundTag readStick(ItemStack stack, int requestedTier) {
         if (!UsbDataRules.readable(stickTier(stack), requestedTier, stickFileTier(stack))) return null;
-//? if >=1.21.1 {
-        /*CompoundTag tag = tag(stack);
-*///?} else {
-        CompoundTag tag = stack.getTag();
-//?}
+        CompoundTag tag = tag(stack);
         if (tag == null || !tag.contains(GTMaterialDataRecipes.NBT_USB_DATA, 10)) return null;
         CompoundTag file = tag.getCompound(GTMaterialDataRecipes.NBT_USB_DATA);
         return file.isEmpty() ? null : file.copy();
@@ -90,32 +75,17 @@ public final class UsbDataMedia {
     public static boolean writeStick(ItemStack stack, int requestedTier, @Nullable CompoundTag data) {
         if (!UsbDataRules.writable(stickTier(stack), requestedTier)) return false;
         if (data == null || data.isEmpty()) {
-//? if >=1.21.1 {
-            /*CompoundTag tag = tag(stack);
-*///?} else {
-            CompoundTag tag = stack.getTag();
-//?}
+            CompoundTag tag = tag(stack);
             if (tag != null) {
                 tag.remove(GTMaterialDataRecipes.NBT_USB_DATA);
                 tag.remove(GTMaterialDataRecipes.NBT_USB_TIER);
-//? if >=1.21.1 {
-                /*store(stack, tag);
-*///?} else {
-                if (tag.isEmpty()) stack.setTag(null);
-//?}
+                store(stack, tag);
             }
         } else {
-//? if >=1.21.1 {
-            /*CompoundTag tag = tagOrEmpty(stack);
-*///?} else {
-            CompoundTag tag = stack.getOrCreateTag();
-//?}
+            CompoundTag tag = tagOrEmpty(stack);
             tag.put(GTMaterialDataRecipes.NBT_USB_DATA, data.copy());
             tag.putByte(GTMaterialDataRecipes.NBT_USB_TIER, (byte) requestedTier);
-//? if >=1.21.1 {
-            /*store(stack, tag);
-*///?} else {
-//?}
+            store(stack, tag);
         }
         return true;
     }
@@ -124,11 +94,7 @@ public final class UsbDataMedia {
 
     public static CompoundTag readDrive(ItemStack drive, int slot, int requestedTier) {
         if (!UsbDataRules.slot(slot) || !UsbDataRules.writable(driveTier(drive), requestedTier)) return null;
-//? if >=1.21.1 {
-        /*CompoundTag tag = tag(drive);
-*///?} else {
-        CompoundTag tag = drive.getTag();
-//?}
+        CompoundTag tag = tag(drive);
         if (tag == null || !tag.contains(GTMaterialDataRecipes.NBT_USB_DRIVE, 10)) return null;
         CompoundTag files = tag.getCompound(GTMaterialDataRecipes.NBT_USB_DRIVE);
         if (Byte.toUnsignedInt(files.getByte(GTMaterialDataRecipes.slotTierKey(slot))) > requestedTier
@@ -139,11 +105,7 @@ public final class UsbDataMedia {
 
     public static boolean writeDrive(ItemStack drive, int slot, int requestedTier, @Nullable CompoundTag data) {
         if (!UsbDataRules.slot(slot) || !UsbDataRules.writable(driveTier(drive), requestedTier)) return false;
-//? if >=1.21.1 {
-        /*CompoundTag tag = tagOrEmpty(drive);
-*///?} else {
-        CompoundTag tag = drive.getOrCreateTag();
-//?}
+        CompoundTag tag = tagOrEmpty(drive);
         CompoundTag files = tag.getCompound(GTMaterialDataRecipes.NBT_USB_DRIVE).copy();
         if (data == null || data.isEmpty()) {
             files.remove(GTMaterialDataRecipes.slotDataKey(slot));
@@ -154,11 +116,7 @@ public final class UsbDataMedia {
         }
         if (files.isEmpty()) tag.remove(GTMaterialDataRecipes.NBT_USB_DRIVE);
         else tag.put(GTMaterialDataRecipes.NBT_USB_DRIVE, files);
-//? if >=1.21.1 {
-        /*store(drive, tag);
-*///?} else {
-        if (tag.isEmpty()) drive.setTag(null);
-//?}
+        store(drive, tag);
         return true;
     }
 }

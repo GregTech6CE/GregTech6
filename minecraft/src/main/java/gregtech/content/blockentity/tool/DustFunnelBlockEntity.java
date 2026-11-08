@@ -217,27 +217,27 @@ public class DustFunnelBlockEntity extends BlockEntity {
     private LazyOptional<IItemHandler> bottomCap = LazyOptional.of(() -> new net.minecraftforge.items.wrapper.RangedWrapper(buffer, 1, 2));
 //?}
 
-    @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
-        tag.put("Buffer", buffer.serializeNBT(lookup));
-        saveProcess(tag);
+    /*@Override
+    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
+        saveData(tag, lookup);
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
+        loadData(tag, lookup);
+    }
 *///?} else {
+    @Override
     public <T> @org.jetbrains.annotations.NotNull LazyOptional<T> getCapability(
             @org.jetbrains.annotations.NotNull Capability<T> capability, @Nullable Direction side) {
         if (capability == ForgeCapabilities.ITEM_HANDLER) return side == Direction.DOWN ? bottomCap.cast() : cap.cast();
         return super.getCapability(capability, side);
-//?}
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
-        if (tag.contains("Buffer")) buffer.deserializeNBT(lookup,tag.getCompound("Buffer"));
-        loadProcess(tag);
-*///?} else {
     public void invalidateCaps() {
         super.invalidateCaps();
         cap.invalidate();
@@ -254,16 +254,24 @@ public class DustFunnelBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.put("Buffer", buffer.serializeNBT());
-        saveProcess(tag);
+        saveData(tag, null);
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        if (tag.contains("Buffer")) buffer.deserializeNBT(tag.getCompound("Buffer"));
-        loadProcess(tag);
+        loadData(tag, null);
+    }
 //?}
+
+    private void saveData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        tag.put("Buffer", gregtech.engine.stack.HandlerNbt.save(buffer, lookup));
+        saveProcess(tag);
+    }
+
+    private void loadData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (tag.contains("Buffer")) gregtech.engine.stack.HandlerNbt.load(buffer, tag.getCompound("Buffer"), lookup);
+        loadProcess(tag);
     }
     private void saveProcess(CompoundTag tag) {
         tag.putInt("gt.mode", mode()); tag.putLong("gt.amount", amount);

@@ -1,5 +1,6 @@
 package gregtech.content.bumble;
 
+import gregtech.engine.stack.StackData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -38,6 +39,7 @@ public final class BumbleBeeGenes {
 
     /** GT6's {@code UT.Code.bind} ranges. */
     public static final long MIN_WORK = 1, MAX_WORK = 10000;
+
     public static final long MIN_AGGRO = 100, MAX_AGGRO = 10000;
     public static final long MIN_LIFE = 1200, MAX_LIFE = 144000;
     public static final long MIN_OFFSPRING = 0, MAX_OFFSPRING = 64;
@@ -53,46 +55,27 @@ public final class BumbleBeeGenes {
 
     /** The stack's genome, generating a random one when the stack carries none (GT6's). */
     public static CompoundTag of(ItemStack stack, RandomSource random) {
-//? if >=1.21.1 {
-        /*CompoundTag genes = peek(stack);
+        CompoundTag genes = peek(stack);
         if (genes == null) {
             genes = random(random);
             with(stack, genes);
         }
-*///?} else {
-        CompoundTag tag = stack.getOrCreateTag();
-        CompoundTag genes = tag.getCompound(NBT_KEY);
-        if (genes.isEmpty()) {
-            genes = random(random);
-            tag.put(NBT_KEY, genes);
-        }
-//?}
         return genes;
     }
 
     /** The stack's genome, or null when it has none (no generation). */
     @Nullable
     public static CompoundTag peek(ItemStack stack) {
-//? if >=1.21.1 {
-        /*if (stack == null || stack.isEmpty()) return null;
-        CompoundTag genes = gregtech.platform.neoforge.StackCustomData.read(stack)
-                .getCompound(NBT_KEY);
+        if (stack == null || stack.isEmpty()) return null;
+        CompoundTag tag = StackData.read(stack);
+        if (tag == null) return null;
+        CompoundTag genes = tag.getCompound(NBT_KEY);
         return genes.isEmpty() ? null : genes;
-*///?} else {
-        if (stack == null || stack.isEmpty() || !stack.hasTag()) return null;
-        CompoundTag genes = stack.getTag().getCompound(NBT_KEY);
-        return genes.isEmpty() ? null : genes;
-//?}
     }
 
     /** Writes a genome onto the stack and returns it (GT6's). */
     public static ItemStack with(ItemStack stack, CompoundTag genes) {
-//? if >=1.21.1 {
-        /*gregtech.platform.neoforge.StackCustomData.update(
-                stack, tag -> tag.put(NBT_KEY, genes.copy()));
-*///?} else {
-        stack.getOrCreateTag().put(NBT_KEY, genes);
-//?}
+        StackData.update(stack, tag -> tag.put(NBT_KEY, genes.copy()));
         return stack;
     }
 
@@ -112,11 +95,11 @@ public final class BumbleBeeGenes {
      * GT6's {@code getBumbleGenes(temperature, biome, hasSky, day, night, random)}
      * ({@code IItemBumbleBee}).
      */
-    public static CompoundTag fromEnvironment(long temperature, float rainfall, boolean hasSky,
-                                              boolean day, boolean night, RandomSource random) {
-        CompoundTag genes = encode(BumbleGenomeRules.fromEnvironment(
-                temperature, rainfall, hasSky, day, night, bits(random)));
-        for (String key : new String[]{"rain", "storm", "inside", "outside"})
+    public static CompoundTag fromEnvironment(
+            long temperature, float rainfall, boolean hasSky, boolean day, boolean night, RandomSource random) {
+        CompoundTag genes =
+                encode(BumbleGenomeRules.fromEnvironment(temperature, rainfall, hasSky, day, night, bits(random)));
+        for (String key : new String[] {"rain", "storm", "inside", "outside"})
             if (!genes.getBoolean(key)) genes.remove(key);
         return genes;
     }
@@ -260,8 +243,8 @@ public final class BumbleBeeGenes {
     }
 
     /** Whether the bee may work right now: the time of day, the weather and inside/outside. */
-    public static boolean activeNow(CompoundTag genes, boolean day, boolean raining, boolean thundering,
-                                    boolean outside) {
+    public static boolean activeNow(
+            CompoundTag genes, boolean day, boolean raining, boolean thundering, boolean outside) {
         if (day ? !dayActive(genes) : !nightActive(genes)) return false;
         if (outside ? !outsideActive(genes) : !insideActive(genes)) return false;
         if (raining && !rainproof(genes)) return false;
@@ -282,9 +265,20 @@ public final class BumbleBeeGenes {
 
     private static BumbleGenomeRules.Genome decode(CompoundTag g) {
         return new BumbleGenomeRules.Genome(
-                humidityMin(g), humidityMax(g), offspring(g), workForce(g), aggressiveness(g), lifeSpan(g),
-                temperatureMin(g), temperatureMax(g), rainproof(g), stormproof(g), nightActive(g),
-                dayActive(g), insideActive(g), outsideActive(g));
+                humidityMin(g),
+                humidityMax(g),
+                offspring(g),
+                workForce(g),
+                aggressiveness(g),
+                lifeSpan(g),
+                temperatureMin(g),
+                temperatureMax(g),
+                rainproof(g),
+                stormproof(g),
+                nightActive(g),
+                dayActive(g),
+                insideActive(g),
+                outsideActive(g));
     }
 
     private static CompoundTag encode(BumbleGenomeRules.Genome g) {
