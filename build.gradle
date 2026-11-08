@@ -11,11 +11,6 @@ group = mod_group_id
 // Only files define mod content; never retain those directories in a delivered jar.
 subprojects {
     tasks.withType(org.gradle.jvm.tasks.Jar).configureEach { includeEmptyDirs = false }
-    // Stonecutter's prepare/generate tasks declare their inputs and outputs but do not opt into
-    // the build cache. Their output is deterministic source text, so enable caching per instance.
-    tasks.matching { it.name.startsWith('stonecutter') }.configureEach {
-        outputs.cacheIf('Stonecutter generation is deterministic') { true }
-    }
 }
 
 // Formatting lives in the build, not in individual edits. The inlined API sources keep
