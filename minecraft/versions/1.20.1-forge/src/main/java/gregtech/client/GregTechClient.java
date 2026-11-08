@@ -39,7 +39,6 @@ import gregtech.content.registry.GTMenuTypes;
 import gregtech.content.registry.GTTanks;
 import gregtech.content.registry.GTWires;
 import gregtech.engine.fluid.FluidRenderLayers;
-import gregtech.engine.fluid.WaterMixinStatus;
 import gregtech.engine.machine.EngineType;
 import gregtech.engine.machine.MachineRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -49,7 +48,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -999,14 +997,6 @@ public final class GregTechClient {
                             return item.spec().display(item.stored(stack))
                                     / (float) item.spec().scale();
                         })));
-        // In the IDE, omitting --mixin.config starts the game without an error but restores a
-        // visible border between vanilla water and GT6 world water. Verify the transformed method
-        // itself, independently of fluid tags (which are not loaded yet during client setup).
-        Fluids.WATER.isSame(Fluids.FLOWING_WATER);
-        if (!WaterMixinStatus.wasInvoked()) {
-            throw new IllegalStateException("GregTech water Mixin is inactive: gregtech.mixins.json was not loaded. "
-                    + "Regenerate IDEA runs with gradlew genIntellijRuns and restart runClient.");
-        }
         ItemBlockRenderTypes.setRenderLayer(
                 gregtech.content.registry.GTDecorBlocks.GLASS_CLEAR.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(

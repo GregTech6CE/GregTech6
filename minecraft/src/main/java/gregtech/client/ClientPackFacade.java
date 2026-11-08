@@ -47,7 +47,7 @@ public final class ClientPackFacade {
 //? if >=1.21.1 {
         /*event.register(id, loader);
 *///?} else {
-        event.register(id.toString(), loader);
+        event.register(id.getPath(), loader);
 //?}
     }
 }
