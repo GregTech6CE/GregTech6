@@ -27,9 +27,8 @@ import net.minecraftforge.registries.RegistryObject;
  * {@code data/gt6ce/worldgen/} and {@code data/gt6ce/forge/biome_modifier/}.
  *
  * <p>This is also where {@link GTStructures} is registered: the dungeon's structure type, its placement
- * type and its anchor piece ({@code ServerLevel.findNearestMapStructure} and {@code /locate structure
- * gt6ce:gt_dungeon} need those, while the dungeon itself stays this feature, see
- * {@link GTDungeonStructure}).</p>
+ * type and its cell pieces, which build every dungeon chunk ({@code /locate structure gt6ce:gt_dungeon}
+ * reads the same entries, see {@link GTDungeonStructure}).</p>
  */
 
 /** Original ore-vein/small-ore/stone-layer features; other feature modules await source migration. */
@@ -77,7 +76,6 @@ public final class GTFeatures {
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> BLACK_SAND=FEATURES.register("gt_black_sand",GTBlackSandFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> NETHER_DEPOSITS=FEATURES.register("gt_nether_deposits",GTNetherDepositFeature::new);
     public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> FLUID_SPRINGS=FEATURES.register("gt_fluid_springs",GTFluidSpringsFeature::new);
-    public static final DeferredHolder<Feature<?>,Feature<NoneFeatureConfiguration>> DUNGEON=FEATURES.register("gt_dungeon",GTDungeonFeature::new);
     public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>> ORIGIN =
 *///?} else {
 
@@ -141,9 +139,6 @@ public final class GTFeatures {
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BUMBLE_HIVES =
             FEATURES.register("gt_bumble_hives", GTBumbleHivesFeature::new);
 
-    /** GT6's large underground dungeon (WorldgenDungeonGT, Loader_Worldgen). */
-    public static final RegistryObject<Feature<NoneFeatureConfiguration>> DUNGEON =
-            FEATURES.register("gt_dungeon", GTDungeonFeature::new);
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> ORIGIN =
 //?}
@@ -156,8 +151,7 @@ public final class GTFeatures {
 
     public static void register(IEventBus modEventBus) {
         FEATURES.register(modEventBus);
-        // The dungeon's structure, its placement and its anchor piece: vanilla's /locate and the structure
-        // system read those, the dungeon's blocks still come from DUNGEON above.
+        // The dungeon is a vanilla structure: its type, placement and cell pieces register here.
         GTStructures.register(modEventBus);
     }
 //?}

@@ -51,7 +51,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * <ul>
  *   <li><b>The large set-up.</b> GT6's {@code makePlatForms} builds up to eight further platforms in
  *       neighbouring empty/corridor cells. {@link #footprint(byte[][], int, int)} reproduces the four
- *       three-cell space tests. {@code GTDungeonFeature.generateCell} lets each target cell build its own
+ *       three-cell space tests. {@code GTDungeonGenerator.generateCell} lets each target cell build its own
  *       platform and {@link #addPipeFragments} clips the connecting pipe runs to that target cell, so
  *       generation order cannot make a neighbouring chunk overwrite the farm.</li>
  *   <li><b>Height.</b> GT6's shaft reaches local 43, i.e. through the ceiling of
@@ -105,7 +105,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * <ul>
  *   <li><b>The large set-up.</b> GT6's {@code makePlatForms} builds up to eight further platforms in
  *       neighbouring empty/corridor cells. {@link #footprint(byte[][], int, int)} reproduces the four
- *       three-cell space tests. {@code GTDungeonFeature.generateCell} lets each target cell build its own
+ *       three-cell space tests. {@code GTDungeonGenerator.generateCell} lets each target cell build its own
  *       platform and {@link #addPipeFragments} clips the connecting pipe runs to that target cell, so
  *       generation order cannot make a neighbouring chunk overwrite the farm.</li>
  *   <li><b>Height.</b> GT6's shaft reaches local 43, i.e. through the ceiling of

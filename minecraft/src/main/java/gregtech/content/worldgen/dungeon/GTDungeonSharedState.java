@@ -4,7 +4,7 @@ package gregtech.content.worldgen.dungeon;
 /*import gregtech.content.registry.*;
 *///?} else {
 //?}
-import gregtech.content.worldgen.GTDungeonFeature;
+import gregtech.content.worldgen.GTDungeonGenerator;
 import net.minecraft.util.RandomSource;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.Set;
  * state between chunk generators.
  *
  * <p>Positive rooms are assigned in GT6's row-major order, before the barracks and corridors. Each
- * cell uses the same candidate shuffle as {@link GTDungeonFeature#generateCell}; a unique room tag is
+ * cell uses the same candidate shuffle as {@link GTDungeonGenerator#generateCell}; a unique room tag is
  * reserved by its first eligible cell. A tagged room can be built only in its reserved cell. A room that
  * later fails a world-dependent check falls back to an untagged room or the empty shell rather than
  * handing its reserved type to another chunk whose generation order is unpredictable.</p>
@@ -45,7 +45,7 @@ public final class GTDungeonSharedState {
         String coin = GTDungeonData.COIN_METALS[RandomSource.create(dungeonSeed ^ COIN_SALT)
                 .nextInt(GTDungeonData.COIN_METALS.length)];
         Set<String> claimedTags = new HashSet<>();
-        boolean[] generatedKeys = new boolean[GTDungeonFeature.KEY_COUNT];
+        boolean[] generatedKeys = new boolean[GTDungeonGenerator.KEY_COUNT];
 
         // GT6 builds all positive rooms before any negative (corridor / important) cell.
         for (int i = 1; i < layout.length - 1; i++) {
@@ -53,8 +53,8 @@ public final class GTDungeonSharedState {
                 if (layout[i][j] <= 0) continue;
                 GTDungeonChunk chosen = chooseRoom(layout, dungeonSeed, i, j, claimedTags);
                 RandomSource workshopRoll = RandomSource.create(
-                        GTDungeonFeature.cellSeed(dungeonSeed ^ WORKSHOP_KEY_SALT, i, j));
-                int workshopKey = workshopRoll.nextInt(GTDungeonFeature.KEY_COUNT * 2);
+                        GTDungeonGenerator.cellSeed(dungeonSeed ^ WORKSHOP_KEY_SALT, i, j));
+                int workshopKey = workshopRoll.nextInt(GTDungeonGenerator.KEY_COUNT * 2);
                 int workshopSlot = workshopRoll.nextInt(18);
                 int[] libraryKeys = libraryKeys(dungeonSeed, i, j);
                 states[i][j] = new CellState(chosen, Set.copyOf(claimedTags),
@@ -91,15 +91,15 @@ public final class GTDungeonSharedState {
                                               Set<String> claimedTags) {
         int connections = GTDungeonLayout.connectionCount(layout, i, j);
         List<GTDungeonChunk> candidates = new ArrayList<>(connections == 1
-                ? GTDungeonFeature.DEAD_END : GTDungeonFeature.ROOMS);
-        RandomSource random = RandomSource.create(GTDungeonFeature.cellSeed(seed, i, j));
+                ? GTDungeonGenerator.DEAD_END : GTDungeonGenerator.ROOMS);
+        RandomSource random = RandomSource.create(GTDungeonGenerator.cellSeed(seed, i, j));
         Collections.shuffle(candidates, new java.util.Random(random.nextLong()));
         for (GTDungeonChunk candidate : candidates) {
-            if (!GTDungeonFeature.roomEnabled(candidate)) continue;
+            if (!GTDungeonGenerator.roomEnabled(candidate)) continue;
             String tag = tagFor(candidate);
             if (tag == null || !claimedTags.contains(tag)) return candidate;
         }
-        return GTDungeonFeature.ROOM_EMPTY;
+        return GTDungeonGenerator.ROOM_EMPTY;
     }
 
     /** The one-per-dungeon tags used by the ported GT6 room list. */
@@ -116,7 +116,7 @@ public final class GTDungeonSharedState {
     }
 
     private static int[] libraryKeys(long seed, int i, int j) {
-        RandomSource random = RandomSource.create(GTDungeonFeature.cellSeed(seed ^ LIBRARY_KEY_SALT, i, j));
+        RandomSource random = RandomSource.create(GTDungeonGenerator.cellSeed(seed ^ LIBRARY_KEY_SALT, i, j));
         int[] result = new int[4];
         for (int row = 0; row < result.length; row++) result[row] = random.nextInt(3) + random.nextInt(3);
         return result;

@@ -109,7 +109,7 @@ import java.util.Set;
  *       {@code RedstoneLampBlock.LIT}.</li>
  *   <li>Keys: GT6 hands out five named dungeon keys, one per dungeon ({@code WorldgenDungeonGT}).
  *       The port registers the ten key items ({@code GTDungeonKeys}) and builds the five stacks
- *       ({@code GTDungeonFeature.keyStack}); the barracks, the workshop and the library put them into a
+ *       ({@code GTDungeonGenerator.keyStack}); the barracks, the workshop and the library put them into a
  *       container slot, and the dungeon loot containers carry matching key ids.</li>
  *   <li>Slabs: GT6's rooms use half blocks of their two rocks for the farm rims, the barracks walls, the
  *       entrance's staircase and the portal rooms' kerbs ({@code mSlabs[SIDE_*]}, see {@link #slab}).

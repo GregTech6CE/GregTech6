@@ -43,18 +43,15 @@ import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement
  *       locate's ring search ({@code ChunkGenerator}, which walks {@code center + spacing * ring}
  *       and asks the placement for that region's chunk) lands on real anchors,</li>
  *   <li>{@link #isPlacementChunk} accepts a chunk exactly when {@link GTDungeonLayout#isAnchor} does, which
- *       is the rule {@code GTDungeonFeature.place} uses for the cells it builds - chunk generation gates
- *       the structure starts on {@code StructurePlacement.isStructureChunk}
- *       ({@code StructurePlacement}), i.e. on this method.</li>
+ *       is the same lattice the cells are laid out on - chunk generation gates the structure starts on
+ *       {@code StructurePlacement.isStructureChunk} ({@code StructurePlacement}), i.e. on this method.</li>
  * </ul>
  *
  * <p>This placement is GT6's lattice and nothing else: it accepts exactly the anchors
- * {@link GTDungeonLayout#isAnchor} names, so {@code isStructureChunk} answers what
- * {@code GTDungeonFeature.place} uses to pick the cells it builds. GT6's one-in-a-hundred gate
- * ({@code WorldgenDungeonGT}) is deliberately <em>not</em> here - it belongs to the dungeon, and both
- * sides roll it from the anchor's seed ({@link GTDungeonLayout#passesProbability}): the feature in
- * {@code GTDungeonFeature.place}, the structure in {@link GTDungeonStructure#findGenerationPoint}. That is
- * what keeps {@code /locate} honest - a structure exists only where a dungeon was really rolled - while the
+ * {@link GTDungeonLayout#isAnchor} names. GT6's one-in-a-hundred gate ({@code WorldgenDungeonGT}) is
+ * deliberately <em>not</em> here - it belongs to the dungeon and is rolled from the anchor's seed in
+ * {@link GTDungeonStructure#findGenerationPoint} ({@link GTDungeonLayout#passesProbability}). That is what
+ * keeps {@code /locate} honest - a structure exists only where a dungeon was really rolled - while the
  * placement stays the plain lattice the task of finding an anchor needs.</p>
  */
 public final class GTDungeonPlacement extends RandomSpreadStructurePlacement {

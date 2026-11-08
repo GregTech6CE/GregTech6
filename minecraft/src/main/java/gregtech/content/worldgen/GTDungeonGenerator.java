@@ -2,6 +2,7 @@ package gregtech.content.worldgen;
 
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.registry.GTDungeonKeys;
+import gregtech.content.worldgen.dungeon.DungeonLayoutRules;
 import gregtech.content.worldgen.dungeon.GTDungeonChunk;
 import gregtech.content.worldgen.dungeon.GTDungeonChunkBarracks;
 import gregtech.content.worldgen.dungeon.GTDungeonChunkCorridor;
@@ -26,19 +27,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
  * Port of GT6's {@code WorldgenDungeonGT} ({@code gregapi/worldgen/dungeon/WorldgenDungeonGT.java},
@@ -47,9 +39,9 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
  *
  * <p>The dungeon is a grid of chunk-sized cells: {@code -1} barracks and {@code -2} entrance (GT6's two
  * "important" cells), {@code -128} corridors and positive ids for the rooms, all laid out by
- * {@link GTDungeonLayout}. This feature is the dispatcher that turns one cell into blocks — see
- * {@link GTDungeonLayout} for the port's cell-by-cell generation and for the differences to GT6's
- * "one call writes the whole dungeon" model.</p>
+ * {@link GTDungeonLayout}. This class turns one cell into blocks; {@link GTDungeonCellPiece} calls it
+ * from the structure's piece placement, one cell per chunk, so every dungeon chunk is written while that
+ * chunk is generated (see {@link GTDungeonLayout} for the port's cell-by-cell split).</p>
  *
  * <p>Rooms are tried in a shuffled order and a room that declines (returns false) or throws hands the cell
  * to the next candidate, exactly like GT6's rejection loop; an empty room is the fallback. GT6's dead-end
@@ -58,7 +50,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
  * are other-mod content. Every cell also carries GT6's five key stacks
  * ({@code WorldgenDungeonGT}), which the barracks, the workshop and the library hand out.</p>
  */
-public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
+public final class GTDungeonGenerator {
 
     /** Independent spike-colour draw for each outer cell, unaffected by corridor generation order. */
     private static final long FARM_PLATFORM_SALT = 0x4641524D5F475436L;
@@ -85,6 +77,11 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
     public static final List<GTDungeonChunk> DEAD_END = List.of(
             new GTDungeonChunkRoomStorage(), new GTDungeonChunkRoomPortalNether(), new GTDungeonChunkRoomPortalEnd());
 
+    /** GT6's five dungeon keys ({@code WorldgenDungeonGT}), one per dungeon. */
+    public static final int KEY_COUNT = 5;
+
+    private GTDungeonGenerator() {}
+
     public static boolean roomEnabled(GTDungeonChunk room) {
         if (room instanceof GTDungeonChunkRoomWorkshop) return gregtech.GregTechConfig.Rule.WORKSHOP.enabled();
         if (room instanceof GTDungeonChunkRoomMiningBedrock)
@@ -98,58 +95,40 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
-    /** GT6's five dungeon keys ({@code WorldgenDungeonGT}), one per dungeon. */
-    public static final int KEY_COUNT = 5;
-
-    public GTDungeonFeature() {
-        super(NoneFeatureConfiguration.CODEC);
+    /**
+     * Whether a cell writes any blocks: every non-empty cell does (a declined room falls back to
+     * {@link #ROOM_EMPTY}, which always builds), and an empty border cell does when it carries part of
+     * the mob farm's outer platform.
+     */
+    public static boolean writesCell(
+            byte[][] cells, GTDungeonSharedState plan, GTDungeonChunkRoomFarmMobs.Footprint farm, int i, int j) {
+        return cells[i][j] != GTDungeonLayout.EMPTY || (farm != null && farm.isOuter(i, j));
     }
 
-    @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        if (!gregtech.GregTechConfig.Worldgen.DUNGEONS.enabled()) return false;
-        WorldGenLevel level = context.level();
-        ServerLevel server = level.getLevel();
-        if (server.dimension() != Level.OVERWORLD) return false;
-        BlockPos origin = context.origin();
-        int chunkX = origin.getX() >> 4, chunkZ = origin.getZ() >> 4;
-        ChunkPos anchor = GTDungeonLayout.anchorFor(chunkX, chunkZ);
-        if (anchor == null) return false;
-        long seed = GTDungeonLayout.seedFor(server, anchor);
-        RandomSource random = RandomSource.create(seed);
-        // GT6's own consumption order: probability, offset Y, colour, the two rocks, then the layout.
-        if (random.nextInt(GTDungeonLayout.PROBABILITY) != 0) return false;
-        if (!GTDungeonLayout.passesPosition(level, anchor, chunkX, chunkZ)) return false;
-        int offsetY = GTDungeonLayout.offsetY(random);
-        int color = random.nextInt(16);
-        StoneType[] rocks = GTDungeonLayout.rocks(random);
-        byte[][] cells = GTDungeonLayout.layout(random);
-        int[] cell = GTDungeonLayout.cellOf(anchor, cells, chunkX, chunkZ);
-        if (cell == null) return false;
-        return generateCell(level, anchor, cells, cell[0], cell[1], offsetY, color, rocks, seed);
-    }
-
-    /** Builds one cell of the dungeon; also the entry point the tests drive directly. */
+    /** Builds one cell of the dungeon; called by the structure piece that covers this chunk. */
     public static boolean generateCell(
             WorldGenLevel level,
             ChunkPos anchor,
-            byte[][] cells,
+            GTDungeonLayout.Plan dungeonPlan,
             int i,
             int j,
-            int offsetY,
-            int color,
-            StoneType[] rocks,
             long seed) {
+        byte[][] cells = dungeonPlan.cells();
+        // A saved piece can outlive a config change that shrinks the layout; skip rather than crash.
+        if (i < 0 || j < 0 || i >= cells.length || j >= cells[i].length) return false;
+        int offsetY = dungeonPlan.offsetY();
+        int color = dungeonPlan.color();
+        StoneType[] rocks = dungeonPlan.rocks();
         byte kind = cells[i][j];
-        GTDungeonSharedState dungeonPlan = GTDungeonSharedState.create(cells, seed);
-        GTDungeonChunkRoomFarmMobs.Footprint farm = GTDungeonChunkRoomFarmMobs.footprint(cells, dungeonPlan);
-        if (kind == GTDungeonLayout.EMPTY && (farm == null || !farm.isOuter(i, j))) return false;
-        int minX = (anchor.x - cells.length / 2 + i) * 16;
-        int minZ = (anchor.z - cells[0].length / 2 + j) * 16;
+        GTDungeonSharedState sharedPlan = GTDungeonSharedState.create(cells, seed);
+        GTDungeonChunkRoomFarmMobs.Footprint farm = GTDungeonChunkRoomFarmMobs.footprint(cells, sharedPlan);
+        if (!writesCell(cells, sharedPlan, farm, i, j)) return false;
+        int minX = DungeonLayoutRules.cellChunkX(anchor.x, cells.length, i) * 16;
+        int minZ = DungeonLayoutRules.cellChunkZ(anchor.z, cells[0].length, j) * 16;
         int y = GTDungeonLayout.y(level, offsetY);
         int connections = GTDungeonLayout.connectionCount(cells, i, j);
         RandomSource cellRandom = RandomSource.create(cellSeed(seed, i, j));
-        GTDungeonSharedState.CellState shared = dungeonPlan.cell(i, j);
+        GTDungeonSharedState.CellState shared = sharedPlan.cell(i, j);
         long[] keyIds = new long[KEY_COUNT];
         for (int key = 0; key < KEY_COUNT; key++) keyIds[key] = keySeed(seed, key);
         ItemStack[] keyStacks = new ItemStack[KEY_COUNT];
@@ -277,13 +256,7 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
      * generates the dungeon cell by cell, see {@link GTDungeonLayout}).</p>
      */
     public static ItemStack keyStack(long[] keyIds, int index) {
-        int type =
-                RandomSource.create(keyIds[index]).nextInt(GTDungeonKeys.all().size());
+        int type = RandomSource.create(keyIds[index]).nextInt(GTDungeonKeys.all().size());
         return GTDungeonKeys.stack(type, keyIds[index], index);
     }
-
-    /** Registry key of the configured feature ({@code worldgen/configured_feature/gt_dungeon.json}). */
-    public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(
-                    Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeon"));
 }

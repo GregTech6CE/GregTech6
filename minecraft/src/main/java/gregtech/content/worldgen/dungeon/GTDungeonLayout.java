@@ -5,11 +5,9 @@ package gregtech.content.worldgen.dungeon;
 *///?} else {
 //?}
 import gregtech.content.block.stone.StoneType;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +33,9 @@ import java.util.List;
  * <em>cell by cell</em>: every chunk of the grid rebuilds the same layout from a seed derived from the
  * grid anchor and builds only its own cell. The gate, the layout algorithm and the cell contents are
  * GT6's; only the random stream is split — GT6 shared one {@code Random} across the whole dungeon, the
- * port derives a stable per-cell stream from the anchor seed.</p>
+ * port derives a stable per-cell stream from the anchor seed. {@link #plan} is the single place that
+ * rebuilds the dungeon-wide values from the seed, so the structure that declares the dungeon
+ * ({@code GTDungeonStructure}) and the generator that fills each cell cannot disagree.</p>
  */
 public final class GTDungeonLayout {
 
@@ -109,17 +109,8 @@ public final class GTDungeonLayout {
      */
     public static int anchorOfRegion(int region) {return DungeonLayoutRules.anchorOfRegion(region, settings());}
 
-    /** The grid cell of a chunk inside a layout, as {@code [i, j]}, or null when it is outside. */
-    @Nullable
-    public static int[] cellOf(ChunkPos anchor, byte[][] cells, int chunkX, int chunkZ) {
-        int i = chunkX - (anchor.x - cells.length / 2);
-        int j = chunkZ - (anchor.z - cells[0].length / 2);
-        if (i < 0 || j < 0 || i >= cells.length || j >= cells[i].length) return null;
-        return new int[]{i, j};
-    }
-
     /** The seed the whole dungeon hangs off: the world seed plus the anchor position. */
-    public static long seedFor(ServerLevel level, ChunkPos anchor) {
+    public static long seedFor(WorldGenLevel level, ChunkPos anchor) {
         return seedFor(level.getSeed(), anchor);
     }
 
@@ -127,35 +118,47 @@ public final class GTDungeonLayout {
      * The same seed from a raw world seed. The structure's side needs it without a level -
      * {@code Structure.GenerationContext} hands out the world seed, and
      * {@code GTDungeonStructure.findGenerationPoint} rolls GT6's one-in-a-hundred gate with it so the
-     * structure exists exactly where the feature builds a dungeon.
+     * structure exists exactly where the cell generator builds a dungeon.
      */
     public static long seedFor(long worldSeed, ChunkPos anchor) {
         return DungeonLayoutRules.seed(worldSeed,anchor.x,anchor.z);
     }
 
+    /**
+     * The one-in-a-hundred roll's bound. {@link #passesProbability} and {@link #plan} both read it, so
+     * the structure gate and the generator's random stream cannot disagree about the roll.
+     */
+    public static int probability() {
+        return gregtech.GregTechConfig.Number.DUNGEON_PROBABILITY.value();
+    }
+
     /** GT6's {@code aRandom.nextInt(mProbability) != 0} gate, evaluated once per anchor. */
     public static boolean passesProbability(long dungeonSeed) {
-        return RandomSource.create(dungeonSeed).nextInt(gregtech.GregTechConfig.Number.DUNGEON_PROBABILITY.value()) == 0;
+        return RandomSource.create(dungeonSeed).nextInt(probability()) == 0;
+    }
+
+    /**
+     * Every per-dungeon value the generator needs, rebuilt from the dungeon seed in GT6's own draw
+     * order: the probability roll, Y offset, colour, the two rocks, then the layout. The structure
+     * uses this to size its pieces; each cell piece uses it to rebuild the same values when it is
+     * placed, so no dungeon-wide state has to travel through NBT.
+     */
+    public record Plan(int offsetY, int color, StoneType[] rocks, byte[][] cells) {}
+
+    public static Plan plan(long dungeonSeed) {
+        RandomSource random = RandomSource.create(dungeonSeed);
+        random.nextInt(probability());
+        int offsetY = offsetY(random);
+        int color = random.nextInt(16);
+        StoneType[] rocks = rocks(random);
+        byte[][] cells = layout(random);
+        return new Plan(offsetY, color, rocks, cells);
     }
 
     /** GT6's anchor-based spawn clearance ({@code WorldgenDungeonGT}). */
     public static boolean passesAnchorClearance(ChunkPos anchor) {
         int minX = anchor.getMinBlockX(), minZ = anchor.getMinBlockZ();
         return DungeonLayoutRules.clearance(minX,minZ, settings());
-    }
-
-    /**
-     * Gate used by every cell of one dungeon. GT6 also checks the <em>anchor's</em> bedrock once before
-     * writing the entire structure. A feature running in a different chunk cannot safely read that
-     * anchor: at FEATURES status it can be four cells away and still only at STRUCTURE_STARTS status.
-     * Reading the current cell's bedrock made a partially generated dungeon, potentially omitting the
-     * cell with a key while the dungeon-wide plan assumed it existed. We therefore keep the common
-     * anchor clearance and probability gates and do not make a cell-local bedrock decision. On custom
-     * worlds without an anchor bedrock floor this can allow a dungeon GT6 would have rejected, but it
-     * never makes different cells disagree about whether their dungeon exists.
-     */
-    public static boolean passesPosition(WorldGenLevel level, ChunkPos anchor, int cellChunkX, int cellChunkZ) {
-        return passesAnchorClearance(anchor);
     }
 
     /** GT6's {@code mMinY + aRandom.nextInt(Math.max(1, mMaxY - mMinY))}. */

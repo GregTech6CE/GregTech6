@@ -18,7 +18,7 @@ import gregtech.content.registry.GTFluids;
  * <p>The room is a dead end: GT6's {@code DungeonChunkRoomVault} ({@code DungeonChunkRoomVault}),
  * which GT6's store room extends, refuses every cell that does not have exactly one connection, and GT6's
  * dispatcher only offers the dead end list to those cells ({@code WorldgenDungeonGT}). The port's
- * dispatcher copies that ({@code GTDungeonFeature}), and the check is kept here as well.</p>
+ * dispatcher copies that ({@code GTDungeonGenerator}), and the check is kept here as well.</p>
  *
  * <h2>Port differences</h2>
  * <ul>

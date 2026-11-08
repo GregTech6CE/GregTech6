@@ -2,5 +2,5 @@
   "type": "gt6ce:gt_dungeon",
   "biomes": "#gt6ce:has_structure/gt_dungeon",
   "spawn_overrides": {},
-  "step": "underground_structures"
+  "step": "top_layer_modification"
 }

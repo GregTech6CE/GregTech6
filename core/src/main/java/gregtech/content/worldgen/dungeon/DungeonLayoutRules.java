@@ -278,6 +278,16 @@ public final class DungeonLayoutRules {
         return out;
     }
 
+    /** The chunk X of cell {@code i} of a layout anchored at {@code anchorX}. */
+    public static int cellChunkX(int anchorX, int rows, int i) {
+        return anchorX - rows / 2 + i;
+    }
+
+    /** The chunk Z of cell {@code j} of a layout anchored at {@code anchorZ}. */
+    public static int cellChunkZ(int anchorZ, int columns, int j) {
+        return anchorZ - columns / 2 + j;
+    }
+
     public static long seed(long world, int x, int z) {
         return world ^ (long) x * 341873128712L ^ (long) z * 132897987541L;
     }

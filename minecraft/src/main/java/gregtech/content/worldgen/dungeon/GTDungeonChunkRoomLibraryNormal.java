@@ -18,7 +18,7 @@ import gregtech.content.registry.GTWoods;
  *
  * <p>GT6's class is the normal-wood variant of the library; the Mystcraft and Thaumcraft libraries share
  * the base class but are other-mod content and are not ported, so this is the only library the port
- * registers (see {@code GTDungeonFeature.ROOMS}).</p>
+ * registers (see {@code GTDungeonGenerator.ROOMS}).</p>
  *
  * <h2>Port differences</h2>
  * <ul>

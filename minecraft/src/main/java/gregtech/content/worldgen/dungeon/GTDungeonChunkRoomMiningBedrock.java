@@ -76,7 +76,7 @@ import net.minecraft.world.level.block.state.BlockState;
  *       masks (1 = north, 2 = south, 4 = west, 8 = east), including the two-sided
  *       walkway rails.</li>
  *   <li><b>Tag scope.</b> GT6 shares one tag set across the whole dungeon, so only one bedrock mine
- *       is ever built per dungeon. {@code GTDungeonFeature.generateCell} hands every cell its own
+ *       is ever built per dungeon. {@code GTDungeonGenerator.generateCell} hands every cell its own
  *       empty tag set, so the port's rule is one bedrock mine per cell.</li>
  * </ul>
  */
