@@ -7,7 +7,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 //?}
 import gregtech.engine.fluid.FluidDisplayBinding;
-import gregtech.engine.stack.StackCompat;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.content.item.FluidItem;
@@ -39,6 +38,7 @@ import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.common.crafting.IngredientType;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 *///?} else {
 import net.minecraft.world.item.crafting.Ingredient;
@@ -48,6 +48,7 @@ import net.minecraftforge.common.crafting.AbstractIngredient;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
@@ -133,6 +134,9 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
     /*/^* No registry-bound example is constructed during serializer registration. ^/
     public static final class ContainerIngredient implements ICustomIngredient {
         public static final MapCodec<ContainerIngredient> CODEC = MapCodec.unit(CreosoteAxleRecipe::creosote);
+        private static FluidStack required() {
+            var holder = GTFluids.still("Oil_Creosote");
+            return holder != null && holder.isBound() ? new FluidStack(holder.get(), 1000) : FluidStack.EMPTY;
 *///?} else {
     public static void registerIngredient() {
         CraftingHelper.register(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("creosote_container_1000").toLowerCase()), ContainerIngredient.SERIALIZER);
@@ -150,9 +154,16 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
             super(examples().map(Ingredient.ItemValue::new));
 //?}
         }
+//? if >=1.21.1 {
+        /*private static boolean sameFluid(FluidStack a, FluidStack b) {
+            return !a.isEmpty() && !b.isEmpty() && a.getFluid() == b.getFluid();
+*///?} else {
+
         private static FluidStack required() {
             var fluid = GTFluids.still("Oil_Creosote");
-            return GTFluids.isPresent(fluid) ? new FluidStack(fluid.get(), 1000) : FluidStack.EMPTY;
+            if (fluid == null || !fluid.isPresent()) return FluidStack.EMPTY;
+            return new FluidStack(fluid.get(), 1000);
+//?}
         }
 
         /** Display every compatible native finite vessel, not just one representative cell. */
@@ -169,26 +180,49 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
             if (input == null || input.isEmpty() || input.getItem() instanceof FluidItem
 //?}
                     || FluidDisplayBinding.hasPayload(input)) return false;
-            var need = required();
+//? if >=1.21.1 {
+            /*var need = required();
+*///?} else {
+            FluidStack need = required();
+//?}
             if (need.isEmpty()) return false;
-            var one = input.copyWithCount(1);
-            var handler = StackCompat.fluidHandler(one);
+//? if >=1.21.1 {
+            /*var one = input.copyWithCount(1);
+            var handler = FluidUtil.getFluidHandler(one).orElse(null);
+*///?} else {
+            ItemStack one = input.copyWithCount(1);
+            var handler = FluidUtil.getFluidHandler(one).resolve().orElse(null);
+//?}
             if (handler == null) return false;
-            var before = StackCompat.fluidContained(one);
-            if (!StackCompat.sameFluid(before, need) || before.getAmount() < 1000) return false;
+//? if >=1.21.1 {
+            /*var before = FluidUtil.getFluidContained(one).orElse(FluidStack.EMPTY);
+            if (!sameFluid(before, need) || before.getAmount() < 1000) return false;
             var taken = handler.drain(need, IFluidHandler.FluidAction.EXECUTE);
-            if (!StackCompat.sameFluid(taken, need) || taken.getAmount() != 1000) return false;
-            var after = StackCompat.fluidContained(handler.getContainer());
+            if (!sameFluid(taken, need) || taken.getAmount() != 1000) return false;
+            var after = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
+*///?} else {
+            FluidStack before = FluidUtil.getFluidContained(one).orElse(FluidStack.EMPTY);
+            if (before.isEmpty() || !before.isFluidEqual(need) || before.getAmount() < 1000) return false;
+            FluidStack taken = handler.drain(need, IFluidHandler.FluidAction.EXECUTE);
+            if (!taken.isFluidEqual(need) || taken.getAmount() != 1000) return false;
+            FluidStack after = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
             // Reject creative/infinite handlers even if they claim to drain successfully.
+//?}
             return before.getAmount() - after.getAmount() == 1000;
         }
 
         static ItemStack drainOne(ItemStack input) {
-            var handler = StackCompat.fluidHandlerOrThrow(input.copyWithCount(1));
+//? if >=1.21.1 {
+            /*var handler = FluidUtil.getFluidHandler(input.copyWithCount(1)).orElseThrow();
             var need = required();
             var drained = handler.drain(need, IFluidHandler.FluidAction.EXECUTE);
-            if (!StackCompat.sameFluid(drained, need) || drained.getAmount() != 1000)
+            if (!sameFluid(drained, need) || drained.getAmount() != 1000)
                 throw new IllegalStateException("Creosote axle did not drain 1000 mB");
+*///?} else {
+            var handler = FluidUtil.getFluidHandler(input.copyWithCount(1)).resolve().orElseThrow();
+            FluidStack drained = handler.drain(required(), IFluidHandler.FluidAction.EXECUTE);
+            if (drained.getAmount() != 1000) throw new IllegalStateException("Creosote axle did not drain 1000 mB");
+//?}
             return handler.getContainer();
         }
 
