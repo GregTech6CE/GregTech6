@@ -47,7 +47,7 @@ import java.util.List;
  * Built-in engines and turbines do not use this class.
  */
 public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBlock, IFluidHandler,
-        gregtech.api.platform.machine.MachineControl.Provider {
+        gregtech.engine.fluid.FluidToolTarget, gregtech.api.platform.machine.MachineControl.Provider {
     private final FluidTank fuel;
     private final List<FluidTank> exhaust;
     private final RecipeMap recipes;
@@ -297,6 +297,55 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
             if (!drained.isEmpty()) return drained;
         }
         return FluidStack.EMPTY;
+    }
+
+    /**
+     * Attachments bypass the facing capability: funnels only reach the fuel tank, taps and
+     * nozzles drain exhaust first and then fall back to fuel, as the original generators did.
+     */
+    private final IFluidHandler toolFill = new IFluidHandler() {
+        public int getTanks() { return 1; }
+        public FluidStack getFluidInTank(int tank) { return tank == 0 ? fuel.getFluid().copy() : FluidStack.EMPTY; }
+        public int getTankCapacity(int tank) { return tank == 0 ? fuel.getCapacity() : 0; }
+        public boolean isFluidValid(int tank, FluidStack stack) { return tank == 0 && fuel.isFluidValid(stack); }
+        public int fill(FluidStack stack, FluidAction action) { return fuel.fill(stack, action); }
+        public FluidStack drain(FluidStack stack, FluidAction action) { return FluidStack.EMPTY; }
+        public FluidStack drain(int amount, FluidAction action) { return FluidStack.EMPTY; }
+    };
+
+    private final IFluidHandler toolDrain = new IFluidHandler() {
+        public int getTanks() { return 1 + exhaust.size(); }
+        public FluidStack getFluidInTank(int tank) {
+            if (tank < 0) return FluidStack.EMPTY;
+            if (tank < exhaust.size()) return exhaust.get(tank).getFluid().copy();
+            return tank == exhaust.size() ? fuel.getFluid().copy() : FluidStack.EMPTY;
+        }
+        public int getTankCapacity(int tank) {
+            if (tank < 0) return 0;
+            if (tank < exhaust.size()) return exhaust.get(tank).getCapacity();
+            return tank == exhaust.size() ? fuel.getCapacity() : 0;
+        }
+        public boolean isFluidValid(int tank, FluidStack stack) { return false; }
+        public int fill(FluidStack stack, FluidAction action) { return 0; }
+        public FluidStack drain(FluidStack stack, FluidAction action) {
+            for (FluidTank tank : exhaust) {
+                FluidStack drained = tank.drain(stack, action);
+                if (!drained.isEmpty()) return drained;
+            }
+            return fuel.drain(stack, action);
+        }
+        public FluidStack drain(int amount, FluidAction action) {
+            for (FluidTank tank : exhaust) {
+                FluidStack drained = tank.drain(amount, action);
+                if (!drained.isEmpty()) return drained;
+            }
+            return fuel.drain(amount, action);
+        }
+    };
+
+    @Override
+    public IFluidHandler fluidToolHandler(Direction side, boolean filling) {
+        return isRemoved() ? null : filling ? toolFill : toolDrain;
     }
 
 //? if >=1.21.1 {

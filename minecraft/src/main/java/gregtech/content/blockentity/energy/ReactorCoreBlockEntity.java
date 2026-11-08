@@ -24,7 +24,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import java.util.*;
 
 /** Original one/four-rod cores. Heat is converted into hot coolant, never emitted as free HU. */
-public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents, gregtech.api.platform.machine.MachineControl.Provider {
+public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents, gregtech.engine.fluid.FluidToolTarget, gregtech.api.platform.machine.MachineControl.Provider {
     public final ItemStack[] rods;
     public final int[] neutrons;
     private final List<ItemStack> legacyOverflow = new ArrayList<>();
@@ -380,6 +380,13 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
             return (output.isEmpty() ? input : output).drain(s, a);
         }
     };
+
+    /** Funnels fill coolant into the input tank; taps and nozzles drain output first, then input. */
+    @Override
+    public IFluidHandler fluidToolHandler(Direction side, boolean filling) {
+        return isRemoved() ? null
+                : filling ? new gregtech.engine.fluid.FluidPort(fluids, true, false) : handFluids;
+    }
 //? if >=1.21.1 {
     /*public net.neoforged.neoforge.items.IItemHandler itemCapability(Direction side) {
         return isRemoved() ? null : items;

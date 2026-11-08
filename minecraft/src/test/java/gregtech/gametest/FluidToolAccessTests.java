@@ -1,7 +1,9 @@
 package gregtech.gametest;
 
 import gregtech.content.block.tool.FluidAttachmentBlock;
+import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.blockentity.machine.FuelGeneratorBlockEntity;
 import gregtech.content.registry.GTFluids;
 import gregtech.engine.machine.MachineInventory;
 import gregtech.engine.recipe.RecipeMap;
@@ -28,9 +30,9 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 /** Tap and nozzle access searches output tanks, then input tanks, without opening the facing capability. */
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
-public final class BasicMachineFluidToolTests {
+public final class FluidToolAccessTests {
 
-    private BasicMachineFluidToolTests() {}
+    private FluidToolAccessTests() {}
 
     @GameTest(template = "test_empty", timeoutTicks = 40)
     public static void toolAccessDrainsOutputTanksBeforeInputs(GameTestHelper helper) {
@@ -119,6 +121,70 @@ public final class BasicMachineFluidToolTests {
         var nozzleAccess = nozzle.access(machine.fluidToolHandler(Direction.UP, false));
         helper.assertTrue(nozzleAccess.drain(300, IFluidHandler.FluidAction.EXECUTE).getFluid() == steam.getFluid(),
                 "A nozzle did not drain a gas from an input tank");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void reactorTapRecoversOutputThenInputCoolant(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var pos = helper.absolutePos(new BlockPos(2, 1, 2));
+        Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "reactor_core"));
+        level.setBlockAndUpdate(pos, block.defaultBlockState());
+        var reactor = (ReactorCoreBlockEntity) level.getBlockEntity(pos);
+        var distilled = GTFluids.stack("DistW", 1000);
+        var steam = GTFluids.stack("Steam", 500);
+        helper.assertTrue(reactor != null && distilled != null && steam != null, "The reactor fixture is incomplete");
+        reactor.input.setFluid(distilled);
+        reactor.output.setFluid(steam);
+
+        var tap = reactor.fluidToolHandler(Direction.UP, false);
+        helper.assertTrue(tap != null && tap.drain(100, IFluidHandler.FluidAction.SIMULATE).getFluid() == steam.getFluid(),
+                "A tap did not prefer the reactor's output tank");
+        helper.assertTrue(tap.drain(600, IFluidHandler.FluidAction.EXECUTE).getAmount() == 500
+                        && reactor.output.isEmpty(),
+                "The tool drain did not empty the reactor output tank first");
+        helper.assertTrue(tap.drain(100, IFluidHandler.FluidAction.EXECUTE).getFluid() == distilled.getFluid(),
+                "A tap did not recover leftover coolant from the input tank");
+        helper.assertTrue(reactor.fluids.drain(100, IFluidHandler.FluidAction.EXECUTE).isEmpty(),
+                "The facing capability drained reactor coolant");
+
+        var fill = reactor.fluidToolHandler(Direction.UP, true);
+        helper.assertTrue(fill != null && fill.drain(100, IFluidHandler.FluidAction.EXECUTE).isEmpty(),
+                "A funnel drained the reactor");
+        helper.assertTrue(fill.isFluidValid(0, distilled)
+                        && !fill.isFluidValid(0, new FluidStack(Fluids.WATER, 100)),
+                "The reactor fill view did not restrict itself to coolant");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void fuelGeneratorTapDrainsTheFuelTank(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var pos = helper.absolutePos(new BlockPos(2, 1, 2));
+        Block block = BuiltInRegistries.BLOCK.get(
+                ResourceLocation.fromNamespaceAndPath("gt6ce_api_test", "fuel_api_test"));
+        level.setBlockAndUpdate(pos, block.defaultBlockState());
+        var generator = (FuelGeneratorBlockEntity) level.getBlockEntity(pos);
+        var diesel = GTFluids.stack("Diesel", 800);
+        helper.assertTrue(generator != null && diesel != null, "The fuel generator fixture is incomplete");
+        helper.assertTrue(generator.fill(diesel, IFluidHandler.FluidAction.EXECUTE) == 800,
+                "The fixture generator rejected its fuel");
+
+        helper.assertTrue(generator.drain(100, IFluidHandler.FluidAction.EXECUTE).isEmpty(),
+                "The facing capability drained the generator's fuel tank");
+        var tap = generator.fluidToolHandler(Direction.UP, false);
+        helper.assertTrue(tap != null
+                        && tap.drain(300, IFluidHandler.FluidAction.EXECUTE).getFluid() == diesel.getFluid(),
+                "A tap did not drain the generator's fuel tank");
+        helper.assertTrue(tap.fill(diesel, IFluidHandler.FluidAction.EXECUTE) == 0,
+                "A tap filled the generator");
+
+        var fill = generator.fluidToolHandler(Direction.UP, true);
+        helper.assertTrue(fill != null && fill.drain(100, IFluidHandler.FluidAction.EXECUTE).isEmpty(),
+                "A funnel drained the generator");
+        helper.assertTrue(fill.isFluidValid(0, diesel)
+                        && fill.fill(diesel, IFluidHandler.FluidAction.SIMULATE) > 0,
+                "The generator fill view did not reach the fuel tank");
         helper.succeed();
     }
 
