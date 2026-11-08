@@ -51,7 +51,7 @@ public final class UsbDataMedia {
     private static int tier(ItemStack stack, String suffix) {
         if (stack == null || stack.isEmpty()) return -1;
         var key = Mc.itemId(stack.getItem());
-        if (key == null || !key.getNamespace().equals("gt6ce")) return -1;
+        if (key == null || !key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return -1;
         return UsbDataRules.tier(key.getNamespace(), key.getPath(), suffix);
     }
 

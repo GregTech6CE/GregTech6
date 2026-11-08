@@ -65,11 +65,7 @@ public final class GTToolModel {
             if (itemId == null) {
                 continue;
             }
-//? if >=1.21.1 {
-            /*ModelResourceLocation inventory = ModelResourceLocation.inventory(itemId);
-*///?} else {
-            ModelResourceLocation inventory = new ModelResourceLocation(itemId, "inventory");
-//?}
+            ModelResourceLocation inventory = ModelResourceLocationCompat.inventory(itemId);
             BakedModel base = models.get(inventory);
             if (base != null) {
                 models.put(inventory, new GTToolBakedModel(base));
@@ -77,10 +73,10 @@ public final class GTToolModel {
         }
 //? if >=1.21.1 {
         /*for(var holder:gregtech.content.registry.GTElectricItems.tools()) {
-            var id=BuiltInRegistries.ITEM.getKey(holder.get());var inventory=ModelResourceLocation.inventory(id);
+            var id=BuiltInRegistries.ITEM.getKey(holder.get());var inventory=ModelResourceLocationCompat.inventory(id);
 *///?} else {
         for(var holder:gregtech.content.registry.GTElectricItems.all()) {
-            var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(holder.get());var inventory=new ModelResourceLocation(id,"inventory");
+            var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(holder.get());var inventory=ModelResourceLocationCompat.inventory(id);
 //?}
             var base=models.get(inventory);if(base!=null)models.put(inventory,new GTToolBakedModel(base));
         }

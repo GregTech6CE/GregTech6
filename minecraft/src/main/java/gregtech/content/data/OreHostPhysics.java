@@ -26,7 +26,7 @@ public final class OreHostPhysics {
       || AddonMaterials.owns(material)) return Optional.empty();
   // Explosive resistance special rules need separately reviewed material provenance.
   if(material.has(gregtech.api.material.MaterialProperty.EXPLOSIVE))return Optional.empty();
-  if(!BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gt6ce")) return Optional.empty();
+  if(!BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return Optional.empty();
   var canonical=GTBlocks.getObject(prefix,material);
   if(canonical==null || !canonical.isPresent() || canonical.get()!=block) return Optional.empty();
 

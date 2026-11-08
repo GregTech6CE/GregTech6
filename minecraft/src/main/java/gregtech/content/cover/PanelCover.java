@@ -43,7 +43,7 @@ public enum PanelCover {
     public static PanelCover of(ItemStack stack) {
         if (stack.isEmpty()) return null;
         var key = Mc.itemId(stack.getItem());
-        if (key != null && key.getNamespace().equals("gt6ce"))
+        if (key != null && key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))
             for (var cover : values())
                 if (cover.id.equals(key.getPath())) return cover;
         return null;

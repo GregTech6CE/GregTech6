@@ -8,9 +8,9 @@ import net.minecraft.world.effect.MobEffects;
 
 /** GT_API_Proxy.onPlayerDestroyItem and ToolStats.afterBreaking. */
 //? if >=1.21.1 {
-/*@net.neoforged.fml.common.EventBusSubscriber(modid = "gt6ce")
+/*@net.neoforged.fml.common.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 *///?} else {
-@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = "gt6ce")
+@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 //?}
 public final class ToolBreakFatigue {
     private ToolBreakFatigue() {}

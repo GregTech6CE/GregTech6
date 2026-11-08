@@ -374,7 +374,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         var heldId = Mc.itemId(held.getItem());
-        if (heldId != null && heldId.getNamespace().equals("gt6ce")
+        if (heldId != null && heldId.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)
                 && heldId.getPath().equals("quicksilver_thermometer")) {
             if (!level.isClientSide)
                 player.displayClientMessage(Component.translatable("message.gt6ce.large_boiler.heat",

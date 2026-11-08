@@ -4,7 +4,7 @@ package gregtech.engine.mod;
 public final class GregTechIdentity {
     public static final String MOD_ID = "gt6ce";
     public static final String MOD_NAME = "GregTech 6 Community Edition";
-    public static final String REGISTRY_NAMESPACE = "gt6ce";
+    public static final String REGISTRY_NAMESPACE = MOD_ID;
 
     private GregTechIdentity() {}
 }

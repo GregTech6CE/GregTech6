@@ -199,7 +199,7 @@ public final class CompatRecipes {
 //? if >=1.21.1 {
 /*        return switch (stack) {
             case CompatSpecs.Stack.Item item -> {
-                var value = BuiltInRegistries.ITEM.get(ResourceLocation.parse(item.id()));
+                var value = gregtech.platform.Mc.item(ResourceLocation.parse(item.id()));
                 if (value == null || value == Items.AIR) {
                     problem(source, "missing item " + item.id());
                     yield List.of();
@@ -207,7 +207,7 @@ public final class CompatRecipes {
                 yield List.of(new ItemStack(value, item.count()));
 *///?} else {
         if (stack instanceof CompatSpecs.Stack.Item item) {
-            var value = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(item.id()));
+            var value = gregtech.platform.Mc.item(ResourceLocation.parse(item.id()));
             if (value == null || value == Items.AIR) {
                 problem(source, "missing item " + item.id());
                 return List.of();

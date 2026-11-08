@@ -40,7 +40,10 @@ public final class SourceOreInputForms {
         if (revision != externalFormsRevision) {
             EXTERNAL_FORMS.clear();
             for (Item item : ItemMaterialRegistry.entries().keySet()) {
-                if (BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")) continue;
+                if (BuiltInRegistries.ITEM
+                        .getKey(item)
+                        .getNamespace()
+                        .equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) continue;
                 var form = MaterialEquivalence.form(new ItemStack(item, 1));
                 if (form == null) continue;
                 EXTERNAL_FORMS
@@ -59,7 +62,10 @@ public final class SourceOreInputForms {
         material = material.resolve();
         if (AddonMaterials.owns(material) || !GTMaterialRegistry.isCoreMaterial(material)) return true;
         // A real externally registered ore input remains admissible despite builtin ORES_NO.
-        if (!BuiltInRegistries.ITEM.getKey(input.getItem()).getNamespace().equals("gt6ce")) return true;
+        if (!BuiltInRegistries.ITEM
+                .getKey(input.getItem())
+                .getNamespace()
+                .equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return true;
         if (!(input.getItem() instanceof MaterialFormItem form)
                 || form.getPrefix() != prefix
                 || form.getMaterial().resolve() != material) return true; // uncertain provenance retains legacy

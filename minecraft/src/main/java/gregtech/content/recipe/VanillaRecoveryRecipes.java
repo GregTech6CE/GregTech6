@@ -95,7 +95,7 @@ public final class VanillaRecoveryRecipes {
         if (!(item instanceof BlockItem blockItem)) return false;
         var block = blockItem.getBlock();
         var id = Mc.blockId(block);
-        if (!id.getNamespace().equals("gt6ce")) return false;
+        if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
         var expected = gregtech.content.machine.MachineConstructionMaterials.block(id.getPath());
         if (expected.isEmpty() && block instanceof gregtech.content.block.machine.BasicMachineBlock machine)
             expected = gregtech.content.machine.OriginalMachineMaterialData.find(

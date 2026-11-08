@@ -43,7 +43,7 @@ final class SourceFurnaceNativeAdapter {
         return material != null && input != null && !input.isEmpty() && input.getCount() == 1
                 && input.getItem() instanceof MaterialFormItem form && form.getPrefix() == prefix
                 && form.getMaterial().resolve() == material.resolve()
-                && BuiltInRegistries.ITEM.getKey(input.getItem()).getNamespace().equals("gt6ce");
+                && BuiltInRegistries.ITEM.getKey(input.getItem()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
     }
 
     /** Whether the early dust-first producer remains responsible for this selected form. */
@@ -112,7 +112,7 @@ final class SourceFurnaceNativeAdapter {
 
         boolean blockInput(GTMaterial material, ItemStack input) {
             if (material == null || input.getCount() != 1 || !(input.getItem() instanceof BlockItem item)
-                    || !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")) return false;
+                    || !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
             var block = item.getBlock();
             if (block instanceof OreBlock ore)
                 return ore.prefix() == BlockMaterialPrefix.ore && ore.material().resolve() == material.resolve()

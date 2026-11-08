@@ -171,7 +171,7 @@ public final class GeneratedRecipeResolver {
         if (material == null) return false;
         for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
             var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
-            if (id == null || id.getNamespace().equals("gt6ce") || id.getNamespace().equals("minecraft")) continue;
+            if (id == null || id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) || id.getNamespace().equals("minecraft")) continue;
             if (item instanceof gregtech.engine.material.MaterialFormItem direct
                     && direct.getPrefix() != null && direct.getMaterial() != null
                     && direct.getPrefix().getName().equals(binding.prefixName())
@@ -179,7 +179,7 @@ public final class GeneratedRecipeResolver {
         }
         for (var entry : gregtech.engine.material.ItemMaterialRegistry.entries().entrySet()) {
             var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(entry.getKey());
-            if (id == null || id.getNamespace().equals("gt6ce") || id.getNamespace().equals("minecraft")) continue;
+            if (id == null || id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) || id.getNamespace().equals("minecraft")) continue;
             var declaredForm = gregtech.engine.material.MaterialEquivalence.form(new ItemStack(entry.getKey()));
             if (declaredForm != null && declaredForm.prefix().getName().equals(binding.prefixName())
                     && declaredForm.material().resolve() == material) return true;

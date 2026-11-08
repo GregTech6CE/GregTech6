@@ -35,7 +35,10 @@ public final class SourceGemGradeResolver {
                                 .equals("gt6ce"))) return canonical;
         ItemStack external = ItemStack.EMPTY;
         for (var item : ItemMaterialRegistry.entries().keySet()) {
-            if (BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")) continue;
+            if (BuiltInRegistries.ITEM
+                    .getKey(item)
+                    .getNamespace()
+                    .equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) continue;
             ItemStack stack = new ItemStack(item, count);
             var form = MaterialEquivalence.form(stack);
             if (form == null || form.prefix() != prefix || form.material() != material) continue;

@@ -143,7 +143,8 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
             return true;
         }
         ResourceLocation id = Mc.blockId(state.getBlock());
-        if (id == null || !id.getNamespace().equals("gt6ce")) return false;
+        if (id == null || !id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))
+            return false;
         if (id.getPath().startsWith("sand_")) return true;
         return state.getBlock() instanceof OreBlock && OreBlock.stoneOf(state).isSediment();
     }

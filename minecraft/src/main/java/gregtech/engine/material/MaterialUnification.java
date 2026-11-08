@@ -37,7 +37,7 @@ public final class MaterialUnification {
 
     private static Item requestedTarget(ItemStack stack) {
         if (stack.getItem() instanceof BlockItem item && item.getBlock() instanceof MaterialBlockLike block) {
-            if (!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")) return null;
+            if (!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return null;
             String name = block.material().resolve().getName();
             return VANILLA_BLOCK_TARGETS.get(block.prefix().getName() + "/" + name);
         }
@@ -127,7 +127,7 @@ public final class MaterialUnification {
     /** The explicitly replaced GT entries, shared by creative tabs, JEI and EMI. */
     public static boolean hiddenDuplicate(ItemStack stack) {
         if (stack == null || stack.isEmpty()
-                || !BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("gt6ce")) return false;
+                || !BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
         Item target = requestedTarget(stack);
         return target != null && target != stack.getItem();
     }

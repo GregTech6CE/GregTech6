@@ -26,7 +26,7 @@ public enum PyriteOreJadeProvider implements IBlockComponentProvider {
     @Nullable
     public static Component displayName(BlockState state) {
         if (!(state.getBlock() instanceof OreBlock ore) || ore.material() != OreMaterials.Pyrite
-                || !BuiltInRegistries.BLOCK.getKey(ore).getNamespace().equals("gt6ce")) return null;
+                || !BuiltInRegistries.BLOCK.getKey(ore).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return null;
         if (ore.prefix() == BlockMaterialPrefix.oreSmall)
             return Component.translatable("jade.gt6ce.pyrite.small_ore");
         return ore.prefix() == BlockMaterialPrefix.ore

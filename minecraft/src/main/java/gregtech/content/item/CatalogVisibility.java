@@ -17,7 +17,7 @@ public final class CatalogVisibility {
         var item = stack.getItem();
         var id = BuiltInRegistries.ITEM.getKey(item);
         if (gregtech.engine.material.MaterialUnification.hiddenDuplicate(stack)) return false;
-        if (id.getNamespace().equals("gt6ce")
+        if (id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)
                 && (id.getPath().startsWith("sapling_small_") || id.getPath().startsWith("sapling_large_"))) return false;
         // Original MicroBlocks controls third-party microblocks/facades, not GT slabs.
         if (!Rule.MICROBLOCKS.enabled() && java.util.Set.of(
@@ -38,7 +38,7 @@ public final class CatalogVisibility {
                 && block.getBlock() instanceof gregtech.content.block.OreBlock
                 && (gregtech.content.block.OreBlock.isBrokenStack(stack)
                 || gregtech.content.block.OreBlock.stoneOfStack(stack) != gregtech.content.block.OreHostStone.STONE)) return false;
-        if (!id.getNamespace().equals("gt6ce")) return true;
+        if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return true;
         if (!Rule.BUMBLEBEES.enabled() && gregtech.content.bumble.BumbleBeeType.speciesOf(stack) != null) return false;
 //? if >=1.21.1 {
         /*if (item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem fluid)

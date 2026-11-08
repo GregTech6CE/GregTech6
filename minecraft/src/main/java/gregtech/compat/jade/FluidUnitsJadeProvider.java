@@ -42,7 +42,7 @@ public enum FluidUnitsJadeProvider implements
 
     private static List<ViewGroup<CompoundTag>> groups(BlockEntity entity) {
         if (entity == null || entity.getLevel() == null
-                || !BuiltInRegistries.BLOCK.getKey(entity.getBlockState().getBlock()).getNamespace().equals("gt6ce")) return null;
+                || !BuiltInRegistries.BLOCK.getKey(entity.getBlockState().getBlock()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return null;
 //? if >=1.21.1 {
         /*var handler = entity.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
                 entity.getBlockPos(), null);

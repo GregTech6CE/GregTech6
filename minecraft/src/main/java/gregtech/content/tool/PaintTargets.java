@@ -36,7 +36,8 @@ public final class PaintTargets {
 
     private static boolean grass(Block block) {
         var id = BuiltInRegistries.BLOCK.getKey(block);
-        return id.getNamespace().equals("gt6ce") && PaintingRules.GRASS_IDS.contains(id.getPath());
+        return id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)
+                && PaintingRules.GRASS_IDS.contains(id.getPath());
     }
 
     public static Block colorTarget(Block block, int index) {

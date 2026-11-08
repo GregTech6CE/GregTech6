@@ -55,7 +55,7 @@ public final class CoverDrops {
     }
 
     public static List<ItemStack> capture(BlockState state, ServerLevel level, BlockEntity owner, List<ItemStack> drops) {
-        if (owner == null || !net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace().equals("gt6ce")) return drops;
+        if (owner == null || !net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return drops;
         boolean machine = owner instanceof gregtech.content.blockentity.machine.HopperBlockEntity
                 || owner instanceof gregtech.content.blockentity.tool.ProcessingToolBlockEntity
                 || owner instanceof gregtech.content.blockentity.GTEnergyBlockEntity

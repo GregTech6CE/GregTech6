@@ -366,7 +366,7 @@ public final class MachineRecipeIngredients {
     private static Object byItemId(String id) {
         ResourceLocation key = ResourceLocation.tryParse(id.trim());
         if (key == null) return null;
-        if (key.getNamespace().equals("gt6ce")) key = ResourceLocation.fromNamespaceAndPath("gt6ce",
+        if (key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) key = ResourceLocation.fromNamespaceAndPath("gt6ce",
                 key.getPath());
         Item item = Mc.item(key);
         if (item == null || item == Items.AIR) return null;

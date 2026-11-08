@@ -111,7 +111,7 @@ public final class NonOreContinuationEvidence {
         if (prefix == null) return false;
         var id = BuiltInRegistries.ITEM.getKey(item);
         if (id == null
-                || !id.getNamespace().equals("gt6ce")
+                || !id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)
                 || !(item instanceof MaterialFormItem form)
                 || form.getPrefix() != prefix
                 || form.getMaterial().resolve() != material) return false;

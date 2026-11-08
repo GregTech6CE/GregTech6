@@ -30,12 +30,12 @@ final class EmiCatalogRepair {
                 .filter(stack -> !(stack.getKey() instanceof net.minecraft.world.level.material.Fluid
                         && stack.getItemStack().isEmpty()
                         && representedFluids.contains(stack.getKey())
-                        && stack.getId().getNamespace().equals("gt6ce")))
+                        && stack.getId().getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)))
                 .filter(stack -> !(stack.getItemStack().getItem() instanceof
                         gregtech.content.block.misc.LegacyConstructionBlockItem)).toList();
         var sorted = new ArrayList<EmiStack>();
         for (var stack : original) {
-            if (!stack.getId().getNamespace().equals("gt6ce")) continue;
+            if (!stack.getId().getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) continue;
             var item = stack.getItemStack();
 //? if >=1.21.1 {
             /*var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(item);
@@ -56,7 +56,7 @@ final class EmiCatalogRepair {
         // shows the fluid instead of its carrier item, without pulling them into GT's sort order.
         var extras = new java.util.IdentityHashMap<EmiStack,EmiStack>();
         for (var stack : original) {
-            if (stack.getId().getNamespace().equals("gt6ce")) continue;
+            if (stack.getId().getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) continue;
             var item = stack.getItemStack();
 //? if >=1.21.1 {
             /*var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(item);
@@ -75,7 +75,7 @@ final class EmiCatalogRepair {
         var result = new ArrayList<EmiStack>(original.size());
         var next = sorted.iterator();
         for (var stack : original) {
-            if (stack.getId().getNamespace().equals("gt6ce")) {
+            if (stack.getId().getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) {
                 result.add(next.next());
             } else {
                 var wrapped = extras.get(stack);

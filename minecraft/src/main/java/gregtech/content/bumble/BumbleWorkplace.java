@@ -104,7 +104,7 @@ public final class BumbleWorkplace {
 
     private static boolean isRainbowLeaf(Block block) {
         ResourceLocation id = Mc.blockId(block);
-        return id != null && id.getNamespace().equals("gt6ce")
+        return id != null && id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)
                 && (id.getPath().equals("leaves_rainbowood")
                 || id.getPath().equals("leaves_opaque_rainbowood"));
     }
@@ -153,7 +153,7 @@ public final class BumbleWorkplace {
                 && !plant.iconName().equals("flower_hexalily");
     }
 //? if >=1.21.1 {
-    /*private static boolean isDiggableClay(Block block){var id=BuiltInRegistries.BLOCK.getKey(block);return id.getNamespace().equals("gt6ce")&&java.util.Set.of("clay_brown","clay_red","clay_blue","clay_yellow","clay_white").contains(id.getPath());}
+    /*private static boolean isDiggableClay(Block block){var id=BuiltInRegistries.BLOCK.getKey(block);return id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)&&java.util.Set.of("clay_brown","clay_red","clay_blue","clay_yellow","clay_white").contains(id.getPath());}
 *///?} else {
 //?}
 }

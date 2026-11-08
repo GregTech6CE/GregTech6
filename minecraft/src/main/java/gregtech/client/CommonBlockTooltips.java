@@ -43,7 +43,7 @@ public final class CommonBlockTooltips {
     public static void append(ItemStack stack, List<Component> lines) {
         if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem item)) return;
         Block block = item.getBlock();
-        if (!BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gt6ce")) return;
+        if (!BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return;
         boolean flammable = lines.stream().anyMatch(line -> containsAnyKey(line, FLAME_KEYS));
         var state = block.defaultBlockState();
         var ore = gregtech.content.data.OreHostPhysics.itemParams(stack);

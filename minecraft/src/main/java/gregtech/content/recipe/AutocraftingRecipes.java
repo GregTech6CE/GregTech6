@@ -64,7 +64,7 @@ public final class AutocraftingRecipes {
 
     private static String id(ItemStack stack) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        return id.getNamespace().equals("gt6ce") ? id.getPath() : "";
+        return id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) ? id.getPath() : "";
     }
 
     public static boolean isProgram(ItemStack stack) {

@@ -25,7 +25,7 @@ public final class GTBerryBushes extends BerryBushCatalog {
         if (stack.is(Items.STRING)) return DEFAULT;
         ResourceLocation id = Mc.itemId(stack.getItem());
         if (id == null) return null;
-        return id.getNamespace().equals("gt6ce") ? BerryBushCatalog.byId(id.getPath()) : null;
+        return id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) ? BerryBushCatalog.byId(id.getPath()) : null;
     }
 
     public static BerryType byId(String id) {

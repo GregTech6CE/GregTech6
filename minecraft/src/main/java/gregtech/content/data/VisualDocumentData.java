@@ -18,7 +18,7 @@ public final class VisualDocumentData {
 
     public static boolean isPages(ItemStack stack) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        return id.getNamespace().equals("gt6ce") && (id.getPath().equals("printed_pages") || id.getPath().equals("many_printed_pages"));
+        return id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && (id.getPath().equals("printed_pages") || id.getPath().equals("many_printed_pages"));
     }
 
     public static boolean isBook(ItemStack stack) {

@@ -296,7 +296,7 @@ public final class GTToolHelper {
         /*if (stack.getItem() instanceof gregtech.engine.tool.PoweredToolItem) return false;
 *///?}
         var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(tool);
-        return id != null && id.getNamespace().equals("gt6ce") && id.getPath().equals("tool_" + tool.toolType().id())
+        return id != null && id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && id.getPath().equals("tool_" + tool.toolType().id())
                 && gregtech.content.registry.GTToolItems.get(tool.toolType()) == tool;
     }
 
@@ -500,7 +500,7 @@ public final class GTToolHelper {
 
         var id=Mc.blockId(state.getBlock());
 
-        if(id==null || !id.getNamespace().equals("gt6ce")) return false;
+        if(id==null || !id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
         return switch(tool) {
             case SWORD -> matchesTool(stack, GTToolType.SWORD);
             case WRENCH -> isMachineWrench(stack) && (!state.requiresCorrectToolForDrops()

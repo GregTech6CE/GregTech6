@@ -26,7 +26,7 @@ public abstract class BlockEntityPaintMixin implements Paintable {
 
     @Unique
     private boolean gregtech$own() {
-        return BuiltInRegistries.BLOCK.getKey(gregtech$self().getBlockState().getBlock()).getNamespace().equals("gt6ce");
+        return BuiltInRegistries.BLOCK.getKey(gregtech$self().getBlockState().getBlock()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
     }
 
     @Unique

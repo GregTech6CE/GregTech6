@@ -92,7 +92,7 @@ public final class OvenRecipeBridge {
 *///?} else {
             var recipeId = recipe.getId();
 //?}
-            if (recipeId.getNamespace().equals("gt6ce") && recipeId.getPath().startsWith("clay_molds/imprint_")
+            if (recipeId.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && recipeId.getPath().startsWith("clay_molds/imprint_")
                     && recipe.getIngredients().stream().anyMatch(input -> input != Ingredient.EMPTY
                     && java.util.Arrays.stream(input.getItems()).noneMatch(stack -> !stack.isEmpty()
                     && !stack.is(net.minecraft.world.item.Items.BARRIER)))) continue;
@@ -103,7 +103,7 @@ public final class OvenRecipeBridge {
             // vanilla furnace turns ore blocks straight into ingots, the step GT6 deliberately removed.
             // Recipes this mod authors itself already encode the proper conversions (stone firing,
             // ceramic and mold firing), so only foreign rows are subject to the removal.
-            if (cooking && !recipeId.getNamespace().equals("gt6ce")
+            if (cooking && !recipeId.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)
                     && oreDicted(firstInput(recipe)) && oreDicted(result)
                     && !isRetainedVanillaSmelting(recipeId, recipe, result)) {
                 dropped++;

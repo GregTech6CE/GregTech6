@@ -104,7 +104,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                 result.put(itemModel(id), MaterialIconDefinitions.addonItemModel(material.getPrefix()).getBytes(StandardCharsets.UTF_8));
                 continue;
             }
-            if (id.getNamespace().equals("gt6ce") && !id.getPath().equals("bottle_crate")
+            if (id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && !id.getPath().equals("bottle_crate")
                     && item instanceof BlockItem crateItem
                     && crateItem.getBlock() instanceof gregtech.content.block.inventory.BottleCrateBlock crate) {
                 String model = "block/inventory/" + id.getPath();
@@ -123,7 +123,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
 *///?} else {
             boolean fluidDisplay = item instanceof gregtech.content.item.FluidItem;
 //?}
-            if (!id.getNamespace().equals("gt6ce") && !materialForm && !fluidDisplay) continue;
+            if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && !materialForm && !fluidDisplay) continue;
             if (JsonResourceAliases.contains("/assets/" + id.getNamespace()
                     + "/models/item/" + id.getPath() + ".json")) continue;
             ResourceLocation parent = null;
@@ -162,7 +162,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         for (var block : BuiltInRegistries.BLOCK) {
             if (!(block instanceof MaterialBlockLike material)) continue;
             ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
-            if (!id.getNamespace().equals("gt6ce") || JsonResourceAliases.contains(
+            if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) || JsonResourceAliases.contains(
                     "/assets/gt6ce/blockstates/" + id.getPath() + ".json")) continue;
             var parent = BlockMaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.material()), material.prefix());
             if (!templates.computeIfAbsent(parent, key -> JsonResourceAliases.contains(
@@ -285,7 +285,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         for (var block : BuiltInRegistries.BLOCK) {
             if (!(block instanceof MaterialBlockLike like) || !like.prefix().isAddon()) continue;
             var id = BuiltInRegistries.BLOCK.getKey(block);
-            if (id == null || !"gt6ce".equals(id.getNamespace())) continue;
+            if (id == null || !gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE.equals(id.getNamespace())) continue;
             String parent = "gt6ce:block/material/addon/" + like.prefix().getTextureFileName();
             result.put(location("blockstates/" + id.getPath() + ".json"),
                     ("{\"variants\":{\"\":{\"model\":\"" + parent + "\"}}}").getBytes(StandardCharsets.UTF_8));

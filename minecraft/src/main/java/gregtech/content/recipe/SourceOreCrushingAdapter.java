@@ -281,7 +281,7 @@ final class SourceOreCrushingAdapter {
             if (vanillaMaterial != null)
                 return material.getName().equals(vanillaMaterial) ? NativeKind.FIXED_STONE : null;
             if (!(input.getItem() instanceof BlockItem item)
-                    || !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")) return null;
+                    || !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return null;
             var block = item.getBlock();
             if (block.getClass() == OreBlock.class) {
                 OreBlock ore = (OreBlock)block;
@@ -375,7 +375,7 @@ final class SourceOreCrushingAdapter {
             if (selected.isEmpty()) return NativeForm.absent();
             if (!(selected.getItem() instanceof BlockItem item) || !(item.getBlock() instanceof MaterialBlockLike physical)
                     || physical.prefix() != BlockMaterialPrefix.blockDust || physical.prefix().getMaterialWeight() != 9 * U
-                    || physical.material().resolve() != material || !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce"))
+                    || physical.material().resolve() != material || !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))
                 return NativeForm.unknown();
             return NativeForm.present(selected);
         }

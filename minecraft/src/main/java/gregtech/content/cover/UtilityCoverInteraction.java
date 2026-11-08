@@ -35,7 +35,7 @@ public final class UtilityCoverInteraction {
 //?}
         // These registered GT containers encode their fluid identity in the item catalog, not NBT.
         var key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(held.getItem());
-        if (key.getNamespace().equals("gt6ce")) {
+        if (key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) {
             for (String prefix : new String[]{"bottle_", "capsule_", "cell_", "bucket_"})
                 if (key.getPath().startsWith(prefix)) {
                     var name = key.getPath().substring(prefix.length());

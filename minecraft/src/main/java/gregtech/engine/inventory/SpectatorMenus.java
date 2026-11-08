@@ -33,7 +33,7 @@ public final class SpectatorMenus {
     public static boolean canOpen(Level level, BlockHitResult hit) {
         var pos = hit.getBlockPos();
         var state = level.getBlockState(pos);
-        if (!BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace().equals("gt6ce")) return false;
+        if (!BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
         var entity = level.getBlockEntity(pos);
         if (entity instanceof BasicMachineBlockEntity && state.getBlock() instanceof BasicMachineBlock
                 || entity instanceof BehaviorMachineBlockEntity) return true;

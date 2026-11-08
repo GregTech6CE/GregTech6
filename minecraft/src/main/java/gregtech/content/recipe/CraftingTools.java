@@ -16,7 +16,7 @@ public final class CraftingTools {
     private CraftingTools() {}
     private static String id(ItemStack stack) {
         var id = Mc.itemId(stack.getItem());
-        return id != null && id.getNamespace().equals("gt6ce") ? id.getPath() : "";
+        return id != null && id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) ? id.getPath() : "";
     }
     public static boolean matches(ItemStack stack, gregtech.engine.tool.GTToolType kind) {
         return CraftingToolDefinitions.matches(id(stack),kind.id())
@@ -42,7 +42,7 @@ public final class CraftingTools {
     }
     private static boolean isGtItem(net.minecraft.world.item.Item item) {
         var key = BuiltInRegistries.ITEM.getKey(item);
-        return key != null && key.getNamespace().equals("gt6ce");
+        return key != null && key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
     }
     public static Ingredient expand(Ingredient ingredient) {
 //? if >=1.21.1 {

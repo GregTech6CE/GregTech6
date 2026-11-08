@@ -116,7 +116,7 @@ public final class GTFoodItems {
             return null;
         }
         ResourceLocation key = Mc.itemId(item);
-        return key == null || !"gt6ce".equals(key.getNamespace()) ? null : entryFor(key.getPath());
+        return key == null || !gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE.equals(key.getNamespace()) ? null : entryFor(key.getPath());
     }
 
     /** How many of GT6's food items the port registers (all 266 of {@code MultiItemFood}). */

@@ -56,7 +56,8 @@ public final class ReviewedCrushedFormGeneration {
                         form.materialName().equals(name) && form.prefixName().equals(prefix.getName()))) return false;
         if (canonical == null || canonical.isEmpty()) return true;
         var id = BuiltInRegistries.ITEM.getKey(canonical.getItem());
-        if (!id.getNamespace().equals("gt6ce") || !id.getPath().equals(prefix.getItemId(material))) return false;
+        if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)
+                || !id.getPath().equals(prefix.getItemId(material))) return false;
         if (!(canonical.getItem() instanceof MaterialFormItem form)
                 || form.getMaterial().resolve() != material
                 || form.getPrefix() != prefix) return false;

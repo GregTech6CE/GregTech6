@@ -321,7 +321,7 @@ public final class ChemRecipeResolver {
                 && form.prefix() == BlockMaterialPrefix.blockDust
                 && form.material() != null && form.material().resolve() == canonical;
         var itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        boolean registry = typed && itemId != null && itemId.getNamespace().equals("gt6ce")
+        boolean registry = typed && itemId != null && itemId.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)
                 && stack.getItem() instanceof net.minecraft.world.item.BlockItem blockItem
                 && blockItem.getBlock().asItem() == stack.getItem()
                 && itemId.equals(BuiltInRegistries.BLOCK.getKey(blockItem.getBlock()));
@@ -385,7 +385,7 @@ public final class ChemRecipeResolver {
         if (material == null) return false;
         for (var item : BuiltInRegistries.ITEM) {
             var id = BuiltInRegistries.ITEM.getKey(item);
-            if (id == null || id.getNamespace().equals("gt6ce") || id.getNamespace().equals("minecraft")) continue;
+            if (id == null || id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) || id.getNamespace().equals("minecraft")) continue;
             if (item instanceof MaterialFormItem direct
                     && direct.getPrefix() != null && direct.getMaterial() != null
                     && direct.getPrefix().getName().equals(binding.prefixName())
@@ -393,7 +393,7 @@ public final class ChemRecipeResolver {
         }
         for (var entry : gregtech.engine.material.ItemMaterialRegistry.entries().entrySet()) {
             var id = BuiltInRegistries.ITEM.getKey(entry.getKey());
-            if (id == null || id.getNamespace().equals("gt6ce") || id.getNamespace().equals("minecraft")) continue;
+            if (id == null || id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) || id.getNamespace().equals("minecraft")) continue;
             var declaredForm = MaterialEquivalence.form(new ItemStack(entry.getKey()));
             if (declaredForm != null && declaredForm.prefix().getName().equals(binding.prefixName())
                     && declaredForm.material().resolve() == material) return true;

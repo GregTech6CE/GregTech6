@@ -44,7 +44,7 @@ public enum MachineCoverSpec {
     public static MachineCoverSpec of(ItemStack stack) {
         if (stack.isEmpty()) return null;
         var key = Mc.itemId(stack.getItem());
-        if (key == null || !key.getNamespace().equals("gt6ce")) return null;
+        if (key == null || !key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return null;
         for (var spec : values())
             if (spec.id.equals(key.getPath())) return spec;
         return null;

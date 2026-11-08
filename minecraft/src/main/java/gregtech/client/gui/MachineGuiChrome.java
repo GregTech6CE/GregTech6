@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /** Resource-pack textures in GUI pixels: fixed end caps, repeated four-pixel middle. */
-@EventBusSubscriber(modid = "gt6ce", value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public final class MachineGuiChrome {
     private static final int BRAND_X = 79, BRAND_Y = 62, BRAND_SIZE = 19;
     private static final Map<ResourceLocation, Boolean> BRAND_SPACE = new ConcurrentHashMap<>();

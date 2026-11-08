@@ -47,7 +47,7 @@ public final class FormConversionCraftingRecipeInjector {
     public static boolean disallowsPlainRecipe(ResourceLocation id,
                                                net.minecraft.world.item.crafting.CraftingRecipe recipe,
                                                net.minecraft.core.RegistryAccess access) {
-        return CraftingMaterialForms.replaces(recipe, access, id != null && id.getNamespace().equals("gt6ce"));
+        return CraftingMaterialForms.replaces(recipe, access, id != null && id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE));
     }
 
     public static boolean disallowsPlainRecipe(net.minecraft.world.item.crafting.CraftingRecipe recipe,
@@ -113,7 +113,7 @@ public final class FormConversionCraftingRecipeInjector {
     }
 
     private static boolean isDedupSource(ResourceLocation id) {
-        if (!id.getNamespace().equals("gt6ce")) return false;
+        if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
         String path = id.getPath();
         return path.startsWith("wire_working/weave_")
                 || path.startsWith("wire_working/unpack_")
@@ -127,7 +127,7 @@ public final class FormConversionCraftingRecipeInjector {
     }
 
     private static boolean isCanonicalSource(ResourceLocation id) {
-        if (!id.getNamespace().equals("gt6ce")) return false;
+        if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
         String path = id.getPath();
         return path.startsWith("form_conversion/")
                 || path.startsWith("wire_sizes/")
@@ -204,7 +204,7 @@ public final class FormConversionCraftingRecipeInjector {
         // Rebind existing generated rows too: their JSON ingredient aliases were indexed before
         // this reload's tags existed. Only this loader's own form-conversion rows are rebuilt.
         int beforeRebind = recipes.size();
-        recipes.removeIf(holder -> holder.id().getNamespace().equals("gt6ce")
+        recipes.removeIf(holder -> holder.id().getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)
                 && holder.id().getPath().startsWith("form_conversion/")
                 && holder.value() instanceof gregtech.content.recipe.ToolShapelessRecipe);
         int rebound = beforeRebind - recipes.size();

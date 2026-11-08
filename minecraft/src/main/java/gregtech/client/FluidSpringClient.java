@@ -50,11 +50,7 @@ public final class FluidSpringClient {
             var output = fluid == null ? Fluids.WATER : BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluid.fluidId()));
             var id = BlockModelShaper.stateToModelLocation(block.defaultBlockState());
             event.getModels().computeIfPresent(id, (key, model) -> new FluidSpringBakedModel(model, output));
-//? if >=1.21.1 {
-            /*var item = ModelResourceLocation.inventory(BuiltInRegistries.BLOCK.getKey(block));
-*///?} else {
-            var item = new ModelResourceLocation(BuiltInRegistries.BLOCK.getKey(block), "inventory");
-//?}
+            var item = ModelResourceLocationCompat.inventory(BuiltInRegistries.BLOCK.getKey(block));
             event.getModels().computeIfPresent(item, (key, model) -> new FluidSpringBakedModel(model, output));
         }
     }

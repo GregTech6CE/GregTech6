@@ -68,9 +68,6 @@ public class GregTechConstants {
         "Gray", "Pink", "Lime", "Yellow", "Light Blue", "Magenta", "Orange", "White"
     };
 
-    /** Legacy registry namespace; loader identity is GregTechIdentity.MOD_ID. */
-    public static final String MODID = "gt6ce";
-
     public static void bootstrap() {
         // Reserved for future CS-side initialization.
     }

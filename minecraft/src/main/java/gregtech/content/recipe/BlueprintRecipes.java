@@ -48,7 +48,7 @@ public final class BlueprintRecipes {
 
     private static boolean is(ItemStack stack, String path) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        return id.getNamespace().equals("gt6ce") && id.getPath().equals(path);
+        return id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && id.getPath().equals(path);
     }
 
     public static Recipe scan(Level level, BlockEntity machine, ItemStack special,

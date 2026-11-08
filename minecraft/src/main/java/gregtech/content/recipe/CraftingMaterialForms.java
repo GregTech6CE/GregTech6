@@ -175,7 +175,7 @@ public final class CraftingMaterialForms {
             var tag = iterator.next();
             var form = formOf(tag.location());
             if (form == null) continue;
-            if (tag.location().getNamespace().equals("gt6ce")) return form;
+            if (tag.location().getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return form;
             if (common == null) common = form;
         }
         return common;

@@ -51,7 +51,7 @@ final class SourceDecompositionNativeFacts {
         Set<String> dustRoles = Set.of("dust", "dustTiny", "dustSmall", "dustDiv72", "blockDust");
         for (var entry : ItemMaterialRegistry.entries().entrySet()) {
             var id = BuiltInRegistries.ITEM.getKey(entry.getKey());
-            if (id == null || id.getNamespace().equals("gt6ce") || id.getNamespace().equals("minecraft")) continue;
+            if (id == null || id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) || id.getNamespace().equals("minecraft")) continue;
             var form = MaterialEquivalence.form(new ItemStack(entry.getKey()));
             if (form != null && dustRoles.contains(form.prefix().getName())
                     && relevant.contains(form.material().resolve().getName())) return false;
@@ -88,7 +88,7 @@ final class SourceDecompositionNativeFacts {
             var value = GeneratedRecipeResolver.namedFluid(field.getKey(), mb);
             if (value == null || value.isEmpty()) continue;
             var id = BuiltInRegistries.FLUID.getKey(value.getFluid());
-            if (id != null && (id.getNamespace().equals("gt6ce") && id.getPath().equals(path)
+            if (id != null && (id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && id.getPath().equals(path)
                     || e.usesVanillaFluid() && id.getNamespace().equals("minecraft") && id.getPath().equals(path)))
                 return value;
         }

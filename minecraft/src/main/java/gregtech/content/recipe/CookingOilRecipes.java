@@ -15,10 +15,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.util.ArrayList;
@@ -126,12 +124,8 @@ public final class CookingOilRecipes {
         Item item;
         if (id.indexOf(':') >= 0) {
             var key = ResourceLocation.parse(id);
-//? if >=1.21.1 {
-            /*item = BuiltInRegistries.ITEM.get(key);
+            item = gregtech.platform.Mc.item(key);
             if (item == net.minecraft.world.item.Items.AIR) item = null;
-*///?} else {
-            item = ForgeRegistries.ITEMS.getValue(key);
-//?}
         } else {
             item = GTFoodItems.itemOrNull(id);
         }

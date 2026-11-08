@@ -271,7 +271,7 @@ final class SourceThermalNativeAdapter {
   }
   private long validatedUnits(GTMaterial material,ItemStack stack,Set<MaterialPrefix> allowed){
    if(stack.isEmpty()||stack.isDamaged()||ItemMaterialRegistry.hasStoredContents(stack)
-       ||!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("gt6ce"))return -1;
+       ||!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))return -1;
 //? if >=1.21.1 {
    /*if(!stack.getComponentsPatch().isEmpty())return -1;
 *///?} else {

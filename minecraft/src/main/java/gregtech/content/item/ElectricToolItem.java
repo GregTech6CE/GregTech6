@@ -148,7 +148,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
 
         var key = Mc.blockId(state.getBlock());
 
-        boolean ownBlock = key != null && key.getNamespace().equals("gt6ce");
+        boolean ownBlock = key != null && key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
         // Sneaking skips Block.use. Give the machine's existing tool handling first chance.
         if (ownBlock) {
             var hit = new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),

@@ -156,7 +156,7 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6's {@code BlocksGT.oreSand} family — the port keeps its sands as icon set blocks. */
     public static boolean isSandLike(BlockState state) {
         ResourceLocation id = Mc.blockId(state.getBlock());
-        return id != null && id.getNamespace().equals("gt6ce") && id.getPath().startsWith("sand_");
+        return id != null && id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && id.getPath().startsWith("sand_");
     }
 
     /**

@@ -74,7 +74,7 @@ public final class BlockLootPack extends AbstractPackResources {
         var tags = new TreeMap<String, Set<String>>();
         for (var block : Mc.blocks()) {
             var id = Mc.blockId(block);
-            if (id == null || !id.getNamespace().equals("gt6ce") || block instanceof net.minecraft.world.level.block.LiquidBlock) continue;
+            if (id == null || !id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) || block instanceof net.minecraft.world.level.block.LiquidBlock) continue;
             String tag = BlockHarvestPolicy.tag(BlockHarvestPolicy.tool(block));
             tags.computeIfAbsent(tag, k -> new TreeSet<>()).add(id.toString());
             int level = BlockHarvestPolicy.level(block);

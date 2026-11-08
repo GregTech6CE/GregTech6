@@ -34,15 +34,9 @@ public final class RainbowLeavesColors {
     /** GT6's opaque leaves render pass is registered as its own full-cube block in the port. */
     @javax.annotation.Nullable
     private static net.minecraft.world.level.block.Block opaqueLeaves() {
-//? if >=1.21.1 {
-        /*var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
-                gregtech.engine.mod.GregTechIdentity.MOD_ID, "leaves_opaque_rainbowood");
-        var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(id);
+        var id = gregtech.platform.Mc.gregtechId("leaves_opaque_rainbowood");
+        var block = gregtech.platform.Mc.block(id);
         return block == net.minecraft.world.level.block.Blocks.AIR ? null : block;
-*///?} else {
-        return net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-                new net.minecraft.resources.ResourceLocation(gregtech.engine.mod.GregTechIdentity.MOD_ID, "leaves_opaque_rainbowood"));
-//?}
     }
 
     @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event) {

@@ -18,7 +18,7 @@ import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.model.BakedModelWrapper;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.ChunkRenderTypeSet;
-@EventBusSubscriber(modid = "gt6ce", bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -28,14 +28,14 @@ import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.model.BakedModelWrapper;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.ChunkRenderTypeSet;
-@Mod.EventBusSubscriber(modid = "gt6ce", bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class ConfiguredAlphaModels {
     private ConfiguredAlphaModels() {}
 
     public static boolean enabled(String namespace) {
-        return !namespace.equals("gt6ce") && !namespace.equals("minecraft")
-                || (namespace.equals("gt6ce") ? Rule.GT_ALPHA : Rule.MC_ALPHA).enabled();
+        return !namespace.equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && !namespace.equals("minecraft")
+                || (namespace.equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) ? Rule.GT_ALPHA : Rule.MC_ALPHA).enabled();
     }
 
     public static RenderType gtTranslucent() {

@@ -126,7 +126,7 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
 
     public static boolean isBlueprint(ItemStack stack) {
         var id = Mc.itemId(stack.getItem());
-        return id != null && id.getNamespace().equals("gt6ce") && (id.getPath().equals("empty_blueprint") || id.getPath().equals("blueprint"));
+        return id != null && id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && (id.getPath().equals("empty_blueprint") || id.getPath().equals("blueprint"));
     }
 
     public boolean writeBlueprint() {

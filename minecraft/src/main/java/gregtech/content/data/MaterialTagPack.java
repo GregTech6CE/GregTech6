@@ -222,11 +222,11 @@ public final class MaterialTagPack extends AbstractPackResources {
                     }
                 }
             }
-            if(id.getNamespace().equals("gt6ce"))
+            if(id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))
                 for(String tag:gregtech.content.recipe.TechnologyIngredients.usbTags(id.getPath()))
                     add(tags,"gt6ce","items",tag,id.toString());
             for(var tool:gregtech.content.tool.CraftingToolDefinitions.ALL)
-                if(id.getNamespace().equals("gt6ce") && (tool.tip().equals(id.getPath()) || tool.token().equals(id.getPath())))
+                if(id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && (tool.tip().equals(id.getPath()) || tool.token().equals(id.getPath())))
                     for(String toolKind:tool.kinds()) add(tags,"forge","items","tools/"+toolKind,id.toString());
             // GT tools: standard Forge convention, e.g. forge:tools/wrench, plus the extra GT6
             // identities of the same tool (a Knife is also a blade, a Monkey Wrench also a wrench).
@@ -393,7 +393,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                 .add("#minecraft:wooden_slabs");
         for (var item : Mc.items()) {
             var id = Mc.itemId(item);
-            if (id == null || !id.getNamespace().equals("gt6ce")) continue;
+            if (id == null || !id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) continue;
             if (item instanceof BlockItem blockItem
                     && blockItem.getBlock() instanceof gregtech.content.block.wood.WoodPlanksBlock) {
                 tags.computeIfAbsent(tagPath("gt6ce:tags/items/wooden_planks.json"), k -> new TreeSet<>())

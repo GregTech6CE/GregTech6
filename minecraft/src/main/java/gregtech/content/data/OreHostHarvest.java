@@ -51,14 +51,14 @@ public final class OreHostHarvest {
   var p=params.get();
   if(stack.isEmpty())return Optional.of(false);
   if(stack.getItem() instanceof ElectricToolItem electric){
-   if(stack.getItem().getClass()!=ElectricToolItem.class || !BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("gt6ce"))return Optional.empty();
+   if(stack.getItem().getClass()!=ElectricToolItem.class || !BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))return Optional.empty();
    boolean tool=electric.toolName().equals("Mining Drill")&&(p.tool().equals("PICKAXE")||p.tool().equals("SHOVEL"));
    return Optional.of(tool&&electric.isPoweredUsable(stack)
        &&electric.headMaterial(stack).getToolQuality()+electric.definition().quality()>=p.harvest());
   }
   if(stack.getItem() instanceof GTToolItem){
    if(stack.getItem().getClass()!=GTToolItem.class && stack.getItem().getClass()!=gregtech.content.item.PocketToolItem.class)return Optional.empty();
-   if(!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("gt6ce"))return Optional.empty();
+   if(!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))return Optional.empty();
    var tag=GTToolHelper.getType(stack).harvestTag();
    boolean tool=p.tool().equals("PICKAXE")?BlockTags.MINEABLE_WITH_PICKAXE.equals(tag):BlockTags.MINEABLE_WITH_SHOVEL.equals(tag);
    return Optional.of(tool&&GTToolHelper.isUsable(stack)&&GTToolHelper.getHarvestLevel(stack)>=p.harvest());

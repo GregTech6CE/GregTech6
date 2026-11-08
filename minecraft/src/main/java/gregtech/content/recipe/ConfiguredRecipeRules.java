@@ -61,7 +61,7 @@ public final class ConfiguredRecipeRules {
     }
 
     private static JsonElement unifyOutput(ResourceLocation id, JsonElement json) {
-        if (!id.getNamespace().equals("gt6ce") || !json.isJsonObject()) return json;
+        if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) || !json.isJsonObject()) return json;
         var object = json.getAsJsonObject();
         if (!object.has("result")) return json;
         var result = object.get("result");
@@ -85,7 +85,7 @@ public final class ConfiguredRecipeRules {
     }
 
     private static JsonElement unifyIngredients(ResourceLocation id, JsonElement json) {
-        if (!id.getNamespace().equals("gt6ce") || !json.isJsonObject()) return json;
+        if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) || !json.isJsonObject()) return json;
         var copy = json.getAsJsonObject().deepCopy();
         for (String key : new String[] {"key", "ingredient", "ingredients", "base", "addition", "template"}) {
             if (copy.has(key)) unifyIngredient(copy.get(key));
@@ -108,7 +108,7 @@ public final class ConfiguredRecipeRules {
 
     private static String vanillaItem(String name) {
         var id = ResourceLocation.tryParse(name);
-        if (id == null || !id.getNamespace().equals("gt6ce")) return null;
+        if (id == null || !id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return null;
         var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(id);
         var stack = new net.minecraft.world.item.ItemStack(item);
         if (!gregtech.engine.material.MaterialUnification.hiddenDuplicate(stack)) return null;
@@ -118,7 +118,7 @@ public final class ConfiguredRecipeRules {
 
     private static JsonElement restore(ResourceLocation id, JsonElement current, ResourceManager resources) {
         boolean vanilla = id.getNamespace().equals("minecraft");
-        if (id.getNamespace().equals("gt6ce") || (vanilla ? GregTechConfig.Rule.REPLACE_VANILLA_RECIPES
+        if (id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) || (vanilla ? GregTechConfig.Rule.REPLACE_VANILLA_RECIPES
                 : GregTechConfig.Rule.REPLACE_MOD_RECIPES).enabled()) return current;
 //? if >=1.21.1 {
         /*String directory = "recipe/";

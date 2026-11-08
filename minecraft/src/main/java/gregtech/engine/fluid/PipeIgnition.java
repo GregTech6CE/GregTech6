@@ -41,8 +41,10 @@ public final class PipeIgnition {
                 }
             }
             // Original GT block families implement IItemGT. The port registers these under gregtech.
-            boolean gtBlock =
-                    BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gt6ce");
+            boolean gtBlock = BuiltInRegistries.BLOCK
+                    .getKey(block)
+                    .getNamespace()
+                    .equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
             if (FluidPipeSafety.canIgnite(false, true, gtBlock, flammable)) {
                 level.setBlock(target, Blocks.FIRE.defaultBlockState(), 3);
             }

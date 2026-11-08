@@ -19,7 +19,7 @@ public final class ConfigFileFormatting {
     @SubscribeEvent public static void reloaded(ModConfigEvent.Reloading event) { format(event); }
 
     private static void format(ModConfigEvent event) {
-        if (!event.getConfig().getModId().equals("gt6ce")) return;
+        if (!event.getConfig().getModId().equals(gregtech.engine.mod.GregTechIdentity.MOD_ID)) return;
         var path = event.getConfig().getFullPath();
         try {
             if (!Files.isRegularFile(path)) return;

@@ -112,11 +112,7 @@ public final class FluidItemClientModels {
             if (itemId == null) {
                 continue;
             }
-//? if >=1.21.1 {
-            /*models.put(ModelResourceLocation.inventory(itemId), wrapper);
-*///?} else {
-            models.put(new ModelResourceLocation(itemId, "inventory"), wrapper);
-//?}
+            models.put(ModelResourceLocationCompat.inventory(itemId), wrapper);
         }
 //? if >=1.21.1 {
     /*}

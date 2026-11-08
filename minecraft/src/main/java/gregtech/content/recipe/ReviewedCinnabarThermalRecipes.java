@@ -88,7 +88,7 @@ public final class ReviewedCinnabarThermalRecipes {
  }
  private static boolean unchangedInput(ItemStack stack,MaterialPrefix prefix,GTMaterial material,long amount){
   if(stack.isEmpty())return true; // Missing forms were not registered by this producer either.
-  if(!net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("gt6ce"))return false;
+  if(!net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))return false;
   if(prefix!=null){
    if(!(stack.getItem() instanceof MaterialFormItem form)||form.getPrefix()!=prefix
      ||form.getMaterial().resolve()!=material||prefix.getMaterialWeight()!=amount)return false;

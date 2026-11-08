@@ -296,7 +296,7 @@ public final class OriginalHandCraftingRows {
         var result=new ArrayList<RegisteredBlock<T>>();
         for(var block:BuiltInRegistries.BLOCK){
             var key=BuiltInRegistries.BLOCK.getKey(block);
-            if(type.isInstance(block)&&key.getNamespace().equals("gt6ce"))result.add(RegisteredBlock.wrap(key.getPath(),()->type.cast(block)));
+            if(type.isInstance(block)&&key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))result.add(RegisteredBlock.wrap(key.getPath(),()->type.cast(block)));
         }
         result.sort(Comparator.comparing(entry->entry.getId().toString()));
         return List.copyOf(result);

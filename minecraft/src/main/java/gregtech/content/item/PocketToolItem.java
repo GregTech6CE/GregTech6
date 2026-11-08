@@ -33,7 +33,7 @@ public final class PocketToolItem extends GTToolItem {
   if(player!=null&&player.isShiftKeyDown()&&GTToolHelper.isUsable(stack)&&player.mayBuild()){
    var pos=context.getClickedPos();var key=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(level.getBlockState(pos).getBlock());
    if(activeType()==GTToolType.SCREWDRIVER&&level.getBlockState(pos).getBlock() instanceof gregtech.content.block.energy.SignalWireBlock)return InteractionResult.PASS;
-   if(!level.mayInteract(player,pos)||level.getBlockEntity(pos)!=null&&!key.getNamespace().equals("gt6ce"))return InteractionResult.PASS;
+   if(!level.mayInteract(player,pos)||level.getBlockEntity(pos)!=null&&!key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))return InteractionResult.PASS;
    if(!level.isClientSide){
     int index=java.util.Arrays.asList(MODES).indexOf(toolType());var next=new ItemStack(GTToolItems.get(MODES[(index+1)%MODES.length]));
 
