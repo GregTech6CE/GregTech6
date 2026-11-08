@@ -60,9 +60,9 @@ import org.jetbrains.annotations.Nullable;
 
 /** GT6 fluid container tile entity. Handles wood barrels, plastic canisters, and metal drums. */
 //? if >=1.21.1 {
-/*public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregtech.content.cover.PanelCoverHost, gregtech.api.sensor.ProgressSensorSource {
+/*public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregtech.engine.fluid.FluidToolTarget, gregtech.content.cover.PanelCoverHost, gregtech.api.sensor.ProgressSensorSource {
 *///?} else {
-public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregtech.content.cover.PanelCoverHost, gregtech.api.sensor.ProgressSensorSource {    private final java.util.Map<Direction, LazyOptional<IFluidHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
+public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregtech.engine.fluid.FluidToolTarget, gregtech.content.cover.PanelCoverHost, gregtech.api.sensor.ProgressSensorSource {    private final java.util.Map<Direction, LazyOptional<IFluidHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
 
 //?}
     private final gregtech.content.cover.ComponentCoverStorage componentCovers = new gregtech.content.cover.ComponentCoverStorage(this);
@@ -349,6 +349,14 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     @Override
     public FluidStack drain(int maxDrain, FluidAction action) {
         return softHammerState ? FluidStack.EMPTY : tank.drain(maxDrain, action);
+    }
+
+    /** Attachments bypass the facing capability, which covers and auto-output faces can close. */
+    @Override
+    public IFluidHandler fluidToolHandler(Direction side, boolean filling) {
+        if (isRemoved()) return null;
+        return filling ? new gregtech.engine.fluid.FluidPort(this, true, false)
+                : new gregtech.engine.fluid.FluidPort(this, false, true);
     }
 
     // === Capability ===

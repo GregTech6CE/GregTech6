@@ -132,23 +132,47 @@ public class GarbageData extends SavedData {
         return out;
     }
 
+    public int fluidCount() {
+        return fluids.size();
+    }
+
+    /** One garbage fluid pile clamped to an int amount, or empty when the index is unused. */
+    public FluidStack viewFluid(int index) {
+        if (index < 0 || index >= fluids.size()) return FluidStack.EMPTY;
+        FluidStack storedFluid = fluids.get(index);
+        if (storedFluid.isEmpty()) return FluidStack.EMPTY;
+        int take = (int) Math.min(Integer.MAX_VALUE, storedFluid.getAmount());
+//? if >=1.21.1 {
+        /*return storedFluid.copyWithAmount(take);
+*///?} else {
+        return new FluidStack(storedFluid, take);
+//?}
+    }
+
+    /** Drains the pile at {@code index}, preserving the insertion order the dump exposes. */
+    public FluidStack drainAt(int index, int maxDrain, boolean simulate) {
+        if (index < 0 || index >= fluids.size() || maxDrain <= 0) return FluidStack.EMPTY;
+        FluidStack storedFluid = fluids.get(index);
+        if (storedFluid.isEmpty()) return FluidStack.EMPTY;
+        int take = Math.min(maxDrain, storedFluid.getAmount());
+//? if >=1.21.1 {
+        /*FluidStack out = storedFluid.copyWithAmount(take);
+*///?} else {
+        FluidStack out = new FluidStack(storedFluid, take);
+//?}
+        if (!simulate) {
+            storedFluid.shrink(take);
+            if (storedFluid.isEmpty()) fluids.remove(index);
+            setDirty();
+        }
+        return out;
+    }
+
     /** Drains from the first non-empty garbage fluid, up to {@code maxDrain}. */
     public FluidStack drain(int maxDrain, boolean simulate) {
         for (int fluidIndex = 0; fluidIndex < fluids.size(); fluidIndex++) {
-            FluidStack storedFluid = fluids.get(fluidIndex);
-            if (storedFluid.isEmpty()) continue;
-            int take = Math.min(maxDrain, storedFluid.getAmount());
-//? if >=1.21.1 {
-            /*FluidStack out = storedFluid.copyWithAmount(take);
-*///?} else {
-            FluidStack out = new FluidStack(storedFluid, take);
-//?}
-            if (!simulate) {
-                storedFluid.shrink(take);
-                if (storedFluid.isEmpty()) fluids.remove(fluidIndex);
-                setDirty();
-            }
-            return out;
+            FluidStack out = drainAt(fluidIndex, maxDrain, simulate);
+            if (!out.isEmpty()) return out;
         }
         return FluidStack.EMPTY;
     }

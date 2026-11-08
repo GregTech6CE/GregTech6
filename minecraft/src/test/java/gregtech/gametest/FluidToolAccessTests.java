@@ -2,9 +2,12 @@ package gregtech.gametest;
 
 import gregtech.content.block.tool.FluidAttachmentBlock;
 import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;
+import gregtech.content.blockentity.inventory.EnderGarbageDumpBlockEntity;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.blockentity.machine.FuelGeneratorBlockEntity;
+import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.registry.GTFluids;
+import gregtech.content.world.GarbageData;
 import gregtech.engine.machine.MachineInventory;
 import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.core.BlockPos;
@@ -13,6 +16,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
@@ -185,6 +189,70 @@ public final class FluidToolAccessTests {
         helper.assertTrue(fill.isFluidValid(0, diesel)
                         && fill.fill(diesel, IFluidHandler.FluidAction.SIMULATE) > 0,
                 "The generator fill view did not reach the fuel tank");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void tankTapBypassesAutoOutputFacesAndClosedCovers(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var pos = helper.absolutePos(new BlockPos(2, 1, 2));
+        Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "drum_bronze"));
+        level.setBlockAndUpdate(pos, block.defaultBlockState());
+        var drum = (TankBlockEntity) level.getBlockEntity(pos);
+        helper.assertTrue(drum != null && drum.fill(new FluidStack(Fluids.WATER, 1000),
+                        IFluidHandler.FluidAction.EXECUTE) == 1000,
+                "The drum fixture rejected water");
+
+        var shutter = new ItemStack(BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "shutter_cover")));
+        gregtech.content.cover.CoverStackData.putBoolean(shutter, "gt.cover.inverted", true);
+        helper.assertTrue(drum.attachCover(Direction.UP, shutter) && drum.panels().shuttered(Direction.UP),
+                "The drum shutter fixture did not close");
+        var covered = fluidCapability(level, pos, Direction.UP);
+        helper.assertTrue(covered != null && covered.drain(100, IFluidHandler.FluidAction.EXECUTE).isEmpty(),
+                "The closed cover did not block the facing capability");
+        var tap = drum.fluidToolHandler(Direction.UP, false);
+        helper.assertTrue(tap != null && tap.drain(200, IFluidHandler.FluidAction.SIMULATE).getAmount() == 200,
+                "A tap did not bypass the closed cover");
+
+        drum.removeCover(Direction.UP);
+        drum.toggleAutoOutput();
+        helper.assertTrue(fluidCapability(level, pos, Direction.DOWN) == null,
+                "The auto-output face still exposed a fluid handler");
+        var autoTap = drum.fluidToolHandler(Direction.DOWN, false);
+        helper.assertTrue(autoTap != null && autoTap.drain(200, IFluidHandler.FluidAction.EXECUTE).getAmount() == 200,
+                "A tap on the auto-output face could not drain");
+
+        drum.toggleSoftHammerState();
+        helper.assertTrue(drum.getSoftHammerState(), "The drum fixture did not seal");
+        helper.assertTrue(drum.fluidToolHandler(Direction.DOWN, false)
+                        .drain(100, IFluidHandler.FluidAction.EXECUTE).isEmpty(),
+                "A sealed drum drained through a tap");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void garbageDumpTapRecoversStoredFluids(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var pos = helper.absolutePos(new BlockPos(2, 1, 2));
+        Block block = BuiltInRegistries.BLOCK.get(
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "ender_garbage_dump"));
+        level.setBlockAndUpdate(pos, block.defaultBlockState());
+        var dump = (EnderGarbageDumpBlockEntity) level.getBlockEntity(pos);
+        var water = new FluidStack(Fluids.WATER, 1000);
+        var steam = GTFluids.stack("Steam", 400);
+        helper.assertTrue(dump != null && steam != null, "The garbage dump fixture is incomplete");
+        GarbageData.get(level).trash(water);
+        GarbageData.get(level).trash(steam);
+
+        var facing = fluidCapability(level, pos, Direction.UP);
+        helper.assertTrue(facing != null && facing.drain(water, IFluidHandler.FluidAction.SIMULATE).getAmount() > 0,
+                "The garbage dump exposed no fluid capability");
+        var tap = dump.fluidToolHandler(Direction.UP, false);
+        helper.assertTrue(tap != null && tap.drain(water, IFluidHandler.FluidAction.EXECUTE).getAmount() == 1000,
+                "A tap did not recover garbage water");
+        helper.assertTrue(tap.drain(steam, IFluidHandler.FluidAction.EXECUTE).getAmount() == 400,
+                "A tap did not recover garbage steam");
         helper.succeed();
     }
 

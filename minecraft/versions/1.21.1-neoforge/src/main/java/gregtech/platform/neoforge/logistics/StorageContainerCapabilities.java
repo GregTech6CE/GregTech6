@@ -37,6 +37,10 @@ public final class StorageContainerCapabilities {
                 GTBlockEntities.SAP_BAG.get(),
                 (blockEntity, side) -> blockEntity);
         event.registerBlockEntity(
+                net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
+                GTBlockEntities.ENDER_GARBAGE_DUMP.get(),
+                (blockEntity, side) -> blockEntity.isRemoved() ? null : blockEntity);
+        event.registerBlockEntity(
                 net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
                 GTBlockEntities.PROCESSING_TOOL.get(),
                 (blockEntity, side) -> blockEntity.itemHandler());

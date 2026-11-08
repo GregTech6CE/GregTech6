@@ -34,7 +34,8 @@ import javax.annotation.Nullable;
  * Shows them in a chest-like GUI and continuously pushes retrieved trash into
  * the inventory/tank below (never into another bin).
  */
-public class EnderGarbageDumpBlockEntity extends BlockEntity implements MenuProvider {
+public class EnderGarbageDumpBlockEntity extends BlockEntity
+        implements MenuProvider, IFluidHandler, gregtech.engine.fluid.FluidToolTarget {
 
     /** Slots shown in the GUI (a double-chest page of the garbage piles). */
     public static final int VIEW_SLOTS = gregtech.content.storage.GarbageStorageRules.VIEW_SLOTS;
@@ -135,6 +136,82 @@ public class EnderGarbageDumpBlockEntity extends BlockEntity implements MenuProv
         });
 //?}
     }
+
+    // ── Fluid retrieval ──────────────────────────────────────────────────
+
+    private GarbageData garbage() {
+        return level == null || level.isClientSide ? null : GarbageData.get(level);
+    }
+
+    @Override
+    public int getTanks() {
+        GarbageData data = garbage();
+        return data == null ? 0 : data.fluidCount();
+    }
+
+    @Override
+    public FluidStack getFluidInTank(int tank) {
+        GarbageData data = garbage();
+        return data == null ? FluidStack.EMPTY : data.viewFluid(tank);
+    }
+
+    @Override
+    public int getTankCapacity(int tank) {
+        return tank >= 0 && tank < getTanks() ? Integer.MAX_VALUE : 0;
+    }
+
+    @Override
+    public boolean isFluidValid(int tank, FluidStack stack) {
+        return false;
+    }
+
+    @Override
+    public int fill(FluidStack resource, FluidAction action) {
+        return 0;
+    }
+
+    @Override
+    public FluidStack drain(FluidStack resource, FluidAction action) {
+        GarbageData data = garbage();
+        if (data == null || resource.isEmpty()) return FluidStack.EMPTY;
+        for (int i = 0; i < data.fluidCount(); i++) {
+            FluidStack stored = data.viewFluid(i);
+            if (!stored.isEmpty() && gregtech.engine.stack.StackCompat.sameFluid(stored, resource))
+                return data.drainAt(i, resource.getAmount(), action.simulate());
+        }
+        return FluidStack.EMPTY;
+    }
+
+    @Override
+    public FluidStack drain(int maxDrain, FluidAction action) {
+        GarbageData data = garbage();
+        return data == null ? FluidStack.EMPTY : data.drain(maxDrain, action.simulate());
+    }
+
+    /** The dump has no funnel path; taps and nozzles read the garbage fluids. */
+    @Override
+    public IFluidHandler fluidToolHandler(Direction side, boolean filling) {
+        return isRemoved() ? null : this;
+    }
+
+//? if >=1.21.1 {
+//?} else {
+    private net.minecraftforge.common.util.LazyOptional<IFluidHandler> fluids =
+            net.minecraftforge.common.util.LazyOptional.of(() -> this);
+
+    @Override
+    public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
+            net.minecraftforge.common.capabilities.Capability<T> cap, @Nullable Direction side) {
+        if (cap == ForgeCapabilities.FLUID_HANDLER) return fluids.cast();
+        return super.getCapability(cap, side);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        fluids.invalidate();
+    }
+//?}
 
     @Override
     public Component getDisplayName() {
