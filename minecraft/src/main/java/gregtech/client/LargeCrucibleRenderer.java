@@ -36,7 +36,7 @@ public final class LargeCrucibleRenderer implements BlockEntityRenderer<LargeCru
         }
     }
 
-    /** GT6 MultiTileEntityCrucible:628-655: four half-block walls and a 1.125-block floor. */
+    /** GT6 MultiTileEntityCrucible: four half-block walls and a 1.125-block floor. */
     private static void renderHull(LargeCrucibleControllerBlockEntity be, PoseStack pose,
                                    MultiBufferSource buffers, int fallbackLight) {
         float outer0 = HULL_MIN, outer1 = HULL_MAX, inner0 = INNER_MIN, inner1 = INNER_MAX;

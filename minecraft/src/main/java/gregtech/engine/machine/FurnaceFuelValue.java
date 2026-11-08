@@ -75,7 +75,7 @@ public final class FurnaceFuelValue {
                 && item.getBlock() instanceof gregtech.content.block.MaterialBlockLike block)
             return (int) MaterialFuelRules.blockBurnValue(block.material(), block.prefix());
         var data = ItemMaterialRegistry.get(stack).orElse(null);
-        // MT.java:1243 declares 100 ticks per U of bark; dry bark is its half-U item.
+        // MT declares 100 ticks per U of bark; dry bark is its half-U item.
         if (data != null && data.components().size() == 1 && data.material().resolve().getName().equals("Bark"))
             return (int) Math.min(32000L, 100L * data.amount() / GTValues.U);
         return null;

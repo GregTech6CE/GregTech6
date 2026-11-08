@@ -147,7 +147,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                     if(family.accepts(form.prefix(),form.material()))
                         add(tags,"gt6ce","items","technology/"+family.tag(),id.toString());
                 // ANY.Iron pickaxe heads for the gem-tipped pickaxe shapeless rows (GT6
-                // Loader_OreProcessing:190-191). OriginalToolMaterials keeps the source family,
+                // Loader_OreProcessing). OriginalToolMaterials keeps the source family,
                 // including Enori, which the generated MaterialGroups.Iron list omits.
                 if (anyIronHead(form.prefix(), form.material()))
                     add(tags,"gt6ce","items",form.prefix()==MaterialPrefix.toolHeadRawPickaxe
@@ -408,7 +408,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                         .add(id.toString());
             }
         }
-        // GT6 mapped modern stripped logs to beamWood (LoaderItemList:1457-1468); include the vanilla
+        // GT6 mapped modern stripped logs to beamWood (LoaderItemList); include the vanilla
         // log/wood pairs the port's wood list covers.
         var strippedLogs = tags.computeIfAbsent(tagPath("gt6ce:tags/items/stripped_logs.json"), k -> new TreeSet<>());
         for (String wood : new String[]{"oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry"}) {

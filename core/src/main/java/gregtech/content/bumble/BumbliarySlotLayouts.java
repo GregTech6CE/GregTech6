@@ -78,7 +78,7 @@ public final class BumbliarySlotLayouts {
     /** GT6's {@code SLOTS_DEAD}: the output of every dead bee, and the only slots automation sees. */
     public static final int[] SLOTS_DEAD = {27, 28, 29, 30, 31, 32, 33, 34, 35};
 
-    /** GT6's standard bumbliary ({@code MultiTileEntityBumbliary:333-343}). */
+    /** GT6's standard bumbliary ({@code MultiTileEntityBumbliary}). */
     public static final Layout LAYOUT =
             new Layout(false, 36, SLOT_ROYAL, SLOT_DRONE, SLOTS_COMBS, SLOTS_DRONE, SLOTS_DEAD, SLOTS_DEAD, 10000);
 
@@ -91,7 +91,7 @@ public final class BumbliarySlotLayouts {
     public static final int[] ADV_SLOTS_AUTO = {0, 4, 5, 9, 10, 11, 14, 15, 16, 17, 18, 19};
 
     /**
-     * GT6's advanced bumbliary ({@code MultiTileEntityBumbliaryAdvanced:333-344}). Note that GT6 lists
+     * GT6's advanced bumbliary ({@code MultiTileEntityBumbliaryAdvanced}). Note that GT6 lists
      * slot 11 in both {@code SLOTS_COMBS} and {@code SLOTS_DRONE}; the port keeps that overlap exactly
      * as the original has it.
      */

@@ -16,12 +16,12 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * References to GT6's ten canonical dungeon key items ({@code gregtech/items/MultiItemRandomTools.java:589-598}:
+ * References to GT6's ten canonical dungeon key items ({@code MultiItemRandomTools}:
  * Iron, Gold, Copper, Tin, Bronze, Brass, Silver, Platinum, Lead and Plastic key, multi-item ids
  * 30000..30009).
  *
  * <p>The canonical ids are {@code <material>_key} in the order of GT6's {@code IL.KEYS}
- * ({@code gregapi/data/IL.java:516}), which is alphabetical and is the order the dungeon's key id
+ * ({@code IL}), which is alphabetical and is the order the dungeon's key id
  * table uses. The port has no {@code key} material prefix, so the keys are registered like every other
  * plain item of the mod instead of extending the material form table - GT6's keys are ore-dictionary
  * entries built from a plate, not a material form either.</p>
@@ -32,7 +32,7 @@ import java.util.List;
  */
 public final class GTDungeonKeys {
 
-    /** GT6's {@code IL.KEYS} ({@code IL.java:516}), in that exact order. */
+    /** GT6's {@code IL.KEYS} ({@code IL}), in that exact order. */
     private static final java.util.List<String> MATERIALS = gregtech.content.storage.SafeLockRules.KEY_MATERIALS;
 
 //? if >=1.21.1 {
@@ -69,7 +69,7 @@ public final class GTDungeonKeys {
 
     /**
      * One of GT6's dungeon keys as a stack, carrying the held name and id of GT6's
-     * {@code WorldgenDungeonGT:173}: {@code "Key #" + (aKeyIndex + 1)} and the {@code gt.key} long.
+     * {@code WorldgenDungeonGT}: {@code "Key #" + (aKeyIndex + 1)} and the {@code gt.key} long.
      */
     public static ItemStack stack(int keyType, long keyId, int keyIndex) {
         GTDungeonKeyItem item = byIndex(keyType);

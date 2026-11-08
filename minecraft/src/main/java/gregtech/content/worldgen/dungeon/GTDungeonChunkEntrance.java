@@ -394,7 +394,7 @@ public class GTDungeonChunkEntrance extends GTDungeonChunkPillar {
     }
 
     /**
-     * GT6's {@code WD.easyRep} ({@code WD:687-688}: air, a bush, snow, fire or leaves) together with the
+     * GT6's {@code WD.easyRep} ({@code WD}: air, a bush, snow, fire or leaves) together with the
      * {@code Block.isWood} test of. The fully qualified vanilla {@code BushBlock} keeps this apart from
      * the port's own bush block.
      */

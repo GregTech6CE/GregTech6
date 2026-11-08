@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * GT6's bumblebee genes — the {@code IItemBumbleBee.Util} companion class
- * ({@code gregapi/item/bumble/IItemBumbleBee.java:96-184}).
+ * ({@code IItemBumbleBee}).
  *
  * <p>Every bee stack carries a {@code gt.bumble} compound with its genome:</p>
  *
@@ -110,7 +110,7 @@ public final class BumbleBeeGenes {
 
     /**
      * GT6's {@code getBumbleGenes(temperature, biome, hasSky, day, night, random)}
-     * ({@code IItemBumbleBee:132-153}).
+     * ({@code IItemBumbleBee}).
      */
     public static CompoundTag fromEnvironment(long temperature, float rainfall, boolean hasSky,
                                               boolean day, boolean night, RandomSource random) {
@@ -122,7 +122,7 @@ public final class BumbleBeeGenes {
     }
 
     /**
-     * GT6's {@code getBumbleGenes(princess, drone, random)} ({@code IItemBumbleBee:109-128}): every
+     * GT6's {@code getBumbleGenes(princess, drone, random)} ({@code IItemBumbleBee}): every
      * gene is taken from one parent at random, with the activity pairs ORed so the offspring can
      * always work.
      */

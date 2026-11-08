@@ -163,7 +163,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
                 return;
             }
 
-            // GT6 TileEntityBase08Barrel:170-186 — the hazard checks sit between the meltdown check
+            // GT6 TileEntityBase08Barrel — the hazard checks sit between the meltdown check
             // and the barrel's own modes, and they eat the contents before anything else runs.
             if (FluidHazards.proofRejects(fluid.getFluid(), spec.gasProof(), spec.acidProof(), spec.plasmaProof())) {
                 corrode(fluid);
@@ -183,7 +183,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     // ── Fluid hazards (GT6 TileEntityBase08Barrel) ───────────────────────────
 
     /**
-     * GT6 {@code TileEntityBase08Barrel:170-186}: a barrel holding a fluid its proof flags do not
+     * GT6 {@code TileEntityBase08Barrel}: a barrel holding a fluid its proof flags do not
      * cover loses the whole content at once (not the pipe's few units a tick) and fizzes, and acid
      * also dissolves the barrel itself with {@code setToAir()}, without the pipe's chance roll.
      * This method only covers the current gas/acid/plasma path; it does not implement the

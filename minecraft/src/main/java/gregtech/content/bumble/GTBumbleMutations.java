@@ -38,7 +38,7 @@ public final class GTBumbleMutations {
 
     /**
      * GT6's combination table, the nested switch of {@code bumbleCombine}
-     * ({@code MultiItemBumbles:378-435}), as {@code {speciesA, speciesB, result}} triples in GT6's own
+     * ({@code MultiItemBumbles}), as {@code {speciesA, speciesB, result}} triples in GT6's own
      * order. A result is always the base species of a tier (the {@code...00} one), because GT6 returns
      * {@code result + aBumbleType}, i.e. a drone (0) or a princess (1).
      *
@@ -57,7 +57,7 @@ public final class GTBumbleMutations {
     private GTBumbleMutations() {}
 
     /**
-     * GT6's {@code bumbleMutateChance} ({@code MultiItemBumbles:459-467}), in 1/10000.
+     * GT6's {@code bumbleMutateChance} ({@code MultiItemBumbles}), in 1/10000.
      *
      * <p>GT6 switches on {@code (meta / 10) % 10}, the species' <em>level</em> digit inside its tier of
      * four: levels 0 and 1 mutate with 5%, level 2 with 2.5%, level 3 with 0.25%, and any other level
@@ -71,13 +71,13 @@ public final class GTBumbleMutations {
         return species == null ? 0 : mutateChance(level(species));
     }
 
-    /** The chance table of {@code MultiItemBumbles:460-466}, keyed by the level digit. */
+    /** The chance table of {@code MultiItemBumbles}, keyed by the level digit. */
     private static int mutateChance(int level) {
         return BumbleSpeciesRules.mutationChanceForLevel(level);
     }
 
     /**
-     * GT6's {@code bumbleMutate} ({@code MultiItemBumbles:470-478}): the level digit decides the
+     * GT6's {@code bumbleMutate} ({@code MultiItemBumbles}): the level digit decides the
      * direction of the mutation, and the bee keeps its type and its genome.
      *
      * <table>
@@ -112,16 +112,16 @@ public final class GTBumbleMutations {
     }
 
     /**
-     * GT6's {@code bumbleCombine} ({@code MultiItemBumbles:370-437}): the special offspring of two
+     * GT6's {@code bumbleCombine} ({@code MultiItemBumbles}): the special offspring of two
      * different species.
      *
      * <p>GT6's {@code aBumbleType} is 0 for a drone and 1 for a princess; it is only appended to the
      * result species, so any {@link BumbleBeeType} works here, but GT6's breeding passes
      * {@link BumbleBeeType#DRONE} and {@link BumbleBeeType#PRINCESS} (the Bumbliary does, at
-     * {@code MultiTileEntityBumbliary:238-246}).</p>
+     * {@code MultiTileEntityBumbliary}).</p>
      *
      * <p>Like GT6's {@code bumbleCombine} - documented as "Stacksize 1 and no BumbleTag"
-     * ({@code IItemBumbleBee:67}) - the answer never carries a genome; the breeding step assigns the
+     * ({@code IItemBumbleBee}) - the answer never carries a genome; the breeding step assigns the
      * inherited one afterwards.</p>
      *
      * @param a the first parent (GT6's {@code aBumbleBeeA})
@@ -141,7 +141,7 @@ public final class GTBumbleMutations {
 
     /**
      * The species GT6's combination switch returns for a pair, including GT6's fallback of the first
-     * parent ({@code MultiItemBumbles:436}, {@code ST.make(this, 1, (aMetaDataA / 10) * 10 + type)}) for
+     * parent ({@code MultiItemBumbles}, {@code ST.make(this, 1, (aMetaDataA / 10) * 10 + type)}) for
      * a pair the table does not list.
      *
      * @return the port species, or null when either parent is not a known species

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * GT6's forest-floor worldgen data, ported from {@code Loader_Worldgen:603-606} (fallen logs),
+ * GT6's forest-floor worldgen data, ported from {@code Loader_Worldgen} (fallen logs),
  * (twigs) and (glowtus), with the biome sets and probabilities from
  * {@code gregtech/content/worldgen/tree/WorldgenLog*}, {@code WorldgenSticks} and {@code WorldgenGlowtus}.
  *
@@ -84,7 +84,7 @@ public class SurfaceFloraRules {
             Set.of(id("taiga"), id("snowy_taiga"), id("old_growth_pine_taiga"), id("old_growth_spruce_taiga"));
 
     /**
-     * {@code Loader_Worldgen:603-606} in registration order. GT6's wastelands biome set has no
+     * {@code Loader_Worldgen} in registration order. GT6's wastelands biome set has no
      * vanilla equivalent, so the "dry" log loses that one entry (documented).
      */
     public static final List<Log> LOGS = List.of(

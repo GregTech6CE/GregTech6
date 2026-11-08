@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * GT6 registers each hand tool under several ore-dictionary tool names ({@code Loader_Tools:116-183}).
+ * GT6 registers each hand tool under several ore-dictionary tool names ({@code Loader_Tools}).
  * The port keeps one {@code forge:tools/<tool id>} tag per tool, so the additional GT6 identities are
  * listed here and emitted alongside the primary one. Spellings follow the port's snake_case tool ids.
  */

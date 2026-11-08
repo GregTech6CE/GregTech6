@@ -16,7 +16,7 @@ public final class SandwichRules {
     public static float saturation(float maximum) {
         return maximum + .5f;
     }
-    /** GT_Proxy:289: only sliced toast starts a batch, using at most sixteen held slices. */
+    /** GT_Proxy: only sliced toast starts a batch, using at most sixteen held slices. */
     public static int starterQuantity(String item, int count) {
         return ("gt6ce:toast".equals(item) || "gt6ce:toasted_toast".equals(item))
                 ? Math.max(0, Math.min(SLOTS, count))

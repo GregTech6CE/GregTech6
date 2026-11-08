@@ -13,12 +13,12 @@ import java.util.List;
  * GT6 {@code gregtech.items.behaviors.Behavior_DataStorage} — the tooltip of a USB <em>stick</em>, the
  * one-file medium, plus the shared data renderer both that class and the drive form call.
  *
- * <p>GT6 hangs the behaviour on {@code MultiItemRandomTools:422-438} / {@code MultiItemTechnological}
- * and prints ({@code Behavior_DataStorage:37-48}):</p>
+ * <p>GT6 hangs the behaviour on {@code MultiItemRandomTools} / {@code MultiItemTechnological}
+ * and prints ({@code Behavior_DataStorage}):</p>
  *
  * <ul>
  *   <li>the data compound rendered by {@code UT.NBT.getDataToolTip(data, list, <b>true</b>)}
- *       ({@code UT.java:2237-2269}) — the verbose form, because a stick holds exactly one file; and</li>
+ *       ({@code UT}) — the verbose form, because a stick holds exactly one file; and</li>
  *   <li>{@code "Data: USB <tier>.0"} in dark grey.</li>
  * </ul>
  *
@@ -33,7 +33,7 @@ public final class BehaviorDataStorage {
     private BehaviorDataStorage() {}
 
     /**
-     * The stick's tooltip lines — GT6 {@code Behavior_DataStorage:37-48}.
+     * The stick's tooltip lines — GT6 {@code Behavior_DataStorage}.
      *
      * @param stack the stick; a stack without any tag prints nothing, exactly like the original
      */

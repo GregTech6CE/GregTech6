@@ -19,8 +19,8 @@ import java.util.List;
  * GT6's loot bags — the items that open GT's own loot tables.
  *
  * <p>In GT6 these are MultiItem entries whose behavior is
- * {@code Behavior_Drop_Loot("gt.<table>", …)} ({@code MultiItemRandomTools:583-586},
- * {@code MultiItemBooks:67}): right-click a block, the bag is consumed and one stack per listed
+ * {@code Behavior_Drop_Loot("gt.<table>", …)} ({@code MultiItemRandomTools},
+ * {@code MultiItemBooks}): right-click a block, the bag is consumed and one stack per listed
  * table is dropped in front of the player, drawn with {@code ChestGenHooks.getOneItem} — a weighted
  * pick with the row's stack-size range ("Loot: Gems, one of which Flawless" is
  * {@code ("gt.flawless", "gt.gems", "gt.gems")}, i.e. three stacks). That is how a player gets GT's

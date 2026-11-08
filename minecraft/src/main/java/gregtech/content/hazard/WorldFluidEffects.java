@@ -19,22 +19,22 @@ import java.util.List;
  * (<b>bathing</b>) and the effects it gives to a head that is inside it (<b>breathing</b>).
  *
  * <p>GT6 keeps these on the fluid <em>block</em>, not on the fluid: {@code BlockBaseFluid} has
- * {@code addEffectBathing} / {@code addEffectBreathing} ({@code gregapi/block/fluid/BlockBaseFluid.java:419,425})
+ * {@code addEffectBathing} / {@code addEffectBreathing} ({@code BlockBaseFluid})
  * and {@code BlockWaterlike} has a single {@code addEffect} list
- * ({@code gregtech/blocks/fluids/BlockWaterlike.java:218}) that is applied on the head-inside path.
- * Every row below is one registration line of {@code Loader_Blocks.java:137-153}; the port has a world
+ * ({@code BlockWaterlike}) that is applied on the head-inside path.
+ * Every row below is one registration line of {@code Loader_Blocks}; the port has a world
  * block for exactly those nine fluids ({@code Loader_Fluids.WORLD_FLUID_PATHS}), so the whole table is
  * reachable in game.
  *
  * <h2>The two entry points GT6 uses</h2>
  *
  * <pre>
- *   // BlockBaseFluid:404-409 - a body that overlaps the fluid block
+ *   // BlockBaseFluid - a body that overlaps the fluid block
  *   if (!world.isRemote &amp;&amp; !mEffectsBathing.isEmpty() &amp;&amp; entity instanceof EntityLivingBase
  *       &amp;&amp; !UT.Entities.isWearingFullChemHazmat(entity))
  *       for (int[] e: mEffectsBathing) UT.Entities.applyPotion(entity, e[0], e[1], e[2], F);
  *
- *   // BlockBaseFluid:411-415 / BlockWaterlike:226-231 - a head inside it
+ *   // BlockBaseFluid / BlockWaterlike - a head inside it
  *   if (!world.isRemote &amp;&amp; effects non-empty &amp;&amp; gate)
  *       for (int[] e: effects) UT.Entities.applyPotion(entity, e[0], e[1], e[2], F);
  *       if (getMaterial() != Material.water &amp;&amp; SERVER_TIME % 20 == 0)
@@ -56,9 +56,9 @@ import java.util.List;
  * <h2>What is not portable</h2>
  *
  * <p>Three of the oil bathing effects are <em>Immersive Engineering's</em> potions, mapped into GT6's
- * own id space ({@code GT_API.java:786-789}: {@code ID_FLAMMABLE = IEPotions.flammable.id},
+ * own id space ({@code GT_API}: {@code ID_FLAMMABLE = IEPotions.flammable.id},
  * {@code ID_SLIPPERY}, {@code ID_STICKY}; the ids themselves are the negatives
- * {@code CS.java:1577}). 1.20.1 has no Immersive Engineering, so those three are recorded as
+ * {@code CS}). 1.20.1 has no Immersive Engineering, so those three are recorded as
  * not-applicable rather than invented - the vanilla {@code blindness 60/1} that sits next to them on
  * the same line is applied. The web behaviour ({@code.setWeb()} on the extra-heavy and heavy lines)
  * is ported: {@code setWeb()} is 1.7.10's {@code Entity#setInWeb}, i.e. vanilla cobweb's
@@ -95,7 +95,7 @@ public final class WorldFluidEffects {
     public static final String LIGHT_OIL = "liquid_light_oil";
     public static final String NATURAL_GAS = "gas_natural_gas";
 
-    /** GT6 {@code BlockBaseFluid:414} / {@code BlockWaterlike:229}: {@code SERVER_TIME % 20 == 0}. */
+    /** GT6 {@code BlockBaseFluid} / {@code BlockWaterlike}: {@code SERVER_TIME % 20 == 0}. */
     public static final int DROWN_INTERVAL = 20;
     /** GT6's: {@code attackEntityFrom(DamageSource.drown, 2.0F)}. */
     public static final float DROWN_DAMAGE = 2.0F;
@@ -103,18 +103,18 @@ public final class WorldFluidEffects {
     private WorldFluidEffects() {}
 
     // ---------------------------------------------------------------------------------------------
-    // Bathing - Loader_Blocks:146-152
+    // Bathing - Loader_Blocks
     // ---------------------------------------------------------------------------------------------
 
     /**
-     * {@code Loader_Blocks.java:149-152}: the four oil blocks. The flammable/slippery/sticky rows are
-     * Immersive Engineering potions ({@code GT_API:786-789}) and are listed in {@link #OIL_IE_EFFECTS}
+     * {@code Loader_Blocks}: the four oil blocks. The flammable/slippery/sticky rows are
+     * Immersive Engineering potions ({@code GT_API}) and are listed in {@link #OIL_IE_EFFECTS}
      * instead of being applied.
      */
     private static final List<EffectRow> OIL_BATHING = List.of(
             new EffectRow(MobEffects.BLINDNESS, 60, 1, "Loader_Blocks.java:149-152 blindness 60/1"));
 
-    /** Recorded, not applied: GT6 gets these three from Immersive Engineering ({@code GT_API:786-789}). */
+    /** Recorded, not applied: GT6 gets these three from Immersive Engineering ({@code GT_API}). */
     public static final List<String> OIL_IE_EFFECTS = List.of("flammable 300/1", "sticky 300/1", "slippery 300/1");
 
     /** Which fluids have a bathing row, and their rows. */
@@ -130,13 +130,13 @@ public final class WorldFluidEffects {
         return !bathingRows(fluid).isEmpty();
     }
 
-    /** {@code BlockBaseFluid:406}: {@code !UT.Entities.isWearingFullChemHazmat(entity)}. */
+    /** {@code BlockBaseFluid}: {@code !UT.Entities.isWearingFullChemHazmat(entity)}. */
     public static boolean bathingGatePasses(LivingEntity entity) {
         return !entity.isSpectator() && !GTHazmat.isChemProtected(entity);
     }
 
     /**
-     * The bathing half of {@code BlockBaseFluid:404-409} for one fluid, without the tick cadence
+     * The bathing half of {@code BlockBaseFluid} for one fluid, without the tick cadence
      * (GT6 re-applies on every collision, which is every tick).
      *
      * @return whether any effect was applied
@@ -150,7 +150,7 @@ public final class WorldFluidEffects {
     }
 
     /**
-     * {@code Loader_Blocks.java:149,150} {@code .setWeb()} - and {@code BlockBaseFluid:374}, where a
+     * {@code Loader_Blocks} {@code .setWeb()} - and {@code BlockBaseFluid}, where a
      * non-empty bathing list is what makes {@code getBlocksMovement} answer true. Only the two heavy
      * oils call {@code setWeb}; the medium and light ones intentionally do not.
      */
@@ -160,15 +160,15 @@ public final class WorldFluidEffects {
     }
 
     // ---------------------------------------------------------------------------------------------
-    // Head inside - Loader_Blocks:137,149-153
+    // Head inside - Loader_Blocks
     // ---------------------------------------------------------------------------------------------
 
-    /** {@code Loader_Blocks.java:149-152}: breathing oils poisons and confuses. */
+    /** {@code Loader_Blocks}: breathing oils poisons and confuses. */
     private static final List<EffectRow> OIL_BREATHING = List.of(
             new EffectRow(MobEffects.POISON, 300, 0, "Loader_Blocks.java:149-152 poison 300/0"),
             new EffectRow(MobEffects.CONFUSION, 120, 0, "Loader_Blocks.java:149-152 confusion 120/0"));
 
-    /** {@code Loader_Blocks.java:153}: the natural-gas spring, the gas row this port already had. */
+    /** {@code Loader_Blocks}: the natural-gas spring, the gas row this port already had. */
     private static final List<EffectRow> GAS_BREATHING = List.of(
             new EffectRow(MobEffects.POISON, 300, 0, "Loader_Blocks.java:153 poison 300/0"),
             new EffectRow(MobEffects.CONFUSION, 120, 0, "Loader_Blocks.java:153 confusion 120/0"));
@@ -188,7 +188,7 @@ public final class WorldFluidEffects {
     }
 
     /**
-     * The gate of {@code BlockBaseFluid:412} for one fluid and entity: the base branch always asks
+     * The gate of {@code BlockBaseFluid} for one fluid and entity: the base branch always asks
      * the gas suit - including for oils, which are liquids.
      */
     public static boolean headGatePasses(LivingEntity entity, Fluid fluid) {
@@ -197,7 +197,7 @@ public final class WorldFluidEffects {
     }
 
     /**
-     * {@code BlockBaseFluid:414} / {@code BlockWaterlike:229}: {@code getMaterial() != Material.water}.
+     * {@code BlockBaseFluid} / {@code BlockWaterlike}: {@code getMaterial() != Material.water}.
      * Only the oils and the natural gas carry a non-water material, so only they drown.
      */
     public static boolean headInsideDrowns(Fluid fluid) {

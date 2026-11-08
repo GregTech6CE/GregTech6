@@ -2,7 +2,7 @@ package gregtech.content.logistics;
 
 import java.util.Arrays;
 
-/** MultiTileEntityMiniPortal:113-180: six sided signal inboxes, maximum merge,
+/** MultiTileEntityMiniPortal: six sided signal inboxes, maximum merge,
  * next tick delivery, and twenty absent ticks before clearing a disconnected side.
  * Advancing before accepting enforces the original global start/scan phases even
  * when modern block entities in different dimensions tick in either order.

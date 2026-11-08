@@ -27,7 +27,7 @@ import java.util.Set;
  * {@link GTLootGen} ({@code table|weight|min|max|spec}).
  *
  * <p>GT6 keeps its loot in vanilla 1.7.10 {@code ChestGenHooks} tables: {@code addLoot} adds a
- * weighted row ({@code ConfigsGT.WORLDGEN}, {@code Loader_Loot:565-574}) and a table is rolled with
+ * weighted row ({@code ConfigsGT.WORLDGEN}, {@code Loader_Loot}) and a table is rolled with
  * {@code ChestGenHooks.getOneItem(table, rand)} / {@code ST.generateLoot} — one weighted row, its
  * stack size uniform between the row's min and max ({@code Loader_Loot.addLoot}, which passes
  * {@code min}/{@code max} to {@code WeightedRandomChestContent}). {@link #roll} reproduces exactly
@@ -84,7 +84,7 @@ public final class GTLootTables {
     }
 
     /**
-     * GT6's {@code gt.matdicts} table ({@code Loader_Loot:359-364}): one row per material that has a
+     * GT6's {@code gt.matdicts} table ({@code Loader_Loot}): one row per material that has a
      * dictionary book, weight 144, exactly like the original loops over
      * {@code OreDictMaterial.MATERIAL_ARRAY}. The table is built here rather than transpiled because
      * its rows depend on the registered materials, just as in GT6.
@@ -155,7 +155,7 @@ public final class GTLootTables {
 
     /**
      * How many items a roll of a table hands out, as {@code [min, max]} — GT6's
-     * {@code ChestGenHooks.getInfo("gt.books").setMin(8).setMax(24)} ({@code Loader_Loot:337-339}); the
+     * {@code ChestGenHooks.getInfo("gt.books").setMin(8).setMax(24)} ({@code Loader_Loot}); the
      * configurable loot chest draws that many stacks when it is first opened.
      *
      * @return the range, or {@code {8, 24}} for a table GT6 does not declare bounds for
@@ -174,7 +174,7 @@ public final class GTLootTables {
 
     /**
      * Fills a container the way GT6's configurable loot chest does when it is first opened
-     * ({@code MultiTileEntityChest:262 generateDungeonLoot} → {@code ST.generateLoot}): as many
+     * ({@code MultiTileEntityChest generateDungeonLoot} → {@code ST.generateLoot}): as many
      * {@link #roll} draws as the table's own count range, placed into the first free slots.
      *
      * @return how many stacks were placed

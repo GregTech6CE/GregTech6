@@ -24,8 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  *
  * <p>GT6 writes them as shapeless recipes against its own container ore dictionary entries —
  * {@code CR.shapeless(make(4, 1100), CR.DEF, new Object[] {OD.container1000milk, OP.bottle.dat(MT.Empty)
- * ×4})} and the matching 3/2/1 rows ({@code MultiItemBottles:143-146},,,
- * ,). The port has
+ * ×4})} and the matching 3/2/1 rows ({@code MultiItemBottles}). The port has
  * no ore dictionary, so a finite, drainable item fluid handler holding 1000&nbsp;mB of the
  * matching fluid takes its place. The creative-only {@code fluid_item_*} display items are rejected.
  *
@@ -102,7 +101,7 @@ public final class BottleFillingRecipeInjector {
         return added;
     }
 
-    /** GT6 MultiItemBottles:390-396, with a real, fully consumed 1000 mB container. */
+    /** GT6 MultiItemBottles, with a real, fully consumed 1000 mB container. */
     private static int fillLubricant(List<Recipe<?>> recipes) {
         Item bottle = ForgeRegistries.ITEMS.getValue(GregTech.id("lubricant_bottle"));
         if (bottle == null || bottle == Items.AIR)

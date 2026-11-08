@@ -36,10 +36,10 @@ import java.util.List;
 
 /**
  * GT6's coin pile ({@code MultiTileEntityCoin}, multi-tile id 32700, registered in
- * {@code Loader_MultiTileEntities.java:2240} under the "Coins" category).
+ * {@code Loader_MultiTileEntities} under the "Coins" category).
  *
  * <p>GT6's coin pile is a 4x4 grid of coin stacks on one block - sixteen faces, each holding up to
- * {@code COIN_STACKSIZE} = 16 coins ({@code MultiTileEntityCoin.java:71}). Only the
+ * {@code COIN_STACKSIZE} = 16 coins ({@code MultiTileEntityCoin}). Only the
  * top face can be clicked, the click lands on one face, an empty hand
  * takes one coin off that face, a coin of the pile's own kind adds one
  * and the pile removes its block once the last coin is gone.
@@ -53,13 +53,13 @@ import java.util.List;
  * pixel-shape bitsets {@code gt.coin.shape.0.<i>}/{@code gt.coin.shape.1.<i>} that
  * only its own renderer reads. Its {@code COIN_MAP} (filled in
  * {@code onRegistration}) holds one such stack per material. GT6's {@code OP.coin} prefix is
- * declared {@code unused} ({@code gregapi/data/OP.java:473}) and generates no items at all.</p>
+ * declared {@code unused} ({@code OP}) and generates no items at all.</p>
  *
  * <p>The port has no multi-tile items, so it registers <b>one coin item per material</b> like every
  * other form ({@code MaterialPrefix.coin}, {@code gt6ce:coin_<i>&lt;material&gt;</i>}, 586 items -
  * the port's tiny-plate materials, which is GT6's own condition plus its four forced precious
  * metals), and {@link #coinItem()} answers with the copper one for a pile that has not bound a
- * material yet, GT6's {@code MT.Cu} being the first of the four {@code WorldgenDungeonGT.java:195}
+ * material yet, GT6's {@code MT.Cu} being the first of the four {@code WorldgenDungeonGT}
  * prefers.</p>
  *
  * <h2>Port differences</h2>
@@ -131,8 +131,8 @@ public class CoinPileBlock extends Block implements EntityBlock, SimpleWaterlogg
      * The coin a port coin pile starts with - the port's stand-in for GT6's unbound pile.
      *
      * <p>GT6's dungeon writes only the sixteen face counters and no material at all
-     * ({@code DungeonData.java:169-173}), which leaves its pile rendering {@code UNCOLOURED}
-     * ({@code MultiTileEntityCoin.java:430-435}); the older {@code WorldgenDungeonGT.java:195} picks
+     * ({@code DungeonData}), which leaves its pile rendering {@code UNCOLOURED}
+     * ({@code MultiTileEntityCoin}); the older {@code WorldgenDungeonGT} picks
      * the material from {@code {Cu, Cu, Cu, Ag, Ag, Au, Au, Pt}}. The port cannot render an uncoloured
      * coin, so a pile without a bound material uses the copper coin, GT6's most frequent dungeon
      * coin.</p>
@@ -148,7 +148,7 @@ public class CoinPileBlock extends Block implements EntityBlock, SimpleWaterlogg
 
     /**
      * True when the stack is one of the port's coins - the port's equivalent of GT6's
-     * {@code ST.equal(aStack, getCoin(1, registry, id))} ({@code MultiTileEntityCoin.java:157}).
+     * {@code ST.equal(aStack, getCoin(1, registry, id))} ({@code MultiTileEntityCoin}).
      *
      * <p>The pile's own block item, a bare {@code gt6ce:coin_pile}, is not a coin: it carries no
      * material, so GT6's pile would not match it either - see the class javadoc.</p>
@@ -164,7 +164,7 @@ public class CoinPileBlock extends Block implements EntityBlock, SimpleWaterlogg
     }
 
     /**
-     * GT6's click behaviour ({@code MultiTileEntityCoin.java:155-179}).
+     * GT6's click behaviour ({@code MultiTileEntityCoin}).
      *
      * <p>GT6 only reacts to the top face and works out which of the sixteen faces was
      * hit from the click position; the port does the same. An empty hand takes one coin
@@ -186,7 +186,7 @@ public class CoinPileBlock extends Block implements EntityBlock, SimpleWaterlogg
         if (hit.getDirection() != Direction.UP) return InteractionResult.sidedSuccess(level.isClientSide);
         // does all of its work on the server side.
         if (level.isClientSide) return InteractionResult.SUCCESS;
-        // GT6's block-relative click coordinates ({@code MultiTileEntityCoin:158} and following).
+        // GT6's block-relative click coordinates ({@code MultiTileEntityCoin} and following).
         int face = CoinPileBlockEntity.faceAt(hit.getLocation().x - pos.getX(), hit.getLocation().z - pos.getZ());
         ItemStack held = player.getItemInHand(hand);
 
@@ -211,7 +211,7 @@ public class CoinPileBlock extends Block implements EntityBlock, SimpleWaterlogg
 
     /**
      * GT6 drops every coin of the pile, in stacks of at most 64
-     * ({@code MultiTileEntityCoin.java:112-122}).
+     * ({@code MultiTileEntityCoin}).
      *
      * <p>As with {@link PileBlock}, the drop hangs on {@code onRemove} so that every removal path drops
      * the coins and none of them drops them twice - GT6 has no {@code playerWillDestroy} equivalent.</p>
@@ -227,7 +227,7 @@ public class CoinPileBlock extends Block implements EntityBlock, SimpleWaterlogg
 
     /**
      * GT6 hands every coin of the pile out through {@code getDrops}, in stacks of at most 64
-     * ({@code MultiTileEntityCoin.java:112-122}); the port reads them from the {@code BLOCK_ENTITY} loot
+     * ({@code MultiTileEntityCoin}); the port reads them from the {@code BLOCK_ENTITY} loot
      * parameter the real drop paths pass (see {@link PileBlock#getDrops}). The original drops only
      * the coins, never an extra empty pile block item.
      *

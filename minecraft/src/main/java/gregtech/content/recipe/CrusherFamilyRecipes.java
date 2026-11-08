@@ -16,7 +16,7 @@ import java.util.List;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * GT6's Crusher handler rows: {@code Loader_Recipes_Handlers:64,69-77}.
+ * GT6's Crusher handler rows: {@code Loader_Recipes_Handlers}.
  * <p>
  * The gem ladder ({@code gemLegendary → 2 gemExquisite → 2 gemFlawless → 2 gem → 2 gemFlawed →
  * 2 gemChipped → pulverized remains}), the {@code bouleGt → 4 gem} row and the rock row. Every row runs

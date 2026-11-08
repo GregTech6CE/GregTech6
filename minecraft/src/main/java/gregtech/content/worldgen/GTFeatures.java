@@ -101,47 +101,47 @@ public final class GTFeatures {
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> SURFACE_FLORA =
             FEATURES.register("gt_surface_flora", GTSurfaceFloraFeature::new);
 
-    /** GT6's berry bushes (WorldgenBushes, Loader_Worldgen:633). */
+    /** GT6's berry bushes (WorldgenBushes, Loader_Worldgen). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BUSHES =
             FEATURES.register("gt_bushes", GTBushesFeature::new);
 
-    /** GT6's surface rock litter (WorldgenRocks, Loader_Worldgen:618). */
+    /** GT6's surface rock litter (WorldgenRocks, Loader_Worldgen). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> ROCKS =
             FEATURES.register("gt_rocks", GTRocksFeature::new);
 
-    /** GT6's deep ocean prismarine pylons (WorldgenDeepOcean, Loader_Worldgen:580). */
+    /** GT6's deep ocean prismarine pylons (WorldgenDeepOcean, Loader_Worldgen). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> DEEP_OCEAN =
             FEATURES.register("gt_deep_ocean", GTDeepOceanFeature::new);
 
-    /** GT6's river black sands (WorldgenBlackSand, Loader_Worldgen:581). */
+    /** GT6's river black sands (WorldgenBlackSand, Loader_Worldgen). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLACK_SAND =
             FEATURES.register("gt_black_sand", GTBlackSandFeature::new);
 
-    /** GT6's swamp turf bogs (WorldgenTurf, Loader_Worldgen:582). */
+    /** GT6's swamp turf bogs (WorldgenTurf, Loader_Worldgen). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> TURF =
             FEATURES.register("gt_turf", GTTurfFeature::new);
 
-    /** GT6's large sand and clay pits (WorldgenPit, Loader_Worldgen:592-597). */
+    /** GT6's large sand and clay pits (WorldgenPit, Loader_Worldgen). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> PITS =
             FEATURES.register("gt_pits", GTPitFeature::new);
 
-    /** GT6's coltan field (WorldgenColtan, Loader_Worldgen:779). */
+    /** GT6's coltan field (WorldgenColtan, Loader_Worldgen). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> COLTAN =
             FEATURES.register("gt_coltan", GTColtanFeature::new);
 
-    /** GT6's fluid springs at bedrock (WorldgenFluidSpring, Loader_Worldgen:782-797). */
+    /** GT6's fluid springs at bedrock (WorldgenFluidSpring, Loader_Worldgen). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> FLUID_SPRINGS =
             FEATURES.register("gt_fluid_springs", GTFluidSpringsFeature::new);
 
-    /** GT6's loose items lying around in the Nether (WorldgenRacks, Loader_Worldgen:619). */
+    /** GT6's loose items lying around in the Nether (WorldgenRacks, Loader_Worldgen). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> NETHER_SCATTER =
             FEATURES.register("gt_nether_scatter", GTNetherScatterFeature::new);
 
-    /** GT6's wild bumblebee hives (WorldgenHives, Loader_Worldgen:652). */
+    /** GT6's wild bumblebee hives (WorldgenHives, Loader_Worldgen). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> BUMBLE_HIVES =
             FEATURES.register("gt_bumble_hives", GTBumbleHivesFeature::new);
 
-    /** GT6's large underground dungeon (WorldgenDungeonGT, Loader_Worldgen:652). */
+    /** GT6's large underground dungeon (WorldgenDungeonGT, Loader_Worldgen). */
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> DUNGEON =
             FEATURES.register("gt_dungeon", GTDungeonFeature::new);
 

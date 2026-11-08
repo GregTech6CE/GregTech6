@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 /**
- * GT6 {@code Behavior_Duct_Tape} ({@code Behavior_Duct_Tape.java:41-116}): the three tape rolls.
+ * GT6 {@code Behavior_Duct_Tape} ({@code Behavior_Duct_Tape}): the three tape rolls.
  *
  * <h2>What the original does</h2>
  *
@@ -27,7 +27,7 @@ import net.minecraft.world.level.Level;
  *       — {@code WD.obstructed}, i.e. the player cannot reach through the block behind it — and
  *       otherwise forwards to {@code IBlockToolable.Util.onToolClick(TOOL_ducttape, aUses, mQuality,
  *       ...)}, which is how a GT6 mass storage gets sealed
- *       ({@code MultiTileEntityMassStorage:184-194}: it answers with {@code max(100, stackSize)}
+ *       ({@code MultiTileEntityMassStorage}: it answers with {@code max(100, stackSize)}
  *       damage, i.e. "this many uses of tape").</li>
  * </ul>
  *
@@ -36,7 +36,7 @@ import net.minecraft.world.level.Level;
  * <p>The port registers the same six items ({@code GTMultiItemsGen.ENTRIES}: {@code tape} /
  * {@code tape_2}, {@code duct_tape} / {@code duct_tape_2} and the BrainTech roll plus its {@code _2}
  * variant — the registered-first one is the full roll, the {@code _2} one the used roll, matching
- * {@code MultiItemRandomTools:555-556}). The qualities and
+ * {@code MultiItemRandomTools}). The qualities and
  * use counts are the original's constructor arguments:
  * {@link #TAPE_QUALITY}/{@link #TAPE_USES},
  * {@link #DUCT_TAPE_QUALITY}/{@link #DUCT_TAPE_USES} and
@@ -52,13 +52,13 @@ import net.minecraft.world.level.Level;
  */
 public final class BehaviorDuctTape {
 
-    /** GT6 {@code MultiItemRandomTools:559}: {@code new Behavior_Duct_Tape(null, Tape_Used, Tape, 0, 10000)}. */
+    /** GT6 {@code MultiItemRandomTools}: {@code new Behavior_Duct_Tape(null, Tape_Used, Tape, 0, 10000)}. */
     public static final long TAPE_QUALITY = 0L, TAPE_USES = 10000L;
 
-    /** GT6 {@code MultiItemRandomTools:568}: {@code (..., Duct_Tape_Used, Duct_Tape, 1, 100000)}. */
+    /** GT6 {@code MultiItemRandomTools}: {@code (..., Duct_Tape_Used, Duct_Tape, 1, 100000)}. */
     public static final long DUCT_TAPE_QUALITY = 1L, DUCT_TAPE_USES = 100000L;
 
-    /** GT6 {@code MultiItemRandomTools:577}: {@code (..., Brain_Tape_Used, Brain_Tape, 2, 10000000)}. */
+    /** GT6 {@code MultiItemRandomTools}: {@code (..., Brain_Tape_Used, Brain_Tape, 2, 10000000)}. */
     public static final long BRAIN_TAPE_QUALITY = 2L, BRAIN_TAPE_USES = 10000000L;
 
     /** Port item ids of the three used rolls (the {@code _2} half of each registration pair). */
@@ -77,7 +77,7 @@ public final class BehaviorDuctTape {
      *
      * <p>GT6 passes the tape's remaining uses and its quality in, and takes the consumed uses back
      * out; the one implementor answers {@code max(100, slot(1).stackSize)}
-     * ({@code MultiTileEntityMassStorage:193}), i.e. "one use per item I have to contain".</p>
+     * ({@code MultiTileEntityMassStorage}), i.e. "one use per item I have to contain".</p>
      */
     public interface Tapeable {
         /**
@@ -141,7 +141,7 @@ public final class BehaviorDuctTape {
     }
 
     /**
-     * GT6 {@code Behavior_Duct_Tape:54-89} for one click: the tape roll plus the block it targets.
+     * GT6 {@code Behavior_Duct_Tape} for one click: the tape roll plus the block it targets.
      *
      * <p>The full-to-used conversion remains visible after a refused operation.
      * The current early return, however, leaves an already exhausted used roll

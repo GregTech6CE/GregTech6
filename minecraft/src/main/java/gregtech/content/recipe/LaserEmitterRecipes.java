@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * GT6's gas laser emitters: filled in the Canning Machine from the empty emitter plus one unit of
- * the laser gas ({@code MultiItemTechnological:396-403}).
+ * the laser gas ({@code MultiItemTechnological}).
  *
  * <p>GT6 defines nine emitters — an empty one and eight gases — and fills them with
  * {@code RM.Canner.addRecipe1(T, 16, 128, IL.Comp_Laser_Gas_Empty.get(1), <gas>.gas(U, T), NF, <filled>)}.
@@ -63,7 +63,7 @@ public final class LaserEmitterRecipes {
                 SKIPPED.add(gas[0] + ": the port registers no such gas");
                 continue;
             }
-            // MultiItemTechnological:396-403 - T, 16 EU/t, 128 ticks
+            // MultiItemTechnological - T, 16 EU/t, 128 ticks
             Recipe recipe = MachineRecipeMaps.Canner.addRecipe(new Recipe(
                     new ItemStack[]{empty.copy()}, new ItemStack[]{filled}, null, null,
                     new FluidStack[]{fluid}, null, 128, 16, 0));

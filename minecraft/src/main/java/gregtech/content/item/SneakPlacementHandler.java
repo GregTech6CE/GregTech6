@@ -25,7 +25,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 //?}
 
 /**
- * GT6 {@code GT_Proxy.java:288-326}: one sneak-click entry that puts the held loose item on the
+ * GT6 {@code GT_Proxy}: one sneak-click entry that puts the held loose item on the
  * ground — toast batches, wooden sticks, flint, surface rocks and metal piles, in source order.
  * GT6's {@code stickAnyNormalWood} is the {@code gt6ce:ammunition/sticks_wood} tag plus the common
  * wooden-rod tag.

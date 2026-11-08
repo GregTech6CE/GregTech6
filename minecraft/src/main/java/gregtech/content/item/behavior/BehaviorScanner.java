@@ -54,25 +54,25 @@ import java.util.Optional;
  */
 public final class BehaviorScanner {
 
-    /** GT6 {@code CS.V[3]} ({@code CS.java:151}): the EU one scanned section costs ({@code WD.java:939}). */
+    /** GT6 {@code CS.V[3]} ({@code CS}): the EU one scanned section costs ({@code WD}). */
     public static final long COST_PER_SECTION = gregtech.engine.tool.ScannerEnergyRules.SECTION_COST;
 
-    /** GT6 {@code WD.java:925}: from this scan level on the Java classes are printed too. */
+    /** GT6 {@code WD}: from this scan level on the Java classes are printed too. */
     public static final int CLASS_LEVEL = 10;
 
-    /** GT6 {@code Behavior_Scanner:62,71}: from this scan level on a clicked entity reports its class. */
+    /** GT6 {@code Behavior_Scanner}: from this scan level on a clicked entity reports its class. */
     public static final int ENTITY_LEVEL = 100;
 
-    /** GT6 {@code MultiItemRandomTools:517}: the Portable Scanner scans at level 2. */
+    /** GT6 {@code MultiItemRandomTools}: the Portable Scanner scans at level 2. */
     public static final int PORTABLE_LEVEL = 2;
 
-    /** GT6 {@code MultiItemRandomTools:516}: the Debug Scanner scans at {@code Integer.MAX_VALUE}. */
+    /** GT6 {@code MultiItemRandomTools}: the Debug Scanner scans at {@code Integer.MAX_VALUE}. */
     public static final int DEBUG_LEVEL = Integer.MAX_VALUE;
 
     private BehaviorScanner() {}
 
     /**
-     * GT6 {@code WD.scan} ({@code WD.java:911-1055}).
+     * GT6 {@code WD.scan} ({@code WD}).
      *
      * @param level     the level the scanned block stands in
      * @param pos       the scanned block
@@ -92,7 +92,7 @@ public final class BehaviorScanner {
         var block = state.getBlock();
         var be = level.getBlockEntity(pos);
 
-        // WD.java:921-936 — the block-level header, which the original never charges for.
+        // WD — the block-level header, which the original never charges for.
         lines.add("--- X: " + pos.getX() + " Y: " + pos.getY() + " Z: " + pos.getZ() + " ---");
         lines.add("Name: " + blockName(level, pos, be) + "  State: " + stateProperties(state));
         var id = Mc.blockId(block);
@@ -128,7 +128,7 @@ public final class BehaviorScanner {
                 lines.add(String.join(" --- ", parts));
             }
 
-            // WD.java:987-993 — ITileEntityEnergy.
+            // WD — ITileEntityEnergy.
             if (be instanceof IEnergyBlock energy) {
                 cost += COST_PER_SECTION;
                 for (GregTechTags.Tag type : energy.getEnergyTypes(side)) {
@@ -138,7 +138,7 @@ public final class BehaviorScanner {
                             + energy.getEnergySizeOutputMax(type, side) + type.getShortName());
                 }
             }
-            // WD.java:994-999 — ITileEntityEnergyDataCapacitor.
+            // WD — ITileEntityEnergyDataCapacitor.
             if (be instanceof IEnergyBlock capacitor) {
                 var capacitorTypes = capacitor.getEnergyCapacitorTypes(side);
                 if (!capacitorTypes.isEmpty()) {
@@ -149,7 +149,7 @@ public final class BehaviorScanner {
                     }
                 }
             }
-            // WD.java:1002-1008 — modern fluid capabilities expose tanks on the clicked face.
+            // WD — modern fluid capabilities expose tanks on the clicked face.
 //? if >=1.21.1 {
             /*IFluidHandler handler = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, pos, side);
 *///?} else {
@@ -172,7 +172,7 @@ public final class BehaviorScanner {
     }
 
     /**
-     * GT6 {@code Behavior_Scanner:61-67} and: an entity clicked with a scanner whose
+     * GT6 {@code Behavior_Scanner} and: an entity clicked with a scanner whose
      * level is above {@link #ENTITY_LEVEL} reports its class name.
      *
      * @return the line to chat, or empty when this scanner's level is too low
@@ -183,7 +183,7 @@ public final class BehaviorScanner {
     }
 
     /**
-     * GT6 {@code WD.java:923}: the block entity's inventory name when it has one, else the block's
+     * GT6 {@code WD}: the block entity's inventory name when it has one, else the block's
      * name.
      *
      * <p>{@code IInventory.getInventoryName()} became {@link Nameable#getCustomName()} in 1.20.1;
@@ -198,7 +198,7 @@ public final class BehaviorScanner {
     }
 
     /**
-     * The port's replacement for GT6's {@code "  MetaData: " + aMeta} ({@code WD.java:923}); see the
+     * The port's replacement for GT6's {@code "  MetaData: " + aMeta} ({@code WD}); see the
      * class javadoc.
      */
     private static String stateProperties(BlockState state) {
@@ -213,8 +213,8 @@ public final class BehaviorScanner {
     }
 
     /**
-     * GT6 {@code LH.getToolTipBlastResistance} ({@code LH.java:272}) without the colour codes: the
-     * resistance as {@code int.frac} plus the same verdict words ({@code LH.java:590,617-622}).
+     * GT6 {@code LH.getToolTipBlastResistance} ({@code LH}) without the colour codes: the
+     * resistance as {@code int.frac} plus the same verdict words ({@code LH}).
      *
      * <p>The last bracket, {@code "(IC2 Nukes can still go through!)"}, is dropped: it needs
      * {@code COMPAT_IC2.isExplosionWhitelisted(block)}, and the port has no IC2.</p>
@@ -224,7 +224,7 @@ public final class BehaviorScanner {
     }
 
     /**
-     * GT6 {@code WD.java:931-933}: {@code "Hand-Harvestable, but X is faster"} when neither a tool
+     * GT6 {@code WD}: {@code "Hand-Harvestable, but X is faster"} when neither a tool
      * nor a level is required, else {@code "Tool to Harvest: X (level)"}.
      *
      * <p>1.20.1's {@code requiresCorrectToolForDrops()} is the port's closest answer to GT6's
@@ -242,7 +242,7 @@ public final class BehaviorScanner {
         return "Tool to Harvest: " + name + " (" + level + ")";
     }
 
-    /** GT6 {@code Code.capitalise(tHarvestTool)} ({@code WD.java:933}); {@code HAND} prints as None. */
+    /** GT6 {@code Code.capitalise(tHarvestTool)} ({@code WD}); {@code HAND} prints as None. */
     public static String toolName(BlockHarvestPolicy.Tool tool) {
         return switch (tool) {
             case PICKAXE -> "Pickaxe";

@@ -1140,9 +1140,8 @@ public class FluidCatalog {
 
     /**
      * Missing imported MOLTEN declarations, not new general material properties.
-     * GT6 3703e40308c8c030763fd6297dea8b210d2a77b1 MT:394,695-696,715,744-746,757-760,
-     * 793,1077,1086,1095,1123,1156,1311-1312,1631,3748,3798-3801;
-     * Loader_Fluids:659 creates these phases through FL.createMolten.
+     * GT6 3703e40308c8c030763fd6297dea8b210d2a77b1 MT;
+     * Loader_Fluids creates these phases through FL.createMolten.
      * Keep this finite ID/name proof local to fluid generation: MELTING, METAL, item forms,
      * targets and compatibility overrides must not be inferred or mutated from it.
      */
@@ -1229,8 +1228,8 @@ public class FluidCatalog {
      * <p>
      * GT6 names them after the material and <em>reuses</em> whatever fluid already carries that name:
      * {@code FL.createGas}/{@code FL.createLiquid} use {@code aMaterial.mNameInternal.toLowerCase()}
-     * (FL.java:1072,1080) and {@code FL.create} falls back to {@code FluidRegistry.getFluid(aName)}
-     * when the name is taken (FL.java:1110), after which the very same fluid is stored as both the
+     * (FL) and {@code FL.create} falls back to {@code FluidRegistry.getFluid(aName)}
+     * when the name is taken (FL), after which the very same fluid is stored as both the
      * material's gas and its liquid. The port used to invent {@code gas.<material>} / {@code liquid.<material>}
      * names, which produced three fluids for one material (e.g. {@code hydrogen} from the dedicated
      * {@code FL.Hydrogen} entry plus an orphaned {@code gas_hydrogen} and {@code liquid_hydrogen}).

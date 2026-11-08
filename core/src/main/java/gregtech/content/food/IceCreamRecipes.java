@@ -1,5 +1,5 @@
 /* GregTech-6 Team / Gregorius Techneticies, LGPL-3.0-or-later.
- * MultiItemFood:847-900; Loader_Recipes_Food food listeners. */
+ * MultiItemFood; Loader_Recipes_Food food listeners. */
 package gregtech.content.food;
 
 public final class IceCreamRecipes {

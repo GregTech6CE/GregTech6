@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Loader_Recipes_Handlers:552-625 material-form conversions. Single-input variants follow the
+ * Loader_Recipes_Handlers material-form conversions. Single-input variants follow the
  * source's AdvancedCrafting1ToY rule: the empty slots before the item select the output by modulo,
  * in source prefix registration order (dust selects tiny before small). Missing outputs still
  * reserve their source offset. XToY requires exactly the same material in every occupied cell.
@@ -247,7 +247,7 @@ public final class FormConversionCraftingRecipeInjector {
 
 *///?} else {
 //?}
-    /** All standard/dense prefix aliases, including actual vanilla ore blocks ({@code Loader_Recipes_Handlers.java:615-616}). */
+    /** All standard/dense prefix aliases, including actual vanilla ore blocks ({@code Loader_Recipes_Handlers}). */
 //? if >=1.21.1 {
     /*private static void registerOreConversions(Map<ResourceLocation, byte[]> recipes) {
 *///?} else {
@@ -267,7 +267,7 @@ public final class FormConversionCraftingRecipeInjector {
     }
 
     /**
-     * GT6 {@code Loader_Recipes_Handlers:619-626}: for every size pair {@code big % small == 0} with
+     * GT6 {@code Loader_Recipes_Handlers}: for every size pair {@code big % small == 0} with
      * divisible sizes, the crafting grid combines fewer than ten small wires into one big wire
      * and splits one big wire into all {@code tAmount} small ones (the machine
      * variants run on the Loom and the Unboxinator). The port's wires are blocks, not material-prefix
@@ -313,9 +313,9 @@ public final class FormConversionCraftingRecipeInjector {
     }
 
     /**
-     * GT6 {@code MultiTileEntityPipeFluid:100-101}: the crafting grid takes a quadruple fluid pipe
+     * GT6 {@code MultiTileEntityPipeFluid}: the crafting grid takes a quadruple fluid pipe
      * apart into four medium ones and a nonuple one into nine small ones (the build-up direction is the
-     * Boxinator's job, {@code Loader_Recipes_Handlers:492}).
+     * Boxinator's job, {@code Loader_Recipes_Handlers}).
      */
 //? if >=1.21.1 {
     /*private static int registerPipeSizes(Map<ResourceLocation, byte[]> recipes) {
@@ -431,7 +431,7 @@ public final class FormConversionCraftingRecipeInjector {
                         + sanitize(material.getName()) + "_" + conversion.inputCount());
 //? if >=1.21.1 {
 //?} else {
-        // Loader_Recipes_Handlers:552-625 passes F to both conversion classes.
+        // Loader_Recipes_Handlers passes F to both conversion classes.
         recipes.add(new gregtech.content.recipe.ToolShapelessRecipe(
                 new ShapelessRecipe(id, "gt.form_conversion", CraftingBookCategory.MISC, result, ingredients), false, OriginalFormConversions.selector(conversion),
                         conversion.input(), material.resolve().getName(), false, FormConversionPlacement.FIXED));

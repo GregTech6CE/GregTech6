@@ -28,7 +28,7 @@ import java.util.TreeMap;
 
 /**
  * Crafting recipes for the port's 20 sensor machines, taken from the original GT6 registrations
- * ({@link GTSensorRecipesGen}, generated from {@code Loader_MultiTileEntities.java:1979-1998}).
+ * ({@link GTSensorRecipesGen}, generated from {@code Loader_MultiTileEntities}).
  * <p>
  * brought the port up to GT6's twenty sensors but none of them could be crafted. This pack
  * closes that: it is the same "generated table + server data pack" route {@link MultiblockRecipePack}
@@ -38,7 +38,7 @@ import java.util.TreeMap;
  * <h2>1. One recipe step instead of two</h2>
  * <p>
  * GT6 passes the pattern and the key map to {@code MultiTileEntityRegistry#add}, which emits
- * {@code CR.shaped(getItem(mID), CR.DEF_REV_NCC, aRecipe)} ({@code MultiTileEntityRegistry:208}) and
+ * {@code CR.shaped(getItem(mID), CR.DEF_REV_NCC, aRecipe)} ({@code MultiTileEntityRegistry}) and
  * then, on every one of the twenty rows, a trailing
  * {@code CR.shapeless(aRegistry.getItem(), CR.DEF_NCC, new Object[]{aRegistry.getItem()})}. The port
  * has no shared multi-tile registry item - each sensor is its own block - so the shaped recipe
@@ -47,8 +47,8 @@ import java.util.TreeMap;
  *
  * <h2>2. {@code allow_mirror = false}</h2>
  * <p>
- * {@code CR.DEF_REV_NCC} is {@code BUF|NO_REM|REV|NO_COLLISION_CHECK} ({@code CR.java:161-167}); it
- * does <em>not</em> contain {@code MIR} ({@code CR.java:131}), so GT6's own recipes are not
+ * {@code CR.DEF_REV_NCC} is {@code BUF|NO_REM|REV|NO_COLLISION_CHECK} ({@code CR}); it
+ * does <em>not</em> contain {@code MIR} ({@code CR}), so GT6's own recipes are not
  * mirror-craftable. The multiblock pack encodes the same flag set the same way.
  * </p>
  *

@@ -24,7 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Set;
 
 /**
- * Port of GT6's {@code WorldgenTurf} ({@code Loader_Worldgen:582}, registered as
+ * Port of GT6's {@code WorldgenTurf} ({@code Loader_Worldgen}, registered as
  * {@code "swamp.turf"}): peat bogs in swamps.
  *
  * <p>GT6 rolls one bog per chunk with {@code nextInt(32) > 0} (about 1 in 32 chunks), requires a

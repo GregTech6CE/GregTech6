@@ -923,9 +923,9 @@ final class GTMultiItemsGen {
         "tera_bumble_princess", "Tera Bumble Princess", "bumblebee", "",
         "tera_bumble_queen", "Tera Bumble Queen", "bumblebee", "",
         "tera_bumble_dead", "Tera Bumble (Dead)", "bumblebee", "",
-        // GT6's four scanned variants per species (MultiItemBumbles:594-597, the meta
+        // GT6's four scanned variants per species (MultiItemBumbles, the meta
         // offsets +5/+6/+7/+9). The Bumblelyzer writes them from a living bee, honey and a
-        // tiny paper plate (RecipeMapBumblelyzer:51-74).
+        // tiny paper plate (RecipeMapBumblelyzer).
         "wild_bumblebee_scanned_drone", "Wild Bumblebee Drone (Scanned)", "bumblebee", "",
         "wild_bumblebee_scanned_princess", "Wild Bumblebee Princess (Scanned)", "bumblebee", "",
         "wild_bumblebee_scanned_queen", "Wild Bumblebee Queen (Scanned)", "bumblebee", "",

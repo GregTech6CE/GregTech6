@@ -49,7 +49,7 @@ public final class AutocraftingRules {
         return List.copyOf(result);
     }
 
-    /** Like GT6's {@code Recipe} constructor ({@code gregapi/recipes/Recipe.java:904-939}), zero-size
+    /** Like GT6's {@code Recipe} constructor ({@code Recipe}), zero-size
      *  catalysts are ignored when deriving the optimization bound. */
     public static <T> Plan<T> optimize(List<Input<T>> inputs, List<Amount<T>> outputs, BiPredicate<T, T> same) {
         var in = new ArrayList<Input<T>>();

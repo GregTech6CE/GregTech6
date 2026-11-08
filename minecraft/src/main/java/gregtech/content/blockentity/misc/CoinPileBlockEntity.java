@@ -19,7 +19,7 @@ import java.util.List;
  * 32700).
  *
  * <p>GT6 keeps sixteen face counters in a {@code byte[16]} ({@code mCoinStackSizes},
- * {@code MultiTileEntityCoin.java:71}) - the 4x4 grid of coin stacks players see on top of the block
+ * {@code MultiTileEntityCoin}) - the 4x4 grid of coin stacks players see on top of the block
  * - and one material for the whole pile ({@code mMaterial}). Each face holds at most
  * {@code COIN_STACKSIZE} coins. The counters are the amount, the material is the kind;
  * GT6's coin <em>item</em> is the pile's own placeable item, whose stack size is the coin count
@@ -42,22 +42,22 @@ import java.util.List;
  */
 public class CoinPileBlockEntity extends BlockEntity {
 
-    /** GT6's sixteen faces: {@code mCoinStackSizes = new byte[16]} ({@code MultiTileEntityCoin.java:71}). */
+    /** GT6's sixteen faces: {@code mCoinStackSizes = new byte[16]} ({@code MultiTileEntityCoin}). */
     public static final int FACES = gregtech.content.block.CoinPileRules.FACES;
 
     /**
      * GT6's per-face cap: {@code private static final byte COIN_STACKSIZE = 16}
-     * ({@code MultiTileEntityCoin.java:74}), used by the add and the item merge.
+     * ({@code MultiTileEntityCoin}), used by the add and the item merge.
      */
     public static final int FACE_STACK_SIZE = gregtech.content.block.CoinPileRules.PER_FACE;
 
     /**
      * The legacy coarse fill state has four values. The block entity renderer itself draws all
-     * sixteen exact per-face heights from GT6 ({@code MultiTileEntityCoin.java:385}).
+     * sixteen exact per-face heights from GT6 ({@code MultiTileEntityCoin}).
      */
     public static final int MAX_FILL = 4;
 
-    /** GT6's per-face key prefix ({@code MultiTileEntityCoin.java:81} and). */
+    /** GT6's per-face key prefix ({@code MultiTileEntityCoin} and). */
     public static final String NBT_STACKSIZE = "gt.coin.stacksize.";
 
     /**
@@ -75,7 +75,7 @@ public class CoinPileBlockEntity extends BlockEntity {
     }
 
     /**
-     * GT6's face index from block-relative click coordinates ({@code MultiTileEntityCoin.java:158} for
+     * GT6's face index from block-relative click coordinates ({@code MultiTileEntityCoin} for
      * the click and for the placement): {@code floor(hitX*4)*4 + floor(hitZ*4)}, with both
      * coordinates clamped into {@code [0, 0.99)}.
      */
@@ -120,7 +120,7 @@ public class CoinPileBlockEntity extends BlockEntity {
 
     /**
      * How many of the sixteen faces carry a coin - what {@link CoinPileBlock#COINS} is set to. GT6
-     * draws exactly those faces ({@code MultiTileEntityCoin.java:346-367}).
+     * draws exactly those faces ({@code MultiTileEntityCoin}).
      */
     public int occupiedFaces() {
         int occupied = 0;
@@ -132,7 +132,7 @@ public class CoinPileBlockEntity extends BlockEntity {
      * A coarse {@code 1..}{@link #MAX_FILL} summary for {@link CoinPileBlock#FILL}.
      *
      * <p>The fullest face decides: GT6 would draw it {@code count / 16} of a block high
-     * ({@code MultiTileEntityCoin.java:385}), while the renderer reads the exact count. The summary
+     * ({@code MultiTileEntityCoin}), while the renderer reads the exact count. The summary
      * rounds the fullest face up to groups of four.</p>
      */
     public int fillLevel() {
@@ -143,7 +143,7 @@ public class CoinPileBlockEntity extends BlockEntity {
 
     /**
      * GT6's drops: every coin of the pile as stacks of at most 64
-     * ({@code MultiTileEntityCoin.java:112-122}, which splits the total with {@code Math.min(64, ...)}).
+     * ({@code MultiTileEntityCoin}, which splits the total with {@code Math.min(64, ...)}).
      * The stacks are copies - the pile keeps its own counters.
      */
     public List<ItemStack> contents() {
@@ -161,7 +161,7 @@ public class CoinPileBlockEntity extends BlockEntity {
     }
 
     /**
-     * GT6's add branch ({@code MultiTileEntityCoin.java:166-172}): one coin per click, only onto a face
+     * GT6's add branch ({@code MultiTileEntityCoin}): one coin per click, only onto a face
      * that still has room and only a coin of the pile's own material - GT6 compares the
      * held stack with {@code getCoin(1, registry, id)} ({@code ST.equal}),
      * and the port's coin item carries that material itself ({@link CoinPileBlock#isCoin}). A pile
@@ -217,7 +217,7 @@ public class CoinPileBlockEntity extends BlockEntity {
     }
 
     /**
-     * GT6's take branch ({@code MultiTileEntityCoin.java:159-165}): one coin off the clicked face,
+     * GT6's take branch ({@code MultiTileEntityCoin}): one coin off the clicked face,
      * returned to the caller. The block callback transfers it only after inventory admission,
      * while creative players destroy it without receiving a coin, as in GT6.
      * The last coin taken clears the pile's kind, which is what GT6's {@code setBlockToAir()} amounts
@@ -237,9 +237,9 @@ public class CoinPileBlockEntity extends BlockEntity {
 
     /**
      * Binds the pile to one coin before any face is filled - the port's equivalent of GT6 writing
-     * {@code gt.material} into the multi-tile's NBT ({@code MultiTileEntityCoin.java:83}),
+     * {@code gt.material} into the multi-tile's NBT ({@code MultiTileEntityCoin}),
      * which its dungeon generator does through {@code COIN_MAP}
-     * ({@code WorldgenDungeonGT.java:195}). A stack that is no coin is refused.
+     * ({@code WorldgenDungeonGT}). A stack that is no coin is refused.
      *
      * @return true when the pile is bound to that coin afterwards
      */
@@ -257,8 +257,8 @@ public class CoinPileBlockEntity extends BlockEntity {
 
     /**
      * Sets the coin of the pile, whatever it held before - GT6's dungeon writes {@code gt.material}
-     * into the multi-tile's NBT before it is placed ({@code DungeonData.java:169-173} writes the face
-     * bytes, {@code WorldgenDungeonGT.java:195} takes the whole coin compound out of {@code COIN_MAP}),
+     * into the multi-tile's NBT before it is placed ({@code DungeonData} writes the face
+     * bytes, {@code WorldgenDungeonGT} takes the whole coin compound out of {@code COIN_MAP}),
      * so the pile never sees a default material at all. The port fills the faces first and binds the
      * metal afterwards, which is why this exists next to {@link #bindCoin}.
      *
@@ -274,8 +274,8 @@ public class CoinPileBlockEntity extends BlockEntity {
 
     /**
      * Writes one face's counter directly, the port's equivalent of GT6 setting the byte itself
-     * ({@code DungeonData.java:170-171} prefills the sixteen {@code gt.coin.stacksize.<i>} keys before
-     * the multi-tile is placed, see {@code MultiTileEntityCoin.java:81}). Used by the dungeon fill and
+     * ({@code DungeonData} prefills the sixteen {@code gt.coin.stacksize.<i>} keys before
+     * the multi-tile is placed, see {@code MultiTileEntityCoin}). Used by the dungeon fill and
      * by tests; {@link #add} remains the player-facing path with its own checks.
      *
      * <p>The count is clamped into {@code 0..}{@link #FACE_STACK_SIZE}, so GT6's cap holds no matter who
@@ -319,7 +319,7 @@ public class CoinPileBlockEntity extends BlockEntity {
     /**
      * Moves {@link CoinPileBlock#COINS} and {@link CoinPileBlock#FILL} onto the legacy block state.
      * The visible renderer reads the sixteen exact counters directly, as GT6 does
-     * ({@code MultiTileEntityCoin.java:341-367}); these two properties are just summary state.
+     * ({@code MultiTileEntityCoin}); these two properties are just summary state.
      *
      * <p>{@code UPDATE_CLIENTS} only: the block itself does not change, so nothing has to be dropped
      * ({@code CoinPileBlock#onRemove} checks the block, not the state) and no neighbour needs an
@@ -383,7 +383,7 @@ public class CoinPileBlockEntity extends BlockEntity {
 //?}
     }
 
-    /** GT6 writes the sixteen {@code gt.coin.stacksize.<i>} bytes ({@code MultiTileEntityCoin.java:93}). */
+    /** GT6 writes the sixteen {@code gt.coin.stacksize.<i>} bytes ({@code MultiTileEntityCoin}). */
     @Override
 //? if >=1.21.1 {
     /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {

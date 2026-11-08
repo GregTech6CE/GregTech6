@@ -198,7 +198,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.stream.Stream;
 
 /**
- * GT6 MultiItemBottles:129-396: one finite 1000 mB fluid container and one to four empty
+ * GT6 MultiItemBottles: one finite 1000 mB fluid container and one to four empty
  * bottles yield that many filled bottles. The whole 1000 mB is consumed regardless of
  * bottle count; the drained vessel returns in the crafting grid.
  */

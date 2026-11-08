@@ -13,9 +13,9 @@ import net.minecraft.world.level.material.MapColor;
  * GT6's configurable loot chests — one block per loot table.
  *
  * <p>In GT6 the world chests are replaced with a GT chest carrying {@code gt.dungeonloot = <table>}
- * ({@code ChestGenHooksChestReplacer:122}) and the same "Loot Chest" item variants let a player place
- * a chest that rolls any table of {@code ST.LOOT_TABLES} ({@code ST.java:1019},
- * {@code MultiTileEntityChest:275}). The port registers one block per table
+ * ({@code ChestGenHooksChestReplacer}) and the same "Loot Chest" item variants let a player place
+ * a chest that rolls any table of {@code ST.LOOT_TABLES} ({@code ST},
+ * {@code MultiTileEntityChest}). The port registers one block per table
  * ({@code loot_chest_<suffix>}) instead of one block with NBT, which keeps the table on the block and
  * keeps a consumed-loot marker on dropped chest items to prevent rerolls after replacement.
  * The labels are GT6's own ({@code LH.java} {@code loot.*} entries).</p>

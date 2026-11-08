@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-/** GT6 MultiTileEntityDynamite:61-138: persisted fuse, ignition and defusing. */
+/** GT6 MultiTileEntityDynamite: persisted fuse, ignition and defusing. */
 //? if >=1.21.1 {
 /*public final class DynamiteBlockEntity extends BlockEntity implements ManualToolBehaviorAccess.Ignitable,
         Extinguishable {

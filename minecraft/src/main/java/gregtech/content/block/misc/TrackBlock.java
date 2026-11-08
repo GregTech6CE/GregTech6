@@ -12,16 +12,16 @@ import net.minecraft.world.level.block.state.properties.RailShape;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * GT6's {@code BlockBaseRail} — the three rail families {@code Loader_Rails:41-72} registers.
+ * GT6's {@code BlockBaseRail} — the three rail families {@code Loader_Rails} registers.
  *
  * <p>GT6 gives every rail a material speed and turns it into the cart's maximum speed
- * ({@code getRailMaxSpeed}, {@code BlockBaseRail:277-289}): the full speed only when the cart is on
+ * ({@code getRailMaxSpeed}, {@code BlockBaseRail}): the full speed only when the cart is on
  * a straight run whose both neighbours are original GT base rails of the same axis, {@code min(speed, 0.4)} on a
  * curve or a dead end, and {@code min(speed, 1.0)} when the neighbouring chunks are not loaded.</p>
  *
  * <p>1.20.1 exposes exactly those hooks through Forge: {@code IForgeBaseRailBlock.getRailMaxSpeed}
  * and {@code IForgeBaseRailBlock.onMinecartPass} (called once per tick while a cart is on the rail,
- * which is where GT6's boost/brake logic lives, {@code BlockBaseRail:291-322}).</p>
+ * which is where GT6's boost/brake logic lives, {@code BlockBaseRail}).</p>
  *
  * <p><b>Speed-cap adapter:</b> Forge clamps every rail to the cart's own ceiling
  * ({@code IForgeAbstractMinecart.getMaxCartSpeedOnRail()}, default 1.2 — its setter is
@@ -34,10 +34,10 @@ import org.jetbrains.annotations.Nullable;
  */
 public final class TrackBlock {
 
-    /** GT6 {@code BlockBaseRail:287}: a rail that is not part of a straight run. */
+    /** GT6 {@code BlockBaseRail}: a rail that is not part of a straight run. */
     static final float CURVE_SPEED = 0.4F;
 
-    /** GT6 {@code BlockBaseRail:282/285}: straight run with unloaded neighbours. */
+    /** GT6 {@code BlockBaseRail}: straight run with unloaded neighbours. */
     static final float UNLOADED_SPEED = 1.0F;
 
     private TrackBlock() {
@@ -46,7 +46,7 @@ public final class TrackBlock {
     /**
      * Hands the rail's speed to the cart the rail is carrying.
      *
-     * <p>GT6 reads the speed straight off the rail it is standing on ({@code BlockBaseRail:277-289} is
+     * <p>GT6 reads the speed straight off the rail it is standing on ({@code BlockBaseRail} is
      * the rail's own answer, and {@code TileEntityBase10ConnectorRendered} carts consult it directly).
      * 1.20.1 routes it through the cart instead: {@code getMaxSpeedWithRail} is
      * {@code min(railMaxSpeed, cart.getCurrentCartSpeedCapOnRail())} ({@code AbstractMinecart}),
@@ -96,7 +96,7 @@ public final class TrackBlock {
         return level.getBlockState(pos).isRedstoneConductor(level, pos);
     }
 
-    /** GT6's plain track ({@code Loader_Rails:41-50}). */
+    /** GT6's plain track ({@code Loader_Rails}). */
     public static final class Straight extends RailBlock {
 //? if >=1.21.1 {
         /*@Override
@@ -125,7 +125,7 @@ public final class TrackBlock {
     }
 
     /**
-     * GT6's booster track ({@code Loader_Rails:52-61}, {@code mPowerRail = true}). Powered: doubles
+     * GT6's booster track ({@code Loader_Rails}, {@code mPowerRail = true}). Powered: doubles
      * a moving cart, or pushes a standing one away from the solid block it faces. Unpowered: brakes
      * the cart to half speed and stops it below 0.03.
      */
@@ -160,7 +160,7 @@ public final class TrackBlock {
     }
 
     /**
-     * GT6's detector track ({@code Loader_Rails:63-72}). GT6 keeps the cart's momentum and only
+     * GT6's detector track ({@code Loader_Rails}). GT6 keeps the cart's momentum and only
      * reports the cart through redstone/comparator. This adapter inherits the native detector;
      * its detection bounds and extension hooks require separate parity checks.
      */

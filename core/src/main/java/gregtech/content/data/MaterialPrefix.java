@@ -115,11 +115,11 @@ public final class MaterialPrefix {
      * GT6's coin form.
      *
      * <p>GT6 has no coin <em>prefix item</em> at all: {@code OP.coin} is declared
-     * {@code unused("coin").setCategoryName("Coins")} ({@code gregapi/data/OP.java:473}), and a coin is
+     * {@code unused("coin").setCategoryName("Coins")} ({@code OP}), and a coin is
      * the placeable multi-tile {@code MultiTileEntityCoin} (id 32700, registered in
-     * {@code Loader_MultiTileEntities.java:2240}) whose item stack carries the material in
+     * {@code Loader_MultiTileEntities}) whose item stack carries the material in
      * {@code gt.material}, a flag in {@code gt.coin.unique} and the two 16x16 pixel-shape bitsets
-     * {@code gt.coin.shape.0.<i>}/{@code gt.coin.shape.1.<i>} ({@code MultiTileEntityCoin.java:79-93}).
+     * {@code gt.coin.shape.0.<i>}/{@code gt.coin.shape.1.<i>} ({@code MultiTileEntityCoin}).
      * GT6 hands those stacks out through its {@code COIN_MAP} (one coin per metal).
      * The port has no multi-tile items, so it registers one coin item per material like every other
      * form - {@code MaterialPrefixes.coin} keeps GT6's {@code OP.coin} entry and now resolves to this
@@ -196,7 +196,7 @@ public final class MaterialPrefix {
             m -> MaterialForms.has(m, "INGOTS")); // GT6 OP.ingot = INGOTS
     private static final Predicate<GTMaterial> HAS_GEM = nativeOr(
             m -> m.has(MaterialProperty.GEM),
-            // Forced gems (OP:613-615) are added as explicit properties after the source table.
+            // Forced gems (OP) are added as explicit properties after the source table.
             m -> MaterialForms.has(m, "GEMS") || m.has(MaterialProperty.GEM)); // GT6 OP.gem = GEMS
     private static final Predicate<GTMaterial> HAS_BOULE = m -> m.has(MaterialProperty.BOULE);
     private static final Predicate<GTMaterial> HAS_PLATE = nativeOr(
@@ -223,7 +223,7 @@ public final class MaterialPrefix {
      * cohort here; preserve legacy IDs elsewhere pending separate tool-form migration proof. */
     private static final Predicate<GTMaterial> GT6_TOOL_HEAD =
             gregtech.content.material.ReviewedSingleArgumentToolTypes::allowsLegacyQualityFallback;
-    /** GT6 OP:247 also accepts wood and Rubber (MT:1301: type 1, BOUNCY/STRETCHY, quality 0). */
+    /** GT6 OP also accepts wood and Rubber (MT: type 1, BOUNCY/STRETCHY, quality 0). */
     private static final Predicate<GTMaterial> GT6_HAMMER =
             GT6_TOOL_HEAD.or(m -> m.has(MaterialProperty.WOOD) || m.getName().equals("Rubber"));
     /** GT6 typemin(1); unknown/addon materials keep the legacy property fallback. */
@@ -232,7 +232,7 @@ public final class MaterialPrefix {
     /** GT6 typemin(2) for files, saws, chisels, drills and machine heads. */
     private static final Predicate<GTMaterial> TOOL_HEAD_2 = m ->
             MaterialForms.of(m).isEmpty() ? HAS_TOOL_HEAD.test(m) || m.getToolQuality() >= 2 : m.getToolTypes() >= 2;
-    /** GT6 OP:247: typemin(1) and (BOUNCY, STRETCHY, WOOD or qualmin(1)); flags not imported yet. */
+    /** GT6 OP: typemin(1) and (BOUNCY, STRETCHY, WOOD or qualmin(1)); flags not imported yet. */
     private static final Predicate<GTMaterial> TOOL_HEAD_HAMMER =
             m -> MaterialForms.of(m).isEmpty()
                     ? HAS_TOOL_HEAD.test(m) || GT6_HAMMER.test(m)
@@ -254,7 +254,7 @@ public final class MaterialPrefix {
 
     /**
      * GT6 {@code OP.PLATES} materials. {@code OreDictMaterial.qual} also grants PLATES to every
-     * material with a positive tool type ({@code OreDictMaterial:899}), alongside PARTS and STICKS.
+     * material with a positive tool type ({@code OreDictMaterial}), alongside PARTS and STICKS.
      */
     private static final Predicate<GTMaterial> GT6_PLATES = m -> MaterialForms.has(m, "PLATES") || m.getToolTypes() > 0;
     /** GT6 {@code OP.GEMS}. */
@@ -270,7 +270,7 @@ public final class MaterialPrefix {
      */
     private static final Predicate<GTMaterial> REFERENCE_TANTALUM_GEM = sourceMaterial(730, "Tantalum");
     /**
-     * {@code OP.java:613-615}: the gem forms force-generated for the salt crystals and the two
+     * {@code OP}: the gem forms force-generated for the salt crystals and the two
      * crystalline materials the item-generator form table lists without GEMS.
      */
     private static final Predicate<GTMaterial> FORCED_GEM_FLAWED = sourceMaterial(9802, "Ice")
@@ -288,7 +288,7 @@ public final class MaterialPrefix {
     /**
      * GT6 {@code OP.PARTS}: gears, rings, springs, rotors, casings. <br>
      * {@code OreDictMaterial.qual} also grants PARTS to every material with a positive tool type
-     * ({@code OreDictMaterial:899}), which is how wood species carry wooden gears, rings, chains,
+     * ({@code OreDictMaterial}), which is how wood species carry wooden gears, rings, chains,
      * springs, rotors and casings that the item-generator form table does not list.
      */
     static final Predicate<GTMaterial> GT6_PARTS = m -> MaterialForms.has(m, "PARTS") || m.getToolTypes() > 0;
@@ -297,7 +297,7 @@ public final class MaterialPrefix {
     /** GT6 {@code OP.ORES}: raw ore, crushed ore, rock. */
     private static final Predicate<GTMaterial> GT6_ORES = m -> MaterialForms.has(m, "ORES");
     /**
-     * The four metals GT6 coins unconditionally ({@code MultiTileEntityCoin.java:286}):
+     * The four metals GT6 coins unconditionally ({@code MultiTileEntityCoin}):
      * {@code tMaterial != MT.Cu && tMaterial != MT.Ag && tMaterial != MT.Au && tMaterial != MT.Pt}.
      * The port's own names for them ({@code ElementMaterials.java}, and Platinum at;
      * Gold is the element material of the same file).
@@ -305,15 +305,15 @@ public final class MaterialPrefix {
     private static final java.util.Set<String> GT6_COIN_METALS =
             java.util.Set.of("Copper", "Silver", "Gold", "Platinum");
     /**
-     * GT6's coin condition ({@code MultiTileEntityCoin.java:285-287}): it walks every material and
+     * GT6's coin condition ({@code MultiTileEntityCoin}): it walks every material and
      * keeps the ones whose tiny plate can be generated -
      * {@code if ((tMaterial.mHidden || !OP.plateTiny.canGenerateItem(tMaterial)) && tMaterial != MT.Cu
      * && … ) continue;} - so a coin exists for exactly the tiny-plate materials, plus Copper, Silver,
      * Gold and Platinum.
      *
      * <p>The port reads {@code OP.plateTiny} as {@link MaterialPrefix#plateTiny} (GT6's
-     * {@code plateTiny = plate}, {@code OP.java:198}, with the port's forced
-     * {@code OP.java:617 plateTiny.forceItemGeneration(MT.Paper)} case) and its
+     * {@code plateTiny = plate}, {@code OP}, with the port's forced
+     * {@code OP plateTiny.forceItemGeneration(MT.Paper)} case) and its
      * {@link MaterialPrefix#isValidFor} additionally rejects materials the port hides, which GT6's
      * coin loop only rejects for the non-precious ones - a hidden material therefore gets no port
      * coin even where GT6 would force one.</p>
@@ -396,13 +396,13 @@ public final class MaterialPrefix {
                 "Gem Plate",
                 nativeOr(
                                 m -> (HAS_GEM.test(m) || HAS_BOULE.test(m)) && m.has(MaterialProperty.GENERATE_PLATE),
-                                // OP:616 force-generates boules for the semiconductor materials.
+                                // OP force-generates boules for the semiconductor materials.
                                 m -> MaterialForms.has(m, "PLATES")
                                         && (MaterialForms.has(m, "GEMS") || m.has(MaterialProperty.BOULE)))
                         .or(REFERENCE_TANTALUM_GEM));
         plateGemTiny = child("plateGemTiny", "Tiny Gem Plate", plateGem);
         plate = def("plate", "Plate", HAS_PLATE);
-        // GT6 `OP.java:198`: `plateTiny = plate`, and `OP.java:617` forces the Paper case
+        // GT6 `OP`: `plateTiny = plate`, and `OP` forces the Paper case
         // (`plateTiny.forceItemGeneration(MT.Paper)`) because Paper carries no PLATES flag
         // (`paper|DUSTS,MULTIPLATES,PLANTS`) — the port's `plate` misses it for the same reason.
         plateTiny = tex(
@@ -474,7 +474,7 @@ public final class MaterialPrefix {
                 nativeOr(
                         m -> m.has(MaterialProperty.GENERATE_LENS) && HAS_GEM.test(m),
                         m -> MaterialForms.has(m, "LENSES")));
-        // GT6 OP.java:209: `round = Or(PARTS, And(PROJECTILES, nugget))` — rounds come from the parts
+        // GT6 OP: `round = Or(PARTS, And(PROJECTILES, nugget))` — rounds come from the parts
         // form, or from a nugget-bearing projectile material (the port's HAS_INGOT stands in for the
         // nugget form, which it generates for ingot materials). PARTS also covers qual's tool-stat
         // grant, which is how the untreated wood species have rounds.
@@ -552,7 +552,7 @@ public final class MaterialPrefix {
         toolHeadPlow = def("toolHeadPlow", "Plow Head", TOOL_HEAD_1);
         toolHeadRawPlow = child("toolHeadRawPlow", "Raw Plow Head", toolHeadPlow);
         toolHeadBuzzSaw = def("toolHeadBuzzSaw", "Buzz Saw Blade", TOOL_HEAD_2);
-        // GT6 `OP.java:254`: `toolHeadArrow` = And(PROJECTILES, typemin(1)) — arrow heads follow the
+        // GT6 `OP`: `toolHeadArrow` = And(PROJECTILES, typemin(1)) — arrow heads follow the
         // projectile flag, not tool quality (every GT6 metal and wood has them). The port keeps its
         // stricter HAS_TOOL_HEAD as an *additional* source so materials it gives tool heads to keep
         // their arrow heads, but GT6's own flag now decides too (Trinium/Naquadah, the renamed woods).
@@ -721,7 +721,7 @@ public final class MaterialPrefix {
             case "dust_div72" -> GTValues.U72;
             // GT6's coin is the only form whose amount is written down outside the prefix table: the
             // coin multi-tile recycles itself as one ninth of a unit
-            // (`OM.stack(mMaterial, U9)`, MultiTileEntityCoin.java:99).
+            // (`OM.stack(mMaterial, U9)`, MultiTileEntityCoin).
             case "coin" -> GTValues.U9;
             case "unit" -> GTValues.U;
             // ore processing
@@ -794,7 +794,7 @@ public final class MaterialPrefix {
             case "tool_head_wrench" -> GTValues.U * 4;
             // OP250: the construction head has the same primary amount as a finished pickaxe.
             case "tool_head_pickaxe", "tool_head_sense", "tool_head_construction_pickaxe" -> GTValues.U9 * 26;
-            // OP:249 gives the builder's wand cap a whole unit, unlike the other pickaxe-shaped heads.
+            // OP gives the builder's wand cap a whole unit, unlike the other pickaxe-shaped heads.
             case "tool_head_builderwand" -> GTValues.U;
             case "tool_head_plow" -> GTValues.U9 * 35;
             case "tool_head_arrow" -> GTValues.U9;
@@ -871,7 +871,7 @@ public final class MaterialPrefix {
     public boolean isValidFor(GTMaterial material) {
         if (material == null) return false;
         // OP uses EMPTY for arrow shafts, powder-filled bullet casings, the empty glass tube
-        // (`OP.java:621` forces the gem pickaxe head item for MT.Empty as well), not for press molds.
+        // (`OP` forces the gem pickaxe head item for MT.Empty as well), not for press molds.
         if (material.getName().equals("Empty")) return hasEmptyForm();
         if (material.has(MaterialProperty.HIDDEN)) return false;
         if (!validator.test(material)) return false;
@@ -886,7 +886,7 @@ public final class MaterialPrefix {
                 || this == bulletGtLarge;
     }
 
-    /** Empty-material ammunition and the forced empty gem pickaxe head ({@code OP.java:621}). */
+    /** Empty-material ammunition and the forced empty gem pickaxe head ({@code OP}). */
     public boolean hasEmptyForm() {
         return hasEmptyAmmunitionForm() || this == toolHeadPickaxeGem;
     }

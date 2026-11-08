@@ -76,7 +76,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
         super(fluid, properties);
     }
 
-    /** Loader_Blocks:149-153 assigns 1000 to all four oils and natural gas. */
+    /** Loader_Blocks assigns 1000 to all four oils and natural gas. */
     @Override
     public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
         String path = net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(state.getFluidState().getType()).getPath();
@@ -97,7 +97,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
             level.scheduleTick(pos, this, 1);
     }
 
-    /** BlockBaseFluid:135-145 consumes oil/gas when a neighbouring fire or lava heats it. */
+    /** BlockBaseFluid consumes oil/gas when a neighbouring fire or lava heats it. */
     @Override
     public void tick(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos,
                      net.minecraft.util.RandomSource random) {
@@ -210,13 +210,13 @@ public class GTWorldFluidBlock extends LiquidBlock {
     private static final Vec3 WEB_MOVEMENT_MULTIPLIER = new Vec3(0.25D, 0.05D, 0.25D);
 
     /**
-     * GT6 {@code BlockBaseFluid:405} - {@code if (mActLikeWeb) aEntity.setInWeb();} - for the two heavy
+     * GT6 {@code BlockBaseFluid} - {@code if (mActLikeWeb) aEntity.setInWeb();} - for the two heavy
      * oils, the only fluids whose registration line calls {@code .setWeb()}
-     * ({@code Loader_Blocks.java:149,150}).
+     * ({@code Loader_Blocks}).
      *
      * <p>1.7.10's {@code Entity#setInWeb()} <em>is</em> vanilla cobweb: {@code makeStuckInBlock} with
      * the 0.25 / 0.05 / 0.25 movement multiplier. GT6's {@code getBlocksMovement}
-     * ({@code BlockBaseFluid:374}) is the same fact seen from the path finder's side; it has no 1.20.1
+     * ({@code BlockBaseFluid}) is the same fact seen from the path finder's side; it has no 1.20.1
      * equivalent for a fluid block (whether a block blocks movement comes from
      * {@code BlockBehaviour.Properties}, which a {@code LiquidBlock} cannot change without replacing
      * vanilla fluid physics), so only the web half is ported and the other is recorded in.

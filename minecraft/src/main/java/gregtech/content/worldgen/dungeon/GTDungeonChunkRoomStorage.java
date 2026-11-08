@@ -10,14 +10,14 @@ import gregtech.content.registry.GTFluids;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomStorage}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomStorage.java:38-215}): the dungeon's store room. Its
+ * ({@code DungeonChunkRoomStorage}): the dungeon's store room. Its
  * lowest four layers are packed with crates of metals, dusts, gems, wood and raw ore, a stack of three
  * crates can carry a loose pile of ingots or plates on top - and behind the vault door, GT6's four walls
  * of fluid tanks.
  *
- * <p>The room is a dead end: GT6's {@code DungeonChunkRoomVault} ({@code DungeonChunkRoomVault.java:27-34}),
+ * <p>The room is a dead end: GT6's {@code DungeonChunkRoomVault} ({@code DungeonChunkRoomVault}),
  * which GT6's store room extends, refuses every cell that does not have exactly one connection, and GT6's
- * dispatcher only offers the dead end list to those cells ({@code WorldgenDungeonGT:260-267}). The port's
+ * dispatcher only offers the dead end list to those cells ({@code WorldgenDungeonGT}). The port's
  * dispatcher copies that ({@code GTDungeonFeature}), and the check is kept here as well.</p>
  *
  * <h2>Port differences</h2>
@@ -26,7 +26,7 @@ import gregtech.content.registry.GTFluids;
  *       {@code DungeonChunkRoomEmpty} and this room, so the port inlines it instead of adding a file for
  *       it: the one connection check is the first line of {@link #generate(GTDungeonData)}.</li>
  *   <li><b>Vault door.</b> GT6 then builds its vault door across the room's single connection
- *       ({@code WorldgenDungeonGT.DOOR_PISTON}, {@code DungeonChunkRoomVault:31}), and does not let a
+ *       ({@code WorldgenDungeonGT.DOOR_PISTON}, {@code DungeonChunkRoomVault}), and does not let a
  *       failure of that door fail the room. The port calls its own
  *       {@link GTDungeonChunkDoorPiston} the same way.</li>
  *   <li><b>Fluid walls.</b> GT6 fills every side without a neighbour with columns of one to four fluid
@@ -55,7 +55,7 @@ import gregtech.content.registry.GTFluids;
  *       the four quadrants and leaves the quadrant empty for the mods it does not have.
  *       The port has neither mod, so it rolls {@code next(7)} and leaves cases 5 and 6 empty, which is
  *       exactly what GT6 does without them.</li>
-     *   <li><b>Piles.</b> GT6's {@code ingots_or_plates} ({@code DungeonData:259-264}) rolls the ingot's
+     *   <li><b>Piles.</b> GT6's {@code ingots_or_plates} ({@code DungeonData}) rolls the ingot's
      *       material and stack size, the plate's material and stack size and then picks plate or ingot with
      *       {@code next1in2()}; the port passes the room's original metal list to
      *       {@link GTDungeonData#ingotsOrPlates(int, int, int, int, String...)}.</li>
@@ -75,10 +75,10 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
 
     @Override
     public boolean generate(GTDungeonData data) {
-        // GT6's DungeonChunkRoomVault:30-32, inlined: a dead end has exactly one connection.
+        // GT6's DungeonChunkRoomVault, inlined: a dead end has exactly one connection.
         if (data.connectionCount != 1 || !super.generate(data)) return false;
         try {
-            // GT6's DungeonChunkRoomVault:31 - the vault door across that single connection.
+            // GT6's DungeonChunkRoomVault - the vault door across that single connection.
             new GTDungeonChunkDoorPiston().generate(data);
         } catch (Throwable ignored) {
             // GT6: the vault door is not important enough to fail the entire room.
@@ -270,7 +270,7 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
     private static final String HELIUM = "Helium";
 
     /**
-     * GT6's {@code ingots_or_plates} ({@code DungeonData:259-264}): a loose pile of ingots or plates.
+     * GT6's {@code ingots_or_plates} ({@code DungeonData}): a loose pile of ingots or plates.
      * GT6 rolls the ingot's material and stack size, the plate's material and stack size and then picks
      * plate or ingot with {@code next1in2()}; the port's piles take GT6's own metal list
      * ({@link CrateMaterialTables#CRATE_METALS}, the same {@code sMetals} GT6 passes here) and roll the size

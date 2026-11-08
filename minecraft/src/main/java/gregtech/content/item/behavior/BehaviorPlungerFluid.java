@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import javax.annotation.Nullable;
 
 /**
- * GT6 {@code Behavior_Plunger_Fluid} ({@code Behavior_Plunger_Fluid.java:41-73}) — the plunger's
+ * GT6 {@code Behavior_Plunger_Fluid} ({@code Behavior_Plunger_Fluid}) — the plunger's
  * "empty the tank" click.
  *
  * <h2>What the original does</h2>
@@ -31,8 +31,8 @@ import javax.annotation.Nullable;
  * anything. When no side has fluid the click does nothing and reports {@code F}.</p>
  *
  * <p>The costs are the plunger tool's own {@code getToolDamagePerDropConversion()}
- * ({@code GT_Tool_Plunger:87} passes it to the behaviour); the plunger does not override it, so
- * {@code ToolStats:64} applies and the number is {@link #COSTS}.</p>
+ * ({@code GT_Tool_Plunger} passes it to the behaviour); the plunger does not override it, so
+ * {@code ToolStats} applies and the number is {@link #COSTS}.</p>
  *
  * <h2>Port notes</h2>
  *
@@ -45,7 +45,7 @@ import javax.annotation.Nullable;
  *       {@link FluidStack}. The original only ever tests for {@code null}, so a partial drain also
  *       counts as "there is fluid here" — the port keeps that: any non-empty simulate result is
  *       enough, the real drain then takes up to {@code 1000} mB.</li>
- *   <li>GT6's creative bypass lives in {@code MultiItemTool.doDamage} ({@code MultiItemTool:434}:
+ *   <li>GT6's creative bypass lives in {@code MultiItemTool.doDamage} ({@code MultiItemTool}:
  *       {@code hasInfiniteItems(aPlayer)} returns {@code T} without damaging), and a tool that cannot
  *       take the damage is rejected before anything happens. Both are kept:
  *       {@link GTToolHelper#isUsable} is the port's {@code isItemStackUsable}.</li>
@@ -54,21 +54,21 @@ import javax.annotation.Nullable;
  * <h2>Sibling behaviours</h2>
  *
  * <p>{@code Behavior_Plunger_Item} (item pipes) is entirely commented out in the original
- * ({@code Behavior_Plunger_Item.java:42-64}) and {@code Behavior_Plunger_Essentia}
+ * ({@code Behavior_Plunger_Item}) and {@code Behavior_Plunger_Essentia}
  * needs Thaumcraft's {@code IEssentiaTransport}; neither is implemented here.</p>
  */
 public final class BehaviorPlungerFluid {
 
-    /** GT6 {@code Behavior_Plunger_Fluid:53}: {@code drain(tDirection, 1000, F)}. */
+    /** GT6 {@code Behavior_Plunger_Fluid}: {@code drain(tDirection, 1000, F)}. */
     public static final int DRAIN_AMOUNT = 1000;
 
-    /** GT6 {@code ToolStats:64} via {@code GT_Tool_Plunger:87}: {@code getToolDamagePerDropConversion()}. */
+    /** GT6 {@code ToolStats} via {@code GT_Tool_Plunger}: {@code getToolDamagePerDropConversion()}. */
     public static final int COSTS = 100;
 
     private BehaviorPlungerFluid() {}
 
     /**
-     * GT6 {@code Behavior_Plunger_Fluid:49-62}: clear up to {@link #DRAIN_AMOUNT} mB from the first
+     * GT6 {@code Behavior_Plunger_Fluid}: clear up to {@link #DRAIN_AMOUNT} mB from the first
      * tank face of the block entity that has fluid, paying {@code costs} durability for it.
      *
      * <p>The order of the original is preserved: find a face with fluid (simulate), then check that
@@ -107,7 +107,7 @@ public final class BehaviorPlungerFluid {
     }
 
     /**
-     * GT6's {@code MultiItemTool.doDamage(aStack, mCosts, aPlayer, F)} ({@code MultiItemTool:433-435}):
+     * GT6's {@code MultiItemTool.doDamage(aStack, mCosts, aPlayer, F)} ({@code MultiItemTool}):
      * creative pays nothing, a tool that is not usable is refused, everything else takes the damage.
      *
      * @return whether the cost could be paid

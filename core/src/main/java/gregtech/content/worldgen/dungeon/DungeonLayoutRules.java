@@ -6,7 +6,7 @@ import java.util.List;
 /** Complete original lattice, room scatter, corridor carving and both cleanup passes. */
 public final class DungeonLayoutRules {
     private DungeonLayoutRules() {}
-    /** GT6's registration values ({@code Loader_Worldgen:652}). */
+    /** GT6's registration values ({@code Loader_Worldgen}). */
     public static final int PROBABILITY = 100;
 
     public static final int MIN_SIZE = 3, MAX_SIZE = 7;

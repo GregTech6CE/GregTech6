@@ -22,7 +22,7 @@ public final class VanillaCraftingReplacements {
 
     public static List<Row> rows() {
         var rows = new ArrayList<Row>();
-        // Loader_Recipes_Vanilla:469,478 removes the vanilla arrow shortcut and uses four shafts.
+        // Loader_Recipes_Vanilla removes the vanilla arrow shortcut and uses four shafts.
         rows.add(new Row(
                 "minecraft:arrow",
                 "minecraft:arrow",

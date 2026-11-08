@@ -78,9 +78,9 @@ import java.util.Set;
  *
  * <p>GT6 attaches covers to <em>tiles</em>, and two of its covers are pipe covers first and machine
  * covers second: the pressure valve, whose {@code interceptCoverPlacement} refuses any host that is
- * not a fluid pipe with exactly one tank ({@code CoverPressureValve:44}), and the fluid filter, whose
+ * not a fluid pipe with exactly one tank ({@code CoverPressureValve}), and the fluid filter, whose
  * {@code interceptFluidFill}/{@code interceptFluidDrain} are asked from the pipe's own fill path
- * ({@code CoverFilterFluid:117,124}). This class is therefore a {@link PanelCoverHost} exactly the
+ * ({@code CoverFilterFluid}). This class is therefore a {@link PanelCoverHost} exactly the
  * way {@code BasicMachineBlockEntity} is one, with three differences, each of them deliberate:</p>
  *
  * <ul>
@@ -97,14 +97,14 @@ import java.util.Set;
  * <h2>Which tank a face sees: none — tanks do not map to faces, in GT6 either</h2>
  *
  * <p>GT6's {@code MultiTileEntityPipeFluid.getFluidTanks2(aSide)} returns the whole {@code mTanks}
- * array for <em>every</em> side ({@code MultiTileEntityPipeFluid:477}), and its
+ * array for <em>every</em> side ({@code MultiTileEntityPipeFluid}), and its
  * {@code getFluidTankFillable2} picks the first tank already holding that fluid and otherwise the
  * first empty one. A face only gates <em>connectivity</em>
  * ({@code canAcceptFluidsFrom}/{@code canEmitFluidsTo}). The port is the same
  * shape: sided handlers gate connectivity, filters and channel-local backflow, while unsided
  * access serves the pipe's own cover operations. All faces see the same channels. The one
  * exception is the pressure valve, which hard-codes {@code mTanks[0]}
- * ({@code CoverPressureValve:51}) and can only be attached when the pipe has a single tank, so
+ * ({@code CoverPressureValve}) and can only be attached when the pipe has a single tank, so
  * {@code tanks[0]} and "the pipe" coincide there.</p>
  */
 public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, PanelCoverHost, CoverStore.Hooks, gregtech.api.sensor.CompressionSensorSource, gregtech.api.sensor.TemperatureSource, gregtech.api.sensor.ProgressSensorSource {
@@ -322,12 +322,12 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 
     /**
      * The one rule the machine does not need is the pressure valve's host test, which GT6 keeps in
-     * the cover itself: {@code CoverPressureValve:44} {@code interceptCoverPlacement} refuses any host
+     * the cover itself: {@code CoverPressureValve} {@code interceptCoverPlacement} refuses any host
      * that is not a {@code MultiTileEntityPipeFluid} with exactly one tank, and any placement whose
      * neighbour is another fluid pipe. {@link CoverUtilityBehaviors#valveCanAttachTo} is that rule as
      * a predicate; the tank count comes from {@link PipeSpec#tankCount()}, which is {@code 1} for
      * every size except QUADRUPLE ({@code 4}) and NONUPLE ({@code 9}) — exactly GT6's
-     * {@code NBT_TANK_COUNT} ({@code MultiTileEntityPipeFluid:92-98}). Without the test a valve could
+     * {@code NBT_TANK_COUNT} ({@code MultiTileEntityPipeFluid}). Without the test a valve could
      * be attached to a quadruple pipe and would then silently release {@code tanks[0]} only.
      */
     @Override
@@ -420,8 +420,8 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
      * the same statics and the machine block's {@code use} call order can be mirrored in
      * {@link FluidPipeBlock}'s.
      *
-     * <p>GT6's right-click on a filter cover ({@code CoverFilterItem:88-112},
-     * {@code CoverFilterFluid:92-114}) and on the retriever ({@code CoverRetrieverItem:123-136}): the
+     * <p>GT6's right-click on a filter cover ({@code CoverFilterItem},
+     * {@code CoverFilterFluid}) and on the retriever ({@code CoverRetrieverItem}): the
      * held stack becomes the filter, once.</p>
      *
      * @return whether a filter was stored
@@ -457,7 +457,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     /**
      * The screwdriver and soft-hammer halves of the same covers, shared with
      * {@link BasicMachineBlockEntity}: the screwdriver flips whitelist/blacklist
-     * ({@code CoverFilterFluid:62-66}) and the soft hammer clears the filter ({@code CoverFilterFluid:67-70}).
+     * ({@code CoverFilterFluid}) and the soft hammer clears the filter ({@code CoverFilterFluid}).
      */
     public boolean configureFilterCover(Direction side, boolean screwdriver, boolean softHammer) {
         String id = coverIdOf(side);
@@ -1339,7 +1339,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     /**
-     * GT6 {@code CoverFilterFluid:117-129} asked about the cover on {@code side}; the pipe's
+     * GT6 {@code CoverFilterFluid} asked about the cover on {@code side}; the pipe's
      * counterpart of {@link BasicMachineBlockEntity#coverFluidFilterPermits(Direction, FluidStack)}.
      * {@code true} means "may pass", which is the inverse of the original's
      * {@code interceptFluidFill} / {@code interceptFluidDrain}.
@@ -1349,7 +1349,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
      * in {@link CoverUtilityBehaviors#fluidFilterPermits} fails and the candidate is never looked at.
      * An <em>empty filter stack on a real fluid filter cover</em> is the other case and is not
      * permissive: it returns {@code MachineCoverSpec.inverted(cover)}, false in the default whitelist
-     * mode and true only in the inverted one — GT6 {@code CoverFilterFluid:120}
+     * mode and true only in the inverted one — GT6 {@code CoverFilterFluid}
      * {@code return aData.mVisuals[aCoverSide] == 0;}. A suspended cover (a controller cover holding
      * the pipe) refuses everything.</p>
      */
@@ -1656,7 +1656,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             return pipe.isFluidValid(tank, stack);
         }
 
-        /** GT6 {@code CoverFilterFluid:117-122} {@code interceptFluidFill}: refuse, do not partially fill. */
+        /** GT6 {@code CoverFilterFluid} {@code interceptFluidFill}: refuse, do not partially fill. */
         @Override
         public int fill(FluidStack resource, FluidAction action) {
             if (!internal && (!gregtech.content.cover.ComponentCoverRuntime.allowsFluid(pipe.getCover(side),true) || !pipe.connected(side) || !pipe.coverFluidFilterPermits(side, resource))) return 0;
@@ -1670,7 +1670,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
             return accepted;
         }
 
-        /** GT6 {@code CoverFilterFluid:124-129} {@code interceptFluidDrain}, asked with the stack offered. */
+        /** GT6 {@code CoverFilterFluid} {@code interceptFluidDrain}, asked with the stack offered. */
         @NotNull @Override
         public FluidStack drain(FluidStack resource, FluidAction action) {
             if (!internal && (!gregtech.content.cover.ComponentCoverRuntime.allowsFluid(pipe.getCover(side),false) || !pipe.connected(side) || !pipe.coverFluidFilterPermits(side, resource))) return FluidStack.EMPTY;

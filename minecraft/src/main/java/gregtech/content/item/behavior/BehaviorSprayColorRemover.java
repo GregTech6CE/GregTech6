@@ -20,10 +20,10 @@ import net.minecraft.world.level.block.StainedGlassPaneBlock;
  */
 public final class BehaviorSprayColorRemover {
 
-    /** GT6 {@code MultiItemRandomTools:271}: {@code (Spray_Empty, Spray_Color_Remover_Used, Spray_Color_Remover, 256)}. */
+    /** GT6 {@code MultiItemRandomTools}: {@code (Spray_Empty, Spray_Color_Remover_Used, Spray_Color_Remover, 256)}. */
     public static final long USES = 256L;
 
-    /** GT6 {@code Behavior_Spray_Color_Remover:54}: {@code mUses = aUses * 10}. */
+    /** GT6 {@code Behavior_Spray_Color_Remover}: {@code mUses = aUses * 10}. */
     public static final int USES_MULTIPLIER = 10;
 
     /** GT6's: {@code tUses -= 10} for one decolorised block. */
@@ -64,7 +64,7 @@ public final class BehaviorSprayColorRemover {
                 USES * USES_MULTIPLIER);
     }
 
-    /** GT6 {@code Behavior_Spray_Color_Remover:58-94}: one click. */
+    /** GT6 {@code Behavior_Spray_Color_Remover}: one click. */
     public static Outcome useOn(
             Level level,
             BlockPos pos,
@@ -88,7 +88,7 @@ public final class BehaviorSprayColorRemover {
     }
 
     /**
-     * GT6 {@code Behavior_Spray_Color_Remover:96-106} for the port's content.
+     * GT6 {@code Behavior_Spray_Color_Remover} for the port's content.
      *
      * @return {@link #REMOVE_COST} when the block was decolorised, {@code 0} when it is not a
      *         colourable block

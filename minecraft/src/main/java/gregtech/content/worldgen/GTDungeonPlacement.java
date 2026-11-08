@@ -17,7 +17,7 @@ import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement
 /**
  * The placement that makes vanilla's structure system see GT6's dungeon lattice
  * ({@code abs(chunk) % 11 == 5} on both axes: {@code GTDungeonLayout.GRID_PERIOD} and
- * {@code GTDungeonLayout.ANCHOR_OFFSET}, i.e. {@code WorldgenDungeonGT:151-152}).
+ * {@code GTDungeonLayout.ANCHOR_OFFSET}, i.e. {@code WorldgenDungeonGT}).
  *
  * <h2>Why a subclass of {@code RandomSpreadStructurePlacement}</h2>
  * <p>{@code /locate structure gt6ce:gt_dungeon} reaches
@@ -51,7 +51,7 @@ import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement
  * <p>This placement is GT6's lattice and nothing else: it accepts exactly the anchors
  * {@link GTDungeonLayout#isAnchor} names, so {@code isStructureChunk} answers what
  * {@code GTDungeonFeature.place} uses to pick the cells it builds. GT6's one-in-a-hundred gate
- * ({@code WorldgenDungeonGT:150}) is deliberately <em>not</em> here - it belongs to the dungeon, and both
+ * ({@code WorldgenDungeonGT}) is deliberately <em>not</em> here - it belongs to the dungeon, and both
  * sides roll it from the anchor's seed ({@link GTDungeonLayout#passesProbability}): the feature in
  * {@code GTDungeonFeature.place}, the structure in {@link GTDungeonStructure#findGenerationPoint}. That is
  * what keeps {@code /locate} honest - a structure exists only where a dungeon was really rolled - while the

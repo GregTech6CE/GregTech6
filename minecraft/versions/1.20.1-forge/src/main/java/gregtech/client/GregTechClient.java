@@ -510,7 +510,7 @@ public final class GregTechClient {
             } else if (block instanceof gregtech.content.block.misc.PileBlock) {
                 // GT6 tints the pile's own greyscale textures with the stored material's colour
                 // (`BlockTextureDefault.get(sTextureSides, mMaterial.fRGBaSolid, ...)`,
-                // MultiTileEntityIngot.java:46-47, MultiTileEntityPlate.java:46-47); the port reads the
+                // MultiTileEntityIngot, MultiTileEntityPlate); the port reads the
                 // colour out of the pile's block entity instead.
                 event.register(
                         (state, level, pos, tintIndex) -> {
@@ -526,7 +526,7 @@ public final class GregTechClient {
                         block);
             } else if (block instanceof gregtech.content.block.misc.CoinPileBlock) {
                 // The same for GT6's coins, which its renderer colours with `mMaterial.fRGBaSolid`
-                // (MultiTileEntityCoin.java:430-435); an unbound pile already carries the port's default
+                // (MultiTileEntityCoin); an unbound pile already carries the port's default
                 // copper coin, so the colour always comes from the pile's own coin item.
                 event.register(
                         (state, level, pos, tintIndex) -> {
@@ -1019,7 +1019,7 @@ public final class GregTechClient {
         // ChunkRenderDispatcher picks a fluid's layer with ItemBlockRenderTypes.getRenderLayer
         // (ChunkRenderDispatcher.java) and vanilla's ItemBlockRenderTypes.FLUID_RENDER_TYPES only
         // contains Fluids.WATER / Fluids.FLOWING_WATER -> RenderType.translucent()
-        // (ItemBlockRenderTypes.java, default RenderType.solid() at line 400), so a separate
+        // (ItemBlockRenderTypes.java, default RenderType.solid()), so a separate
         // fluid stayed on the opaque solid layer - "the liquid still is not transparent like vanilla
         // water". The flowing variants are fluids of their own, so they are registered too: the
         // five spring IDs and their flowing variants share this registry policy. setRenderLayer may

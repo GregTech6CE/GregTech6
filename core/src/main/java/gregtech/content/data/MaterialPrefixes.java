@@ -696,7 +696,7 @@ public class MaterialPrefixes {
         BlockMaterialPrefix.blockSolid = blockSolid.getBlockDelegate();
 
         // Standard yields: ore = 2 units, small ore = 1 unit (specials may differ per material).
-        // GT6 OP.java:152/153: both ore prefixes are `ORES` — every material GT6 gives an ore to has
+        // GT6 OP: both ore prefixes are `ORES` — every material GT6 gives an ore to has
         // one (all of `G_INGOT_MACHINE_ORES`, 483 of the 1061 joined port materials, of which 358 are
         // declared through a non-ore factory here), so the flag is consulted next to the port property.
         oreBlock = registerBlock(block("ore")

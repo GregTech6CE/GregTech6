@@ -15,7 +15,7 @@ public final class TechnologicalItemDefinitions {
             Map.entry("slicer_shape_eigths", "slicer_shape_eights"),
             // IL.Module_*_Generator are multi-items, registered from their display name
             // ("Stone Generator Module" -> GTMultiItemsGen "stone_generator_module"); GT6's
-            // Extruder rows name them as recipe keys (Loader_Recipes_Extruder:44-151).
+            // Extruder rows name them as recipe keys (Loader_Recipes_Extruder).
             Map.entry("module_stone_generator", "stone_generator_module"),
             Map.entry("module_basalt_generator", "basalt_generator_module"),
             Map.entry("module_blackstone_generator", "blackstone_generator_module"),
@@ -39,7 +39,7 @@ public final class TechnologicalItemDefinitions {
             Map.entry("food_potato_poisonous", "minecraft:poisonous_potato"),
             Map.entry("remains_plant", "plant_remains"),
             // IL.Dynamite_Strong is the block whose display name gives the port's
-            // "strong_dynamite" id (GT6 MultiTileEntityDynamite, Loader_MultiTileEntities:2237).
+            // "strong_dynamite" id (GT6 MultiTileEntityDynamite, Loader_MultiTileEntities).
             Map.entry("dynamite_strong", "strong_dynamite"));
 
     // ---- English name derivation ----
@@ -384,8 +384,8 @@ public final class TechnologicalItemDefinitions {
 
         // The pump/conveyor/robot-arm covers, the redstone torch/repeater covers and the tag
         // selector are NOT separate items: GT6 gives those roles to the compact electric pump /
-        // conveyor / robot arm (MultiItemTechnological:50-53), to the vanilla redstone torch and
-        // repeater (GT_API:799-802) and to the programmed circuit (ItemIntegratedCircuit:87).
+        // conveyor / robot arm (MultiItemTechnological), to the vanilla redstone torch and
+        // repeater (GT_API) and to the programmed circuit (ItemIntegratedCircuit).
         // See content/cover/CoverItems.
 
         // ===== Logistics =====

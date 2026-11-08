@@ -56,7 +56,7 @@ public final class GTBookContent {
         BOOKS.put(elements.name(), elements);
     }
 
-    /** GT6 Loader_Books:570-582: three instructions, then one page per crucible alloy recipe. */
+    /** GT6 Loader_Books: three instructions, then one page per crucible alloy recipe. */
     private static Book alloyBook() {
         List<String> pages = new ArrayList<>();
         pages.add(
@@ -98,7 +98,7 @@ public final class GTBookContent {
                 List.copyOf(pages));
     }
 
-    /** GT6 Loader_Books:586-596; visible non-antimatter elements in numeric material-ID order. */
+    /** GT6 Loader_Books; visible non-antimatter elements in numeric material-ID order. */
     private static Book elementBook() {
         List<GTMaterial> materials = new ArrayList<>(GTMaterialRegistry.allMaterials());
         materials.sort(Comparator.comparingInt(GTMaterial::getId));

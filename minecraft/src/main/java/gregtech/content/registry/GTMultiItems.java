@@ -40,18 +40,18 @@ public final class GTMultiItems {
         }
         registerWoodenBuckets(registrar);
         registerPaintSprays(registrar);
-        // GT6's Dusty Guide Book (MultiItemBooks:67, addItem 32765) opens the gt.books table. The port
+        // GT6's Dusty Guide Book (MultiItemBooks, addItem 32765) opens the gt.books table. The port
         // registers it by hand: it is the only MultiItemBooks entry the loot chain needs, and
         // transpile_gt6_multiitems.py has a HAND_REGISTERED set so a later "books" category never
         // emits this id twice. Its assets come from tools/generate_guide_book_assets.py.
         BY_ID.put("dusty_guide_book", registrar.item(REGISTRY_NAMESPACE, "dusty_guide_book",
                 () -> new gregtech.content.loot.LootBagItem(new Item.Properties().stacksTo(64), "gt.books")));
-        // GT6's Dusty Material Dictionary (MultiItemBooks:68, addItem 32766) rolls gt.matdicts, the
+        // GT6's Dusty Material Dictionary (MultiItemBooks, addItem 32766) rolls gt.matdicts, the
         // table GTLootTables builds from the registered materials. Assets come from
         // tools/generate_material_dictionary_assets.py.
         BY_ID.put("dusty_material_dictionary", registrar.item(REGISTRY_NAMESPACE, "dusty_material_dictionary",
                 () -> new gregtech.content.loot.LootBagItem(new Item.Properties().stacksTo(64), "gt.matdicts")));
-        // GT6's Loot Bottle (MultiItemBottles:367 "Clouded Bottle", addItem 32761) opens gt.bottles —
+        // GT6's Loot Bottle (MultiItemBottles "Clouded Bottle", addItem 32761) opens gt.bottles —
         // the last GT table the port had deferred; assets from tools/generate_loot_bottle_assets.py.
         BY_ID.put("loot_bottle", registrar.item(REGISTRY_NAMESPACE, "loot_bottle",
                 () -> new gregtech.content.loot.LootBagItem(new Item.Properties().stacksTo(64), "gt.bottles")));
@@ -83,7 +83,7 @@ public final class GTMultiItems {
 //?}
             ));
             // The four GT6 loot bags: right-click a block to open them and get GT's own loot
-            // tables (MultiItemRandomTools:583-586, Behavior_Drop_Loot).
+            // tables (MultiItemRandomTools, Behavior_Drop_Loot).
             case "bagged_sapling" -> new gregtech.content.loot.LootBagItem(props, "gt.saplings");
             case "seed_pouch" -> new gregtech.content.loot.LootBagItem(props, "gt.seeds");
             case "gem_pouch" -> new gregtech.content.loot.LootBagItem(props, "gt.flawless", "gt.gems", "gt.gems");

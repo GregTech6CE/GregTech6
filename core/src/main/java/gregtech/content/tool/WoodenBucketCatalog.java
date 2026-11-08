@@ -1,5 +1,5 @@
 /* Original bucket families: Gregorius Techneticies / GregTech-6 Team, LGPL-3.0-or-later.
- * Source: MultiItemRandomTools:304-329; empty shells contain 3U wood and 1U band metal. */
+ * Source: MultiItemRandomTools; empty shells contain 3U wood and 1U band metal. */
 package gregtech.content.tool;
 
 import java.util.List;

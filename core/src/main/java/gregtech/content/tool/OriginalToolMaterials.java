@@ -122,7 +122,7 @@ public final class OriginalToolMaterials {
 
     public static boolean acceptsHead(ToolDefinition type, GTMaterial material) {
         if (material == null || material.has(MaterialProperty.ANTIMATTER)) return false;
-        // Loader_Recipes_Woods:237-238 uses each plank material, including generic Wood.
+        // Loader_Recipes_Woods uses each plank material, including generic Wood.
         if (type == ToolDefinition.ROLLING_PIN && material.has(MaterialProperty.WOOD)) return true;
         if (material.getToolTypes() < type.minToolTypes()) return false;
         if (type.isGun() || type.isPocket())

@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 /**
- * GT6's shaped one-piece-tool row ({@code Loader_Tools:305-320}), e.g.
+ * GT6's shaped one-piece-tool row ({@code Loader_Tools}), e.g.
  * {@code WRENCH = {"PhP"," P "," P "}}.
  *
  * <p>The port used to register these tools as one shapeless assembly, which both lost the shape and

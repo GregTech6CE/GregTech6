@@ -103,7 +103,7 @@ public final class GTIconSetBlocks {
                                             block.get(), new Item.Properties())
                                     : new BlockItem(block.get(), new Item.Properties().stacksTo(64)));
             if (iconName.equals("planks_treated")) {
-                // GT6 Loader_Woods:85-87: the treated plank block is also the
+                // GT6 Loader_Woods: the treated plank block is also the
                 // canonical OP.plate/WoodTreated, rather than a separate flat item.
                 GTItems.bind(
                         gregtech.content.data.MaterialPrefix.plate,

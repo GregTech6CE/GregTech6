@@ -9,7 +9,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 
-/** GT_Proxy:288-293: sneak-click toast/toasted toast to place a batch on solid ground. */
+/** GT_Proxy: sneak-click toast/toasted toast to place a batch on solid ground. */
 public final class SandwichPlacementHandler {
     private SandwichPlacementHandler() {}
 

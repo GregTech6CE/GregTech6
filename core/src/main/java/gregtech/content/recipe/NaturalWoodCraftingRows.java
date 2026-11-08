@@ -3,7 +3,7 @@ package gregtech.content.recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-/** LoaderWoodDictionary:165-171 / Loader_Recipes_Woods:184-185,243-244.
+/** LoaderWoodDictionary / Loader_Recipes_Woods.
  * These logs yield 1 plank by hand, 2 by saw and 3 by machine; their log entries
  * explicitly have no stick output. Plank entries still have their normal stick forms.
  */

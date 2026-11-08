@@ -93,12 +93,12 @@ import java.util.Set;
  *       stored ingot and plate, one quarter-block coin per occupied face, in the material's colour
  *       ({@code PileBlock.STACK} and {@code CoinPileBlock.COINS}) - and the only thing GT6 draws that the
  *       port cannot is its per-face 3D coin image, the two 16x16 shape bitmaps with their 128x128 top
- *       and bottom sheets ({@code MultiTileEntityCoin.java:341-449}); the port draws GT6's flat coin
+ *       and bottom sheets ({@code MultiTileEntityCoin}); the port draws GT6's flat coin
  *       instead, which is the renderer GT6 itself falls back to with its 3D coins off.</li>
- *   <li>Coins: GT6's dungeon writes no coin material at all ({@code DungeonData.java:169-173}), leaving
+ *   <li>Coins: GT6's dungeon writes no coin material at all ({@code DungeonData}), leaving
  *       its pile uncoloured, while the port's coins are real items. {@link #coins} therefore binds the
  *       pile to one metal of {@link #COIN_METALS}, GT6's own dungeon coin list
- *       ({@code WorldgenDungeonGT.java:195}). A dungeon-wide seed picks that metal once through
+ *       ({@code WorldgenDungeonGT}). A dungeon-wide seed picks that metal once through
  *       {@link GTDungeonSharedState}, so every pile of the dungeon agrees without cross-chunk state.</li>
  *   <li>Loot: GT6 fills its own shelf/chest multi-tiles from {@code ChestGenHooks}. The port places
  *       its GT shelf and material chest with corresponding 1.20.1 loot tables.</li>
@@ -107,7 +107,7 @@ import java.util.Set;
  *       harvest drops for its seventeen GT flowers.</li>
  *   <li>Lamps: 1.20.1 has no separate lit redstone lamp block, so {@link #lamp} sets
  *       {@code RedstoneLampBlock.LIT}.</li>
- *   <li>Keys: GT6 hands out five named dungeon keys, one per dungeon ({@code WorldgenDungeonGT:169-173}).
+ *   <li>Keys: GT6 hands out five named dungeon keys, one per dungeon ({@code WorldgenDungeonGT}).
  *       The port registers the ten key items ({@code GTDungeonKeys}) and builds the five stacks
  *       ({@code GTDungeonFeature.keyStack}); the barracks, the workshop and the library put them into a
  *       container slot, and the dungeon loot containers carry matching key ids.</li>
@@ -115,7 +115,7 @@ import java.util.Set;
  *       entrance's staircase and the portal rooms' kerbs ({@code mSlabs[SIDE_*]}, see {@link #slab}).
  *       The port's stone family carries the same half blocks with the same six orientations
  *       ({@code GTStoneSlabBlock.FACING} = GT6's side constant), so those sites are GT6's again; only
- *       GT6's random brick variant roll of {@code bricks(...)} ({@code DungeonData:124}, meta
+ *       GT6's random brick variant roll of {@code bricks(...)} ({@code DungeonData}, meta
  *       {@code 3 + next(3)}) stays collapsed onto {@link StoneVariant#BRICKS}, for slabs and full
  *       blocks alike.</li>
  *   <li>Fluid containers: GT6's {@code MultiTileEntityBarrelWood}, {@code MultiTileEntityBarrelMetal},
@@ -222,7 +222,7 @@ public final class GTDungeonData {
     public boolean next4in5() { return next(5) < 4; }
     public boolean next5in6() { return next(6) < 5; }
 
-    // ── the rock family (GT6's {@code DungeonData:124-151}) ────────────────────────────────────
+    // ── the rock family (GT6's {@code DungeonData}) ────────────────────────────────────
 
     /** Whether this cell's local height uses the dungeon's secondary rock (GT6: {@code aY == 2}). */
     public StoneType rockAt(int localY) { return localY == 2 ? secondary : primary; }
@@ -252,16 +252,16 @@ public final class GTDungeonData {
     /**
      * GT6's half block of one of the dungeon's two rocks, in the orientation GT6 names by its side
      * constant ({@code aData.mPrimary.mSlabs[SIDE_*]}, e.g.
-     * {@code DungeonChunkRoomFarmCrop:42-55}).
+     * {@code DungeonChunkRoomFarmCrop}).
      *
-     * <p>GT6's {@code BlockMetaType.mSlabs} ({@code BlockMetaType:74-81}) holds six separate half-block
-     * blocks of the same rock, indexed by GT6's side constants ({@code CS:516-521}):
+     * <p>GT6's {@code BlockMetaType.mSlabs} ({@code BlockMetaType}) holds six separate half-block
+     * blocks of the same rock, indexed by GT6's side constants ({@code CS}):
      * {@code SIDE_Y_NEG = 0}, {@code SIDE_Y_POS = 1}, {@code SIDE_Z_NEG = 2}, {@code SIDE_Z_POS = 3},
      * {@code SIDE_X_NEG = 4}, {@code SIDE_X_POS = 5} - the same order as vanilla's {@link Direction}
      * ({@code DOWN, UP, NORTH, SOUTH, WEST, EAST}), and the port's {@link GTStoneSlabBlock} carries
      * exactly that orientation in its {@code FACING} property. Its six collision boxes
      * ({@code GTStoneSlabBlock}) are GT6's own block bounds
-     * ({@code BlockMetaType:121-128}) block for block, so a GT6 side becomes a vanilla direction
+     * ({@code BlockMetaType}) block for block, so a GT6 side becomes a vanilla direction
      * without any mirroring.</p>
      *
      * <p>The rock is the cell's rock for that local height ({@link #rockAt}), exactly as in GT6's
@@ -275,7 +275,7 @@ public final class GTDungeonData {
     public boolean slab(int ax, int ay, int az, StoneVariant variant, Direction side) {
         Block slab = GTBlocks.getStoneSlab(rockAt(ay), variant);
         if (slab == null) {
-            // The port registers a slab for every rock/variant pair (Loader_Blocks:117-133); should one
+            // The port registers a slab for every rock/variant pair (Loader_Blocks); should one
             // ever be missing, GT6's half block cannot be expressed and the full block stands in.
             return stone(ax, ay, az, variant);
         }
@@ -304,7 +304,7 @@ public final class GTDungeonData {
 
     /**
      * One of GT6's straight runs of tile slabs (the kerbs of {@link GTDungeonChunkRoomPortal}, GT6
-     * {@code DungeonChunkRoomPortal:43-62} and its three siblings): {@code count} tile slabs starting at
+     * {@code DungeonChunkRoomPortal} and its three siblings): {@code count} tile slabs starting at
      * the given local offset, stepping by {@code (dx, dz)} - GT6 writes every kerb as such a run, in
      * either direction. All of them use GT6's {@code mSlabs[0]}, the bottom half.
      */
@@ -316,7 +316,7 @@ public final class GTDungeonData {
         return placed;
     }
 
-    // ── the colour family (GT6's {@code DungeonData:153-166}) ──────────────────────────────────
+    // ── the colour family (GT6's {@code DungeonData}) ──────────────────────────────────
 
     public boolean glass(int ax, int ay, int az) {
         return set(ax, ay, az, gregtech.content.block.misc.FixedConstructionColor.recolor(
@@ -337,7 +337,7 @@ public final class GTDungeonData {
      * (the brick is what powers the lamp in GT6's own {@code lit_redstone_lamp} variant).
      *
      * <p>Port difference: GT6 wrote an <em>unlit</em> lamp when the offset was zero and then faked block
-     * light 15 at that position through {@code WorldgenDungeonGT:296-302} (its {@code mLightUpdateCoords}
+     * light 15 at that position through {@code WorldgenDungeonGT} (its {@code mLightUpdateCoords}
      * pass). 1.20.1 recomputes light from real emitters, so an unlit lamp would leave the dungeon dark —
      * the port therefore always places the lamp lit, which keeps GT6's light level without the hack.</p>
      */
@@ -348,10 +348,10 @@ public final class GTDungeonData {
                 .setValue(net.minecraft.world.level.block.RedstoneLampBlock.LIT, true));
     }
 
-    // ── decorations (GT6's {@code DungeonData:169-348}) ────────────────────────────────────────
+    // ── decorations (GT6's {@code DungeonData}) ────────────────────────────────────────
 
     /**
-     * GT6's storage-room metal list ({@code DungeonChunkRoomStorage:45}), by port material name. GT6
+     * GT6's storage-room metal list ({@code DungeonChunkRoomStorage}), by port material name. GT6
      * passes it to {@code ingots_or_plates} for the loose piles of that room; the port's {@link #pile}
      * rolls from it when a room passes no list of its own.
      */
@@ -359,8 +359,8 @@ public final class GTDungeonData {
             "Steel", "Steel", "StainlessSteel", "StainlessSteel", "DamascusSteel"};
 
     /**
-     * GT6's gem list ({@code DungeonChunkRoomStorage:44}) reduced to the gem and crystal entries GT6's
-     * {@code OP.plateGem} can carry (a gem or boule material with plates, {@code DungeonData:273-276}).
+     * GT6's gem list ({@code DungeonChunkRoomStorage}) reduced to the gem and crystal entries GT6's
+     * {@code OP.plateGem} can carry (a gem or boule material with plates, {@code DungeonData}).
      * The list feeds {@link PileKind#GEM_PLATE} the same way {@link #PILE_METALS} feeds the other two
      * forms; entries the port has no item for are skipped by {@link #rollPileItem}, which walks the list.
      */
@@ -368,12 +368,12 @@ public final class GTDungeonData {
             "Amethyst", "NetherQuartz", "CertusQuartz", "Lapis", "Redstone", "Glowstone", "Apatite", "Coal"};
 
     /**
-     * GT6's dungeon coin materials ({@code WorldgenDungeonGT.java:195}):
+     * GT6's dungeon coin materials ({@code WorldgenDungeonGT}):
      * {@code UT.Code.select(MT.NULL, MT.Cu, MT.Cu, MT.Cu, MT.Ag, MT.Ag, MT.Au, MT.Au, MT.Pt)} - one of
      * eight equally likely entries, so copper 3/8, silver 2/8, gold 2/8 and platinum 1/8.
      *
-     * <p>GT6's newer dungeon ({@code DungeonData.java:169-173}) writes no material at all and leaves its
-     * pile uncoloured ({@code MultiTileEntityCoin.java:430-435}); the port's coin is a real item that has
+     * <p>GT6's newer dungeon ({@code DungeonData}) writes no material at all and leaves its
+     * pile uncoloured ({@code MultiTileEntityCoin}); the port's coin is a real item that has
      * to name the metal it is made of, so a dungeon pile rolls GT6's own coin list - the one the older
      * {@code WorldgenDungeonGT} used for exactly this purpose. The names are the port's
      * ({@code ElementMaterials.java} Copper, Silver and Platinum; Gold is the
@@ -415,7 +415,7 @@ public final class GTDungeonData {
 
     /**
      * GT6's {@code set(BlocksGT.blockRaw, x, y, z, aMaterial.mID)} - the single material form, which the
-     * bedrock mine uses for the pillars it grows out of its vein ({@code DungeonChunkRoomMiningBedrock:130-132}).
+     * bedrock mine uses for the pillars it grows out of its vein ({@code DungeonChunkRoomMiningBedrock}).
      *
      * @return whether the raw ore block of that material exists in the port and was placed
      */
@@ -435,13 +435,13 @@ public final class GTDungeonData {
     }
 
     /**
-     * GT6's coin pile ({@code DungeonData.java:169-173}).
+     * GT6's coin pile ({@code DungeonData}).
      *
      * <p>GT6 rolls every one of the sixteen faces with {@code next1in3() ? next(8) : 0}, then overwrites
      * one random face with {@code 1 + next(8)} - so a dungeon coin pile always carries at least one coin
      * and never more than eight per face. Both bytes are written through
      * {@link CoinPileBlockEntity#setFaceCount}, which keeps GT6's cap of sixteen coins per face
-     * ({@code MultiTileEntityCoin.java:74}).</p>
+     * ({@code MultiTileEntityCoin}).</p>
      *
      * <p>Port difference: GT6's dungeon coins carry no material, the port's have to, so the pile is
      * bound to the dungeon's one chosen metal of {@link #COIN_METALS} afterwards ({@link #rollCoin}).
@@ -493,7 +493,7 @@ public final class GTDungeonData {
      * one random element of a list, or the replacement when the list is empty.
      *
      * <p>GT6's dungeon calls this for things whose choice is <b>not</b> part of the dungeon's own stream:
-     * the storage room picks its tank fluid that way ({@code DungeonChunkRoomStorage:70},
+     * the storage room picks its tank fluid that way ({@code DungeonChunkRoomStorage},
      * {@code UT.Code.select(NF, tFluids[tType])}), because {@code UT.Code.select} draws from
      * {@code RNGSUS}, GT6's shared global RNG. The port therefore draws it from a stream of its own
      * ({@link #wandering}) instead of {@link #random} - every later roll of the cell, and with it the
@@ -534,7 +534,7 @@ public final class GTDungeonData {
 
     /**
      * A coin pile with one face filled to a fixed count - the port's explicit form of GT6's face bytes
-     * ({@code DungeonData:170-171}), for a room that wants a specific pile and for tests.
+     * ({@code DungeonData}), for a room that wants a specific pile and for tests.
      *
      * @param face  GT6's face index, {@code 0..15} (see {@link CoinPileBlockEntity#faceAt})
      * @param count coins on that face, clamped into GT6's cap
@@ -553,7 +553,7 @@ public final class GTDungeonData {
     }
 
     /**
-     * GT6's loose ingot / plate / gem-plate pile on the floor ({@code DungeonData.java:265-276}), whose
+     * GT6's loose ingot / plate / gem-plate pile on the floor ({@code DungeonData}), whose
      * multi-tiles carry one stack in {@code NBT_VALUE} - the port's {@link PileBlockEntity} carries the
      * same stack, filled here.
      *
@@ -577,7 +577,7 @@ public final class GTDungeonData {
     }
 
     /**
-     * GT6's {@code ingots(x, y, z, aStackSize, materials...)} and friends ({@code DungeonData:265-276}):
+     * GT6's {@code ingots(x, y, z, aStackSize, materials...)} and friends ({@code DungeonData}):
      * one material out of {@code materials}, one stack size,
      * {@code aStackSize <= 0 ? nextStack() : bindStack(aStackSize)}.
      */
@@ -614,8 +614,8 @@ public final class GTDungeonData {
      * already at hand, for a room that knows its material.
      *
      * <p>Like GT6, an invalid stack places nothing at all ({@code ST.valid(aStack) && set(...)},
-     * {@code DungeonData:265-276}); the port's pile then clamps the stack to its own cap of 64
-     * ({@code MultiTileEntityPlaceable.java:82}) when it takes it.</p>
+     * {@code DungeonData}); the port's pile then clamps the stack to its own cap of 64
+     * ({@code MultiTileEntityPlaceable}) when it takes it.</p>
      */
     public boolean pileStack(int ax, int ay, int az, PileKind kind, @Nullable ItemStack stack) {
         if (stack == null || stack.isEmpty()) return false;
@@ -626,7 +626,7 @@ public final class GTDungeonData {
     }
 
     /**
-     * GT6's {@code OP.<prefix>.mat(material, 1)} for a dungeon pile ({@code DungeonData:260-274}): one
+     * GT6's {@code OP.<prefix>.mat(material, 1)} for a dungeon pile ({@code DungeonData}): one
      * item of the form, of a material the port actually registers an item for.
      *
      * <p>GT6 draws {@code aMaterials[next(aMaterials.length)]} once; the port starts at the same random
@@ -751,7 +751,7 @@ public final class GTDungeonData {
 
     /**
      * GT6's shelving with one of the dungeon's key stacks inside it
-     * ({@code DungeonChunkBarracks:111-121}, {@code DungeonChunkRoomLibrary:122-128}): GT6 rolls the
+     * ({@code DungeonChunkBarracks}, {@code DungeonChunkRoomLibrary}): GT6 rolls the
      * slot with {@code next(28)} (barracks, hinting at a back slot with the cobble behind the shelf) or
      * {@code next(14)} (library) and stores the key stack there.
      *
@@ -780,7 +780,7 @@ public final class GTDungeonData {
 
     /**
      * GT6's chest multi-tile with a fixed inventory instead of a loot table - the supply chest of the
-     * Nether portal room ({@code DungeonChunkRoomPortalNether:41-48}, multi-tile 502 with
+     * Nether portal room ({@code DungeonChunkRoomPortalNether}, multi-tile 502 with
      * {@code NBT_INV_LIST}).
      */
     public boolean chestContents(int ax, int ay, int az, ItemStack... contents) {
@@ -806,7 +806,7 @@ public final class GTDungeonData {
      *
      * <p>GT6 writes a filled container as
      * {@code aData.set(x, y, z, SIDE_UNKNOWN, id, new FluidTankGT(FL.X.make(n)).writeToNBT(..., NBT_TANK), T, T)}
-     * ({@code DungeonChunkRoomWorkshop:51}), so the fluid and its amount
+     * ({@code DungeonChunkRoomWorkshop}), so the fluid and its amount
      * belong to the block. The port owns both halves now and this helper fills whichever the block
      * carries:</p>
      * <ul>

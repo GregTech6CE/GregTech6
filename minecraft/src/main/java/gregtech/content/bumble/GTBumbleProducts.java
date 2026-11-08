@@ -15,7 +15,7 @@ import net.minecraft.world.item.Items;
  *
  * <table>
  *   <caption>GT6's product tables</caption>
- *   <tr><td>{@code bumbleProductCount} ({@code MultiItemBumbles:492-494})</td>
+ *   <tr><td>{@code bumbleProductCount} ({@code MultiItemBumbles})</td>
  *       <td>always 1: a species has exactly one product, its comb</td></tr>
  *   <tr><td>{@code bumbleProductStack}</td>
  *       <td>{@code meta / 100} picks the comb row: the honey comb for every tier 0 species, the water
@@ -43,16 +43,16 @@ import net.minecraft.world.item.Items;
  */
 public final class GTBumbleProducts {
 
-    /** GT6's {@code rng(10000)} bound for the product roll ({@code MultiTileEntityBumbliary:171}). */
+    /** GT6's {@code rng(10000)} bound for the product roll ({@code MultiTileEntityBumbliary}). */
     public static final int ROLL = 10000;
 
-    /** GT6's roll bound of the advanced bumbliary ({@code MultiTileEntityBumbliaryAdvanced:171}). */
+    /** GT6's roll bound of the advanced bumbliary ({@code MultiTileEntityBumbliaryAdvanced}). */
     public static final int ADVANCED_ROLL = 20000;
 
     private GTBumbleProducts() {}
 
     /**
-     * GT6's species level, {@code (meta / 10) % 10} ({@code MultiItemBumbles:482,460}): the position of
+     * GT6's species level, {@code (meta / 10) % 10} ({@code MultiItemBumbles}): the position of
      * a species inside its comb tier, 0..3.
      */
     public static int level(int speciesId) {
@@ -60,20 +60,20 @@ public final class GTBumbleProducts {
     }
 
     /**
-     * GT6's {@code bumbleProductChance} ({@code MultiItemBumbles:481-489}): 2500, 5000, 7500 and 10000
+     * GT6's {@code bumbleProductChance} ({@code MultiItemBumbles}): 2500, 5000, 7500 and 10000
      * per 10000 for the levels 0..3, and 10000 for anything outside the table.
      */
     public static int chance(int speciesId) {
         return BumbleSpeciesRules.productChance(speciesId);
     }
 
-    /** GT6's {@code bumbleProductCount} ({@code MultiItemBumbles:492-494}): one product per species. */
+    /** GT6's {@code bumbleProductCount} ({@code MultiItemBumbles}): one product per species. */
     public static int count() {
         return 1;
     }
 
     /**
-     * GT6's {@code bumbleProductStack} ({@code MultiItemBumbles:189-213}) for the one product of a
+     * GT6's {@code bumbleProductStack} ({@code MultiItemBumbles}) for the one product of a
      * species: its comb, or an empty stack when the port does not register that comb.
      */
     public static ItemStack stack(int speciesId, int count) {

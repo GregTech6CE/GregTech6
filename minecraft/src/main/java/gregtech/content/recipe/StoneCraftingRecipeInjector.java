@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * GT6 {@code BlockStones:257-487} — the crafting-grid rows of every masonry variant of every rock type.
+ * GT6 {@code BlockStones} — the crafting-grid rows of every masonry variant of every rock type.
  *
  * <p>The rows are shaped ({@code CR.shaped}) and shapeless ({@code CR.shapeless}) hand recipes GT6
  * registers per equal-block group, i.e. once per rock type per variant:</p>
@@ -60,11 +60,11 @@ import java.util.Map;
  * </pre>
  *
  * <p>Two GT6 details are carried over: the tool keys are GT tools of the type GT6's
- * {@code craftingToolHammer/Chisel/File} ore dictionary names refer to ({@code CR.java:344-360}), and
+ * {@code craftingToolHammer/Chisel/File} ore dictionary names refer to ({@code CR}), and
  * rows with the {@code CR.DEF} flag are registered <em>without</em> mirroring, which is why
  * {@link ToolShapedRecipe} is used instead of a plain {@link ShapedRecipe}.</p>
  *
- * <p>{@code BlockMetaType:88-95} adds two rows to every full masonry block, independently of those
+ * <p>{@code BlockMetaType} adds two rows to every full masonry block, independently of those
  * variant groups: {@code "X"/"X"} turns two slabs back into the block and {@code "sX"} saws the block
  * into two slabs. Both are registered per meta, so all 16 {@link StoneVariant}s of every rock get
  * them, including reinforced and redstone bricks.</p>
@@ -157,7 +157,7 @@ public final class StoneCraftingRecipeInjector {
         added += shaped(recipes, path + "/cobble_to_wall", new String[]{"XXX", "XXX"},
                 Map.of('X', Ingredient.of(cobble)), new ItemStack(Items.COBBLESTONE_WALL, 6), true);
 
-        // GT6 BlockMetaType:88-95 — every full block and its slab pair, whatever the variant group.
+        // GT6 BlockMetaType — every full block and its slab pair, whatever the variant group.
         for (StoneVariant variant : StoneVariant.values()) {
             ItemStack full = block(type, variant);
             ItemStack half = slab(type, variant);
@@ -173,7 +173,7 @@ public final class StoneCraftingRecipeInjector {
                 Map.of('X', Ingredient.of(bricks), 'y', chisel), cracked, false);
         added += shaped(recipes, path + "/bricks_cracked_by_hammer", new String[]{"h", "X"},
                 Map.of('X', Ingredient.of(bricks), 'h', hammer), cracked, false);
-        // GT6's 'e' key is OreDictToolNames.drill (CR.java:341); the port registers no drill tool, so
+        // GT6's 'e' key is OreDictToolNames.drill (CR); the port registers no drill tool, so
         // this row cannot be built.
         SKIPPED.add(path + "/bricks_reinforced: GT6's key 'e' is the drill tool, which the port does not register");
         added += shaped(recipes, path + "/bricks_redstone", new String[]{"Dh", "X "},
@@ -201,7 +201,7 @@ public final class StoneCraftingRecipeInjector {
         added += shapeless(recipes, path + "/mossy_cobblestone_from_vine", vine, cobble, cobbleMossy);
         added += shapeless(recipes, path + "/mossy_bricks_from_vine", vine, bricks, bricksMossy);
         added += shapeless(recipes, path + "/mossy_cracked_bricks_from_vine", vine, cracked, bricksMossy);
-        // GT6 RM.growmoss (RM.java:305-310) writes a second shapeless row per group using its own moss
+        // GT6 RM.growmoss (RM) writes a second shapeless row per group using its own moss
         // item (OD.itemMoss), which the port does not register.
         for (String clean : new String[]{"cobblestone", "bricks", "cracked_bricks"}) {
             SKIPPED.add(path + "/mossy_" + clean + "_from_moss: GT6's moss item is not registered");

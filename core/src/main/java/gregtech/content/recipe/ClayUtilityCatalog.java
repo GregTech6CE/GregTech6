@@ -2,7 +2,7 @@ package gregtech.content.recipe;
 
 import java.util.List;
 
-/** Original GT6 MultiItemRandomTools:126,128-132 and Loader_MultiTileEntities firing rows.
+/** Original GT6 MultiItemRandomTools and Loader_MultiTileEntities firing rows.
  * SPDX-License-Identifier: LGPL-3.0-or-later; Gregorius Techneticies and contributors. */
 public final class ClayUtilityCatalog {
     private ClayUtilityCatalog() {}

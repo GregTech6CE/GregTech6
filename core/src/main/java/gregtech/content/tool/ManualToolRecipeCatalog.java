@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * GT6's <em>shaped</em> tool and tool-head recipes, as data ({@code Loader_Tools:255-380}).
+ * GT6's <em>shaped</em> tool and tool-head recipes, as data ({@code Loader_Tools}).
  *
  * <p>GT6 has three tool families and this class covers two of them:</p>
  *
@@ -27,7 +27,7 @@ import java.util.Map;
  *       GTToolHeadRecipe registers those.</li>
  * </ol>
  *
- * <p>Key letters are GT6's ({@code Loader_Tools:395-425} for tools, {@code CR.java:336-360} for the
+ * <p>Key letters are GT6's ({@code Loader_Tools} for tools, {@code CR} for the
  * bare tool keys): {@code A} the tool head, {@code H} the handle stick, {@code I} ingot, {@code P}
  * plate, {@code G} gem, {@code B} plateCurved, {@code C} plateGem, {@code S} stick, {@code T} screw,
  * {@code O} ring, {@code N} nugget, {@code R} rock, {@code V/W/X/Y/Z} the per-tool special object, and the lowercase letters are crafting tools ({@code h} hammer, {@code f}
@@ -40,7 +40,7 @@ import java.util.Map;
 public final class ManualToolRecipeCatalog {
 
     /**
-     * Extra rules of GT6's hand-written early rows ({@code Loader_Tools:255-290}): a slot can be a
+     * Extra rules of GT6's hand-written early rows ({@code Loader_Tools}): a slot can be a
      * fixed vanilla item, the tool's material can be fixed by that item, or the row can be limited to
      * one material or to the stone materials.
      */
@@ -188,7 +188,7 @@ public final class ManualToolRecipeCatalog {
     // ── data ──────────────────────────────────────────────────────────────
 
     static {
-        // Loader_Tools:317-319. Flint is the striker; H uses the normal material handle.
+        // Loader_Tools. Flint is the striker; H uses the normal material handle.
         var gunForms = forms('X', MaterialPrefix.plateCurved, 'T', MaterialPrefix.screw);
         var gunTools = tools('d', ToolDefinition.SCREWDRIVER, 'h', ToolDefinition.HARD_HAMMER);
         var gunGate = new Gate(Map.of('V', "minecraft:flint"), null, null, false, false);
@@ -201,7 +201,7 @@ public final class ManualToolRecipeCatalog {
         SHAPED.put(
                 ToolDefinition.RIFLE,
                 List.of(new Pattern(new String[] {"XXX", "HHV", "dTh"}, gunForms, gunTools, false, true, gunGate)));
-        // Loader_Tools:354; all seven blades and rings share one primary material, handle Blue.
+        // Loader_Tools; all seven blades and rings share one primary material, handle Blue.
         SHAPED.put(
                 ToolDefinition.POCKET_MULTITOOL,
                 List.of(tool(
@@ -224,7 +224,7 @@ public final class ManualToolRecipeCatalog {
                                 'O',
                                 MaterialPrefix.ring),
                         Map.of())));
-        // Loader_Tools:305-320 — the one-piece tools, both the metal and the gem variant.
+        // Loader_Tools — the one-piece tools, both the metal and the gem variant.
         SHAPED.put(
                 ToolDefinition.WRENCH,
                 List.of(
@@ -403,7 +403,7 @@ public final class ManualToolRecipeCatalog {
                         new String[] {"AT", "Sd"},
                         forms('S', MaterialPrefix.stick, 'T', MaterialPrefix.screw),
                         tools('d', ToolDefinition.SCREWDRIVER))));
-        // Loader_Tools:245-247 — the rolling pin is one of the hand-written rows (CR.DEF_MIR).
+        // Loader_Tools — the rolling pin is one of the hand-written rows (CR.DEF_MIR).
         SHAPED.put(
                 ToolDefinition.ROLLING_PIN,
                 List.of(
@@ -413,7 +413,7 @@ public final class ManualToolRecipeCatalog {
                                 tools('f', ToolDefinition.FILE),
                                 true,
                                 false),
-                        // Loader_Recipes_Woods:237-238: one species plank, two arbitrary wood
+                        // Loader_Recipes_Woods: one species plank, two arbitrary wood
                         // sticks (their materials need not agree), and a file or a knife.
                         pattern(
                                 new String[] {"  S", " P ", "S f"},
@@ -427,13 +427,13 @@ public final class ManualToolRecipeCatalog {
                                 tools('k', ToolDefinition.KNIFE),
                                 true,
                                 false)));
-        // Loader_Tools:225-243 — "T "/" F": a striking material above a piece of flint. The T key
+        // Loader_Tools — "T "/" F": a striking material above a piece of flint. The T key
         // accepts the material's gem, rock or nugget form; GTFlintAndTinderRecipe lists them.
         SHAPED.put(
                 ToolDefinition.FLINT_AND_TINDER,
                 List.of(pattern(new String[] {"T ", " F"}, forms('T', MaterialPrefix.gem), Map.of(), true, false)));
 
-        // Loader_Tools:255-290 — the hand-written early tools, one row per family, with the rock or
+        // Loader_Tools — the hand-written early tools, one row per family, with the rock or
         // the flint itself as the material: flint (MT.Flint), bone (MT.Bone), obsidian, petrified
         // wood and every stone material (ANY.Stone.mToThis). The handle is one of GT6's handle loop
         // entries (wood stick, bamboo, bone, plastic), limited to those early handle families.
@@ -459,7 +459,7 @@ public final class ManualToolRecipeCatalog {
         addEarly(ToolDefinition.CLUB, new String[] {" XX", "XXX", "HX "}, ofStone(), true);
         addEarly(ToolDefinition.HARD_HAMMER, new String[] {"XX ", "XXH", "XX "}, ofStone(), true);
 
-        // Loader_Tools:293-313 — the head recipes of the same registrations.
+        // Loader_Tools — the head recipes of the same registrations.
         HEADS.put(
                 ToolDefinition.PICKAXE,
                 List.of(
@@ -665,7 +665,7 @@ public final class ManualToolRecipeCatalog {
                                         ToolDefinition.HARD_HAMMER,
                                         's',
                                         ToolDefinition.SAW))));
-        // Loader_Tools:298 — GT6 also writes a head row for the wrench; the port's wrench is headless
+        // Loader_Tools — GT6 also writes a head row for the wrench; the port's wrench is headless
         // (its tool row builds it straight from plates), so the head is only reachable through this row.
         HEADS.put(
                 ToolDefinition.WRENCH,

@@ -79,7 +79,7 @@ public final class TechnologyIngredients {
                 && java.util.Set.of("gem", "dust", "plate", "plateGem").contains(form);
     }
 
-    /** MultiItemTechnological:791-806 / LoaderOreDictReRegistrations:348-365: high USB tiers pay lower tiers. */
+    /** MultiItemTechnological / LoaderOreDictReRegistrations: high USB tiers pay lower tiers. */
     public static List<String> usbTags(String id) {
         var tags = new java.util.ArrayList<String>();
         for (String kind : List.of("stick", "cable"))

@@ -54,7 +54,7 @@ public class WoodLogBlock extends RotatedPillarBlock {
     /** GT6 BlockTreeLogA/B/C: strip a living log into its corresponding stripped log. */
     public ItemStack toolProduct() {
         if (species == WoodSpecies.CINNAMON) {
-            // GT6 BlockTreeLogB:99 prefers its own IL.Food_Cinnamon before cinnamon dust.
+            // GT6 BlockTreeLogB prefers its own IL.Food_Cinnamon before cinnamon dust.
             Item bark = Mc.item(
                     ResourceLocation.fromNamespaceAndPath("gt6ce", "cinnamon_bark"));
 //? if >=1.21.1 {

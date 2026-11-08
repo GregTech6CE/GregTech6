@@ -50,7 +50,7 @@ public final class ImportedMaterialData extends gregtech.engine.material.Materia
                 GregTechConstants.U2,
                 MaterialProperty.FLAMMABLE);
 
-        // MT.java:385-404 elemental fuels.
+        // MT elemental fuels.
         fuelOnly(Li, GregTechConstants.TICKS_PER_SMELT * 10L, null, 0);
         fuelOnly(Li_6, GregTechConstants.TICKS_PER_SMELT * 10L, null, 0);
         fuelOnly(C, GregTechConstants.TICKS_PER_SMELT * 4L, null, 0, MaterialProperty.FLAMMABLE);

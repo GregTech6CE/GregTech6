@@ -40,19 +40,19 @@ import org.jetbrains.annotations.Nullable;
  *       stack holds more than one item, and {@link #breed(ItemStack, ItemStack, boolean, RandomSource)}
  *       offers GT6's slot condition for a caller that knows where the drone came from.</li>
  *   <li>GT6 lets {@code Util.getBumbleTag} generate and store a missing genome on both parents
- *       ({@code IItemBumbleBee:97-102}, reached from and from the inheritance at
+ *       ({@code IItemBumbleBee}, reached from and from the inheritance at
  *       ); the port does the same through {@link BumbleBeeGenes#of}, so a genome-less
  *       princess and drone leave this call with a genome, exactly like in GT6.</li>
- *   <li>GT6's {@code bumbleEqual} ({@code MultiItemBumbles:567}) compares the item <em>and</em>
+ *   <li>GT6's {@code bumbleEqual} ({@code MultiItemBumbles}) compares the item <em>and</em>
  *       {@code meta / 10}; GT6 has one item for every species and type, so that is "same species,
  *       whatever the type". The port has one item per (species, type), so {@link #sameSpecies} compares
  *       the species only.</li>
- *   <li>GT6's {@code bumbleCrown} and {@code bumbleKill} ({@code MultiItemBumbles:565-566}) keep the
+ *   <li>GT6's {@code bumbleCrown} and {@code bumbleKill} ({@code MultiItemBumbles}) keep the
  *       scan state, which the port reproduces through {@link BumbleBeeType#scanned()} and
  *       {@link BumbleBeeType#deadVariant()}: a scanned princess is crowned to a scanned queen and a
  *       scanned drone dies as a scanned dead bee. The offspring itself is never scanned, because GT6
  *       builds it with the plain types ({@code bumblePrincess} = {@code + 1}, {@code bumbleDrone} =
- *       {@code + 0}, {@code MultiItemBumbles:570-571}).</li>
+ *       {@code + 0}, {@code MultiItemBumbles}).</li>
  *   <li>GT6's {@code rng(..)} for the princess count is the tile entity's global
  *       {@code RNGSUS.nextInt(bound)}; the port uses {@link RandomSource#nextInt(int)} with the same
  *       bound.</li>
@@ -61,7 +61,7 @@ import org.jetbrains.annotations.Nullable;
 public final class BumbleBreeding {
 
     /**
-     * What GT6's breeding step produced ({@code MultiTileEntityBumbliary:218-261}).
+     * What GT6's breeding step produced ({@code MultiTileEntityBumbliary}).
      *
      * @param offspring GT6's {@code mOffSpring}: {@code offspring + princessCount} bees, the first
      *                  {@code princessCount} of them princesses and the rest drones, each with its own
@@ -86,7 +86,7 @@ public final class BumbleBreeding {
     private BumbleBreeding() {}
 
     /**
-     * GT6's drone pick ({@code MultiTileEntityBumbliary:200-213}).
+     * GT6's drone pick ({@code MultiTileEntityBumbliary}).
      *
      * <p>GT6 first looks at its main drone slot and takes it whenever it holds a breedable drone
      * ({@code, bumbleType % 5 == 0}); only otherwise does it scan the spare drone slots.
@@ -116,7 +116,7 @@ public final class BumbleBreeding {
     }
 
     /**
-     * GT6's breeding step ({@code MultiTileEntityBumbliary:214-266}) with the drone treated as if it
+     * GT6's breeding step ({@code MultiTileEntityBumbliary}) with the drone treated as if it
      * came from the main drone slot, so a drone stack of more than one item costs two drones.
      *
      *
@@ -192,7 +192,7 @@ public final class BumbleBreeding {
     }
 
     /**
-     * GT6's cross-species child ({@code MultiTileEntityBumbliary:234-248}): a coin over the two parents
+     * GT6's cross-species child ({@code MultiTileEntityBumbliary}): a coin over the two parents
      * and GT6's combination table, in the order of GT6's {@code switch(rng(4))}.
      *
      * <p>Note that GT6 passes the princess first for the {@code bumbleCombine} in case 2 and the drone
@@ -216,7 +216,7 @@ public final class BumbleBreeding {
     }
 
     /**
-     * GT6's {@code bumbleEqual} ({@code MultiItemBumbles:222}, {@code MultiItemBumbles:567}): whether two bees are of the
+     * GT6's {@code bumbleEqual} ({@code MultiItemBumbles}, {@code MultiItemBumbles}): whether two bees are of the
      * same species, whatever their types are.
      *
      * <p>Port difference: GT6 compares the item <em>and</em> {@code meta / 10}, which is the same species
@@ -235,7 +235,7 @@ public final class BumbleBreeding {
     }
 
     /**
-     * GT6's {@code bumbleKill} ({@code MultiItemBumbles:565}, {@code MultiTileEntityBumbliary:257}):
+     * GT6's {@code bumbleKill} ({@code MultiItemBumbles}, {@code MultiTileEntityBumbliary}):
      * {@code (meta / 5) * 5 + 4}, which keeps the scan state - a scanned drone dies as a scanned dead
      * bee, everything else as a plain dead bee.
      *
@@ -250,7 +250,7 @@ public final class BumbleBreeding {
     }
 
     /**
-     * GT6's {@code bumbleCrown} ({@code MultiItemBumbles:566}, {@code MultiTileEntityBumbliary:261}):
+     * GT6's {@code bumbleCrown} ({@code MultiItemBumbles}, {@code MultiTileEntityBumbliary}):
      * {@code (meta / 5) * 5 + 2}, the queen of the same species that keeps the scan state - a scanned
      * princess is crowned to a scanned queen.
      *

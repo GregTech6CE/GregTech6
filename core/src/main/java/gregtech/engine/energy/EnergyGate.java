@@ -22,13 +22,13 @@ import gregtech.content.data.GregTechTags;
 import java.util.function.LongSupplier;
 
 /**
- * The pure part of the upstream TileEntityBase01Root energy gate (TileEntityBase01Root.java:716-717),
+ * The pure part of the upstream TileEntityBase01Root energy gate (TileEntityBase01Root),
  * shared by the native EnergyBlockDefaults adapter. The core calculation has no
  * Minecraft or loader dependency.
  *
  * Semantics kept verbatim against upstream's TileEntityBase01Root:
  * - aSize 0 or the wrong directionality (not accepting / not emitting) -> 0, nothing happens;
- * - GregTechTags.Energy.ALL_SIZE_IRRELEVANT types (TD.java:218, e.g. RF/Steam/Heat - NOT EU) skip the
+ * - GregTechTags.Energy.ALL_SIZE_IRRELEVANT types (TD, e.g. RF/Steam/Heat - NOT EU) skip the
  *   minimum packet size check entirely;
  * - injection: a packet below getEnergySizeInputMin returns aAmount (the offered energy counts
  *   as USED but doInject is never called - the energy is swallowed);
@@ -40,7 +40,7 @@ import java.util.function.LongSupplier;
 public final class EnergyGate {
     private EnergyGate() {}
 
-    /** Upstream TileEntityBase01Root.java:717 (doEnergyInjection gate). */
+    /** Upstream TileEntityBase01Root (doEnergyInjection gate). */
     public static long gateInjection(
             GregTechTags.Tag aEnergyType,
             boolean aAccepting,
@@ -54,7 +54,7 @@ public final class EnergyGate {
         return aAmount; // packet too small: upstream swallows the offered amount without storing it
     }
 
-    /** Upstream TileEntityBase01Root.java:716 (doEnergyExtraction gate). */
+    /** Upstream TileEntityBase01Root (doEnergyExtraction gate). */
     public static long gateExtraction(
             GregTechTags.Tag aEnergyType,
             boolean aEmitting,

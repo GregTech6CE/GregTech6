@@ -29,7 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 /**
- * Port of GT6's {@code WorldgenRacks} ({@code Loader_Worldgen:619}) — despite the name it does not
+ * Port of GT6's {@code WorldgenRacks} ({@code Loader_Worldgen}) — despite the name it does not
  * place racks: it scatters <em>loose items on the ground</em> in the Nether, i.e. GT6's multi-tile
  * 32757 "item lying around" (the same tile entity the surface rocks use).
  *

@@ -4,7 +4,7 @@ import gregtech.content.block.wood.WoodSpecies;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Loader_MultiTileEntities:184: one wooden bottle crate per available plank identity.
+/** Loader_MultiTileEntities: one wooden bottle crate per available plank identity.
  * Treated planks retain the existing bottle_crate registry id (original texture index 62).
  * Modern vanilla woods use the same plank-driven rule as the original wood dictionary.
  */

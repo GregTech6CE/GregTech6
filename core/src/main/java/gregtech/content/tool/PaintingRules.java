@@ -26,7 +26,7 @@ public final class PaintingRules {
         return name.toString();
     }
 
-    /** Further GT6 materials upstream registers as dyes (LoaderOreDictReRegistrations:560-575). */
+    /** Further GT6 materials upstream registers as dyes (LoaderOreDictReRegistrations). */
     private static final java.util.Map<String, String> EXTRA_DYE_MATERIALS = java.util.Map.ofEntries(
             java.util.Map.entry("Carbon", "black"),
             java.util.Map.entry("Graphite", "gray"),

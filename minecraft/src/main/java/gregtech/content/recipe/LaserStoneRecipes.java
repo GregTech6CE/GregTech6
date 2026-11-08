@@ -12,7 +12,7 @@ import java.util.List;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-/** BlockStones:494-537 and Loader_Recipes_OreDict:74-78, native stone and generator engravings. */
+/** BlockStones and Loader_Recipes_OreDict, native stone and generator engravings. */
 public final class LaserStoneRecipes {
     public record Entry(String family, StoneType stone, SourceLensRoles.Color color, Recipe recipe) {}
 

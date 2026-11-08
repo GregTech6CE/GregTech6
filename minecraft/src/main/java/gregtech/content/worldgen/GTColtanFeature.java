@@ -15,7 +15,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * Port of GT6's {@code WorldgenColtan} ({@code Loader_Worldgen:779}) — the "coltan contention"
+ * Port of GT6's {@code WorldgenColtan} ({@code Loader_Worldgen}) — the "coltan contention"
  * region.
  *
  * <p>GT6 derives one centre point per world from the world seed

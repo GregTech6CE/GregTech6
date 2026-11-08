@@ -2,7 +2,7 @@ package gregtech.content.tool;
 
 import java.util.List;
 
-/** GT6 MultiItemRandomTools:470-512. Tips are infinite only in the GT crafting table/autocrafter. */
+/** GT6 MultiItemRandomTools. Tips are infinite only in the GT crafting table/autocrafter. */
 public final class CraftingToolDefinitions {
     private CraftingToolDefinitions() {}
 

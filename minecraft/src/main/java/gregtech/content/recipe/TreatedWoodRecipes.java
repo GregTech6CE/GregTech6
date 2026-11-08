@@ -21,9 +21,9 @@ import net.minecraft.world.item.ItemStack;
 
 /**
  * GT6's untreated-wood Bath handler and plank ore-dictionary recipes:
- * {@code Loader_Recipes_Handlers.java:660-667} and {@code Loader_Recipes_OreDict.java:257-263}.
+ * {@code Loader_Recipes_Handlers} and {@code Loader_Recipes_OreDict}.
  * The {@code plate/WoodTreated} material form resolves to the placeable
- * {@code planks_treated} block, as in GT6 {@code Loader_Woods.java:85-87}.
+ * {@code planks_treated} block, as in GT6 {@code Loader_Woods}.
  *
  * <p>GT6 registers one {@code RecipeMapHandlerMaterial} per untreated wood material and maps every
  * prefix that has an item for both the wood and the treated/polished material. The oil amount and
@@ -36,11 +36,11 @@ public final class TreatedWoodRecipes extends OriginalRecipeBatch {
     private static final String[] VANILLA_PLANKS = {
         "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry"
     };
-    /** Loader_Recipes_Handlers:661-667. */
+    /** Loader_Recipes_Handlers. */
     private static final String[] TREATED_OILS = {
         "Oil_Seed", "Oil_Lin", "Oil_Hemp", "Oil_Nut", "Oil_Olive", "Oil_Sunflower", "Oil_Creosote"
     };
-    /** Loader_Recipes_Handlers:668-669 with their per-unit amounts. */
+    /** Loader_Recipes_Handlers with their per-unit amounts. */
     private static final String[] POLISHED_OILS = {"Oil_Fish"};
 
     private static final int[] POLISHED_UNIT_MB = {1000, 500};

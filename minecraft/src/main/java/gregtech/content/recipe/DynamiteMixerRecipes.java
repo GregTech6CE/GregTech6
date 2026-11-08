@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 
-/** {@code Loader_Recipes_Other.java:202-212}: Dynamite from a wood-family dust and Glyceryl.
+/** {@code Loader_Recipes_Other}: Dynamite from a wood-family dust and Glyceryl.
  * The source registers one Mixer row per {@code ANY.Wood} member at each dust size; Bark and Paper
  * are registered separately on the same handler and are not wood-group members.
  */

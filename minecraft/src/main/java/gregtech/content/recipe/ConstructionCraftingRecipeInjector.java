@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * The remaining rows of GT6's shared block constructors that the port never carried.
  *
- * <p>{@code BlockMetaType:88-95} gives every full {@code BlockColored} block and its slab three rows
+ * <p>{@code BlockMetaType} gives every full {@code BlockColored} block and its slab three rows
  * per meta: two slabs rebuild the block ({@code "X"/"X"}), a saw cuts the block into two slabs
  * ({@code "sX"}), and {@code RM.sawing(16, 16, F, 5, …)} is the Cutter equivalent. The port models
  * GT6's sixteen metas as one fixed-colour identity per {@link DyeColor} (the retained legacy palette

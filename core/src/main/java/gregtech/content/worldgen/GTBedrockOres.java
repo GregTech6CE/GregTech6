@@ -92,7 +92,7 @@ public final class GTBedrockOres {
                     "flower_alpine_catchfly"));
 
     /**
-     * The five retained Nether rows from {@code Loader_Worldgen:758-764}, registered without an
+     * The five retained Nether rows from {@code Loader_Worldgen}, registered without an
      * indicator flower — only surface rocks — so {@code flowerId} is null. VoidQuartz and
      * Gloomstone stay retired; see the parity notes.
      */

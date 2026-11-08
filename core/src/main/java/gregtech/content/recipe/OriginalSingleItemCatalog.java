@@ -4,7 +4,7 @@ package gregtech.content.recipe;
 import java.util.List;
 import java.util.Map;
 
-/** MultiItemRandomTools:63-73, MultiItemFood and GT_API_Proxy#getBurnTime. */
+/** MultiItemRandomTools, MultiItemFood and GT_API_Proxy#getBurnTime. */
 public final class OriginalSingleItemCatalog {
     private OriginalSingleItemCatalog() {}
 

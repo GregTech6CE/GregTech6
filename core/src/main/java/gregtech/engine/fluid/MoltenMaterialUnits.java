@@ -10,9 +10,9 @@ public final class MoltenMaterialUnits {
     private MoltenMaterialUnits() {}
 
     public static final Ratio STANDARD = new Ratio(144);
-    // GT6 Loader_Fluids:214, 3703e403: createMolten(MT.Al2O3, 504).
+    // GT6 Loader_Fluids, 3703e403: createMolten(MT.Al2O3, 504).
     public static final Ratio ALUMINA = new Ratio(504);
-    // GT6 Loader_Fluids:191: Plastic retains its 1000 mB per material U binding.
+    // GT6 Loader_Fluids: Plastic retains its 1000 mB per material U binding.
     public static final Ratio PLASTIC = new Ratio(1000);
     public static final Ratio BUCKET = new Ratio(1000);
     /** GT6 {@code MT.Lava}: one vanilla bucket contains nine material units. */

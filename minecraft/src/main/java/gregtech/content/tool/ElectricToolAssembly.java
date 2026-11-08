@@ -16,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import java.util.*;
 
-/** GT6 Loader_Tools:354-359, concrete material/battery rows, like OreProcessing_Tool.
+/** GT6 Loader_Tools, concrete material/battery rows, like OreProcessing_Tool.
  * LV Drill deliberately uses a rod, unlike the separate Mining Drill's tool head. */
 public enum ElectricToolAssembly {
     DRILL("electric_drill"),

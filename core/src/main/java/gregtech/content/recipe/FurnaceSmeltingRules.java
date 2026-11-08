@@ -8,7 +8,7 @@ import gregtech.engine.material.*;
 import java.math.BigInteger;
 import java.util.List;
 
-/** Loader_Recipes_Furnace:151-160,190-201; source FURNACE is input permission.
+/** Loader_Recipes_Furnace; source FURNACE is input permission.
  * All reviewed FURNACE-positive smelting targets solidify with an identity U ratio.
  * The source's Water/Lava solidification exceptions are not targets of those positive inputs. */
 public final class FurnaceSmeltingRules {

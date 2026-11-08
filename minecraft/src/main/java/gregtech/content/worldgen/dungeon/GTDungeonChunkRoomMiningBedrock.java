@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomMiningBedrock}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomMiningBedrock.java:34-139}).
+ * ({@code DungeonChunkRoomMiningBedrock}).
  *
  * <p>The bedrock mine: GT6 first generates a bedrock ore vein of one of thirteen materials under
  * the cell and refuses the cell when it cannot (the vein writer requires bedrock at the cell
@@ -54,7 +54,7 @@ import net.minecraft.world.level.block.state.BlockState;
  *       and the seven {@code MT.OREMATS} ores) - and picks them with
  *       {@link GTDungeonData#select} like GT6 does, so the cell's own roll sequence stays GT6's.</li>
  *   <li><b>The refusal.</b> GT6 returns false when {@code generateVein} fails, which it does when
- *       the cell centre has no bedrock ({@code WorldgenOresBedrock:183-185}). The port tests that
+ *       the cell centre has no bedrock ({@code WorldgenOresBedrock}). The port tests that
  *       with {@link GTDungeonData#aboveBedrock}, whose result is the inverse of GT6's test. The
  *       port's vein writer repeats the same test internally, so its result is not used twice: a
  *       material whose port ore block is missing must not refuse a cell GT6 would have built.</li>
@@ -82,7 +82,7 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
 
-    /** GT6's room tag ({@code WorldgenDungeonGT:75}); a cell that already carries it is refused. */
+    /** GT6's room tag ({@code WorldgenDungeonGT}); a cell that already carries it is refused. */
     public static final String TAG_MINING_BEDROCK = "gt.dungeon.mining.bedrock";
 
     /**
@@ -109,7 +109,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
         // to stay GT6's.
         GTMaterial vein = data.select(VEIN_MATERIALS, 0, 0, 0);
         // GT6's vein writer requires existing bedrock under the cell centre and makes the room
-        // refuse the cell without it (WorldgenOresBedrock:183-185); aboveBedrock is that test
+        // refuse the cell without it (WorldgenOresBedrock); aboveBedrock is that test
         // inverted (GTDungeonData).
         if (data.aboveBedrock(8, 8)) return false;
         GTBedrockOreFeature.placeVein(data.level, data.random, data.x, data.z, vein);

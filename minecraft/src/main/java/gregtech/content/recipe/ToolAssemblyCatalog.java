@@ -22,7 +22,7 @@ import net.minecraft.world.item.Items;
  * so this catalogue is the single description of their contract, and the JEI tool-assembly category
  * renders it.</p>
  *
- * <p>GT6 source: {@code Loader_Tools:332-350} registers one {@code AdvancedCraftingTool} per tool
+ * <p>GT6 source: {@code Loader_Tools} registers one {@code AdvancedCraftingTool} per tool
  * type out of {@code OP} prefix forms plus an "any material" match; the head/handle split is GT6's
  * ({@code ToolCompat}'s head + handle tools), the one-piece tools use the material forms listed in
  * {@link GTToolAssemblyRecipe#directRequirements()}.</p>

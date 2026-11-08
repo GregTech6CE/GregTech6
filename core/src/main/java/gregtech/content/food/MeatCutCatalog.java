@@ -3,7 +3,7 @@ package gregtech.content.food;
 import gregtech.api.material.GTValues;
 import java.util.List;
 
-/** Meat and bone payloads from {@code MultiItemFood.java:529-578}; quantities are material units. */
+/** Meat and bone payloads from {@code MultiItemFood}; quantities are material units. */
 public final class MeatCutCatalog {
     private MeatCutCatalog() {}
 

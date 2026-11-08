@@ -26,7 +26,7 @@ import java.util.List;
 
 /**
  * GT6's bumbliary ({@code MultiTileEntityBumbliary}, GT6 id 32741) and its advanced variant
- * ({@code MultiTileEntityBumbliaryAdvanced}, GT6 id 32007, {@code Loader_MultiTileEntities:2221-2222}):
+ * ({@code MultiTileEntityBumbliaryAdvanced}, GT6 id 32007, {@code Loader_MultiTileEntities}):
  * the block around {@link BumbliaryBlockEntity}.
  *
  * <p>GT6 gives both machines one block each with a full-size icon per face; the port keeps the
@@ -65,7 +65,7 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
 
     /**
      * GT6 registers the standard bumbliary with {@code ANY.Wood} and the advanced one with
-     * {@code MT.StainlessSteel} ({@code Loader_MultiTileEntities:2221-2222}), so the shared art is
+     * {@code MT.StainlessSteel} ({@code Loader_MultiTileEntities}), so the shared art is
      * tinted with the machine's material.
      */
     @Override
@@ -133,7 +133,7 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
     }
 
     /**
-     * GT6's {@code breakDrop} and {@code breakBlock} ({@code TileEntityBase05Inventories:152-171}):
+     * GT6's {@code breakDrop} and {@code breakBlock} ({@code TileEntityBase05Inventories}):
      * the machine hands its whole inventory out when it disappears - a player's break, a piston or an
      * explosion alike - and a running machine ({@code mLife > 0}) kills every bee on the way out, so a
      * broken bumbliary never gives a live queen back.

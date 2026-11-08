@@ -12,8 +12,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * GT6 {@code Behavior_Chunk_Remover} ({@code Behavior_Chunk_Remover.java:39-45}) — the "Chunk Eraser"
- * debug item ({@code MultiItemRandomTools:519}; the port registers it as {@code gt6ce:chunk_eraser}
+ * GT6 {@code Behavior_Chunk_Remover} ({@code Behavior_Chunk_Remover}) — the "Chunk Eraser"
+ * debug item ({@code MultiItemRandomTools}; the port registers it as {@code gt6ce:chunk_eraser}
  * in {@code GTMultiItemsGen.ENTRIES}).
  *
  * <h2>What the original does</h2>
@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * ({@code (aX & ~15).. (aX & ~15) + 16}) is swept from {@link #MIN_Y} to {@link #MAX_Y}
  * inclusive and every position becomes GT6's null block:
  * {@code WD.set(aWorld, tX, tY, tZ, NB, 0, 2)}. {@code NB} is {@code Blocks.air}
- * ({@code CS.java:850}) and {@code 2} is the flag handed to {@code World.setBlock}, i.e. "tell the
+ * ({@code CS}) and {@code 2} is the flag handed to {@code World.setBlock}, i.e. "tell the
  * clients, skip the neighbour updates". The behaviour then returns {@code T} — the click
  * is always handled, even when there was nothing to delete.</p>
  *
@@ -69,19 +69,19 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public final class BehaviorChunkEraser {
 
-    /** GT6 {@code Behavior_Chunk_Remover:41}: {@code tY = 1} — one above GT6's bedrock floor. */
+    /** GT6 {@code Behavior_Chunk_Remover}: {@code tY = 1} — one above GT6's bedrock floor. */
     public static final int MIN_Y = 1;
 
-    /** GT6 {@code Behavior_Chunk_Remover:41}: the loop condition {@code tY < 250}, so 249 is included. */
+    /** GT6 {@code Behavior_Chunk_Remover}: the loop condition {@code tY < 250}, so 249 is included. */
     public static final int MAX_Y = 249;
 
-    /** GT6 {@code Behavior_Chunk_Remover:41}: {@code (aX & ~15)} to {@code (aX & ~15) + 16}. */
+    /** GT6 {@code Behavior_Chunk_Remover}: {@code (aX & ~15)} to {@code (aX & ~15) + 16}. */
     private static final int CHUNK_SIZE = 16;
 
     private BehaviorChunkEraser() {}
 
     /**
-     * GT6 {@code Behavior_Chunk_Remover:41-43}: air out the chunk column {@code chunkX}/{@code chunkZ}
+     * GT6 {@code Behavior_Chunk_Remover}: air out the chunk column {@code chunkX}/{@code chunkZ}
      * between {@code minY} and {@code maxY}, both inclusive.
      *
      * <p>The order of the original's loops is kept (x, then z, then y — y innermost), and so is the flag
@@ -128,7 +128,7 @@ public final class BehaviorChunkEraser {
     }
 
     /**
-     * GT6 {@code Behavior_Chunk_Remover:39-45} for one click: erase the clicked position's chunk column.
+     * GT6 {@code Behavior_Chunk_Remover} for one click: erase the clicked position's chunk column.
      *
      * <p>{@code side}, {@code player} and the three hit coordinates are part of the behaviour-click
      * signature every class of this layer has, but the original reads none of them — in particular there

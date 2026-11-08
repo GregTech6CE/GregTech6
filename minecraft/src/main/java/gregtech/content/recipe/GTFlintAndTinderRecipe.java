@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * GT6's flint and tinder rows ({@code Loader_Tools:225-247}): {@code "T "/" F"} — a striking material
+ * GT6's flint and tinder rows ({@code Loader_Tools}): {@code "T "/" F"} — a striking material
  * above a piece of flint, with {@code T} being the first of the material's gem, rock or nugget form
  * (GT6 registers a separate row per case, in that order).
  */

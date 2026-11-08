@@ -62,7 +62,7 @@ import static gregtech.content.recipe.SourceRecyclingFacts.*;
  *   <li>null-prefix item data (block items, machine casings, transports, unified vanilla items).</li>
  * </ul>
  *
- * <p>Source: {@code OreDictManager:650-669} (recyclable admission), {@code Loader_OreProcessing:240-291}
+ * <p>Source: {@code OreDictManager} (recyclable admission), {@code Loader_OreProcessing}
  * (accumulate converted target stacks, choose one phase, weight-based duration, Melter eligibility).
  * Ore and dirty ore-processing prefixes are rejected before accumulation, as in the source.</p>
  */

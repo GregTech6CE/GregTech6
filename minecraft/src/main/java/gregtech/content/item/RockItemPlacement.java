@@ -31,7 +31,7 @@ public final class RockItemPlacement {
                 BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
     }
 
-    /** GT6 {@code GT_Proxy.java:297}: flint put down by hand becomes a lying-item rock. */
+    /** GT6 {@code GT_Proxy}: flint put down by hand becomes a lying-item rock. */
     public static InteractionResult placeFlint(UseOnContext use) {
         if (use.getPlayer() == null
                 || !use.getPlayer().isShiftKeyDown()

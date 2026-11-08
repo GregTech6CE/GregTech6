@@ -40,15 +40,15 @@ import java.util.Map;
  * <ol>
  *   <li><b>Vanilla food values.</b> GT6's {@code FoodStat} food level and saturation are what
  *       {@code MultiItemRandom} hands to vanilla's food data verbatim
- *       ({@code MultiItemRandom.java:297-304}: {@code addStats(foodLevel, saturation)}), and 1.20.1's
+ *       ({@code MultiItemRandom}: {@code addStats(foodLevel, saturation)}), and 1.20.1's
  *       {@code FoodData.eat(nutrition, saturationModifier)} computes the same
  *       {@code nutrition * saturationModifier * 2}. {@link #foodProperties(String)} returns them so the
  *       registry can build the real {@link FoodProperties} instead of one placeholder for all food.</li>
  *   <li><b>The six statistics.</b> {@code FoodStat.onEaten} pushes them into {@code EntityFoodTracker}
- *       ({@code FoodStat.java:164-172}); the port reads them from {@link GTFoodStats}, which is generated
+ *       ({@code FoodStat}); the port reads them from {@link GTFoodStats}, which is generated
  *       from this same table by {@code tools/extract_gt6_food_stats.py}.</li>
  *   <li><b>The empty container.</b> {@code FoodStat.onEaten} returns {@code mEmptyContainer} to the
- *       player ({@code FoodStat.java:146-151}) - eating a Potato on a Stick gives the stick back, a bag
+ *       player ({@code FoodStat}) - eating a Potato on a Stick gives the stick back, a bag
  *       of chips gives the foil scraps. {@link #onItemUseFinish} does that here.</li>
  * </ol>
  *
@@ -158,7 +158,7 @@ public final class GTFoodItems {
         return List.copyOf(MISSING_ITEMS);
     }
 
-    /** The GT6 FoodStat item recipe time: {@code max(foodLevel * 8, 16)} ticks ({@code MultiItemRandom.java:283}). */
+    /** The GT6 FoodStat item recipe time: {@code max(foodLevel * 8, 16)} ticks ({@code MultiItemRandom}). */
     public static int useDuration(Entry entry) {
         return entry == null || !entry.hasFoodStat() ? 0 : Math.max(entry.food().level() * 8, 16);
     }
@@ -167,7 +167,7 @@ public final class GTFoodItems {
      * The vanilla {@link FoodProperties} of a GT6 food item, or null when GT6 declared no
      * {@code FoodStat} for it (GT6's grass, tusks, hooves and combs are not edible at all - only the rows
      * whose {@code addItem} call carried a {@code FoodStat} get {@code setFoodBehavior},
-     * {@code MultiItemRandom.java:159-160}).
+     * {@code MultiItemRandom}).
      */
     public static FoodProperties foodProperties(String id) {
         Entry entry = entryFor(id);
@@ -200,9 +200,9 @@ public final class GTFoodItems {
     }
 
     /**
-     * GT6 {@code FoodStat.onEaten}'s container return ({@code FoodStat.java:146-151}): the eaten item's
+     * GT6 {@code FoodStat.onEaten}'s container return ({@code FoodStat}): the eaten item's
      * {@code mEmptyContainer} goes to the player, and not in creative mode
-     * ({@code UT.Entities.hasInfiniteItems}, {@code FoodStat.java:146}).
+     * ({@code UT.Entities.hasInfiniteItems}, {@code FoodStat}).
      */
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public static void onItemUseFinish(LivingEntityUseItemEvent.Finish event) {
@@ -226,7 +226,7 @@ public final class GTFoodItems {
     }
 
     /**
-     * The delivery half of {@code FoodStat.java:146-151}: the empty container goes into the player's
+     * The delivery half of {@code FoodStat}: the empty container goes into the player's
      * inventory, and when there is no room it is dropped in front of them instead of being lost.
      *
      * <p>Public so the drop branch can be driven directly. A dropped {@code ItemEntity} is not

@@ -7,7 +7,7 @@ import gregtech.content.material.SourceLatheMaterialProfiles;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import java.util.List;
 
-/** Generic Cutter handlers at GT6 3703e403, Loader_Recipes_Handlers:628–652. */
+/** Generic Cutter handlers at GT6 3703e403, Loader_Recipes_Handlers–652. */
 public final class SourceCutterRules {
     private SourceCutterRules() {}
 

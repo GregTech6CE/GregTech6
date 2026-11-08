@@ -13,11 +13,11 @@ import java.util.List;
 
 /**
  * Port of GT6's ten dungeon keys, which are ordinary entries of its random-tools multi-item
- * ({@code gregtech/items/MultiItemRandomTools.java:589-598}, ids 30000..30009, {@code IL.KEYS} in
- * {@code gregapi/data/IL.java:516}) with GT6's key behaviour attached
+ * ({@code MultiItemRandomTools}, ids 30000..30009, {@code IL.KEYS} in
+ * {@code IL}) with GT6's key behaviour attached
  * ({@code gregtech/items/behaviors/Behavior_Key.java}).
  *
- * <p>GT6 hands these keys out from the dungeon cells: {@code WorldgenDungeonGT:169-173} builds five
+ * <p>GT6 hands these keys out from the dungeon cells: {@code WorldgenDungeonGT} builds five
  * stacks, one per dungeon, each with a <b>random key type</b> ({@code IL.KEYS[aRandom.nextInt(10)]}),
  * the custom name {@code "Key #" + (i + 1)} and one id in the {@code gt.key} long tag; the rooms then
  * put the stack into a shelf or chest inventory, and {@code Behavior_Key} compares the tag of the held
@@ -43,7 +43,7 @@ import java.util.List;
  */
 public class GTDungeonKeyItem extends Item {
 
-    /** GT6's {@code NBT_KEY} ({@code gregapi/data/CS.java:1169}). */
+    /** GT6's {@code NBT_KEY} ({@code CS}). */
     public static final String NBT_KEY = "gt.key";
     /** The vanilla compound GT6's {@code getWithNameAndNBT} puts the custom name into. */
     public static final String NBT_DISPLAY = "display";
@@ -62,7 +62,7 @@ public class GTDungeonKeyItem extends Item {
         return net.minecraft.world.InteractionResult.PASS;
     }
 
-    /** GT6's {@code Behavior_Key:50}: the {@code gt.key} id of the stack, {@code 0} for a blank key. */
+    /** GT6's {@code Behavior_Key}: the {@code gt.key} id of the stack, {@code 0} for a blank key. */
     public static long keyId(ItemStack stack) {
 //? if >=1.21.1 {
         /*var data = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
@@ -101,7 +101,7 @@ public class GTDungeonKeyItem extends Item {
     }
 
     /**
-     * GT6's key tooltips ({@code Behavior_Key:66-74}): the behaviour line and the id of the key, or
+     * GT6's key tooltips ({@code Behavior_Key}): the behaviour line and the id of the key, or
      * {@code *BLANK*} for a key that has none.
      */
     @Override

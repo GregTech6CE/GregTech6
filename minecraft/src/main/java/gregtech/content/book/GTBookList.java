@@ -29,7 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class GTBookList {
     private GTBookList() {}
 
-    /** GT6 MultiItemBooks:67-68 registers both dusty loot books as normal shelf books. */
+    /** GT6 MultiItemBooks registers both dusty loot books as normal shelf books. */
     private static final String DUSTY_GUIDE = "gt6ce:dusty_guide_book";
     private static final String DUSTY_DICTIONARY = "gt6ce:dusty_material_dictionary";
 

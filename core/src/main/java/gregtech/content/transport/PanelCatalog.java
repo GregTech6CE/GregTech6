@@ -7,7 +7,7 @@ import gregtech.content.storage.BottleCrateVariants;
 import gregtech.content.tool.PaintingRules;
 import java.util.*;
 
-/** Loader_MultiTileEntities:2043-2082; original panels are cover items, never placed blocks. */
+/** Loader_MultiTileEntities; original panels are cover items, never placed blocks. */
 public final class PanelCatalog {
     private PanelCatalog() {}
 

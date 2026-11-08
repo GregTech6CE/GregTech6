@@ -13,8 +13,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * GT6 {@code Behavior_Worldgen_Debugger} ({@code Behavior_Worldgen_Debugger.java:43-55}) — the
- * "Worldgen Debug Wand" ({@code MultiItemRandomTools:520}; the port registers it as
+ * GT6 {@code Behavior_Worldgen_Debugger} ({@code Behavior_Worldgen_Debugger}) — the
+ * "Worldgen Debug Wand" ({@code MultiItemRandomTools}; the port registers it as
  * {@code gt6ce:worldgen_debug_wand} in {@code GTMultiItemsGen.ENTRIES}), the tool that makes an
  * ore vein visible by deleting everything around it.
  *
@@ -30,7 +30,7 @@ import net.minecraft.world.level.block.state.BlockState;
  *       {@code ((ITileEntity) aWorld.getTileEntity(x, y, z)).onAdjacentBlockChange(x, y, z)},
  *       which lets the block re-examine its surroundings — a GT prefix block has a
  *       block entity in GT6 ({@code PrefixBlock} implements {@code ITileEntityProvider},
- *       {@code PrefixBlock.java:84});</li>
+ *       {@code PrefixBlock});</li>
  *   <li>everything else becomes air, exactly the chunk remover's {@code WD.set(..., NB, 0, 2)}.
  *       </li>
  * </ul>
@@ -43,10 +43,10 @@ import net.minecraft.world.level.block.state.BlockState;
  *
  * <h2>The port's "is a GT prefix block" predicate</h2>
  *
- * <p>GT6's {@code IPrefixBlock} ({@code gregapi/block/IPrefixBlock.java:27}) is implemented by exactly
- * one class, {@code gregapi.block.prefixblock.PrefixBlock} ({@code PrefixBlock.java:84}), and that class
+ * <p>GT6's {@code IPrefixBlock} ({@code IPrefixBlock}) is implemented by exactly
+ * one class, {@code gregapi.block.prefixblock.PrefixBlock} ({@code PrefixBlock}), and that class
  * backs the whole prefix-material family: {@code CS.BlocksGT} declares the ore blocks
- * ({@code ore}, {@code oreBedrock}, {@code oreSmall}, …, {@code CS.java:1633-1637}) and the material
+ * ({@code ore}, {@code oreBedrock}, {@code oreSmall}, …, {@code CS}) and the material
  * blocks ({@code blockIngot}, {@code blockPlate}, …) as {@code IPrefixBlock}.
  * The worldgen-relevant half of that family is what a vein is made of, and in the port that is
  * {@link gregtech.content.block.OreBlock} — one ore block per material with the host rock in its
@@ -81,19 +81,19 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public final class BehaviorWorldgenDebugger {
 
-    /** GT6 {@code Behavior_Worldgen_Debugger:45}: {@code tY = 1}, inherited from the chunk remover. */
+    /** GT6 {@code Behavior_Worldgen_Debugger}: {@code tY = 1}, inherited from the chunk remover. */
     public static final int MIN_Y = BehaviorChunkEraser.MIN_Y;
 
-    /** GT6 {@code Behavior_Worldgen_Debugger:45}: {@code tY < 250}, so 249 is the last swept position. */
+    /** GT6 {@code Behavior_Worldgen_Debugger}: {@code tY < 250}, so 249 is the last swept position. */
     public static final int MAX_Y = BehaviorChunkEraser.MAX_Y;
 
-    /** GT6 {@code Behavior_Worldgen_Debugger:45}: {@code (aX & ~15)} to {@code (aX & ~15) + 16}. */
+    /** GT6 {@code Behavior_Worldgen_Debugger}: {@code (aX & ~15)} to {@code (aX & ~15) + 16}. */
     private static final int CHUNK_SIZE = 16;
 
     private BehaviorWorldgenDebugger() {}
 
     /**
-     * GT6 {@code Behavior_Worldgen_Debugger:45-53}: air out the chunk column {@code chunkX}/{@code chunkZ}
+     * GT6 {@code Behavior_Worldgen_Debugger}: air out the chunk column {@code chunkX}/{@code chunkZ}
      * between {@code minY} and {@code maxY} inclusive, but keep every GT ore.
      *
      * <p>The original's loop order is kept (x, then z, then y) and so is the order of its two tests — the
@@ -143,7 +143,7 @@ public final class BehaviorWorldgenDebugger {
     }
 
     /**
-     * GT6 {@code Behavior_Worldgen_Debugger:43-55} for one click: sweep the clicked position's chunk column,
+     * GT6 {@code Behavior_Worldgen_Debugger} for one click: sweep the clicked position's chunk column,
      * keeping the ores.
      *
      * <p>{@code side}, {@code player} and the three hit coordinates belong to the behaviour-click signature

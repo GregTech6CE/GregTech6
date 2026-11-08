@@ -31,7 +31,7 @@ import java.util.List;
  * identity. The colour state and migration ticker here support the port's earlier state-based hives;
  * newly generated fixed variants do not carry that state.</p>
  *
- * <p>Breaking rule ({@code MultiTileEntityBumbleHive:97-99}): only a player's break sets
+ * <p>Breaking rule ({@code MultiTileEntityBumbleHive}): only a player's break sets
  * {@code mDroppable}, and only then does the hive hand out its contents — a piston, an explosion or
  * {@code /setblock} destroys the colony with the block.</p>
  */

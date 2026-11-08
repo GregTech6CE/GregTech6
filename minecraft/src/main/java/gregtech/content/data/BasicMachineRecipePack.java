@@ -98,7 +98,7 @@ public final class BasicMachineRecipePack {
         recipe.put("pattern", pattern);
         recipe.put("key", key);
         // GT6's machine patterns are aRegistry.add(...) recipes, i.e. CR.DEF_REV without the MIR
-        // flag (CR.java:161-163); 1.20.1 mirrors shaped recipes by default.
+        // flag (CR); 1.20.1 mirrors shaped recipes by default.
         recipe.put("allow_mirror", false);
 //? if >=1.21.1 {
         /*recipe.put("result", Map.of("id", outputId.toString()));

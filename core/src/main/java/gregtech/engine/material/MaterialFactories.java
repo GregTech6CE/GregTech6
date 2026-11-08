@@ -99,7 +99,7 @@ public class MaterialFactories {
     }
 
     public static GTMaterial alloy(int id, String name, int color, MaterialProperty... props) {
-        // GT6 creates every alloy with TD.G_INGOT_MACHINE, which includes DUSTS (TD.java:609) —
+        // GT6 creates every alloy with TD.G_INGOT_MACHINE, which includes DUSTS (TD) —
         // alloy dusts such as Bronze/Steel/Brass Dust are ordinary GT6 items and the chemistry
         // tables consume them, and `OM.dust(...)`/`OP.dust.mat(...)` references resolve against
         // them.

@@ -17,12 +17,12 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
 /**
- * GT6's three tree holes ({@code Loader_MultiTileEntities:2026-2028}, multi-tile ids 32762/32761/32760):
+ * GT6's three tree holes ({@code Loader_MultiTileEntities}, multi-tile ids 32762/32761/32760):
  * the rubber resin hole, the tapped maple and the tapped rainbowood.
  *
  * <p>Registry ids follow GT6's names. The resin hole is placed by the rubber tree shape itself (GT6
  * {@code BlockTreeSaplingAB} case 0), the two sap holes are drilled into a maple/rainbowood log with a
- * hand drill (GT6 {@code BlockTreeLogA:103} / {@code BlockTreeLogB:104}).
+ * hand drill (GT6 {@code BlockTreeLogA} / {@code BlockTreeLogB}).
  */
 public final class GTTreeHoles {
     private static final List<RegisteredBlock<? extends Block>> ALL = new ArrayList<>();

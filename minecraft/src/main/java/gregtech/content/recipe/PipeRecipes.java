@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * GT6's Welder rows that turn curved plates into pipes: {@code Loader_Recipes_Handlers:324-328} (hard
+ * GT6's Welder rows that turn curved plates into pipes: {@code Loader_Recipes_Handlers} (hard
  * materials) and (easy-heatable ones).
  *
  * <pre>
@@ -56,7 +56,7 @@ import java.util.Map;
 public final class PipeRecipes {
     private static final List<PipeWeldingRules.Row> ROWS=PipeWeldingRules.ROWS;
 
-    /** Item pipes only exist for these sizes in GT6 ({@code MultiTileEntityPipeItem:77-79}). */
+    /** Item pipes only exist for these sizes in GT6 ({@code MultiTileEntityPipeItem}). */
     private static final Map<PipeSpec.PipeSize, ItemPipeSpec.ItemPipeSize> ITEM_PIPE_SIZES = Map.of(
             PipeSpec.PipeSize.MEDIUM, ItemPipeSpec.ItemPipeSize.MEDIUM,
             PipeSpec.PipeSize.LARGE, ItemPipeSpec.ItemPipeSize.LARGE,
@@ -128,10 +128,10 @@ public final class PipeRecipes {
     }
 
     /**
-     * GT6 {@code Loader_Recipes_Handlers:492} (Boxinator) and (Unboxinator): four
+     * GT6 {@code Loader_Recipes_Handlers} (Boxinator) and (Unboxinator): four
      * medium pipes pack into one quadruple pipe, nine small ones into a nonuple — and both split again.
      * The crafting-grid direction lives in {@code Loader_FormConversionCraftingRecipes}
-     * ({@code MultiTileEntityPipeFluid:100-101}).
+     * ({@code MultiTileEntityPipeFluid}).
      */
     private static void bundle(GTMaterial material, Map<String, Map<PipeSpec.PipeSize, ItemStack>> fluid) {
         Map<PipeSpec.PipeSize, ItemStack> sizes = fluid.getOrDefault(material.getName(), Map.of());

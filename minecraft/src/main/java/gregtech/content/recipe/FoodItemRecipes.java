@@ -71,7 +71,7 @@ public final class FoodItemRecipes {
         smelting();
         slicing();
         mixing();
-        // Loader_Recipes_Food.java:430: cooked ribs absorb 250 L of barbecue sauce in the bath.
+        // Loader_Recipes_Food: cooked ribs absorb 250 L of barbecue sauce in the bath.
         var barbecueSauce = fluid("Sauce_BBQ", 250);
         if (!barbecueSauce.isEmpty() && MachineRecipeMaps.Bath.addRecipe1(false, 0, 16,
                 food("grilled_ribs", 1), barbecueSauce, FluidStack.EMPTY, food("barbecue_ribs", 1)) != null) registered++;
@@ -179,7 +179,7 @@ public final class FoodItemRecipes {
                 registered++;
             }
         }
-        // Correct the duplicate dogmeat call in GT6 MultiItemFood.java:574 so the declared mule pair cooks.
+        // Correct the duplicate dogmeat call in GT6 MultiItemFood so the declared mule pair cooks.
     }
 
     // ── 2. Slicer (GT6 RM.Slicer.addRecipe2 rows) ────────────────────────────────────────────────
@@ -191,7 +191,7 @@ public final class FoodItemRecipes {
             {"sugary_chocolate_raisin_dough", "slicer_shape_flat", "cookie_shaped_chocolate_raisin_dough", "4", "MultiItemFood.java:618"},
             {"abyssal_dough", "slicer_shape_flat", "cookie_shaped_abyssal_dough", "4", "MultiItemFood.java:629"},
             {"bun", "slicer_shape_split", "sliced_bun", "2", "MultiItemFood.java:688"},
-            // GT6's IL.Food_Bread is ST.make(Items.bread, 1, 0) - a vanilla alias (MultiItemFood.java:715),
+            // GT6's IL.Food_Bread is ST.make(Items.bread, 1, 0) - a vanilla alias (MultiItemFood),
             // so this row has no GT item and uses the "minecraft:" input form below.
             {"minecraft:bread", "slicer_shape_split", "sliced_bread", "2", "MultiItemFood.java:727"},
             {"baguette", "slicer_shape_split", "sliced_baguette", "2", "MultiItemFood.java:757"},
@@ -252,7 +252,7 @@ public final class FoodItemRecipes {
     };
 
     private static void mixing() {
-        // Loader_Recipes_Food.java:137-150 — the dough flavourings.
+        // Loader_Recipes_Food — the dough flavourings.
         for (String[] row : MIXER_ITEMS) {
             ItemStack input = food(row[0], 1);
             ItemStack ingredient = item(row[1], 1);
@@ -264,25 +264,25 @@ public final class FoodItemRecipes {
                 registered++;
             }
         }
-        // Loader_Recipes_Food.java:141,143 — dough plus a full dust; the same dust stack the GT6 line
+        // Loader_Recipes_Food — dough plus a full dust; the same dust stack the GT6 line
         // names with OM.dust(MT.Sugar) / OM.dust(MT.Chocolate) (one dust, no unit arithmetic).
         mixerDust("dough", "Sugar", "sugary_dough", 2, "Loader_Recipes_Food.java:141");
         mixerDust("dough", "Cocoa", "chocolate_dough", 1, "Loader_Recipes_Food.java:142");
         mixerDust("dough", "Chocolate", "chocolate_dough", 2, "Loader_Recipes_Food.java:143");
-        // Loader_Recipes_Food.java:255,259 — sugared dough plus raisins.
+        // Loader_Recipes_Food — sugared dough plus raisins.
         mixerPair("sugary_dough", "green_raisins", "sugary_raisin_dough", 1, "Loader_Recipes_Food.java:255");
         mixerPair("sugary_dough", "chocolate_raisins", "sugary_chocolate_raisin_dough", 1, "Loader_Recipes_Food.java:259");
-        // MultiItemFood.java:506 — the two egg halves mix back into a scrambled egg.
+        // MultiItemFood — the two egg halves mix back into a scrambled egg.
         mixerPair("egg_white", "egg_yolk", "scrambled_egg", 1, "MultiItemFood.java:506");
-        // MultiItemFood.java:509-511 — egg yolk plus a cooking oil and a vinegar makes 250 mB mayonnaise.
+        // MultiItemFood — egg yolk plus a cooking oil and a vinegar makes 250 mB mayonnaise.
         for (String oil : fluidFields(gregtech.content.data.RegisteredFluids.FluidFlags.COOKING_OIL)) {
             for (String vinegar : fluidFields(gregtech.content.data.RegisteredFluids.FluidFlags.VINEGAR)) {
                 mayonnaise(oil, vinegar, "MultiItemFood.java:509");
             }
         }
-        // MultiItemFood.java:510-511 use lemon / lime juice directly instead of a vinegar.
+        // MultiItemFood use lemon / lime juice directly instead of a vinegar.
         mayonnaise("Oil_Seed", "Juice_Lemon", "MultiItemFood.java:510");
-        // MultiItemFood.java:852-879 — GT6's flavoured ice creams.
+        // MultiItemFood — GT6's flavoured ice creams.
         for (String[] row : MIXER_FLUIDS) {
             ItemStack input = food(row[0], 1);
             ItemStack output = food(row[3], 1);
@@ -378,14 +378,14 @@ public final class FoodItemRecipes {
     // ── 4. Boxinator / Unboxinator ───────────────────────────────────────────────────────────────
 
     private static void packaging() {
-        // MultiItemFood.java:360,370,377 — the packaged food is boxed, the packaging comes back off.
+        // MultiItemFood — the packaged food is boxed, the packaging comes back off.
         box("fries", "gt6ce:plate_double_paper", "fries_2", "MultiItemFood.java:360");
         box("potato_chips", "gt6ce:foil_aluminium", "bag_of_potato_chips", "MultiItemFood.java:370");
         box("chili_chips", "gt6ce:foil_aluminium", "bag_of_chili_chips", "MultiItemFood.java:377");
         unbox("fries_2", "fries", "gt6ce:scrap_gt_paper", 16, "MultiItemFood.java:361");
         unbox("bag_of_potato_chips", "potato_chips", "gt6ce:scrap_gt_aluminium", 2, "MultiItemFood.java:371");
         unbox("bag_of_chili_chips", "chili_chips", "gt6ce:scrap_gt_aluminium", 2, "MultiItemFood.java:378");
-        // MultiItemFood.java:917-919 — the three pills are boxed from a dust and the empty pill.
+        // MultiItemFood — the three pills are boxed from a dust and the empty pill.
         pill("Iodine", "radaway", "MultiItemFood.java:917");
         pill("Mint", "peppermint", "MultiItemFood.java:918");
         ItemStack mushroom = new ItemStack(Items.BROWN_MUSHROOM);

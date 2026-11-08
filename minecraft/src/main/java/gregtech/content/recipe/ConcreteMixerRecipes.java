@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import net.minecraft.world.item.ItemStack;
 
-/** Loader_Recipes_Other:314-319, GT6 3703e403: the five dry-concrete mixing forms.
+/** Loader_Recipes_Other, GT6 3703e403: the five dry-concrete mixing forms.
  * Real dust blocks carry 9 U each; do not flatten them into capped stacks of dust.
  */
 public final class ConcreteMixerRecipes {

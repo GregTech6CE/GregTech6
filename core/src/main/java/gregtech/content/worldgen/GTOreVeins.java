@@ -38,10 +38,10 @@ public final class GTOreVeins {
     public record SmallOre(String name, int minY, int maxY, int amount, GTMaterial material) {}
 
     /**
-     * All GT6 large veins flagged {@code ORE_OVERWORLD}, in original order (Loader_Worldgen
-     * lines 885-915), which is exactly GT6's registration order.
+     * All GT6 large veins flagged {@code ORE_OVERWORLD}, in original order (Loader_Worldgen),
+     * which is exactly GT6's registration order.
      *
-     * <p>This is the preserved legacy table, not the default generation list. GT6WorldGenerator:125
+     * <p>This is the preserved legacy table, not the default generation list. GT6WorldGenerator
      * passes no ORE_OVERWORLD list when GENERATE_STONE is enabled (also for Overworld-like
      * dimensions). The stone-layer system and this legacy large-vein system are alternatives.
      * Use {@link #activeOverworldVeins()} for generation and recipe-browser information.
@@ -434,7 +434,7 @@ public final class GTOreVeins {
     }
 
     /**
-     * All GT6 small ores flagged {@code GEN_OVERWORLD} (Loader_Worldgen lines 800-847).
+     * All GT6 small ores flagged {@code GEN_OVERWORLD} (Loader_Worldgen).
      * Mod-compat entries (Thaumcraft/AE2/IHL/HEX/... gated ores when the other mod is absent) are
      * omitted; added the GT6 {@code ore.small.eudialyte} entry, which was skipped before because
      * the port had no Eudialyte material yet ( added it).

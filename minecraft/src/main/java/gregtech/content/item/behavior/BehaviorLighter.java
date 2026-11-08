@@ -27,19 +27,19 @@ import net.minecraft.world.level.Level;
  */
 public final class BehaviorLighter {
 
-    /** GT6 {@code UT.Code.bind(0, 10000, aChance)} ({@code Behavior_Lighter:49,57}). */
+    /** GT6 {@code UT.Code.bind(0, 10000, aChance)} ({@code Behavior_Lighter}). */
     public static final long MAX_CHANCE = 10000L;
 
-    /** GT6 {@code Behavior_Lighter:94,108}: a failed roll costs a full unit anyway. */
+    /** GT6 {@code Behavior_Lighter}: a failed roll costs a full unit anyway. */
     public static final long FAILED_ROLL_COST = 10000L;
 
-    /** GT6 {@code Behavior_Lighter:91,105}: {@code onToolClick(TOOL_igniter, MAX, 3, ...)}. */
+    /** GT6 {@code Behavior_Lighter}: {@code onToolClick(TOOL_igniter, MAX, 3, ...)}. */
     public static final long IGNITER_QUALITY = 3L;
 
     private BehaviorLighter() {}
 
     /**
-     * One lighter family: GT6's constructor arguments ({@code Behavior_Lighter:44-58}) plus the
+     * One lighter family: GT6's constructor arguments ({@code Behavior_Lighter}) plus the
      * three items, which the port names instead of passing in.
      *
      * @param can        the empty/used/full triple, with {@link Consumable#LIGHTER_KEY} as the tag
@@ -50,7 +50,7 @@ public final class BehaviorLighter {
      */
     public record LighterSpec(Consumable can, long fuelAmount, long chance) {
 
-        /** GT6 {@code Behavior_Lighter:62,83}: only a single-use lighter may be stacked. */
+        /** GT6 {@code Behavior_Lighter}: only a single-use lighter may be stacked. */
         public boolean accepts(ItemStack stack) {
             return stack.getCount() == 1 || (fuelAmount == 1 && can.empty().isEmpty());
         }
@@ -71,37 +71,37 @@ public final class BehaviorLighter {
         return new LighterSpec(can, fuelAmount, Math.max(0L, Math.min(MAX_CHANCE, chance)));
     }
 
-    /** GT6 {@code MultiItemRandomTools:343}: {@code new Behavior_Lighter(9000)} — one match. */
+    /** GT6 {@code MultiItemRandomTools}: {@code new Behavior_Lighter(9000)} — one match. */
     public static LighterSpec match() {
         return spec(null, null, null, 1, 9000);
     }
 
-    /** GT6 {@code MultiItemRandomTools:358}: match box, 64 matches at 90%. */
+    /** GT6 {@code MultiItemRandomTools}: match box, 64 matches at 90%. */
     public static LighterSpec matchBox() {
         return spec(null, "gt6ce:match_box", "gt6ce:match_box_full", 64, 9000);
     }
 
-    /** GT6 {@code MultiItemRandomTools:368}: Invar lighter, 100 uses, never fails. */
+    /** GT6 {@code MultiItemRandomTools}: Invar lighter, 100 uses, never fails. */
     public static LighterSpec invar() {
         return spec("gt6ce:lighter_empty", "gt6ce:lighter", "gt6ce:lighter_full", 100, 10000);
     }
 
-    /** GT6 {@code MultiItemRandomTools:377}: platinum lighter, 1000 uses, never fails. */
+    /** GT6 {@code MultiItemRandomTools}: platinum lighter, 1000 uses, never fails. */
     public static LighterSpec platinum() {
         return spec("gt6ce:shiny_lighter_empty", "gt6ce:shiny_lighter", "gt6ce:shiny_lighter_full", 1000, 10000);
     }
 
-    /** GT6 {@code MultiItemRandomTools:387}: plastic lighter, 100 uses at 90%, breaks when empty. */
+    /** GT6 {@code MultiItemRandomTools}: plastic lighter, 100 uses at 90%, breaks when empty. */
     public static LighterSpec plastic() {
         return spec("gt6ce:plastic_lighter_broken", "gt6ce:plastic_lighter", "gt6ce:plastic_lighter_full", 100, 9000);
     }
 
-    /** GT6 {@code MultiItemRandomTools:394}: fire starter from dry grass, one use at 50%. */
+    /** GT6 {@code MultiItemRandomTools}: fire starter from dry grass, one use at 50%. */
     public static LighterSpec fireStarter() {
         return spec(null, null, null, 1, 5000);
     }
 
-    /** GT6 {@code MultiItemRandomTools:397}: fire starter from dry bark, one use at 55%. */
+    /** GT6 {@code MultiItemRandomTools}: fire starter from dry bark, one use at 55%. */
     public static LighterSpec fireStarterBark() {
         return spec(null, null, null, 1, 5500);
     }
@@ -123,7 +123,7 @@ public final class BehaviorLighter {
     }
 
     /**
-     * GT6 {@code Behavior_Lighter:82-120}: one block click.
+     * GT6 {@code Behavior_Lighter}: one block click.
      *
      * @param level  the level the clicked block stands in
      * @param pos    the clicked block
@@ -185,7 +185,7 @@ public final class BehaviorLighter {
     }
 
     /**
-     * GT6 {@code Behavior_Lighter:112-114}: {@code units(tDamage, 10000, 1, T)} fuel units, rounded
+     * GT6 {@code Behavior_Lighter}: {@code units(tDamage, 10000, 1, T)} fuel units, rounded
      * up, and {@code useUp} once none are left.
      */
     public static ItemStack consumeFuel(ItemStack stack, LighterSpec spec, long cost, @Nullable Player player) {

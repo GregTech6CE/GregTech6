@@ -8,7 +8,7 @@ import gregtech.content.material.SourceLatheMaterialProfiles;
 import java.math.BigInteger;
 import java.util.List;
 
-/** The eleven generic Lathe pairs in GT6 Loader_Recipes_Handlers:371–393 (3703e403). */
+/** The eleven generic Lathe pairs in GT6 Loader_Recipes_Handlers–393 (3703e403). */
 public final class SourceLatheRules {
     private SourceLatheRules() {}
 

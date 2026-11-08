@@ -28,7 +28,7 @@ import java.util.List;
  * Converts vanilla furnace/blast furnace smelting recipes into GT6 oven recipes on server start, and
  * pushes the GT furnace rows back into the vanilla furnace.
  * <p>
- * GT6 {@code Loader_Recipes_Furnace:103-131} also rewrites the vanilla recipes themselves: any
+ * GT6 {@code Loader_Recipes_Furnace} also rewrites the vanilla recipes themselves: any
  * recipe whose result carries an ore-dict material flagged {@code TD.Processing.NEVER_FURNACE}
  * (Iron, Wrought Iron, Steel, Titanium, Tungsten) is <em>un-smelted</em> 鈥?the result is replaced by
  * {@code scrapGt} of that material, because those metals have to be melted in a crucible instead.
@@ -37,7 +37,7 @@ import java.util.List;
  * {@link RecipeManager#replaceRecipes(Iterable)}.
  * </p>
  * <p>
- * The other direction is GT6 {@code RM.add_smelting} ({@code RM.java:805-821}): it writes into the
+ * The other direction is GT6 {@code RM.add_smelting} ({@code RM}): it writes into the
  * <em>vanilla</em> furnace recipe list, which is how dust, piles, gems, rocks and crushed ore melt
  * back into their metal. The port keeps those rows in {@link MachineRecipeMaps#Furnace} (the Oven's
  * table), so this loader mirrors them into the vanilla recipe manager as well 鈥?otherwise the
@@ -98,7 +98,7 @@ public final class OvenRecipeBridge {
                     && !stack.is(net.minecraft.world.item.Items.BARRIER)))) continue;
             ItemStack result = resultOf(recipe, access);
             boolean cooking = recipe.getType() == RecipeType.SMELTING || recipe.getType() == RecipeType.BLASTING;
-            // GT6 Loader_Recipes_Furnace:103-112 removes every cooking row whose input and output both
+            // GT6 Loader_Recipes_Furnace removes every cooking row whose input and output both
             // carry GT material data; the listener rows add the proper ones back below. Without this a
             // vanilla furnace turns ore blocks straight into ingots, the step GT6 deliberately removed.
             // Recipes this mod authors itself already encode the proper conversions (stone firing,

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 import net.minecraft.world.item.ItemStack;
 
-/** GT6 Loader_Recipes_Handlers:655,658,712-722 and RecipeMapHandlerMaterial.
+/** GT6 Loader_Recipes_Handlers and RecipeMapHandlerMaterial.
  * Only registered input/output pairs of the same source prefix are converted.
  */
 public final class PolarizerMaterialRecipes {
@@ -201,7 +201,7 @@ public final class PolarizerMaterialRecipes {
         Set<GTMaterial> materials = new LinkedHashSet<>();
         for (GTMaterial material : group.getReRegistrations())
             if (material != null && material.isValid()) materials.add(material.resolve());
-        // ANY.java:118/120 includes Enori; use its registered form if available, never invent an item.
+        // ANY includes Enori; use its registered form if available, never invent an item.
         for (String name : sourceMembers) {
             GTMaterial material = GTMaterialRegistry.get(name);
             if (material != null && material.isValid()) materials.add(material.resolve());

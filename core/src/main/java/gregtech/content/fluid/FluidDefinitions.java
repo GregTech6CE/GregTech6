@@ -76,15 +76,15 @@ public final class FluidDefinitions {
                 material.resolve().put(gregtech.api.material.MaterialProperty.LIQUID);
             }
         }
-        // MT.sulfur() is created with MELTING + MOLTEN (MT.java:160), so molten sulfur is a real
+        // MT.sulfur() is created with MELTING + MOLTEN (MT), so molten sulfur is a real
         // GT6 fluid; the import kept the dust only.
         var sulfur = GTMaterialRegistry.get("Sulfur");
         if (sulfur != null && sulfur.resolve().isValid()) {
             sulfur.resolve().put(gregtech.api.material.MaterialProperty.MOLTEN);
         }
-        // GT6's *dcmp* compound factories (MT.java:1081 Al2O3, Fe2O3, CaCl2,
+        // GT6's *dcmp* compound factories (MT Al2O3, Fe2O3, CaCl2,
         // Na2CO3, UF4 and their siblings) declare MELTING/MOLTEN, so their molten phases are
-        // real GT6 fluids that the chemistry tables consume (`m:Al2O3:2000` …); the import kept the dust
+        // real GT6 fluids that the chemistry tables consume (`m:Al2O3` …); the import kept the dust
         // only, which left 11 chemistry recipes with an unresolvable fluid.
         for (String name : new String[] {
             "Alumina",
@@ -124,7 +124,7 @@ public final class FluidDefinitions {
         bindMaterialFluids();
     }
 
-    /** GT6 {@code Loader_Fluids.java:606-610}: unconditional FL.create declarations. */
+    /** GT6 {@code Loader_Fluids}: unconditional FL.create declarations. */
     private static void registerGoldenBottleFluids() {
         long base = FluidCatalog.FluidFlags.LIQUID
                 | FluidCatalog.FluidFlags.SIMPLE
@@ -166,7 +166,7 @@ public final class FluidDefinitions {
      * Equivalent to {@code MT.Iron.liquid(FL.make("iron.molten", 144))} in the original.
      */
     private static void bindMaterialFluids() {
-        // Mod-compat molten metals (original GT6 Loader_Fluids lines 161-189)
+        // Mod-compat molten metals from GT6's Loader_Fluids
 
         bindMolten("aluminumbrass.molten", "AluminiumBrass");
         bindMolten("bronze.molten", "Bronze");
@@ -195,10 +195,10 @@ public final class FluidDefinitions {
         bindMolten("platinum.molten", "Pt");
         bindMolten("cobalt.molten", "Co");
 
-        // Special material bindings (original lines 135-158)
+        // Special material bindings
         bindMolten("molten_tritanium", "TritaniumAlloy");
 
-        // Non-auto-generated molten materials (lines 191-199)
+        // Non-auto-generated molten materials
         bindMolten("plastic", "Plastic");
         bindMolten("glass", "Glass");
         bindMolten("molten.enderpearl", "EnderPearl");
@@ -213,7 +213,7 @@ public final class FluidDefinitions {
         bindMolten("molten.zinc", "Zinc");
         bindMolten("molten.calcite", "Calcite");
 
-        // createMolten materials (lines 201-213)
+        // createMolten materials
         bindMolten("molten.chocolate", "Chocolate");
         bindMolten("molten.cheese", "Cheese");
         bindMolten("molten.sugar", "Sugar");

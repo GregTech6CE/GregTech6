@@ -279,7 +279,7 @@ public final class SandwichBottleFoods {
                     true,
                     false,
                     false), // Loader_Fluids.java:576; MultiItemBottles.java:160
-            // Loader_Fluids.java:562; MultiItemBottles.java:192
+            // Loader_Fluids; MultiItemBottles
             new Food(
                     "chocolate_cream",
                     4,
@@ -309,8 +309,8 @@ public final class SandwichBottleFoods {
                     false,
                     false,
                     false), // Loader_Fluids.java:633; MultiItemBottles.java:204
-            // Loader_Fluids.java:632; MultiItemBottles.java:206
-            // Loader_Fluids.java:631; MultiItemBottles.java:208
+            // Loader_Fluids; MultiItemBottles
+            // Loader_Fluids; MultiItemBottles
             new Food(
                     "tomato_ketchup",
                     4,
@@ -337,7 +337,7 @@ public final class SandwichBottleFoods {
                     false,
                     false,
                     false), // Loader_Fluids.java:599; MultiItemBottles.java:266
-            // Loader_Fluids.java:598; MultiItemBottles.java:273
+            // Loader_Fluids; MultiItemBottles
             new Food(
                     "rainbow_sap",
                     5,

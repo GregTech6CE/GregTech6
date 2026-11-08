@@ -1,5 +1,5 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
- * Loader_MultiTileEntities:2043-2082 and gregapi wood dictionary item data. */
+ * Loader_MultiTileEntities and gregapi wood dictionary item data. */
 package gregtech.content.transport;
 
 import gregtech.api.material.*;

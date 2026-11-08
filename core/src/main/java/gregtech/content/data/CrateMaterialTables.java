@@ -5,7 +5,7 @@ import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.material.SupplementalMaterials;
 
 /**
- * GT6's crate material tables ({@code DungeonChunkRoomStorage:42-46}) as port materials, in GT6's
+ * GT6's crate material tables ({@code DungeonChunkRoomStorage}) as port materials, in GT6's
  * own order <em>and multiplicity</em> (a material listed three times is three times as likely).
  *
  * <p>The tables are shared by the dungeon storage room's generation (loose piles and raw ore blocks)

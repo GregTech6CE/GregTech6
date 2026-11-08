@@ -1,6 +1,6 @@
 /* Canvas rules adapted from GregTech-6 Team, LGPL-3.0-or-later.
- * MultiItemRandomTools:443-447; RecipeMapScannerVisuals:101-114,184-194;
- * RecipeMapPrinter:86-97; CoverTextureCanvas. */
+ * MultiItemRandomTools; RecipeMapScannerVisuals;
+ * RecipeMapPrinter; CoverTextureCanvas. */
 package gregtech.content.cover;
 
 import gregtech.content.tool.PaintingRules;

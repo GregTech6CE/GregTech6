@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 /**
  * GT6 {@code GT_Tool_Club#convertBlockDrops}: a club works like a hard hammer, but every rocky
  * block it breaks crumbles into {@code rockGt} items of that block's material instead of dropping
- * itself ({@code GT_Tool_Club.java:61-109}).
+ * itself ({@code GT_Tool_Club}).
  *
  * <p>The source compares against a fixed vanilla block list plus every {@code BlockStones} variant
  * flagged {@code JUSTSTONE}, and gives {@code 1 + random(4)} rocks per block. The port keeps the
@@ -55,11 +55,11 @@ public final class ClubRockCrushing {
     }
 
     private static ItemStack rocksFor(Block block, RandomSource random) {
-        // GT_Tool_Club.java:96-99 — vanilla and modded redstone ore yields chipped Cinnabar.
+        // GT_Tool_Club — vanilla and modded redstone ore yields chipped Cinnabar.
         if (block == Blocks.REDSTONE_ORE || block == Blocks.DEEPSLATE_REDSTONE_ORE) {
             return GTItems.getStack(MaterialPrefix.gemChipped, OreMaterials.Cinnabar, count(random));
         }
-        // GT_Tool_Club.java:101-104 — BlockStones.JUSTSTONE covers every rock type's masonry.
+        // GT_Tool_Club — BlockStones.JUSTSTONE covers every rock type's masonry.
         if (block instanceof GTStoneBlock stone && stone.variant().isJustStone()) {
             return GTItems.getStack(MaterialPrefix.rockGt, stone.stoneMaterial(), count(random));
         }
@@ -81,7 +81,7 @@ public final class ClubRockCrushing {
 
     private static Map<Block, GTMaterial> buildRocks() {
         Map<Block, GTMaterial> table = new HashMap<>();
-        // GT_Tool_Club.java:65-68 — stone and its masonry metas.
+        // GT_Tool_Club — stone and its masonry metas.
         for (String path : new String[] {
             "stone",
             "smooth_stone",
@@ -105,7 +105,7 @@ public final class ClubRockCrushing {
         }) {
             put(table, path, StoneMaterials.Stone);
         }
-        // GT_Tool_Club.java:69-72 — nether brick blocks.
+        // GT_Tool_Club — nether brick blocks.
         for (String path : new String[] {
             "nether_bricks",
             "nether_brick_stairs",
@@ -118,11 +118,11 @@ public final class ClubRockCrushing {
         put(table, "netherrack", StoneMaterials.Netherrack);
         put(table, "end_stone", StoneMaterials.Endstone);
         put(table, "obsidian", CompoundMaterials.Obsidian);
-        // GT_Tool_Club.java:87-91 — basalt came from mods in 1.7.10; 1.16+ vanilla has it.
+        // GT_Tool_Club — basalt came from mods in 1.7.10; 1.16+ vanilla has it.
         for (String path : new String[] {"basalt", "polished_basalt", "smooth_basalt"}) {
             put(table, path, StoneMaterials.Basalt);
         }
-        // GT_Tool_Club.java:92-95 — same for the blackstone family.
+        // GT_Tool_Club — same for the blackstone family.
         GTMaterial blackstone = GTMaterialRegistry.get("Blackstone");
         for (String path : new String[] {
             "blackstone",

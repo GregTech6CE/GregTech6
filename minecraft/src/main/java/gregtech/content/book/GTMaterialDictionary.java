@@ -20,18 +20,18 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * GT6's <b>Material Dictionary</b> ({@code MultiItemBooks:59-60}, metas 32002/32003; loot variant
+ * GT6's <b>Material Dictionary</b> ({@code MultiItemBooks}, metas 32002/32003; loot variant
  * {@code 32766} "Dusty Material Dictionary").
  *
  * <p>GT6 builds one of these per material and stores it on the material
- * ({@code OreDictMaterial.mDictionaryBook}, created by {@code UT.java:762} as
+ * ({@code OreDictMaterial.mDictionaryBook}, created by {@code UT} as
  * {@code ST.book("Material_Dictionary_<name>")}); the pages come from
  * {@code UT.Books.addMaterialDictionary}, which walks the material's data: chemical components,
  * alloy recipes it takes part in, byproducts, tool stats, the enchantments its tools accept, its
  * properties, its machine and ore flags, and the materials that smelt/solidify/burn/pulverize into
  * it. The loot table {@code gt.matdicts} hands out one row per material
- * ({@code Loader_Loot:359-364}) and the Dusty Material Dictionary rolls that table
- * ({@code MultiItemBooks:68} + {@code Behavior_Drop_Loot}).</p>
+ * ({@code Loader_Loot}) and the Dusty Material Dictionary rolls that table
+ * ({@code MultiItemBooks} + {@code Behavior_Drop_Loot}).</p>
  *
  * <p>The port generates the same kind of page from its own material data. This is the first slice —
  * identity, composition, the forms the material actually has, tool stats, properties and ore/byproduct

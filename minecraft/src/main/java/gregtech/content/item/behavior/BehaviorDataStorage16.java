@@ -10,9 +10,9 @@ import java.util.List;
 
 /**
  * GT6 {@code gregtech.items.behaviors.Behavior_DataStorage16} — the tooltip of a USB <em>drive</em>, the
- * sixteen-file medium ({@code MultiItemTechnological:814-817}).
+ * sixteen-file medium ({@code MultiItemTechnological}).
  *
- * <p>The original ({@code Behavior_DataStorage16:37-58}) prints, in this order:</p>
+ * <p>The original ({@code Behavior_DataStorage16}) prints, in this order:</p>
  *
  * <ul>
  *   <li>no {@code gt.usb.drive} tag at all — {@code "Perfectly Formatted"} in cyan: an
@@ -26,7 +26,7 @@ import java.util.List;
  * </ul>
  *
  * <p>The slot layout itself lives in {@code GTMaterialDataRecipes} (GT6 keys slot {@code i} as
- * {@code gt.usb.data<i>} / {@code gt.usb.tier<i>}, {@code MultiTileEntityHDDSwitch:61-83}); this class
+ * {@code gt.usb.data<i>} / {@code gt.usb.tier<i>}, {@code MultiTileEntityHDDSwitch}); this class
  * only renders it.</p>
  */
 public final class BehaviorDataStorage16 {

@@ -16,7 +16,7 @@ import gregtech.platform.Mc;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * GT6 {@code Loader_Recipes_Handlers:349-358} — machine casings welded from six plates plus two long
+ * GT6 {@code Loader_Recipes_Handlers} — machine casings welded from six plates plus two long
  * rods (or four rods) in the Welder, in four grades
  * ({@code casingMachine}, {@code ...Double}, {@code ...Quadruple}, {@code ...Dense}).
  * <p>

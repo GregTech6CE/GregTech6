@@ -46,7 +46,7 @@ public final class MachineWorkCost {
     }
 
     /**
-     * GT6 {@code MultiTileEntityBasicMachine.java:766-773}: ordinary parallel batches scale
+     * GT6 {@code MultiTileEntityBasicMachine}: ordinary parallel batches scale
      * power; TU keeps recipe time.
      * Returns null when these inputs have no representable cost. That is a refused calculation,
      * not a missing lookup: items and fluids use an empty stack, materials use {@code invalid()}.

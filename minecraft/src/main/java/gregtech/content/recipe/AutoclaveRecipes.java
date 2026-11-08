@@ -75,7 +75,7 @@ public final class AutoclaveRecipes {
     private static void crystallise(GTMaterial material, Row row) {
         ItemStack input = GTItems.getStack(row.input(), material, row.inCount());
         ItemStack output = GTItems.getStack(row.output(), material, row.outCount());
-        // RecipeMapHandlerPrefix:218 scales both fluid sides by toolQuality+1 (aFlatFluidCosts = F).
+        // RecipeMapHandlerPrefix scales both fluid sides by toolQuality+1 (aFlatFluidCosts = F).
         int quality = material.getToolQuality() + 1;
         FluidStack steam = GTFluids.stack("Steam", Math.multiplyExact(row.steam(), quality));
         FluidStack distilledWater = byRegistryName("ic2distilledwater", Math.multiplyExact(row.distW(), quality));

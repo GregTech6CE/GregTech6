@@ -161,7 +161,7 @@ public final class BasicMachineCatalog {
 
         // QU machines — Osmium color only
         MACHINE_DEFS.add(new MachineDef("massfab", "QU", new GTMaterial[] {Materials.OsmiumElemental}));
-        // GT6 registers the Molecular Scanner as T3 only (Loader_MultiTileEntities:1549-1553; T1/T2/
+        // GT6 registers the Molecular Scanner as T3 only (Loader_MultiTileEntities; T1/T2/
         // T4/T5 are commented out) and its NBT_INPUT of 512 is exactly the scanner recipe's power
         // (RecipeMapScannerMolecular), so the single port machine is tier 3.
         MACHINE_DEFS.add(new MachineDef("scannermolecular", "QU", new GTMaterial[] {Materials.OsmiumElemental}, 3));

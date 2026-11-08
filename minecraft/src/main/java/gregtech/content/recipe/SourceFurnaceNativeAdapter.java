@@ -23,7 +23,7 @@ import java.util.Optional;
 
 import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
 
-/** The native block branch of Loader_OreProcessing:311,345-349, not the oreRaw form listener.
+/** The native block branch of Loader_OreProcessing, not the oreRaw form listener.
  * Source permissions govern only this producer; they grant no authority to delete cooking rows.
  */
 final class SourceFurnaceNativeAdapter {

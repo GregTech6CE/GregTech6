@@ -8,8 +8,8 @@ import net.minecraft.world.level.block.Blocks;
 
 /**
  * Port of GT6's {@code DungeonChunkCorridor3}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkCorridor3.java:32-205}), the corridor GT6 builds for a
- * cell with exactly three dungeon neighbours ({@code WorldgenDungeonGT:289}).
+ * ({@code DungeonChunkCorridor3}), the corridor GT6 builds for a
+ * cell with exactly three dungeon neighbours ({@code WorldgenDungeonGT}).
  *
  * <p>GT6 first lays down {@link GTDungeonChunkCorridor}'s shell (which itself adds the
  * {@link GTDungeonChunkPillar} of a turn and the loot crate cluster of the central box), then decorates
@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.Blocks;
  *       {@link GTDungeonData#chest}. The port has a single chest block, which always faces north (GT6
  *       turned the multi-tile towards the room), so the roll is evaluated - it consumes GT6's
  *       {@code next1in2()} and {@code next(3)} from the cell's random - and its result is dropped.</li>
- *   <li>GT6's key-locked Safe multi-tile ({@code 3010}, {@code Loader_MultiTileEntities:135}) uses
+ *   <li>GT6's key-locked Safe multi-tile ({@code 3010}, {@code Loader_MultiTileEntities}) uses
  *       {@link GTDungeonData#safe} with the selected dungeon key ID. The four dead ends select key #3
  *       when generated, otherwise key #1/#2/#4/#5 respectively. The port has both mechanical and
  *       key-locked safes; these calls request the key-locked variant.</li>

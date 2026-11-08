@@ -1,6 +1,6 @@
 package gregtech.content.logistics;
 
-/** GT6 Logistics Core's previous-pass CPU meters (MultiTileEntityLogisticsCore:210, 300-317). */
+/** GT6 Logistics Core's previous-pass CPU meters. */
 public final class LogisticsCpuDisplay {
     public record Usage(int logic, int control, int storage, int conversion) {
         public static final Usage ZERO = new Usage(0, 0, 0, 0);

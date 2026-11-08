@@ -8,7 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
 /**
- * GT6's reactor contact hazard: {@code gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java:303}
+ * GT6's reactor contact hazard: {@code MultiTileEntityReactorCore}
  *
  * <pre>@Override public void onEntityCollidedWithBlock(Entity aEntity) {
  *     if (mRunning) {UT.Entities.applyHeatDamage(aEntity, 5); UT.Entities.applyRadioactivity(aEntity, 3, 1);}
@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
  * <p>So leaning on a <em>running</em> core (either size - that class is the shared base of the 1x1 and
  * the 2x2) burns for a flat 5 and adds a level-3 radiation dose of 1. The radial irradiation of
  * everything standing near the reactor was already ported ({@code ReactorCoreBlockEntity.irradiate},
- * GT6 {@code MultiTileEntityReactorCore1x1:87-95}); this is the part that needs the entity to actually
+ * GT6 {@code MultiTileEntityReactorCore1x1}); this is the part that needs the entity to actually
  * touch the core block, which is why it lives in the blocks' {@code entityInside}.
  *
  * <p>Both protections GT6 applies come for free through {@link GTEntityHelper} and
@@ -32,7 +32,7 @@ public final class ReactorHazards {
         return level.getBlockEntity(pos) instanceof ReactorCoreBlockEntity core && !core.stopped && !core.failed;
     }
 
-    /** GT6 {@code MultiTileEntityReactorCore:303}: heat 5 plus a level-3 dose of 1, once per entity. */
+    /** GT6 {@code MultiTileEntityReactorCore}: heat 5 plus a level-3 dose of 1, once per entity. */
     public static void contact(Level level, BlockPos pos, Entity entity) {
         if (level.isClientSide || !(entity instanceof LivingEntity living) || !living.isAlive()) return;
         if (!isRunning(level, pos)) return;

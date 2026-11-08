@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomPortalEnd}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomPortalEnd.java:32-102}): the dead end that leads to
+ * ({@code DungeonChunkRoomPortalEnd}): the dead end that leads to
  * the End. It is GT6's vault - the empty room with its door - whose floor becomes end stone with
  * glowstone at the sixteen lamp positions, and then, in the branch GT6 gates on the Et Futurum mod, a
  * purpur room: purpur pillars on the four corners and on the lamp grid, purpur blocks as the floor and
@@ -52,12 +52,12 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class GTDungeonChunkRoomPortalEnd extends GTDungeonChunkRoomEmpty {
 
-    /** GT6's room tag ({@code WorldgenDungeonGT:70}); a cell that already carries it is refused. */
+    /** GT6's room tag ({@code WorldgenDungeonGT}); a cell that already carries it is refused. */
     public static final String TAG_PORTAL_END = "gt.dungeon.portal.end";
 
     @Override
     public boolean generate(GTDungeonData data) {
-        // + DungeonChunkRoomVault:30-32, inlined: the tag first, then a dead end with one
+        // + DungeonChunkRoomVault, inlined: the tag first, then a dead end with one
         // connection, then the room shell and the vault door.
         if (data.hasTag(TAG_PORTAL_END) || data.connectionCount != 1 || !super.generate(data)) return false;
         data.tags.add(TAG_PORTAL_END);

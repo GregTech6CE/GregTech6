@@ -19,7 +19,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * Port of GT6's {@code WorldgenBushes} ({@code Loader_Worldgen:633}).
+ * Port of GT6's {@code WorldgenBushes} ({@code Loader_Worldgen}).
  *
  * <p>The current feature attempts one column per chunk with a {@code 1/4} roll, checks its biome
  * allowlist and surface, then places a ripe core, optional horizontal cores and attached branches.

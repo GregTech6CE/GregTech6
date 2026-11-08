@@ -37,7 +37,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomFarmMobs}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomFarmMobs.java:36-205}): GT6's mob farm.
+ * ({@code DungeonChunkRoomFarmMobs}): GT6's mob farm.
  *
  * <p>The empty room is built first (GT6's calls its super class and refuses the cell when that
  * fails), then a 4x4 stone pillar grows out of the middle of the hall. Two rings of containers hang around
@@ -91,7 +91,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomFarmMobs}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomFarmMobs.java:36-205}): GT6's mob farm.
+ * ({@code DungeonChunkRoomFarmMobs}): GT6's mob farm.
  *
  * <p>The empty room is built first (GT6's calls its super class and refuses the cell when that
  * fails), then a 4x4 stone pillar grows out of the middle of the hall. Two rings of containers hang around
@@ -144,7 +144,7 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
 
-    /** GT6's tag ({@code WorldgenDungeonGT.TAG_FARM_MOBS}, {@code WorldgenDungeonGT:80}). */
+    /** GT6's tag ({@code WorldgenDungeonGT.TAG_FARM_MOBS}, {@code WorldgenDungeonGT}). */
     public static final String TAG_FARM_MOBS = "gt.dungeon.farm.mobs";
 
     /** GT6's {@code tPlatforms}: the lanes that carry a spawn platform, of the 16 lanes. */

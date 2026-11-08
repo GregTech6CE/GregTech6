@@ -13,8 +13,8 @@ import net.minecraft.world.level.block.piston.PistonBaseBlock;
 
 /**
  * Port of GT6's {@code DungeonChunkDoorPiston}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkDoorPiston.java:30-347}): the piston door GT6 puts into
- * the wall of a dead-end room. {@code DungeonChunkRoomVault:31} (the base of the storage room and of the
+ * ({@code DungeonChunkDoorPiston}): the piston door GT6 puts into
+ * the wall of a dead-end room. {@code DungeonChunkRoomVault} (the base of the storage room and of the
  * portal rooms) runs it for a cell with a single connection, and it is the room that owns it: this cell
  * only builds the door itself.
  *
@@ -27,9 +27,9 @@ import net.minecraft.world.level.block.piston.PistonBaseBlock;
  *
  * <p>Port differences:</p>
  * <ul>
- *   <li>GT6's Hand Crank multi-tile (32111, {@code Loader_MultiTileEntities:2105}) becomes the port's own
+ *   <li>GT6's Hand Crank multi-tile (32111, {@code Loader_MultiTileEntities}) becomes the port's own
  *       crank block. GT6's {@code NBT_FACING} is the wall the crank is mounted on, because the crank
- *       drives the block on that side ({@code MultiTileEntityCrank:78}) and its handle - the lit front -
+ *       drives the block on that side ({@code MultiTileEntityCrank}) and its handle - the lit front -
  *       points the other way; {@link gregtech.content.block.tool.CrankBlock}
  *       stores the opposite, the direction it points away from its wall
  *       ({@code CrankBlock}), so {@link #crank} flips it. The colour and the
@@ -48,7 +48,7 @@ import net.minecraft.world.level.block.piston.PistonBaseBlock;
  *   <li>The door frame reaches local {@code y = 6} and the lamps put their redstone brick at
  *       {@code y = 5}, i.e. a couple of layers above the 0..4 shell of a
  *       plain corridor. GT6's rooms are nine blocks tall (floor 0, interior 1..6, ceiling 7, tile skin
- *       8: {@code DungeonChunkBarracks:46}, {@code DungeonChunkEntrance:94}), which is where the door
+ *       8: {@code DungeonChunkBarracks}, {@code DungeonChunkEntrance}), which is where the door
  *       stands, so GT6's coordinates are kept as they are and stay inside the room height.</li>
  * </ul>
  */

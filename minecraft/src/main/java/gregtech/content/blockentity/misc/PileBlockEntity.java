@@ -22,8 +22,8 @@ import java.util.List;
  * {@code MultiTileEntityPlate} 32085, {@code MultiTileEntityPlateGem} 32086) and their shared base
  * {@code gregapi/tileentity/misc/MultiTileEntityPlaceable.java}.
  *
- * <p>GT6 keeps exactly one stack in {@code mStack} ({@code MultiTileEntityPlaceable.java:49}), read
- * from and written to the key {@code "gt.value"} ({@code NBT_VALUE}, {@code CS.java:1218}), and
+ * <p>GT6 keeps exactly one stack in {@code mStack} ({@code MultiTileEntityPlaceable}), read
+ * from and written to the key {@code "gt.value"} ({@code NBT_VALUE}, {@code CS}), and
  * derives the material from the stack's ore dictionary data ({@code OM.anydata},
  * ). The port stores the same single stack under the same NBT key and derives the
  * prefix and material from the port's own registries instead (see {@link #prefixOf} and
@@ -36,15 +36,15 @@ import java.util.List;
  * </pre>
  *
  * <p>A pile holds one stack of one material up to {@code MAX_SIZE} = 64 items - GT6's own cap
- * ({@code MultiTileEntityPlaceable.java:82}). GT6 additionally renders one layer per eight stored
- * ingots and widens the collision box with the stack size ({@code MultiTileEntityIngot.java:129-131},
- * {@code MultiTileEntityPlate.java:62-64}); the port drives geometry, selection and collision through
+ * ({@code MultiTileEntityPlaceable}). GT6 additionally renders one layer per eight stored
+ * ingots and widens the collision box with the stack size ({@code MultiTileEntityIngot},
+ * {@code MultiTileEntityPlate}); the port drives geometry, selection and collision through
  * {@link PileBlock#STACK}, which {@link #syncState} keeps equal to {@link #count}.</p>
  */
 public class PileBlockEntity extends BlockEntity {
-    /** GT6's {@code NBT_VALUE} ({@code gregapi/data/CS.java:1218}) - the key GT6 saves the stack under. */
+    /** GT6's {@code NBT_VALUE} ({@code CS}) - the key GT6 saves the stack under. */
     public static final String NBT_VALUE = "gt.value";
-    /** GT6's stack limit for a pile ({@code MultiTileEntityPlaceable.java:82}). */
+    /** GT6's stack limit for a pile ({@code MultiTileEntityPlaceable}). */
     public static final int MAX_SIZE = gregtech.content.block.MaterialPileRules.MAX_SIZE;
 
     private final PileBlock.Kind kind;
@@ -72,7 +72,7 @@ public class PileBlockEntity extends BlockEntity {
 
     /**
      * GT6's {@code mSize}, which is what its renderer draws one box per
-     * ({@code MultiTileEntityPlaceable.java:58}, {@code MultiTileEntityIngot.java:48}): the stored
+     * ({@code MultiTileEntityPlaceable}, {@code MultiTileEntityIngot}): the stored
      * stack size, or {@code 0} for the port's empty pile, which GT6 cannot have because its pile
      * <em>is</em> the item stack.
      */
@@ -83,7 +83,7 @@ public class PileBlockEntity extends BlockEntity {
     /**
      * Moves {@link PileBlock#STACK} to the current content size, which is what makes a bigger pile
      * look bigger - GT6 needs no such step, its renderer reads {@code mSize} directly
-     * ({@code MultiTileEntityPlaceable.java:117-123}).
+     * ({@code MultiTileEntityPlaceable}).
      *
      * <p>{@code UPDATE_CLIENTS} only: the block itself does not change, so nothing has to be dropped
      * or re-shaped, and no neighbour needs an update.</p>
@@ -113,7 +113,7 @@ public class PileBlockEntity extends BlockEntity {
     }
 
     /**
-     * GT6's {@code getDrops} returns the stored stack ({@code MultiTileEntityPlaceable.java:72-74}),
+     * GT6's {@code getDrops} returns the stored stack ({@code MultiTileEntityPlaceable}),
      * so this is a list of zero or one stack. The stack is a copy - the pile keeps its own.
      */
     public List<ItemStack> contents() {
@@ -151,12 +151,12 @@ public class PileBlockEntity extends BlockEntity {
 
     /**
      * GT6 accepts a click when the held stack is the very same stack as the stored one
-     * ({@code ST.equal}, {@code MultiTileEntityPlaceable.java:81} and {@code ST.java:92-94}).
+     * ({@code ST.equal}, {@code MultiTileEntityPlaceable} and {@code ST}).
      *
      * <p>The port's equivalent is "same form and same material", because the port registers its own
      * iron ingot next to the unified vanilla one and GT6's ore dictionary would have unified them
      * anyway. An empty pile accepts the first stack of its own prefix, which is the stack it binds to
-     * from then on ({@code MultiTileEntityPlaceable.java:91}).</p>
+     * from then on ({@code MultiTileEntityPlaceable}).</p>
      */
     public boolean canAccept(ItemStack held) {
         if (held.isEmpty() || prefixOf(held) != kind.prefix()) return false;
@@ -178,7 +178,7 @@ public class PileBlockEntity extends BlockEntity {
     }
 
     /**
-     * GT6's merge branch ({@code MultiTileEntityPlaceable.java:81-96}), on the port's terms: the whole
+     * GT6's merge branch ({@code MultiTileEntityPlaceable}), on the port's terms: the whole
      * held stack goes in, but never past {@code MAX_SIZE} - and a full pile takes nothing at all,
      * which is where GT6 returns early.
      *
@@ -200,7 +200,7 @@ public class PileBlockEntity extends BlockEntity {
     }
 
     /**
-     * GT6's take branch ({@code MultiTileEntityPlaceable.java:98-111}) takes exactly one item
+     * GT6's take branch ({@code MultiTileEntityPlaceable}) takes exactly one item
      * ({@code ST.amount(1, mStack)}); the port keeps the amount as a parameter so a future machine can
      * take more. Emptying the pile clears the stored stack and hence the material the pile was bound
      * to, which is what GT6's {@code setToAir()} amounts to.
@@ -298,7 +298,7 @@ public class PileBlockEntity extends BlockEntity {
 //?}
     }
 
-    /** GT6 writes {@code ST.save(aNBT, NBT_VALUE, mStack)} ({@code MultiTileEntityPlaceable.java:68}). */
+    /** GT6 writes {@code ST.save(aNBT, NBT_VALUE, mStack)} ({@code MultiTileEntityPlaceable}). */
     @Override
 //? if >=1.21.1 {
     /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {

@@ -15,13 +15,13 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
  * <b>nothing</b>.
  *
  * <p>GT6 has no structure for its dungeon: {@code WorldgenDungeonGT} was a 1.7.10 world generator entry
- * that wrote the whole grid of cells ({@code Loader_Worldgen:652}). The port generates that same dungeon as
+ * that wrote the whole grid of cells ({@code Loader_Worldgen}). The port generates that same dungeon as
  * the {@link GTDungeonFeature} feature, cell by cell (see {@code GTDungeonLayout}), so nothing is left for
  * a structure to build - what is missing is only vanilla's <em>knowledge</em> of where the dungeon is, which
  * is what {@code /locate} and structure-related game mechanics read. This class provides exactly that
  * knowledge and nothing else: it declares one {@link GTDungeonAnchorPiece} at every
  * {@link GTDungeonPlacement lattice anchor} that passes GT6's own one-in-a-hundred gate
- * ({@code WorldgenDungeonGT:150}, the same roll {@code GTDungeonFeature} makes), and that piece places no
+ * ({@code WorldgenDungeonGT}, the same roll {@code GTDungeonFeature} makes), and that piece places no
  * blocks (see its javadoc for why a piece, and not an empty generation point, is what vanilla's
  * {@code StructureCheck} and {@code StructureStart} need). So a structure exists exactly where a dungeon
  * does, and {@code /locate} therefore reports dungeons rather than one anchor out of a hundred.</p>
@@ -35,7 +35,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
  *       ({@code data/gt6ce/forge/biome_modifier/gt_dungeon.json}); the two are independent - a structure
  *       start is created at the chunk's {@code STRUCTURE_STARTS} status, long before any decoration.</li>
  *   <li>{@code tags/worldgen/biome/has_structure/gt_dungeon.json} - {@code #minecraft:is_overworld},
- *       GT6's {@code GEN_OVERWORLD} of {@code Loader_Worldgen:652}. The tag is also what
+ *       GT6's {@code GEN_OVERWORLD} of {@code Loader_Worldgen}. The tag is also what
  *       {@code ChunkGeneratorStructureState.hasBiomesForStructureSet} ({@code ChunkGeneratorStructureState})
  *       reads to decide whether the structure set belongs to a dimension at all.</li>
  *   <li>{@code worldgen/structure_set/gt_dungeons.json} - one entry, this structure at weight 1, with the
@@ -60,7 +60,7 @@ public class GTDungeonStructure extends Structure {
     /**
      * One anchor piece per anchor that GT6's own gate accepts, and nothing at all for the others.
      *
-     * <p>GT6 rolls the dungeon once per anchor - {@code WorldgenDungeonGT:150}'s
+     * <p>GT6 rolls the dungeon once per anchor - {@code WorldgenDungeonGT}'s
      * {@code aRandom.nextInt(mProbability) != 0}, i.e. one dungeon per hundred anchors
      * ({@link GTDungeonLayout#passesProbability} of {@link GTDungeonLayout#seedFor}) - and the port's
      * {@link GTDungeonFeature} rolls the very same value from the very same seed. Rolling it here as well

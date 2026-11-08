@@ -103,7 +103,7 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
      * The level this portal is used from leads to: the portal's own dimension from the overworld, the
      * overworld from its own dimension, and nowhere from any other dimension - GT6's
      * {@code findTargetPortal} and {@code addThisPortalToLists} only know the overworld and the other
-     * side ({@code MultiTileEntityMiniPortalNether:67-113}).
+     * side ({@code MultiTileEntityMiniPortalNether}).
      */
     @Nullable
     public ServerLevel targetLevel(Level level) {
@@ -166,7 +166,7 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
         return InteractionResult.CONSUME;
     }
 
-    /** GT6's portal tooltips ({@code MultiTileEntityMiniPortalNether:49-59}, {@code MultiTileEntityMiniPortalEnd:49-60}). */
+    /** GT6's portal tooltips ({@code MultiTileEntityMiniPortalNether}, {@code MultiTileEntityMiniPortalEnd}). */
     @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,

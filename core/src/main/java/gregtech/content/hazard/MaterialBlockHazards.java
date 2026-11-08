@@ -6,7 +6,7 @@ import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 
-/** PrefixBlock:393-405,538-541: strength follows contents, not the mining charge's fixed cube. */
+/** PrefixBlock: strength follows contents, not the mining charge's fixed cube. */
 public final class MaterialBlockHazards {
     private MaterialBlockHazards() {}
 

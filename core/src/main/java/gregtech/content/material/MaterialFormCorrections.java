@@ -9,7 +9,7 @@ final class MaterialFormCorrections {
     private MaterialFormCorrections() {}
 
     static void apply() {
-        // MT.java:1259 G_STONE, STONE, WOOD. Needed for the source's petrified-wood
+        // MT G_STONE, STONE, WOOD. Needed for the source's petrified-wood
         // rock knapping rows and wood/plastic handle equivalence.
         CompoundMaterials.PetrifiedWood.put(
                 MaterialProperty.STONE, MaterialProperty.WOOD, MaterialProperty.GENERATE_STICKS);
@@ -127,7 +127,7 @@ final class MaterialFormCorrections {
                     MaterialProperty.DUST,
                     MaterialProperty.GENERATE_DUST);
         }
-        // OP:624 force-generates boules for the seven MT sapphire-family declarations.
+        // OP force-generates boules for the seven MT sapphire-family declarations.
         // Keep this before source eligibility snapshots and before addon linking callbacks.
         for (var material : new gregtech.api.material.GTMaterial[] {
             CompoundMaterials.Sapphire,
@@ -143,15 +143,15 @@ final class MaterialFormCorrections {
                     && gregtech.engine.material.GTMaterialRegistry.get(material.getName()) == material
                     && !gregtech.engine.addon.AddonMaterials.owns(material)) material.put(MaterialProperty.BOULE);
         }
-        // MT.java:3833 Blackstone is a *knappable* stone — `brick(9223, "Blackstone", …).qual(1, 5.0, 64, 1)`
-        // — so like Stone (MT.java:1631) and Basalt it carries tool stats; the port declared it as a
+        // MT Blackstone is a *knappable* stone — `brick(9223, "Blackstone", …).qual(1, 5.0, 64, 1)`
+        // — so like Stone (MT) and Basalt it carries tool stats; the port declared it as a
         // dust-only supplemental material, which left its tool heads (and the recipes knapping them) out.
         var blackstone = gregtech.engine.material.GTMaterialRegistry.get("Blackstone");
         if (blackstone != null && blackstone.isValid()) blackstone.setToolStats(1, 5.0F, 64, 1);
 
-        // The source's stone factories put TD.Properties.STONE — `stone(...)` (MT.java:323, which
-        // `brick(...)` at :194 delegates to) for Blackstone, and the explicit argument of
-        // `create(8599, "Bedrock", …)` (MT.java:1637). Without it OP.rockGt (Or(ORES, STONE))
+        // The source's stone factories put TD.Properties.STONE — `stone(...)` (MT, which
+        // `brick(...)` delegates to) for Blackstone, and the explicit argument of
+        // `create(8599, "Bedrock", …)` (MT). Without it OP.rockGt (Or(ORES, STONE))
         // skipped both, so their anvil, mortar and sharpener rows had no rock.
         // MT.CFoam (9883) also declares STONE, but the port's property-based plate/stick/parts
         // branches would then give it forms the source form set (DUSTS only) does not have.
@@ -172,7 +172,7 @@ final class MaterialFormCorrections {
                         MaterialProperty.GENERATE_LENS)
                 .setTextureSet(MaterialTextureSet.CUBE_SHINY);
 
-        // GT6's quartz() helper uses TD.G_QUARTZ (TD.java:604 =
+        // GT6's quartz() helper uses TD.G_QUARTZ (TD =
         // PROJECTILES, DUSTS, PLANTS, PLATES, STICKS, GEMS), so Nether Quartz, Certus Quartz,
         // Charged Certus Quartz and Fluix all have a GEM form in the original; the import kept the
         // dust only, which is why gem-shaped recipes (e.g. the charged-certus chain) had no item.
@@ -188,7 +188,7 @@ final class MaterialFormCorrections {
                             MaterialProperty.GENERATE_PROJECTILE);
         }
 
-        // GT6 TD.G_INGOT_MACHINE / G_INGOT_MACHINE_ORES both include DUSTS (TD.java:609-610), so
+        // GT6 TD.G_INGOT_MACHINE / G_INGOT_MACHINE_ORES both include DUSTS (TD), so
         // every metal and alloy created with them has a dust. Materials created through other
         // helpers in this port may still lack it — sweep them so alloy dusts (Bronze, Steel,
         // Brass, Invar, …) exist everywhere, as they do in the original.

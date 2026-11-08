@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 import java.util.*;
 
-/** GT6 Loader_Recipes_Other lines 949-966: all 18 fusion reactions, including their LU startup cost.
+/** GT6 Loader_Recipes_Other: all 18 fusion reactions, including their LU startup cost.
  * Gas units are 1000 mB/U; molten metal units are 144 mB/U. Missing phases never substitute another phase. */
 public final class FusionRecipeLoader implements InitializationStep {
     private int added;
@@ -46,8 +46,8 @@ public final class FusionRecipeLoader implements InitializationStep {
         if(material==null){missing.add(token);return FluidStack.EMPTY;}
         var name=material.getName().toLowerCase(Locale.ROOT);
         // GT6 fuels the ring with the material's own gas/liquid phase (MT.D.gas(...)), not with a
-        // name-prefixed fluid: the generated gas name is the material name (FL.java:1080) and the
-        // molten phase keeps its "molten." prefix (FL.java:1077).
+        // name-prefixed fluid: the generated gas name is the material name (FL) and the
+        // molten phase keeps its "molten." prefix (FL).
         var stack="gas".equals(fields[1])
                 ? GeneratedRecipeResolver.materialFluid(material.getName(),Integer.parseInt(fields[2]))
                 : GeneratedRecipeResolver.byRegistryName("molten."+name,Integer.parseInt(fields[2]));

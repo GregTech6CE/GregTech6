@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
-/** The processing rows of GT6 {@code BlockDiggable:69-96} and {@code MultiItemFood:123-165}. */
+/** The processing rows of GT6 {@code BlockDiggable} and {@code MultiItemFood}. */
 public final class DiggableRecipes {
     public record Variant(String block, String ball, GTMaterial material) {}
 
@@ -59,12 +59,12 @@ public final class DiggableRecipes {
     public static int register() {
         if (registered) throw new IllegalStateException("Diggable processing rows registered twice");
         registered = true;
-        // BlockDiggable:75 includes vanilla clay alongside the five colored clay blocks.
+        // BlockDiggable includes vanilla clay alongside the five colored clay blocks.
         add(
                 MachineRecipeMaps.Drying.addRecipe1(
                         true, 16, 64, new ItemStack(Blocks.CLAY), new ItemStack(Blocks.TERRACOTTA)),
                 "dry vanilla clay");
-        // MultiItemFood:159-165 also packs and unpacks the ordinary vanilla clay block.
+        // MultiItemFood also packs and unpacks the ordinary vanilla clay block.
         ItemStack vanillaBalls = new ItemStack(Items.CLAY_BALL, 4);
         ItemStack vanillaClay = new ItemStack(Blocks.CLAY);
         add(
@@ -100,7 +100,7 @@ public final class DiggableRecipes {
                         "generify ball " + row.ball());
             }
         }
-        // MultiItemFood:168-178: the ordinary ball and five colored balls roll into plates,
+        // MultiItemFood: the ordinary ball and five colored balls roll into plates,
         // while one dust unit compresses back into the matching ball.
         clayBalls().forEach((material, ball) -> clayBallForms(material, ball, material.getName()));
         return registeredCount;

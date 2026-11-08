@@ -19,7 +19,7 @@ import java.util.TreeSet;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * GT6's generic shredder (recycling) rows: {@code Loader_Recipes_Handlers:152-155}.
+ * GT6's generic shredder (recycling) rows: {@code Loader_Recipes_Handlers}.
  * <p>
  * GT6 loops over every prefix that is {@code RECYCLABLE}, declares no byproducts and is neither an ore,
  * ore-processing or dust-based form, a container, a cable, a wire or a pipe, and registers

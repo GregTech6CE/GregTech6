@@ -35,8 +35,8 @@ import java.util.Optional;
  * <p>GT6 hangs its behaviours on {@code MultiItem} meta-items: {@code MultiItemRandomTools} and the
  * {@code ToolsGT} tool classes call {@code addItemBehavior(...)}/pass a behaviour into
  * {@code addItem(...)}, and the meta-item then forwards {@code onItemUseFirst}/{@code onItemRightClick}
- * to it (e.g. {@code MultiItemRandomTools:279} for the C-Foam removal spray, for the
- * portable scanner, {@code GT_Tool_Plunger:86-87} for the two plunger behaviours). The port registers
+ * to it (e.g. {@code MultiItemRandomTools} for the C-Foam removal spray, for the
+ * portable scanner, {@code GT_Tool_Plunger} for the two plunger behaviours). The port registers
  * those items as plain {@code TechItem}s ({@code GTMultiItems}) with no per-item behaviour
  * slot, so the behaviour lives here as {@code static} methods over the objects they touch —
  * world, position, face, holder stack, player — exactly the shape
@@ -52,10 +52,10 @@ import java.util.Optional;
  * <h2>What is in this file</h2>
  *
  * <ul>
- *   <li>{@link #obstructed} — GT6 {@code WD.obstructed} ({@code WD.java:127-148}), used by the tape,
+ *   <li>{@link #obstructed} — GT6 {@code WD.obstructed} ({@code WD}), used by the tape,
  *       the flint-and-tinder and the extinguisher as their "can the player actually reach this face"
  *       gate;</li>
- *   <li>{@link #creative} — GT6 {@code UT.Entities.hasInfiniteItems} ({@code UT.java:3187-3189});</li>
+ *   <li>{@link #creative} — GT6 {@code UT.Entities.hasInfiniteItems} ({@code UT});</li>
  *   <li>{@link #mayEdit} — GT6 {@code EntityPlayer.canPlayerEdit} ({@code 1.7.10} signature) in its
  *       1.20.1 form;</li>
  *   <li>{@link Consumable} — the shared "empty / used / full + {@code gt.remaining}" shape GT6
@@ -63,7 +63,7 @@ import java.util.Optional;
  *   <li>{@link Ignitable} plus {@link #igniteToolClick}, {@link #lightVanillaFire} and
  *       {@link #primeTnt} — GT6's {@code TOOL_igniter} click, i.e. {@code IBlockToolable.Util.
  *       onToolClick(TOOL_igniter,...)} together with the vanilla half of that tool kind
- *       ({@code ToolCompat.java:201-223}).</li>
+ *       ({@code ToolCompat}).</li>
  * </ul>
  *
  * <h2>Registered behaviour ids</h2>
@@ -122,7 +122,7 @@ public final class ItemBehaviors {
      *
      * <p>Every GT6 behaviour returns two things at once — whether it handled the click
      * ({@code onItemUseFirst}'s boolean, which decides whether {@code Block#use} still runs) and the
-     * stack it left behind ({@code Behavior_Duct_Tape:63-87} swaps the item, decrements the counter
+     * stack it left behind ({@code Behavior_Duct_Tape} swaps the item, decrements the counter
      * and may consume the stack) — and 1.20.1 cannot express the second in place, so both travel
      * together.</p>
      *
@@ -141,7 +141,7 @@ public final class ItemBehaviors {
 
 
     /**
-     * GT6 {@code WD.obstructed} ({@code WD.java:127-148}): whether the block <em>behind</em> the
+     * GT6 {@code WD.obstructed} ({@code WD}): whether the block <em>behind</em> the
      * clicked face reaches into that face far enough that the player cannot put a tool through it.
      *
      * <p>The original works on the neighbour's 1.7.10 collision bounding box and asks, per side,
@@ -150,8 +150,8 @@ public final class ItemBehaviors {
      * tangential axes ({@code > PX_P[2] = 0.125} and {@code < PX_N[2] = 0.875}). All six branches are
      * kept verbatim; {@code shape.bounds()} is the same union box
      * {@code getCollisionBoundingBoxFromPool} returned. Trapdoors, doors and ladders never obstruct
-     * ({@code WD.java:136}), and a block without a collision box never does
-     * ({@code WD.java:138}).</p>
+     * ({@code WD}), and a block without a collision box never does
+     * ({@code WD}).</p>
      *
      * @param level the level the clicked block stands in
      * @param pos   the clicked block; the neighbour is {@code pos.relative(side)}
@@ -163,7 +163,7 @@ public final class ItemBehaviors {
         return ManualToolBehaviorAccess.obstructed(level, pos, side);
     }
 
-    /** GT6 {@code UT.Entities.hasInfiniteItems} ({@code UT.java:3187-3189}): creative mode only. */
+    /** GT6 {@code UT.Entities.hasInfiniteItems} ({@code UT}): creative mode only. */
     public static boolean creative(@Nullable Player player) {
         return ManualToolBehaviorAccess.creative(player);
     }
@@ -259,9 +259,9 @@ public final class ItemBehaviors {
             // Both original behaviors consume the server click even when payment fails.
             return Outcome.acted(stack);
         }
-        // the debug pair (MultiItemRandomTools:519-520) and the Remote Activator's bind half.
+        // the debug pair (MultiItemRandomTools) and the Remote Activator's bind half.
         // Both debug items are deliberately exempt from the build-permission gate, exactly like GT6's
-        // (Behavior_Chunk_Remover:39 and Behavior_Worldgen_Debugger:43 check only `isRemote`).
+        // (Behavior_Chunk_Remover and Behavior_Worldgen_Debugger check only `isRemote`).
         if (id.equals("chunk_eraser")) {
             return BehaviorChunkEraser.useOn(level, pos, side, player, stack, hitX, hitY, hitZ);
         }
@@ -281,7 +281,7 @@ public final class ItemBehaviors {
     /**
      * One right-click into the air, with no block under the cursor — GT6's {@code onItemRightClick}.
      *
-     * <p>Only the Remote Activator uses this slot ({@code Behavior_Remote:76-90} fires every bound
+     * <p>Only the Remote Activator uses this slot ({@code Behavior_Remote} fires every bound
      * coordinate within {@link BehaviorRemote#RANGE}); the port has no other behaviour that reacts to a
      * click in the air, so the lookup is by id and everything else is refused without allocating.</p>
      */
@@ -316,8 +316,8 @@ public final class ItemBehaviors {
 
     /**
      * One right-click on an entity, dispatched the same way — the flint and tinder's and the
-     * lighter's creeper branch ({@code Behavior_FlintAndTinder:69-78},
-     * {@code Behavior_Lighter:61-79}).
+     * lighter's creeper branch ({@code Behavior_FlintAndTinder},
+     * {@code Behavior_Lighter}).
      */
     public static Outcome useOnEntity(Entity entity, @Nullable Player player, ItemStack stack) {
         String id = itemId(stack);
@@ -362,7 +362,7 @@ public final class ItemBehaviors {
     /** The last scan cost, so a caller without a chat channel can still report it. */
     private static long lastScanCost;
 
-    /** GT6 charges the scan out of the item's energy buffer ({@code Behavior_Scanner:53}). */
+    /** GT6 charges the scan out of the item's energy buffer ({@code Behavior_Scanner}). */
     public static long lastScanCost() {
         return lastScanCost;
     }
@@ -372,8 +372,8 @@ public final class ItemBehaviors {
     /**
      * GT6's consumable shape, which every tape, lighter and spray class repeats: a full item, a used
      * item that carries the remaining uses in {@code gt.remaining}, and an optional empty item the
-     * stack turns into when the uses run out ({@code Behavior_Duct_Tape:42-51},
-     * {@code Behavior_Spray_Extinguisher:49-54}, {@code Behavior_Lighter:52-58}); each class's wear
+     * stack turns into when the uses run out ({@code Behavior_Duct_Tape},
+     * {@code Behavior_Spray_Extinguisher}, {@code Behavior_Lighter}); each class's wear
      * path repeats the same pair of stacks.
      *
      * <p>The original mutates the {@link ItemStack} in place ({@code func_150996_a} swaps the item,
@@ -387,15 +387,15 @@ public final class ItemBehaviors {
      * @param full  the item the canning machine fills; using it once converts it to {@code used}
      * @param uses  GT6's {@code mUses} — the counter a full item starts with
      * @param key   the NBT tag the counter lives in: {@link #USES_KEY} for the tapes and sprays
-     *              ({@code Behavior_Duct_Tape:61}, {@code Behavior_Spray_Extinguisher:64}),
-     *              {@link #LIGHTER_KEY} for the lighters ({@code UT.java:2087,2093})
+     *              ({@code Behavior_Duct_Tape}, {@code Behavior_Spray_Extinguisher}),
+     *              {@link #LIGHTER_KEY} for the lighters ({@code UT})
      */
     public record Consumable(ItemStack empty, ItemStack used, ItemStack full, long uses, String key) {
 
-        /** GT6's {@code "gt.remaining"} tag, written at {@code Behavior_Duct_Tape:77}. */
+        /** GT6's {@code "gt.remaining"} tag, written at {@code Behavior_Duct_Tape}. */
         public static final String USES_KEY = "gt.remaining";
 
-        /** GT6's {@code "gt.lighter"} tag ({@code UT.NBT.setLighterFuel}, {@code UT.java:2085-2093}). */
+        /** GT6's {@code "gt.lighter"} tag ({@code UT.NBT.setLighterFuel}, {@code UT}). */
         public static final String LIGHTER_KEY = "gt.lighter";
 
         public Consumable(ItemStack empty, ItemStack used, ItemStack full, long uses) {
@@ -424,7 +424,7 @@ public final class ItemBehaviors {
         /**
          * The remaining uses, i.e. GT6's {@code tNBT.getLong("gt.remaining")} — except that a full
          * item reports {@link #uses} without having been used yet, which is how
-         * {@code Behavior_Duct_Tape:111} displays it.
+         * {@code Behavior_Duct_Tape} displays it.
          */
         public long remaining(ItemStack stack) {
             if (isFull(stack)) return uses;
@@ -437,8 +437,8 @@ public final class ItemBehaviors {
         }
 
         /**
-         * GT6's {@code prepare} ({@code Behavior_Lighter:122-128}, inlined at
-         * {@code Behavior_Duct_Tape:63-67}): a full stack becomes the used one and starts at full
+         * GT6's {@code prepare} ({@code Behavior_Lighter}, inlined at
+         * {@code Behavior_Duct_Tape}): a full stack becomes the used one and starts at full
          * fuel. A stack that is already used (or unknown) is returned unchanged.
          */
         public ItemStack prepared(ItemStack stack) {
@@ -460,8 +460,8 @@ public final class ItemBehaviors {
         }
 
         /**
-         * GT6's use bookkeeping ({@code Behavior_Duct_Tape:76-87},
-         * {@code Behavior_Spray_Foam_Hardener:80-91}): subtract, and when nothing is left run
+         * GT6's use bookkeeping ({@code Behavior_Duct_Tape},
+         * {@code Behavior_Spray_Foam_Hardener}): subtract, and when nothing is left run
          * {@link #usedUp}.
          *
          * @param stack  the used stack, after {@link #prepared}
@@ -487,7 +487,7 @@ public final class ItemBehaviors {
         }
 
         /**
-         * GT6's {@code useUp} ({@code Behavior_Lighter:130-137}): the stack either turns into
+         * GT6's {@code useUp} ({@code Behavior_Lighter}): the stack either turns into
          * {@link #empty} — the counter tag is dropped on the way, exactly like the original's
          * {@code tNBT.removeTag}/{@code func_150996_a} pair — or one of it is consumed.
          */
@@ -517,10 +517,10 @@ public final class ItemBehaviors {
     // ── the spray-can click every spray class repeats ────────────────────
 
     /**
-     * One spray operation — GT6's {@code foam} ({@code Behavior_Spray_Foam:109-178}),
-     * {@code harden} ({@code Behavior_Spray_Foam_Hardener:95-116}),
-     * {@code remove} ({@code Behavior_Spray_Foam_Remover:95-115}) and
-     * {@code extinguish} ({@code Behavior_Spray_Extinguisher:95-130}).
+     * One spray operation — GT6's {@code foam} ({@code Behavior_Spray_Foam}),
+     * {@code harden} ({@code Behavior_Spray_Foam_Hardener}),
+     * {@code remove} ({@code Behavior_Spray_Foam_Remover}) and
+     * {@code extinguish} ({@code Behavior_Spray_Extinguisher}).
      */
     public interface SprayEffect {
         /**
@@ -536,7 +536,7 @@ public final class ItemBehaviors {
 
     /**
      * GT6's five spray classes share one click shape, repeated verbatim in each of them
-     * ({@code Behavior_Spray_Foam_Remover:58-93} is the shortest copy): refuse while the client side
+     * ({@code Behavior_Spray_Foam_Remover} is the shortest copy): refuse while the client side
      * runs, while the stack is stacked and when the player may not edit the block; turn a full can
      * into the used one and start its counter; run the operation with the counter the creative flag
      * allows; subtract what it reports; and finally empty the can when the counter reaches zero.
@@ -575,13 +575,13 @@ public final class ItemBehaviors {
     // ── GT6's TOOL_igniter click ─────────────────────────────────────────
     /**
      * A block (or block entity) that reacts to GT6's {@code TOOL_igniter}
-     * ({@code CS.java:1035}), i.e. the port's half of {@code IBlockToolable.onToolClick}.
+     * ({@code CS}), i.e. the port's half of {@code IBlockToolable.onToolClick}.
      *
      * <p>GT6's implementors are the fire boxes and fluid/gas generators
-     * ({@code MultiTileEntityGeneratorSolid:226}, {@code MultiTileEntityGeneratorLiquid:180},
-     * {@code MultiTileEntityGeneratorFluidBed:202}, {@code MultiTileEntityBasicMachine:373}), the
-     * dynamite ({@code MultiTileEntityDynamite:100}) and the mini portals
-     * ({@code MultiTileEntityMiniPortalNether:118} and its five siblings). None of them is a GT6
+     * ({@code MultiTileEntityGeneratorSolid}, {@code MultiTileEntityGeneratorLiquid},
+     * {@code MultiTileEntityGeneratorFluidBed}, {@code MultiTileEntityBasicMachine}), the
+     * dynamite ({@code MultiTileEntityDynamite}) and the mini portals
+     * ({@code MultiTileEntityMiniPortalNether} and its five siblings). None of them is a GT6
      * random-tool item, so a block only has to implement this interface once.</p>
      */
     public interface Ignitable {
@@ -604,8 +604,8 @@ public final class ItemBehaviors {
      * <p>The block entity is asked first and the block second, which is the resolution order
      * {@code WD.te(..., aDelegator = T)} produces in every other behaviour of this package. The
      * return value is handed back unchanged so a caller can apply GT6's own conversion
-     * ({@code Behavior_FlintAndTinder:58} uses {@code units(damage, 10000, 100, T)} for a tool,
-     * {@code Behavior_Lighter:112} uses {@code units(damage, 10000, 1, T)} for a fuel unit).</p>
+     * ({@code Behavior_FlintAndTinder} uses {@code units(damage, 10000, 100, T)} for a tool,
+     * {@code Behavior_Lighter} uses {@code units(damage, 10000, 1, T)} for a fuel unit).</p>
      *
      * @return the cost in GT6's 1/10000 units, or {@code 0} when nothing reacted
      */
@@ -621,22 +621,22 @@ public final class ItemBehaviors {
 //?}
     }
 
-    /** GT6 {@code ToolCompat:206}: a TNT block ignited by a GT igniter costs one full unit. */
+    /** GT6 {@code ToolCompat}: a TNT block ignited by a GT igniter costs one full unit. */
     public static final long TNT_COST = ManualToolBehaviorAccess.TNT_COST;
 
     /**
-     * The vanilla half of GT6's {@code TOOL_igniter} ({@code ToolCompat.java:201-223}): a GT igniter
+     * The vanilla half of GT6's {@code TOOL_igniter} ({@code ToolCompat}): a GT igniter
      * that no block claims lights a fire block in front of the clicked face.
      *
      * <p>The original's conditions, in order: the target must be air
-     * ({@code aWorld.isAirBlock}, {@code ToolCompat:217}) and the clicked block must have oxygen
-     * ({@code WD.oxygen}, {@code ToolCompat:218}) — which is {@code WD.java:396-398}, i.e. a
+     * ({@code aWorld.isAirBlock}, {@code ToolCompat}) and the clicked block must have oxygen
+     * ({@code WD.oxygen}, {@code ToolCompat}) — which is {@code WD}, i.e. a
      * Galacticraft-only check that is unconditionally {@code true} without that mod, so the port
      * keeps only the air test. The fire state comes from
      * {@link BaseFireBlock#getState(net.minecraft.world.level.BlockGetter, BlockPos)}, the 1.20.1
      * replacement for GT6's bare {@code Blocks.fire}.</p>
      *
-     * <p><b>Not ported from {@code ToolCompat:203-213}:</b> the Forestry Candle and the Twilight
+     * <p><b>Not ported from {@code ToolCompat}:</b> the Forestry Candle and the Twilight
      * Forest Lamp of Cinders branches — neither mod exists in the port.</p>
      *
      * @return whether a fire block was placed, i.e. whether the operation cost a use
@@ -647,7 +647,7 @@ public final class ItemBehaviors {
     }
 
     /**
-     * GT6 {@code ToolCompat:203-207}: a TNT block is primed instead of being set on fire, and the
+     * GT6 {@code ToolCompat}: a TNT block is primed instead of being set on fire, and the
      * block is removed. 1.20.1 folds both halves into
      * {@link TntBlock#onCaughtFire(BlockState, Level, BlockPos, Direction, net.minecraft.world.entity.LivingEntity)}.
      *

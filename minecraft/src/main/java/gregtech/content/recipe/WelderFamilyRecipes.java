@@ -19,7 +19,7 @@ import java.util.List;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * GT6's remaining Welder rows: {@code Loader_Recipes_Handlers:316-360}.
+ * GT6's remaining Welder rows: {@code Loader_Recipes_Handlers}.
  * <p>
  * Beyond the machine casings (which {@link MachineCasingRecipes} owns), GT6 welds
  * </p>

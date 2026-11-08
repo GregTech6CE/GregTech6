@@ -36,10 +36,10 @@ import java.util.Map;
 
 /**
  * GT6 puts GT loot into the world's chests and replaces those chests with GT loot chests
- * ({@code Loader_Loot:45-56} registers a {@code ChestGenHooksChestReplacer} per vanilla category,
- * {@code ChestGenHooksChestReplacer:122} places a GT chest carrying
+ * ({@code Loader_Loot} registers a {@code ChestGenHooksChestReplacer} per vanilla category,
+ * {@code ChestGenHooksChestReplacer} places a GT chest carrying
  * {@code gt.dungeonloot = <vanilla category>}), and the GT chest rolls <em>that vanilla category</em>
- * ({@code MultiTileEntityChest:262} → {@code ST.generateLoot} → {@code ChestGenHooks}). So the rows a
+ * ({@code MultiTileEntityChest} → {@code ST.generateLoot} → {@code ChestGenHooks}). So the rows a
  * player finds in a dungeon, mineshaft, stronghold, pyramid or village chest are the ones GT6 added
  * to the vanilla tables — {@code addLoot(ChestGenHooks.<CONST>, …)} rows, 91 of them transpiled into
  * {@link gregtech.content.recipe.generated.GTLootGen} as {@code van.<CONST>} by

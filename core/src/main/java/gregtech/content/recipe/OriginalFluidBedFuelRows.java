@@ -8,7 +8,7 @@ import gregtech.engine.machine.crucible.CrucibleMath;
 import java.util.List;
 
 /**
- * Original GT6 Loader_Fuels:37-43 fluidized-bed charges, with MT:1521-1531 fuel data.
+ * Original GT6 Loader_Fuels fluidized-bed charges, with MT fuel data.
  * Keep these source values local to the recipe import: the port's general furnace metadata
  * is incomplete and must not silently remove six of the original fluidized-bed fuels.
  */

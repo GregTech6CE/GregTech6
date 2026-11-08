@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
 /**
- * GT6's {@code Loader_Rails} tracks ({@code Loader_Rails:41-72}): ten materials, each as a plain
+ * GT6's {@code Loader_Rails} tracks ({@code Loader_Rails}): ten materials, each as a plain
  * track, a booster track and a detector track, with GT6's own top speed and explosion resistance.
  *
  * <p>Ids are {@code track_<material>}, {@code track_booster_<material>} and
@@ -60,7 +60,7 @@ public final class GTTrackBlocks {
     }
 
     /**
-     * GT6 {@code Loader_Rails:41-72}: material, top speed, explosion resistance and the rail material
+     * GT6 {@code Loader_Rails}: material, top speed, explosion resistance and the rail material
      * the booster recipe uses as its "G" ingredient. This port registers the three families per material.
      */
     private static final List<Track> TRACKS = new ArrayList<>();
@@ -85,7 +85,7 @@ public final class GTTrackBlocks {
         return gregtech.content.transport.TrackCatalog.materialName(slug);
     }
 
-    /** The booster recipe's "G" ingredient material ({@code Loader_Rails:119-128}), or null. */
+    /** The booster recipe's "G" ingredient material ({@code Loader_Rails}), or null. */
     public static String boosterMaterial(String material) {
         return gregtech.content.transport.TrackCatalog.boosterMaterial(material);
     }

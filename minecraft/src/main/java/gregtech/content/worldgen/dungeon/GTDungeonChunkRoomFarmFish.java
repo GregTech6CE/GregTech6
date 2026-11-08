@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.Blocks;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomFarmFish}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomFarmFish.java:38-82}): GT6's fish farm.
+ * ({@code DungeonChunkRoomFarmFish}): GT6's fish farm.
  *
  * <p>The empty room is built first (GT6's calls its super class and refuses the cell when that
  * fails), then a concrete basin is poured into the middle of the floor: the ring at local 3 and 12 keeps
@@ -45,7 +45,7 @@ import net.minecraft.world.level.block.Blocks;
  */
 public class GTDungeonChunkRoomFarmFish extends GTDungeonChunkRoomEmpty {
 
-    /** GT6's tag ({@code WorldgenDungeonGT.TAG_FARM_FISH}, {@code WorldgenDungeonGT:82}). */
+    /** GT6's tag ({@code WorldgenDungeonGT.TAG_FARM_FISH}, {@code WorldgenDungeonGT}). */
     public static final String TAG_FARM_FISH = "gt.dungeon.farm.fish";
 
     /** GT6's chest category ({@code ChestGenHooks.BONUS_CHEST}) as a 1.20.1 table. */

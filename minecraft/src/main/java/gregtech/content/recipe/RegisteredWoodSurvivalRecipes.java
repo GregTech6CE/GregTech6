@@ -44,7 +44,7 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
             var components = java.util.List.of(
                     gregtech.api.material.MaterialComponent.of(material, 5 * unit),
                     gregtech.api.material.MaterialComponent.of(bark, unit));
-            // WoodEntry:175-176 upgrades the original generic 4U log to 5U wood + 1U bark,
+            // WoodEntry upgrades the original generic 4U log to 5U wood + 1U bark,
             // or 6U of the same material for rotten/mossy wood. PlankEntry contributes 1U.
             gregtech.engine.material.ItemMaterialRegistry.register(
                     item("gt6ce:log_" + wood.kind(), 1).getItem(),
@@ -85,7 +85,7 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
                 + 2 * 2 * 2 * coolants
                 + NaturalWoodCraftingRows.SPECIES.size() * (coolants + 3);
     }
-    /** Loader_Recipes_Woods:296-304: half a unit of wood, or petrify nine slabs. */
+    /** Loader_Recipes_Woods: half a unit of wood, or petrify nine slabs. */
     private void slabUses(String wood) {
         String name = gregtech.content.plant.WoodSlabCatalog.material(wood);
         var material = gregtech.engine.material.GTMaterialRegistry.get(name);
@@ -98,7 +98,7 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
         if (dust.isEmpty()) throw new IllegalStateException("Missing wood slab pulverization material " + name);
         MachineRecipeMaps.pulverizing(slab, dust);
         MachineRecipeMaps.generify(slab, new ItemStack(net.minecraft.world.level.block.Blocks.OAK_SLAB));
-        // Loader_Recipes_Woods:211: every species plank is the generic wood plank.
+        // Loader_Recipes_Woods: every species plank is the generic wood plank.
         MachineRecipeMaps.generify(
                 item("gt6ce:planks_" + wood, 1), new ItemStack(net.minecraft.world.level.block.Blocks.OAK_PLANKS));
     }
@@ -124,7 +124,7 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
     static GTMaterial material(String wood) {
         return GTMaterialRegistry.get(WoodSlabCatalog.material(wood));
     }
-    /** Loader_Recipes_Woods:168/191/212/278/296 uses the species' mTargetPulver. */
+    /** Loader_Recipes_Woods uses the species' mTargetPulver. */
     static ItemStack pulp(String wood, long amount) {
         var result = MortarGrindingRecipes.pulverize(material(wood), amount);
         if (result.isEmpty()) throw new IllegalStateException("Missing wood pulp " + wood + "/" + amount);

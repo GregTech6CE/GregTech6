@@ -33,7 +33,7 @@ public final class UtilityCraftingRows {
                             "block:" + (spec.dense() ? "casingMachineQuadruple" : "casingMachine"),
                             'w',
                             "item:gt6ce:tool_wrench")));
-        // MultiItemRandomTools:126-132; tools retain their original durability use.
+        // MultiItemRandomTools; tools retain their original durability use.
         for (var raw : gregtech.content.recipe.ClayUtilityCatalog.ROWS)
             rows.add(new OriginalSurvivalRecipes.Row(
                     raw.raw(),
@@ -47,7 +47,7 @@ public final class UtilityCraftingRows {
                             "item:gt6ce:tool_knife",
                             'R',
                             "item:gt6ce:tool_rolling_pin")));
-        // The spray can, its refills and the lighter rows (MultiItemRandomTools:240,388,534,536-537).
+        // The spray can, its refills and the lighter rows (MultiItemRandomTools).
         rows.add(new OriginalSurvivalRecipes.Row(
                 "empty_spray_can",
                 1,

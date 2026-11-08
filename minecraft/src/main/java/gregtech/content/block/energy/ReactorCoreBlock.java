@@ -46,7 +46,7 @@ public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.eng
         return new ReactorCoreBlockEntity(pos, state);
     }
 
-    /** GT6 {@code MultiTileEntityReactorCore:303}: touching a running core burns and irradiates. */
+    /** GT6 {@code MultiTileEntityReactorCore}: touching a running core burns and irradiates. */
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, net.minecraft.world.entity.Entity entity) {
         gregtech.content.nuclear.ReactorHazards.contact(level, pos, entity);

@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * GT6 {@code Behavior_Spray_Extinguisher} ({@code Behavior_Spray_Extinguisher.java:45-147}) — the
+ * GT6 {@code Behavior_Spray_Extinguisher} ({@code Behavior_Spray_Extinguisher}) — the
  * CO2 fire extinguisher.
  *
  * <h2>The original</h2>
@@ -28,10 +28,10 @@ import java.util.List;
  *       {@code aPlayer == null || SIDES_INVALID[aSide] || FakePlayer || !WD.obstructed(...)} — the
  *       click goes to {@code onToolClick(TOOL_extinguisher, aUses * 1000, 1,...)} and its answer is
  *       converted with {@code min(10, tDamage / 1000)}. That tool kind really is implemented in GT6:
- *       the dynamite is defused ({@code MultiTileEntityDynamite:101}), the three generators stop
- *       burning ({@code MultiTileEntityGeneratorSolid:227}, {@code MultiTileEntityGeneratorLiquid:181},
- *       {@code MultiTileEntityGeneratorFluidBed:203}) and the seven mini portals close at line 119 of
- *       their class ({@code MultiTileEntityMiniPortal*}).</li>
+ *       the dynamite is defused ({@code MultiTileEntityDynamite}), the three generators stop
+ *       burning ({@code MultiTileEntityGeneratorSolid}, {@code MultiTileEntityGeneratorLiquid},
+ *       {@code MultiTileEntityGeneratorFluidBed}) and the seven mini portals close
+ *       ({@code MultiTileEntityMiniPortal*}).</li>
  *   <li>The area: with at least {@code 10} uses left, a {@code 3x3x3} volume in
  *       front of the clicked face has its fire blocks removed, then every entity in
  *       the {@code 5x5x5} box around that volume that is a {@link Blaze} takes 10 damage or that is
@@ -56,10 +56,10 @@ import java.util.List;
  */
 public final class BehaviorSprayExtinguisher {
 
-    /** GT6 {@code MultiItemRandomTools:298}: {@code (Spray_Empty, Spray_Extinguisher_Used, Spray_Extinguisher, 256)}. */
+    /** GT6 {@code MultiItemRandomTools}: {@code (Spray_Empty, Spray_Extinguisher_Used, Spray_Extinguisher, 256)}. */
     public static final long USES = 256L;
 
-    /** GT6 {@code Behavior_Spray_Extinguisher:53}: {@code mUses = aUses * 10}. */
+    /** GT6 {@code Behavior_Spray_Extinguisher}: {@code mUses = aUses * 10}. */
     public static final int USES_MULTIPLIER = 10;
 
     /** GT6's: the area half needs at least this many uses. */
@@ -77,12 +77,12 @@ public final class BehaviorSprayExtinguisher {
     private BehaviorSprayExtinguisher() {}
 
     /**
-     * A block (or block entity) that reacts to GT6's {@code TOOL_extinguisher} ({@code CS.java:1036}):
+     * A block (or block entity) that reacts to GT6's {@code TOOL_extinguisher} ({@code CS}):
      * the port's half of {@code IBlockToolable.onToolClick}.
      *
      * <p>GT6's implementors answer {@code 10000} — one full unit — when they defused themselves or
      * stopped burning; the extinguisher turns that into {@link #HOOK_MAX_COST} uses
-     * ({@code Behavior_Spray_Extinguisher:100}).</p>
+     * ({@code Behavior_Spray_Extinguisher}).</p>
      */
 
 //? if >=1.21.1 {
@@ -105,7 +105,7 @@ public final class BehaviorSprayExtinguisher {
                 USES * USES_MULTIPLIER);
     }
 
-    /** GT6 {@code Behavior_Spray_Extinguisher:57-93}: one click. */
+    /** GT6 {@code Behavior_Spray_Extinguisher}: one click. */
     public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player, ItemStack stack,
                                 float hitX, float hitY, float hitZ) {
         return ItemBehaviors.useSpray(level, pos, side, player, stack, fireExtinguisher(),

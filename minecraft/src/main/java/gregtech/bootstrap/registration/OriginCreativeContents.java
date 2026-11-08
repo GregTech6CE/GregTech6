@@ -173,7 +173,7 @@ public final class OriginCreativeContents {
         }
         // Source registration order within a category; newly ported entries follow by stable ID.
         items.sort(Comparator.comparingInt((Item item)->{
-            // Original canvas loop immediately precedes Magic Research Paper (MultiItemRandomTools:443-452).
+            // Original canvas loop immediately precedes Magic Research Paper (MultiItemRandomTools).
             if(item instanceof CanvasItem)return SourceCreativeCatalog.entry("magic_research_paper_introduction").order();
             if(item instanceof ColoredBookItem book)return book.variant().originalId();
             if(item instanceof gregtech.content.item.PanelItemView panel)return panel.panelSpec().order();

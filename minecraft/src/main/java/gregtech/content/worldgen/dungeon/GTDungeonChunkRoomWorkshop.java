@@ -56,7 +56,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 
-    /** GT6's room tag ({@code WorldgenDungeonGT:74}); a cell that already carries it is refused. */
+    /** GT6's room tag ({@code WorldgenDungeonGT}); a cell that already carries it is refused. */
     public static final String TAG_WORKSHOP = "gt.dungeon.workshop";
 
     /** GT6's {@code ChestGenHooks} categories as loot tables. */
@@ -66,7 +66,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
     private static final String LOOT_JUNGLE = "chests/jungle_temple";
     private static final String LOOT_BLACKSMITH = "chests/village_weaponsmith";
 
-    /** GT6's anvil multi-tile materials ({@code Loader_MultiTileEntities:2199-2202}, ids 32034-32037). */
+    /** GT6's anvil multi-tile materials ({@code Loader_MultiTileEntities}, ids 32034-32037). */
     private static final String[] ANVIL_MATERIALS = {"BlackSteel", "BlueSteel", "RedSteel", "VanadiumSteel"};
 
     /** GT6's mould meta ids for the three tiers the crucible roll picks. */
@@ -80,7 +80,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
     private static final String PROPANE = "Propane", OXYGEN = "Oxygen", HELIUM = "Helium", WATER = "Water";
 
     /**
-     * GT6's {@code tDrinks} ({@code DungeonChunkRoomWorkshop:176}): the seven drinks a dungeon barrel
+     * GT6's {@code tDrinks} ({@code DungeonChunkRoomWorkshop}): the seven drinks a dungeon barrel
      * can hold, with the purple drink standing in for three of the seven entries - exactly GT6's
      * {@code FL.array(FL.Purple_Drink, FL.Purple_Drink, FL.Purple_Drink, FL.Vodka, FL.Mead,
      * FL.Whiskey_GlenMcKenner, FL.Wine_Grape_Purple)} order, which {@code UT.Code.select(NF, tDrinks)}
@@ -90,7 +90,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
             "Vodka", "Mead", "Rum_Dark", "Wine_Grape_Purple"};
 
     /**
-     * GT6's {@code ALL_SIDES_HORIZONTAL} ({@code CS:682}, {@code {2, 3, 4, 5}} = north, south, west,
+     * GT6's {@code ALL_SIDES_HORIZONTAL} ({@code CS}, {@code {2, 3, 4, 5}} = north, south, west,
      * east - the order the bottle crate's facing roll of and indexes).
      */
     private static final Direction[] HORIZONTAL =
@@ -114,7 +114,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 //?}
 
         // GT6: the vanilla crafting table of the workbench row and its ceramic mortar on top
-        // ({@code DungeonChunkRoomWorkshop.java:58}, multi-tile 32735, the port's mortar_block).
+        // ({@code DungeonChunkRoomWorkshop}, multi-tile 32735, the port's mortar_block).
         data.set(1, 1, 1, Blocks.CRAFTING_TABLE.defaultBlockState());
         BlockState mortar = mortar();
         if (mortar != null) data.set(1, 2, 1, mortar);
@@ -136,7 +136,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
         // GT6 5011 with its original steel parts and Invar lighter inventory.
         WorkshopCraftingSupplies.place(data,1,1,4);
 
-        // GT6: the ceramic measuring pot ({@code DungeonChunkRoomWorkshop.java:113}, multi-tile 32738), written without tank NBT, so it
+        // GT6: the ceramic measuring pot ({@code DungeonChunkRoomWorkshop}, multi-tile 32738), written without tank NBT, so it
         // stands empty like the original.
         measuringPot(data, 1, 2, 4);
 
@@ -216,7 +216,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
         // ink, purple drink, holy water and indigo bottles inside.
         DungeonBottleSupplies.chemicals(data, 11, 1, 14);
 
-        // GT6: the ceramic mixing bowl table ({@code DungeonChunkRoomWorkshop.java:161}, multi-tile 32705); a smooth block.
+        // GT6: the ceramic mixing bowl table ({@code DungeonChunkRoomWorkshop}, multi-tile 32705); a smooth block.
         BlockState mixingBowl = tool("mixing_bowl");
         if (mixingBowl != null) data.set(13, 1, 14, mixingBowl);
         data.smooth(14, 1, 14);
@@ -227,14 +227,14 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
                 : Blocks.WATER_CAULDRON.defaultBlockState()
                         .setValue(LayeredCauldronBlock.LEVEL, cauldronLevel));
 
-        // GT6: the stainless bathing pot table ({@code DungeonChunkRoomWorkshop.java:164}, multi-tile 32707) and, above it, the stainless
+        // GT6: the stainless bathing pot table ({@code DungeonChunkRoomWorkshop}, multi-tile 32707) and, above it, the stainless
         // steel drum with 64000 mB of water, two stainless taps and its ceiling funnel.
         BlockState bathingPot = tool("bathing_pot");
         if (bathingPot != null) data.set(14, 1, 11, bathingPot);
         WorkshopFluidStation.place(data, 14, 2, 14);
 
         // GT6's drink corner: a 2x2 area holds up to three stacked drinks each. GT6 rolls
-        // the barrel size first ({@code DungeonChunkRoomWorkshop.java:174}, 32000 mB ironwood barrel 32734 or 16000 mB wooden barrel 32714)
+        // the barrel size first ({@code DungeonChunkRoomWorkshop}, 32000 mB ironwood barrel 32734 or 16000 mB wooden barrel 32714)
         // and then rolls one of seven drinks per barrel, or a bottle crate of filled bottles; the port
         // owns both barrels with GT6's capacities, so the size roll and the drink roll are kept.
         int tAmount = data.next1in3() ? 32000 : 16000;
@@ -271,7 +271,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
     // ---- the port's own smithy row blocks ----
 
     /**
-     * GT6's burning box {@code 1102+tCrucibleType} ({@code DungeonChunkRoomWorkshop.java:134}, {@code Loader_MultiTileEntities.java:524-528}:
+     * GT6's burning box {@code 1102+tCrucibleType} ({@code DungeonChunkRoomWorkshop}, {@code Loader_MultiTileEntities}:
      * 1102 bronze, 1103 invar, 1104 steel) with GT6's facing {@code SIDE_X_NEG} (west).
      */
     private static BlockState burningBox(int tCrucibleType) {
@@ -291,8 +291,8 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
     }
 
     /**
-     * GT6's smelting crucible {@code 1020+tCrucibleType} ({@code DungeonChunkRoomWorkshop.java:144},
-     * {@code Loader_MultiTileEntities.java:265-267}: 1020 bronze, 1021 invar, 1022 steel). GT6 writes
+     * GT6's smelting crucible {@code 1020+tCrucibleType} ({@code DungeonChunkRoomWorkshop},
+     * {@code Loader_MultiTileEntities}: 1020 bronze, 1021 invar, 1022 steel). GT6 writes
      * {@code NBT_FACING} onto it; the port's crucible is a plain block without a facing property, so
      * the direction is not expressible and the block is placed with its default state.
      */
@@ -445,7 +445,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
      * {@code fluid_barometer_gas_cylinder} and {@code fluid_barometer_gas_cylinder_stainless_steel}
      * ({@code PortableFluidContainerSpec.BAROMETER_GAS_CYLINDER}/{@code GAS_CYLINDER_STAINLESS}: steel
      * without acid proof, stainless steel with it, exactly GT6's
-     * {@code Loader_MultiTileEntities:2100-2101}).</p>
+     * {@code Loader_MultiTileEntities}).</p>
      */
     private static void gasCylinder(GTDungeonData data, int x, int y, int z, boolean stainless, String fluid) {
         data.tank(x, y, z, container(stainless
@@ -460,7 +460,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 
     /**
      * GT6's Ceramic Measuring Pot {@code 32738} (
-     * {@code Loader_MultiTileEntities:2095}, {@code MultiTileEntityMeasuringPot}, 1000 mB) as the port's
+     * {@code Loader_MultiTileEntities}, {@code MultiTileEntityMeasuringPot}, 1000 mB) as the port's
      * {@code fluid_measuring_pot} ({@code PortableFluidContainerSpec.MEASURING_POT}). GT6 writes no tank
      * NBT for it, so the pot is placed empty.
      */
@@ -470,7 +470,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 
     /**
      * GT6's Stainless Steel Drum {@code 32716} (
-     * {@code Loader_MultiTileEntities:2152}, {@code MultiTileEntityBarrelMetal}, 64000 mB, gas and acid
+     * {@code Loader_MultiTileEntities}, {@code MultiTileEntityBarrelMetal}, 64000 mB, gas and acid
      * proof) as the port's {@code drum_stainless_steel} - the same material, capacity and proof flags -
      * filled with GT6's 64000 mB of water.
      */
@@ -480,7 +480,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 
     /**
      * One of GT6's drink barrels: the Ironwood Barrel {@code 32734} at 32000 mB
-     * ({@code Loader_MultiTileEntities:2146}) as the port's {@code wood_barrel_ironwood} or the Wooden
+     * ({@code Loader_MultiTileEntities}) as the port's {@code wood_barrel_ironwood} or the Wooden
      * Barrel {@code 32714} at 16000 mB (treated wood) as the port's
      * {@code wood_barrel_treated}; both port barrels carry GT6's material and capacity. GT6 picks the
      * drink with {@code UT.Code.select(NF, tDrinks)}, which is the roll the caller
@@ -515,7 +515,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
     }
 
     /**
-     * GT6's {@code DungeonData.ingots_or_plates} ({@code DungeonData:259-264}): metallic ingots or
+     * GT6's {@code DungeonData.ingots_or_plates} ({@code DungeonData}): metallic ingots or
      * plates of one of GT6's thirteen {@code sMetals} lie on the floor. Both candidates
      * draw their own material and stack size before the final kind roll.
      */

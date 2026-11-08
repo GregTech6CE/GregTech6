@@ -68,8 +68,8 @@ public final class ExternalOreProcessingRules {
             new Route("Crusher", MaterialPrefix.rubble, MaterialPrefix.pebbles, 1, 128),
             new Route("Sifting", MaterialPrefix.pebbles, MaterialPrefix.dust, 3, 512));
 
-    /** Two Shredder speeds ({@code Loader_Recipes_Handlers.java:117-131}); the Anvil rows require an
-     *  empty workpiece ({@code Loader_Recipes_Handlers.java:158-160}). */
+    /** Two Shredder speeds ({@code Loader_Recipes_Handlers}); the Anvil rows require an
+     *  empty workpiece ({@code Loader_Recipes_Handlers}). */
     public record GrindingRoute(
             String map, MaterialPrefix input, int dustCount, int fineCount, boolean excludesBedrock) {
         public GrindingRoute(String map, MaterialPrefix input, int dustCount) {
@@ -123,7 +123,7 @@ public final class ExternalOreProcessingRules {
             new GrindingRoute("Anvil", MaterialPrefix.chunk, 2),
             new GrindingRoute("Anvil", MaterialPrefix.rubble, 2),
             new GrindingRoute("Anvil", MaterialPrefix.pebbles, 2),
-            // No fines at all ({@code Loader_Recipes_Handlers.java:120-136,161-165}).
+            // No fines at all ({@code Loader_Recipes_Handlers}).
             new GrindingRoute("Shredder", MaterialPrefix.clump, 1, false),
             new GrindingRoute("Shredder", MaterialPrefix.reduced, 1, false),
             new GrindingRoute("Shredder", MaterialPrefix.crystalline, 1, false),

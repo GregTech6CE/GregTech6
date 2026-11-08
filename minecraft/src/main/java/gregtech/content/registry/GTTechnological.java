@@ -67,7 +67,7 @@ public final class GTTechnological {
      * would silently count as missing content. Each entry here is the same item under two names —
      * verified against the item's own registration, not guessed:
      * {@code IL.Shape_Press_BulletCasing*} are the three bullet-casing press molds the Press uses as
-     * catalysts (GT6 {@code Loader_Recipes_Handlers:254-255} vs
+     * catalysts (GT6 {@code Loader_Recipes_Handlers} vs
      * {@code PressAmmunitionRecipes}), and {@code IL.Shape_Slicer_Eigths} is the original's typo of
      * "eighths". Read by {@code tools/audit_tech_item_tokens.py}.</p>
      */

@@ -15,7 +15,7 @@ public final class FluidPhysicalProperties {
 
     public static int viscosity(FluidEntry entry) {
         if (entry.viscosity() != 0) return entry.viscosity();
-        // FL.java:1103-1107: molten is STATE_LIQUID, not a separate 6000-viscosity state.
+        // FL: molten is STATE_LIQUID, not a separate 6000-viscosity state.
         return entry.hasFlag(FluidFlags.PLASMA) ? 10 : entry.gas() ? 200 : 1000;
     }
 
@@ -37,7 +37,7 @@ public final class FluidPhysicalProperties {
         return entry.gas() ? -100 : 1000;
     }
 
-    /** FL.java:1128-1135; CS.WEIGHT_AIR_G_PER_CUBIC_CENTIMETER = 0.0012. */
+    /** FL; CS.WEIGHT_AIR_G_PER_CUBIC_CENTIMETER = 0.0012. */
     public static int materialDensity(double gramsPerCubicCentimeter) {
         double density = gramsPerCubicCentimeter > 0.0012
                 ? 1000 * gramsPerCubicCentimeter

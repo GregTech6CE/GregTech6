@@ -17,7 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import java.util.*;
 
-/** Survival entries from GT6 BlockStones and Loader_Recipes_Handlers (157,403-416). */
+/** Survival entries from GT6 BlockStones and Loader_Recipes_Handlers. */
 public final class StoneAndToolSurvivalRecipes {
     private static final List<Recipe> ADDED=new ArrayList<>();
     private static final List<Recipe> STONE_EXTRUSIONS=new ArrayList<>();
@@ -46,7 +46,7 @@ public final class StoneAndToolSurvivalRecipes {
     }
 
     /**
-     * GT6 {@code BlockStones:286-315} and {@code BlockStones:331-360}: the stone-equal and
+     * GT6 {@code BlockStones} and {@code BlockStones}: the stone-equal and
      * cobblestone-equal blocks of every rock type extrude into that rock's plates, rods, bolts,
      * (small) gears and *raw tool heads*, 16 EU/t for 32 ticks — with both mold families
      * ({@code IL.Shape_Extruder_*} and {@code IL.Shape_SimpleEx_*}, the port's

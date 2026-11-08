@@ -13,7 +13,7 @@ import gregtech.content.block.inventory.DrawerQuadBlock;
 import gregtech.content.blockentity.inventory.DrawerQuadBlockEntity;
 import net.minecraft.core.*;
 
-/** GT6 DungeonChunkRoomWorkshop:63-97. Rolls counts before slots; duplicate slots are overwritten. */
+/** GT6 DungeonChunkRoomWorkshop. Rolls counts before slots; duplicate slots are overwritten. */
 public final class WorkshopDrawerSupplies {
     private WorkshopDrawerSupplies() {}
     public static void place(GTDungeonData data, int x, int y, int z) {

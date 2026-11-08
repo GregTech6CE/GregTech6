@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 /**
- * GT6's furnace smelting rows for ore-processing forms: {@code Loader_Recipes_Furnace:137-166} and
+ * GT6's furnace smelting rows for ore-processing forms: {@code Loader_Recipes_Furnace} and
  * the {@code Listener_Furnace_Smelting} class at the end of that file.
  *
  * <p>Every material form — dust, small/tiny pile, gem ladder, rock, raw ore, crushed ore — can be
@@ -35,7 +35,7 @@ import net.minecraft.world.item.Items;
  * </pre>
  *
  * <p>{@code mTargetSolidifying} is not modelled by the port: in GT6 only H2O → Ice and Lava → Obsidian
- * set it ({@code MT.java:1880-1881}) and neither is furnace-smeltable, so the smelting target is its
+ * set it ({@code MT}) and neither is furnace-smeltable, so the smelting target is its
  * own solidifying target for every row this table touches. {@code OM.ingot}'s cascade
  * (block → ingot → chunk → nugget) is the port's, so a small pile of dust comes back as one chunk and
  * a nugget stays a nugget, exactly as in the original.</p>
@@ -59,7 +59,7 @@ public final class FurnaceSmeltingRecipes {
         }
     }
 
-    /** GT6 {@code Loader_Recipes_Furnace:137-166}, in the original's order. */
+    /** GT6 {@code Loader_Recipes_Furnace}, in the original's order. */
     private static final List<Row> ROWS = List.of(
             Row.of("scrapGt"),
             Row.of("dust"),
@@ -89,7 +89,7 @@ public final class FurnaceSmeltingRecipes {
             Row.exp("crushedCentrifuged"),
             Row.exp("crushedCentrifugedTiny"));
 
-    /** GT6 {@code Loader_Recipes_Furnace:168-177}: clay-family forms that fire into ceramic ones. */
+    /** GT6 {@code Loader_Recipes_Furnace}: clay-family forms that fire into ceramic ones. */
     private static final String[][] CERAMIC_ROWS = {
         {"dust", "dust"},
         {"dustSmall", "dustSmall"},

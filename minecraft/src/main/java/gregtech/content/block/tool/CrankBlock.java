@@ -38,7 +38,7 @@ import java.util.List;
 
 /**
  * Hand crank (GT6 multi-tile 32111). Activation is latched to a player's last interaction,
- * not a fixed pulse or gaze timer: MultiTileEntityCrank:72-112, UT.Entities.
+ * not a fixed pulse or gaze timer: MultiTileEntityCrank, UT.Entities.
  * Every server tick each eligible operator supplies one potion-adjusted RU offer. A rejected
  * offer does not stop motion/redstone or cause hunger. FACING is the handle side; its opposite
  * is the mount and energy recipient. No stored energy or rotational decay exists here.
@@ -52,13 +52,13 @@ public class CrankBlock extends DirectionalBlock implements SimpleWaterloggedBlo
         return gregtech.content.material.Materials.Iron.getColor();
     }
 
-    /** GT6 {@code mActive} ({@code MultiTileEntityCrank:52}): the crank is being turned right now. */
+    /** GT6 {@code mActive} ({@code MultiTileEntityCrank}): the crank is being turned right now. */
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
     /** Poll operator eligibility every server tick, rather than end a ten-tick pulse. */
     public static final int ACTIVE_TICKS = 1;
 
-    /** GT6's redstone value while active ({@code MultiTileEntityCrank:116}). */
+    /** GT6's redstone value while active ({@code MultiTileEntityCrank}). */
     public static final int ACTIVE_SIGNAL = gregtech.content.tool.UtilityToolRules.CRANK_SIGNAL;
 
     private static final VoxelShape[] SHAPES = new VoxelShape[6];
@@ -128,7 +128,7 @@ public class CrankBlock extends DirectionalBlock implements SimpleWaterloggedBlo
         return !level.getBlockState(pos.relative(facing.getOpposite())).isAir();
     }
 
-    // ---- GT6 MultiTileEntityCrank:115-122: the crank is a redstone source while it is turned ----
+    // ---- GT6 MultiTileEntityCrank: the crank is a redstone source while it is turned ----
 
     @Override
     public boolean isSignalSource(BlockState state) {
@@ -146,7 +146,7 @@ public class CrankBlock extends DirectionalBlock implements SimpleWaterloggedBlo
     }
 
     /**
-     * GT6 receives the opposite/query side already (TileEntityBase06Covers:405-416).
+     * GT6 receives the opposite/query side already (TileEntityBase06Covers).
      * OPOS[mFacing] therefore powers the mounting block, rather than the handle's neighbour.
      * This port stores the handle in FACING, the same query value as OPOS[mFacing].
      */

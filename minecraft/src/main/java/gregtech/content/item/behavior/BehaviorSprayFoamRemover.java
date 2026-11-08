@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * GT6 {@code Behavior_Spray_Foam_Remover} ({@code Behavior_Spray_Foam_Remover.java:46-132}) — the
+ * GT6 {@code Behavior_Spray_Foam_Remover} ({@code Behavior_Spray_Foam_Remover}) — the
  * C-Foam Removal Spray.
  *
  * <h2>The original</h2>
@@ -27,7 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * block and simply runs negative afterwards, which is how GT6's own code empties it.</p>
  *
  * <p>Both C-Foam blocks are foamable, and both answer {@code removeFoam} by setting the block to air
- * ({@code BlockCFoamFresh:115-117} for the wet one, {@code BlockCFoam:63-65} for the hardened one), so
+ * ({@code BlockCFoamFresh} for the wet one, {@code BlockCFoam} for the hardened one), so
  * the spray removes hardened foam too. The wet/hardened pair is in the port as
  * {@code gt6ce:cfoam_fresh} / {@code gt6ce:cfoam} ({@code CFoamBlock}, {@code GTDecorBlocks}).</p>
  *
@@ -38,16 +38,16 @@ import net.minecraft.world.level.block.state.BlockState;
  *       branch has nothing to apply to; {@link #SLAB_REMOVE_COST} records the number
  *       and the test pins it against the {@code 10} the port does use.</li>
  *   <li><b>No IC2 and no {@code ITileEntityFoamable}.</b> The IC2 foam/reinforced-foam/scaffold
- *       branches (and {@code Behavior_Spray_Foam:129-130} on the placement side) and
+ *       branches (and {@code Behavior_Spray_Foam} on the placement side) and
  *       the machine-face foaming need content the port does not have.</li>
  * </ul>
  */
 public final class BehaviorSprayFoamRemover {
 
-    /** GT6 {@code MultiItemRandomTools:279}: {@code new Behavior_Spray_Foam_Remover(Spray_Empty, Spray_Foam_Remover_Used, Spray_Foam_Remover, 256)}. */
+    /** GT6 {@code MultiItemRandomTools}: {@code new Behavior_Spray_Foam_Remover(Spray_Empty, Spray_Foam_Remover_Used, Spray_Foam_Remover, 256)}. */
     public static final long USES = 256L;
 
-    /** GT6 {@code Behavior_Spray_Foam_Remover:54}: {@code mUses = aUses * 10}. */
+    /** GT6 {@code Behavior_Spray_Foam_Remover}: {@code mUses = aUses * 10}. */
     public static final int USES_MULTIPLIER = 10;
 
     /** GT6's: a full C-Foam block costs this many uses. */
@@ -67,7 +67,7 @@ public final class BehaviorSprayFoamRemover {
                 USES * USES_MULTIPLIER);
     }
 
-    /** GT6 {@code Behavior_Spray_Foam_Remover:58-93}: one click. */
+    /** GT6 {@code Behavior_Spray_Foam_Remover}: one click. */
     public static Outcome useOn(
             Level level,
             BlockPos pos,

@@ -36,9 +36,9 @@ import java.util.Map;
  * GT6's Bath conversions that are not tied to untreated wood:
  *
  * <ul>
- *   <li>{@code Loader_Recipes_Other.java:201-214} turns wood, bark and paper dust into paper in
+ *   <li>{@code Loader_Recipes_Other} turns wood, bark and paper dust into paper in
  *       the four water types.</li>
- *   <li>{@code Loader_Recipes_Handlers.java:696-738} converts iron/steel/diamond families with
+ *   <li>{@code Loader_Recipes_Handlers} converts iron/steel/diamond families with
  *       fiery tears, fiery blood, molten metals, Midasium and Holy Water.</li>
  * </ul>
  *

@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 
 /**
  * The vanilla half of GT6's wrench click: the block list that draws GT6's 3×3 wrench overlay
- * ({@code GT_API_Proxy_Client.java:641}) and the rotation policy of {@code ToolCompat.java:330-357}.
+ * ({@code GT_API_Proxy_Client}) and the rotation policy of {@code ToolCompat}.
  *
  * <p>The twelve original blocks are the only ones upstream knows; the observer, barrel and crafter
  * did not exist in 1.7.10 and are extended here with the same face grid and facing-side pickup.

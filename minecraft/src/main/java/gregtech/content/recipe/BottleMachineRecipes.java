@@ -15,7 +15,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 
-/** GT6 RecipeMapFluidCanner:50-72, materialized for both runtime machines and recipe viewers.
+/** GT6 RecipeMapFluidCanner, materialized for both runtime machines and recipe viewers.
  * Every existing bottle consumes/returns its actual source portion and empty container.
  */
 public final class BottleMachineRecipes {

@@ -235,7 +235,7 @@ public class MachineRecipeMaps {
     // GT6 subclasses RecipeMap and overrides findRecipe() whenever a row depends on the identity of
     // the inputs rather than on a fixed table: the scanner, printer and replicator read the NBT a
     // scanner wrote onto a USB stick (wired from GregTech's phase-C loader list), and the Bumblelyzer
-    // scans whichever living bee sits in its input slots (RecipeMapBumblelyzer:51-74). The
+    // scans whichever living bee sits in its input slots (RecipeMapBumblelyzer). The
     // Bumblelyzer's provider is installed here, in the map's own initializer, so it is in place for
     // every entry point - the loader list, the recipe-viewer index and the game tests alike.
     static {
@@ -484,7 +484,7 @@ public class MachineRecipeMaps {
      * The smoker/blast furnace and EXP parameters are accepted for source compatibility
      * but currently ignored (vanilla recipe conversion happens in Loader_OvenRecipes).
      * <p>
-     * GT6 {@code Loader_Recipes_Furnace:122-130}: an output material flagged
+     * GT6 {@code Loader_Recipes_Furnace}: an output material flagged
      * {@code TD.Processing.NEVER_FURNACE} (Iron, Wrought Iron, Steel, Titanium, Tungsten — the
      * metals that must be melted in a crucible) is <em>un-smelted</em>: the recipe yields
      * {@code scrapGt} of that material instead of the metal itself.

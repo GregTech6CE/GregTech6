@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Port of GT6's {@code WorldgenPit} ({@code Loader_Worldgen:592-597}): the large sand and clay pits
+ * Port of GT6's {@code WorldgenPit} ({@code Loader_Worldgen}): the large sand and clay pits
  * of GT6's plains and savannas.
  *
  * <p>GT6 rolls one pit per chunk with {@code nextInt(320) > 0} (i.e. about 1 in 320 chunks), only in
@@ -54,7 +54,7 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
     /** One GT6 pit registration: the name from {@code Loader_Worldgen} and the block it fills with. */
     public record Pit(String name, String blockId) {}
 
-    /** {@code Loader_Worldgen:592-597} minus the default-disabled red clay and the PFAA entries. */
+    /** {@code Loader_Worldgen} minus the default-disabled red clay and the PFAA entries. */
     public static final List<Pit> PITS = TerrainWorldgenRules.PITS.stream().map(row->new Pit(row.name(),row.blockId())).toList();
 
     /** GT6 {@code BIOMES_PLAINS} / {@code BIOMES_SAVANNA}. */

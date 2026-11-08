@@ -21,12 +21,12 @@ import java.util.List;
 
 /**
  * The {@code FlowingFluid}s behind the GT6 fluids whose density is below air's, natural gas being
- * the one with a world block ({@code Loader_Blocks:150}).
+ * the one with a world block ({@code Loader_Blocks}).
  *
  * <p>Original GT6 places these fluids as {@code BlockFluidFinite} with a negative density, and
  * Forge's 1.7.10 fluid base turns that into {@code densityDir = -1}: the block spreads toward
  * {@code +Y}, rises as far as it can and is trashed at the vertical world limit
- * ({@code BlockBaseFluid:135-345}). Modern {@code FlowingFluid} has no such direction switch - it
+ * ({@code BlockBaseFluid}). Modern {@code FlowingFluid} has no such direction switch - it
  * always looks at the block below - so a GT6 gas registered with the ordinary
  * {@code ForgeFlowingFluid}/{@code BaseFlowingFluid} runs downhill like water, which is what the
  * port did for natural gas.
@@ -40,7 +40,7 @@ import java.util.List;
  *       no vanilla falling-water column.</li>
  *   <li>A block rises as a whole. A full block leaves one quantum behind and re-schedules the
  *       moved block for the next tick, the original's compressed jet
- *       ({@code BlockBaseFluid:269-303}); smaller amounts rise on the ordinary five-tick cadence,
+ *       ({@code BlockBaseFluid}); smaller amounts rise on the ordinary five-tick cadence,
  *       matching {@code BlockBaseFluid}'s vertical move.</li>
  *   <li>When the cell above is blocked, the quanta equalise across the open horizontal neighbours
  *       instead of following vanilla's fixed one-level-per-block drop-off, so gas forms a thin
@@ -104,7 +104,7 @@ public final class GTGasFluid {
             if (state.isEmpty()) return;
             BlockPos abovePos = pos.above();
             if (level.isOutsideBuildHeight(abovePos)) {
-                // BlockBaseFluid:150-154 trashes gas at the vertical world limit.
+                // BlockBaseFluid trashes gas at the vertical world limit.
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                 return;
             }
@@ -114,7 +114,7 @@ public final class GTGasFluid {
             int amount = state.getAmount();
 
             if (amount > NORMAL_QUANTA) {
-                // BlockBaseFluid:269-303: a compressed block leaves one quantum and jets the rest
+                // BlockBaseFluid: a compressed block leaves one quantum and jets the rest
                 // on the next tick, so gas rises as a plume instead of a falling-water column.
                 if (canSpreadTo(level, pos, here, Direction.UP, abovePos, aboveState, above, getFlowing())) {
                     setQuanta(level, abovePos, this, amount - 1);
@@ -186,7 +186,7 @@ public final class GTGasFluid {
             if (state.isEmpty()) return;
             BlockPos abovePos = pos.above();
             if (level.isOutsideBuildHeight(abovePos)) {
-                // BlockBaseFluid:150-154 trashes gas at the vertical world limit.
+                // BlockBaseFluid trashes gas at the vertical world limit.
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
                 return;
             }
@@ -250,7 +250,7 @@ public final class GTGasFluid {
         Direction[] directions = Direction.Plane.HORIZONTAL.stream().toArray(Direction[]::new);
 
         if (amount == 1) {
-            // BlockBaseFluid:172-183 only moves a lone quantum sideways when the cell above it is
+            // BlockBaseFluid only moves a lone quantum sideways when the cell above it is
             // not liquid and the cell above the target is free, i.e. when the side move actually
             // opens a way upwards. Under a flat ceiling the quantum therefore stays put instead
             // of hopping between neighbours every tick.

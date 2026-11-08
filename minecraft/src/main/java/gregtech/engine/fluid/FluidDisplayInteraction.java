@@ -17,7 +17,7 @@ public final class FluidDisplayInteraction {
     private FluidDisplayInteraction() {}
 
     /**
-     * GT6 ItemFluidDisplay:77-79 tries each face of the clicked target, stopping at the first
+     * GT6 ItemFluidDisplay tries each face of the clicked target, stopping at the first
      * successful fill. Never drain or replace the display carrier. The server consumes even
      * survival/no-fill clicks so a block callback cannot turn it into a survival fuel source.
      */

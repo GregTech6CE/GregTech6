@@ -23,7 +23,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-/** GT6 {@code Loader_Recipes_Handlers.java:740-841}: prefix matrix, forging targets and both mold families. */
+/** GT6 {@code Loader_Recipes_Handlers}: prefix matrix, forging targets and both mold families. */
 public final class SourceExtruderRecipes {
     private SourceExtruderRecipes() {}
 
@@ -230,7 +230,7 @@ public final class SourceExtruderRecipes {
     }
 
     /**
-     * {@code Loader_Recipes_Extruder.java:202}: prefixes whose weight is at least {@code U64},
+     * {@code Loader_Recipes_Extruder}: prefixes whose weight is at least {@code U64},
      * at most {@code U} and divides {@code U}. The special wax/glass/plastic/zirconium rows
      * consume one material unit per row, so larger blocks and non-divisible forms do not participate.
      */
@@ -332,7 +332,7 @@ public final class SourceExtruderRecipes {
     }
 
     /**
-     * The explicit rows of {@code Loader_Recipes_Extruder.java:200-295}: wax pills, glass
+     * The explicit rows of {@code Loader_Recipes_Extruder}: wax pills, glass
      * panes/tubes/bottles, the plastic canister, tin-alloy food cans and the zirconium reactor-rod hull.
      */
     public static int registerSpecialRecipes() {
@@ -351,7 +351,7 @@ public final class SourceExtruderRecipes {
 
     /**
      * The block and brick mold rows of the basalt and blackstone generator modules
-     * ({@code Loader_Recipes_Extruder.java:25-60}). Their source stacks are the rock fallbacks:
+     * ({@code Loader_Recipes_Extruder}). Their source stacks are the rock fallbacks:
      * basalt stone for the block mold and basalt bricks for the ingot mold.
      */
     private static void generatorModuleRows() {
@@ -441,7 +441,7 @@ public final class SourceExtruderRecipes {
         if (zirconium == null || !zirconium.isValid()) return;
         ItemStack rod = registryItem("gt6ce:reactor_rod_9201", 1);
         if (rod.isEmpty()) return;
-        // Loader_Recipes_Extruder.java:289 uses the kilogram weight of one material unit, not density.
+        // Loader_Recipes_Extruder uses the kilogram weight of one material unit, not density.
         long ticks = Math.max(64, (long)
                 (((zirconium.getMeltingPoint() - 293d) * (1d + zirconium.getDensity() * 111.111111d)) / 6144d));
         var forms = forms(zirconium);

@@ -19,7 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-/** GT6 DungeonChunkRoomWorkshop:149–160 and 183–195, including conditional random-call order. */
+/** GT6 DungeonChunkRoomWorkshop–160 and 183–195, including conditional random-call order. */
 public final class DungeonBottleSupplies {
     private static final Direction[] FACING={Direction.NORTH,Direction.SOUTH,Direction.WEST,Direction.EAST};
     private static final String[] CHEMICALS={"mercury_bottle","mercury_bottle","mercury_bottle",

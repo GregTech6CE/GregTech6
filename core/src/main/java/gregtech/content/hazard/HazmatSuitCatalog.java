@@ -1,5 +1,5 @@
 /* GregTech-6 Team / Gregorius Techneticies, LGPL-3.0-or-later.
- * Original Loader_Tools.java:68-117; ItemArmorBase:81-99. */
+ * Original Loader_Tools; ItemArmorBase. */
 package gregtech.content.hazard;
 
 import java.util.List;

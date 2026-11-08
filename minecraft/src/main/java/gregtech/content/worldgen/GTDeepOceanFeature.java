@@ -17,7 +17,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * Port of GT6's {@code WorldgenDeepOcean} ({@code Loader_Worldgen:580}, registered as
+ * Port of GT6's {@code WorldgenDeepOcean} ({@code Loader_Worldgen}, registered as
  * {@code "ocean.prismacorals"}).
  *
  * <p>Only in the deep ocean. GT6 picks one random column of the chunk at {@code 3 + rand(9)},

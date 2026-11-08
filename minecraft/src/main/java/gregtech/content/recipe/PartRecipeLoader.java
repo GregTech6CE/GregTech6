@@ -115,7 +115,7 @@ public class PartRecipeLoader implements InitializationStep {
         }
     }
 
-    /** Original Loader_Recipes_Handlers:371–393 enables pulverized remains for these lathe rows. */
+    /** Original Loader_Recipes_Handlers–393 enables pulverized remains for these lathe rows. */
     private void lathePart(GTMaterial m, MaterialPrefix in, int inCount,
                            MaterialPrefix out, int outCount, long duration) {
         ItemStack input = mat(in, m, inCount);
@@ -127,7 +127,7 @@ public class PartRecipeLoader implements InitializationStep {
         unitRule(MachineRecipeMaps.Lathe, m, in, input, template);
     }
 
-    /** RecipeMapHandlerPrefix:213–218 → OM.pulverize, including target identity and ratio. */
+    /** RecipeMapHandlerPrefix–218 → OM.pulverize, including target identity and ratio. */
     private static ItemStack[] machiningOutputs(GTMaterial material, MaterialPrefix in, int inCount,
                                                 MaterialPrefix out, int outCount, ItemStack output) {
         return machiningOutputs(material, in.getMaterialWeight() * inCount, out, outCount, output);
@@ -227,10 +227,10 @@ public class PartRecipeLoader implements InitializationStep {
 
     // ── Extruder: any extruder-capable input + shape mold → any part ────────
     //
-    // GT6 Loader_Recipes_Handlers:740-800 registers the whole matrix generically: for every prefix in
+    // GT6 Loader_Recipes_Handlers registers the whole matrix generically: for every prefix in
     // EXTRUDER_FODDER / INGOT_BASED / GEM_BASED (and DUST_BASED for the low-heat family) it walks a
     // fixed output list and calls addExtruderRecipe(input, output, hot, shape). Amounts are scaled by
-    // the two prefixes' material weights (line 812). The port used to register only the ingot row of
+    // the two prefixes' material weights. The port used to register only the ingot row of
     // the hot family, so tool heads, blocks, and every low-heat mold were missing.
 
     private int extruderPairCount;

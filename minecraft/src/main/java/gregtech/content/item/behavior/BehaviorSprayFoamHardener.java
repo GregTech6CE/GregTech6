@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 /**
- * GT6 {@code Behavior_Spray_Foam_Hardener} ({@code Behavior_Spray_Foam_Hardener.java:46-133}) — the
+ * GT6 {@code Behavior_Spray_Foam_Hardener} ({@code Behavior_Spray_Foam_Hardener}) — the
  * Hardening Spray.
  *
  * <h2>The original</h2>
@@ -23,15 +23,15 @@ import net.minecraft.world.level.Level;
  * ({@code aBlock instanceof BlockCFoamFresh && SIDES_VALID[mSide]}).</p>
  *
  * <p>Only the wet block dries: {@code BlockCFoamFresh.dryFoam} swaps in {@code BlocksGT.CFoam} with
- * the same metadata ({@code BlockCFoamFresh:110-112}), while {@code BlockCFoam.dryFoam} answers
- * {@code F} ({@code BlockCFoam:57-60}), so an already hardened block costs nothing.</p>
+ * the same metadata ({@code BlockCFoamFresh}), while {@code BlockCFoam.dryFoam} answers
+ * {@code F} ({@code BlockCFoam}), so an already hardened block costs nothing.</p>
  *
  * <h2>Why this one is a clean port</h2>
  *
  * <p>The port's wet foam already owns exactly that operation: {@link CFoamBlockEntity#dry()} is
  * documented as GT6's {@code dryFoam} and swaps the block for {@code gt6ce:cfoam}
  * ({@code CFoamBlockEntity}), reporting whether it did. GT6's {@code MultiTileEntityCFoam}
- * reaches it through {@code ITileEntityFoamable} ({@code MultiTileEntityCFoam:118-124}), which is the
+ * reaches it through {@code ITileEntityFoamable} ({@code MultiTileEntityCFoam}), which is the
  * first branch tests — so the port's hardener is that branch and nothing else, and a
  * hardened block simply has no block entity to find (/ answering
  * {@code F}).</p>
@@ -41,10 +41,10 @@ import net.minecraft.world.level.Level;
  */
 public final class BehaviorSprayFoamHardener {
 
-    /** GT6 {@code MultiItemRandomTools:288}: {@code (Spray_Empty, Spray_Foam_Hardener_Used, Spray_Foam_Hardener, 256)}. */
+    /** GT6 {@code MultiItemRandomTools}: {@code (Spray_Empty, Spray_Foam_Hardener_Used, Spray_Foam_Hardener, 256)}. */
     public static final long USES = 256L;
 
-    /** GT6 {@code Behavior_Spray_Foam_Hardener:54}: {@code mUses = aUses * 10}. */
+    /** GT6 {@code Behavior_Spray_Foam_Hardener}: {@code mUses = aUses * 10}. */
     public static final int USES_MULTIPLIER = 10;
 
     /** GT6's: hardening a full C-Foam block costs this many uses. */
@@ -64,7 +64,7 @@ public final class BehaviorSprayFoamHardener {
                 USES * USES_MULTIPLIER);
     }
 
-    /** GT6 {@code Behavior_Spray_Foam_Hardener:58-93}: one click. */
+    /** GT6 {@code Behavior_Spray_Foam_Hardener}: one click. */
     public static Outcome useOn(
             Level level,
             BlockPos pos,

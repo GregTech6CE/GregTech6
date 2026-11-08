@@ -35,7 +35,7 @@ public class RopeBlock extends HorizontalDirectionalBlock implements SimpleWater
 
     /**
      * GT6 draws every rope with the same greyscale texture tinted by the rope's material
-     * ({@code Loader_MultiTileEntities:2086-2091} hands each rope an {@code aMat}); the six ropes
+     * ({@code Loader_MultiTileEntities} hands each rope an {@code aMat}); the six ropes
      * therefore differ only by this colour.
      */
     private final int tintRgb;

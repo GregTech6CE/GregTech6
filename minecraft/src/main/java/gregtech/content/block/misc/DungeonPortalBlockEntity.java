@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import net.minecraft.world.entity.Entity;
 
-/** GT6 miniature cross-dimension relay (MultiTileEntityMiniPortal:325-519).
+/** GT6 miniature cross-dimension relay (MultiTileEntityMiniPortal).
  * Items, fluids, FE and GT packets address the loaded opposite neighbour of the linked
  * portal; six sided redstone/comparator inboxes follow the original tick phases.
  * Legacy key data is retained for saves, but keys do not activate the source machine.
@@ -33,17 +33,17 @@ implements gregtech.content.item.behavior.ItemBehaviors.Ignitable,
 gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
 //?}
 
-    /** GT6's {@code NBT_KEY} ({@code gregapi/data/CS.java:1169}), legacy key data retained for old saves. */
+    /** GT6's {@code NBT_KEY} ({@code CS}), legacy key data retained for old saves. */
     public static final String NBT_KEY = GTDungeonKeyItem.NBT_KEY;
 
-    /** GT6's {@code NBT_ACTIVE} ({@code CS.java:1172}). */
+    /** GT6's {@code NBT_ACTIVE} ({@code CS}). */
     public static final String NBT_ACTIVE = "gt.active";
 
     /**
      * GT6's {@code sListWorldSide} / {@code sListNetherSide} / {@code sListEndSide}
-     * ({@code MultiTileEntityMiniPortalNether:42-47}, {@code MultiTileEntityMiniPortalEnd:42-47}):
+     * ({@code MultiTileEntityMiniPortalNether}, {@code MultiTileEntityMiniPortalEnd}):
      * the active portals of each kind, so a portal can find its counterpart on the other side. GT6
-     * keeps live tile entities; the port keeps positions and validates them while scanning, with entries removed on chunk unload as in {@code MultiTileEntityMiniPortal:203-207}.
+     * keeps live tile entities; the port keeps positions and validates them while scanning, with entries removed on chunk unload as in {@code MultiTileEntityMiniPortal}.
      */
     private static final Map<Block, Set<GlobalPos>> ACTIVE = new LinkedHashMap<>();
 
@@ -76,7 +76,7 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
         return false;
     }
 
-    /** MultiTileEntityMiniPortalNether:116-128: all GT igniters toggle; extinguishers close. */
+    /** MultiTileEntityMiniPortalNether: all GT igniters toggle; extinguishers close. */
     @Override
     public long onIgnite(Level world, BlockPos pos, net.minecraft.core.Direction side,
             @Nullable net.minecraft.world.entity.player.Player player,
@@ -104,7 +104,7 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
         return 10000L;
     }
 
-    /** GT6's {@code setPortalActive} ({@code MultiTileEntityMiniPortal:183}). */
+    /** GT6's {@code setPortalActive} ({@code MultiTileEntityMiniPortal}). */
     public boolean activate() {
         if (active || !(getBlockState().getBlock() instanceof DungeonPortalBlock portal)
                 || level == null || portal.targetLevel(level) == null) return false;
@@ -117,7 +117,7 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
         return true;
     }
 
-    /** GT6's {@code setPortalInactive} ({@code MultiTileEntityMiniPortal:184}). */
+    /** GT6's {@code setPortalInactive} ({@code MultiTileEntityMiniPortal}). */
     public boolean deactivate() {
         if (!active) return false;
         clearLinkedSignals();
@@ -189,8 +189,8 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
     }
 
     /**
-     * GT6's {@code findTargetPortal} ({@code MultiTileEntityMiniPortalNether:67-96},
-     * {@code MultiTileEntityMiniPortalEnd:63-92}): the closest active portal of the same kind on the
+     * GT6's {@code findTargetPortal} ({@code MultiTileEntityMiniPortalNether},
+     * {@code MultiTileEntityMiniPortalEnd}): the closest active portal of the same kind on the
      * other side, measured with GT6's distance factor ({@code xCoord - tTarget.xCoord * 8} from the
      * overworld and the other way round from the Nether, the same with 128 for the End) and limited by
      * GT6's margin of error (128 metres for the Nether, 512 for the End). On a tie GT6 keeps the one
@@ -272,7 +272,7 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
     }
 
     /**
-     * GT6's magnifying glass report ({@code MultiTileEntityMiniPortal:230-239}): the counterpart's
+     * GT6's magnifying glass report ({@code MultiTileEntityMiniPortal}): the counterpart's
      * coordinates, or that there is none. Unlike the source this also tells an inactive portal from
      * one that cannot reach a counterpart from its dimension.
      */

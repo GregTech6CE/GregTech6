@@ -331,15 +331,15 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
 
 
-        // the utility covers of CoverUtilityBehaviors. GT6 CoverCrafting:49-54 opens a workbench
+        // the utility covers of CoverUtilityBehaviors. GT6 CoverCrafting opens a workbench
 
         // on a bare-handed click of the cover's face; the item/fluid filters and the item retriever
 
-        // take the held stack as their filter (CoverFilterItem:115-127, CoverFilterFluid:117-129,
+        // take the held stack as their filter (CoverFilterItem, CoverFilterFluid,
 
-        // CoverRetrieverItem:123-136), the screwdriver flips whitelist/blacklist and the soft hammer
+        // CoverRetrieverItem), the screwdriver flips whitelist/blacklist and the soft hammer
 
-        // clears it (CoverFilterItem:58-70, CoverRetrieverItem:94-102). Nothing here fires when no such cover is on
+        // clears it (CoverFilterItem, CoverRetrieverItem). Nothing here fires when no such cover is on
 
         // the clicked face - the checks are all keyed on the face's cover id.
 
@@ -476,9 +476,9 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
      * <p>Delegated to {@link gregtech.content.cover.CoverItems#isCover}: GT6 gives the
 
-     * cover role to the vanilla redstone torch/repeater ({@code GT_API:799-802}) and to the compact
+     * cover role to the vanilla redstone torch/repeater ({@code GT_API}) and to the compact
 
-     * electric pump/conveyor/robot arm ({@code MultiItemTechnological:50-53}), so neither is a
+     * electric pump/conveyor/robot arm ({@code MultiItemTechnological}), so neither is a
 
      * {@code TechItem} in the port.</p>
 
@@ -498,11 +498,11 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
     /**
 
-     * GT6's asphalt cover boosts whoever walks over it ({@code CoverAsphalt:38-41}: the entity's
+     * GT6's asphalt cover boosts whoever walks over it ({@code CoverAsphalt}: the entity's
 
      * horizontal motion is multiplied while it moves, is on the ground, is not sneaking and is not in
 
-     * water). It is bound to the Asphalt Panel block ({@code Loader_MultiTileEntities:2054}), so the
+     * water). It is bound to the Asphalt Panel block ({@code Loader_MultiTileEntities}), so the
 
      * face that matters is the one being walked on - the machine's top.
 

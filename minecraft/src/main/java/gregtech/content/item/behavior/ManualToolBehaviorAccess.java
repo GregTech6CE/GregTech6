@@ -26,11 +26,11 @@ public final class ManualToolBehaviorAccess {
         }
     }
 
-    /** GT6 {@code WD.obstructed} ({@code WD.java:127-148}) uses 1/8 and 1/4 pixel bands. */
+    /** GT6 {@code WD.obstructed} ({@code WD}) uses 1/8 and 1/4 pixel bands. */
     private static final double PX_P_2 = 0.125D, PX_N_2 = 0.875D, PX_P_4 = 0.25D, PX_N_4 = 0.75D;
 
     /**
-     * GT6 {@code WD.obstructed} ({@code WD.java:127-148}): whether the block <em>behind</em> the
+     * GT6 {@code WD.obstructed} ({@code WD}): whether the block <em>behind</em> the
      * clicked face reaches into that face far enough that the player cannot put a tool through it.
      *
      * <p>The original works on the neighbour's 1.7.10 collision bounding box and asks, per side,
@@ -39,8 +39,8 @@ public final class ManualToolBehaviorAccess {
      * tangential axes ({@code > PX_P[2] = 0.125} and {@code < PX_N[2] = 0.875}). All six branches are
      * kept verbatim; {@code shape.bounds()} is the same union box
      * {@code getCollisionBoundingBoxFromPool} returned. Trapdoors, doors and ladders never obstruct
-     * ({@code WD.java:136}), and a block without a collision box never does
-     * ({@code WD.java:138}).</p>
+     * ({@code WD}), and a block without a collision box never does
+     * ({@code WD}).</p>
      *
      * @param level the level the clicked block stands in
      * @param pos   the clicked block; the neighbour is {@code pos.relative(side)}
@@ -53,14 +53,14 @@ public final class ManualToolBehaviorAccess {
         BlockPos neighbour = pos.relative(side);
         if (!level.hasChunkAt(neighbour)) return false;
         BlockState state = level.getBlockState(neighbour);
-        // WD.java:136 - these three are explicitly never obstructing.
+        // WD - these three are explicitly never obstructing.
         if (state.getBlock() instanceof TrapDoorBlock
                 || state.getBlock() instanceof DoorBlock
                 || state.getBlock() instanceof LadderBlock) {
             return false;
         }
         var shape = state.getCollisionShape(level, neighbour);
-        // WD.java:138 - no collision box at all means no obstruction.
+        // WD - no collision box at all means no obstruction.
         if (shape.isEmpty()) return false;
         AABB box = shape.bounds();
         boolean spansX = box.maxX > PX_P_2 && box.minX < PX_N_2;
@@ -76,7 +76,7 @@ public final class ManualToolBehaviorAccess {
         };
     }
 
-    /** GT6 {@code UT.Entities.hasInfiniteItems} ({@code UT.java:3187-3189}): creative mode only. */
+    /** GT6 {@code UT.Entities.hasInfiniteItems} ({@code UT}): creative mode only. */
     public static boolean creative(@Nullable Player player) {
         return player != null && player.getAbilities().instabuild;
     }
@@ -122,8 +122,8 @@ public final class ManualToolBehaviorAccess {
      * <p>The block entity is asked first and the block second, which is the resolution order
      * {@code WD.te(..., aDelegator = T)} produces in every other behaviour of this package. The
      * return value is handed back unchanged so a caller can apply GT6's own conversion
-     * ({@code Behavior_FlintAndTinder:58} uses {@code units(damage, 10000, 100, T)} for a tool,
-     * {@code Behavior_Lighter:112} uses {@code units(damage, 10000, 1, T)} for a fuel unit).</p>
+     * ({@code Behavior_FlintAndTinder} uses {@code units(damage, 10000, 100, T)} for a tool,
+     * {@code Behavior_Lighter} uses {@code units(damage, 10000, 1, T)} for a fuel unit).</p>
      *
      * @return the cost in GT6's 1/10000 units, or {@code 0} when nothing reacted
      */
@@ -144,22 +144,22 @@ public final class ManualToolBehaviorAccess {
         return target.onIgnite(level, pos, side, player, igniter, sneaking, hitX, hitY, hitZ);
     }
 
-    /** GT6 {@code ToolCompat:206}: a TNT block ignited by a GT igniter costs one full unit. */
+    /** GT6 {@code ToolCompat}: a TNT block ignited by a GT igniter costs one full unit. */
     public static final long TNT_COST = 10000L;
 
     /**
-     * The vanilla half of GT6's {@code TOOL_igniter} ({@code ToolCompat.java:201-223}): a GT igniter
+     * The vanilla half of GT6's {@code TOOL_igniter} ({@code ToolCompat}): a GT igniter
      * that no block claims lights a fire block in front of the clicked face.
      *
      * <p>The original's conditions, in order: the target must be air
-     * ({@code aWorld.isAirBlock}, {@code ToolCompat:217}) and the clicked block must have oxygen
-     * ({@code WD.oxygen}, {@code ToolCompat:218}) — which is {@code WD.java:396-398}, i.e. a
+     * ({@code aWorld.isAirBlock}, {@code ToolCompat}) and the clicked block must have oxygen
+     * ({@code WD.oxygen}, {@code ToolCompat}) — which is {@code WD}, i.e. a
      * Galacticraft-only check that is unconditionally {@code true} without that mod, so the port
      * keeps only the air test. The fire state comes from
      * {@link BaseFireBlock#getState(net.minecraft.world.level.BlockGetter, BlockPos)}, the 1.20.1
      * replacement for GT6's bare {@code Blocks.fire}.</p>
      *
-     * <p><b>Not ported from {@code ToolCompat:203-213}:</b> the Forestry Candle and the Twilight
+     * <p><b>Not ported from {@code ToolCompat}:</b> the Forestry Candle and the Twilight
      * Forest Lamp of Cinders branches — neither mod exists in the port.</p>
      *
      * @return whether a fire block was placed, i.e. whether the operation cost a use
@@ -174,7 +174,7 @@ public final class ManualToolBehaviorAccess {
     }
 
     /**
-     * GT6 {@code ToolCompat:203-207}: a TNT block is primed instead of being set on fire, and the
+     * GT6 {@code ToolCompat}: a TNT block is primed instead of being set on fire, and the
      * block is removed. 1.20.1 folds both halves into
      * {@link TntBlock#onCaughtFire(BlockState, Level, BlockPos, Direction, net.minecraft.world.entity.LivingEntity)}.
      *

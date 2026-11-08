@@ -2,7 +2,7 @@ package gregtech.content.worldgen.dungeon;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomPortal}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomPortal.java:27-162}): the shared interior of GT6's
+ * ({@code DungeonChunkRoomPortal}): the shared interior of GT6's
  * portal rooms. It is the empty room of a dead end plus the door of GT6's vault, and then one carpet of
  * the dungeon's colour with a kerb of rock tiles around it on the side that faces away from the room's
  * only connection.
@@ -33,10 +33,10 @@ public class GTDungeonChunkRoomPortal extends GTDungeonChunkRoomEmpty {
 
     @Override
     public boolean generate(GTDungeonData data) {
-        // GT6's DungeonChunkRoomVault:30-32, inlined: a dead end has exactly one connection.
+        // GT6's DungeonChunkRoomVault, inlined: a dead end has exactly one connection.
         if (data.connectionCount != 1 || !super.generate(data)) return false;
         try {
-            // GT6's DungeonChunkRoomVault:31 - the vault door across that single connection.
+            // GT6's DungeonChunkRoomVault - the vault door across that single connection.
             new GTDungeonChunkDoorPiston().generate(data);
         } catch (Throwable ignored) {
             // GT6: the vault door is not important enough to fail the entire room.
@@ -100,7 +100,7 @@ public class GTDungeonChunkRoomPortal extends GTDungeonChunkRoomEmpty {
             // x = 1 up to the far X at z = 4.
             data.slabKerbs(1, 1, 4, far, 1, 0);
         }
-        // {@code DungeonChunkRoomPortal.java:82-88}: the column of the far X, z = 5..11.
+        // {@code DungeonChunkRoomPortal}: the column of the far X, z = 5..11.
         data.slabKerbs(far, 1, 5, 7, 0, 1);
         if (mirrored) {
             // z = 11 from the far X + 1 to 14.
@@ -125,7 +125,7 @@ public class GTDungeonChunkRoomPortal extends GTDungeonChunkRoomEmpty {
             // z = 1 up to the far Z at x = 4.
             data.slabKerbs(4, 1, 1, far, 0, 1);
         }
-        // {@code DungeonChunkRoomPortal.java:146-152}: the row of the far Z, x = 5..11.
+        // {@code DungeonChunkRoomPortal}: the row of the far Z, x = 5..11.
         data.slabKerbs(5, 1, far, 7, 1, 0);
         if (mirrored) {
             // x = 11 from the far Z + 1 to 14.

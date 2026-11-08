@@ -619,7 +619,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     /**
-     * Air vent cover: GT6 {@code CoverVent.onTickPre} ({@code CoverVent:43-65}) — every 360 ticks, in
+     * Air vent cover: GT6 {@code CoverVent.onTickPre} ({@code CoverVent}) — every 360 ticks, in
      * this face's own slot of the cycle, air from in front of the vent is poured into the input
      * tanks: {@code Air}, {@code Air_Nether} or {@code Air_End} depending on the dimension. The whole
      * behaviour, including the {@code WD.collectable_air} front-face gate and the partial-fill
@@ -679,8 +679,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
     /**
      * GT6's redstone torch cover is an <em>inverter</em> and its repeater a <em>follower</em>
-     * ({@code CoverRedstoneTorch:43} / {@code CoverRedstoneRepeater:43}, both through
-     * {@code AbstractCoverAttachmentTorch:50-57}: {@code mVisuals == 0 ? 15 : 0}). The wire they hang
+     * ({@code CoverRedstoneTorch} / {@code CoverRedstoneRepeater}, both through
+     * {@code AbstractCoverAttachmentTorch}: {@code mVisuals == 0 ? 15 : 0}). The wire they hang
      * on is this machine's powered state, which is {@code mRunning}. Until both covers were
      * answered with the same {@code mRunning ? 15 : 0}, so the torch was inverted.
      */
@@ -714,7 +714,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
      * The recipe tag selected by an attached selector circuit, or -2 when none is attached.
      *
      * <p>GT6 registers the programmed circuit itself as {@code CoverSelectorTag(i)}
-     * ({@code ItemIntegratedCircuit:87}), so the circuit's variant <em>is</em> the tag; the port's
+     * ({@code ItemIntegratedCircuit}), so the circuit's variant <em>is</em> the tag; the port's
      * {@code integrated_circuit_N} items follow the same rule. NBT {@code gt.circuit} is still read
      * for covers configured by the older port-only selector item.</p>
      */
@@ -1503,8 +1503,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         @Override public int getSlots() { return inner.getSlots(); }
         @Override public ItemStack getStackInSlot(int slot) { return inner.getStackInSlot(slot); }
         // the face's cover is the pipe filter. GT6 asks that from its item handler's
-        // interceptItemInsert/interceptItemExtract hooks (CoverFilterItem:115-127), and the retriever
-        // cover refuses both outright on its own face (CoverRetrieverItem:138-139, "aCoverSide ==
+        // interceptItemInsert/interceptItemExtract hooks (CoverFilterItem), and the retriever
+        // cover refuses both outright on its own face (CoverRetrieverItem, "aCoverSide ==
         // aSide"). A face without such a cover admits everything, which is what keeps every other
         // machine behaving exactly as before.
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
@@ -1542,7 +1542,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             return gregtech.content.cover.ComponentCoverRuntime.allowsFluid(be.getCover(side),true) && canFill && !be.isRemoved() && !be.isFaceShuttered(side)
                     && be.coverFluidFilterPermits(side, stack) && be.isFluidValid(tank, stack);
         }
-        // GT6 CoverFilterFluid:117-129 interceptFluidFill / interceptFluidDrain.
+        // GT6 CoverFilterFluid interceptFluidFill / interceptFluidDrain.
         @Override public int fill(FluidStack resource, FluidAction action) {
             Direction side = be.relativeToAbsolute(relativeSide);
             return gregtech.content.cover.ComponentCoverRuntime.allowsFluid(be.getCover(side),true) && canFill && !be.isRemoved() && !be.isFaceShuttered(side)
@@ -1665,13 +1665,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     /**
      * Whether this machine's covers were suspended by a controller cover on the previous utility
-     * tick, i.e. the {@code !aStopped} edge of GT6 {@code CoverRetrieverItem:55-57}
+     * tick, i.e. the {@code !aStopped} edge of GT6 {@code CoverRetrieverItem}
      * ({@code onStoppedUpdate} sets the retriever's pending value to 1 when it resumes).
      */
     private boolean utilityWasStopped;
 
     /**
-     * GT6's {@code aData.mValues[aSide]} for the retriever ({@code CoverRetrieverItem:56,62}): a
+     * GT6's {@code aData.mValues[aSide]} for the retriever ({@code CoverRetrieverItem}): a
      * per-face "run on the next tick even though the 20-tick clock has not come round" flag, set on
      * resume and currently cleared only after moving items. GT6 cleared it before the
      * eligible attempt, even when the search found nothing.
@@ -1696,7 +1696,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public void tickUtilityCovers(Level level, BlockPos pos) {
         if (level == null) return;
         // CoverControllerCovers suspends the other covers; GT6 gates the retriever on !aData.mStopped
-        // (CoverRetrieverItem:61) and the valve on the same flag (CoverPressureValve:50).
+        // (CoverRetrieverItem) and the valve on the same flag (CoverPressureValve).
         if (panels().stopped()) { utilityWasStopped = true; return; }
         boolean resumed = utilityWasStopped;
         utilityWasStopped = false;
@@ -1734,12 +1734,12 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     /**
-     * GT6 {@code CoverFilterItem:115-127} asked about a live face: does the filter cover on
+     * GT6 {@code CoverFilterItem} asked about a live face: does the filter cover on
      * {@code side} let {@code candidate} through?
      *
      * <p>GT6 asks this from its own item handler's {@code interceptItemInsert}/{@code
      * interceptItemExtract} hooks, one call per slot and side, with the face test
-     * {@code aCoverSide != aSide} in front of it ({@code CoverFilterItem:116}). The port's
+     * {@code aCoverSide != aSide} in front of it ({@code CoverFilterItem}). The port's
      * {@code MachineItemHandler} has no per-side insert hook to hang that on, so the predicate is
      * exposed here for whatever wiring does own the face, so the rule stays reachable from a real
      * attached cover.</p>
@@ -1758,7 +1758,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     }
 
-    /** GT6 {@code CoverFilterFluid:117-129} asked about a live face. See {@link #coverFilterPermits}. */
+    /** GT6 {@code CoverFilterFluid} asked about a live face. See {@link #coverFilterPermits}. */
     public boolean coverFluidFilterPermits(Direction side, FluidStack candidate) {
         return gregtech.content.cover.CoverUtilityBehaviors.fluidFilterPermits(
 
@@ -1771,7 +1771,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     /**
-     * GT6 {@code CoverRetrieverItem:138-139} — the retriever refuses <em>every</em> item insert
+     * GT6 {@code CoverRetrieverItem} — the retriever refuses <em>every</em> item insert
      * and extract on its own face ({@code return aCoverSide == aSide;}, both hooks), so a pipe can
      * neither push into nor pull out of the face the retriever owns; only the retriever itself moves
      * items there. That is the whole interception rule for that cover — unlike the item filter, whose
@@ -1805,13 +1805,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     /**
-     * GT6's right-click on a filter cover ({@code CoverFilterItem:88-112},
-     * {@code CoverFilterFluid:92-114}) and on the retriever ({@code CoverRetrieverItem:123-136}):
+     * GT6's right-click on a filter cover ({@code CoverFilterItem},
+     * {@code CoverFilterFluid}) and on the retriever ({@code CoverRetrieverItem}):
      * the held stack becomes the filter, once.
      *
      * <p>For the fluid filter the original resolves the fluid out of the held stack, first through
      * {@code FL.getFluid(tStack, T)} and then through the item's container association
-     * ({@code CoverFilterFluid:98-104}); the port keeps the first half — the Forge fluid-container
+     * ({@code CoverFilterFluid}); the port keeps the first half — the Forge fluid-container
      * capability — and has no second half to keep, because the port has no ore-dictionary container
      * prefix.</p>
      *
@@ -1854,10 +1854,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     /**
      * The screwdriver and soft-hammer halves of the same three covers: the screwdriver flips
-     * whitelist/blacklist ({@code CoverFilterItem:58-62}, {@code CoverFilterFluid:62-66},
-     * {@code CoverRetrieverItem:94-98}) and the soft hammer clears the filter
-     * ({@code CoverFilterItem:63-66}, {@code CoverFilterFluid:67-70},
-     * {@code CoverRetrieverItem:99-102}).
+     * whitelist/blacklist ({@code CoverFilterItem}, {@code CoverFilterFluid},
+     * {@code CoverRetrieverItem}) and the soft hammer clears the filter
+     * ({@code CoverFilterItem}, {@code CoverFilterFluid},
+     * {@code CoverRetrieverItem}).
      *
      * <p>Shaped exactly like {@link #configureControlCover} next to it, including the client-side
      * early return, so the same caller can drive both.</p>

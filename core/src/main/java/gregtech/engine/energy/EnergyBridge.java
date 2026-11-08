@@ -37,7 +37,7 @@ import gregtech.content.data.GregTechConstants;
  *
  * <ul>
  * <li><b>Overflow</b>: aPacketCount*aPacketSizeFE is computed in the long domain and clamped
- *     into int range by {@link #bind31} (upstream {@code UT.Code.bind31}, UT.java:1564) —
+ *     into int range by {@link #bind31} (upstream {@code UT.Code.bind31}, UT) —
  *     top-tier ladders reach products where naive int math overflows. GTCEu's
  *     {@code GTMath.saturatedCast} is the same guard family.</li>
  * <li><b>Rounding alignment</b>: the simulated acceptance is rounded DOWN to a whole packet
@@ -96,7 +96,7 @@ public final class EnergyBridge {
         int extractEnergy(int aAmount, boolean aSimulate);
     }
 
-    /** Upstream UT.Code.bind31 (UT.java:1564 verbatim): clamp [0, Integer.MAX_VALUE] and narrow. */
+    /** Upstream UT.Code.bind31 (UT verbatim): clamp [0, Integer.MAX_VALUE] and narrow. */
     public static int bind31(long aBoundValue) {
         return (int) Math.max(0, Math.min(2147483647, aBoundValue));
     }

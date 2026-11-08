@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The rows GT6 adds from its own main class — {@code GT6_Main.java:326-403} — which the transpilers do
+ * The rows GT6 adds from its own main class — {@code GT6_Main} — which the transpilers do
  * not see because they are neither a {@code Loader_Recipes_*} file nor a registration pattern:
  *
  * <ul>
@@ -39,7 +39,7 @@ import java.util.List;
  *
  * <p>Rows whose content the port does not register (Twilight Forest and
  * Galacticraft maps, Thaumcraft loot bags) are recorded in {@link #skipped()} with their reason
- * instead of being invented. The material dictionary book ({@code GT6_Main:388}) also needs the NBT
+ * instead of being invented. The material dictionary book ({@code GT6_Main}) also needs the NBT
  * of a scanned USB stick, so it is printed by {@link GTMaterialDataRecipes} rather than from a static
  * row; it stays listed here as a checklist entry.</p>
  */
@@ -113,7 +113,7 @@ public final class GTMainRecipes {
 
             // ---- display rows: the printer reproduces what a scanned USB stick carries ----
             // GT6 prints a map of one dye unit per colour divided by nine (16 mB per colour) and one
-            // unit of black for a scanned block (GT6_Main:361 /).
+            // unit of black for a scanned block (GT6_Main /).
             new Row("Printer", true, 16, 64, "v:map:1;tech:usb1_stick:1", "v:filled_map:1",
                     "f:Dye_Chemical_Yellow:16;f:Dye_Chemical_Magenta:16;f:Dye_Chemical_Cyan:16;"
                             + "f:Dye_Chemical_Black:16", "", "GT6_Main:361"),

@@ -48,7 +48,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Set;
 
 /**
- * Port of GT6's {@code WorldgenHives} ({@code gregtech/content/worldgen/WorldgenHives.java:54-204}): the wild
+ * Port of GT6's {@code WorldgenHives} ({@code WorldgenHives}): the wild
  * bumblebee colonies.
  *
  * <p>GT6 rolls one column per chunk ({@code tX = minX + rnd(16)}, {@code tZ = minZ + rnd(16)}) and

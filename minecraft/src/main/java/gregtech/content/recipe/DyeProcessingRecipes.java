@@ -54,7 +54,7 @@ public final class DyeProcessingRecipes {
                     new FluidStack[]{fluid("Dye_Chemical_"+color,288)},16,16,0);
             naturalDyes.apply(chemical,0); oils.apply(chemical,1); add(MachineRecipeMaps.Mixer,chemical);
             mixer(16,null,new FluidStack[]{fluid("Dye_Chemical_"+color,16),fluid("CFoam",100)},fluid("CFoam_Dyed_"+color,100));
-            // MultiItemRandomTools:246: 16 dye units (16 * 144 mB), 256 ticks at 16 EU/t.
+            // MultiItemRandomTools: 16 dye units (16 * 144 mB), 256 ticks at 16 EU/t.
             add(MachineRecipeMaps.Canner,new Recipe(new ItemStack[]{item("gt6ce:empty_spray_can",1)},
                     new ItemStack[]{item("gt6ce:spray_paint_"+vanilla,1)},null,null,
                     new FluidStack[]{fluid("Dye_Chemical_"+color,2304)},null,256,16,0));
@@ -119,7 +119,7 @@ public final class DyeProcessingRecipes {
     }
 
     /**
-     * {@code Loader_Recipes_Other.java:252-330}: one tagged row per colour and batch size.
+     * {@code Loader_Recipes_Other}: one tagged row per colour and batch size.
      * A rock's group decides the foam colour, and the first
      * group leaves it undyed. GT6's {@code OM.dust(clay, U4)} is one small pile while the large
      * recipe takes one full dust.
@@ -160,7 +160,7 @@ public final class DyeProcessingRecipes {
     }
 
     /**
-     * Loader_Recipes_Other:449-462: Bath recolouring. A white construction block takes 1/24 of a dye
+     * Loader_Recipes_Other: Bath recolouring. A white construction block takes 1/24 of a dye
      * unit, a slab 1/48, and any panel 1/144; each colour's dye fluids are its water-mixed, flower
      * and chemical dyes plus the source list's extra entries (squid ink for black, indigo and
      * blueberry juice for blue, cranberry juice for red). EU 0, 16 ticks.

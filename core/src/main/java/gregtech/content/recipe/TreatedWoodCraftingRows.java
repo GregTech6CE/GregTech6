@@ -1,5 +1,5 @@
 package gregtech.content.recipe;
-/** Original treated-wood hand patterns from Loader_OreProcessing:194 / Loader_Recipes_Woods:217-218.
+/** Original treated-wood hand patterns from Loader_OreProcessing / Loader_Recipes_Woods.
  * Same encoded contract as GTWoodRecipes.CRAFT_ROWS; no independent material namespace. */
 public final class TreatedWoodCraftingRows {
     private TreatedWoodCraftingRows() {}

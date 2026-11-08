@@ -146,7 +146,7 @@ public final class MultiblockRecipePack {
 //?}
             clayRecipe(generated,"reclaim_"+row.raw(),reclaim);
         }
-        // MultiItemRandomTools:130 also permits the vertically reversed crossing layout.
+        // MultiItemRandomTools also permits the vertically reversed crossing layout.
         var crossing=new HashMap<String,Object>();
         crossing.put("type","gt6ce:tool_shaped");
         crossing.put("pattern",List.of(" C ","CCC","kCR"));

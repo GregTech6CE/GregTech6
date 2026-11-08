@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomFarmCrop}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomFarmCrop.java:35-229}): GT6's crop farm.
+ * ({@code DungeonChunkRoomFarmCrop}): GT6's crop farm.
  *
  * <p>The empty room is built first (GT6's calls its super class and refuses the cell when that
  * fails), then the four corners of the hall become plots: a rim of smooth rock slabs at local 1, 5 and 6
@@ -50,7 +50,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
  *       rock, its smooth form and its orientation ({@link GTDungeonData#slab}), so the rims are GT6's
  *       again.</li>
  *   <li><b>Planters.</b> GT6's multi-tile 32065 is its "Universal Plant Pot"
- *       ({@code Loader_MultiTileEntities:2228}). The port's {@code plant_pot} now supports plants on its
+ *       ({@code Loader_MultiTileEntities}). The port's {@code plant_pot} now supports plants on its
  *       top face, including the cactus and sugar cane at local 2..4 and the garden saplings/flowers.</li>
  *   <li><b>Sugar cane and cactus.</b> GT6's {@code Blocks.reeds} and {@code Blocks.cactus} are vanilla and
  *       are kept ({@code Blocks.SUGAR_CANE} at (5,1,5) and (10,1,10), {@code Blocks.CACTUS} at (5,1,10)
@@ -80,7 +80,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
  */
 public class GTDungeonChunkRoomFarmCrop extends GTDungeonChunkRoomEmpty {
 
-    /** GT6's tag ({@code WorldgenDungeonGT.TAG_FARM_CROP}, {@code WorldgenDungeonGT:81}). */
+    /** GT6's tag ({@code WorldgenDungeonGT.TAG_FARM_CROP}, {@code WorldgenDungeonGT}). */
     public static final String TAG_FARM_CROP = "gt.dungeon.farm.crop";
 
     /** GT6's {@code tCrops} list as 1.20.1 crops, in GT6's order (see the javadoc). */
@@ -118,7 +118,7 @@ public class GTDungeonChunkRoomFarmCrop extends GTDungeonChunkRoomEmpty {
      * next(Saplings_AB.maxMeta()), BlocksGT.Saplings_CD, next(Saplings_CD.maxMeta()), Blocks.sapling,
      * next(6))}. GT6's three-block overload evaluates the three <em>metas</em> first (left to right) and
      * then draws one more number to pick among the three blocks ({@code next(3)},
-     * {@code DungeonData:378-386}), so one sapling costs four rolls; the port keeps all four in that
+     * {@code DungeonData}), so one sapling costs four rolls; the port keeps all four in that
      * order and rolls over its own family sizes instead of GT6's {@code maxMeta}.
      */
     private static void sapling(GTDungeonData data, int x, int y, int z) {
@@ -221,7 +221,7 @@ public class GTDungeonChunkRoomFarmCrop extends GTDungeonChunkRoomEmpty {
         // sapling at local 2, a flower at local 5 and one tall plant at local 5 and 6.
         if (data.neighbour(1, 0) == GTDungeonLayout.EMPTY) {
             data.smoothSlab(14, 3, 5, Direction.SOUTH);
-            // GT6's cocoa metas come from COMPASS_FROM_SIDE (CS.java:516-521): the west wall (SIDE_X_NEG)
+            // GT6's cocoa metas come from COMPASS_FROM_SIDE (CS): the west wall (SIDE_X_NEG)
             // is meta 3, which is a cocoa attached to the log on its east side.
             cocoaPair(data, 14, 6, 13, 6, Direction.EAST);
             cocoaPair(data, 14, 7, 13, 7, Direction.EAST);

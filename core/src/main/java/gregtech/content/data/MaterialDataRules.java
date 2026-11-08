@@ -13,7 +13,7 @@ public final class MaterialDataRules {
             PRINTER_TICKS = VisualDocumentRules.bookPrint(0).ticks(),
             PRINTER_MANY_TICKS = VisualDocumentRules.bookPrint(51).ticks();
 
-    /** RecipeMapReplicator:91/110: duration per nucleon, at one QU per tick. */
+    /** RecipeMapReplicator: duration per nucleon, at one QU per tick. */
     public static final long REPLICATOR_TICKS_PER_NUCLEON = 256, REPLICATOR_POWER = 1;
 
     /** GT6's data tooltip figure in {@code UT.NBT} (distinct from raw recipe work). */

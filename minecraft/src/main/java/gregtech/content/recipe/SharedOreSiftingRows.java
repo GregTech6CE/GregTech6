@@ -121,7 +121,7 @@ public final class SharedOreSiftingRows {
   return List.copyOf(out);
  }
 
- /** GT6 Loader_OreProcessing:351 — every DUST_ORE host ore stack gets a Sifter row. The host is a
+ /** GT6 Loader_OreProcessing — every DUST_ORE host ore stack gets a Sifter row. The host is a
   * block state in the port, so each sediment host gets one row over the same ore block. */
  private static final List<OreHostStone> DUST_ORE_HOSTS=List.of(
      OreHostStone.SAND,OreHostStone.RED_SAND,OreHostStone.GRAVEL,OreHostStone.MUD);

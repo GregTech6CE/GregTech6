@@ -34,7 +34,7 @@ import net.minecraftforge.registries.RegistryObject;
  * {@code Registries.STRUCTURE_PLACEMENT} are vanilla's own built-in registries; mods may add to them, and
  * Forge fires {@code RegisterEvent} for them like for any other registry.</p>
  *
- * <p>GT6's counterpart is its {@code Loader_Worldgen:652} registration of
+ * <p>GT6's counterpart is its {@code Loader_Worldgen} registration of
  * {@code WorldgenDungeonGT} - a 1.7.10 world generator with no registry entry at all.</p>
  */
 public final class GTStructures {

@@ -59,15 +59,15 @@ public final class SandwichSourceIngredients {
             new Entry("gt6ce:red_pill", 42), // MultiItemFood.java:915
             new Entry("gt6ce:antidote", 42), // MultiItemFood.java:916
             new Entry("gt6ce:cure_all", 42), // MultiItemFood.java:921
-            // MultiItemFood.java:925
+            // MultiItemFood
             new Entry("gt6ce:emerald_green_bar", 34), // MultiItemFood.java:926
             new Entry("gt6ce:raw_meat_bar", 29), // MultiItemFood.java:927
             new Entry("gt6ce:cooked_meat_bar", 30), // MultiItemFood.java:928
             new Entry("gt6ce:chocolate_bar", 21), // MultiItemFood.java:929
             new Entry("gt6ce:raw_fish_bar", 24), // MultiItemFood.java:931
             new Entry("gt6ce:cooked_fish_bar", 25), // MultiItemFood.java:932
-            // MultiItemFood.java:933
-            // MultiItemFood.java:934
+            // MultiItemFood
+            // MultiItemFood
             new Entry("gt6ce:grape_vinegar", 10), // MultiItemBottles.java:58
             new Entry("gt6ce:cave_johnsons_grenade_juice", 11), // MultiItemBottles.java:75
             new Entry("gt6ce:chili_sauce", 1), // MultiItemBottles.java:106

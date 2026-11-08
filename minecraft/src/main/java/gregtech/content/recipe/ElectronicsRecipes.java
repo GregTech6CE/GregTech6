@@ -68,7 +68,7 @@ public final class ElectronicsRecipes {
         sapphireBoules();
         REGISTERED.addAll(PolarizerMaterialRecipes.register());
 
-        // GT6 MultiItemTechnological:571-698 + — the magical/enderium/signalum branch of the
+        // GT6 MultiItemTechnological + — the magical/enderium/signalum branch of the
         // circuit chain. The rows above cover GT6's copper/gold/platinum ladder; these were the items the
         // port registered with no way to make them (see docs/items-without-recipes.json).
         String[] magicWires={"Thaumium","Manasteel","Netherite"};
@@ -97,11 +97,11 @@ public final class ElectronicsRecipes {
         bath("circuit_board_enderium","circuit_enderium","SolderingAlloy");
         for(String solder:new String[]{"Lead","Tin","SolderingAlloy"}) bath("circuit_board_signalum","circuit_signalum",solder);
 
-        // GT6 Loader_Recipes_Other:147-155 + MultiItemTechnological:765-770 — the crystal branch:
+        // GT6 Loader_Recipes_Other + MultiItemTechnological — the crystal branch:
         // a gem plate is engraved into a crystal circuit, the socket is crafted from a platinum circuit
         // plate, two ultimate circuits and two helium-neon laser emitters, and the Press turns
         // socket + circuit into a processor.
-        // MT diamond/emerald/sapphire factories (208-210, 1358-1386) and ANY.init (97-99).
+        // MT diamond/emerald/sapphire factories and ANY.init.
         // Keep explicit native factory members: not all port ANY groups carry their original registrations.
         crystal("crystal_circuit_diamond", new String[]{"Diamond", "BlueDiamond", "GreenDiamond",
                 "RedDiamond", "YellowDiamond", "PinkDiamond", "DiamondIndustrial", "ManaDiamond",
@@ -118,7 +118,7 @@ public final class ElectronicsRecipes {
         return REGISTERED.size();
     }
 
-    /** GT6 Loader_Recipes_Other:692-706: seven sapphire-family boules, six inert gases. */
+    /** GT6 Loader_Recipes_Other: seven sapphire-family boules, six inert gases. */
     private static void sapphireBoules() {
         GTMaterial[] dopants = {Materials.Magnesium, Materials.Titanium, Materials.Copper, Materials.Iron, Materials.Vanadium, Materials.Chromium};
         GTMaterial[] crystals = {Materials.GreenSapphire, Materials.YellowSapphire, Materials.OrangeSapphire, Materials.BlueSapphire, Materials.PurpleSapphire, Materials.Ruby};
@@ -157,7 +157,7 @@ public final class ElectronicsRecipes {
     }
 
     /**
-     * GT6 {@code Loader_Recipes_Other:147-155}: the Laser Engraver burns a gem plate into a crystal
+     * GT6 {@code Loader_Recipes_Other}: the Laser Engraver burns a gem plate into a crystal
      * circuit with a lens as the (unconsumed) catalyst. GT6 loops over every material that re-registers
      * to the gem group ({@code ANY.Diamond.mToThis} and friends); the port names those materials
      * directly and adds the group's re-registrations on top.
@@ -185,7 +185,7 @@ public final class ElectronicsRecipes {
         }
     }
 
-    /** GT6 {@code Loader_Recipes_Other:158-166}: four foils and a lens engrave a circuit wire. */
+    /** GT6 {@code Loader_Recipes_Other}: four foils and a lens engrave a circuit wire. */
     private static void engrave(String wire,String foilMaterial) {
         var foil = GTItems.getStack(MaterialPrefix.foil, GTMaterialRegistry.get(foilMaterial), 4);
         if (foil.isEmpty()) return;
@@ -195,7 +195,7 @@ public final class ElectronicsRecipes {
                     new ItemStack[]{tech(wire,1)},null,null,null,null,64,16,0).withCatalystInputs(1));
     }
 
-    /** GT6 {@code MultiItemTechnological:720-743}: soldering a circuit board into a finished circuit. */
+    /** GT6 {@code MultiItemTechnological}: soldering a circuit board into a finished circuit. */
     private static void bath(String board,String circuit,String solder) {
         add(MachineRecipeMaps.Bath,new Recipe(new ItemStack[]{tech(board,1)},
                 new ItemStack[]{tech(circuit,1)},null,null,

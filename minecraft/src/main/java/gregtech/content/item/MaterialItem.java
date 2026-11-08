@@ -85,7 +85,7 @@ public class MaterialItem extends Item implements gregtech.engine.material.Mater
 //?}
     }
 
-    /** PrefixItemProjectile:115-125 consumes ammunition used in a living-entity melee attack. */
+    /** PrefixItemProjectile consumes ammunition used in a living-entity melee attack. */
     public static boolean consumeAmmoOnAttack(ItemStack stack, net.minecraft.world.entity.player.Player player,
                                               net.minecraft.world.entity.Entity target) {
         if (!player.level().isClientSide) gregtech.engine.tool.MaterialEnchantmentStacks.applyAmmo(stack, player.level());

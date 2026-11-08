@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * GT6 {@code BlockStones:255-468}: what the machines make of every masonry variant of every rock type.
+ * GT6 {@code BlockStones}: what the machines make of every masonry variant of every rock type.
  *
  * <p>GT6 iterates {@code mEqualBlocks[<variant>]} — the blocks equal to one variant of one rock — and
  * gives each group its own hammer, crusher, shredder, smelting, {@code generify} and moss rows. The
@@ -49,10 +49,10 @@ import java.util.Map;
  *
  * <p>Two details worth keeping: the reinforced and redstone brick groups carry their extra material
  * into the crusher/shredder byproducts (and therefore are never smelted back to plain stone, GT6
- * {@code BlockStones:426-438}), and the slab-to-plate sawing rows exist for every variant GT6 marks
- * {@code JUSTSTONE} — i.e. all but those same two (GT6 {@code BlockStones:271-274}). The Cutter also
+ * {@code BlockStones}), and the slab-to-plate sawing rows exist for every variant GT6 marks
+ * {@code JUSTSTONE} — i.e. all but those same two (GT6 {@code BlockStones}). The Cutter also
  * saws every full block into two of its slabs, a base row every variant gets from
- * {@code BlockMetaType:92}.</p>
+ * {@code BlockMetaType}.</p>
  */
 public final class StoneVariantRecipes {
 
@@ -79,7 +79,7 @@ public final class StoneVariantRecipes {
             items(type);
             sawing(type);
         }
-        // GT6 BlockStones:262 — one block of rock dust smelts back into the plain stone block. Nine
+        // GT6 BlockStones — one block of rock dust smelts back into the plain stone block. Nine
         // dusts are not interchangeable: they are the material's own dust and smelt into its
         // smelting target (FurnaceSmeltingRecipes), not into masonry.
         for (StoneType type : StoneType.values()) {
@@ -96,7 +96,7 @@ public final class StoneVariantRecipes {
         return ENTRIES.size();
     }
 
-    /** GT6 {@code BlockStones:260-468} — one pass over the 16 variants of one rock type. */
+    /** GT6 {@code BlockStones} — one pass over the 16 variants of one rock type. */
     private static void items(StoneType type) {
         int harvest = type.harvestLevel();
         ItemStack rock4 = GTItems.getStack(MaterialPrefix.rockGt, type.material(), 4);
@@ -196,8 +196,8 @@ public final class StoneVariantRecipes {
     }
 
     /**
-     * GT6 {@code BlockMetaType:92} saws every full block into two of its own slabs, and
-     * {@code BlockStones:271-274} saws every {@code JUSTSTONE} slab into plates and small dust.
+     * GT6 {@code BlockMetaType} saws every full block into two of its own slabs, and
+     * {@code BlockStones} saws every {@code JUSTSTONE} slab into plates and small dust.
      */
     private static void sawing(StoneType type) {
         for (StoneVariant variant : StoneVariant.values()) {

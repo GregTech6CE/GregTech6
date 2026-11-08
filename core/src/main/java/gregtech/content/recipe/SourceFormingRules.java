@@ -8,7 +8,7 @@ import gregtech.content.material.SourceLatheMaterialProfiles;
 import java.math.BigInteger;
 import java.util.List;
 
-/** Six generic forming pairs from GT6 Loader_Recipes_Handlers:298–316 at 3703e403. */
+/** Six generic forming pairs from GT6 Loader_Recipes_Handlers–316 at 3703e403. */
 public final class SourceFormingRules {
     private SourceFormingRules() {}
 

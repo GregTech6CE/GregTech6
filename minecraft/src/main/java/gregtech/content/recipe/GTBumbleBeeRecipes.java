@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * GT6's <b>Bumblelyzer</b> - the port of {@code RecipeMapBumblelyzer.findRecipe}
- * ({@code gregapi/recipes/maps/RecipeMapBumblelyzer.java:51-74}), installed on
+ * ({@code RecipeMapBumblelyzer}), installed on
  * {@link MachineRecipeMaps#Bumblelyzer} through {@link
  * gregtech.engine.recipe.RecipeMap#dynamicRecipes}.
  *
@@ -39,7 +39,7 @@ import java.util.List;
  *
  * <ul>
  *   <li> - only honey counts ({@code FluidsGT.HONEY}, i.e. the three fluids declared with
- *       the {@code HONEY} flag in {@code FL.java:139-141}, plus {@code FL.Honeydew}).</li>
+ *       the {@code HONEY} flag in {@code FL}, plus {@code FL.Honeydew}).</li>
  *   <li> - every valid input stack, truncated to a single item
  *       ({@code ST.amount(1, aInput)}).</li>
  *   <li> - a bee whose {@code bumbleType < 5} (a <em>living</em>, not yet scanned bee;
@@ -47,7 +47,7 @@ import java.util.List;
  *       variant of that same bee, at the price of 10 mB of the tank's honey.</li>
  *   <li> - the "no paper" fallback: a bee that is <em>already</em> scanned is passed
  *       through unchanged (input = output, 1 tick), the row GT6 also publishes as
- *       "Was already scanned, auto-skipping" ({@code MultiItemBumbles:586-587}).</li>
+ *       "Was already scanned, auto-skipping" ({@code MultiItemBumbles}).</li>
  *   <li> - the Forestry bee branch ({@code IL.FR_Bee_Drone/Princess/Queen} analysed
  *       through {@code AlleleManager}). <b>Skipped:</b> the port has no Forestry bees, so no stack can
  *       ever satisfy it (see the note on {@link #find}).</li>
@@ -58,14 +58,14 @@ import java.util.List;
  *   <li>The tiny paper plate is an <b>input</b>, not an output: passes
  *       {@code ST.array(aInput, OP.plateTiny.mat(MT.Paper, aInput.stackSize))} as the recipe's
  *       <em>inputs</em> and the scanned bee as its only output. GT6's recipe-viewer rows show the
- *       same layout ({@code MultiItemBumbles:584-585}).</li>
+ *       same layout ({@code MultiItemBumbles}).</li>
  *   <li>That plate count is always <b>1</b>, whatever the input stack size: has already
  *       replaced the stack with {@code ST.amount(1, aInput)} (= {@code ST.copy_} + {@code ST.size_}),
  *       so {@code aInput.stackSize} read one line later is 1 by construction. GT6 therefore has no
  *       "paper only for a single bee" rule; a stack of five bees also consumes one plate and produces
  *       one scanned bee.</li>
  *   <li>Duration and power are {@code 64, 16} in, and GT6's {@code Recipe} constructor
- *       takes them in that order - {@code gregapi/recipes/Recipe.java:877} is
+ *       takes them in that order - {@code Recipe} is
  *       {@code (..., aInputs, aOutputs, aSpecialItems, aChances, aFluidInputs, aFluidOutputs,
  *       aDuration, aEUt, aSpecialValue)} - so the row is <b>64 ticks at 16 EU/t</b>, exactly like the
  *       port stores the molecular scanner's row from the analogous of
@@ -78,7 +78,7 @@ import java.util.List;
  *       equivalent; these providers only ever run from a machine's recipe lookup, which cannot happen
  *       before the server started.</li>
  *   <li>GT6 additionally registers two <em>fake</em> recipe-viewer rows per bee
- *       ({@code MultiItemBumbles:584-585}, honey and honeydew); the port registers them too, marked as
+ *       ({@code MultiItemBumbles}, honey and honeydew); the port registers them too, marked as
  *       fake so the machine can never run one ({@link #registerDisplayRows()}).</li>
  * </ul>
  */
@@ -101,7 +101,7 @@ public final class GTBumbleBeeRecipes {
     public static final long PASS_EU = 16;
 
     /**
-     * GT6's three display-row bee types ({@code MultiItemBumbles:582}, {@code for (int i : {0, 1, 4})}:
+     * GT6's three display-row bee types ({@code MultiItemBumbles}, {@code for (int i : {0, 1, 4})}:
      * drone, princess and the dead bee - a living bee's metas below 5).
      */
     public static final BumbleBeeType[] DISPLAY_TYPES = {
@@ -109,8 +109,8 @@ public final class GTBumbleBeeRecipes {
 
     /**
      * GT6's display-row fluids: every fluid declared with the {@code HONEY} flag
-     * ({@code FluidsGT.HONEY}, the three {@code FL.java:139-141} entries) plus honeydew
-     * ({@code MultiItemBumbles:584-585}).
+     * ({@code FluidsGT.HONEY}, the three {@code FL} entries) plus honeydew
+     * ({@code MultiItemBumbles}).
      */
     private static final String[] DISPLAY_FLUIDS = {"Honey", "Honeydew"};
 
@@ -150,7 +150,7 @@ public final class GTBumbleBeeRecipes {
     public static boolean isRegistered() { return registered; }
 
     /**
-     * GT6's two recipe-viewer rows per bee ({@code MultiItemBumbles:584-585}, inside the per-species
+     * GT6's two recipe-viewer rows per bee ({@code MultiItemBumbles}, inside the per-species
      * {@code make}): {@code [bee, tiny paper plate] + 10 mB of honey -> the scanned bee}, once per honey
      * fluid, and the same row with honeydew instead. GT6 adds them with {@code addFakeRecipe}, which is
      * why the Bumblelyzer's recipe page is never empty while the machine itself ignores them
@@ -285,7 +285,7 @@ public final class GTBumbleBeeRecipes {
     }
 
     /**
-     * GT6's: a fluid declared with the {@code HONEY} flag ({@code FL.java:139-141}:
+     * GT6's: a fluid declared with the {@code HONEY} flag ({@code FL}:
      * {@code for.honey}, {@code grc.honey} and BoP's {@code honey}) or honeydew.
      */
     private static boolean isHoney(@Nullable FluidStack stack) {

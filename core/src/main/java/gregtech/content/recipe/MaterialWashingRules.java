@@ -5,7 +5,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
 import java.util.List;
 
-/** OP:570-573 / OreDictListenerItem_Washing: one item and one water level per server tick. */
+/** OP / OreDictListenerItem_Washing: one item and one water level per server tick. */
 public final class MaterialWashingRules {
     private MaterialWashingRules() {}
 

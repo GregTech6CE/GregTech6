@@ -20,7 +20,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * Port of GT6's {@code WorldgenBlackSand} ({@code Loader_Worldgen:581}, registered as
+ * Port of GT6's {@code WorldgenBlackSand} ({@code Loader_Worldgen}, registered as
  * {@code "river.magnetite"}): placer deposits of black magnetite sand in rivers.
  *
  * <p>GT6 rolls one deposit per chunk with {@code nextInt(64) > 0} (about 1 in 64 chunks), refuses

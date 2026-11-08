@@ -20,16 +20,16 @@ package gregtech.content.recipe;
  * those species as {@code gt6ce:log_*} / {@code gt6ce:planks_*} / {@code gt6ce:stripped_log_*} blocks
  * ({@code registry/GTWoods.java}, {@code block/wood/WoodSpecies.java}). Every row below is registered
  * with the numbers GT6's own table carries for that species, with {@code CS.NERFED_WOOD = true}
- * ({@code gregapi/data/CS.java:866} in the original), i.e. the hand/saw counts rather than the
+ * ({@code CS} in the original), i.e. the hand/saw counts rather than the
  * buzz-saw/lathe ones.</p>
  *
  * <p>Port differences, all of them deliberate:</p>
  * <ul>
  *   <li>No fireproof wood: GT6's {@code BlocksGT.Log*FireProof}/{@code PlanksFireProof}/{@code Beam*FireProof}
- *       family (Laminator/Bath rows at {@code Loader_Recipes_Woods.java:46-119}) has no port block.</li>
+ *       family (Laminator/Bath rows at {@code Loader_Recipes_Woods}) has no port block.</li>
  *   <li>No slabs or stairs for the port's species: GT6's {@code LIST_STAIRS}/{@code LIST_SLABS} rows
  *       are therefore skipped.</li>
- *   <li>Vanilla woods ({@code LoaderWoodDictionary.java:51-56}) keep vanilla's own recipes; the port's
+ *   <li>Vanilla woods ({@code LoaderWoodDictionary}) keep vanilla's own recipes; the port's
  *       per-species log rows would only duplicate {@code minecraft:oak_planks} and friends.</li>
  *   <li>Other mods' wood (IC2/MFR/Atum/Fossil/BoP/TC/TF/BTL/Aether/Botania/Witchery/AbyssalCraft/
  *       Steamcraft/EBXL/Bamboo/Caveworld/TCFM/Forestry) is absent from 1.20.1.</li>

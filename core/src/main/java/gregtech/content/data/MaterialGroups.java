@@ -78,7 +78,7 @@ public class MaterialGroups {
         }
         initialized = true;
 
-        // MT:208 diamond(...) puts every diamond in ANY.Diamond; ANY:97 also adds Diamantine.
+        // MT diamond(...) puts every diamond in ANY.Diamond; ANY also adds Diamantine.
         Diamond.addReRegistrationToThis(
                 GT6Materials.Compounds.Diamond,
                 GT6Materials.Compounds.DiamondBlue,
@@ -158,7 +158,7 @@ public class MaterialGroups {
                 GT6Materials.Compounds.Flint);
         Steel.addReRegistrationToThis(GT6Materials.Compounds.Steel, GT6Materials.Compounds.Knightmetal);
         W.addReRegistrationToThis(GT6Materials.Elements.W, GT6Materials.Compounds.TungstenSintered);
-        // GT6 reverses MT.Wood into ANY.Wood itself (ANY.java:156), so the generic wood material
+        // GT6 reverses MT.Wood into ANY.Wood itself (ANY), so the generic wood material
         // belongs to both the default and the broad wood families.
         Wood.addReRegistrationToThis(GT6Materials.Woods.Wood);
         WoodDefault.addReRegistrationToThis(GT6Materials.Woods.Wood);

@@ -28,7 +28,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Set;
 
 /**
- * Port of GT6's {@code WorldgenRocks} ({@code Loader_Worldgen:618}, registered as
+ * Port of GT6's {@code WorldgenRocks} ({@code Loader_Worldgen}, registered as
  * {@code "overworld.rocks"} with {@code amount = 2, probability = 3}).
  *
  * <p>GT6's "rock litter" generator: in temperate biomes every chunk marks two target columns and

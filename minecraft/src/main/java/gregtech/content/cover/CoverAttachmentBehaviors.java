@@ -34,19 +34,19 @@ public final class CoverAttachmentBehaviors {
     /** Behaviour id of the air vent, i.e. the registry path of {@code gt6ce:air_vent}. */
     public static final String AIR_VENT = "air_vent";
 
-    /** GT6 {@code CoverDrain:109}: {@code SERVER_TIME % 20 == 5}. */
+    /** GT6 {@code CoverDrain}: {@code SERVER_TIME % 20 == 5}. */
     public static final int DRAIN_PERIOD = 20, DRAIN_PHASE = 5;
 
-    /** GT6 {@code CoverDrain:70}: {@code SERVER_TIME % 100 == 10}. */
+    /** GT6 {@code CoverDrain}: {@code SERVER_TIME % 100 == 10}. */
     public static final int RAIN_PERIOD = 100, RAIN_PHASE = 10;
 
-    /** GT6 {@code CoverVent:45}: one 360 tick cycle, one slot of 60 ticks per side, first at 30. */
+    /** GT6 {@code CoverVent}: one 360 tick cycle, one slot of 60 ticks per side, first at 30. */
     public static final int VENT_CYCLE = 360, VENT_SLOT = 60, VENT_OFFSET = 30;
 
-    /** GT6 {@code CoverVent:48,49,50,55,59,62}: {@code FL.Air.make(256000)} per operation. */
+    /** GT6 {@code CoverVent}: {@code FL.Air.make(256000)} per operation. */
     public static final int VENT_AIR_AMOUNT = 256000;
 
-    /** One fluid block is one bucket, GT6 {@code FL.Water.make(1000)} ({@code CoverDrain:129}). */
+    /** One fluid block is one bucket, GT6 {@code FL.Water.make(1000)} ({@code CoverDrain}). */
     public static final int FLUID_BLOCK_AMOUNT = 1000;
 
     /** One GT6 quantum: {@code BlockBaseFluid}'s 125 mB, i.e. one eighth of a port fluid block. */
@@ -87,7 +87,7 @@ public final class CoverAttachmentBehaviors {
     }
 
     /**
-     * GT6 {@code CoverDrain:109-155}. World blocks are drained differently by family:
+     * GT6 {@code CoverDrain}. World blocks are drained differently by family:
      *
      * <ul>
      *   <li>GT6 finite fluid blocks (the port's {@code GTWorldFluidBlock}s) are drained quantum by
@@ -143,7 +143,7 @@ public final class CoverAttachmentBehaviors {
         return true;
     }
 
-    /** GT6 {@code BlockBaseFluid:145}: horizontal, or the vertical side gravity allows. */
+    /** GT6 {@code BlockBaseFluid}: horizontal, or the vertical side gravity allows. */
     private static boolean drainsAtGtFluid(Direction side, Fluid fluid) {
         if (side.getAxis().isHorizontal()) return true;
         return gregtech.engine.fluid.FluidHazards.isLighterThanAir(fluid)
@@ -151,7 +151,7 @@ public final class CoverAttachmentBehaviors {
     }
 
     /**
-     * GT6 {@code CoverDrain:147}: {@code SIDES_HORIZONTAL[aCoverSide] || FL.gas(tFluid) ||
+     * GT6 {@code CoverDrain}: {@code SIDES_HORIZONTAL[aCoverSide] || FL.gas(tFluid) ||
      * (FL.lighter(tFluid) ? SIDES_BOTTOM : SIDES_TOP)[aCoverSide]} — a liquid block may only be
      * drained when that does not work against gravity.
      */
@@ -162,10 +162,10 @@ public final class CoverAttachmentBehaviors {
     }
 
     /**
-     * GT6 {@code CoverDrain:70-84}: rain water into the machine, every 100 ticks, from the up face
+     * GT6 {@code CoverDrain}: rain water into the machine, every 100 ticks, from the up face
      * and the four horizontal ones.
      *
-     * <p>{@code FL.fill_} ignores whether the machine had room ({@code CoverDrain:81}), so this
+     * <p>{@code FL.fill_} ignores whether the machine had room ({@code CoverDrain}), so this
      * returns the ordinary "did anything go in" answer rather than pretending to be strict.</p>
      */
     private static boolean collectRain(Level level, BlockPos machinePos, Direction side, IFluidHandler sink) {
@@ -206,7 +206,7 @@ public final class CoverAttachmentBehaviors {
     }
 
     /**
-     * GT6 {@code CoverDrain:72,81}: {@code rainfall > 0 && temperature >= 0.2} gates the collection
+     * GT6 {@code CoverDrain}: {@code rainfall > 0 && temperature >= 0.2} gates the collection
      * and the amount is {@code (long)Math.max(1, rainfall * 10000) * (thundering ? 2 : 1)}.
      *
      * <p>Split out from {@link #collectRain} because it is the only part of the rain path that can be
@@ -221,7 +221,7 @@ public final class CoverAttachmentBehaviors {
     }
 
     /**
-     * GT6 {@code CoverVent:45}: {@code SERVER_TIME % 360 == 30 + 60 * aSide} — the tick inside the
+     * GT6 {@code CoverVent}: {@code SERVER_TIME % 360 == 30 + 60 * aSide} — the tick inside the
      * 360 tick cycle at which this face's vent fires, so the six faces never all fire at once.
      *
      * <p>GT6 numbers sides in its own order ({@code SIDE_X_NEG} first), the port in
@@ -234,7 +234,7 @@ public final class CoverAttachmentBehaviors {
     }
 
     /**
-     * GT6 {@code CoverVent:47-51}: the air a vent pulls in is chosen by dimension —
+     * GT6 {@code CoverVent}: the air a vent pulls in is chosen by dimension —
      * {@code FL.Air_Nether} in the nether, {@code FL.Air_End} in the end, {@code FL.Air} everywhere
      * else.
      *
@@ -249,7 +249,7 @@ public final class CoverAttachmentBehaviors {
     }
 
     /**
-     * One air vent operation: GT6 {@code CoverVent:44-64}, air from in front of the cover into the
+     * One air vent operation: GT6 {@code CoverVent}, air from in front of the cover into the
      * machine.
      *
      * <p>The order of the original's tests is kept — cycle slot first, then
@@ -281,13 +281,13 @@ public final class CoverAttachmentBehaviors {
         var air = GTFluids.still(field);
         if (air == null) return false;
         // FL.fill_ semantics: fill what fits, drop the rest. No second call and no all-or-nothing
-        // simulate, exactly like CoverVent:48.
+        // simulate, exactly like CoverVent.
         FluidStack stack = new FluidStack(air.get(), VENT_AIR_AMOUNT);
         return sink.fill(stack, IFluidHandler.FluidAction.EXECUTE) > 0;
     }
 
     /**
-     * GT6 {@code WD.collectable_air} ({@code WD.java:399-400}): the block in front must neither
+     * GT6 {@code WD.collectable_air} ({@code WD}): the block in front must neither
      * collide nor be a liquid.
      *
      * <p>Both halves are kept and neither is narrowed to "is an air block", because the original
@@ -305,7 +305,7 @@ public final class CoverAttachmentBehaviors {
     /**
      * Whether a fluid is a gas.
      *
-     * <p>GT6's own predicate, not a table written here: {@code FL.gas} ({@code FL.java:770}) is
+     * <p>GT6's own predicate, not a table written here: {@code FL.gas} ({@code FL}) is
      * {@code STATE_GASEOUS}, which the port keeps as {@code RegisteredFluids.FluidEntry#gas()} and
      * which {@code FluidHazards} resolves for a live fluid, falling back to Forge's
      * lighter-than-air flag only for fluids GT6 never declared

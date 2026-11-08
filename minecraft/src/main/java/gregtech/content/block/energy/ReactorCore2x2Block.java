@@ -63,7 +63,7 @@ public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements E
         return new ReactorCore2x2BlockEntity(pos, state);
     }
 
-    /** GT6 {@code MultiTileEntityReactorCore:303} is the shared base of the 1x1 and the 2x2 core. */
+    /** GT6 {@code MultiTileEntityReactorCore} is the shared base of the 1x1 and the 2x2 core. */
     @Override
     public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
                              @NotNull net.minecraft.world.entity.Entity entity) {

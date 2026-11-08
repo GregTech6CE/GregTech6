@@ -1,6 +1,6 @@
 /*
  * Blueprint scanning/printing adapted from GregTech-6 Team (2024), LGPL-3.0-or-later.
- * RecipeMapScannerVisuals:89-99; RecipeMapPrinter:99-104,120-124.
+ * RecipeMapScannerVisuals; RecipeMapPrinter.
  */
 package gregtech.content.recipe;
 

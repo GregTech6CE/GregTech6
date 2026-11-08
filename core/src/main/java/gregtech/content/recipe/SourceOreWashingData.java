@@ -7,7 +7,7 @@ import java.util.Set;
  * Bounded, exact-identity washing facts from original GT6 MT at
  * 3703e40308c8c030763fd6297dea8b210d2a77b1 (W: 607771f74acb0fe647f7e9412676e72094799545).
  * Includes every source positive (20 Mercury, 12 Persulfate, 29 Firestone; 59 identities),
- * including the nine inherited refractmetal Firestone tags at MT:76. The 109 explicit
+ * including the nine inherited refractmetal Firestone tags at MT. The 109 explicit
  * negatives are source-declared candidates of the 159 reviewed positive-candidate/tag cases,
  * not a blanket default for SupplementalMaterials, addons, or arbitrary matching names.
  * IDs AND canonical names must agree; callers must separately verify native provenance

@@ -13,13 +13,13 @@ import net.minecraft.world.item.ItemStack;
  * machine part, or even a vanilla block:</p>
  *
  * <ul>
- *   <li>{@code MultiItemTechnological:50-53} gives the compact electric pump, conveyor and robot arm
+ *   <li>{@code MultiItemTechnological} gives the compact electric pump, conveyor and robot arm
  *       a cover instance ({@code new CoverPump(250 << 2i)}, {@code new CoverConveyor(512 >> i)},
  *       {@code new CoverRobotArm(512 >> i)}), so those three items are simultaneously machine
  *       components and covers.</li>
- *   <li>{@code GT_API:799-802} registers the vanilla redstone torch (both lit and unlit states) as
+ *   <li>{@code GT_API} registers the vanilla redstone torch (both lit and unlit states) as
  *       {@code CoverRedstoneTorch} and the vanilla repeater as {@code CoverRedstoneRepeater}.</li>
- *   <li>{@code ItemIntegratedCircuit:87} registers the programmed circuit (meta 0…15) as
+ *   <li>{@code ItemIntegratedCircuit} registers the programmed circuit (meta 0…15) as
  *       {@code CoverSelectorTag(i)}, i.e. the circuit's variant <em>is</em> the selected tag.</li>
  * </ul>
  *
@@ -60,7 +60,7 @@ public final class CoverItems {
         if (stack.getItem() instanceof gregtech.content.item.CanvasItem) return "canvas_cover";
         if(stack.getItem() instanceof gregtech.engine.material.MaterialFormItem material&&!MaterialCoverRules.textures(material.getPrefix().getName()).isEmpty())return "material_plate_cover";
         if (key.getNamespace().equals("minecraft")) {
-            // GT_API:799-802 - the vanilla redstone torch (either state) and repeater are covers
+            // GT_API - the vanilla redstone torch (either state) and repeater are covers
             return switch (id) {
                 case "redstone_torch", "redstone_wall_torch" -> REDSTONE_TORCH;
                 case "repeater" -> REDSTONE_REPEATER;
@@ -88,8 +88,8 @@ public final class CoverItems {
                 || id.equals("redstone_conductor_cover_emit") || id.equals("drain") || id.equals("air_vent")
                 || id.equals("item_filter") || id.equals("fluid_filter")
                 // GT6 registers these two on items whose names do not end in "_cover" - the
-                // pressure valve is a fluid-pipe cover (CoverPressureValve:44) and the asphalt cover
-                // is bound to the Asphalt Panel block (Loader_MultiTileEntities:2054). Both could be
+                // pressure valve is a fluid-pipe cover (CoverPressureValve) and the asphalt cover
+                // is bound to the Asphalt Panel block (Loader_MultiTileEntities). Both could be
                 // attached but never dispatched before, because this list did not name them.
                 || id.equals("pressure_value") || id.equals("panel_asphalt") || id.startsWith("panel_concrete") || id.startsWith("panel_wood")
                 || id.contains("machine_switch") || id.contains("selector") && id.startsWith("redstone")

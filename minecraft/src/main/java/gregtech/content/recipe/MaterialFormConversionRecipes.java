@@ -27,14 +27,14 @@ import net.minecraft.world.item.ItemStack;
  * GT6 registers these generically per material instead of listing them one by one:
  * </p>
  * <ul>
- *   <li>{@code Loader_Recipes_Handlers:217-233} — {@code RM.Compressor} handlers
+ *   <li>{@code Loader_Recipes_Handlers} — {@code RM.Compressor} handlers
  *       ({@code RecipeMapHandlerPrefix}), e.g. {@code plate 9 -> plateDense 1},
  *       {@code dust 1 -> plateGem 1}, {@code blockPlate 1 -> plateDense 1}.</li>
- *   <li>{@code Loader_Recipes_Handlers:451-489} — {@code RM.Unboxinator} handlers,
+ *   <li>{@code Loader_Recipes_Handlers} — {@code RM.Unboxinator} handlers,
  *       e.g. {@code blockIngot 1 -> ingot 9}, {@code ingot 1 -> nugget 9},
  *       {@code dust 1 -> dustTiny 9}, {@code dustSmall 1 -> dustDiv72 18},
  *       {@code toolHeadPickaxeGem 1 -> gemFlawed 2 + empty head}.</li>
- *   <li>{@code Loader_Recipes_Handlers:492-550} — {@code RM.Boxinator} handlers; the packing
+ *   <li>{@code Loader_Recipes_Handlers} — {@code RM.Boxinator} handlers; the packing
  *       direction needs a circuit ({@code ST.tag(n)}, port: {@link GTTechnological#selectorTag(int)})
  *       so the machine knows which compression is meant, exactly like GT6.</li>
  * </ul>
@@ -48,7 +48,7 @@ import net.minecraft.world.item.ItemStack;
  * fixed duration when the handler passes one (the packing/unpacking handlers all pass 16 ticks) and
  * otherwise {@code getCosts()}, which is {@code ceil(units / U * multiplier * (1 + toolQuality))}.
  * GT6 gates the two compressor passes on {@code tEasyWorkable = FURNACE || SOFT}
- * ({@code Loader_Recipes_Handlers:58}): easy materials compress in a flat 16/144 ticks, everything
+ * ({@code Loader_Recipes_Handlers}): easy materials compress in a flat 16/144 ticks, everything
  * else pays the quality-scaled multiplier 256. The port has no such material property, so the flags
  * are imported by {@code tools/extract_gt6_workability.py} into {@link MaterialWorkability}.
  * <p>
@@ -100,7 +100,7 @@ public final class MaterialFormConversionRecipes {
         return ENTRIES.size();
     }
 
-    /** GT6's compressor rows, dust to plate or gem ({@code Loader_Recipes_Handlers:217-233}). */
+    /** GT6's compressor rows, dust to plate or gem ({@code Loader_Recipes_Handlers}). */
     private static void compressor(GTMaterial material, boolean easy, int quality) {
         // dust -> plateGem. GT6 excludes materials that already have the fancy gem forms (and Ice).
         boolean gemLike = has(MaterialPrefix.gemLegendary, material)
@@ -119,7 +119,7 @@ public final class MaterialFormConversionRecipes {
         compressingBlock(material, denseTicks, BlockMaterialPrefix.blockSolid, 1, MaterialPrefix.plateDense, 1);
     }
 
-    /** GT6 {@code Loader_Recipes_Handlers:451}: the gem pickaxe head is a cast that returns two flawed gems. */
+    /** GT6 {@code Loader_Recipes_Handlers}: the gem pickaxe head is a cast that returns two flawed gems. */
     private static void gemPickaxeHead(GTMaterial material) {
         ItemStack input = GTItems.getStack(MaterialPrefix.toolHeadPickaxeGem, material, 1);
         ItemStack gems = GTItems.getStack(MaterialPrefix.gemFlawed, material, 2);
@@ -138,7 +138,7 @@ public final class MaterialFormConversionRecipes {
                 empty);
     }
 
-    /** GT6 {@code Loader_Recipes_Handlers:451-489}: 1 block / big form -> 9 (or 6/18/8) smaller forms. */
+    /** GT6 {@code Loader_Recipes_Handlers}: 1 block / big form -> 9 (or 6/18/8) smaller forms. */
     private static void unboxinator(GTMaterial material) {
         unbox("blockRaw 1 -> oreRaw 9", BlockMaterialPrefix.blockRaw, 1, MaterialPrefix.oreRaw, 9, material);
         unbox("blockDust 1 -> dust 9", BlockMaterialPrefix.blockDust, 1, MaterialPrefix.dust, 9, material);
@@ -209,7 +209,7 @@ public final class MaterialFormConversionRecipes {
         }
     }
 
-    /** GT6 {@code Loader_Recipes_Handlers:492-550}: pack smaller forms into blocks / bigger forms. */
+    /** GT6 {@code Loader_Recipes_Handlers}: pack smaller forms into blocks / bigger forms. */
     private static void boxinator(GTMaterial material) {
         box("oreRaw 9 -> blockRaw 1", MaterialPrefix.oreRaw, 9, 9, BlockMaterialPrefix.blockRaw, 1, material);
         box("dust 9 -> blockDust 1", MaterialPrefix.dust, 9, 9, BlockMaterialPrefix.blockDust, 1, material);

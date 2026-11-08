@@ -75,9 +75,9 @@ public final class GTMaterialDictionaryPages {
 
     /**
      * One labelled line of a processing page. GT6 keeps eleven targets on the material
-     * ({@code OreDictMaterial:284-295}); the port models four of them there and the other seven in
+     * ({@code OreDictMaterial}); the port models four of them there and the other seven in
      * {@link gregtech.content.data.generated.MaterialProcessingTargets}, whose rows are generated
-     * from {@code MT.java} and whose default is GT6's own ({@code OreDictMaterial:287-294}: the material
+     * from {@code MT.java} and whose default is GT6's own ({@code OreDictMaterial}: the material
      * itself, one unit).
      */
     private static void processingLine(StringBuilder out, String label, GTMaterial material) {

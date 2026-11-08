@@ -45,7 +45,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
             int amount) {
     }
 
-    /** {@code Loader_Worldgen:782-788} — the overworld springs, in GT6's order. */
+    /** {@code Loader_Worldgen} — the overworld springs, in GT6's order. */
     public static final List<Spring> SPRINGS = FluidSpringRules.SPRINGS.stream().map(v -> new Spring(v.name(), v.fluidId(), v.blockId(),
             v.probability(), v.indicatorType(), v.amount())).toList();
 
@@ -85,7 +85,7 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's floor test ({@code WorldgenFluidSpring:67}): vanilla bedrock, or a GT bedrock deposit
+     * GT6's floor test ({@code WorldgenFluidSpring}): vanilla bedrock, or a GT bedrock deposit
      * whose ore replaced it — both are a floor. This reads the ore's {@code stone} block-state
      * property; a registry-id prefix test ({@code "bedrock_ore"}) matches no registered block.
      */

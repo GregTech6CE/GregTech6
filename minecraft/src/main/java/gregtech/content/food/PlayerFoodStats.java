@@ -18,14 +18,14 @@ import net.minecraft.world.entity.player.Player;
  * {@link gregtech.content.nuclear.PlayerRadiation}, the port of GT6's radiation branch).
  *
  * <p>Numbers are GT6's, including the two config defaults it ships with
- * ({@code DeathByOverdosingCertainFoods = true}, {@code NutritionSystem = true}, {@code GT_API.java:511-512}):
+ * ({@code DeathByOverdosingCertainFoods = true}, {@code NutritionSystem = true}, {@code GT_API}):
  * <ul>
  *   <li>every 50 ticks each statistic at 25/50/75/100 applies its potion effects (durations 1200 or 300
- *       ticks, amplifiers 0..3, exactly as {@code EntityFoodTracker.tick():84-185} lists them);</li>
+ *       ticks, amplifiers 0..3, exactly as {@code EntityFoodTracker.tick()} lists them);</li>
  *   <li>at 100 the three "overdose" statistics (alcohol, caffeine, and - under the nutrition system -
  *       fat, sugar, dehydration) also deal {@code 2} damage of their own GT damage type;</li>
  *   <li>every 100 ticks each statistic decays by one, except radiation, which never decays
- *       ({@code EntityFoodTracker:193} - only a Radaway or death clears it).</li>
+ *       ({@code EntityFoodTracker} - only a Radaway or death clears it).</li>
  * </ul>
  */
 public final class PlayerFoodStats {
@@ -121,7 +121,7 @@ public final class PlayerFoodStats {
     /**
      * GT6 {@code EntityFoodTracker.tick()}'s decay pass: one point off every statistic that can decay.
      * Radiation is deliberately absent - GT6 comments that it is the only one that never decreases
-     * ({@code EntityFoodTracker:193}), so only a Radaway or death removes it.
+     * ({@code EntityFoodTracker}), so only a Radaway or death removes it.
      */
     public static void decay(Player player) {
         for (int stat = 0; stat < GTFoodStats.TRACKED; stat++) {

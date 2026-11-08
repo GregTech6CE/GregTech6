@@ -1,6 +1,6 @@
 package gregtech.content.energy;
 
-/** MultiTileEntityBoilerTank:165-175, 202-215, 242: source boiler hazards in HU/steam units. */
+/** GT6 boiler tank hazards in HU/steam units. */
 public final class BoilerHazards {
     private BoilerHazards() {}
 

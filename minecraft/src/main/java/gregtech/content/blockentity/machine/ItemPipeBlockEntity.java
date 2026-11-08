@@ -128,14 +128,14 @@ public class ItemPipeBlockEntity extends BlockEntity
 
     /**
      * Whether the covers were suspended by a controller cover on the previous cover tick, i.e. the
-     * {@code !aStopped} edge of GT6 {@code CoverRetrieverItem:55-57}
+     * {@code !aStopped} edge of GT6 {@code CoverRetrieverItem}
      * ({@code onStoppedUpdate} sets the retriever's pending value to 1 when it resumes).
      * {@link BasicMachineBlockEntity} keeps the same field.
      */
     private boolean utilityWasStopped;
 
     /**
-     * GT6's {@code aData.mValues[aSide]} for the retriever ({@code CoverRetrieverItem:56,62}): a
+     * GT6's {@code aData.mValues[aSide]} for the retriever ({@code CoverRetrieverItem}): a
      * per-face "run on the next tick even though the 20-tick clock has not come round" flag, set on
      * resume and currently cleared only after moving items. GT6 cleared it before the
      * eligible attempt, even when the search found nothing.
@@ -356,8 +356,8 @@ public class ItemPipeBlockEntity extends BlockEntity
      * the same statics and the machine block's {@code use} call order can be mirrored in
      * {@link ItemPipeBlock}'s.
      *
-     * <p>GT6's right-click on an item filter ({@code CoverFilterItem:88-112}) and on the retriever
-     * ({@code CoverRetrieverItem:123-136}): the held stack becomes the filter, once. The fluid half of
+     * <p>GT6's right-click on an item filter ({@code CoverFilterItem}) and on the retriever
+     * ({@code CoverRetrieverItem}): the held stack becomes the filter, once. The fluid half of
      * the machine's method is deliberately absent — an item pipe cannot host a fluid filter
      * ({@code CoverFilterFluid} asks a tank, and {@code FluidPipeBlockEntity} is its host).</p>
      *
@@ -379,8 +379,8 @@ public class ItemPipeBlockEntity extends BlockEntity
     /**
      * The screwdriver and soft-hammer halves of the same two covers, shared with
      * {@link BasicMachineBlockEntity}: the screwdriver flips whitelist/blacklist
-     * ({@code CoverFilterItem:58-62}, {@code CoverRetrieverItem:94-98}) and the soft hammer clears the
-     * filter ({@code CoverFilterItem:63-66}, {@code CoverRetrieverItem:99-102}).
+     * ({@code CoverFilterItem}, {@code CoverRetrieverItem}) and the soft hammer clears the
+     * filter ({@code CoverFilterItem}, {@code CoverRetrieverItem}).
      */
     public boolean configureFilterCover(Direction side, boolean screwdriver, boolean softHammer) {
         String id = coverIdOf(side);
@@ -397,7 +397,7 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     /**
-     * GT6 {@code CoverFilterItem:115-127} asked about a live face: does the item filter on {@code side}
+     * GT6 {@code CoverFilterItem} asked about a live face: does the item filter on {@code side}
      * let {@code candidate} through? The pipe's counterpart of
      * {@link BasicMachineBlockEntity#coverFilterPermits(Direction, ItemStack)}.
      *
@@ -406,7 +406,7 @@ public class ItemPipeBlockEntity extends BlockEntity
      * {@link CoverUtilityBehaviors#itemFilterPermits} fails and the candidate is never looked at. An
      * <em>empty filter stack on a real item filter cover</em> is the other case and is not permissive:
      * it returns {@code !MachineCoverSpec.inverted(cover)}, false in the default whitelist mode and
-     * true only in the inverted one — GT6 {@code CoverFilterItem:118}
+     * true only in the inverted one — GT6 {@code CoverFilterItem}
      * {@code return aData.mVisuals[aCoverSide] == 0;} read as "intercept". A suspended cover refuses
      * everything.</p>
      */
@@ -419,7 +419,7 @@ public class ItemPipeBlockEntity extends BlockEntity
     }
 
     /**
-     * GT6 {@code CoverRetrieverItem:138-139} — {@code return aCoverSide == aSide;}, on both
+     * GT6 {@code CoverRetrieverItem} — {@code return aCoverSide == aSide;}, on both
      * {@code interceptItemInsert} and {@code interceptItemExtract}: the retriever refuses
      * <em>every</em> item insert and extract on the face it owns, so a pipe can neither push into nor
      * pull out of that face; only the retriever itself moves items there.
@@ -432,7 +432,7 @@ public class ItemPipeBlockEntity extends BlockEntity
     /**
      * The two item-cover interception rules of one face as the single question every traffic path
      * asks: may {@code candidate} cross {@code side}? GT6 asks them as two hooks on the same face
-     * ({@code CoverFilterItem:115-127}, {@code CoverRetrieverItem:138-139}) and the port composes them
+     * ({@code CoverFilterItem}, {@code CoverRetrieverItem}) and the port composes them
      * here for the same reason {@code BasicMachineBlockEntity} keeps them as two methods and calls
      * both — this is the one place they are combined, and it is the only predicate
      * {@link #sendTo}, the capability view and the retriever's own face consult.
@@ -845,7 +845,7 @@ public class ItemPipeBlockEntity extends BlockEntity
                 // path below is byte for byte the pre-cover one and no face view is ever built. A
                 // face-aware handler exists only where an item filter or a retriever actually sits,
                 // because those are the two covers whose rule is an item rule (§112 / GT6
-                // CoverFilterItem:115-127, CoverRetrieverItem:138-139).
+                // CoverFilterItem, CoverRetrieverItem).
                 if (coverStore.hasCovers() && isItemCoverFace(side)) return faceHandler(side).cast();
                 return sideHandler(side).cast();
             }
@@ -1028,7 +1028,7 @@ public class ItemPipeBlockEntity extends BlockEntity
      * block entity <em>directly</em> as {@code CoverUtilityBehaviors.tickRetriever}'s {@code target} and
      * not the face view, so the pipe's own insert is not refused by the blanket rule the retriever
      * applies to its face. GT6 draws that line the same way from the other end: its retriever inserts
-     * into the inventory across the face ({@code CoverRetrieverItem:67,72}) and only extracts through
+     * into the inventory across the face ({@code CoverRetrieverItem}) and only extracts through
      * the pipe's sides, and the port's substitution of "the host's own slots" for that target has always
      * bypassed the host's own intercepts — the machine's retriever does too.</p>
      */
@@ -1041,8 +1041,8 @@ public class ItemPipeBlockEntity extends BlockEntity
         }
 
         /**
-         * GT6 {@code CoverFilterItem:115-120} {@code interceptItemInsert} and
-         * {@code CoverRetrieverItem:138}: refuse, never partially insert.
+         * GT6 {@code CoverFilterItem} {@code interceptItemInsert} and
+         * {@code CoverRetrieverItem}: refuse, never partially insert.
          */
         @NotNull
         @Override
@@ -1052,8 +1052,8 @@ public class ItemPipeBlockEntity extends BlockEntity
         }
 
         /**
-         * GT6 {@code CoverFilterItem:122-127} {@code interceptItemExtract} and
-         * {@code CoverRetrieverItem:139}, asked with the stack the slot holds — which is the stack the
+         * GT6 {@code CoverFilterItem} {@code interceptItemExtract} and
+         * {@code CoverRetrieverItem}, asked with the stack the slot holds — which is the stack the
          * original is handed ({@code interceptItemExtract(..., ItemStack aStack, ...)}).
          */
         @NotNull

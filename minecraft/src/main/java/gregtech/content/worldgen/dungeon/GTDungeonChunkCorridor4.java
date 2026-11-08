@@ -2,8 +2,8 @@ package gregtech.content.worldgen.dungeon;
 
 /**
  * Port of GT6's {@code DungeonChunkCorridor4}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkCorridor4.java:29-103}), the corridor GT6 builds for a
- * cell with four dungeon neighbours ({@code WorldgenDungeonGT:289}), i.e. a crossing.
+ * ({@code DungeonChunkCorridor4}), the corridor GT6 builds for a
+ * cell with four dungeon neighbours ({@code WorldgenDungeonGT}), i.e. a crossing.
  *
  * <p>GT6 turns a crossing into a hall: a 12x12 chamber (local 2..13) with brick walls, a tiled floor and
  * a small-tiled ceiling, in which the sixteen columns at x/z 4, 7, 8 and 11 are chiselled at the floor
@@ -15,13 +15,13 @@ package gregtech.content.worldgen.dungeon;
  * <ul>
  *   <li>The hall reaches local {@code y = 6}, and the ceiling lamps put their redstone brick at
  *       {@code y = 7}. That is GT6's own cell height: GT6's rooms are nine
- *       blocks tall (floor 0, interior 1..6, ceiling 7, tile skin 8, see {@code DungeonChunkBarracks:46},
- *       {@code DungeonChunkEntrance:94} and {@code DungeonChunkRoomFarmMobs:59}), so a crossing is as
+ *       blocks tall (floor 0, interior 1..6, ceiling 7, tile skin 8, see {@code DungeonChunkBarracks},
+ *       {@code DungeonChunkEntrance} and {@code DungeonChunkRoomFarmMobs}), so a crossing is as
  *       tall as a room while the port's {@link GTDungeonData} {@code FLOOR_Y}/{@code CEILING_Y}
  *       constants only describe the 0..4 shell of a plain corridor. GT6's coordinates are kept, so a
  *       crossing stays inside the dungeon's room height; only the four entrance arms (0..4) are
  *       corridor sized, exactly as in GT6.</li>
- *   <li>{@link GTDungeonData#lamp} is GT6's {@code DungeonData:163-167} lamp and keeps the
+ *   <li>{@link GTDungeonData#lamp} is GT6's {@code DungeonData} lamp and keeps the
  *       {@code +1} redstone brick above the ceiling, so the lamps of the crossing behave like GT6's.</li>
  *   <li>GT6 prints the stack trace of a failed pillar; the port swallows it like
  *       {@link GTDungeonChunkCorridor} does, because {@code WorldgenDungeonGT}'s dispatcher already

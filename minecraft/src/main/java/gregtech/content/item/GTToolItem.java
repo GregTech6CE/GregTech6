@@ -94,7 +94,7 @@ public class GTToolItem extends Item {
         var multiblock = gregtech.engine.multiblock.MultiblockTools.use(context);
         if (multiblock.consumesAction()) return multiblock;
         // GT6's TOOL_plunger and TOOL_igniter clicks are onItemUseFirst behaviours as well, so
-        // they run before Block#use (Behavior_Plunger_Fluid:49-62, Behavior_FlintAndTinder:45-61).
+        // they run before Block#use (Behavior_Plunger_Fluid, Behavior_FlintAndTinder).
         if (!context.getLevel().isClientSide()) {
             if (toolType == GTToolType.HARD_HAMMER) {
                 var prospect = gregtech.content.tool.HammerProspecting.use(context);
@@ -132,7 +132,7 @@ public class GTToolItem extends Item {
                 return InteractionResult.SUCCESS;
             }
             // the builder's wand is a tool, not a multi-item, so its click lands here as well
-            // (GT6 hangs Behavior_Builderwand on TOOL_builderwand, GT_Tool_Builderwand:62).
+            // (GT6 hangs Behavior_Builderwand on TOOL_builderwand, GT_Tool_Builderwand).
             if (toolType == GTToolType.BUILDER_WAND
                     && gregtech.content.item.behavior.BehaviorBuilderWand.useOn(
                             context.getLevel(), clicked, context.getClickedFace(), context.getPlayer(),
@@ -278,7 +278,7 @@ public class GTToolItem extends Item {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        // GT6's onLeftClickEntity creeper branch (Behavior_FlintAndTinder:69-78) - a flint and
+        // GT6's onLeftClickEntity creeper branch (Behavior_FlintAndTinder) - a flint and
         // tinder lights a creeper instead of just hitting it.
         if (toolType == GTToolType.FLINT_AND_TINDER && attacker instanceof Player player
                 && gregtech.content.item.behavior.BehaviorFlintAndTinder.igniteCreeper(

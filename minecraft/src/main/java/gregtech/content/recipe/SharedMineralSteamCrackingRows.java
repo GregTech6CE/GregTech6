@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/** Mineral wax cracking from original Loader_Recipes_Ores:385-387,473-481.
+/** Mineral wax cracking from original Loader_Recipes_Ores.
  * Selected registered forms determine admission, not a named ore or generation-permission list.
  * Ambient byproduct phases reuse the source-backed centrifuge resolver; unknown is not solid.
  */

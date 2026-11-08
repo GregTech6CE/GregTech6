@@ -11,7 +11,7 @@ import gregtech.content.registry.GTWoods;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomLibraryNormal}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomLibraryNormal.java:36-105}): GT6's plain library room.
+ * ({@code DungeonChunkRoomLibraryNormal}): GT6's plain library room.
  * It is {@link GTDungeonChunkRoomLibrary}'s reading hall plus, on every side of the cell that has no
  * neighbour, a low wall of two shelves in slab supports, with coins, pots, a cup and up to two ZPM
  * modules in front of it.
@@ -50,7 +50,7 @@ import gregtech.content.registry.GTWoods;
  */
 public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
 
-    /** GT6's tag for this variant ({@code WorldgenDungeonGT.TAG_LIBRARY_NORMAL}, {@code WorldgenDungeonGT:77}). */
+    /** GT6's tag for this variant ({@code WorldgenDungeonGT.TAG_LIBRARY_NORMAL}, {@code WorldgenDungeonGT}). */
     public static final String TAG_LIBRARY_NORMAL = "gt.dungeon.library.normal";
 
     /** GT6's shelf support: an upside down slab of its extra Blue Spruce wood (see the class javadoc). */

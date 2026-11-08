@@ -59,7 +59,7 @@ public class GTNetherDepositFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * Nether quartz in netherrack (GT6 {@code WorldgenNetherQuartz}, {@code Loader_Worldgen:600}).
+     * Nether quartz in netherrack (GT6 {@code WorldgenNetherQuartz}, {@code Loader_Worldgen}).
      *
      * <p>GT6 walks every column of the chunk and uses its value noise at two fixed heights —
      * {@code 40 + noise(x, 0, z, 200)} and {@code 40 + noise(x, 64, z, 200)} — replacing the

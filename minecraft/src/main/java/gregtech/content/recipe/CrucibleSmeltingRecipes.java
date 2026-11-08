@@ -28,7 +28,7 @@ import net.minecraft.world.item.ItemStack;
  * and {@code getNEIRecipes} lists those forms in the recipe viewer. The smelting crucible machine
  * is registered for both crucible maps
  * ({@code RM.CrucibleSmelting.mRecipeMachineList.addAll(RM.CrucibleAlloying.mRecipeMachineList)},
- * {@code Loader_MultiTileEntities:294}), so its tab is what tells a player at which temperature a
+ * {@code Loader_MultiTileEntities}), so its tab is what tells a player at which temperature a
  * material melts and what it turns into — using the actual raw-ore crushing payload before smelting, including the iron chain, where
  * {@code Pig Iron → Wrought Iron} needs 2011 K.
  * </p>

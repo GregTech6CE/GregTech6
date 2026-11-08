@@ -196,7 +196,7 @@ public final class GTToolBlocks {
                         gregtech.content.material.Materials.Brown.getColor()),
                 // GT6 Rope: MT.Brown
                 block -> new BlockItem(block, new Item.Properties().stacksTo(64)));
-        // GT6's five other ropes (Loader_MultiTileEntities:2087-2091); the shared greyscale texture is
+        // GT6's five other ropes (Loader_MultiTileEntities); the shared greyscale texture is
         // tinted by the rope's material, so no extra art is needed.
         ROPE_SILK = rope(registrar, gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(
                 v -> v.id().equals("rope_silk")).findFirst().orElseThrow());
@@ -214,7 +214,7 @@ public final class GTToolBlocks {
                         10F, 5, gregtech.content.material.Materials.Red.getColor()),
                 // GT6 Dynamite: MT.Red, quality 10
                 block -> new BlockItem(block, new Item.Properties().stacksTo(64)));
-        // GT6's other two explosives (Loader_MultiTileEntities:2235,2237): the boomstick's quality is
+        // GT6's other two explosives (Loader_MultiTileEntities): the boomstick's quality is
         // 10 like the dynamite's, the strong dynamite's is 40 - four times the resistance threshold, with the same 3x3x3 volume.
         BOOMSTICK = dynamite(registrar, "boomstick", 10F, 3, gregtech.content.material.Materials.Orange);
         DYNAMITE_STRONG = dynamite(registrar, "strong_dynamite", 40F, 5, gregtech.content.material.Materials.Purple);
@@ -254,8 +254,8 @@ public final class GTToolBlocks {
                 BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(1f, 5f).sound(SoundType.WOOD));
         simple(registrar, "plant_pot",
                 BlockBehaviour.Properties.of().mapColor(MapColor.CLAY).strength(1f, 5f).sound(SoundType.STONE));
-        // GT6's bumbliary (Loader_MultiTileEntities:2221, hardness 5.0/resistance 5.0) and the
-        // advanced one ({@code Loader_MultiTileEntities:2222}, stainless steel, 6.0/6.0). The port
+        // GT6's bumbliary (Loader_MultiTileEntities, hardness 5.0/resistance 5.0) and the
+        // advanced one ({@code Loader_MultiTileEntities}, stainless steel, 6.0/6.0). The port
         // keeps GT6's ids, so the existing lang keys and the model keep working.
         GTBumbleBlocks.initializeApiaries(registrar);
         BUMBLIARY = RegisteredBlock.reference("bumbliary");

@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomPortalNether}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomPortalNether.java:35-191}): the dead end that leads
+ * ({@code DungeonChunkRoomPortalNether}): the dead end that leads
  * to the Nether. It is GT6's vault (see {@link GTDungeonChunkRoomPortal}) whose floor becomes netherrack
  * with glowstone at its sixteen lamp pillars and whose ceiling becomes Netherlicious shroomlight and
  * wart blocks, plus - per connection direction - a supply chest of obsidian, netherrack, glowstone,
@@ -47,7 +47,7 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public class GTDungeonChunkRoomPortalNether extends GTDungeonChunkRoomPortal {
 
-    /** GT6's room tag ({@code WorldgenDungeonGT:69}); a cell that already carries it is refused. */
+    /** GT6's room tag ({@code WorldgenDungeonGT}); a cell that already carries it is refused. */
     public static final String TAG_PORTAL_NETHER = "gt.dungeon.portal.nether";
 
     @Override

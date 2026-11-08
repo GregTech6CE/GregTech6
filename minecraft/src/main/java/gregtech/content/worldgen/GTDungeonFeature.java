@@ -43,7 +43,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 /**
  * Port of GT6's {@code WorldgenDungeonGT} ({@code gregapi/worldgen/dungeon/WorldgenDungeonGT.java},
  * registered as {@code new WorldgenDungeonGT("overworld.structure.dungeon.large", T, 100, 3, 7, 20, 20, 6, T, F,
- * F, T, T, T, T, T, GEN_OVERWORLD, …)} in {@code Loader_Worldgen:652}).
+ * F, T, T, T, T, T, GEN_OVERWORLD, …)} in {@code Loader_Worldgen}).
  *
  * <p>The dungeon is a grid of chunk-sized cells: {@code -1} barracks and {@code -2} entrance (GT6's two
  * "important" cells), {@code -128} corridors and positive ids for the rooms, all laid out by
@@ -56,14 +56,14 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
  * list holds the storage room and the five portal rooms (one per dimension pair); the port keeps its
  * storage room plus the Nether and End portal rooms, because the Twilight, Aether and Mystcraft portals
  * are other-mod content. Every cell also carries GT6's five key stacks
- * ({@code WorldgenDungeonGT:169-173}), which the barracks, the workshop and the library hand out.</p>
+ * ({@code WorldgenDungeonGT}), which the barracks, the workshop and the library hand out.</p>
  */
 public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
 
     /** Independent spike-colour draw for each outer cell, unaffected by corridor generation order. */
     private static final long FARM_PLATFORM_SALT = 0x4641524D5F475436L;
 
-    /** GT6's static cell types ({@code WorldgenDungeonGT:57-66}). */
+    /** GT6's static cell types ({@code WorldgenDungeonGT}). */
     public static final GTDungeonChunk CORRIDOR = new GTDungeonChunkCorridor();
 
     public static final GTDungeonChunk CORRIDOR3 = new GTDungeonChunkCorridor3();
@@ -98,7 +98,7 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
-    /** GT6's five dungeon keys ({@code WorldgenDungeonGT:161}), one per dungeon. */
+    /** GT6's five dungeon keys ({@code WorldgenDungeonGT}), one per dungeon. */
     public static final int KEY_COUNT = 5;
 
     public GTDungeonFeature() {
@@ -258,7 +258,7 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's dungeon key ids ({@code WorldgenDungeonGT:170-171}): the first id is random and every further
+     * GT6's dungeon key ids ({@code WorldgenDungeonGT}): the first id is random and every further
      * one is exactly one lower ({@code tKeyIDs[i] = tKeyIDs[i - 1] - 1}), so the five ids are always
      * distinct and reproducible from the dungeon seed.
      */
@@ -268,7 +268,7 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * One of GT6's five key stacks ({@code WorldgenDungeonGT:172-173}):
+     * One of GT6's five key stacks ({@code WorldgenDungeonGT}):
      * {@code IL.KEYS[aRandom.nextInt(IL.KEYS.length)].getWithNameAndNBT(1, "Key #" + (i + 1),
      * UT.NBT.makeLong(NBT_KEY, tKeyIDs[i]))}.
      *

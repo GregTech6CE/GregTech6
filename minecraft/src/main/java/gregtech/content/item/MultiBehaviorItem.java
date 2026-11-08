@@ -50,7 +50,7 @@ public final class MultiBehaviorItem extends TechItem {
 
     /**
      * GT6's multi-item {@code onItemRightClick} slot. Of the port's ~1270 multi-items only the
-     * remote activator has one ({@code Behavior_Remote:76-90}, "activate every bound coordinate of
+     * remote activator has one ({@code Behavior_Remote}, "activate every bound coordinate of
      * this dimension"), so everything else falls straight through.
      *
      * <p><b>Falling through means calling {@code super}, not returning {@code PASS}.</b>

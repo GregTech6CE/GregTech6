@@ -18,7 +18,7 @@ import java.util.List;
  * The dungeon's gate and layout, ported from GT6's {@code WorldgenDungeonGT}
  * ({@code gregapi/worldgen/dungeon/WorldgenDungeonGT.java}, registered as
  * {@code new WorldgenDungeonGT("overworld.structure.dungeon.large", T, 100, 3, 7, 20, 20, 6, T, F, F, T, T, T, T, T,
- * GEN_OVERWORLD, …)} in {@code Loader_Worldgen:652}).
+ * GEN_OVERWORLD, …)} in {@code Loader_Worldgen}).
  *
  * <table>
  *   <caption>GT6's registration values, kept as constants here</caption>
@@ -39,7 +39,7 @@ import java.util.List;
  */
 public final class GTDungeonLayout {
 
-    /** GT6's registration values ({@code Loader_Worldgen:652}). */
+    /** GT6's registration values ({@code Loader_Worldgen}). */
     public static final int PROBABILITY = 100;
     public static final int MIN_SIZE = 3, MAX_SIZE = 7;
     public static final int MIN_Y = 20, MAX_Y = 20;
@@ -88,7 +88,7 @@ public final class GTDungeonLayout {
     private static int nearestAnchor(int chunk) {return DungeonLayoutRules.nearestAnchor(chunk, settings());}
 
     /**
-     * GT6's anchor test on one axis ({@code WorldgenDungeonGT:151-152}):
+     * GT6's anchor test on one axis ({@code WorldgenDungeonGT}):
      * {@code Math.abs(chunk) % GRID_PERIOD == ANCHOR_OFFSET}, i.e. {@code 5, 16, 27, ...} and
      * {@code -5, -16, -27, ...}. This is the very rule {@link #anchorFor} snaps a chunk to; the structure
      * placement ({@code gregtech.content.worldgen.GTDungeonPlacement}) declares exactly these chunks
@@ -138,7 +138,7 @@ public final class GTDungeonLayout {
         return RandomSource.create(dungeonSeed).nextInt(gregtech.GregTechConfig.Number.DUNGEON_PROBABILITY.value()) == 0;
     }
 
-    /** GT6's anchor-based spawn clearance ({@code WorldgenDungeonGT:142-144}). */
+    /** GT6's anchor-based spawn clearance ({@code WorldgenDungeonGT}). */
     public static boolean passesAnchorClearance(ChunkPos anchor) {
         int minX = anchor.getMinBlockX(), minZ = anchor.getMinBlockZ();
         return DungeonLayoutRules.clearance(minX,minZ, settings());
@@ -177,7 +177,7 @@ public final class GTDungeonLayout {
     public static int size(RandomSource random) {return DungeonLayoutRules.size(random::nextInt, settings());}
 
     /**
-     * GT6's layout algorithm ({@code WorldgenDungeonGT:159-248}): pick two "important" cells
+     * GT6's layout algorithm ({@code WorldgenDungeonGT}): pick two "important" cells
      * ({@code -1} barracks, {@code -2} entrance), scatter up to {@link #ROOM_ID_COUNT} normal rooms,
      * carve a path from every occupied cell towards the centre, and then run GT6's two cleanup passes
      * that remove corridors which would not connect anything.

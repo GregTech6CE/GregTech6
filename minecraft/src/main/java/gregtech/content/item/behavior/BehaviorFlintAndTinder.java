@@ -35,10 +35,10 @@ import javax.annotation.Nullable;
  */
 public final class BehaviorFlintAndTinder {
 
-    /** GT6 {@code GT_Proxy:95} / {@code GT6_Main:111}: default {@code "general.FlintAndSteelChance"}. */
+    /** GT6 {@code GT_Proxy} / {@code GT6_Main}: default {@code "general.FlintAndSteelChance"}. */
     public static final int DEFAULT_FLINT_CHANCE = 30;
 
-    /** GT6 {@code Behavior_FlintAndTinder:48}: {@code long tDamage = 5000} when no branch fired. */
+    /** GT6 {@code Behavior_FlintAndTinder}: {@code long tDamage = 5000} when no branch fired. */
     public static final long NO_IGNITION_COST = 5000L;
 
     /** GT6's: {@code units(max(10000, tDamage), 10000, 100, T)}. */
@@ -63,7 +63,7 @@ public final class BehaviorFlintAndTinder {
     }
 
     /**
-     * GT6 {@code Behavior_FlintAndTinder:45-61}: one click of the flint and tinder.
+     * GT6 {@code Behavior_FlintAndTinder}: one click of the flint and tinder.
      *
      * @param level       the level the clicked block stands in
      * @param pos         the clicked block
@@ -112,7 +112,7 @@ public final class BehaviorFlintAndTinder {
 //?}
         if (cost > 0) return cost;
 //? if >=1.21.1 {
-        /*if (ManualToolBehaviorAccess.primeTnt(level, pos, player)) return ManualToolBehaviorAccess.TNT_COST;   // GT6 ToolCompat:203-207
+        /*if (ManualToolBehaviorAccess.primeTnt(level, pos, player)) return ManualToolBehaviorAccess.TNT_COST;   // GT6 ToolCompat
         if (ManualToolBehaviorAccess.lightVanillaFire(level, player, pos, side, stack)) return ManualToolBehaviorAccess.TNT_COST;
 *///?} else {
         if (ItemBehaviors.primeTnt(level, pos, player)) return ItemBehaviors.TNT_COST;   // GT6 ToolCompat:203-207
@@ -122,7 +122,7 @@ public final class BehaviorFlintAndTinder {
     }
 
     /**
-     * GT6 {@code Behavior_FlintAndTinder:69-78}: left-clicking a creeper lights its fuse for 100
+     * GT6 {@code Behavior_FlintAndTinder}: left-clicking a creeper lights its fuse for 100
      * durability.
      *
      * <p>The current helper has no side guard; GTToolItem invokes it from hurtEnemy.

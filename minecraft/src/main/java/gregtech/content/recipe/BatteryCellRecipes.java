@@ -24,7 +24,7 @@ import java.util.List;
  * GT6's five filled battery cells: the empty cell is canned together with its electrolyte.
  *
  * <p>GT6 declares the empty cells as ordinary shaped recipes
- * ({@code MultiItemTechnological:464,469,474,479,484}) and marks them
+ * ({@code MultiItemTechnological}) and marks them
  * <em>"Battery Part (doesn't require Canning Machine!)"</em>, while each filled cell carries a
  * {@code FluidContainerData} which makes the Canning Machine able to
  * fill it:</p>
@@ -37,9 +37,9 @@ import java.util.List;
  * lithium-manganese HF gas 2000 mB ({@code MT.HF.gas(U*2, T)})
  * </pre>
  *
- * <p>GT6 produces these rows from the fluid-container registry ({@code OreDictManager:296-300} plus
+ * <p>GT6 produces these rows from the fluid-container registry ({@code OreDictManager} plus
  * {@code FL.set}), so the machine work comes from the Canning Machine's generic container pass —
- * {@code RM.java:743-746} shows it as {@code Canner.addRecipe2(T, 16, 16, …)}: 16 EU/t for 16 ticks.
+ * {@code RM} shows it as {@code Canner.addRecipe2(T, 16, 16, …)}: 16 EU/t for 16 ticks.
  * The port expresses the same conversion as explicit rows because its battery cells are plain items
  * rather than registered fluid containers.</p>
  */
@@ -76,7 +76,7 @@ public final class BatteryCellRecipes {
                 SKIPPED.add(fill.source() + ": the port registers no " + fill.fluid() + " fluid");
                 continue;
             }
-            // RM.java:743-746 - canning runs at 16 EU/t for 16 ticks
+            // RM - canning runs at 16 EU/t for 16 ticks
             Recipe recipe = MachineRecipeMaps.Canner.addRecipe(new Recipe(
                     new ItemStack[]{empty.copy()}, new ItemStack[]{filled}, null, null,
                     new FluidStack[]{fluid}, null, 16, 16, 0));

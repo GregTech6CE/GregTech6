@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 /**
- * GT6's shaped tool-<em>head</em> row ({@code Loader_Tools:293-313}, the {@code mToolHeadRecipes} of
+ * GT6's shaped tool-<em>head</em> row ({@code Loader_Tools}, the {@code mToolHeadRecipes} of
  * every head-based tool), e.g. {@code PICKAXE = {"PII","f h"}} with the gem variant
  * {@code {"CGG","f  "}}.
  *

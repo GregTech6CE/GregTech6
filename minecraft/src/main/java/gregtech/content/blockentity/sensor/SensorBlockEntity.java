@@ -37,18 +37,18 @@ public class SensorBlockEntity extends BlockEntity {
         KILOBUCKETOMETER, GIBBLOMETER, STACKOMETER, LUMINOMETER,
         PLAYERCOUNTER, CHRONOMETER, GEIGER, LASEROMETER,
         // GT6 has four weight-o-meters that differ only in their scale (gramm / kilogramme /
-        // tons / kilotons - Loader_MultiTileEntities:1988-1991) and a TPS meter. The port's
+        // tons / kilotons - Loader_MultiTileEntities) and a TPS meter. The port's
         // WEIGHTOMETRIC is GT6's Heavy one (tonnes, maximum 65535), so these complete the set.
         WEIGHTOMETRIC_LIGHT, WEIGHTOMETRIC_MEDIUM, WEIGHTOMETRIC_SUPER_HEAVY, TPS, KILOGIBBLOMETER
     }
 
-    /** GT6 {@code MultiTileEntityTPSmeter:62} {@code getTickRate()}: one sample every 20 ticks. */
+    /** GT6 {@code MultiTileEntityTPSmeter} {@code getTickRate()}: one sample every 20 ticks. */
     public static final int TPS_TICK_RATE = 20;
 
-    /** GT6 {@code MultiTileEntityTPSmeter:46}: the value before the first measurement. */
+    /** GT6 {@code MultiTileEntityTPSmeter}: the value before the first measurement. */
     public static final long TPS_DEFAULT = 2000L;
 
-    /** GT6 {@code MultiTileEntityTPSmeter:57} {@code getCurrentMax()}: 20.00 TPS on the display. */
+    /** GT6 {@code MultiTileEntityTPSmeter} {@code getCurrentMax()}: 20.00 TPS on the display. */
     public static final long TPS_MAX = 2000L;
 
     private Direction configuredInput;
@@ -86,11 +86,11 @@ public class SensorBlockEntity extends BlockEntity {
     private int threshold;
     private boolean hexadecimal;
 
-    /** GT6 {@code MultiTileEntityTPSmeter:39}: the last wall-clock sample and the value it produced. */
+    /** GT6 {@code MultiTileEntityTPSmeter}: the last wall-clock sample and the value it produced. */
     private long tpsSampleTime;
     private long tpsValue = TPS_DEFAULT;
 
-    /** GT6 {@code MultiTileEntityTPSmeter:42-49}: sample the wall clock every {@code getTickRate()} ticks. */
+    /** GT6 {@code MultiTileEntityTPSmeter}: sample the wall clock every {@code getTickRate()} ticks. */
     public void sampleTps() {
         long now = System.currentTimeMillis();
         if (tpsSampleTime != 0L) tpsValue = tpsFromElapsed(now - tpsSampleTime, TPS_TICK_RATE);
@@ -100,7 +100,7 @@ public class SensorBlockEntity extends BlockEntity {
     public long tpsValue() { return tpsValue; }
 
     /**
-     * The arithmetic of {@code MultiTileEntityTPSmeter:46}:
+     * The arithmetic of {@code MultiTileEntityTPSmeter}:
      * {@code (mTime - tTime > 0 ? (getTickRate() * 100000) / (mTime - tTime) : 2000)} - i.e. hundredths
      * of a tick per second, so 20 TPS reads as {@code 2000} and 10 TPS as {@code 1000}. Split out so a
      * test can drive it without a clock.
@@ -202,7 +202,7 @@ public class SensorBlockEntity extends BlockEntity {
         if (target instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity part)
             target = part.sensorTarget();
 
-        // GT6 MultiTileEntityTPSmeter:42-49 - the TPS meter measures the server, not the block in
+        // GT6 MultiTileEntityTPSmeter - the TPS meter measures the server, not the block in
         // front of it, so it is sampled on its own 20-tick beat and needs no target at all.
         if (be.kind == Kind.TPS && level.getGameTime() % TPS_TICK_RATE == 0) be.sampleTps();
 

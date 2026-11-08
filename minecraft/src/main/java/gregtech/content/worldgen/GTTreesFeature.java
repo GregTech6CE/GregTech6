@@ -20,7 +20,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * Port of GT6's {@code WorldgenTree*} surface generators ({@code Loader_Worldgen:608-616}).
+ * Port of GT6's {@code WorldgenTree*} surface generators ({@code Loader_Worldgen}).
  *
  * <p>GT6 registers one {@code WorldgenOnSurface} per tree species: {@code amount = 1} target column
  * per chunk, a {@code 1/probability} roll on that column, a biome-name gate
@@ -60,7 +60,7 @@ public class GTTreesFeature extends Feature<NoneFeatureConfiguration> {
             id("grove"));
 
     /**
-     * GT6 {@code Loader_Worldgen:608-616} in registration order — {@code (species, probability,
+     * GT6 {@code Loader_Worldgen} in registration order — {@code (species, probability,
      * GT6 biome set, 1.20.1 biomes)}. Rainbowood is listed by GT6 too, but its biome set contains
      * only the modded "Enchanted Forest", so it has no vanilla biome here (documented above).
      */

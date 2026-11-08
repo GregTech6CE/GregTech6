@@ -61,7 +61,7 @@ public final class ScannerItem extends TechItem implements IItemEnergy {
 //?}
     }
 
-    /** MultiItem:392-399: discharged items stack; charged items do not. */
+    /** MultiItem: discharged items stack; charged items do not. */
     @Override public int getMaxStackSize(ItemStack stack) {
         return !spec.debug() && stored(stack) > 0 ? 1 : 64;
     }
@@ -87,7 +87,7 @@ public final class ScannerItem extends TechItem implements IItemEnergy {
         if (spec.debug()) return amount;
         long stored = stored(stack);
         long accepted = spec.injectionPackets(stack.getCount(), stored, size, amount);
-        // EnergyStat:75,128-149 stores the last oversized partial packet, without clamping it.
+        // EnergyStat stores the last oversized partial packet, without clamping it.
         if (execute && accepted > 0) setCharge(stack, stored + accepted * Math.abs(size));
         return accepted;
     }

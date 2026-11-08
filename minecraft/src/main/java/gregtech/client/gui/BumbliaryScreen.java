@@ -8,12 +8,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
- * GT6's bumbliary screen ({@code ContainerClient}, {@code MultiTileEntityBumbliary:497-509}): GT6's own
+ * GT6's bumbliary screen ({@code ContainerClient}, {@code MultiTileEntityBumbliary}): GT6's own
  * GUI sheet, drawn as it is.
  *
  * <p>The title tab stays outside the bee slots. The standard machine uses
  * {@code textures/gui/machines/Bumbliary.png}, the advanced one
- * {@code textures/gui/machines/BumbliaryAdvanced.png} ({@code MultiTileEntityBumbliaryAdvanced:469,476});
+ * {@code textures/gui/machines/BumbliaryAdvanced.png} ({@code MultiTileEntityBumbliaryAdvanced});
  * the port ships both under lower-case names.</p>
  */
 public class BumbliaryScreen extends MachineContainerScreen<BumbliaryContainerMenu> {

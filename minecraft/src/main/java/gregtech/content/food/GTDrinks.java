@@ -25,7 +25,7 @@ import java.util.Map;
  * GT6 {@code CS.DrinksGT}: what a drink does to you.
  *
  * <p>GT6 registers every drinkable fluid in {@code Loader_Fluids} as a {@code FoodStatDrink}, which puts the
- * entry into {@code DrinksGT.REGISTER} keyed by the fluid's name ({@code FoodStatDrink.java:46-52}); a
+ * entry into {@code DrinksGT.REGISTER} keyed by the fluid's name ({@code FoodStatDrink}); a
  * GT6 bottle (its source portion, {@code MultiItemBottles}) reads it through {@code FoodStatFluid}.
  * The port keys the same table by {@link Fluid}, generated from {@code Loader_Fluids.java} into
  * {@link GTDrinksGen} (345 rows; the fluid is resolved through {@link RegisteredFluids#get(String)}, which

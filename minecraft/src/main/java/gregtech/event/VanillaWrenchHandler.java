@@ -46,14 +46,14 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
  * GT6's wrench and screwdriver clicks on vanilla blocks, which no block of this port sees because
  * the original ran them through {@code ToolCompat}.
  *
- * <p>The click order mirrors {@code ToolCompat.java:298-366}: pillars cycle their axis, the
+ * <p>The click order mirrors {@code ToolCompat}: pillars cycle their axis, the
  * workbench and bookshelf are taken apart, and the twelve blocks of
  * {@link VanillaWrenchTargets} pop when the clicked 3×3 cell is the face they already point at and
  * rotate to the selected cell otherwise. A click that lands on no legal cell is left alone, so the
  * block's own right-click still runs, exactly like the original returning {@code 0}.</p>
  *
  * <p>Comparators and repeaters rotate clockwise under the screwdriver
- * ({@code ToolCompat.java:246-250}); the wrench never touches them.</p>
+ * ({@code ToolCompat}); the wrench never touches them.</p>
  */
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
 public final class VanillaWrenchHandler {

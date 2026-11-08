@@ -37,7 +37,7 @@ public final class ProcessingToolRenderer implements BlockEntityRenderer<Process
         var stack = tool.displayItem();
         if (stack.isEmpty()) return;
         if (bowl || bath) {
-            // MultiTileEntityMixingBowl:402-408 and MultiTileEntityBathingPot:381-388 show a
+            // MultiTileEntityMixingBowl and MultiTileEntityBathingPot show a
             // material dust top face (gray MT.NULL blockDust when the item has no material),
             // never the ingredient's item model.
             var material = gregtech.engine.material.ItemMaterialRegistry.get(stack)

@@ -69,10 +69,10 @@ public final class CoverUtilityBehaviors {
 
     // ── NBT keys, spelled exactly as GT6 spells them ────────────────────────────────
 
-    /** GT6 {@code CoverFilterItem:47,65,95} / {@code CoverRetrieverItem:65}: the filtered item. */
+    /** GT6 {@code CoverFilterItem} / {@code CoverRetrieverItem}: the filtered item. */
     public static final String FILTER_ITEM_KEY = "gt.filter.item";
 
-    /** GT6 {@code CoverFilterFluid:51,68,95}: the filtered fluid. */
+    /** GT6 {@code CoverFilterFluid}: the filtered fluid. */
     public static final String FILTER_FLUID_KEY = "gt.filter.fluid";
 
     /** Where GT6 keeps {@code aData.mVisuals}: the chisel-selected design of a texture cover. */
@@ -81,29 +81,29 @@ public final class CoverUtilityBehaviors {
     // ── CoverCrafting ──────────────────────────────────────────────────────────────
 
     /**
-     * GT6 {@code CoverCrafting:49}: {@code new S2DPacketOpenWindow(id, 1, "Crafting", 9, T)} — the
+     * GT6 {@code CoverCrafting}: {@code new S2DPacketOpenWindow(id, 1, "Crafting", 9, T)} — the
      * window type is the vanilla workbench and {@code 9} is its nine slots, i.e. the 3×3 grid of
      * {@code ContainerWorkbench} opened over the cover's face.
      */
     public static final int CRAFTING_GRID_SLOTS = 9;
 
-    /** GT6 {@code CoverCrafting:57} {@code isSealable} — the crafting cover never seals its face. */
+    /** GT6 {@code CoverCrafting} {@code isSealable} — the crafting cover never seals its face. */
     public static boolean craftingCoverSealsFace() {
         return false;
     }
 
-    /** GT6 {@code CoverCrafting:58} {@code isDecorative}. */
+    /** GT6 {@code CoverCrafting} {@code isDecorative}. */
     public static boolean craftingCoverIsDecorative() {
         return true;
     }
 
-    /** GT6 {@code CoverCrafting:59} {@code showsConnectorFront} — no pipe/wire stub is drawn. */
+    /** GT6 {@code CoverCrafting} {@code showsConnectorFront} — no pipe/wire stub is drawn. */
     public static boolean craftingCoverShowsConnectorFront() {
         return false;
     }
 
     /**
-     * GT6 {@code CoverCrafting:46-55}: right-clicking the cover opens a workbench.
+     * GT6 {@code CoverCrafting}: right-clicking the cover opens a workbench.
      *
      * <p>The original guards the container on {@code aPlayer instanceof EntityPlayerMP}
      * and then returns {@code T} unconditionally, so the click is
@@ -117,7 +117,7 @@ public final class CoverUtilityBehaviors {
      * <p>The native menu keeps its crafting inventory and recipes. Its validity check uses the
      * cover host and an eight-block reach instead of requiring a vanilla crafting-table block.</p>
      *
-     * @return whether the click was consumed, which is always true — {@code CoverCrafting:54}
+     * @return whether the click was consumed, which is always true — {@code CoverCrafting}
      */
     public static boolean clickCraftingCover(Entity player, ServerLevel level, BlockPos pos) {
         if (player instanceof ServerPlayer server && level != null && pos != null) {
@@ -137,22 +137,22 @@ public final class CoverUtilityBehaviors {
 
     // ── CoverRetrieverItem ─────────────────────────────────────────────────────────
 
-    /** GT6 {@code CoverRetrieverItem:61}: {@code SERVER_TIME % 20 == 15}. */
+    /** GT6 {@code CoverRetrieverItem}: {@code SERVER_TIME % 20 == 15}. */
     public static final int RETRIEVER_PERIOD = 20, RETRIEVER_PHASE = 15;
 
     /**
-     * GT6 {@code CoverRetrieverItem:72}: {@code ST.move(..., 64, 1, 64, 1)} — {@code aMaxSize 64},
+     * GT6 {@code CoverRetrieverItem}: {@code ST.move(..., 64, 1, 64, 1)} — {@code aMaxSize 64},
      * {@code aMinSize 1}, {@code aMaxMove 64}, {@code aMinMove 1}. The two 64s are one stack, which
      * is also the per-operation ceiling asserted here.
      */
     public static final int RETRIEVER_MAX_MOVE = 64, RETRIEVER_MIN_MOVE = 1;
 
     /**
-     * GT6 {@code CoverRetrieverItem:61}: the retriever fires when the clock reaches
+     * GT6 {@code CoverRetrieverItem}: the retriever fires when the clock reaches
      * {@code % 20 == 15} <em>or</em> when its own pending flag is still set.
      *
      * <p>That flag is GT6's {@code aData.mValues[aSide]}: {@code onStoppedUpdate} sets it to 1 when
-     * the cover stops being suspended ({@code CoverRetrieverItem:55-57}) and the tick body clears it
+     * the cover stops being suspended ({@code CoverRetrieverItem}) and the tick body clears it
      * once it has run, so a cover that was held back by a controller cover catches up
      * immediately instead of waiting out the rest of the 20-tick cycle.</p>
      */
@@ -236,8 +236,8 @@ public final class CoverUtilityBehaviors {
     /**
      * The whitelist/blacklist core of both filter covers, read straight off the original.
      *
-     * <p>GT6 spells it twice, once for items ({@code CoverFilterItem:115-127}) and once for fluids
-     * ({@code CoverFilterFluid:117-129}), with identical bodies:</p>
+     * <p>GT6 spells it twice, once for items ({@code CoverFilterItem}) and once for fluids
+     * ({@code CoverFilterFluid}), with identical bodies:</p>
      *
      * <pre>
      *   if (aCoverSide != aSide) return F;                                    // other faces: not ours
@@ -267,7 +267,7 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * GT6 {@code CoverFilterItem:115-127} for a live machine face: the stored item filter, the
+     * GT6 {@code CoverFilterItem} for a live machine face: the stored item filter, the
      * screwdriver-selected mode and the candidate stack.
      *
      * <p>A face whose cover is <em>not</em> a filter admits everything: GT6 only ever asks this from
@@ -295,7 +295,7 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * GT6 {@code CoverFilterFluid:117-129} uses {@code FL.equal(a, b, T)}: the same
+     * GT6 {@code CoverFilterFluid} uses {@code FL.equal(a, b, T)}: the same
      * fluid with NBT ignored. Compare fluid identities here; stack-level equality
      * may also compare tags or components and impose a stricter condition.
      */
@@ -315,13 +315,13 @@ public final class CoverUtilityBehaviors {
 //?}
         if (filter.isEmpty()) return MachineCoverSpec.inverted(cover);
         if (candidate == null || candidate.isEmpty()) return false;
-        // UT.java:113 with aIgnoreNBT = T: same fluid, tags ignored — not FluidStack#isFluidEqual,
+        // UT with aIgnoreNBT = T: same fluid, tags ignored — not FluidStack#isFluidEqual,
         // which would also compare the tag and therefore be stricter than the original.
         return filterPermits(true, MachineCoverSpec.inverted(cover), false,
                 filter.getFluid() == candidate.getFluid());
     }
 
-    /** The item stored under {@link #FILTER_ITEM_KEY}, or empty ({@code CoverFilterItem:47,74,93}). */
+    /** The item stored under {@link #FILTER_ITEM_KEY}, or empty ({@code CoverFilterItem}). */
 //? if >=1.21.1 {
     /*public static ItemStack itemFilter(ItemStack cover,net.minecraft.core.HolderLookup.Provider lookup) {
         CompoundTag tag = cover == null ? null : CoverStackData.read(cover);
@@ -339,7 +339,7 @@ public final class CoverUtilityBehaviors {
 
     /**
      * The fluid stored under {@link #FILTER_FLUID_KEY}, or empty
-     * ({@code CoverFilterFluid:51,78,95}; GT6 writes it with {@code FL.save(null, ...)}).
+     * ({@code CoverFilterFluid}; GT6 writes it with {@code FL.save(null, ...)}).
      */
 //? if >=1.21.1 {
     /*public static FluidStack fluidFilter(ItemStack cover,net.minecraft.core.HolderLookup.Provider lookup) {
@@ -358,7 +358,7 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * GT6 {@code CoverFilterItem:92-97} / {@code CoverFilterFluid:96-109}: right-clicking the cover
+     * GT6 {@code CoverFilterItem} / {@code CoverFilterFluid}: right-clicking the cover
      * with a stack stores a template; item filters also toggle wildcard on repeated matches.
      * This shared setter is currently reused by retrievers, which had a one-shot original setter.
      * The original never consumes the held stack, and neither does this.
@@ -393,7 +393,7 @@ public final class CoverUtilityBehaviors {
         return true;
     }
 
-    /** GT6 {@code CoverFilterFluid:94-111}: the same one-shot right-click rule for a fluid. */
+    /** GT6 {@code CoverFilterFluid}: the same one-shot right-click rule for a fluid. */
 //? if >=1.21.1 {
     /*public static boolean setFluidFilter(ItemStack cover, FluidStack held,net.minecraft.core.HolderLookup.Provider lookup) {
 *///?} else {
@@ -421,8 +421,8 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * The screwdriver toggle, GT6 {@code CoverFilterItem:58-62} / {@code CoverFilterFluid:62-66} /
-     * {@code CoverRetrieverItem:94-98}: {@code aData.visual(side, visuals == 0 ? 1 : 0)}. In the port
+     * The screwdriver toggle, GT6 {@code CoverFilterItem} / {@code CoverFilterFluid} /
+     * {@code CoverRetrieverItem}: {@code aData.visual(side, visuals == 0 ? 1 : 0)}. In the port
      * that is the existing {@code gt.cover.inverted} flag, so this returns the new blacklist state.
      *
      * <p>The caller owns {@code setChanged()} and the block update, exactly as
@@ -445,7 +445,7 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * GT6 {@code CoverFilterItem:63-66} / {@code CoverFilterFluid:67-70}: the soft hammer removes the
+     * GT6 {@code CoverFilterItem} / {@code CoverFilterFluid}: the soft hammer removes the
      * filter, and only the filter — the mode survives.
      *
      * @return whether there was one
@@ -470,18 +470,18 @@ public final class CoverUtilityBehaviors {
 
     // ── CoverPressureValve ─────────────────────────────────────────────────────────
 
-    /** GT6 {@code CoverPressureValve:50}: {@code aTimer > 2} — the valve ignores the first ticks. */
+    /** GT6 {@code CoverPressureValve}: {@code aTimer > 2} — the valve ignores the first ticks. */
     public static final int VALVE_MIN_TICKS = 2;
 
     /**
-     * GT6 {@code CoverPressureValve:59}: {@code aData.box(-2, -2, -2, +3, +3, +3)}, the 5×5×5 cube
+     * GT6 {@code CoverPressureValve}: {@code aData.box(-2, -2, -2, +3, +3, +3)}, the 5×5×5 cube
      * the escaping gas damages. The port reads GT6 boxes as an {@link AABB} around the block
      * inflated by the lower offset, which is what {@code FluidPipeBlockEntity} already does
      * for the very same GT6 code.
      */
     public static final double VALVE_VENT_INFLATE = 2.0D;
 
-    /** What one valve tick does. GT6 {@code CoverPressureValve:52-61}. */
+    /** What one valve tick does. GT6 {@code CoverPressureValve}. */
     public enum ValveAction {
         /** Tank not full, or full with nowhere to go. */
         IDLE,
@@ -492,7 +492,7 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * GT6 {@code CoverPressureValve:44}: the valve only goes on a fluid pipe with exactly one tank,
+     * GT6 {@code CoverPressureValve}: the valve only goes on a fluid pipe with exactly one tank,
      * and only when the block it faces is <em>not</em> another fluid pipe.
      *
      * <p>The original rejects a non-pipe host, a tank count other than one, or
@@ -510,9 +510,9 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * GT6 {@code CoverPressureValve:53-61}: a full tank empties into the tank in front, and if there
+     * GT6 {@code CoverPressureValve}: a full tank empties into the tank in front, and if there
      * is none, a gas escapes into the open air — a liquid does not, which is the tooltip's "Liquids
-     * require Tank in front!" ({@code CoverPressureValve:70}).
+     * require Tank in front!" ({@code CoverPressureValve}).
      */
     public static ValveAction valveAction(boolean tankFull, boolean gas, boolean tankInFront,
                                           boolean collisionInFront) {
@@ -523,7 +523,7 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * One pressure valve operation: GT6 {@code CoverPressureValve:49-64}.
+     * One pressure valve operation: GT6 {@code CoverPressureValve}.
      *
      * <p>The fluid pipe host supplies its first tank after checking the global cover
      * stop flag. Normal placement permits only single-tank pipes. The clock here is
@@ -566,7 +566,7 @@ public final class CoverUtilityBehaviors {
         };
     }
 
-    /** GT6 {@code CoverPressureValve:56} {@code FL.move(tTank, tDelegator)}: as much as fits. */
+    /** GT6 {@code CoverPressureValve} {@code FL.move(tTank, tDelegator)}: as much as fits. */
     private static boolean moveInto(IFluidHandler frontTank, FluidTankGT tank) {
         FluidStack offered = tank.drain(intClamp(tank.getAmount()), IFluidHandler.FluidAction.SIMULATE);
         if (offered.isEmpty()) return false;
@@ -583,14 +583,14 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * GT6 {@code CoverPressureValve:57-61}: the fizz, the temperature damage to everything inside
+     * GT6 {@code CoverPressureValve}: the fizz, the temperature damage to everything inside
      * {@link #VALVE_VENT_INFLATE} blocks, and {@code GarbageGT.trash(tTank)}.
      *
      * <p>The damage is the port's existing {@code GTEntityHelper.applyTemperatureDamage} with
      * exactly the arguments the original passes — {@code 2.0F} multiplier and {@code 10.0F} cap,
      * which are {@code FluidHazards.PIPE_TEMPERATURE_MULTIPLIER} and
      * {@code FluidHazards.PIPE_TEMPERATURE_CAP} ({@code FluidHazards}, from
-     * {@code MultiTileEntityPipeFluid:299,305}). The temperature comes from
+     * {@code MultiTileEntityPipeFluid}). The temperature comes from
      * {@link #fluidTemperature}. The fizz is vanilla's {@code FIRE_EXTINGUISH}, the same substitution
      * {@code FluidPipeBlockEntity} makes for the same GT6 sound.</p>
      */
@@ -608,7 +608,7 @@ public final class CoverUtilityBehaviors {
 
     /**
      * GT6 {@code FL.temperature(aFluid)}: the fluid's own Kelvin value, which is what
-     * {@code CoverPressureValve:59} feeds to {@code applyTemperatureDamage}.
+     * {@code CoverPressureValve} feeds to {@code applyTemperatureDamage}.
      *
      * <p>The port carries it in the fluid's registry metadata ({@code RegisteredFluids.FluidEntry}),
      * reached through {@code GTFluids.entryForFluid} — the same route {@code FluidHazards.isGas}
@@ -628,14 +628,14 @@ public final class CoverUtilityBehaviors {
     // ── CoverAsphalt ───────────────────────────────────────────────────────────────
 
     /**
-     * GT6 {@code CoverAsphalt:39}: {@code aEntity.motionX *= 1.3; aEntity.motionZ *= 1.3;} — the
+     * GT6 {@code CoverAsphalt}: {@code aEntity.motionX *= 1.3; aEntity.motionZ *= 1.3;} — the
      * asphalt cover is a speed boost, and it is the only material cover in GT6 that has a behaviour
      * at all.
      */
     public static final double ASPHALT_BOOST = 1.3D;
 
     /**
-     * GT6 {@code CoverAsphalt:39} as a pure multiplier: {@code 1.3} while the entity is moving, is
+     * GT6 {@code CoverAsphalt} as a pure multiplier: {@code 1.3} while the entity is moving, is
      * not in water and is not sneaking, {@code 1.0} otherwise.
      *
      * <p>All three of the original's conditions are negative gates — no motion means nothing to
@@ -651,7 +651,7 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * GT6 {@code CoverAsphalt:38-41} {@code onWalkOver}: the same rule applied to a live entity.
+     * GT6 {@code CoverAsphalt} {@code onWalkOver}: the same rule applied to a live entity.
      *
      * <p>{@code motionX}/{@code motionZ} are the 1.20.1 {@code getDeltaMovement()} components — the
      * original mutates the fields in place, which 1.20.1 does through
@@ -674,29 +674,29 @@ public final class CoverUtilityBehaviors {
     // ── CoverRedstoneTorch / CoverRedstoneRepeater ─────────────────────────────────
 
     /**
-     * GT6 {@code CoverRedstoneTorch:42-44}: the torch's condition is
+     * GT6 {@code CoverRedstoneTorch}: the torch's condition is
      * {@code ((MultiTileEntityWireRedstoneInsulated)aData.mTileEntity).mRedstone > 0} — the wire it
      * sits on carries a signal.
      *
-     * <p>{@code AbstractCoverAttachmentTorch:60-68} turns a true condition into {@code mVisuals = 1}
-     * and a false one into {@code mVisuals = 0}, and {@code CoverRedstoneTorch:31-33} maps
+     * <p>{@code AbstractCoverAttachmentTorch} turns a true condition into {@code mVisuals = 1}
+     * and a false one into {@code mVisuals = 0}, and {@code CoverRedstoneTorch} maps
      * {@code mVisuals == 0} to the <em>lit</em> textures. So the torch is lit exactly when the wire
      * is <em>not</em> powered: it is an inverter, which {@code getRedstoneOutWeak/Strong}
-     * ({@code AbstractCoverAttachmentTorch:50-57}, {@code mVisuals == 0 ? 15 : 0}) confirms.</p>
+     * ({@code AbstractCoverAttachmentTorch}, {@code mVisuals == 0 ? 15 : 0}) confirms.</p>
      */
     public static final int TORCH_VISUAL_LIT = 0, TORCH_VISUAL_DARK = 1;
 
     /**
-     * GT6 {@code CoverRedstoneTorch:43}: {@code mRedstone > 0}. The return value is the original's
+     * GT6 {@code CoverRedstoneTorch}: {@code mRedstone > 0}. The return value is the original's
      * {@code condition}, i.e. the argument of {@code onTickPost}'s {@code if}
-     * ({@code AbstractCoverAttachmentTorch:62}).
+     * ({@code AbstractCoverAttachmentTorch}).
      */
     public static boolean torchCondition(boolean wirePowered) {
         return wirePowered;
     }
 
     /**
-     * GT6 {@code CoverRedstoneRepeater:43}: {@code mRedstone <= 0} — the repeater lights exactly
+     * GT6 {@code CoverRedstoneRepeater}: {@code mRedstone <= 0} — the repeater lights exactly
      * when the wire <em>is</em> powered, so it is a follower where the torch is an inverter.
      */
     public static boolean repeaterCondition(boolean wirePowered) {
@@ -704,22 +704,22 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * GT6 {@code AbstractCoverAttachmentTorch:60-68} for the torch: {@code mVisuals} becomes 1 when
-     * the condition holds and 0 when it does not, which {@code CoverRedstoneTorch:31-33} renders as
-     * off/on. {@code CoverRedstoneTorch:43} makes the condition "wire powered", so a powered wire
+     * GT6 {@code AbstractCoverAttachmentTorch} for the torch: {@code mVisuals} becomes 1 when
+     * the condition holds and 0 when it does not, which {@code CoverRedstoneTorch} renders as
+     * off/on. {@code CoverRedstoneTorch} makes the condition "wire powered", so a powered wire
      * darkens the torch.
      */
     public static int torchVisual(boolean wirePowered) {
         return torchCondition(wirePowered) ? TORCH_VISUAL_DARK : TORCH_VISUAL_LIT;
     }
 
-    /** The same for {@code CoverRedstoneRepeater:43}: a powered wire lights it. */
+    /** The same for {@code CoverRedstoneRepeater}: a powered wire lights it. */
     public static int repeaterVisual(boolean wirePowered) {
         return repeaterCondition(wirePowered) ? TORCH_VISUAL_DARK : TORCH_VISUAL_LIT;
     }
 
     /**
-     * GT6 {@code AbstractCoverAttachmentTorch:50-57} {@code getRedstoneOutStrong} and
+     * GT6 {@code AbstractCoverAttachmentTorch} {@code getRedstoneOutStrong} and
      * {@code getRedstoneOutWeak} — byte for byte the same body, {@code mVisuals == 0 ? 15 : 0}.
      */
     public static int torchSignal(int visual) {
@@ -727,17 +727,17 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * GT6 {@code AbstractCoverAttachmentTorch:35}: {@code interceptCoverPlacement} refuses every
+     * GT6 {@code AbstractCoverAttachmentTorch}: {@code interceptCoverPlacement} refuses every
      * host that is not a {@code MultiTileEntityWireRedstoneInsulated} — the redstone torch and the
      * repeater are covers <em>for the insulated redstone wire</em>, not for machines
-     * ({@code GT_API:799-802} registers them on the vanilla blocks, but the placement rule is the
+     * ({@code GT_API} registers them on the vanilla blocks, but the placement rule is the
      * wire's).
      */
     public static boolean torchCoverCanAttachTo(boolean hostIsRedstoneWire) {
         return hostIsRedstoneWire;
     }
 
-    /** GT6 {@code AbstractCoverAttachmentTorch:36}: {@code interceptConnect} — always true. */
+    /** GT6 {@code AbstractCoverAttachmentTorch}: {@code interceptConnect} — always true. */
     public static boolean torchCoverInterceptsConnect() {
         return true;
     }
@@ -745,13 +745,13 @@ public final class CoverUtilityBehaviors {
     // ── CoverTextureMulti: the blank and warning covers ────────────────────────────
 
     /**
-     * GT6 {@code MultiItemTechnological:59}: {@code new CoverTextureMulti(T, T, "machines/covers/
+     * GT6 {@code MultiItemTechnological}: {@code new CoverTextureMulti(T, T, "machines/covers/
      * blank/", 6)} — the blank cover has six designs.
      */
     public static final int BLANK_COVER_DESIGNS = 6;
 
     /**
-     * GT6 {@code MultiItemTechnological:87}: {@code new CoverTextureMulti(T, T, "machines/covers/
+     * GT6 {@code MultiItemTechnological}: {@code new CoverTextureMulti(T, T, "machines/covers/
      * warning/", 20)} — the warning cover has twenty.
      */
     public static final int WARNING_COVER_DESIGNS = 20;
@@ -767,7 +767,7 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * GT6 {@code CoverTextureMulti:63-66}: a chisel click is
+     * GT6 {@code CoverTextureMulti}: a chisel click is
      * {@code aData.visual(aSide, (visuals + 1) % mTextures.length)} — the whole behaviour of the
      * blank and warning covers.
      *
@@ -780,12 +780,12 @@ public final class CoverUtilityBehaviors {
         return Math.floorMod(current + 1, count);
     }
 
-    /** GT6 {@code CoverTextureMulti:77}: {@code isDecorative} is true for both texture covers. */
+    /** GT6 {@code CoverTextureMulti}: {@code isDecorative} is true for both texture covers. */
     public static boolean textureCoverIsDecorative() {
         return true;
     }
 
-    /** GT6 {@code CoverTextureMulti:78}: {@code needsVisualsSaved} — the chosen design persists. */
+    /** GT6 {@code CoverTextureMulti}: {@code needsVisualsSaved} — the chosen design persists. */
     public static boolean textureCoverNeedsVisualsSaved() {
         return true;
     }
@@ -800,7 +800,7 @@ public final class CoverUtilityBehaviors {
         return tag == null ? 0 : tag.getInt(VISUAL_KEY);
     }
 
-    /** Advance a texture cover's design by one, GT6 {@code CoverTextureMulti:64}. */
+    /** Advance a texture cover's design by one, GT6 {@code CoverTextureMulti}. */
     public static int cycleDesign(ItemStack cover, int count) {
         if (cover == null || cover.isEmpty() || count <= 1) return design(cover);
         int next = nextDesign(design(cover), count);

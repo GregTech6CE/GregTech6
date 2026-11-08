@@ -80,7 +80,7 @@ public final class GTMaterialEnchants {
                         .add(entry.enchantment() + " " + roman(entry.level()));
             }
         }
-        // Damage is GT6's shorthand that forwards to weapons *and* ammo (OreDictMaterial:1091).
+        // Damage is GT6's shorthand that forwards to weapons *and* ammo (OreDictMaterial).
         if (out.containsKey("Damage")) {
             for (String kind : new String[] {"Weapons", "Ammo"}) {
                 List<String> target = out.computeIfAbsent(kind, key -> new ArrayList<>());

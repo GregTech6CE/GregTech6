@@ -68,7 +68,7 @@ public final class OriginalHandCraftingRows {
     }
 
     /**
-     * Loader_MultiTileEntities:1143-1153: the eleven metal walls are four plates shaped with a
+     * Loader_MultiTileEntities: the eleven metal walls are four plates shaped with a
      * wrench and a hard hammer. Dense walls have no hand row in the source.
      */
     private static int metalWalls(Map<ResourceLocation, byte[]> recipes) {
@@ -90,7 +90,7 @@ public final class OriginalHandCraftingRows {
         return added;
     }
 
-    /** Loader_Recipes_Woods:174/195: one log or beam and any wooden stick, mirrored. */
+    /** Loader_Recipes_Woods: one log or beam and any wooden stick, mirrored. */
     private static void woodenClubs(Map<ResourceLocation, byte[]> recipes) {
         var sticks = Ingredient.of(ItemTags.create(id("ammunition/sticks_wood")));
         for (var species : gregtech.content.block.wood.WoodSpecies.values()) {
@@ -128,7 +128,7 @@ public final class OriginalHandCraftingRows {
             throw new IllegalStateException("Missing wooden club output: " + path);
     }
 
-    /** Loader_Recipes_Handlers:422-434; file finishing is also available without a sharpening machine. */
+    /** Loader_Recipes_Handlers; file finishing is also available without a sharpening machine. */
     private static void finishRawToolHeads(Map<ResourceLocation, byte[]> recipes) {
         var file = requiredTool(GTToolType.FILE);
         for (var material : gregtech.engine.material.GTMaterialRegistry.allMaterials()) {
@@ -234,7 +234,7 @@ public final class OriginalHandCraftingRows {
         return gregtech.content.recipe.CraftingMaterialForms.ingredient(stack);
     }
 
-    /** GT6 Loader_Recipes_Handlers:418-419: an ingot or billet and a file produce one rod. */
+    /** GT6 Loader_Recipes_Handlers: an ingot or billet and a file produce one rod. */
     private static void rods(Map<ResourceLocation, byte[]> recipes) {
         var coated = Set.of("WoodTreated", "WoodPolished", "SteelGalvanized", "NetherizedDiamond");
         for (GTMaterial material : gregtech.engine.material.GTMaterialRegistry.allMaterials()) {
@@ -254,7 +254,7 @@ public final class OriginalHandCraftingRows {
         }
     }
 
-    /** GT6 Loader_OreProcessing:152-155. Hand crafting is not restricted by Welder flags. */
+    /** GT6 Loader_OreProcessing. Hand crafting is not restricted by Welder flags. */
     private static void machineCasings(Map<ResourceLocation, byte[]> recipes) {
         MaterialPrefix[] plates = {MaterialPrefix.plate, MaterialPrefix.plateDouble,
                 MaterialPrefix.plateQuadruple, MaterialPrefix.plateDense};
@@ -501,7 +501,7 @@ public final class OriginalHandCraftingRows {
     }
 
     private static Ingredient lubricant(boolean early) {
-        // GT6 LoaderOreDictReRegistrations:978-989: itemLubricant is filled lubricant,
+        // GT6 LoaderOreDictReRegistrations: itemLubricant is filled lubricant,
         // itemLubricantEarly additionally accepts eight seed/vegetable/animal oil bottles.
         // BottleItem returns the GT6 empty bottle from getCraftingRemainingItem.
         String[] names = early
@@ -655,7 +655,7 @@ public final class OriginalHandCraftingRows {
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 
-    // ── battery cells (MultiItemTechnological:464-484) ─────────────────────
+    // ── battery cells (MultiItemTechnological) ─────────────────────
 
     /**
      * The five empty battery cells; the filled ones come from the Canning Machine
@@ -746,7 +746,7 @@ public final class OriginalHandCraftingRows {
 
     private static int storage(Map<ResourceLocation, byte[]> recipes) {
         int added = 0;
-        // Loader_MultiTileEntities:2003-2004, source craftable miniature relays.
+        // Loader_MultiTileEntities, source craftable miniature relays.
         ItemStack obsidianRod = GTItems.getStack(MaterialPrefix.stickLong,
                 gregtech.engine.material.GTMaterialRegistry.get("Obsidian"),1);
         ItemStack endstoneRod = GTItems.getStack(MaterialPrefix.stickLong,
@@ -758,7 +758,7 @@ public final class OriginalHandCraftingRows {
                 Map.of('S',Ingredient.of(endstoneRod),'E',Ingredient.of(Items.ENDER_EYE),'G',Ingredient.of(Items.GHAST_TEAR)),
                 new ItemStack(GTDungeonBlocks.PORTAL_END.get()));
 
-        // GT6 Loader_MultiTileEntities:184, treated-plank bottle crate 8762.
+        // GT6 Loader_MultiTileEntities, treated-plank bottle crate 8762.
         var woodBolts=GTItems.creativeEntries(MaterialPrefix.bolt).stream()
                 .filter(entry->entry.material().has(gregtech.api.material.MaterialProperty.WOOD))
                 .map(entry->new ItemStack(entry.item().get())).toArray(ItemStack[]::new);
@@ -783,7 +783,7 @@ public final class OriginalHandCraftingRows {
             ItemStack ring = tagOrPlate("rings", material, MaterialPrefix.ring);
             ItemStack stick = tagOrPlate("rods", material, MaterialPrefix.stick);
             ItemStack screw = tagOrPlate("screws", material, MaterialPrefix.screw);
-            // Loader_MultiTileEntities:144: three small casings, two screws and screwdriver.
+            // Loader_MultiTileEntities: three small casings, two screws and screwdriver.
             ItemStack smallCasing = GTItems.getStack(MaterialPrefix.itemCasing, material, 1);
             if (!smallCasing.isEmpty() && !screw.isEmpty())
                 added += register(recipes,"storage/bottle_crate_"+spec.suffix(),new String[]{"CdC","TCT"},
@@ -825,7 +825,7 @@ public final class OriginalHandCraftingRows {
                 }
             }
             if (!ring.isEmpty() && !stick.isEmpty()) {
-                // GT6 Loader_MultiTileEntities:133, reinforced wooden chest.
+                // GT6 Loader_MultiTileEntities, reinforced wooden chest.
                 added += register(recipes, "storage/reinforced_wood_chest_" + spec.suffix(),
                         new String[]{"sSw", "RCR", "SSS"},
                         Map.of('S', Ingredient.of(stick), 'R', Ingredient.of(ring),
@@ -834,7 +834,7 @@ public final class OriginalHandCraftingRows {
                         new ItemStack(reinforcedWoodChest(material)));
             }
             if (!plate.isEmpty() && !ring.isEmpty() && !stick.isEmpty() && !chest.isEmpty()) {
-                // Loader_MultiTileEntities:132 - "sPw" / "RSR" / "PPP"
+                // Loader_MultiTileEntities - "sPw" / "RSR" / "PPP"
                 added += register(recipes, "storage/chest_" + spec.suffix(),
                         new String[]{"sPw", "RSR", "PPP"},
                         Map.of('P', Ingredient.of(plate), 'R', Ingredient.of(ring), 'S', Ingredient.of(stick),
@@ -843,7 +843,7 @@ public final class OriginalHandCraftingRows {
                         chest.copy());
             }
             if (!screw.isEmpty() && !chest.isEmpty() && !casing.isEmpty() && !storage.isEmpty()) {
-                // Loader_MultiTileEntities:141 - "TCT" / "wMd" / "TCT"
+                // Loader_MultiTileEntities - "TCT" / "wMd" / "TCT"
                 added += register(recipes, "storage/mass_storage_" + spec.suffix(),
                         new String[]{"TCT", "wMd", "TCT"},
                         Map.of('T', Ingredient.of(screw), 'C', Ingredient.of(chest), 'M', Ingredient.of(casing),
@@ -855,7 +855,7 @@ public final class OriginalHandCraftingRows {
             ItemStack genericBus = tech("generic_logistics_storage_bus");
             if (!screw.isEmpty() && !storage.isEmpty() && !genericBus.isEmpty()
                     && !logisticsStorage.isEmpty()) {
-                // Loader_MultiTileEntities:142 - GT6 6200+aID, including OD_CIRCUITS[4].
+                // Loader_MultiTileEntities - GT6 6200+aID, including OD_CIRCUITS[4].
                 // Tier-four-or-higher circuits are exposed through a tag so other mods may opt in.
                 added += register(recipes, "storage/logistics_mass_storage_" + spec.suffix(),
                         new String[]{"TQT", "wCd", "TMT"},
@@ -867,7 +867,7 @@ public final class OriginalHandCraftingRows {
                         logisticsStorage);
             }
         }
-        // Loader_MultiTileEntities:140/138 - the drawer and locker use a metal chest as their core
+        // Loader_MultiTileEntities - the drawer and locker use a metal chest as their core
         ItemStack anyChest = blocks(gregtech.content.block.inventory.MetalChestBlock.class).isEmpty() ? ItemStack.EMPTY
                 : metalChest(GTStorageMetals.ALL.get(Math.min(1, GTStorageMetals.ALL.size() - 1)));
         if (RegisteredBlock.reference("locker") != null && !anyChest.isEmpty()) {

@@ -32,10 +32,10 @@ import java.util.List;
  */
 public final class BehaviorRemote {
 
-    /** GT6 {@code Behavior_Remote:56} (and {@code Behavior_Remote:95}): {@code tList.size() >= 64} per dimension. */
+    /** GT6 {@code Behavior_Remote} (and {@code Behavior_Remote}): {@code tList.size() >= 64} per dimension. */
     public static final int MAX_COORDS = 64;
 
-    /** GT6 {@code Behavior_Remote:80}: {@code Math.abs(...) <= 128} on every axis, from the player. */
+    /** GT6 {@code Behavior_Remote}: {@code Math.abs(...) <= 128} on every axis, from the player. */
     public static final int RANGE = 128;
 
     private BehaviorRemote() {
@@ -66,7 +66,7 @@ public final class BehaviorRemote {
 
     /**
      * GT6's NBT key for one dimension: {@code "gt.remote.dim." + aDimension}
-     * ({@code Behavior_Remote:113,123,133}).
+     * ({@code Behavior_Remote}).
      *
      * <p>GT6 appends the numeric dimension id; 1.20.1 has none, so the port appends the dimension's
      * {@code ResourceLocation} — see the class javadoc for that one deviation.</p>
@@ -140,7 +140,7 @@ public final class BehaviorRemote {
 
     /**
      * GT6 {@code WD.te(aWorld, tCoords, F)} tested against {@code ITileEntityRemoteActivateable}
-     * ({@code Behavior_Remote:60,81,98}) — the remote-activatable at a coordinate, or {@code null}.
+     * ({@code Behavior_Remote}) — the remote-activatable at a coordinate, or {@code null}.
      *
      * <p>Nothing is resolved for a coordinate whose chunk is not loaded: GT6's {@code F} argument is
      * "do not load", and asking the level for a block would load the chunk. The block entity is asked
@@ -274,7 +274,7 @@ public final class BehaviorRemote {
     }
 
     /**
-     * GT6 {@code Behavior_Remote:80}: {@code Math.abs(tCoords.posX - aPlayer.posX) <= 128} and the same
+     * GT6 {@code Behavior_Remote}: {@code Math.abs(tCoords.posX - aPlayer.posX) <= 128} and the same
      * test for {@code y} and {@code z} — a cube around the player, not a sphere.
      */
 

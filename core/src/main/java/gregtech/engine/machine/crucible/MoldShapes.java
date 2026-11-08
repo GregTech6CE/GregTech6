@@ -65,7 +65,7 @@ public final class MoldShapes {
                 : recipe.itemPrefix().getName();
     }
 
-    /** MultiTileEntityMold:628-921. Preserve the original HashMap stages and overwrite order. */
+    /** MultiTileEntityMold. Preserve the original HashMap stages and overwrite order. */
     private static void initMoldRecipes() {
         Map<Integer, Recipe> TEMP_MOLD_RECIPES = new HashMap<>();
 

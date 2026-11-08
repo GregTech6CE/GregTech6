@@ -40,13 +40,13 @@ import java.util.List;
  *
  * <p>GT6 registers three placeable multi-tiles for these - {@code MultiTileEntityIngot} (id 32084),
  * {@code MultiTileEntityPlate} (32085) and {@code MultiTileEntityPlateGem} (32086), see
- * {@code Loader_MultiTileEntities.java:2036-2038}. All three share the same behaviour from
+ * {@code Loader_MultiTileEntities}. All three share the same behaviour from
  * {@code gregapi/tileentity/misc/MultiTileEntityPlaceable.java}: they carry exactly one stack
  * ({@code mStack}, read from {@code NBT_VALUE} = {@code "gt.value"} in), a right click
  * merges an identical stack into the pile or takes one item back out of it,
  * and breaking the pile drops that stack. GT6's dungeon places
- * them from real material stacks ({@code DungeonData.java:262-275}) and dropped ingots and plates
- * form new piles when they expire ({@code GT_API_Proxy.java:1468-1470}). The port keeps the three material pile
+ * them from real material stacks ({@code DungeonData}) and dropped ingots and plates
+ * form new piles when they expire ({@code GT_API_Proxy}). The port keeps the three material pile
  * kinds and adds that behaviour through {@link PileBlockEntity}.
  *
  * <h2>Port differences</h2>
@@ -56,7 +56,7 @@ import java.util.List;
  * The following port differences require separate parity decisions:</p>
  * <ul>
  *   <li>A held stack is matched by prefix and material ({@link PileBlockEntity#canAccept}) instead of
- *       GT6's item identity ({@code ST.equal}, {@code ST.java:92-94}), so the port's own iron ingot
+ *       GT6's item identity ({@code ST.equal}, {@code ST}), so the port's own iron ingot
  *       and the unified vanilla iron ingot can share one pile.</li>
  *   <li>An empty pile refuses the click where GT6 removes the block on any click - the
  *       port's pile can legitimately exist empty, and deleting a block the player just placed would
@@ -66,11 +66,11 @@ import java.util.List;
  *       consume" ({@code onBlockActivated2} returns {@code T} on every path), so a refused click
  *       still lets the player place the held block.</li>
  *   <li>GT6 renders one layer per eight stored ingots and grows the collision box with the stack
- *       ({@code MultiTileEntityIngot.java:45-49}); the port bakes GT6's own pass
+ *       ({@code MultiTileEntityIngot}); the port bakes GT6's own pass
  *       geometry into one model per stack size and carries that size in {@link #STACK}, and synchronizes material data with a block entity packet
- *       ({@code MultiTileEntityPlaceable.java:116-125}) - the block state travels with the chunk and
+ *       ({@code MultiTileEntityPlaceable}) - the block state travels with the chunk and
  *       with every placement, which is the port's equivalent of GT6's data packet.</li>
- *   <li>GT6's piles are soft (hardness 0.25F, {@code MultiTileEntityPlaceable.java:138}) and do not
+ *   <li>GT6's piles are soft (hardness 0.25F, {@code MultiTileEntityPlaceable}) and do not
  *       obstruct placement; the port keeps the block properties these blocks
  *       already had.</li>
  * </ul>
@@ -80,15 +80,15 @@ public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBl
      * The stack size GT6 draws, as a block state.
      *
      * <p>GT6 renders one box <em>per stored item</em>: {@code getRenderPasses} returns {@code mSize}
-     * ({@code MultiTileEntityIngot.java:48}, {@code MultiTileEntityPlate.java:48}) and
+     * ({@code MultiTileEntityIngot}, {@code MultiTileEntityPlate}) and
      * {@code setBlockBounds} maps the pass index onto the box of that item
-     * ({@code MultiTileEntityIngot.java:52-127} lays eight ingots per layer, alternating between an
+     * ({@code MultiTileEntityIngot} lays eight ingots per layer, alternating between an
      * X-aligned and a Z-aligned layer, and reaches a full block at 64;
-     * {@code MultiTileEntityPlate.java:52-60} stacks at most four plates in a 2x2 arrangement whose
+     * {@code MultiTileEntityPlate} stacks at most four plates in a 2x2 arrangement whose
      * height follows {@code mSize}). A block model cannot grow a variable number of elements at
      * runtime, so the port bakes one model per stack size and carries the size in this property -
      * {@code 0} for an empty pile, otherwise exactly GT6's {@code mSize} of {@code 1..64}
-     * ({@code MultiTileEntityPlaceable.java:58}, {@code UT.Code.bindStack}). {@link PileBlockEntity}
+     * ({@code MultiTileEntityPlaceable}, {@code UT.Code.bindStack}). {@link PileBlockEntity}
      * keeps the property in step with its contents; the model files behind the 65 values are generated
      * by {@code tools/generate_pile_assets.py}.</p>
      */
@@ -117,7 +117,7 @@ public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBl
 
         /**
          * The port block of this form - GT6's multi-tile 32084 / 32085 / 32086
-         * ({@code Loader_MultiTileEntities:2036-2038}). Resolved on every call for the same reason as
+         * ({@code Loader_MultiTileEntities}). Resolved on every call for the same reason as
          * {@link #prefix()}: the blocks have to be registered before this is asked.
          */
         public Block block() {
@@ -175,7 +175,7 @@ public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBl
     }
 
     /**
-     * GT6's click behaviour ({@code MultiTileEntityPlaceable.java:77-113}).
+     * GT6's click behaviour ({@code MultiTileEntityPlaceable}).
      *
      * <p>GT6 does its work on the server and reports the click as handled on the client;
      * the port keeps that answer so the arm still swings. Server side the port follows
@@ -195,7 +195,7 @@ public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBl
 //?}
                                  InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof PileBlockEntity pile)) return InteractionResult.PASS;
-        // GT6: `if (isClientSide()) return T;` (MultiTileEntityPlaceable.java:78) - the client never
+        // GT6: `if (isClientSide()) return T;` (MultiTileEntityPlaceable) - the client never
         // decides, it only reports the click as handled.
         if (level.isClientSide) return InteractionResult.SUCCESS;
         ItemStack held = player.getItemInHand(hand);
@@ -206,7 +206,7 @@ public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBl
             int moved = pile.add(held);
             if (moved <= 0) return InteractionResult.PASS;   // a full pile takes nothing
             // shrinks the held stack unconditionally - unlike its coin pile, which
-            // spares a creative player (MultiTileEntityCoin.java:168).
+            // spares a creative player (MultiTileEntityCoin).
             held.shrink(moved);
             playCollect(level, pos);
             return InteractionResult.CONSUME;
@@ -225,7 +225,7 @@ public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBl
     }
 
     /**
-     * GT6's column walk ({@code MultiTileEntityPlaceable.java:99-105}): the item is taken from the
+     * GT6's column walk ({@code MultiTileEntityPlaceable}): the item is taken from the
      * highest pile above the clicked one that carries the very same stack. The original decrements
      * that selected pile's own stack; it does not store one aggregate count for the whole column.
      */
@@ -246,7 +246,7 @@ public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBl
 
     /**
      * GT6 drops the stored stack when the multi-tile is broken
-     * ({@code MultiTileEntityPlaceable.java:72-74}).
+     * ({@code MultiTileEntityPlaceable}).
      *
      * <p>Like the port's book shelf, the drop hangs on {@code onRemove} and not on
      * {@code playerWillDestroy}, because GT6 overrides {@code breakBlock}, which <em>every</em>
@@ -266,7 +266,7 @@ public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBl
 
     /**
      * GT6 hands the stored stack out through {@code getDrops}
-     * ({@code MultiTileEntityPlaceable.java:72-74}) - the drop route a player break, a piston move with
+     * ({@code MultiTileEntityPlaceable}) - the drop route a player break, a piston move with
      * drops and an explosion take: {@code Block.dropResources} passes the block entity as the
      * {@code BLOCK_ENTITY} loot parameter ({@code Level.destroyBlock}), which is where the port
      * reads the pile from.

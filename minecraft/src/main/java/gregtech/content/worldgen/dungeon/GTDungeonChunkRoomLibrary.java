@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.properties.SlabType;
 
 /**
  * Port of GT6's {@code DungeonChunkRoomLibrary}
- * ({@code gregapi/worldgen/dungeon/DungeonChunkRoomLibrary.java:36-197}): the interior shared by GT6's
+ * ({@code DungeonChunkRoomLibrary}): the interior shared by GT6's
  * library rooms - a wooden reading hall inside the stone cell, with a carpet, four walls of bookshelves
  * between the corner posts, the plank row that tops those walls, a wooden coffered ceiling and a set of
  * furniture in the middle of the hall.
@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.state.properties.SlabType;
  *
  * <p>Exactly like GT6's class, this one extends {@link GTDungeonChunkRoomEmpty}, so the shell (floor,
  * walls, ceiling, the four doorways) is built first and the interior is written over it; GT6's
- * {@code DungeonChunkRoomLibrary:39} returns false when that shell refuses the cell.</p>
+ * {@code DungeonChunkRoomLibrary} returns false when that shell refuses the cell.</p>
  *
  * <h2>Port differences</h2>
  * <ul>
@@ -59,7 +59,7 @@ import net.minecraft.world.level.block.state.properties.SlabType;
  */
 public class GTDungeonChunkRoomLibrary extends GTDungeonChunkRoomEmpty {
 
-    /** GT6's tag for this room ({@code WorldgenDungeonGT.TAG_LIBRARY}, {@code WorldgenDungeonGT:76}). */
+    /** GT6's tag for this room ({@code WorldgenDungeonGT.TAG_LIBRARY}, {@code WorldgenDungeonGT}). */
     public static final String TAG_LIBRARY = "gt.dungeon.library";
 
     /** GT6's default shelf table ({@code ChestGenHooks.STRONGHOLD_LIBRARY}). */

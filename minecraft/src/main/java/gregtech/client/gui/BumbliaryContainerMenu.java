@@ -20,20 +20,20 @@ import net.minecraftforge.items.SlotItemHandler;
 
 /**
  * GT6's bumbliary container ({@code MultiTileEntityBumbliary.MultiTileEntityGUICommonBumbliary},
- * the advanced one {@code MultiTileEntityBumbliaryAdvanced:390-426}): the machine's slots in GT6's own
+ * the advanced one {@code MultiTileEntityBumbliaryAdvanced}): the machine's slots in GT6's own
  * grid plus the player inventory at GT6's offset.
  *
- * <p>GT6's {@code ContainerCommon.addSlots} returns 84 for both machines ({@code ContainerCommon:289}),
+ * <p>GT6's {@code ContainerCommon.addSlots} returns 84 for both machines ({@code ContainerCommon}),
  * so the player rows start at y=84, the hotbar at y=142 and the GUI texture is 176x166 - which is
  * exactly the sheet GT6 ships ({@code textures/gui/machines/Bumbliary.png}, the advanced machine
  * {@code BumbliaryAdvanced.png}). The machine slots sit on GT6's 18-pixel grid: 9 columns from x=8 for
  * the standard machine and 5 columns from x=44 for the advanced one, rows at y=8, 26, 44 and 62
- * ({@code MultiTileEntityBumbliary:396-434}).</p>
+ * ({@code MultiTileEntityBumbliary}).</p>
  *
  * <h2>Slot rules</h2>
  * <p>GT6 builds its GUI from {@code Slot_Normal} with two flags, so the port does the same. The whole
- * table of the standard machine ({@code MultiTileEntityBumbliary:396-434}, the advanced one
- * {@code MultiTileEntityBumbliaryAdvanced:397-419} has the same shape with its own indices):</p>
+ * table of the standard machine ({@code MultiTileEntityBumbliary}, the advanced one
+ * {@code MultiTileEntityBumbliaryAdvanced} has the same shape with its own indices):</p>
  * <ul>
  *   <li>{@code setCanPut(F)} on the comb, spare-drone and dead slots: only the player's own two bee
  *       slots take items ({@code isItemValidForSlotGUI}).</li>
@@ -59,9 +59,9 @@ import net.minecraftforge.items.SlotItemHandler;
  */
 public class BumbliaryContainerMenu extends AbstractContainerMenu {
 
-    /** GT6's {@code ContainerCommon.addSlots} offset on both machines ({@code ContainerCommon:289}). */
+    /** GT6's {@code ContainerCommon.addSlots} offset on both machines ({@code ContainerCommon}). */
     public static final int PLAYER_INVENTORY_Y = 84;
-    /** GT6's GUI sheet is 176x166 ({@code GuiContainer} defaults, {@code ContainerClient:69-73}). */
+    /** GT6's GUI sheet is 176x166 ({@code GuiContainer} defaults, {@code ContainerClient}). */
     public static final int IMAGE_WIDTH = 176, IMAGE_HEIGHT = 166;
 
     private final BumbliaryBlockEntity machine;
@@ -175,7 +175,7 @@ public class BumbliaryContainerMenu extends AbstractContainerMenu {
             this.drone = index == layout.drone();
             this.canPut = royal || drone;
             // GT6 marks both bee slots and every spare drone slot with setCanTake(F)
-            // ({@code MultiTileEntityGUICommonBumbliary:410}, and the
+            // ({@code MultiTileEntityGUICommonBumbliary}, and the
             // spare ones), so a survival player empties the comb slots and the dead slots only -
             // plus the royal slot, which the machine's canTakeOutOfSlotGUI decides.
             this.canTake = !royal && index != layout.drone() && !contains(layout.drones(), index);

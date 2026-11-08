@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
- * GT6 {@code GT_Proxy.java:307-326}: sneak-clicking a block with an ingot, plate or gem plate places
+ * GT6 {@code GT_Proxy}: sneak-clicking a block with an ingot, plate or gem plate places
  * the whole held stack as multi-tile 32084, 32085 or 32086. The same ore-prefix lookup also covers
  * unified vanilla ingots; their {@code Item} classes cannot implement a GT-specific {@code useOn}.
  */

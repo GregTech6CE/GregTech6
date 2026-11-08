@@ -15,7 +15,7 @@ import java.util.List;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * GT6's Anvil shredding rows: {@code Loader_Recipes_Handlers:157-172}
+ * GT6's Anvil shredding rows: {@code Loader_Recipes_Handlers}
  * ({@code RecipeMapHandlerPrefixShredding} in {@code RM.Anvil}).
  * <p>
  * These are the hand-grinding rows of the ore chain: an anvil (hammer) turns rock and ore chunks into
@@ -23,13 +23,13 @@ import net.minecraft.world.item.ItemStack;
  * through {@link ExternalOreProcessing} after tags load, rather than creating GT-owned items.
  * <p>
  * The {@code selfcrush()} condition is GT6's
- * {@code aMaterial.mTargetCrushing.mMaterial == aMaterial} ({@code OreDictMaterialCondition.java:47-50}),
+ * {@code aMaterial.mTargetCrushing.mMaterial == aMaterial} ({@code OreDictMaterialCondition}),
  * modelled here with {@link GTMaterial#getTargetCrushingMaterial()}; {@code MORTAR} comes from the
  * workability import. GT6's {@code ST.emptySlot()} second input (the anvil slot has to stay empty) is
  * expressed as an empty stack in the second input slot, the idiom the port's other anvil rows use.
  * Rows whose recipe already exists in the map are dropped by the collision check — the {@code rockGt}
  * row, for instance, is registered by {@code StoneAndToolSurvivalRecipes}, which ports the same original
- * row ({@code Loader_Recipes_Handlers:157}).
+ * row ({@code Loader_Recipes_Handlers}).
  */
 public final class AnvilShreddingRecipes {
     /** One registered anvil grinding row, for tests and reports. */

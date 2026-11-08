@@ -153,7 +153,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
     }
 
     /**
-     * GT6 {@code MultiTileEntityPipeFluid:460}: {@code onEntityCollidedWithBlock} ->
+     * GT6 {@code MultiTileEntityPipeFluid}: {@code onEntityCollidedWithBlock} ->
      * {@code UT.Entities.applyTemperatureDamage(entity, mTemperature, 1, 5.0F)}. The pipe's own
      * temperature tracks the fluid inside it (and drifts back to the environment), so touching a pipe
      * full of molten metal burns and one full of liquid nitrogen freezes - the port already had the

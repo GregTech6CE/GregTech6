@@ -25,7 +25,7 @@ import java.util.Set;
  * effects, as long as it is not wearing a full chemical hazmat suit.
  *
  * <p>The GT6 entry point is {@code BlockBaseFluid.onEntityCollidedWithBlock}
- * ({@code gregapi/block/fluid/BlockBaseFluid.java:404-409}), i.e. Forge 1.7.10's per-block collision
+ * ({@code BlockBaseFluid}), i.e. Forge 1.7.10's per-block collision
  * callback fired once per tick for every block the entity's bounding box overlaps:
  *
  * <pre>
@@ -38,7 +38,7 @@ import java.util.Set;
  *
  * <p>1.20.1 has no such callback for fluids, so the same question is asked from a
  * {@link LivingEvent.LivingTickEvent} at {@link EventPriority#LOWEST} - the priority GT6 uses for its
- * own living-update hook ({@code GT_API_Proxy:520}) and the same one
+ * own living-update hook ({@code GT_API_Proxy}) and the same one
  * {@link BreathingGasEvents} already subscribes with. The block iteration mirrors vanilla's own
  * {@code Entity#checkInsideBlocks} box (the bounding box shrunk by 1.0E-7 so a box that ends exactly
  * on a block border does not pick the next block up).
@@ -48,7 +48,7 @@ import java.util.Set;
  * never expires while you stand in a geothermal spring. Only the drown damage beside it is throttled
  * to every 20 ticks; that half lives in {@link BreathingGasEvents}.
  *
- * <p>The web flag ({@code BlockBaseFluid:405} {@code setInWeb()}) is not here: it is a property of the
+ * <p>The web flag ({@code BlockBaseFluid} {@code setInWeb()}) is not here: it is a property of the
  * fluid <em>block</em>, so {@code GTWorldFluidBlock#entityInside} applies it.
  */
 //? if >=1.21.1 {
@@ -60,7 +60,7 @@ public final class BathingEffectEvents {
 
     private BathingEffectEvents() {}
 
-    /** GT6 {@code GT_API_Proxy:520}, same {@code LOWEST} priority. */
+    /** GT6 {@code GT_API_Proxy}, same {@code LOWEST} priority. */
     @SubscribeEvent(priority = EventPriority.LOWEST)
 //? if >=1.21.1 {
     /*public static void onLivingTick(EntityTickEvent.Pre event) {

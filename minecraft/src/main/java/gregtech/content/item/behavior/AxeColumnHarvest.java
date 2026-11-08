@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
 //?}
 
-/** GT_Tool_Axe:105-141: only the same block in the column above, with increasing wear. */
+/** GT_Tool_Axe: only the same block in the column above, with increasing wear. */
 public final class AxeColumnHarvest {
     private static final ThreadLocal<Boolean> HARVESTING = ThreadLocal.withInitial(() -> false);
     private AxeColumnHarvest() {}

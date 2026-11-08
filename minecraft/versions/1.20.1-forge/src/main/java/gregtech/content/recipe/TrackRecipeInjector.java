@@ -22,17 +22,17 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 
 /**
- * GT6's track recipes ({@code Loader_Rails:108-156}, the branch without Railcraft, which this port
+ * GT6's track recipes ({@code Loader_Rails}, the branch without Railcraft, which this port
  * does not have):
  *
  * <ul>
  *   <li>plain track — {@code "RSR","RSR","RSR"} with the material's {@code railGt} item and a
  *       treated-wood stick, four tracks;</li>
  *   <li>booster track — {@code "RSR","GDG","RSR"} plus redstone and the booster material GT6 lists
- *       per rail ({@code Loader_Rails:119-128}), four tracks;</li>
+ *       per rail ({@code Loader_Rails}), four tracks;</li>
  *   <li>detector track — {@code "RSR","RPR","RDR"} plus redstone and a stone pressure plate, four
  *       tracks;</li>
- *   <li>the four <b>vanilla</b> rail recipes ({@code Loader_Rails:141-156}), which GT6 does not add
+ *   <li>the four <b>vanilla</b> rail recipes ({@code Loader_Rails}), which GT6 does not add
  *       next to the vanilla ones but <em>replaces</em> ({@code DEL_OTHER_SHAPED_RECIPES}): they take
  *       GT6's {@code railGt} items instead of iron ingots, and the activator rail's yield climbs with
  *       the material (aluminium 1 … adamantium 64). Only conflicting shaped crafting rows are
@@ -45,7 +45,7 @@ public final class TrackRecipeInjector {
     private static final List<Item> REPLACED =
             List.of(Items.RAIL, Items.POWERED_RAIL, Items.DETECTOR_RAIL, Items.ACTIVATOR_RAIL);
 
-    /** {@code Loader_Rails:145-156}: the activator rail's material and GT6's yield for it. */
+    /** {@code Loader_Rails}: the activator rail's material and GT6's yield for it. */
     private static final List<String> REGISTERED = new ArrayList<>();
 
     private static final List<String> SKIPPED = new ArrayList<>();
@@ -93,7 +93,7 @@ public final class TrackRecipeInjector {
         return !result.isEmpty() && REPLACED.contains(result.getItem());
     }
 
-    /** GT6's replacement of the four vanilla rail recipes ({@code Loader_Rails:141-156}). */
+    /** GT6's replacement of the four vanilla rail recipes ({@code Loader_Rails}). */
     private static int vanilla(List<Recipe<?>> recipes, net.minecraft.core.RegistryAccess access) {
         recipes.removeIf(recipe -> replacesVanillaRailRecipe(recipe, access));
         int added = 0;

@@ -18,12 +18,12 @@ import java.util.List;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * GT6's Mortar handler block: {@code Loader_Recipes_Handlers:79-112}.
+ * GT6's Mortar handler block: {@code Loader_Recipes_Handlers}.
  * <p>
  * Every row is a {@code RecipeMapHandlerPrefix} with a {@code null} output prefix, which is GT6's
  * "<em>pulverized remains</em>" form: the input's whole material amount comes back as dust
- * ({@link #pulverize(GTMaterial, long)} = {@code OM.pulverize}, GT6 {@code gregapi/util/OM.java:370-372}). Except for
- * small rocks, the rows are gated on the material flag {@code MORTAR} ("can be ground in a mortar", {@code TD.java:515}),
+ * ({@link #pulverize(GTMaterial, long)} = {@code OM.pulverize}, GT6 {@code OM}). Except for
+ * small rocks, the rows are gated on the material flag {@code MORTAR} ("can be ground in a mortar", {@code TD}),
  * plus, for gems, sticks, ingots and plates, {@code BRITTLE} or {@code FOOD}
  * ({@code Or(BRITTLE, FOOD, <finer form>.NOT)} / {@code Or(BRITTLE, FOOD, WOOD)}).
  * <p>
@@ -145,7 +145,7 @@ public final class MortarGrindingRecipes {
         ENTRIES.add(new Entry(prefixName, MachineRecipeMaps.Mortar, rule.publish(MachineRecipeMaps.Mortar)));
     }
 
-    /** GT6 {@code OM.pulverize(material, amount)} ({@code gregapi/util/OM.java:370-372}): dust of the pulverization target. */
+    /** GT6 {@code OM.pulverize(material, amount)} ({@code OM}): dust of the pulverization target. */
     public static ItemStack pulverize(GTMaterial material, long amount) {
         GTMaterial target = material.getTargetPulverMaterial();
         if (target == null || !target.isValid()) return ItemStack.EMPTY;

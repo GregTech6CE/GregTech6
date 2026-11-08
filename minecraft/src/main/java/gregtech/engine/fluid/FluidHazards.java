@@ -18,7 +18,7 @@ import net.minecraft.world.level.material.Fluid;
 public final class FluidHazards {
     public static final int PIPE_MAGIC_DESTROY_CHANCE = 100;
 
-    /** GT6 FL.magic: explicit fluid flags plus magical material-derived fluids (FL:1119). */
+    /** GT6 FL.magic: explicit fluid flags plus magical material-derived fluids (FL). */
     public static boolean isMagic(Fluid fluid) {
         if (fluid == null || fluid == net.minecraft.world.level.material.Fluids.EMPTY) return false;
         var entry = GTFluids.entryForFluid(fluid);
@@ -35,13 +35,13 @@ public final class FluidHazards {
         /** Not hazardous: water, lava, molten metal, food. GT6's {@code FluidsGT} has no such set. */
         NONE(0),
         /**
-         * A fluid whose material carries {@code TD.Properties.ACID} ({@code FL.java:756},
-         * {@code FL.java:1118}). Trash amount from {@code MultiTileEntityPipeFluid.java:309}.
+         * A fluid whose material carries {@code TD.Properties.ACID} ({@code FL},
+         * {@code FL}). Trash amount from {@code MultiTileEntityPipeFluid}.
          */
         ACID(16),
-        /** A fluid created with {@code STATE_GASEOUS} ({@code FL.java:770}, {@code FL.java:1105}). */
+        /** A fluid created with {@code STATE_GASEOUS} ({@code FL}, {@code FL}). */
         GAS(8),
-        /** A fluid created with {@code STATE_PLASMA} ({@code FL.java:760}, {@code FL.java:1106}). */
+        /** A fluid created with {@code STATE_PLASMA} ({@code FL}, {@code FL}). */
         PLASMA(64);
 
         private final int pipeTrashPerTick;
@@ -52,7 +52,7 @@ public final class FluidHazards {
 
         /**
          * Fluid a pipe that is not proof against this hazard loses per tick:
-         * {@code GarbageGT.trash(tTank, 8)} for gas ({@code MultiTileEntityPipeFluid.java:297}),
+         * {@code GarbageGT.trash(tTank, 8)} for gas ({@code MultiTileEntityPipeFluid}),
          * {@code 64} for plasma and {@code 16} for acid.
          */
         public int pipeTrashPerTick() {
@@ -60,11 +60,11 @@ public final class FluidHazards {
         }
     }
 
-    /** GT6 {@code MultiTileEntityPipeFluid.java:311}: {@code applyChemDamage(entity, 2)}. */
+    /** GT6 {@code MultiTileEntityPipeFluid}: {@code applyChemDamage(entity, 2)}. */
     public static final float PIPE_ACID_DAMAGE = 2.0F;
-    /** GT6 {@code MultiTileEntityPipeFluid.java:312}: {@code if (rng(100) == 0)} destroys the pipe. */
+    /** GT6 {@code MultiTileEntityPipeFluid}: {@code if (rng(100) == 0)} destroys the pipe. */
     public static final int PIPE_ACID_DESTROY_CHANCE = 100;
-    /** GT6 {@code MultiTileEntityPipeFluid.java:299} and {@code MultiTileEntityPipeFluid.java:305}:
+    /** GT6 {@code MultiTileEntityPipeFluid} and {@code MultiTileEntityPipeFluid}:
      *  {@code applyTemperatureDamage(e, T, 2.0F, 10.0F)}. */
     public static final float PIPE_TEMPERATURE_MULTIPLIER = 2.0F;
     /** The damage cap of the same call. */
@@ -73,12 +73,12 @@ public final class FluidHazards {
     private FluidHazards() {}
 
     /**
-     * GT6 {@code FL.java:756} {@code FL.acid}: true when the fluid's material is
-     * {@code TD.Properties.ACID} ({@code TD.java:386}, filled at {@code FL.java:1118}).
+     * GT6 {@code FL} {@code FL.acid}: true when the fluid's material is
+     * {@code TD.Properties.ACID} ({@code TD}, filled at {@code FL}).
      *
      * <p>Acids are ordinary liquids and gases as far as the state machine is concerned, so this is
      * independent of {@link #isGas}: hydrogen chloride and hydrogen fluoride are both
-     * ({@code MT.java:1020-1021}), which is exactly why GT6 checks the two separately.
+     * ({@code MT}), which is exactly why GT6 checks the two separately.
      */
     public static boolean isAcid(Fluid fluid) {
         RegisteredFluids.FluidEntry entry = GTFluids.entryForFluid(fluid);
@@ -97,7 +97,7 @@ public final class FluidHazards {
     }
 
     /**
-     * GT6 {@code FL.java:775-776} {@code FL.lighter}: the registered density is below air's.
+     * GT6 {@code FL} {@code FL.lighter}: the registered density is below air's.
      *
      * <p>Strictly {@code density < 0} in {@code FluidType} units; the native
      * {@code FluidType.isLighterThanAir()} uses {@code <= 0}, which would also call the three
@@ -112,8 +112,8 @@ public final class FluidHazards {
     }
 
     /**
-     * GT6 {@code FL.java:760} {@code FL.plasma}: the fluid was created with {@code STATE_PLASMA}
-     * ({@code FL.java:1106}), which the port carries as {@link RegisteredFluids.FluidFlags#PLASMA}.
+     * GT6 {@code FL} {@code FL.plasma}: the fluid was created with {@code STATE_PLASMA}
+     * ({@code FL}), which the port carries as {@link RegisteredFluids.FluidFlags#PLASMA}.
      */
     public static boolean isPlasma(Fluid fluid) {
         RegisteredFluids.FluidEntry entry = GTFluids.entryForFluid(fluid);
@@ -125,7 +125,7 @@ public final class FluidHazards {
      * of the three independent predicates.
      *
      * <p>GT6 never picks one: it runs three consecutive tests over the same tank
-     * ({@code MultiTileEntityPipeFluid.java:296} gas, plasma, acid). This
+     * ({@code MultiTileEntityPipeFluid} gas, plasma, acid). This
      * method exists only for callers that cannot act on more than one class, so it reports the class
      * GT6 hits hardest - {@link Kind#PLASMA} (64 units a tick) before {@link Kind#ACID} (16 a tick,
      * and the only class that can destroy the vessel) before {@link Kind#GAS} (8 a tick). A fluid that
@@ -148,9 +148,9 @@ public final class FluidHazards {
      * flags refuse this hazard class?
      *
      * <p>Every GT6 vessel asks the same three questions in the same shape -
-     * {@code MultiTileEntityPipeFluid.java:296-317} for the pipe,
-     * {@code TileEntityBase08Barrel.java:251-254} for the barrel's fill gate and for
-     * its per-tick corrosion, and {@code TileEntityBase08FluidContainer.java:420} for the general
+     * {@code MultiTileEntityPipeFluid} for the pipe,
+     * {@code TileEntityBase08Barrel} for the barrel's fill gate and for
+     * its per-tick corrosion, and {@code TileEntityBase08FluidContainer} for the general
      * container:
      * <pre>
      *   if (!mGasProof &amp;&amp; FL.gas(aFluid)) return 0;
@@ -189,7 +189,7 @@ public final class FluidHazards {
 
     /**
      * Fluid a non-proof pipe loses per tick, summed over the classes the fluid has, exactly as GT6
-     * applies each test in turn on the same tank ({@code MultiTileEntityPipeFluid.java:296-317}): a
+     * applies each test in turn on the same tank ({@code MultiTileEntityPipeFluid}): a
      * gas costs 8, plasma 64 and acid 16, so hydrogen chloride in a plain iron pipe costs 24.
      * Returns {@code 0} for {@link Kind#NONE}, and never more than the tank can hold - the caller
      * drains it.

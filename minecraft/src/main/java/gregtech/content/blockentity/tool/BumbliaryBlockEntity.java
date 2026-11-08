@@ -61,14 +61,14 @@ import java.util.List;
  * <p>The GUI rules are GT6's: only a living princess may be put into the royal slot
  * ({@code isItemValidForSlotGUI}) and only a drone into the main drone slot, nothing may be
  * put into the comb, spare-drone and dead slots, the spare drone slots cannot be emptied by the
- * player at all ({@code MultiTileEntityBumbliary:399-421}, {@code setCanTake(F)}), the royal slot can
+ * player at all ({@code MultiTileEntityBumbliary}, {@code setCanTake(F)}), the royal slot can
  * only be emptied while it does not hold a live queen ({@code canTakeOutOfSlotGUI}) and the
  * royal slot takes exactly one item ({@code getInventoryStackLimitGUI}).</p>
  *
  * <p>Automation sees the dead slots only, on every side: {@code getAccessibleSlotsFromSide2}
  * returns {@link #SLOTS_DEAD}, {@code canInsertItem2} is false and {@code canExtractItem2}
  * allows the extraction of {@code aSlot >= 27} - the dead bees. The advanced machine exposes
- * {@link #ADV_SLOTS_AUTO} instead ({@code MultiTileEntityBumbliaryAdvanced:341-344}), i.e. its combs
+ * {@link #ADV_SLOTS_AUTO} instead ({@code MultiTileEntityBumbliaryAdvanced}), i.e. its combs
  * and its dead bees.</p>
  *
  * <h2>What runs per tick</h2>
@@ -101,7 +101,7 @@ import java.util.List;
  *       9x9x9/5x5x5; insect protection and GT6 species immunity are checked by
  *       {@link gregtech.content.bumble.BumbleSting}.</li>
  *   <li><b>The working-place scan is implemented for registered blocks.</b> GT6 calls
- *       {@code bumbleCanProduce} ({@code MultiItemBumbles:216-349}) before it rolls a product. The
+ *       {@code bumbleCanProduce} ({@code MultiItemBumbles}) before it rolls a product. The
  *       port checks the same species categories within three blocks (one for the advanced machine),
  *       via {@link BumbleWorkplace}. GT6's optional-mod plants without a modern registered counterpart
  *       are not fabricated. {@code bumbleCanProduct} always answers the machine's
@@ -115,7 +115,7 @@ import java.util.List;
  *   <li><b>GT6's {@code rng(..)} is one global RNG</b> ({@code RNGSUS}); the port draws from
  *       {@link Level#random}, the closest single source a block entity can reach, and hands the same
  *       source to {@link BumbleBreeding} (GT6 mixes its tile entity RNG with {@code RNGSUS} there).</li>
- *   <li><b>The NBT keys are GT6's own</b> ({@code CS:1175,1230,1251}): {@code gt.progress} is
+ *   <li><b>The NBT keys are GT6's own</b> ({@code CS}): {@code gt.progress} is
  *       {@code mLife}, {@code gt.cooldown} is {@code mBreedingCountDown} and {@code gt.invout} is the
  *       brood list with {@code gt.invout.<i>} entries. The inventory is stored under
  *       {@code inventory} like every other port container.</li>
@@ -127,7 +127,7 @@ import java.util.List;
 public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
         gregtech.engine.inventory.BlockContents {
 
-    // ── GT6's NBT keys (CS.java:1175, 1230, 1251) ───────────────────────────────────────────────
+    // ── GT6's NBT keys (CS) ───────────────────────────────────────────────────────────
     /** GT6's {@code NBT_PROGRESS}: the queen's remaining life. */
     public static final String NBT_PROGRESS = "gt.progress";
     /** GT6's {@code NBT_COOLDOWN}: the breeding countdown. */
@@ -153,7 +153,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
 
     /**
      * GT6's slot groups, so the standard and the advanced machine share one implementation
-     * ({@code MultiTileEntityBumbliary:333-337} and {@code MultiTileEntityBumbliaryAdvanced:333-337}).
+     * ({@code MultiTileEntityBumbliary} and {@code MultiTileEntityBumbliaryAdvanced}).
      */
     public static final class Layout extends gregtech.content.bumble.BumbliarySlotLayouts.Layout {
         public Layout(boolean advanced,int slots,int royal,int drone,int[] combs,int[] drones,int[] dead,int[] accessible,int productRoll){super(advanced,slots,royal,drone,combs,drones,dead,accessible,productRoll);}
@@ -279,7 +279,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     }
 
     /**
-     * GT6's {@code getRain(x, y, z)} ({@code TileEntityBase01Root:266-271}) as the sides of the
+     * GT6's {@code getRain(x, y, z)} ({@code TileEntityBase01Root}) as the sides of the
      * machine see it: no sky in the dimension means no rain, otherwise the neighbour is "in the rain"
      * when it sits at or above the height the precipitation stops at.
      */
@@ -539,7 +539,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     // ── GT6's inventory helpers ─────────────────────────────────────────────────────────────────
 
     /**
-     * GT6's {@code addStackToSlot} ({@code TileEntityBase05Inventories:173-188}): all or nothing into
+     * GT6's {@code addStackToSlot} ({@code TileEntityBase05Inventories}): all or nothing into
      * one slot - an empty slot takes the whole stack, an equal one takes it while it fits.
      */
     private boolean addStackToSlot(int slot, ItemStack stack) {
@@ -584,7 +584,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     }
 
     /**
-     * GT6's {@code bumbleKill} ({@code MultiItemBumbles:565}): {@code (meta / 5) * 5 + 4}, i.e. the dead
+     * GT6's {@code bumbleKill} ({@code MultiItemBumbles}): {@code (meta / 5) * 5 + 4}, i.e. the dead
      * bee of the same species that keeps the scan state, the stack size and the genome.
      */
     private ItemStack kill(ItemStack bee) {
@@ -706,7 +706,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     }
 
     /**
-     * GT6's {@code breakBlock} ({@code TileEntityBase05Inventories:152-171}): the machine hands its
+     * GT6's {@code breakBlock} ({@code TileEntityBase05Inventories}): the machine hands its
      * whole inventory out when it is destroyed, whatever destroys it.
      */
     @Override

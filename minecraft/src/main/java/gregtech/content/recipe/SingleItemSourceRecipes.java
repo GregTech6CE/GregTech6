@@ -44,7 +44,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
         for (var row : OriginalSingleItemCatalog.COMPOUNDS) {
             var input = own(row.item(), 1);
             var material = GTMaterialRegistry.get(row.material());
-            // MultiItemRandomTools:63-73: each compound contains 1/9 U and fires into one nugget.
+            // MultiItemRandomTools: each compound contains 1/9 U and fires into one nugget.
             ItemMaterialRegistry.register(input.getItem(), null, material, GTValues.U / 9);
             smelt(row.item(), mat(MaterialPrefix.nugget, row.material(), 1), false);
             var target = material.getTargetSmeltingMaterial();
@@ -56,7 +56,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
     }
 
     private void animalParts() {
-        // Loader_Recipes_Food:325-346: hooves, horns, antlers and ivory have the same two uses.
+        // Loader_Recipes_Food: hooves, horns, antlers and ivory have the same two uses.
         for (String id : OriginalSingleItemCatalog.ANIMAL_PARTS) {
             smelt(id, own("sticky_goo", 1), true);
             add(
@@ -94,7 +94,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
     }
 
     private void meat() {
-        // MultiItemFood:581 and Loader_Recipes_Food:350-365 preserve the 2U scrap-meat payload.
+        // MultiItemFood and Loader_Recipes_Food preserve the 2U scrap-meat payload.
         ItemMaterialRegistry.register(
                 own("scrap_meat", 1).getItem(), null, GTMaterialRegistry.get("MeatRaw"), 2 * GTValues.U);
         add(
@@ -115,7 +115,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
                 items(new ItemStack(Items.ROTTEN_FLESH)),
                 null,
                 null);
-        // MultiItemFood:927-928 are the original ingot forms, not decorative food copies.
+        // MultiItemFood are the original ingot forms, not decorative food copies.
         for (String state : List.of("raw", "cooked")) {
             String material = state.equals("raw") ? "MeatRaw" : "MeatCooked";
             String id = state + "_meat_bar";
@@ -150,7 +150,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
                     null);
         }
         smelt("raw_meat_bar", own("cooked_meat_bar", 1), true);
-        // Loader_Recipes_Food:97-103: all seven raw meat forms can be cooked.
+        // Loader_Recipes_Food: all seven raw meat forms can be cooked.
         for (var prefix : List.of(
                 MaterialPrefix.ingot,
                 MaterialPrefix.billet,
@@ -171,7 +171,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
     }
 
     private void remains() {
-        // Loader_Recipes_Crops:142-152 delegates all plant remains to RM.biomass(8).
+        // Loader_Recipes_Crops delegates all plant remains to RM.biomass(8).
         for (String id : OriginalSingleItemCatalog.PLANT_REMAINS) {
             Set<String> seen = new HashSet<>();
             biomass(id, "Water", 135, 32, seen);
@@ -219,7 +219,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
     }
 
     private void chum() {
-        // Loader_Recipes_Food:392-398: vanilla fallback of the original scrap-meat recipe.
+        // Loader_Recipes_Food: vanilla fallback of the original scrap-meat recipe.
         for (String rotten : List.of("MeatRotten", "FishRotten")) {
             for (String oil : List.of("Oil_Fish")) {
                 add(

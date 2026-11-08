@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * GT6's bumblebee <em>types</em> — the {@code meta % 10} of {@code ItemsGT.BUMBLEBEES}
- * ({@code MultiItemBumbles:564-577}).
+ * ({@code MultiItemBumbles}).
  *
  * <table>
  *   <caption>GT6's type metas</caption>

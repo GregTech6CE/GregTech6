@@ -1,4 +1,4 @@
-/* GregTech-6 Team, Loader_Recipes_Other:325-351; LGPL-3.0-or-later. */
+/* GregTech-6 Team, Loader_Recipes_Other; LGPL-3.0-or-later. */
 package gregtech.content.recipe;
 
 import java.util.*;

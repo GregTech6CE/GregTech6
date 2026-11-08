@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * getMaxCartSpeedOnRail())}). For a vanilla minecart that ceiling is <b>1.2</b>
  * ({@code IForgeAbstractMinecart.getMaxCartSpeedOnRail()}, whose comment warns that faster carts can
  * outrun chunk loading), so GT6's three fastest rails — Tungstensteel 1.40, Tungstencarbide 1.60 and
- * Adamantium 4.00 ({@code Loader_Rails:41-72}) — were silently capped at 1.2. {@code TrackBlock}'s class
+ * Adamantium 4.00 ({@code Loader_Rails}) — were silently capped at 1.2. {@code TrackBlock}'s class
  * javadoc records that as a deliberate difference the port could not fix without mixins; this mixin
  * closes it.</p>
  *
@@ -33,7 +33,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  *       {@code setCurrentCartSpeedCapOnRail}; only a rail that does — the port's {@code TrackBlock},
  *       through {@code applySpeedToCart} — can move the cap, and it hands over the value its own
  *       {@code railSpeed} computed, so a curve still means 0.4 and an unloaded neighbour still means
- *       1.0 ({@code BlockBaseRail:277-289}).</li>
+ *       1.0 ({@code BlockBaseRail}).</li>
  *   <li><b>A cart that never met a GT6 rail keeps Forge's behaviour</b>: its cap stays at
  *       {@code getMaxCartSpeedOnRail()}, and {@code getMaxCartSpeedOnRail()} itself is not touched —
  *       a rail that asks the cart for its ceiling still gets 1.2.</li>

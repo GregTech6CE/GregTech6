@@ -19,7 +19,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
  * (radius 4-7, two to four blocks deep).
  *
  * <p>PROVENANCE: GT6 has no clay seam pass at all - its only overworld clay generator is
- * {@code WorldgenPit} ({@code Loader_Worldgen:592-597}, ported as {@link GTPitFeature}) and the
+ * {@code WorldgenPit} ({@code Loader_Worldgen}, ported as {@link GTPitFeature}) and the
  * river placer black sands are {@link GTBlackSandFeature} - so this feature is the port's own
  * substitute for vanilla's round clay discs. Its clay blocks are GT6's {@code BlocksGT.Diggables}
  * metas 1/4/5/6 (Brown/Yellow/Blue/White Clay), i.e. the port's {@code gt6ce:clay_brown},
@@ -35,7 +35,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
  * so a pit replaces the surface block. The seam now starts at the top ground block too, which makes
  * both of the port's clay deposits show their clay.
  *
- * <p>NOTE ON GT6: GT6's own pit deliberately keeps a one block cap. {@code WorldgenPit.java:66-74}
+ * <p>NOTE ON GT6: GT6's own pit deliberately keeps a one block cap. {@code WorldgenPit}
  * skips every opaque block that is neither {@code Blocks.dirt} nor sand/clay/ore-sand, and 1.7.10
  * {@code Blocks.grass} is an opaque cube, so the grass block survives and GT6's clay starts at the
  * dirt below it; GT6's changelog 6.05.30 names the result "Clay 'Veins' below Grass". The port keeps
@@ -131,7 +131,7 @@ public class GTSurfaceDepositFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's sediment hosts of {@code WorldgenPit.java:67-69} (dirt, sand, clay) plus gravel, with
+     * GT6's sediment hosts of {@code WorldgenPit} (dirt, sand, clay) plus gravel, with
      * the {@code #minecraft:dirt} tag the port's own pit column uses - it also covers the grass
      * block of a grass-topped shore, which is what makes the seam reach the surface.
      */

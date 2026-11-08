@@ -35,13 +35,13 @@ import java.util.List;
  * build a row from the <em>NBT</em> of their inputs — something a static table cannot express:</p>
  *
  * <ul>
- *   <li>{@code RecipeMapScannerMolecular:46-67} — a scannable material form plus an {@code USB_Stick_3}
+ *   <li>{@code RecipeMapScannerMolecular} — a scannable material form plus an {@code USB_Stick_3}
  *       becomes that same stick carrying {@code gt.usb.data = {gt.replicator.data: <material id>}} and
  *       {@code gt.usb.tier = 3}; the work is {@code (protons + neutrons) * 512} ticks at 512 QU/t.</li>
- *   <li>{@code RecipeMapPrinter:139-149} — the stick plus paper prints the material's dictionary:
+ *   <li>{@code RecipeMapPrinter} — the stick plus paper prints the material's dictionary:
  *       3 paper, or 6 for a book past 50 pages, at 16 GU/t for 512 / 1024 ticks, with black dye
  *       ({@code FL.mul(DYE_FLUIDS_CHEMICAL[Black], 1, 2 or 1, T)} = 72 / 144 mB in GT6's 144 mB unit).</li>
- *   <li>{@code RecipeMapReplicator:81-84} + {@code getReplicatorRecipe} — the stick plus
+ *   <li>{@code RecipeMapReplicator} + {@code getReplicatorRecipe} — the stick plus
  *       {@code neutralmatter} (the material's neutrons) and {@code chargedmatter} (its protons)
  *       rebuilds the material, preferring its ambient fluid, then its priority prefix, then gem → gem
  *       plate → ingot → plate → nugget (9) → chunk (4) → dust → tiny dust (9) → small dust (4)
@@ -70,9 +70,9 @@ public final class GTMaterialDataRecipes {
     public static final String USB_STICK = "usb3_stick";
     private static final int USB_TIER = gregtech.content.data.UsbDataRules.SCANNER_TIER;
 
-    /** GT6's scanner power ({@code RecipeMapScannerMolecular:57}); the T3 machine accepts 256..1024. */
+    /** GT6's scanner power ({@code RecipeMapScannerMolecular}); the T3 machine accepts 256..1024. */
     private static final long SCANNER_EU = gregtech.content.data.MaterialDataRules.SCANNER_POWER;
-    /** GT6's printer power for a normal / a many-pages book ({@code RecipeMapPrinter:135}). */
+    /** GT6's printer power for a normal / a many-pages book ({@code RecipeMapPrinter}). */
     private static final long PRINTER_EU = gregtech.content.data.MaterialDataRules.PRINTER_POWER;
     private static final long PRINTER_MANY_TICKS = gregtech.content.data.MaterialDataRules.PRINTER_MANY_TICKS;
     /** GT6's printer duration. */
@@ -82,7 +82,7 @@ public final class GTMaterialDataRecipes {
     private static final int DYE_MB_MANY = gregtech.content.data.MaterialDataRules.DYE_MANY_MB;
     /** GT6's threshold for the "large" printed book. */
     private static final int MANY_PAGES = gregtech.content.data.MaterialDataRules.MANY_PAGES;
-    /** GT6's replicator duration per nucleon ({@code RecipeMapReplicator:91}). */
+    /** GT6's replicator duration per nucleon ({@code RecipeMapReplicator}). */
     private static final long REPLICATOR_TICKS_PER_NUCLEON = gregtech.content.data.MaterialDataRules.REPLICATOR_TICKS_PER_NUCLEON;
 
     private static boolean registered;
@@ -208,10 +208,10 @@ public final class GTMaterialDataRecipes {
     // ── GT6's USB drives: sixteen files in one item ──────────────────────
 
     /**
-     * GT6 {@code CS.NBT_USB_DRIVE} ({@code CS.java:1278}) — the compound holding a drive's slots.
+     * GT6 {@code CS.NBT_USB_DRIVE} ({@code CS}) — the compound holding a drive's slots.
      * <p>
      * GT6 keys a drive's slot {@code i} as {@code gt.usb.data<i>} plus {@code gt.usb.tier<i>}
-     * ({@code MultiTileEntityHDDSwitch:61-83}), i.e. the stick's two keys with the slot index
+     * ({@code MultiTileEntityHDDSwitch}), i.e. the stick's two keys with the slot index
      * concatenated — the layout below keeps that exactly.
      * </p>
      */
@@ -279,7 +279,7 @@ public final class GTMaterialDataRecipes {
     /**
      * The material a drive's slot points at, or null.
      *
-     * <p>GT6 {@code MultiTileEntityHDDSwitch:61-62} answers a slot only when
+     * <p>GT6 {@code MultiTileEntityHDDSwitch} answers a slot only when
      * {@code gt.usb.tier<i> <= driveTier}: a drive reads its own tier and below, and a file written by a
      * higher-tier drive stays invisible to a lower one. The port keeps that gate — a tier-1 drive cannot
      * read a tier-3 file, which is the whole point of the four drive tiers.</p>
@@ -322,7 +322,7 @@ public final class GTMaterialDataRecipes {
 
     /**
      * Writes material data into the first free slot of a drive, the way GT6's HDD switch writes the
-     * slot its mode index points at ({@code MultiTileEntityHDDSwitch:72-83}).
+     * slot its mode index points at ({@code MultiTileEntityHDDSwitch}).
      *
      * @return the slot the file landed in, or −1 when every slot is taken
      */
@@ -379,7 +379,7 @@ public final class GTMaterialDataRecipes {
     // ── the molecular scanner ────────────────────────────────────────────
 
     /**
-     * GT6 {@code RecipeMapScannerMolecular:46-67}: a material form plus a USB 3 stick is replaced by
+     * GT6 {@code RecipeMapScannerMolecular}: a material form plus a USB 3 stick is replaced by
      * that stick carrying the material's name.
      */
     @Nullable
@@ -428,7 +428,7 @@ public final class GTMaterialDataRecipes {
     // ── the printer ──────────────────────────────────────────────────────
 
     /**
-     * GT6 {@code RecipeMapPrinter:139-149}: a scanned USB stick plus paper prints the material's
+     * GT6 {@code RecipeMapPrinter}: a scanned USB stick plus paper prints the material's
      * dictionary pages — 3 paper, or 6 when the dictionary runs past 50 pages, followed by binding.
      */
     @Nullable
@@ -481,7 +481,7 @@ public final class GTMaterialDataRecipes {
     // ── the matter replicator ────────────────────────────────────────────
 
     /**
-     * GT6 {@code RecipeMapReplicator:81-84}: a scanned USB stick plus the material's neutrons as
+     * GT6 {@code RecipeMapReplicator}: a scanned USB stick plus the material's neutrons as
      * {@code neutralmatter} and its protons as {@code chargedmatter} rebuild the material.
      */
     @Nullable
