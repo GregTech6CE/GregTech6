@@ -38,9 +38,9 @@ import java.util.Map;
  * glass/CFoam slab families need two grid rows per colour, which they had none of. Their Cutter row
  * already exists with the dye chain in {@link DyeProcessingRecipes}.</p>
  *
- * <p>{@code Loader_Blocks:70} adds the reinforced-concrete hand row
+ * <p>{@code Loader_Blocks} adds the reinforced-concrete hand row
  * ({@code "Se"/"X ", 'X' = concrete, 'S' = iron stick, mirrored}). GT6's {@code 'e'} is
- * {@code OreDictToolNames.drill} ({@code CR.java:343}), which GT6's Hand Drill registers, so the row
+ * {@code OreDictToolNames.drill} ({@code CR}), which GT6's Hand Drill registers, so the row
  * uses {@link GTToolType#HAND_DRILL}.</p>
  *
  * <p>Concrete, reinforced concrete, asphalt and fresh CFoam have no slab block in the port yet: GT6's
@@ -123,7 +123,7 @@ public final class ConstructionCraftingRecipeInjector {
         return added;
     }
 
-    /** GT6 {@code Loader_Blocks:70}: one mirrored iron-stick row per concrete colour. */
+    /** GT6 {@code Loader_Blocks}: one mirrored iron-stick row per concrete colour. */
 //? if >=1.21.1 {
     /*private static int reinforcedConcrete(Map<ResourceLocation, byte[]> recipes) {
 *///?} else {

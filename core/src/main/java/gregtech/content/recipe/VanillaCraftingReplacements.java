@@ -201,7 +201,7 @@ public final class VanillaCraftingReplacements {
         rows.add(new Row(
                 "gt6ce:vanilla/stick_saw", "minecraft:stick", 2, "s/P", keys("s=tool:saw", "P=tag:minecraft:planks")));
         shaped(rows, "bowl", 1, "k/X", "k=tool:knife", "X=tag:minecraft:planks");
-        // Loader_Recipes_Vanilla:467,486: the dyeing rows keep vanilla's shape but take any dye
+        // Loader_Recipes_Vanilla: the dyeing rows keep vanilla's shape but take any dye
         // of the colour, so GT6's dye dusts work there too.
         for (String color : List.of(
                 "orange",

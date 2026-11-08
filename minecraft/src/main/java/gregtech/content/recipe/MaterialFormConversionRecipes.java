@@ -173,7 +173,7 @@ public final class MaterialFormConversionRecipes {
         unpack("dust 1 -> dustTiny 9", MaterialPrefix.dust, 1, MaterialPrefix.dustTiny, 9, material);
         unpack("dustSmall 1 -> dustDiv72 18", MaterialPrefix.dustSmall, 1, MaterialPrefix.dustDiv72, 18, material);
         unpack("dustTiny 1 -> dustDiv72 8", MaterialPrefix.dustTiny, 1, MaterialPrefix.dustDiv72, 8, material);
-        // Loader_Recipes_Handlers:452-456: a projectile gives back its head/dust and the empty
+        // Loader_Recipes_Handlers: a projectile gives back its head/dust and the empty
         // carrier. MT.Empty itself is excluded by the source's MT.Empty.NOT condition.
         if (material != Materials.Empty) {
             projectile(

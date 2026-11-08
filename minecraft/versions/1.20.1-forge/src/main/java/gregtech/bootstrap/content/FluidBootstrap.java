@@ -33,7 +33,7 @@ import net.minecraftforge.registries.RegistryObject;
 public record FluidBootstrap() implements InitializationStep {
     /**
      * Fluids that also exist as world blocks. GT6's fluid springs ({@code WorldgenFluidSpring},
-     * Loader_Worldgen:782-797) place oil and natural gas into the world, so those need a
+     * Loader_Worldgen) place oil and natural gas into the world, so those need a
      * {@link LiquidBlock}.
      */
     private static final Set<String> WORLD_FLUID_PATHS = FluidRenderLayers.worldFluidPaths();

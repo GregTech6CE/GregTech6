@@ -74,7 +74,7 @@ public class FuelRecipeLoader implements InitializationStep {
         }
     }
 
-    /** Loader_Fuels:213: the turbine map's only original row, 160 mB steam -> 1 mB distilled water. */
+    /** Loader_Fuels: the turbine map's only original row, 160 mB steam -> 1 mB distilled water. */
     private void registerTurbineFuel() {
         FluidStack steam = make("Steam", 160);
         FluidStack distilledWater = make("DistW", 1);

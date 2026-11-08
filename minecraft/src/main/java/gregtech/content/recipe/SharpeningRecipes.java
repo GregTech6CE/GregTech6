@@ -16,7 +16,7 @@ import java.util.List;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * GT6's Sharpening (grindstone) handler block: {@code Loader_Recipes_Handlers:396-415}.
+ * GT6's Sharpening (grindstone) handler block: {@code Loader_Recipes_Handlers}.
  * <p>
  * Twenty rows in two groups:
  * </p>

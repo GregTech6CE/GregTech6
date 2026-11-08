@@ -729,7 +729,7 @@ public final class ManualToolRecipeCatalog {
     public static String specialItem(ToolDefinition type, char letter) {
         if (letter != 'V') return null;
         return switch (type) {
-            // Loader_Tools:314 uses DYE_OREDICTS[Blue], so GT6's blue dye dust works as well.
+            // Loader_Tools uses DYE_OREDICTS[Blue], so GT6's blue dye dust works as well.
             case CROWBAR -> "#forge:dyes/blue";
             case SCOOP -> "#minecraft:wool";
             default -> null;
@@ -747,9 +747,8 @@ public final class ManualToolRecipeCatalog {
      * tool. Head-based tools keep that row even when they also have shaped early rows — a pickaxe can
      * come from a head plus a stick <em>or</em> straight from a rock.
      *
-     * <p>The universal spade is the exception: {@code Loader_Tools.java:298} gives it a tool row
-     * ({@code "AT", "Sd"}) rather than a head recipe, and {@code Loader_Tools.java:332-350} has no
-     * {@code AdvancedCraftingTool} row for it.</p>
+     * <p>The universal spade is the exception: it has a shaped tool row of its own instead of a
+     * head recipe, and no {@code AdvancedCraftingTool} row exists for it.</p>
      */
     public static boolean isHeadAssembly(ToolDefinition type) {
         return type == ToolDefinition.MAGNIFYING_GLASS

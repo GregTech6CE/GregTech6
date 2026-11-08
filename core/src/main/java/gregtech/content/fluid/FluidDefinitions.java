@@ -12,7 +12,7 @@ public final class FluidDefinitions {
     public static void prepare() {
         FluidCatalog.bootstrap();
         registerGoldenBottleFluids();
-        // Loader_Fluids:618 creates ordinary mercury with L=144 mB per U. GT6's metal factory does not
+        // Loader_Fluids creates ordinary mercury with L=144 mB per U. GT6's metal factory does not
         // set MOLTEN, so this ordinary liquid is mercury's only phase; the generic 1000 mB quantity
         // used by MatterRecipeLoader is still an audited mismatch.
         gregtech.content.material.generated.ElementMaterials.Mercury.put(gregtech.api.material.MaterialProperty.LIQUID);

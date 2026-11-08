@@ -122,7 +122,7 @@ public final class UtilityCraftingRows {
                             "mat:stick",
                             'd',
                             "item:gt6ce:tool_screwdriver",
-                            // Loader_MultiTileEntities:138 uses OD.craftingLeather; GT6 also takes modded leather.
+                            // Loader_MultiTileEntities uses OD.craftingLeather; GT6 also takes modded leather.
                             'L',
                             "tag:gt6ce:leathers",
                             'C',

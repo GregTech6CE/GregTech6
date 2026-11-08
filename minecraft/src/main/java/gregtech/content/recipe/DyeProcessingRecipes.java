@@ -42,7 +42,7 @@ public final class DyeProcessingRecipes {
             String vanilla=color.replace("LightBlue","light_blue").replace("LightGray","light_gray").toLowerCase(Locale.ROOT);
             var dye=item("minecraft:"+vanilla+"_dye",1);
             var waters=RecipeInputGroups.fluids("water","Water","MnWtr","DistW");
-            // Loader_Recipes_Other:135-140 mixes every dyeMixable item, i.e. the vanilla dye and
+            // Loader_Recipes_Other mixes every dyeMixable item, i.e. the vanilla dye and
             // GT6's own dye dust of that colour, so the recipe takes the shared dye tag.
             var recipe=waters.apply(new Recipe(new ItemStack[]{dye.copy()},null,null,null,
                     new FluidStack[]{waters.stack(144)},new FluidStack[]{fluid("Dye_Water_"+color,216)},16,16,0),0);
@@ -60,7 +60,7 @@ public final class DyeProcessingRecipes {
                     new FluidStack[]{fluid("Dye_Chemical_"+color,2304)},null,256,16,0));
             var dyeColor = net.minecraft.world.item.DyeColor.byName(vanilla, net.minecraft.world.item.DyeColor.WHITE);
             var wet = colored("cfoam_fresh", dyeColor, 1);
-            // Loader_Recipes_Other:488 injects every registered air; spectral dew is not an air here.
+            // Loader_Recipes_Other injects every registered air; spectral dew is not an air here.
             for(String air:new String[]{"Air","Air_End","Air_Nether"})
                 add(MachineRecipeMaps.Injector,new Recipe(null,new ItemStack[]{colored("cfoam_fresh",dyeColor,1)},null,null,
                         new FluidStack[]{fluid("CFoam_Dyed_"+color,100),fluid(air,1000)},null,16,16,0));

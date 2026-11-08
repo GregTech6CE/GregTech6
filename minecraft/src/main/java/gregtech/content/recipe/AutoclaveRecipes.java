@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * GT6's Autoclave handler block: {@code Loader_Recipes_Handlers:436-448}.
+ * GT6's Autoclave handler block: {@code Loader_Recipes_Handlers}.
  * <p>
  * Twelve rows grow crystals from dust: {@code dustSmall 1/2/4/8/16/32} and {@code dust 1/1/1/2/4/8} turn
  * into the gem ladder ({@code gemChipped} → {@code gemLegendary}), consuming steam and returning

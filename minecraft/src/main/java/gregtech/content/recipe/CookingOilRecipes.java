@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 /**
- * GT6 6.17 cooking-oil furnace rows ({@code RecipeMapFurnace.java:57-61}): smelting a raw meat or fish
+ * GT6 6.17 cooking-oil furnace rows ({@code RecipeMapFurnace}): smelting a raw meat or fish
  * cut with 50 mB of cooking oil yields two cooked items instead of one. The original synthesises the
  * row inside {@code findRecipe} from the smelting result; this port keeps its table-driven lookup and
  * publishes the oil variant as a higher-priority static row beside the plain one, so the doubled row
@@ -34,11 +34,11 @@ import java.util.TreeSet;
  * {@code listAllmeatcooked}, excluding {@code listAllmeatsubstitute}): the whole GT meat cuts, the ingot
  * and dust forms of MeatRaw (including the raw meat bar), and the vanilla meats and fish. The ham slice,
  * the smaller MeatRaw forms and the FishRaw forms carry no meat ore-dict name in the original
- * ({@code MultiItemFood.java:534}, {@code LoaderOreDictReRegistrations.java:815-817}) and do not double.
+ * ({@code MultiItemFood}, {@code LoaderOreDictReRegistrations}) and do not double.
  * The rows stay in the GT oven table only; the vanilla furnace has no fluid tank and never mirrors them.</p>
  */
 public final class CookingOilRecipes {
-    /** Oil consumed per doubled row; {@code RecipeMapFurnace.java:58-60} requires and takes 50 mB. */
+    /** Oil consumed per doubled row; {@code RecipeMapFurnace} requires and takes 50 mB. */
     private static final int OIL_MB = 50;
     /** Above the plain smelting rows (priority 0) so the oil variant wins when both match. */
     private static final long OIL_PRIORITY = 1;

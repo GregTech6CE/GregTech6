@@ -152,7 +152,7 @@ public final class SharedOreWashingRows {
          new long[0],new FluidStack[]{mercury},new FluidStack[0],size.ticks(),BATH_POWER));
     }
    }else{
-    // Loader_Recipes_Ores:437 names Firestone first; a retired reagent material is skipped, not fatal.
+    // Loader_Recipes_Ores names Firestone first; a retired reagent material is skipped, not fatal.
     String[] reagents=tag==SourceOreWashingData.Tag.PERSULFATE?new String[]{"SodiumPersulfate","PotassiumPersulfate"}
         :new String[]{"Firestone","Pyrotheum","Octine"};
     for(String reagentName:reagents)for(BathShape shape:bathShapes()){

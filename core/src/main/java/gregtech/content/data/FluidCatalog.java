@@ -1269,7 +1269,7 @@ public class FluidCatalog {
                 default -> false;
             }) MOLTEN_FACTORY_FIELDS.add(field);
             long flags = gas ? FluidFlags.GAS_FLAG : FluidFlags.LIQUID;
-            // Loader_Fluids:618 creates mercury as an ordinary simple liquid, not a generated one.
+            // Loader_Fluids creates mercury as an ordinary simple liquid, not a generated one.
             if (!gas && material.getName().equals("Mercury")) flags |= FluidFlags.SIMPLE;
             FluidEntry generated = register(
                     field,

@@ -14,9 +14,8 @@ import org.junit.jupiter.api.Test;
 final class ManualToolRecipeCatalogTest {
 
     /**
-     * Every {@code AdvancedCraftingTool} registration of {@code Loader_Tools.java:332-350}. The
-     * universal spade is absent: its row is the shaped {@code "AT", "Sd"} tool recipe at
-     * {@code Loader_Tools.java:298}.
+     * Every {@code AdvancedCraftingTool} registration. The universal spade is absent: its row is
+     * the shaped {@code "AT", "Sd"} tool recipe.
      */
     private static final Set<ToolDefinition> ORIGINAL_ASSEMBLIES = EnumSet.of(
             ToolDefinition.MAGNIFYING_GLASS,

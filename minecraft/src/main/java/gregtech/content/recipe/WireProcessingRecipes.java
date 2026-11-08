@@ -144,7 +144,7 @@ public final class WireProcessingRecipes {
 
     /**
      * One ingot's worth of a wire material becomes two size-1 wires. The rule is published in
-     * material units ({@code Loader_Recipes_Handlers:289}), so every equivalent ingot item of the
+     * material units ({@code Loader_Recipes_Handlers}), so every equivalent ingot item of the
      * material is admitted and no representative stack narrows the input set.
      */
     private static void addPhysicalWire(long ticks, GTMaterial material, ItemStack result, ItemStack input) {
