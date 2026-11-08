@@ -8,7 +8,9 @@ import java.nio.file.Files
 
 /** Preserve the ForgeGradle ProcessResources/CopySpec contract, but copy only changed inputs.
  * Gradle handles full rebuilds and snapshots; removed inputs are explicitly removed from output.
+ * The annotation is not inherited from ProcessResources, so the subclass opts in explicitly.
  */
+@CacheableTask
 abstract class IncrementalProcessResources extends ProcessResources {
     private FileTree trackedSource
     @Override @InputFiles @SkipWhenEmpty @IgnoreEmptyDirectories @PathSensitive(PathSensitivity.RELATIVE)
