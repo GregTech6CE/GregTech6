@@ -37,13 +37,6 @@ public final class GTBurningBoxes {
                 .orElse(null);
     }
 
-    public static RegisteredBlock<BurningBoxBlock> findFuel(String id) {
-        return FUEL.stream()
-                .filter(block -> block.getId().getPath().equals(id))
-                .findFirst()
-                .orElse(null);
-    }
-
     public static void registerAll(ContentRegistrar registrar) {
         if (!SOLID.isEmpty() || !FUEL.isEmpty()) return;
         var brick = InitialSmelteryDefinitions.brickBurningBox();
@@ -64,8 +57,7 @@ public final class GTBurningBoxes {
                 FUEL.add(registrar.block(
                         REGISTRY_NAMESPACE,
                         entry.spec().id(),
-                        () -> new BurningBoxBlock(
-                                entry.fuelType(), entry.spec(), fuelProperties(entry.spec())),
+                        () -> new BurningBoxBlock(entry.fuelType(), entry.spec(), fuelProperties(entry.spec())),
                         box -> new BurningBoxBlockItem(box, new Item.Properties().stacksTo(16), entry.spec())));
             }
         }

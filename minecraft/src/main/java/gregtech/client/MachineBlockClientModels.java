@@ -35,18 +35,8 @@ public final class MachineBlockClientModels {
 
     private MachineBlockClientModels() {}
 
-//? if >=1.21.1 {
-//?} else {
-    private static final ResourceLocation BAROMETER_MODEL =
-            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, ("block/machines/barometer/sprites").toLowerCase());
-//?}
-
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
         Set<ResourceLocation> registered = new HashSet<>();
-//? if >=1.21.1 {
-//?} else {
-        ClientModelEvents.registerAdditional(event, BAROMETER_MODEL);
-//?}
         for (var entry : GTBasicMachines.all()) {
             for (String suffix : new String[]{"", "_running", "_active"}) {
                 ResourceLocation id = entry.get().basicSpec().modelId(suffix);

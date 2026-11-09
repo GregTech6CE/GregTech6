@@ -49,14 +49,6 @@ public final class GTSmeltery {
         return List.copyOf(CROSSINGS);
     }
 
-    public static RegisteredBlock<SmeltingCrucibleBlock> ceramicCrucible() {
-        return CERAMIC_CRUCIBLE;
-    }
-
-    public static RegisteredBlock<MoldBlock> ceramicMold() {
-        return CERAMIC_MOLD;
-    }
-
     public static RegisteredBlock<SmeltingCrucibleBlock> findCrucible(String id) {
         return CRUCIBLES.stream()
                 .filter(block -> block.getId().getPath().equals(id))
