@@ -255,11 +255,6 @@ public final class GTFoodRecipes {
     }
 
     private static void sourceRows(List<ChemRecipe> rows) {
-        row(SOURCE, "Mixer", 16, 16, 29)
-                .fluid(nativeFluid("RoyalJelly", 100))
-                .fluid(nativeFluid("Honeydew", 200))
-                .out(nativeFluid("Ambrosia", 400))
-                .add(rows);
         row(SOURCE, "Mixer", 16, 16, 30)
                 .item(dust("Milk", thousandths(1000)))
                 .fluid(nativeFluid("Soda", 500))
@@ -298,6 +293,12 @@ public final class GTFoodRecipes {
         row(SOURCE, "Distillery", 16, 80, 36)
                 .kept(selector(0))
                 .fluid(nativeFluid("Juice_Cactus", 100))
+                .out(nativeFluid("DistW", 50))
+                .add(rows);
+        row(SOURCE, "Distillery", 16, 80, 37)
+                .kept(selector(0))
+                .fluid(nativeFluid("Sap_Maple", 125))
+                .out(nativeFluid("Syrup_Maple", 50))
                 .out(nativeFluid("DistW", 50))
                 .add(rows);
         row(SOURCE, "Distillery", 16, 16, 38)
@@ -401,6 +402,11 @@ public final class GTFoodRecipes {
                 .kept(selector(0))
                 .fluid(nativeFluid("Juice_Carrot", 50))
                 .out(nativeFluid("Wine_Carrot", 25))
+                .add(rows);
+        row(SOURCE, "Drying", 16, 200, 79)
+                .fluid(nativeFluid("Sap_Maple", 250))
+                .out(dust("Sugar", thousandths(1000)))
+                .out(nativeFluid("DistW", 100))
                 .add(rows);
         row(SOURCE, "Drying", 16, 100, 80)
                 .fluid(nativeFluid("Juice_Reed", 200))

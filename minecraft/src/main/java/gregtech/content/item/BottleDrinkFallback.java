@@ -75,34 +75,6 @@ final class BottleDrinkFallback {
                             false,
                             List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 100, 1, 100)))),
             Map.entry(
-                    "Sap_Maple",
-                    new DrinkNutritionRows.Row(
-                            "maplesap",
-                            3,
-                            0.2f,
-                            0,
-                            false,
-                            false,
-                            "drink",
-                            false,
-                            false,
-                            false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.hunger.id", 300, 1, 50), new DrinkNutritionRows.Effect("PotionsGT.ID_STICKY", 300, 0, 30)))),
-            Map.entry(
-                    "Sap_Rainbow",
-                    new DrinkNutritionRows.Row(
-                            "rainbowsap",
-                            5,
-                            0.5f,
-                            0,
-                            false,
-                            false,
-                            "drink",
-                            true,
-                            false,
-                            false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.regeneration.id", 60, 4, 100), new DrinkNutritionRows.Effect("PotionsGT.ID_STICKY", 300, 0, 30), new DrinkNutritionRows.Effect("Potion.digSpeed.id", 900, 2, 100)))),
-            Map.entry(
                     "Juice_Coconut",
                     new DrinkNutritionRows.Row(
                             "coconutmilk",
@@ -326,20 +298,6 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             List.of( new DrinkNutritionRows.Effect("Potion.heal.id", 1, 0, 10), new DrinkNutritionRows.Effect("Potion.moveSpeed.id", 200, 0, 20)))),
-            Map.entry(
-                    "Syrup_Maple",
-                    new DrinkNutritionRows.Row(
-                            "maplesyrup",
-                            4,
-                            0.2f,
-                            0,
-                            false,
-                            false,
-                            "drink",
-                            false,
-                            false,
-                            false,
-                            List.of(new DrinkNutritionRows.Effect("PotionsGT.ID_STICKY", 300, 0, 70)))),
             Map.entry(
                     "Cream_Coconut",
                     new DrinkNutritionRows.Row(
@@ -592,6 +550,22 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             List.of(new DrinkNutritionRows.Effect("Potion.regeneration.id", 120, 4, 100)))),
+            Map.entry(
+                    "Ambrosia",
+                    new DrinkNutritionRows.Row(
+                            "potion.ambrosia",
+                            2,
+                            0.2f,
+                            0,
+                            true,
+                            false,
+                            "drink",
+                            true,
+                            false,
+                            false,
+                            List.of(
+                                    new DrinkNutritionRows.Effect("PotionsGT.ID_STICKY", 300, 0, 70),
+                                    new DrinkNutritionRows.Effect("Potion.regeneration.id", 150, 0, 100)))),
             Map.entry(
                     "Vodka",
                     new DrinkNutritionRows.Row(

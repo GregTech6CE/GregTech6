@@ -104,7 +104,7 @@ public class BottleItem extends Item {
         Fluid fluid = fluid();
         if (fluid == null) {
             var fallback = BottleDrinkFallback.row(fluidKey);
-            if (fallback == null || !player.canEat(fallback.alwaysEdible())) {
+            if (fallback == null || !GTDrinks.canEat(player, true, fallback.alwaysEdible())) {
                 return InteractionResultHolder.pass(stack);
             }
             player.startUsingItem(hand);
@@ -143,7 +143,7 @@ public class BottleItem extends Item {
         Fluid fluid = fluid();
         if (fluid == null) {
             var fallback = BottleDrinkFallback.row(fluidKey);
-            if (fallback == null) return stack;
+            if (fallback == null || !GTDrinks.canEat(player, true, fallback.alwaysEdible())) return stack;
             BottleDrinkFallback.drink(player, fallback);
         } else if (!GTDrinks.drink(player, new FluidStack(fluid, amount()))) {
             return stack;

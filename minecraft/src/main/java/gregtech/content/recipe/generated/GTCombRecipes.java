@@ -50,8 +50,7 @@ public final class GTCombRecipes {
 
     private static void fluidRows(List<ChemRecipe> rows) {
         row(SOURCE + "253", "Centrifuge", 16, 64)
-                .item(tech("magic_comb", 1)).out(nativeFluid("Ambrosia", 100))
-                .out(dust("WaxMagic", U(1))).add(rows);
+                .item(tech("magic_comb", 1)).out(dust("WaxMagic", U(1))).add(rows);
         row(SOURCE + "254", "Centrifuge", 16, 64)
                 .item(tech("nether_comb", 1)).out(nativeFluid("Blaze", 144))
                 .out(dust("WaxRefractory", U(1))).add(rows);

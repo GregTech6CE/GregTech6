@@ -17,7 +17,9 @@ public final class BottleFillingRows {
             new Family("seed_oil", "Oil_Seed", "MultiItemBottles:129-132"),
             new Family("milk", "Milk", "MultiItemBottles:143-146"),
             new Family("honey", "Honey", "MultiItemBottles:164-167", "minecraft:honey_bottle"),
-            new Family("green_slime_bottle", "Slime_Green", "MultiItemBottles:211-214"));
+            new Family("green_slime_bottle", "Slime_Green", "MultiItemBottles:211-214"),
+            new Family("maple_sap", "Sap_Maple", "MultiItemBottles:268-271"),
+            new Family("rainbow_sap", "Sap_Rainbow", "MultiItemBottles:277-280"));
 
     public static List<Family> all() {
         var rows = new java.util.ArrayList<>(FAMILIES);

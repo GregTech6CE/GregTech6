@@ -48,6 +48,8 @@ public final class GTTreeHoles {
 
     public static void registerAll(ContentRegistrar registrar) {
         hole(registrar, "resin_hole_rubber", WoodSpecies.RUBBER, "item:gt6ce:rubber_resin");
+        hole(registrar, "tapped_maple", WoodSpecies.MAPLE, "fluid:gt6ce:maplesap");
+        hole(registrar, "tapped_rainbowood", WoodSpecies.RAINBOWOOD, "fluid:gt6ce:rainbowsap");
     }
 
     private static void hole(ContentRegistrar registrar, String id, WoodSpecies species, String yield) {

@@ -38,6 +38,8 @@ public final class TorchCraftingRecipes {
         // Never substitute a fluid bottle or the unrelated vanilla shroomlight block for those source items.
         fluid(rows, "Resin_Rubber", 6, 6);
         fluid(rows, "Resin_Spruce", 6, 6);
+        fluid(rows, "Sap_Maple", 6, 2);
+        fluid(rows, "Sap_Rainbow", 8, 4);
         fluid(rows, "Creosote", 6, 2);
         // Original disabledrecipes.torchesFromCoal defaults false and guards this entire family.
         if (!GregTechConfig.Rule.DISABLE_COAL_TORCHES.enabled()) {

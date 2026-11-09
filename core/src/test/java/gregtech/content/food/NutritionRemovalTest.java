@@ -63,7 +63,7 @@ class NutritionRemovalTest {
     void tableSizesArePreserved() {
         assertEquals(251, GTFoodItemsGen.ROWS.size());
         assertEquals(57, CannedFoodCatalog.ROWS.size());
-        assertEquals(128, GTDrinksGen.ROWS.size());
+        assertEquals(130, GTDrinksGen.ROWS.size());
         assertEquals(29, SandwichBottleFoods.ROWS.size());
         assertEquals(137, GTBottlesGen.ENTRIES.length / 3);
     }
@@ -90,8 +90,8 @@ class NutritionRemovalTest {
                 "Holywater",
                 "Purple_Drink",
                 "Rotten_Drink",
-                "Sap_Maple",
-                "Sap_Rainbow",
+                "Ambrosia",
+                "Med_Heal",
                 "Juice_Coconut",
                 "Juice_Currant",
                 "Juice_Fig",
@@ -110,7 +110,6 @@ class NutritionRemovalTest {
                 "MilkSoy",
                 "Sauce_Chili",
                 "Sauce_BBQ",
-                "Syrup_Maple",
                 "Cream_Coconut",
                 "Smoothie_Coconut",
                 "Pina_Colada",
@@ -128,7 +127,6 @@ class NutritionRemovalTest {
                 "Wine_Grape_Purple",
                 "Vinegar_Grape",
                 "Med_Laxative",
-                "Med_Heal",
                 "Vodka",
                 "Leninade",
                 "Beer_Dark",
@@ -166,8 +164,8 @@ class NutritionRemovalTest {
                 "holywater",
                 "purpledrink",
                 "rottendrink",
-                "maplesap",
-                "rainbowsap",
+                "potion.ambrosia",
+                "medicine.heal",
                 "coconutmilk",
                 "currantjuice",
                 "figjuice",
@@ -186,7 +184,6 @@ class NutritionRemovalTest {
                 "soymilk",
                 "chillysauce",
                 "bbqsauce",
-                "maplesyrup",
                 "coconutcream",
                 "coconutsmoothie",
                 "pina.colada",
@@ -204,7 +201,6 @@ class NutritionRemovalTest {
                 "ricardosanchez",
                 "vinegar",
                 "medicine.laxative",
-                "medicine.heal",
                 "binnie.vodka",
                 "potion.leninade",
                 "darkbeer",

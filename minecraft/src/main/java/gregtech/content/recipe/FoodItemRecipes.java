@@ -239,7 +239,9 @@ public final class FoodItemRecipes {
             {"ice_cream", "Juice_Gooseberry", "50", "gooseberry_ice_cream", "MultiItemFood.java:870"},
             {"ice_cream", "RoyalJelly", "5", "honey_ice_cream", "MultiItemFood.java:871"},
             {"ice_cream", "Honey", "50", "honey_ice_cream", "MultiItemFood.java:872"},
+            {"ice_cream", "Syrup_Maple", "50", "maple_ice_cream", "MultiItemFood.java:876"},
             {"ice_cream", "Cream_Nutella", "50", "nutella_ice_cream", "MultiItemFood.java:877"},
+            {"ice_cream", "Sap_Rainbow", "50", "rainbow_ice_cream", "MultiItemFood.java:879"},
     };
 
     private static void mixing() {
