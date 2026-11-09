@@ -39,14 +39,12 @@ public final class FoodStatEvents {
             return;
         }
         ItemStack stack = event.getItem();
-        int[] stats = GTFoodStats.stats(stack);
-        if (stats == null) {
+        Integer radiation = GTFoodStats.radiation(stack);
+        if (radiation == null || radiation == 0) {
             return;
         }
-        if (stats[GTFoodStats.RADIATION] != 0) {
-            // GT6 routes this into the tracker's sixth value (mRadiation); the port's radiation tracker is
-            // PlayerRadiation, whose persistent key is the same kind of 7-bit dose.
-            PlayerRadiation.change(player, stats[GTFoodStats.RADIATION]);
-        }
+        // GT6 routes this into the tracker's sixth value (mRadiation); the port's radiation tracker is
+        // PlayerRadiation, whose persistent key is the same kind of 7-bit dose.
+        PlayerRadiation.change(player, radiation);
     }
 }
