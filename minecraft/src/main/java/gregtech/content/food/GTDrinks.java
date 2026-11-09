@@ -35,9 +35,10 @@ import java.util.Map;
  * data, and radiation goes through {@link PlayerRadiation}; the five other GT6 statistics are not tracked.
  */
 public final class GTDrinks {
-    /** One {@code FoodStatDrink} row: the food values and the six statistics GT6 tracks. */
-    public record Row(String field, int foodLevel, float saturation, int alcohol, int caffeine,
-                      int dehydration, int sugar, int fat, int radiation, boolean alwaysEdible, boolean invisibleParticles, String useAction, boolean milk, boolean extinguish, boolean explosive, List<DrinkNutritionRows.Effect> effects) {}
+    /** One {@code FoodStatDrink} row: the food values and the one statistic the port tracks. */
+    public record Row(String field, int foodLevel, float saturation, int radiation, boolean alwaysEdible,
+                      boolean invisibleParticles, String useAction, boolean milk, boolean extinguish,
+                      boolean explosive, List<DrinkNutritionRows.Effect> effects) {}
 
     private static final Map<Fluid, Row> BY_FLUID = new IdentityHashMap<>();
     private static final List<String> UNRESOLVED = new java.util.ArrayList<>();
@@ -51,7 +52,7 @@ public final class GTDrinks {
         }
         built = true;
         for (DrinkNutritionRows.Row source : GTDrinksGen.ROWS) {
-            Row row=new Row(source.field(),source.foodLevel(),source.saturation(),source.alcohol(),source.caffeine(),source.dehydration(),source.sugar(),source.fat(),source.radiation(),source.alwaysEdible(),source.invisibleParticles(),source.useAction(),source.milk(),source.extinguish(),source.explosive(),source.effects());
+            Row row=new Row(source.field(),source.foodLevel(),source.saturation(),source.radiation(),source.alwaysEdible(),source.invisibleParticles(),source.useAction(),source.milk(),source.extinguish(),source.explosive(),source.effects());
             // GT6 keys drinks by FL field name for most fluids and by the FL.create("...") name for the
             // brews; the port keys its own table by field, so try both and finally match on the registry
             // path with sanitizePath applied to both sides (which is what the port itself registers).
