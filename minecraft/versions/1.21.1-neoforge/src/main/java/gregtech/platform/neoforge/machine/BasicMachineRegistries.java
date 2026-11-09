@@ -2,32 +2,28 @@ package gregtech.platform.neoforge.machine;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
-import gregtech.api.material.*;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.content.machine.BasicMachineDefinitions;
-import gregtech.engine.machine.BasicMachineSpec;
-import gregtech.engine.material.*;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
+import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
+import gregtech.content.blockentity.machine.CompressedGasTankBlockEntity;
+import gregtech.content.blockentity.machine.FuelGeneratorBlockEntity;
+import gregtech.content.registry.BehaviorMachineRegistration;
+import gregtech.content.registry.CompressedGasTankRegistration;
+import gregtech.content.registry.FuelGeneratorRegistration;
+import gregtech.content.registry.GTBasicMachines;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.capabilities.*;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
-import net.neoforged.neoforge.registries.*;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
-/** Native registrations from the shared catalog; original large recipe/matter/distillation factories are bound. */
+/** NeoForge menus, capabilities and payload wiring for the shared machine catalogs. */
 public final class BasicMachineRegistries {
     private BasicMachineRegistries() {}
 
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES =
-            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, REGISTRY_NAMESPACE);
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(Registries.MENU, REGISTRY_NAMESPACE);
     public static final DeferredHolder<MenuType<?>, MenuType<gregtech.client.gui.BasicMachineContainerMenu>> MENU =
@@ -43,81 +39,9 @@ public final class BasicMachineRegistries {
             "part",
             () -> IMenuTypeExtension.create(
                     (id, inventory, buffer) -> new gregtech.client.gui.PartMenu(id, inventory, buffer)));
-    private static final List<gregtech.content.registry.RegisteredBlock<BasicMachineBlock>> MACHINES =
-            new ArrayList<>();
-    private static final List<DeferredHolder<BlockEntityType<?>, BlockEntityType<BasicMachineBlockEntity>>> TYPES =
-            new ArrayList<>();
-    private static final List<DeferredRegister<BlockEntityType<?>>> ADDON_ENTITIES = new ArrayList<>();
-
-    public static List<gregtech.content.registry.RegisteredBlock<BasicMachineBlock>> all() {
-        return Collections.unmodifiableList(MACHINES);
-    }
-
-    public static List<DeferredHolder<BlockEntityType<?>, BlockEntityType<BasicMachineBlockEntity>>> types() {
-        return Collections.unmodifiableList(TYPES);
-    }
-
-    public static void register(gregtech.content.registry.ContentRegistrar registrar) {
-        var entities = new LinkedHashMap<String, DeferredRegister<BlockEntityType<?>>>();
-        entities.put(REGISTRY_NAMESPACE, ENTITIES);
-        for (BasicMachineSpec spec : BasicMachineDefinitions.specifications()) {
-            String namespace = spec.namespace();
-            var entityReg = entities.computeIfAbsent(namespace, ns -> {
-                var created = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ns);
-                ADDON_ENTITIES.add(created);
-                return created;
-            });
-            var block = gregtech.content.registry.MultiblockRegistration.register(
-                    gregtech.content.multiblock.ControllerDeclarations.recipe(
-                            spec,
-                            () -> spec.controllerKind() == gregtech.api.machine.MachineControllerKind.DISTILLATION
-                                    ? new gregtech.content.block.machine.MultiblockControllerBlock(
-                                            spec,
-                                            BlockBehaviour.Properties.of()
-                                                    .mapColor(MapColor.METAL)
-                                                    .strength(spec.hardness(), spec.blastResistance())
-                                                    .requiresCorrectToolForDrops())
-                                    : new BasicMachineBlock(
-                                            spec,
-                                            BlockBehaviour.Properties.of()
-                                                    .mapColor(MapColor.METAL)
-                                                    .strength(spec.hardness(), spec.blastResistance())
-                                                    .requiresCorrectToolForDrops())),
-                    (path, factory) -> registrar.block(
-                            namespace,
-                            path,
-                            factory,
-                            bare -> new BasicMachineItem(bare, new Item.Properties().stacksTo(16))));
-            MACHINES.add(block);
-            var type = entityReg.register("be_" + spec.id(), () -> {
-                AtomicReference<BlockEntityType<BasicMachineBlockEntity>> ref = new AtomicReference<>();
-                var value = BlockEntityType.Builder.of(
-                                (pos, state) -> {
-                                    var be = block.get().createBlockEntity(ref.get(), pos, state);
-                                    be.setSpec(spec);
-                                    return be;
-                                },
-                                block.get())
-                        .build(null);
-                ref.set(value);
-                block.get().setBeTypeSupplier(() -> value);
-                return value;
-            });
-            TYPES.add(type);
-        }
-        BehaviorMachineRegistration.register(registrar);
-        FuelGeneratorRegistration.register(registrar);
-        CompressedGasTankRegistration.register(registrar);
-    }
 
     public static void submit(IEventBus bus) {
-        ENTITIES.register(bus);
         MENUS.register(bus);
-        for (var entities : ADDON_ENTITIES) entities.register(bus);
-        ADDON_ENTITIES.clear();
-        BehaviorMachineRegistration.submit(bus);
-        FuelGeneratorRegistration.submit(bus);
-        CompressedGasTankRegistration.submit(bus);
         bus.addListener(BasicMachineRegistries::capabilities);
         bus.addListener(gregtech.network.MachinePayloads::register);
     }
@@ -220,12 +144,24 @@ public final class BasicMachineRegistries {
                 Capabilities.FluidHandler.BLOCK,
                 gregtech.content.registry.GTBlockEntities.ADDON_FUNCTIONAL_PART.get(),
                 gregtech.content.blockentity.machine.AddonFunctionalPartBlockEntity::fluidCapability);
-        for (var type : TYPES) {
+        for (var type : GTBasicMachines.types()) {
             event.registerBlockEntity(
                     Capabilities.ItemHandler.BLOCK, type.get(), BasicMachineBlockEntity::itemCapability);
             event.registerBlockEntity(
                     Capabilities.FluidHandler.BLOCK, type.get(), BasicMachineBlockEntity::fluidCapability);
         }
+        for (var type : BehaviorMachineRegistration.types()) {
+            event.registerBlockEntity(
+                    Capabilities.ItemHandler.BLOCK, type.get(), BehaviorMachineBlockEntity::itemCapability);
+            event.registerBlockEntity(
+                    Capabilities.FluidHandler.BLOCK, type.get(), BehaviorMachineBlockEntity::fluidCapability);
+        }
+        for (var type : FuelGeneratorRegistration.types())
+            event.registerBlockEntity(
+                    Capabilities.FluidHandler.BLOCK, type.get(), FuelGeneratorBlockEntity::fluidCapability);
+        for (var type : CompressedGasTankRegistration.types())
+            event.registerBlockEntity(
+                    Capabilities.FluidHandler.BLOCK, type.get(), CompressedGasTankBlockEntity::fluidCapability);
     }
 
     public static void registerCompositions() {
@@ -233,7 +169,7 @@ public final class BasicMachineRegistries {
             if (!(block instanceof BasicMachineBlock machine)) continue;
             var spec = machine.basicSpec();
             gregtech.content.machine.OriginalMachineMaterialData.find(spec.machineName(), spec.tier())
-                    .ifPresent(data -> ItemMaterialRegistry.register(block.asItem(), data));
+                    .ifPresent(data -> gregtech.engine.material.ItemMaterialRegistry.register(block.asItem(), data));
         }
     }
 }

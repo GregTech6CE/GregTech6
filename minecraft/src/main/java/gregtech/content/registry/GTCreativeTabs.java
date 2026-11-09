@@ -6,7 +6,6 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.engine.machine.MachineRegistry;
 //?}
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
@@ -376,9 +375,9 @@ private GTCreativeTabs() {}
 //? if >=1.21.1 {
         /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("basic_machines");
 *///?} else {
-        List<RegistryObject<BasicMachineBlock>> machines = MachineRegistry.basicMachines();
+        var machines = GTBasicMachines.all();
         if (!machines.isEmpty()) {
-            RegistryObject<BasicMachineBlock> first = machines.get(0);
+            var first = machines.get(0);
             if (first.isPresent()) return new ItemStack(first.get());
         }
         return new ItemStack(Items.IRON_BLOCK);

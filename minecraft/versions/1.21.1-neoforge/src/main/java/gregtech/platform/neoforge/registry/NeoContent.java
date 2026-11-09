@@ -3,6 +3,7 @@ package gregtech.platform.neoforge.registry;
 import gregtech.bootstrap.ContentRegistration;
 import gregtech.content.registry.ContentRegistrar;
 import gregtech.content.registry.GTAxles;
+import gregtech.content.registry.GTBasicMachines;
 import gregtech.content.registry.GTBlackSands;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTBlocks;
@@ -89,7 +90,7 @@ public final class NeoContent implements ContentRegistration.PlatformContent {
         LogisticsRegistries.register(registrar);
         GTSounds.bootstrap();
         FluidTransportRegistries.register(registrar);
-        BasicMachineRegistries.register(registrar);
+        GTBasicMachines.registerAll(registrar);
         SmelteryRegistries.register(registrar);
         HopperRegistries.register(registrar);
         // Last: fills the icon ids no earlier family claimed, so it must follow every block family.

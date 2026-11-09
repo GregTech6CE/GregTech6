@@ -2,6 +2,7 @@ package gregtech.content.registry;
 
 import gregtech.content.block.machine.BehaviorMachineBlock;
 import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
+import gregtech.content.multiblock.ControllerDeclarations;
 import gregtech.engine.addon.AddonMachines;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -13,19 +14,20 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 
-/** Registers addon behavior machines in the addon's namespace, on GregTech's mod bus. */
+/** Registers addon behavior machines in the addon's namespace. */
 public final class BehaviorMachineRegistration {
     private static final List<RegisteredBlock<BehaviorMachineBlock>> BLOCKS = new ArrayList<>();
-    private static final List<DeferredRegister<BlockEntityType<?>>> ENTITIES = new ArrayList<>();
+    private static final List<RegisteredBlockEntity<BehaviorMachineBlockEntity>> TYPES = new ArrayList<>();
 
     private BehaviorMachineRegistration() {}
 
     public static List<RegisteredBlock<BehaviorMachineBlock>> all() {
         return List.copyOf(BLOCKS);
+    }
+
+    public static List<RegisteredBlockEntity<BehaviorMachineBlockEntity>> types() {
+        return List.copyOf(TYPES);
     }
 
     public static void register(ContentRegistrar registrar) {
@@ -37,20 +39,12 @@ public final class BehaviorMachineRegistration {
         for (var entry : byNamespace.entrySet()) registerNamespace(registrar, entry.getKey(), entry.getValue());
     }
 
-    public static void submit(IEventBus bus) {
-        for (var entities : ENTITIES) entities.register(bus);
-        ENTITIES.clear();
-    }
-
     private static void registerNamespace(
             ContentRegistrar registrar, String namespace, List<AddonMachines.AcceptedBehavior> machines) {
-        DeferredRegister<BlockEntityType<?>> entities =
-                DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, namespace);
-        ENTITIES.add(entities);
         var holders = new ArrayList<RegisteredBlock<BehaviorMachineBlock>>();
         for (AddonMachines.AcceptedBehavior accepted : machines) {
-            RegisteredBlock<BehaviorMachineBlock> block = gregtech.content.registry.MultiblockRegistration.register(
-                    gregtech.content.multiblock.ControllerDeclarations.behavior(
+            RegisteredBlock<BehaviorMachineBlock> block = MultiblockRegistration.register(
+                    ControllerDeclarations.behavior(
                             accepted,
                             () -> new BehaviorMachineBlock(
                                     accepted,
@@ -68,18 +62,18 @@ public final class BehaviorMachineRegistration {
             groups.computeIfAbsent(machines.get(i).blockEntityPath(), path -> new ArrayList<>())
                     .add(holders.get(i));
         for (var group : groups.entrySet()) {
-            entities.register(group.getKey(), () -> {
+            var type = registrar.blockEntity(namespace, group.getKey(), () -> {
                 AtomicReference<BlockEntityType<BehaviorMachineBlockEntity>> typeRef = new AtomicReference<>();
-                Block[] valid =
-                        group.getValue().stream().map(RegisteredBlock::get).toArray(Block[]::new);
-                BlockEntityType<BehaviorMachineBlockEntity> type = BlockEntityType.Builder.of(
+                Block[] valid = group.getValue().stream().map(RegisteredBlock::get).toArray(Block[]::new);
+                BlockEntityType<BehaviorMachineBlockEntity> built = BlockEntityType.Builder.of(
                                 (pos, state) -> new BehaviorMachineBlockEntity(typeRef.get(), pos, state), valid)
                         .build(null);
-                typeRef.set(type);
+                typeRef.set(built);
                 for (RegisteredBlock<BehaviorMachineBlock> block : group.getValue())
-                    block.get().setBeType(() -> type);
-                return type;
+                    block.get().setBeType(() -> built);
+                return built;
             });
+            TYPES.add(type);
         }
     }
 }

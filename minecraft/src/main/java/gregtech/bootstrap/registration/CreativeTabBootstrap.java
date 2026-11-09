@@ -309,8 +309,8 @@ public class CreativeTabBootstrap {
                     gregtech.content.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN,
                     gregtech.content.registry.GTMultiblocks.findPart(17999),
                     gregtech.content.registry.GTMultiblocks.findPart(17998),
-                    gregtech.content.registry.GTMultiblocks.IMPLOSION_COMPRESSOR_MAIN,
-                    gregtech.content.registry.GTMultiblocks.FUSION_REACTOR_MAIN}) {
+                    gregtech.content.registry.RegisteredBlock.reference("implosion_compressor_main"),
+                    gregtech.content.registry.RegisteredBlock.reference("fusion_reactor_main")}) {
                 if (ro != null && ro.isPresent()) {
                     event.accept(new net.minecraft.world.item.ItemStack(
                             (net.minecraft.world.level.block.Block) ro.get()));
@@ -422,7 +422,7 @@ public class CreativeTabBootstrap {
     }
 
     private static void populateBasicMachines(BuildCreativeModeTabContentsEvent event) {
-        for (var entry : MachineRegistry.basicMachines()) {
+        for (var entry : GTBasicMachines.all()) {
             if (entry.isPresent()) event.accept(new ItemStack(entry.get(), 1));
         }
     }

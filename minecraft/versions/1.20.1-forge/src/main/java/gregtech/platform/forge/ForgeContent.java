@@ -3,12 +3,8 @@ package gregtech.platform.forge;
 import gregtech.bootstrap.ContentRegistration;
 import gregtech.bootstrap.content.FluidBootstrap;
 import gregtech.bootstrap.content.ToolBootstrap;
-import gregtech.content.registry.AddonMachineRegistration;
 import gregtech.content.registry.AddonSensorRegistration;
-import gregtech.content.registry.BehaviorMachineRegistration;
-import gregtech.content.registry.CompressedGasTankRegistration;
 import gregtech.content.registry.ContentRegistrar;
-import gregtech.content.registry.FuelGeneratorRegistration;
 import gregtech.content.registry.GTBasicMachines;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTBlocks;
@@ -29,7 +25,6 @@ import gregtech.content.registry.GTStorage;
 import gregtech.content.registry.GTSurfaceBlocks;
 import gregtech.content.registry.GTToolBlocks;
 import gregtech.content.worldgen.GTFeatures;
-import gregtech.engine.machine.MachineRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 /**
@@ -67,7 +62,6 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
         GTBasicMachines.registerAll(registrar);
         GTStorage.registerAll(registrar);
         GTToolBlocks.registerAll(registrar);
-        MachineRegistry.registerBasicMachineBeTypes(GTBlockEntities.BLOCK_ENTITIES);
     }
 
     /** Attaches every shared, addon and platform content register exactly once. */
@@ -76,10 +70,6 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
         GTFluids.FLUIDS.register(bus);
         GTFluids.registerAddonFluids(bus);
         ToolBootstrap.submit(bus);
-        AddonMachineRegistration.submit(bus);
-        BehaviorMachineRegistration.submit(bus);
-        FuelGeneratorRegistration.submit(bus);
-        CompressedGasTankRegistration.submit(bus);
         GTItems.ITEMS.register(bus);
         GTItems.registerAddonItems(bus);
         GTBlocks.BLOCKS.register(bus);

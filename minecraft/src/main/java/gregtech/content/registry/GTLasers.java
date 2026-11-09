@@ -49,12 +49,6 @@ public final class GTLasers {
     public static RegisteredBlock<Block> ZPM_DISCHARGER_ELITE;
 //?}
 
-    // F8 batch 4: Logistics Core
-//? if >=1.21.1 {
-//?} else {
-    public static RegisteredBlock<Block> LOGISTICS_CORE;
-//?}
-
     private GTLasers() {}
 
     public static List<RegisteredBlock<? extends Block>> all() { return Collections.unmodifiableList(ALL); }
@@ -109,12 +103,6 @@ public final class GTLasers {
         ZPM_DISCHARGER_BASIC = reg(registrar, "zpm_discharger_basic", () -> new gregtech.content.block.energy.ZpmDischargerBlock(BlockBehaviour.Properties.of().strength(4f,50f).requiresCorrectToolForDrops(),false));
         ZPM_DISCHARGER_ADVANCED = reg(registrar, "zpm_discharger_advanced", () -> new gregtech.content.block.energy.ZpmDischargerBlock(BlockBehaviour.Properties.of().strength(4f,50f).requiresCorrectToolForDrops(),true));
         ZPM_DISCHARGER_ELITE = ZPM_DISCHARGER_BASIC;
-
-        // F8: Logistics Core
-        LOGISTICS_CORE = MultiblockRegistration.register(gregtech.engine.multiblock.ControllerDeclaration.multiblock(REGISTRY_NAMESPACE, "logistics_core",
-                () -> new gregtech.content.block.machine.LogisticsCoreControllerBlock(laserProps()),
-                gregtech.content.multiblock.ControllerDeclarations.LOGISTICS),
-                (path, factory) -> reg(registrar, path, factory));
 //?}
     }
 

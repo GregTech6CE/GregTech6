@@ -2,6 +2,7 @@ package gregtech.content.registry;
 
 import gregtech.content.block.machine.FuelGeneratorBlock;
 import gregtech.content.blockentity.machine.FuelGeneratorBlockEntity;
+import gregtech.content.multiblock.ControllerDeclarations;
 import gregtech.engine.addon.AddonMachines;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -12,19 +13,20 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 
-/** Registers addon fuel generators in the addon's namespace, on GregTech's mod bus. */
+/** Registers addon fuel generators in the addon's namespace. */
 public final class FuelGeneratorRegistration {
     private static final List<RegisteredBlock<FuelGeneratorBlock>> BLOCKS = new ArrayList<>();
-    private static final List<DeferredRegister<BlockEntityType<?>>> ENTITIES = new ArrayList<>();
+    private static final List<RegisteredBlockEntity<FuelGeneratorBlockEntity>> TYPES = new ArrayList<>();
 
     private FuelGeneratorRegistration() {}
 
     public static List<RegisteredBlock<FuelGeneratorBlock>> all() {
         return List.copyOf(BLOCKS);
+    }
+
+    public static List<RegisteredBlockEntity<FuelGeneratorBlockEntity>> types() {
+        return List.copyOf(TYPES);
     }
 
     public static void register(ContentRegistrar registrar) {
@@ -36,19 +38,11 @@ public final class FuelGeneratorRegistration {
         for (var entry : byNamespace.entrySet()) registerNamespace(registrar, entry.getKey(), entry.getValue());
     }
 
-    public static void submit(IEventBus bus) {
-        for (var entities : ENTITIES) entities.register(bus);
-        ENTITIES.clear();
-    }
-
     private static void registerNamespace(
             ContentRegistrar registrar, String namespace, List<AddonMachines.AcceptedFuel> machines) {
-        DeferredRegister<BlockEntityType<?>> entities =
-                DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, namespace);
-        ENTITIES.add(entities);
         for (AddonMachines.AcceptedFuel accepted : machines) {
-            RegisteredBlock<FuelGeneratorBlock> block = gregtech.content.registry.MultiblockRegistration.register(
-                    gregtech.content.multiblock.ControllerDeclarations.fuel(
+            RegisteredBlock<FuelGeneratorBlock> block = MultiblockRegistration.register(
+                    ControllerDeclarations.fuel(
                             accepted,
                             () -> new FuelGeneratorBlock(
                                     accepted,
@@ -60,17 +54,17 @@ public final class FuelGeneratorRegistration {
                             namespace, path, factory, bare -> new BlockItem(bare, new Item.Properties().stacksTo(16))));
             BLOCKS.add(block);
             String path = "be_" + accepted.declaration().casing().id().replace('/', '_');
-            entities.register(path, () -> {
+            var type = registrar.blockEntity(namespace, path, () -> {
                 AtomicReference<BlockEntityType<FuelGeneratorBlockEntity>> typeRef = new AtomicReference<>();
-                BlockEntityType<FuelGeneratorBlockEntity> type = BlockEntityType.Builder.of(
-                                (pos, state) ->
-                                        (FuelGeneratorBlockEntity) block.get().create(typeRef.get(), pos, state),
+                BlockEntityType<FuelGeneratorBlockEntity> built = BlockEntityType.Builder.of(
+                                (pos, state) -> (FuelGeneratorBlockEntity) block.get().create(typeRef.get(), pos, state),
                                 block.get())
                         .build(null);
-                typeRef.set(type);
-                block.get().setBeType(() -> type);
-                return type;
+                typeRef.set(built);
+                block.get().setBeType(() -> built);
+                return built;
             });
+            TYPES.add(type);
         }
     }
 }

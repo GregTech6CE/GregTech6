@@ -1,6 +1,7 @@
 package gregtech.client;
 
 import gregtech.client.gui.BasicMachineScreen;
+import gregtech.content.registry.GTBasicMachines;
 import gregtech.platform.neoforge.machine.BasicMachineRegistries;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -35,7 +36,7 @@ public final class BasicMachineClientSetup {
 
     @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block event) {
-        for (var holder : BasicMachineRegistries.all()) {
+        for (var holder : GTBasicMachines.all()) {
             var block = holder.get();
             event.register(
                     (state, level, pos, index) ->
@@ -46,7 +47,7 @@ public final class BasicMachineClientSetup {
 
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
-        for (var holder : BasicMachineRegistries.all()) {
+        for (var holder : GTBasicMachines.all()) {
             var block = holder.get();
             event.register(
                     ItemColorARGB.opaque((stack, index) ->
@@ -57,7 +58,7 @@ public final class BasicMachineClientSetup {
 
     @SubscribeEvent
     public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
-        for (var type : BasicMachineRegistries.types())
+        for (var type : GTBasicMachines.types())
             event.registerBlockEntityRenderer(type.get(), MachineCoverRenderer::new);
         event.registerBlockEntityRenderer(
                 gregtech.content.registry.GTBlockEntities.COKE_OVEN.get(), MachineCoverRenderer::new);

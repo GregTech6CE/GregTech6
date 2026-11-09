@@ -94,7 +94,7 @@ public final class EngineClientSetup {
                 GTBlockEntities.ADDON_ENERGY_PART.get(), gregtech.client.FunctionalPartRenderer::new);
         gregtech.client.BehaviorMachineClients.collect();
         var behaviorTypes = new java.util.LinkedHashSet<net.minecraft.world.level.block.entity.BlockEntityType<?>>();
-        for (var holder : gregtech.platform.neoforge.machine.BehaviorMachineRegistration.all()) {
+        for (var holder : gregtech.content.registry.BehaviorMachineRegistration.all()) {
             var type = holder.get().blockEntityType();
             if (type != null) behaviorTypes.add(type);
         }

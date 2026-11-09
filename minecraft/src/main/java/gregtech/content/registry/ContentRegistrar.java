@@ -6,6 +6,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 /**
  * Loader-neutral view of the item and block registries used by shared registration code.
@@ -32,6 +34,10 @@ public interface ContentRegistrar {
 
     /** Queues a block whose item comes from another path (or none at all). */
     <T extends Block> RegisteredBlock<T> blockWithoutItem(String namespace, String path, Supplier<T> factory);
+
+    /** Queues a block entity type in the given namespace. */
+    <T extends BlockEntity> RegisteredBlockEntity<T> blockEntity(
+            String namespace, String path, Supplier<BlockEntityType<T>> factory);
 
     /** Queues a block and a plain {@link BlockItem} with the same path. */
     default <T extends Block> RegisteredBlock<T> block(String namespace, String path, Supplier<T> factory) {
@@ -72,6 +78,14 @@ public interface ContentRegistrar {
             return new RegisteredBlock<>(
                     ResourceLocation.fromNamespaceAndPath(namespace, path),
                     GTBlocks.blocks(namespace).register(path, factory));
+        }
+
+        @Override
+        public <T extends BlockEntity> RegisteredBlockEntity<T> blockEntity(
+                String namespace, String path, Supplier<BlockEntityType<T>> factory) {
+            return new RegisteredBlockEntity<>(
+                    ResourceLocation.fromNamespaceAndPath(namespace, path),
+                    GTBlockEntities.entities(namespace).register(path, factory));
         }
     }
 }

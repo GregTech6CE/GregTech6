@@ -28,6 +28,7 @@ import gregtech.content.block.machine.TankBlock;
 import gregtech.content.blockentity.machine.KineticSteamEngineBlockEntity;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 import gregtech.content.item.FluidItem;
+import gregtech.content.registry.GTBasicMachines;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTEnergyNodes;
@@ -593,7 +594,7 @@ public final class GregTechClient {
             int tint = block.spec().tintRgb();
             event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, block);
         });
-        MachineRegistry.basicMachines().forEach(entry -> {
+        GTBasicMachines.all().forEach(entry -> {
             if (entry.isPresent()) {
                 BasicMachineBlock block = entry.get();
                 int tint = block.basicSpec().material().getColor();
@@ -957,11 +958,10 @@ public final class GregTechClient {
                 GTBlockEntities.ORIGINAL_LARGE_BOILER.get(), OriginalLargeBoilerBarometerRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LARGE_TURBINE.get(), LargeTurbineRotorRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LARGE_GAS_TURBINE.get(), LargeTurbineRotorRenderer::new);
-        event.registerBlockEntityRenderer(GTBlockEntities.FUSION_REACTOR.get(), MachineCoverRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.COKE_OVEN.get(), MachineCoverRenderer::new);
 
         // Cover plates on basic machine faces
-        for (var blockRO : gregtech.engine.machine.MachineRegistry.basicMachines()) {
+        for (var blockRO : GTBasicMachines.all()) {
             if (!blockRO.isPresent()) continue;
             BlockEntityType<?> beType = blockRO.get().beType();
             if (beType == null) continue;

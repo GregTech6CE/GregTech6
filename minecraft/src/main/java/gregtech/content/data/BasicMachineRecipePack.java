@@ -3,12 +3,8 @@ package gregtech.content.data;
 import com.google.gson.Gson;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.machine.BasicMachineBlock;
-import gregtech.platform.Mc;
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.machine.BasicMachineRegistries;
-*///?} else {
 import gregtech.content.registry.GTBasicMachines;
-//?}
+import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
@@ -46,13 +42,8 @@ public final class BasicMachineRecipePack {
     private BasicMachineRecipePack() {}
 
     public static void contribute(Map<ResourceLocation, byte[]> generated) {
-//? if >=1.21.1 {
-        /*for (var entry : BasicMachineRegistries.all()) {
-            if (!entry.isBound()) continue;
-*///?} else {
         for (var entry : GTBasicMachines.all()) {
-            if (!entry.isPresent()) continue;
-//?}
+            if (!entry.isBound()) continue;
             BasicMachineBlock machine = entry.get();
             var spec = machine.basicSpec();
             if (MULTIBLOCK_CONTROLLERS.contains(spec.machineName())) continue;

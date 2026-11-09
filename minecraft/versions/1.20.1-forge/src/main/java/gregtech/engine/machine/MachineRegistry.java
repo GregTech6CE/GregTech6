@@ -1,6 +1,5 @@
 package gregtech.engine.machine;
 
-import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.machine.BurningBoxBlock;
 import gregtech.content.block.machine.CrucibleCrossingBlock;
 import gregtech.content.block.machine.CrucibleFaucetBlock;
@@ -15,19 +14,15 @@ import gregtech.content.block.machine.QueueHopperBlockItem;
 import gregtech.content.block.machine.SmeltingCrucibleBlock;
 import gregtech.content.block.machine.SmeltingCrucibleBlockItem;
 import gregtech.content.block.machine.SolidBurningBoxBlock;
-import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.registry.GTBlocks;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
@@ -43,9 +38,6 @@ public final class MachineRegistry {
     private static final List<RegistryObject<CrucibleFaucetBlock>> CRUCIBLE_FAUCETS = new ArrayList<>();
     private static final List<RegistryObject<HopperBlock>> HOPPERS = new ArrayList<>();
     private static final List<RegistryObject<QueueHopperBlock>> QUEUE_HOPPERS = new ArrayList<>();
-    private static final List<RegistryObject<BasicMachineBlock>> BASIC_MACHINES = new ArrayList<>();
-    /** RegistryObjects for basic machine blocks; used in lazy BE type registration pass. */
-    private static final List<RegistryObject<BasicMachineBlock>> BASIC_MACHINE_BLOCKS = new ArrayList<>();
 
     private static final int MOLD_META_OFFSET = 50;
     private static final int BASIN_META_OFFSET = 750;
@@ -278,86 +270,5 @@ public final class MachineRegistry {
 
     public static List<RegistryObject<QueueHopperBlock>> queueHoppers() {
         return Collections.unmodifiableList(QUEUE_HOPPERS);
-    }
-
-    // ── Basic Machine registration ──────────────────────────────────────────
-
-    /**
-     * Registers a basic machine block (GT6 {@code MultiTileEntityBasicMachine}).
-     * <p>
-     * The matching {@link BlockEntityType} is registered separately via
-     * {@link #registerBasicMachineBeTypes(DeferredRegister)} so that
-     * {@code MachineRegistry} does not need to import {@code GTBlockEntities}.
-     */
-    public static RegistryObject<BasicMachineBlock> registerBasicMachine(BasicMachineSpec spec) {
-        gregtech.engine.addon.RegisteredMachineIndex.bind(spec);
-        return registerBasicMachine(spec, props -> new BasicMachineBlock(spec, props));
-    }
-
-    /** Addon blocks are registered on their own namespace and still appear in {@link #basicMachines()}. */
-    public static void trackBasicMachine(RegistryObject<BasicMachineBlock> block) {
-        BASIC_MACHINES.add(block);
-    }
-
-    /** Variant taking a custom block factory (multiblock controllers etc.). */
-    public static RegistryObject<BasicMachineBlock> registerBasicMachine(
-            BasicMachineSpec spec, java.util.function.Function<BlockBehaviour.Properties, BasicMachineBlock> factory) {
-        RegistryObject<BasicMachineBlock> block = gregtech.content.registry.MultiblockRegistration.register(
-                gregtech.content.multiblock.ControllerDeclarations.recipe(
-                        spec,
-                        () -> factory.apply(BlockBehaviour.Properties.of()
-                                .mapColor(MapColor.METAL)
-                                .strength(spec.hardness(), spec.blastResistance())
-                                .requiresCorrectToolForDrops())),
-                GTBlocks.BLOCKS::register);
-        BASIC_MACHINES.add(block);
-        BASIC_MACHINE_BLOCKS.add(block);
-        GTBlocks.BLOCK_ITEMS.register(
-                spec.id(),
-                () -> new GTMachineBlockItem(
-                        block.get(),
-                        new Item.Properties().stacksTo(16),
-                        new MachineSpec(
-                                spec.id(),
-                                spec.material().getLocalName(),
-                                spec.material().getColor(),
-                                0,
-                                0,
-                                spec.textureFolder(),
-                                spec.hardness(),
-                                spec.blastResistance()),
-                        spec));
-        return block;
-    }
-
-    /**
-     * Second pass: registers per-machine {@link BlockEntityType}s for every
-     * basic machine queued via {@link #registerBasicMachine(BasicMachineSpec)}.
-     * Call ONCE from the loader before submitting the BE type
-     * {@code DeferredRegister} to the bus.
-     */
-    public static void registerBasicMachineBeTypes(DeferredRegister<BlockEntityType<?>> beRegistry) {
-        for (RegistryObject<BasicMachineBlock> blockRO : BASIC_MACHINE_BLOCKS) {
-            beRegistry.register("be_" + blockRO.getId().getPath(), () -> {
-                BasicMachineBlock block = blockRO.get();
-                BasicMachineSpec spec = block.basicSpec();
-                AtomicReference<BlockEntityType<BasicMachineBlockEntity>> typeRef = new AtomicReference<>();
-                BlockEntityType<BasicMachineBlockEntity> type = BlockEntityType.Builder.of(
-                                (pos, state) -> {
-                                    BasicMachineBlockEntity be = block.createBlockEntity(typeRef.get(), pos, state);
-                                    be.setSpec(spec);
-                                    return be;
-                                },
-                                block)
-                        .build(null);
-                typeRef.set(type);
-                block.setBeTypeSupplier(() -> type);
-                return type;
-            });
-        }
-    }
-
-    public static List<RegistryObject<BasicMachineBlock>> basicMachines() {
-        return Collections.unmodifiableList(BASIC_MACHINES);
     }
 }

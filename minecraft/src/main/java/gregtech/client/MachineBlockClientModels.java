@@ -13,6 +13,7 @@ import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.machine.BurningBoxBlock;
 import gregtech.content.block.machine.EngineBlock;
 import gregtech.content.block.machine.SolidBurningBoxBlock;
+import gregtech.content.registry.GTBasicMachines;
 import gregtech.content.registry.GTEngines;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
@@ -50,11 +51,7 @@ public final class MachineBlockClientModels {
 //?} else {
         ClientModelEvents.registerAdditional(event, BAROMETER_MODEL);
 //?}
-//? if >=1.21.1 {
-        /*for (var entry : gregtech.platform.neoforge.machine.BasicMachineRegistries.all()) {
-*///?} else {
-        for (var entry : MachineRegistry.basicMachines()) {
-//?}
+        for (var entry : GTBasicMachines.all()) {
             for (String suffix : new String[]{"", "_running", "_active"}) {
                 ResourceLocation id = entry.get().basicSpec().modelId(suffix);
                 if (registered.add(id)) {
@@ -186,11 +183,7 @@ public final class MachineBlockClientModels {
         int basicAliased = 0;
         int basicMissing = 0;
 
-//? if >=1.21.1 {
-        /*for (var entry : gregtech.platform.neoforge.machine.BasicMachineRegistries.all()) {
-*///?} else {
-        for (var entry : MachineRegistry.basicMachines()) {
-//?}
+        for (var entry : GTBasicMachines.all()) {
             if (!entry.isPresent()) continue;
 
             BasicMachineBlock block = entry.get();

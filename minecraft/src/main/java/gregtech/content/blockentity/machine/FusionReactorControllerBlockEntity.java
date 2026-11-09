@@ -37,13 +37,8 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
     private Recipe continuousRecipe;
     private boolean running, passive, processing, completed;
 
-//? if >=1.21.1 {
-    /*public FusionReactorControllerBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state) {
+    public FusionReactorControllerBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state) {
         super(type,pos,state);
-*///?} else {
-    public FusionReactorControllerBlockEntity(BlockPos pos,BlockState state) {
-        super(GTBlockEntities.FUSION_REACTOR.get(),pos,state);
-//?}
         setSpec(((BasicMachineBlock)state.getBlock()).basicSpec());
     }
     @Override public boolean applyStructure(PatternMatch match) {

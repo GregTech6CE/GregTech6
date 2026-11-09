@@ -2,6 +2,9 @@ package gregtech.content.registry;
 import net.minecraft.resources.ResourceLocation;
 import gregtech.engine.mod.GregTechIdentity;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 //? if >=1.21.1 {
@@ -574,12 +577,6 @@ public final class GTBlockEntities {
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LightningRodControllerBlockEntity>> LIGHTNING_ROD =
             BLOCK_ENTITIES.register("lightning_rod", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LightningRodControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "lightning_rod"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "lightning_rod")).build(null));
 
-    public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity>> IMPLOSION_COMPRESSOR =
-            BLOCK_ENTITIES.register("implosion_compressor", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "implosion_compressor"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "implosion_compressor")).build(null));
-
-    public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity>> FUSION_REACTOR =
-            BLOCK_ENTITIES.register("fusion_reactor", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "fusion_reactor"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "fusion_reactor")).build(null));
-
     /** GT6 17997: Logistics Core controller (the walls are existing multiblock port entities). */
     public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity>> LOGISTICS_CORE =
             BLOCK_ENTITIES.register("logistics_core", () -> BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "logistics_core"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "logistics_core")).build(null));
@@ -661,9 +658,24 @@ public final class GTBlockEntities {
             BLOCK_ENTITIES.register("zpm_discharger", () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmDischargerBlockEntity::new,GTLasers.ZPM_DISCHARGER_BASIC.get(),GTLasers.ZPM_DISCHARGER_ADVANCED.get(),GTLasers.ZPM_DISCHARGER_ELITE.get()).build(null));
 //?}
 
+    private static final Map<String, DeferredRegister<BlockEntityType<?>>> ADDON_ENTITIES = new LinkedHashMap<>();
+
     private GTBlockEntities() {}
 
-    public static void register(IEventBus bus) { BLOCK_ENTITIES.register(bus); }
+    public static DeferredRegister<BlockEntityType<?>> entities(String namespace) {
+        if (REGISTRY_NAMESPACE.equals(namespace)) return BLOCK_ENTITIES;
+//? if >=1.21.1 {
+        return ADDON_ENTITIES.computeIfAbsent(namespace, ns -> DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ns));
+//?} else {
+        return ADDON_ENTITIES.computeIfAbsent(namespace, ns -> DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ns));
+//?}
+    }
+
+    public static void register(IEventBus bus) {
+        BLOCK_ENTITIES.register(bus);
+        for (var register : ADDON_ENTITIES.values()) register.register(bus);
+        ADDON_ENTITIES.clear();
+    }
 
     public static final java.util.function.Supplier<BlockEntityType<gregtech.content.blockentity.energy.EnergyNodeBlockEntity>> ENERGY_NODE =
 //? if >=1.21.1 {
