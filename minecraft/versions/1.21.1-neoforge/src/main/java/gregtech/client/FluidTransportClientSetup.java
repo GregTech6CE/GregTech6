@@ -2,10 +2,7 @@ package gregtech.client;
 
 import gregtech.content.transport.fluid.FluidTransportRegistries;
 import java.util.Locale;
-import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -72,17 +69,9 @@ public final class FluidTransportClientSetup {
         }
     }
 
-    @SubscribeEvent
     public static void models(ModelEvent.ModifyBakingResult event) {
-        var models = event.getModels();
-        ItemTransforms transforms = ItemTransforms.NO_TRANSFORMS;
-        for (String path : new String[] {"iron_block", "stone", "dirt"}) {
-            var model = models.get(ModelResourceLocation.inventory(ResourceLocation.withDefaultNamespace(path)));
-            if (model != null && model.isGui3d() && model.getTransforms() != ItemTransforms.NO_TRANSFORMS) {
-                transforms = model.getTransforms();
-                break;
-            }
-        }
+        BakedModelMap models = BakedModelMap.of(event.getModels());
+        ItemTransforms transforms = BlockItemModelHelper.blockItemTransforms();
         for (var entry : FluidTransportRegistries.pipes()) {
             var block = entry.get();
             var spec = block.spec();
@@ -97,10 +86,7 @@ public final class FluidTransportClientSetup {
                             0,
                             null)
                     .itemTransforms(transforms);
-            var key = BuiltInRegistries.BLOCK.getKey(block);
-            for (var state : block.getStateDefinition().getPossibleStates())
-                models.put(BlockModelShaper.stateToModelLocation(key, state), model);
-            models.put(ModelResourceLocation.inventory(key), model);
+            BlockItemClientModels.alias(models, block, model, model);
         }
         for (var block : gregtech.content.registry.AddonPipeRegistration.fluidBlocks()) {
             var spec = block.spec();
@@ -115,10 +101,7 @@ public final class FluidTransportClientSetup {
                             0,
                             null)
                     .itemTransforms(transforms);
-            var key = BuiltInRegistries.BLOCK.getKey(block);
-            for (var state : block.getStateDefinition().getPossibleStates())
-                models.put(BlockModelShaper.stateToModelLocation(key, state), model);
-            models.put(ModelResourceLocation.inventory(key), model);
+            BlockItemClientModels.alias(models, block, model, model);
         }
     }
 }

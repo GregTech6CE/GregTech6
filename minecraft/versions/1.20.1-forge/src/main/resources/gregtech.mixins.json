@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "gregtech.mixin",
   "plugin": "gregtech.mixin.GTOptimizationMixinPlugin",
-  "compatibilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_17",
   "refmap": "gregtech.refmap.json",
   "mixins": [
     "GTStateTransitionsMixin",

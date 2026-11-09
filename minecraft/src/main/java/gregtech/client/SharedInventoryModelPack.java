@@ -3,11 +3,10 @@ package gregtech.client;
 import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.block.MaterialBlockLike;
+import gregtech.content.block.OreBlock;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.item.CreativeTabIconItem;
-import gregtech.content.item.MaterialItem;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.*;
 import net.minecraft.server.packs.repository.*;
@@ -43,6 +42,8 @@ import java.util.*;
 @net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class SharedInventoryModelPack extends AbstractPackResources {
+    /** Ores are replaced by OreBakedModel; their blockstate only needs a valid stone placeholder. */
+    private static final ResourceLocation STONE_TEMPLATE = ResourceLocation.withDefaultNamespace("block/stone");
     private Map<ResourceLocation, byte[]> resources;
     private Set<String> namespaces;
 
@@ -62,30 +63,15 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     public static void packs(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.CLIENT_RESOURCES) return;
         event.addRepositorySource(output -> {
-//? if >=1.21.1 {
-            /*var location = new PackLocationInfo("gt6ce:shared_inventory", Component.literal("GregTech shared inventory models"), PackSource.BUILT_IN, Optional.empty());
-            var pack = Pack.readMetaAndCreate(location, new Pack.ResourcesSupplier() {
-                public PackResources openPrimary(PackLocationInfo info) { return new SharedInventoryModelPack(info); }
-                public PackResources openFull(PackLocationInfo info, Pack.Metadata metadata) { return new SharedInventoryModelPack(info); }
-            }, PackType.CLIENT_RESOURCES, new PackSelectionConfig(true, Pack.Position.BOTTOM, true));
-*///?} else {
-            var pack = Pack.readMetaAndCreate("gt6ce:shared_inventory", Component.literal("GregTech shared inventory models"), true,
-                    SharedInventoryModelPack::new, PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, PackSource.BUILT_IN);
-//?}
+            Pack pack = ClientPackFacade.createSharedInventoryPack();
             if (pack != null) output.accept(pack);
         });
     }
 
-    @SubscribeEvent
     public static void loaders(ModelEvent.RegisterGeometryLoaders event) {
-//? if >=1.21.1 {
-        /*event.register(ResourceLocation.fromNamespaceAndPath(gregtech.engine.mod.GregTechIdentity.MOD_ID, "shared_inventory"),
-                (net.neoforged.neoforge.client.model.geometry.IGeometryLoader<Reference>)
-                        (json, context) -> new Reference(ResourceLocation.parse(json.get("parent").getAsString())));
-*///?} else {
-        event.register("shared_inventory", (net.minecraftforge.client.model.geometry.IGeometryLoader<Reference>)
-                (json, context) -> new Reference(ResourceLocation.tryParse(json.get("parent").getAsString())));
-//?}
+        ClientPackFacade.registerGeometryLoader(event,
+                ResourceLocation.fromNamespaceAndPath(gregtech.engine.mod.GregTechIdentity.MOD_ID, "shared_inventory"),
+                (json, context) -> new Reference(ResourceLocation.parse(json.get("parent").getAsString())));
     }
 
     private synchronized Map<ResourceLocation, byte[]> data() {
@@ -144,14 +130,20 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             } else if (item instanceof BlockItem blockItem) {
                 if (blockItem.getBlock() instanceof BasicMachineBlock machine) {
                     parent = location("block/machine/basic/" + machine.basicSpec().machineName());
+                } else if (blockItem.getBlock() instanceof OreBlock) {
+                    parent = STONE_TEMPLATE;
                 } else if (blockItem.getBlock() instanceof MaterialBlockLike material) {
-                    parent = BlockMaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.material()), material.prefix());
+                    parent = material.prefix().isAddon()
+                            ? BlockMaterialIcons.addonModel(material.prefix())
+                            : BlockMaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.material()), material.prefix());
                 }
             }
             // Do not invent a missing template or hide it behind a dummy model. Unsupported
             // references remain visible in the usual bakery warning and final model checks.
-            if (parent == null || !templates.computeIfAbsent(parent, key -> JsonResourceAliases.contains(
-                    "/assets/" + key.getNamespace() + "/models/" + key.getPath() + ".json"))) continue;
+            if (parent == null) continue;
+            boolean templateExists = parent.equals(STONE_TEMPLATE) || templates.computeIfAbsent(parent, key -> JsonResourceAliases.contains(
+                    "/assets/" + key.getNamespace() + "/models/" + key.getPath() + ".json"));
+            if (!templateExists) continue;
             byte[] json = references.computeIfAbsent(parent, key ->
                     MaterialIconDefinitions.sharedInventoryJson(key.toString()).getBytes(StandardCharsets.UTF_8));
             result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), json);
@@ -161,14 +153,19 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         int states = 0;
         for (var block : BuiltInRegistries.BLOCK) {
             if (!(block instanceof MaterialBlockLike material)) continue;
+            if (material.prefix().isAddon()) continue;
             ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
-            if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) || JsonResourceAliases.contains(
-                    "/assets/gt6ce/blockstates/" + id.getPath() + ".json")) continue;
-            var parent = BlockMaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.material()), material.prefix());
-            if (!templates.computeIfAbsent(parent, key -> JsonResourceAliases.contains(
-                    "/assets/" + key.getNamespace() + "/models/" + key.getPath() + ".json"))) continue;
+            if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) continue;
+            String statePath = "blockstates/" + id.getPath() + ".json";
+            if (JsonResourceAliases.contains("/assets/gt6ce/" + statePath) || result.containsKey(location(statePath))) continue;
+            ResourceLocation parent = block instanceof OreBlock
+                    ? STONE_TEMPLATE
+                    : BlockMaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.material()), material.prefix());
+            boolean templateExists = parent.equals(STONE_TEMPLATE) || templates.computeIfAbsent(parent, key -> JsonResourceAliases.contains(
+                    "/assets/" + key.getNamespace() + "/models/" + key.getPath() + ".json"));
+            if (!templateExists) continue;
             byte[] json = ("{\"variants\":{\"\":{\"model\":\"" + parent + "\"}}}").getBytes(StandardCharsets.UTF_8);
-            result.put(location("blockstates/" + id.getPath() + ".json"), json);
+            result.put(location(statePath), json);
             states++;
         }
         // Keep aliases at the same low priority as the original mod assets. Each path
@@ -344,7 +341,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     @Override
     public synchronized void close() { resources = null; namespaces = null; }
 
-    private record Reference(ResourceLocation parent) implements IUnbakedGeometry<Reference> {
+    record Reference(ResourceLocation parent) implements IUnbakedGeometry<Reference> {
         @Override
         public net.minecraft.client.resources.model.BakedModel bake(IGeometryBakingContext context,
                 net.minecraft.client.resources.model.ModelBaker baker,

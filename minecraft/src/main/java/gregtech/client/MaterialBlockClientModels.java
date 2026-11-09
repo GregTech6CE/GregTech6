@@ -1,89 +1,61 @@
 package gregtech.client;
 import gregtech.engine.mod.GregTechIdentity;
 
-
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.registry.GTBlocks;
-import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 //? if >=1.21.1 {
-/*import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.minecraft.core.registries.BuiltInRegistries;
+/*import net.neoforged.neoforge.client.event.ModelEvent;
 *///?} else {
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import org.slf4j.Logger;
 
+import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Map;
+import java.util.Set;
 
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-//?}
 public final class MaterialBlockClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private MaterialBlockClientModels() {}
 
-    @SubscribeEvent
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
         BlockPrefixRegistry.ensurePrefixesLoaded();
-        java.util.Set<ResourceLocation> registered = new java.util.HashSet<>();
+        Set<ResourceLocation> registered = new HashSet<>();
         for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
             if (!prefix.isAddon()) continue;
-            ResourceLocation location = BlockMaterialIcons.addonModel(prefix);
-//? if >=1.21.1 {
-            /*if (registered.add(location)) event.register(ModelResourceLocation.standalone(location));
-*///?} else {
-            if (registered.add(location)) event.register(location);
-//?}
+            register(event, registered, BlockMaterialIcons.addonModel(prefix));
         }
         for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
             for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
                 if (prefix.isAddon()) continue;
-//? if >=1.21.1 {
-                /*// Ores are baked from the stone template by OreClientModels, not a material cube.
-                if (prefix == BlockMaterialPrefix.ore || prefix == BlockMaterialPrefix.oreSmall) continue;
-*///?} else {
-                // World ores use OreClientModels; only NONE has the actual tab-icon templates.
+                // World ores render through OreBakedModel; only NONE keeps the tab-icon templates.
                 if ((prefix == BlockMaterialPrefix.ore || prefix == BlockMaterialPrefix.oreSmall)
                         && set != MaterialTextureSet.NONE) continue;
-//?}
-                ResourceLocation location = BlockMaterialIcons.sharedModelLocation(set, prefix);
-//? if >=1.21.1 {
-                /*if (registered.add(location)) event.register(ModelResourceLocation.standalone(location));
-*///?} else {
-                if (registered.add(location)) event.register(location);
-//?}
+                register(event, registered, BlockMaterialIcons.sharedModelLocation(set, prefix));
             }
         }
     }
 
-    @SubscribeEvent
+    private static void register(ModelEvent.RegisterAdditional event, Set<ResourceLocation> registered,
+                                 ResourceLocation location) {
+        if (registered.add(location)) {
+            ClientModelEvents.registerAdditional(event, location);
+        }
+    }
+
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
-//? if >=1.21.1 {
-        /*Map<ModelResourceLocation, BakedModel> models = event.getModels();
-*///?} else {
-        Map<ResourceLocation, BakedModel> models = event.getModels();
-//?}
-        BlockItemModelHelper.captureFromVanillaBlockItem(models);
+        BakedModelMap models = BakedModelMap.of(event.getModels());
         int aliased = 0;
         int missing = 0;
-        Map<BakedModel, BakedModel> tintedModels = new java.util.IdentityHashMap<>();
+        Map<BakedModel, BakedModel> tintedModels = new IdentityHashMap<>();
 
         for (var entry : GTBlocks.allEntries()) {
             if (!entry.isPresent() || !(entry.get() instanceof MaterialBlockLike materialBlock)) {
@@ -93,45 +65,27 @@ public final class MaterialBlockClientModels {
             if (entry.get() instanceof gregtech.content.block.OreBlock) {
                 continue;
             }
-            ResourceLocation blockId = Mc.blockId(entry.get());
-            if (blockId == null) {
-                continue;
-            }
             BakedModel shared = resolveSharedModel(models, materialBlock);
             if (shared == null) {
                 missing++;
                 continue;
             }
             BakedModel tintedShared = tintedModels.computeIfAbsent(shared, MaterialBlockBakedModel::new);
-            BakedModel worldModel = tintedShared;
             BakedModel itemModel = BlockItemClientModels.asBlockItem(tintedShared);
-            ResourceLocation itemId = Mc.itemId(entry.get().asItem());
-            if (itemId == null) {
-                itemId = blockId;
-            }
-            BlockItemClientModels.alias(models, itemId,
-                    Mc.gregtechId("block/blocks/" + blockId.getPath()), worldModel, itemModel);
-            for (var state : entry.get().getStateDefinition().getPossibleStates())
-                models.put(net.minecraft.client.renderer.block.BlockModelShaper.stateToModelLocation(blockId, state), worldModel);
+            BlockItemClientModels.alias(models, entry.get(), tintedShared, itemModel);
             aliased++;
         }
 
-//? if >=1.21.1 {
-        /*LOGGER.info("[{}] Material block model aliasing: {} mapped, {} missing", "gt6ce", aliased, missing);
-*///?} else {
-        LOGGER.info("[{}] Material block model aliasing: {} mapped, {} missing", GregTechIdentity.REGISTRY_NAMESPACE, aliased, missing);
-//?}
+        LOGGER.info("[{}] Material block model aliasing: {} mapped, {} missing",
+                GregTechIdentity.REGISTRY_NAMESPACE, aliased, missing);
     }
 
-//? if >=1.21.1 {
-    /*private static BakedModel resolveSharedModel(Map<ModelResourceLocation, BakedModel> models, MaterialBlockLike materialBlock) {
-*///?} else {
-    private static BakedModel resolveSharedModel(Map<ResourceLocation, BakedModel> models, MaterialBlockLike materialBlock) {
-//?}
-        if (materialBlock.prefix().isAddon())
-            return BakedModelLookup.find(models, BlockMaterialIcons.addonModel(materialBlock.prefix()));
+    private static BakedModel resolveSharedModel(BakedModelMap models, MaterialBlockLike materialBlock) {
+        if (materialBlock.prefix().isAddon()) {
+            return models.find(BlockMaterialIcons.addonModel(materialBlock.prefix()));
+        }
         MaterialTextureSet primary = MaterialIcons.resolveTextureSet(materialBlock.material());
-        BakedModel model = lookupModel(models, primary, materialBlock.prefix());
+        BakedModel model = models.find(BlockMaterialIcons.sharedModelLocation(primary, materialBlock.prefix()));
         if (model != null) {
             return model;
         }
@@ -139,22 +93,11 @@ public final class MaterialBlockClientModels {
             if (fallback == primary) {
                 continue;
             }
-            model = lookupModel(models, fallback, materialBlock.prefix());
+            model = models.find(BlockMaterialIcons.sharedModelLocation(fallback, materialBlock.prefix()));
             if (model != null) {
                 return model;
             }
         }
         return null;
-    }
-
-//? if >=1.21.1 {
-    /*private static BakedModel lookupModel(Map<ModelResourceLocation, BakedModel> models,
-*///?} else {
-    private static BakedModel lookupModel(Map<ResourceLocation, BakedModel> models,
-//?}
-                                          MaterialTextureSet set,
-                                          BlockMaterialPrefix prefix) {
-        ResourceLocation id = BlockMaterialIcons.sharedModelLocation(set, prefix);
-        return BakedModelLookup.find(models, id);
     }
 }

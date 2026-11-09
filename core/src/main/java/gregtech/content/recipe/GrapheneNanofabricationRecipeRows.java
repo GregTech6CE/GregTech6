@@ -1,6 +1,7 @@
 package gregtech.content.recipe;
 
 import gregtech.content.data.MaterialPrefix;
+import gregtech.engine.machine.PipeSpec;
 
 /** Original GrapheneNanofabricationRecipes parameters; native stack/registry construction stays in the platforms. */
 public final class GrapheneNanofabricationRecipeRows {
@@ -8,6 +9,15 @@ public final class GrapheneNanofabricationRecipeRows {
 
     public record Entry(
             int ticks, int selector, MaterialPrefix input, int inputCount, MaterialPrefix output, int outputCount) {}
+
+    /** Carbon fluid pipe rows; the source uses {@code MT.C} for both the dust input and the pipe output. */
+    public record PipeEntry(
+            int ticks,
+            int selector,
+            MaterialPrefix input,
+            int inputCount,
+            PipeSpec.PipeSize outputSize,
+            int outputCount) {}
 
     private static final Entry[] DEFINITIONS = {
         new Entry(64, 0, MaterialPrefix.dustDiv72, 18, MaterialPrefix.foil, 1),
@@ -57,7 +67,29 @@ public final class GrapheneNanofabricationRecipeRows {
         new Entry(4352, 12, MaterialPrefix.dust, 17, MaterialPrefix.rotor, 4),
     };
 
+    private static final PipeEntry[] PIPE_DEFINITIONS = {
+        new PipeEntry(128, 13, MaterialPrefix.dustDiv72, 36, PipeSpec.PipeSize.TINY, 1),
+        new PipeEntry(256, 13, MaterialPrefix.dustTiny, 9, PipeSpec.PipeSize.TINY, 2),
+        new PipeEntry(128, 13, MaterialPrefix.dustSmall, 2, PipeSpec.PipeSize.TINY, 1),
+        new PipeEntry(256, 13, MaterialPrefix.dust, 1, PipeSpec.PipeSize.TINY, 2),
+        new PipeEntry(256, 14, MaterialPrefix.dustTiny, 9, PipeSpec.PipeSize.SMALL, 1),
+        new PipeEntry(256, 14, MaterialPrefix.dustSmall, 4, PipeSpec.PipeSize.SMALL, 1),
+        new PipeEntry(256, 14, MaterialPrefix.dust, 1, PipeSpec.PipeSize.SMALL, 1),
+        new PipeEntry(768, 15, MaterialPrefix.dustTiny, 27, PipeSpec.PipeSize.MEDIUM, 1),
+        new PipeEntry(768, 15, MaterialPrefix.dustSmall, 12, PipeSpec.PipeSize.MEDIUM, 1),
+        new PipeEntry(768, 15, MaterialPrefix.dust, 3, PipeSpec.PipeSize.MEDIUM, 1),
+        new PipeEntry(1536, 16, MaterialPrefix.dustTiny, 54, PipeSpec.PipeSize.LARGE, 1),
+        new PipeEntry(1536, 16, MaterialPrefix.dustSmall, 24, PipeSpec.PipeSize.LARGE, 1),
+        new PipeEntry(1536, 16, MaterialPrefix.dust, 6, PipeSpec.PipeSize.LARGE, 1),
+        new PipeEntry(3072, 17, MaterialPrefix.dustSmall, 48, PipeSpec.PipeSize.HUGE, 1),
+        new PipeEntry(3072, 17, MaterialPrefix.dust, 12, PipeSpec.PipeSize.HUGE, 1),
+    };
+
     public static Entry[] definitions() {
         return DEFINITIONS.clone();
+    }
+
+    public static PipeEntry[] pipeDefinitions() {
+        return PIPE_DEFINITIONS.clone();
     }
 }
