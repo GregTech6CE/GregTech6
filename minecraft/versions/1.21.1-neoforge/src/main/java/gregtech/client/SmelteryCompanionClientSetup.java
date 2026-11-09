@@ -1,6 +1,7 @@
 package gregtech.client;
 
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTSmeltery;
 import gregtech.platform.neoforge.smeltery.SmelteryRegistries;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -22,10 +23,7 @@ public final class SmelteryCompanionClientSetup {
     @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block event) {
         for (var list : java.util.List.of(
-                SmelteryRegistries.molds(),
-                SmelteryRegistries.basins(),
-                SmelteryRegistries.faucets(),
-                SmelteryRegistries.crossings()))
+                GTSmeltery.molds(), GTSmeltery.basins(), GTSmeltery.faucets(), GTSmeltery.crossings()))
             for (var holder : list)
                 event.register(
                         (state, level, pos, index) ->
@@ -36,10 +34,7 @@ public final class SmelteryCompanionClientSetup {
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
         for (var list : java.util.List.of(
-                SmelteryRegistries.molds(),
-                SmelteryRegistries.basins(),
-                SmelteryRegistries.faucets(),
-                SmelteryRegistries.crossings()))
+                GTSmeltery.molds(), GTSmeltery.basins(), GTSmeltery.faucets(), GTSmeltery.crossings()))
             for (var holder : list)
                 event.register(
                         ItemColorARGB.opaque((stack, index) ->

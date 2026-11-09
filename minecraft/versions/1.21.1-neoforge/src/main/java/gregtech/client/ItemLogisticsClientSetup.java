@@ -1,8 +1,8 @@
 package gregtech.client;
 
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTHoppers;
 import gregtech.content.registry.GTItemPipes;
-import gregtech.content.transport.HopperRegistries;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
@@ -39,12 +39,12 @@ public final class ItemLogisticsClientSetup {
         for (var block : gregtech.content.registry.AddonPipeRegistration.itemBlocks())
             event.register(
                     (state, level, pos, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF, block);
-        for (var entry : HopperRegistries.hoppers()) {
+        for (var entry : GTHoppers.hoppers()) {
             var block = entry.get();
             event.register(
                     (state, level, pos, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF, block);
         }
-        for (var entry : HopperRegistries.queues()) {
+        for (var entry : GTHoppers.queues()) {
             var block = entry.get();
             event.register(
                     (state, level, pos, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF, block);
@@ -65,14 +65,14 @@ public final class ItemLogisticsClientSetup {
                     ItemColorARGB.opaque(
                             (stack, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF),
                     block.asItem());
-        for (var entry : HopperRegistries.hoppers()) {
+        for (var entry : GTHoppers.hoppers()) {
             var block = entry.get();
             event.register(
                     ItemColorARGB.opaque(
                             (stack, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF),
                     block.asItem());
         }
-        for (var entry : HopperRegistries.queues()) {
+        for (var entry : GTHoppers.queues()) {
             var block = entry.get();
             event.register(
                     ItemColorARGB.opaque(
@@ -137,8 +137,8 @@ public final class ItemLogisticsClientSetup {
             }
             var model = new HopperBakedModel(faces, faces.get(Direction.DOWN));
             java.util.List<net.minecraft.world.level.block.Block> blocks = new java.util.ArrayList<>();
-            if (type.equals("hopper")) HopperRegistries.hoppers().forEach(e -> blocks.add(e.get()));
-            else HopperRegistries.queues().forEach(e -> blocks.add(e.get()));
+            if (type.equals("hopper")) GTHoppers.hoppers().forEach(e -> blocks.add(e.get()));
+            else GTHoppers.queues().forEach(e -> blocks.add(e.get()));
             for (var block : blocks) {
                 BlockItemClientModels.alias(models, block, model, model);
             }

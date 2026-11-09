@@ -14,6 +14,7 @@ import gregtech.content.registry.GTCreativeTabs;
 import gregtech.content.registry.GTEnergyNodes;
 import gregtech.content.registry.GTGearboxes;
 import gregtech.content.registry.GTGrassSoils;
+import gregtech.content.registry.GTHoppers;
 import gregtech.content.registry.GTItemPipes;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTLogisticsTank;
@@ -35,7 +36,6 @@ import gregtech.content.registry.GTSurfaceBlocks;
 import gregtech.content.registry.GTToolBlocks;
 import gregtech.content.registry.GTWires;
 import gregtech.content.registry.GTZpmArtifacts;
-import gregtech.content.transport.HopperRegistries;
 import gregtech.content.transport.fluid.FluidTransportRegistries;
 import gregtech.content.worldgen.GTFeatures;
 import gregtech.platform.neoforge.enchantment.GTEnchantmentEffectTypes;
@@ -92,7 +92,7 @@ public final class NeoContent implements ContentRegistration.PlatformContent {
         FluidTransportRegistries.register(registrar);
         GTBasicMachines.registerAll(registrar);
         SmelteryRegistries.register(registrar);
-        HopperRegistries.register(registrar);
+        GTHoppers.register(registrar);
         // Last: fills the icon ids no earlier family claimed, so it must follow every block family.
         GTRemainingIconBlocks.initialize(registrar);
     }
@@ -105,7 +105,6 @@ public final class NeoContent implements ContentRegistration.PlatformContent {
         FluidTransportRegistries.submit(bus);
         BasicMachineRegistries.submit(bus);
         SmelteryRegistries.submit(bus);
-        HopperRegistries.submit(bus);
         GTEnchantmentEffectTypes.submit(bus);
         GTItems.ITEMS.register(bus);
         GTItems.registerAddonItems(bus);

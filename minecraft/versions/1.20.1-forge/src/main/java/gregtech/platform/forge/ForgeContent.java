@@ -16,7 +16,6 @@ import gregtech.content.registry.GTEnchantments;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTIconSetBlocks;
 import gregtech.content.registry.GTItems;
-import gregtech.content.registry.GTMachines;
 import gregtech.content.registry.GTMenuTypes;
 import gregtech.content.registry.GTMiscBlocks;
 import gregtech.content.registry.GTProjectiles;
@@ -57,7 +56,9 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
     public void machines(ContentRegistrar registrar) {
         gregtech.content.fluid.FluidPipeDefinitions.register(registrar);
         gregtech.content.fluid.TankDefinitions.register(registrar);
-        GTMachines.bootstrap();
+        gregtech.content.registry.GTBurningBoxes.registerAll(registrar);
+        gregtech.content.registry.GTSmeltery.register(registrar);
+        gregtech.content.registry.GTHoppers.register(registrar);
         AddonSensorRegistration.register(registrar);
         GTBasicMachines.registerAll(registrar);
         GTStorage.registerAll(registrar);

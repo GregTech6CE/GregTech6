@@ -31,18 +31,20 @@ import gregtech.content.item.FluidItem;
 import gregtech.content.registry.GTBasicMachines;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTBurningBoxes;
 import gregtech.content.registry.GTEnergyNodes;
 import gregtech.content.registry.GTEngines;
 import gregtech.content.registry.GTFluidItems;
 import gregtech.content.registry.GTFluidPipes;
+import gregtech.content.registry.GTHoppers;
 import gregtech.content.registry.GTItemPipes;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTMenuTypes;
+import gregtech.content.registry.GTSmeltery;
 import gregtech.content.registry.GTTanks;
 import gregtech.content.registry.GTWires;
 import gregtech.engine.fluid.FluidRenderLayers;
 import gregtech.engine.machine.EngineType;
-import gregtech.engine.machine.MachineRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -580,7 +582,7 @@ public final class GregTechClient {
                     return 0xFFFFFF;
                 },
                 GTBlocks.ROCK.get());
-        MachineRegistry.solidBurningBoxes().forEach(entry -> {
+        GTBurningBoxes.solidBoxes().forEach(entry -> {
             if (!entry.isPresent()) {
                 return;
             }
@@ -588,7 +590,7 @@ public final class GregTechClient {
             int tint = block.spec().tintRgb();
             event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, block);
         });
-        MachineRegistry.burningBoxes().forEach(entry -> {
+        GTBurningBoxes.fuelBoxes().forEach(entry -> {
             if (!entry.isPresent()) return;
             BurningBoxBlock block = entry.get();
             int tint = block.spec().tintRgb();
@@ -752,39 +754,39 @@ public final class GregTechClient {
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, entry.get());
             }
         });
-        MachineRegistry.smeltingCrucibles().forEach(entry -> {
+        GTSmeltery.crucibles().forEach(entry -> {
             if (entry.isPresent()) {
                 registerCrucibleTint(event, entry.get());
             }
         });
-        MachineRegistry.moldBasins().forEach(entry -> {
+        GTSmeltery.basins().forEach(entry -> {
             if (entry.isPresent()) {
                 registerCrucibleTint(event, entry.get());
             }
         });
-        MachineRegistry.molds().forEach(entry -> {
+        GTSmeltery.molds().forEach(entry -> {
             if (entry.isPresent()) {
                 registerCrucibleTint(event, entry.get());
             }
         });
-        MachineRegistry.crucibleCrossings().forEach(entry -> {
+        GTSmeltery.crossings().forEach(entry -> {
             if (entry.isPresent()) {
                 registerCrucibleTint(event, entry.get());
             }
         });
-        MachineRegistry.crucibleFaucets().forEach(entry -> {
+        GTSmeltery.faucets().forEach(entry -> {
             if (entry.isPresent()) {
                 registerCrucibleTint(event, entry.get());
             }
         });
-        MachineRegistry.hoppers().forEach(entry -> {
+        GTHoppers.hoppers().forEach(entry -> {
             if (entry.isPresent()) {
                 HopperBlock block = entry.get();
                 int tint = block.spec().tintRgb();
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, block);
             }
         });
-        MachineRegistry.queueHoppers().forEach(entry -> {
+        GTHoppers.queues().forEach(entry -> {
             if (entry.isPresent()) {
                 QueueHopperBlock block = entry.get();
                 int tint = block.spec().tintRgb();

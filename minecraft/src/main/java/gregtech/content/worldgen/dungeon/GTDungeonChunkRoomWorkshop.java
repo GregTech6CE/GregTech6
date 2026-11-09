@@ -1,11 +1,6 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-import gregtech.platform.neoforge.smeltery.SmelteryRegistries;
-*///?} else {
-import gregtech.engine.machine.MachineRegistry;
-//?}
+import gregtech.content.registry.*;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.content.book.GTBooks;
@@ -24,7 +19,6 @@ import gregtech.content.registry.GTFluids;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.content.registry.GTMachines;
 import gregtech.content.registry.GTStorage;
 import gregtech.content.registry.GTTanks;
 //?}
@@ -276,15 +270,9 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
      */
     private static BlockState burningBox(int tCrucibleType) {
         var block = switch (tCrucibleType) {
-//? if >=1.21.1 {
-            /*case 1 -> DungeonBindings.supplier("burning_box_solid_invar");
-            case 2 -> DungeonBindings.supplier("burning_box_solid_steel");
-            default -> DungeonBindings.supplier("burning_box_solid_bronze");
-*///?} else {
-            case 1 -> GTMachines.BURNING_BOX_SOLID_INVAR;
-            case 2 -> GTMachines.BURNING_BOX_SOLID_STEEL;
-            default -> GTMachines.BURNING_BOX_SOLID_BRONZE;
-//?}
+            case 1 -> gregtech.content.registry.GTBurningBoxes.findSolid("burning_box_solid_invar");
+            case 2 -> gregtech.content.registry.GTBurningBoxes.findSolid("burning_box_solid_steel");
+            default -> gregtech.content.registry.GTBurningBoxes.findSolid("burning_box_solid_bronze");
         };
         return block.get().defaultBlockState()
                 .setValue(HorizontalDirectionalBlock.FACING, Direction.WEST);
@@ -298,33 +286,22 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
      */
     private static BlockState crucible(int tCrucibleType) {
         var block = switch (tCrucibleType) {
-//? if >=1.21.1 {
-            /*case 1 -> DungeonBindings.supplier("smelting_crucible_invar");
-            case 2 -> DungeonBindings.supplier("smelting_crucible_steel");
-            default -> DungeonBindings.supplier("smelting_crucible_bronze");
-*///?} else {
-            case 1 -> GTMachines.SMELTING_CRUCIBLE_INVAR;
-            case 2 -> GTMachines.SMELTING_CRUCIBLE_STEEL;
-            default -> GTMachines.SMELTING_CRUCIBLE_BRONZE;
-//?}
+            case 1 -> gregtech.content.registry.GTSmeltery.findCrucible("smelting_crucible_invar");
+            case 2 -> gregtech.content.registry.GTSmeltery.findCrucible("smelting_crucible_steel");
+            default -> gregtech.content.registry.GTSmeltery.findCrucible("smelting_crucible_bronze");
         };
         return block.get().defaultBlockState();
     }
 
     /**
      * GT6's mould {@code 1070+tCrucibleType}. The port registers one mould per crucible
-     * tier as a companion of the crucible ({@code MachineRegistry}), carrying the GT6 meta id
+     * tier as a companion of the crucible ({@code GTSmeltery}), carrying the GT6 meta id
      * in its {@code CrucibleSpec}, so the tier is resolved through that id instead of a name.
      */
     private static BlockState mold(int tCrucibleType) {
         int gt6Id = GT6_MOLD_BRONZE + tCrucibleType;
-//? if >=1.21.1 {
-        /*for (var holder : SmelteryRegistries.molds()) {
-            if (!holder.isBound()) continue;
-*///?} else {
-        for (var holder : MachineRegistry.molds()) {
+        for (var holder : gregtech.content.registry.GTSmeltery.molds()) {
             if (!holder.isPresent()) continue;
-//?}
             MoldBlock block = holder.get();
             if (block.spec().gt6MetaId() == gt6Id) return block.defaultBlockState();
         }

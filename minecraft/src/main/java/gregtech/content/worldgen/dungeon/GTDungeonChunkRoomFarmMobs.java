@@ -19,7 +19,6 @@ import gregtech.content.registry.GTItems;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.content.registry.GTMachines;
 import gregtech.content.registry.GTStorage;
 //?}
 import gregtech.content.data.generated.GT6Materials;
@@ -68,7 +67,7 @@ import net.minecraft.world.level.block.state.BlockState;
  *       and its contact damage.</li>
  *   <li><b>Steel hoppers.</b> GT6's hopper multi-tile {@code 8010} (its comment calls them "Steel
  *       Hoppers!") becomes the port's own steel hopper
- *       ({@code GTMachines.HOPPER_STEEL}) with GT6's output face per hopper ({@code SIDE_X_POS} is east
+ *       ({@code GTHoppers.find("hopper_steel")}) with GT6's output face per hopper ({@code SIDE_X_POS} is east
  *       and {@code SIDE_Z_POS} south).</li>
  *   <li><b>Item pipes.</b> GT6's multi-tile {@code 25377} is the medium Arsenic Bronze pipe. The port
  *       places its real item pipes with GT6's connection masks at the vertical shaft and both storage
@@ -489,10 +488,9 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
 
     /** GT6's steel hopper (multi-tile {@code 8010}) as the port's steel hopper, with GT6's output face. */
     private static BlockState hopper(Direction facing) {
-//? if >=1.21.1 {
-        /*return DungeonBindings.supplier("hopper_steel").get().defaultBlockState().setValue(DirectionalBlock.FACING, facing);
-*///?} else {
-        return GTMachines.HOPPER_STEEL.get().defaultBlockState().setValue(DirectionalBlock.FACING, facing);
-//?}
+        return gregtech.content.registry.GTHoppers.find("hopper_steel")
+                .get()
+                .defaultBlockState()
+                .setValue(DirectionalBlock.FACING, facing);
     }
 }

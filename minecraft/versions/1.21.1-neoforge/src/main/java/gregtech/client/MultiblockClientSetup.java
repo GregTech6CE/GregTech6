@@ -29,7 +29,7 @@ public final class MultiblockClientSetup {
 
     @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block event) {
-        for (var holder : gregtech.platform.neoforge.smeltery.SmelteryRegistries.crucibles())
+        for (var holder : GTSmeltery.crucibles())
             event.register(
                     (state, level, pos, index) -> {
                         if (index != 0) return 0xFFFFFF;
@@ -50,7 +50,7 @@ public final class MultiblockClientSetup {
 
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
-        for (var holder : gregtech.platform.neoforge.smeltery.SmelteryRegistries.crucibles())
+        for (var holder : GTSmeltery.crucibles())
             event.register(
                     ItemColorARGB.opaque(
                             (stack, index) -> index == 0 ? holder.get().spec().tintRgb() : 0xFFFFFF),

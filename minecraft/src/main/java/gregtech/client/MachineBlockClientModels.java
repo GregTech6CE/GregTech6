@@ -3,17 +3,13 @@ import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.engine.machine.BasicMachineSpec;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.engine.machine.MachineRegistry;
-//?}
-
 import gregtech.engine.machine.BurningBoxFuelType;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.machine.BurningBoxBlock;
 import gregtech.content.block.machine.EngineBlock;
 import gregtech.content.block.machine.SolidBurningBoxBlock;
 import gregtech.content.registry.GTBasicMachines;
+import gregtech.content.registry.GTBurningBoxes;
 import gregtech.content.registry.GTEngines;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
@@ -80,11 +76,7 @@ public final class MachineBlockClientModels {
         int aliased = 0;
         int missing = 0;
 
-//? if >=1.21.1 {
-        /*for (var entry : gregtech.platform.neoforge.smeltery.SmelteryRegistries.solidBoxes()) {
-*///?} else {
-        for (var entry : MachineRegistry.solidBurningBoxes()) {
-//?}
+        for (var entry : GTBurningBoxes.solidBoxes()) {
             if (!entry.isPresent()) {
                 continue;
             }
@@ -132,11 +124,7 @@ public final class MachineBlockClientModels {
         int newBurningAliased = 0;
         int newBurningMissing = 0;
 
-//? if >=1.21.1 {
-        /*for (var entry : gregtech.platform.neoforge.smeltery.SmelteryRegistries.fuelBoxes()) {
-*///?} else {
-        for (var entry : MachineRegistry.burningBoxes()) {
-//?}
+        for (var entry : GTBurningBoxes.fuelBoxes()) {
             if (!entry.isPresent()) continue;
 
             BurningBoxBlock block = entry.get();

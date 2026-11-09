@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.platform.neoforge.smeltery.SmelteryRegistries;
+import gregtech.content.registry.GTBurningBoxes;
 import java.util.*;
 import net.minecraft.client.resources.model.*;
 import net.neoforged.api.distmarker.Dist;
@@ -18,7 +18,7 @@ public final class BurningBoxClientSetup {
 
     @SubscribeEvent
     public static void blockColors(RegisterColorHandlersEvent.Block event) {
-        for (var list : List.of(SmelteryRegistries.solidBoxes(), SmelteryRegistries.fuelBoxes()))
+        for (var list : List.of(GTBurningBoxes.solidBoxes(), GTBurningBoxes.fuelBoxes()))
             for (var holder : list)
                 event.register(
                         (state, level, pos, index) ->
@@ -28,7 +28,7 @@ public final class BurningBoxClientSetup {
 
     @SubscribeEvent
     public static void itemColors(RegisterColorHandlersEvent.Item event) {
-        for (var list : List.of(SmelteryRegistries.solidBoxes(), SmelteryRegistries.fuelBoxes()))
+        for (var list : List.of(GTBurningBoxes.solidBoxes(), GTBurningBoxes.fuelBoxes()))
             for (var holder : list)
                 event.register(
                         ItemColorARGB.opaque((stack, index) ->

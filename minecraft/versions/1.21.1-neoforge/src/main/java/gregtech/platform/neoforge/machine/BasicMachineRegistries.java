@@ -162,6 +162,14 @@ public final class BasicMachineRegistries {
         for (var type : CompressedGasTankRegistration.types())
             event.registerBlockEntity(
                     Capabilities.FluidHandler.BLOCK, type.get(), CompressedGasTankBlockEntity::fluidCapability);
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                gregtech.content.registry.GTBlockEntities.HOPPER.get(),
+                (be, side) -> be.capabilityHandler(side));
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                gregtech.content.registry.GTBlockEntities.QUEUE_HOPPER.get(),
+                (be, side) -> be.capabilityHandler(side));
     }
 
     public static void registerCompositions() {

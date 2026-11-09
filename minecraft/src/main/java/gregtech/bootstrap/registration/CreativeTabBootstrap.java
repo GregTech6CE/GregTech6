@@ -23,7 +23,6 @@ public final class CreativeTabBootstrap {private CreativeTabBootstrap(){}
 
 import gregtech.content.material.Materials;
 import gregtech.GregTech;
-import gregtech.engine.machine.MachineRegistry;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
@@ -403,19 +402,28 @@ public class CreativeTabBootstrap {
     }
 
     private static void populateCrucibles(BuildCreativeModeTabContentsEvent event) {
-        for (var registry : MachineRegistry.smelteryBlocks()) {
-            for (var entry : registry) {
-                if (entry.isPresent()) event.accept(new ItemStack(entry.get(), 1));
-            }
+        acceptAll(event, GTSmeltery.crucibles());
+        acceptAll(event, GTSmeltery.basins());
+        acceptAll(event, GTSmeltery.molds());
+        acceptAll(event, GTSmeltery.crossings());
+        acceptAll(event, GTSmeltery.faucets());
+    }
+
+    private static void acceptAll(
+            BuildCreativeModeTabContentsEvent event,
+            java.util.List<? extends gregtech.content.registry.RegisteredBlock<? extends net.minecraft.world.level.block.Block>>
+                    blocks) {
+        for (var entry : blocks) {
+            if (entry.isPresent()) event.accept(new ItemStack(entry.get(), 1));
         }
     }
 
     private static void populateBurningBoxes(BuildCreativeModeTabContentsEvent event) {
-        for (var entry : MachineRegistry.solidBurningBoxes()) {
+        for (var entry : GTBurningBoxes.solidBoxes()) {
             if (!entry.isPresent()) continue;
             event.accept(new ItemStack(entry.get(), 1));
         }
-        for (var entry : MachineRegistry.burningBoxes()) {
+        for (var entry : GTBurningBoxes.fuelBoxes()) {
             if (!entry.isPresent()) continue;
             event.accept(new ItemStack(entry.get(), 1));
         }
@@ -456,8 +464,8 @@ public class CreativeTabBootstrap {
     }
 
     private static void populateHoppers(BuildCreativeModeTabContentsEvent event) {
-        var hoppers = MachineRegistry.hoppers();
-        var queueHoppers = MachineRegistry.queueHoppers();
+        var hoppers = GTHoppers.hoppers();
+        var queueHoppers = GTHoppers.queues();
         int count = Math.max(hoppers.size(), queueHoppers.size());
         for (int i = 0; i < count; i++) {
             if (i < hoppers.size()) {

@@ -2,7 +2,8 @@ package gregtech.client;
 
 import com.mojang.logging.LogUtils;
 import gregtech.GregTech;
-import gregtech.engine.machine.MachineRegistry;
+import gregtech.content.registry.GTHoppers;
+import gregtech.content.registry.RegisteredBlock;
 import java.util.EnumMap;
 import java.util.Map;
 import net.minecraft.client.resources.model.BakedModel;
@@ -35,14 +36,14 @@ public final class HopperClientModels {
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
 
-        int hoppers = aliasHoppers(models, MachineRegistry.hoppers(), "hopper");
-        int queueHoppers = aliasHoppers(models, MachineRegistry.queueHoppers(), "queuehopper");
+        int hoppers = aliasHoppers(models, GTHoppers.hoppers(), "hopper");
+        int queueHoppers = aliasHoppers(models, GTHoppers.queues(), "queuehopper");
         LOGGER.info(
                 "[{}] Hopper model aliasing: {} hoppers, {} queuehoppers", GregTech.NAMESPACE, hoppers, queueHoppers);
     }
 
     private static <T extends Block> int aliasHoppers(
-            BakedModelMap models, Iterable<net.minecraftforge.registries.RegistryObject<T>> blocks, String texPath) {
+            BakedModelMap models, Iterable<RegisteredBlock<T>> blocks, String texPath) {
         // Collect per-facing shared models
         Map<Direction, BakedModel> byFacing = new EnumMap<>(Direction.class);
         for (Direction facing : Direction.values()) {

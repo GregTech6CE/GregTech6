@@ -353,8 +353,9 @@ private GTCreativeTabs() {}
 //? if >=1.21.1 {
         /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("smelting_crucibles");
 *///?} else {
-        if (GTMachines.SMELTING_CRUCIBLE_STEEL != null && GTMachines.SMELTING_CRUCIBLE_STEEL.isPresent()) {
-            return new ItemStack(GTMachines.SMELTING_CRUCIBLE_STEEL.get());
+        var crucible = GTSmeltery.findCrucible("smelting_crucible_steel");
+        if (crucible != null && crucible.isPresent()) {
+            return new ItemStack(crucible.get());
         }
         return new ItemStack(Items.IRON_BLOCK);
 //?}
@@ -364,8 +365,9 @@ private GTCreativeTabs() {}
 //? if >=1.21.1 {
         /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("burning_boxes");
 *///?} else {
-        if (GTMachines.BURNING_BOX_SOLID_STEEL != null && GTMachines.BURNING_BOX_SOLID_STEEL.isPresent()) {
-            return new ItemStack(GTMachines.BURNING_BOX_SOLID_STEEL.get());
+        var burningBox = GTBurningBoxes.findSolid("burning_box_solid_steel");
+        if (burningBox != null && burningBox.isPresent()) {
+            return new ItemStack(burningBox.get());
         }
         return new ItemStack(Items.FURNACE);
 //?}
@@ -455,8 +457,9 @@ private GTCreativeTabs() {}
 //? if >=1.21.1 {
         /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("hoppers");
 *///?} else {
-        if (GTMachines.HOPPER_STEEL != null && GTMachines.HOPPER_STEEL.isPresent()) {
-            return new ItemStack(GTMachines.HOPPER_STEEL.get());
+        var hopper = GTHoppers.find("hopper_steel");
+        if (hopper != null && hopper.isPresent()) {
+            return new ItemStack(hopper.get());
         }
         return new ItemStack(Items.HOPPER);
 //?}

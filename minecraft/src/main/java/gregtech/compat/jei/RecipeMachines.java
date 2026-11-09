@@ -2,13 +2,14 @@ package gregtech.compat.jei;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.engine.machine.MachineRegistry;
 //?}
 
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.registry.BehaviorMachineRegistration;
 import gregtech.content.registry.FuelGeneratorRegistration;
 import gregtech.content.registry.GTBasicMachines;
+import gregtech.content.registry.GTBurningBoxes;
+import gregtech.content.registry.GTSmeltery;
 import gregtech.content.registry.GTToolBlocks;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.stack.StackCompat;
@@ -63,12 +64,7 @@ public final class RecipeMachines {
             add(result, MachineRecipeMaps.AnvilBendBig, new ItemStack(entry.get()));
         }
 
-//? if >=1.21.1 {
-        /*for (var entry:gregtech.platform.neoforge.smeltery.SmelteryRegistries.crucibles()) if(entry.isBound())
-*///?} else {
-        for (var entry : MachineRegistry.smeltingCrucibles()) if (entry.isPresent())
-//?}
-        {
+        for (var entry : GTSmeltery.crucibles()) if (entry.isBound()) {
             add(result, MachineRecipeMaps.CrucibleAlloying, new ItemStack(entry.get()));
             add(result, MachineRecipeMaps.CrucibleSmelting, new ItemStack(entry.get()));
         }
@@ -91,11 +87,7 @@ public final class RecipeMachines {
                         RecipeMap.RECIPE_MAPS::get,
                         RecipeMachines::sameStack);
 
-//? if >=1.21.1 {
-        /*for (var entry : gregtech.platform.neoforge.smeltery.SmelteryRegistries.fuelBoxes()) {
-*///?} else {
-        for (var entry : MachineRegistry.burningBoxes()) {
-//?}
+        for (var entry : GTBurningBoxes.fuelBoxes()) {
             var map = switch (entry.get().fuelType()) {
                 case LIQUID -> gregtech.content.data.FuelRecipeMaps.Burn;
                 case GAS -> gregtech.content.data.FuelRecipeMaps.Gas;

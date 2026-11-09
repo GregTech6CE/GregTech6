@@ -6,13 +6,13 @@ import gregtech.engine.machine.CrucibleSpec;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.engine.machine.MachineRegistry;
 //?}
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.block.machine.CrucibleCrossingBlock;
 import gregtech.content.block.machine.CrucibleFaucetBlock;
 import gregtech.content.block.machine.MoldBasinBlock;
 import gregtech.content.block.machine.MoldBlock;
+import gregtech.content.registry.GTSmeltery;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
@@ -50,28 +50,17 @@ public final class SmelteryClientModels {
 
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
-//? if >=1.21.1 {
-        /*int basins = aliasHullBlocks(models, gregtech.platform.neoforge.smeltery.SmelteryRegistries.basins(), MoldBasinIcons::sharedModelLocation, false);
-        int molds = aliasHullBlocks(models, gregtech.platform.neoforge.smeltery.SmelteryRegistries.molds(), CrucibleMoldIcons::sharedModelLocation, false);
-        int crossings = aliasHullBlocks(models, gregtech.platform.neoforge.smeltery.SmelteryRegistries.crossings(), CrucibleCrossingIcons::sharedModelLocation, false);
-        int faucets = aliasHullBlocks(models, gregtech.platform.neoforge.smeltery.SmelteryRegistries.faucets(), CrucibleFaucetIcons::sharedModelLocation, true);
-*///?} else {
-        int basins = aliasHullBlocks(models, MachineRegistry.moldBasins(), MoldBasinIcons::sharedModelLocation, false);
-        int molds = aliasHullBlocks(models, MachineRegistry.molds(), CrucibleMoldIcons::sharedModelLocation, false);
-        int crossings = aliasHullBlocks(models, MachineRegistry.crucibleCrossings(), CrucibleCrossingIcons::sharedModelLocation, false);
-        int faucets = aliasHullBlocks(models, MachineRegistry.crucibleFaucets(), CrucibleFaucetIcons::sharedModelLocation, true);
-//?}
+        int basins = aliasHullBlocks(models, GTSmeltery.basins(), MoldBasinIcons::sharedModelLocation, false);
+        int molds = aliasHullBlocks(models, GTSmeltery.molds(), CrucibleMoldIcons::sharedModelLocation, false);
+        int crossings = aliasHullBlocks(models, GTSmeltery.crossings(), CrucibleCrossingIcons::sharedModelLocation, false);
+        int faucets = aliasHullBlocks(models, GTSmeltery.faucets(), CrucibleFaucetIcons::sharedModelLocation, true);
         LOGGER.info("[{}] Smeltery hull aliasing: {} basins, {} molds, {} crossings, {} faucets",
                 GregTechIdentity.REGISTRY_NAMESPACE, basins, molds, crossings, faucets);
     }
 
     private static <T extends Block> int aliasHullBlocks(
             BakedModelMap models,
-//? if >=1.21.1 {
-            /*Iterable<? extends gregtech.content.registry.RegisteredBlock<T>> blocks,
-*///?} else {
-            Iterable<net.minecraftforge.registries.RegistryObject<T>> blocks,
-//?}
+            Iterable<? extends gregtech.content.registry.RegisteredBlock<T>> blocks,
             Function<MaterialTextureSet, ResourceLocation> sharedModel,
             boolean faucet) {
         int aliased = 0;

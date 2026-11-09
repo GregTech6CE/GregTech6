@@ -6,10 +6,10 @@ import gregtech.engine.machine.CrucibleSpec;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.engine.machine.MachineRegistry;
 //?}
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.block.machine.SmeltingCrucibleBlock;
+import gregtech.content.registry.GTSmeltery;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
@@ -38,13 +38,8 @@ public final class CrucibleClientModels {
         int aliased = 0;
         int missing = 0;
 
-//? if >=1.21.1 {
-        /*for (var entry : gregtech.platform.neoforge.smeltery.SmelteryRegistries.crucibles()) {
+        for (var entry : GTSmeltery.crucibles()) {
             if (!entry.isBound()) {
-*///?} else {
-        for (var entry : MachineRegistry.smeltingCrucibles()) {
-            if (!entry.isPresent()) {
-//?}
                 continue;
             }
             SmeltingCrucibleBlock block = entry.get();
