@@ -57,7 +57,8 @@ public final class FuelGeneratorRegistration {
             var type = registrar.blockEntity(namespace, path, () -> {
                 AtomicReference<BlockEntityType<FuelGeneratorBlockEntity>> typeRef = new AtomicReference<>();
                 BlockEntityType<FuelGeneratorBlockEntity> built = BlockEntityType.Builder.of(
-                                (pos, state) -> (FuelGeneratorBlockEntity) block.get().create(typeRef.get(), pos, state),
+                                (pos, state) ->
+                                        (FuelGeneratorBlockEntity) block.get().create(typeRef.get(), pos, state),
                                 block.get())
                         .build(null);
                 typeRef.set(built);
