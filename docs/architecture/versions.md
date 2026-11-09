@@ -1,6 +1,6 @@
 # 跨版本要求与入口
 
-先读[架构](README.md)。节点由 [settings.gradle](../../settings.gradle) 定义：`1.20.1-forge` 与 `1.21.1-neoforge`。两个节点的行为与内容必须一致；版本差异由 Stonecutter 与共享门面承接，不维护两套业务规则。
+先读[架构](README.md)。节点由 [settings.gradle](../../settings.gradle) 定义：`1.20.1-forge` 与 `1.21.1-neoforge`。两个节点的行为与内容必须一致；版本差异由 Stonecutter 与共享门面承接，不维护两套业务规则。差异的裁决顺序、统一目标和平台 API 例外见[跨版本统一方针](stonecutter/unification-policy.md)。
 
 当前 VCS 节点与活动节点均为 `1.20.1-forge`。两者的区别见[用法](stonecutter/usage.md#vcsversion-与-active)。
 
@@ -21,6 +21,7 @@
 
 | 要做什么 | 从这里开始 |
 | --- | --- |
+| 裁决版本差异、判断保留还是统一 | [跨版本统一方针](stonecutter/unification-policy.md) |
 | 理解三层结构、内容分类与归属 | [Stonecutter 设计](stonecutter/design.md) |
 | 查 `//?` 写法、输入目录、生成结果与验证命令 | [Stonecutter 用法](stonecutter/usage.md) |
 | 处理具体调用点（BlockEntity、ItemStack、FluidStack、Container、SavedData、Registry、Capability、ClientModel、Facade、Trivial、Parity） | [分类索引](stonecutter/categories.md) |
