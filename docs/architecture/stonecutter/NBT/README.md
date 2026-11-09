@@ -18,4 +18,12 @@
 
 线格式也从 `{id, Count, tag}` 变为 `{id, count, components}`，旧 `tag` 需要迁移。
 
-子类型见[分类索引](../categories.md#nbt)。
+## 子类型
+
+| 子类型 | 说明 | 文档 | 关键词 |
+| --- | --- | --- | --- |
+| NbtCompat | 物品/流体栈的 save/parse 入口 | [nbtcompat.md](nbtcompat.md) | saveItem, readItem, saveFluid |
+| HandlerNbt | `ItemStackHandler` 的 parent/key 重载 | [handler-nbt.md](handler-nbt.md) | serializeNBT, deserializeNBT, Size |
+| 旧 tag 迁移 | 旧 `tag` 复合标签搬进 `CUSTOM_DATA` | [legacy-migration.md](legacy-migration.md) | tag, CUSTOM_DATA, DFU |
+| 容器与存档数据 | `ContainerHelper` 与 `SavedData.Factory` | [container-saveddata.md](container-saveddata.md) | saveAllItems, computeIfAbsent |
+| 线格式 | `{id, Count, tag}` → `{id, count, components}` | [wire-format.md](wire-format.md) | Count, count, components |

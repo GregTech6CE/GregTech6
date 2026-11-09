@@ -16,4 +16,10 @@
 
 provider 不是全局单例：服务端由 `WorldLoader` 构建，客户端在 1.21.1 由 `ClientboundRegistryDataPacket` 同步（1.20.1 随登录包下发），重载或切换世界后可能失效。
 
-子类型见[分类索引](../categories.md#provider)。
+## 子类型
+
+| 子类型 | 说明 | 文档 | 关键词 |
+| --- | --- | --- | --- |
+| Provider 本身 | 是什么、从哪来、为什么不能缓存 | [provider.md](provider.md) | WorldLoader, registryAccess |
+| 无 level 路径 | `getUpdateTag`、客户端 tooltip 的兜底 | [no-level.md](no-level.md) | RegistryContext, currentLookup |
+| 注册表快照 | `Holder` 身份与跨快照重绑定 | [registry-snapshot.md](registry-snapshot.md) | Holder.Reference, ItemEnchantments |

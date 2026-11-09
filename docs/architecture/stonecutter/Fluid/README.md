@@ -12,4 +12,11 @@ NeoForge 1.21.1 的 `FluidStack` 也已组件化，`getTag()` 不再可用；身
 | 罐体写 | `FluidTankGT#writeToNBT(CompoundTag)` | `FluidTankGT#writeToNBT(CompoundTag, HolderLookup.Provider)` |
 | 罐体读 | `FluidTankGT#readFromNBT(CompoundTag)` | `FluidTankGT#readFromNBT(CompoundTag, HolderLookup.Provider)` |
 
-子类型见[分类索引](../categories.md#fluid)。
+## 子类型
+
+| 子类型 | 说明 | 文档 | 关键词 |
+| --- | --- | --- | --- |
+| 身份比较 | `isFluidEqual` 与 `isSameFluidSameComponents` | [identity.md](identity.md) | sameFluid |
+| 能力获取 | `ForgeCapabilities` 与 `Capabilities.FluidHandler` | [capability.md](capability.md) | FluidUtil, IFluidHandlerItem |
+| 罐体 NBT | `FluidTankGT` / `FluidStack` 的 save/parse | [tank-nbt.md](tank-nbt.md) | writeTank, readTank |
+| 显示绑定 | `FluidDisplayBinding` 的 provider 顺序 | [display-binding.md](display-binding.md) | display, resolve |

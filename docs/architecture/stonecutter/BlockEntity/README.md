@@ -12,4 +12,11 @@
 
 `loadAdditional` 执行时方块实体可能还没有 `level`（`loadStatic` 只读档，`level` 由调用方稍后 `setLevel`），因此不能在方法里调用 `level.registryAccess()`，必须使用传入的 provider。
 
-子类型见[分类索引](../categories.md#blockentity)。
+## 子类型
+
+| 子类型 | 说明 | 文档 | 关键词 |
+| --- | --- | --- | --- |
+| 薄覆盖 | override 签名分支，方法体委托共享方法 | [thin-override.md](thin-override.md) | saveData, loadData |
+| codecLookup | 在签名分支里绑定局部 provider 别名 | [codec-lookup.md](codec-lookup.md) | codecLookup, Provider |
+| 同步 tag | `getUpdateTag` / `handleUpdateTag` 的签名差异 | [update-tag.md](update-tag.md) | getUpdateTag, handleUpdateTag |
+| 静态加载 | `loadStatic` 与 level 时序 | [load-static.md](load-static.md) | loadStatic, saveWithoutMetadata |

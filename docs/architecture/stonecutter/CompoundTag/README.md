@@ -24,4 +24,11 @@
 
 两个谓词在 1.20.1 上等价，在 1.21.1 上不等价：附魔、伤害、自定义名称都是独立组件，不在 `CUSTOM_DATA` 里。
 
-子类型见[分类索引](../categories.md#compoundtag)。
+## 子类型
+
+| 子类型 | 说明 | 文档 | 关键词 |
+| --- | --- | --- | --- |
+| StackData | 公共面统一为 `CompoundTag` | [stackdata.md](stackdata.md) | read, write, update |
+| 两个谓词 | `hasCustomData` 与 `hasAnyData` | [predicates.md](predicates.md) | hasTag, getComponentsPatch |
+| CoverStackData | 覆盖板侧的委托与专用键清理 | [cover-stackdata.md](cover-stackdata.md) | detached, gt.cover.* |
+| 类型化组件 | 只留在 1.21.1 分支的强类型组件 | [typed-components.md](typed-components.md) | BLOCK_ENTITY_DATA, ENCHANTMENTS |

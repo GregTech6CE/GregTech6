@@ -15,4 +15,14 @@
 
 判断标准只有一条：**分支是否真的消失**。只把分支内的一行调用换成门面、分支本身原样保留，不算有效改动。
 
-子类型见[分类索引](../categories.md#trivial)。
+## 子类型
+
+| 子类型 | 说明 | 文档 | 关键词 |
+| --- | --- | --- | --- |
+| 同义分支 | 两侧代码完全相同 | [identical.md](identical.md) | identical |
+| 空块与单侧 import | 一侧为空或只有 import | [empty-import.md](empty-import.md) | empty, import |
+| 拆分重复 | 同条件两个单侧块，或重复注册 | [split-duplicate.md](split-duplicate.md) | split duplicate, registration |
+| 注册表与 id | 注册表查找、命名空间、标签目录 | [registry-id.md](registry-id.md) | Mc, ResourceLocation, tags |
+| logger 与模型 | 日志门面与模型资源位置 | [logger-model.md](logger-model.md) | Mc.logger, ModelResourceLocation |
+| 身份与包装 | 身份比较、包装类、静态谓词 | [identity-wrapper.md](identity-wrapper.md) | StackCompat, NeoToolBindings |
+| 语义案例 | 看起来同义、实际承载行为 | [semantic-cases.md](semantic-cases.md) | craftKind, plunger, igniter |
