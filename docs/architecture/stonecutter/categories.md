@@ -74,9 +74,9 @@
 
 ## ClientModel
 
-摘要：客户端模型资源位置与 baked model 的差异。
+摘要：客户端模型资源位置、baked model map、模型事件与 pack 构造的差异。
 
-关键词：ModelResourceLocation, BakedModel, ModelBakery, client event, inventory
+关键词：ModelResourceLocation, RegisterAdditional, STANDALONE_VARIANT, BakedModel, BakedModelMap, ModelBakery, missing sentinel, getPlain, find, ModelEvent, ModifyBakingResult, RegisterGeometryLoaders, EventBusSubscriber, SubscribeEvent, ClientModelBootstrap, ClientPackFacade, AbstractPackResources, Pack.readMetaAndCreate, inventory
 
 领域文档：[ClientModel/README.md](ClientModel/README.md)
 

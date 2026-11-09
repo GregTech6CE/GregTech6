@@ -66,6 +66,9 @@
 | `HandlerNbt` | `engine.stack` | `ItemStackHandler` NBT | provider 签名 |
 | `CoverStackData` | `content.cover` | 覆盖板栈数据读写 | NBT 与数据组件 |
 | `ContentRegistrar` | `content.registry` | 加载器中立的物品/方块注册视图 | 注册 API |
+| `BakedModelMap` | `client` | 模型 map key、variant 回退与 missing 哨兵 | map key 类型、missing 哨兵 key |
+| `ClientModelEvents` | `client` | `RegisterAdditional` 的模型注册 | plain `ResourceLocation` ↔ `STANDALONE_VARIANT` |
+| `ClientPackFacade` | `client` | pack 工厂与 geometry loader key | Pack 构造、`readMetaAndCreate`、loader key |
 
 平台细节与验收见[共享门面](../packages/platforms/facade.md)。`CoverStackData` 目前是过渡门面，部分方法为纯转发；调用点迁移完成后应收敛。
 
