@@ -668,24 +668,8 @@ public class FluidCatalog {
                     fluid("Smoothie_Gooseberry", "gooseberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Strawberry =
                     fluid("Smoothie_Strawberry", "strawberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Plum = fluid("Smoothie_Plum", "plumsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Peach = fluid("Smoothie_Peach", "peachsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Elderberry =
-                    fluid("Smoothie_Elderberry", "elderberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Grapefruit =
-                    fluid("Smoothie_Grapefruit", "grapefruitsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Lime = fluid("Smoothie_Lime", "limesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Orange =
-                    fluid("Smoothie_Orange", "orangesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Persimmon =
                     fluid("Smoothie_Persimmon", "persimmonsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Apricot =
-                    fluid("Smoothie_Apricot", "apricotsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Pear = fluid("Smoothie_Pear", "pearsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Grape_Red =
-                    fluid("Smoothie_Grape_Red", "redgrapesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Grape_White =
-                    fluid("Smoothie_Grape_White", "whitegrapesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Grape_Green =
                     fluid("Smoothie_Grape_Green", "grapesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Grape_Purple =
@@ -696,8 +680,6 @@ public class FluidCatalog {
                     fluid("Smoothie_Ananas", "pineapplesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Banana =
                     fluid("Smoothie_Banana", "bananasmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Cherry =
-                    fluid("Smoothie_Cherry", "cherrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Cranberry =
                     fluid("Smoothie_Cranberry", "cranberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Lemon = fluid("Smoothie_Lemon", "lemonsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
@@ -725,7 +707,6 @@ public class FluidCatalog {
 
             Tea = fluid("Tea", "tea").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS | FluidFlags.TEA),
             Tea_Sweet = fluid("Tea_Sweet", "sweettea").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS | FluidFlags.TEA),
-            Tea_Ice = fluid("Tea_Ice", "icetea").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS | FluidFlags.TEA),
             Purple_Drink = fluid("Purple_Drink", "purpledrink").withFlags(FluidFlags.FOOD),
             Lemonade = fluid("Lemonade", "potion.lemonade").withFlags(FluidFlags.FOOD),
             Grenade_Juice =
@@ -733,7 +714,6 @@ public class FluidCatalog {
             BAWLS = fluid("BAWLS", "bawls").withFlags(FluidFlags.FOOD),
             Ketchup = fluid("Ketchup", "ketchup").withFlags(FluidFlags.FOOD),
             Mayo = fluid("Mayo", "mayo").withFlags(FluidFlags.FOOD),
-            Dressing = fluid("Dressing", "potion.dressing").withFlags(FluidFlags.FOOD),
             Soup_Mushroom = fluid("Soup_Mushroom", "mushroomsoup").withFlags(FluidFlags.FOOD),
             Sauce_Chili = fluid("Sauce_Chili", "chillysauce").withFlags(FluidFlags.FOOD),
             Sauce_Hot = fluid("Sauce_Hot", "potion.hotsauce").withFlags(FluidFlags.FOOD),
@@ -816,7 +796,6 @@ public class FluidCatalog {
             Leninade = fluid("Leninade", "potion.leninade").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
             Mead = fluid("Mead", "mead").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
             ShortMead = fluid("ShortMead", "short.mead").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
-            Sake = fluid("Sake", "potion.sake").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
             Alcopops = fluid("Alcopops", "potion.alcopops").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
 
             // =======================================================================
