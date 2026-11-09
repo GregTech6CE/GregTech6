@@ -31,6 +31,7 @@ import gregtech.content.item.FluidItem;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTEnergyNodes;
+import gregtech.content.registry.GTEngines;
 import gregtech.content.registry.GTFluidItems;
 import gregtech.content.registry.GTFluidPipes;
 import gregtech.content.registry.GTItemPipes;
@@ -789,7 +790,7 @@ public final class GregTechClient {
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, block);
             }
         });
-        MachineRegistry.allEngines().forEach(entry -> {
+        GTEngines.all().forEach(entry -> {
             if (entry.isPresent()) {
                 EngineBlock block = entry.get();
                 int tint = block.tintRgb();
@@ -970,15 +971,8 @@ public final class GregTechClient {
         }
 
         // Engine BERs — heat-colored core overlay
-        var steamEngines = gregtech.engine.machine.MachineRegistry.steamEngines();
-        var strongSteamEngines = gregtech.engine.machine.MachineRegistry.strongSteamEngines();
-        for (var blockRO : steamEngines) {
-            event.registerBlockEntityRenderer(
-                    (BlockEntityType<KineticSteamEngineBlockEntity>)
-                            (Object) blockRO.get().getBeType(),
-                    SteamEngineRenderer::new);
-        }
-        for (var blockRO : strongSteamEngines) {
+        for (var blockRO : GTEngines.all()) {
+            if (blockRO.get().engineType() != EngineType.STEAM) continue;
             event.registerBlockEntityRenderer(
                     (BlockEntityType<KineticSteamEngineBlockEntity>)
                             (Object) blockRO.get().getBeType(),

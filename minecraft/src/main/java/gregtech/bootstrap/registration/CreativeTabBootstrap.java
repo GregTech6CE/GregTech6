@@ -472,7 +472,7 @@ public class CreativeTabBootstrap {
     }
 
     private static void populateEngines(BuildCreativeModeTabContentsEvent event) {
-        for (var entry : MachineRegistry.allEngines()) {
+        for (var entry : GTEngines.all()) {
             if (entry.isPresent()) event.accept(new ItemStack(entry.get(), 1));
         }
         // Steam boiler tanks bridge the burning-box -> engine chain

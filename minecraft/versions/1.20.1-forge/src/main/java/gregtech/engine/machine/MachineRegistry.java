@@ -5,7 +5,6 @@ import gregtech.content.block.machine.BurningBoxBlock;
 import gregtech.content.block.machine.CrucibleCrossingBlock;
 import gregtech.content.block.machine.CrucibleFaucetBlock;
 import gregtech.content.block.machine.CrucibleHullBlockItem;
-import gregtech.content.block.machine.EngineBlock;
 import gregtech.content.block.machine.GTMachineBlockItem;
 import gregtech.content.block.machine.HopperBlock;
 import gregtech.content.block.machine.HopperBlockItem;
@@ -17,12 +16,6 @@ import gregtech.content.block.machine.SmeltingCrucibleBlock;
 import gregtech.content.block.machine.SmeltingCrucibleBlockItem;
 import gregtech.content.block.machine.SolidBurningBoxBlock;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.content.blockentity.machine.KineticDieselEngineBlockEntity;
-import gregtech.content.blockentity.machine.KineticElectricEngineBlockEntity;
-import gregtech.content.blockentity.machine.KineticFluxEngineBlockEntity;
-import gregtech.content.blockentity.machine.KineticRotationEngineBlockEntity;
-import gregtech.content.blockentity.machine.KineticSteamEngineBlockEntity;
-import gregtech.content.material.generated.WoodMaterials;
 import gregtech.content.registry.GTBlocks;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +24,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -54,15 +46,6 @@ public final class MachineRegistry {
     private static final List<RegistryObject<BasicMachineBlock>> BASIC_MACHINES = new ArrayList<>();
     /** RegistryObjects for basic machine blocks; used in lazy BE type registration pass. */
     private static final List<RegistryObject<BasicMachineBlock>> BASIC_MACHINE_BLOCKS = new ArrayList<>();
-
-    private static final List<RegistryObject<EngineBlock>> ELECTRIC_ENGINES = new ArrayList<>();
-    private static final List<RegistryObject<EngineBlock>> FLUX_ENGINES = new ArrayList<>();
-    private static final List<RegistryObject<EngineBlock>> STEAM_ENGINES = new ArrayList<>();
-    private static final List<RegistryObject<EngineBlock>> STRONG_STEAM_ENGINES = new ArrayList<>();
-    private static final List<RegistryObject<EngineBlock>> ROTATION_ENGINES = new ArrayList<>();
-    private static final List<RegistryObject<EngineBlock>> DIESEL_ENGINES = new ArrayList<>();
-    /** Engine blocks queued for BE type registration. */
-    private static final List<RegistryObject<EngineBlock>> ENGINE_BLOCKS = new ArrayList<>();
 
     private static final int MOLD_META_OFFSET = 50;
     private static final int BASIN_META_OFFSET = 750;
@@ -376,253 +359,5 @@ public final class MachineRegistry {
 
     public static List<RegistryObject<BasicMachineBlock>> basicMachines() {
         return Collections.unmodifiableList(BASIC_MACHINES);
-    }
-
-    // ── Engine registration ────────────────────────────────────────────────
-
-    private static RegistryObject<EngineBlock> registerEngineBlock(
-            EngineType type, MachineSpec itemSpec, Object engineSpec, float hardness, float blastResistance) {
-        boolean woodenRotation = type == EngineType.ROTATION
-                && engineSpec instanceof RotationEngineSpec rotation
-                && rotation.material() == WoodMaterials.WoodTreated;
-        RegistryObject<EngineBlock> block = GTBlocks.BLOCKS.register(itemSpec.id(), () -> {
-            BlockBehaviour.Properties properties = BlockBehaviour.Properties.of()
-                    .mapColor(woodenRotation ? MapColor.WOOD : MapColor.METAL)
-                    .strength(hardness, blastResistance)
-                    .requiresCorrectToolForDrops();
-            if (woodenRotation) properties.sound(SoundType.WOOD);
-            return type == EngineType.ROTATION || type == EngineType.DIESEL
-                    ? new EngineBlock(type, itemSpec, engineSpec, properties)
-                    : new gregtech.content.block.machine.WaterloggedEngineBlock(type, itemSpec, engineSpec, properties);
-        });
-        ENGINE_BLOCKS.add(block);
-        GTBlocks.BLOCK_ITEMS.register(
-                itemSpec.id(), () -> new GTMachineBlockItem(block.get(), new Item.Properties().stacksTo(16), itemSpec));
-        return block;
-    }
-
-    public static RegistryObject<EngineBlock> registerElectricEngine(ElectricEngineSpec spec) {
-        MachineSpec ms = engineMachineSpec(
-                spec.id(),
-                spec.materialName(),
-                spec.tintRgb(),
-                spec.outputRate(),
-                spec.textureFolder(),
-                spec.hardness(),
-                spec.blastResistance());
-        RegistryObject<EngineBlock> block =
-                registerEngineBlock(EngineType.ELECTRIC, ms, spec, spec.hardness(), spec.blastResistance());
-        ELECTRIC_ENGINES.add(block);
-        return block;
-    }
-
-    public static RegistryObject<EngineBlock> registerFluxEngine(FluxEngineSpec spec) {
-        MachineSpec ms = engineMachineSpec(
-                spec.id(),
-                spec.materialName(),
-                spec.tintRgb(),
-                spec.outputRate(),
-                spec.textureFolder(),
-                spec.hardness(),
-                spec.blastResistance());
-        RegistryObject<EngineBlock> block =
-                registerEngineBlock(EngineType.FLUX, ms, spec, spec.hardness(), spec.blastResistance());
-        FLUX_ENGINES.add(block);
-        return block;
-    }
-
-    public static RegistryObject<EngineBlock> registerSteamEngine(SteamEngineSpec spec) {
-        MachineSpec ms = engineMachineSpec(
-                spec.id(),
-                spec.materialName(),
-                spec.tintRgb(),
-                spec.outputRate(),
-                spec.textureFolder(),
-                spec.hardness(),
-                spec.blastResistance());
-        RegistryObject<EngineBlock> block =
-                registerEngineBlock(EngineType.STEAM, ms, spec, spec.hardness(), spec.blastResistance());
-        STEAM_ENGINES.add(block);
-        return block;
-    }
-
-    public static RegistryObject<EngineBlock> registerStrongSteamEngine(StrongSteamEngineSpec spec) {
-        MachineSpec ms = engineMachineSpec(
-                spec.id(),
-                spec.materialName(),
-                spec.tintRgb(),
-                spec.outputRate(),
-                spec.textureFolder(),
-                spec.hardness(),
-                spec.blastResistance());
-        RegistryObject<EngineBlock> block =
-                registerEngineBlock(EngineType.STEAM, ms, spec, spec.hardness(), spec.blastResistance());
-        STRONG_STEAM_ENGINES.add(block);
-        return block;
-    }
-
-    public static RegistryObject<EngineBlock> registerRotationEngine(RotationEngineSpec spec) {
-        MachineSpec ms = engineMachineSpec(
-                spec.id(),
-                spec.materialName(),
-                spec.tintRgb(),
-                spec.outputRate(),
-                spec.textureFolder(),
-                spec.hardness(),
-                spec.blastResistance());
-        RegistryObject<EngineBlock> block =
-                registerEngineBlock(EngineType.ROTATION, ms, spec, spec.hardness(), spec.blastResistance());
-        ROTATION_ENGINES.add(block);
-        return block;
-    }
-
-    public static RegistryObject<EngineBlock> registerDieselEngine(DieselEngineSpec spec) {
-        MachineSpec ms = engineMachineSpec(
-                spec.id(),
-                spec.materialName(),
-                spec.tintRgb(),
-                spec.outputRate(),
-                spec.textureFolder(),
-                spec.hardness(),
-                spec.blastResistance());
-        RegistryObject<EngineBlock> block =
-                registerEngineBlock(EngineType.DIESEL, ms, spec, spec.hardness(), spec.blastResistance());
-        DIESEL_ENGINES.add(block);
-        return block;
-    }
-
-    private static MachineSpec engineMachineSpec(
-            String id,
-            String matName,
-            int tint,
-            long output,
-            String textureFolder,
-            float hardness,
-            float blastResistance) {
-        return new MachineSpec(id, matName, tint, 10000, output, "engines/" + textureFolder, hardness, blastResistance);
-    }
-
-    /** Second pass: registers per-engine {@link BlockEntityType}s. */
-    public static void registerEngineBeTypes(DeferredRegister<BlockEntityType<?>> beRegistry) {
-        for (RegistryObject<EngineBlock> blockRO : ENGINE_BLOCKS) {
-            beRegistry.register("be_" + blockRO.getId().getPath(), () -> {
-                EngineBlock block = blockRO.get();
-                BlockEntityType<?> type = switch (block.engineType()) {
-                    case ELECTRIC -> buildElectricBeType(block);
-                    case FLUX -> buildFluxBeType(block);
-                    case STEAM -> buildSteamBeType(block);
-                    case ROTATION -> buildRotationBeType(block);
-                    case DIESEL -> buildDieselBeType(block);
-                };
-                block.setBeTypeSupplier(() -> type);
-                return type;
-            });
-        }
-    }
-
-    private static BlockEntityType<KineticElectricEngineBlockEntity> buildElectricBeType(EngineBlock block) {
-        ElectricEngineSpec spec = block.engineSpec(ElectricEngineSpec.class);
-        AtomicReference<BlockEntityType<KineticElectricEngineBlockEntity>> ref = new AtomicReference<>();
-        BlockEntityType<KineticElectricEngineBlockEntity> type = BlockEntityType.Builder.of(
-                        (pos, state) -> {
-                            KineticElectricEngineBlockEntity be =
-                                    new KineticElectricEngineBlockEntity(ref.get(), pos, state);
-                            be.setSpec(spec);
-                            return be;
-                        },
-                        block)
-                .build(null);
-        ref.set(type);
-        return type;
-    }
-
-    private static BlockEntityType<KineticFluxEngineBlockEntity> buildFluxBeType(EngineBlock block) {
-        FluxEngineSpec spec = block.engineSpec(FluxEngineSpec.class);
-        AtomicReference<BlockEntityType<KineticFluxEngineBlockEntity>> ref = new AtomicReference<>();
-        BlockEntityType<KineticFluxEngineBlockEntity> type = BlockEntityType.Builder.of(
-                        (pos, state) -> {
-                            KineticFluxEngineBlockEntity be = new KineticFluxEngineBlockEntity(ref.get(), pos, state);
-                            be.setSpec(spec);
-                            return be;
-                        },
-                        block)
-                .build(null);
-        ref.set(type);
-        return type;
-    }
-
-    private static BlockEntityType<KineticSteamEngineBlockEntity> buildSteamBeType(EngineBlock block) {
-        SteamEngineData spec = block.engineSpec(SteamEngineData.class);
-        AtomicReference<BlockEntityType<KineticSteamEngineBlockEntity>> ref = new AtomicReference<>();
-        BlockEntityType<KineticSteamEngineBlockEntity> type = BlockEntityType.Builder.of(
-                        (pos, state) -> {
-                            KineticSteamEngineBlockEntity be = new KineticSteamEngineBlockEntity(ref.get(), pos, state);
-                            be.setSpec(spec);
-                            return be;
-                        },
-                        block)
-                .build(null);
-        ref.set(type);
-        return type;
-    }
-
-    private static BlockEntityType<KineticRotationEngineBlockEntity> buildRotationBeType(EngineBlock block) {
-        RotationEngineSpec spec = block.engineSpec(RotationEngineSpec.class);
-        AtomicReference<BlockEntityType<KineticRotationEngineBlockEntity>> ref = new AtomicReference<>();
-        BlockEntityType<KineticRotationEngineBlockEntity> type = BlockEntityType.Builder.of(
-                        (pos, state) -> {
-                            KineticRotationEngineBlockEntity be =
-                                    new KineticRotationEngineBlockEntity(ref.get(), pos, state);
-                            be.setSpec(spec);
-                            return be;
-                        },
-                        block)
-                .build(null);
-        ref.set(type);
-        return type;
-    }
-
-    private static BlockEntityType<KineticDieselEngineBlockEntity> buildDieselBeType(EngineBlock block) {
-        DieselEngineSpec spec = block.engineSpec(DieselEngineSpec.class);
-        AtomicReference<BlockEntityType<KineticDieselEngineBlockEntity>> ref = new AtomicReference<>();
-        BlockEntityType<KineticDieselEngineBlockEntity> type = BlockEntityType.Builder.of(
-                        (pos, state) -> {
-                            KineticDieselEngineBlockEntity be =
-                                    new KineticDieselEngineBlockEntity(ref.get(), pos, state);
-                            be.setSpec(spec);
-                            return be;
-                        },
-                        block)
-                .build(null);
-        ref.set(type);
-        return type;
-    }
-
-    public static List<RegistryObject<EngineBlock>> electricEngines() {
-        return Collections.unmodifiableList(ELECTRIC_ENGINES);
-    }
-
-    public static List<RegistryObject<EngineBlock>> fluxEngines() {
-        return Collections.unmodifiableList(FLUX_ENGINES);
-    }
-
-    public static List<RegistryObject<EngineBlock>> steamEngines() {
-        return Collections.unmodifiableList(STEAM_ENGINES);
-    }
-
-    public static List<RegistryObject<EngineBlock>> strongSteamEngines() {
-        return Collections.unmodifiableList(STRONG_STEAM_ENGINES);
-    }
-
-    public static List<RegistryObject<EngineBlock>> rotationEngines() {
-        return Collections.unmodifiableList(ROTATION_ENGINES);
-    }
-
-    public static List<RegistryObject<EngineBlock>> dieselEngines() {
-        return Collections.unmodifiableList(DIESEL_ENGINES);
-    }
-
-    public static List<RegistryObject<EngineBlock>> allEngines() {
-        return Collections.unmodifiableList(ENGINE_BLOCKS);
     }
 }

@@ -13,6 +13,7 @@ import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.machine.BurningBoxBlock;
 import gregtech.content.block.machine.EngineBlock;
 import gregtech.content.block.machine.SolidBurningBoxBlock;
+import gregtech.content.registry.GTEngines;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.block.BlockModelShaper;
@@ -241,11 +242,7 @@ public final class MachineBlockClientModels {
         // Engine item models: wrap in BlockItemDisplayBakedModel for correct item transforms
         int engineAliased = 0;
 
-//? if >=1.21.1 {
-        /*for (var entry : gregtech.content.registry.GTEngines.all()) {
-*///?} else {
-        for (var entry : MachineRegistry.allEngines()) {
-//?}
+        for (var entry : GTEngines.all()) {
             if (!entry.isPresent()) continue;
 
             EngineBlock block = entry.get();

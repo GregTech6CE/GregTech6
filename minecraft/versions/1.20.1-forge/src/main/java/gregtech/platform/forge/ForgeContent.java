@@ -67,8 +67,7 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
         GTBasicMachines.registerAll(registrar);
         GTStorage.registerAll(registrar);
         GTToolBlocks.registerAll(registrar);
-        MachineRegistry.registerBasicMachineBeTypes(GTBlockEntities.BLOCK_ENTITY_TYPES);
-        MachineRegistry.registerEngineBeTypes(GTBlockEntities.BLOCK_ENTITY_TYPES);
+        MachineRegistry.registerBasicMachineBeTypes(GTBlockEntities.BLOCK_ENTITIES);
     }
 
     /** Attaches every shared, addon and platform content register exactly once. */
@@ -86,7 +85,7 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
         GTBlocks.BLOCKS.register(bus);
         GTBlocks.BLOCK_ITEMS.register(bus);
         GTBlocks.registerAddonBlocks(bus);
-        GTBlockEntities.BLOCK_ENTITY_TYPES.register(bus);
+        GTBlockEntities.register(bus);
         GTCreativeTabs.TABS.register(bus);
         GTSounds.REGISTRY.register(bus);
         GTMenuTypes.registerAll();

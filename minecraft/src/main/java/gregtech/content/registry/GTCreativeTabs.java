@@ -17,7 +17,6 @@ import gregtech.engine.prefix.BlockPrefixRegistry;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.content.block.machine.BasicMachineBlock;
-import gregtech.content.block.machine.EngineBlock;
 import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.data.RegisteredFluids;
 //?}
@@ -468,9 +467,9 @@ private GTCreativeTabs() {}
 //? if >=1.21.1 {
         /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("engines");
 *///?} else {
-        List<RegistryObject<EngineBlock>> engines = MachineRegistry.allEngines();
+        var engines = GTEngines.all();
         if (!engines.isEmpty()) {
-            RegistryObject<EngineBlock> first = engines.get(0);
+            var first = engines.get(0);
             if (first.isPresent()) return new ItemStack(first.get());
         }
         return new ItemStack(Items.FURNACE);

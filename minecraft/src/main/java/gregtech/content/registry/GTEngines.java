@@ -1,9 +1,8 @@
 package gregtech.content.registry;
-//? if >=1.21.1 {
-/*import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 import gregtech.api.machine.*;
-import gregtech.engine.machine.*;
 import gregtech.engine.machine.*;
 import gregtech.content.block.machine.EngineBlock;
 import gregtech.content.blockentity.machine.*;
@@ -44,7 +43,7 @@ public final class GTEngines {
                     },
                     bare -> new EngineItem(bare, new net.minecraft.world.item.Item.Properties().stacksTo(16)));
             ALL.add(block);
-            var holder = GTBlockEntities.BLOCK_ENTITIES.register("be_" + itemSpec.id(), () -> {
+            GTBlockEntities.BLOCK_ENTITIES.register("be_" + itemSpec.id(), () -> {
                 var type = buildType(block.get());
                 typeRef.set(type);
                 return type;
@@ -138,32 +137,22 @@ public final class GTEngines {
             super(block, p);
         }
 
-        @Override
+//? if >=1.21.1 {
+        /*@Override
         public void appendHoverText(net.minecraft.world.item.ItemStack stack, TooltipContext context,
                                     List<net.minecraft.network.chat.Component> lines,
                                     net.minecraft.world.item.TooltipFlag flag) {
             super.appendHoverText(stack, context, lines, flag);
             gregtech.client.EngineTooltips.appendEngine((EngineBlock) getBlock(), lines);
         }
-    }
-}
 *///?} else {
-import gregtech.api.machine.*;
-import gregtech.engine.machine.*;
-import gregtech.engine.machine.*;
-
-public final class GTEngines {
-    private GTEngines() {}
-
-    public static void registerAll(ContentRegistrar registrar) {
-        for (var e : gregtech.content.energy.EngineCatalog.all()) {
-            if (e.spec() instanceof ElectricEngineSpec spec) MachineRegistry.registerElectricEngine(spec);
-            if (e.spec() instanceof FluxEngineSpec spec) MachineRegistry.registerFluxEngine(spec);
-            if (e.spec() instanceof SteamEngineSpec spec) MachineRegistry.registerSteamEngine(spec);
-            if (e.spec() instanceof StrongSteamEngineSpec spec) MachineRegistry.registerStrongSteamEngine(spec);
-            if (e.spec() instanceof RotationEngineSpec spec) MachineRegistry.registerRotationEngine(spec);
-            if (e.spec() instanceof DieselEngineSpec spec) MachineRegistry.registerDieselEngine(spec);
+        @Override
+        public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.level.Level level,
+                                    List<net.minecraft.network.chat.Component> lines,
+                                    net.minecraft.world.item.TooltipFlag flag) {
+            super.appendHoverText(stack, level, lines, flag);
+            gregtech.client.EngineTooltips.appendEngine((EngineBlock) getBlock(), lines);
         }
+//?}
     }
 }
-//?}
