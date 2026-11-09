@@ -63,7 +63,7 @@ class NutritionRemovalTest {
     void tableSizesArePreserved() {
         assertEquals(251, GTFoodItemsGen.ROWS.size());
         assertEquals(57, CannedFoodCatalog.ROWS.size());
-        assertEquals(134, GTDrinksGen.ROWS.size());
+        assertEquals(128, GTDrinksGen.ROWS.size());
         assertEquals(29, SandwichBottleFoods.ROWS.size());
         assertEquals(137, GTBottlesGen.ENTRIES.length / 3);
     }
@@ -137,7 +137,13 @@ class NutritionRemovalTest {
                 "Sauce_Diabolo",
                 "Sauce_Diablo",
                 "Sauce_Cow_Level",
-                "Sap");
+                "Sap",
+                "Smoothie_Ananas",
+                "Smoothie_Banana",
+                "Smoothie_Gooseberry",
+                "Smoothie_Lemon",
+                "Smoothie_Pomegranate",
+                "Smoothie_Strawberry");
         for (String field : removedFields) {
             assertNull(FluidCatalog.get(field), field);
         }
@@ -206,7 +212,13 @@ class NutritionRemovalTest {
                 "potion.hotsauce",
                 "potion.diabolosauce",
                 "potion.diablosauce",
-                "potion.diablosauce.strong");
+                "potion.diablosauce.strong",
+                "pineapplesmoothie",
+                "bananasmoothie",
+                "gooseberrysmoothie",
+                "lemonsmoothie",
+                "pomegranatesmoothie",
+                "strawberrysmoothie");
         assertFalse(GTDrinksGen.ROWS.stream().anyMatch(row -> removedDrinkFields.contains(row.field())));
 
         assertEquals("Sake", GTBottles.fluidKeyOf("sake"));

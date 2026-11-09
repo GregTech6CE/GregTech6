@@ -33,7 +33,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class NutritionRemovalTests {
     private static final String BATCH = "nutrition_removal";
-    private static final Set<String> REMOVED_DRINK_FIELDS =     Set.of(
+    private static final Set<String> REMOVED_DRINK_FIELDS = Set.of(
             "potion.sake",
             "potion.dressing",
             "apricotsmoothie",
@@ -98,7 +98,13 @@ public final class NutritionRemovalTests {
             "potion.hotsauce",
             "potion.diabolosauce",
             "potion.diablosauce",
-            "potion.diablosauce.strong");
+            "potion.diablosauce.strong",
+            "pineapplesmoothie",
+            "bananasmoothie",
+            "gooseberrysmoothie",
+            "lemonsmoothie",
+            "pomegranatesmoothie",
+            "strawberrysmoothie");
 
     private NutritionRemovalTests() {}
 
@@ -112,7 +118,7 @@ public final class NutritionRemovalTests {
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
     public static void closedLoopBottlesStayRegisteredWithoutFluid(GameTestHelper helper) {
-        List<String> inert =         List.of(
+        List<String> inert = List.of(
                 "apricot_smoothie",
                 "barbecue_sauce",
                 "bawls",
@@ -174,7 +180,13 @@ public final class NutritionRemovalTests {
                 "starfruit_smoothie",
                 "there_is_no_cow_sauce",
                 "vodka",
-                "wine");
+                "wine",
+                "ananas_smoothie",
+                "banana_smoothie",
+                "gooseberry_smoothie",
+                "lemon_smoothie",
+                "pomegranate_smoothie",
+                "strawberry_smoothie");
         for (String id : inert) {
             Item item = GTFoodItems.itemOrNull(id);
             helper.assertTrue(item instanceof BottleItem, id + " is still a bottle item");

@@ -602,21 +602,9 @@ public class FluidCatalog {
                     fluid("Smoothie_Blackberry", "blackberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Blueberry =
                     fluid("Smoothie_Blueberry", "blueberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Gooseberry =
-                    fluid("Smoothie_Gooseberry", "gooseberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Strawberry =
-                    fluid("Smoothie_Strawberry", "strawberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Apple = fluid("Smoothie_Apple", "applesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Ananas =
-                    fluid("Smoothie_Ananas", "pineapplesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Banana =
-                    fluid("Smoothie_Banana", "bananasmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Cranberry =
                     fluid("Smoothie_Cranberry", "cranberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Lemon = fluid("Smoothie_Lemon", "lemonsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Pomegranate =
-                    fluid("Smoothie_Pomegranate", "pomegranatesmoothie")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             // =======================================================================
             // Mashes
             // =======================================================================

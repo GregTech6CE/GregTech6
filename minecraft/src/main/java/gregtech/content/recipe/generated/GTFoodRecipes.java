@@ -37,18 +37,7 @@ public final class GTFoodRecipes {
     private static final String[] WATERS = {"Water", "MnWtr", "DistW"};
 
     private static final String[] SMOOTHIE_JUICES = {
-        "Juice_Ananas",
-        "Juice_Apple",
-        "Juice_Banana",
-        "Juice_Blackberry",
-        "Juice_Blueberry",
-        "Juice_Cranberry",
-        "Juice_Gooseberry",
-        "Juice_Lemon",
-        "Juice_Melon",
-        "Juice_Pomegranate",
-        "Juice_Raspberry",
-        "Juice_Strawberry"
+        "Juice_Apple", "Juice_Blackberry", "Juice_Blueberry", "Juice_Cranberry", "Juice_Melon", "Juice_Raspberry"
     };
 
     private GTFoodRecipes() {}

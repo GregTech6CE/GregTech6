@@ -955,7 +955,91 @@ final class BottleDrinkFallback {
                             false,
                             false,
                             false,
-                            List.of( new DrinkNutritionRows.Effect("Potion.regeneration.id", 700, 4, 95), new DrinkNutritionRows.Effect("Potion.field_76444_x.id", 3000, 1, 95), new DrinkNutritionRows.Effect("Potion.resistance.id", 7000, 1, 95), new DrinkNutritionRows.Effect("Potion.fireResistance.id", 7000, 0, 95))))
+                            List.of( new DrinkNutritionRows.Effect("Potion.regeneration.id", 700, 4, 95), new DrinkNutritionRows.Effect("Potion.field_76444_x.id", 3000, 1, 95), new DrinkNutritionRows.Effect("Potion.resistance.id", 7000, 1, 95), new DrinkNutritionRows.Effect("Potion.fireResistance.id", 7000, 0, 95)))),
+            Map.entry(
+                    "Smoothie_Ananas",
+                    new DrinkNutritionRows.Row(
+                            "pineapplesmoothie",
+                            2,
+                            0.2f,
+                            0,
+                            false,
+                            false,
+                            "drink",
+                            false,
+                            false,
+                            false,
+                            List.of(new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60)))),
+            Map.entry(
+                    "Smoothie_Banana",
+                    new DrinkNutritionRows.Row(
+                            "bananasmoothie",
+                            4,
+                            0.2f,
+                            0,
+                            false,
+                            false,
+                            "drink",
+                            false,
+                            false,
+                            false,
+                            List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 100, 1, 20)))),
+            Map.entry(
+                    "Smoothie_Gooseberry",
+                    new DrinkNutritionRows.Row(
+                            "gooseberrysmoothie",
+                            2,
+                            0.2f,
+                            0,
+                            false,
+                            false,
+                            "drink",
+                            false,
+                            false,
+                            false,
+                            List.of(new DrinkNutritionRows.Effect("Potion.damageBoost.id", 200, 1, 25)))),
+            Map.entry(
+                    "Smoothie_Lemon",
+                    new DrinkNutritionRows.Row(
+                            "lemonsmoothie",
+                            2,
+                            0.4f,
+                            0,
+                            false,
+                            false,
+                            "drink",
+                            false,
+                            false,
+                            false,
+                            List.of( new DrinkNutritionRows.Effect("Potion.digSpeed.id", 1200, 0, 60), new DrinkNutritionRows.Effect("PotionsGT.ID_CONDUCTIVE", 300, 0, 70)))),
+            Map.entry(
+                    "Smoothie_Pomegranate",
+                    new DrinkNutritionRows.Row(
+                            "pomegranatesmoothie",
+                            1,
+                            0.2f,
+                            0,
+                            false,
+                            false,
+                            "drink",
+                            false,
+                            false,
+                            false,
+                            List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 100, 1, 20)))),
+            Map.entry(
+                    "Smoothie_Strawberry",
+                    new DrinkNutritionRows.Row(
+                            "strawberrysmoothie",
+                            4,
+                            0.2f,
+                            0,
+                            false,
+                            false,
+                            "drink",
+                            false,
+                            false,
+                            false,
+                            List.of(new DrinkNutritionRows.Effect("Potion.hunger.id", 100, 1, 10))))
     );
 
     private BottleDrinkFallback() {}
