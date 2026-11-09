@@ -20,15 +20,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 //? if >=1.21.1 {
-/*import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+/*import net.neoforged.neoforge.client.event.ModelEvent;
 *///?} else {
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 //?}
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -38,17 +32,11 @@ import java.util.Map;
 import java.util.function.Function;
 
 /** Mold basin / mold / crossing / faucet hull models (same texture-set sharing as smelting crucibles). */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-//?}
 public final class SmelteryClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private SmelteryClientModels() {}
 
-    @SubscribeEvent
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
         for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
             ClientModelEvents.registerAdditional(event, MoldBasinIcons.sharedModelLocation(set));
@@ -60,12 +48,10 @@ public final class SmelteryClientModels {
         }
     }
 
-    @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
 //? if >=1.21.1 {
-        /*BlockItemModelHelper.captureFromVanillaBlockItem(models);
-        int basins = aliasHullBlocks(models, gregtech.platform.neoforge.smeltery.SmelteryRegistries.basins(), MoldBasinIcons::sharedModelLocation, false);
+        /*int basins = aliasHullBlocks(models, gregtech.platform.neoforge.smeltery.SmelteryRegistries.basins(), MoldBasinIcons::sharedModelLocation, false);
         int molds = aliasHullBlocks(models, gregtech.platform.neoforge.smeltery.SmelteryRegistries.molds(), CrucibleMoldIcons::sharedModelLocation, false);
         int crossings = aliasHullBlocks(models, gregtech.platform.neoforge.smeltery.SmelteryRegistries.crossings(), CrucibleCrossingIcons::sharedModelLocation, false);
         int faucets = aliasHullBlocks(models, gregtech.platform.neoforge.smeltery.SmelteryRegistries.faucets(), CrucibleFaucetIcons::sharedModelLocation, true);

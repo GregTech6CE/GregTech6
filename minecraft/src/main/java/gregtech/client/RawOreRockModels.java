@@ -21,7 +21,6 @@ import net.neoforged.neoforge.client.model.data.ModelData;
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.model.BakedModelWrapper;
@@ -34,7 +33,6 @@ public final class RawOreRockModels {
         return ResourceLocation.fromNamespaceAndPath("gt6ce", "block/rock_marker_" + ground.getSerializedName());
     }
 
-    @SubscribeEvent
     public static void register(ModelEvent.RegisterAdditional event) {
         for (var ground : RockBlock.Ground.values()) {
             ClientModelEvents.registerAdditional(event, marker(ground));
@@ -57,7 +55,6 @@ public final class RawOreRockModels {
     }
 *///?}
 
-    @SubscribeEvent
     public static void bake(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
         ResourceLocation rockId = ResourceLocation.fromNamespaceAndPath("gt6ce", "rock");

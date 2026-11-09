@@ -81,7 +81,6 @@ public final class ItemLogisticsClientSetup {
         }
     }
 
-    @SubscribeEvent
     public static void additional(ModelEvent.RegisterAdditional event) {
         for (String type : new String[] {"hopper", "queuehopper"})
             for (Direction face : Direction.values())
@@ -89,10 +88,8 @@ public final class ItemLogisticsClientSetup {
                         event, id("block/machine/" + type + "_" + face.getSerializedName()));
     }
 
-    @SubscribeEvent
     public static void models(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
-        BlockItemModelHelper.captureFromVanillaBlockItem(models);
         ItemTransforms transforms = BlockItemModelHelper.blockItemTransforms();
         for (var entry : GTItemPipes.all()) {
             var block = entry.get();

@@ -69,10 +69,8 @@ public final class FluidTransportClientSetup {
         }
     }
 
-    @SubscribeEvent
     public static void models(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
-        BlockItemModelHelper.captureFromVanillaBlockItem(models);
         ItemTransforms transforms = BlockItemModelHelper.blockItemTransforms();
         for (var entry : FluidTransportRegistries.pipes()) {
             var block = entry.get();

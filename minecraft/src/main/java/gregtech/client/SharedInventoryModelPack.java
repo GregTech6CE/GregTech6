@@ -68,7 +68,6 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         });
     }
 
-    @SubscribeEvent
     public static void loaders(ModelEvent.RegisterGeometryLoaders event) {
         ClientPackFacade.registerGeometryLoader(event,
                 ResourceLocation.fromNamespaceAndPath(gregtech.engine.mod.GregTechIdentity.MOD_ID, "shared_inventory"),

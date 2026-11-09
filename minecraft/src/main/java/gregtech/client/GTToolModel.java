@@ -1,5 +1,4 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.content.registry.GTToolItems;
 import gregtech.platform.Mc;
@@ -7,34 +6,22 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
-/*import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.ModelEvent;
+/*import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraft.core.registries.BuiltInRegistries;
 //?}
 
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-//?}
 public final class GTToolModel {
     public static final ModelProperty<ItemStack> STACK = new ModelProperty<>();
 
     private GTToolModel() {}
 
-    @SubscribeEvent
     public static void registerIconsetModels(ModelEvent.RegisterAdditional event) {
         for (ResourceLocation icon : ToolIconSets.allRegisteredIcons()) {
             ClientModelEvents.registerAdditional(event, iconsetModelId(icon));
@@ -42,7 +29,6 @@ public final class GTToolModel {
         }
     }
 
-    @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
 

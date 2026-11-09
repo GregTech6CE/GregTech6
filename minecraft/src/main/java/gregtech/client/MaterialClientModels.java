@@ -19,7 +19,6 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 *///?} else {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 //?}
 import org.slf4j.Logger;
@@ -48,7 +47,6 @@ public final class MaterialClientModels {
      * Only prefixes that generate material form items own such a model; transport pipes bind block items to
      * pipe prefixes without any shared material model.
      */
-    @SubscribeEvent
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
         List<MaterialPrefix> prefixes = MaterialItemDefinitions.candidatePrefixes();
         for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
@@ -58,7 +56,6 @@ public final class MaterialClientModels {
         }
     }
 
-    @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
         int aliased = 0;
@@ -118,6 +115,11 @@ public final class MaterialClientModels {
             if (entry.get() instanceof gregtech.content.item.EnergyCrystalItem) continue;
             MaterialFormItem item = (MaterialFormItem) entry.get();
             event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? item.getTintColor() : 0xFFFFFF), entry.get());
+        }
+        for (var entry : GTItems.addonEntries()) {
+            if (entry.get() instanceof MaterialFormItem item) {
+                event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? item.getTintColor() : 0xFFFFFF), entry.get());
+            }
         }
     }
 *///?}

@@ -37,10 +37,8 @@ public final class ElectricWireClientSetup {
         }
     }
 
-    @SubscribeEvent
     public static void models(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
-        BlockItemModelHelper.captureFromVanillaBlockItem(models);
         ItemTransforms transforms = BlockItemModelHelper.blockItemTransforms();
         var wire = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/wire");
         var rubber = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/rubber/pipeside");

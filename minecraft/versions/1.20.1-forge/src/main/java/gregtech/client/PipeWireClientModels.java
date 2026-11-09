@@ -18,10 +18,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
@@ -30,7 +27,6 @@ import org.slf4j.Logger;
  * {@link PipeWireBakedModel} (GT6 thin-into-thick connection rendering).
  * Items use the same geometry with two opposite connection arms.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class PipeWireClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -41,10 +37,8 @@ public final class PipeWireClientModels {
 
     private PipeWireClientModels() {}
 
-    @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
-        BlockItemModelHelper.captureFromVanillaBlockItem(models);
         int replaced = 0;
 
         for (var entry : GTFluidPipes.all()) {

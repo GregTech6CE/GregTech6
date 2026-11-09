@@ -42,7 +42,7 @@ public final class FluidSpringClient {
         var id = data == null ? null : ResourceLocation.tryParse(data.getString("spring"));
         return id != null && BuiltInRegistries.FLUID.containsKey(id) ? BuiltInRegistries.FLUID.get(id) : Fluids.WATER;
     }
-    @SubscribeEvent public static void models(ModelEvent.ModifyBakingResult event) {
+    public static void models(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
         for (var block : GTFluidSprings.allBlocks()) {
             var fluid = ((gregtech.content.block.FluidSpringBlock) block).spring();

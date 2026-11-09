@@ -62,12 +62,10 @@ public final class FluidItemClientModels {
 
     private FluidItemClientModels() {}
 
-    @SubscribeEvent
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
         ClientModelEvents.registerAdditional(event, SHARED_MODEL);
     }
 
-    @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         FluidItemOverrideList.clearCache();
         FluidAppearance.clearCache();

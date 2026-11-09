@@ -11,15 +11,9 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
-/*import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+/*import net.neoforged.neoforge.client.event.ModelEvent;
 *///?} else {
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 //?}
 import org.slf4j.Logger;
 
@@ -37,11 +31,6 @@ import java.util.Map;
  * stone-pinned {@link OreBakedModel#stoneModel} view. The blockstate JSON still only needs its one
  * {@code ""} variant.
  */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-//?}
 public final class OreClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -49,15 +38,12 @@ public final class OreClientModels {
 
     private static final ResourceLocation TEMPLATE = ResourceLocation.withDefaultNamespace("block/stone");
 
-    @SubscribeEvent
     public static void registerTemplate(ModelEvent.RegisterAdditional event) {
         ClientModelEvents.registerAdditional(event, TEMPLATE);
     }
 
-    @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
-        BlockItemModelHelper.captureFromVanillaBlockItem(models);
         BakedModel template = models.find(TEMPLATE);
         if (template == null) {
             LOGGER.error("[{}] vanilla stone model missing — ore models not replaced", GregTechIdentity.REGISTRY_NAMESPACE);

@@ -15,37 +15,24 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 //? if >=1.21.1 {
-/*import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+/*import net.neoforged.neoforge.client.event.ModelEvent;
 *///?} else {
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 //?}
 import org.slf4j.Logger;
 
 /** Crucibles: GT6 bowl hull via {@link CrucibleBlockBakedModel} + content BER top pass. */
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-//?}
 public final class CrucibleClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private CrucibleClientModels() {}
 
-    @SubscribeEvent
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
         for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
             ClientModelEvents.registerAdditional(event, CrucibleBowlIcons.sharedModelLocation(set));
         }
     }
 
-    @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
         int aliased = 0;

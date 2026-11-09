@@ -6,24 +6,18 @@ import gregtech.content.block.energy.GearboxBlock;
 import gregtech.content.registry.GTGearboxes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 /** Replaces static six-sided gearbox cubes with GT6's per-face axle/gear textures. */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class GearboxClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private GearboxClientModels() {}
 
-    @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
-        BlockItemModelHelper.captureFromVanillaBlockItem(models);
         GearboxBakedModel shared = new GearboxBakedModel();
         int replaced = 0;
         for (var entry : GTGearboxes.allGearboxes()) {

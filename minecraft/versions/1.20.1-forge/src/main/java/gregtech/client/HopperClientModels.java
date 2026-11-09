@@ -9,10 +9,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -21,14 +18,12 @@ import org.slf4j.Logger;
  * Hopper / queuehopper shared model registration and bake-time aliasing.
  * Follows the same pattern as {@link MachineBlockClientModels} for burning boxes.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class HopperClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final String[] HOPPER_TYPES = {"hopper", "queuehopper"};
 
     private HopperClientModels() {}
 
-    @SubscribeEvent
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
         for (String type : HOPPER_TYPES) {
             for (Direction facing : Direction.values()) {
@@ -37,7 +32,6 @@ public final class HopperClientModels {
         }
     }
 
-    @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
 

@@ -8,20 +8,15 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import org.slf4j.Logger;
 
 /** Loads one cube per design index and swaps it onto structural parts from {@code gt.design}. */
-@EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class PartDesignClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private PartDesignClientModels() {}
 
-    @SubscribeEvent
     public static void register(ModelEvent.RegisterAdditional event) {
         for (var folder : PartDesigns.folders().entrySet()) {
             for (int design = 1; design <= folder.getValue(); design++)
@@ -29,7 +24,6 @@ public final class PartDesignClientModels {
         }
     }
 
-    @SubscribeEvent
     public static void bake(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
         int wrapped = 0;

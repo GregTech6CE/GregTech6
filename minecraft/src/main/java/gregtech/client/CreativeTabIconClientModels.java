@@ -1,5 +1,4 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
 
 
 import gregtech.api.material.MaterialTextureSet;
@@ -11,32 +10,19 @@ import gregtech.platform.Mc;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 //? if >=1.21.1 {
-/*import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+/*import net.neoforged.neoforge.client.event.ModelEvent;
 *///?} else {
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 //?}
 import org.jetbrains.annotations.Nullable;
 
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-//?}
 public final class CreativeTabIconClientModels {
     private static final MaterialTextureSet ICON_SET = MaterialTextureSet.NONE;
 
     private CreativeTabIconClientModels() {}
 
-    @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
-        BlockItemModelHelper.captureFromVanillaBlockItem(models);
 
         for (var entry : GTCreativeTabIcons.allEntries()) {
             if (!(entry.get() instanceof CreativeTabIconItem iconItem)) {

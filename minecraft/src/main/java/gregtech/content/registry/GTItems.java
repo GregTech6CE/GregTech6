@@ -39,6 +39,13 @@ public final class GTItems {
         if (GregTechNeoForge.NAMESPACE.equals(namespace)) return ITEMS;
         return ADDON_ITEMS.computeIfAbsent(namespace, DeferredRegister::createItems);
     }
+
+    public static java.util.Collection<RegisteredItem<Item>> addonEntries() {
+        var entries = new java.util.ArrayList<RegisteredItem<Item>>();
+        for (DeferredRegister.Items register : ADDON_ITEMS.values())
+            register.getEntries().forEach(holder -> entries.add(new RegisteredItem<Item>(holder.getId(), holder::get)));
+        return entries;
+    }
 *///?} else {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTechIdentity.REGISTRY_NAMESPACE);
     private static final java.util.Map<String, DeferredRegister<Item>> ADDON_ITEMS = new java.util.LinkedHashMap<>();

@@ -36,10 +36,8 @@ public final class SignalWireClientSetup {
         }
     }
 
-    @SubscribeEvent
     public static void models(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
-        BlockItemModelHelper.captureFromVanillaBlockItem(models);
         ItemTransforms fallbackTransforms = BlockItemModelHelper.blockItemTransforms();
         var wireTexture = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/wire");
         var rubberTexture = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/rubber/pipeside");

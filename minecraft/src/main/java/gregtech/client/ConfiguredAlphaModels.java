@@ -10,25 +10,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.ItemStack;
 import java.util.List;
 //? if >=1.21.1 {
-/*import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ModelEvent;
+/*import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.model.BakedModelWrapper;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.ChunkRenderTypeSet;
-@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.model.BakedModelWrapper;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.ChunkRenderTypeSet;
-@Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class ConfiguredAlphaModels {
     private ConfiguredAlphaModels() {}
@@ -42,7 +32,6 @@ public final class ConfiguredAlphaModels {
         return Rule.GT_ALPHA.enabled() ? RenderType.translucent() : RenderType.cutout();
     }
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void models(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
         // Keep the canonical missing sentinel unwrapped so BakedModelMap.find can reject it.
