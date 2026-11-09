@@ -3,18 +3,7 @@ package gregtech.content.worldgen.dungeon;
 /** GT6's two dungeon cup drink pools; the original chooses from the global RNG, not the room RNG. */
 final class GTDungeonCupDrinks {
     private static final String[] CORRIDOR = {
-        null,
-        null,
-        null,
-        null,
-        null,
-        "Purple_Drink",
-        "Purple_Drink",
-        "Purple_Drink",
-        "Vodka",
-        "Mead",
-        "Rum_Dark",
-        "Wine_Grape_Purple"
+        null, null, null, null, null, "Mead", "Rum_White", "Rum_Dark", "Rum_White", "Mead", "Rum_Dark", "Wine_Lemon"
     };
     private static final String[] BARRACKS = {
         null,
@@ -22,14 +11,14 @@ final class GTDungeonCupDrinks {
         null,
         null,
         null,
-        "Purple_Drink",
-        "Grenade_Juice",
-        "Vodka",
-        "Leninade",
         "Mead",
-        "BAWLS",
+        "Grenade_Juice",
+        "Rum_White",
+        "Lemonade",
+        "Mead",
+        "Soda",
         "Rum_Dark",
-        "Wine_Grape_Purple"
+        "Wine_Lemon"
     };
 
     private GTDungeonCupDrinks() {}

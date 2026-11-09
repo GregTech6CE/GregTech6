@@ -36,7 +36,6 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
         INSTANCE.animalParts();
         INSTANCE.meat();
         INSTANCE.remains();
-        INSTANCE.chum();
         return INSTANCE.entries().size() + SMELTING.size();
     }
 
@@ -175,7 +174,6 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
         for (String id : OriginalSingleItemCatalog.PLANT_REMAINS) {
             Set<String> seen = new HashSet<>();
             biomass(id, "Water", 135, 32, seen);
-            biomass(id, "Rotten_Drink", 405, 16, seen);
             biomass(id, "Soup_Mushroom", 405, 16, seen);
             var fields = new TreeSet<>(RegisteredFluids.all().keySet());
             for (String field : fields) {
@@ -216,29 +214,6 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
                 null,
                 fluids(input),
                 fluids(result));
-    }
-
-    private void chum() {
-        // Loader_Recipes_Food: vanilla fallback of the original scrap-meat recipe.
-        for (String rotten : List.of("MeatRotten", "FishRotten")) {
-            for (String oil : List.of("Oil_Fish")) {
-                add(
-                        "chum/" + rotten + "/" + oil,
-                        MachineRecipeMaps.Mixer,
-                        256,
-                        16,
-                        items(
-                                own("scrap_meat", 1),
-                                new ItemStack(Items.FERMENTED_SPIDER_EYE),
-                                mat(MaterialPrefix.dust, rotten, 1),
-                                new ItemStack(Items.BONE_MEAL),
-                                new ItemStack(Items.POISONOUS_POTATO),
-                                new ItemStack(Items.RED_MUSHROOM)),
-                        items(own("chum", 8)),
-                        fluids(fluid("Purple_Drink", 1000), fluid(oil, 1000)),
-                        fluids());
-            }
-        }
     }
 
     private static ItemStack own(String id, int count) {

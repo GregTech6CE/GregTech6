@@ -71,10 +71,6 @@ public final class FoodItemRecipes {
         smelting();
         slicing();
         mixing();
-        // Loader_Recipes_Food: cooked ribs absorb 250 L of barbecue sauce in the bath.
-        var barbecueSauce = fluid("Sauce_BBQ", 250);
-        if (!barbecueSauce.isEmpty() && MachineRecipeMaps.Bath.addRecipe1(false, 0, 16,
-                food("grilled_ribs", 1), barbecueSauce, FluidStack.EMPTY, food("barbecue_ribs", 1)) != null) registered++;
         packaging();
         registered += CannedFoodRecipes.register();
         registered += BottleMachineRecipes.register();
@@ -232,24 +228,18 @@ public final class FoodItemRecipes {
     private static final String[][] MIXER_FLUIDS = {
             {"ice_cream", "Juice_Lemon", "50", "lemon_ice_cream", "MultiItemFood.java:852"},
             {"ice_cream", "Juice_Banana", "50", "banana_ice_cream", "MultiItemFood.java:853"},
-            {"ice_cream", "Juice_Grape_Green", "50", "grape_ice_cream", "MultiItemFood.java:856"},
-            {"ice_cream", "Juice_Grape_Purple", "50", "grape_ice_cream", "MultiItemFood.java:857"},
             {"ice_cream", "Juice_Apple", "50", "apple_ice_cream", "MultiItemFood.java:858"},
             {"ice_cream", "Juice_Ananas", "50", "ananas_ice_cream", "MultiItemFood.java:860"},
             {"ice_cream", "Juice_Cranberry", "50", "cranberry_ice_cream", "MultiItemFood.java:862"},
             {"ice_cream", "Juice_Strawberry", "50", "strawberry_ice_cream", "MultiItemFood.java:863"},
-            {"ice_cream", "Juice_Kiwi", "50", "kiwi_ice_cream", "MultiItemFood.java:864"},
             {"ice_cream", "Juice_Melon", "50", "melon_ice_cream", "MultiItemFood.java:865"},
-            {"ice_cream", "Juice_Currant", "50", "currant_ice_cream", "MultiItemFood.java:866"},
             {"ice_cream", "Juice_Raspberry", "50", "raspberry_ice_cream", "MultiItemFood.java:867"},
             {"ice_cream", "Juice_Blackberry", "50", "blackberry_ice_cream", "MultiItemFood.java:868"},
             {"ice_cream", "Juice_Blueberry", "50", "blueberry_ice_cream", "MultiItemFood.java:869"},
             {"ice_cream", "Juice_Gooseberry", "50", "gooseberry_ice_cream", "MultiItemFood.java:870"},
             {"ice_cream", "RoyalJelly", "5", "honey_ice_cream", "MultiItemFood.java:871"},
             {"ice_cream", "Honey", "50", "honey_ice_cream", "MultiItemFood.java:872"},
-            {"ice_cream", "Syrup_Maple", "50", "maple_ice_cream", "MultiItemFood.java:876"},
             {"ice_cream", "Cream_Nutella", "50", "nutella_ice_cream", "MultiItemFood.java:877"},
-            {"ice_cream", "Sap_Rainbow", "50", "rainbow_ice_cream", "MultiItemFood.java:879"},
     };
 
     private static void mixing() {
@@ -327,8 +317,6 @@ public final class FoodItemRecipes {
                 chocolate,FluidStack.EMPTY,food("chocolate_ice_cream",1))!=null)registered++;
         for(String raisins:new String[]{"green_raisins","red_raisins"})mixerPair("ice_cream",raisins,"raisin_ice_cream",1,"Loader_Recipes_Food:156");
         mixerPair("ice_cream","grilled_bacon","bacon_ice_cream",1,"Loader_Recipes_Food:231");
-        var chum=food("chum",1);
-        if(!chum.isEmpty()&&MachineRecipeMaps.Mixer.addRecipe2(false,16,16,food("ice_cream",4),chum,food("chum_ice_cream",4))!=null)registered++;
     }
 
     private static void mixerDust(String inputId, String material, String outputId, int count, String source) {

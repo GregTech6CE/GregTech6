@@ -45,9 +45,6 @@ public final class WoodenBucketCatalog {
             new Content("honey", "Honey", 8, List.of("Honey")),
             new Content("lubricant", "Lubricant", 10, List.of("Lubricant")),
             new Content("spoiled_milk", "Milk (you cannot drink out of Buckets!)", 11, List.of("Milk_Spoiled")),
-            new Content("maple_sap", "Maple Sap", 12, List.of("Sap_Maple")),
-            new Content("rainbow_sap", "Rainbow Sap", 13, List.of("Sap_Rainbow")),
-            new Content("soy_milk", "Soy Milk", 14, List.of("MilkSoy")),
             new Content("glue", "Glue", 15, List.of("Glue")),
             new Content(
                     "seed_oil",

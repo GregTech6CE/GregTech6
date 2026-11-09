@@ -81,13 +81,12 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 
     /**
      * GT6's {@code tDrinks} ({@code DungeonChunkRoomWorkshop}): the seven drinks a dungeon barrel
-     * can hold, with the purple drink standing in for three of the seven entries - exactly GT6's
-     * {@code FL.array(FL.Purple_Drink, FL.Purple_Drink, FL.Purple_Drink, FL.Vodka, FL.Mead,
-     * FL.Whiskey_GlenMcKenner, FL.Wine_Grape_Purple)} order, which {@code UT.Code.select(NF, tDrinks)}
-     * draws from GT6's global RNG, not the dungeon room's RNG.
+     * can hold. The fluids removed with the drink cleanup keep the same slot count and RNG draw order;
+     * Mead fills the three former purple-drink slots, Rum_White replaces vodka, and Wine_Lemon replaces
+     * the purple grape wine.
      */
-    private static final String[] DRINKS = {"Purple_Drink", "Purple_Drink", "Purple_Drink",
-            "Vodka", "Mead", "Rum_Dark", "Wine_Grape_Purple"};
+    private static final String[] DRINKS = {"Mead", "Mead", "Mead",
+            "Rum_White", "Mead", "Rum_Dark", "Wine_Lemon"};
 
     /**
      * GT6's {@code ALL_SIDES_HORIZONTAL} ({@code CS}, {@code {2, 3, 4, 5}} = north, south, west,
