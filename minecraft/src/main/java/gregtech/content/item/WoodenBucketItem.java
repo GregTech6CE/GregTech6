@@ -55,6 +55,7 @@ public final class WoodenBucketItem extends TechItem {
         ItemMaterialRegistry.register(this, new ItemComposition(null, List.of(
                 MaterialComponent.of(GTMaterialRegistry.get("Wood"), 3 * GTValues.U),
                 MaterialComponent.of(GTMaterialRegistry.get(band.material()), GTValues.U)),
+                GTMaterialRegistry.get("Wood"),
                 "GT6 MultiItemRandomTools wooden bucket", content.empty()));
     }
 

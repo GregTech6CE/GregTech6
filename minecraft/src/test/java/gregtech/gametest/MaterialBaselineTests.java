@@ -19,6 +19,7 @@ import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
 import gregtech.engine.machine.crucible.CrucibleItemInput;
 import gregtech.engine.material.ItemMaterialRegistry;
+import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -126,6 +127,27 @@ public final class MaterialBaselineTests {
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void traversalAndSingleQueriesUseTheSameEffectiveSnapshot(GameTestHelper helper) {
+        long tagged = 0;
+        for (var entry : ItemMaterialRegistry.entries().entrySet()) {
+            helper.assertTrue(
+                    ItemMaterialRegistry.base(entry.getKey()).orElseThrow().equals(entry.getValue()),
+                    "traversal and lookup disagree for " + id(new ItemStack(entry.getKey())));
+            helper.assertTrue(
+                    ItemMaterialRegistry.get(new ItemStack(entry.getKey())).orElseThrow().equals(entry.getValue()),
+                    "stack lookup differs from base for " + id(new ItemStack(entry.getKey())));
+            helper.assertFalse(entry.getValue().sources().isEmpty(), "composition has no provenance");
+            if (entry.getValue().sources().stream()
+                    .anyMatch(source -> source.kind() == ItemCompositionSource.Kind.FORM_TAG)) tagged++;
+        }
+        helper.assertTrue(
+                gregtech.content.recipe.ExternalOreProcessing.taggedCompositions() == 0 || tagged > 0,
+                "loaded common-form tags contribute effective compositions");
+        helper.assertTrue(ItemMaterialRegistry.explicit(Items.IRON_BLOCK).isPresent(), "explicit diagnostics remain");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
     public static void seventyTwoUnitsExposePlanAndQueryableOutput(GameTestHelper helper) {
         var stack = new ItemStack(Items.ENCHANTED_GOLDEN_APPLE);
         var data = ItemMaterialRegistry.get(stack).orElseThrow();
@@ -156,8 +178,10 @@ public final class MaterialBaselineTests {
         helper.assertTrue(actual.components().get(1).material().resolve() == Materials.Steel.resolve()
                 && actual.components().get(1).amount() == 4 * GTValues.U, "secondary: 4U Steel");
         var form = MaterialEquivalence.form(stack);
-        helper.assertTrue(form != null && form.prefix() == MaterialPrefix.toolHeadDrill,
-                "form query represents the primary identity; composition retains the steel");
+        helper.assertTrue(form == null, "a composite tool head is not a pure material form");
+        helper.assertTrue(explicit.components().stream()
+                        .anyMatch(component -> component.material().resolve() == Materials.Steel.resolve()),
+                "equivalence rejection does not discard the secondary Steel");
         observe(helper, "composite_head", stack);
         helper.succeed();
     }
@@ -204,8 +228,9 @@ public final class MaterialBaselineTests {
         helper.assertTrue(ItemMaterialRegistry.canRecover(empty), "plain stone mold is admitted for recovery");
         helper.assertTrue(MoldItemData.shape(shaped) == mask, "casting cavity survives on the item");
         helper.assertTrue(ItemMaterialRegistry.get(empty).equals(ItemMaterialRegistry.get(shaped)), "shape keeps composition");
-        helper.assertTrue(ItemMaterialRegistry.hasStoredContents(shaped), "observed difference: cavity data is treated as stored contents");
-        helper.assertFalse(CrucibleItemInput.isValid(shaped), "observed shaped casting mold rejection (#349)");
+        helper.assertFalse(ItemMaterialRegistry.hasStoredContents(shaped), "a casting cavity is shape state, not inventory");
+        helper.assertTrue(CrucibleItemInput.isValid(shaped), "a shaped casting mold remains meltable");
+        helper.assertTrue(ItemMaterialRegistry.canRecover(shaped), "a shaped casting mold keeps bulk recovery");
         observe(helper, "casting_mold_empty", empty);
         observe(helper, "casting_mold_shaped", shaped);
         var press = GTTechnological.get("press_bullet_casing_shape_small");
@@ -233,12 +258,36 @@ public final class MaterialBaselineTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void compositionAdmissionAndCookingPolicyStayIndependent(GameTestHelper helper) {
+        var descriptive = ItemMaterialRegistry.entries().entrySet().stream()
+                .filter(entry -> entry.getValue().sources().stream()
+                        .anyMatch(source -> source.kind() == ItemCompositionSource.Kind.VANILLA_JSON))
+                .filter(entry -> !entry.getValue().bulkRecoveryAllowed())
+                .findFirst()
+                .orElseThrow();
+        var stack = new ItemStack(descriptive.getKey());
+        helper.assertTrue(ItemMaterialRegistry.get(stack).isPresent(), "descriptive composition is queryable");
+        helper.assertTrue(ItemMaterialRegistry.canMelt(stack), "composition existence remains independently meltable");
+        helper.assertFalse(ItemMaterialRegistry.canRecover(stack), "descriptive composition does not grant bulk recovery");
+        helper.assertFalse(
+                ItemMaterialRegistry.hasMaterialProcessingRule(stack),
+                "descriptive vanilla data does not delete material cooking rules");
+        var materialItem = GTItems.getStack(MaterialPrefix.ingot, Materials.Iron, 1);
+        helper.assertTrue(
+                ItemMaterialRegistry.hasMaterialProcessingRule(materialItem),
+                "native material forms retain material cooking policy");
+        helper.succeed();
+    }
+
     // GameTest runs batches sequentially, so the asynchronous reload cannot overlap other tests.
     @GameTest(template = "test_empty", batch = "material_baseline_reload", timeoutTicks = 6000)
     public static void realResourceReloadDoesNotAccumulateRules(GameTestHelper helper) {
         var server = helper.getLevel().getServer();
         var packs = List.copyOf(server.getPackRepository().getSelectedIds());
         int applications = MachineRecipeOverlay.applications();
+        long compositionRevision = ItemMaterialRegistry.compositionRevision();
+        int composedItems = ItemMaterialRegistry.entries().size();
         capture(helper, "startup");
         var before = ownedCounts();
         var sample = describe(new ItemStack(Items.IRON_BLOCK));
@@ -248,13 +297,19 @@ public final class MaterialBaselineTests {
             RELOAD_FAILURE.set(failure);
             RELOAD_COMPLETE.set(true);
         });
-        awaitReload(helper, applications, before, sample);
+        awaitReload(helper, applications, compositionRevision, composedItems, before, sample);
     }
 
     private static void awaitReload(
-            GameTestHelper helper, int applications, List<Integer> before, String sample) {
+            GameTestHelper helper,
+            int applications,
+            long compositionRevision,
+            int composedItems,
+            List<Integer> before,
+            String sample) {
         if (!RELOAD_COMPLETE.get()) {
-            helper.runAfterDelay(1, () -> awaitReload(helper, applications, before, sample));
+            helper.runAfterDelay(
+                    1, () -> awaitReload(helper, applications, compositionRevision, composedItems, before, sample));
             return;
         }
         var failure = RELOAD_FAILURE.get();
@@ -270,6 +325,12 @@ public final class MaterialBaselineTests {
         helper.assertTrue(
                 sample.equals(describe(new ItemStack(Items.IRON_BLOCK))),
                 "fixed composition is stable after reload");
+        helper.assertTrue(
+                ItemMaterialRegistry.compositionRevision() >= compositionRevision,
+                "reload invalidates composition-dependent caches");
+        helper.assertTrue(
+                composedItems == ItemMaterialRegistry.entries().size(),
+                "repeat reload does not accumulate effective compositions");
         capture(helper, "reload");
         var reloadedRecipe = find(MachineRecipeMaps.Shredder, List.of(new ItemStack(Items.IRON_INGOT)), List.of());
         helper.assertTrue(
@@ -296,7 +357,7 @@ public final class MaterialBaselineTests {
         return id(stack) + "\t" + (data.prefix() == null ? "-" : data.prefix().getName())
                 + "\t" + data.material().resolve().getName() + "\t" + data.components().stream()
                 .map(c -> c.material().resolve().getName() + "=" + c.amount()).sorted().collect(Collectors.joining(","))
-                + "\t" + data.recoverable() + "\t" + ItemMaterialRegistry.canRecover(stack)
+                + "\t" + data.bulkRecoveryAllowed() + "\t" + ItemMaterialRegistry.canRecover(stack)
                 + "\t" + ItemMaterialRegistry.canMelt(stack) + "\t" + ItemMaterialRegistry.hasStoredContents(stack)
                 + "\t" + CrucibleItemInput.parse(stack).stream().map(c -> c.material.getName() + "=" + c.amount).sorted().collect(Collectors.joining(","))
                 + "\t" + data.source() + state;

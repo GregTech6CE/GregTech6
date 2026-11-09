@@ -23,21 +23,35 @@ public final class VanillaWoodProcessingRecipes extends OriginalRecipeBatch {
         var material = RegisteredWoodSurvivalRecipes.material(wood);
         var bark = GTMaterialRegistry.get("Bark");
         for (String type : types) {
-            ItemMaterialRegistry.register(
-                    mc(wood + "_" + type, 1).getItem(),
+            String raw = wood + "_" + type;
+            registerWoodComposition(
+                    raw,
                     new ItemComposition(
                             null,
                             java.util.List.of(
                                     MaterialComponent.of(material, 8 * GTValues.U),
                                     MaterialComponent.of(bark, GTValues.U)),
+                            material,
                             "GT6 WoodEntry (modern wood binding)",
                             true));
-            ItemMaterialRegistry.register(
-                    mc("stripped_" + wood + "_" + type, 1).getItem(), null, material, 8 * GTValues.U);
+            registerWoodComposition("stripped_" + raw, new ItemComposition(null, material, 8 * GTValues.U));
         }
-        ItemMaterialRegistry.register(mc(wood + "_planks", 1).getItem(), MaterialPrefix.plate, material, GTValues.U);
-        ItemMaterialRegistry.register(mc(wood + "_stairs", 1).getItem(), null, material, 3 * GTValues.U / 4);
-        ItemMaterialRegistry.register(mc(wood + "_slab", 1).getItem(), null, material, GTValues.U / 2);
+        registerWoodComposition(wood + "_planks", new ItemComposition(MaterialPrefix.plate, material, GTValues.U));
+        registerWoodComposition(wood + "_stairs", new ItemComposition(null, material, 3 * GTValues.U / 4));
+        registerWoodComposition(wood + "_slab", new ItemComposition(null, material, GTValues.U / 2));
+    }
+
+    private static void registerWoodComposition(String path, ItemComposition composition) {
+        var item = mc(path, 1).getItem();
+        String jsonSource = ItemMaterialRegistry.explicitSourceId(item, ItemCompositionSource.Kind.VANILLA_JSON)
+                .orElse(null);
+        ItemMaterialRegistry.register(
+                item,
+                composition,
+                ItemCompositionSource.Kind.EXPLICIT,
+                "gt6ce:wood-entry/" + path,
+                "GT6 wood material binding",
+                jsonSource);
     }
 
     public static int register() {

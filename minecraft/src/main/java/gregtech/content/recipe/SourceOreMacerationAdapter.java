@@ -118,7 +118,7 @@ final class SourceOreMacerationAdapter {
                 for (var part : data.components()) {
                     GTMaterial material = part.material().resolve();
                     if (!namespace.equals("gt6ce")
-                            || !data.recoverable()
+                            || !data.bulkRecoveryAllowed()
                             || data.components().size() != 1
                             || data.amount() != data.prefix().getMaterialWeight()
                             || !SourceFurnaceNativeAdapter.nativeForm(
@@ -175,7 +175,7 @@ final class SourceOreMacerationAdapter {
             if (!SourceFurnaceNativeAdapter.nativeForm(prefix, material, selected)) return NativeForm.unknown();
             var data = ItemMaterialRegistry.explicit(selected.getItem()).orElse(null);
             if (data == null
-                    || !data.recoverable()
+                    || !data.bulkRecoveryAllowed()
                     || data.prefix() != prefix
                     || data.components().size() != 1
                     || data.material().resolve() != material.resolve()

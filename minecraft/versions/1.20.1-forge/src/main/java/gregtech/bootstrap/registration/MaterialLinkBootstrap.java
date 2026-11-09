@@ -11,7 +11,5 @@ public record MaterialLinkBootstrap() implements InitializationStep {
         gregtech.content.material.ModMaterialUnificationLoader.register();
         gregtech.content.material.VanillaCompositionLoader.register();
         gregtech.content.material.VanillaMaterialCorrections.register();
-        gregtech.content.registry.GTBars.registerCompositions();
-        gregtech.content.recipe.VanillaWoodProcessingRecipes.registerMaterials();
     }
 }

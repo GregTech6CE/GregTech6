@@ -314,7 +314,7 @@ final class SourceOreCrushingAdapter {
         }
         private static boolean composition(ItemStack input, MaterialPrefix prefix, GTMaterial material, long amount, boolean optional) {
             var data = ItemMaterialRegistry.explicit(input.getItem()).orElse(null);
-            return data == null ? optional : data.recoverable() && data.prefix() == prefix && data.components().size() == 1
+            return data == null ? optional : data.bulkRecoveryAllowed() && data.prefix() == prefix && data.components().size() == 1
                     && data.material().resolve() == material && data.amount() == amount;
         }
         @Override GTMaterial target(GTMaterial material) {

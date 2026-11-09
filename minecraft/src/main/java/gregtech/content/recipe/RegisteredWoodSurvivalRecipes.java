@@ -33,6 +33,7 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
                             java.util.List.of(
                                     MaterialComponent.of(material, 8 * GTValues.U),
                                     MaterialComponent.of(bark, GTValues.U)),
+                            material,
                             "GT6 WoodEntry",
                             true));
             ItemMaterialRegistry.register(GTWoods.strippedLog(species).asItem(), null, material, 8 * GTValues.U);

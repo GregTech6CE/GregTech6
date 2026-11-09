@@ -213,7 +213,7 @@ public class PartRecipeLoader implements InitializationStep {
                     || block.prefix() != prefix || block.material().resolve() != material) return false;
             long units = 9 * GTValues.U;
             var data = gregtech.engine.material.ItemMaterialRegistry.base(stack.getItem()).orElse(null);
-            if (data != null) return data.recoverable() && data.prefix() == null
+            if (data != null) return data.bulkRecoveryAllowed() && data.prefix() == null
                     && data.components().size() == 1 && data.material().resolve() == material
                     && data.amount() == units;
             // Forge has no general block composition registration; inspect the actual known block.

@@ -511,11 +511,10 @@ public final class OvenRecipeBridge {
         return false;
     }
 
-    /** GT6 {@code OM.anydata}: GT material items plus every unified vanilla item. */
+    /** Only material rules may delete or replace a foreign cooking row; descriptive data stays descriptive. */
     private static boolean oreDicted(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return false;
-        if (stack.getItem() instanceof gregtech.engine.material.MaterialFormItem) return true;
-        return gregtech.engine.material.ItemMaterialRegistry.get(stack).isPresent();
+        return gregtech.engine.material.ItemMaterialRegistry.hasMaterialProcessingRule(stack);
     }
 
     /**

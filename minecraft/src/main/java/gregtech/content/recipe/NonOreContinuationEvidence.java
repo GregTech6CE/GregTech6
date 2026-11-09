@@ -78,7 +78,7 @@ public final class NonOreContinuationEvidence {
                 var data = ItemMaterialRegistry.explicit(stack.getItem()).orElse(null);
                 if (data != null
                         && (data.prefix() != prefix
-                                || !data.recoverable()
+                                || !data.bulkRecoveryAllowed()
                                 || data.components().size() != 1
                                 || data.material().resolve() != material
                                 || data.amount() != prefix.getMaterialWeight())) defer.add(material);
@@ -91,7 +91,7 @@ public final class NonOreContinuationEvidence {
                 GTMaterial material = part.material().resolve();
                 if (!candidates.contains(material)) continue;
                 if (!canonicalSelf(entry.getKey(), data.prefix(), material)
-                        || !data.recoverable()
+                        || !data.bulkRecoveryAllowed()
                         || data.components().size() != 1
                         || data.amount() != data.prefix().getMaterialWeight()) defer.add(material);
             }

@@ -97,7 +97,7 @@ public final class ReviewedCinnabarThermalRecipes {
   if(prefix==null)return amount==9*U&&ThermalInputProof.captureCinnabarBlock(stack,material)!=null;
   var composition=ItemMaterialRegistry.explicit(stack.getItem()).orElse(null);
   if(composition==null)return false; // Missing ordinary item proof must not create a guessed row.
-  return composition.recoverable()&&composition.prefix()==prefix&&composition.components().size()==1
+  return composition.bulkRecoveryAllowed()&&composition.prefix()==prefix&&composition.components().size()==1
     &&composition.material().resolve()==material&&composition.amount()==amount
     &&ThermalInputProof.capture(stack,material,prefix,amount)!=null;
  }

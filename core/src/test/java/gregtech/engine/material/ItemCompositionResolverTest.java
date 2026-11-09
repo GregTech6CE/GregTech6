@@ -1,0 +1,113 @@
+package gregtech.engine.material;
+
+import gregtech.api.material.MaterialComponent;
+import gregtech.content.material.Materials;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ItemCompositionResolverTest {
+    @Test
+    void candidateOrderDoesNotChangeTheEffectiveComposition() {
+        var explicit = candidate("explicit", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true);
+        var tag = candidate("tag", ItemCompositionSource.Kind.FORM_TAG, Materials.Copper, 1, true);
+        var expected = ItemCompositionResolver.resolve(Map.of("test:item", List.of(tag, explicit)));
+        var reversed = new ArrayList<>(List.of(explicit, tag));
+        Collections.reverse(reversed);
+        assertEquals(expected, ItemCompositionResolver.resolve(Map.of("test:item", reversed)));
+        assertEquals(Materials.Iron.resolve(), expected.get("test:item").material());
+    }
+
+    @Test
+    void equivalentExplicitDeclarationsMergeTheirSources() {
+        var first = candidate("first", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true);
+        var second = candidate("second", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4, true);
+        var data = ItemCompositionResolver.resolve(Map.of("test:item", List.of(second, first)))
+                .get("test:item");
+        assertEquals(List.of("first", "second"),
+                data.sources().stream().map(ItemCompositionSource::declarationId).toList());
+    }
+
+    @Test
+    void conflictingSamePriorityCandidatesFailWithBothDeclarations() {
+        var iron = candidate("iron", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true);
+        var copper = candidate("copper", ItemCompositionSource.Kind.EXPLICIT, Materials.Copper, 4, true);
+        var error = assertThrows(
+                IllegalStateException.class,
+                () -> ItemCompositionResolver.resolve(Map.of("test:item", List.of(iron, copper))));
+        assertTrue(error.getMessage().contains("iron"));
+        assertTrue(error.getMessage().contains("copper"));
+    }
+
+    @Test
+    void tagCandidateIsEffectiveWhenNoExplicitLayerExists() {
+        var tag = candidate("tag", ItemCompositionSource.Kind.FORM_TAG, Materials.Copper, 1, true);
+        var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(tag))).get("test:item");
+        assertEquals(Materials.Copper.resolve(), resolved.material());
+        assertEquals(ItemCompositionSource.Kind.FORM_TAG, resolved.sources().get(0).kind());
+    }
+
+    @Test
+    void explicitOverrideIsValidatedAndTracked() {
+        var json = candidate("json", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4, false);
+        var correction = new ItemCompositionCandidate(
+                "test:item",
+                composition("correction", ItemCompositionSource.Kind.CORRECTION, Materials.Copper, 4, true),
+                "json");
+        var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(json, correction)));
+        assertEquals(Materials.Copper.resolve(), resolved.get("test:item").material());
+        assertThrows(
+                IllegalStateException.class,
+                () -> ItemCompositionResolver.resolve(Map.of("test:item", List.of(correction))));
+
+        var cycleA = new ItemCompositionCandidate(
+                "test:item",
+                composition("a", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true),
+                "b");
+        var cycleB = new ItemCompositionCandidate(
+                "test:item",
+                composition("b", ItemCompositionSource.Kind.EXPLICIT, Materials.Copper, 4, true),
+                "a");
+        assertThrows(
+                IllegalStateException.class,
+                () -> ItemCompositionResolver.resolve(Map.of("test:item", List.of(cycleA, cycleB))));
+    }
+
+    @Test
+    void damagedScalingUsesExactFloorWithoutMultiplicationOverflow() {
+        assertEquals(Long.MAX_VALUE / 3, ItemCompositionScaling.scale(Long.MAX_VALUE, 1, 3));
+        assertEquals(2, ItemCompositionScaling.scale(5, 1, 2));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> ItemCompositionScaling.scale(10, 2, 1));
+    }
+
+    private static ItemCompositionCandidate candidate(
+            String id,
+            ItemCompositionSource.Kind kind,
+            gregtech.api.material.GTMaterial material,
+            long amount,
+            boolean bulkRecovery) {
+        return new ItemCompositionCandidate(
+                "test:item", composition(id, kind, material, amount, bulkRecovery), null);
+    }
+
+    private static ItemComposition composition(
+            String id,
+            ItemCompositionSource.Kind kind,
+            gregtech.api.material.GTMaterial material,
+            long amount,
+            boolean bulkRecovery) {
+        return new ItemComposition(
+                null,
+                List.of(MaterialComponent.of(material, amount)),
+                material,
+                List.of(new ItemCompositionSource(kind, id, "test", "", "")),
+                bulkRecovery);
+    }
+}

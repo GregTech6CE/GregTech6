@@ -34,7 +34,8 @@ public final class ColoredBookItem extends WrittenBookItem {
         parts.add(gregtech.api.material.MaterialComponent.of(gregtech.content.material.Materials.Paper,gregtech.api.material.GTValues.U*(variant.large()?6:3)));
         if(variant.emblem().equals("bronze"))parts.add(gregtech.api.material.MaterialComponent.of(gregtech.content.material.Materials.Bronze,gregtech.api.material.GTValues.U/9));
         if(variant.emblem().equals("radiation"))parts.add(gregtech.api.material.MaterialComponent.of(gregtech.content.material.Materials.Technetium,gregtech.api.material.GTValues.U/9));
-        gregtech.engine.material.ItemMaterialRegistry.register(this,new gregtech.engine.material.ItemComposition(null,parts,"GT6 MultiItemBooks",true));
+        gregtech.engine.material.ItemMaterialRegistry.register(this,new gregtech.engine.material.ItemComposition(
+                null,parts,gregtech.content.material.Materials.Paper,"GT6 MultiItemBooks",true));
     }
     public ColoredBookRules.Variant variant(){return variant;}
 //? if >=1.21.1 {

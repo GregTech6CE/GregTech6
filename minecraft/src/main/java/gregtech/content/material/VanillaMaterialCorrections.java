@@ -88,6 +88,18 @@ public final class VanillaMaterialCorrections {
             components.add(MaterialComponent.of(GTMaterialRegistry.get("Redstone"), U / 4));
         }
         if (waxed) components.add(MaterialComponent.of(GTMaterialRegistry.get("WaxBee"), U));
-        ItemMaterialRegistry.register(item, new ItemComposition(null, components, "GT6CE modern vanilla materials", true));
+        String jsonSource = ItemMaterialRegistry.explicitSourceId(
+                        item, gregtech.engine.material.ItemCompositionSource.Kind.VANILLA_JSON)
+                .orElse(null);
+        ItemMaterialRegistry.registerCorrection(
+                item,
+                new ItemComposition(
+                        null,
+                        components,
+                        components.get(0).material(),
+                        "GT6CE modern vanilla materials",
+                        true),
+                "gt6ce:vanilla-corrections/" + path,
+                jsonSource);
     }
 }

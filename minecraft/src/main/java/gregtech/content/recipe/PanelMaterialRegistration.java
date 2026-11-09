@@ -51,6 +51,7 @@ public final class PanelMaterialRegistration {
                                 MaterialComponent.of(GTMaterialRegistry.get("Concrete"), GTValues.U),
                                 MaterialComponent.of(
                                         GTMaterialRegistry.get("Iron"), MaterialPrefix.stick.getMaterialWeight())),
+                        GTMaterialRegistry.get("Concrete"),
                         "GT6 BlockConcreteReinforced",
                         true));
         for (var variant : gregtech.content.registry.GTConstructionVariants.all()) {

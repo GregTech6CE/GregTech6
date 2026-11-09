@@ -2,7 +2,9 @@ package gregtech.content.material;
 
 import com.google.gson.*;
 import gregtech.api.material.*;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.*;
+import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
@@ -27,18 +29,80 @@ public final class VanillaCompositionLoader {
                 var item = Mc.item(ResourceLocation.withDefaultNamespace(entry.getKey()));
                 if (item == null || item == Items.AIR) continue; // Model variants are not registered items.
                 var row = entry.getValue().getAsJsonObject();
+                var rowErrors = validateRow(entry.getKey(), row);
+                if (!rowErrors.isEmpty()) {
+                    errors.addAll(rowErrors);
+                    continue;
+                }
                 var components = new ArrayList<MaterialComponent>();
                 for (var part : row.getAsJsonObject("components").entrySet()) {
                     var material = GTMaterialRegistry.get(part.getKey());
-                    if (!material.isValid()) { errors.add(entry.getKey() + ": " + part.getKey()); continue; }
                     components.add(MaterialComponent.of(material, part.getValue().getAsLong()));
                 }
-                var previous = ItemMaterialRegistry.base(item);
-                var prefix = previous.map(gregtech.engine.material.ItemComposition::prefix).orElse(null);
-                ItemMaterialRegistry.register(item, new gregtech.engine.material.ItemComposition(prefix, components,
-                        row.get("source").getAsString(), row.get("recoverable").getAsBoolean()));
+                var prefix = prefix(entry.getKey(), row, errors);
+                String source = row.has("source") ? row.get("source").getAsString() : "GT6CE vanilla item data";
+                ItemMaterialRegistry.register(
+                        item,
+                        new ItemComposition(prefix, components, components.get(0).material(), source,
+                                row.has("bulkRecovery")
+                                        ? row.get("bulkRecovery").getAsBoolean()
+                                        : row.has("recoverable") && row.get("recoverable").getAsBoolean()),
+                        ItemCompositionSource.Kind.VANILLA_JSON,
+                        "gt6ce:vanilla-compositions/" + entry.getKey(),
+                        "vanilla_compositions.json");
             }
             if (!errors.isEmpty()) throw new IllegalStateException("Unresolved vanilla materials: " + errors);
         } catch (IOException e) { throw new UncheckedIOException(e); }
+    }
+
+    static List<String> validateRow(String itemPath, JsonObject row) {
+        var errors = new ArrayList<String>();
+        if (!row.has("components") || !row.get("components").isJsonObject()) {
+            errors.add(itemPath + ": missing components object");
+            return errors;
+        }
+        var components = row.getAsJsonObject("components");
+        if (components.size() == 0) errors.add(itemPath + ": components must not be empty");
+        for (var part : components.entrySet()) {
+            if (!GTMaterialRegistry.get(part.getKey()).isValid())
+                errors.add(itemPath + ": unknown material " + part.getKey());
+            try {
+                if (part.getValue().getAsLong() <= 0)
+                    errors.add(itemPath + ": component amount must be positive");
+            } catch (RuntimeException failure) {
+                errors.add(itemPath + ": component amount is not an integer");
+            }
+        }
+        boolean legacyRecovery = row.has("recoverable") && row.get("recoverable").getAsBoolean();
+        boolean bulkRecovery = row.has("bulkRecovery") && row.get("bulkRecovery").getAsBoolean();
+        if (row.has("recoverable") && row.has("bulkRecovery") && legacyRecovery != bulkRecovery)
+            errors.add(itemPath + ": recoverable and bulkRecovery disagree");
+        prefix(itemPath, row, errors);
+        return errors;
+    }
+
+    private static MaterialPrefix prefix(String itemPath, JsonObject row, List<String> errors) {
+        if (row.has("prefix") && row.has("inherit")) {
+            errors.add(itemPath + ": prefix and inherit are mutually exclusive");
+            return null;
+        }
+        if (row.has("prefix")) {
+            String name = row.get("prefix").getAsString();
+            MaterialPrefix prefix = PrefixRegistry.byName(name);
+            if (prefix == null) errors.add(itemPath + ": unknown prefix " + name);
+            return prefix;
+        }
+        if (row.has("inherit") && !"vanilla-unification".equals(row.get("inherit").getAsString())) {
+            errors.add(itemPath + ": unknown inheritance target " + row.get("inherit").getAsString());
+            return null;
+        }
+        var inherited = VanillaUnificationDefinitions.entries().stream()
+                .filter(candidate -> candidate.itemPath().equals(itemPath))
+                .findFirst();
+        if (row.has("inherit") && inherited.isEmpty()) {
+            errors.add(itemPath + ": no vanilla-unification declaration to inherit");
+            return null;
+        }
+        return inherited.map(VanillaUnificationDefinitions.Entry::prefix).orElse(null);
     }
 }

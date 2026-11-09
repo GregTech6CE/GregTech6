@@ -37,7 +37,16 @@ public final class MeatItemMaterials {
         var parts = new ArrayList<MaterialComponent>();
         parts.add(MaterialComponent.of(GTMaterialRegistry.get(material), meat));
         if (bone > 0) parts.add(MaterialComponent.of(GTMaterialRegistry.get("Bone"), bone));
-        ItemMaterialRegistry.register(item, new ItemComposition(null, parts, "GT6 MultiItemFood meat cuts", true));
+        String jsonSource = ItemMaterialRegistry.explicitSourceId(
+                        item, gregtech.engine.material.ItemCompositionSource.Kind.VANILLA_JSON)
+                .orElse(null);
+        ItemMaterialRegistry.register(
+                item,
+                new ItemComposition(null, parts, GTMaterialRegistry.get(material), "GT6 MultiItemFood meat cuts", true),
+                gregtech.engine.material.ItemCompositionSource.Kind.EXPLICIT,
+                "gt6ce:meat-item/" + id,
+                "GT6 food item data",
+                jsonSource);
         ITEMS.add(item);
     }
 }

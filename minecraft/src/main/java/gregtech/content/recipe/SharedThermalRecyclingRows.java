@@ -233,7 +233,7 @@ final class SharedThermalRecyclingRows {
         for (var entry : materialItems) {
             Item item = entry.getKey();
             ItemComposition data = entry.getValue();
-            if (data == null || !data.recoverable() || data.components().isEmpty()) continue;
+            if (data == null || !data.bulkRecoveryAllowed() || data.components().isEmpty()) continue;
             MaterialPrefix prefix = data.prefix();
             if (prefix != null && ownedByAuditedProducer(prefix, data)) continue;
             if (!allows(prefix)) continue;

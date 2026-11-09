@@ -3,6 +3,7 @@ package gregtech.content.material;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.ModMaterialUnification;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.ItemMaterialRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +23,13 @@ public final class ModMaterialUnificationLoader {
             MaterialPrefix prefix = gregtech.engine.prefix.PrefixRegistry.byName(form.prefix());
             var material = GTMaterialRegistry.get(form.material());
             if (prefix == null || !material.isValid() || !prefix.isValidFor(material.resolve())) continue;
-            ItemMaterialRegistry.register(item, prefix, material.resolve());
+            ItemMaterialRegistry.register(
+                    item,
+                    new gregtech.engine.material.ItemComposition(
+                            prefix, material.resolve(), prefix.getMaterialWeight()),
+                    ItemCompositionSource.Kind.UNIFICATION,
+                    "gt6ce:mod-unification/" + form.itemId(),
+                    "mod unification table");
         }
     }
 }

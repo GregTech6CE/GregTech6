@@ -24,7 +24,6 @@ public final class MaterialEquivalence {
         Map.entry("ore","ores"),Map.entry("rawOreChunk","raw_ore_chunks"));
     private MaterialEquivalence() {}
     public static Form form(ItemStack stack) {
-        if(stack.getItem() instanceof gregtech.engine.material.MaterialFormItem m) return new Form(m.getPrefix(),m.getMaterial().resolve());
         var data=ItemMaterialRegistry.get(stack).orElse(null);
         if(data==null||data.prefix()==null||data.components().size()!=1||data.amount()!=data.prefix().getMaterialWeight()) return null;
         return new Form(data.prefix(),data.material().resolve());

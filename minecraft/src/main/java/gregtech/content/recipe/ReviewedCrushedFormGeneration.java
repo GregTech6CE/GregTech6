@@ -66,7 +66,7 @@ public final class ReviewedCrushedFormGeneration {
         var explicit = ItemMaterialRegistry.explicit(canonical.getItem()).orElse(null);
         if (explicit != null
                 && (explicit.prefix() != prefix
-                        || !explicit.recoverable()
+                        || !explicit.bulkRecoveryAllowed()
                         || explicit.components().size() != 1
                         || explicit.material().resolve() != material
                         || explicit.amount() != prefix.getMaterialWeight())) return false;

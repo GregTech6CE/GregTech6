@@ -281,7 +281,7 @@ final class SourceThermalNativeAdapter {
    if(!allowed.contains(form.getPrefix())
        ||GTItems.getStack(form.getPrefix(),material,stack.getCount()).getItem()!=stack.getItem())return -1;
    var data=ItemMaterialRegistry.explicit(stack.getItem()).orElse(null);
-   if(data==null||!data.recoverable()||data.prefix()!=form.getPrefix()||data.components().size()!=1
+   if(data==null||!data.bulkRecoveryAllowed()||data.prefix()!=form.getPrefix()||data.components().size()!=1
        ||data.material().resolve()!=material||data.amount()!=form.getPrefix().getMaterialWeight())return -1;
    try{return Math.multiplyExact((long)stack.getCount(),data.amount());}
    catch(ArithmeticException invalid){return -1;}

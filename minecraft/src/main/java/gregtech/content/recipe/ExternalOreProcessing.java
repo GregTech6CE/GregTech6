@@ -28,7 +28,7 @@ public final class ExternalOreProcessing {
     /** Distinct from ore-prefix compositions so callers can tell tag-derived ingots, dusts and rods apart. */
     public static final String TAGGED_COMPOSITION_SOURCE = "GT6 common form tags";
 
-    private static volatile Map<Item, ItemComposition> compositions = Map.of();
+    private static volatile int publishedCompositions;
     private static volatile int taggedCompositions;
     private static volatile int ambiguousTaggedItems;
 
@@ -46,24 +46,6 @@ public final class ExternalOreProcessing {
         return Optional.ofNullable(cooking.get(item));
     }
 
-    public static Optional<ItemComposition> composition(Item item) {
-        return Optional.ofNullable(compositions.get(item));
-    }
-
-    private static void publishCompositions(Map<Item, ItemComposition> replacement) {
-        var previous = compositions;
-        boolean changed = previous.size() != replacement.size();
-        if (!changed)
-            for (var entry : replacement.entrySet()) {
-                if (!Objects.equals(previous.get(entry.getKey()), entry.getValue())) {
-                    changed = true;
-                    break;
-                }
-            }
-        compositions = replacement;
-        if (changed) ItemMaterialRegistry.notifyExternalCompositionChanged();
-    }
-
     /** Remove only this adapter's exact rows; other mods' processing rows remain registered. */
     public static synchronized void clear() {
         // Restore displaced source rows before removing them; otherwise an old mirror can resurrect this reload's
@@ -71,7 +53,8 @@ public final class ExternalOreProcessing {
         gregtech.content.recipe.OvenRecipeBridge.clearMirrors();
         OWNED.forEach(RecipeMap::removeAll);
         OWNED.clear();
-        publishCompositions(Map.of());
+        ItemMaterialRegistry.clearTagCandidates();
+        publishedCompositions = 0;
         cooking = Map.of();
         taggedCompositions = 0;
         ambiguousTaggedItems = 0;
@@ -81,25 +64,26 @@ public final class ExternalOreProcessing {
         clear(); // Old tag compositions must not bias native identity when indexing this reload.
         CraftingMaterialForms.rebuild(true);
         var forms = CraftingMaterialForms.nativeAliases();
-        var materialData = new IdentityHashMap<Item, ItemComposition>();
+        var materialData = new IdentityHashMap<Item, List<ItemComposition>>();
         for (var prefix : ExternalOreProcessingRules.COMPOSITION_FORMS)
             for (var entry : forms.entrySet()) {
                 if (!entry.getKey().prefix().equals(prefix.getName())) continue;
                 var material = GTMaterialRegistry.get(entry.getKey().material()).resolve();
                 if (!material.isValid()) continue;
                 for (var item : entry.getValue())
-                    if (ItemMaterialRegistry.base(item).isEmpty())
-                        materialData.put(
-                                item,
-                                new ItemComposition(
-                                        prefix,
-                                        List.of(MaterialComponent.of(material, prefix.getMaterialWeight())),
-                                        "GT6 OP external ore-prefix tags",
-                                        true));
+                    materialData
+                            .computeIfAbsent(item, ignored -> new ArrayList<>())
+                            .add(new ItemComposition(
+                                    prefix,
+                                    List.of(MaterialComponent.of(material, prefix.getMaterialWeight())),
+                                    material,
+                                    "GT6 OP external ore-prefix tags",
+                                    true));
             }
         int oreCompositions = materialData.size();
         taggedCompositions = bindCommonForms(materialData);
-        publishCompositions(Collections.unmodifiableMap(materialData));
+        ItemMaterialRegistry.publishTagCandidates(materialData);
+        publishedCompositions = materialData.size();
         int added = 0;
         for (var route : ExternalOreProcessingRules.ROUTES) {
             var map = map(route.map());
@@ -219,7 +203,7 @@ public final class ExternalOreProcessing {
                 .info(
                         "[gregtech] Bound {} external ore processing rows and {} material compositions from loaded tags ({} ore prefix, {} common form); skipped {} ambiguous common-form items",
                         added,
-                        compositions.size(),
+                        publishedCompositions,
                         oreCompositions,
                         taggedCompositions,
                         ambiguousTaggedItems);
@@ -227,7 +211,7 @@ public final class ExternalOreProcessing {
     }
 
     /** One unambiguous common-form tag becomes one unit of that GT prefix. Conflicting tags are left untouched. */
-    private static int bindCommonForms(Map<Item, ItemComposition> materialData) {
+    private static int bindCommonForms(Map<Item, List<ItemComposition>> materialData) {
         var allowed = new HashSet<String>();
         for (var prefix : ExternalOreProcessingRules.TAGGED_MATERIAL_FORMS) allowed.add(prefix.getName());
         int added = 0;
@@ -257,11 +241,12 @@ public final class ExternalOreProcessing {
                     || !allowed.contains(prefix.getName())
                     || !material.isValid()
                     || !prefix.isValidFor(material)) continue;
-            materialData.put(
-                    item,
-                    new ItemComposition(
+            materialData
+                    .computeIfAbsent(item, ignored -> new ArrayList<>())
+                    .add(new ItemComposition(
                             prefix,
                             List.of(MaterialComponent.of(material, prefix.getMaterialWeight())),
+                            material,
                             TAGGED_COMPOSITION_SOURCE,
                             true));
             added++;
