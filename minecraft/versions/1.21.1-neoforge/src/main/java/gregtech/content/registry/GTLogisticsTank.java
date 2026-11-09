@@ -17,7 +17,6 @@ public final class GTLogisticsTank {
                 REGISTRY_NAMESPACE,
                 spec.id(),
                 () -> new LogisticsTankBlock(spec, TankBlock.defaultProperties(spec)),
-                bare -> new gregtech.content.transport.fluid.FluidTransportBlockItem(
-                        bare, new Item.Properties().stacksTo(16)));
+                bare -> new GTMachineBlockItem(bare, new Item.Properties().stacksTo(16)));
     }
 }

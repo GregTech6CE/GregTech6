@@ -15,7 +15,6 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 *///?} else {
 import gregtech.content.blockentity.machine.CrucibleCrossingBlockEntity;
 import gregtech.content.blockentity.machine.CrucibleFaucetBlockEntity;
-import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.content.blockentity.machine.BurningBoxBlockEntity;
 import gregtech.content.blockentity.machine.HopperBlockEntity;
 import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
@@ -24,11 +23,9 @@ import gregtech.content.blockentity.machine.MoldBlockEntity;
 import gregtech.content.blockentity.machine.QueueHopperBlockEntity;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 import gregtech.content.blockentity.machine.SolidBurningBoxBlockEntity;
-import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.block.machine.BurningBoxBlock;
 import gregtech.content.block.machine.CrucibleCrossingBlock;
 import gregtech.content.block.machine.CrucibleFaucetBlock;
-import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.machine.HopperBlock;
 import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.block.machine.MoldBasinBlock;
@@ -36,7 +33,6 @@ import gregtech.content.block.machine.MoldBlock;
 import gregtech.content.block.machine.QueueHopperBlock;
 import gregtech.content.block.machine.SmeltingCrucibleBlock;
 import gregtech.content.block.machine.SolidBurningBoxBlock;
-import gregtech.content.block.machine.TankBlock;
 import net.minecraft.world.level.block.Block;
 //?}
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -97,6 +93,14 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.tool.DynamiteBlockEntity>> DYNAMITE =
             BLOCK_ENTITIES.register("dynamite",()->BlockEntityType.Builder.of(gregtech.content.blockentity.tool.DynamiteBlockEntity::new,GTToolBlocks.DYNAMITE.get(),GTToolBlocks.BOOMSTICK.get(),GTToolBlocks.DYNAMITE_STRONG.get()).build(null));
+
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.FluidPipeBlockEntity>> FLUID_PIPE =
+            BLOCK_ENTITIES.register("fluid_pipe", () -> {
+                net.minecraft.world.level.block.Block[] blocks = AddonPipeRegistration.fluidPipeBlocks(
+                        GTFluidPipes.all().stream().map(RegisteredBlock::get));
+                return BlockEntityType.Builder.of(
+                        gregtech.content.blockentity.machine.FluidPipeBlockEntity::new, blocks).build(null);
+            });
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.FluidSpringBlockEntity>> FLUID_SPRING =
             BLOCK_ENTITIES.register("fluid_spring",()->BlockEntityType.Builder.of(gregtech.content.blockentity.FluidSpringBlockEntity::new,GTFluidSprings.allBlocks()).build(null));
@@ -183,6 +187,16 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.BoilerTankBlockEntity>> STEAM_BOILER =
             BLOCK_ENTITIES.register("steam_boiler",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.BoilerTankBlockEntity::new,GTBoilers.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.TankBlockEntity>> TANK =
+            BLOCK_ENTITIES.register("tank", () -> {
+                net.minecraft.world.level.block.Block[] blocks = GTTanks.all().stream()
+                        .map(RegisteredBlock::get)
+                        .filter(block -> !(block instanceof gregtech.content.block.machine.LogisticsTankBlock))
+                        .toArray(net.minecraft.world.level.block.Block[]::new);
+                return BlockEntityType.Builder.of(
+                        gregtech.content.blockentity.machine.TankBlockEntity::new, blocks).build(null);
+            });
+
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.TreeHoleBlockEntity>> TREE_HOLE =
             BLOCK_ENTITIES.register("tree_hole",()->BlockEntityType.Builder.of(gregtech.content.blockentity.TreeHoleBlockEntity::new,GTTreeHoles.blocks().toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
@@ -250,13 +264,6 @@ public static final RegistryObject<BlockEntityType<MoldBlockEntity>> MOLD =
                         .map(RegisteredBlock::get)
                         .toArray(MoldBlock[]::new);
                 return BlockEntityType.Builder.of(MoldBlockEntity::new, blocks).build(null);
-            });
-public static final RegistryObject<BlockEntityType<FluidPipeBlockEntity>> FLUID_PIPE =
-            BLOCK_ENTITIES.register("fluid_pipe", () -> {
-                FluidPipeBlock[] blocks = java.util.Arrays.stream(AddonPipeRegistration.fluidPipeBlocks(
-                        GTFluidPipes.all().stream().filter(RegisteredBlock::isPresent).map(RegisteredBlock::get)))
-                        .map(block -> (FluidPipeBlock) block).toArray(FluidPipeBlock[]::new);
-                return BlockEntityType.Builder.of(FluidPipeBlockEntity::new, blocks).build(null);
             });
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.tool.ProcessingToolBlockEntity>> PROCESSING_TOOL =
             BLOCK_ENTITIES.register("processing_tool", () -> BlockEntityType.Builder.of(
@@ -335,15 +342,6 @@ public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.
                         .toArray(gregtech.content.block.tool.ManualToolBlock[]::new);
                 return BlockEntityType.Builder.of(
                         gregtech.content.blockentity.tool.ManualToolBlockEntity::new, blocks).build(null);
-            });
-public static final RegistryObject<BlockEntityType<TankBlockEntity>> TANK =
-            BLOCK_ENTITIES.register("tank", () -> {
-                TankBlock[] blocks = GTTanks.all().stream()
-                        .filter(RegisteredBlock::isPresent)
-                        .map(RegisteredBlock::get)
-                        .filter(block -> !(block instanceof gregtech.content.block.machine.LogisticsTankBlock))
-                        .toArray(TankBlock[]::new);
-                return BlockEntityType.Builder.of(TankBlockEntity::new, blocks).build(null);
             });
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LogisticsTankBlockEntity>> LOGISTICS_TANK =
             BLOCK_ENTITIES.register("logistics_tank", () -> BlockEntityType.Builder.of(

@@ -1,6 +1,8 @@
 package gregtech.client;
 
-import gregtech.content.transport.fluid.FluidTransportRegistries;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTFluidPipes;
+import gregtech.content.registry.GTTanks;
 import java.util.Locale;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.resources.ResourceLocation;
@@ -25,13 +27,13 @@ public final class FluidTransportClientSetup {
 
     @SubscribeEvent
     public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(FluidTransportRegistries.FLUID_PIPE.get(), PipeCoverRenderer::new);
-        event.registerBlockEntityRenderer(FluidTransportRegistries.TANK.get(), TankCoverRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.FLUID_PIPE.get(), PipeCoverRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.TANK.get(), TankCoverRenderer::new);
     }
 
     @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block event) {
-        for (var entry : FluidTransportRegistries.pipes()) {
+        for (var entry : GTFluidPipes.all()) {
             var block = entry.get();
             event.register(
                     (state, level, pos, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF, block);
@@ -39,7 +41,7 @@ public final class FluidTransportClientSetup {
         for (var block : gregtech.content.registry.AddonPipeRegistration.fluidBlocks())
             event.register(
                     (state, level, pos, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF, block);
-        for (var entry : FluidTransportRegistries.tanks()) {
+        for (var entry : GTTanks.all()) {
             var block = entry.get();
             event.register(
                     (state, level, pos, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF, block);
@@ -48,7 +50,7 @@ public final class FluidTransportClientSetup {
 
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
-        for (var entry : FluidTransportRegistries.pipes()) {
+        for (var entry : GTFluidPipes.all()) {
             var block = entry.get();
             event.register(
                     ItemColorARGB.opaque(
@@ -60,7 +62,7 @@ public final class FluidTransportClientSetup {
                     ItemColorARGB.opaque(
                             (stack, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF),
                     block.asItem());
-        for (var entry : FluidTransportRegistries.tanks()) {
+        for (var entry : GTTanks.all()) {
             var block = entry.get();
             event.register(
                     ItemColorARGB.opaque(
@@ -72,7 +74,7 @@ public final class FluidTransportClientSetup {
     public static void models(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
         ItemTransforms transforms = BlockItemModelHelper.blockItemTransforms();
-        for (var entry : FluidTransportRegistries.pipes()) {
+        for (var entry : GTFluidPipes.all()) {
             var block = entry.get();
             var spec = block.spec();
             String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);

@@ -22,10 +22,7 @@ import gregtech.content.data.GregTechConstants;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 
-//? if >=1.21.1 {
-//?} else {
 import gregtech.content.registry.GTBlockEntities;
-//?}
 import gregtech.util.GTEntityHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -187,11 +184,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     public FluidPipeBlockEntity(BlockPos pos, BlockState state) {
-//? if >=1.21.1 {
-        /*this(FluidTransportRegistries.FLUID_PIPE.get(), pos, state);
-*///?} else {
         this(GTBlockEntities.FLUID_PIPE.get(), pos, state);
-//?}
     }
 
     private static PipeSpec specFromState(BlockState state) {

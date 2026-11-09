@@ -7,11 +7,10 @@ import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.client.TankTooltips;
 //? if >=1.21.1 {
 /*import gregtech.content.transport.fluid.FluidTransportRegistries;
-
 *///?} else {
-import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTSounds;
 //?}
+import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -51,11 +50,7 @@ public class TankBlock extends Block implements EntityBlock {
     @SuppressWarnings("unchecked")
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide) return null;
-//? if >=1.21.1 {
-        /*if (type != FluidTransportRegistries.TANK.get()) return null;
-*///?} else {
         if (type != GTBlockEntities.TANK.get()) return null;
-//?}
         return (BlockEntityTicker<T>) (BlockEntityTicker<TankBlockEntity>) TankBlockEntity::serverTick;
     }
 

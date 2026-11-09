@@ -261,25 +261,15 @@ public final class GregTechClient {
                 // carries no contents the model could read.
                 event.register((stack, tintIndex) -> 0xFFFFFF, pileItem);
             } else if (entry.get() instanceof GTMachineBlockItem machineItem) {
-                if (machineItem.getBlock() instanceof EngineBlock engine) {
-                    int coreTint = switch (engine.engineType()) {
-                        case ELECTRIC, FLUX -> 0x00FF00;
-                        case STEAM -> 0x0000FF;
-                        case ROTATION -> machineItem.spec().tintRgb();
-                        case DIESEL -> 0xFF6600;
-                    };
+                if (machineItem.getBlock() instanceof TankBlock tank) {
                     event.register(
-                            (stack, tintIndex) -> switch (tintIndex) {
-                                case 0 -> machineItem.spec().tintRgb();
-                                case 1 -> coreTint;
-                                default -> 0xFFFFFF;
-                            },
-                            machineItem);
-                } else {
+                            (stack, tintIndex) -> tintIndex == 0 ? tank.spec().tintRgb() : 0xFFFFFF, machineItem);
+                } else if (machineItem.getBlock() instanceof FluidPipeBlock pipe) {
                     event.register(
-                            (stack, tintIndex) ->
-                                    tintIndex == 0 ? machineItem.spec().tintRgb() : 0xFFFFFF,
-                            machineItem);
+                            (stack, tintIndex) -> tintIndex == 0 ? pipe.spec().tintRgb() : 0xFFFFFF, machineItem);
+                } else if (machineItem.getBlock() instanceof ItemPipeBlock pipe) {
+                    event.register(
+                            (stack, tintIndex) -> tintIndex == 0 ? pipe.spec().tintRgb() : 0xFFFFFF, machineItem);
                 }
             } else if (entry.get() instanceof SmeltingCrucibleBlockItem crucibleItem) {
                 event.register(

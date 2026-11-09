@@ -13,6 +13,7 @@ import gregtech.content.registry.GTBushes;
 import gregtech.content.registry.GTCreativeTabs;
 import gregtech.content.registry.GTDecorBlocks;
 import gregtech.content.registry.GTEnchantments;
+import gregtech.content.registry.GTFluidPipes;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTIconSetBlocks;
 import gregtech.content.registry.GTItems;
@@ -23,6 +24,7 @@ import gregtech.content.registry.GTProjectiles;
 import gregtech.content.registry.GTSounds;
 import gregtech.content.registry.GTStorage;
 import gregtech.content.registry.GTSurfaceBlocks;
+import gregtech.content.registry.GTTanks;
 import gregtech.content.registry.GTToolBlocks;
 import gregtech.content.worldgen.GTFeatures;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -56,8 +58,8 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
 
     @Override
     public void machines(ContentRegistrar registrar) {
-        gregtech.content.fluid.FluidPipeDefinitions.register(registrar);
-        gregtech.content.fluid.TankDefinitions.register(registrar);
+        GTFluidPipes.registerAll(registrar);
+        GTTanks.registerAll(registrar);
         gregtech.content.registry.GTBurningBoxes.registerAll(registrar);
         gregtech.content.registry.GTSmeltery.register(registrar);
         gregtech.content.registry.GTHoppers.register(registrar);

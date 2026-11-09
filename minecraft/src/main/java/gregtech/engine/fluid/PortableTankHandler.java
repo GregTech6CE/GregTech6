@@ -63,7 +63,7 @@ public final class PortableTankHandler implements IFluidHandlerItem {
 //? if >=1.21.1 {
         /*if (data.size() == 1 && data.contains("id")) data.remove("id");
         if (!data.isEmpty()) data.putString("id", net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE
-                .getKey(gregtech.content.transport.fluid.FluidTransportRegistries.TANK.get()).toString());
+                .getKey(gregtech.content.registry.GTBlockEntities.TANK.get()).toString());
         if (data.isEmpty()) container.remove(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
         else container.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
                 net.minecraft.world.item.component.CustomData.of(data));
