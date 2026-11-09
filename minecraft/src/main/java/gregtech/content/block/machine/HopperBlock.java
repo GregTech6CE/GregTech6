@@ -39,10 +39,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.EnumMap;
 import java.util.Map;
-//? if >=1.21.1 {
-//?} else {
-import net.minecraftforge.registries.RegistryObject;
-//?}
 import javax.annotation.Nullable;
 
 /** GT6 hopper block ({@code MultiTileEntityHopper}). Parallel-slot inventory, 6-way facing output. */
@@ -129,11 +125,7 @@ public class HopperBlock extends DirectionalBlock implements EntityBlock, ToolIn
     @SuppressWarnings("unchecked")
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide) return null;
-//? if >=1.21.1 {
-        /*var expected = GTBlockEntities.HOPPER;
-*///?} else {
-        RegistryObject<BlockEntityType<HopperBlockEntity>> expected = GTBlockEntities.HOPPER;
-//?}
+        var expected = GTBlockEntities.HOPPER;
         if (expected != null && type == expected.get()) {
             return (BlockEntityTicker<T>) (BlockEntityTicker<HopperBlockEntity>) HopperBlockEntity::serverTick;
         }

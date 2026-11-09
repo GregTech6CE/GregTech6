@@ -37,10 +37,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-//? if >=1.21.1 {
-//?} else {
-import net.minecraftforge.registries.RegistryObject;
-//?}
 import javax.annotation.Nullable;
 import java.util.EnumMap;
 import java.util.Map;
@@ -128,11 +124,7 @@ public class QueueHopperBlock extends DirectionalBlock implements EntityBlock, T
     @SuppressWarnings("unchecked")
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide) return null;
-//? if >=1.21.1 {
-        /*var expected = GTBlockEntities.QUEUE_HOPPER;
-*///?} else {
-        RegistryObject<BlockEntityType<QueueHopperBlockEntity>> expected = GTBlockEntities.QUEUE_HOPPER;
-//?}
+        var expected = GTBlockEntities.QUEUE_HOPPER;
         if (expected != null && type == expected.get()) {
             return (BlockEntityTicker<T>) (BlockEntityTicker<QueueHopperBlockEntity>) QueueHopperBlockEntity::serverTick;
         }

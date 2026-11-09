@@ -7,7 +7,7 @@ import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.energy.EnergyNodeSpec;
 import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import net.minecraft.world.InteractionResult;
-import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTEnergyNodes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -116,7 +116,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
     @Override
     @SuppressWarnings("unchecked")
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide || type != GTBlockEntities.ENERGY_NODE.get()) return null;
+        if (level.isClientSide || type != GTEnergyNodes.ENERGY_NODE.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<EnergyNodeBlockEntity>) EnergyNodeBlockEntity::serverTick;
     }
 

@@ -32,6 +32,7 @@ import gregtech.content.registry.GTBasicMachines;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTBurningBoxes;
+import gregtech.content.registry.GTChemicalBatteries;
 import gregtech.content.registry.GTEnergyNodes;
 import gregtech.content.registry.GTEngines;
 import gregtech.content.registry.GTFluidItems;
@@ -936,8 +937,8 @@ public final class GregTechClient {
 
         event.registerBlockEntityRenderer(GTBlockEntities.METAL_CHEST.get(), MetalChestRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.TANK.get(), TankCoverRenderer::new);
-        event.registerBlockEntityRenderer(GTBlockEntities.ENERGY_NODE.get(), EnergyNodeRenderer::new);
-        event.registerBlockEntityRenderer(GTBlockEntities.CHEMICAL_BATTERY.get(), ChemicalBatteryRenderer::new);
+        event.registerBlockEntityRenderer(GTEnergyNodes.ENERGY_NODE.get(), EnergyNodeRenderer::new);
+        event.registerBlockEntityRenderer(GTChemicalBatteries.CHEMICAL_BATTERY.get(), ChemicalBatteryRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.MASS_STORAGE.get(), MassStorageRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LOGISTICS_MASS_STORAGE.get(), MassStorageRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.MATERIAL_ANVIL.get(), MaterialAnvilRenderer::new);

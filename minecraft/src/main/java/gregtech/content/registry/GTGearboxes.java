@@ -1,27 +1,20 @@
 package gregtech.content.registry;
 
-import gregtech.engine.energy.EnergyNodeSpec;
-import gregtech.content.energy.GearboxCatalog.Tier;
-import gregtech.engine.energy.GearboxSpec;
 import gregtech.content.block.energy.EnergyNodeBlock;
 import gregtech.content.block.energy.GearboxBlock;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.*;
-import net.neoforged.bus.api.IEventBus;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-*///?} else {
-//?}
-
+import gregtech.content.energy.GearboxCatalog.Tier;
+import gregtech.engine.energy.EnergyNodeSpec;
+import gregtech.engine.energy.GearboxSpec;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
 
 /** Material variants of GT6 custom gearboxes and RU rotation transformers. */
 public final class GTGearboxes {
@@ -31,22 +24,12 @@ public final class GTGearboxes {
     // GT6 Loader_MultiTileEntities.kinetic(). Registry names of
     // the existing variants remain stable; the source's numeric IDs are in the
     // resource generator so that rates and names can be checked against GT6.
-    private static final gregtech.content.energy.GearboxCatalog.Tier[] TIERS = gregtech.content.energy.GearboxCatalog.tiers();
+    private static final gregtech.content.energy.GearboxCatalog.Tier[] TIERS =
+            gregtech.content.energy.GearboxCatalog.tiers();
 
-//? if >=1.21.1 {
-    /*public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
-    public static final DeferredHolder<BlockEntityType<?>,
-            BlockEntityType<gregtech.content.blockentity.energy.GearboxBlockEntity>> GEARBOX = ENTITIES.register("gearbox",
-            () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.GearboxBlockEntity::new,
-            allGearboxes().stream().map(RegisteredBlock::get).toArray(Block[]::new)).build(null));
-*///?}
-    private GTGearboxes() {
-    }
-//? if >=1.21.1 {
-    /*public static void submit(IEventBus bus) {
-        ENTITIES.register(bus);
-    }
-*///?}
+    public static RegisteredBlockEntity<gregtech.content.blockentity.energy.GearboxBlockEntity> GEARBOX;
+
+    private GTGearboxes() {}
 
     public static List<RegisteredBlock<GearboxBlock>> allGearboxes() {
         return Collections.unmodifiableList(ALL_GEARBOXES);
@@ -61,6 +44,15 @@ public final class GTGearboxes {
             registerGearbox(registrar, tier);
             registerTransformer(registrar, tier);
         }
+        GEARBOX = registrar.blockEntity(
+                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
+                "gearbox",
+                () -> BlockEntityType.Builder.of(
+                                gregtech.content.blockentity.energy.GearboxBlockEntity::new,
+                                allGearboxes().stream()
+                                        .map(RegisteredBlock::get)
+                                        .toArray(Block[]::new))
+                        .build(null));
     }
 
     private static void registerGearbox(ContentRegistrar registrar, Tier tier) {

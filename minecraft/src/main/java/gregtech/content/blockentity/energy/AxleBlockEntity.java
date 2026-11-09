@@ -10,11 +10,9 @@ import gregtech.engine.energy.IEnergyConductor;
 import gregtech.content.block.energy.AxleBlock;
 import gregtech.content.data.GregTechTags;
 //? if >=1.21.1 {
-/*import gregtech.content.registry.GTAxles;
-import net.minecraft.core.HolderLookup;
-*///?} else {
-import gregtech.content.registry.GTBlockEntities;
-//?}
+/*import net.minecraft.core.HolderLookup;
+*///?}
+import gregtech.content.registry.GTAxles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -48,11 +46,7 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
     public long transferredPower() { return transferredPower; }
 
     public AxleBlockEntity(BlockPos pos, BlockState state) {
-//? if >=1.21.1 {
-        /*super(GTAxles.AXLE.get(), pos, state);
-*///?} else {
-        super(GTBlockEntities.AXLE.get(), pos, state);
-//?}
+        super(GTAxles.AXLE.get(), pos, state);
     }
 
     private AxleSpec axleSpec() {

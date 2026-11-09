@@ -161,11 +161,7 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
     @Override
     public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
             Level level,BlockState state,net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
-//? if >=1.21.1 {
-        /*if(level.isClientSide || type!=gregtech.content.registry.GTAxles.AXLE.get())return null;
-*///?} else {
-        if(level.isClientSide || type!=gregtech.content.registry.GTBlockEntities.AXLE.get())return null;
-//?}
+        if(level.isClientSide || type!=gregtech.content.registry.GTAxles.AXLE.get())return null;
         return (world,pos,blockState,entity)->((AxleBlockEntity)entity).serverTick();
     }
 

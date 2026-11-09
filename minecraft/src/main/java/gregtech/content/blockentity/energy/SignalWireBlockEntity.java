@@ -7,11 +7,7 @@ import gregtech.api.signal.GtSignalReceiver;
 import gregtech.api.signal.GtSignalSource;
 import gregtech.content.block.energy.*;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTSignalWires;
-*///?} else {
-import gregtech.content.registry.GTBlockEntities;
-//?}
+import gregtech.content.registry.GTSignalWires;
 
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
@@ -38,15 +34,9 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
     private int mode;
     private Direction received;
 
-//? if >=1.21.1 {
-    /*public SignalWireBlockEntity(BlockPos pos, BlockState state) {
+    public SignalWireBlockEntity(BlockPos pos, BlockState state) {
         super(GTSignalWires.SIGNAL_WIRE.get(), pos, state);
     }
-*///?} else {
-    public SignalWireBlockEntity(BlockPos pos, BlockState state) {
-        super(GTBlockEntities.SIGNAL_WIRE.get(), pos, state);
-    }
-//?}
 
     @Override
     public void onLoad() {

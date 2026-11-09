@@ -123,7 +123,7 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements gregte
 //?}
 
     public EnergyNodeBlockEntity(BlockPos pos, BlockState state) {
-        this(gregtech.content.registry.GTBlockEntities.ENERGY_NODE.get(), pos, state);
+        this(gregtech.content.registry.GTEnergyNodes.ENERGY_NODE.get(), pos, state);
     }
 
     public EnergyNodeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {

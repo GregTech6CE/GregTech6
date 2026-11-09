@@ -43,7 +43,7 @@ public final class GTEngines {
                     },
                     bare -> new EngineItem(bare, new net.minecraft.world.item.Item.Properties().stacksTo(16)));
             ALL.add(block);
-            GTBlockEntities.BLOCK_ENTITIES.register("be_" + itemSpec.id(), () -> {
+            registrar.blockEntity(REGISTRY_NAMESPACE, "be_" + itemSpec.id(), () -> {
                 var type = buildType(block.get());
                 typeRef.set(type);
                 return type;
