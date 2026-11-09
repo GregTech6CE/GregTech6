@@ -134,7 +134,6 @@ configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
         java {
             target ratchetTargets != null ? spotlessProject.files(ratchetTargets) : javaSources
             targetExclude stonecutterPaths
-            targetExclude '**/generated/**'
             palantirJavaFormat('2.103.0')
         }
     }
