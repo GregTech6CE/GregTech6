@@ -36,13 +36,21 @@ final class MachineItemOutputComponent implements RecipeComponent<ItemResult> {
             int chance = output.hasChance() ? chance(output.getChance()) : 10_000;
             var stack = output.item;
             return new ItemResult(
-                    BuiltInRegistries.ITEM.getKey(stack.getItem()).toString(), null, null, null, stack.getCount(),
+                    BuiltInRegistries.ITEM.getKey(stack.getItem()).toString(),
+                    null,
+                    null,
+                    null,
+                    stack.getCount(),
                     chance);
         }
         if (value instanceof ItemStack stack) {
             if (stack.isEmpty()) throw new IllegalArgumentException("empty item");
             return new ItemResult(
-                    BuiltInRegistries.ITEM.getKey(stack.getItem()).toString(), null, null, null, stack.getCount(),
+                    BuiltInRegistries.ITEM.getKey(stack.getItem()).toString(),
+                    null,
+                    null,
+                    null,
+                    stack.getCount(),
                     10_000);
         }
         if (value instanceof CharSequence text) return fromText(text.toString(), 1, 10_000);
