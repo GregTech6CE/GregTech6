@@ -2,9 +2,19 @@
 
 ## 子原因
 
-1.20.1 与 1.21.1 的物品栈 NBT 形状不同。读取旧存档或跨版本复制数据时，必须按形状判断。
+`ItemStack#save` / `parseOptional` 的 `//?` 分支不仅切换 provider 参数，也切换写出的 NBT 形状。读取旧存档或跨版本复制数据时，必须按形状判断。
 
 ## 例子
+
+### `//?` 分支
+
+```java
+//? if >=1.21.1 {
+tag.put("item", stack.save(lookup));            // {id, count, components}
+//?} else {
+tag.put("item", stack.save(new CompoundTag())); // {id, Count, tag}
+//?}
+```
 
 ### 修复前
 
