@@ -84,7 +84,7 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
         GTCreativeTabs.TABS.register(bus);
         GTSounds.REGISTRY.register(bus);
         GTMenuTypes.registerAll();
-        GTMenuTypes.MENU_TYPES.register(bus);
+        GTMenuTypes.submit(bus);
         GTProjectiles.register(bus);
         GTFeatures.register(bus);
         GTEnchantments.register(bus);

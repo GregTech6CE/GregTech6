@@ -1,7 +1,5 @@
 package gregtech.platform.neoforge.machine;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
@@ -11,37 +9,15 @@ import gregtech.content.registry.BehaviorMachineRegistration;
 import gregtech.content.registry.CompressedGasTankRegistration;
 import gregtech.content.registry.FuelGeneratorRegistration;
 import gregtech.content.registry.GTBasicMachines;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.inventory.MenuType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
-/** NeoForge menus, capabilities and payload wiring for the shared machine catalogs. */
+/** NeoForge capabilities and payload wiring for the shared machine catalogs. */
 public final class BasicMachineRegistries {
     private BasicMachineRegistries() {}
 
-    public static final DeferredRegister<MenuType<?>> MENUS =
-            DeferredRegister.create(Registries.MENU, REGISTRY_NAMESPACE);
-    public static final DeferredHolder<MenuType<?>, MenuType<gregtech.client.gui.BasicMachineContainerMenu>> MENU =
-            MENUS.register(
-                    "basic_machine",
-                    () -> IMenuTypeExtension.create(gregtech.client.gui.BasicMachineContainerMenu::new));
-    public static final DeferredHolder<MenuType<?>, MenuType<gregtech.client.gui.BehaviorMachineMenu>> BEHAVIOR_MENU =
-            MENUS.register(
-                    "behavior_machine",
-                    () -> IMenuTypeExtension.create((id, inventory, buffer) ->
-                            new gregtech.client.gui.BehaviorMachineMenu(id, inventory, buffer)));
-    public static final DeferredHolder<MenuType<?>, MenuType<gregtech.client.gui.PartMenu>> PART_MENU = MENUS.register(
-            "part",
-            () -> IMenuTypeExtension.create(
-                    (id, inventory, buffer) -> new gregtech.client.gui.PartMenu(id, inventory, buffer)));
-
     public static void submit(IEventBus bus) {
-        MENUS.register(bus);
         bus.addListener(BasicMachineRegistries::capabilities);
         bus.addListener(gregtech.network.MachinePayloads::register);
     }
