@@ -3,7 +3,7 @@ import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.MaterialFormItem;
-import gregtech.engine.prefix.PrefixRegistry;
+import gregtech.engine.material.MaterialItemDefinitions;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.platform.Mc;
@@ -25,6 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 
 import java.util.IdentityHashMap;
+import java.util.List;
 import java.util.Map;
 
 //? if >=1.21.1 {
@@ -44,13 +45,14 @@ public final class MaterialClientModels {
 
     /**
      * Shared models under {@code models/item/material/...} must be registered explicitly or they are never baked.
+     * Only prefixes that generate material form items own such a model; transport pipes bind block items to
+     * pipe prefixes without any shared material model.
      */
     @SubscribeEvent
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
-        PrefixRegistry.ensurePrefixesLoaded();
+        List<MaterialPrefix> prefixes = MaterialItemDefinitions.candidatePrefixes();
         for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
-            for (MaterialPrefix prefix : PrefixRegistry.all()) {
-                if (!GTItems.hasBoundItems(prefix) || prefix.isAddon()) continue;
+            for (MaterialPrefix prefix : prefixes) {
                 ClientModelEvents.registerAdditional(event, MaterialIcons.sharedModelLocation(set, prefix));
             }
         }
