@@ -5,9 +5,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dev.latvian.mods.kubejs.recipe.RecipeJS;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
+import gregtech.api.addon.recipe.MachineRecipeDocuments;
 import gregtech.api.addon.recipe.MaterialUnitIngredient;
 import gregtech.engine.recipe.data.JsonMaps;
-import gregtech.engine.recipe.data.MachineRecipeDocuments;
 
 final class MachineMaterialInputComponent implements RecipeComponent<MaterialUnitIngredient> {
     static final MachineMaterialInputComponent INSTANCE = new MachineMaterialInputComponent();

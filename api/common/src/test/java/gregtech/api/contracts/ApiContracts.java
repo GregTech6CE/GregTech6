@@ -20,6 +20,9 @@ import gregtech.api.addon.material.SmeltingTargetDeclaration;
 import gregtech.api.addon.pipe.FluidPipeDeclaration;
 import gregtech.api.addon.pipe.ItemPipeDeclaration;
 import gregtech.api.addon.recipe.CrucibleContent;
+import gregtech.api.addon.recipe.MachineRecipeDocumentTypes;
+import gregtech.api.addon.recipe.MachineRecipeDocuments;
+import gregtech.api.addon.recipe.MachineRecipeType;
 import gregtech.api.addon.recipe.RecipeMachine;
 import gregtech.api.addon.recipe.RecipeTable;
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
@@ -45,6 +48,7 @@ import gregtech.api.multiblock.StructureRole;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.jar.JarFile;
@@ -73,6 +77,7 @@ public final class ApiContracts {
         StructurePatternContracts.check();
         checkWorldgenContracts();
         checkModDataContracts();
+        checkMachineRecipeContracts();
         checkLocaleContracts();
         try {
             AddonRuntime.services();
@@ -81,6 +86,46 @@ public final class ApiContracts {
             check(expected.getMessage().contains("not installed"), "Missing host diagnostic");
         }
         System.out.println("Standalone API JAR and energy contracts passed");
+    }
+
+    private static void checkMachineRecipeContracts() {
+        check(MachineRecipeType.ADDITION.equals("gt6ce:machine"), "Addition type id");
+        check(MachineRecipeType.REMOVAL.equals("gt6ce:machine_removal"), "Removal type id");
+
+        var addition = MachineRecipeDocuments.addition(Map.<String, Object>of(
+                "map", "gt.recipe.crusher",
+                "item_inputs", List.<Object>of(Map.<String, Object>of(
+                        "material", "Steel", "form", "ingot", "count", 2L)),
+                "item_outputs", List.<Object>of(Map.<String, Object>of(
+                        "tag", "forge:gravel", "chance", 5000L)),
+                "fluid_outputs", List.<Object>of(Map.<String, Object>of(
+                        "tag", "forge:steam", "amount", 100L)),
+                "eu_per_tick", 16L,
+                "duration", 20L));
+        check("Steel".equals(addition.itemInputs().get(0).material()), "Material form input");
+        check("forge:gravel".equals(addition.itemOutputs().get(0).tag()), "Tag item output");
+        check("forge:steam".equals(addition.fluidOutputs().get(0).tag()), "Tag fluid output");
+        var canonical = MachineRecipeDocuments.canonical(addition);
+        check(canonical.contains("\"material\":\"Steel\",\"form\":\"ingot\""), "Material form written");
+        check(canonical.contains("\"tag\":\"forge:gravel\""), "Tag output written");
+
+        var removal = MachineRecipeDocuments.removal(Map.<String, Object>of(
+                "map", "gt.recipe.crusher",
+                "item_outputs", List.<Object>of(Map.<String, Object>of("tag", "forge:gravel"))));
+        check("forge:gravel".equals(removal.itemOutputs().get(0).tag()), "Removal tag output");
+        check(MachineRecipeDocuments.canonical(removal).contains("\"tag\":\"forge:gravel\""),
+                "Removal tag written");
+
+        MachineRecipeDocumentTypes.register(() -> "test:contract");
+        check(MachineRecipeDocumentTypes.find("test:contract") != null, "Registered document type");
+        check(MachineRecipeDocumentTypes.find("test:missing") == null, "Unknown document type");
+        MachineRecipeDocumentTypes.close();
+        try {
+            MachineRecipeDocumentTypes.register(() -> "test:late");
+            throw new AssertionError("Late document type registration must fail");
+        } catch (IllegalStateException expected) {
+            // expected
+        }
     }
 
     private static void checkJarClosure() throws Exception {

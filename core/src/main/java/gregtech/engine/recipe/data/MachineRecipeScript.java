@@ -1,5 +1,11 @@
 package gregtech.engine.recipe.data;
 
+import gregtech.api.addon.recipe.FluidComponent;
+import gregtech.api.addon.recipe.ItemComponent;
+import gregtech.api.addon.recipe.ItemResult;
+import gregtech.api.addon.recipe.MachineRecipeDocument;
+import gregtech.api.addon.recipe.MachineRecipeDocuments;
+import gregtech.api.addon.recipe.MachineRecipeRemovalDocument;
 import gregtech.engine.addon.AddonMachines;
 import java.util.List;
 
@@ -44,7 +50,7 @@ public final class MachineRecipeScript {
             long special,
             long priority) {
         requireKnownMap(map);
-        return MachineRecipeDocuments.canonical(new MachineRecipeSpec(
+        return MachineRecipeDocuments.canonical(new MachineRecipeDocument(
                 map, itemInputs, fluidInputs, itemOutputs, fluidOutputs, euPerTick, duration, special, null, priority));
     }
 
@@ -56,13 +62,13 @@ public final class MachineRecipeScript {
             List<FluidComponent> fluidOutputs) {
         requireKnownMap(map);
         return MachineRecipeDocuments.canonical(
-                new MachineRecipeRemovalSpec(map, false, itemInputs, fluidInputs, itemOutputs, fluidOutputs));
+                new MachineRecipeRemovalDocument(map, false, itemInputs, fluidInputs, itemOutputs, fluidOutputs));
     }
 
     public static String clear(String map) {
         requireKnownMap(map);
         return MachineRecipeDocuments.canonical(
-                new MachineRecipeRemovalSpec(map, true, List.of(), List.of(), List.of(), List.of()));
+                new MachineRecipeRemovalDocument(map, true, List.of(), List.of(), List.of(), List.of()));
     }
 
     /** Prefixes a canonical body with the vanilla recipe type. */
@@ -81,6 +87,18 @@ public final class MachineRecipeScript {
 
     public static ItemResult result(String item, int count, int chance) {
         return new ItemResult(item, count, chance);
+    }
+
+    public static ItemResult resultTag(String tag, int count, int chance) {
+        return ItemResult.tag(tag, count, chance);
+    }
+
+    public static ItemResult resultMaterial(String material, String form, int count, int chance) {
+        return ItemResult.material(material, form, count, chance);
+    }
+
+    public static ItemComponent material(String material, String form, int count) {
+        return ItemComponent.material(material, form, count);
     }
 
     public static FluidComponent fluid(String fluid, long amount) {

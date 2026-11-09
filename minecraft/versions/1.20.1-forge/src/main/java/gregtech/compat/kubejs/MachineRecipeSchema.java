@@ -1,39 +1,39 @@
 package gregtech.compat.kubejs;
 
-import dev.latvian.mods.kubejs.fluid.OutputFluid;
-import dev.latvian.mods.kubejs.item.InputItem;
-import dev.latvian.mods.kubejs.item.OutputItem;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
-import dev.latvian.mods.kubejs.recipe.component.FluidComponents;
-import dev.latvian.mods.kubejs.recipe.component.ItemComponents;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
 import dev.latvian.mods.kubejs.recipe.component.StringComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
+import gregtech.api.addon.recipe.FluidComponent;
+import gregtech.api.addon.recipe.ItemComponent;
+import gregtech.api.addon.recipe.ItemResult;
 
 /** Typed {@code gt6ce:machine} schema. The JSON names are the datapack field names. */
 final class MachineRecipeSchema {
     static final RecipeKey<String> MAP = StringComponent.ANY.key("map");
-    static final RecipeKey<InputItem[]> ITEM_INPUTS = ItemComponents.INPUT_ARRAY
+    static final RecipeKey<ItemComponent[]> ITEM_INPUTS = MachineItemInputComponent.INSTANCE
+            .asArray()
             .key("item_inputs")
             .preferred("itemInputs")
-            .optional(new InputItem[0])
+            .optional(new ItemComponent[0])
             .alwaysWrite();
-    static final RecipeKey<gregtech.engine.recipe.data.FluidComponent[]> FLUID_INPUTS =
-            MachineFluidInputComponent.INSTANCE
-                    .asArray()
-                    .key("fluid_inputs")
-                    .preferred("fluidInputs")
-                    .optional(new gregtech.engine.recipe.data.FluidComponent[0])
-                    .alwaysWrite();
-    static final RecipeKey<OutputItem[]> ITEM_OUTPUTS = ItemComponents.OUTPUT_ARRAY
+    static final RecipeKey<FluidComponent[]> FLUID_INPUTS = MachineFluidInputComponent.INSTANCE
+            .asArray()
+            .key("fluid_inputs")
+            .preferred("fluidInputs")
+            .optional(new FluidComponent[0])
+            .alwaysWrite();
+    static final RecipeKey<ItemResult[]> ITEM_OUTPUTS = MachineItemOutputComponent.INSTANCE
+            .asArray()
             .key("item_outputs")
             .preferred("itemOutputs")
-            .optional(new OutputItem[0])
+            .optional(new ItemResult[0])
             .alwaysWrite();
-    static final RecipeKey<OutputFluid[]> FLUID_OUTPUTS = FluidComponents.OUTPUT_ARRAY
+    static final RecipeKey<FluidComponent[]> FLUID_OUTPUTS = MachineFluidInputComponent.INSTANCE
+            .asArray()
             .key("fluid_outputs")
             .preferred("fluidOutputs")
-            .optional(new OutputFluid[0])
+            .optional(new FluidComponent[0])
             .alwaysWrite();
     static final RecipeKey<Long> EU =
             NumberComponent.LONG.key("eu_per_tick").preferred("eu").optional(0L).alwaysWrite();

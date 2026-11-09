@@ -3,15 +3,21 @@ package gregtech.content.recipe;
 import gregtech.engine.material.MaterialDisplayBinding;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
-import gregtech.engine.recipe.data.FluidComponent;
-import gregtech.engine.recipe.data.ItemComponent;
-import gregtech.engine.recipe.data.ItemResult;
-import gregtech.engine.recipe.data.MachineRecipeFields;
+import gregtech.api.addon.recipe.FluidComponent;
+import gregtech.api.addon.recipe.ItemComponent;
+import gregtech.api.addon.recipe.ItemResult;
+import gregtech.api.addon.recipe.MachineRecipeDocument;
+import gregtech.api.addon.recipe.MachineRecipeDocumentTypes;
+import gregtech.api.addon.recipe.MachineRecipeFields;
+import gregtech.api.addon.recipe.MachineRecipeRemovalDocument;
+import gregtech.api.addon.platform.MachineRecipeDocumentProvider;
 import gregtech.engine.recipe.data.MachineRecipeMatch;
-import gregtech.engine.recipe.data.MachineRecipeRemovalSpec;
-import gregtech.engine.recipe.data.MachineRecipeSpec;
 import gregtech.compat.common.CompatRecipes;
+import gregtech.content.data.MaterialPrefixes;
 import gregtech.content.recipe.ExternalOreProcessing;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTItems;
+import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -40,6 +46,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Restores the startup rows, rebuilds tag-owned rows, then applies datapack removals and finally
@@ -267,25 +274,48 @@ public final class MachineRecipeOverlay {
         for (var map : RecipeMap.RECIPE_MAP_LIST) map.captureBaseline(exclude);
     }
 
-    private record Marker(String id, MachineRecipeSpec addition, MachineRecipeRemovalSpec removal) {}
+    private record Marker(String id, MachineRecipeDocument addition, MachineRecipeRemovalDocument removal) {}
 
     private static List<Marker> markers(RecipeManager manager) {
         var markers = new ArrayList<Marker>();
 //? if >=1.21.1 {
 /*        for (RecipeHolder<?> holder : manager.getRecipes()) {
-            if (holder.value() instanceof MachineDatapackRecipe marker)
+            var recipe = holder.value();
+            if (recipe instanceof MachineDatapackRecipe marker)
                 markers.add(new Marker(holder.id().toString(), marker.addition(), marker.removal()));
+            else addProviderMarker(markers, recipe);
 *///?} else {
         for (var recipe : manager.getRecipes()) {
             if (recipe instanceof MachineDatapackRecipe marker)
                 markers.add(new Marker(marker.getId().toString(), marker.addition(), marker.removal()));
+            else addProviderMarker(markers, recipe);
 //?}
         }
         markers.sort(Comparator.comparing(Marker::id));
         return markers;
     }
 
-    private static void install(String id, MachineRecipeSpec spec, Tally tally) {
+    /** Addon recipe objects carry their own document; the registered type validates it. */
+    private static void addProviderMarker(List<Marker> markers, Object recipe) {
+        if (!(recipe instanceof MachineRecipeDocumentProvider provider)) return;
+        var type = MachineRecipeDocumentTypes.find(provider.documentType());
+        if (type == null) {
+            problem("unregistered document type " + provider.documentType() + " from " + provider.documentId());
+            return;
+        }
+        try {
+            Map<String, Object> json = provider.document();
+            var addition = type.addition(json);
+            var removal = type.removal(json);
+            if ((addition == null) == (removal == null))
+                throw new IllegalArgumentException("document type must return exactly one of an addition or a removal");
+            markers.add(new Marker(provider.documentId(), addition, removal));
+        } catch (RuntimeException failure) {
+            problem(provider.documentId() + " " + failure.getMessage());
+        }
+    }
+
+    private static void install(String id, MachineRecipeDocument spec, Tally tally) {
         var map = RecipeMap.RECIPE_MAPS.get(spec.map());
         if (map == null) {
             tally.rejected++;
@@ -323,7 +353,7 @@ public final class MachineRecipeOverlay {
     }
 
     private static void add(RecipeMap map, ItemStack[] items, ItemStack[] outputs, long[] chances,
-            FluidStack[] fluidInputs, FluidStack[] fluidOutputs, MachineRecipeSpec spec, Tally tally,
+            FluidStack[] fluidInputs, FluidStack[] fluidOutputs, MachineRecipeDocument spec, Tally tally,
             String source) {
         if (gregtech.engine.addon.ExclusiveOutputMaps.enabled(map)
                 && !gregtech.engine.addon.ExclusiveOutputRules.isPair(outputs.length,
@@ -430,6 +460,14 @@ public final class MachineRecipeOverlay {
                 if (holder.is(other)) return true;
             return false;
         }
+        public String materialItem(String material, String form) {
+            try {
+                return materialItemId(material, form);
+            } catch (IllegalArgumentException unknown) {
+                problem("removal material " + material + "/" + form + " " + unknown.getMessage());
+                return null;
+            }
+        }
     };
 
     private static MachineRecipeMatch.RecipeView view(Recipe recipe) {
@@ -486,6 +524,10 @@ public final class MachineRecipeOverlay {
     private static List<List<ItemStack>> itemSlots(List<ItemComponent> inputs) {
         var slots = new ArrayList<List<ItemStack>>();
         for (var input : inputs) {
+            if (input.material() != null) {
+                slots.add(List.of(materialStack(input.material(), input.form(), input.count())));
+                continue;
+            }
             if (input.item() != null) {
                 var item = item(input.item());
                 if (item == null) throw new IllegalArgumentException("unknown item " + input.item());
@@ -507,18 +549,60 @@ public final class MachineRecipeOverlay {
     private static ItemStack[] outputs(List<ItemResult> results) {
         var stacks = new ItemStack[results.size()];
         for (int i = 0; i < results.size(); i++) {
-            var item = item(results.get(i).item());
-            if (item == null) throw new IllegalArgumentException("unknown item " + results.get(i).item());
-            stacks[i] = new ItemStack(item, results.get(i).count());
+            var result = results.get(i);
+            if (result.material() != null) {
+                stacks[i] = materialStack(result.material(), result.form(), result.count());
+                continue;
+            }
+            if (result.tag() != null) {
+                stacks[i] = new ItemStack(representative(result.tag()), result.count());
+                continue;
+            }
+            var item = item(result.item());
+            if (item == null) throw new IllegalArgumentException("unknown item " + result.item());
+            stacks[i] = new ItemStack(item, result.count());
         }
         return stacks;
+    }
+
+    /** The alphabetically first member is the one concrete output a tag can produce. */
+    private static Item representative(String tag) {
+        var tagId = ResourceLocation.tryParse(tag);
+        if (tagId == null) throw new IllegalArgumentException("bad tag " + tag);
+        var choices = new ArrayList<Item>();
+        for (var holder : BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, tagId)))
+            choices.add(holder.value());
+        if (choices.isEmpty()) throw new IllegalArgumentException("empty tag " + tag);
+        choices.sort(Comparator.comparing(value -> BuiltInRegistries.ITEM.getKey(value).toString()));
+        return choices.get(0);
+    }
+
+    private static ItemStack materialStack(String materialId, String formName, int count) {
+        var registered = GTMaterialRegistry.registeredNameIgnoringCase(materialId);
+        var material = registered == null ? null : GTMaterialRegistry.get(registered);
+        if (material == null || !material.isValid())
+            throw new IllegalArgumentException("unknown material " + materialId);
+        for (var prefix : gregtech.engine.prefix.PrefixRegistry.all()) {
+            if (!prefix.getName().equalsIgnoreCase(formName)) continue;
+            var stack = GTItems.getStack(prefix, material, count);
+            if (!stack.isEmpty()) return stack;
+        }
+        for (var entry : MaterialPrefixes.all().entrySet()) {
+            if (!entry.getKey().equalsIgnoreCase(formName) || !entry.getValue().isBlock()) continue;
+            var stack = GTBlocks.getStack(entry.getValue().getBlockDelegate(), material);
+            if (!stack.isEmpty()) return stack.copyWithCount(count);
+        }
+        throw new IllegalArgumentException("unknown material form " + formName + " for " + materialId);
+    }
+
+    private static String materialItemId(String materialId, String formName) {
+        return BuiltInRegistries.ITEM.getKey(materialStack(materialId, formName, 1).getItem()).toString();
     }
 
     private static FluidStack[] fluids(List<FluidComponent> components, boolean input) {
         var stacks = new FluidStack[components.size()];
         for (int i = 0; i < components.size(); i++) {
             if (components.get(i).tag() != null) {
-                if (!input) throw new IllegalArgumentException("fluid output does not take a tag");
                 var tag = TagKey.create(Registries.FLUID, ResourceLocation.parse(components.get(i).tag()));
                 Fluid representative = null;
                 for (var holder : BuiltInRegistries.FLUID.getTagOrEmpty(tag)) {

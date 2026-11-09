@@ -1,10 +1,10 @@
 package gregtech.compat.kubejs;
 
 import dev.latvian.mods.rhino.Wrapper;
+import gregtech.api.addon.recipe.FluidComponent;
+import gregtech.api.addon.recipe.ItemComponent;
+import gregtech.api.addon.recipe.ItemResult;
 import gregtech.engine.kubejs.StructureLayoutDocuments;
-import gregtech.engine.recipe.data.FluidComponent;
-import gregtech.engine.recipe.data.ItemComponent;
-import gregtech.engine.recipe.data.ItemResult;
 import gregtech.engine.recipe.data.MachineRecipeScript;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -80,7 +80,9 @@ final class ScriptValues {
         int count = json.containsKey("count") ? number(json.get("count")) : fallback;
         if (json.get("item") != null) return new ItemComponent(text(json.get("item")), null, count);
         if (json.get("tag") != null) return new ItemComponent(null, text(json.get("tag")), count);
-        throw new IllegalArgumentException("item input needs item or tag");
+        if (json.get("material") != null)
+            return MachineRecipeScript.material(text(json.get("material")), text(json.get("form")), count);
+        throw new IllegalArgumentException("item input needs item, tag or material+form");
     }
 
     private static ItemResult result(Object value) {
@@ -89,6 +91,10 @@ final class ScriptValues {
         var json = object(unwrapped);
         int count = json.containsKey("count") ? number(json.get("count")) : 0;
         int chance = json.containsKey("chance") ? number(json.get("chance")) : 0;
+        if (json.get("tag") != null) return MachineRecipeScript.resultTag(text(json.get("tag")), count, chance);
+        if (json.get("material") != null)
+            return MachineRecipeScript.resultMaterial(
+                    text(json.get("material")), text(json.get("form")), count, chance);
         return MachineRecipeScript.result(text(json.get("item")), count, chance);
     }
 

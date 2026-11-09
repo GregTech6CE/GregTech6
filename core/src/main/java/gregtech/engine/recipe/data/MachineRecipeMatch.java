@@ -1,6 +1,11 @@
 package gregtech.engine.recipe.data;
 
-/** Static-row matching for {@link MachineRecipeRemovalSpec}. Dynamic providers are not visible here. */
+import gregtech.api.addon.recipe.FluidComponent;
+import gregtech.api.addon.recipe.ItemComponent;
+import gregtech.api.addon.recipe.ItemResult;
+import gregtech.api.addon.recipe.MachineRecipeRemovalDocument;
+
+/** Static-row matching for {@link MachineRecipeRemovalDocument}. Dynamic providers are not visible here. */
 public final class MachineRecipeMatch {
     private MachineRecipeMatch() {}
 
@@ -55,9 +60,14 @@ public final class MachineRecipeMatch {
         default boolean fluidTagsOverlap(String a, String b) {
             return a.equals(b);
         }
+
+        /** The item a material form resolves to, or null when the form is unknown. */
+        default String materialItem(String material, String form) {
+            return null;
+        }
     }
 
-    public static boolean matches(MachineRecipeRemovalSpec spec, RecipeView recipe, TagQuery tags) {
+    public static boolean matches(MachineRecipeRemovalDocument spec, RecipeView recipe, TagQuery tags) {
         if (spec.clear()) return true;
         // Matching, not a first-match scan: a broad removal condition must not consume the one
         // input that a later, more specific condition can only match. Each condition and entry are
@@ -73,12 +83,11 @@ public final class MachineRecipeMatch {
                         recipe.inputFluids(),
                         (need, i) -> fluidInputMatches(
                                 need, recipe.inputFluid(i), recipe.inputFluidTag(i), recipe.inputFluidAmount(i), tags))
-                && assign(spec.itemOutputs(), recipe.outputItems(), (need, i) -> outputMatches(need, recipe, i))
+                && assign(spec.itemOutputs(), recipe.outputItems(), (need, i) -> outputMatches(need, recipe, i, tags))
                 && assign(
                         spec.fluidOutputs(),
                         recipe.outputFluids(),
-                        (need, i) -> fluidMatches(
-                                need.fluid(), need.amount(), recipe.outputFluid(i), recipe.outputFluidAmount(i)));
+                        (need, i) -> fluidOutputMatches(need, recipe, i, tags));
     }
 
     @FunctionalInterface
@@ -115,6 +124,10 @@ public final class MachineRecipeMatch {
 
     private static boolean itemMatches(ItemComponent need, String item, String tag, int count, TagQuery tags) {
         if (need.count() != 0 && need.count() != count) return false;
+        if (need.material() != null) {
+            var resolved = tags.materialItem(need.material(), need.form());
+            return resolved != null && resolved.equals(item);
+        }
         if (tag != null)
             return need.tag() != null ? tags.itemTagsOverlap(need.tag(), tag) : tags.itemInTag(need.item(), tag);
         if (need.item() != null) return need.item().equals(item);
@@ -131,14 +144,23 @@ public final class MachineRecipeMatch {
                 : need.fluid().equals(fluid);
     }
 
-    private static boolean outputMatches(ItemResult need, RecipeView recipe, int index) {
-        if (!need.item().equals(recipe.outputItem(index))) return false;
+    private static boolean outputMatches(ItemResult need, RecipeView recipe, int index, TagQuery tags) {
         if (need.count() != 0 && need.count() != recipe.outputItemCount(index)) return false;
-        return need.chance() == 0 || need.chance() == recipe.outputItemChance(index);
+        if (need.chance() != 0 && need.chance() != recipe.outputItemChance(index)) return false;
+        String actual = recipe.outputItem(index);
+        if (need.material() != null) {
+            var resolved = tags.materialItem(need.material(), need.form());
+            return resolved != null && resolved.equals(actual);
+        }
+        if (need.tag() != null) return tags.itemInTag(actual, need.tag());
+        return need.item().equals(actual);
     }
 
-    private static boolean fluidMatches(String fluid, long amount, String actual, long actualAmount) {
-        if (!fluid.equals(actual)) return false;
-        return amount == 0 || amount == actualAmount;
+    private static boolean fluidOutputMatches(FluidComponent need, RecipeView recipe, int index, TagQuery tags) {
+        if (need.amount() != 0 && need.amount() != recipe.outputFluidAmount(index)) return false;
+        String actual = recipe.outputFluid(index);
+        return need.tag() != null
+                ? tags.fluidInTag(actual, need.tag())
+                : need.fluid().equals(actual);
     }
 }

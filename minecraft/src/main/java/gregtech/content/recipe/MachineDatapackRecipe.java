@@ -3,23 +3,17 @@ package gregtech.content.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-//? if >=1.21.1 {
-/*import com.google.gson.JsonParser;
-*///?} else {
 import com.google.gson.JsonParseException;
-//?}
+import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 //? if >=1.21.1 {
 /**///?} else {
 import com.google.gson.JsonSyntaxException;
 //?}
-import gregtech.engine.recipe.data.MachineRecipeDocuments;
-//? if >=1.21.1 {
-/*import gregtech.engine.recipe.data.MachineRecipeFields;
-*///?} else {
-//?}
-import gregtech.engine.recipe.data.MachineRecipeRemovalSpec;
-import gregtech.engine.recipe.data.MachineRecipeSpec;
+import gregtech.api.addon.recipe.MachineRecipeDocument;
+import gregtech.api.addon.recipe.MachineRecipeDocuments;
+import gregtech.api.addon.recipe.MachineRecipeFields;
+import gregtech.api.addon.recipe.MachineRecipeRemovalDocument;
 //? if >=1.21.1 {
 /*import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
@@ -97,13 +91,13 @@ public final class MachineDatapackRecipe implements Recipe<CraftingContainer> {
 /**///?} else {
     private final ResourceLocation id;
 //?}
-    private final MachineRecipeSpec addition;
-    private final MachineRecipeRemovalSpec removal;
+    private final MachineRecipeDocument addition;
+    private final MachineRecipeRemovalDocument removal;
 
 //? if >=1.21.1 {
-/*    private MachineDatapackRecipe(MachineRecipeSpec addition, MachineRecipeRemovalSpec removal) {
+/*    private MachineDatapackRecipe(MachineRecipeDocument addition, MachineRecipeRemovalDocument removal) {
 *///?} else {
-    private MachineDatapackRecipe(ResourceLocation id, MachineRecipeSpec addition, MachineRecipeRemovalSpec removal) {
+    private MachineDatapackRecipe(ResourceLocation id, MachineRecipeDocument addition, MachineRecipeRemovalDocument removal) {
         this.id = id;
 //?}
         this.addition = addition;
@@ -111,25 +105,25 @@ public final class MachineDatapackRecipe implements Recipe<CraftingContainer> {
     }
 
 //? if >=1.21.1 {
-/*    public static MachineDatapackRecipe addition(MachineRecipeSpec spec) {
+/*    public static MachineDatapackRecipe addition(MachineRecipeDocument spec) {
         return new MachineDatapackRecipe(spec, null);
 *///?} else {
-    public static MachineDatapackRecipe addition(ResourceLocation id, MachineRecipeSpec spec) {
+    public static MachineDatapackRecipe addition(ResourceLocation id, MachineRecipeDocument spec) {
         return new MachineDatapackRecipe(id, spec, null);
 //?}
     }
 
 //? if >=1.21.1 {
-/*    public static MachineDatapackRecipe removal(MachineRecipeRemovalSpec spec) {
+/*    public static MachineDatapackRecipe removal(MachineRecipeRemovalDocument spec) {
         return new MachineDatapackRecipe(null, spec);
 *///?} else {
-    public static MachineDatapackRecipe removal(ResourceLocation id, MachineRecipeRemovalSpec spec) {
+    public static MachineDatapackRecipe removal(ResourceLocation id, MachineRecipeRemovalDocument spec) {
         return new MachineDatapackRecipe(id, null, spec);
 //?}
     }
 
-    public MachineRecipeSpec addition() { return addition; }
-    public MachineRecipeRemovalSpec removal() { return removal; }
+    public MachineRecipeDocument addition() { return addition; }
+    public MachineRecipeRemovalDocument removal() { return removal; }
 
 //? if >=1.21.1 {
 /*    @Override public boolean matches(CraftingInput input, Level level) { return false; }
@@ -167,7 +161,7 @@ public final class MachineDatapackRecipe implements Recipe<CraftingContainer> {
             catch (RuntimeException failure) { throw new JsonSyntaxException(failure.getMessage(), failure); }
         }
         @Override public MachineDatapackRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
-            return MachineDatapackRecipe.addition(id, MachineRecipeDocuments.addition(buffer.readUtf()));
+            return MachineDatapackRecipe.addition(id, MachineRecipeDocuments.addition(parse(buffer.readUtf())));
         }
         @Override public void toNetwork(FriendlyByteBuf buffer, MachineDatapackRecipe recipe) {
             buffer.writeUtf(MachineRecipeDocuments.canonical(recipe.addition));
@@ -198,7 +192,7 @@ public final class MachineDatapackRecipe implements Recipe<CraftingContainer> {
             catch (RuntimeException failure) { throw new JsonSyntaxException(failure.getMessage(), failure); }
         }
         @Override public MachineDatapackRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
-            return MachineDatapackRecipe.removal(id, MachineRecipeDocuments.removal(buffer.readUtf()));
+            return MachineDatapackRecipe.removal(id, MachineRecipeDocuments.removal(parse(buffer.readUtf())));
         }
         @Override public void toNetwork(FriendlyByteBuf buffer, MachineDatapackRecipe recipe) {
             buffer.writeUtf(MachineRecipeDocuments.canonical(recipe.removal));
@@ -233,8 +227,8 @@ public final class MachineDatapackRecipe implements Recipe<CraftingContainer> {
                         ? MachineRecipeDocuments.canonical(recipe.addition)
                         : MachineRecipeDocuments.canonical(recipe.removal)),
                 buffer -> addition
-                        ? MachineDatapackRecipe.addition(MachineRecipeDocuments.addition(buffer.readUtf()))
-                        : MachineDatapackRecipe.removal(MachineRecipeDocuments.removal(buffer.readUtf())));
+                        ? MachineDatapackRecipe.addition(MachineRecipeDocuments.addition(parse(buffer.readUtf())))
+                        : MachineDatapackRecipe.removal(MachineRecipeDocuments.removal(parse(buffer.readUtf()))));
         return new RecipeSerializer<>() {
             @Override public MapCodec<MachineDatapackRecipe> codec() { return codec; }
             @Override public StreamCodec<RegistryFriendlyByteBuf, MachineDatapackRecipe> streamCodec() { return stream; }
@@ -260,6 +254,13 @@ public final class MachineDatapackRecipe implements Recipe<CraftingContainer> {
 *///?} else {
         for (var entry : json.entrySet()) map.put(entry.getKey(), value(entry.getValue()));
 //?}
+        return map;
+    }
+
+    private static Map<String, Object> parse(String json) {
+        JsonObject object = JsonParser.parseString(json).getAsJsonObject();
+        var map = new LinkedHashMap<String, Object>();
+        for (var entry : object.entrySet()) map.put(entry.getKey(), value(entry.getValue()));
         return map;
     }
 

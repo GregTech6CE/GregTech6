@@ -3,6 +3,9 @@ package gregtech.engine.recipe.data;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import gregtech.api.addon.recipe.MachineRecipeDocuments;
+import gregtech.api.addon.recipe.MachineRecipeFields;
+import gregtech.api.addon.recipe.MachineRecipeRemovalDocument;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +20,7 @@ final class MachineRecipeMatchTest {
 
     @Test
     void aBroadConditionDoesNotConsumeTheSpecificInputsOnlySlot() {
-        var spec = MachineRecipeDocuments.removal("""
+        var spec = removal("""
                 {"map":"gt.recipe.crusher",
                  "item_inputs":[{"tag":"test:any"},{"item":"minecraft:dirt"}]}
                 """);
@@ -27,11 +30,11 @@ final class MachineRecipeMatchTest {
 
     @Test
     void conditionOrderIsIrrelevant() {
-        var first = MachineRecipeDocuments.removal("""
+        var first = removal("""
                 {"map":"gt.recipe.crusher",
                  "item_inputs":[{"tag":"test:any"},{"item":"minecraft:dirt"}]}
                 """);
-        var second = MachineRecipeDocuments.removal("""
+        var second = removal("""
                 {"map":"gt.recipe.crusher",
                  "item_inputs":[{"item":"minecraft:dirt"},{"tag":"test:any"}]}
                 """);
@@ -42,7 +45,7 @@ final class MachineRecipeMatchTest {
 
     @Test
     void repeatedConditionsNeedDistinctInputs() {
-        var spec = MachineRecipeDocuments.removal("""
+        var spec = removal("""
                 {"map":"gt.recipe.crusher",
                  "item_inputs":[{"item":"minecraft:dirt"},{"item":"minecraft:dirt"}]}
                 """);
@@ -52,7 +55,7 @@ final class MachineRecipeMatchTest {
 
     @Test
     void unmatchedConditionStillRejectsTheRecipe() {
-        var spec = MachineRecipeDocuments.removal("""
+        var spec = removal("""
                 {"map":"gt.recipe.crusher",
                  "item_inputs":[{"item":"minecraft:stone"}]}
                 """);
@@ -61,7 +64,7 @@ final class MachineRecipeMatchTest {
 
     @Test
     void aRejectedConditionDoesNotEnumerateEveryPermutation() {
-        var spec = MachineRecipeDocuments.removal("""
+        var spec = removal("""
                 {"map":"gt.recipe.crusher",
                  "item_inputs":[{"tag":"test:any"},{"tag":"test:any"},{"tag":"test:any"},{"tag":"test:any"},
                                 {"tag":"test:any"},{"tag":"test:any"},{"tag":"test:any"},{"tag":"test:any"},
@@ -82,6 +85,96 @@ final class MachineRecipeMatchTest {
         // Every condition is compared against every entry once; enumerating permutations would
         // reach hundreds of millions of lookups for this shape.
         assertTrue(queries[0] <= 12 * 12, "unexpected query count " + queries[0]);
+    }
+
+    @Test
+    void aTagOutputMatchesAnyMemberOfThatTag() {
+        var spec = removal("""
+                {"map":"gt.recipe.crusher",
+                 "item_outputs":[{"tag":"test:any","count":1}]}
+                """);
+        assertTrue(MachineRecipeMatch.matches(spec, outputs("minecraft:stone"), TAGS));
+    }
+
+    @Test
+    void aMaterialFormMatchesItsResolvedItem() {
+        var spec = removal("""
+                {"map":"gt.recipe.crusher",
+                 "item_outputs":[{"material":"steel","form":"ingot"}]}
+                """);
+        var tags = new MachineRecipeMatch.TagQuery() {
+            @Override
+            public boolean itemInTag(String itemId, String tagId) {
+                return false;
+            }
+
+            @Override
+            public String materialItem(String material, String form) {
+                return "gt6ce:" + form + "/" + material;
+            }
+        };
+        assertTrue(MachineRecipeMatch.matches(spec, outputs("gt6ce:ingot/steel"), tags));
+        assertFalse(MachineRecipeMatch.matches(spec, outputs("gt6ce:plate/steel"), tags));
+    }
+
+    private static MachineRecipeRemovalDocument removal(String json) {
+        return MachineRecipeDocuments.removal(JsonMaps.object(json));
+    }
+
+    private static MachineRecipeMatch.RecipeView outputs(String output) {
+        return new MachineRecipeMatch.RecipeView() {
+            public int inputItems() {
+                return 0;
+            }
+
+            public String inputItem(int index) {
+                return "";
+            }
+
+            public int inputItemCount(int index) {
+                return 0;
+            }
+
+            public int inputFluids() {
+                return 0;
+            }
+
+            public String inputFluid(int index) {
+                return "";
+            }
+
+            public long inputFluidAmount(int index) {
+                return 0;
+            }
+
+            public int outputItems() {
+                return 1;
+            }
+
+            public String outputItem(int index) {
+                return output;
+            }
+
+            public int outputItemCount(int index) {
+                return 1;
+            }
+
+            public int outputItemChance(int index) {
+                return MachineRecipeFields.CHANCE_CERTAIN;
+            }
+
+            public int outputFluids() {
+                return 0;
+            }
+
+            public String outputFluid(int index) {
+                return "";
+            }
+
+            public long outputFluidAmount(int index) {
+                return 0;
+            }
+        };
     }
 
     private static MachineRecipeMatch.RecipeView view(List<String> inputItems) {

@@ -9,6 +9,9 @@ import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.rhino.Wrapper;
 import dev.latvian.mods.rhino.type.TypeInfo;
+import gregtech.api.addon.recipe.FluidComponent;
+import gregtech.api.addon.recipe.ItemComponent;
+import gregtech.api.addon.recipe.ItemResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +23,9 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 /** Recipe components whose JSON is the machine-recipe document, not a vanilla ingredient. */
 final class MachineRecipeComponents {
-    static final RecipeComponent<List<MachineItem>> ITEMS = list(new MachineItemComponent());
-    static final RecipeComponent<List<MachineResult>> RESULTS = list(new MachineResultComponent());
-    static final RecipeComponent<List<MachineFluid>> FLUIDS = list(new MachineFluidComponent());
+    static final RecipeComponent<List<ItemComponent>> ITEMS = list(new ItemComponentComponent());
+    static final RecipeComponent<List<ItemResult>> RESULTS = list(new ItemResultComponent());
+    static final RecipeComponent<List<FluidComponent>> FLUIDS = list(new FluidComponentComponent());
 
     private MachineRecipeComponents() {}
 
@@ -58,20 +61,19 @@ final class MachineRecipeComponents {
         }
     }
 
-    record MachineItem(String item, String tag, int count) {}
-
-    record MachineResult(String item, int count, int chance) {}
-
-    record MachineFluid(String fluid, String tag, long amount) {}
-
-    private static final class MachineItemComponent implements RecipeComponent<MachineItem> {
-        static final RecipeComponentType<MachineItem> TYPE = RecipeComponentType.unit(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", "machine_item"), new MachineItemComponent());
-        private static final Codec<MachineItem> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        Codec.STRING.optionalFieldOf("item").forGetter(value -> optional(value.item)),
-                        Codec.STRING.optionalFieldOf("tag").forGetter(value -> optional(value.tag)),
-                        Codec.INT.optionalFieldOf("count", 1).forGetter(MachineItem::count))
-                .apply(instance, (item, tag, count) -> checked(item.orElse(null), tag.orElse(null), count)));
+    private static final class ItemComponentComponent implements RecipeComponent<ItemComponent> {
+        static final RecipeComponentType<ItemComponent> TYPE = RecipeComponentType.unit(
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "machine_item"), new ItemComponentComponent());
+        private static final Codec<ItemComponent> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                        Codec.STRING.optionalFieldOf("item").forGetter(value -> optional(value.item())),
+                        Codec.STRING.optionalFieldOf("tag").forGetter(value -> optional(value.tag())),
+                        Codec.STRING.optionalFieldOf("material").forGetter(value -> optional(value.material())),
+                        Codec.STRING.optionalFieldOf("form").forGetter(value -> optional(value.form())),
+                        Codec.INT.optionalFieldOf("count", 1).forGetter(ItemComponent::count))
+                .apply(
+                        instance,
+                        (item, tag, material, form, count) -> item(
+                                item.orElse(null), tag.orElse(null), material.orElse(null), form.orElse(null), count)));
 
         @Override
         public RecipeComponentType<?> type() {
@@ -79,36 +81,50 @@ final class MachineRecipeComponents {
         }
 
         @Override
-        public Codec<MachineItem> codec() {
+        public Codec<ItemComponent> codec() {
             return CODEC;
         }
 
         @Override
         public TypeInfo typeInfo() {
-            return TypeInfo.of(MachineItem.class);
+            return TypeInfo.of(ItemComponent.class);
         }
 
         @Override
-        public MachineItem wrap(RecipeScriptContext cx, Object from) {
+        public ItemComponent wrap(RecipeScriptContext cx, Object from) {
             Object value = unwrap(from);
-            if (value instanceof MachineItem item) return checked(item.item, item.tag, item.count);
+            if (value instanceof ItemComponent component)
+                return item(
+                        component.item(), component.tag(), component.material(), component.form(), component.count());
             if (value instanceof ItemStack stack) {
                 if (stack.isEmpty()) throw new IllegalArgumentException("empty item");
-                return checked(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString(), null, stack.getCount());
+                return item(
+                        BuiltInRegistries.ITEM.getKey(stack.getItem()).toString(), null, null, null, stack.getCount());
             }
             if (value instanceof CharSequence text) return fromText(text.toString(), 1);
             return fromMap(map(value), 1);
         }
     }
 
-    private static final class MachineResultComponent implements RecipeComponent<MachineResult> {
-        static final RecipeComponentType<MachineResult> TYPE = RecipeComponentType.unit(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", "machine_result"), new MachineResultComponent());
-        private static final Codec<MachineResult> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        Codec.STRING.fieldOf("item").forGetter(MachineResult::item),
-                        Codec.INT.optionalFieldOf("count", 1).forGetter(MachineResult::count),
-                        Codec.INT.optionalFieldOf("chance", 10000).forGetter(MachineResult::chance))
-                .apply(instance, MachineRecipeComponents::result));
+    private static final class ItemResultComponent implements RecipeComponent<ItemResult> {
+        static final RecipeComponentType<ItemResult> TYPE = RecipeComponentType.unit(
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "machine_result"), new ItemResultComponent());
+        private static final Codec<ItemResult> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                        Codec.STRING.optionalFieldOf("item").forGetter(value -> optional(value.item())),
+                        Codec.STRING.optionalFieldOf("tag").forGetter(value -> optional(value.tag())),
+                        Codec.STRING.optionalFieldOf("material").forGetter(value -> optional(value.material())),
+                        Codec.STRING.optionalFieldOf("form").forGetter(value -> optional(value.form())),
+                        Codec.INT.optionalFieldOf("count", 1).forGetter(ItemResult::count),
+                        Codec.INT.optionalFieldOf("chance", 10000).forGetter(ItemResult::chance))
+                .apply(
+                        instance,
+                        (item, tag, material, form, count, chance) -> result(
+                                item.orElse(null),
+                                tag.orElse(null),
+                                material.orElse(null),
+                                form.orElse(null),
+                                count,
+                                chance)));
 
         @Override
         public RecipeComponentType<?> type() {
@@ -116,38 +132,52 @@ final class MachineRecipeComponents {
         }
 
         @Override
-        public Codec<MachineResult> codec() {
+        public Codec<ItemResult> codec() {
             return CODEC;
         }
 
         @Override
         public TypeInfo typeInfo() {
-            return TypeInfo.of(MachineResult.class);
+            return TypeInfo.of(ItemResult.class);
         }
 
         @Override
-        public MachineResult wrap(RecipeScriptContext cx, Object from) {
+        public ItemResult wrap(RecipeScriptContext cx, Object from) {
             Object value = unwrap(from);
-            if (value instanceof MachineResult result) return result(result.item, result.count, result.chance);
+            if (value instanceof ItemResult result)
+                return result(
+                        result.item(), result.tag(), result.material(), result.form(), result.count(), result.chance());
             if (value instanceof ItemStack stack) {
                 if (stack.isEmpty()) throw new IllegalArgumentException("empty item");
-                return result(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString(), stack.getCount(), 10000);
+                return result(
+                        BuiltInRegistries.ITEM.getKey(stack.getItem()).toString(),
+                        null,
+                        null,
+                        null,
+                        stack.getCount(),
+                        10000);
             }
-            if (value instanceof CharSequence text) return result(text.toString(), 1, 10000);
+            if (value instanceof CharSequence text) return resultFromText(text.toString(), 1, 10000);
             var json = map(value);
             int count = json.containsKey("count") ? number(json.get("count")) : 1;
             int chance = json.containsKey("chance") ? number(json.get("chance")) : 10000;
-            return result(text(json.get("item")), count, chance);
+            return result(
+                    json.get("item") == null ? null : text(json.get("item")),
+                    json.get("tag") == null ? null : text(json.get("tag")),
+                    json.get("material") == null ? null : text(json.get("material")),
+                    json.get("form") == null ? null : text(json.get("form")),
+                    count,
+                    chance);
         }
     }
 
-    private static final class MachineFluidComponent implements RecipeComponent<MachineFluid> {
-        static final RecipeComponentType<MachineFluid> TYPE = RecipeComponentType.unit(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", "machine_fluid"), new MachineFluidComponent());
-        private static final Codec<MachineFluid> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        Codec.STRING.optionalFieldOf("fluid").forGetter(value -> optional(value.fluid)),
-                        Codec.STRING.optionalFieldOf("tag").forGetter(value -> optional(value.tag)),
-                        Codec.LONG.fieldOf("amount").forGetter(MachineFluid::amount))
+    private static final class FluidComponentComponent implements RecipeComponent<FluidComponent> {
+        static final RecipeComponentType<FluidComponent> TYPE = RecipeComponentType.unit(
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "machine_fluid"), new FluidComponentComponent());
+        private static final Codec<FluidComponent> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                        Codec.STRING.optionalFieldOf("fluid").forGetter(value -> optional(value.fluid())),
+                        Codec.STRING.optionalFieldOf("tag").forGetter(value -> optional(value.tag())),
+                        Codec.LONG.fieldOf("amount").forGetter(FluidComponent::amount))
                 .apply(instance, (fluid, tag, amount) -> fluid(fluid.orElse(null), tag.orElse(null), amount)));
 
         @Override
@@ -156,19 +186,20 @@ final class MachineRecipeComponents {
         }
 
         @Override
-        public Codec<MachineFluid> codec() {
+        public Codec<FluidComponent> codec() {
             return CODEC;
         }
 
         @Override
         public TypeInfo typeInfo() {
-            return TypeInfo.of(MachineFluid.class);
+            return TypeInfo.of(FluidComponent.class);
         }
 
         @Override
-        public MachineFluid wrap(RecipeScriptContext cx, Object from) {
+        public FluidComponent wrap(RecipeScriptContext cx, Object from) {
             Object value = unwrap(from);
-            if (value instanceof MachineFluid fluid) return fluid(fluid.fluid, fluid.tag, fluid.amount);
+            if (value instanceof FluidComponent component)
+                return fluid(component.fluid(), component.tag(), component.amount());
             if (value instanceof FluidStack stack) {
                 if (stack.isEmpty()) throw new IllegalArgumentException("empty fluid");
                 return fluid(BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString(), null, stack.getAmount());
@@ -181,39 +212,40 @@ final class MachineRecipeComponents {
         }
     }
 
-    private static MachineItem fromText(String text, int count) {
-        if (text.startsWith("#")) return checked(null, text.substring(1), count);
-        return checked(text, null, count);
+    private static ItemComponent fromText(String text, int count) {
+        if (text.startsWith("#")) return item(null, text.substring(1), null, null, count);
+        return item(text, null, null, null, count);
     }
 
-    private static MachineItem fromMap(Map<String, Object> json, int fallback) {
+    private static ItemComponent fromMap(Map<String, Object> json, int fallback) {
         int count = json.containsKey("count") ? number(json.get("count")) : fallback;
-        if (json.get("item") != null && json.get("tag") == null) return checked(text(json.get("item")), null, count);
-        if (json.get("tag") != null && json.get("item") == null) return checked(null, text(json.get("tag")), count);
-        throw new IllegalArgumentException("item input needs exactly one of item or tag");
+        return item(
+                json.get("item") == null ? null : text(json.get("item")),
+                json.get("tag") == null ? null : text(json.get("tag")),
+                json.get("material") == null ? null : text(json.get("material")),
+                json.get("form") == null ? null : text(json.get("form")),
+                count);
     }
 
-    private static MachineItem checked(String item, String tag, int count) {
-        if ((item == null) == (tag == null))
-            throw new IllegalArgumentException("item input needs exactly one of item or tag");
+    private static ItemComponent item(String item, String tag, String material, String form, int count) {
         if (count < 1) throw new IllegalArgumentException("count must be at least 1");
-        return new MachineItem(item, tag, count);
+        return new ItemComponent(item, tag, material, form, count);
     }
 
-    private static MachineResult result(String item, int count, int chance) {
-        if (item == null || item.isBlank() || item.indexOf(':') < 0) throw new IllegalArgumentException("item");
+    private static ItemResult resultFromText(String text, int count, int chance) {
+        if (text.startsWith("#")) return result(null, text.substring(1), null, null, count, chance);
+        return result(text, null, null, null, count, chance);
+    }
+
+    private static ItemResult result(String item, String tag, String material, String form, int count, int chance) {
         if (count < 1) throw new IllegalArgumentException("count must be at least 1");
         if (chance < 1 || chance > 10000) throw new IllegalArgumentException("chance must be from 1 to 10000");
-        return new MachineResult(item, count, chance);
+        return new ItemResult(item, tag, material, form, count, chance);
     }
 
-    private static MachineFluid fluid(String fluid, String tag, long amount) {
-        if ((fluid == null) == (tag == null))
-            throw new IllegalArgumentException("exactly one of fluid or tag is required");
-        String id = fluid == null ? tag : fluid;
-        if (id.isBlank() || ResourceLocation.tryParse(id) == null) throw new IllegalArgumentException("fluid/tag");
+    private static FluidComponent fluid(String fluid, String tag, long amount) {
         if (amount < 0 || amount > Integer.MAX_VALUE) throw new IllegalArgumentException("amount");
-        return new MachineFluid(fluid, tag, amount);
+        return new FluidComponent(fluid, tag, amount);
     }
 
     private static Optional<String> optional(String value) {
@@ -229,10 +261,19 @@ final class MachineRecipeComponents {
         }
         if (unwrapped instanceof JsonObject json) {
             var out = new LinkedHashMap<String, Object>();
-            for (var entry : json.entrySet())
-                out.put(
-                        entry.getKey(),
-                        entry.getValue().isJsonPrimitive() ? entry.getValue().getAsString() : entry.getValue());
+            for (var entry : json.entrySet()) {
+                var child = entry.getValue();
+                if (child.isJsonPrimitive()) {
+                    var primitive = child.getAsJsonPrimitive();
+                    out.put(
+                            entry.getKey(),
+                            primitive.isBoolean()
+                                    ? primitive.getAsBoolean()
+                                    : primitive.isNumber() ? primitive.getAsNumber() : primitive.getAsString());
+                } else {
+                    out.put(entry.getKey(), child);
+                }
+            }
             return out;
         }
         throw new IllegalArgumentException("expected an object");

@@ -1,4 +1,6 @@
-package gregtech.engine.recipe;
+/* SPDX-License-Identifier: LGPL-3.0-or-later */
+
+package gregtech.api.addon.recipe;
 
 import gregtech.api.material.GTValues;
 import java.math.BigDecimal;

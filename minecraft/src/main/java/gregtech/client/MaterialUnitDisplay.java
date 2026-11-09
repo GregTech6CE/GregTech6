@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.engine.recipe.MaterialUnitAmount;
+import gregtech.api.addon.recipe.MaterialUnitAmount;
 import gregtech.engine.recipe.Recipe;
 import java.util.List;
 import net.minecraft.ChatFormatting;

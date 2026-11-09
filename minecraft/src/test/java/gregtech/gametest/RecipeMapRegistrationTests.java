@@ -422,14 +422,14 @@ public final class RecipeMapRegistrationTests {
         var recipe = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
                 new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
                 .withPriority(7).withSource("datapack:test");
-        var match = gregtech.engine.recipe.data.MachineRecipeDocuments.removal("""
+        var match = removal("""
                 {"map":"gt.test.recipe.removal.priority",
                  "item_inputs":[{"item":"minecraft:iron_ingot"}],
                  "item_outputs":[{"item":"minecraft:gold_ingot"}]}
                 """);
         helper.assertTrue(gregtech.engine.recipe.data.MachineRecipeMatch.matches(match, view(recipe), NO_TAGS),
                 "priority and provenance do not keep a row out of a datapack removal");
-        var other = gregtech.engine.recipe.data.MachineRecipeDocuments.removal("""
+        var other = removal("""
                 {"map":"gt.test.recipe.removal.priority",
                  "item_inputs":[{"item":"minecraft:iron_ingot"}],
                  "item_outputs":[{"item":"minecraft:diamond"}]}
@@ -437,6 +437,11 @@ public final class RecipeMapRegistrationTests {
         helper.assertFalse(gregtech.engine.recipe.data.MachineRecipeMatch.matches(other, view(recipe), NO_TAGS),
                 "a different output still fails the removal condition");
         helper.succeed();
+    }
+
+    private static gregtech.api.addon.recipe.MachineRecipeRemovalDocument removal(String json) {
+        return gregtech.api.addon.recipe.MachineRecipeDocuments.removal(
+                gregtech.engine.recipe.data.JsonMaps.object(json));
     }
 
     private static final gregtech.engine.recipe.data.MachineRecipeMatch.TagQuery NO_TAGS =

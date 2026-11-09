@@ -7,9 +7,10 @@ import dev.latvian.mods.kubejs.recipe.RecipeScriptContext;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponentType;
 import dev.latvian.mods.rhino.type.TypeInfo;
+import gregtech.api.addon.recipe.MachineRecipeDocuments;
+import gregtech.api.addon.recipe.MaterialUnitAmount;
 import gregtech.api.addon.recipe.MaterialUnitIngredient;
 import gregtech.engine.recipe.data.JsonMaps;
-import gregtech.engine.recipe.data.MachineRecipeDocuments;
 import net.minecraft.resources.ResourceLocation;
 
 final class MachineMaterialInputComponent implements RecipeComponent<MaterialUnitIngredient> {
@@ -18,9 +19,7 @@ final class MachineMaterialInputComponent implements RecipeComponent<MaterialUni
             RecipeComponentType.unit(ResourceLocation.fromNamespaceAndPath("gt6ce", "material_unit_input"), INSTANCE);
     private static final Codec<MaterialUnitIngredient> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                     Codec.STRING.fieldOf("material").forGetter(MaterialUnitIngredient::material),
-                    Codec.STRING
-                            .fieldOf("units")
-                            .forGetter(value -> gregtech.engine.recipe.MaterialUnitAmount.format(value.amount())),
+                    Codec.STRING.fieldOf("units").forGetter(value -> MaterialUnitAmount.format(value.amount())),
                     Codec.STRING.listOf().fieldOf("forms").forGetter(MaterialUnitIngredient::forms),
                     Codec.STRING
                             .optionalFieldOf("rounding", "whole_outputs")
@@ -29,7 +28,7 @@ final class MachineMaterialInputComponent implements RecipeComponent<MaterialUni
                     instance,
                     (material, units, forms, rounding) -> new MaterialUnitIngredient(
                             material,
-                            gregtech.engine.recipe.MaterialUnitAmount.parse(units),
+                            MaterialUnitAmount.parse(units),
                             forms,
                             MaterialUnitIngredient.Rounding.valueOf(rounding.toUpperCase(java.util.Locale.ROOT)))));
 

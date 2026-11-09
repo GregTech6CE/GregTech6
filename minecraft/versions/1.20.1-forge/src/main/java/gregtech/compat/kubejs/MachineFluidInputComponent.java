@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import dev.latvian.mods.kubejs.fluid.FluidStackJS;
 import dev.latvian.mods.kubejs.recipe.RecipeJS;
 import dev.latvian.mods.kubejs.recipe.component.RecipeComponent;
-import gregtech.engine.recipe.data.FluidComponent;
+import gregtech.api.addon.recipe.FluidComponent;
 
 /** Keeps fluid tags in the machine document instead of coercing them into a fluid stack. */
 final class MachineFluidInputComponent implements RecipeComponent<FluidComponent> {

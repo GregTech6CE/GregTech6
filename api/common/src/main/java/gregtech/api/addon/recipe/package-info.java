@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** Addon recipe tables and crucible recipe declarations. */
+/** Addon recipe tables, crucible recipe declarations and machine-recipe datapack documents. */
 @NullMarked
 package gregtech.api.addon.recipe;
 

@@ -5,28 +5,31 @@ import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
 import dev.latvian.mods.kubejs.recipe.component.StringComponent;
 import dev.latvian.mods.kubejs.recipe.schema.KubeRecipeFactory;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
+import gregtech.api.addon.recipe.FluidComponent;
+import gregtech.api.addon.recipe.ItemComponent;
+import gregtech.api.addon.recipe.ItemResult;
 import java.util.List;
 import net.minecraft.resources.ResourceLocation;
 
 /** Typed {@code gt6ce:machine} schema. The JSON names are the datapack field names. */
 final class MachineRecipeSchema {
     static final RecipeKey<String> MAP = StringComponent.STRING.instance().otherKey("map");
-    static final RecipeKey<List<MachineRecipeComponents.MachineItem>> ITEM_INPUTS = MachineRecipeComponents.ITEMS
+    static final RecipeKey<List<ItemComponent>> ITEM_INPUTS = MachineRecipeComponents.ITEMS
             .otherKey("item_inputs")
             .functionNames("itemInputs")
             .optional(List.of())
             .alwaysWrite();
-    static final RecipeKey<List<MachineRecipeComponents.MachineFluid>> FLUID_INPUTS = MachineRecipeComponents.FLUIDS
+    static final RecipeKey<List<FluidComponent>> FLUID_INPUTS = MachineRecipeComponents.FLUIDS
             .otherKey("fluid_inputs")
             .functionNames("fluidInputs")
             .optional(List.of())
             .alwaysWrite();
-    static final RecipeKey<List<MachineRecipeComponents.MachineResult>> ITEM_OUTPUTS = MachineRecipeComponents.RESULTS
+    static final RecipeKey<List<ItemResult>> ITEM_OUTPUTS = MachineRecipeComponents.RESULTS
             .otherKey("item_outputs")
             .functionNames("itemOutputs")
             .optional(List.of())
             .alwaysWrite();
-    static final RecipeKey<List<MachineRecipeComponents.MachineFluid>> FLUID_OUTPUTS = MachineRecipeComponents.FLUIDS
+    static final RecipeKey<List<FluidComponent>> FLUID_OUTPUTS = MachineRecipeComponents.FLUIDS
             .otherKey("fluid_outputs")
             .functionNames("fluidOutputs")
             .optional(List.of())

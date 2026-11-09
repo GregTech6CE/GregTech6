@@ -18,7 +18,8 @@ public final class MaterialUnitRecipes {
     }
 
     public static ItemStack display(MaterialUnitIngredient ingredient) {
-        var material = GTMaterialRegistry.get(ingredient.material());
+        var registered = GTMaterialRegistry.registeredNameIgnoringCase(ingredient.material());
+        var material = registered == null ? null : GTMaterialRegistry.get(registered);
         if (material == null || !material.isValid())
             throw new IllegalArgumentException("Unknown material " + ingredient.material());
         var display = GTItems.getStack(MaterialPrefix.unit, material.resolve(), 1);
@@ -32,7 +33,11 @@ public final class MaterialUnitRecipes {
         var display = display(ingredient);
         template.mInputs[slot] = display;
         template.materialDeclarations = java.util.Map.of(slot, ingredient);
-        var material = GTMaterialRegistry.get(ingredient.material()).resolve();
+        var registered = GTMaterialRegistry.registeredNameIgnoringCase(ingredient.material());
+        var material = (registered == null
+                        ? GTMaterialRegistry.get(ingredient.material())
+                        : GTMaterialRegistry.get(registered))
+                .resolve();
         var rule = new MaterialUnitRecipe(template, slot, material, ingredient.amount(), ingredient.rounding());
         var found = new java.util.HashSet<String>();
         for (var candidate : MaterialDisplayBinding.alternatives(display)) {

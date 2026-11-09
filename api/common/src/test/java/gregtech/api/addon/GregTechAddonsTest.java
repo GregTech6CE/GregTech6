@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import gregtech.api.addon.recipe.MachineRecipeDocumentTypes;
 import java.util.List;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.AfterEach;
@@ -23,8 +24,8 @@ class GregTechAddonsTest {
     void apiVersionCodeMatchesTheMajorAndMinorParts() {
         assertEquals(GregTechAddons.apiMajor() * 1000 + GregTechAddons.apiMinor(), GregTechAddons.apiVersion());
         assertEquals(1, GregTechAddons.apiMajor());
-        assertEquals(6, GregTechAddons.apiMinor());
-        assertEquals(1006, GregTechAddons.apiVersion());
+        assertEquals(7, GregTechAddons.apiMinor());
+        assertEquals(1007, GregTechAddons.apiVersion());
     }
 
     @Test
@@ -55,6 +56,14 @@ class GregTechAddonsTest {
         }));
         assertThrows(IllegalStateException.class, () -> GregTechAddons.dispatchRecipesReady(CONTEXT));
         assertEquals(GregTechAddons.Phase.FAILED, GregTechAddons.phase());
+    }
+
+    @Test
+    void documentTypeRegistrationClosesWithTheLifecycle() {
+        MachineRecipeDocumentTypes.register(() -> "test:custom");
+        assertEquals(List.of("test:custom"), MachineRecipeDocumentTypes.registeredIds());
+        GregTechAddons.dispatchRecipesReady(CONTEXT);
+        assertThrows(IllegalStateException.class, () -> MachineRecipeDocumentTypes.register(() -> "test:late"));
     }
 
     @Test
