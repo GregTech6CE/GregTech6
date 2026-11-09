@@ -32,7 +32,7 @@ import java.util.Map;
  * carries GT6's own {@code FL} field names).
  *
  * <p>Drinking applies GT6's {@code FoodStat.onEaten}: the food level and saturation go through vanilla's food
- * data, and radiation goes through {@link PlayerRadiation}; the five other GT6 statistics are not tracked.
+ * data; the six GT6 statistics are not tracked, and drinks add no radiation.
  */
 public final class GTDrinks {
     /** One {@code FoodStatDrink} row: the food values and the one statistic the port tracks. */

@@ -8,15 +8,15 @@
 | 伤害类型 | 删除 `alcohol`、`caffeine`、`dehydration`、`sugar`、`fat` 五个 `damage_type` JSON、`GTDamageTypes` 的常量/工厂/`ALL` 条目、四个共享伤害标签中的成员，以及中英文各 10 条死亡键；radiation 与其标签/语言键保留。 | 五个伤害类型只被五项统计的过量伤害使用，统计移除后没有调用方。 |
 | 配置 | 删除 `general.NutritionSystem` 与 `general.DeathByOverdosingCertainFoods`；保留 `general.AFK_Hunger` 与 `general.drinks_always_drinkable`。 | 原配置只关闭脱水/糖/脂肪的效果，不能真正关闭系统；移除后不再保留半失效开关。旧 TOML 键由加载器忽略。 |
 | 食物与饮料数据 | `FoodStatisticRows` 从 191 行缩为 5 条辐射行；`GTFoodItemsGen` 251 行、`CannedFoodCatalog` 57 行、`DrinkNutritionRows`/`GTDrinksGen` 199 行、`SandwichBottleFoods` 29 行删除五项统计列，保留食物值、饱和度、容器、罐头/三明治行为、饮料即时效果、`invisibleParticles`、`temperatureEffect` 与 radiation。 | 五项统计与普通食物/饮料行为解耦；删列不影响 `FoodProperties`、空容器返还、罐头腐烂、三明治层、饮料 milk/extinguish/explosive 或饮用音效。 |
-| 辐射 | 保留 `PlayerRadiation` 的剂量、症状、伤害与克隆逻辑；食物侧保留 5 条辐射行（banana、banana_slice、banana_ice_cream、radaway、cure_all），饮料侧保留 4 条香蕉类辐射行（各 +5）。`cure_all` 的 `-999` 是重置哨兵，经 0..127 clamp 后归零。 | 辐射不属于五项营养统计，且与核反应堆、防护装备、Radaway 与 Cure All 绑定；移除会改变核玩法。 |
+| 辐射 | 保留 `PlayerRadiation` 的剂量、症状、伤害与克隆逻辑；食物/饮料不再增加辐射，`FoodStatisticRows` 只保留 `radaway`（-50）与 `cure_all`（-999）两条医疗清除行，4 条香蕉饮料的辐射值置 0。`cure_all` 的 `-999` 是重置哨兵，经 0..127 clamp 后归零。 | 辐射来源只保留反应堆与附魔照射；食物/饮料的正向辐射与核玩法无关。Radaway/Cure All 是清除辐射的医疗物品，不属于食品辐射。 |
 | AFK 饥饿 | 从 `PlayerFoodStats.tick` 迁到 `AfkHungerEvents`：仍按 `player.tickCount % 2400 == 1200`、背包/盔甲重量与 `general.AFK_Hunger` 结算。 | AFK 饥饿是 GT6 的独立分支，不属于五项统计；迁移保持触发相位、权重与配置语义不变。 |
 | 纯闭环饮料流体 | 停注 13 条流体：`Sake`、`Dressing`、11 个无产出 Smoothie；同时删除对应 `GTDrinksGen` 行、Canner 装/倒配方、语言键与流体贴图。清单见[附录A](#附录a-停注的饮料流体)。 | 连通性审计确认它们只有“瓶装物品 ↔ 流体”的 Canner 双向边，没有作物、冰/水、Biomass、燃料、世界生成、冰激凌、染料或三明治流体消费者；删流体不会改变 C 类饮料链。 |
-| 瓶装物品保留 | 保留 `GTBottlesGen` 的 13 条映射、`GTMultiItemsGen` 的物品 id、模型/贴图、`item.gt6ce.*` 语言键、堆组与创造页位置。`BottleItem.fluid()` 返回 null，物品右键不消耗、不动作；`BottleMachineRecipes.missing()` 记录这 13 条。 | 保留旧存档物品身份与可引用性；本次不新增饮料专属 API，也不做恢复附属，未来附属可通过现有公开类恢复。 |
+| 瓶装物品保留 | 保留 `GTBottlesGen` 的 13 条映射、`GTMultiItemsGen` 的物品 id、模型/贴图、`item.gt6ce.*` 语言键、堆组与创造页位置。`BottleItem.fluid()` 返回 null，但 `BottleItem` 通过私有的 `BottleDrinkFallback` 表读取原饮用数据，右键仍可饮用、生存返还空瓶、创造模式不消耗；`BottleMachineRecipes.missing()` 记录这 13 条。 | 原版 GT6 中这些瓶装物品可饮用；保留物品与饮用行为，避免移除流体引入新的可用性差异。 |
 | 孤立流体 `Tea_Ice` | 停注 `Tea_Ice`（`icetea`）、其 `GTDrinksGen` 行、语言键、贴图与动画描述；没有对应瓶装物品。 | 无瓶装、无配方、无消费者，属于无人可获得的孤立饮料流体。 |
 | 不处理的 C 类流体 | 保留 Fig/Mango/Papaya/Persimmon/Starfruit 等来源缺失果汁、葡萄/土豆/椰子/猕猴桃/醋栗、酒/醋/茶/咖啡/奶/蜂蜜/酱汁、Biomass 输入、燃料与地牢流体。 | 这些分量至少有一个外部锚点（Ice/Water、作物、Biomass、燃料、世界生成、冰激凌、染料或三明治）；删除会连带移除下游配方或世界生成。 |
 | 资源清理 | 删除 14 条流体的 `fluid.gt6ce.*`、`fluid_type.gt6ce.*`、中文遗留 `fluid.*` 与 `gt.drink.*` 键（英文 28 条、中文 56 条），以及 14 组流体贴图与 `.png.mcmeta`；保留物品侧语言键、模型与贴图。 | 避免无主语言键与无主贴图；物品保留时不能删除物品侧资源。 |
 | 存档兼容 | 旧 `gt.props.food` 不再读取；旧储罐/机器中的 14 条已停注流体按本端既有流体处理方式静默清空；13 个瓶装物品 ID 不变；旧 TOML 的两个键被忽略。 | 本端没有流体迁移机制，且物品身份优先保留；不新增迁移工具。 |
-| API 与附属 | 不新增 `AddonDrinks` 或物品级饮料表，不改 API 版本；保留 `GTDrinks`、`GTBottles`、`BottleItem`、`DrinkNutritionRows` 等现有公开类可被引用。 | 本次只做移除；恢复 Sake/Dressing/冰沙的饮用行为与来源由后续独立附属按现有公开类处理。 |
+| API 与附属 | 不新增公开饮料 API，不改 API 版本；`BottleDrinkFallback` 是 `content.item` 内的包私有表，只被 `BottleItem` 使用。保留 `GTDrinks`、`GTBottles`、`BottleItem`、`DrinkNutritionRows` 等现有公开类可被引用。 | 物品级回退只修复“移除流体导致物品不可用”的差异，不开放新的附属契约；生存来源仍不在本次范围。 |
 
 ## 附录A 停注的饮料流体
 
@@ -41,19 +41,16 @@
 
 | 食物 | 辐射值 |
 | --- | ---: |
-| `gt6ce:banana` | 4 |
-| `gt6ce:banana_slice` | 1 |
-| `gt6ce:banana_ice_cream` | 2 |
 | `gt6ce:radaway` | -50 |
 | `gt6ce:cure_all` | -999（重置哨兵，clamp 后为 0） |
 
-饮料侧保留 `bananasmoothie`、`binnie.juicebanana`、`binnie.liqueurbanana`、`binnie.winebanana` 四条，辐射值均为 5。
+`banana`、`banana_slice`、`banana_ice_cream` 与 `bananasmoothie`、`binnie.juicebanana`、`binnie.liqueurbanana`、`binnie.winebanana` 的辐射值已全部置 0 或移除；食物/饮料不再增加辐射。
 
 ## 附录C 数据规模
 
 | 项目 | 变化 |
 | --- | --- |
-| `FoodStatisticRows` | 191 → 5 |
+| `FoodStatisticRows` | 191 → 2 |
 | `GTFoodItemsGen` | 251 行，删除统计列 |
 | `CannedFoodCatalog` | 57 行，删除统计列 |
 | `GTDrinksGen` | 199 → 185（删除 14 条） |

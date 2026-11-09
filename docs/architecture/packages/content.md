@@ -36,7 +36,7 @@
 | `content.worldgen.dungeon` | 地牢布局规则 | `DungeonLayoutRules` |
 | `content.plant` | 植物种类、生长、浆果与花卉目录 | `BerryBushCatalog`、`BushGrowthRules` |
 | `content.bumble` | 蜜蜂种类、遗传、合成与槽位定义 | `GTBumbleSpecies`、`BumbleGenomeRules` |
-| `content.food` | 食物/饮料数值、瓶装、罐头与辐射行 | `FoodNutritionRows`、`FoodStatisticRows`、`BottleFillingRows` |
+| `content.food` | 食物/饮料数值、瓶装、罐头与医疗辐射清除行 | `FoodNutritionRows`、`FoodStatisticRows`、`BottleFillingRows` |
 | `content.book` | 书籍、书架、材料字典与附魔书目录 | `GTBookContent`、`BookCraftingCatalog` |
 | `content.loot` | 战利品、掉落与抽取规则 | `LootChestCatalog`、`MobDropRules` |
 | `content.creative` | 创造栏和配方查看器的内容排序目录 | `CreativeTabCatalog`、`EmiCatalogOrder` |

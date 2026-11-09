@@ -20,23 +20,19 @@ import org.junit.jupiter.api.Test;
 /** Guards the RFC #363 removal: five statistics are gone, radiation and the bottle items stay. */
 class NutritionRemovalTest {
     private static List<String> components(Class<? extends Record> type) {
-        return Arrays.stream(type.getRecordComponents()).map(RecordComponent::getName).toList();
+        return Arrays.stream(type.getRecordComponents())
+                .map(RecordComponent::getName)
+                .toList();
     }
 
     @Test
-    void foodStatisticRowsKeepOnlyRadiation() {
-        assertEquals(5, FoodStatisticRows.ROWS.size());
+    void foodStatisticRowsKeepOnlyMedicalRadiationRemoval() {
+        assertEquals(2, FoodStatisticRows.ROWS.size());
         assertEquals(List.of("itemId", "radiation"), components(FoodStatisticRows.Row.class));
         Map<String, Integer> values = FoodStatisticRows.ROWS.stream()
                 .collect(Collectors.toMap(FoodStatisticRows.Row::itemId, FoodStatisticRows.Row::radiation));
-        assertEquals(
-                Map.of(
-                        "gt6ce:banana", 4,
-                        "gt6ce:banana_slice", 1,
-                        "gt6ce:banana_ice_cream", 2,
-                        "gt6ce:radaway", -50,
-                        "gt6ce:cure_all", -999),
-                values);
+        assertEquals(Map.of("gt6ce:radaway", -50, "gt6ce:cure_all", -999), values);
+        assertTrue(GTDrinksGen.ROWS.stream().allMatch(row -> row.radiation() == 0), "drinks add no radiation");
     }
 
     @Test

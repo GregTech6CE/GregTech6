@@ -60,7 +60,7 @@ public final class NutritionRemovalTests {
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
-    public static void closedLoopBottlesStayRegisteredButInert(GameTestHelper helper) {
+    public static void closedLoopBottlesStayRegisteredWithoutFluid(GameTestHelper helper) {
         List<String> inert = List.of(
                 "sake",
                 "dressing",
@@ -88,12 +88,12 @@ public final class NutritionRemovalTests {
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
-    public static void radiationRowsAndClampStayIntact(GameTestHelper helper) {
+    public static void medicalRadiationRemovalStaysIntact(GameTestHelper helper) {
         Item banana = GTFoodItems.itemOrNull("banana");
         Item radaway = GTFoodItems.itemOrNull("radaway");
         Item cureAll = GTFoodItems.itemOrNull("cure_all");
-        helper.assertTrue(banana != null && radaway != null && cureAll != null, "radiation foods exist");
-        helper.assertTrue(GTFoodStats.radiation(new ItemStack(banana)) == 4, "banana keeps +4");
+        helper.assertTrue(banana != null && radaway != null && cureAll != null, "food and medicine items exist");
+        helper.assertTrue(GTFoodStats.radiation(new ItemStack(banana)) == null, "banana adds no radiation");
         helper.assertTrue(GTFoodStats.radiation(new ItemStack(radaway)) == -50, "radaway keeps -50");
         helper.assertTrue(GTFoodStats.radiation(new ItemStack(cureAll)) == -999, "cure_all keeps its sentinel");
 
@@ -152,15 +152,40 @@ public final class NutritionRemovalTests {
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
-    public static void inertBottleUseDoesNotConsume(GameTestHelper helper) {
+    public static void fallbackBottleConsumesInSurvivalAndNotInCreative(GameTestHelper helper) {
         Item sake = GTFoodItems.itemOrNull("sake");
         helper.assertTrue(sake instanceof BottleItem, "sake is still a bottle item");
-        Player player = player(helper);
-        ItemStack stack = new ItemStack(sake);
-        player.setItemInHand(InteractionHand.MAIN_HAND, stack);
-        var result = ((BottleItem) sake).use(helper.getLevel(), player, InteractionHand.MAIN_HAND);
-        helper.assertTrue(result.getResult() == InteractionResult.PASS, "a bottle without a fluid passes");
-        helper.assertTrue(stack.getCount() == 1, "the inert bottle is not consumed");
+
+        var survival = MultiblockBehaviorApiTests.menuPlayer(helper);
+        survival.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        survival.getFoodData().setFoodLevel(0);
+        try {
+            ItemStack stack = new ItemStack(sake);
+            survival.setItemInHand(InteractionHand.MAIN_HAND, stack);
+            var result = ((BottleItem) sake).use(helper.getLevel(), survival, InteractionHand.MAIN_HAND);
+            helper.assertTrue(result.getResult() == InteractionResult.CONSUME, "sake starts a drink");
+            ((BottleItem) sake).finishUsingItem(stack, helper.getLevel(), survival);
+            helper.assertTrue(stack.getCount() == 0, "sake is consumed in survival");
+            helper.assertTrue(
+                    survival.getInventory().items.stream()
+                            .anyMatch(item -> item.is(BottleItem.emptyBottle().getItem())),
+                    "survival returns an empty bottle");
+        } finally {
+            survival.discard();
+        }
+
+        var creative = MultiblockBehaviorApiTests.menuPlayer(helper);
+        creative.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+        try {
+            ItemStack stack = new ItemStack(sake);
+            creative.setItemInHand(InteractionHand.MAIN_HAND, stack);
+            var result = ((BottleItem) sake).use(helper.getLevel(), creative, InteractionHand.MAIN_HAND);
+            helper.assertTrue(result.getResult() == InteractionResult.CONSUME, "creative starts a drink");
+            ((BottleItem) sake).finishUsingItem(stack, helper.getLevel(), creative);
+            helper.assertTrue(stack.getCount() == 1, "creative does not consume the bottle");
+        } finally {
+            creative.discard();
+        }
         helper.succeed();
     }
 }
