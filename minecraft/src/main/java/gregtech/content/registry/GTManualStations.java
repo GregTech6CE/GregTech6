@@ -2,6 +2,7 @@ package gregtech.content.registry;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
+import gregtech.api.material.GTMaterial;
 import gregtech.content.block.tool.*;
 import gregtech.content.blockentity.tool.ManualToolBlockEntity.Kind;
 import java.util.*;
@@ -9,6 +10,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
+/** GT6 manual tool stations: anvils, vessels, mortars, ropes, scaffolds and shaped tool blocks. */
 public final class GTManualStations {
 
     private GTManualStations() {}
@@ -34,6 +36,15 @@ public final class GTManualStations {
     public static RegisteredBlock<AdvancedButtonBlock> ADVANCED_BUTTON;
     public static RegisteredBlock<CrankBlock> CRANK;
     public static RegisteredBlock<PlantPotBlock> PLANT_POT;
+
+    public static List<RegisteredBlock<ManualToolBlock>> manual() {
+        return Collections.unmodifiableList(MANUAL);
+    }
+
+    public static ScaffoldBlock scaffold(GTMaterial material) {
+        for (var entry : SCAFFOLDS) if (entry.get().material() == material) return entry.get();
+        throw new IllegalArgumentException("No scaffold for " + material.getName());
+    }
 
     private static void item(
             ContentRegistrar registrar, String id, java.util.function.Supplier<? extends Block> b, int count) {

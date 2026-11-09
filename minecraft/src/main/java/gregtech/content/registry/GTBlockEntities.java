@@ -261,12 +261,12 @@ public static final RegistryObject<BlockEntityType<FluidPipeBlockEntity>> FLUID_
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.tool.ProcessingToolBlockEntity>> PROCESSING_TOOL =
             BLOCK_ENTITIES.register("processing_tool", () -> BlockEntityType.Builder.of(
                     gregtech.content.blockentity.tool.ProcessingToolBlockEntity::new,
-                    GTToolBlocks.simpleBlocks().stream().map(RegisteredBlock::get).filter(b -> b instanceof gregtech.content.block.tool.ProcessingToolBlock)
+                    GTManualStations.VESSELS.stream().map(RegisteredBlock::get)
                             .toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.tool.MaterialAnvilBlockEntity>> MATERIAL_ANVIL =
             BLOCK_ENTITIES.register("material_anvil", () -> BlockEntityType.Builder.of(
                     gregtech.content.blockentity.tool.MaterialAnvilBlockEntity::new,
-                    GTToolBlocks.ANVILS.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+                    GTManualStations.ANVILS.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.inventory.UsbSwitchBlockEntity>> USB_SWITCH =
             BLOCK_ENTITIES.register("usb_switch", () -> BlockEntityType.Builder.of(
                     gregtech.content.blockentity.inventory.UsbSwitchBlockEntity::new,
@@ -320,16 +320,16 @@ public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.tool.DustFunnelBlockEntity>> DUST_FUNNEL =
             BLOCK_ENTITIES.register("dust_funnel", () -> BlockEntityType.Builder.of(
                     gregtech.content.blockentity.tool.DustFunnelBlockEntity::new,
-                    GTToolBlocks.DUST_FUNNEL.get()).build(null));
+                    GTManualStations.DUST_FUNNEL.get()).build(null));
 
     /** GT6's bumbliary (multi-tile 32741) and advanced bumbliary (32007): both share this type. */
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.tool.BumbliaryBlockEntity>> BUMBLIARY =
             BLOCK_ENTITIES.register("bumbliary", () -> BlockEntityType.Builder.of(
                     gregtech.content.blockentity.tool.BumbliaryBlockEntity::new,
-                    GTToolBlocks.BUMBLIARY.get(), GTToolBlocks.ADVANCED_BUMBLIARY.get()).build(null));
+                    GTBumbleBlocks.BUMBLIARY.get(), GTBumbleBlocks.ADVANCED_BUMBLIARY.get()).build(null));
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.tool.ManualToolBlockEntity>> MANUAL_TOOL =
             BLOCK_ENTITIES.register("manual_tool", () -> {
-                gregtech.content.block.tool.ManualToolBlock[] blocks = GTToolBlocks.manual().stream()
+                gregtech.content.block.tool.ManualToolBlock[] blocks = GTManualStations.MANUAL.stream()
                         .filter(RegisteredBlock::isPresent)
                         .map(RegisteredBlock::get)
                         .toArray(gregtech.content.block.tool.ManualToolBlock[]::new);
@@ -361,7 +361,7 @@ public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.SapBagBlockEntity>> SAP_BAG =
             BLOCK_ENTITIES.register("sap_bag", () ->
                     BlockEntityType.Builder.of(gregtech.content.blockentity.SapBagBlockEntity::new,
-                            GTToolBlocks.SAP_BAG.get()).build(null));
+                            GTManualStations.SAP_BAG.get()).build(null));
 
     /**
      * GT6's miniature portals ({@code MultiTileEntityMiniPortalNether}, {@code ...End}) as far as the

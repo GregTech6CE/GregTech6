@@ -10,7 +10,6 @@ import gregtech.content.registry.FuelGeneratorRegistration;
 import gregtech.content.registry.GTBasicMachines;
 import gregtech.content.registry.GTBurningBoxes;
 import gregtech.content.registry.GTSmeltery;
-import gregtech.content.registry.GTToolBlocks;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.stack.StackCompat;
 import java.util.*;
@@ -35,30 +34,19 @@ public final class RecipeMachines {
             if (entry.isBound() && !entry.get().basicSpec().machineName().equals("fusionreactor"))
                 add(result, entry.get().basicSpec().recipeMap(), new ItemStack(entry.get()));
 
-//? if >=1.21.1 {
-        /*for (var entry:gregtech.content.registry.GTManualStations.MANUAL) if(entry.isBound())
-*///?} else {
-        for (var entry : GTToolBlocks.manual()) if (entry.isPresent())
-//?}
+        for (var entry : gregtech.content.registry.GTManualStations.MANUAL) if (entry.isBound())
             add(result, entry.get().kind().recipeMap(), new ItemStack(entry.get()));
 
-//? if >=1.21.1 {
-        /*for (var entry:gregtech.content.registry.GTManualStations.VESSELS) if(entry.isBound() && entry.get() instanceof gregtech.content.block.tool.ProcessingToolBlock tool) {
-*///?} else {
-        for (var entry : GTToolBlocks.simpleBlocks())
-            if (entry.isPresent() && entry.get() instanceof gregtech.content.block.tool.ProcessingToolBlock tool) {
-//?}
+        for (var entry : gregtech.content.registry.GTManualStations.VESSELS)
+            if (entry.isBound()) {
+                var tool = entry.get();
                 var map = tool.toolId().equals("juicer")
                         ? MachineRecipeMaps.Juicer
                         : tool.toolId().equals("bathing_pot") ? MachineRecipeMaps.Bath : MachineRecipeMaps.Mixer;
                 add(result, map, new ItemStack(tool));
             }
 
-//? if >=1.21.1 {
-        /*for (var entry:gregtech.content.registry.GTManualStations.ANVILS) if(entry.isBound()) {
-*///?} else {
-        for (var entry : GTToolBlocks.ANVILS) if (entry.isPresent()) {
-//?}
+        for (var entry : gregtech.content.registry.GTManualStations.ANVILS) if (entry.isBound()) {
             add(result, MachineRecipeMaps.Anvil, new ItemStack(entry.get()));
             add(result, MachineRecipeMaps.AnvilBendSmall, new ItemStack(entry.get()));
             add(result, MachineRecipeMaps.AnvilBendBig, new ItemStack(entry.get()));

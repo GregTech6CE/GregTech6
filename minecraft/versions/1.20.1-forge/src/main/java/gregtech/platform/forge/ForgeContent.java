@@ -16,6 +16,7 @@ import gregtech.content.registry.GTEnchantments;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTIconSetBlocks;
 import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTManualStations;
 import gregtech.content.registry.GTMenuTypes;
 import gregtech.content.registry.GTMiscBlocks;
 import gregtech.content.registry.GTProjectiles;
@@ -47,7 +48,8 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
         GTIconSetBlocks.registerAll(registrar);
         GTBushes.registerAll(registrar);
         GTSurfaceBlocks.initializeDiggables(registrar);
-        GTBumbleBlocks.initializeHives(registrar);
+        GTBumbleBlocks.initialize(registrar);
+        GTManualStations.initialize(registrar);
         GTDecorBlocks.registerAll();
         GTMiscBlocks.registerAll(registrar);
     }

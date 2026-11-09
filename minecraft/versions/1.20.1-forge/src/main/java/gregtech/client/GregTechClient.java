@@ -647,17 +647,17 @@ public final class GregTechClient {
                         entry.get());
             }
         });
-        gregtech.content.registry.GTToolBlocks.manual().forEach(entry -> {
+        gregtech.content.registry.GTManualStations.MANUAL.forEach(entry -> {
             if (entry.isPresent()) {
                 event.register((state, level, pos, tintIndex) -> entry.get().tint(tintIndex), entry.get());
             }
         });
-        if (gregtech.content.registry.GTToolBlocks.CRANK != null
-                && gregtech.content.registry.GTToolBlocks.CRANK.isPresent()) {
+        if (gregtech.content.registry.GTManualStations.CRANK != null
+                && gregtech.content.registry.GTManualStations.CRANK.isPresent()) {
             event.register(
                     (state, level, pos, tintIndex) ->
                             tintIndex == 0 ? gregtech.content.block.tool.CrankBlock.tintRgb() : 0xFFFFFF,
-                    gregtech.content.registry.GTToolBlocks.CRANK.get());
+                    gregtech.content.registry.GTManualStations.CRANK.get());
         }
         GTEnergyNodes.all().forEach(entry -> {
             if (entry.isPresent()) {

@@ -4,7 +4,7 @@ package gregtech.content.worldgen.dungeon;
 /*import gregtech.content.registry.*;
 *///?} else {
 //?}
-import gregtech.content.registry.GTToolBlocks;
+import gregtech.content.registry.GTManualStations;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DirectionalBlock;
@@ -433,11 +433,7 @@ public class GTDungeonChunkDoorPiston implements GTDungeonChunk {
      * stores the direction it points away from that wall, so the two are opposites.
      */
     private static void crank(GTDungeonData data, int x, int y, int z, Direction mountedOn) {
-//? if >=1.21.1 {
-        /*data.set(x, y, z, GTManualStations.CRANK.get().defaultBlockState()
-*///?} else {
-        data.set(x, y, z, GTToolBlocks.CRANK.get().defaultBlockState()
-//?}
+        data.set(x, y, z, GTManualStations.CRANK.get().defaultBlockState()
                 .setValue(DirectionalBlock.FACING, mountedOn.getOpposite()));
     }
 }

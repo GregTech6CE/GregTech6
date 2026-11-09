@@ -310,13 +310,8 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 
     /** GT6's steel grindstone {@code 32703} as the port's {@code grindstone_block}. */
     private static BlockState grindstone() {
-//? if >=1.21.1 {
-        /*for (var holder : GTManualStations.MANUAL) {
+        for (var holder : GTManualStations.MANUAL) {
             if (!holder.isBound()) continue;
-*///?} else {
-        for (var holder : GTToolBlocks.manual()) {
-            if (!holder.isPresent()) continue;
-//?}
             ManualToolBlock block = holder.get();
             if (block.kind() == ManualToolBlockEntity.Kind.GRINDSTONE) {
                 return block.defaultBlockState().setValue(ManualToolBlock.FACING, Direction.SOUTH);
@@ -327,13 +322,8 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 
     /** GT6's ceramic mortar {@code 32735} as the port's {@code mortar_block}. */
     private static BlockState mortar() {
-//? if >=1.21.1 {
-        /*for (var holder : GTManualStations.MANUAL) {
+        for (var holder : GTManualStations.MANUAL) {
             if (!holder.isBound()) continue;
-*///?} else {
-        for (var holder : GTToolBlocks.manual()) {
-            if (!holder.isPresent()) continue;
-//?}
             ManualToolBlock block = holder.get();
             if (block.kind() == ManualToolBlockEntity.Kind.MORTAR) return block.defaultBlockState();
         }
@@ -343,13 +333,8 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
     /** GT6's second anvil multi-tile {@code 32034+rnd(4)} as the port's material anvil. */
     private static BlockState anvil(int index) {
         String material = ANVIL_MATERIALS[index];
-//? if >=1.21.1 {
-        /*for (var holder : GTManualStations.ANVILS) {
+        for (var holder : GTManualStations.ANVILS) {
             if (!holder.isBound()) continue;
-*///?} else {
-        for (var holder : GTToolBlocks.ANVILS) {
-            if (!holder.isPresent()) continue;
-//?}
             if (holder.get().material().getName().equals(material)) return holder.get().defaultBlockState();
         }
         return Blocks.ANVIL.defaultBlockState();

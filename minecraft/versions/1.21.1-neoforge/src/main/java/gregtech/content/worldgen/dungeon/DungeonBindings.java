@@ -30,9 +30,4 @@ public final class DungeonBindings {
         for (var h : GTStorageContainers.DRAWERS) if (h.get().material() == material) return h.get();
         throw new IllegalArgumentException("Dungeon drawer " + material.getName());
     }
-
-    public static gregtech.content.block.tool.ScaffoldBlock scaffold(GTMaterial material) {
-        for (var h : GTManualStations.SCAFFOLDS) if (h.get().material() == material) return h.get();
-        throw new IllegalArgumentException("Dungeon scaffold " + material.getName());
-    }
 }
