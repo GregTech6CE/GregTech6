@@ -18,7 +18,8 @@
 | `NbtCompat` | `engine.stack` | 物品/流体栈 NBT | provider 签名、序列化形状 |
 | `HandlerNbt` | `engine.stack` | `ItemStackHandler` NBT | provider 签名 |
 | `CoverStackData` | `content.cover` | 覆盖板栈数据读写 | NBT 与数据组件 |
-| `ContentRegistrar` | `content.registry` | 加载器中立的物品/方块注册视图 | 注册 API |
+| `ContentRegistrar` | `content.registry` | 加载器中立的物品/方块/方块实体注册视图 | 注册 API、BE 注册表归属 |
+| `GTEngines` / `GTBasicMachines` / `GTBurningBoxes` / `GTSmeltery` / `GTHoppers` | `content.registry` | 机器、燃烧箱、熔炉与 hopper 家族目录 | 注册归属、holder 类型、节点 BE 类型 |
 
 表中是代表入口；完整判断标准见[Stonecutter 设计](../../stonecutter/design.md#判断准则)，完整清单与归属见[共享门面](../../stonecutter/design.md#共享门面)。
 

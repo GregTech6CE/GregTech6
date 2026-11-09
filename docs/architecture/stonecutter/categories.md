@@ -58,9 +58,9 @@
 
 ## Registry
 
-摘要：注册表查找、`ResourceLocation` 构造与标签目录命名。
+摘要：注册表查找、`ResourceLocation` 构造、标签目录命名与共享注册家族目录。
 
-关键词：BuiltInRegistries, ForgeRegistries, Mc.item, GregTech.id, fromNamespaceAndPath, ResourceLocation, tags/items, tags/item, GregTechIdentity
+关键词：BuiltInRegistries, ForgeRegistries, Mc.item, GregTech.id, fromNamespaceAndPath, ResourceLocation, tags/items, tags/item, GregTechIdentity, registerAll, ContentRegistrar, RegisteredBlock, RegisteredBlockEntity, GTEngines, GTBasicMachines, GTBurningBoxes, GTSmeltery, GTHoppers
 
 领域文档：[Registry/README.md](Registry/README.md)
 

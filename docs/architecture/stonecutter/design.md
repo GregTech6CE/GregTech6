@@ -67,7 +67,8 @@
 | `NbtCompat` | `engine.stack` | 物品/流体栈 NBT | provider 签名、序列化形状 |
 | `HandlerNbt` | `engine.stack` | `ItemStackHandler` NBT | provider 签名 |
 | `CoverStackData` | `content.cover` | 覆盖板栈数据读写 | NBT 与数据组件 |
-| `ContentRegistrar` | `content.registry` | 加载器中立的物品/方块注册视图 | 注册 API |
+| `ContentRegistrar` | `content.registry` | 加载器中立的物品/方块/方块实体注册视图 | 注册 API、BE 注册表归属 |
+| `GTEngines` / `GTBasicMachines` / `GTBurningBoxes` / `GTSmeltery` / `GTHoppers` | `content.registry` | 机器、燃烧箱、熔炉与 hopper 家族目录 | 注册归属、holder 类型、节点 BE 类型 |
 | `BakedModelMap` | `client` | 模型 map key、variant 回退与 missing 哨兵 | map key 类型、missing 哨兵 key |
 | `ClientModelEvents` | `client` | `RegisterAdditional` 的模型注册 | plain `ResourceLocation` ↔ `STANDALONE_VARIANT` |
 | `ClientPackFacade` | `client` | pack 工厂与 geometry loader key | Pack 构造、`readMetaAndCreate`、loader key |

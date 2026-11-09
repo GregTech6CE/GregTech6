@@ -11,6 +11,7 @@
 - [流体管道分布模式](fluid-distribution.md)：新增的 `BALANCED`/`SHARED` 配置与空闲调度开关。
 - [药水系统移除](potion-removal.md)：移除整套药水系统的决策，含流体、配方表、饮用条目与下游联动；已执行，清理项并入[流体移除](fluid-removal.md)与[物品移除](item-removal.md)。
 - [板条箱重构](crate-rework.md)：装饰板条箱、战利品板条箱与材料板条箱的三种身份划分，含走廊生成与 4,018 个材料板条箱的删除。
+- [跨版本统一](version-unification.md)：`1.20.1-forge` 向 `1.21.1-neoforge` 基准收敛时的注册内容与物品类变更。
 - [其他差异](#其他差异)：交互、配置、新增内容与注册身份调整等无法归类的条目。
 
 ## 其他差异

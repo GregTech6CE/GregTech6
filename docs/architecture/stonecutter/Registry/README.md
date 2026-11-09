@@ -9,3 +9,4 @@
 | lookup | `BuiltInRegistries` ↔ `ForgeRegistries` | [lookup.md](lookup.md) | Mc.item |
 | resource-location | `GregTech.id` ↔ `fromNamespaceAndPath` | [resource-location.md](resource-location.md) | ResourceLocation |
 | tag-directory | `tags/items` ↔ `tags/item` | [tag-directory.md](tag-directory.md) | tags |
+| registration-catalogs | 共享家族目录与 BE 注册门面 | [registration-catalogs.md](registration-catalogs.md) | registerAll, ContentRegistrar, RegisteredBlockEntity |
