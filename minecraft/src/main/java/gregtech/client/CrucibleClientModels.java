@@ -4,9 +4,6 @@ import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.engine.machine.CrucibleSpec;
 
-//? if >=1.21.1 {
-//?} else {
-//?}
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.block.machine.SmeltingCrucibleBlock;
 import gregtech.content.registry.GTSmeltery;

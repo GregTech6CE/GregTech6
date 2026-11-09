@@ -9,11 +9,7 @@ import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.blockentity.energy.GearboxBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.MaterialItem;
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTGearboxes;
-*///?} else {
 import gregtech.content.registry.GTGearboxes;
-//?}
 import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

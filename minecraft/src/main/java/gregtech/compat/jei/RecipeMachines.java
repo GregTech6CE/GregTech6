@@ -1,9 +1,5 @@
 package gregtech.compat.jei;
 
-//? if >=1.21.1 {
-//?} else {
-//?}
-
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.registry.BehaviorMachineRegistration;
 import gregtech.content.registry.FuelGeneratorRegistration;
@@ -19,7 +15,8 @@ import net.minecraft.world.item.ItemStack;
 public final class RecipeMachines {
     public static net.minecraft.world.level.block.Block machine(String id) {
         return GTBasicMachines.all().stream()
-                .filter(h -> h.get().basicSpec().id().equals(id) && "gt6ce".equals(h.get().basicSpec().namespace()))
+                .filter(h -> h.get().basicSpec().id().equals(id)
+                        && "gt6ce".equals(h.get().basicSpec().namespace()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Missing native machine: " + id))
                 .get();
@@ -34,8 +31,8 @@ public final class RecipeMachines {
             if (entry.isBound() && !entry.get().basicSpec().machineName().equals("fusionreactor"))
                 add(result, entry.get().basicSpec().recipeMap(), new ItemStack(entry.get()));
 
-        for (var entry : gregtech.content.registry.GTManualStations.MANUAL) if (entry.isBound())
-            add(result, entry.get().kind().recipeMap(), new ItemStack(entry.get()));
+        for (var entry : gregtech.content.registry.GTManualStations.MANUAL)
+            if (entry.isBound()) add(result, entry.get().kind().recipeMap(), new ItemStack(entry.get()));
 
         for (var entry : gregtech.content.registry.GTManualStations.VESSELS)
             if (entry.isBound()) {
@@ -46,25 +43,24 @@ public final class RecipeMachines {
                 add(result, map, new ItemStack(tool));
             }
 
-        for (var entry : gregtech.content.registry.GTManualStations.ANVILS) if (entry.isBound()) {
-            add(result, MachineRecipeMaps.Anvil, new ItemStack(entry.get()));
-            add(result, MachineRecipeMaps.AnvilBendSmall, new ItemStack(entry.get()));
-            add(result, MachineRecipeMaps.AnvilBendBig, new ItemStack(entry.get()));
-        }
+        for (var entry : gregtech.content.registry.GTManualStations.ANVILS)
+            if (entry.isBound()) {
+                add(result, MachineRecipeMaps.Anvil, new ItemStack(entry.get()));
+                add(result, MachineRecipeMaps.AnvilBendSmall, new ItemStack(entry.get()));
+                add(result, MachineRecipeMaps.AnvilBendBig, new ItemStack(entry.get()));
+            }
 
-        for (var entry : GTSmeltery.crucibles()) if (entry.isBound()) {
-            add(result, MachineRecipeMaps.CrucibleAlloying, new ItemStack(entry.get()));
-            add(result, MachineRecipeMaps.CrucibleSmelting, new ItemStack(entry.get()));
-        }
+        for (var entry : GTSmeltery.crucibles())
+            if (entry.isBound()) {
+                add(result, MachineRecipeMaps.CrucibleAlloying, new ItemStack(entry.get()));
+                add(result, MachineRecipeMaps.CrucibleSmelting, new ItemStack(entry.get()));
+            }
 
         add(result, MachineRecipeMaps.ImplosionCompressor, new ItemStack(machine("implosion_compressor_main")));
 
         for (var entry : FuelGeneratorRegistration.all())
             if (entry.isPresent())
-                add(
-                        result,
-                        RecipeMap.RECIPE_MAPS.get(entry.get().declaration().fuelMap()),
-                        new ItemStack(entry.get()));
+                add(result, RecipeMap.RECIPE_MAPS.get(entry.get().declaration().fuelMap()), new ItemStack(entry.get()));
 
         for (var entry : BehaviorMachineRegistration.all())
             if (entry.isPresent())
@@ -94,7 +90,10 @@ public final class RecipeMachines {
                     gregtech.content.data.FuelRecipeMaps.Gas,
                     new ItemStack(gregtech.content.multiblock.LargeMachineParts.block(originalId)));
 
-        add(result, MachineRecipeMaps.CokeOven, new ItemStack(gregtech.content.registry.GTMultiblocks.COKE_OVEN_MAIN.get()));
+        add(
+                result,
+                MachineRecipeMaps.CokeOven,
+                new ItemStack(gregtech.content.registry.GTMultiblocks.COKE_OVEN_MAIN.get()));
         add(
                 result,
                 gregtech.content.data.FuelRecipeMaps.Hot,
