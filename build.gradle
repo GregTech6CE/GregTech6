@@ -98,15 +98,30 @@ configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
     // complete tree, so a broken repository can never turn the check into a no-op.
     def ratchetTargets = spotlessRatchet ? spotlessProject.provider {
         try {
+            // Compare against the merge base, not the moving default branch tip: a branch that
+            // is behind master must not inherit master-only files into the local ratchet.
+            def mergeBase = spotlessProject.providers.exec {
+                workingDir spotlessProject.projectDir
+                commandLine 'git', 'merge-base', spotlessRatchet, 'HEAD'
+                ignoreExitValue = true
+            }
+            def base = mergeBase.result.get().exitValue == 0
+                    ? mergeBase.standardOutput.asText.get().trim()
+                    : spotlessRatchet
             def diff = spotlessProject.providers.exec {
                 workingDir spotlessProject.projectDir
                 commandLine 'git', '-c', 'core.quotepath=false', 'diff', '--name-only',
-                        '--diff-filter=ACMR', '--relative', spotlessRatchet, '--', ':(glob)src/**/*.java'
+                        '--diff-filter=ACMR', '--relative', base, '--', ':(glob)src/**/*.java'
                 ignoreExitValue = true
             }
             if (diff.result.get().exitValue == 0) {
+                // The ratchet target is a plain file list, so the FileTree exclude and the
+                // stonecutter targetExclude do not apply to it; filter them here instead.
+                def excluded = stonecutterPaths.get()
                 return diff.standardOutput.asText.get().readLines()
-                        .findAll { String path -> path }
+                        .findAll { String path ->
+                            path && !excluded.contains(path) && !path.contains('/generated/')
+                        }
                         .collect { String path -> new File(spotlessProject.projectDir, path) }
                         .findAll { File file -> file.isFile() }
             }
@@ -119,6 +134,7 @@ configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
         java {
             target ratchetTargets != null ? spotlessProject.files(ratchetTargets) : javaSources
             targetExclude stonecutterPaths
+            targetExclude '**/generated/**'
             palantirJavaFormat('2.103.0')
         }
     }
