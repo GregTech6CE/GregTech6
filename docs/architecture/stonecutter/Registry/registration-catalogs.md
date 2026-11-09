@@ -5,7 +5,7 @@
 同一内容家族在两个版本各有一套注册路径时，会产生重复列表、不同 holder 类型和重复 BE 类型。典型形态：
 
 - 1.20.1 的节点注册类（如 `MachineRegistry`、`GTMachines`）直接使用 `GTBlocks` / `GTBlocks.BLOCK_ITEMS` 和 `RegistryObject`；
-- 1.21.1 的共享/节点目录（如 `GTEngines`、`BasicMachineRegistries`）使用 `ContentRegistrar` 和 `RegisteredBlock`；
+- 1.21.1 的共享目录（如 `GTEngines`、`GTSmeltery`）使用 `ContentRegistrar` 和 `RegisteredBlock`；节点适配器（如 `BasicMachineRegistries`）只保留 Menu、capability 和提交入口；
 - 调用点通过 `//?` 在 `List<RegistryObject<T>>` 与 `List<RegisteredBlock<T>>` 之间切换。
 
 这类差异不是平台 API 差异，而是注册归属和 holder 类型的历史分叉。
@@ -55,7 +55,8 @@ public final class GTBasicMachines {
 - 方块/物品注册放共享家族类，使用 `ContentRegistrar`。
 - 共享 BE 类用 `ContentRegistrar.blockEntity` + `RegisteredBlockEntity`。
 - 节点专属 BE 类、Menu、capability、网络仍留在节点类；共享家族类只暴露列表/句柄。
-- 共享物品类只保留 `appendHoverText` 签名的 `//?`（`TooltipContext` ↔ `Level`）。
+- 本次统一的机器物品类（`BasicMachineItem`、`EngineItem`、`BurningBoxBlockItem`）只保留 `appendHoverText` 签名的 `//?`（`TooltipContext` ↔ `Level`）；其他共享物品类不受此限。
+- `GTBlockEntities` 目前仍是共享类内的两套 BE 类型列表，是下一轮收敛目标。
 - 删除旧节点注册类前先 `rg` 外部引用；外部引用面通常远小于类本身。
 
 ## 为什么这么修复

@@ -39,7 +39,7 @@
 ### 判断准则
 
 - 两个版本都需要，且没有版本差异：共享代码。
-- 两个版本都需要，差异只是签名、数据格式或注册归属：共享门面。
+- 两个版本都需要，差异只是签名、数据格式或注册归属：共享门面；门面必须是唯一路径，不能包两套注册路径。
 - 两个版本都需要，但整类需要不同的加载器 API/生命周期：节点实现。
 - 只有一个版本需要：节点实现。
 - 共享代码需要 import 节点类：共享门面。
@@ -68,7 +68,7 @@
 | `HandlerNbt` | `engine.stack` | `ItemStackHandler` NBT | provider 签名 |
 | `CoverStackData` | `content.cover` | 覆盖板栈数据读写 | NBT 与数据组件 |
 | `ContentRegistrar` | `content.registry` | 加载器中立的物品/方块/方块实体注册视图 | 注册 API、BE 注册表归属 |
-| `GTEngines` / `GTBasicMachines` / `GTBurningBoxes` / `GTSmeltery` / `GTHoppers` | `content.registry` | 机器、燃烧箱、熔炉与 hopper 家族目录 | 注册归属、holder 类型、节点 BE 类型 |
+| `GTEngines` / `GTBasicMachines` / `GTBurningBoxes` / `GTSmeltery` / `GTHoppers` | `content.registry` | 机器、燃烧箱、熔炉与 hopper 家族目录 | 注册归属、holder 类型 |
 | `BakedModelMap` | `client` | 模型 map key、variant 回退与 missing 哨兵 | map key 类型、missing 哨兵 key |
 | `ClientModelEvents` | `client` | `RegisterAdditional` 的模型注册 | plain `ResourceLocation` ↔ `STANDALONE_VARIANT` |
 | `ClientPackFacade` | `client` | pack 工厂与 geometry loader key | Pack 构造、`readMetaAndCreate`、loader key |
@@ -87,7 +87,7 @@
 
 ## //? 的归属
 
-`//?` 是共享输入内的条件编译，不是一层。它只承载共享代码无法表达的差异：API 签名、数据格式、注册归属。
+`//?` 是共享输入内的条件编译，不是一层。它只承载平台 API 运行时差异：API 签名、数据格式、注册表、能力、网络、事件生命周期。注册归属差异由共享门面收敛为唯一路径，不保留为 `//?`。
 
 - 能收进门面的差异，不留在业务代码。
 - 同一调用在两个版本都有同名同义方法时，直接调用共享方法。

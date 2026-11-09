@@ -9,7 +9,7 @@
 | FluidStack | `FluidStack#save`、`tag` ↔ components、线格式、身份比较 |
 | Container | `ContainerHelper#saveAllItems` / `loadAllItems` 的 provider 参数 |
 | SavedData | `SavedData.Factory` 的 provider 参数 |
-| Registry | 注册表查找、`ResourceLocation` 构造、标签目录命名 |
+| Registry | 注册表查找、`ResourceLocation` 构造、标签目录命名、共享注册家族目录 |
 | Capability | `ForgeCapabilities` ↔ `Capabilities`、`LazyOptional` ↔ `Optional` |
 | ClientModel | `ModelResourceLocation`、baked model、客户端事件 |
 | Facade | logger、包装类、静态谓词 |

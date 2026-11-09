@@ -1,6 +1,6 @@
 # Registry
 
-注册表查找、`ResourceLocation` 构造与标签目录命名在两个版本上不同。
+注册表查找、`ResourceLocation` 构造、标签目录命名与共享注册家族目录在两个版本上不同。
 
 ## 子类型
 
