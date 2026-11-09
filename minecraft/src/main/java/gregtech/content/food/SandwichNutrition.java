@@ -82,7 +82,8 @@ public final class SandwichNutrition {
         if (bottle != null) {
             applyRadiation(player, bottle.radiation());
         } else if (entry != null && entry.hasFoodStat()) {
-            applyRadiation(player, entry.stats().radiation());
+            Integer radiation = GTFoodStats.radiation(stack);
+            if (radiation != null) applyRadiation(player, radiation);
         } else {
             var drink = drink(stack);
             if (drink != null) applyRadiation(player, drink.radiation());
