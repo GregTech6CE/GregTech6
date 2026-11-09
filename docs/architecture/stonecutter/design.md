@@ -69,6 +69,16 @@
 
 平台细节与验收见[共享门面](../packages/platforms/facade.md)。`CoverStackData` 目前是过渡门面，部分方法为纯转发；调用点迁移完成后应收敛。
 
+## Provider 基础
+
+`HolderLookup.Provider` 是 Codec 解析注册表条目时使用的上下文。1.20.5 起物品/流体栈的序列化改为 Codec 驱动，编解码需要它；1.20.1 的序列化方法不接收它。
+
+- `HolderLookup.Provider` 在 1.20.1 已经存在，`RegistryAccess extends HolderLookup.Provider`；缺的是 vanilla 方法重载，不是类型本身。
+- 服务端由 `WorldLoader` 构建，客户端在 1.21.1 由 `ClientboundRegistryDataPacket` 同步（1.20.1 随登录包下发）。
+- 重载或切换世界后可能失效，不能缓存到静态字段。
+- 无 level 路径（`getUpdateTag`、客户端 tooltip）需要按侧取；当前 `GTToolEnchantments` 与 `FluidDisplayBinding` 各自维护 `currentLookup()`，目标是统一的 `RegistryContext`（待建）。
+- `Holder` 身份跨快照会变；`ItemEnchantments` 按身份比较，跨快照混用需要重新解析。
+
 ## //? 的归属
 
 `//?` 是共享输入内的条件编译，不是一层。它只承载共享代码无法表达的差异：API 签名、数据格式、注册归属。
