@@ -32,7 +32,7 @@ public final class GTCreativeTabIcons {
         if (!ALL_ICONS.isEmpty()) throw new IllegalStateException("Creative tab icons registered twice");
         PrefixRegistry.ensurePrefixesLoaded();
         for (MaterialPrefix prefix : PrefixRegistry.all()) {
-            if (prefix.isHiddenFromCreative() || prefix.isAddon()) {
+            if (prefix.isHiddenFromCreative() || prefix.isAddon() || !GTItems.hasBoundItems(prefix)) {
                 continue;
             }
             MaterialPrefix bound = prefix;
@@ -46,6 +46,9 @@ public final class GTCreativeTabIcons {
 
         BlockPrefixRegistry.ensurePrefixesLoaded();
         for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
+            if (!GTBlocks.hasBoundBlocks(prefix)) {
+                continue;
+            }
             BlockMaterialPrefix bound = prefix;
             var icon = registrar.item(
                     REGISTRY_NAMESPACE,
