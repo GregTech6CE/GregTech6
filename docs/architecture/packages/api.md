@@ -12,7 +12,7 @@
 | `api.addon` | 附属发现、身份、生命周期、命名限制与 SPI | `GregTechAddon`、`GregTechAddons`、`AddonRuntime`；声明失败应有上下文 |
 | `api.addon.material` | 材料、前缀、成分、形态、类型化 metadata、分类 tag 和替代组声明 | `MaterialDeclaration`、`MaterialMetadata`、`MaterialTagDeclaration`、`MaterialGroupDeclaration`、`GregTechMaterials` |
 | `api.addon.machine` | 机器、行为、部件、布局及参数声明 | `AddonMachine.withStructure` 显式绑定；`MultiblockMachine`、`BehaviorMachine`、`LayoutPart`、`AddonMachineContributor` |
-| `api.addon.recipe` | 配方表、坩埚反应、模具、保留输入与概率声明 | `RecipeMachine`、`CrucibleReactionDeclaration`、`RecipeOutputChances` |
+| `api.addon.recipe` | 配方表、坩埚反应、模具、保留输入与概率声明，以及 `gt6ce:machine` 数据包文档 | `RecipeMachine`、`CrucibleReactionDeclaration`、`RecipeOutputChances`、`MachineRecipeDocument`、`MachineRecipeDocuments`、`MachineRecipeDocumentType` |
 | `api.addon.pipe` | 附属物品/流体管道的定义 | `ItemPipeDeclaration`、`FluidPipeDeclaration` |
 | `api.addon.worldgen` | 矿脉与小矿生成声明及命名规则 | `OreVeinDeclaration`、`SmallOreDeclaration` |
 | `api.material` | 材料公共模型、成分、性质、原子属性和数量常量 | `GTMaterial`、`MaterialComponent`、`GTValues`；不可引入物品栈 |
@@ -27,13 +27,15 @@
 
 `StructureGrid` 与 `RecipeMapSpec` 已移回宿主，分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`；它们不属于附属契约。
 
+`MachineRecipeDocuments` 只处理 `Map<String,Object>` 形式的 JSON 树并写出 canonical JSON；文件解析由宿主或附属的 JSON 库完成。自定义文档类型通过 `MachineRecipeDocumentTypes` 注册，在 `dispatchRecipesReady` 开始时关闭。
+
 ## Minecraft 层的 API
 
 入口为 [minecraft/gregtech/api](../../../api/minecraft/src/main/java/gregtech/api)。共享源码由 `:api-platform:<node>` 经 Stonecutter 分别编译为 Forge / NeoForge API；编译路径不包含 core 或模组 main 输出。
 
 | 包 | 应当承担 | 边界 |
 | --- | --- | --- |
-| `api.addon.platform` | 附属使用的物品、流体、能源、加载器、平台服务桥接 | `StructureAccess.cells()` 提供成功匹配快照，`MachineBehavior` 提供结构状态回调；允许游戏类型，由宿主绑定 |
+| `api.addon.platform` | 附属使用的物品、流体、能源、加载器、平台服务桥接 | `StructureAccess.cells()` 提供成功匹配快照，`MachineBehavior` 提供结构状态回调，`MachineRecipeDocumentProvider` 让附属自有 RecipeType 的配方对象进入机器配方 overlay；允许游戏类型，由宿主绑定 |
 | `api.machine` | 游戏中的机器控制接口 | 当前有 `MachineControl`，与 core 同包但不同源码层 |
 | `api.transport` | 游戏世界中管道的连接契约 | `FluidPipeConnectable`、`ItemPipeConnectable`；避免公开整个内部网络 |
 

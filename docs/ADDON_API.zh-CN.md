@@ -2,7 +2,7 @@
 
 本页面向附属与脚本作者；宿主实现的分层见[API 包职责](architecture/packages/api.md)。开发版附属需固定匹配的 GT6CE 运行时、平台和 SDK 构建。
 
-按需阅读：[契约入口](#按需求找契约) · [库与 SDK](#独立库与-sdk-构建) · [多方块声明](#多方块声明api-13) · [输出与诊断](#主动输出与诊断api-13) · [布局 JSON](#布局-json-与-kubejs) · [预览与交互](#预览与部件交互)。
+按需阅读：[契约入口](#按需求找契约) · [库与 SDK](#独立库与-sdk-构建) · [多方块声明](#多方块声明api-13) · [机器配方数据包](#机器配方数据包api-17) · [输出与诊断](#主动输出与诊断api-13) · [布局 JSON](#布局-json-与-kubejs) · [预览与交互](#预览与部件交互)。
 
 ## 按需求找契约
 
@@ -17,6 +17,7 @@
 | 结构状态与失败诊断 | `StructureAccess`、`AddonStructures`、`StructureProblem` | 在逻辑服务端读取宿主快照或按需诊断，不加载区块、不改变部件归属 |
 | 能源/物品/流体/加载器等游戏能力 | [api.addon.platform](../api/minecraft/src/main/java/gregtech/api/addon/platform) | Minecraft 类型桥接，使用匹配版本和加载器的 SDK |
 | KubeJS 脚本扩展 | 两节点的 `gregtech.compat.kubejs`、core 的 `engine.kubejs` | 原生插件接入与纯声明规则分层；使用对应平台版本 |
+| 数据驱动机器配方、移除与优先级 | [MachineRecipeDocuments](../api/common/src/main/java/gregtech/api/addon/recipe/MachineRecipeDocuments.java)、[MachineRecipeDocumentType](../api/common/src/main/java/gregtech/api/addon/recipe/MachineRecipeDocumentType.java) | 文档 API 1.7；自定义类型在模组构造阶段注册，`dispatchRecipesReady` 后关闭 |
 
 材料与机器 SPI 分别使用资源文件 `META-INF/services/gregtech.api.addon.material.AddonMaterialContributor`、`META-INF/services/gregtech.api.addon.machine.AddonMachineContributor` 列出实现类。按接口声明提供附属自身 ID 和纯数据；命名、范围与冲突规则以接口和 `AddonNames` 等校验为准。不要新用已标记弃用的 `GregTechMaterialContributor`。
 
@@ -38,9 +39,9 @@
 
 | 产物坐标 | 内容与输出 |
 | --- | --- |
-| `gregtech:gt6ce-api:1.6.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
-| `gregtech:gt6ce-addon-sdk-1.20.1-forge:1.6.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
-| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:1.6.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-api:1.7.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
+| `gregtech:gt6ce-addon-sdk-1.20.1-forge:1.7.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:1.7.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
 
 这些是构建配置中的坐标，不表示已发布到公共 Maven 仓库。版本规则见下节[API 版本](#api-版本)。
 
@@ -54,13 +55,128 @@
 
 ## API 版本
 
-当前分支使用 API `1.6.0`，与模组版本独立；以 [api/common/build.gradle](../api/common/build.gradle) 为准。`GregTechAddons.apiVersion()` 返回 `major * 1000 + minor`，1.6 为 `1006`，不能据此推断某个模组构建兼容。修改内联 API 时同步构建配置与 `GregTechAddons` 的版本。
+当前分支使用 API `1.7.0`，与模组版本独立；以 [api/common/build.gradle](../api/common/build.gradle) 为准。`GregTechAddons.apiVersion()` 返回 `major * 1000 + minor`，1.7 为 `1007`，不能据此推断某个模组构建兼容。修改内联 API 时同步构建配置与 `GregTechAddons` 的版本。
 
 宿主专用的 `StructureGrid` 与 `RecipeMapSpec` 不属于附属契约：它们分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`，编码内置多方块几何和配方表，附属不应依赖。
 
 公共 API 的契约检查、SDK 与平台检查见[验证与验收](development/validation/README.md)。移动到 API 包的可变模型或内部辅助类不自动获得长期兼容保证。
 
-## 材料目录（API 1.8）
+## 机器配方数据包（API 1.7）
+
+`gt6ce:machine` 向已有机器配方表追加或覆盖行，`gt6ce:machine_removal` 删除行。数据包路径按目标版本的配方目录（`data/<namespace>/recipes/`，1.21.1 为单数 `recipe/`）。处理顺序固定：恢复基线、重建标签与生成行、应用移除、最后应用追加；移除只能匹配基线和生成行，追加看到的是最终静态集合。同一行的显式 `priority` 决定查找优先级，较高者优先，相同值保持发布顺序。
+
+### 格式
+
+追加示例：
+
+```json
+{
+  "type": "gt6ce:machine",
+  "map": "gt.recipe.crusher",
+  "item_inputs":  [{"item": "minecraft:stone", "count": 1}],
+  "fluid_inputs": [{"tag": "forge:water", "amount": 1000}],
+  "item_outputs": [{"tag": "forge:gravel", "count": 1, "chance": 10000}],
+  "fluid_outputs":[{"fluid": "minecraft:water", "amount": 100}],
+  "eu_per_tick": 16,
+  "duration": 20,
+  "special": 0,
+  "priority": 5
+}
+```
+
+- `map` 是内部配方表名（如 `gt.recipe.crusher`），不是注册 ID；未知名字拒绝该行。追加文档至少需要一个输入和一个输出。
+- `item_inputs` / `item_outputs` 的条目必须且只能写一种身份：
+  - `item`：物品注册 ID，格式为 `namespace:path`。
+  - `tag`：标签 ID（不带 `#`）。输入标签表示任意成员；输出标签在加载时按注册 ID 字母序取首个成员作为具体产出，空标签拒绝该行。
+  - `material` + `form`：材料名和形态名，加载时解析为具体物品。两者大小写不敏感；追加时名称未知或形态不存在会拒绝该行，移除条件则记录诊断且不匹配。
+- `fluid_inputs` / `fluid_outputs` 的条目写 `fluid` 或 `tag` 二选一，不接受 `material`+`form`。
+- `count` 省略为 1；追加时物品输入和输出都必须至少为 1。`chance` 省略为 10000（万分比），追加时必须至少为 1。
+- `fluid_inputs` 的 `amount` 在追加时必填，0 表示只检查该流体存在、不消耗数量；移除时可省略，省略表示不限数量。`fluid_outputs` 的 `amount` 在追加时必须至少为 1。流体输出也接受 `tag`，同样取字母序首个成员。
+- `material_input` 是整行的材料单位规则，不是普通输入槽：`{"material":"Steel","units":"2U","forms":["ingot","block"],"rounding":"whole_outputs"}`。`units` 支持 `2U`、`1/2U` 这样的精确分数；`forms` 必须显式列出；`rounding` 为 `whole_outputs` 或 `exact_ratio`。每行最多一条，占用第一个输入槽。
+- `priority` 只用于追加；移除条件带 `priority` 会报错。省略或 0 表示普通行。
+- 根对象中以 `_` 开头的键是注释或脚本标记，会被忽略；其他未知字段、重复身份和类型错误都会拒绝该行。
+- `material_input` 与 `material`+`form` 是两种不同概念：前者是运行时按形态换算的材料单位规则，后者在加载时直接解析成一个具体物品。
+
+移除示例：
+
+```json
+{
+  "type": "gt6ce:machine_removal",
+  "map": "gt.recipe.crusher",
+  "item_inputs":  [{"item": "minecraft:stone"}],
+  "item_outputs": [{"tag": "forge:gravel"}]
+}
+```
+
+- `clear: true` 删除该表的全部静态行；它不能和匹配条件同时出现。
+- 未写 `clear` 时至少要有一个匹配条件。所有列出的条件都必须匹配；匹配是集合分配而不是按顺序贪心，因此条件书写顺序不影响结果。
+- 移除条件中的 `count` 省略表示不限数量；`chance` 省略或为 0 表示不限概率。
+
+### Java API
+
+`gregtech.api.addon.recipe` 提供完整文档模型。API 只接收 `Map<String,Object>` 形式的 JSON 树，不内置 JSON 解析器；宿主与 KubeJS 各自用已有解析器把文件解析成 Map 后传入，附属也可以使用自己已有的 JSON 库。
+
+```java
+import gregtech.api.addon.recipe.*;
+
+var document = MachineRecipeDocuments.addition(Map.<String, Object>of(
+        "type", MachineRecipeType.ADDITION,
+        "map", "gt.recipe.crusher",
+        "item_inputs", List.<Object>of(
+                Map.<String, Object>of("material", "Steel", "form", "ingot", "count", 1L)),
+        "item_outputs", List.<Object>of(
+                Map.<String, Object>of("tag", "forge:gravel", "chance", 10000L)),
+        "eu_per_tick", 16L,
+        "duration", 20L));
+String json = MachineRecipeDocuments.canonical(document); // 不含 "type"，写文件时自行补上
+```
+
+- `MachineRecipeDocuments.addition(...)` / `removal(...)` 解析并校验；`canonical(...)` 写出字段顺序稳定的 JSON。
+- `MachineRecipeDocument`、`MachineRecipeRemovalDocument` 是公开记录；`ItemComponent`、`ItemResult`、`FluidComponent` 构造时校验 ID、材料名和数量。
+- `MachineRecipeType.ADDITION`/`REMOVAL` 与 `MachineRecipeFields` 提供类型 ID 和字段名常量，避免附属复制字符串。
+- 1.7 起这些类型不再位于 `gregtech.engine.recipe.data`；依赖旧内部包名的附属需要迁移到公开包。运行时可用 `GregTechAddons.apiVersion() >= 1007` 做特性判断。
+
+### 让附属自己的数据包配方进入 overlay
+
+1. 在模组构造阶段注册一个 `MachineRecipeDocumentType`：
+
+```java
+MachineRecipeDocumentTypes.register(new MachineRecipeDocumentType() {
+    @Override public String id() { return "mymod:compressor"; }
+
+    @Override public MachineRecipeDocument addition(Map<String, Object> json) {
+        return MachineRecipeDocuments.addition(json);
+    }
+});
+```
+
+2. 附属用加载器 API 注册自己的 `RecipeType`/`RecipeSerializer`。配方对象（同时实现目标加载器的 `Recipe`）实现平台 API 的 `gregtech.api.addon.platform.MachineRecipeDocumentProvider`：
+
+```java
+public final class CompressorDocument implements MachineRecipeDocumentProvider {
+    private final Map<String, Object> document;
+
+    @Override public String documentType() { return "mymod:compressor"; }
+    @Override public Map<String, Object> document() { return document; }
+    @Override public String documentId() { return "mymod:compressor/example"; }
+}
+```
+
+3. overlay 读取 `document()`，用注册的文档类型校验并得到一个追加或移除文档，然后按与内置类型相同的顺序、优先级和移除匹配规则应用。类型必须恰好返回追加或移除之一；未注册的类型和校验失败只记录诊断，不影响其他行。
+
+注册在 `GregTechAddons.dispatchRecipesReady` 开始时关闭；重复 ID、迟注册和无效 `namespace:path` 直接报错。文档类型只负责把原始对象转成文档，不执行注册或世界访问。
+
+### KubeJS
+
+两个平台的 `gt6ce:machine` typed schema 使用与数据包相同的字段名，item 条目支持：
+
+- 字符串：`"minecraft:stone"`、`"#forge:plates/steel"`；
+- 对象：`{item, tag, material, form, count}`，其中身份三选一；输出还可带 `chance`；
+- 平台原生物品栈或输出对象。
+
+追加走 typed schema；移除用 `GT6CE.removeMachine(event, spec)`，整表清空用 `GT6CE.clearMap(event, map)`。脚本仍须使用目标平台匹配的 KubeJS 版本；两节点的序列化实现不同，不能照搬另一版本的语法。
+
+## 材料目录（API 1.6）
 
 材料和 metadata 仍通过 `AddonMaterialContributor` 提交。材料初始化 READY 后，`GregTechMaterials.catalog()` 返回当前会话的不可变 `MaterialCatalogView`：`resolve(name)` 解析规范名和别名，`find(MaterialKey)` 只返回真实材料，材料组不会伪装成可加工材料。旧宿主没有该服务时明确抛出 `UnsupportedOperationException`，未就绪时明确报告阶段，不以空集合掩盖失败。
 
