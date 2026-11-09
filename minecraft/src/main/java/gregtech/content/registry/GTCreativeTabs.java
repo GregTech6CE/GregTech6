@@ -2,133 +2,83 @@ package gregtech.content.registry;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
-
-
-//? if >=1.21.1 {
-//?} else {
-//?}
+import gregtech.bootstrap.registration.OriginCreativeContents;
+import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
-
-
-
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.block.machine.BasicMachineBlock;
-import gregtech.content.block.energy.ElectricWireBlock;
-import gregtech.content.data.RegisteredFluids;
-//?}
-import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.prefix.PrefixRegistry;
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.item.FluidItem;
-//?}
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.DeferredHolder;
+/*import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 *///?} else {
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 //?}
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class GTCreativeTabs {
-    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, REGISTRY_NAMESPACE);
+    public static final DeferredRegister<CreativeModeTab> TABS =
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, REGISTRY_NAMESPACE);
 
 //? if >=1.21.1 {
-    /*private static final Map<MaterialPrefix, DeferredHolder<CreativeModeTab,CreativeModeTab>> BY_PREFIX = new HashMap<>();
-    private static final Map<BlockMaterialPrefix, DeferredHolder<CreativeModeTab,CreativeModeTab>> BY_BLOCK_PREFIX = new HashMap<>();
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> TOOLS_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> STONES_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> CRUCIBLES_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> BURNING_BOXES_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> BASIC_MACHINES_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> FLUIDS_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> PIPES_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> ITEM_PIPES_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> FLUID_CONTAINERS_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> HOPPERS_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> WIRES_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> ENGINES_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> AXLES_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> TECHNOLOGY_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> ENERGY_NODES_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> STORAGE_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> MULTIBLOCKS_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> ICONSETS_TAB;
-    public static DeferredHolder<CreativeModeTab,CreativeModeTab> MULTI_ITEMS_TAB;
+    /*private static final Map<MaterialPrefix, DeferredHolder<CreativeModeTab, CreativeModeTab>> BY_PREFIX =
+            new HashMap<>();
+    private static final Map<BlockMaterialPrefix, DeferredHolder<CreativeModeTab, CreativeModeTab>> BY_BLOCK_PREFIX =
+            new HashMap<>();
 *///?} else {
     private static final Map<MaterialPrefix, RegistryObject<CreativeModeTab>> BY_PREFIX = new HashMap<>();
     private static final Map<BlockMaterialPrefix, RegistryObject<CreativeModeTab>> BY_BLOCK_PREFIX = new HashMap<>();
-    public static RegistryObject<CreativeModeTab> TOOLS_TAB;
-    public static RegistryObject<CreativeModeTab> STONES_TAB;
-    public static RegistryObject<CreativeModeTab> CRUCIBLES_TAB;
-    public static RegistryObject<CreativeModeTab> BURNING_BOXES_TAB;
-    public static RegistryObject<CreativeModeTab> BASIC_MACHINES_TAB;
-    public static RegistryObject<CreativeModeTab> FLUIDS_TAB;
-    public static RegistryObject<CreativeModeTab> PIPES_TAB;
-    public static RegistryObject<CreativeModeTab> ITEM_PIPES_TAB;
-    public static RegistryObject<CreativeModeTab> FLUID_CONTAINERS_TAB;
-    public static RegistryObject<CreativeModeTab> HOPPERS_TAB;
-    public static RegistryObject<CreativeModeTab> WIRES_TAB;
-    public static RegistryObject<CreativeModeTab> ENGINES_TAB;
-    public static RegistryObject<CreativeModeTab> AXLES_TAB;
-    public static RegistryObject<CreativeModeTab> TECHNOLOGY_TAB;
-    public static RegistryObject<CreativeModeTab> ENERGY_NODES_TAB;
-    public static RegistryObject<CreativeModeTab> STORAGE_TAB;
-    public static RegistryObject<CreativeModeTab> MULTIBLOCKS_TAB;
-    public static RegistryObject<CreativeModeTab> ICONSETS_TAB;
-    public static RegistryObject<CreativeModeTab> MULTI_ITEMS_TAB;
 //?}
     private static boolean registered = false;
 
-
 //? if >=1.21.1 {
-    /*private static final Map<String,DeferredHolder<CreativeModeTab,CreativeModeTab>> SOURCE_PAGES=new java.util.LinkedHashMap<>();
-    private static DeferredHolder<CreativeModeTab,CreativeModeTab> registerFamily(String family) {
+    /*private static final Map<String, DeferredHolder<CreativeModeTab, CreativeModeTab>> SOURCE_PAGES =
+            new LinkedHashMap<>();
+
+    private static DeferredHolder<CreativeModeTab, CreativeModeTab> registerFamily(String family) {
 *///?} else {
-    private static final Map<String,RegistryObject<CreativeModeTab>> SOURCE_PAGES=new java.util.LinkedHashMap<>();
+    private static final Map<String, RegistryObject<CreativeModeTab>> SOURCE_PAGES = new LinkedHashMap<>();
+
     private static RegistryObject<CreativeModeTab> registerFamily(String family) {
 //?}
-        if(!gregtech.content.creative.CreativeTabCatalog.FAMILIES.contains(family))return null;
-        if(SOURCE_PAGES.isEmpty())for(String id:gregtech.content.creative.CreativeTabCatalog.FAMILIES)
-            SOURCE_PAGES.put(id,TABS.register(id,()->CreativeModeTab.builder()
-                .title(Component.translatable(gregtech.content.creative.CreativeTabCatalog.title(id)))
-                .withSearchBar().icon(()->gregtech.bootstrap.registration.OriginCreativeContents.icon(id))
-                .displayItems((params,output)->{}).build()));
+        if (!gregtech.content.creative.CreativeTabCatalog.FAMILIES.contains(family)) return null;
+        if (SOURCE_PAGES.isEmpty())
+            for (String id : gregtech.content.creative.CreativeTabCatalog.FAMILIES)
+                SOURCE_PAGES.put(
+                        id,
+                        TABS.register(
+                                id,
+                                () -> CreativeModeTab.builder()
+                                        .title(Component.translatable(
+                                                gregtech.content.creative.CreativeTabCatalog.title(id)))
+                                        .withSearchBar()
+                                        .icon(() -> OriginCreativeContents.icon(id))
+                                        .displayItems((params, output) -> {})
+                                        .build()));
         return SOURCE_PAGES.get(family);
     }
-private GTCreativeTabs() {}
+
+    private GTCreativeTabs() {}
 
     /** Call once before {@code TABS.register(IEventBus)}. */
     public static void registerTabs() {
-        if (registered) {
-            return;
-        }
+        if (registered) return;
         registered = true;
         PrefixRegistry.ensurePrefixesLoaded();
         for (MaterialPrefix prefix : PrefixRegistry.all()) {
-            if (!GTItems.hasBoundItems(prefix)) {
-                continue;
-            }
+            if (!GTItems.hasBoundItems(prefix)) continue;
             MaterialPrefix bound = prefix;
 //? if >=1.21.1 {
-            /*DeferredHolder<CreativeModeTab,CreativeModeTab> tab = TABS.register(prefix.getRegistryName(), () -> CreativeModeTab.builder()
+            /*DeferredHolder<CreativeModeTab, CreativeModeTab> tab = TABS.register(prefix.getRegistryName(), () -> CreativeModeTab.builder()
                     .title(tabTitle(bound))
 *///?} else {
             RegistryObject<CreativeModeTab> tab = TABS.register(prefix.getRegistryName(), () -> CreativeModeTab.builder()
@@ -136,23 +86,20 @@ private GTCreativeTabs() {}
 //?}
                     .withSearchBar()
                     .icon(() -> iconFor(bound))
-                    .displayItems((params, output) -> {
-                        // Populated in CreativeTabHandler via BuildCreativeModeTabContentsEvent.
-                    })
+                    .displayItems((params, output) -> {})
                     .build());
             BY_PREFIX.put(prefix, tab);
         }
 
-        TOOLS_TAB = registerFamily("tools");
+        // Register the family pages before the block-prefix tabs so the tab order matches the source catalog.
+        registerFamily("tools");
 
         BlockPrefixRegistry.ensurePrefixesLoaded();
         for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
-            if (!GTBlocks.hasBoundBlocks(prefix)) {
-                continue;
-            }
+            if (!GTBlocks.hasBoundBlocks(prefix)) continue;
             BlockMaterialPrefix bound = prefix;
 //? if >=1.21.1 {
-            /*DeferredHolder<CreativeModeTab,CreativeModeTab> tab = TABS.register("block_" + bound.getRegistryName(), () -> CreativeModeTab.builder()
+            /*DeferredHolder<CreativeModeTab, CreativeModeTab> tab = TABS.register("block_" + bound.getRegistryName(), () -> CreativeModeTab.builder()
                     .title(blockTabTitle(bound))
 *///?} else {
             RegistryObject<CreativeModeTab> tab = TABS.register("block_" + bound.getRegistryName(), () -> CreativeModeTab.builder()
@@ -165,102 +112,20 @@ private GTCreativeTabs() {}
             BY_BLOCK_PREFIX.put(prefix, tab);
         }
 
-        STONES_TAB = registerFamily("stones");
-
-        CRUCIBLES_TAB = registerFamily("smelting_crucibles");
-
-        BURNING_BOXES_TAB = registerFamily("burning_boxes");
-
-        BASIC_MACHINES_TAB = registerFamily("basic_machines");
-
-        FLUIDS_TAB = registerFamily("fluids");
-
-        PIPES_TAB = registerFamily("pipes");
-
-        ITEM_PIPES_TAB = registerFamily("item_pipes");
-
-        FLUID_CONTAINERS_TAB = registerFamily("fluid_containers");
-
-        HOPPERS_TAB = registerFamily("hoppers");
-
-        WIRES_TAB = registerFamily("wires");
-
-        ENGINES_TAB = registerFamily("engines");
-
-        AXLES_TAB = registerFamily("axles");
-
-        TECHNOLOGY_TAB = registerFamily("technology");
-
-        ICONSETS_TAB = registerFamily("iconsets");
-
-        STORAGE_TAB = registerFamily("storage");
-        ENERGY_NODES_TAB = registerFamily("energy_nodes");
-        MULTIBLOCKS_TAB = registerFamily("multiblocks");
-        MULTI_ITEMS_TAB = registerFamily("multi_items");
-            for(String family:gregtech.content.creative.CreativeTabCatalog.FAMILIES)registerFamily(family);
-}
-
-//? if >=1.21.1 {
-    /*private static ItemStack storageStack(){return gregtech.bootstrap.registration.NeoCreativeContents.icon("storage");}
-*///?} else {
-    private static net.minecraft.world.item.ItemStack storageStack() {
-        var ms = GTStorage.MASS_STORAGE;
-        if (ms != null && ms.isPresent()) return new net.minecraft.world.item.ItemStack(ms.get());
-        return new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BARREL);
-    }
-//?}
-
-//? if >=1.21.1 {
-    /*private static ItemStack energyNodeStack(){return gregtech.bootstrap.registration.NeoCreativeContents.icon("energy_nodes");}
-*///?} else {
-    private static net.minecraft.world.item.ItemStack energyNodeStack() {
-        for (var entry : GTEnergyNodes.all()) {
-            if (entry.isPresent()) return new net.minecraft.world.item.ItemStack(entry.get());
-        }
-        return new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.REDSTONE_BLOCK);
-    }
-//?}
-
-//? if >=1.21.1 {
-    /*private static ItemStack multiblockStack(){return gregtech.bootstrap.registration.NeoCreativeContents.icon("multiblocks");}
-*///?} else {
-    private static net.minecraft.world.item.ItemStack multiblockStack() {
-        var main = GTMultiblocks.DISTILLATION_TOWER_MAIN;
-        if (main != null && main.isPresent()) return new net.minecraft.world.item.ItemStack(main.get());
-        return new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.FURNACE);
-    }
-//?}
-
-//? if >=1.21.1 {
-    /*private static ItemStack multiItemsStack(){return gregtech.bootstrap.registration.NeoCreativeContents.icon("multi_items");}
-*///?} else {
-    private static net.minecraft.world.item.ItemStack multiItemsStack() {
-        for (var entry : GTMultiItems.all()) {
-            if (entry.isPresent()) return new net.minecraft.world.item.ItemStack(entry.get());
-        }
-        return new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BREAD);
-    }
-//?}
-
-//? if >=1.21.1 {
-    /*public static Map<MaterialPrefix, DeferredHolder<CreativeModeTab,CreativeModeTab>> byPrefix() {
-*///?} else {
-    public static Map<MaterialPrefix, RegistryObject<CreativeModeTab>> byPrefix() {
-//?}
-        return Collections.unmodifiableMap(BY_PREFIX);
+        for (String family : gregtech.content.creative.CreativeTabCatalog.FAMILIES) registerFamily(family);
     }
 
 //? if >=1.21.1 {
-    /*public static DeferredHolder<CreativeModeTab,CreativeModeTab> tabFor(MaterialPrefix prefix) {
+    /*private static DeferredHolder<CreativeModeTab, CreativeModeTab> tabFor(MaterialPrefix prefix) {
 *///?} else {
-    public static RegistryObject<CreativeModeTab> tabFor(MaterialPrefix prefix) {
+    private static RegistryObject<CreativeModeTab> tabFor(MaterialPrefix prefix) {
 //?}
         return BY_PREFIX.get(prefix);
     }
 
     public static ResourceKey<CreativeModeTab> keyFor(MaterialPrefix prefix) {
 //? if >=1.21.1 {
-        /*DeferredHolder<CreativeModeTab,CreativeModeTab> tab = tabFor(prefix);
+        /*DeferredHolder<CreativeModeTab, CreativeModeTab> tab = tabFor(prefix);
 *///?} else {
         RegistryObject<CreativeModeTab> tab = tabFor(prefix);
 //?}
@@ -269,224 +134,11 @@ private GTCreativeTabs() {}
 
     public static ResourceKey<CreativeModeTab> keyFor(BlockMaterialPrefix prefix) {
 //? if >=1.21.1 {
-        /*DeferredHolder<CreativeModeTab,CreativeModeTab> tab = BY_BLOCK_PREFIX.get(prefix);
+        /*DeferredHolder<CreativeModeTab, CreativeModeTab> tab = BY_BLOCK_PREFIX.get(prefix);
 *///?} else {
         RegistryObject<CreativeModeTab> tab = BY_BLOCK_PREFIX.get(prefix);
 //?}
         return tab == null ? null : tab.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> stonesTabKey() {
-        return STONES_TAB == null ? null : STONES_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> cruciblesTabKey() {
-        return CRUCIBLES_TAB == null ? null : CRUCIBLES_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> burningBoxesTabKey() {
-        return BURNING_BOXES_TAB == null ? null : BURNING_BOXES_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> basicMachinesTabKey() {
-        return BASIC_MACHINES_TAB == null ? null : BASIC_MACHINES_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> fluidsTabKey() {
-        return FLUIDS_TAB == null ? null : FLUIDS_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> pipesTabKey() {
-        return PIPES_TAB == null ? null : PIPES_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> itemPipesTabKey() {
-        return ITEM_PIPES_TAB == null ? null : ITEM_PIPES_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> fluidContainersTabKey() {
-        return FLUID_CONTAINERS_TAB == null ? null : FLUID_CONTAINERS_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> hoppersTabKey() {
-        return HOPPERS_TAB == null ? null : HOPPERS_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> wiresTabKey() {
-        return WIRES_TAB == null ? null : WIRES_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> enginesTabKey() {
-        return ENGINES_TAB == null ? null : ENGINES_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> technologyTabKey() {
-        return TECHNOLOGY_TAB == null ? null : TECHNOLOGY_TAB.getKey();
-    }
-
-    public static ResourceKey<CreativeModeTab> iconSetsTabKey() {
-        return ICONSETS_TAB == null ? null : ICONSETS_TAB.getKey();
-    }
-
-    private static ItemStack wiresStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("wires");
-*///?} else {
-        // Icon: rubber-coated copper cable (1x)
-        for (var entry : GTWires.allCables()) {
-            if (entry.isPresent()) {
-                ElectricWireBlock block = entry.get();
-                if ("copper".equals(block.spec().id()) && block.spec().size() == 1) {
-                    return new ItemStack(block);
-                }
-            }
-        }
-        // fallback: any cable
-        for (var entry : GTWires.allCables()) {
-            if (entry.isPresent()) return new ItemStack(entry.get());
-        }
-        return new ItemStack(net.minecraft.world.item.Items.STICK);
-//?}
-    }
-
-    private static ItemStack cruciblesStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("smelting_crucibles");
-*///?} else {
-        var crucible = GTSmeltery.findCrucible("smelting_crucible_steel");
-        if (crucible != null && crucible.isPresent()) {
-            return new ItemStack(crucible.get());
-        }
-        return new ItemStack(Items.IRON_BLOCK);
-//?}
-    }
-
-    private static ItemStack burningBoxesStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("burning_boxes");
-*///?} else {
-        var burningBox = GTBurningBoxes.findSolid("burning_box_solid_steel");
-        if (burningBox != null && burningBox.isPresent()) {
-            return new ItemStack(burningBox.get());
-        }
-        return new ItemStack(Items.FURNACE);
-//?}
-    }
-
-    private static ItemStack basicMachinesStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("basic_machines");
-*///?} else {
-        var machines = GTBasicMachines.all();
-        if (!machines.isEmpty()) {
-            var first = machines.get(0);
-            if (first.isPresent()) return new ItemStack(first.get());
-        }
-        return new ItemStack(Items.IRON_BLOCK);
-//?}
-    }
-
-    private static ItemStack fluidsStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("fluids");
-*///?} else {
-        FluidItem first = GTFluidItems.getFirst();
-        if (first != null) {
-            return new ItemStack(first);
-        }
-        return new ItemStack(Items.WATER_BUCKET);
-//?}
-    }
-
-    private static ItemStack pipesStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("pipes");
-*///?} else {
-        if (GTFluidPipes.PIPE_MEDIUM_STEEL != null && GTFluidPipes.PIPE_MEDIUM_STEEL.isPresent()) {
-            return new ItemStack(GTFluidPipes.PIPE_MEDIUM_STEEL.get());
-        }
-        return new ItemStack(Items.IRON_BLOCK);
-//?}
-    }
-
-    private static ItemStack itemPipesStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("item_pipes");
-*///?} else {
-        if (GTItemPipes.PIPE_MEDIUM_BRASS != null && GTItemPipes.PIPE_MEDIUM_BRASS.isPresent()) {
-            return new ItemStack(GTItemPipes.PIPE_MEDIUM_BRASS.get());
-        }
-        return new ItemStack(Items.HOPPER);
-//?}
-    }
-
-    private static ItemStack fluidContainersStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("fluid_containers");
-*///?} else {
-        if (GTTanks.DRUM_STEEL != null && GTTanks.DRUM_STEEL.isPresent()) {
-            return new ItemStack(GTTanks.DRUM_STEEL.get());
-        }
-        return new ItemStack(Items.BARREL);
-//?}
-    }
-
-    private static ItemStack technologyStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("technology");
-*///?} else {
-        for (RegisteredItem<Item> entry : GTTechnological.all()) {
-            if (entry.isPresent()) return new ItemStack(entry.get());
-        }
-        return new ItemStack(Items.REDSTONE);
-//?}
-    }
-
-    private static ItemStack iconSetsStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("iconsets");
-*///?} else {
-        for (RegisteredBlock<Block> entry : GTIconSetBlocks.all()) {
-            if (entry.isPresent()) return new ItemStack(entry.get());
-        }
-        return new ItemStack(Items.BRICK);
-//?}
-    }
-
-    private static ItemStack hoppersStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("hoppers");
-*///?} else {
-        var hopper = GTHoppers.find("hopper_steel");
-        if (hopper != null && hopper.isPresent()) {
-            return new ItemStack(hopper.get());
-        }
-        return new ItemStack(Items.HOPPER);
-//?}
-    }
-
-    private static ItemStack enginesStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("engines");
-*///?} else {
-        var engines = GTEngines.all();
-        if (!engines.isEmpty()) {
-            var first = engines.get(0);
-            if (first.isPresent()) return new ItemStack(first.get());
-        }
-        return new ItemStack(Items.FURNACE);
-//?}
-    }
-
-    private static ItemStack axlesStack() {
-//? if >=1.21.1 {
-        /*return gregtech.bootstrap.registration.NeoCreativeContents.icon("axles");
-*///?} else {
-        for (var entry : GTAxles.all()) {
-            if (entry.isPresent()) return new ItemStack(entry.get());
-        }
-        return new ItemStack(Items.STICK);
-//?}
     }
 
     private static ItemStack blockIconFor(BlockMaterialPrefix prefix) {
