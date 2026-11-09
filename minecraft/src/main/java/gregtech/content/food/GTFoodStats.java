@@ -28,7 +28,7 @@ public final class GTFoodStats {
     public static final int SUGAR = 3;
     public static final int FAT = 4;
     public static final int RADIATION = 5;
-    /** The five statistics {@link PlayerFoodStats} tracks; radiation lives in {@code PlayerRadiation}. */
+    /** GT6's tracked statistics; only {@link #RADIATION} remains, and it lives in {@code PlayerRadiation}. */
     public static final int TRACKED = 5;
 
     private static final Map<Item, int[]> BY_ITEM = new IdentityHashMap<>();

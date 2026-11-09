@@ -28,11 +28,11 @@ import java.util.Map;
  * entry into {@code DrinksGT.REGISTER} keyed by the fluid's name ({@code FoodStatDrink}); a
  * GT6 bottle (its source portion, {@code MultiItemBottles}) reads it through {@code FoodStatFluid}.
  * The port keys the same table by {@link Fluid}, generated from {@code Loader_Fluids.java} into
- * {@link GTDrinksGen} (345 rows; the fluid is resolved through {@link RegisteredFluids#get(String)}, which
+ * {@link GTDrinksGen} (198 rows; the fluid is resolved through {@link RegisteredFluids#get(String)}, which
  * carries GT6's own {@code FL} field names).
  *
  * <p>Drinking applies GT6's {@code FoodStat.onEaten}: the food level and saturation go through vanilla's food
- * data, the six statistics into {@link PlayerFoodStats} (and {@link PlayerRadiation} for the radiation one).
+ * data, and radiation goes through {@link PlayerRadiation}; the five other GT6 statistics are not tracked.
  */
 public final class GTDrinks {
     /** One {@code FoodStatDrink} row: the food values and the six statistics GT6 tracks. */
@@ -259,21 +259,6 @@ public final class GTDrinks {
             player.hurt(player.damageSources().explosion(player, player), Float.MAX_VALUE);
         }
         player.getFoodData().eat(row.foodLevel(), row.saturation());
-        if (row.alcohol() != 0) {
-            PlayerFoodStats.change(player, row.alcohol(), GTFoodStats.ALCOHOL);
-        }
-        if (row.caffeine() != 0) {
-            PlayerFoodStats.change(player, row.caffeine(), GTFoodStats.CAFFEINE);
-        }
-        if (row.dehydration() != 0) {
-            PlayerFoodStats.change(player, row.dehydration(), GTFoodStats.DEHYDRATION);
-        }
-        if (row.sugar() != 0) {
-            PlayerFoodStats.change(player, row.sugar(), GTFoodStats.SUGAR);
-        }
-        if (row.fat() != 0) {
-            PlayerFoodStats.change(player, row.fat(), GTFoodStats.FAT);
-        }
         if (row.radiation() != 0) {
             PlayerRadiation.change(player, row.radiation());
         }
