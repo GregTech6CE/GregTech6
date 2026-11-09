@@ -8,12 +8,12 @@ import java.util.List;
  *
  * <p>GT6's food items: every {@code addItem(...)} row of {@code gregtech/items/MultiItemFood.java}
  * with the numbers of its {@code new FoodStat(...)} argument. {@code foodLevel}/{@code saturation}
- * are what GT6 hands to vanilla food data ({@code MultiItemRandom.java:297-304}), the six
- * statistics [alcohol, caffeine, dehydration, sugar, fat, radiation] are what
- * {@code FoodStat.onEaten} pushes into {@code EntityFoodTracker} ({@code FoodStat.java:164-172}).
+ * are what GT6 hands to vanilla food data ({@code MultiItemRandom.java:297-304}); the five removed
+ * statistics are not carried, and radiation is kept separately in
+ * {@link gregtech.content.food.FoodStatisticRows}.
  *
  * <p>{@code id} is the port's own item id: the rows are lined up 1:1 against the {@code food}
- * category of {@code GTMultiItemsGen} (both 266 entries, verified by the extractor), so the ids
+ * category of {@code GTMultiItemsGen} (both 251 entries, verified by the extractor), so the ids
  * are read from the port's registration instead of derived from GT6's display names.
  */
 public final class GTFoodItemsGen {
@@ -2233,7 +2233,7 @@ public final class GTFoodItemsGen {
 
     /**
      * GT6 food rows the port does <em>not</em> register, with the reason. Empty, and that is the
-     * point: all 266 rows of {@code MultiItemFood} line up 1:1 with the {@code food} category of
+     * point: all 251 port rows line up 1:1 with the {@code food} category of
      * {@code GTMultiItemsGen} (the extractor fails loudly if a single row stops matching), and the
      * one row GT6 itself does not register is the hidden ID-migration stub in {@link #SKIPPED}.
      * The list stays empty while the food line is complete; a future gap row would be registered

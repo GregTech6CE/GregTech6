@@ -28,7 +28,7 @@ import java.util.Map;
  * entry into {@code DrinksGT.REGISTER} keyed by the fluid's name ({@code FoodStatDrink}); a
  * GT6 bottle (its source portion, {@code MultiItemBottles}) reads it through {@code FoodStatFluid}.
  * The port keys the same table by {@link Fluid}, generated from {@code Loader_Fluids.java} into
- * {@link GTDrinksGen} (198 rows; the fluid is resolved through {@link RegisteredFluids#get(String)}, which
+ * {@link GTDrinksGen} (185 rows; the fluid is resolved through {@link RegisteredFluids#get(String)}, which
  * carries GT6's own {@code FL} field names).
  *
  * <p>Drinking applies GT6's {@code FoodStat.onEaten}: the food level and saturation go through vanilla's food
