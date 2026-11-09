@@ -1,6 +1,6 @@
 # Stonecutter 分类索引
 
-本目录按作用对象划分；每个领域内部再按差异类型拆子文档。通用概念见[设计](design.md)与[用法](usage.md)。
+本目录按作用对象划分；每个领域内部再按差异类型拆子文档。通用概念见[设计](design.md)与[用法](usage.md)。`HolderLookup.Provider` 的通用概念见设计文档的“Provider 基础”；各领域的 provider 签名见对应领域。
 
 | 领域 | 主要差异 |
 | --- | --- |
@@ -20,7 +20,7 @@
 
 摘要：方块实体回调的签名差异，全部由 provider 参数引起。
 
-关键词：BlockEntity, saveAdditional, loadAdditional, getUpdateTag, loadStatic, codecLookup
+关键词：BlockEntity, saveAdditional, loadAdditional, getUpdateTag, handleUpdateTag, loadStatic, codecLookup, saveData, loadData, saveWithoutMetadata
 
 领域文档：[BlockEntity/README.md](BlockEntity/README.md)
 
@@ -28,7 +28,7 @@
 
 摘要：物品栈的 provider 签名、自定义数据存储、线格式、旧数据迁移与身份比较。
 
-关键词：ItemStack, save, CUSTOM_DATA, StackData, isSameItemSameTags, isSameItemSameComponents
+关键词：ItemStack, ItemStack#save, ItemStack#parseOptional, CUSTOM_DATA, CustomData, StackData, ItemStack#getTag, ItemStack#getOrCreateTag, ItemStack#setTag, ItemStack#hasTag, hasAnyData, hasCustomData, isSameItemSameTags, isSameItemSameComponents, StackCompat.sameItem, BLOCK_ENTITY_DATA
 
 领域文档：[ItemStack/README.md](ItemStack/README.md)
 
@@ -36,7 +36,7 @@
 
 摘要：流体栈的 provider 签名、组件存储、线格式与身份比较。
 
-关键词：FluidStack, save, components, isFluidEqual, isSameFluidSameComponents
+关键词：FluidStack, FluidStack#save, FluidStack#writeToNBT, FluidStack#loadFluidStackFromNBT, FluidStack#getTag, FluidStack#getComponentsPatch, FluidTankGT, isFluidEqual, isSameFluidSameComponents, StackCompat.sameFluid
 
 领域文档：[FluidStack/README.md](FluidStack/README.md)
 
@@ -60,7 +60,7 @@
 
 摘要：注册表查找、`ResourceLocation` 构造与标签目录命名。
 
-关键词：BuiltInRegistries, ForgeRegistries, ResourceLocation, tags
+关键词：BuiltInRegistries, ForgeRegistries, Mc.item, GregTech.id, fromNamespaceAndPath, ResourceLocation, tags/items, tags/item, GregTechIdentity
 
 领域文档：[Registry/README.md](Registry/README.md)
 
@@ -68,7 +68,7 @@
 
 摘要：能力 API 与 `LazyOptional` / `Optional` 的差异。
 
-关键词：ForgeCapabilities, Capabilities, LazyOptional, Optional
+关键词：ForgeCapabilities, Capabilities, LazyOptional, Optional, FluidUtil, IFluidHandlerItem, CapabilityItemHandler, IItemHandler
 
 领域文档：[Capability/README.md](Capability/README.md)
 
@@ -76,7 +76,7 @@
 
 摘要：客户端模型资源位置与 baked model 的差异。
 
-关键词：ModelResourceLocation, BakedModel, client event
+关键词：ModelResourceLocation, BakedModel, ModelBakery, client event, inventory
 
 领域文档：[ClientModel/README.md](ClientModel/README.md)
 
@@ -84,7 +84,7 @@
 
 摘要：日志、包装类与静态谓词的收敛。
 
-关键词：logger, wrapper, static predicate
+关键词：logger, LogUtils, GregTech.LOGGER, Mc.logger, wrapper, NeoToolBindings, static predicate, GTToolType, PanelCoverHost
 
 领域文档：[Facade/README.md](Facade/README.md)
 
@@ -92,7 +92,7 @@
 
 摘要：两侧相同、一侧为空、只差 import 或常量的分支。
 
-关键词：identical, empty block, import, split duplicate
+关键词：identical, same, empty block, one-sided, import, split duplicate, duplicate registration
 
 领域文档：[Trivial/README.md](Trivial/README.md)
 
@@ -100,6 +100,6 @@
 
 摘要：CE 与原版的行为差异，不是版本差异；清理 Stonecutter 分支时不能误折叠。
 
-关键词：craftKind, plunger, igniter, PanelCoverHost
+关键词：craftKind, isInteractionTool, isTool, plunger, igniter, consumesTool, PanelCoverHost
 
 领域文档：[Parity/README.md](Parity/README.md)
