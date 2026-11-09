@@ -116,11 +116,6 @@ public final class MaterialClientModels {
             MaterialFormItem item = (MaterialFormItem) entry.get();
             event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? item.getTintColor() : 0xFFFFFF), entry.get());
         }
-        for (var entry : GTItems.addonEntries()) {
-            if (entry.get() instanceof MaterialFormItem item) {
-                event.register(ItemColorARGB.opaque((stack, layer) -> layer == 0 ? item.getTintColor() : 0xFFFFFF), entry.get());
-            }
-        }
     }
 *///?}
 }
