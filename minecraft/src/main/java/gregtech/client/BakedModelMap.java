@@ -12,6 +12,10 @@ import java.util.function.BiFunction;
 /**
  * Node-neutral view of the bakery model map. Call sites never declare the version-specific key type:
  * 1.20.1 keys its map by {@link ResourceLocation} and 1.21.1 by {@link ModelResourceLocation}.
+ *
+ * <p>Every lookup rejects the bakery missing sentinel: {@link #get}, {@link #getPlain} and
+ * {@link #find} return {@code null} when the key is absent or resolves to the sentinel. Only
+ * {@link #missing()} exposes the raw sentinel, for identity checks such as the alpha pass.</p>
  */
 public final class BakedModelMap {
     /** Same key as both bakeries; keep lookups independent of the renderer bootstrap. */
@@ -29,34 +33,37 @@ public final class BakedModelMap {
         return new BakedModelMap(models);
     }
 
+    /** Returns {@code null} when the key is absent or still points at the missing sentinel. */
     public BakedModel get(ResourceLocation id, String variant) {
-        return models.get(new ModelResourceLocation(id, variant));
+        return usable(rawGet(new ModelResourceLocation(id, variant)));
     }
 
     /** 1.20.1 keeps a plain {@link ResourceLocation} key for {@code RegisterAdditional} entries. */
     public BakedModel getPlain(ResourceLocation id) {
-        return models.get(id);
+        return usable(rawGet(id));
     }
 
     /** Resolve a shared model without treating the bakery missing sentinel as success. */
     public BakedModel find(ResourceLocation id) {
         // 1.20.1 RegisterAdditional stores plain keys; prefer them before block/item variants.
         BakedModel plain = getPlain(id);
-        if (isUsable(plain)) return plain;
+        if (plain != null) return plain;
         // "standalone" is the 1.21.1 RegisterAdditional variant; the other keys cover block/item models.
         for (String variant : new String[]{"standalone", "", "inventory", "normal"}) {
             BakedModel model = get(id, variant);
-            if (isUsable(model)) return model;
+            if (model != null) return model;
         }
         return null;
     }
 
+    /** True when the model exists and is not the canonical missing sentinel. */
     public boolean isUsable(BakedModel model) {
-        return model != null && model != models.get(MISSING);
+        return model != null && model != rawGet(MISSING);
     }
 
+    /** The raw missing sentinel; only for identity checks, never for rendering. */
     public BakedModel missing() {
-        return models.get(MISSING);
+        return rawGet(MISSING);
     }
 
     public void put(ResourceLocation id, String variant, BakedModel model) {
@@ -69,6 +76,14 @@ public final class BakedModelMap {
 
     public void replaceAll(BiFunction<ResourceLocation, BakedModel, BakedModel> replacer) {
         models.replaceAll((key, model) -> replacer.apply(modelId(key), model));
+    }
+
+    private BakedModel rawGet(Object key) {
+        return models.get(key);
+    }
+
+    private BakedModel usable(BakedModel model) {
+        return isUsable(model) ? model : null;
     }
 
 //? if >=1.21.1 {
