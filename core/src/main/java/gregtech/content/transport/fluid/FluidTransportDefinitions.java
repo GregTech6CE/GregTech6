@@ -240,6 +240,16 @@ public final class FluidTransportDefinitions {
                 0,
                 0),
         new FluidPipeMat(
+                "efrine",
+                gregtech.content.material.generated.CompoundMaterials.Efrine,
+                250,
+                true,
+                false,
+                true,
+                true,
+                0,
+                0),
+        new FluidPipeMat(
                 "netherite",
                 gregtech.content.material.generated.CompoundMaterials.Netherite,
                 300,
