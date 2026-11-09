@@ -62,7 +62,7 @@
 
 ## 记录与验证
 
-- 行为变更记录到 parity/decision 文档；提交说明写明变更范围。
+- 相对于 golden 的行为变更记录到 parity/decision 文档；注册路径、holder 类型、类删除等结构变更记录到架构文档或提交说明，不进入 parity。
 - 两个节点 `stonecutterGenerate` + `compileJava` 通过。
 - `spotlessCheck` 通过。
 - 检查生成源码：分支折叠、import 残留、两节点一致性。
