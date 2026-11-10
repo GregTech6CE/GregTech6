@@ -139,7 +139,7 @@ class ItemCompositionResolverTest {
     }
 
     @Test
-    void damagedScalingDropsPrimaryIdentityWhenOnlySecondaryMaterialRemains() {
+    void damagedScalingPreservesAnInvalidPrimaryWhenOnlySecondaryMaterialRemains() {
         var composition = new ItemComposition(
                 null,
                 List.of(MaterialComponent.of(Materials.Iron, 1), MaterialComponent.of(Materials.Copper, 100)),
@@ -150,7 +150,15 @@ class ItemCompositionResolverTest {
         var scaled = ItemCompositionScaling.scale(composition, 1, 100);
 
         assertEquals(List.of(MaterialComponent.of(Materials.Copper, 1)), scaled.components());
-        assertEquals(Materials.Copper.resolve(), scaled.material());
+        assertFalse(scaled.material().isValid());
+    }
+
+    @Test
+    void legacySingleComponentDeclarationsStillInferTheirPrimary() {
+        var composition =
+                new ItemComposition(null, List.of(MaterialComponent.of(Materials.Iron, 4)), "legacy probe", true);
+
+        assertEquals(Materials.Iron.resolve(), composition.material());
     }
 
     private static ItemCompositionCandidate candidate(

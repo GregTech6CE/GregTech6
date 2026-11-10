@@ -1,24 +1,31 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
 import gregtech.api.material.MaterialProperty;
+import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.RecyclablePrefixes;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.ItemComposition;
+import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
+import gregtech.engine.recipe.MaterialUnitRecipe;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.stack.StackCompat;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -38,19 +45,26 @@ import net.minecraft.world.item.ItemStack;
  * either comes back as material or the player has to store it forever.
  */
 public final class ShredderRecyclingRecipes {
+    private static final String GENERIC_SOURCE = "recovery:shredder-generic";
+
     /** One registered recycling route, for tests and reports. */
     public record Entry(String input, Recipe recipe) {}
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
+    private static final List<Entry> TAG_ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = new ArrayList<>();
-    private static final java.util.Map<String, Integer> SKIP_REASONS = new java.util.TreeMap<>();
+    private static final Map<String, Integer> SKIP_REASONS = new java.util.TreeMap<>();
+    private static final Map<MaterialUnitRecipe, Recipe> TAG_OWNED = new IdentityHashMap<>();
 
     private static boolean registered;
 
     private ShredderRecyclingRecipes() {}
 
     public static List<Entry> entries() {
-        return Collections.unmodifiableList(ENTRIES);
+        var entries = new ArrayList<Entry>(ENTRIES.size() + TAG_ENTRIES.size());
+        entries.addAll(ENTRIES);
+        entries.addAll(TAG_ENTRIES);
+        return Collections.unmodifiableList(entries);
     }
 
     public static List<String> skipped() {
@@ -70,22 +84,11 @@ public final class ShredderRecyclingRecipes {
                     .orElse(null);
             if (prefix == null && blockPrefix == null) missing.add(name);
         }
-        for (var entry : ItemMaterialRegistry.entries().entrySet().stream()
-                .sorted(Comparator.comparing(entry -> net.minecraft.core.registries.BuiltInRegistries.ITEM
-                        .getKey(entry.getKey())
-                        .toString()))
-                .toList()) {
-            ItemStack input = new ItemStack(entry.getKey());
+        for (var entry : sortedEntries()) {
             var composition = entry.getValue();
-            MaterialPrefix prefix = composition.prefix();
-            if (prefix == null
-                    || input.getItem() instanceof BlockItem
-                    || composition.material().has(MaterialProperty.ANTIMATTER)
-                    || !allows(prefix)
-                    || composition.material() != null
-                            && containerForm(prefix)
-                            && !"Empty".equals(composition.material().resolve().getName())) continue;
-            recycle(input, prefix, prefix.getName());
+            if (isTagOwned(composition)) continue;
+            if (entry.getKey() instanceof BlockItem) continue;
+            recycle(entry.getKey(), ENTRIES);
         }
         for (var entry : gregtech.content.data.MaterialPrefixes.all().entrySet()) {
             if (!RecyclablePrefixes.NAMES.contains(PrefixRegistry.sourceName(entry.getKey()))) continue;
@@ -94,7 +97,8 @@ public final class ShredderRecyclingRecipes {
             for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
                 if (material.has(MaterialProperty.ANTIMATTER)) continue;
                 var input = gregtech.content.registry.GTBlocks.getStack(blockPrefix, material);
-                recycle(input, null, entry.getKey());
+                if (!(input.getItem() instanceof BlockItem)) continue;
+                publish(input, ENTRIES, new RecyclableForm(null, PrefixRegistry.sourceName(entry.getKey())));
             }
         }
         if (!missing.isEmpty()) SKIPPED.add("prefixes the port does not have: " + missing);
@@ -108,6 +112,44 @@ public final class ShredderRecyclingRecipes {
         return ENTRIES.size();
     }
 
+    /** Rebuilds only tag-derived rows; explicit startup rows stay in the captured recipe baseline. */
+    public static int rebuildTagRows() {
+        if (!registered || !ItemMaterialRegistry.tagInputReady()) return TAG_ENTRIES.size();
+        var planned = new ArrayList<Planned>();
+        for (var entry : sortedEntries()) {
+            var composition = entry.getValue();
+            if (isTagOwned(composition)) planned.add(prepare(entry.getKey(), composition));
+        }
+        clearTagRows();
+        try {
+            for (var candidate : planned) {
+                if (candidate == null || candidate.rule() == null) continue;
+                beforePublish(candidate.rule().template);
+                var published = candidate.rule().publish(MachineRecipeMaps.Shredder);
+                if (published == null) {
+                    skip("tag-existing-owner");
+                    continue;
+                }
+                TAG_OWNED.put(candidate.rule(), published);
+                TAG_ENTRIES.add(new Entry(candidate.name(), published));
+            }
+        } catch (RuntimeException | Error failure) {
+            clearTagRows();
+            throw failure;
+        }
+        return TAG_ENTRIES.size();
+    }
+
+    public static void clearTagRows() {
+        for (var rule : List.copyOf(TAG_OWNED.keySet())) rule.remove();
+        TAG_OWNED.clear();
+        TAG_ENTRIES.clear();
+    }
+
+    public static Set<Recipe> owned() {
+        return Set.copyOf(TAG_OWNED.values());
+    }
+
     private static boolean allows(MaterialPrefix prefix) {
         return RecyclablePrefixes.NAMES.contains(PrefixRegistry.sourceName(prefix.getName()));
     }
@@ -118,17 +160,53 @@ public final class ShredderRecyclingRecipes {
         return source.equals("chemtube") || source.equals("cell") || source.equals("capcellcon");
     }
 
-    private static void recycle(ItemStack input, MaterialPrefix expectedPrefix, String name) {
-        if (input.isEmpty()) return;
+    private static List<Map.Entry<net.minecraft.world.item.Item, ItemComposition>> sortedEntries() {
+        return ItemMaterialRegistry.entries().entrySet().stream()
+                .sorted(Comparator.comparing(entry -> net.minecraft.core.registries.BuiltInRegistries.ITEM
+                        .getKey(entry.getKey())
+                        .toString()))
+                .toList();
+    }
+
+    private static boolean isTagOwned(ItemComposition composition) {
+        return composition.sources().stream().anyMatch(source -> source.kind() == ItemCompositionSource.Kind.FORM_TAG);
+    }
+
+    private static void recycle(net.minecraft.world.item.Item item, List<Entry> destination) {
+        ItemStack input = new ItemStack(item);
+        var data = ItemMaterialRegistry.base(item).orElse(null);
+        var form = recyclableForm(input, data);
+        if (form == null) return;
+        publish(input, destination, form);
+    }
+
+    private static void publish(ItemStack input, List<Entry> destination, RecyclableForm form) {
         var data = ItemMaterialRegistry.base(input.getItem()).orElse(null);
+        if (data == null || form == null) return;
+        var candidate = prepare(input, data, form);
+        if (candidate == null || candidate.rule() == null) return;
+        beforePublish(candidate.rule().template);
+        var published = candidate.rule().publish(MachineRecipeMaps.Shredder);
+        if (published == null) skip("existing-owner");
+        else destination.add(new Entry(candidate.name(), published));
+    }
+
+    private static Planned prepare(net.minecraft.world.item.Item item, ItemComposition data) {
+        ItemStack input = new ItemStack(item);
+        var form = recyclableForm(input, data);
+        return form == null ? null : prepare(input, data, form);
+    }
+
+    private static Planned prepare(ItemStack input, ItemComposition data, RecyclableForm form) {
+        if (input.isEmpty()) return null;
         if (data == null
                 || ItemMaterialRegistry.recoveryRejection(input) != ItemMaterialRegistry.RecoveryRejection.ELIGIBLE) {
             skip("input");
-            return;
+            return null;
         }
-        if (data.prefix() != expectedPrefix || !data.material().isValid()) {
+        if (data.prefix() != form.prefix() || !data.material().isValid()) {
             skip("composition-override");
-            return;
+            return null;
         }
         GTMaterial material = data.material().resolve();
         long totalUnits;
@@ -138,16 +216,16 @@ public final class ShredderRecyclingRecipes {
                     .reduce(0, Math::addExact);
         } catch (ArithmeticException overflow) {
             skip("composition-overflow");
-            return;
+            return null;
         }
         if (totalUnits <= 0) {
             skip("empty-composition");
-            return;
+            return null;
         }
         var plan = MaterialRecoveryRules.planShredder(data, MachineRecipeMaps.Shredder.mOutputItemsCount);
         if (!plan.accepted()) {
             skip("plan-" + plan.rejection().name().toLowerCase(Locale.ROOT));
-            return;
+            return null;
         }
         var outputs = new ArrayList<ItemStack>();
         for (var output : plan.outputs()) {
@@ -155,28 +233,14 @@ public final class ShredderRecyclingRecipes {
                 var stack = GTItems.getStack(pile.prefix(), output.material(), pile.count());
                 if (stack.isEmpty()) {
                     skip("output-binding");
-                    return;
+                    return null;
                 }
                 outputs.add(stack);
             }
         }
         if (outputs.isEmpty()) {
             skip("no-output");
-            return;
-        }
-        // Two GT6 passes: multiplier 256 for hard materials, 16 for MORTAR grindable ones.
-        long multiplier = gregtech.content.material.MaterialProcessingProperties.isMortarGrindable(material) ? 16 : 256;
-        long duration;
-        try {
-            duration = Math.max(
-                    1,
-                    (Math.multiplyExact(Math.multiplyExact(totalUnits, multiplier), material.getToolQuality() + 1L)
-                                    + GTValues.U
-                                    - 1)
-                            / GTValues.U);
-        } catch (ArithmeticException overflow) {
-            skip("duration-overflow");
-            return;
+            return null;
         }
         var template = RecipeMap.make(
                 true,
@@ -186,23 +250,72 @@ public final class ShredderRecyclingRecipes {
                 null,
                 null,
                 null,
-                duration,
+                plan.duration(),
                 16,
                 0);
-        if (template == null) return;
-        var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
+        if (template == null) return null;
+        template.withSource(GENERIC_SOURCE);
+        var rule = new MaterialUnitRecipe(
                 template,
                 0,
                 material,
                 totalUnits,
                 gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
         rule.source(input, totalUnits);
-        var published = rule.publish(MachineRecipeMaps.Shredder);
-        if (published == null) skip("existing-owner");
-        else ENTRIES.add(new Entry(name, published));
+        return new Planned(form.name(), rule);
+    }
+
+    private static void beforePublish(Recipe candidate) {
+        var collision = MachineRecipeMaps.Shredder.findCollision(candidate);
+        if (collision != null && GENERIC_SOURCE.equals(collision.mSource)) {
+            if (sameOutputs(collision, candidate)) return;
+            throw conflict(candidate, collision);
+        }
+    }
+
+    private static IllegalStateException conflict(Recipe candidate, Recipe existing) {
+        return new IllegalStateException("Conflicting Shredder recovery rows for "
+                + candidate.mInputs[0].getHoverName().getString() + ": existing "
+                + existing.mOutputs.length + " outputs at " + existing.mDuration + "t, candidate "
+                + candidate.mOutputs.length + " outputs at " + candidate.mDuration + "t");
+    }
+
+    private static boolean sameOutputs(Recipe left, Recipe right) {
+        if (left.mOutputs.length != right.mOutputs.length
+                || left.mFluidOutputs.length != right.mFluidOutputs.length
+                || !java.util.Arrays.equals(left.mChances, right.mChances)) return false;
+        for (int i = 0; i < left.mOutputs.length; i++)
+            if (!ItemStack.matches(left.mOutputs[i], right.mOutputs[i])) return false;
+        for (int i = 0; i < left.mFluidOutputs.length; i++)
+            if (!StackCompat.sameFluid(left.mFluidOutputs[i], right.mFluidOutputs[i])) return false;
+        return true;
+    }
+
+    private static RecyclableForm recyclableForm(ItemStack input, ItemComposition data) {
+        if (data == null || data.material() == null || data.material().has(MaterialProperty.ANTIMATTER)) return null;
+        MaterialPrefix prefix = data.prefix();
+        if (prefix != null) {
+            return allows(prefix)
+                            && !(containerForm(prefix)
+                                    && !"Empty".equals(data.material().resolve().getName()))
+                    ? new RecyclableForm(prefix, prefix.getName())
+                    : null;
+        }
+        if (input.getItem() instanceof BlockItem blockItem
+                && blockItem.getBlock() instanceof MaterialBlockLike block
+                && RecyclablePrefixes.NAMES.contains(
+                        PrefixRegistry.sourceName(block.prefix().getName()))) {
+            return new RecyclableForm(
+                    null, PrefixRegistry.sourceName(block.prefix().getName()));
+        }
+        return null;
     }
 
     private static void skip(String reason) {
         SKIP_REASONS.merge(reason, 1, Integer::sum);
     }
+
+    private record RecyclableForm(MaterialPrefix prefix, String name) {}
+
+    private record Planned(String name, MaterialUnitRecipe rule) {}
 }

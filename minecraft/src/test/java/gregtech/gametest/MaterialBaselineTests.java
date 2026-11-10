@@ -143,6 +143,11 @@ public final class MaterialBaselineTests {
             if (entry.getValue().sources().stream()
                     .anyMatch(source -> source.kind() == ItemCompositionSource.Kind.FORM_TAG)) tagged++;
         }
+        helper.assertTrue(ItemMaterialRegistry.tagInputReady(), "tag input generation is ready at runtime");
+        helper.assertTrue(
+                ItemMaterialRegistry.compositionStatus(Items.DRAGON_EGG)
+                        != ItemMaterialRegistry.CompositionLookupState.TAG_INPUT_NOT_READY,
+                "completed tag input distinguishes absence from an unpublished generation");
         helper.assertTrue(
                 gregtech.content.recipe.ExternalOreProcessing.taggedCompositions() == 0 || tagged > 0,
                 "loaded common-form tags contribute effective compositions");
@@ -369,6 +374,39 @@ public final class MaterialBaselineTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void tagDrivenShredderRowsFollowTheEffectiveSnapshot(GameTestHelper helper) {
+        var item = Items.END_CRYSTAL;
+        var stack = new ItemStack(item);
+        helper.assertTrue(ItemMaterialRegistry.explicit(item).isEmpty(), "probe item starts without explicit material");
+        try {
+            ItemMaterialRegistry.publishTagCandidates(
+                    Map.of(item, List.of(taggedComposition(MaterialPrefix.ingot, Materials.Copper, GTValues.U))));
+            gregtech.content.recipe.ShredderRecyclingRecipes.rebuildTagRows();
+            var recipe = find(MachineRecipeMaps.Shredder, List.of(stack), List.of());
+            helper.assertTrue(recipe != null, "tag-derived composition creates a Shredder row");
+            helper.assertTrue(
+                    Arrays.stream(recipe.mOutputs)
+                            .anyMatch(output -> output.is(GTItems.getStack(MaterialPrefix.dust, Materials.Copper, 1)
+                                    .getItem())),
+                    "tag-derived Shredder row uses the resolved composition");
+
+            ItemMaterialRegistry.publishTagCandidates(Map.of());
+            gregtech.content.recipe.ShredderRecyclingRecipes.rebuildTagRows();
+            helper.assertTrue(
+                    ItemMaterialRegistry.compositionStatus(item)
+                            == ItemMaterialRegistry.CompositionLookupState.ABSENT,
+                    "cleared tag generation remains distinct from an unpublished generation");
+            helper.assertTrue(
+                    find(MachineRecipeMaps.Shredder, List.of(stack), List.of()) == null,
+                    "removing the tag composition withdraws its Shredder row");
+        } finally {
+            ItemMaterialRegistry.publishTagCandidates(Map.of());
+            gregtech.content.recipe.ShredderRecyclingRecipes.clearTagRows();
+        }
+        helper.succeed();
+    }
+
     // GameTest runs batches sequentially, so the asynchronous reload cannot overlap other tests.
     @GameTest(template = "test_empty", batch = "material_baseline_reload", timeoutTicks = 6000)
     public static void realResourceReloadDoesNotAccumulateRules(GameTestHelper helper) {
@@ -430,6 +468,7 @@ public final class MaterialBaselineTests {
 
     private static List<Integer> ownedCounts() {
         return List.of(gregtech.content.recipe.ExternalOreProcessing.owned().size(),
+                gregtech.content.recipe.ShredderRecyclingRecipes.owned().size(),
                 gregtech.content.recipe.SharedThermalInputRows.owned().size());
     }
 
@@ -439,10 +478,14 @@ public final class MaterialBaselineTests {
 
     private static String id(ItemStack stack) { return BuiltInRegistries.ITEM.getKey(stack.getItem()).toString(); }
 
+    private static ItemComposition taggedComposition(gregtech.api.material.GTMaterial material, long amount) {
+        return taggedComposition(null, material, amount);
+    }
+
     private static ItemComposition taggedComposition(
-            gregtech.api.material.GTMaterial material, long amount) {
+            MaterialPrefix prefix, gregtech.api.material.GTMaterial material, long amount) {
         return new ItemComposition(
-                null,
+                prefix,
                 List.of(gregtech.api.material.MaterialComponent.of(material, amount)),
                 material,
                 List.of(new ItemCompositionSource(ItemCompositionSource.Kind.FORM_TAG, "probe", "test", "", "")),

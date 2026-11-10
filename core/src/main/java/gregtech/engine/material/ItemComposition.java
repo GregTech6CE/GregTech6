@@ -32,8 +32,6 @@ public record ItemComposition(
         if (requiredPrimary.isValid()
                 && normalizedComponents.stream().noneMatch(c -> c.material().resolve() == requiredPrimary))
             throw new IllegalArgumentException("Primary material is not a composition component: " + primaryMaterial);
-        if (!primaryMaterial.isValid() && normalizedComponents.size() == 1)
-            primaryMaterial = normalizedComponents.get(0).material().resolve();
         GTMaterial orderingPrimary = primaryMaterial;
         components = normalizedComponents.stream()
                 .sorted(Comparator.comparing((MaterialComponent component) ->
@@ -67,7 +65,7 @@ public record ItemComposition(
         this(
                 prefix,
                 components,
-                MaterialSentinels.INVALID,
+                inferredPrimary(components),
                 List.of(ItemCompositionSource.fromLegacy(source)),
                 bulkRecoveryAllowed);
     }
@@ -108,5 +106,20 @@ public record ItemComposition(
 
     public ItemComposition withSources(List<ItemCompositionSource> replacementSources) {
         return new ItemComposition(prefix, components, primaryMaterial, replacementSources, bulkRecoveryAllowed);
+    }
+
+    /**
+     * Legacy declarations often omitted an explicit primary. Keep that migration-time inference
+     * out of the canonical constructor so scaling can preserve an intentionally missing primary.
+     */
+    private static GTMaterial inferredPrimary(List<MaterialComponent> components) {
+        if (components == null) return MaterialSentinels.INVALID;
+        GTMaterial inferred = null;
+        for (var component : components) {
+            GTMaterial material = component.material().resolve();
+            if (inferred != null && inferred != material) return MaterialSentinels.INVALID;
+            inferred = material;
+        }
+        return inferred == null ? MaterialSentinels.INVALID : inferred;
     }
 }

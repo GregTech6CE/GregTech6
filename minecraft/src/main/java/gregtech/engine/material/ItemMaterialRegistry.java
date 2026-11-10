@@ -23,9 +23,16 @@ public final class ItemMaterialRegistry {
     private static final Map<Item, List<ItemCompositionCandidate>> EXPLICIT_SUBMISSIONS = new IdentityHashMap<>();
     private static final Map<Item, List<ItemCompositionCandidate>> TAG_SUBMISSIONS = new IdentityHashMap<>();
     private static final AtomicLong COMPOSITION_REVISION = new AtomicLong();
+    private static boolean tagInputReady;
 
     private static final Map<Item, ItemComposition> EFFECTIVE = new IdentityHashMap<>();
     private static final Map<Item, ItemComposition> EXPLICIT = new IdentityHashMap<>();
+
+    public enum CompositionLookupState {
+        PRESENT,
+        ABSENT,
+        TAG_INPUT_NOT_READY
+    }
 
     private ItemMaterialRegistry() {}
 
@@ -127,6 +134,7 @@ public final class ItemMaterialRegistry {
             }
         }
         synchronized (LOCK) {
+            boolean readinessChanged = !tagInputReady;
             var affected = new HashSet<Item>();
             affected.addAll(TAG_SUBMISSIONS.keySet());
             affected.addAll(staged.keySet());
@@ -153,7 +161,8 @@ public final class ItemMaterialRegistry {
             }
             TAG_SUBMISSIONS.clear();
             TAG_SUBMISSIONS.putAll(staged);
-            if (changed) COMPOSITION_REVISION.incrementAndGet();
+            tagInputReady = true;
+            if (changed || readinessChanged) COMPOSITION_REVISION.incrementAndGet();
         }
     }
 
@@ -184,6 +193,21 @@ public final class ItemMaterialRegistry {
     public static Optional<ItemComposition> base(Item item) {
         synchronized (LOCK) {
             return Optional.ofNullable(EFFECTIVE.get(item));
+        }
+    }
+
+    /** Distinguishes a missing composition from a snapshot whose tag input has not been published yet. */
+    public static CompositionLookupState compositionStatus(Item item) {
+        synchronized (LOCK) {
+            if (EFFECTIVE.containsKey(item)) return CompositionLookupState.PRESENT;
+            return tagInputReady ? CompositionLookupState.ABSENT : CompositionLookupState.TAG_INPUT_NOT_READY;
+        }
+    }
+
+    /** Whether the complete external-tag generation has been published at least once this session. */
+    public static boolean tagInputReady() {
+        synchronized (LOCK) {
+            return tagInputReady;
         }
     }
 
