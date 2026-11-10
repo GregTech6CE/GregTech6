@@ -15,7 +15,6 @@ import gregtech.content.registry.GTGrassSoils;
 import gregtech.content.registry.GTHoppers;
 import gregtech.content.registry.GTItemPipes;
 import gregtech.content.registry.GTItems;
-import gregtech.content.registry.GTLogisticsTank;
 import gregtech.content.registry.GTManualStations;
 import gregtech.content.registry.GTMenuTypes;
 import gregtech.content.registry.GTMetalChests;
@@ -72,7 +71,6 @@ public final class NeoContent implements ContentRegistration.PlatformContent {
         GTRelaysFilters.initialize(registrar);
         GTManualStations.initialize(registrar);
         GTZpmArtifacts.initialize(registrar);
-        GTLogisticsTank.initialize(registrar);
         GTRemainingDecor.initialize(registrar);
         GTMetalChests.initialize(registrar);
         GTBumbleBlocks.initialize(registrar);

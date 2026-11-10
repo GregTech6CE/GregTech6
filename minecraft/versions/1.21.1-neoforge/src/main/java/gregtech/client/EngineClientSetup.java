@@ -46,8 +46,8 @@ public final class EngineClientSetup {
             e.register((s, l, p, t) -> t == 0 ? h.get().spec().material().getColor() : 0xFFFFFF, h.get());
         e.register(
                 (s, l, p, t) ->
-                        t == 0 ? GTLogisticsTank.BLOCK.get().spec().material().getColor() : 0xFFFFFF,
-                GTLogisticsTank.BLOCK.get());
+                        t == 0 ? GTTanks.LOGISTICS_TANK.get().spec().material().getColor() : 0xFFFFFF,
+                GTTanks.LOGISTICS_TANK.get());
         for (var h : GTBoilers.all())
             e.register((s, l, p, t) -> t == 0 ? h.get().spec().material().getColor() : 0xFFFFFF, h.get());
     }
@@ -68,8 +68,8 @@ public final class EngineClientSetup {
                     h.get().asItem());
         e.register(
                 ItemColorARGB.opaque((s, t) ->
-                        t == 0 ? GTLogisticsTank.BLOCK.get().spec().material().getColor() : 0xFFFFFF),
-                GTLogisticsTank.BLOCK.get().asItem());
+                        t == 0 ? GTTanks.LOGISTICS_TANK.get().spec().material().getColor() : 0xFFFFFF),
+                GTTanks.LOGISTICS_TANK.get().asItem());
         for (var h : GTBoilers.all())
             e.register(
                     ItemColorARGB.opaque(
