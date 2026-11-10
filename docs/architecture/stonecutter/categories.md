@@ -1,8 +1,18 @@
-# Stonecutter 分类索引
+# Stonecutter 分类总览
 
-本目录按作用对象划分；每个领域内部再按差异类型拆子文档。通用概念见[设计](design.md)与[用法](usage.md)。分类 README 与子样例的格式见[模板](templates.md)。`HolderLookup.Provider` 的通用概念见设计文档的“Provider 基础”；各领域的 provider 签名见对应领域。
+本页是 Stonecutter 分类总览，按作用对象划分 11 个分类，设计、用法与模板见[设计](design.md)、[用法](usage.md)、[模板](templates.md)。
 
-| 领域 | 主要差异 |
+## 文件清单
+
+| 文件 | 名称 |
+| --- | --- |
+| `docs/architecture/stonecutter/categories.md` | 分类总览 |
+| `docs/architecture/stonecutter/<分类>/README.md` | 分类 README |
+| `docs/architecture/stonecutter/<分类>/<子类型>.md` | 子样例 |
+
+## 分类清单
+
+| 分类 | 主要差异 |
 | --- | --- |
 | BlockEntity | `saveAdditional` / `loadAdditional` / `getUpdateTag` / `loadStatic` 的 provider 参数 |
 | ItemStack | `ItemStack#save`、`tag` ↔ `CUSTOM_DATA`、线格式、旧 tag 迁移、身份比较、封面过滤器 provider |
@@ -22,7 +32,7 @@
 
 关键词：BlockEntity, saveAdditional, loadAdditional, getUpdateTag, handleUpdateTag, loadStatic, codecLookup, saveData, loadData, saveWithoutMetadata
 
-领域文档：[BlockEntity/README.md](BlockEntity/README.md)
+分类 README：[BlockEntity/README.md](BlockEntity/README.md)
 
 ## ItemStack
 
@@ -30,7 +40,7 @@
 
 关键词：ItemStack, ItemStack#save, ItemStack#parseOptional, CUSTOM_DATA, CustomData, StackData, ItemStack#getTag, ItemStack#getOrCreateTag, ItemStack#setTag, ItemStack#hasTag, hasAnyData, hasCustomData, isSameItemSameTags, isSameItemSameComponents, StackCompat.sameItem, BLOCK_ENTITY_DATA, registryAccess, setItemFilter, setFluidFilter
 
-领域文档：[ItemStack/README.md](ItemStack/README.md)
+分类 README：[ItemStack/README.md](ItemStack/README.md)
 
 ## FluidStack
 
@@ -38,7 +48,7 @@
 
 关键词：FluidStack, FluidStack#save, FluidStack#writeToNBT, FluidStack#loadFluidStackFromNBT, FluidStack#getTag, FluidStack#getComponentsPatch, FluidTankGT, isFluidEqual, isSameFluidSameComponents, StackCompat.sameFluid
 
-领域文档：[FluidStack/README.md](FluidStack/README.md)
+分类 README：[FluidStack/README.md](FluidStack/README.md)
 
 ## Container
 
@@ -46,7 +56,7 @@
 
 关键词：ContainerHelper, saveAllItems, loadAllItems
 
-领域文档：[Container/README.md](Container/README.md)
+分类 README：[Container/README.md](Container/README.md)
 
 ## SavedData
 
@@ -54,7 +64,7 @@
 
 关键词：SavedData, Factory, computeIfAbsent
 
-领域文档：[SavedData/README.md](SavedData/README.md)
+分类 README：[SavedData/README.md](SavedData/README.md)
 
 ## Registry
 
@@ -62,7 +72,7 @@
 
 关键词：BuiltInRegistries, ForgeRegistries, Mc.item, GregTech.id, fromNamespaceAndPath, ResourceLocation, tags/items, tags/item, GregTechIdentity
 
-领域文档：[Registry/README.md](Registry/README.md)
+分类 README：[Registry/README.md](Registry/README.md)
 
 ## Capability
 
@@ -70,7 +80,7 @@
 
 关键词：ForgeCapabilities, Capabilities, LazyOptional, Optional, FluidUtil, IFluidHandlerItem, CapabilityItemHandler, IItemHandler
 
-领域文档：[Capability/README.md](Capability/README.md)
+分类 README：[Capability/README.md](Capability/README.md)
 
 ## ClientModel
 
@@ -78,7 +88,7 @@
 
 关键词：ModelResourceLocation, RegisterAdditional, STANDALONE_VARIANT, BakedModel, BakedModelMap, ModelBakery, missing sentinel, getPlain, find, ModelEvent, ModifyBakingResult, RegisterGeometryLoaders, EventBusSubscriber, SubscribeEvent, ClientModelBootstrap, ClientPackFacade, AbstractPackResources, Pack.readMetaAndCreate, inventory
 
-领域文档：[ClientModel/README.md](ClientModel/README.md)
+分类 README：[ClientModel/README.md](ClientModel/README.md)
 
 ## Facade
 
@@ -86,7 +96,7 @@
 
 关键词：logger, LogUtils, GregTech.LOGGER, Mc.logger, EventBusSubscriber, PlayerInteractEvent
 
-领域文档：[Facade/README.md](Facade/README.md)
+分类 README：[Facade/README.md](Facade/README.md)
 
 ## Placement
 
@@ -94,7 +104,7 @@
 
 关键词：registerAll, ContentRegistrar, Supplier, GTManualStations, GTMenuTypes, OriginCreativeContents, GTMachineBlockItem, SmeltingCrucibleEntity, PoweredToolItem, NeoToolBindings, GTToolType, shared BE, reference catalog, mixed catalog, registry lookup, identical, same, empty, one-sided, import, split duplicate, duplicate registration
 
-领域文档：[Placement/README.md](Placement/README.md)
+分类 README：[Placement/README.md](Placement/README.md)
 
 ## Parity
 
@@ -102,4 +112,4 @@
 
 关键词：craftKind, plunger, igniter, consumesTool
 
-领域文档：[Parity/README.md](Parity/README.md)
+分类 README：[Parity/README.md](Parity/README.md)

@@ -34,4 +34,4 @@ API 独立编译，不依赖实现；core 不依赖 Minecraft。content 定义�
 
 继续读[包职责索引](packages/README.md)，只展开当前任务对应专题。资源与生成输入另见[资源指南](resources.md)。
 
-跨版本要求见[跨版本要求与入口](versions.md)；Stonecutter 的三层设计、用法与具体调用例子见[设计](stonecutter/design.md)、[用法](stonecutter/usage.md)、[分类索引](stonecutter/categories.md)。
+跨版本要求见[跨版本要求与入口](versions.md)；Stonecutter 的三层设计、用法与具体调用例子见[设计](stonecutter/design.md)、[用法](stonecutter/usage.md)、[分类总览](stonecutter/categories.md)。

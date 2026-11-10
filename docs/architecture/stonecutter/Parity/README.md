@@ -5,7 +5,7 @@
 ## 两类差异
 
 - **行为差异**（CE 与原版 GT6）：记录在 [docs/decisions/parity/](../../../decisions/parity/README.md)。
-- **Stonecutter 代码实现差异**（平台 API、类落点、注册归属）：记录在[对应领域文档](../categories.md)。
+- **Stonecutter 代码实现差异**（平台 API、类落点、注册归属）：记录在[分类总览](../categories.md)。
 
 ## 工作要求
 

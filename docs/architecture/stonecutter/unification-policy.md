@@ -91,6 +91,6 @@
 
 - 三层结构与归属见[设计](design.md)。
 - `//?` 写法与验证命令见[用法](usage.md)。
-- 具体领域差异见[分类索引](categories.md)。
+- 具体分类差异见[分类总览](categories.md)。
 - 落点偏差案例见[实现落点偏差](Placement/README.md)。
 - CE 与原版 GT6 的行为差异见[parity 目录](../../decisions/parity/README.md)。

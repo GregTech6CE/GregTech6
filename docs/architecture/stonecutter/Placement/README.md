@@ -2,7 +2,7 @@
 
 实现落点偏差：同一内容家族在两个版本中实现落点不同：注册归属、holder 类型、节点目录、复合目录、菜单落点、共享 BE 段、引用目录、混合目录、目录字段、物品类依赖、节点类拆分、创造栏装配、包装类、静态谓词、空/同义/拆分重复。差异来自我们自己的迁移与组织方式，不是平台 API 运行时差异，也不是 CE 与原版 GT6 的行为差异。
 
-分类 README 与子文档格式见[模板](../templates.md)。
+分类 README 与子样例格式见[模板](../templates.md)。
 
 ## 子类型
 
@@ -24,6 +24,6 @@
 
 ## 边界
 
-- 平台 API 运行时差异留在原领域（BlockEntity、ItemStack、FluidStack、Container、SavedData、Registry、Capability、ClientModel、Facade）。
+- 平台 API 运行时差异留在原分类（BlockEntity、ItemStack、FluidStack、Container、SavedData、Registry、Capability、ClientModel、Facade）。
 - CE 与原版 GT6 的行为差异见 [`docs/decisions/parity/`](../../../decisions/parity/README.md)；[Parity](../Parity/README.md) 只是折叠前守卫页。
 - 本目录只处理结构、归属和重复路径；不改变行为。
