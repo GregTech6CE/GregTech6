@@ -1,10 +1,17 @@
 package gregtech.engine.material;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 /** Structured provenance for one item-composition submission. */
-public record ItemCompositionSource(Kind kind, String declarationId, String producer, String reference, String note) {
+public record ItemCompositionSource(
+        Kind kind,
+        String declarationId,
+        String producer,
+        String reference,
+        String note,
+        List<String> replacedSourceIds) {
     public enum Kind {
         EXPLICIT(1),
         VANILLA_JSON(1),
@@ -31,6 +38,13 @@ public record ItemCompositionSource(Kind kind, String declarationId, String prod
         requireText(producer, "producer");
         reference = reference == null ? "" : reference;
         note = note == null ? "" : note;
+        replacedSourceIds = List.copyOf(Objects.requireNonNull(replacedSourceIds, "replacedSourceIds"));
+        if (replacedSourceIds.stream().anyMatch(value -> value == null || value.isBlank()))
+            throw new IllegalArgumentException("replacedSourceIds must not contain blank values");
+    }
+
+    public ItemCompositionSource(Kind kind, String declarationId, String producer, String reference, String note) {
+        this(kind, declarationId, producer, reference, note, List.of());
     }
 
     public int priority() {
@@ -40,6 +54,7 @@ public record ItemCompositionSource(Kind kind, String declarationId, String prod
     public String description() {
         String value = declarationId + " [" + producer + "]";
         if (!reference.isBlank() && !reference.equals(declarationId)) value += " @" + reference;
+        if (!replacedSourceIds.isEmpty()) value += " replaces " + String.join(" -> ", replacedSourceIds);
         return note.isBlank() ? value : value + ": " + note;
     }
 

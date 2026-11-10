@@ -1,7 +1,9 @@
 package gregtech.engine.material;
 
 import gregtech.api.material.MaterialComponent;
+import gregtech.content.material.MaterialTestFixture;
 import gregtech.content.material.Materials;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,6 +14,11 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ItemCompositionResolverTest {
+    @BeforeAll
+    static void init() {
+        MaterialTestFixture.ensureInitialized();
+    }
+
     @Test
     void candidateOrderDoesNotChangeTheEffectiveComposition() {
         var explicit = candidate("explicit", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true);
@@ -64,6 +71,7 @@ class ItemCompositionResolverTest {
                 composition("correction", ItemCompositionSource.Kind.CORRECTION, Materials.Copper, 4, true), "json");
         var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(json, correction)));
         assertEquals(Materials.Copper.resolve(), resolved.get("test:item").material());
+        assertEquals(List.of("json"), resolved.get("test:item").sources().get(0).replacedSourceIds());
         assertThrows(
                 IllegalStateException.class,
                 () -> ItemCompositionResolver.resolve(Map.of("test:item", List.of(correction))));
@@ -75,6 +83,34 @@ class ItemCompositionResolverTest {
         assertThrows(
                 IllegalStateException.class,
                 () -> ItemCompositionResolver.resolve(Map.of("test:item", List.of(cycleA, cycleB))));
+    }
+
+    @Test
+    void oneDeclarationCannotBeReplacedByMultipleCandidates() {
+        var json = candidate("json", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4, true);
+        var first = new ItemCompositionCandidate(
+                composition("first", ItemCompositionSource.Kind.CORRECTION, Materials.Iron, 4, true), "json");
+        var second = new ItemCompositionCandidate(
+                composition("second", ItemCompositionSource.Kind.CORRECTION, Materials.Iron, 4, true), "json");
+
+        var error = assertThrows(
+                IllegalStateException.class,
+                () -> ItemCompositionResolver.resolve(Map.of("test:item", List.of(json, first, second))));
+        assertTrue(error.getMessage().contains("replaced by both"));
+    }
+
+    @Test
+    void replacementTraceRetainsTheCompleteOverrideChain() {
+        var base = candidate("base", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4, true);
+        var middle = new ItemCompositionCandidate(
+                composition("middle", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true), "base");
+        var winner = new ItemCompositionCandidate(
+                composition("winner", ItemCompositionSource.Kind.CORRECTION, Materials.Iron, 4, true), "middle");
+
+        var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(base, middle, winner)))
+                .get("test:item");
+
+        assertEquals(List.of("middle", "base"), resolved.sources().get(0).replacedSourceIds());
     }
 
     @Test
@@ -92,6 +128,7 @@ class ItemCompositionResolverTest {
                 resolved.get("test:item").sources().stream()
                         .map(ItemCompositionSource::declarationId)
                         .toList());
+        assertEquals(List.of("json"), resolved.get("test:item").sources().get(0).replacedSourceIds());
     }
 
     @Test

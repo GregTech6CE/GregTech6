@@ -65,6 +65,7 @@ public final class ItemCompositionResolver {
         var bySource = new HashMap<String, ItemCompositionCandidate>();
         for (var candidate : level) bySource.put(candidate.sourceId(), candidate);
         var replaced = new HashSet<String>();
+        var overriddenBy = new HashMap<String, String>();
         for (var candidate : level) {
             String target = candidate.replacesSourceId();
             if (target == null) continue;
@@ -72,6 +73,10 @@ public final class ItemCompositionResolver {
             if (source.kind().priority() != 1)
                 throw new IllegalStateException("Only an explicit-layer declaration may replace another: "
                         + candidate.sourceId() + " for " + item);
+            var previous = overriddenBy.putIfAbsent(target, candidate.sourceId());
+            if (previous != null)
+                throw new IllegalStateException("Item composition declaration " + target + " for " + item
+                        + " is replaced by both " + previous + " and " + candidate.sourceId());
             if (!bySource.containsKey(target)) {
                 if (requireReplacementTargets) {
                     throw new IllegalStateException("Item composition override " + candidate.sourceId() + " for " + item
@@ -98,10 +103,30 @@ public final class ItemCompositionResolver {
             }
         }
         var sources = winners.stream()
-                .flatMap(candidate -> candidate.composition().sources().stream())
+                .map(candidate -> withReplacementTrace(candidate, bySource))
                 .sorted(Comparator.comparing(ItemCompositionSource::declarationId))
                 .toList();
         return first.withSources(sources);
+    }
+
+    private static ItemCompositionSource withReplacementTrace(
+            ItemCompositionCandidate candidate, Map<String, ItemCompositionCandidate> bySource) {
+        var source = candidate.composition().sources().get(0);
+        if (candidate.replacesSourceId() == null) return source;
+        var replacements = new ArrayList<String>();
+        String target = candidate.replacesSourceId();
+        while (target != null && !replacements.contains(target)) {
+            replacements.add(target);
+            var replaced = bySource.get(target);
+            target = replaced == null ? null : replaced.replacesSourceId();
+        }
+        return new ItemCompositionSource(
+                source.kind(),
+                source.declarationId(),
+                source.producer(),
+                source.reference(),
+                source.note(),
+                replacements);
     }
 
     private static void validateReplacementCycles(Object item, List<ItemCompositionCandidate> level) {
