@@ -309,11 +309,7 @@ if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEnt
     @Override
     public String getDescriptionId() {
 
-//? if >=1.21.1 {
-/*        return "item." + "gt6ce" + ".tool." + toolType.id();
-*///?} else {
         return "item." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool." + toolType.id();
-//?}
 
     }
 
@@ -324,11 +320,7 @@ if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEnt
         }
         GTMaterial head = GTToolHelper.getHead(stack);
 
-//? if >=1.21.1 {
-/*        return Component.translatable("item." + "gt6ce" + ".tool." + toolType.id() + ".named",
-*///?} else {
         return Component.translatable("item." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool." + toolType.id() + ".named",
-//?}
 
                 MaterialPresentation.name(head), Component.translatable(toolType.translationKey()));
     }

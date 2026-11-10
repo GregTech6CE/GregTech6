@@ -1,12 +1,5 @@
 package gregtech.compat.jei;
 
-
-
-//? if >=1.21.1 {
-/**///?} else {
-import gregtech.GregTech;
-//?}
-
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.platform.Mc;

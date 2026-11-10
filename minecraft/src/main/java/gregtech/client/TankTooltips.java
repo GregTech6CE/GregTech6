@@ -203,11 +203,7 @@ public final class TankTooltips {
         String toolKey = resolveHarvestToolKey(texSet);
         if (mat.hasToolStats()) {
             tooltip.add(Component.empty()
-//? if >=1.21.1 {
-                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.harvest.tool_label")
-*///?} else {
                     .append(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.harvest.tool_label")
-//?}
                             .withStyle(ChatFormatting.GRAY))
                     .append(Component.translatable(toolKey)
                             .withStyle(ChatFormatting.WHITE))
@@ -215,50 +211,26 @@ public final class TankTooltips {
                             .withStyle(ChatFormatting.GRAY)));
         } else {
             tooltip.add(Component.empty()
-//? if >=1.21.1 {
-                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.hand_harvest")
-*///?} else {
                     .append(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.hand_harvest")
-//?}
                             .withStyle(ChatFormatting.GRAY))
                     .append(Component.literal(", "))
-//? if >=1.21.1 {
-                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.harvest.but_label")
-*///?} else {
                     .append(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.harvest.but_label")
-//?}
                             .withStyle(ChatFormatting.GRAY))
                     .append(Component.translatable(toolKey)
                             .withStyle(ChatFormatting.WHITE))
-//? if >=1.21.1 {
-                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.harvest.faster")
-*///?} else {
                     .append(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.harvest.faster")
-//?}
                             .withStyle(ChatFormatting.GRAY)));
         }
     }
 
     private static String resolveHarvestToolKey(MaterialTextureSet texSet) {
         if (texSet == MaterialTextureSet.RUBBER) {
-//? if >=1.21.1 {
-            /*return "tooltip." + "gt6ce" + ".machine.harvest_shears";
-*///?} else {
             return "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.harvest_shears";
-//?}
         }
         if (texSet == MaterialTextureSet.WOOD) {
-//? if >=1.21.1 {
-            /*return "tooltip." + "gt6ce" + ".machine.harvest_axe";
-*///?} else {
             return "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.harvest_axe";
-//?}
         }
-//? if >=1.21.1 {
-        /*return "tooltip." + "gt6ce" + ".machine.harvest_wrench";
-*///?} else {
         return "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".machine.harvest_wrench";
-//?}
     }
 
     // === Magnifying Glass Info (sent to player chat) ===
@@ -273,15 +245,9 @@ public final class TankTooltips {
         // Auto output status
         player.sendSystemMessage(Component.empty()
                 .append(autoOutput
-//? if >=1.21.1 {
-/*// Version-specific branch.
-                        ? Component.translatable("tooltip." + "gt6ce" + ".tank.info.auto_output")
-                        : Component.translatable("tooltip." + "gt6ce" + ".tank.info.no_auto_output"))
-*///?} else {
 // Version-specific branch.
                         ? Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tank.info.auto_output")
                         : Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tank.info.no_auto_output"))
-//?}
                 .withStyle(autoOutput ? ChatFormatting.GREEN : ChatFormatting.WHITE));
 
         // Soft hammer state — GT6 calls this "Sealed"; the lock is kept without fermentation.
@@ -295,11 +261,7 @@ public final class TankTooltips {
 
         if (fluid.isEmpty()) {
             player.sendSystemMessage(Component.empty()
-//? if >=1.21.1 {
-                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".tank.info.capacity")
-*///?} else {
                     .append(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tank.info.capacity")
-//?}
                             .withStyle(ChatFormatting.WHITE))
                     .append(Component.literal(": " + formatLargeNumber(spec.capacity()) + " " + gregtech.engine.fluid.FluidUnits.unit())
                             .withStyle(ChatFormatting.AQUA)));
