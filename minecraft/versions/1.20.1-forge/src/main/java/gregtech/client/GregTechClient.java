@@ -90,8 +90,8 @@ public final class GregTechClient {
                                 : 0xFFFFFF,
                         entry.get().asItem()));
         java.util.stream.Stream.concat(
-                        gregtech.content.registry.GTMiscBlocks.ADVANCED_CRAFTING_TABLES.stream(),
-                        gregtech.content.registry.GTMiscBlocks.CHARGING_CRAFTING_TABLES.stream())
+                        gregtech.content.registry.GTCraftingTables.ADVANCED.stream(),
+                        gregtech.content.registry.GTCraftingTables.CHARGING.stream())
                 .forEach(entry -> event.register(
                         (stack, index) -> index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                         entry.get().asItem()));
@@ -109,21 +109,14 @@ public final class GregTechClient {
                         (stack, tintIndex) ->
                                 tintIndex == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                         entry.get().asItem()));
-        for (var entry : java.util.List.of(
-                gregtech.content.registry.GTMiscBlocks.FILTER_ITEMS,
-                gregtech.content.registry.GTMiscBlocks.FILTER_FLUIDS,
-                gregtech.content.registry.GTMiscBlocks.FILTER_ITEMS_FLUIDS,
-                gregtech.content.registry.GTMiscBlocks.FILTER_OREDICT))
+        for (var entry : gregtech.content.registry.GTRelaysFilters.FILTERS)
             event.register(
                     (stack, index) ->
                             index == 0 ? gregtech.content.material.Materials.SteelGalvanized.getColor() : 0xFFFFFF,
                     entry.get().asItem());
-        gregtech.content.registry.GTMiscBlocks.SOURCE_EXTENDERS
-                .values()
-                .forEach(entry -> event.register(
-                        (stack, index) ->
-                                index == 0 ? entry.get().spec().material().getColor() : 0xFFFFFF,
-                        entry.get().asItem()));
+        gregtech.content.registry.GTRelaysFilters.EXTENDERS.forEach(entry -> event.register(
+                (stack, index) -> index == 0 ? entry.get().spec().material().getColor() : 0xFFFFFF,
+                entry.get().asItem()));
         GTItems.ITEMS.getEntries().forEach(entry -> {
             if (entry.get() instanceof gregtech.content.item.PortableFluidContainerItem vessel) {
                 event.register(
@@ -145,16 +138,6 @@ public final class GregTechClient {
                 event.register(
                         (stack, tintIndex) -> tintIndex == 0 ? materialItem.getTintColor() : 0xFFFFFF, entry.get());
         }
-        gregtech.content.registry.GTMiscBlocks.all().forEach(entry -> {
-            if (!(entry.get() instanceof gregtech.content.block.misc.PanelBlock)
-                    && !(entry.get() instanceof gregtech.content.block.misc.AutoToolBlock)
-                    && !(entry.get() instanceof gregtech.content.block.misc.LongDistEndpointBlock)
-                    && !(entry.get() instanceof gregtech.content.block.misc.LongDistanceTransformerBlock))
-                event.register(
-                        (stack, index) ->
-                                index == 0 ? gregtech.content.tool.MiscBlockAppearance.tint(entry.get()) : 0xFFFFFF,
-                        entry.get().asItem());
-        });
         var multiblockTintBlocks = gregtech.content.registry.GTMultiblocks.texturedBlocks().stream()
                 .filter(ro -> ro != null && ro.isPresent())
                 .map(ro -> ro.get())
@@ -402,21 +385,15 @@ public final class GregTechClient {
 
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
-        for (var entry : java.util.List.of(
-                gregtech.content.registry.GTMiscBlocks.FILTER_ITEMS,
-                gregtech.content.registry.GTMiscBlocks.FILTER_FLUIDS,
-                gregtech.content.registry.GTMiscBlocks.FILTER_ITEMS_FLUIDS,
-                gregtech.content.registry.GTMiscBlocks.FILTER_OREDICT))
+        for (var entry : gregtech.content.registry.GTRelaysFilters.FILTERS)
             event.register(
                     (state, level, pos, index) ->
                             index == 0 ? gregtech.content.material.Materials.SteelGalvanized.getColor() : 0xFFFFFF,
                     entry.get());
-        gregtech.content.registry.GTMiscBlocks.SOURCE_EXTENDERS
-                .values()
-                .forEach(entry -> event.register(
-                        (state, level, pos, index) ->
-                                index == 0 ? entry.get().spec().material().getColor() : 0xFFFFFF,
-                        entry.get()));
+        gregtech.content.registry.GTRelaysFilters.EXTENDERS.forEach(entry -> event.register(
+                (state, level, pos, index) ->
+                        index == 0 ? entry.get().spec().material().getColor() : 0xFFFFFF,
+                entry.get()));
         for (var rod : gregtech.content.registry.GTFuelRods.ALL) {
             event.register(
                     (state, level, pos, tint) -> tint == 0 ? rod.get().tintRgb() : 0xFFFFFF,
@@ -548,16 +525,6 @@ public final class GregTechClient {
                         (state, level, pos, tintIndex) -> tintIndex == 0 ? explosive.tintRgb() : 0xFFFFFF, explosive);
             }
         });
-        gregtech.content.registry.GTMiscBlocks.all().forEach(entry -> {
-            if (!(entry.get() instanceof gregtech.content.block.misc.PanelBlock)
-                    && !(entry.get() instanceof gregtech.content.block.misc.AutoToolBlock)
-                    && !(entry.get() instanceof gregtech.content.block.misc.LongDistEndpointBlock)
-                    && !(entry.get() instanceof gregtech.content.block.misc.LongDistanceTransformerBlock))
-                event.register(
-                        (state, level, pos, index) ->
-                                index == 0 ? gregtech.content.tool.MiscBlockAppearance.tint(entry.get()) : 0xFFFFFF,
-                        entry.get());
-        });
         // Surface rocks: tint from the block entity's material (vein indicators).
         event.register(
                 (state, level, pos, tintIndex) -> {
@@ -673,8 +640,8 @@ public final class GregTechClient {
             }
         });
         java.util.stream.Stream.concat(
-                        gregtech.content.registry.GTMiscBlocks.ADVANCED_CRAFTING_TABLES.stream(),
-                        gregtech.content.registry.GTMiscBlocks.CHARGING_CRAFTING_TABLES.stream())
+                        gregtech.content.registry.GTCraftingTables.ADVANCED.stream(),
+                        gregtech.content.registry.GTCraftingTables.CHARGING.stream())
                 .forEach(entry -> event.register(
                         (state, level, pos, index) ->
                                 index == 0 ? entry.get().material().getColor() : 0xFFFFFF,

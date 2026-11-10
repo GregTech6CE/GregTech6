@@ -17,6 +17,11 @@ public final class GTCraftingTables {
     public static final java.util.List<RegisteredBlock<ChargingCraftingTableBlock>> CHARGING =
             new java.util.ArrayList<>();
 
+    public static AdvancedCraftingTableBlock advanced(gregtech.api.material.GTMaterial material) {
+        for (var table : ADVANCED) if (table.get().material() == material) return table.get();
+        throw new IllegalArgumentException("No crafting table for " + material.getName());
+    }
+
     public static void initialize(ContentRegistrar registrar) {
         for (var spec : GTStorageMetals.ALL) {
             String suffix = spec.suffix().equals("steel") ? "" : "_" + spec.suffix();

@@ -1,7 +1,5 @@
 package gregtech.content.worldgen.dungeon;
 
-import gregtech.api.material.GTMaterial;
-import gregtech.content.registry.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -19,10 +17,5 @@ public final class DungeonBindings {
 
     public static java.util.function.Supplier<Block> supplier(String id) {
         return () -> block(id);
-    }
-
-    public static gregtech.content.block.misc.AdvancedCraftingTableBlock craftingTable(GTMaterial material) {
-        for (var h : GTCraftingTables.ADVANCED) if (h.get().material() == material) return h.get();
-        throw new IllegalArgumentException("Dungeon table " + material.getName());
     }
 }

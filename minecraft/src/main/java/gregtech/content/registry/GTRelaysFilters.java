@@ -13,7 +13,7 @@ import net.minecraft.world.level.material.MapColor;
 public final class GTRelaysFilters {
     private GTRelaysFilters() {}
 
-    public static final java.util.List<RegisteredBlock<? extends Block>> EXTENDERS = new java.util.ArrayList<>();
+    public static final java.util.List<RegisteredBlock<SourceExtenderBlock>> EXTENDERS = new java.util.ArrayList<>();
     public static final java.util.List<RegisteredBlock<AutoHammerBlock>> HAMMERS = new java.util.ArrayList<>();
     public static final java.util.List<RegisteredBlock<AutoIgniterBlock>> IGNITERS = new java.util.ArrayList<>();
     public static final java.util.List<RegisteredBlock<FilterBlock>> FILTERS = new java.util.ArrayList<>();

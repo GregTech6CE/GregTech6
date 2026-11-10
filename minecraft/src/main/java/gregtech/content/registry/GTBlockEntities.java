@@ -66,6 +66,15 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.tool.AdvancedButtonBlockEntity>> ADVANCED_BUTTON =
             BLOCK_ENTITIES.register("advanced_button",()->BlockEntityType.Builder.of(gregtech.content.blockentity.tool.AdvancedButtonBlockEntity::new,GTManualStations.ADVANCED_BUTTON.get()).build(null));
 
+    public static final Supplier<BlockEntityType<gregtech.content.block.misc.AdvancedCraftingTableBlockEntity>> ADVANCED_CRAFTING_TABLE =
+            BLOCK_ENTITIES.register("advanced_crafting_table",()->BlockEntityType.Builder.of(gregtech.content.block.misc.AdvancedCraftingTableBlockEntity::new,GTCraftingTables.ADVANCED.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+
+    public static final Supplier<BlockEntityType<gregtech.content.block.misc.AutoHammerBlockEntity>> AUTO_HAMMER =
+            BLOCK_ENTITIES.register("auto_hammer",()->BlockEntityType.Builder.of(gregtech.content.block.misc.AutoHammerBlockEntity::new,GTRelaysFilters.HAMMERS.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+
+    public static final Supplier<BlockEntityType<gregtech.content.block.misc.AutoIgniterBlockEntity>> AUTO_IGNITER =
+            BLOCK_ENTITIES.register("auto_igniter",()->BlockEntityType.Builder.of(gregtech.content.block.misc.AutoIgniterBlockEntity::new,GTRelaysFilters.IGNITERS.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity>> BEDROCK_DRILL =
             BLOCK_ENTITIES.register("bedrock_drill",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "bedrock_drill"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "bedrock_drill")).build(null));
 
@@ -84,6 +93,9 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.CFoamBlockEntity>> CFOAM =
             BLOCK_ENTITIES.register("cfoam",()->BlockEntityType.Builder.of(gregtech.content.blockentity.CFoamBlockEntity::new,GTConstructionVariants.wetFoams()).build(null));
+
+    public static final Supplier<BlockEntityType<gregtech.content.block.misc.ChargingCraftingTableBlockEntity>> CHARGING_CRAFTING_TABLE =
+            BLOCK_ENTITIES.register("charging_crafting_table",()->BlockEntityType.Builder.of(gregtech.content.block.misc.ChargingCraftingTableBlockEntity::new,GTCraftingTables.CHARGING.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.tool.CoinMoldBlockEntity>> COIN_MOLD =
             BLOCK_ENTITIES.register("coin_mold",()->BlockEntityType.Builder.of(gregtech.content.blockentity.tool.CoinMoldBlockEntity::new,GTManualStations.COIN_MOLD.get()).build(null));
@@ -122,6 +134,12 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.inventory.EnderGarbageDumpBlockEntity>> ENDER_GARBAGE_DUMP =
             BLOCK_ENTITIES.register("ender_garbage_dump",()->BlockEntityType.Builder.of(gregtech.content.blockentity.inventory.EnderGarbageDumpBlockEntity::new,GTStorageContainers.ENDER_GARBAGE_DUMP.get()).build(null));
+
+    public static final Supplier<BlockEntityType<gregtech.content.block.misc.ExtenderBlockEntity>> EXTENDER =
+            BLOCK_ENTITIES.register("extender",()->BlockEntityType.Builder.of(gregtech.content.block.misc.ExtenderBlockEntity::new,GTRelaysFilters.EXTENDERS.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+
+    public static final Supplier<BlockEntityType<gregtech.content.block.misc.FilterBlockEntity>> FILTER =
+            BLOCK_ENTITIES.register("filter",()->BlockEntityType.Builder.of(gregtech.content.block.misc.FilterBlockEntity::new,GTRelaysFilters.FILTERS.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.FluidPipeBlockEntity>> FLUID_PIPE =
             BLOCK_ENTITIES.register("fluid_pipe", () -> {
@@ -178,6 +196,12 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.LogisticsTankBlockEntity>> LOGISTICS_TANK =
             BLOCK_ENTITIES.register("logistics_tank",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.LogisticsTankBlockEntity::new,GTTanks.LOGISTICS_TANK.get()).build(null));
+
+    public static final Supplier<BlockEntityType<gregtech.content.block.misc.LongDistEndpointBlockEntity>> LONG_DIST_ENDPOINT =
+            BLOCK_ENTITIES.register("long_dist_endpoint",()->BlockEntityType.Builder.of(gregtech.content.block.misc.LongDistEndpointBlockEntity::new,GTLongDistance.block("long_dist_endpoint_item"),GTLongDistance.block("long_dist_endpoint_fluid")).build(null));
+
+    public static final Supplier<BlockEntityType<gregtech.content.block.misc.LongDistanceTransformerBlockEntity>> LONG_DIST_TRANSFORMER =
+            BLOCK_ENTITIES.register("long_dist_transformer",()->BlockEntityType.Builder.of(gregtech.content.block.misc.LongDistanceTransformerBlockEntity::new,GTLongDistance.transformers()).build(null));
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.tool.ManualToolBlockEntity>> MANUAL_TOOL =
             BLOCK_ENTITIES.register("manual_tool",()->BlockEntityType.Builder.of(gregtech.content.blockentity.tool.ManualToolBlockEntity::new,GTManualStations.MANUAL.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
@@ -281,16 +305,8 @@ public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.c
 public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.misc.PileBlockEntity>> PILE=BLOCK_ENTITIES.register("pile",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.PileBlockEntity::new,GTMaterialPiles.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.misc.CoinPileBlockEntity>> COIN_PILE=BLOCK_ENTITIES.register("coin_pile",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.CoinPileBlockEntity::new,GTCoinPiles.COIN_PILE.get()).build(null));
 public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.inventory.BookShelfBlockEntity>> BOOKSHELF=BLOCK_ENTITIES.register("bookshelf",()->BlockEntityType.Builder.of(gregtech.content.blockentity.inventory.BookShelfBlockEntity::new,GTBookShelves.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.block.misc.AdvancedCraftingTableBlockEntity>> ADVANCED_CRAFTING_TABLE=BLOCK_ENTITIES.register("advanced_crafting_table",()->BlockEntityType.Builder.of(gregtech.content.block.misc.AdvancedCraftingTableBlockEntity::new,GTCraftingTables.ADVANCED.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.block.misc.ChargingCraftingTableBlockEntity>> CHARGING_CRAFTING_TABLE=BLOCK_ENTITIES.register("charging_crafting_table",()->BlockEntityType.Builder.of(gregtech.content.block.misc.ChargingCraftingTableBlockEntity::new,GTCraftingTables.CHARGING.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.block.misc.ExtenderBlockEntity>> EXTENDER=BLOCK_ENTITIES.register("extender",()->BlockEntityType.Builder.of(gregtech.content.block.misc.ExtenderBlockEntity::new,GTRelaysFilters.EXTENDERS.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.block.misc.FilterBlockEntity>> FILTER=BLOCK_ENTITIES.register("filter",()->BlockEntityType.Builder.of(gregtech.content.block.misc.FilterBlockEntity::new,GTRelaysFilters.FILTERS.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.block.misc.AutoIgniterBlockEntity>> AUTO_IGNITER=BLOCK_ENTITIES.register("auto_igniter",()->BlockEntityType.Builder.of(gregtech.content.block.misc.AutoIgniterBlockEntity::new,GTRelaysFilters.IGNITERS.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.block.misc.AutoHammerBlockEntity>> AUTO_HAMMER=BLOCK_ENTITIES.register("auto_hammer",()->BlockEntityType.Builder.of(gregtech.content.block.misc.AutoHammerBlockEntity::new,GTRelaysFilters.HAMMERS.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ZpmModuleBlockEntity>> ZPM_MODULE=BLOCK_ENTITIES.register("zpm_module",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmModuleBlockEntity::new,GTZpmArtifacts.ZPM.get()).build(null));
 public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ZpmDischargerBlockEntity>> ZPM_DISCHARGER=BLOCK_ENTITIES.register("zpm_discharger",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmDischargerBlockEntity::new,GTZpmArtifacts.BASIC.get(),GTZpmArtifacts.ADVANCED.get(),GTZpmArtifacts.ELITE.get()).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.block.misc.LongDistEndpointBlockEntity>> LONG_DIST_ENDPOINT=BLOCK_ENTITIES.register("long_dist_endpoint",()->BlockEntityType.Builder.of(gregtech.content.block.misc.LongDistEndpointBlockEntity::new,GTLongDistance.block("long_dist_endpoint_item"),GTLongDistance.block("long_dist_endpoint_fluid")).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.block.misc.LongDistanceTransformerBlockEntity>> LONG_DIST_TRANSFORMER=BLOCK_ENTITIES.register("long_dist_transformer",()->BlockEntityType.Builder.of(gregtech.content.block.misc.LongDistanceTransformerBlockEntity::new,GTLongDistance.transformers()).build(null));
 public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.misc.SandwichBlockEntity>> SANDWICH_BLOCK=BLOCK_ENTITIES.register("sandwich_block",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.SandwichBlockEntity::new,GTSandwich.SANDWICH_BLOCK.get()).build(null));
 *///?} else {
 public static final RegistryObject<BlockEntityType<SolidBurningBoxBlockEntity>> SOLID_BURNING_BOX =
@@ -364,50 +380,6 @@ public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.
             BLOCK_ENTITIES.register("logistics_wire", () -> BlockEntityType.Builder.of(
                     gregtech.content.blockentity.machine.LogisticsWireBlockEntity::new,
                     GTIconSetBlocks.LOGISTICS_WIRE.get()).build(null));
-    // Wave 45 BE types
-public static final RegistryObject<BlockEntityType<gregtech.content.block.misc.AdvancedCraftingTableBlockEntity>> ADVANCED_CRAFTING_TABLE =
-            BLOCK_ENTITIES.register("advanced_crafting_table", () -> BlockEntityType.Builder.of(
-                    gregtech.content.block.misc.AdvancedCraftingTableBlockEntity::new,
-                    GTMiscBlocks.ADVANCED_CRAFTING_TABLES.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-public static final RegistryObject<BlockEntityType<gregtech.content.block.misc.ChargingCraftingTableBlockEntity>> CHARGING_CRAFTING_TABLE =
-            BLOCK_ENTITIES.register("charging_crafting_table", () -> BlockEntityType.Builder.of(
-                    gregtech.content.block.misc.ChargingCraftingTableBlockEntity::new,
-                    GTMiscBlocks.CHARGING_CRAFTING_TABLES.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-public static final RegistryObject<BlockEntityType<gregtech.content.block.misc.AutoIgniterBlockEntity>> AUTO_IGNITER =
-            BLOCK_ENTITIES.register("auto_igniter", () -> {
-                java.util.List<net.minecraft.world.level.block.Block> blocks = new java.util.ArrayList<>();
-                GTMiscBlocks.autoTools().stream()
-                        .filter(ro -> ro.isPresent() && ro.get() instanceof gregtech.content.block.misc.AutoIgniterBlock)
-                        .forEach(ro -> blocks.add(ro.get()));
-                return BlockEntityType.Builder.of(
-                        gregtech.content.block.misc.AutoIgniterBlockEntity::new,
-                        blocks.toArray(new net.minecraft.world.level.block.Block[0])).build(null);
-            });
-public static final RegistryObject<BlockEntityType<gregtech.content.block.misc.AutoHammerBlockEntity>> AUTO_HAMMER =
-            BLOCK_ENTITIES.register("auto_hammer", () -> {
-                java.util.List<net.minecraft.world.level.block.Block> blocks = new java.util.ArrayList<>();
-                GTMiscBlocks.autoTools().stream()
-                        .filter(ro -> ro.isPresent() && ro.get() instanceof gregtech.content.block.misc.AutoHammerBlock)
-                        .forEach(ro -> blocks.add(ro.get()));
-                return BlockEntityType.Builder.of(
-                        gregtech.content.block.misc.AutoHammerBlockEntity::new,
-                        blocks.toArray(new net.minecraft.world.level.block.Block[0])).build(null);
-            });
-public static final RegistryObject<BlockEntityType<gregtech.content.block.misc.LongDistEndpointBlockEntity>> LONG_DIST_ENDPOINT =
-            BLOCK_ENTITIES.register("long_dist_endpoint", () -> BlockEntityType.Builder.of(
-                    gregtech.content.block.misc.LongDistEndpointBlockEntity::new,
-                    GTMiscBlocks.LONG_DIST_ENDPOINT_ITEM.get(), GTMiscBlocks.LONG_DIST_ENDPOINT_FLUID.get()).build(null));
-public static final RegistryObject<BlockEntityType<gregtech.content.block.misc.LongDistanceTransformerBlockEntity>> LONG_DIST_TRANSFORMER =
-            BLOCK_ENTITIES.register("long_dist_transformer", () -> BlockEntityType.Builder.of(
-                    gregtech.content.block.misc.LongDistanceTransformerBlockEntity::new,
-                    GTMiscBlocks.LONG_DIST_TRANSFORMER_ULV.get(), GTMiscBlocks.LONG_DIST_TRANSFORMER_LV.get(),
-                    GTMiscBlocks.LONG_DIST_TRANSFORMER_MV.get(), GTMiscBlocks.LONG_DIST_TRANSFORMER_ZPM.get(),
-                    GTMiscBlocks.LONG_DIST_TRANSFORMER_UV.get()).build(null));
-public static final RegistryObject<BlockEntityType<gregtech.content.block.misc.ExtenderBlockEntity>> EXTENDER =
-            BLOCK_ENTITIES.register("extender", () -> BlockEntityType.Builder.of(
-                    gregtech.content.block.misc.ExtenderBlockEntity::new,
-                    GTMiscBlocks.extenderBlocks()).build(null));
-public static final RegistryObject<BlockEntityType<gregtech.content.block.misc.FilterBlockEntity>> FILTER = BLOCK_ENTITIES.register("filter",()->BlockEntityType.Builder.of(gregtech.content.block.misc.FilterBlockEntity::new,GTMiscBlocks.FILTER_ITEMS.get(),GTMiscBlocks.FILTER_FLUIDS.get(),GTMiscBlocks.FILTER_ITEMS_FLUIDS.get(),GTMiscBlocks.FILTER_OREDICT.get()).build(null));
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.energy.ZpmModuleBlockEntity>> ZPM_MODULE =
             BLOCK_ENTITIES.register("zpm_module", () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmModuleBlockEntity::new,GTLasers.ZPM.get()).build(null));
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.energy.ZpmDischargerBlockEntity>> ZPM_DISCHARGER =
