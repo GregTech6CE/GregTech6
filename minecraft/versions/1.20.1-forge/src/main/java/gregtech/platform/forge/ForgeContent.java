@@ -18,6 +18,7 @@ import gregtech.content.registry.GTFluidPipes;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTIconSetBlocks;
 import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTLogisticsWire;
 import gregtech.content.registry.GTManualStations;
 import gregtech.content.registry.GTMassStorages;
 import gregtech.content.registry.GTMenuTypes;
@@ -73,6 +74,7 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
         gregtech.content.registry.GTBurningBoxes.registerAll(registrar);
         gregtech.content.registry.GTSmeltery.register(registrar);
         gregtech.content.registry.GTHoppers.register(registrar);
+        GTLogisticsWire.register(registrar);
         AddonSensorRegistration.register(registrar);
         GTBasicMachines.registerAll(registrar);
         GTMassStorages.initialize(registrar);

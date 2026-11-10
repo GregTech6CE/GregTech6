@@ -15,6 +15,7 @@ import gregtech.content.registry.GTGrassSoils;
 import gregtech.content.registry.GTHoppers;
 import gregtech.content.registry.GTItemPipes;
 import gregtech.content.registry.GTItems;
+import gregtech.content.registry.GTLogisticsWire;
 import gregtech.content.registry.GTManualStations;
 import gregtech.content.registry.GTMassStorages;
 import gregtech.content.registry.GTMenuTypes;
@@ -37,7 +38,6 @@ import gregtech.content.transport.fluid.FluidTransportRegistries;
 import gregtech.content.worldgen.GTFeatures;
 import gregtech.platform.neoforge.enchantment.GTEnchantmentEffectTypes;
 import gregtech.platform.neoforge.fluid.FluidRegistries;
-import gregtech.platform.neoforge.logistics.LogisticsRegistries;
 import gregtech.platform.neoforge.machine.AddonSensorRegistration;
 import gregtech.platform.neoforge.machine.BasicMachineRegistries;
 import gregtech.platform.neoforge.smeltery.SmelteryRegistries;
@@ -82,7 +82,7 @@ public final class NeoContent implements ContentRegistration.PlatformContent {
         GTToolBlocks.registerAll(registrar);
         AddonSensorRegistration.register(registrar);
         GTMassStorages.initialize(registrar);
-        LogisticsRegistries.register(registrar);
+        GTLogisticsWire.register(registrar);
         GTSounds.bootstrap();
         GTFluidPipes.registerAll(registrar);
         GTTanks.registerAll(registrar);
@@ -96,7 +96,6 @@ public final class NeoContent implements ContentRegistration.PlatformContent {
     /** Attaches every shared, addon and platform content register exactly once. */
     public void submit() {
         FluidRegistries.submit(bus);
-        LogisticsRegistries.submit(bus);
         FluidTransportRegistries.submit(bus);
         BasicMachineRegistries.submit(bus);
         SmelteryRegistries.submit(bus);

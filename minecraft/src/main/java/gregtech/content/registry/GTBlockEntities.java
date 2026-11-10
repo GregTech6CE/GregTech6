@@ -177,6 +177,7 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.inventory.LockerBlockEntity>> LOCKER =
             BLOCK_ENTITIES.register("locker",()->BlockEntityType.Builder.of(gregtech.content.blockentity.inventory.LockerBlockEntity::new,GTStorageContainers.LOCKERS.stream().map(java.util.function.Supplier::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
+    /** GT6 17997: Logistics Core controller (the walls are existing multiblock port entities). */
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity>> LOGISTICS_CORE =
             BLOCK_ENTITIES.register("logistics_core",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.LogisticsCoreControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "logistics_core"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "logistics_core")).build(null));
 
@@ -185,6 +186,10 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.LogisticsTankBlockEntity>> LOGISTICS_TANK =
             BLOCK_ENTITIES.register("logistics_tank",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.LogisticsTankBlockEntity::new,GTTanks.LOGISTICS_TANK.get()).build(null));
+
+    /** GT6 24901: six-way cuttable logistics connector. */
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.LogisticsWireBlockEntity>> LOGISTICS_WIRE =
+            BLOCK_ENTITIES.register("logistics_wire",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.LogisticsWireBlockEntity::new,GTLogisticsWire.WIRE.get()).build(null));
 
     public static final Supplier<BlockEntityType<gregtech.content.block.misc.LongDistEndpointBlockEntity>> LONG_DIST_ENDPOINT =
             BLOCK_ENTITIES.register("long_dist_endpoint",()->BlockEntityType.Builder.of(gregtech.content.block.misc.LongDistEndpointBlockEntity::new,GTLongDistance.block("long_dist_endpoint_item"),GTLongDistance.block("long_dist_endpoint_fluid")).build(null));
@@ -315,11 +320,6 @@ public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.
                         .toArray(Block[]::new);
                 return BlockEntityType.Builder.of(gregtech.content.blockentity.OreBlockEntity::new, blocks).build(null);
             });
-    /** GT6 17997: Logistics Core controller (the walls are existing multiblock port entities). */
-public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LogisticsWireBlockEntity>> LOGISTICS_WIRE =
-            BLOCK_ENTITIES.register("logistics_wire", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.machine.LogisticsWireBlockEntity::new,
-                    GTIconSetBlocks.LOGISTICS_WIRE.get()).build(null));
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.energy.ZpmModuleBlockEntity>> ZPM_MODULE =
             BLOCK_ENTITIES.register("zpm_module", () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmModuleBlockEntity::new,GTLasers.ZPM.get()).build(null));
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.energy.ZpmDischargerBlockEntity>> ZPM_DISCHARGER =
