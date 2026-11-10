@@ -156,14 +156,26 @@ public final class MaterialBaselineTests {
         var data = ItemMaterialRegistry.get(stack).orElseThrow();
         helper.assertTrue(data.components().size() == 1 && data.material().resolve() == Materials.Gold.resolve()
                 && data.amount() == 72 * GTValues.U, "enchanted golden apple carries 72U Gold");
-        var plan = MaterialRecoveryRules.dust(data.amount());
-        helper.assertTrue(plan != null && plan.count() == 64 && plan.prefix() == MaterialPrefix.dust,
-                "observed difference: current 72U dust planner caps at 64U; phase 05 owns the correction");
+        var plan = MaterialRecoveryRules.dustPlan(data.amount());
+        helper.assertTrue(plan.complete() && plan.representedUnits() == 72 * GTValues.U,
+                "72U dust planner preserves every unit");
+        helper.assertTrue(
+                plan.stackCount() == 2
+                        && plan.piles().get(0).equals(new MaterialRecoveryRules.DustPile(MaterialPrefix.dust, 64))
+                        && plan.piles().get(1).equals(new MaterialRecoveryRules.DustPile(MaterialPrefix.dust, 8)),
+                "72U uses legal 64 dust plus 8 dust stacks");
         var recipe = find(MachineRecipeMaps.Shredder, List.of(stack), List.of());
         helper.assertTrue(recipe != null, "72U item has a queryable recycling recipe");
-        helper.assertTrue(recipe.mOutputs[0].is(GTItems.getStack(MaterialPrefix.dust, Materials.Gold, 1).getItem())
-                && recipe.mOutputs[0].getCount() == 64, "observed difference: final shredder output also caps at 64U Gold");
-        write(helper, "72u.tsv", List.of("input\t" + describe(stack), "plan\t" + plan.prefix().getName() + "\t" + plan.count(),
+        helper.assertTrue(
+                recipe.mOutputs.length == 2
+                        && recipe.mOutputs[0].is(GTItems.getStack(MaterialPrefix.dust, Materials.Gold, 1)
+                                .getItem())
+                        && recipe.mOutputs[0].getCount() == 64
+                        && recipe.mOutputs[1].is(GTItems.getStack(MaterialPrefix.dust, Materials.Gold, 1)
+                                .getItem())
+                        && recipe.mOutputs[1].getCount() == 8,
+                "final shredder row preserves 72U Gold");
+        write(helper, "72u.tsv", List.of("input\t" + describe(stack), "plan\t" + plan.piles(),
                 "lookup\t" + (recipe == null ? "absent" : signature(MachineRecipeMaps.Shredder, recipe))));
         helper.succeed();
     }
@@ -185,6 +197,16 @@ public final class MaterialBaselineTests {
         helper.assertTrue(explicit.components().stream()
                         .anyMatch(component -> component.material().resolve() == Materials.Steel.resolve()),
                 "equivalence rejection does not discard the secondary Steel");
+        var plan = MaterialRecoveryRules.planShredder(actual, MachineRecipeMaps.Shredder.mOutputItemsCount);
+        helper.assertTrue(plan.accepted(), "complete composite composition has a shredder plan");
+        helper.assertTrue(
+                plan.outputs().stream()
+                        .map(output -> output.material().resolve())
+                        .toList()
+                        .containsAll(List.of(
+                                Materials.Titanium.getTargetPulverMaterial().resolve(),
+                                Materials.Steel.getTargetPulverMaterial().resolve())),
+                "composite shredder plan converts every component through its own pulverization target");
         observe(helper, "composite_head", stack);
         helper.succeed();
     }
@@ -201,9 +223,17 @@ public final class MaterialBaselineTests {
             helper.assertTrue(half.components().get(i).amount() == full.components().get(i).amount()
                     * (tool.getMaxDamage() - tool.getDamageValue()) / tool.getMaxDamage(), "damage scales component " + i);
         observe(helper, "tool_partial", tool);
+        helper.assertTrue(
+                ItemMaterialRegistry.recoveryRejection(tool)
+                        == ItemMaterialRegistry.RecoveryRejection.DAMAGED,
+                "partial tools retain scaled composition but are explicitly rejected by full-output recipes");
         tool.setDamageValue(tool.getMaxDamage());
         helper.assertTrue(ItemMaterialRegistry.get(tool).orElseThrow().components().isEmpty(), "exhausted tool has no positive material");
         helper.assertFalse(ItemMaterialRegistry.canRecover(tool), "no recovery from exhausted tool");
+        helper.assertTrue(
+                ItemMaterialRegistry.recoveryRejection(tool)
+                        == ItemMaterialRegistry.RecoveryRejection.DAMAGED,
+                "exhausted recovery rejection remains attributable to item state");
         observe(helper, "tool_exhausted", tool);
         var nativeTool = GTToolItem.create(GTToolType.PICKAXE, Materials.Iron, gregtech.engine.material.GTMaterialRegistry.get("Wood"));
         helper.assertFalse(nativeTool.isEmpty(), "native material tool exists");
@@ -273,6 +303,10 @@ public final class MaterialBaselineTests {
         helper.assertTrue(ItemMaterialRegistry.get(stack).isPresent(), "descriptive composition is queryable");
         helper.assertTrue(ItemMaterialRegistry.canMelt(stack), "composition existence remains independently meltable");
         helper.assertFalse(ItemMaterialRegistry.canRecover(stack), "descriptive composition does not grant bulk recovery");
+        helper.assertTrue(
+                ItemMaterialRegistry.recoveryRejection(stack)
+                        == ItemMaterialRegistry.RecoveryRejection.NOT_BULK_RECOVERABLE,
+                "recovery rejection names missing bulk authorization");
         helper.assertFalse(
                 ItemMaterialRegistry.hasMaterialProcessingRule(stack),
                 "descriptive vanilla data does not delete material cooking rules");
@@ -313,6 +347,22 @@ public final class MaterialBaselineTests {
             helper.assertTrue(
                     ItemMaterialRegistry.base(item).isEmpty(),
                     "removed tag candidates drop the effective composition");
+
+            var json = new ItemComposition(null, Materials.Copper, 4);
+            ItemMaterialRegistry.register(
+                    item,
+                    json,
+                    ItemCompositionSource.Kind.VANILLA_JSON,
+                    "gt6ce:test/dragon-egg-composition",
+                    "GameTest JSON composition");
+            ItemMaterialRegistry.publishTagCandidates(Map.of(item, List.of(taggedComposition(Materials.Iron, 1))));
+            helper.assertTrue(
+                    ItemMaterialRegistry.base(item).orElseThrow().sources().stream()
+                            .allMatch(source -> source.kind() == ItemCompositionSource.Kind.VANILLA_JSON),
+                    "explicit JSON remains the selected composition over a tag fallback");
+            helper.assertFalse(
+                    ItemMaterialRegistry.hasMaterialProcessingRule(new ItemStack(item)),
+                    "a discarded lower-priority tag does not authorize cooking rules");
         } finally {
             ItemMaterialRegistry.publishTagCandidates(Map.of(item, List.of()));
         }

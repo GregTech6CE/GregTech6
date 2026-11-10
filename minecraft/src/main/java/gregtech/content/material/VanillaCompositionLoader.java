@@ -63,6 +63,15 @@ public final class VanillaCompositionLoader {
         return Optional.of(declarationId(id.getPath()));
     }
 
+    /** Whether this JSON declaration explicitly inherits the vanilla-unification processing policy. */
+    public static boolean inheritsVanillaUnification(Item item) {
+        ResourceLocation id = Mc.itemId(item);
+        if (id == null || !id.getNamespace().equals("minecraft") || !TABLE.has(id.getPath())) return false;
+        var row = TABLE.getAsJsonObject(id.getPath());
+        return row.has("inherit")
+                && "vanilla-unification".equals(row.get("inherit").getAsString());
+    }
+
     private static String declarationId(String itemPath) {
         return "gt6ce:vanilla-compositions/" + itemPath;
     }

@@ -17,7 +17,6 @@ import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.mod.SetupOnce;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.MachineWorkCost;
-import gregtech.platform.neoforge.machine.BasicMachineRegistries;
 import gregtech.platform.neoforge.registry.NeoContent;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.bus.api.IEventBus;
@@ -75,7 +74,6 @@ public final class GregTechNeoForge {
     private static void finishSharedSetup() {
         GTProjectiles.registerDispensers();
         GTDungeonBlocks.registerPotPlants();
-        BasicMachineRegistries.registerCompositions();
         GTSpecialOreBlocks.registerCompositions();
         GTBlackSands.registerCompositions();
         gregtech.content.material.MaterialItemCompositions.registerVanillaBindings();

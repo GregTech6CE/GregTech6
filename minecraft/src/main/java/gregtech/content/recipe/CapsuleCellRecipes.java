@@ -2,10 +2,13 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 
-import gregtech.engine.fluid.PortableFluidContainerSpec;
-import gregtech.engine.recipe.Recipe;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
+import gregtech.engine.fluid.PortableFluidContainerSpec;
+import gregtech.engine.material.ItemComposition;
+import gregtech.engine.material.ItemCompositionSource;
+import gregtech.engine.material.ItemMaterialRegistry;
+import gregtech.engine.recipe.Recipe;
 import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -42,9 +45,21 @@ public final class CapsuleCellRecipes {
             var output=GTItems.getStack(MaterialPrefix.dustTiny,spec.material(),1);
             if(output.isEmpty())throw new IllegalStateException("Missing capsule recycling dust: "+spec.id());
             var input=new ItemStack(Mc.item(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())));
+            var composition=ItemMaterialRegistry.base(input.getItem()).orElse(null);
+            if(composition==null) {
+                var data=new ItemComposition(null,java.util.List.of(MaterialComponent.of(spec.material(),GTValues.U9)),
+                        spec.material(),"capsule-cell material",true);
+                ItemMaterialRegistry.register(input.getItem(),data,ItemCompositionSource.Kind.EXPLICIT,
+                        "gt6ce:capsule-cell/"+spec.id(),"PortableFluidContainerSpec");
+                composition=ItemMaterialRegistry.base(input.getItem()).orElse(null);
+            }
+            if(composition==null
+                    ||ItemMaterialRegistry.recoveryRejection(input)!=ItemMaterialRegistry.RecoveryRejection.ELIGIBLE
+                    ||composition.components().size()!=1
+                    ||composition.material().resolve()!=spec.material().resolve())continue;
             boolean brittle=spec.id().startsWith("cell_wax")||spec.id().equals("cell_plastic");
             long work=(brittle?2L:256L)*Math.max(1,spec.material().getToolQuality()+1);
-            if(MachineRecipeMaps.Shredder.addRecipe(new Recipe(new ItemStack[]{input},new ItemStack[]{output},null,null,null,null,(work+8)/9,16,0))!=null)count++;
+            if(MachineRecipeMaps.Shredder.addRecipe(new Recipe(new ItemStack[]{input},new ItemStack[]{output},null,null,null,null,(work+8)/9,16,0).withMaterialRecovery())!=null)count++;
         }
         return count;
     }

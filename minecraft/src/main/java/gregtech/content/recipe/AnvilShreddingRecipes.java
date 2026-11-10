@@ -7,6 +7,7 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
@@ -27,9 +28,8 @@ import net.minecraft.world.item.ItemStack;
  * modelled here with {@link GTMaterial#getTargetCrushingMaterial()}; {@code MORTAR} comes from the
  * workability import. GT6's {@code ST.emptySlot()} second input (the anvil slot has to stay empty) is
  * expressed as an empty stack in the second input slot, the idiom the port's other anvil rows use.
- * Rows whose recipe already exists in the map are dropped by the collision check — the {@code rockGt}
- * row, for instance, is registered by {@code StoneAndToolSurvivalRecipes}, which ports the same original
- * row ({@code Loader_Recipes_Handlers}).
+ * {@code StoneAndToolSurvivalRecipes} owns the independent {@code rockGt} row from
+ * {@code Loader_Recipes_Handlers}; it is intentionally absent from this table.
  */
 public final class AnvilShreddingRecipes {
     /** One registered anvil grinding row, for tests and reports. */
@@ -37,7 +37,8 @@ public final class AnvilShreddingRecipes {
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = List.of(
-            "eight external-prefix rows (:158-165) bind actual external items through ExternalOreProcessing after tags");
+            "eight external-prefix rows (:158-165) bind actual external items through ExternalOreProcessing after"
+                    + " tags");
 
     /** GT6 row; {@code selfCrush} mirrors GT6's selfcrush() condition, {@code mortar} its MORTAR flag. */
     private record Row(
@@ -50,7 +51,6 @@ public final class AnvilShreddingRecipes {
             boolean mortar) {}
 
     private static final List<Row> ROWS = List.of(
-            new Row(MaterialPrefix.rockGt, MaterialPrefix.dustSmall, 9, null, 0, false, false),
             new Row(MaterialPrefix.oreRaw, MaterialPrefix.crushed, 1, MaterialPrefix.crushedTiny, 6, true, true),
             new Row(MaterialPrefix.crushed, MaterialPrefix.dust, 1, MaterialPrefix.dustDiv72, 9, false, true),
             new Row(MaterialPrefix.crushedPurified, MaterialPrefix.dust, 1, MaterialPrefix.dustDiv72, 18, false, true),
@@ -98,6 +98,11 @@ public final class AnvilShreddingRecipes {
         if (row.mortar() && !gregtech.content.material.MaterialProcessingProperties.isMortarGrindable(material)) return;
         if (row.selfCrush() && material.getTargetCrushingMaterial() != material) return;
         ItemStack input = GTItems.getStack(row.input(), material, 1);
+        var composition = ItemMaterialRegistry.base(input.getItem()).orElse(null);
+        if (composition == null
+                || ItemMaterialRegistry.recoveryRejection(input) != ItemMaterialRegistry.RecoveryRejection.ELIGIBLE
+                || composition.components().size() != 1
+                || composition.material().resolve() != material.resolve()) return;
         GTMaterial target = material.getTargetPulverMaterial().resolve();
         ItemStack output = GTItems.getStack(row.output(), target, row.outCount());
         ItemStack byproduct = row.byproduct() == null
@@ -119,15 +124,16 @@ public final class AnvilShreddingRecipes {
         // rejects an empty stack ("declared input failed to resolve"), so the recipe is built directly
         // the way AnvilRecipeDefinitions does it — the anvil's 2-item minimum counts slots, not entries.
         Recipe recipe = new Recipe(
-                new ItemStack[] {input, ItemStack.EMPTY},
-                byproduct.isEmpty() ? new ItemStack[] {output} : new ItemStack[] {output, byproduct},
-                null,
-                null,
-                null,
-                null,
-                duration,
-                16,
-                0);
+                        new ItemStack[] {input, ItemStack.EMPTY},
+                        byproduct.isEmpty() ? new ItemStack[] {output} : new ItemStack[] {output, byproduct},
+                        null,
+                        null,
+                        null,
+                        null,
+                        duration,
+                        16,
+                        0)
+                .withMaterialRecovery();
         if (MachineRecipeMaps.Anvil.addRecipe(recipe) != null) {
             ENTRIES.add(new Entry(
                     row.input().getName() + " -> " + row.output().getName() + " x" + row.outCount()

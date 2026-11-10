@@ -34,10 +34,7 @@ public final class ItemMaterialRegistry {
                 || prefix == MaterialPrefix.toolHeadChainsaw
                 || prefix == MaterialPrefix.toolHeadDrill
                 || prefix == MaterialPrefix.toolHeadPickaxeGem;
-        if (item != null
-                && material != null
-                && prefix != null
-                && (prefix.hasEmptyForm() || compositeHead)) {
+        if (item != null && material != null && prefix != null && (prefix.hasEmptyForm() || compositeHead)) {
             var parts = MaterialChemistry.prefixMaterialWeights(material, prefix).stream()
                     .map(c -> MaterialComponent.of(c.material(), c.amount()))
                     .toList();
@@ -141,7 +138,8 @@ public final class ItemMaterialRegistry {
                 var tags = staged.get(item);
                 if (tags != null) itemCandidates.addAll(tags);
                 if (itemCandidates.isEmpty()) continue;
-                var value = ItemCompositionResolver.resolve(Map.of(item, itemCandidates)).get(item);
+                var value = ItemCompositionResolver.resolve(Map.of(item, itemCandidates))
+                        .get(item);
                 if (value != null) resolved.put(item, value);
             }
             boolean changed = false;
@@ -218,27 +216,57 @@ public final class ItemMaterialRegistry {
                 || stack.is(net.minecraft.world.item.Items.BUCKET);
     }
 
+    /**
+     * Why a stack may or may not enter a bulk recovery recipe.
+     *
+     * <p>Composition availability, damage, stored contents and the bulk-recovery declaration are
+     * separate facts. Runtime rows can distinguish a design rejection from a missing binding.</p>
+     */
+    public enum RecoveryRejection {
+        ELIGIBLE,
+        NO_COMPOSITION,
+        NO_COMPONENTS,
+        NOT_BULK_RECOVERABLE,
+        DAMAGED,
+        STORED_CONTENTS,
+        UNSUPPORTED_CONTAINER
+    }
+
+    public static RecoveryRejection recoveryRejection(ItemStack stack) {
+        if (stack.isEmpty()) return RecoveryRejection.NO_COMPOSITION;
+        var data = base(stack.getItem()).orElse(null);
+        if (data == null) return RecoveryRejection.NO_COMPOSITION;
+        if (data.components().isEmpty()) return RecoveryRejection.NO_COMPONENTS;
+        if (!data.bulkRecoveryAllowed()) return RecoveryRejection.NOT_BULK_RECOVERABLE;
+        if (stack.isDamaged()) return RecoveryRejection.DAMAGED;
+        if (hasStoredContents(stack)) return RecoveryRejection.STORED_CONTENTS;
+        if (stack.getItem() instanceof net.minecraft.world.item.BucketItem
+                && !stack.is(net.minecraft.world.item.Items.BUCKET)) return RecoveryRejection.UNSUPPORTED_CONTAINER;
+        return RecoveryRejection.ELIGIBLE;
+    }
+
     /** Bulk-machine recovery authorization, independent of composition existence and melting. */
     public static boolean canRecover(ItemStack stack) {
-        var data = get(stack);
-        return data.isPresent() && data.get().bulkRecoveryAllowed() && canMelt(stack);
+        return recoveryRejection(stack) == RecoveryRejection.ELIGIBLE;
     }
 
     /** Whether item data should replace a material cooking rule; descriptive compositions do not. */
     public static boolean hasMaterialProcessingRule(ItemStack stack) {
         if (stack.getItem() instanceof MaterialFormItem) return true;
         synchronized (LOCK) {
-            var item = stack.getItem();
-            var explicit = EXPLICIT_SUBMISSIONS.get(item);
-            if (explicit != null
-                    && explicit.stream()
-                            .map(candidate -> candidate.composition().sources().get(0).kind())
-                            .anyMatch(kind -> kind != ItemCompositionSource.Kind.VANILLA_JSON
-                                    && kind != ItemCompositionSource.Kind.CORRECTION
-                                    && kind != ItemCompositionSource.Kind.BLOCK_WEIGHT)) return true;
-            var tags = TAG_SUBMISSIONS.get(item);
-            return tags != null && !tags.isEmpty();
+            var composition = EFFECTIVE.get(stack.getItem());
+            return composition != null
+                    && composition.sources().stream()
+                            .anyMatch(source -> authorizesMaterialProcessingRule(stack.getItem(), source));
         }
+    }
+
+    private static boolean authorizesMaterialProcessingRule(Item item, ItemCompositionSource source) {
+        return switch (source.kind()) {
+            case VANILLA_JSON -> gregtech.content.material.VanillaCompositionLoader.inheritsVanillaUnification(item);
+            case CORRECTION, BLOCK_WEIGHT -> false;
+            default -> true;
+        };
     }
 
     public static boolean hasStoredContents(ItemStack stack) {
@@ -246,7 +274,7 @@ public final class ItemMaterialRegistry {
                 && item.getBlock() instanceof gregtech.content.block.inventory.LootChestBlock) {
 //? if >=1.21.1 {
             /*var loot = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-            if (loot == null || !loot.copyTag().getBoolean("GTLootGenerated")) return true;
+                        if (loot == null || !loot.copyTag().getBoolean("GTLootGenerated")) return true;
 *///?} else {
             var loot = stack.getTagElement("BlockEntityTag");
             if (loot == null || !loot.getBoolean("GTLootGenerated")) return true;
@@ -259,15 +287,15 @@ public final class ItemMaterialRegistry {
                         || tag.contains("EntityTag")
                         || tag.contains("ChargedProjectiles"))) return true;
 //? if >=1.21.1 {
-/*        var blockData = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        return (blockData != null && hasStoredBlockEntityData(stack, blockData.copyTag()))
-                || stack.has(net.minecraft.core.component.DataComponents.ENTITY_DATA)
-                || stack.has(net.minecraft.core.component.DataComponents.BUCKET_ENTITY_DATA)
-                || stack.has(net.minecraft.core.component.DataComponents.CONTAINER_LOOT)
-                || stack.has(net.minecraft.core.component.DataComponents.CHARGED_PROJECTILES)
-                || (stack.get(net.minecraft.core.component.DataComponents.CONTAINER) != null
-                    && !stack.get(net.minecraft.core.component.DataComponents.CONTAINER).equals(
-                            net.minecraft.world.item.component.ItemContainerContents.EMPTY));
+        /*        var blockData = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+                return (blockData != null && hasStoredBlockEntityData(stack, blockData.copyTag()))
+                        || stack.has(net.minecraft.core.component.DataComponents.ENTITY_DATA)
+                        || stack.has(net.minecraft.core.component.DataComponents.BUCKET_ENTITY_DATA)
+                        || stack.has(net.minecraft.core.component.DataComponents.CONTAINER_LOOT)
+                        || stack.has(net.minecraft.core.component.DataComponents.CHARGED_PROJECTILES)
+                        || (stack.get(net.minecraft.core.component.DataComponents.CONTAINER) != null
+                            && !stack.get(net.minecraft.core.component.DataComponents.CONTAINER).equals(
+                                    net.minecraft.world.item.component.ItemContainerContents.EMPTY));
 *///?} else {
         return false;
 //?}
@@ -276,7 +304,8 @@ public final class ItemMaterialRegistry {
     private static void submit(Item item, ItemComposition data, @Nullable String replacesSourceId) {
         if (item == null || data == null) return;
         if (data.sources().size() != 1)
-            throw new IllegalArgumentException("Submitted item composition must have exactly one source: " + data.source());
+            throw new IllegalArgumentException(
+                    "Submitted item composition must have exactly one source: " + data.source());
         var candidate = new ItemCompositionCandidate(data, replacesSourceId);
         synchronized (LOCK) {
             var candidates = EXPLICIT_SUBMISSIONS.computeIfAbsent(item, ignored -> new ArrayList<>());
@@ -313,7 +342,8 @@ public final class ItemMaterialRegistry {
         var explicit = EXPLICIT_SUBMISSIONS.get(item);
         if (explicit != null) combined.put(item, explicit);
         var tags = TAG_SUBMISSIONS.get(item);
-        if (tags != null) combined.computeIfAbsent(item, ignored -> new ArrayList<>()).addAll(tags);
+        if (tags != null)
+            combined.computeIfAbsent(item, ignored -> new ArrayList<>()).addAll(tags);
         var replacement = (requireReplacementTargets
                         ? ItemCompositionResolver.resolve(combined)
                         : ItemCompositionResolver.resolveLenient(combined))
@@ -345,7 +375,10 @@ public final class ItemMaterialRegistry {
 
     private static String sourceSuffix(ItemComposition composition) {
         return Integer.toHexString(Objects.hash(
-                composition.prefix(), composition.components(), composition.sources(), composition.bulkRecoveryAllowed()));
+                composition.prefix(),
+                composition.components(),
+                composition.sources(),
+                composition.bulkRecoveryAllowed()));
     }
 
     private static String sourceReference(ItemComposition composition) {

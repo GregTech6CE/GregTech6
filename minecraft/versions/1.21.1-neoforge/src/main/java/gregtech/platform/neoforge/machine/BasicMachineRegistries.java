@@ -1,26 +1,29 @@
 package gregtech.platform.neoforge.machine;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
-import gregtech.api.material.*;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.machine.BasicMachineDefinitions;
 import gregtech.engine.machine.BasicMachineSpec;
-import gregtech.engine.material.*;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.capabilities.*;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
-import net.neoforged.neoforge.registries.*;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 /** Native registrations from the shared catalog; original large recipe/matter/distillation factories are bound. */
 public final class BasicMachineRegistries {
@@ -225,15 +228,6 @@ public final class BasicMachineRegistries {
                     Capabilities.ItemHandler.BLOCK, type.get(), BasicMachineBlockEntity::itemCapability);
             event.registerBlockEntity(
                     Capabilities.FluidHandler.BLOCK, type.get(), BasicMachineBlockEntity::fluidCapability);
-        }
-    }
-
-    public static void registerCompositions() {
-        for (var block : net.minecraft.core.registries.BuiltInRegistries.BLOCK) {
-            if (!(block instanceof BasicMachineBlock machine)) continue;
-            var spec = machine.basicSpec();
-            gregtech.content.machine.OriginalMachineMaterialData.find(spec.machineName(), spec.tier())
-                    .ifPresent(data -> ItemMaterialRegistry.register(block.asItem(), data));
         }
     }
 }

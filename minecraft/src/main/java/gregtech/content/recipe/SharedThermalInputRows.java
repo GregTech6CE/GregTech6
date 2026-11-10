@@ -57,11 +57,24 @@ public final class SharedThermalInputRows {
         if (!initialized) return;
         var snapshot = new Snapshot();
         var planned = definitions(materials, snapshot);
+        var prepared = new ArrayList<Prepared>();
+        for (var definition : planned) {
+            var recipe = definition.recipe();
+            if (recipe != null) prepared.add(new Prepared(definition, recipe));
+        }
         clearOwned(); DEFERRED.clear(); DEFERRED.addAll(snapshot.deferred); ADMISSIONS.clear();
         try {
-            for (var definition : planned) {
-                Recipe accepted = definition.admit();
+            for (var candidate : prepared) {
+                var definition = candidate.definition();
                 RecipeMap map = definition.row().map();
+                Recipe accepted;
+                if (map == gregtech.content.data.MachineRecipeMaps.Smelter && MoltenMetalUnitRecipes.collect(
+                        candidate.recipe().mInputs[0], candidate.recipe().mFluidOutputs[0],
+                        candidate.recipe().mDuration, candidate.recipe().mEUt, definition.row().inputProof()::matches)) {
+                    accepted = null;
+                } else {
+                    accepted = map.addRecipe(candidate.recipe());
+                }
                 ADMISSIONS.add(new Admission(definition.material().getName(), definition.prefix(), map.mNameInternal, accepted != null));
                 if (accepted != null) OWNED.computeIfAbsent(map, ignored -> Collections.newSetFromMap(new IdentityHashMap<>())).add(accepted);
             }
@@ -74,16 +87,16 @@ public final class SharedThermalInputRows {
             if (row.map() == gregtech.content.data.MachineRecipeMaps.Smelter) visitor.accept(row.input(), row.output());
         }
     }
+    record Prepared(Definition definition, Recipe recipe) {}
+
     record Definition(GTMaterial material, MaterialPrefix prefix, NativeRow row) {
-        Recipe admit() {
+        Recipe recipe() {
             if (row.input().isEmpty() || row.output().isEmpty()) return null;
-            if (row.map() == gregtech.content.data.MachineRecipeMaps.Smelter && MoltenMetalUnitRecipes.collect(
-                    row.input(), row.output(), row.ticks(), row.power(), row.inputProof()::matches)) return null;
             var recipe = RecipeMap.make(true, new ItemStack[]{row.input().copy()}, new ItemStack[0], null, null,
                     new FluidStack[0], new FluidStack[]{row.output().copy()}, row.ticks(), row.power(), 0);
             // Retain the registration proof at lookup and consumption: no damaged or filled input.
             // This existing guard preserves equivalent material aliases, unlike exact-item matching.
-            return recipe == null ? null : row.map().addRecipe(recipe.withMaterialRecovery().withItemInputGuard(0, row.inputProof()::matches));
+            return recipe == null ? null : recipe.withMaterialRecovery().withItemInputGuard(0, row.inputProof()::matches);
         }
     }
     static List<Definition> definitions(Collection<GTMaterial> selected, Snapshot snapshot) {

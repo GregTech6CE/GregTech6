@@ -4,22 +4,11 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
 import gregtech.api.material.MaterialProperty;
-import gregtech.content.block.BlockMaterialWeights;
-import gregtech.content.block.MaterialBlockItem;
-import gregtech.content.block.MaterialBlockLike;
-import gregtech.content.block.stone.GTStoneBlock;
-import gregtech.content.block.stone.GTStoneSlabBlock;
-import gregtech.content.block.stone.StoneMaterialWeights;
-import gregtech.content.block.stone.StoneType;
-import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.registry.GTBlocks;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ItemMaterialRegistry;
-import gregtech.engine.prefix.BlockMaterialPrefix;
-import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -28,7 +17,6 @@ import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -141,16 +129,22 @@ final class SharedThermalRecyclingRows {
 
     static void rebuild() {
         if (!initialized) return;
-        clear();
         var snapshot = new SourceThermalNativeAdapter.Snapshot();
-        int rows = 0;
+        var plannedRows = new ArrayList<Row>();
+        var plannedDeferred = new ArrayList<Deferred>();
         for (var candidate : candidates()) {
             var outcome = plan(candidate, snapshot);
             if (outcome.action() == Action.DEFERRED) {
-                DEFERRED.add(new Deferred(candidate.name(), outcome.reason().name()));
+                plannedDeferred.add(new Deferred(candidate.name(), outcome.reason().name()));
                 continue;
             }
-            for (var row : outcome.rows()) {
+            plannedRows.addAll(outcome.rows());
+        }
+        clear();
+        DEFERRED.addAll(plannedDeferred);
+        int rows = 0;
+        try {
+            for (var row : plannedRows) {
                 Recipe accepted = row.admit();
                 if (accepted != null) {
                     OWNED.computeIfAbsent(row.map(), ignored -> Collections.newSetFromMap(new IdentityHashMap<>()))
@@ -158,6 +152,9 @@ final class SharedThermalRecyclingRows {
                     rows++;
                 }
             }
+        } catch (RuntimeException | Error failure) {
+            clear();
+            throw failure;
         }
         var reasons = new java.util.TreeMap<String, Integer>();
         for (Deferred deferred : DEFERRED) reasons.merge(deferred.reason(), 1, Integer::sum);
@@ -218,11 +215,7 @@ final class SharedThermalRecyclingRows {
     private record Candidate(
             ItemStack stack,
             MaterialPrefix prefix,
-            BlockMaterialPrefix blockPrefix,
-            List<MaterialComponent> components,
-            StoneType stoneType,
-            StoneVariant stoneVariant,
-            boolean stoneSlab) {
+            List<MaterialComponent> components) {
         String name() { return stack.getHoverName().getString(); }
     }
 
@@ -241,38 +234,7 @@ final class SharedThermalRecyclingRows {
                 continue;
             // Every component counts: the source scores duration by the whole item's mass, and a
             // crafting-derived block keeps the parts its recipe puts in it.
-            out.add(new Candidate(new ItemStack(item), prefix, null, data.components(), null, null, false));
-        }
-        for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
-            if (!allowsBlock(prefix.getName())) continue;
-            for (GTMaterial raw : GTMaterialRegistry.sortedMaterials()) {
-                GTMaterial material = raw.resolve();
-                if (!material.isValid() || material.has(MaterialProperty.ANTIMATTER)) continue;
-                ItemStack stack = GTBlocks.getStack(prefix, material);
-                if (stack.isEmpty()) continue;
-                var components = BlockMaterialWeights.contained(material, prefix);
-                if (components.isEmpty()) continue;
-                out.add(new Candidate(stack, null, prefix, components, null, null, false));
-            }
-        }
-        for (Block block : BuiltInRegistries.BLOCK) {
-            StoneType type;
-            StoneVariant variant;
-            boolean slab;
-            if (block instanceof GTStoneBlock stone) {
-                type = stone.stoneType();
-                variant = stone.variant();
-                slab = false;
-            } else if (block instanceof GTStoneSlabBlock stone) {
-                type = stone.stoneType();
-                variant = stone.variant();
-                slab = true;
-            } else continue;
-            GTMaterial material = type.material();
-            if (material == null || !material.isValid()) continue;
-            var components = StoneMaterialWeights.contained(material, variant, slab);
-            if (components.isEmpty()) continue;
-            out.add(new Candidate(new ItemStack(block), null, null, components, type, variant, slab));
+            out.add(new Candidate(new ItemStack(item), prefix, data.components()));
         }
         return out;
     }
@@ -303,11 +265,6 @@ final class SharedThermalRecyclingRows {
         if (prefix == null) return false;
         String source = PrefixRegistry.sourceName(prefix.getName());
         return source.equals("chemtube") || source.equals("cell") || source.equals("capcellcon");
-    }
-
-    private static boolean allowsBlock(String name) {
-        String source = PrefixRegistry.sourceName(name);
-        return RECYCLABLE.contains(source) && !ORE_FORMS.contains(source);
     }
 
     private static Outcome plan(Candidate candidate, SourceThermalNativeAdapter.Snapshot snapshot) {
@@ -434,25 +391,13 @@ final class SharedThermalRecyclingRows {
 
     /** Exact composition proof retained on the recipe, so only the admitted item mass is recycled. */
     record ThermalRecyclingProof(
-            Item item,
-            MaterialPrefix prefix,
-            BlockMaterialPrefix blockPrefix,
-            GTMaterial blockMaterial,
-            List<MaterialComponent> components,
-            StoneType stoneType,
-            StoneVariant stoneVariant,
-            boolean stoneSlab) {
+            Item item, MaterialPrefix prefix, List<MaterialComponent> components) {
         static ThermalRecyclingProof capture(Candidate candidate) {
             if (candidate.stack().isEmpty() || candidate.components().isEmpty()) return null;
             return new ThermalRecyclingProof(
                     candidate.stack().getItem(),
                     candidate.prefix(),
-                    candidate.blockPrefix(),
-                    candidate.blockPrefix() == null ? null : candidate.components().get(0).material().resolve(),
-                    List.copyOf(candidate.components()),
-                    candidate.stoneType(),
-                    candidate.stoneVariant(),
-                    candidate.stoneSlab());
+                    List.copyOf(candidate.components()));
         }
 
         boolean matches(ItemStack offered) {
@@ -464,27 +409,6 @@ final class SharedThermalRecyclingRows {
                         || copy.getItem() instanceof gregtech.engine.recipe.RecipeCatalystLike
                         || copy.getItem() instanceof gregtech.engine.inventory.ContainerShapeLike
                         || copy.hasCraftingRemainingItem() || !copy.getCraftingRemainingItem().isEmpty()) return false;
-                if (stoneType != null) {
-                    if (stoneSlab) {
-                        if (!(copy.getItem() instanceof gregtech.content.block.stone.GTStoneSlabBlockItem blockItem)
-                                || !(blockItem.getBlock() instanceof GTStoneSlabBlock block)
-                                || block.stoneType() != stoneType || block.variant() != stoneVariant) return false;
-                        return StoneMaterialWeights.contained(block.stoneMaterial(), stoneVariant, true)
-                                .equals(components);
-                    }
-                    if (!(copy.getItem() instanceof gregtech.content.block.MaterialBlockItem blockItem)
-                            || !(blockItem.getBlock() instanceof GTStoneBlock block)
-                            || block.stoneType() != stoneType || block.variant() != stoneVariant) return false;
-                    return StoneMaterialWeights.contained(block.stoneMaterial(), stoneVariant, false)
-                            .equals(components);
-                }
-                if (blockPrefix != null) {
-                    if (!(copy.getItem() instanceof MaterialBlockItem blockItem)
-                            || !(blockItem.getBlock() instanceof MaterialBlockLike block)
-                            || block.prefix() != blockPrefix || block.material().resolve() != blockMaterial)
-                        return false;
-                    return BlockMaterialWeights.contained(block.material(), block.prefix()).equals(components);
-                }
                 var data = ItemMaterialRegistry.get(copy).orElse(null);
                 if (data == null || !ItemMaterialRegistry.canRecover(copy) || !Objects.equals(prefix, data.prefix()))
                     return false;
