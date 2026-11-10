@@ -63,7 +63,7 @@ public final class ReviewedCrushedFormGeneration {
                 || form.getPrefix() != prefix) return false;
         var bound = GTItems.getStack(prefix, material, 1);
         if (bound.isEmpty() || bound.getItem() != canonical.getItem()) return false;
-        var explicit = ItemMaterialRegistry.explicit(canonical.getItem()).orElse(null);
+        var explicit = ItemMaterialRegistry.base(canonical.getItem()).orElse(null);
         if (explicit != null
                 && (explicit.prefix() != prefix
                         || !explicit.bulkRecoveryAllowed()

@@ -4,6 +4,7 @@ import gregtech.api.addon.material.MaterialInfoTool;
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialFormKind;
 import gregtech.api.addon.material.MaterialKey;
+import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.PulverizationMaterialHelper;
 import gregtech.api.material.SmeltingMaterialHelper;
@@ -323,6 +324,50 @@ public final class MaterialBaselineTests {
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void addonThermalRecoveryUsesDeclaredTargetAndPhase(GameTestHelper helper) {
+        var material = gregtech.engine.material.GTMaterialRegistry.get("BaselineThermalAddon");
+        var dust = GTItems.getStack(MaterialPrefix.dust, material, 1);
+        helper.assertFalse(dust.isEmpty(), "addon dust form is registered");
+        var smelting = GregTechMaterials.processes()
+                .findSingle(new MaterialKey(material.getName()), MaterialProcessKeys.SMELTING)
+                .filter(rule -> rule.value().amount() > 0)
+                .orElseThrow();
+        helper.assertTrue(
+                material.getName().equals(smelting.value().material().name()),
+                "addon smelting target is its declared material");
+        helper.assertTrue(
+                gregtech.engine.recipe.chem.MaterialFluidBinding.findAll(material.getName()).size() == 1,
+                "addon has one declared thermal phase");
+        var composition = ItemMaterialRegistry.base(dust.getItem()).orElseThrow();
+        helper.assertTrue(
+                composition.prefix() == MaterialPrefix.dust
+                        && composition.material().resolve() == material
+                        && composition.components().size() == 1,
+                "addon dust uses its authoritative composition");
+        helper.assertTrue(ItemMaterialRegistry.canRecover(dust), "addon dust is recoverable");
+        var recipe = find(MachineRecipeMaps.Smelter, List.of(dust), List.of());
+        var matchingRows = MachineRecipeMaps.Smelter.mRecipeList.stream()
+                .filter(row -> row.mInputs.length == 1
+                        && !row.mInputs[0].isEmpty()
+                        && row.mInputs[0].getItem() == dust.getItem())
+                .toList();
+        helper.assertTrue(
+                recipe != null,
+                "addon material participates in thermal recovery; matching-row-count="
+                        + matchingRows.size()
+                        + "; input-matches="
+                        + matchingRows.stream().anyMatch(row -> row.matchesItemInput(0, dust)));
+        helper.assertTrue(
+                Arrays.stream(recipe.mFluidOutputs)
+                        .anyMatch(output -> output != null && !output.isEmpty()),
+                "addon thermal row uses its declared native phase");
+        helper.assertTrue(
+                Arrays.stream(recipe.mFluidOutputs).anyMatch(output -> output.getAmount() == 144),
+                "one addon material unit uses the standard 144 mB phase scale");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
     public static void tagCandidateReplacementIsAtomicAndRemovalIsObservable(GameTestHelper helper) {
         var item = Items.DRAGON_EGG;
         helper.assertTrue(ItemMaterialRegistry.explicit(item).isEmpty(), "tag probe item has no explicit composition");
@@ -353,21 +398,35 @@ public final class MaterialBaselineTests {
                     ItemMaterialRegistry.base(item).isEmpty(),
                     "removed tag candidates drop the effective composition");
 
-            var json = new ItemComposition(null, Materials.Copper, 4);
-            ItemMaterialRegistry.register(
-                    item,
-                    json,
-                    ItemCompositionSource.Kind.VANILLA_JSON,
-                    "gt6ce:test/dragon-egg-composition",
-                    "GameTest JSON composition");
-            ItemMaterialRegistry.publishTagCandidates(Map.of(item, List.of(taggedComposition(Materials.Iron, 1))));
+            var descriptive = ItemMaterialRegistry.entries().entrySet().stream()
+                    .filter(entry -> entry.getValue().sources().stream()
+                            .anyMatch(source -> source.kind() == ItemCompositionSource.Kind.VANILLA_JSON))
+                    .filter(entry -> !entry.getValue().bulkRecoveryAllowed())
+                    .findFirst()
+                    .orElseThrow();
+            var declaredItem = descriptive.getKey();
+            ItemMaterialRegistry.publishTagCandidates(
+                    Map.of(declaredItem, List.of(taggedComposition(MaterialPrefix.ingot, Materials.Iron, GTValues.U))));
             helper.assertTrue(
-                    ItemMaterialRegistry.base(item).orElseThrow().sources().stream()
+                    ItemMaterialRegistry.base(declaredItem).orElseThrow().sources().stream()
                             .allMatch(source -> source.kind() == ItemCompositionSource.Kind.VANILLA_JSON),
                     "explicit JSON remains the selected composition over a tag fallback");
             helper.assertFalse(
-                    ItemMaterialRegistry.hasMaterialProcessingRule(new ItemStack(item)),
+                    ItemMaterialRegistry.hasMaterialProcessingRule(new ItemStack(declaredItem)),
                     "a discarded lower-priority tag does not authorize cooking rules");
+
+            boolean closed = false;
+            try {
+                ItemMaterialRegistry.register(
+                        Items.DRAGON_EGG,
+                        new ItemComposition(null, Materials.Copper, 4),
+                        ItemCompositionSource.Kind.VANILLA_JSON,
+                        "gt6ce:test/closed-explicit",
+                        "GameTest closed explicit registration");
+            } catch (IllegalStateException expected) {
+                closed = expected.getMessage().contains("closed");
+            }
+            helper.assertTrue(closed, "explicit item composition registration closes after final validation");
         } finally {
             ItemMaterialRegistry.publishTagCandidates(Map.of(item, List.of()));
         }

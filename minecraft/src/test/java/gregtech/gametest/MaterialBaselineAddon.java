@@ -15,10 +15,15 @@ public final class MaterialBaselineAddon implements AddonMaterialContributor {
 
     @Override
     public List<MaterialDeclaration> materials() {
-        return List.of(MaterialDeclaration.builder("BaselineRuntimeCompound")
-                .dust()
-                .centrifuge()
-                .build());
+        return List.of(
+                MaterialDeclaration.builder("BaselineRuntimeCompound")
+                        .dust()
+                        .centrifuge()
+                        .build(),
+                MaterialDeclaration.builder("BaselineThermalAddon")
+                        .dust()
+                        .liquid()
+                        .build());
     }
 
     @Override

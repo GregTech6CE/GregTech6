@@ -196,7 +196,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                                 +MaterialEquivalence.materialName(form.material()),id.toString());
             } else {
                 // Vanilla-unified items (minecraft:iron_block, ...) carry a material without a prefix.
-                var data=gregtech.engine.material.ItemMaterialRegistry.explicit(item).orElse(null);
+                var data=gregtech.engine.material.ItemMaterialRegistry.declared(item).orElse(null);
                 var blockTarget=item instanceof BlockItem && id.getNamespace().equals("minecraft")
                         ? VanillaUnificationDefinitions.blockTarget(id.getPath()) : null;
                 // A block target keeps its form material even when the item also carries a
@@ -520,7 +520,7 @@ public final class MaterialTagPack extends AbstractPackResources {
     private static MaterialEquivalence.Form registeredForm(Item item) {
         if (item instanceof gregtech.engine.material.MaterialFormItem materialItem)
             return new MaterialEquivalence.Form(materialItem.getPrefix(), materialItem.getMaterial().resolve());
-        var data = gregtech.engine.material.ItemMaterialRegistry.explicit(item).orElse(null);
+        var data = gregtech.engine.material.ItemMaterialRegistry.declared(item).orElse(null);
         if (data == null || data.prefix() == null || data.components().size() != 1
                 || data.amount() != data.prefix().getMaterialWeight()) return null;
         return new MaterialEquivalence.Form(data.prefix(), data.material().resolve());

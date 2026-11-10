@@ -75,7 +75,7 @@ public final class NonOreContinuationEvidence {
                     defer.add(material);
                     continue;
                 }
-                var data = ItemMaterialRegistry.explicit(stack.getItem()).orElse(null);
+                var data = ItemMaterialRegistry.base(stack.getItem()).orElse(null);
                 if (data != null
                         && (data.prefix() != prefix
                                 || !data.bulkRecoveryAllowed()

@@ -65,7 +65,7 @@ public class DustFunnelBlockEntity extends BlockEntity {
             return block.prefix() == gregtech.engine.prefix.BlockMaterialPrefix.blockDust;
         // GT6 black sands are their material's blockDust without MaterialBlockLike: they keep their
         // own name and texture, so only the GTBlocks binding identifies them as that form.
-        var data = gregtech.engine.material.ItemMaterialRegistry.explicit(item).orElse(null);
+        var data = gregtech.engine.material.ItemMaterialRegistry.base(item).orElse(null);
         if (data == null || data.components().size() != 1) return false;
         var bound = gregtech.content.registry.GTBlocks.getStack(
                 gregtech.engine.prefix.BlockMaterialPrefix.blockDust, data.material());

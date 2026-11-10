@@ -95,7 +95,7 @@ public final class CraftingMaterialForms {
         planks.sort(Comparator.comparing((Item item) -> !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("minecraft"))
                 .thenComparing(item -> BuiltInRegistries.ITEM.getKey(item).toString()));
         for (var item : planks) {
-            var data = ItemMaterialRegistry.explicit(item).orElse(null);
+            var data = ItemMaterialRegistry.declared(item).orElse(null);
             if (data == null || data.prefix() != MaterialPrefix.plate || data.components().size() != 1
                     || data.amount() != GTValues.U || !data.material().has(MaterialProperty.WOOD)) continue;
             var form = new Form("plate", data.material().resolve().getName());

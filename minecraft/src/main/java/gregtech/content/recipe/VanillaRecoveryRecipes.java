@@ -94,8 +94,8 @@ public final class VanillaRecoveryRecipes {
                             16,
                             0)
                     .withMaterialRecovery();
-            // Existing explicit GT6 processing recipes keep priority and their special yields.
-            if (MachineRecipeMaps.Shredder.addRecipe(recipe) != null) RECIPES.add(recipe);
+            recipe.withSource("recovery:vanilla-generic");
+            if (RecoveryRecipeConflicts.publish(MachineRecipeMaps.Shredder, recipe) != null) RECIPES.add(recipe);
             else skip("existing-owner");
         }
         Mc.logger()

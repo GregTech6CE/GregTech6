@@ -235,7 +235,7 @@ public final class SharedOreWashingRows {
    var form=MaterialEquivalence.form(selected);
    if(form==null||form.prefix()!=prefix||form.material().resolve()!=m||selected.getCount()!=count)
     return NativeForm.unknown();
-   var metadata=ItemMaterialRegistry.explicit(selected.getItem()).orElse(null);
+   var metadata=ItemMaterialRegistry.base(selected.getItem()).orElse(null);
    if(metadata!=null&&(metadata.prefix()!=prefix||metadata.components().size()!=1
        ||metadata.material().resolve()!=m||metadata.amount()!=prefix.getMaterialWeight()))return NativeForm.unknown();
    return NativeForm.present(selected);

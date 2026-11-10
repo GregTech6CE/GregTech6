@@ -21,7 +21,7 @@ import static gregtech.api.material.GTValues.U;
 public final class ReviewedCinnabarThermalRecipes {
  private ReviewedCinnabarThermalRecipes(){}
  private record Form(MaterialPrefix prefix,long amount){}
- private record Input(ItemStack stack,long amount,ThermalInputProof proof){}
+ private record Input(ItemStack stack,long amount,RecoveryInputProof proof){}
  private record MetalFraction(MaterialPrefix prefix,long amount,int millibuckets,long titaniumTicks,long ironTicks){}
  private static final MetalFraction[] METAL_FRACTIONS={
   new MetalFraction(MaterialPrefix.dustSmall,U/4,36,129,207),
@@ -49,11 +49,11 @@ public final class ReviewedCinnabarThermalRecipes {
   for(var form:FORMS){
    var stack=GTItems.getStack(form.prefix,material,1);
    if(!unchangedInput(stack,form.prefix,material,form.amount))return false;
-   inputs.add(new Input(stack,form.amount,ThermalInputProof.capture(stack,material,form.prefix,form.amount)));
+   inputs.add(new Input(stack,form.amount,RecoveryInputProof.capture(stack,material,form.prefix,form.amount)));
   }
   var block=ReviewedCinnabarFacts.INSTANCE.blockDust(material,1);
   if(!unchangedInput(block,null,material,9*U))return false;
-  inputs.add(new Input(block,9*U,ThermalInputProof.captureCinnabarBlock(block,material)));
+  inputs.add(new Input(block,9*U,RecoveryInputProof.captureCinnabarBlock(block,material)));
   for(var input:inputs)emit(input.stack,input.amount,target,input.proof);
   return true; // Only replaces this producer's old dust row; no mapwide removals.
  }
@@ -74,7 +74,7 @@ public final class ReviewedCinnabarThermalRecipes {
     ||!net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(fluid.getFluid()).toString().equals(expected))return false;
   // Independent paired original literals: floor(weight*(melting-293)/1600), density4.54/7.874.
   long ticks=material.getId()==220?519:830;
-  admit(MachineRecipeMaps.Smelter,input,fluid,ticks,ThermalInputProof.capture(input,material,MaterialPrefix.dust,U));
+  admit(MachineRecipeMaps.Smelter,input,fluid,ticks,RecoveryInputProof.capture(input,material,MaterialPrefix.dust,U));
   // Finite extension of this reviewed Ti/Fe single-material source branch, not generic recycling.
   // Missing forms stay missing; explicit changed compositions defer independently, never deleted.
   for(var form:METAL_FRACTIONS){
@@ -82,7 +82,7 @@ public final class ReviewedCinnabarThermalRecipes {
    if(fraction.isEmpty()||!unchangedInput(fraction,form.prefix,material,form.amount))continue;
    long fractionTicks=material.getId()==220?form.titaniumTicks:form.ironTicks;
    var fractionFluid=fluid.copy();fractionFluid.setAmount(form.millibuckets);
-   admit(MachineRecipeMaps.Smelter,fraction,fractionFluid,fractionTicks,ThermalInputProof.capture(fraction,material,form.prefix,form.amount));
+  admit(MachineRecipeMaps.Smelter,fraction,fractionFluid,fractionTicks,RecoveryInputProof.capture(fraction,material,form.prefix,form.amount));
   }
   return true;
  }
@@ -94,14 +94,14 @@ public final class ReviewedCinnabarThermalRecipes {
      ||form.getMaterial().resolve()!=material||prefix.getMaterialWeight()!=amount)return false;
   }else if(!(stack.getItem() instanceof gregtech.content.block.MaterialBlockItem block)
      ||block.material()==null||block.material().resolve()!=material)return false;
-  if(prefix==null)return amount==9*U&&ThermalInputProof.captureCinnabarBlock(stack,material)!=null;
-  var composition=ItemMaterialRegistry.explicit(stack.getItem()).orElse(null);
+  if(prefix==null)return amount==9*U&&RecoveryInputProof.captureCinnabarBlock(stack,material)!=null;
+  var composition=ItemMaterialRegistry.base(stack.getItem()).orElse(null);
   if(composition==null)return false; // Missing ordinary item proof must not create a guessed row.
   return composition.bulkRecoveryAllowed()&&composition.prefix()==prefix&&composition.components().size()==1
     &&composition.material().resolve()==material&&composition.amount()==amount
-    &&ThermalInputProof.capture(stack,material,prefix,amount)!=null;
+    &&RecoveryInputProof.capture(stack,material,prefix,amount)!=null;
  }
- private static void emit(ItemStack input,long amount,GTMaterial target,ThermalInputProof proof){
+ private static void emit(ItemStack input,long amount,GTMaterial target,RecoveryInputProof proof){
   if(input.isEmpty())return;
   var result=SourceRecyclingMath.singleLiquid(amount,U,U/3,144,7.8003,234,300,293);
   if(result.millibuckets()<=0)return;
@@ -111,7 +111,7 @@ public final class ReviewedCinnabarThermalRecipes {
   admit(MachineRecipeMaps.Melter,input,fluid,result.ticks(),proof);
   admit(MachineRecipeMaps.Smelter,input,fluid,result.ticks(),proof);
  }
- private static Recipe admit(RecipeMap map,ItemStack input,FluidStack output,long ticks,ThermalInputProof proof){
+ private static Recipe admit(RecipeMap map,ItemStack input,FluidStack output,long ticks,RecoveryInputProof proof){
   if(proof==null||input.isEmpty()||output.isEmpty())return null;
   var recipe=RecipeMap.make(true,new ItemStack[]{input.copy()},new ItemStack[0],null,null,
       new FluidStack[0],new FluidStack[]{output.copy()},ticks,16,0);

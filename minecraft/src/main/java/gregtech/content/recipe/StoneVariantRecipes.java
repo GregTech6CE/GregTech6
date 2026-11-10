@@ -252,7 +252,7 @@ public final class StoneVariantRecipes {
                 || dust.isEmpty()
                 || ItemMaterialRegistry.recoveryRejection(in)
                         != ItemMaterialRegistry.RecoveryRejection.ELIGIBLE) return;
-        Recipe recipe = MachineRecipeMaps.Shredder.addRecipe(new Recipe(
+        Recipe recipe = new Recipe(
                 new ItemStack[] {in},
                 extra == null || extra.isEmpty()
                         ? new ItemStack[] {dust}
@@ -263,7 +263,8 @@ public final class StoneVariantRecipes {
                 null,
                 ticks,
                 16,
-                0).withMaterialRecovery());
+                0).withMaterialRecovery().withSource("recovery:stone-variant");
+        recipe = RecoveryRecipeConflicts.publish(MachineRecipeMaps.Shredder, recipe);
         count(family, recipe);
     }
 

@@ -225,7 +225,7 @@ public final class ExternalOreProcessing {
             if (id == null || item == Items.AIR) continue;
             String namespace = id.getNamespace();
             if (namespace.equals("minecraft") || namespace.equals("gt6ce")) continue;
-            if (ItemMaterialRegistry.explicit(item).isPresent() || materialData.containsKey(item)) continue;
+            if (ItemMaterialRegistry.declared(item).isPresent() || materialData.containsKey(item)) continue;
             var forms = CraftingMaterialForms.taggedForms(new ItemStack(item));
             boolean common = false;
             for (var form : forms)

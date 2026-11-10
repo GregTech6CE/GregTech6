@@ -16,7 +16,6 @@ import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.MaterialUnitRecipe;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
-import gregtech.engine.stack.StackCompat;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -124,8 +123,7 @@ public final class ShredderRecyclingRecipes {
         try {
             for (var candidate : planned) {
                 if (candidate == null || candidate.rule() == null) continue;
-                beforePublish(candidate.rule().template);
-                var published = candidate.rule().publish(MachineRecipeMaps.Shredder);
+                var published = publish(candidate.rule());
                 if (published == null) {
                     skip("tag-existing-owner");
                     continue;
@@ -185,8 +183,7 @@ public final class ShredderRecyclingRecipes {
         if (data == null || form == null) return;
         var candidate = prepare(input, data, form);
         if (candidate == null || candidate.rule() == null) return;
-        beforePublish(candidate.rule().template);
-        var published = candidate.rule().publish(MachineRecipeMaps.Shredder);
+        var published = publish(candidate.rule());
         if (published == null) skip("existing-owner");
         else destination.add(new Entry(candidate.name(), published));
     }
@@ -265,30 +262,13 @@ public final class ShredderRecyclingRecipes {
         return new Planned(form.name(), rule);
     }
 
-    private static void beforePublish(Recipe candidate) {
-        var collision = MachineRecipeMaps.Shredder.findCollision(candidate);
-        if (collision != null && GENERIC_SOURCE.equals(collision.mSource)) {
-            if (sameOutputs(collision, candidate)) return;
-            throw conflict(candidate, collision);
-        }
-    }
-
-    private static IllegalStateException conflict(Recipe candidate, Recipe existing) {
-        return new IllegalStateException("Conflicting Shredder recovery rows for "
-                + candidate.mInputs[0].getHoverName().getString() + ": existing "
-                + existing.mOutputs.length + " outputs at " + existing.mDuration + "t, candidate "
-                + candidate.mOutputs.length + " outputs at " + candidate.mDuration + "t");
-    }
-
-    private static boolean sameOutputs(Recipe left, Recipe right) {
-        if (left.mOutputs.length != right.mOutputs.length
-                || left.mFluidOutputs.length != right.mFluidOutputs.length
-                || !java.util.Arrays.equals(left.mChances, right.mChances)) return false;
-        for (int i = 0; i < left.mOutputs.length; i++)
-            if (!ItemStack.matches(left.mOutputs[i], right.mOutputs[i])) return false;
-        for (int i = 0; i < left.mFluidOutputs.length; i++)
-            if (!StackCompat.sameFluid(left.mFluidOutputs[i], right.mFluidOutputs[i])) return false;
-        return true;
+    private static Recipe publish(MaterialUnitRecipe rule) {
+        var resolution = RecoveryRecipeConflicts.inspect(MachineRecipeMaps.Shredder, rule.template);
+        if (resolution.action() == RecoveryRecipeConflicts.Action.REPLACE_GENERIC)
+            MachineRecipeMaps.Shredder.removeAll(List.of(resolution.existing()));
+        if (resolution.action() != RecoveryRecipeConflicts.Action.PUBLISH
+                && resolution.action() != RecoveryRecipeConflicts.Action.REPLACE_GENERIC) return null;
+        return rule.publish(MachineRecipeMaps.Shredder);
     }
 
     private static RecyclableForm recyclableForm(ItemStack input, ItemComposition data) {

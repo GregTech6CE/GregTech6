@@ -24,6 +24,7 @@ public final class ItemMaterialRegistry {
     private static final Map<Item, List<ItemCompositionCandidate>> TAG_SUBMISSIONS = new IdentityHashMap<>();
     private static final AtomicLong COMPOSITION_REVISION = new AtomicLong();
     private static boolean tagInputReady;
+    private static boolean explicitClosed;
 
     private static final Map<Item, ItemComposition> EFFECTIVE = new IdentityHashMap<>();
     private static final Map<Item, ItemComposition> EXPLICIT = new IdentityHashMap<>();
@@ -179,6 +180,7 @@ public final class ItemMaterialRegistry {
     public static void validateExplicitSnapshot() {
         synchronized (LOCK) {
             for (var item : EXPLICIT_SUBMISSIONS.keySet()) updateItemLocked(item, true);
+            explicitClosed = true;
         }
     }
 
@@ -194,6 +196,12 @@ public final class ItemMaterialRegistry {
         synchronized (LOCK) {
             return Optional.ofNullable(EFFECTIVE.get(item));
         }
+    }
+
+    /** Effective composition whose winner is not an external resource-tag import. */
+    public static Optional<ItemComposition> declared(Item item) {
+        return base(item).filter(composition -> composition.sources().stream()
+                .noneMatch(source -> source.kind() == ItemCompositionSource.Kind.FORM_TAG));
     }
 
     /** Distinguishes a missing composition from a snapshot whose tag input has not been published yet. */
@@ -332,6 +340,8 @@ public final class ItemMaterialRegistry {
                     "Submitted item composition must have exactly one source: " + data.source());
         var candidate = new ItemCompositionCandidate(data, replacesSourceId);
         synchronized (LOCK) {
+            if (explicitClosed)
+                throw new IllegalStateException("Explicit item composition registration is closed");
             var candidates = EXPLICIT_SUBMISSIONS.computeIfAbsent(item, ignored -> new ArrayList<>());
             var previous = candidates.stream()
                     .filter(existing -> existing.sourceId().equals(candidate.sourceId()))

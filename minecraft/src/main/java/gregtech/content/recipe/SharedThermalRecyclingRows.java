@@ -1,19 +1,22 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
 import gregtech.api.material.MaterialProperty;
+import gregtech.api.material.SmeltingMaterialHelper;
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTFluids;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
+import gregtech.engine.fluid.MoltenFluidHandler;
+import gregtech.engine.recipe.chem.MaterialFluidBinding;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.recipe.SourceRecyclingMath;
-import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -31,8 +34,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import static gregtech.content.recipe.SourceRecyclingFacts.*;
@@ -183,6 +186,9 @@ final class SharedThermalRecyclingRows {
         TARGET_IDENTITY_OVERRIDE,
         FLUID_BINDING_OVERRIDE,
         REQUIRED_NATIVE_FLUID_ABSENT,
+        DECLARED_PROCESS_MISSING,
+        DECLARED_PHASE_MISSING,
+        DECLARED_PHASE_AMBIGUOUS,
         INVALID_RUNTIME_STATS,
         UNVERIFIED_INPUT_BEHAVIOR
     }
@@ -193,7 +199,7 @@ final class SharedThermalRecyclingRows {
         static Outcome deferred(Reason reason) { return new Outcome(Action.DEFERRED, reason, List.of()); }
     }
 
-    private record Row(RecipeMap map, ItemStack input, FluidStack output, long ticks, ThermalRecyclingProof proof) {
+    private record Row(RecipeMap map, ItemStack input, FluidStack output, long ticks, RecoveryInputProof proof) {
         Recipe admit() {
             if (map == gregtech.content.data.MachineRecipeMaps.Smelter && MoltenMetalUnitRecipes.collect(
                     input, output, ticks, SourceThermalRecyclingRules.POWER, proof::matches)) return null;
@@ -208,7 +214,13 @@ final class SharedThermalRecyclingRows {
                     ticks,
                     SourceThermalRecyclingRules.POWER,
                     0);
-            return recipe == null ? null : map.addRecipe(recipe.withMaterialRecovery().withItemInputGuard(0, proof::matches));
+            return recipe == null
+                    ? null
+                    : RecoveryRecipeConflicts.publish(
+                            map,
+                            recipe.withMaterialRecovery()
+                                    .withItemInputGuard(0, proof::matches)
+                                    .withSource("recovery:thermal-generic"));
         }
     }
 
@@ -240,18 +252,7 @@ final class SharedThermalRecyclingRows {
     }
 
     private static boolean ownedByAuditedProducer(MaterialPrefix prefix, ItemComposition data) {
-        if (SourceThermalInputRules.form(prefix) != null) return true;
-        if (!GTMaterialRegistry.isCoreMaterial(data.material().resolve())) return false;
-        GTMaterial material = data.material().resolve();
-        if (material.getId() == 9114 && material.getName().equals("Cinnabar"))
-            return prefix == MaterialPrefix.dust || prefix == MaterialPrefix.dustSmall
-                    || prefix == MaterialPrefix.dustTiny || prefix == MaterialPrefix.dustDiv72
-                    || prefix == MaterialPrefix.crushedPurified || prefix == MaterialPrefix.crushedPurifiedTiny
-                    || prefix == MaterialPrefix.crushedCentrifuged || prefix == MaterialPrefix.crushedCentrifugedTiny;
-        boolean metal = material.getId() == 220 && material.getName().equals("Titanium")
-                || material.getId() == 260 && material.getName().equals("Iron");
-        return metal && (prefix == MaterialPrefix.dustSmall || prefix == MaterialPrefix.dustTiny
-                || prefix == MaterialPrefix.dustDiv72);
+        return ThermalRecoveryOwnership.auditedInputRowsOwn(prefix, data.material());
     }
 
     private static boolean allows(MaterialPrefix prefix) {
@@ -268,6 +269,9 @@ final class SharedThermalRecyclingRows {
     }
 
     private static Outcome plan(Candidate candidate, SourceThermalNativeAdapter.Snapshot snapshot) {
+        if (candidate.components().stream()
+                .map(component -> component.material().resolve())
+                .anyMatch(AddonMaterials::owns)) return planDeclared(candidate);
         var targetUnits = new java.util.LinkedHashMap<GTMaterial, Long>();
         var factsByTarget = new java.util.LinkedHashMap<GTMaterial, SourceRecyclingFacts.Facts>();
         double weight = 0;
@@ -339,7 +343,7 @@ final class SharedThermalRecyclingRows {
         } catch (IllegalArgumentException | ArithmeticException invalid) {
             return Outcome.deferred(Reason.INVALID_RUNTIME_STATS);
         }
-        var proof = ThermalRecyclingProof.capture(candidate);
+        var proof = RecoveryInputProof.capture(candidate.stack(), candidate.prefix(), candidate.components());
         if (proof == null) return Outcome.deferred(Reason.UNVERIFIED_INPUT_BEHAVIOR);
         FluidStack output = chosen.phase().fluid().copy();
         output.setAmount(millibuckets);
@@ -349,6 +353,72 @@ final class SharedThermalRecyclingRows {
                     gregtech.content.data.MachineRecipeMaps.Melter, candidate.stack(), output.copy(), ticks, proof));
         rows.add(new Row(
                 gregtech.content.data.MachineRecipeMaps.Smelter, candidate.stack(), output.copy(), ticks, proof));
+        return Outcome.ok(rows);
+    }
+
+    /** Addon declarations are authoritative for their own smelting target and material fluid binding. */
+    private static Outcome planDeclared(Candidate candidate) {
+        var targetUnits = new java.util.LinkedHashMap<GTMaterial, Long>();
+        double weight = 0;
+        try {
+            for (MaterialComponent component : candidate.components()) {
+                GTMaterial material = component.material().resolve();
+                if (!valid(material)) return Outcome.deferred(Reason.UNKNOWN_SOURCE_IDENTITY);
+                weight += SourceRecyclingMath.materialWeight(material.getDensity(), component.amount(), SOURCE_UNIT);
+                var declared = SmeltingMaterialHelper.target(material);
+                if (declared.isEmpty()) continue;
+                GTMaterial target = GTMaterialRegistry.get(declared.get().material().name()).resolve();
+                if (!valid(target)) return Outcome.deferred(Reason.DECLARED_PROCESS_MISSING);
+                long units = SourceRecyclingMath.targetUnits(
+                        component.amount(), SOURCE_UNIT, declared.get().amount());
+                if (units > 0) targetUnits.merge(target, units, Math::addExact);
+            }
+        } catch (IllegalArgumentException | ArithmeticException invalid) {
+            return Outcome.deferred(Reason.INVALID_RUNTIME_STATS);
+        }
+        if (targetUnits.isEmpty()) return Outcome.none();
+        if (targetUnits.size() != 1) return Outcome.none();
+
+        var chosen = targetUnits.entrySet().iterator().next();
+        GTMaterial target = chosen.getKey();
+        var fields = new LinkedHashSet<String>();
+        for (var binding : MaterialFluidBinding.findAll(target.getName())) fields.add(binding.field());
+        if (fields.isEmpty()) return Outcome.deferred(Reason.DECLARED_PHASE_MISSING);
+        if (fields.size() != 1) return Outcome.deferred(Reason.DECLARED_PHASE_AMBIGUOUS);
+
+        FluidStack sample = GTFluids.stack(fields.iterator().next(), 1);
+        if (sample == null || sample.isEmpty())
+            return Outcome.deferred(Reason.REQUIRED_NATIVE_FLUID_ABSENT);
+        var ratio = MoltenFluidHandler.ratio(target, sample);
+        int millibuckets;
+        long ticks;
+        try {
+            millibuckets = gregtech.content.recipe.OriginalMaterialFluidUnits.millibuckets(
+                    chosen.getValue(),
+                    Math.multiplyExact(SOURCE_UNIT, ratio.materialUnits()),
+                    ratio.millibucketsPerUnit(),
+                    false);
+            if (millibuckets <= 0) return Outcome.none();
+            int temperature = sample.getFluid().getFluidType().getTemperature(sample);
+            ticks = SourceRecyclingMath.weightedTicks(
+                    weight,
+                    target.getMeltingPoint(),
+                    temperature,
+                    SourceThermalRecyclingRules.ENVIRONMENT_TEMPERATURE,
+                    millibuckets,
+                    sample.getFluid() == Fluids.LAVA);
+        } catch (IllegalArgumentException | ArithmeticException invalid) {
+            return Outcome.deferred(Reason.INVALID_RUNTIME_STATS);
+        }
+        var proof = RecoveryInputProof.capture(candidate.stack(), candidate.prefix(), candidate.components());
+        if (proof == null) return Outcome.deferred(Reason.UNVERIFIED_INPUT_BEHAVIOR);
+        FluidStack output = sample.copy();
+        output.setAmount(millibuckets);
+        var rows = new ArrayList<Row>(2);
+        boolean craftedPhase = target.has(MaterialProperty.MELTING) || target.has(MaterialProperty.MOLTEN);
+        if (craftedPhase)
+            rows.add(new Row(MachineRecipeMaps.Melter, candidate.stack(), output.copy(), ticks, proof));
+        rows.add(new Row(MachineRecipeMaps.Smelter, candidate.stack(), output.copy(), ticks, proof));
         return Outcome.ok(rows);
     }
 
@@ -383,48 +453,9 @@ final class SharedThermalRecyclingRows {
 
     private static boolean valid(GTMaterial material) {
         return material != null && material.isValid() && material.resolve() == material
-                && GTMaterialRegistry.isCoreMaterial(material) && !AddonMaterials.owns(material)
                 && !material.has(MaterialProperty.ANTIMATTER)
                 && GTMaterialRegistry.get(material.getId()) == material
                 && GTMaterialRegistry.get(material.getName()) == material;
     }
 
-    /** Exact composition proof retained on the recipe, so only the admitted item mass is recycled. */
-    record ThermalRecyclingProof(
-            Item item, MaterialPrefix prefix, List<MaterialComponent> components) {
-        static ThermalRecyclingProof capture(Candidate candidate) {
-            if (candidate.stack().isEmpty() || candidate.components().isEmpty()) return null;
-            return new ThermalRecyclingProof(
-                    candidate.stack().getItem(),
-                    candidate.prefix(),
-                    List.copyOf(candidate.components()));
-        }
-
-        boolean matches(ItemStack offered) {
-            try {
-                if (offered == null || offered.isEmpty() || offered.getItem() != item) return false;
-                ItemStack copy = offered.copyWithCount(1);
-                if (copy.isDamaged() || copy.isDamageableItem() || copy.getMaxDamage() != 0
-                        || ItemMaterialRegistry.hasStoredContents(copy)
-                        || copy.getItem() instanceof gregtech.engine.recipe.RecipeCatalystLike
-                        || copy.getItem() instanceof gregtech.engine.inventory.ContainerShapeLike
-                        || copy.hasCraftingRemainingItem() || !copy.getCraftingRemainingItem().isEmpty()) return false;
-                var data = ItemMaterialRegistry.get(copy).orElse(null);
-                if (data == null || !ItemMaterialRegistry.canRecover(copy) || !Objects.equals(prefix, data.prefix()))
-                    return false;
-                if (!data.components().equals(components)) return false;
-                // Reject filled fluid containers exactly like the audited producer.
-                var handler = StackCompat.fluidHandler(copy);
-                if (handler != null) {
-                    int tanks = handler.getTanks();
-                    if (tanks < 0) return false;
-                    for (int tank = 0; tank < tanks; tank++)
-                        if (handler.getTankCapacity(tank) != 0) return false;
-                }
-                return true;
-            } catch (RuntimeException | LinkageError invalidBehavior) {
-                return false;
-            }
-        }
-    }
 }

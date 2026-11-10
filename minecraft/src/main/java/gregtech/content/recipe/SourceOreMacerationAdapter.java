@@ -173,7 +173,7 @@ final class SourceOreMacerationAdapter {
             ItemStack selected = GTItems.getStack(prefix, material.resolve(), 1);
             if (selected.isEmpty()) return NativeForm.absent();
             if (!SourceFurnaceNativeAdapter.nativeForm(prefix, material, selected)) return NativeForm.unknown();
-            var data = ItemMaterialRegistry.explicit(selected.getItem()).orElse(null);
+            var data = ItemMaterialRegistry.base(selected.getItem()).orElse(null);
             if (data == null
                     || !data.bulkRecoveryAllowed()
                     || data.prefix() != prefix

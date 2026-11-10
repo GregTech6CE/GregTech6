@@ -59,7 +59,10 @@ public final class CapsuleCellRecipes {
                     ||composition.material().resolve()!=spec.material().resolve())continue;
             boolean brittle=spec.id().startsWith("cell_wax")||spec.id().equals("cell_plastic");
             long work=(brittle?2L:256L)*Math.max(1,spec.material().getToolQuality()+1);
-            if(MachineRecipeMaps.Shredder.addRecipe(new Recipe(new ItemStack[]{input},new ItemStack[]{output},null,null,null,null,(work+8)/9,16,0).withMaterialRecovery())!=null)count++;
+            var recipe=new Recipe(new ItemStack[]{input},new ItemStack[]{output},null,null,null,null,(work+8)/9,16,0)
+                    .withMaterialRecovery()
+                    .withSource("recovery:capsule");
+            if(RecoveryRecipeConflicts.publish(MachineRecipeMaps.Shredder,recipe)!=null)count++;
         }
         return count;
     }
