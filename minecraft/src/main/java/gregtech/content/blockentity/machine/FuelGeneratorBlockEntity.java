@@ -16,10 +16,7 @@ import gregtech.content.block.machine.FuelGeneratorBlock;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-//? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup;
-*///?} else {
-//?}
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;

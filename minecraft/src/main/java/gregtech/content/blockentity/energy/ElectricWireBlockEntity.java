@@ -11,9 +11,7 @@ import gregtech.content.data.GregTechConstants;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.transport.energy.ElectricNetwork;
 import gregtech.content.transport.energy.ElectricNetworks;
-//? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup;
-*///?}
+import net.minecraft.core.HolderLookup;
 import gregtech.content.registry.GTWires;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

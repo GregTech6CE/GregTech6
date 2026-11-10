@@ -9,9 +9,7 @@ import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.energy.IEnergyConductor;
 import gregtech.content.block.energy.AxleBlock;
 import gregtech.content.data.GregTechTags;
-//? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup;
-*///?}
+import net.minecraft.core.HolderLookup;
 import gregtech.content.registry.GTAxles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

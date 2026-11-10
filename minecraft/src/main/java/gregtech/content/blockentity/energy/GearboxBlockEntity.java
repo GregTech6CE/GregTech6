@@ -6,9 +6,7 @@ import gregtech.engine.energy.IEnergyBlock;
 import gregtech.content.block.energy.GearboxBlock;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MaterialPrefix;
-//? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup;
-*///?}
+import net.minecraft.core.HolderLookup;
 import gregtech.content.registry.GTGearboxes;
 import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;

@@ -3,9 +3,7 @@ package gregtech.content.blockentity.energy;
 import gregtech.content.block.energy.ChemicalBatteryBlock;
 import gregtech.content.energy.PortableBatterySpec;
 import gregtech.content.item.ChemicalBatteryItem;
-//? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup;
-*///?}
+import net.minecraft.core.HolderLookup;
 import gregtech.content.registry.GTChemicalBatteries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

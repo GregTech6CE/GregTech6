@@ -10,10 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
-//? if >=1.21.1 {
-/*import net.minecraft.core.HolderLookup;
-*///?} else {
-//?}
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
