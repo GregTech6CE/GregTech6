@@ -11,7 +11,7 @@
 | `engine` | 执行层总体说明 | `package-info.java`；不继续使用旧 internal 命名扩张实现 |
 | `engine.addon` | 附属声明收集、校验、物化与共享服务绑定 | `AddonCoreServices`、`AddonMaterials`、`AddonMachines`、`AddonPipes` |
 | `engine.definition` | 定义目录的组织与查询机制 | `DefinitionCatalog`；内容行放 content |
-| `engine.material` | 材料安装、链接、附属事实冻结、最终角色、不可变视图和化学规则 | `GTMaterialRegistry`、`MaterialRegistryState`、`MaterialInfoRegistry`、`MaterialLinker`、`MaterialViews` |
+| `engine.material` | 材料安装、链接、附属事实冻结、最终角色、物品成分裁决、不可变视图和化学规则 | `GTMaterialRegistry`、`MaterialInfoRegistry`、`ItemCompositionResolver`、`MaterialViews` |
 | `engine.prefix` | 材料形态/前缀的注册与解析 | `PrefixRegistry`、`BlockPrefixRegistry` |
 | `engine.recipe` | 配方成本、并行与输出空间拟合、燃料批次、可合成性和界面坐标等共享机制 | `MachineWorkCost`、`ParallelFit`、`FluidFuelChargeMath`；不能夹带游戏栈 |
 | `engine.recipe.data` | 配方文档模型、组件、解析及校验 | `MachineRecipeDocuments`、`ItemComponent`、`FluidComponent` |
@@ -45,7 +45,7 @@
 | `engine.inventory` | 游戏物品库存、方块内容、大容量存储面与物料形态适配 |
 | `engine.machine`、`engine.machine.crucible` | 机器基类、配方状态机（`RecipeProcessor`、`RecipeLookup`）、相邻能力缓存、控制和坩埚物品输入 |
 | `engine.stack` | 两节点物品/流体栈与 NBT 的序列化、同一性助手（`StackCompat`、`NbtCompat`），供组件代码消去版本分支 |
-| `engine.material` | ItemStack 的材料归属、等价、统一和表现绑定 |
+| `engine.material` | ItemStack 的材料归属、候选快照、等价、统一和表现绑定；`ItemMaterialRegistry` 同时提供遍历与单物品查询 |
 | `engine.multiblock` | `ControllerDeclaration` / `ControllerBinding` 关联主控、实体类型与结构；端口归属、工具目标和机器连接 |
 | `engine.multiblock.tracking` | 结构模式编译、足迹、世界变化跟踪、聚合及客户端成形同步；`StructureConstraints` 把公共约束编译为缓存检查 |
 | `engine.recipe` | 游戏配方对象、输入匹配、查询表、产出与 GUI 布局 |

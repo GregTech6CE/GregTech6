@@ -69,6 +69,9 @@ routes:
   - paths: ["minecraft/src/test/**"]
     packages: [content, engine]
     checks: [gametest, format]
+  - paths: ["minecraft/versions/*/src/test/**"]
+    packages: [content, engine]
+    checks: [gametest, format]
 
   # 版本节点：基础编译、组装与格式检查
   - paths: ["minecraft/versions/*/src/main/**"]
