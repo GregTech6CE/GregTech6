@@ -2,7 +2,9 @@ package gregtech.content.block.stone;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.registry.GTBlocks;
+import gregtech.content.worldgen.OreHarvest;
 import gregtech.engine.material.MaterialPresentation;
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -10,23 +12,12 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.PickaxeItem;
-//? if >=1.21.1 {
-//?} else {
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-//?}
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 /** GT decorative stone block (GT6 {@code BlockStonesGT} / {@code BlockStones}). */
 public final class GTStoneBlock extends Block {
@@ -69,7 +60,8 @@ public final class GTStoneBlock extends Block {
 
     @Override
     public MutableComponent getName() {
-        return Component.translatable(getDescriptionId(), MaterialPresentation.name(stoneMaterial), variant.displayName());
+        return Component.translatable(
+                getDescriptionId(), MaterialPresentation.name(stoneMaterial), variant.displayName());
     }
 
     @Override
@@ -82,12 +74,7 @@ public final class GTStoneBlock extends Block {
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
-        ItemStack tool = params.getOptionalParameter(LootContextParams.TOOL);
-//? if >=1.21.1 {
-        /*boolean silkTouch = gregtech.content.worldgen.OreHarvest.from(params).silkTouch();
-*///?} else {
-        boolean silkTouch = tool != null && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0;
-//?}
+        boolean silkTouch = OreHarvest.from(params).silkTouch();
         if (variant == StoneVariant.STONE && !silkTouch) {
             Block cobble = GTBlocks.getStone(stoneType, StoneVariant.COBBLE);
             if (cobble != null) {
@@ -96,8 +83,6 @@ public final class GTStoneBlock extends Block {
         }
         return List.of(new ItemStack(this));
     }
-
-
 
     @Override
     public boolean isSignalSource(BlockState state) {

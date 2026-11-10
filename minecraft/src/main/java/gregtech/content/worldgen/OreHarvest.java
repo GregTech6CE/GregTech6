@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
@@ -14,13 +15,18 @@ public record OreHarvest(int fortune, boolean silkTouch) {
         return from(params.getLevel(), tool);
     }
 
-    public static OreHarvest from(net.minecraft.world.level.LevelAccessor level, ItemStack tool) {
+    public static OreHarvest from(LevelAccessor level, ItemStack tool) {
         if (tool == null || tool.isEmpty()) {
             return new OreHarvest(0, false);
         }
-        var enchantments = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+//? if >=1.21.1 {
+        /*var enchantments = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
         int fortune = EnchantmentHelper.getItemEnchantmentLevel(enchantments.getOrThrow(Enchantments.FORTUNE), tool);
         int silk = EnchantmentHelper.getItemEnchantmentLevel(enchantments.getOrThrow(Enchantments.SILK_TOUCH), tool);
+*///?} else {
+        int fortune = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool);
+        int silk = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool);
+//?}
         return new OreHarvest(fortune, silk > 0);
     }
 }
