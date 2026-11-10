@@ -5,16 +5,16 @@
 | 领域 | 主要差异 |
 | --- | --- |
 | BlockEntity | `saveAdditional` / `loadAdditional` / `getUpdateTag` / `loadStatic` 的 provider 参数 |
-| ItemStack | `ItemStack#save`、`tag` ↔ `CUSTOM_DATA`、线格式、旧 tag 迁移、身份比较 |
+| ItemStack | `ItemStack#save`、`tag` ↔ `CUSTOM_DATA`、线格式、旧 tag 迁移、身份比较、封面过滤器 provider |
 | FluidStack | `FluidStack#save`、`tag` ↔ components、线格式、身份比较 |
 | Container | `ContainerHelper#saveAllItems` / `loadAllItems` 的 provider 参数 |
 | SavedData | `SavedData.Factory` 的 provider 参数 |
 | Registry | 注册表查找、`ResourceLocation` 构造、标签目录命名 |
 | Capability | `ForgeCapabilities` ↔ `Capabilities`、`LazyOptional` ↔ `Optional` |
 | ClientModel | `ModelResourceLocation`、baked model、客户端事件 |
-| Facade | logger |
-| Placement | 注册归属、holder 类型、节点目录、菜单落点、物品类依赖、创造栏装配、包装类、静态谓词、分支噪声 |
-| Parity | CE 与原版行为差异，不是版本差异 |
+| Facade | logger、事件总线 |
+| Placement | 注册归属、holder 类型、节点目录、菜单落点、物品类依赖、节点类拆分、创造栏装配、包装类、静态谓词、分支噪声 |
+| Parity（守卫） | 行为差异见 decisions/parity；本目录只做折叠前检查 |
 
 ## BlockEntity
 
@@ -26,9 +26,9 @@
 
 ## ItemStack
 
-摘要：物品栈的 provider 签名、自定义数据存储、线格式、旧数据迁移与身份比较。
+摘要：物品栈的 provider 签名、自定义数据存储、线格式、旧数据迁移、身份比较与封面过滤器 provider。
 
-关键词：ItemStack, ItemStack#save, ItemStack#parseOptional, CUSTOM_DATA, CustomData, StackData, ItemStack#getTag, ItemStack#getOrCreateTag, ItemStack#setTag, ItemStack#hasTag, hasAnyData, hasCustomData, isSameItemSameTags, isSameItemSameComponents, StackCompat.sameItem, BLOCK_ENTITY_DATA
+关键词：ItemStack, ItemStack#save, ItemStack#parseOptional, CUSTOM_DATA, CustomData, StackData, ItemStack#getTag, ItemStack#getOrCreateTag, ItemStack#setTag, ItemStack#hasTag, hasAnyData, hasCustomData, isSameItemSameTags, isSameItemSameComponents, StackCompat.sameItem, BLOCK_ENTITY_DATA, registryAccess, setItemFilter, setFluidFilter
 
 领域文档：[ItemStack/README.md](ItemStack/README.md)
 
@@ -82,24 +82,24 @@
 
 ## Facade
 
-摘要：日志 API 的收敛。
+摘要：日志与事件总线 API 的分支，优先收进共享门面。
 
-关键词：logger, LogUtils, GregTech.LOGGER, Mc.logger
+关键词：logger, LogUtils, GregTech.LOGGER, Mc.logger, EventBusSubscriber, PlayerInteractEvent
 
 领域文档：[Facade/README.md](Facade/README.md)
 
 ## Placement
 
-摘要：同一内容家族在两个版本中实现落点不同，包括注册归属、holder 类型、节点目录、菜单落点、物品类依赖、创造栏装配、包装类、静态谓词和分支噪声。
+摘要：同一内容家族在两个版本中实现落点不同，包括注册归属、holder 类型、节点目录、菜单落点、物品类依赖、节点类拆分、创造栏装配、包装类、静态谓词和分支噪声。
 
-关键词：registerAll, ContentRegistrar, Supplier, GTManualStations, GTMenuTypes, OriginCreativeContents, GTMachineBlockItem, NeoToolBindings, GTToolType, identical, same, empty, one-sided, import, split duplicate, duplicate registration
+关键词：registerAll, ContentRegistrar, Supplier, GTManualStations, GTMenuTypes, OriginCreativeContents, GTMachineBlockItem, SmeltingCrucibleEntity, PoweredToolItem, NeoToolBindings, GTToolType, identical, same, empty, one-sided, import, split duplicate, duplicate registration
 
 领域文档：[Placement/README.md](Placement/README.md)
 
 ## Parity
 
-摘要：CE 与原版的行为差异，不是版本差异；清理 Stonecutter 分支时不能误折叠。
+摘要：CE 与原版 GT6 的行为差异不在本目录记录；权威记录见 [`docs/decisions/parity/`](../../decisions/parity/README.md)。折叠 `//?` 分支前先查该目录。
 
-关键词：craftKind, isInteractionTool, isTool, plunger, igniter, consumesTool, PanelCoverHost
+关键词：craftKind, plunger, igniter, consumesTool
 
 领域文档：[Parity/README.md](Parity/README.md)

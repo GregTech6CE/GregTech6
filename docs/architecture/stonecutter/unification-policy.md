@@ -81,6 +81,7 @@
 ## 记录与验证
 
 - 相对于 golden 的行为变更记录到 parity/decision 文档；注册路径、holder 类型、类删除等结构变更记录到架构文档或提交说明，不进入 parity。
+- Stonecutter 文档只记录代码写法差异；行为差异的权威记录在 [`docs/decisions/parity/`](../../decisions/parity/README.md)，不在 Stonecutter 分类中重复。
 - 两个节点 `stonecutterGenerate` + `compileJava` 通过。
 - `spotlessCheck` 通过。
 - 检查生成源码：分支折叠、import 残留、两节点一致性。

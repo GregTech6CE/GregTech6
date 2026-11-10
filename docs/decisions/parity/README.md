@@ -9,6 +9,7 @@
 - [原版优先](prefer-origin.md)：以原版 MC 物品、流体或方块替代 GT 自有实现。
 - [幻觉物品](illusion.md)：重构期凭空产生、原 GT6 不存在的注册项及其清理。
 - [流体管道分布模式](fluid-distribution.md)：新增的 `BALANCED`/`SHARED` 配置与空闲调度开关。
+- [工具交互行为](tool-interactions.md)：交互工具判定、plunger 抽取顺序、igniter 的 `PASS`、封面工具守卫。
 - [药水系统移除](potion-removal.md)：移除整套药水系统的决策，含流体、配方表、饮用条目与下游联动；已执行，清理项并入[流体移除](fluid-removal.md)与[物品移除](item-removal.md)。
 - [营养系统移除](nutrition-removal.md)：移除五项食物统计、其伤害类型与配置，保留辐射；停注 13 条闭环饮料流体与 `Tea_Ice`，保留瓶装物品。
 - [板条箱重构](crate-rework.md)：装饰板条箱、战利品板条箱与材料板条箱的三种身份划分，含走廊生成与 4,018 个材料板条箱的删除。
