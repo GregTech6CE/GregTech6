@@ -11,14 +11,18 @@ public final class GTLootGen {
     private GTLootGen() {}
 
     /** The transpiled rows, as {@code table|weight|min|max|spec}. */
-    public static String[] rows() { return ROWS; }
+    public static String[] rows() {
+        return ROWS;
+    }
 
     /**
      * How many items a roll of a GT6 table hands out, as {@code table|min|max}
      * ({@code ChestGenHooks.getInfo("gt.books").setMin(8).setMax(24)}, {@code Loader_Loot:337-339});
      * GT6's configurable loot chest fills its slots with one roll per drawn item.
      */
-    public static String[] tableCounts() { return TABLE_COUNTS; }
+    public static String[] tableCounts() {
+        return TABLE_COUNTS;
+    }
 
     static final String[] TABLE_COUNTS = {
         "gt.books|8|24",
@@ -101,6 +105,7 @@ public final class GTLootGen {
         "gt.misc|36|2|8|i:stick:Breeze:1",
         "gt.misc|144|3|12|tech:dynamite:1",
         "gt.misc|36|1|1|tech:modeled_porcelain_cup:1",
+        "gt.misc|36|2|4|tech:cure_all:1",
         "gt.saplings|288|1|4|v:dead_bush:1",
         "gt.saplings|288|1|4|v:dead_bush:1",
         "gt.saplings|144|1|1|v:sunflower:1",

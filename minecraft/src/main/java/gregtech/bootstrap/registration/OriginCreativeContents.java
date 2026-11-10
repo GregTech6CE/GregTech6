@@ -166,7 +166,7 @@ public final class OriginCreativeContents {
             if((!itemId.getNamespace().equals(REGISTRY_NAMESPACE) && !addonMachine && !addonPipe && !addonPart && !addonDrum && !addonFluid)||item instanceof MaterialFormItem && !(item instanceof EnergyCrystalItem)||item instanceof CreativeTabIconItem)continue;
 //?}
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
-            if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
+            if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
 
             if (!gregtech.content.item.CatalogVisibility.visible(new ItemStack(item))) continue;
             items.add(item);

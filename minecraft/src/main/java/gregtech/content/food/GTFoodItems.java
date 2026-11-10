@@ -31,12 +31,12 @@ import java.util.Map;
  *
  * <p>The port registers the food <em>items</em> from {@code GTMultiItemsGen} (transpiled by
  * {@code tools/transpile_gt6_multiitems.py}, one entry per GT6 {@code addItem(...)} row), and every one
- * of GT6's 266 food items is already there. What was missing is the content of their
+ * of GT6's 251 food items is already there. What was missing is the content of their
  * {@code new FoodStat(...)} argument, which is a separate generated table
  * ({@link GTFoodItemsGen}, {@code tools/extract_gt6_food_items.py}) exactly like
  * {@link GTBottles} is for the bottles.
  *
- * <p>Three GT6 behaviours hang off that table:
+ * <p>Two GT6 behaviours hang off that table:
  * <ol>
  *   <li><b>Vanilla food values.</b> GT6's {@code FoodStat} food level and saturation are what
  *       {@code MultiItemRandom} hands to vanilla's food data verbatim
@@ -44,16 +44,14 @@ import java.util.Map;
  *       {@code FoodData.eat(nutrition, saturationModifier)} computes the same
  *       {@code nutrition * saturationModifier * 2}. {@link #foodProperties(String)} returns them so the
  *       registry can build the real {@link FoodProperties} instead of one placeholder for all food.</li>
- *   <li><b>The six statistics.</b> {@code FoodStat.onEaten} pushes them into {@code EntityFoodTracker}
- *       ({@code FoodStat}); the port reads them from {@link GTFoodStats}, which is generated
- *       from this same table by {@code tools/extract_gt6_food_stats.py}.</li>
  *   <li><b>The empty container.</b> {@code FoodStat.onEaten} returns {@code mEmptyContainer} to the
  *       player ({@code FoodStat}) - eating a Potato on a Stick gives the stick back, a bag
  *       of chips gives the foil scraps. {@link #onItemUseFinish} does that here.</li>
  * </ol>
  *
  * <p>Not carried over, and recorded in {@link GTFoodItemsGen#SKIPPED} rather than invented: GT6's
- * {@code PotionsGT} potion effects and the ENVM body-temperature/hydration numbers.
+ * {@code PotionsGT} potion effects and the ENVM body-temperature/hydration numbers. Radiation is kept
+ * separately in {@link gregtech.content.food.FoodStatisticRows}.
  */
 //? if >=1.21.1 {
 /*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
@@ -68,24 +66,15 @@ public final class GTFoodItems {
     public record Food(int level, float saturation, int hydration, int temperature,
                        boolean alwaysEdible, boolean rotten) {}
 
-    /** GT6 {@code FoodStat}'s six statistics, in {@link GTFoodStats}' order. */
-    public record Stats(int alcohol, int caffeine, int dehydration, int sugar, int fat, int radiation) {
-        /** Whether any of the six is non-zero (GT6 only tracks what changes). */
-        public boolean tracked() {
-            return alcohol != 0 || caffeine != 0 || dehydration != 0
-                    || sugar != 0 || fat != 0 || radiation != 0;
-        }
-    }
-
     /**
      * One GT6 food item: the port's item id, its GT6 display name, its GT6 {@code addItem} meta id (the
-     * texture number in {@code GT6resourcepack}), the food values, the statistics, the empty container
-     * and the {@code MultiItemFood.java} line all of it comes from.
+     * texture number in {@code GT6resourcepack}), the food values, the empty container and the
+     * {@code MultiItemFood.java} line all of it comes from.
      */
-    public record Entry(String id, String display, int meta, Food food, Stats stats,
+    public record Entry(String id, String display, int meta, Food food,
                         String container, int containerCount, boolean hasFoodStat, int line) {}
 
-    private static Entry fromShared(FoodNutritionRows.Entry r) { var f=r.food();var q=r.stats();return new Entry(r.id(),r.display(),r.meta(),new Food(f.level(),f.saturation(),f.hydration(),f.temperature(),f.alwaysEdible(),f.rotten()),new Stats(q.alcohol(),q.caffeine(),q.dehydration(),q.sugar(),q.fat(),q.radiation()),r.container(),r.containerCount(),r.hasFoodStat(),r.line()); }
+    private static Entry fromShared(FoodNutritionRows.Entry r) { var f=r.food();return new Entry(r.id(),r.display(),r.meta(),new Food(f.level(),f.saturation(),f.hydration(),f.temperature(),f.alwaysEdible(),f.rotten()),r.container(),r.containerCount(),r.hasFoodStat(),r.line()); }
     private static final List<Entry> ROWS=GTFoodItemsGen.ROWS.stream().map(GTFoodItems::fromShared).toList();
     private static final Map<String, Entry> BY_ID = new LinkedHashMap<>();
     private static final List<String> MISSING_ITEMS = new ArrayList<>();

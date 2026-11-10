@@ -25,8 +25,8 @@ import net.minecraftforge.fluids.FluidStack;
  *
  * <p>GT6 gives every {@code MultiItemBottles} entry a {@code FoodStatFluid}, i.e. the bottle <em>is</em>
  * the source portion of that fluid, and the numbers come from {@code DrinksGT} (the port's
- * {@link GTDrinks} table, /). Bottles whose fluid the port does not have pass instead of being
- * consumed, the same call the per-fluid {@link FluidItem} makes.
+ * {@link GTDrinks} table, /). Bottles whose fluid the port no longer registers read the item-level
+ * fallback values in {@link BottleDrinkFallback}, so they keep their original drink behaviour.
  *
  * <p>Drinking gives back GT6's own empty bottle ({@code bottle_empty}, the {@code bottle} material
  * prefix's "Empty") and only falls back to a vanilla glass bottle when that item is missing.
@@ -102,7 +102,15 @@ public class BottleItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         Fluid fluid = fluid();
-        if (fluid == null || !GTDrinks.canDrink(player, new FluidStack(fluid, amount()))) {
+        if (fluid == null) {
+            var fallback = BottleDrinkFallback.row(fluidKey);
+            if (fallback == null || !GTDrinks.canEat(player, true, fallback.alwaysEdible())) {
+                return InteractionResultHolder.pass(stack);
+            }
+            player.startUsingItem(hand);
+            return InteractionResultHolder.consume(stack);
+        }
+        if (!GTDrinks.canDrink(player, new FluidStack(fluid, amount()))) {
             return InteractionResultHolder.pass(stack);
         }
         player.startUsingItem(hand);
@@ -112,7 +120,9 @@ public class BottleItem extends Item {
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
         var row = GTDrinks.rowFor(fluid());
-        return row != null && row.useAction().equals("eat") ? UseAnim.EAT : UseAnim.DRINK;
+        if (row != null) return row.useAction().equals("eat") ? UseAnim.EAT : UseAnim.DRINK;
+        var fallback = BottleDrinkFallback.row(fluidKey);
+        return fallback != null && fallback.useAction().equals("eat") ? UseAnim.EAT : UseAnim.DRINK;
     }
 
 //? if >=1.21.1 {
@@ -122,14 +132,22 @@ public class BottleItem extends Item {
 //?}
         // Vanilla potion time as the floor; GT6's 16-tick floor is recorded in the parity notes.
         var row = GTDrinks.rowFor(fluid());
-        return Math.max(32, row == null ? 32 : row.foodLevel() * 8);
+        if (row != null) return Math.max(32, row.foodLevel() * 8);
+        var fallback = BottleDrinkFallback.row(fluidKey);
+        return Math.max(32, fallback == null ? 32 : fallback.foodLevel() * 8);
     }
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         if (level.isClientSide || !(entity instanceof Player player)) return stack;
         Fluid fluid = fluid();
-        if (fluid == null || !GTDrinks.drink(player, new FluidStack(fluid, amount()))) return stack;
+        if (fluid == null) {
+            var fallback = BottleDrinkFallback.row(fluidKey);
+            if (fallback == null || !GTDrinks.canEat(player, true, fallback.alwaysEdible())) return stack;
+            BottleDrinkFallback.drink(player, fallback);
+        } else if (!GTDrinks.drink(player, new FluidStack(fluid, amount()))) {
+            return stack;
+        }
         if (!player.getAbilities().instabuild) {
             stack.shrink(1);
 //? if >=1.21.1 {

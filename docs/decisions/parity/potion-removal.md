@@ -21,7 +21,7 @@
 | 密封储罐 | 保留软锤密封与密封语义，密封后拒绝灌入与抽出；删除密封后的发酵——发酵 tick、配方查询、进度、相关 NBT、进度传感器与界面进度提示一并移除，不给密封储罐保留药水入口。 | 密封发酵是上游 GT6 的行为，但药水改为物品后桶内不可能再有药水；剩下的非药水无物品路线只有 17 条，保留半套只对食物与生物质生效的隐藏机制，收益低于维护与展示成本。这 17 条仍由发酵机执行，不受影响。 |
 | 瓶筐经验瓶 | 经验瓶在瓶筐中的液面暂用水 + 手动颜色 #06FF44（绿色）渲染（中间临时替代方案）；原版经验瓶的液面颜色为紫色。 | 上游 GT6 的瓶筐用跳跃药水作为经验瓶的显示流体；跳跃药水停注后，水能保留“有液体”的显示，颜色取原贴图平均色，避免新注册流体或贴图。原版经验瓶为紫色，本端暂改为绿色，属于临时视觉方案。 |
 | Potion_Tainted | 一并停注，不提供替代品。 | 上游用它承接外模组药水，移植端从未移植该路径。 |
-| 保留的相似内容 | `Dragon_Breath` 流体保留；24 种 `potion.*` 命名的饮料流体及其贴图保留，id 清单见[附录F](#附录f-随移除清理的资源)。 | 只是注册名相似，这些流体不带药水标志、是带食物标志的饮料；龙息物品仍被原版喷溅药水和蜂房使用。 |
+| 保留的相似内容 | `Dragon_Breath` 流体保留；16 种 `potion.*` 命名的饮料流体及其贴图保留，id 清单见[附录F](#附录f-随移除清理的资源)。 | 只是注册名相似，这些流体不带药水标志、是带食物标志的饮料；龙息物品仍被原版喷溅药水和蜂房使用。`potion.dressing`、`potion.sake`、`potion.hotsauce`、`potion.diabolosauce`、`potion.diablosauce`、`potion.diablosauce.strong`、`potion.leninade`、`potion.dragonblood` 已由[营养系统移除](nutrition-removal.md)删除。 |
 | 资源清理 | 两种语言各 188 条药水流体键、94 组流体贴图与动画描述，中文另有 187 条指向同一批流体的 GT6 时代旧键，加上毒瓶与 9 个毒性木桶的模型、贴图、堆组和相关语言键，明细见[附录F](#附录f-随移除清理的资源)。 | 沿用光谱露那次的清理范围，避免留下无主键与无主模型。 |
 | 存档兼容 | 已发布存档（v1.0.0–v1.0.4 全部含药水内容）里储罐、板条箱与杯子中的药水流体载入后静默清空，不提供流体迁移；机器物品栏布局不变，药水槽单独持久化；密封储罐的发酵进度 NBT 不再读取，密封状态保留。 | 本端没有流体迁移机制，且药水身份改由物品承载。 |
 
@@ -94,8 +94,8 @@
 | 流体语言键 | 每语言 94 | `fluid.gt6ce.<id>`，`<id>` 取[附录A](#附录a-停注的药水流体)的 94 个注册名 |
 | 流体类型语言键 | 每语言 94 | `fluid_type.gt6ce.<id 中非字母数字换成下划线>`，同样按附录A 的 94 个注册名派生 |
 | 旧式显示回退键 | 中文 93 | `fluid.potion.<id 去掉前缀>`，即 `fluid.potion.awkward` 一类的 GT6 时代键；显示链先取上一行的 `fluid_type` 键，这些回退键只在中文文件里存在，94 条药水流体中除 `potion.poison` 外各有 1 条 |
-| 旧饮品说明键 | 中文 94 | `gt.drink.potion.<id 去掉前缀>`，无任何代码读取，94 条药水流体各有 1 条；同前缀另有 23 条属于饮料 |
+| 旧饮品说明键 | 中文 94 | `gt.drink.potion.<id 去掉前缀>`，无任何代码读取，94 条药水流体各有 1 条；同前缀另有 15 条属于饮料 |
 | 流体贴图 | 94 组 | `assets/gt6ce/textures/block/fluids/<id>.png` 与 `<id>.png.mcmeta`，按附录A 的注册名匹配 |
 | 毒瓶 | 1 物品，每语言 2 键 | `assets/gt6ce/models/item/bottle_of_poison.json`、`assets/gt6ce/textures/item/bottles/bottle_of_poison.png`、`item.gt6ce.bottle_of_poison` 与 `item.gt6ce.bottle_of_poison.tooltip`；`assets/gt6ce/stack_groups/material_forms/functional_chemical_bottles.json` 中的 `item:gt6ce:bottle_of_poison` 一个条目，同文件其余条目不属于本次清理 |
 | 毒性木桶 | 9 物品，每语言 19 键 | `wooden_bucket_<band>_poison`，`<band>` 取 `copper`、`tin`、`zinc`、`lead`、`bismuth`、`brass`、`bronze`、`bismuth_bronze`、`gold`；9 个 `assets/gt6ce/models/item/` 文件与 9 个 `assets/gt6ce/textures/item/wooden_buckets/` 文件、18 条 `item.gt6ce.wooden_bucket_<band>_poison` 与 `.tooltip` 键、`emi.group.gt6ce.wooden_bucket_poison` 键；`assets/gt6ce/stack_groups/material_forms/functional_wooden_bucket_poison.json`，该文件 9 个条目全是毒性木桶 |
-| 同前缀保留项 | 24 流体 | `potion.mineralwater`、`potion.ambrosia`、`potion.coffee`、`potion.darkcoffee`、`potion.cafeaulait`、`potion.darkcafeaulait`、`potion.laitaucafe`、`potion.chocolatemilk`、`potion.darkchocolatemilk`、`potion.lemonade`、`potion.cavejohnsonsgrenadejuice`、`potion.dressing`、`potion.hotsauce`、`potion.diabolosauce`、`potion.diablosauce`、`potion.diablosauce.strong`、`potion.dragonblood`、`potion.leninade`、`potion.sake`、`potion.alcopops`、`potion.goldenapplejuice`、`potion.goldencider`、`potion.idunsapplejuice`、`potion.notchesbrew`；它们对应 `fluid.gt6ce.potion.*` 剩下的 23 条（`potion.chocolatemilk` 无该键）、`fluid_type.gt6ce.potion_*` 剩下的 24 条与贴图目录剩下的 23 组（`potion.chocolatemilk` 无贴图），另有 `potion.png` 与 `potion.saltywater.png` 两组本就无主的贴图 |
+| 同前缀保留项 | 16 流体 | `potion.mineralwater`、`potion.ambrosia`、`potion.coffee`、`potion.darkcoffee`、`potion.cafeaulait`、`potion.darkcafeaulait`、`potion.laitaucafe`、`potion.chocolatemilk`、`potion.darkchocolatemilk`、`potion.lemonade`、`potion.cavejohnsonsgrenadejuice`、`potion.alcopops`、`potion.goldenapplejuice`、`potion.goldencider`、`potion.idunsapplejuice`、`potion.notchesbrew`；它们对应 `fluid.gt6ce.potion.*` 剩下的 15 条（`potion.chocolatemilk` 无该键）、`fluid_type.gt6ce.potion_*` 剩下的 16 条与贴图目录剩下的 15 组（`potion.chocolatemilk` 无贴图），另有 `potion.png` 与 `potion.saltywater.png` 两组本就无主的贴图。其余 8 条 `potion.*` 饮料已由[营养系统移除](nutrition-removal.md)删除 |

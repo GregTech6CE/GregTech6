@@ -80,18 +80,16 @@ public final class SandwichNutrition {
         }
         var entry = GTFoodItems.entryFor(stack.getItem());
         if (bottle != null) {
-            applyStats(player, bottle.alcohol(), bottle.caffeine(), bottle.dehydration(), bottle.sugar(), bottle.fat(), bottle.radiation());
+            applyRadiation(player, bottle.radiation());
         } else if (entry != null && entry.hasFoodStat()) {
-            var values = entry.stats();
-            applyStats(player, values.alcohol(), values.caffeine(), values.dehydration(), values.sugar(), values.fat(), values.radiation());
+            Integer radiation = GTFoodStats.radiation(stack);
+            if (radiation != null) applyRadiation(player, radiation);
         } else {
             var drink = drink(stack);
-            if (drink != null) applyStats(player, drink.alcohol(), drink.caffeine(), drink.dehydration(), drink.sugar(), drink.fat(), drink.radiation());
+            if (drink != null) applyRadiation(player, drink.radiation());
         }
     }
-    private static void applyStats(Player player, int alcohol, int caffeine, int dehydration, int sugar, int fat, int radiation) {
-        int[] values = {alcohol, caffeine, dehydration, sugar, fat};
-        for (int stat = 0; stat < values.length; stat++) if (values[stat] != 0) PlayerFoodStats.change(player, values[stat], stat);
+    private static void applyRadiation(Player player, int radiation) {
         if (radiation != 0) PlayerRadiation.change(player, radiation);
     }
 }

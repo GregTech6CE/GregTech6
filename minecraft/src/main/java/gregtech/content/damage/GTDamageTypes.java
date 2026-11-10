@@ -54,38 +54,14 @@ public final class GTDamageTypes {
     public static final ResourceKey<DamageType> SPIKE = key("spike");
     /** GT6 {@code DamageSourceExploding} — "exploded" (absolute, allowed in creative). */
     public static final ResourceKey<DamageType> EXPLODED = key("exploded");
-    /** GT6 {@code DamageSourceAlcohol} — "died from alcohol poisoning" (absolute). */
-    public static final ResourceKey<DamageType> ALCOHOL = key("alcohol");
-    /** GT6 {@code DamageSourceCaffeine} — "overdosed on caffeine" (absolute). */
-    public static final ResourceKey<DamageType> CAFFEINE = key("caffeine");
-    /** GT6 {@code DamageSourceDehydration} — "took more than the deadly dose of Salt" (absolute). */
-    public static final ResourceKey<DamageType> DEHYDRATION = key("dehydration");
-    /** GT6 {@code DamageSourceSugar} — "died of Diabetes" (absolute). */
-    public static final ResourceKey<DamageType> SUGAR = key("sugar");
-    /** GT6 {@code DamageSourceFat} — "got a Heart Attack" (absolute). */
-    public static final ResourceKey<DamageType> FAT = key("fat");
     /** IC2's {@code DMG_ELECTRIC}, which {@code DamageSources.getElectricDamage} delegates to. */
     public static final ResourceKey<DamageType> ELECTRIC = key("electric");
     /** IC2's {@code DMG_RADIATION}, which {@code DamageSources.getRadioactiveDamage} delegates to. */
     public static final ResourceKey<DamageType> RADIATION = key("radiation");
 
     /** Every type this class registers, in GT6's {@code DamageSources} order of the hazard helpers. */
-    public static final List<ResourceKey<DamageType>> ALL = List.of(
-            HEAT,
-            FROST,
-            CHEMICAL,
-            BUMBLE,
-            CRUSHER,
-            SHREDDER,
-            SPIKE,
-            EXPLODED,
-            ALCOHOL,
-            CAFFEINE,
-            DEHYDRATION,
-            SUGAR,
-            FAT,
-            ELECTRIC,
-            RADIATION);
+    public static final List<ResourceKey<DamageType>> ALL =
+            List.of(HEAT, FROST, CHEMICAL, BUMBLE, CRUSHER, SHREDDER, SPIKE, EXPLODED, ELECTRIC, RADIATION);
 
     private GTDamageTypes() {}
 
@@ -135,26 +111,6 @@ public final class GTDamageTypes {
     /** GT6 {@code DamageSources.getExplodingDamage()}. */
     public static DamageSource exploding(Level level) {
         return source(level, EXPLODED);
-    }
-    /** GT6 {@code DamageSources.getAlcoholDamage()}. */
-    public static DamageSource alcohol(Level level) {
-        return source(level, ALCOHOL);
-    }
-    /** GT6 {@code DamageSources.getCaffeineDamage()}. */
-    public static DamageSource caffeine(Level level) {
-        return source(level, CAFFEINE);
-    }
-    /** GT6 {@code DamageSources.getDehydrationDamage()}. */
-    public static DamageSource dehydration(Level level) {
-        return source(level, DEHYDRATION);
-    }
-    /** GT6 {@code DamageSources.getSugarDamage()}. */
-    public static DamageSource sugar(Level level) {
-        return source(level, SUGAR);
-    }
-    /** GT6 {@code DamageSources.getFatDamage()}. */
-    public static DamageSource fat(Level level) {
-        return source(level, FAT);
     }
     /** GT6 {@code DamageSources.getElectricDamage()} (IC2's type; see the class javadoc). */
     public static DamageSource electric(Level level) {

@@ -40,6 +40,7 @@
 | 地热水 | 保留 `watergeothermal` 及 `overworld.fluid.water` 地热泉，恢复贴图、饮用／浸泡效果、锅炉用水、热交换与化学加工用途。 | 地热水有独立用途，不参与普通水统一，不应随海水／河水删除。 |
 | 淡水 | 停注材料生成流体 `freshwater`；材料 `FreshWater` 保留但不再生成流体。 | 没有世界生成、物品来源或配方消费端。 |
 | 氦离子、氮离子 | 停注 `heliumplasma`、`nitrogenplasma`。 | 端口没有达到等离子相温度的配方；`heliumplasma` 的离心绑定在 293 K 下不可达，`nitrogenplasma` 没有引用。 |
+| 营养系统饮料流体 | 停注 69 条无独立配方来源的饮料流体（14 条纯闭环/孤立 + 49 条死配方闭包 + 6 条源头物品不可获得的死冰沙），删除对应 `GTDrinksGen` 行、Canner 装/倒行、语言键与贴图；137 条瓶装映射保留，65 个受影响物品通过 `BottleDrinkFallback` 保持 `F(饮料, 玩家, 配置)` 不变，5 个金色瓶保留原流体并走原版路径，地牢杯/桶/储罐替换为现有饮品或水。注册名与分组见[营养系统移除](nutrition-removal.md)附录A。 | 闭包规则：世界生成与瓶装 Canner 环不算来源，死流体导致的下游配方失去唯一输入时一并删除；非饮料工业流体与 `Water_Geothermal` 不参与。`Ambrosia` 因蜂巢/Mixer 来源保留，`Med_Heal` 停注。 |
 | 无产出且不可熔炼的熔融金属流体 | 停注 `molten.al2o3`、`molten.cryolite`、`molten.lithiumchloride`、`molten.lithiumchlorate`、`molten.aluminiumfluoride`。 | 按 `RecipeDump` 核对：255 条生成熔融流体中 148 条有配方产出，107 条无配方产出；其中只有这 5 条同时没有 `MELTING` 可熔炼物品。`molten.al2o3` 是 `molten.alumina` 的静态重复项，配方使用后者；其余 4 条是只有 `MOLTEN` 旗标、没有熔点的熔盐。 |
 
 本次复核使用 `RecipeDump` 的静态与 overlay 快照（93 张图、128,858 条）核对熔融流体的配方产出；坩埚动态熔炼不算配方产出，因此只删除同时没有可熔炼物品形态的 5 条。海水、河水统一后，`GTWaterParity`、`GTWorldWaterFluid`、`VanillaWaterlogging`、`WaterFamilyIdentity`、`WaterFluidClientExtensions`、`WorldWaterBlockColors` 及 10 个水体 mixin 一并移除，`minecraft:water` 流体标签文件不再需要。

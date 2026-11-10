@@ -154,8 +154,6 @@ public final class GregTechConfig {
         TOOL_BREAK_FATIGUE("general.ToolBreakFatique", true),
         SMALLER_VANILLA_TOOL_DURABILITY("general.SmallerVanillaToolDurability", true),
         RANDOMIZE_VANILLA_FLINT_AND_STEEL("general.RandomizeVanillaFlintAndSteel", true),
-        NUTRITION("general.NutritionSystem", true),
-        OVERDOSE_DEATH("general.DeathByOverdosingCertainFoods", true),
         ALWAYS_DRINK("general.drinks_always_drinkable", false),
         DISABLE_VANILLA_ORES("general.DisableVanillaOres", true),
         DISABLE_VANILLA_DECORATIVE_STONE("worldgen.DisableVanillaDecorativeStone", true),

@@ -28,16 +28,17 @@ import java.util.Map;
  * entry into {@code DrinksGT.REGISTER} keyed by the fluid's name ({@code FoodStatDrink}); a
  * GT6 bottle (its source portion, {@code MultiItemBottles}) reads it through {@code FoodStatFluid}.
  * The port keys the same table by {@link Fluid}, generated from {@code Loader_Fluids.java} into
- * {@link GTDrinksGen} (345 rows; the fluid is resolved through {@link RegisteredFluids#get(String)}, which
+ * {@link GTDrinksGen} (131 rows; the fluid is resolved through {@link RegisteredFluids#get(String)}, which
  * carries GT6's own {@code FL} field names).
  *
  * <p>Drinking applies GT6's {@code FoodStat.onEaten}: the food level and saturation go through vanilla's food
- * data, the six statistics into {@link PlayerFoodStats} (and {@link PlayerRadiation} for the radiation one).
+ * data; the five nutrition statistics are removed, and drinks add no radiation.
  */
 public final class GTDrinks {
-    /** One {@code FoodStatDrink} row: the food values and the six statistics GT6 tracks. */
-    public record Row(String field, int foodLevel, float saturation, int alcohol, int caffeine,
-                      int dehydration, int sugar, int fat, int radiation, boolean alwaysEdible, boolean invisibleParticles, String useAction, boolean milk, boolean extinguish, boolean explosive, List<DrinkNutritionRows.Effect> effects) {}
+    /** One {@code FoodStatDrink} row: the food values and the one statistic the port tracks. */
+    public record Row(String field, int foodLevel, float saturation, int radiation, boolean alwaysEdible,
+                      boolean invisibleParticles, String useAction, boolean milk, boolean extinguish,
+                      boolean explosive, List<DrinkNutritionRows.Effect> effects) {}
 
     private static final Map<Fluid, Row> BY_FLUID = new IdentityHashMap<>();
     private static final List<String> UNRESOLVED = new java.util.ArrayList<>();
@@ -51,7 +52,7 @@ public final class GTDrinks {
         }
         built = true;
         for (DrinkNutritionRows.Row source : GTDrinksGen.ROWS) {
-            Row row=new Row(source.field(),source.foodLevel(),source.saturation(),source.alcohol(),source.caffeine(),source.dehydration(),source.sugar(),source.fat(),source.radiation(),source.alwaysEdible(),source.invisibleParticles(),source.useAction(),source.milk(),source.extinguish(),source.explosive(),source.effects());
+            Row row=new Row(source.field(),source.foodLevel(),source.saturation(),source.radiation(),source.alwaysEdible(),source.invisibleParticles(),source.useAction(),source.milk(),source.extinguish(),source.explosive(),source.effects());
             // GT6 keys drinks by FL field name for most fluids and by the FL.create("...") name for the
             // brews; the port keys its own table by field, so try both and finally match on the registry
             // path with sanitizePath applied to both sides (which is what the port itself registers).
@@ -160,6 +161,15 @@ public final class GTDrinks {
         return GTDrinksGen.SKIPPED;
     }
 
+    /**
+     * GT6's always-edible gate. {@code canonicalBottle} is the port's {@code potion} flag: the fluid has a
+     * canonical bottle item, so the drink is treated like a potion and ignores hunger. Item-level fallbacks
+     * are canonical bottles too and pass {@code true}, which keeps them on the same gate as a live fluid.
+     */
+    public static boolean canEat(Player player, boolean canonicalBottle, boolean alwaysEdible) {
+        return player.canEat(canonicalBottle || gregtech.GregTechConfig.Rule.ALWAYS_DRINK.enabled() || alwaysEdible);
+    }
+
     /** Canonical potions and the original drink registry only; never arbitrary tank fluids. */
     public static boolean canDrink(Player player, FluidStack stack) {
         if (stack == null || stack.isEmpty()) return false;
@@ -169,8 +179,7 @@ public final class GTDrinks {
         if (stack.getAmount() < portion) return false;
         Row row = rowFor(stack);
         boolean potion = !bottle.isEmpty();
-        return (row != null || potion) && player.canEat(potion || gregtech.GregTechConfig.Rule.ALWAYS_DRINK.enabled()
-                || row != null && row.alwaysEdible());
+        return (row != null || potion) && canEat(player, potion, row != null && row.alwaysEdible());
     }
 
     /** External-mod effects remain in the source table but are unavailable without their owning mod. */
@@ -223,8 +232,8 @@ public final class GTDrinks {
     }
 
     /**
-     * GT6 {@code FoodStat.onEaten} for a drink: food level, saturation, the six statistics and the drink
-     * sound. Returns false when the fluid is not a drink, so callers can pass.
+     * GT6 {@code FoodStat.onEaten} for a drink: food level, saturation, the drink sound and the source
+     * effects. Returns false when the fluid is not a drink, so callers can pass.
      */
     public static boolean drink(Player player, FluidStack stack) {
         Row row = rowFor(stack);
@@ -259,21 +268,6 @@ public final class GTDrinks {
             player.hurt(player.damageSources().explosion(player, player), Float.MAX_VALUE);
         }
         player.getFoodData().eat(row.foodLevel(), row.saturation());
-        if (row.alcohol() != 0) {
-            PlayerFoodStats.change(player, row.alcohol(), GTFoodStats.ALCOHOL);
-        }
-        if (row.caffeine() != 0) {
-            PlayerFoodStats.change(player, row.caffeine(), GTFoodStats.CAFFEINE);
-        }
-        if (row.dehydration() != 0) {
-            PlayerFoodStats.change(player, row.dehydration(), GTFoodStats.DEHYDRATION);
-        }
-        if (row.sugar() != 0) {
-            PlayerFoodStats.change(player, row.sugar(), GTFoodStats.SUGAR);
-        }
-        if (row.fat() != 0) {
-            PlayerFoodStats.change(player, row.fat(), GTFoodStats.FAT);
-        }
         if (row.radiation() != 0) {
             PlayerRadiation.change(player, row.radiation());
         }

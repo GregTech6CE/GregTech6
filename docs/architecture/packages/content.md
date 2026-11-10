@@ -36,7 +36,7 @@
 | `content.worldgen.dungeon` | 地牢布局规则 | `DungeonLayoutRules` |
 | `content.plant` | 植物种类、生长、浆果与花卉目录 | `BerryBushCatalog`、`BushGrowthRules` |
 | `content.bumble` | 蜜蜂种类、遗传、合成与槽位定义 | `GTBumbleSpecies`、`BumbleGenomeRules` |
-| `content.food` | 食物/饮料营养、瓶装、罐头等内容行 | `FoodNutritionRows`、`BottleFillingRows` |
+| `content.food` | 食物/饮料数值、瓶装、罐头与医疗辐射清除行 | `FoodNutritionRows`、`FoodStatisticRows`、`BottleFillingRows` |
 | `content.book` | 书籍、书架、材料字典与附魔书目录 | `GTBookContent`、`BookCraftingCatalog` |
 | `content.loot` | 战利品、掉落与抽取规则 | `LootChestCatalog`、`MobDropRules` |
 | `content.creative` | 创造栏和配方查看器的内容排序目录 | `CreativeTabCatalog`、`EmiCatalogOrder` |
@@ -91,7 +91,7 @@
   - 材料模型、成分、形态与前缀、统一化与重复 ID；材料相关配方匹配。
   - 能源类型转换、门控与存储状态；物流路由、批量存储与槽位布局。
   - 矿脉、岩层、地牢布局与原点世界的纯规则；矿脉模式持久化与旧数据迁移。
-  - 砧配方成本、工具磨损、坩埚热量与物料比例、食物营养、战利品概率。
+  - 砧配方成本、工具磨损、坩埚热量与物料比例、食物数值与瓶装返还、战利品概率。
   - 长流体存储、物性与管道安全；核燃料棒、冷却与辐射的纯计算。
 - GameTest
   - 配方加载、合成匹配、tag 成员、`RecipeMap` 注册与机器配方执行。

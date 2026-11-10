@@ -34,6 +34,10 @@ public final class DungeonBottleSupplies {
             case "Mead" -> "mead";
             case "Rum_Dark" -> "pirate_brew";
             case "Wine_Grape_Purple" -> "ricardo_sanchez";
+            case "Rum_White" -> "rum";
+            case "Wine_Lemon" -> "limoncello";
+            case "Soda" -> "soda";
+            case "Lemonade" -> "lemonade";
             default -> throw new IllegalArgumentException("Unmapped workshop drink: "+fluidField);
         };
         place(data,x,y,z,id);
