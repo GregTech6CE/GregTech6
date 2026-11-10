@@ -17,11 +17,7 @@ import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTFluids;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.registry.GTStorage;
 import gregtech.content.registry.GTTanks;
-//?}
 import gregtech.content.registry.GTToolBlocks;
 import gregtech.content.registry.GTToolItems;
 import gregtech.platform.Mc;
@@ -98,13 +94,8 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
         gasCylinder(data, 5, 1, 1, false, PROPANE);
 
         // GT6: a chest with mineshaft loot and one with stronghold loot, both painted.
-//? if >=1.21.1 {
-        /*data.chest(3, 1, 1, LOOT_MINESHAFT, GTMetalChests.chest(gregtech.content.material.Materials.StainlessSteel,false), Direction.SOUTH);
-        data.chest(2, 1, 1, LOOT_STRONGHOLD, GTMetalChests.chest(gregtech.content.material.Materials.StainlessSteel,false), Direction.SOUTH);
-*///?} else {
-        data.chest(3, 1, 1, LOOT_MINESHAFT, gregtech.content.registry.GTStorage.chest(gregtech.content.material.Materials.StainlessSteel), Direction.SOUTH);
-        data.chest(2, 1, 1, LOOT_STRONGHOLD, gregtech.content.registry.GTStorage.chest(gregtech.content.material.Materials.StainlessSteel), Direction.SOUTH);
-//?}
+        data.chest(3, 1, 1, LOOT_MINESHAFT, GTMetalChests.chest(gregtech.content.material.Materials.StainlessSteel, false), Direction.SOUTH);
+        data.chest(2, 1, 1, LOOT_STRONGHOLD, GTMetalChests.chest(gregtech.content.material.Materials.StainlessSteel, false), Direction.SOUTH);
 
         // GT6: the vanilla crafting table of the workbench row and its ceramic mortar on top
         // ({@code DungeonChunkRoomWorkshop}, multi-tile 32735, the port's mortar_block).
@@ -113,11 +104,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
         if (mortar != null) data.set(1, 2, 1, mortar);
 
         // GT6: a chest with dungeon loot.
-//? if >=1.21.1 {
-        /*data.chest(1, 1, 2, LOOT_DUNGEON, GTMetalChests.chest(gregtech.content.material.Materials.StainlessSteel,false), Direction.EAST);
-*///?} else {
-        data.chest(1, 1, 2, LOOT_DUNGEON, gregtech.content.registry.GTStorage.chest(gregtech.content.material.Materials.StainlessSteel), Direction.EAST);
-//?}
+        data.chest(1, 1, 2, LOOT_DUNGEON, GTMetalChests.chest(gregtech.content.material.Materials.StainlessSteel, false), Direction.EAST);
 
         // GT6 4011: stainless steel drawer with four pages of material-specific workshop parts.
         WorkshopDrawerSupplies.place(data,1,1,3);
@@ -160,11 +147,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
         int tCrucibleType = data.next(3);
 
         // GT6's smithy row. SIDE_X_NEG of GT6's multi-tiles is the port's WEST.
-//? if >=1.21.1 {
-        /*data.chest(14, 1, 1, LOOT_BLACKSMITH, GTMetalChests.chest(gregtech.content.material.Materials.StainlessSteel,false), Direction.WEST);
-*///?} else {
-        data.chest(14, 1, 1, LOOT_BLACKSMITH, gregtech.content.registry.GTStorage.chest(gregtech.content.material.Materials.StainlessSteel), Direction.WEST);
-//?}
+        data.chest(14, 1, 1, LOOT_BLACKSMITH, GTMetalChests.chest(gregtech.content.material.Materials.StainlessSteel, false), Direction.WEST);
         data.smooth(14, 1, 2);
         data.set(14, 1, 3, burningBox(tCrucibleType));
         data.smooth(14, 1, 4);
@@ -341,11 +324,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 
     /** GT6's mass storage ({@code 6011}) as the port's own container block. */
     private static BlockState storage(Direction facing) {
-//? if >=1.21.1 {
-        /*return DungeonBindings.block("mass_storage_stainless_steel").defaultBlockState()
-*///?} else {
-        return GTStorage.MASS_STORAGE.get().defaultBlockState()
-//?}
+        return GTMassStorages.MASS_STORAGE.get().defaultBlockState()
                 .setValue(HorizontalDirectionalBlock.FACING, facing);
     }
 
@@ -387,11 +366,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 
     /** GT6's compartment drawer ({@code 4011}) as the port's own container block. */
     private static BlockState drawer(Direction facing) {
-//? if >=1.21.1 {
-        /*return DungeonBindings.block("drawer_quad").defaultBlockState()
-*///?} else {
-        return GTStorage.DRAWER_QUAD.get().defaultBlockState()
-//?}
+        return GTStorageContainers.DRAWER_QUAD.get().defaultBlockState()
                 .setValue(gregtech.content.block.inventory.DrawerQuadBlock.FACING, facing);
     }
 

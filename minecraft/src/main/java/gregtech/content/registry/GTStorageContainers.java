@@ -2,6 +2,7 @@ package gregtech.content.registry;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
+import gregtech.api.material.GTMaterial;
 import gregtech.content.block.inventory.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -15,6 +16,7 @@ public final class GTStorageContainers {
 
     public static final java.util.List<RegisteredBlock<LockerBlock>> LOCKERS = new java.util.ArrayList<>();
     public static final java.util.List<RegisteredBlock<DrawerQuadBlock>> DRAWERS = new java.util.ArrayList<>();
+    public static RegisteredBlock<DrawerQuadBlock> DRAWER_QUAD;
     public static RegisteredBlock<BottleCrateBlock> BOTTLE_CRATE;
     public static RegisteredBlock<LockerBlock> LOCKER;
     public static RegisteredBlock<UsbSwitchBlock> USB_SWITCH, HDD_SWITCH;
@@ -22,6 +24,11 @@ public final class GTStorageContainers {
     public static RegisteredBlock<EnderGarbageDumpBlock> ENDER_GARBAGE_DUMP;
 
     public static final java.util.List<RegisteredBlock<BottleCrateBlock>> BOTTLE_CRATES = new java.util.ArrayList<>();
+
+    public static DrawerQuadBlock drawer(GTMaterial material) {
+        for (var entry : DRAWERS) if (entry.get().material() == material) return entry.get();
+        throw new IllegalArgumentException("No drawer for " + material.getName());
+    }
 
     public static void initialize(ContentRegistrar registrar) {
         for (var spec : GTStorageMetals.ALL) {
@@ -37,6 +44,7 @@ public final class GTStorageContainers {
                                     .requiresCorrectToolForDrops()),
                     bare -> new BlockItem(bare, new Item.Properties().stacksTo(16)));
             DRAWERS.add(registeredDrawer);
+            if (id.equals("drawer_quad")) DRAWER_QUAD = registeredDrawer;
         }
         BOTTLE_CRATE = registrar.block(
                 REGISTRY_NAMESPACE,

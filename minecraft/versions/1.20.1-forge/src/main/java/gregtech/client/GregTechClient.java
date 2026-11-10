@@ -95,18 +95,16 @@ public final class GregTechClient {
                 .forEach(entry -> event.register(
                         (stack, index) -> index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                         entry.get().asItem()));
-        gregtech.content.registry.GTStorage.BOTTLE_CRATES.forEach(entry -> event.register(
+        gregtech.content.registry.GTStorageContainers.BOTTLE_CRATES.forEach(entry -> event.register(
                 (stack, index) -> index == 0 ? entry.get().tintRgb() : 0xFFFFFF,
                 entry.get().asItem()));
-        gregtech.content.registry.GTStorage.DRAWERS.forEach(entry -> event.register(
+        gregtech.content.registry.GTStorageContainers.DRAWERS.forEach(entry -> event.register(
                 (stack, index) -> index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                 entry.get().asItem()));
-        gregtech.content.registry.GTStorage.LOCKERS.forEach(entry -> event.register(
+        gregtech.content.registry.GTStorageContainers.LOCKERS.forEach(entry -> event.register(
                 (stack, index) -> index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                 entry.get().asItem()));
-        java.util.stream.Stream.concat(
-                        gregtech.content.registry.GTStorage.SAFES.stream(),
-                        gregtech.content.registry.GTStorage.KEY_SAFES.stream())
+        gregtech.content.registry.GTSafes.all().stream()
                 .forEach(entry -> event.register(
                         (stack, tintIndex) ->
                                 tintIndex == 0 ? entry.get().material().getColor() : 0xFFFFFF,
@@ -656,19 +654,19 @@ public final class GregTechClient {
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, node);
             }
         });
-        gregtech.content.registry.GTStorage.MASS_STORAGES.forEach(entry -> {
+        gregtech.content.registry.GTMassStorages.MASS_STORAGES.forEach(entry -> {
             if (entry.isPresent() && entry.get().material() != null) {
                 int tint = entry.get().material().getColor();
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, entry.get());
             }
         });
-        gregtech.content.registry.GTStorage.LOGISTICS_MASS_STORAGES.forEach(entry -> {
+        gregtech.content.registry.GTMassStorages.LOGISTICS_MASS_STORAGES.forEach(entry -> {
             if (entry.isPresent()) {
                 int tint = gregtech.content.material.Materials.Black.getColor();
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, entry.get());
             }
         });
-        gregtech.content.registry.GTStorage.METAL_CHESTS.forEach(entry -> {
+        gregtech.content.registry.GTMetalChests.METAL.forEach(entry -> {
             if (entry.isPresent()) {
                 int tint = entry.get().material().getColor();
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, entry.get());
@@ -681,19 +679,17 @@ public final class GregTechClient {
                         (state, level, pos, index) ->
                                 index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                         entry.get()));
-        gregtech.content.registry.GTStorage.BOTTLE_CRATES.forEach(entry -> event.register(
+        gregtech.content.registry.GTStorageContainers.BOTTLE_CRATES.forEach(entry -> event.register(
                 (state, level, pos, index) -> index == 0 ? entry.get().tintRgb() : 0xFFFFFF, entry.get()));
-        gregtech.content.registry.GTStorage.DRAWERS.forEach(entry -> event.register(
+        gregtech.content.registry.GTStorageContainers.DRAWERS.forEach(entry -> event.register(
                 (state, level, pos, index) ->
                         index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                 entry.get()));
-        gregtech.content.registry.GTStorage.LOCKERS.forEach(entry -> event.register(
+        gregtech.content.registry.GTStorageContainers.LOCKERS.forEach(entry -> event.register(
                 (state, level, pos, index) ->
                         index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                 entry.get()));
-        java.util.stream.Stream.concat(
-                        gregtech.content.registry.GTStorage.SAFES.stream(),
-                        gregtech.content.registry.GTStorage.KEY_SAFES.stream())
+        gregtech.content.registry.GTSafes.all().stream()
                 .forEach(entry -> event.register(
                         (state, level, pos, tintIndex) ->
                                 tintIndex == 0 ? entry.get().material().getColor() : 0xFFFFFF,

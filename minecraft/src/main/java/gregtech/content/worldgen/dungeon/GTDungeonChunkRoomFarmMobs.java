@@ -1,10 +1,5 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.block.misc.SpikeBlock;
 import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
@@ -15,12 +10,8 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTDecorBlocks;
 //?}
 import gregtech.content.registry.GTItems;
-
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.registry.GTStorage;
-//?}
+import gregtech.content.registry.GTMassStorages;
+import gregtech.content.registry.GTStorageContainers;
 import gregtech.content.data.generated.GT6Materials;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
@@ -77,7 +68,7 @@ import net.minecraft.world.level.block.state.BlockState;
  *       spider eyes, glowstone dust, bones, sticks, feathers, gunpowder, rotten flesh, sugar, arrows and
  *       one of GT6's wooden arrows, each {@code 1 + next(8)} - plus one compartment
  *       drawer of multi-tile {@code 4009} and one smooth block form the two
- *       rings. The port uses its own mass storage ({@code GTStorage.MASS_STORAGE}) and quad drawer
+ *       rings. The port uses its own mass storage ({@code GTMassStorages.MASS_STORAGE}) and quad drawer
  *       with GT6's facing and fills all fourteen bulk stores with their 1..8 starting items. The
  *       original material-less wood arrow is represented by a GT wood arrow.</li>
  *   <li><b>Rolls.</b> The spike-colour roll and all fourteen initial stack-size rolls now follow GT6's
@@ -131,7 +122,7 @@ import net.minecraft.world.level.block.state.BlockState;
  *       spider eyes, glowstone dust, bones, sticks, feathers, gunpowder, rotten flesh, sugar, arrows and
  *       one of GT6's wooden arrows, each {@code 1 + next(8)} - plus one compartment
  *       drawer of multi-tile {@code 4009} and one smooth block form the two
- *       rings. The port uses its own mass storage ({@code GTStorage.MASS_STORAGE}) and quad drawer
+ *       rings. The port uses its own mass storage ({@code GTMassStorages.MASS_STORAGE}) and quad drawer
  *       with GT6's facing and fills all fourteen bulk stores with their 1..8 starting items. The
  *       original material-less wood arrow is represented by a GT wood arrow.</li>
  *   <li><b>Rolls.</b> The spike-colour roll and all fourteen initial stack-size rolls now follow GT6's
@@ -448,11 +439,7 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
 
     /** GT6's mass storage (multi-tile {@code 6009}) as the port's mass storage, with GT6's facing. */
     private static BlockState storage(Direction facing) {
-//? if >=1.21.1 {
-        /*return DungeonBindings.block("mass_storage_stainless_steel").defaultBlockState()
-*///?} else {
-        return GTStorage.MASS_STORAGE.get().defaultBlockState()
-//?}
+        return GTMassStorages.MASS_STORAGE.get().defaultBlockState()
                 .setValue(HorizontalDirectionalBlock.FACING, facing);
     }
 
@@ -478,11 +465,7 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
 
     /** GT6's compartment drawer (multi-tile {@code 4009}) as the port's quad drawer, with GT6's facing. */
     private static BlockState drawer(Direction facing) {
-//? if >=1.21.1 {
-        /*return DungeonBindings.drawer(gregtech.content.material.Materials.Bronze).defaultBlockState()
-*///?} else {
-        return GTStorage.drawer(gregtech.content.material.Materials.Bronze).defaultBlockState()
-//?}
+        return GTStorageContainers.drawer(gregtech.content.material.Materials.Bronze).defaultBlockState()
                 .setValue(gregtech.content.block.inventory.DrawerQuadBlock.FACING, facing);
     }
 

@@ -18,11 +18,14 @@ import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTIconSetBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTManualStations;
+import gregtech.content.registry.GTMassStorages;
 import gregtech.content.registry.GTMenuTypes;
+import gregtech.content.registry.GTMetalChests;
 import gregtech.content.registry.GTMiscBlocks;
 import gregtech.content.registry.GTProjectiles;
+import gregtech.content.registry.GTSafes;
 import gregtech.content.registry.GTSounds;
-import gregtech.content.registry.GTStorage;
+import gregtech.content.registry.GTStorageContainers;
 import gregtech.content.registry.GTSurfaceBlocks;
 import gregtech.content.registry.GTTanks;
 import gregtech.content.registry.GTToolBlocks;
@@ -50,6 +53,9 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
         GTIconSetBlocks.registerAll(registrar);
         GTBushes.registerAll(registrar);
         GTSurfaceBlocks.initializeDiggables(registrar);
+        GTSafes.initialize(registrar);
+        GTStorageContainers.initialize(registrar);
+        GTMetalChests.initialize(registrar);
         GTBumbleBlocks.initialize(registrar);
         GTManualStations.initialize(registrar);
         GTDecorBlocks.registerAll();
@@ -65,7 +71,7 @@ public final class ForgeContent implements ContentRegistration.PlatformContent {
         gregtech.content.registry.GTHoppers.register(registrar);
         AddonSensorRegistration.register(registrar);
         GTBasicMachines.registerAll(registrar);
-        GTStorage.registerAll(registrar);
+        GTMassStorages.initialize(registrar);
         GTToolBlocks.registerAll(registrar);
     }
 

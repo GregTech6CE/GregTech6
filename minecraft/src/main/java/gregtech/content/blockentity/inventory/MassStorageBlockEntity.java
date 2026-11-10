@@ -59,11 +59,7 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
 //?}
 
     public MassStorageBlockEntity(BlockPos pos, BlockState state) {
-//? if >=1.21.1 {
-        /*this(gregtech.platform.neoforge.logistics.StorageRegistries.MASS_STORAGE.get(), pos, state);
-*///?} else {
         this(gregtech.content.registry.GTBlockEntities.MASS_STORAGE.get(), pos, state);
-//?}
     }
 
     protected MassStorageBlockEntity(BlockEntityType<? extends MassStorageBlockEntity> type,

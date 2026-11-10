@@ -25,9 +25,4 @@ public final class DungeonBindings {
         for (var h : GTCraftingTables.ADVANCED) if (h.get().material() == material) return h.get();
         throw new IllegalArgumentException("Dungeon table " + material.getName());
     }
-
-    public static gregtech.content.block.inventory.DrawerQuadBlock drawer(GTMaterial material) {
-        for (var h : GTStorageContainers.DRAWERS) if (h.get().material() == material) return h.get();
-        throw new IllegalArgumentException("Dungeon drawer " + material.getName());
-    }
 }
