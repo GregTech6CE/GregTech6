@@ -9,11 +9,11 @@
 | FluidStack | `FluidStack#save`、`tag` ↔ components、线格式、身份比较 |
 | Container | `ContainerHelper#saveAllItems` / `loadAllItems` 的 provider 参数 |
 | SavedData | `SavedData.Factory` 的 provider 参数 |
-| Registry | 注册表查找、`ResourceLocation` 构造、标签目录命名、共享注册家族目录 |
+| Registry | 注册表查找、`ResourceLocation` 构造、标签目录命名 |
 | Capability | `ForgeCapabilities` ↔ `Capabilities`、`LazyOptional` ↔ `Optional` |
 | ClientModel | `ModelResourceLocation`、baked model、客户端事件 |
-| Facade | logger、包装类、静态谓词 |
-| Trivial | 同义分支、空块、单侧 import、拆分重复 |
+| Facade | logger |
+| Placement | 注册归属、holder 类型、节点目录、菜单落点、物品类依赖、创造栏装配、包装类、静态谓词、分支噪声 |
 | Parity | CE 与原版行为差异，不是版本差异 |
 
 ## BlockEntity
@@ -58,9 +58,9 @@
 
 ## Registry
 
-摘要：注册表查找、`ResourceLocation` 构造、标签目录命名、共享注册家族目录、holder 类型、菜单目录、创造栏内容源与物品类依赖。
+摘要：注册表查找、`ResourceLocation` 构造与标签目录命名。
 
-关键词：BuiltInRegistries, ForgeRegistries, Mc.item, GregTech.id, fromNamespaceAndPath, ResourceLocation, tags/items, tags/item, GregTechIdentity, registerAll, ContentRegistrar, RegisteredBlock, RegisteredBlockEntity, Supplier, DeferredHolder, RegistryObject, GTEngines, GTBasicMachines, GTBurningBoxes, GTSmeltery, GTHoppers, GTManualStations, GTFluidPipes, GTTanks, GTMachineBlockItem, GTMenuTypes, MenuType, IForgeMenuType, IMenuTypeExtension, OriginCreativeContents, GTToolBlocks, GTBumbleBlocks, MachineSpec, CreativeTabBootstrap, initialize
+关键词：BuiltInRegistries, ForgeRegistries, Mc.item, GregTech.id, fromNamespaceAndPath, ResourceLocation, tags/items, tags/item, GregTechIdentity
 
 领域文档：[Registry/README.md](Registry/README.md)
 
@@ -82,19 +82,19 @@
 
 ## Facade
 
-摘要：日志、包装类与静态谓词的收敛。
+摘要：日志 API 的收敛。
 
-关键词：logger, LogUtils, GregTech.LOGGER, Mc.logger, wrapper, NeoToolBindings, static predicate, GTToolType, PanelCoverHost
+关键词：logger, LogUtils, GregTech.LOGGER, Mc.logger
 
 领域文档：[Facade/README.md](Facade/README.md)
 
-## Trivial
+## Placement
 
-摘要：两侧相同、一侧为空、只差 import 或常量的分支。
+摘要：同一内容家族在两个版本中实现落点不同，包括注册归属、holder 类型、节点目录、菜单落点、物品类依赖、创造栏装配、包装类、静态谓词和分支噪声。
 
-关键词：identical, same, empty block, one-sided, import, split duplicate, duplicate registration
+关键词：registerAll, ContentRegistrar, Supplier, GTManualStations, GTMenuTypes, OriginCreativeContents, GTMachineBlockItem, NeoToolBindings, GTToolType, identical, same, empty, one-sided, import, split duplicate, duplicate registration
 
-领域文档：[Trivial/README.md](Trivial/README.md)
+领域文档：[Placement/README.md](Placement/README.md)
 
 ## Parity
 

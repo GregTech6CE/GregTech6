@@ -44,7 +44,7 @@
 - 只有一个版本需要：节点实现。
 - 共享代码需要 import 节点类：共享门面。
 - 节点类只是转发共享代码中的方法：共享代码。
-- 节点类只是共享代码的陈旧副本，或节点目录只是同一内容的第二套注册路径：共享代码。
+- 节点类只是共享代码的陈旧副本，或节点目录只是同一内容的第二套注册路径：共享代码；归类见[实现落点偏差](Placement/README.md)。
 
 差异的裁决顺序、统一目标和平台 API 例外见[跨版本统一方针](unification-policy.md)。
 
@@ -77,7 +77,7 @@
 | `ClientModelEvents` | `client` | `RegisterAdditional` 的模型注册 | plain `ResourceLocation` ↔ `STANDALONE_VARIANT` |
 | `ClientPackFacade` | `client` | pack 工厂与 geometry loader key | Pack 构造、`readMetaAndCreate`、loader key |
 
-平台细节与验收见[共享门面](../packages/platforms/facade.md)。`CoverStackData` 目前是过渡门面，部分方法为纯转发；调用点迁移完成后应收敛。
+平台细节与验收见[共享门面](../packages/platforms/facade.md)。`CoverStackData` 目前是过渡门面，部分方法为纯转发；调用点迁移完成后应收敛。共享目录/物品类的落点偏差案例见[实现落点偏差](Placement/README.md)。
 
 ## Provider 基础
 

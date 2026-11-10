@@ -24,7 +24,7 @@
 | 裁决版本差异、判断保留还是统一 | [跨版本统一方针](stonecutter/unification-policy.md) |
 | 理解三层结构、内容分类与归属 | [Stonecutter 设计](stonecutter/design.md) |
 | 查 `//?` 写法、输入目录、生成结果与验证命令 | [Stonecutter 用法](stonecutter/usage.md) |
-| 处理具体调用点（BlockEntity、ItemStack、FluidStack、Container、SavedData、Registry、Capability、ClientModel、Facade、Trivial、Parity） | [分类索引](stonecutter/categories.md) |
+| 处理具体调用点（BlockEntity、ItemStack、FluidStack、Container、SavedData、Registry、Capability、ClientModel、Facade、Placement、Parity） | [分类索引](stonecutter/categories.md) |
 | 查平台门面、Forge/NeoForge 节点入口与验收 | [平台边界](packages/platforms.md) |
 | 执行双平台编译、格式与 GameTest | [验证与验收](../development/validation/README.md) |
 
