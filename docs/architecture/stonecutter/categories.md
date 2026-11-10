@@ -90,9 +90,9 @@
 
 ## Placement
 
-摘要：同一内容家族在两个版本中实现落点不同，包括注册归属、holder 类型、节点目录、菜单落点、物品类依赖、节点类拆分、创造栏装配、包装类、静态谓词和分支噪声。
+摘要：同一内容家族在两个版本中实现落点不同，包括注册归属、holder 类型、节点目录、菜单落点、共享 BE 段、引用目录、混合目录、目录字段、物品类依赖、节点类拆分、创造栏装配、包装类、静态谓词和分支噪声。
 
-关键词：registerAll, ContentRegistrar, Supplier, GTManualStations, GTMenuTypes, OriginCreativeContents, GTMachineBlockItem, SmeltingCrucibleEntity, PoweredToolItem, NeoToolBindings, GTToolType, identical, same, empty, one-sided, import, split duplicate, duplicate registration
+关键词：registerAll, ContentRegistrar, Supplier, GTManualStations, GTMenuTypes, OriginCreativeContents, GTMachineBlockItem, SmeltingCrucibleEntity, PoweredToolItem, NeoToolBindings, GTToolType, shared BE, reference catalog, mixed catalog, registry lookup, identical, same, empty, one-sided, import, split duplicate, duplicate registration
 
 领域文档：[Placement/README.md](Placement/README.md)
 
