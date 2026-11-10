@@ -44,6 +44,7 @@
 - 只有一个版本需要：节点实现。
 - 共享代码需要 import 节点类：共享门面。
 - 节点类只是转发共享代码中的方法：共享代码。
+- 节点类只是共享代码的陈旧副本，或节点目录只是同一内容的第二套注册路径：共享代码。
 
 差异的裁决顺序、统一目标和平台 API 例外见[跨版本统一方针](unification-policy.md)。
 
@@ -55,6 +56,7 @@
 - 同名方法在两个版本同义；语义不同就改名，或在调用点显式选择。
 - 门面必须做适配或有明确契约，不写纯转发。
 - 新增门面必须有调用点；没有调用点的门面不构成边界。
+- holder 类型只是 `DeferredHolder` / `RegistryObject` 的差异时，字段用 `Supplier<T>`；需要注册键时用 record 同时保存 key 与 supplier，或保留一个最小的 `//?`。
 
 当前代表门面：
 
@@ -69,6 +71,8 @@
 | `CoverStackData` | `content.cover` | 覆盖板栈数据读写 | NBT 与数据组件 |
 | `ContentRegistrar` | `content.registry` | 加载器中立的物品/方块/方块实体注册视图 | 注册 API、BE 注册表归属 |
 | `GTEngines` / `GTBasicMachines` / `GTBurningBoxes` / `GTSmeltery` / `GTHoppers` | `content.registry` | 机器、燃烧箱、熔炉与 hopper 家族目录 | 注册归属、holder 类型 |
+| `GTManualStations` / `GTFluidPipes` / `GTTanks` / `GTMachineBlockItem` | `content.registry` / `content.block.machine` | 手动工作台、流体管道、储罐与管道物品（共享目录/物品类） | 注册归属、holder 类型、物品类依赖 |
+| `GTMenuTypes` | `content.registry` | 共享菜单目录 | 菜单工厂、holder 类型 |
 | `BakedModelMap` | `client` | 模型 map key、variant 回退与 missing 哨兵 | map key 类型、missing 哨兵 key |
 | `ClientModelEvents` | `client` | `RegisterAdditional` 的模型注册 | plain `ResourceLocation` ↔ `STANDALONE_VARIANT` |
 | `ClientPackFacade` | `client` | pack 工厂与 geometry loader key | Pack 构造、`readMetaAndCreate`、loader key |

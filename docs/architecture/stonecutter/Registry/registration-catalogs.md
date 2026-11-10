@@ -56,7 +56,7 @@ public final class GTBasicMachines {
 - 共享 BE 类用 `ContentRegistrar.blockEntity` + `RegisteredBlockEntity`。
 - 节点专属 BE 类、Menu、capability、网络仍留在节点类；共享家族类只暴露列表/句柄。
 - 本次统一的机器物品类（`BasicMachineItem`、`EngineItem`、`BurningBoxBlockItem`）只保留 `appendHoverText` 签名的 `//?`（`TooltipContext` ↔ `Level`）；其他共享物品类不受此限。
-- `GTBlockEntities` 目前仍是共享类内的两套 BE 类型列表，是下一轮收敛目标。
+- `GTBlockEntities` 的共享 BE 类型已折叠为 `Supplier<BlockEntityType<T>>` 字段；剩余节点专属条目仍留在分支中。
 - 删除旧节点注册类前先 `rg` 外部引用；外部引用面通常远小于类本身。
 
 ## 为什么这么修复
