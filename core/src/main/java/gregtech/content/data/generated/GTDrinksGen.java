@@ -1188,6 +1188,20 @@ public final class GTDrinksGen {
                     false,
                     List.of(new DrinkNutritionRows.Effect("Potion.digSpeed.id", 900, 1, 90))),
             new DrinkNutritionRows.Row(
+                    "potion.ambrosia",
+                    2,
+                    0.2f,
+                    0,
+                    true,
+                    false,
+                    "drink",
+                    true,
+                    false,
+                    false,
+                    List.of(
+                            new DrinkNutritionRows.Effect("PotionsGT.ID_STICKY", 300, 0, 70),
+                            new DrinkNutritionRows.Effect("Potion.regeneration.id", 150, 0, 100))),
+            new DrinkNutritionRows.Row(
                     "potion.cafeaulait", 4, 0.4f, 0, false, false, "drink", false, false, false, List.of()),
             new DrinkNutritionRows.Row(
                     "potion.cavejohnsonsgrenadejuice",

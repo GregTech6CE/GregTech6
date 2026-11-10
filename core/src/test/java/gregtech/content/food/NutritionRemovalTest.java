@@ -2,6 +2,7 @@ package gregtech.content.food;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -63,7 +64,7 @@ class NutritionRemovalTest {
     void tableSizesArePreserved() {
         assertEquals(251, GTFoodItemsGen.ROWS.size());
         assertEquals(57, CannedFoodCatalog.ROWS.size());
-        assertEquals(130, GTDrinksGen.ROWS.size());
+        assertEquals(131, GTDrinksGen.ROWS.size());
         assertEquals(29, SandwichBottleFoods.ROWS.size());
         assertEquals(137, GTBottlesGen.ENTRIES.length / 3);
     }
@@ -90,7 +91,6 @@ class NutritionRemovalTest {
                 "Holywater",
                 "Purple_Drink",
                 "Rotten_Drink",
-                "Ambrosia",
                 "Med_Heal",
                 "Juice_Coconut",
                 "Juice_Currant",
@@ -164,7 +164,6 @@ class NutritionRemovalTest {
                 "holywater",
                 "purpledrink",
                 "rottendrink",
-                "potion.ambrosia",
                 "medicine.heal",
                 "coconutmilk",
                 "currantjuice",
@@ -216,6 +215,11 @@ class NutritionRemovalTest {
                 "pomegranatesmoothie",
                 "strawberrysmoothie");
         assertFalse(GTDrinksGen.ROWS.stream().anyMatch(row -> removedDrinkFields.contains(row.field())));
+
+        assertNotNull(FluidCatalog.get("Ambrosia"), "Ambrosia is restored as a source product");
+        assertTrue(
+                GTDrinksGen.ROWS.stream().anyMatch(row -> row.field().equals("potion.ambrosia")),
+                "Ambrosia keeps its drink row");
 
         assertEquals("Sake", GTBottles.fluidKeyOf("sake"));
         assertEquals("Dressing", GTBottles.fluidKeyOf("dressing"));

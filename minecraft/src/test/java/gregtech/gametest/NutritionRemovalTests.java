@@ -52,7 +52,6 @@ public final class NutritionRemovalTests {
             "holywater",
             "purpledrink",
             "rottendrink",
-            "potion.ambrosia",
             "medicine.heal",
             "coconutmilk",
             "currantjuice",
@@ -117,7 +116,6 @@ public final class NutritionRemovalTests {
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
     public static void closedLoopBottlesStayRegisteredWithoutFluid(GameTestHelper helper) {
         List<String> inert = List.of(
-                "ambrosia",
                 "apricot_smoothie",
                 "barbecue_sauce",
                 "bawls",
@@ -189,6 +187,22 @@ public final class NutritionRemovalTests {
             helper.assertTrue(((BottleItem) item).fluid() == null, id + " has no fluid");
         }
         helper.assertTrue(BottleMachineRecipes.missing().containsAll(inert), "the inert bottles are reported missing");
+        helper.assertTrue(
+                BottleMachineRecipes.missing().size() == 65, "exactly 65 affected bottles are reported missing");
+
+        Item ambrosia = GTFoodItems.itemOrNull("ambrosia");
+        helper.assertTrue(
+                ambrosia instanceof BottleItem && ((BottleItem) ambrosia).fluid() != null,
+                "Ambrosia keeps its original fluid");
+        helper.assertTrue(
+                !BottleMachineRecipes.missing().contains("ambrosia"), "Ambrosia is not reported missing");
+        for (String id : List.of(
+                "golden_apple_juice", "golden_cider", "iduns_apple_juice", "notches_brew", "golden_carrot_juice")) {
+            Item item = GTFoodItems.itemOrNull(id);
+            helper.assertTrue(item instanceof BottleItem, id + " is a bottle item");
+            helper.assertTrue(((BottleItem) item).fluid() != null, id + " keeps its original fluid");
+            helper.assertTrue(!BottleMachineRecipes.missing().contains(id), id + " is not reported missing");
+        }
         helper.assertTrue(
                 GTDrinks.unresolved().stream().noneMatch(REMOVED_DRINK_FIELDS::contains),
                 "removed drink rows are not left unresolved");

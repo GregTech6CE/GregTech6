@@ -255,6 +255,11 @@ public final class GTFoodRecipes {
     }
 
     private static void sourceRows(List<ChemRecipe> rows) {
+        row(SOURCE, "Mixer", 16, 16, 29)
+                .fluid(nativeFluid("RoyalJelly", 100))
+                .fluid(nativeFluid("Honeydew", 200))
+                .out(nativeFluid("Ambrosia", 400))
+                .add(rows);
         row(SOURCE, "Mixer", 16, 16, 30)
                 .item(dust("Milk", thousandths(1000)))
                 .fluid(nativeFluid("Soda", 500))

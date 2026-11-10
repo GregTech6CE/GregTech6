@@ -523,6 +523,7 @@ public class FluidCatalog {
             Milk_Spoiled = fluid("Milk_Spoiled", "spoiledmilk").withFlags(FluidFlags.FOOD | FluidFlags.MILK),
             Honey = fluid("Honey", "honey").withFlags(FluidFlags.FOOD | FluidFlags.HONEY),
             Honeydew = fluid("Honeydew", "honeydew").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
+            Ambrosia = fluid("Ambrosia", "potion.ambrosia").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
             RoyalJelly = fluid("RoyalJelly", "royaljelly").withFlags(FluidFlags.FOOD),
             Sap_Rainbow = fluid("Sap_Rainbow", "rainbowsap").withFlags(FluidFlags.FOOD | FluidFlags.MAGIC),
             Sap_Maple = fluid("Sap_Maple", "maplesap").withFlags(FluidFlags.FOOD),
