@@ -3,11 +3,7 @@ import gregtech.engine.mod.GregTechIdentity;
 
 
 import gregtech.content.blockentity.misc.CoinPileBlockEntity;
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTCoinPiles;
-*///?} else {
-import gregtech.content.registry.GTDecorBlocks;
-//?}
+import gregtech.content.registry.GTCoinPiles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -72,11 +68,7 @@ public final class CoinItemExpireHandler {
         }
 
         // GT6 next checks the same seven positions for a free place to make a fresh pile.
-//? if >=1.21.1 {
-        /*BlockState placed = GTCoinPiles.COIN_PILE.get().defaultBlockState();
-*///?} else {
-        BlockState placed = GTDecorBlocks.COIN_PILE.get().defaultBlockState();
-//?}
+        BlockState placed = GTCoinPiles.COIN_PILE.get().defaultBlockState();
         for (BlockPos offset : OFFSETS) {
             if (remaining <= 0) break;
             BlockPos target = origin.offset(offset);

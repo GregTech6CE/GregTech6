@@ -78,8 +78,14 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity>> BEDROCK_DRILL =
             BLOCK_ENTITIES.register("bedrock_drill",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.BedrockDrillControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "bedrock_drill"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "bedrock_drill")).build(null));
 
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.inventory.BookShelfBlockEntity>> BOOKSHELF =
+            BLOCK_ENTITIES.register("bookshelf",()->BlockEntityType.Builder.of(gregtech.content.blockentity.inventory.BookShelfBlockEntity::new,GTBookShelves.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.inventory.BottleCrateBlockEntity>> BOTTLE_CRATE =
             BLOCK_ENTITIES.register("bottle_crate",()->BlockEntityType.Builder.of(gregtech.content.blockentity.inventory.BottleCrateBlockEntity::new,GTStorageContainers.BOTTLE_CRATES.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.misc.BumbleHiveBlockEntity>> BUMBLE_HIVE =
+            BLOCK_ENTITIES.register("bumble_hive",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.BumbleHiveBlockEntity::new,GTBumbleBlocks.allHives()).build(null));
 
     /** GT6's bumbliary (multi-tile 32741) and advanced bumbliary (32007): both share this type. */
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.tool.BumbliaryBlockEntity>> BUMBLIARY =
@@ -99,6 +105,9 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.tool.CoinMoldBlockEntity>> COIN_MOLD =
             BLOCK_ENTITIES.register("coin_mold",()->BlockEntityType.Builder.of(gregtech.content.blockentity.tool.CoinMoldBlockEntity::new,GTManualStations.COIN_MOLD.get()).build(null));
+
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.misc.CoinPileBlockEntity>> COIN_PILE =
+            BLOCK_ENTITIES.register("coin_pile",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.CoinPileBlockEntity::new,GTCoinPiles.COIN_PILE.get()).build(null));
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity>> COKE_OVEN =
             BLOCK_ENTITIES.register("coke_oven",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "coke_oven"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "coke_oven")).build(null));
@@ -232,6 +241,9 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity>> ORIGINAL_LARGE_BOILER =
             BLOCK_ENTITIES.register("original_large_boiler",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "original_large_boiler"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "original_large_boiler")).build(null));
 
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.misc.PileBlockEntity>> PILE =
+            BLOCK_ENTITIES.register("pile",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.PileBlockEntity::new,GTMaterialPiles.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.energy.PlacedReactorRodBlockEntity>> PLACED_REACTOR_ROD =
             BLOCK_ENTITIES.register("placed_reactor_rod",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.PlacedReactorRodBlockEntity::new,GTFuelRods.BLOCKS.values().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
@@ -258,6 +270,9 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.inventory.SafeBlockEntity>> SAFE =
             BLOCK_ENTITIES.register("safe",()->BlockEntityType.Builder.of(gregtech.content.blockentity.inventory.SafeBlockEntity::new,GTSafes.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.misc.SandwichBlockEntity>> SANDWICH_BLOCK =
+            BLOCK_ENTITIES.register("sandwich_block",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.SandwichBlockEntity::new,GTSandwich.SANDWICH_BLOCK.get()).build(null));
 
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.SapBagBlockEntity>> SAP_BAG =
             BLOCK_ENTITIES.register("sap_bag",()->BlockEntityType.Builder.of(gregtech.content.blockentity.SapBagBlockEntity::new,GTManualStations.SAP_BAG.get()).build(null));
@@ -301,13 +316,8 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
     /*
 public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.platform.neoforge.smeltery.MoldEntity>> MOLD=gregtech.platform.neoforge.smeltery.SmelteryRegistries.MOLD;
 public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.platform.neoforge.smeltery.SolidBurningBoxEntity>> SOLID_BURNING_BOX=gregtech.platform.neoforge.smeltery.SmelteryRegistries.SOLID_BURNING_BOX;
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.misc.BumbleHiveBlockEntity>> BUMBLE_HIVE=BLOCK_ENTITIES.register("bumble_hive",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.BumbleHiveBlockEntity::new,GTBumbleBlocks.allHives()).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.misc.PileBlockEntity>> PILE=BLOCK_ENTITIES.register("pile",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.PileBlockEntity::new,GTMaterialPiles.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.misc.CoinPileBlockEntity>> COIN_PILE=BLOCK_ENTITIES.register("coin_pile",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.CoinPileBlockEntity::new,GTCoinPiles.COIN_PILE.get()).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.inventory.BookShelfBlockEntity>> BOOKSHELF=BLOCK_ENTITIES.register("bookshelf",()->BlockEntityType.Builder.of(gregtech.content.blockentity.inventory.BookShelfBlockEntity::new,GTBookShelves.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ZpmModuleBlockEntity>> ZPM_MODULE=BLOCK_ENTITIES.register("zpm_module",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmModuleBlockEntity::new,GTZpmArtifacts.ZPM.get()).build(null));
 public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ZpmDischargerBlockEntity>> ZPM_DISCHARGER=BLOCK_ENTITIES.register("zpm_discharger",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmDischargerBlockEntity::new,GTZpmArtifacts.BASIC.get(),GTZpmArtifacts.ADVANCED.get(),GTZpmArtifacts.ELITE.get()).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.misc.SandwichBlockEntity>> SANDWICH_BLOCK=BLOCK_ENTITIES.register("sandwich_block",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.SandwichBlockEntity::new,GTSandwich.SANDWICH_BLOCK.get()).build(null));
 *///?} else {
 public static final RegistryObject<BlockEntityType<SolidBurningBoxBlockEntity>> SOLID_BURNING_BOX =
             BLOCK_ENTITIES.register("solid_burning_box", () -> {
@@ -342,39 +352,6 @@ public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.
                         .toArray(Block[]::new);
                 return BlockEntityType.Builder.of(gregtech.content.blockentity.OreBlockEntity::new, blocks).build(null);
             });
-public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.inventory.BookShelfBlockEntity>> BOOKSHELF =
-            BLOCK_ENTITIES.register("bookshelf", () ->
-                    BlockEntityType.Builder.of(gregtech.content.blockentity.inventory.BookShelfBlockEntity::new,
-                            GTDecorBlocks.allBookshelves().stream().map(RegistryObject::get)
-                                    .toArray(Block[]::new)).build(null));
-
-    /**
-     * GT6's loose ingot, plate and gem-plate piles (multi-tiles 32084/32085/32086), which all share
-     * {@code gregapi.tileentity.misc.MultiTileEntityPlaceable}: one stored stack ({@code NBT_VALUE}).
-     */
-public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.misc.PileBlockEntity>> PILE =
-            BLOCK_ENTITIES.register("pile", () ->
-                    BlockEntityType.Builder.of(gregtech.content.blockentity.misc.PileBlockEntity::new,
-                            GTDecorBlocks.INGOT_PILE.get(), GTDecorBlocks.PLATE_PILE.get(),
-                            GTDecorBlocks.PLATE_GEM_PILE.get()).build(null));
-
-    /** GT6's coin pile (multi-tile 32700): sixteen faces of up to sixteen coins each. */
-public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.misc.CoinPileBlockEntity>> COIN_PILE =
-            BLOCK_ENTITIES.register("coin_pile", () ->
-                    BlockEntityType.Builder.of(gregtech.content.blockentity.misc.CoinPileBlockEntity::new,
-                            GTDecorBlocks.COIN_PILE.get()).build(null));
-
-    /** GT6's sixteen-layer edible sandwich ({@code MultiTileEntitySandwich}). */
-public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.misc.SandwichBlockEntity>> SANDWICH_BLOCK =
-            BLOCK_ENTITIES.register("sandwich_block", () -> BlockEntityType.Builder.of(
-                    gregtech.content.blockentity.misc.SandwichBlockEntity::new,
-                    GTDecorBlocks.SANDWICH_BLOCK.get()).build(null));
-
-    /** GT6's drying construction foam ({@code MultiTileEntityCFoam}). */
-public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.misc.BumbleHiveBlockEntity>> BUMBLE_HIVE =
-            BLOCK_ENTITIES.register("bumble_hive", () ->
-                    BlockEntityType.Builder.of(gregtech.content.blockentity.misc.BumbleHiveBlockEntity::new,
-                            GTDecorBlocks.allHives()).build(null));
     /** GT6 17997: Logistics Core controller (the walls are existing multiblock port entities). */
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.machine.LogisticsWireBlockEntity>> LOGISTICS_WIRE =
             BLOCK_ENTITIES.register("logistics_wire", () -> BlockEntityType.Builder.of(

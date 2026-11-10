@@ -16,11 +16,6 @@ import gregtech.content.blockentity.misc.PileBlockEntity;
 import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.registry.GTDecorBlocks;
-//?}
 import gregtech.content.registry.GTDungeonBlocks;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTItems;
@@ -29,6 +24,8 @@ import gregtech.content.registry.SharedDecorBlocks;
 //? if >=1.21.1 {
 /*import gregtech.content.registry.*;
 *///?} else {
+import gregtech.content.registry.GTBookShelves;
+import gregtech.content.registry.GTCoinPiles;
 import gregtech.content.registry.GTMetalChests;
 import gregtech.content.registry.GTSafes;
 //?}
@@ -451,11 +448,7 @@ public final class GTDungeonData {
      * The choice comes from a separate seeded stream, so the cell's furniture rolls stay untouched.</p>
      */
     public boolean coins(int ax, int ay, int az) {
-//? if >=1.21.1 {
-        /*if (!set(ax, ay, az, GTCoinPiles.COIN_PILE.get().defaultBlockState())) return false;
-*///?} else {
-        if (!set(ax, ay, az, GTDecorBlocks.COIN_PILE.get().defaultBlockState())) return false;
-//?}
+        if (!set(ax, ay, az, GTCoinPiles.COIN_PILE.get().defaultBlockState())) return false;
         BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
         if (level.getBlockEntity(pos) instanceof CoinPileBlockEntity pile) {
             for (int face = 0; face < CoinPileBlockEntity.FACES; face++) {
@@ -542,11 +535,7 @@ public final class GTDungeonData {
      * @param face  GT6's face index, {@code 0..15} (see {@link CoinPileBlockEntity#faceAt})
      * @param count coins on that face, clamped into GT6's cap
      */    public boolean coin(int ax, int ay, int az, int face, int count) {
-//? if >=1.21.1 {
-        /*if (!set(ax, ay, az, GTCoinPiles.COIN_PILE.get().defaultBlockState())) return false;
-*///?} else {
-        if (!set(ax, ay, az, GTDecorBlocks.COIN_PILE.get().defaultBlockState())) return false;
-//?}
+        if (!set(ax, ay, az, GTCoinPiles.COIN_PILE.get().defaultBlockState())) return false;
         BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
         if (level.getBlockEntity(pos) instanceof CoinPileBlockEntity pile) {
             pile.setCoin(rollCoin(ax, ay, az));
@@ -747,11 +736,7 @@ public final class GTDungeonData {
      * the key back when the shelf is broken - like GT6's shelf, whose inventory drops with it.</p>
      */
     public boolean shelf(int ax, int ay, int az, @Nullable String lootTable, @Nullable ItemStack key, int keySlot) {
-//? if >=1.21.1 {
-        /*if (!set(ax, ay, az, DungeonBindings.block("bookshelf").defaultBlockState()
-*///?} else {
-        if (!set(ax, ay, az, GTDecorBlocks.BOOKSHELF.get().defaultBlockState()
-//?}
+        if (!set(ax, ay, az, GTBookShelves.get("bookshelf").defaultBlockState()
                 .setValue(gregtech.content.block.BookShelfBlock.FACING, shelfFacing(ax, az)))) return false;
         BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
         if (level.getBlockEntity(pos) instanceof gregtech.content.blockentity.inventory.BookShelfBlockEntity shelf) {

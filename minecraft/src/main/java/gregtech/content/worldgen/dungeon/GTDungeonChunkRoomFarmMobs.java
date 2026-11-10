@@ -4,15 +4,10 @@ import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.block.misc.SpikeBlock;
 import gregtech.content.blockentity.inventory.MassStorageBlockEntity;
 import gregtech.content.data.MaterialPrefix;
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.registry.GTDecorBlocks;
-//?}
+import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTMassStorages;
 import gregtech.content.registry.GTStorageContainers;
-import gregtech.content.data.generated.GT6Materials;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -139,8 +134,9 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
 
     /** GT6's {@code tPlatforms}: the lanes that carry a spawn platform, of the 16 lanes. */
     private static final boolean[] PLATFORMS = {
-            false, true, true, false, false, false, true, true,
-            true, true, false, false, false, true, true, false};
+        false, true, true, false, false, false, true, true,
+        true, true, false, false, false, true, true, false
+    };
 
     /** The GT6 3×3 mob-farm footprint, indexed by dungeon-grid cell rather than absolute blocks. */
     public static final class Footprint {
@@ -162,8 +158,13 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
             return includes(i, j) && (i != farmI || j != farmJ);
         }
 
-        public int farmI() { return farmI; }
-        public int farmJ() { return farmJ; }
+        public int farmI() {
+            return farmI;
+        }
+
+        public int farmJ() {
+            return farmJ;
+        }
     }
 
     /** Find the uniquely reserved mob farm without reading or forcing any other chunk. */
@@ -197,7 +198,10 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
     }
 
     private static boolean free(byte[][] layout, int i, int j) {
-        return i >= 0 && i < layout.length && j >= 0 && j < layout[i].length
+        return i >= 0
+                && i < layout.length
+                && j >= 0
+                && j < layout[i].length
                 && (layout[i][j] == GTDungeonLayout.EMPTY || layout[i][j] == GTDungeonLayout.CORRIDOR);
     }
 
@@ -227,15 +231,13 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
         }
     }
 
-    private static void horizontalFragment(GTDungeonData data, int startX, int endX, int z,
-                                           int targetX, int targetZ) {
+    private static void horizontalFragment(GTDungeonData data, int startX, int endX, int z, int targetX, int targetZ) {
         if (z < targetZ || z >= targetZ + 16) return;
         for (int x = Math.max(startX, targetX); x <= Math.min(endX, targetX + 15); x++)
             pipe(data, x - targetX, 7, z - targetZ, 48); // SBIT_W | SBIT_E
     }
 
-    private static void verticalFragment(GTDungeonData data, int startZ, int endZ, int x,
-                                         int targetX, int targetZ) {
+    private static void verticalFragment(GTDungeonData data, int startZ, int endZ, int x, int targetX, int targetZ) {
         if (x < targetX || x >= targetX + 16) return;
         for (int z = Math.max(startZ, targetZ); z <= Math.min(endZ, targetZ + 15); z++)
             pipe(data, x - targetX, 7, z - targetZ, 12); // SBIT_N | SBIT_S
@@ -319,7 +321,12 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
         data.chiseled(9, 2, 6);
         stored(data, 9, 2, 7, Direction.EAST, Items.ARROW);
         int woodenArrowCount = 1 + data.next(8);
-        stored(data, 9, 2, 8, Direction.EAST,
+        stored(
+                data,
+                9,
+                2,
+                8,
+                Direction.EAST,
                 GTItems.getStack(MaterialPrefix.arrowGtWood, GT6Materials.Woods.Wood, woodenArrowCount));
         data.chiseled(9, 2, 9);
 
@@ -367,8 +374,12 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
         boolean redSteel = data.next1in2();
         for (int tX = 7; tX <= 8; tX++) {
             for (int tZ = 7; tZ <= 8; tZ++) {
-                data.set(aX + tX, 9, aZ + tZ, gregtech.content.registry.GTSpikes.get(
-                        SpikeBlock.Family.STEEL, SpikeBlock.Mode.OMNI, redSteel).defaultBlockState());
+                data.set(
+                        aX + tX,
+                        9,
+                        aZ + tZ,
+                        gregtech.content.registry.GTSpikes.get(SpikeBlock.Family.STEEL, SpikeBlock.Mode.OMNI, redSteel)
+                                .defaultBlockState());
             }
         }
 
@@ -439,7 +450,9 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
 
     /** GT6's mass storage (multi-tile {@code 6009}) as the port's mass storage, with GT6's facing. */
     private static BlockState storage(Direction facing) {
-        return GTMassStorages.MASS_STORAGE.get().defaultBlockState()
+        return GTMassStorages.MASS_STORAGE
+                .get()
+                .defaultBlockState()
                 .setValue(HorizontalDirectionalBlock.FACING, facing);
     }
 
@@ -465,7 +478,8 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
 
     /** GT6's compartment drawer (multi-tile {@code 4009}) as the port's quad drawer, with GT6's facing. */
     private static BlockState drawer(Direction facing) {
-        return GTStorageContainers.drawer(gregtech.content.material.Materials.Bronze).defaultBlockState()
+        return GTStorageContainers.drawer(gregtech.content.material.Materials.Bronze)
+                .defaultBlockState()
                 .setValue(gregtech.content.block.inventory.DrawerQuadBlock.FACING, facing);
     }
 
