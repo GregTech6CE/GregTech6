@@ -1,8 +1,5 @@
 package gregtech.content.block.stone;
-//? if >=1.21.1 {
-//?} else {
 import gregtech.engine.material.MaterialPresentation;
-//?}
 
 import gregtech.engine.GTWaterloggable;
 import gregtech.api.material.GTMaterial;
@@ -106,11 +103,7 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
 
     @Override
     public MutableComponent getName() {
-//? if >=1.21.1 {
-        /*return Component.translatable(getDescriptionId(), Component.translatable(stoneMaterial.getTranslationKey(), stoneMaterial.getDisplayNameFallback()), variant.displayName());
-*///?} else {
         return Component.translatable(getDescriptionId(), MaterialPresentation.name(stoneMaterial), variant.displayName());
-//?}
     }
 
     @Override

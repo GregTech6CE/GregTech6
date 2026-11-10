@@ -1,11 +1,8 @@
 package gregtech.content.block.stone;
-//? if >=1.21.1 {
-//?} else {
-import gregtech.engine.material.MaterialPresentation;
-//?}
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.registry.GTBlocks;
+import gregtech.engine.material.MaterialPresentation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -72,11 +69,7 @@ public final class GTStoneBlock extends Block {
 
     @Override
     public MutableComponent getName() {
-//? if >=1.21.1 {
-        /*return Component.translatable(getDescriptionId(), Component.translatable(stoneMaterial.getTranslationKey(), stoneMaterial.getDisplayNameFallback()), variant.displayName());
-*///?} else {
         return Component.translatable(getDescriptionId(), MaterialPresentation.name(stoneMaterial), variant.displayName());
-//?}
     }
 
     @Override

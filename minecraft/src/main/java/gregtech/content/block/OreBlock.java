@@ -1,9 +1,6 @@
 package gregtech.content.block;
-import gregtech.engine.mod.GregTechIdentity;
-//? if >=1.21.1 {
-//?} else {
 import gregtech.engine.material.MaterialPresentation;
-//?}
+import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -156,11 +153,7 @@ public class OreBlock extends Block implements MaterialBlockLike {
 
     @Override
     public MutableComponent getName() {
-//? if >=1.21.1 {
-        /*return Component.translatable(getDescriptionId(), Component.translatable(material.getTranslationKey(), material.getDisplayNameFallback()));
-*///?} else {
         return Component.translatable(getDescriptionId(), MaterialPresentation.name(material));
-//?}
     }
 
     /** True for the {@code oreSmall} prefix variant. */
