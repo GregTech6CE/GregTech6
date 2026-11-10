@@ -2,7 +2,6 @@ package gregtech.client;
 
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTSmeltery;
-import gregtech.platform.neoforge.smeltery.SmelteryRegistries;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -15,7 +14,7 @@ import net.neoforged.neoforge.client.event.*;
 public final class SmelteryCompanionClientSetup {
     @SubscribeEvent
     public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(SmelteryRegistries.MOLD.get(), context -> new SmelteryHullRenderer(context));
+        event.registerBlockEntityRenderer(GTBlockEntities.MOLD.get(), context -> new SmelteryHullRenderer(context));
         event.registerBlockEntityRenderer(
                 GTBlockEntities.MOLD_BASIN.get(), context -> new SmelteryHullRenderer(context));
     }

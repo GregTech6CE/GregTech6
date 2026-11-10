@@ -5,7 +5,6 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
 import gregtech.engine.multiblock.MultiblockLayout;
-import gregtech.engine.multiblock.MultiblockPortOwner;
 import gregtech.engine.multiblock.PartBindings;
 import gregtech.engine.stack.StackCompat;
 import gregtech.content.block.machine.LargeCrucibleControllerBlock;
@@ -43,11 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 /** GT6 MultiTileEntityCrucible: 3x3x3 open vessel, per-material wall, shared smelting engine. */
-//? if >=1.21.1 {
-/*public final class LargeCrucibleControllerBlockEntity extends gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity implements gregtech.engine.multiblock.CrucibleStructureOwner, gregtech.engine.multiblock.tracking.TrackedMultiblock {
-*///?} else {
-public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBlockEntity implements MultiblockPortOwner, gregtech.engine.multiblock.tracking.TrackedMultiblock {
-//?}
+public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBlockEntity implements gregtech.engine.multiblock.CrucibleStructureOwner, gregtech.engine.multiblock.tracking.TrackedMultiblock {
     public static final long MAX_AMOUNT = gregtech.content.multiblock.OriginalLargeCrucibleParameters.CAPACITY_UNITS;
     private final LargeCrucibleSpecs.Variant variant;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();

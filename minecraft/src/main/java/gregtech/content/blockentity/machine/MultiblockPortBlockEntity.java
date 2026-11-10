@@ -180,11 +180,7 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
             if (level instanceof ServerLevel server && !WorldStructureClaims.claim(server, worldPosition, owner)) return;
             this.controller=owner.immutable(); this.role=role;
             gregtech.engine.multiblock.tracking.ClientFormedSync.send(this);
-//? if >=1.21.1 {
-            /*updateCrucibleVisual(owner() instanceof gregtech.engine.multiblock.CrucibleStructureOwner);
-*///?} else {
-            updateCrucibleVisual(owner() instanceof LargeCrucibleControllerBlockEntity);
-//?}
+            updateCrucibleVisual(owner() instanceof gregtech.engine.multiblock.CrucibleStructureOwner);
         } finally {
             gregtech.engine.multiblock.tracking.StructureScanProbe.resume();
         }
@@ -238,17 +234,9 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
                 && host.canLogistics(side);
     }
     /** GT6 crucible's middle wall serves faucets and molds; upper wall serves hand access. */
-//? if >=1.21.1 {
-    /*public gregtech.engine.multiblock.CrucibleStructureOwner crucibleController() {
-*///?} else {
-    public LargeCrucibleControllerBlockEntity crucibleController() {
-//?}
+    public gregtech.engine.multiblock.CrucibleStructureOwner crucibleController() {
         var host = owner();
-//? if >=1.21.1 {
-        /*return host instanceof gregtech.engine.multiblock.CrucibleStructureOwner crucible ? crucible : null;
-*///?} else {
-        return host instanceof LargeCrucibleControllerBlockEntity crucible ? crucible : null;
-//?}
+        return host instanceof gregtech.engine.multiblock.CrucibleStructureOwner crucible ? crucible : null;
     }
     public boolean isCrucibleUpperPort() { return role == MultiblockLayout.Role.ITEM_FLUID_IO && crucibleController() != null; }
     /** Bound crucible wall: the controller whose hollow this wall face can open into. */

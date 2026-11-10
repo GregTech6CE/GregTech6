@@ -1,11 +1,7 @@
 package gregtech.client;
 
 import gregtech.api.material.GTMaterial;
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
-*///?} else {
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
-//?}
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,11 +16,7 @@ import org.joml.Matrix4f;
 /**
  * GT6 {@code MultiTileEntitySmeltery} render pass 5: top face only ({@code SIDES_TOP}).
  */
-//? if >=1.21.1 {
-/*public final class SmeltingCrucibleRenderer implements BlockEntityRenderer<SmeltingCrucibleEntity> {
-*///?} else {
 public final class SmeltingCrucibleRenderer implements BlockEntityRenderer<SmeltingCrucibleBlockEntity> {
-//?}
     private static final float INTERIOR_MIN = 2 / 16.0F;
     private static final float INTERIOR_MAX = 14 / 16.0F;
     private static final float FLOOR = 2 / 16.0F;
@@ -33,11 +25,7 @@ public final class SmeltingCrucibleRenderer implements BlockEntityRenderer<Smelt
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public void render(SmeltingCrucibleEntity be, float partialTick, PoseStack poseStack,
-*///?} else {
     public void render(SmeltingCrucibleBlockEntity be, float partialTick, PoseStack poseStack,
-//?}
                        MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         if (be.getDisplayedHeight() == 0 || be.getDisplayedMaterialId() <= 0) {
             return;
@@ -48,11 +36,7 @@ public final class SmeltingCrucibleRenderer implements BlockEntityRenderer<Smelt
             return;
         }
 
-//? if >=1.21.1 {
-        /*float topY = (.125F+(be.getDisplayedHeight()&255)/292.571428F);
-*///?} else {
-        float topY = be.getContentFillMaxY();
-//?}
+float topY = be.getContentFillMaxY();
         if (topY <= FLOOR) {
             return;
         }
@@ -139,11 +123,7 @@ public final class SmeltingCrucibleRenderer implements BlockEntityRenderer<Smelt
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public boolean shouldRenderOffScreen(SmeltingCrucibleEntity be) {
-*///?} else {
     public boolean shouldRenderOffScreen(SmeltingCrucibleBlockEntity be) {
-//?}
         return be.getDisplayedHeight() != 0;
     }
 }

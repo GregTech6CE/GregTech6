@@ -14,13 +14,9 @@ import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.client.GTToolTooltips;
 
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
-*///?} else {
 import gregtech.content.block.machine.HopperBlock;
 import gregtech.content.block.machine.QueueHopperBlock;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
-//?}
 
 import gregtech.content.registry.GTToolItems;
 import net.minecraft.core.BlockPos;
@@ -148,11 +144,7 @@ public class GTToolItem extends Item {
         }
         BlockPos pos = context.getClickedPos();
 
-//? if >=1.21.1 {
-/*        if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleEntity crucible)) {
-*///?} else {
-        if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEntity crucible)) {
-//?}
+if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEntity crucible)) {
 
             return InteractionResult.PASS;
         }

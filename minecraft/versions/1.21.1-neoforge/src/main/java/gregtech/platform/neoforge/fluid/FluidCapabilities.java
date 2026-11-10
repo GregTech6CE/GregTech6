@@ -1,6 +1,6 @@
 package gregtech.platform.neoforge.fluid;
 
-import gregtech.platform.neoforge.smeltery.SmelteryRegistries;
+import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.Direction;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -49,7 +49,7 @@ public final class FluidCapabilities {
                         .toArray(net.minecraft.world.item.Item[]::new));
         event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
-                SmelteryRegistries.SMELTING_CRUCIBLE.get(),
+                GTBlockEntities.SMELTING_CRUCIBLE.get(),
                 (crucible, side) -> side == Direction.DOWN ? null : crucible.moltenFluidHandler());
     }
 }

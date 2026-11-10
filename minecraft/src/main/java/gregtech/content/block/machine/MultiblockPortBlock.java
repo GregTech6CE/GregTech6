@@ -14,11 +14,7 @@ public final class MultiblockPortBlock extends Block implements EntityBlock {
                 && level.getBlockEntity(pos) instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port) {
             var crucible = port.crucibleController();
             if (crucible != null)
-//? if >=1.21.1 {
-                /*gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, crucible.getCrucibleTemperature());
-*///?} else {
-                gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, crucible.getTemperature());
-//?}
+                gregtech.util.GTEntityHelper.applyTemperatureDamage(entity, crucible.getCrucibleTemperature());
         }
         super.stepOn(level, pos, state, entity);
     }

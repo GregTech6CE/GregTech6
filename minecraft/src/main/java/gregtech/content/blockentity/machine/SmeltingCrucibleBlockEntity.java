@@ -1,4 +1,4 @@
-package gregtech.platform.neoforge.smeltery;
+package gregtech.content.blockentity.machine;
 
 import gregtech.api.machine.BlockFace;
 import gregtech.api.material.GTValues;
@@ -6,6 +6,7 @@ import gregtech.content.data.GregTechConstants;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.Materials;
+import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.machine.CrucibleSpec;
 import gregtech.engine.machine.InitialSmelteryDefinitions;
@@ -22,6 +23,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -29,15 +32,28 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+*///?} else {
+import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+//?}
 
-/** Neo world/cache/storage adapter for the shared real crucible engine. */
-public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnergyBlockEntity
-        implements gregtech.engine.energy.HeatEnergyBlock,
-                gregtech.engine.machine.ITileEntityCrucible,
+/**
+ * Smelting crucible (GT6 {@code MultiTileEntitySmeltery}).
+ * <p>
+ * 16 material units of internal storage, one top cache slot, HU input on the bottom face.
+ */
+public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GTEnergyBlockEntity
+        implements gregtech.engine.machine.ITileEntityCrucible,
                 gregtech.engine.fluid.MoltenMaterialStorage,
                 gregtech.api.machine.HeatHandler,
                 gregtech.api.sensor.WeightSensorSource,
@@ -71,18 +87,14 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
             setChanged();
         }
     };
-    private final net.neoforged.neoforge.items.IItemHandler itemInput = new CrucibleAutomationInput(cache);
-
-    public net.neoforged.neoforge.items.IItemHandler itemInputHandler(@Nullable Direction side) {
-        return side == Direction.UP && !isRemoved() ? itemInput : null;
-    }
+    private final IItemHandler itemInput = new CrucibleAutomationInput(cache);
 
     private final gregtech.engine.machine.CrucibleSpec spec;
     private ThermalState thermal = new ThermalState(293, 293, 0, 100);
 
-    public SmeltingCrucibleEntity(BlockPos pos, BlockState state) {
+    public SmeltingCrucibleBlockEntity(BlockPos pos, BlockState state) {
         this(
-                SmelteryRegistries.SMELTING_CRUCIBLE.get(),
+                GTBlockEntities.SMELTING_CRUCIBLE.get(),
                 pos,
                 state,
                 state.getBlock() instanceof gregtech.content.block.machine.SmeltingCrucibleBlock block
@@ -90,12 +102,12 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
                         : InitialSmelteryDefinitions.ceramicCrucible());
     }
 
-    public SmeltingCrucibleEntity(BlockPos pos, BlockState state, CrucibleSpec spec) {
-        this(SmelteryRegistries.SMELTING_CRUCIBLE.get(), pos, state, spec);
+    public SmeltingCrucibleBlockEntity(BlockPos pos, BlockState state, CrucibleSpec spec) {
+        this(GTBlockEntities.SMELTING_CRUCIBLE.get(), pos, state, spec);
     }
 
-    protected SmeltingCrucibleEntity(
-            net.minecraft.world.level.block.entity.BlockEntityType<?> type,
+    protected SmeltingCrucibleBlockEntity(
+            BlockEntityType<?> type,
             BlockPos pos,
             BlockState state,
             gregtech.engine.machine.CrucibleSpec spec) {
@@ -201,10 +213,6 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
         }
     }
 
-    protected void tickServer() {
-        serverTick();
-    }
-
     protected boolean takeMaterial(gregtech.api.material.GTMaterial material, long amount) {
         if (amount <= 0
                 || content.stream()
@@ -286,20 +294,47 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
     }
 
     @Override
-    public net.neoforged.neoforge.client.model.data.ModelData getModelData() {
-        return net.neoforged.neoforge.client.model.data.ModelData.builder()
+    public ModelData getModelData() {
+        return ModelData.builder()
                 .with(gregtech.client.CrucibleModelData.MELTDOWN, isMeltDownWarning())
                 .build();
     }
 
     @Override
-    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+    /*public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookup) {
         super.handleUpdateTag(tag, lookup);
+*///?} else {
+    public void handleUpdateTag(CompoundTag tag) {
+        super.handleUpdateTag(tag);
+//?}
         if (level != null && level.isClientSide) {
             requestModelDataUpdate();
-            gregtech.client.CrucibleClientSync.refreshHull(worldPosition);
+//? if >=1.21.1 {
+            /*gregtech.client.CrucibleClientSync.refreshHull(worldPosition);
+*///?} else {
+            net.minecraftforge.fml.DistExecutor.unsafeRunWhenOn(
+                    net.minecraftforge.api.distmarker.Dist.CLIENT,
+                    () -> () -> gregtech.client.CrucibleClientSync.refreshHull(worldPosition));
+//?}
         }
     }
+
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+//? if >=1.21.1 {
+    /*public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider lookup) {
+        if (packet.getTag() != null) handleUpdateTag(packet.getTag(), lookup);
+    }
+*///?} else {
+    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
+        if (packet.getTag() != null) handleUpdateTag(packet.getTag());
+    }
+//?}
 
     public long getTemperature() {
         return thermal.temperatureK();
@@ -375,10 +410,6 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
         return amount;
     }
 
-    public net.neoforged.neoforge.fluids.capability.IFluidHandler moltenFluidHandler() {
-        return new gregtech.engine.fluid.MoltenFluidHandler(this);
-    }
-
     public long getEnergyBuffer() {
         return thermal.energyHU();
     }
@@ -434,6 +465,12 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
         return (getDisplayedHeight() & 255) * 100 / 255;
     }
 
+    /** GT6 {@code setBlockBounds2} pass 5 top Y in block space. */
+    public float getContentFillMaxY() {
+        int height = displayedHeight & 0xFF;
+        return (2 / 16.0F) + height / 292.571428F;
+    }
+
     public String formatContentSummary() {
         if (content.isEmpty()) return "empty";
         return content.stream()
@@ -464,7 +501,13 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
         return true;
     }
 
-    public void serverTick() {
+    public static void serverTick(Level level, BlockPos pos, BlockState state, SmeltingCrucibleBlockEntity be) {
+        if (!level.isClientSide) {
+            be.tickServer();
+        }
+    }
+
+    protected void tickServer() {
         int before = content.hashCode();
         if (getBlockState().getBlock() instanceof gregtech.content.block.machine.SmeltingCrucibleBlock) {
             long rain = gregtech.content.blockentity.machine.SmallCrucibleRain.amount(level, worldPosition);
@@ -524,10 +567,6 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
         }
         if (before != content.hashCode() || level.getGameTime() % 20 == 0) sync();
         setChanged();
-    }
-
-    public boolean fillMold(MoldEntity mold, Direction moldSide) {
-        return fillMoldAtSide(mold, moldSide.getOpposite().ordinal(), moldSide.ordinal());
     }
 
     @Override
@@ -628,7 +667,11 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
         }
         ItemStack expected = GTItems.getStack(MaterialPrefix.scrapGt, lightest.material, 1);
         return !expected.isEmpty()
-                && ItemStack.isSameItemSameComponents(held, expected)
+//? if >=1.21.1 {
+                /*&& ItemStack.isSameItemSameComponents(held, expected)
+*///?} else {
+                && ItemStack.isSameItemSameTags(held, expected)
+//?}
                 && held.getCount() < held.getMaxStackSize();
     }
 
@@ -755,7 +798,11 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
     private static void giveScrapToPlayer(Player player, InteractionHand hand, ItemStack scrap) {
         ItemStack clicked = player.getItemInHand(hand);
         if (!clicked.isEmpty()) {
-            if (ItemStack.isSameItemSameComponents(clicked, scrap) && clicked.getCount() < clicked.getMaxStackSize()) {
+//? if >=1.21.1 {
+            /*if (ItemStack.isSameItemSameComponents(clicked, scrap) && clicked.getCount() < clicked.getMaxStackSize()) {
+*///?} else {
+            if (ItemStack.isSameItemSameTags(clicked, scrap) && clicked.getCount() < clicked.getMaxStackSize()) {
+//?}
                 clicked.grow(1);
                 return;
             }
@@ -773,7 +820,11 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
             player.setItemInHand(InteractionHand.MAIN_HAND, scrap);
             return;
         }
-        if (ItemStack.isSameItemSameComponents(main, scrap) && main.getCount() < main.getMaxStackSize()) {
+//? if >=1.21.1 {
+        /*if (ItemStack.isSameItemSameComponents(main, scrap) && main.getCount() < main.getMaxStackSize()) {
+*///?} else {
+        if (ItemStack.isSameItemSameTags(main, scrap) && main.getCount() < main.getMaxStackSize()) {
+//?}
             main.grow(1);
             return;
         }
@@ -792,8 +843,13 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
             player.setItemInHand(InteractionHand.MAIN_HAND, stack);
             return;
         }
-        if (ItemStack.isSameItemSameComponents(main, stack)
+//? if >=1.21.1 {
+        /*if (ItemStack.isSameItemSameComponents(main, stack)
                 && main.getCount() + stack.getCount() <= main.getMaxStackSize()) {
+*///?} else {
+        if (ItemStack.isSameItemSameTags(main, stack)
+                && main.getCount() + stack.getCount() <= main.getMaxStackSize()) {
+//?}
             main.grow(stack.getCount());
             player.setItemInHand(InteractionHand.MAIN_HAND, main);
             return;
@@ -815,8 +871,13 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+    /*protected void loadAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
         super.loadAdditional(tag, lookup);
+*///?} else {
+    public void load(CompoundTag tag) {
+        super.load(tag);
+//?}
         long temperature =
                 tag.contains("gt.temperature") ? tag.getLong("gt.temperature") : GregTechConstants.DEF_ENV_TEMP;
         thermal = new ThermalState(
@@ -832,13 +893,22 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
             long amount = entry.getLong("amount");
             if (material.isValid() && amount > 0) content.add(CrucibleMaterialStack.of(material, amount));
         }
-        if (tag.contains("gt.cache")) cache.deserializeNBT(lookup, tag.getCompound("gt.cache"));
+//? if >=1.21.1 {
+        /*if (tag.contains("gt.cache")) cache.deserializeNBT(lookup, tag.getCompound("gt.cache"));
+*///?} else {
+        if (tag.contains("gt.cache")) cache.deserializeNBT(tag.getCompound("gt.cache"));
+//?}
         updateDisplayState();
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
+//? if >=1.21.1 {
+    /*protected void saveAdditional(CompoundTag tag, HolderLookup.Provider lookup) {
         super.saveAdditional(tag, lookup);
+*///?} else {
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+//?}
         tag.putInt("Meta", spec.gt6MetaId());
         tag.putLong("gt.temperature", thermal.temperatureK());
         tag.putLong("gt.temperature.old", thermal.previousTemperatureK());
@@ -852,7 +922,11 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
             list.add(entry);
         }
         tag.put("gt.materials", list);
-        tag.put("gt.cache", cache.serializeNBT(lookup));
+//? if >=1.21.1 {
+        /*tag.put("gt.cache", cache.serializeNBT(lookup));
+*///?} else {
+        tag.put("gt.cache", cache.serializeNBT());
+//?}
     }
 
     @Override
@@ -940,5 +1014,48 @@ public class SmeltingCrucibleEntity extends gregtech.content.blockentity.GTEnerg
             setChanged();
         }
         return amount;
+    }
+
+//? if >=1.21.1 {
+    /*public IItemHandler itemInputHandler(@Nullable Direction side) {
+        return side == Direction.UP && !isRemoved() ? itemInput : null;
+    }
+
+    public net.neoforged.neoforge.fluids.capability.IFluidHandler moltenFluidHandler() {
+*///?} else {
+    private net.minecraftforge.common.util.LazyOptional<IItemHandler> itemInputCapability =
+            net.minecraftforge.common.util.LazyOptional.of(() -> itemInput);
+    private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.fluids.capability.IFluidHandler>
+            moltenFluidCapability =
+                    net.minecraftforge.common.util.LazyOptional.of(() -> new gregtech.engine.fluid.MoltenFluidHandler(this));
+
+    @Override
+    public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
+            net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction side) {
+        if (capability == net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER
+                && side == Direction.UP) return itemInputCapability.cast();
+        if (capability == net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER
+                && side != Direction.DOWN) return moltenFluidCapability.cast();
+        return super.getCapability(capability, side);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        moltenFluidCapability.invalidate();
+        itemInputCapability.invalidate();
+    }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        itemInputCapability = net.minecraftforge.common.util.LazyOptional.of(() -> itemInput);
+        moltenFluidCapability =
+                net.minecraftforge.common.util.LazyOptional.of(() -> new gregtech.engine.fluid.MoltenFluidHandler(this));
+    }
+
+    public net.minecraftforge.fluids.capability.IFluidHandler moltenFluidHandler() {
+//?}
+        return new gregtech.engine.fluid.MoltenFluidHandler(this);
     }
 }

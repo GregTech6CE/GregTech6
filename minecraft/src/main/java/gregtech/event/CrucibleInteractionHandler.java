@@ -1,11 +1,7 @@
 package gregtech.event;
 import gregtech.engine.mod.GregTechIdentity;
 
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
-*///?} else {
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
-//?}
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -58,17 +54,10 @@ public final class CrucibleInteractionHandler {
             }
             return;
         }
-//? if >=1.21.1 {
-        /*SmeltingCrucibleEntity crucible = blockEntity instanceof SmeltingCrucibleEntity direct
-*///?} else {
-        SmeltingCrucibleBlockEntity crucible = blockEntity instanceof SmeltingCrucibleBlockEntity direct
-//?}
+SmeltingCrucibleBlockEntity crucible = blockEntity instanceof SmeltingCrucibleBlockEntity direct
                 ? direct : blockEntity instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port
-//? if >=1.21.1 {
-                        /*&& (container || port.isCrucibleUpperPort()) && port.crucibleController() instanceof SmeltingCrucibleEntity owner ? owner : null;
-*///?} else {
-                        && (container || port.isCrucibleUpperPort()) ? port.crucibleController() : null;
-//?}
+                        && (container || port.isCrucibleUpperPort())
+                        && port.crucibleController() instanceof SmeltingCrucibleBlockEntity owner ? owner : null;
         if (crucible == null) return;
         if (crucible instanceof gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity large
                 && !large.isStructureOk()) return;

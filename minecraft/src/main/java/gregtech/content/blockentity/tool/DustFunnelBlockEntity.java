@@ -4,11 +4,7 @@ import gregtech.api.material.*;
 
 import gregtech.engine.machine.crucible.CrucibleItemInput;
 import gregtech.engine.machine.crucible.CrucibleMaterialStack;
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
-*///?} else {
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
-//?}
 import gregtech.content.data.MaterialPrefix;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -186,11 +182,7 @@ public class DustFunnelBlockEntity extends BlockEntity {
             for (int slot = 0; slot < below.getSlots() && !remaining.isEmpty(); slot++) remaining = below.insertItem(slot, remaining, false);
             funnel.buffer.setStackInSlot(1, remaining); return;
         }
-//? if >=1.21.1 {
-        /*if (!(level.getBlockEntity(pos.below()) instanceof SmeltingCrucibleEntity crucible)) return;
-*///?} else {
-        if (!(level.getBlockEntity(pos.below()) instanceof SmeltingCrucibleBlockEntity crucible)) return;
-//?}
+if (!(level.getBlockEntity(pos.below()) instanceof SmeltingCrucibleBlockEntity crucible)) return;
         List<CrucibleMaterialStack> incoming = CrucibleItemInput.parse(output.copyWithCount(1));
         if (incoming.isEmpty()) return;
         if (crucible.addMaterialStacks(incoming, crucible.getTemperature())) {

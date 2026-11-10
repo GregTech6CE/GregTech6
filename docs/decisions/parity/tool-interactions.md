@@ -12,7 +12,6 @@
 ## 与 Stonecutter 分支的关系
 
 - `GTToolHelper.isInteractionTool` 的 `PoweredToolItem` ↔ `ElectricToolItem` 分支是 1.21.1 节点接口与共享类的落点差异，不是行为差异。
-- `GTToolItem.onItemUseFirst` 的 `SmeltingCrucibleEntity` ↔ `SmeltingCrucibleBlockEntity` 分支是 1.21.1 节点类与 1.20.1 节点类的落点差异，不是 plunger 行为本身。
 - `IgnitableBlockHandler` 的 import 和 `hurtAndBreak` 分支是事件总线 API 差异。
 - `UtilityCoverInteraction` 的 `level.registryAccess()` 分支是 provider 参数差异。
 

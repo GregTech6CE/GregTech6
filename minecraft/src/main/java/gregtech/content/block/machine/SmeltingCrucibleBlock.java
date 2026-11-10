@@ -8,13 +8,8 @@ import gregtech.engine.machine.GTMachineBlock;
 //?}
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
-import gregtech.platform.neoforge.smeltery.SmelteryRegistries;
-*///?} else {
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
-//?}
 import gregtech.util.GTEntityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -113,11 +108,7 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
             return;
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
-//? if >=1.21.1 {
-        /*if (blockEntity instanceof SmeltingCrucibleEntity crucible) {
-*///?} else {
         if (blockEntity instanceof SmeltingCrucibleBlockEntity crucible) {
-//?}
             GTEntityHelper.applyTemperatureDamage(entity, crucible.getTemperature(), 1.0F, 10.0F);
         }
     }
@@ -126,11 +117,7 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
-//? if >=1.21.1 {
-            /*if (blockEntity instanceof SmeltingCrucibleEntity crucible) {
-*///?} else {
             if (blockEntity instanceof SmeltingCrucibleBlockEntity crucible) {
-//?}
                 GTEntityHelper.applyTemperatureDamage(entity, crucible.getTemperature(), 1.0F, 10.0F);
             }
         }
@@ -160,11 +147,7 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-//? if >=1.21.1 {
-        /*return new SmeltingCrucibleEntity(pos, state, spec);
-*///?} else {
-        return new SmeltingCrucibleBlockEntity(pos, state);
-//?}
+        return new SmeltingCrucibleBlockEntity(pos, state, spec);
     }
 
     @Nullable
@@ -174,13 +157,8 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
         if (level.isClientSide) {
             return null;
         }
-//? if >=1.21.1 {
-        /*return type == SmelteryRegistries.SMELTING_CRUCIBLE.get()
-                ? (lvl, pos, st, be) -> ((SmeltingCrucibleEntity) be).serverTick()
-*///?} else {
         return type == GTBlockEntities.SMELTING_CRUCIBLE.get()
                 ? (lvl, pos, st, be) -> SmeltingCrucibleBlockEntity.serverTick(lvl, pos, st, (SmeltingCrucibleBlockEntity) be)
-//?}
                 : null;
     }
 
@@ -192,11 +170,7 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
 //?}
                                  InteractionHand hand, BlockHitResult hit) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-//? if >=1.21.1 {
-        /*if (blockEntity instanceof SmeltingCrucibleEntity crucible
-*///?} else {
         if (blockEntity instanceof SmeltingCrucibleBlockEntity crucible
-//?}
                 && (hit.getDirection() == Direction.UP || VesselInnerFaces.isInnerFace(state, hit))
                 && crucible.canHandleUse(player, hand)) {
             // Client prediction only — authoritative logic runs in CrucibleInteractionHandler on server.
@@ -209,11 +183,7 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
-//? if >=1.21.1 {
-            /*if (blockEntity instanceof SmeltingCrucibleEntity crucible) {
-*///?} else {
             if (blockEntity instanceof SmeltingCrucibleBlockEntity crucible) {
-//?}
                 crucible.dropContents();
             }
         }
@@ -288,11 +258,7 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
                                        boolean willHarvest, FluidState fluid) {
         if (!level.isClientSide && !player.isCreative()) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
-//? if >=1.21.1 {
-            /*if (blockEntity instanceof SmeltingCrucibleEntity crucible
-*///?} else {
             if (blockEntity instanceof SmeltingCrucibleBlockEntity crucible
-//?}
                     && crucible.getTemperature() >= CrucibleHazards.BREAK_MELTDOWN_TEMPERATURE_K) {
                 crucible.meltDownOnBreak();
                 return false;

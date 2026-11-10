@@ -36,7 +36,7 @@
 
 `ContentRegistrar.shared()` 是唯一的适配器实现：内置命名空间落到 `GTItems.ITEMS`、`GTBlocks.BLOCKS` 和 `GTBlocks.BLOCK_ITEMS`，附属命名空间按 namespace 取独立注册表，不并入 `gt6ce`。平台入口只做三件事：绑定平台服务与前置数据、通过 `ContentRegistration.PlatformContent` 的 `blocks` / `machines` 位置追加平台专属家族、在最后调用一次 `submit()` 提交所有延迟注册表。`submit()` 是唯一的提交点；家族方法只排队，需要额外提交的家族提供 `submit(IEventBus)`，但不在 `register(ContentRegistrar)` 内提交。附属命名空间的方块实体表通过共享 `GTBlockEntities.entities(namespace)` 排队；Menu、能力、网络和其他原生注册仍由节点入口在同一个 `submit()` 中集中提交。
 
-共享注册表（`GTBlockEntities`、`GTFluids`，内部按版本分支）与节点适配器（NeoForge 的 `SmelteryRegistries`、`BasicMachineRegistries` 等非物品注册表）仍需使用平台注册类型，它们属于注册适配代码，不受“内容家族只使用 `ContentRegistrar`”约束；共享内容家族不得绕过适配器直接写 `GTBlocks` / `GTItems`。
+共享注册表（`GTBlockEntities`、`GTFluids`，内部按版本分支）与节点适配器（NeoForge 的 `SmelteryItemCapabilities`、`BasicMachineRegistries` 等能力与菜单注册）仍需使用平台注册类型，它们属于注册适配代码，不受“内容家族只使用 `ContentRegistrar`”约束；共享内容家族不得绕过适配器直接写 `GTBlocks` / `GTItems`。
 
 新增内容家族时：
 

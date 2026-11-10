@@ -20,9 +20,7 @@ public final class MultiblockClientSetup {
         event.registerBlockEntityRenderer(
                 GTBlockEntities.ORIGINAL_LARGE_BOILER.get(), OriginalLargeBoilerBarometerRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LARGE_CRUCIBLE.get(), LargeCrucibleRenderer::new);
-        event.registerBlockEntityRenderer(
-                gregtech.platform.neoforge.smeltery.SmelteryRegistries.SMELTING_CRUCIBLE.get(),
-                SmeltingCrucibleRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.SMELTING_CRUCIBLE.get(), SmeltingCrucibleRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LARGE_TURBINE.get(), LargeTurbineRotorRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LARGE_GAS_TURBINE.get(), LargeTurbineRotorRenderer::new);
     }
@@ -37,7 +35,8 @@ public final class MultiblockClientSetup {
                         if (level != null
                                 && pos != null
                                 && level.getBlockEntity(pos)
-                                        instanceof gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity crucible
+                                        instanceof
+                                        gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity crucible
                                 && crucible.isMeltDownWarning()) return CrucibleBlockBakedModel.meltdownRgb(tint);
                         return tint;
                     },

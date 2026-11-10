@@ -12,26 +12,6 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.Registries;
 *///?} else {
-import gregtech.content.blockentity.machine.CrucibleCrossingBlockEntity;
-import gregtech.content.blockentity.machine.CrucibleFaucetBlockEntity;
-import gregtech.content.blockentity.machine.BurningBoxBlockEntity;
-import gregtech.content.blockentity.machine.HopperBlockEntity;
-import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
-import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
-import gregtech.content.blockentity.machine.MoldBlockEntity;
-import gregtech.content.blockentity.machine.QueueHopperBlockEntity;
-import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
-import gregtech.content.blockentity.machine.SolidBurningBoxBlockEntity;
-import gregtech.content.block.machine.BurningBoxBlock;
-import gregtech.content.block.machine.CrucibleCrossingBlock;
-import gregtech.content.block.machine.CrucibleFaucetBlock;
-import gregtech.content.block.machine.HopperBlock;
-import gregtech.content.block.machine.ItemPipeBlock;
-import gregtech.content.block.machine.MoldBasinBlock;
-import gregtech.content.block.machine.MoldBlock;
-import gregtech.content.block.machine.QueueHopperBlock;
-import gregtech.content.block.machine.SmeltingCrucibleBlock;
-import gregtech.content.block.machine.SolidBurningBoxBlock;
 import net.minecraft.world.level.block.Block;
 //?}
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -229,6 +209,9 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.inventory.MetalChestBlockEntity>> METAL_CHEST =
             BLOCK_ENTITIES.register("metal_chest",()->BlockEntityType.Builder.of(gregtech.content.blockentity.inventory.MetalChestBlockEntity::new,GTMetalChests.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.MoldBlockEntity>> MOLD =
+            BLOCK_ENTITIES.register("mold",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.MoldBlockEntity::new,GTSmeltery.molds().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.MoldBasinBlockEntity>> MOLD_BASIN =
             BLOCK_ENTITIES.register("mold_basin",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.MoldBasinBlockEntity::new,GTSmeltery.basins().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
@@ -290,6 +273,12 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
                         blocks.toArray(gregtech.content.block.sensor.SensorBlock[]::new)).build(null);
             });
 
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity>> SMELTING_CRUCIBLE =
+            BLOCK_ENTITIES.register("smelting_crucible",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity::new,GTSmeltery.crucibles().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.SolidBurningBoxBlockEntity>> SOLID_BURNING_BOX =
+            BLOCK_ENTITIES.register("solid_burning_box",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.SolidBurningBoxBlockEntity::new,GTBurningBoxes.solidBoxes().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.BoilerTankBlockEntity>> STEAM_BOILER =
             BLOCK_ENTITIES.register("steam_boiler",()->BlockEntityType.Builder.of(gregtech.content.blockentity.machine.BoilerTankBlockEntity::new,GTBoilers.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
@@ -314,35 +303,9 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
 
 //? if >=1.21.1 {
     /*
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.platform.neoforge.smeltery.MoldEntity>> MOLD=gregtech.platform.neoforge.smeltery.SmelteryRegistries.MOLD;
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.platform.neoforge.smeltery.SolidBurningBoxEntity>> SOLID_BURNING_BOX=gregtech.platform.neoforge.smeltery.SmelteryRegistries.SOLID_BURNING_BOX;
 public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ZpmModuleBlockEntity>> ZPM_MODULE=BLOCK_ENTITIES.register("zpm_module",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmModuleBlockEntity::new,GTZpmArtifacts.ZPM.get()).build(null));
 public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ZpmDischargerBlockEntity>> ZPM_DISCHARGER=BLOCK_ENTITIES.register("zpm_discharger",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmDischargerBlockEntity::new,GTZpmArtifacts.BASIC.get(),GTZpmArtifacts.ADVANCED.get(),GTZpmArtifacts.ELITE.get()).build(null));
 *///?} else {
-public static final RegistryObject<BlockEntityType<SolidBurningBoxBlockEntity>> SOLID_BURNING_BOX =
-            BLOCK_ENTITIES.register("solid_burning_box", () -> {
-                SolidBurningBoxBlock[] blocks = GTBurningBoxes.solidBoxes().stream()
-                        .filter(RegisteredBlock::isPresent)
-                        .map(RegisteredBlock::get)
-                        .toArray(SolidBurningBoxBlock[]::new);
-                return BlockEntityType.Builder.of(SolidBurningBoxBlockEntity::new, blocks).build(null);
-            });
-public static final RegistryObject<BlockEntityType<SmeltingCrucibleBlockEntity>> SMELTING_CRUCIBLE =
-            BLOCK_ENTITIES.register("smelting_crucible", () -> {
-                SmeltingCrucibleBlock[] blocks = GTSmeltery.crucibles().stream()
-                        .filter(RegisteredBlock::isPresent)
-                        .map(RegisteredBlock::get)
-                        .toArray(SmeltingCrucibleBlock[]::new);
-                return BlockEntityType.Builder.of(SmeltingCrucibleBlockEntity::new, blocks).build(null);
-            });
-public static final RegistryObject<BlockEntityType<MoldBlockEntity>> MOLD =
-            BLOCK_ENTITIES.register("mold", () -> {
-                MoldBlock[] blocks = GTSmeltery.molds().stream()
-                        .filter(RegisteredBlock::isPresent)
-                        .map(RegisteredBlock::get)
-                        .toArray(MoldBlock[]::new);
-                return BlockEntityType.Builder.of(MoldBlockEntity::new, blocks).build(null);
-            });
 public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.OreBlockEntity>> ORE =
             BLOCK_ENTITIES.register("ore", () -> {
                 Block[] blocks = GTBlocks.allEntries().stream()
