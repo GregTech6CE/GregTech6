@@ -76,9 +76,9 @@
 
 ## Capability
 
-摘要：能力 API 与 `LazyOptional` / `Optional` 的差异。
+摘要：能力 API、`LazyOptional` / `Optional` 与共享 BE 的能力暴露的差异。
 
-关键词：ForgeCapabilities, Capabilities, LazyOptional, Optional, FluidUtil, IFluidHandlerItem, CapabilityItemHandler, IItemHandler
+关键词：ForgeCapabilities, Capabilities, LazyOptional, Optional, FluidUtil, IFluidHandlerItem, CapabilityItemHandler, IItemHandler, RegisterCapabilitiesEvent, getCapability
 
 分类 README：[Capability/README.md](Capability/README.md)
 
@@ -100,9 +100,9 @@
 
 ## Placement
 
-摘要：同一内容家族在两个版本中实现落点不同，包括注册归属、holder 类型、节点目录、菜单落点、共享 BE 段、引用目录、混合目录、目录字段、物品类依赖、节点类拆分、创造栏装配、包装类、静态谓词和分支噪声。
+摘要：同一内容家族在两个版本中实现落点不同，包括注册归属、holder 类型、节点目录、菜单落点、共享 BE 段、引用目录、混合目录、目录字段、物品类依赖、节点类拆分与合并、节点专属迁移类、创造栏装配、包装类、静态谓词和分支噪声。
 
-关键词：registerAll, ContentRegistrar, Supplier, GTManualStations, GTMenuTypes, OriginCreativeContents, GTMachineBlockItem, PoweredToolItem, NeoToolBindings, GTToolType, shared BE, reference catalog, mixed catalog, registry lookup, identical, same, empty, one-sided, import, split duplicate, duplicate registration
+关键词：registerAll, ContentRegistrar, Supplier, GTManualStations, GTMenuTypes, OriginCreativeContents, GTMachineBlockItem, PoweredToolItem, SmeltingCrucibleBlockEntity, OreBlockEntity, NeoToolBindings, GTToolType, shared BE, reference catalog, mixed catalog, registry lookup, node BE merge, legacy save, identical, same, empty, one-sided, import, split duplicate, duplicate registration
 
 分类 README：[Placement/README.md](Placement/README.md)
 
