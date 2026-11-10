@@ -29,8 +29,11 @@ class ItemCompositionResolverTest {
         var second = candidate("second", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4, true);
         var data = ItemCompositionResolver.resolve(Map.of("test:item", List.of(second, first)))
                 .get("test:item");
-        assertEquals(List.of("first", "second"),
-                data.sources().stream().map(ItemCompositionSource::declarationId).toList());
+        assertEquals(
+                List.of("first", "second"),
+                data.sources().stream()
+                        .map(ItemCompositionSource::declarationId)
+                        .toList());
     }
 
     @Test
@@ -47,18 +50,18 @@ class ItemCompositionResolverTest {
     @Test
     void tagCandidateIsEffectiveWhenNoExplicitLayerExists() {
         var tag = candidate("tag", ItemCompositionSource.Kind.FORM_TAG, Materials.Copper, 1, true);
-        var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(tag))).get("test:item");
+        var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(tag)))
+                .get("test:item");
         assertEquals(Materials.Copper.resolve(), resolved.material());
-        assertEquals(ItemCompositionSource.Kind.FORM_TAG, resolved.sources().get(0).kind());
+        assertEquals(
+                ItemCompositionSource.Kind.FORM_TAG, resolved.sources().get(0).kind());
     }
 
     @Test
     void explicitOverrideIsValidatedAndTracked() {
         var json = candidate("json", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4, false);
         var correction = new ItemCompositionCandidate(
-                "test:item",
-                composition("correction", ItemCompositionSource.Kind.CORRECTION, Materials.Copper, 4, true),
-                "json");
+                composition("correction", ItemCompositionSource.Kind.CORRECTION, Materials.Copper, 4, true), "json");
         var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(json, correction)));
         assertEquals(Materials.Copper.resolve(), resolved.get("test:item").material());
         assertThrows(
@@ -66,25 +69,51 @@ class ItemCompositionResolverTest {
                 () -> ItemCompositionResolver.resolve(Map.of("test:item", List.of(correction))));
 
         var cycleA = new ItemCompositionCandidate(
-                "test:item",
-                composition("a", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true),
-                "b");
+                composition("a", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true), "b");
         var cycleB = new ItemCompositionCandidate(
-                "test:item",
-                composition("b", ItemCompositionSource.Kind.EXPLICIT, Materials.Copper, 4, true),
-                "a");
+                composition("b", ItemCompositionSource.Kind.EXPLICIT, Materials.Copper, 4, true), "a");
         assertThrows(
                 IllegalStateException.class,
                 () -> ItemCompositionResolver.resolve(Map.of("test:item", List.of(cycleA, cycleB))));
     }
 
     @Test
+    void replacementTargetMayBeRegisteredAfterTheOverride() {
+        var correction = new ItemCompositionCandidate(
+                composition("correction", ItemCompositionSource.Kind.CORRECTION, Materials.Copper, 4, true), "json");
+        var pending = ItemCompositionResolver.resolveLenient(Map.of("test:item", List.of(correction)));
+        assertEquals(Materials.Copper.resolve(), pending.get("test:item").material());
+
+        var json = candidate("json", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4, false);
+        var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(json, correction)));
+        assertEquals(Materials.Copper.resolve(), resolved.get("test:item").material());
+        assertEquals(
+                List.of("correction"),
+                resolved.get("test:item").sources().stream()
+                        .map(ItemCompositionSource::declarationId)
+                        .toList());
+    }
+
+    @Test
     void damagedScalingUsesExactFloorWithoutMultiplicationOverflow() {
         assertEquals(Long.MAX_VALUE / 3, ItemCompositionScaling.scale(Long.MAX_VALUE, 1, 3));
         assertEquals(2, ItemCompositionScaling.scale(5, 1, 2));
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> ItemCompositionScaling.scale(10, 2, 1));
+        assertThrows(IllegalArgumentException.class, () -> ItemCompositionScaling.scale(10, 2, 1));
+    }
+
+    @Test
+    void damagedScalingDropsPrimaryIdentityWhenOnlySecondaryMaterialRemains() {
+        var composition = new ItemComposition(
+                null,
+                List.of(MaterialComponent.of(Materials.Iron, 1), MaterialComponent.of(Materials.Copper, 100)),
+                Materials.Iron,
+                List.of(new ItemCompositionSource(ItemCompositionSource.Kind.EXPLICIT, "probe", "test", "", "")),
+                true);
+
+        var scaled = ItemCompositionScaling.scale(composition, 1, 100);
+
+        assertEquals(List.of(MaterialComponent.of(Materials.Copper, 1)), scaled.components());
+        assertEquals(Materials.Copper.resolve(), scaled.material());
     }
 
     private static ItemCompositionCandidate candidate(
@@ -93,8 +122,7 @@ class ItemCompositionResolverTest {
             gregtech.api.material.GTMaterial material,
             long amount,
             boolean bulkRecovery) {
-        return new ItemCompositionCandidate(
-                "test:item", composition(id, kind, material, amount, bulkRecovery), null);
+        return new ItemCompositionCandidate(composition(id, kind, material, amount, bulkRecovery), null);
     }
 
     private static ItemComposition composition(

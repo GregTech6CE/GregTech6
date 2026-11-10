@@ -110,6 +110,7 @@ public final class MachineRecipeBootstrap {
         // Comb and technology rows live inside GT6 item classes, outside the loader tables.
         runStep("GTCombRecipes", gregtech.content.recipe.generated.GTCombRecipes::register);
         runStep("GTTechnologyRecipes", gregtech.content.recipe.generated.GTTechnologyRecipes::register);
+        gregtech.engine.material.ItemMaterialRegistry.validateExplicitSnapshot();
         gregtech.engine.recipe.RecipeDiagnostics.report();
         RecipeDump.afterRegistration();
     }

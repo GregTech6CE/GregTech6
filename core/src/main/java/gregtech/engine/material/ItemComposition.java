@@ -4,7 +4,6 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialComponent;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.content.data.MaterialPrefix;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,6 +60,8 @@ public record ItemComposition(
                 true);
     }
 
+    /** @deprecated Submit structured provenance through {@link ItemCompositionSource}. */
+    @Deprecated(forRemoval = false)
     public ItemComposition(
             MaterialPrefix prefix, List<MaterialComponent> components, String source, boolean bulkRecoveryAllowed) {
         this(
@@ -71,6 +72,8 @@ public record ItemComposition(
                 bulkRecoveryAllowed);
     }
 
+    /** @deprecated Submit structured provenance through {@link ItemCompositionSource}. */
+    @Deprecated(forRemoval = false)
     public ItemComposition(
             MaterialPrefix prefix,
             List<MaterialComponent> components,
@@ -97,11 +100,6 @@ public record ItemComposition(
                 .mapToLong(MaterialComponent::amount)
                 .findFirst()
                 .orElse(0);
-    }
-
-    /** Compatibility accessor for recovery producers migrating in plan 05. */
-    public boolean recoverable() {
-        return bulkRecoveryAllowed;
     }
 
     public String source() {

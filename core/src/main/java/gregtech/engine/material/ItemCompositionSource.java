@@ -4,8 +4,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 /** Structured provenance for one item-composition submission. */
-public record ItemCompositionSource(
-        Kind kind, String declarationId, String producer, String reference, String note) {
+public record ItemCompositionSource(Kind kind, String declarationId, String producer, String reference, String note) {
     public enum Kind {
         EXPLICIT(1),
         VANILLA_JSON(1),
@@ -40,10 +39,12 @@ public record ItemCompositionSource(
 
     public String description() {
         String value = declarationId + " [" + producer + "]";
+        if (!reference.isBlank() && !reference.equals(declarationId)) value += " @" + reference;
         return note.isBlank() ? value : value + ": " + note;
     }
 
     /** Preserves the legacy free-form source while recognizing the known derived producers. */
+    @Deprecated(forRemoval = false)
     public static ItemCompositionSource fromLegacy(String source) {
         String value = source == null || source.isBlank() ? "unspecified" : source;
         String lower = value.toLowerCase(Locale.ROOT);
@@ -51,9 +52,10 @@ public record ItemCompositionSource(
                 ? Kind.FORM_TAG
                 : lower.contains("cr.rev") || lower.contains("reversible crafting")
                         ? Kind.RECIPE_REVERSE
-                        : lower.contains("block composition") ? Kind.BLOCK_WEIGHT
-                        : value.equals("GT6 unification") ? Kind.UNIFICATION : Kind.EXPLICIT;
-        return new ItemCompositionSource(kind, value, "legacy item-data producer", "", value);
+                        : lower.contains("block composition")
+                                ? Kind.BLOCK_WEIGHT
+                                : value.equals("GT6 unification") ? Kind.UNIFICATION : Kind.EXPLICIT;
+        return new ItemCompositionSource(kind, value, "legacy item-data producer", value, "");
     }
 
     private static void requireText(String value, String name) {

@@ -41,20 +41,40 @@ public final class ItemMaterialRegistry {
             var parts = MaterialChemistry.prefixMaterialWeights(material, prefix).stream()
                     .map(c -> MaterialComponent.of(c.material(), c.amount()))
                     .toList();
-            String source = compositeHead ? "GT6 OP tool-head components" : "GT6 OP ammunition components";
-            if (!parts.isEmpty())
-                register(item, new ItemComposition(prefix, parts, material, source, true));
+            String producer = compositeHead ? "GT6 OP tool-head components" : "GT6 OP ammunition components";
+            if (!parts.isEmpty()) {
+                ItemCompositionSource source = new ItemCompositionSource(
+                        ItemCompositionSource.Kind.EXPLICIT,
+                        "gt6ce:item-form/" + implementationId(item) + "/" + prefix.getName(),
+                        producer,
+                        producer,
+                        "");
+                submit(item, new ItemComposition(prefix, parts, material, List.of(source), true), null);
+            }
             return;
         }
         register(item, prefix, material, prefix == null ? GTValues.U : prefix.getMaterialWeight());
     }
 
     public static void register(Item item, @Nullable MaterialPrefix prefix, GTMaterial material, long amount) {
-        if (item != null && material != null && material.isValid() && amount > 0)
-            register(item, new ItemComposition(prefix, material, amount));
+        if (item != null && material != null && material.isValid() && amount > 0) {
+            String prefixName = prefix == null ? "unprefixed" : prefix.getName();
+            ItemCompositionSource source = new ItemCompositionSource(
+                    ItemCompositionSource.Kind.EXPLICIT,
+                    "gt6ce:item-form/" + implementationId(item) + "/" + prefixName,
+                    "GT6 item form",
+                    "GT6 item form",
+                    "");
+            submit(
+                    item,
+                    new ItemComposition(
+                            prefix, List.of(MaterialComponent.of(material, amount)), material, List.of(source), true),
+                    null);
+        }
     }
 
     /** Compatibility entry point: the composition's structured source decides its candidate priority. */
+    @Deprecated(forRemoval = false)
     public static void register(Item item, ItemComposition data) {
         submit(item, data, null);
     }
@@ -71,22 +91,8 @@ public final class ItemMaterialRegistry {
             String declarationId,
             String producer,
             @Nullable String replacesSourceId) {
-        ItemCompositionSource source = new ItemCompositionSource(kind, declarationId, producer, "", "");
-        submit(
-                item,
-                new ItemComposition(
-                        data.prefix(),
-                        data.components(),
-                        data.primaryMaterial(),
-                        List.of(source),
-                        data.bulkRecoveryAllowed()),
-                replacesSourceId);
-    }
-
-    public static void registerCorrection(
-            Item item, ItemComposition data, String declarationId, @Nullable String replacesSourceId) {
         ItemCompositionSource source =
-                new ItemCompositionSource(ItemCompositionSource.Kind.CORRECTION, declarationId, "reviewed correction", "", "");
+                new ItemCompositionSource(kind, declarationId, producer, sourceReference(data), "");
         submit(
                 item,
                 new ItemComposition(
@@ -96,17 +102,6 @@ public final class ItemMaterialRegistry {
                         List.of(source),
                         data.bulkRecoveryAllowed()),
                 replacesSourceId);
-    }
-
-    public static Optional<String> explicitSourceId(Item item, ItemCompositionSource.Kind kind) {
-        synchronized (LOCK) {
-            var candidates = EXPLICIT_SUBMISSIONS.get(item);
-            if (candidates == null) return Optional.empty();
-            return candidates.stream()
-                    .filter(candidate -> candidate.composition().sources().get(0).kind() == kind)
-                    .map(ItemCompositionCandidate::sourceId)
-                    .findFirst();
-        }
     }
 
     /**
@@ -131,7 +126,7 @@ public final class ItemMaterialRegistry {
                         List.of(source),
                         composition.bulkRecoveryAllowed());
                 staged.computeIfAbsent(entry.getKey(), ignored -> new ArrayList<>())
-                        .add(new ItemCompositionCandidate(implementationId(entry.getKey()), tagged, null));
+                        .add(new ItemCompositionCandidate(tagged, null));
             }
         }
         synchronized (LOCK) {
@@ -173,6 +168,13 @@ public final class ItemMaterialRegistry {
         return COMPOSITION_REVISION.get();
     }
 
+    /** Validates deferred replacement targets after all built-in and recipe-side producers have submitted. */
+    public static void validateExplicitSnapshot() {
+        synchronized (LOCK) {
+            for (var item : EXPLICIT_SUBMISSIONS.keySet()) updateItemLocked(item, true);
+        }
+    }
+
     /** Explicit-layer result, retained for source diagnostics and migration compatibility. */
     public static Optional<ItemComposition> explicit(Item item) {
         synchronized (LOCK) {
@@ -201,17 +203,7 @@ public final class ItemMaterialRegistry {
         int maximum = stack.getMaxDamage();
         if (maximum <= 0) return Optional.of(data);
         int remaining = Math.max(0, Math.min(maximum, maximum - stack.getDamageValue()));
-        var scaled = data.components().stream()
-                .map(component -> MaterialComponent.of(
-                        component.material(), ItemCompositionScaling.scale(component.amount(), remaining, maximum)))
-                .filter(component -> component.amount() > 0)
-                .toList();
-        return Optional.of(new ItemComposition(
-                data.prefix(),
-                scaled,
-                scaled.isEmpty() ? MaterialSentinels.INVALID : data.primaryMaterial(),
-                data.sources(),
-                data.bulkRecoveryAllowed()));
+        return Optional.of(ItemCompositionScaling.scale(data, remaining, maximum));
     }
 
     /**
@@ -285,7 +277,7 @@ public final class ItemMaterialRegistry {
         if (item == null || data == null) return;
         if (data.sources().size() != 1)
             throw new IllegalArgumentException("Submitted item composition must have exactly one source: " + data.source());
-        var candidate = new ItemCompositionCandidate(implementationId(item), data, replacesSourceId);
+        var candidate = new ItemCompositionCandidate(data, replacesSourceId);
         synchronized (LOCK) {
             var candidates = EXPLICIT_SUBMISSIONS.computeIfAbsent(item, ignored -> new ArrayList<>());
             var previous = candidates.stream()
@@ -299,18 +291,21 @@ public final class ItemMaterialRegistry {
             }
             var trial = new ArrayList<>(candidates);
             trial.add(candidate);
-            ItemCompositionResolver.resolve(Map.of(item, trial));
+            ItemCompositionResolver.resolveLenient(Map.of(item, trial));
             candidates.add(candidate);
-            updateItemLocked(item);
+            updateItemLocked(item, false);
         }
     }
 
-    private static void updateItemLocked(Item item) {
+    private static void updateItemLocked(Item item, boolean requireReplacementTargets) {
         var explicitCandidates = EXPLICIT_SUBMISSIONS.get(item);
         if (explicitCandidates == null || explicitCandidates.isEmpty()) {
             EXPLICIT.remove(item);
         } else {
-            var explicit = ItemCompositionResolver.resolve(Map.of(item, explicitCandidates)).get(item);
+            var explicit = (requireReplacementTargets
+                            ? ItemCompositionResolver.resolve(Map.of(item, explicitCandidates))
+                            : ItemCompositionResolver.resolveLenient(Map.of(item, explicitCandidates)))
+                    .get(item);
             if (explicit == null) EXPLICIT.remove(item);
             else EXPLICIT.put(item, explicit);
         }
@@ -319,7 +314,10 @@ public final class ItemMaterialRegistry {
         if (explicit != null) combined.put(item, explicit);
         var tags = TAG_SUBMISSIONS.get(item);
         if (tags != null) combined.computeIfAbsent(item, ignored -> new ArrayList<>()).addAll(tags);
-        var replacement = ItemCompositionResolver.resolve(combined).get(item);
+        var replacement = (requireReplacementTargets
+                        ? ItemCompositionResolver.resolve(combined)
+                        : ItemCompositionResolver.resolveLenient(combined))
+                .get(item);
         var previous = EFFECTIVE.get(item);
         boolean changed = !Objects.equals(previous, replacement);
         if (replacement == null) EFFECTIVE.remove(item);
@@ -347,7 +345,13 @@ public final class ItemMaterialRegistry {
 
     private static String sourceSuffix(ItemComposition composition) {
         return Integer.toHexString(Objects.hash(
-                composition.prefix(), composition.components(), composition.bulkRecoveryAllowed()));
+                composition.prefix(), composition.components(), composition.sources(), composition.bulkRecoveryAllowed()));
+    }
+
+    private static String sourceReference(ItemComposition composition) {
+        if (composition.sources().isEmpty()) return "";
+        var source = composition.sources().get(0);
+        return source.reference().isBlank() ? source.description() : source.reference();
     }
 
     private static boolean hasStoredBlockEntityData(ItemStack stack, net.minecraft.nbt.CompoundTag tag) {

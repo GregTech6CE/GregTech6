@@ -4,6 +4,7 @@ import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
+import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.ItemMaterialRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -88,10 +89,8 @@ public final class VanillaMaterialCorrections {
             components.add(MaterialComponent.of(GTMaterialRegistry.get("Redstone"), U / 4));
         }
         if (waxed) components.add(MaterialComponent.of(GTMaterialRegistry.get("WaxBee"), U));
-        String jsonSource = ItemMaterialRegistry.explicitSourceId(
-                        item, gregtech.engine.material.ItemCompositionSource.Kind.VANILLA_JSON)
-                .orElse(null);
-        ItemMaterialRegistry.registerCorrection(
+        String jsonSource = VanillaCompositionLoader.declarationId(item).orElse(null);
+        ItemMaterialRegistry.register(
                 item,
                 new ItemComposition(
                         null,
@@ -99,7 +98,9 @@ public final class VanillaMaterialCorrections {
                         components.get(0).material(),
                         "GT6CE modern vanilla materials",
                         true),
+                ItemCompositionSource.Kind.CORRECTION,
                 "gt6ce:vanilla-corrections/" + path,
+                "reviewed correction",
                 jsonSource);
     }
 }

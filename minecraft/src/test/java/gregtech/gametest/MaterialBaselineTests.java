@@ -18,6 +18,7 @@ import gregtech.content.recipe.MaterialRecoveryRules;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
 import gregtech.engine.machine.crucible.CrucibleItemInput;
+import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.MaterialEquivalence;
@@ -29,6 +30,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -280,6 +283,42 @@ public final class MaterialBaselineTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void tagCandidateReplacementIsAtomicAndRemovalIsObservable(GameTestHelper helper) {
+        var item = Items.DRAGON_EGG;
+        helper.assertTrue(ItemMaterialRegistry.explicit(item).isEmpty(), "tag probe item has no explicit composition");
+        var first = taggedComposition(Materials.Copper, 4);
+        try {
+            ItemMaterialRegistry.publishTagCandidates(Map.of(item, List.of(first)));
+            var effective = ItemMaterialRegistry.base(item).orElseThrow();
+            long revision = ItemMaterialRegistry.compositionRevision();
+
+            IllegalStateException conflict = null;
+            try {
+                ItemMaterialRegistry.publishTagCandidates(Map.of(
+                        item,
+                        List.of(taggedComposition(Materials.Iron, 1), taggedComposition(Materials.Gold, 2))));
+            } catch (IllegalStateException failure) {
+                conflict = failure;
+            }
+            helper.assertTrue(conflict != null, "conflicting tag candidates must fail");
+            helper.assertTrue(
+                    effective.equals(ItemMaterialRegistry.base(item).orElseThrow()),
+                    "failed tag publication preserves the previous effective composition");
+            helper.assertTrue(
+                    ItemMaterialRegistry.compositionRevision() == revision,
+                    "failed tag publication does not advance the composition revision");
+
+            ItemMaterialRegistry.publishTagCandidates(Map.of(item, List.of()));
+            helper.assertTrue(
+                    ItemMaterialRegistry.base(item).isEmpty(),
+                    "removed tag candidates drop the effective composition");
+        } finally {
+            ItemMaterialRegistry.publishTagCandidates(Map.of(item, List.of()));
+        }
+        helper.succeed();
+    }
+
     // GameTest runs batches sequentially, so the asynchronous reload cannot overlap other tests.
     @GameTest(template = "test_empty", batch = "material_baseline_reload", timeoutTicks = 6000)
     public static void realResourceReloadDoesNotAccumulateRules(GameTestHelper helper) {
@@ -287,7 +326,7 @@ public final class MaterialBaselineTests {
         var packs = List.copyOf(server.getPackRepository().getSelectedIds());
         int applications = MachineRecipeOverlay.applications();
         long compositionRevision = ItemMaterialRegistry.compositionRevision();
-        int composedItems = ItemMaterialRegistry.entries().size();
+        var compositions = compositionSnapshot();
         capture(helper, "startup");
         var before = ownedCounts();
         var sample = describe(new ItemStack(Items.IRON_BLOCK));
@@ -297,19 +336,19 @@ public final class MaterialBaselineTests {
             RELOAD_FAILURE.set(failure);
             RELOAD_COMPLETE.set(true);
         });
-        awaitReload(helper, applications, compositionRevision, composedItems, before, sample);
+        awaitReload(helper, applications, compositionRevision, compositions, before, sample);
     }
 
     private static void awaitReload(
             GameTestHelper helper,
             int applications,
             long compositionRevision,
-            int composedItems,
+            Map<String, ItemComposition> compositions,
             List<Integer> before,
             String sample) {
         if (!RELOAD_COMPLETE.get()) {
             helper.runAfterDelay(
-                    1, () -> awaitReload(helper, applications, compositionRevision, composedItems, before, sample));
+                    1, () -> awaitReload(helper, applications, compositionRevision, compositions, before, sample));
             return;
         }
         var failure = RELOAD_FAILURE.get();
@@ -329,8 +368,8 @@ public final class MaterialBaselineTests {
                 ItemMaterialRegistry.compositionRevision() >= compositionRevision,
                 "reload invalidates composition-dependent caches");
         helper.assertTrue(
-                composedItems == ItemMaterialRegistry.entries().size(),
-                "repeat reload does not accumulate effective compositions");
+                compositions.equals(compositionSnapshot()),
+                "repeat reload preserves effective composition membership and values");
         capture(helper, "reload");
         var reloadedRecipe = find(MachineRecipeMaps.Shredder, List.of(new ItemStack(Items.IRON_INGOT)), List.of());
         helper.assertTrue(
@@ -349,6 +388,23 @@ public final class MaterialBaselineTests {
     }
 
     private static String id(ItemStack stack) { return BuiltInRegistries.ITEM.getKey(stack.getItem()).toString(); }
+
+    private static ItemComposition taggedComposition(
+            gregtech.api.material.GTMaterial material, long amount) {
+        return new ItemComposition(
+                null,
+                List.of(gregtech.api.material.MaterialComponent.of(material, amount)),
+                material,
+                List.of(new ItemCompositionSource(ItemCompositionSource.Kind.FORM_TAG, "probe", "test", "", "")),
+                true);
+    }
+
+    private static Map<String, ItemComposition> compositionSnapshot() {
+        var entries = new TreeMap<String, ItemComposition>();
+        for (var entry : ItemMaterialRegistry.entries().entrySet())
+            entries.put(id(new ItemStack(entry.getKey())), entry.getValue());
+        return Map.copyOf(entries);
+    }
 
     private static String describe(ItemStack stack) {
         var data = ItemMaterialRegistry.get(stack).orElse(null);

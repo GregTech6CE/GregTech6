@@ -48,12 +48,16 @@ public final class ExternalOreProcessing {
 
     /** Remove only this adapter's exact rows; other mods' processing rows remain registered. */
     public static synchronized void clear() {
+        clearOwnedState();
+        ItemMaterialRegistry.clearTagCandidates();
+    }
+
+    private static void clearOwnedState() {
         // Restore displaced source rows before removing them; otherwise an old mirror can resurrect this reload's
         // predecessors.
         gregtech.content.recipe.OvenRecipeBridge.clearMirrors();
         OWNED.forEach(RecipeMap::removeAll);
         OWNED.clear();
-        ItemMaterialRegistry.clearTagCandidates();
         publishedCompositions = 0;
         cooking = Map.of();
         taggedCompositions = 0;
@@ -61,7 +65,7 @@ public final class ExternalOreProcessing {
     }
 
     public static synchronized int rebuild() {
-        clear(); // Old tag compositions must not bias native identity when indexing this reload.
+        clearOwnedState();
         CraftingMaterialForms.rebuild(true);
         var forms = CraftingMaterialForms.nativeAliases();
         var materialData = new IdentityHashMap<Item, List<ItemComposition>>();

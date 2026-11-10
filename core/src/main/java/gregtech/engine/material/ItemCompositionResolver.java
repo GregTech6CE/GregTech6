@@ -11,10 +11,21 @@ public final class ItemCompositionResolver {
 
     public static <K> Map<K, ItemComposition> resolve(
             Map<K, ? extends Collection<ItemCompositionCandidate>> submissions) {
+        return resolve(submissions, true);
+    }
+
+    /** Registration may precede an explicitly named override target; the final snapshot validates it. */
+    static <K> Map<K, ItemComposition> resolveLenient(
+            Map<K, ? extends Collection<ItemCompositionCandidate>> submissions) {
+        return resolve(submissions, false);
+    }
+
+    private static <K> Map<K, ItemComposition> resolve(
+            Map<K, ? extends Collection<ItemCompositionCandidate>> submissions, boolean requireReplacementTargets) {
         var result = new LinkedHashMap<K, ItemComposition>();
         for (var entry : submissions.entrySet()) {
             if (entry.getValue() == null || entry.getValue().isEmpty()) continue;
-            ItemComposition selected = resolveItem(entry.getKey(), entry.getValue());
+            ItemComposition selected = resolveItem(entry.getKey(), entry.getValue(), requireReplacementTargets);
             if (selected != null) result.put(entry.getKey(), selected);
         }
         var ordered = new LinkedHashMap<K, ItemComposition>();
@@ -24,7 +35,8 @@ public final class ItemCompositionResolver {
         return Collections.unmodifiableMap(ordered);
     }
 
-    private static ItemComposition resolveItem(Object item, Collection<ItemCompositionCandidate> submitted) {
+    private static ItemComposition resolveItem(
+            Object item, Collection<ItemCompositionCandidate> submitted, boolean requireReplacementTargets) {
         var candidates = new ArrayList<>(submitted);
         candidates.sort(Comparator.comparing(ItemCompositionCandidate::sourceId)
                 .thenComparing(candidate -> candidate.composition().source()));
@@ -35,19 +47,21 @@ public final class ItemCompositionResolver {
             if (previous != null) {
                 throw new IllegalStateException("Duplicate item composition declaration "
                         + candidate.sourceId() + " for " + item + " from "
-                        + previous.composition().source() + " and " + candidate.composition().source());
+                        + previous.composition().source() + " and "
+                        + candidate.composition().source());
             }
             groups.computeIfAbsent(candidate.composition().sources().get(0).priority(), ignored -> new ArrayList<>())
                     .add(candidate);
         }
         for (var level : groups.values()) {
-            var resolved = resolveLevel(item, level);
+            var resolved = resolveLevel(item, level, requireReplacementTargets);
             if (resolved != null) return resolved;
         }
         return null;
     }
 
-    private static ItemComposition resolveLevel(Object item, List<ItemCompositionCandidate> level) {
+    private static ItemComposition resolveLevel(
+            Object item, List<ItemCompositionCandidate> level, boolean requireReplacementTargets) {
         var bySource = new HashMap<String, ItemCompositionCandidate>();
         for (var candidate : level) bySource.put(candidate.sourceId(), candidate);
         var replaced = new HashSet<String>();
@@ -58,17 +72,20 @@ public final class ItemCompositionResolver {
             if (source.kind().priority() != 1)
                 throw new IllegalStateException("Only an explicit-layer declaration may replace another: "
                         + candidate.sourceId() + " for " + item);
-            if (!bySource.containsKey(target))
-                throw new IllegalStateException("Item composition override " + candidate.sourceId()
-                        + " for " + item + " names missing declaration " + target);
+            if (!bySource.containsKey(target)) {
+                if (requireReplacementTargets) {
+                    throw new IllegalStateException("Item composition override " + candidate.sourceId() + " for " + item
+                            + " names missing declaration " + target);
+                }
+                continue;
+            }
             replaced.add(target);
         }
         validateReplacementCycles(item, level);
         var winners = level.stream()
                 .filter(candidate -> !replaced.contains(candidate.sourceId()))
                 .toList();
-        if (winners.isEmpty())
-            throw new IllegalStateException("Item composition overrides form a cycle for " + item);
+        if (winners.isEmpty()) throw new IllegalStateException("Item composition overrides form a cycle for " + item);
         var first = winners.get(0).composition();
         for (int index = 1; index < winners.size(); index++) {
             var candidate = winners.get(index).composition();
@@ -90,18 +107,15 @@ public final class ItemCompositionResolver {
     private static void validateReplacementCycles(Object item, List<ItemCompositionCandidate> level) {
         var replacements = new HashMap<String, String>();
         for (var candidate : level)
-            if (candidate.replacesSourceId() != null) replacements.put(candidate.sourceId(), candidate.replacesSourceId());
+            if (candidate.replacesSourceId() != null)
+                replacements.put(candidate.sourceId(), candidate.replacesSourceId());
         var visiting = new HashSet<String>();
         var visited = new HashSet<String>();
         for (String source : replacements.keySet()) visit(item, source, replacements, visiting, visited);
     }
 
     private static void visit(
-            Object item,
-            String source,
-            Map<String, String> replacements,
-            Set<String> visiting,
-            Set<String> visited) {
+            Object item, String source, Map<String, String> replacements, Set<String> visiting, Set<String> visited) {
         if (visited.contains(source)) return;
         if (!visiting.add(source))
             throw new IllegalStateException("Item composition override cycle for " + item + " through " + source);

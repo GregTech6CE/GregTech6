@@ -3,6 +3,7 @@ package gregtech.content.recipe;
 import gregtech.api.material.*;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.VanillaCompositionLoader;
 import gregtech.content.plant.WoodSlabCatalog;
 import gregtech.engine.material.*;
 import net.minecraft.world.item.ItemStack;
@@ -43,8 +44,7 @@ public final class VanillaWoodProcessingRecipes extends OriginalRecipeBatch {
 
     private static void registerWoodComposition(String path, ItemComposition composition) {
         var item = mc(path, 1).getItem();
-        String jsonSource = ItemMaterialRegistry.explicitSourceId(item, ItemCompositionSource.Kind.VANILLA_JSON)
-                .orElse(null);
+        String jsonSource = VanillaCompositionLoader.declarationId(item).orElse(null);
         ItemMaterialRegistry.register(
                 item,
                 composition,
