@@ -1,6 +1,6 @@
 # Stonecutter 分类索引
 
-本目录按作用对象划分；每个领域内部再按差异类型拆子文档。通用概念见[设计](design.md)与[用法](usage.md)。`HolderLookup.Provider` 的通用概念见设计文档的“Provider 基础”；各领域的 provider 签名见对应领域。
+本目录按作用对象划分；每个领域内部再按差异类型拆子文档。通用概念见[设计](design.md)与[用法](usage.md)。分类 README 与子样例的格式见[模板](templates.md)。`HolderLookup.Provider` 的通用概念见设计文档的“Provider 基础”；各领域的 provider 签名见对应领域。
 
 | 领域 | 主要差异 |
 | --- | --- |
