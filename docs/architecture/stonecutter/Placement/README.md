@@ -1,6 +1,6 @@
 # Placement
 
-实现落点偏差：同一内容家族在两个版本中实现落点不同：注册归属、holder 类型、节点目录、复合目录、菜单落点、共享 BE 段、引用目录、混合目录、目录字段、物品类依赖、节点类拆分、创造栏装配、包装类、静态谓词、空/同义/拆分重复。差异来自我们自己的迁移与组织方式，不是平台 API 运行时差异，也不是 CE 与原版 GT6 的行为差异。
+实现落点偏差：同一内容家族在两个版本中实现落点不同：注册归属、holder 类型、节点目录、复合目录、菜单落点、共享 BE 段、引用目录、混合目录、目录字段、物品类依赖、节点类拆分、创造栏装配、包装类、静态谓词、空/同义/同义常量/拆分重复。差异来自我们自己的迁移与组织方式，不是平台 API 运行时差异，也不是 CE 与原版 GT6 的行为差异。
 
 分类 README 与子样例格式见[模板](../templates.md)。
 
@@ -11,7 +11,7 @@
 | registration-ownership | 注册归属、holder 类型、节点目录、复合目录、菜单落点、共享 BE 段、引用目录、混合目录、目录字段 | [registration-catalogs.md](registration-catalogs.md)、[holder-supplier.md](holder-supplier.md)、[node-catalog-migration.md](node-catalog-migration.md)、[catalog-split.md](catalog-split.md)、[menu-catalogs.md](menu-catalogs.md)、[shared-be-registrations.md](shared-be-registrations.md)、[reference-catalogs.md](reference-catalogs.md)、[mixed-catalog-split.md](mixed-catalog-split.md)、[catalog-field-over-lookup.md](catalog-field-over-lookup.md) | registerAll, Supplier, GTMenuTypes, shared BE, reference, mixed catalog, lookup |
 | class-ownership | 类归属、物品类依赖、节点类拆分、节点 BE 类合并、节点专属迁移类、包装类、静态谓词 | [item-class-dependency.md](item-class-dependency.md)、[node-class-split.md](node-class-split.md)、[node-be-class-merge.md](node-be-class-merge.md)、[node-only-migration.md](node-only-migration.md)、[wrapper-classes.md](wrapper-classes.md)、[static-predicates.md](static-predicates.md) | GTMachineBlockItem, PoweredToolItem, SmeltingCrucibleBlockEntity, OreBlockEntity, NeoToolBindings, GTToolType |
 | content-assembly | 创造栏等内容装配 | [creative-tab-contents.md](creative-tab-contents.md) | OriginCreativeContents |
-| branch-noise | 空块、同义、拆分重复 | [identical.md](identical.md)、[empty-import.md](empty-import.md)、[split-duplicate.md](split-duplicate.md) | identical, empty, split duplicate |
+| branch-noise | 空块、同义、同义常量、拆分重复 | [identical.md](identical.md)、[identical-constants.md](identical-constants.md)、[empty-import.md](empty-import.md)、[split-duplicate.md](split-duplicate.md) | identical, constant, empty, split duplicate |
 
 ## 与方针的对应
 
