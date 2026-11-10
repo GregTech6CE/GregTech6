@@ -4,21 +4,16 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
+import gregtech.content.worldgen.OreHarvest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
-//? if >=1.21.1 {
-//?} else {
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-//?}
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 import java.util.List;
 
@@ -49,19 +44,9 @@ public final class VanillaOreBlock extends IconSetBlock {
     /** GT6: one raw ore, or 1..Fortune+1 raw ores; Silk Touch keeps the 2U block. */
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);
-        if (tool == null) tool = ItemStack.EMPTY;
-//? if >=1.21.1 {
-        /*if (gregtech.content.worldgen.OreHarvest.from(builder).silkTouch())
-*///?} else {
-        if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0)
-//?}
-            return List.of(new ItemStack(this));
-//? if >=1.21.1 {
-        /*int fortune = Math.max(0, gregtech.content.worldgen.OreHarvest.from(builder).fortune());
-*///?} else {
-        int fortune = Math.max(0, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, tool));
-//?}
+        OreHarvest harvest = OreHarvest.from(builder);
+        if (harvest.silkTouch()) return List.of(new ItemStack(this));
+        int fortune = Math.max(0, harvest.fortune());
         int amount = 1 + builder.getLevel().random.nextInt(fortune + 1);
         ItemStack raw = GTItems.getStack(MaterialPrefix.oreRaw, material(), amount);
         return raw.isEmpty() ? List.of() : List.of(raw);
@@ -73,7 +58,7 @@ public final class VanillaOreBlock extends IconSetBlock {
                           net.minecraft.world.level.block.entity.BlockEntity blockEntity,
                           net.minecraft.world.entity.Entity breaker, ItemStack tool) {
         RandomSource random = level.getRandom();
-        int silkTouchLevel = gregtech.content.worldgen.OreHarvest.from(level, tool).silkTouch() ? 1 : 0;
+        int silkTouchLevel = OreHarvest.from(level, tool).silkTouch() ? 1 : 0;
 *///?} else {
     public int getExpDrop(BlockState state, LevelReader level, RandomSource random, BlockPos pos,
                           int fortuneLevel, int silkTouchLevel) {

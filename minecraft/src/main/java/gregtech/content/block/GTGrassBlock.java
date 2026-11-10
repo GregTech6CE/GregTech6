@@ -1,16 +1,14 @@
 package gregtech.content.block;
 
+import gregtech.content.worldgen.OreHarvest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 
 //? if >=1.21.1 {
@@ -29,13 +27,7 @@ public final class GTGrassBlock extends IconSetBlock {
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);
-//? if >=1.21.1 {
-        /*if (tool != null && gregtech.content.worldgen.OreHarvest.from(builder).silkTouch())
-*///?} else {
-        if (tool != null && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0)
-//?}
-            return List.of(new ItemStack(this));
+        if (OreHarvest.from(builder).silkTouch()) return List.of(new ItemStack(this));
         return List.of(new ItemStack(Blocks.DIRT));
     }
 
