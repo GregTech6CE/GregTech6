@@ -1,14 +1,16 @@
-# 单侧 import
+# 单侧引用与 import
 
 ## 子原因
 
-整段 import 被放进一个版本分支，另一侧为空。是否保留不取决于“哪个版本用到”，而取决于被导入的类在哪里存在，以及共享代码是否应该依赖它：
+单侧 import 通常只是症状：真正的原因是单侧代码引用了类 A，而另一侧走了自己的实现。处理顺序：
 
-- 类在两侧都存在（共享源码、两侧都有的原版类或公共库）：import 放到分支外，删除分支。未被另一节点使用的 import 不影响编译，以两个节点都编译通过为准。
-- 类只在单节点存在：
-  - 共享关注点（命名空间、logger、`ResourceLocation` 构造）已有共享常量或门面：改调用点，删除节点 import。
-  - 真正的平台 API（Forge/NeoForge 注解、注册表、网络类）：保留分支，按平台 API 例外处理。
-  - import 未被使用：直接删除。
+1. 用 `rg` 找到 A 在分支内的使用点。
+2. 找到另一侧同位置、同职责的调用链。
+3. 如果另一侧是手写等价实现，而 A 是共享模块：先把另一侧改为调用 A，再删除行为分支和 import 分支。
+4. 如果两侧都已经调用 A（import 被拆到两个分支）：把 import 提到分支外。
+5. 如果另一侧有意使用不同 API（平台/parity）：保留单侧 import 和分支，不要 hoist。
+
+反例：只删除 import 侧的 `//?`、把 A 提到两边，却不改另一侧的手写实现。这样另一侧仍然不使用 A，却多背了一个依赖；阅读时也看不出 A 实际被哪一侧使用。
 
 ## 例子
 
@@ -17,36 +19,38 @@
 ```java
 //? if >=1.21.1 {
 //?} else {
-import gregtech.GregTech;
+import gregtech.engine.material.MaterialPresentation;
 //?}
-...
+
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
+        /*return Component.translatable(getDescriptionId(), Component.translatable(material.getTranslationKey(), material.getDisplayNameFallback()));
 *///?} else {
-@Mod.EventBusSubscriber(modid = GregTech.MODID)
+        return Component.translatable(getDescriptionId(), MaterialPresentation.name(material));
 //?}
 ```
 
 ### 修复后
 
 ```java
-import gregtech.engine.mod.GregTechIdentity;
-...
-//? if >=1.21.1 {
-/*@EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
-*///?} else {
-@Mod.EventBusSubscriber(modid = GregTechIdentity.MOD_ID)
-//?}
+import gregtech.engine.material.MaterialPresentation;
+
+return Component.translatable(getDescriptionId(), MaterialPresentation.name(material));
 ```
 
 ### 为什么这么修复
 
-`gregtech.GregTech` 是 1.20.1 Forge 的 `@Mod` 入口类，只存在于 `minecraft/versions/1.20.1-forge/src/main/java/gregtech/GregTech.java`；1.21.1 的入口是 `gregtech.platform.neoforge.GregTechNeoForge`。共享代码依赖它，会把 1.20.1 的落点固化到共享源码里。`MODID` 在共享 `core` 的 `GregTechIdentity.MOD_ID` 中有等值常量，改调用点后 import 分支消失。剩余的 `@Mod.EventBusSubscriber` ↔ `@EventBusSubscriber` 是平台 API 差异，按例外保留。
+`MaterialPresentation` 是共享源码集里的类，两个节点都能用。1.21.1 侧原本自己拼 `Component.translatable(material.getTranslationKey(), material.getDisplayNameFallback())`，与 `MaterialPresentation.name(material)` 职责相同。先把 1.21.1 的调用改为 `MaterialPresentation.name`，行为分支和 import 分支一起消失。
+
+只 hoist import 会让 1.21.1 继续走自己的实现：依赖被带到两边，调用链仍然分叉。判断标准不是“类在两侧都存在”，而是“两侧是否都调用 A”。
+
+统一调用前核对语义：`MaterialPresentation.name` 使用 `translatableWithFallback(key, fallback)`，1.21.1 手写路径使用 `translatable(key, fallback)`。材料翻译键缺失时两者显示不同；现有 GT 材料键都存在。若调用点的键可能缺失，先决定以哪一侧的 fallback 行为为准，再统一。
+
+`gregtech.GregTech` 是另一种同型问题：它是 1.20.1 的 `@Mod` 入口类，共享代码只在 1.20.1 分支使用 `MODID`/`LOGGER`/`id()`。正确做法是先把调用改为 `GregTechIdentity`/`Mc`，再删除 import；不是把节点入口类 hoist 到两边。
 
 ### 其他可能的修复方式
 
-- 保留 import 分支。共享代码仍依赖 1.20.1 入口类，后续调用点会继续复制这个依赖。
-- 把整个类移到节点源码。只有该类确实只在单节点运行时才成立；共享的 loot 注入逻辑移到节点会变成两套实现。
-- 用 `Mc.logger()` / `Mc.gregtechId()` 替代 `GregTech.LOGGER` / `GregTech.id()`。同一原则：共享门面吸收节点实现，调用点不再 import 节点入口类。
+- 只 hoist import，不改另一侧调用。也就是反例：依赖面扩大，调用链仍分叉。
+- 保留单侧 import 和分支。适用于另一侧确实要使用不同 API（平台/parity）的情况。
+- 把整个类移到节点源码。只有该类确实只在单节点运行时才成立。
 
 相关链接：[issue #358](https://github.com/GregTech6CE/GregTech6/issues/358)
