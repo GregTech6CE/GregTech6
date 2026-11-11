@@ -41,10 +41,6 @@ import javax.annotation.Nullable;
 
 /** Mold basin (GT6 {@code MultiTileEntityBasin}) — open-top basin producing solid cast blocks. */
 public class MoldBasinBlock extends Block implements EntityBlock, GTMachineBlock {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     private static final VoxelShape INTERIOR = Shapes.box(
             1 / 16.0D, 1 / 16.0D, 1 / 16.0D,
             15 / 16.0D, 1.0D, 15 / 16.0D);

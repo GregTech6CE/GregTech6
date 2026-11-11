@@ -36,10 +36,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 /** GT6-style tinted log block with fireproof variant support. */
 public class WoodLogBlock extends RotatedPillarBlock {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<WoodLogBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
     private final WoodSpecies species;
 

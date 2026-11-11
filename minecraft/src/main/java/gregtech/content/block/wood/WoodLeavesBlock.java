@@ -25,10 +25,6 @@ import net.minecraft.world.level.block.state.BlockState;
  * ({@link #getDrops}: saplings and the occasional stick).
  */
 public class WoodLeavesBlock extends LeavesBlock {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<WoodLeavesBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     private final WoodSpecies species;
 
     public WoodLeavesBlock(WoodSpecies species, Properties properties) {

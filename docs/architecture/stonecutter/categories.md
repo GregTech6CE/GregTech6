@@ -1,6 +1,6 @@
 # Stonecutter 分类总览
 
-本页是 Stonecutter 分类总览，按作用对象划分 11 个分类，设计、用法与模板见[设计](design.md)、[用法](usage.md)、[模板](templates.md)。
+本页是 Stonecutter 分类总览，按作用对象划分 12 个分类，设计、用法与模板见[设计](design.md)、[用法](usage.md)、[模板](templates.md)。
 
 ## 文件清单
 
@@ -24,6 +24,7 @@
 | ClientModel | `ModelResourceLocation`、baked model、客户端事件 |
 | Facade | logger、事件总线 |
 | Placement | 注册归属、holder 类型、节点目录、菜单落点、物品类依赖、节点类拆分、创造栏装配、包装类、静态谓词、分支噪声 |
+| BlockCodec（守卫） | 方块类型 codec 的来源、当前作用与 1.21-only stub 规则 |
 | Parity（守卫） | 行为差异见 decisions/parity；本目录只做折叠前检查 |
 
 ## BlockEntity
@@ -105,6 +106,14 @@
 关键词：registerAll, ContentRegistrar, Supplier, GTManualStations, GTMenuTypes, OriginCreativeContents, GTMachineBlockItem, PoweredToolItem, SmeltingCrucibleBlockEntity, OreBlockEntity, NeoToolBindings, GTToolType, shared BE, reference catalog, mixed catalog, registry lookup, node BE merge, legacy save, identical, identical constant, same, empty, one-sided, one-sided reference, call chain, one-sided import, node entry, import, split duplicate, duplicate registration
 
 分类 README：[Placement/README.md](Placement/README.md)
+
+## BlockCodec
+
+摘要：方块类型 codec（`Block.codec()`、`MapCodec`、`BLOCK_TYPE`）仅 1.21 存在且无运行时消费端；守卫继承原版抽象基类被迫覆写 codec 时的 1.21-only stub 规则。
+
+关键词：Block.codec, MapCodec, MapCodec.unit, simpleCodec, BLOCK_TYPE, BlockTypes, BlockListReport, DirectionalBlock, HorizontalDirectionalBlock, FallingBlock, BushBlock, BaseRailBlock, BaseEntityBlock, EntityBlock, stub codec
+
+分类 README：[BlockCodec/README.md](BlockCodec/README.md)
 
 ## Parity
 

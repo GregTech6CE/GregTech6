@@ -94,5 +94,6 @@
 - 三层结构与归属见[设计](design.md)。
 - `//?` 写法与验证命令见[用法](usage.md)。
 - 具体分类差异见[分类总览](categories.md)。
+- 方块类型 codec 的来源、当前作用与 1.21-only stub 规则见[BlockCodec](BlockCodec/README.md)。
 - 落点偏差案例见[实现落点偏差](Placement/README.md)。
 - CE 与原版 GT6 的行为差异见[parity 目录](../../decisions/parity/README.md)。

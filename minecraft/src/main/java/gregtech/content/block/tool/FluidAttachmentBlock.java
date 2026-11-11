@@ -21,13 +21,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 /** Material-defined attachment; explicit source tool access precedes ordinary fluid capabilities. */
 public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block implements gregtech.engine.tool.ToolInteractionTarget {
-//? if >=1.21.1 {
-    /*@Override
-    public com.mojang.serialization.MapCodec<FluidAttachmentBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-*///?} else {
-//?}
     public static final net.minecraft.world.level.block.state.properties.DirectionProperty FACING =
             net.minecraft.world.level.block.state.properties.DirectionProperty.create("facing", d -> d != Direction.UP);
     private final java.util.EnumMap<Direction, net.minecraft.world.phys.shapes.VoxelShape> shapes = new java.util.EnumMap<>(Direction.class);

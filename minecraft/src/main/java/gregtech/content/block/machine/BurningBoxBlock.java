@@ -30,11 +30,6 @@ public class BurningBoxBlock extends GTFacingMachineBlock implements EntityBlock
     private static final VoxelShape COLLISION_SHAPE = Shapes.box(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D);
 
     private final BurningBoxFuelType fuelType;
-//? if >=1.21.1 {
-
-    /*@Override public com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.block.Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
 
     public BurningBoxBlock(BurningBoxFuelType fuelType, MachineSpec spec, Properties properties) {
         super(spec, properties);

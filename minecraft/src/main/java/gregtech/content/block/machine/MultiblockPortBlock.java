@@ -18,13 +18,6 @@ public final class MultiblockPortBlock extends Block implements EntityBlock {
         }
         super.stepOn(level, pos, state, entity);
     }
-//? if >=1.21.1 {
-    /*@Override
-    public com.mojang.serialization.MapCodec<MultiblockPortBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-*///?} else {
-//?}
     @Override
     public void appendHoverText(net.minecraft.world.item.ItemStack stack,
 //? if >=1.21.1 {

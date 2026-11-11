@@ -17,10 +17,6 @@ import net.minecraft.world.item.*;
 public final class ZpmModuleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     public static final IntegerProperty CHARGE=IntegerProperty.create("charge",0,15);
     private static final VoxelShape SHAPE=Shapes.or(Block.box(4,0,4,12,4,12),Block.box(5,4,5,11,12,11));
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     public ZpmModuleBlock(Properties properties){super(properties.noOcclusion().lightLevel(s->s.getValue(CHARGE)));registerDefaultState(defaultBlockState().setValue(CHARGE,0).setValue(GTWaterloggable.WATERLOGGED, false));}
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState>b){
         b.add(GTWaterloggable.WATERLOGGED);b.add(CHARGE);}

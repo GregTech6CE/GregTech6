@@ -41,10 +41,6 @@ public class PumpBlock extends Block implements EntityBlock, gregtech.engine.too
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-//? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     public PumpSpec spec() { return spec; }
 
     @Override

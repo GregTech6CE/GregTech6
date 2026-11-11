@@ -42,10 +42,6 @@ import javax.annotation.Nullable;
 
 /** Mold (GT6 {@code MultiTileEntityMold}) — chisel-selectable casting mold plate. */
 public class MoldBlock extends Block implements EntityBlock, GTMachineBlock, SimpleWaterloggedBlock {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     private static final VoxelShape OUTLINE = Shapes.box(0.0D, 0.0D, 0.0D, 1.0D, 3 / 16.0D, 1.0D);
     private static final VoxelShape COLLISION = Shapes.box(
             2 / 16.0D, 0.0D, 2 / 16.0D,

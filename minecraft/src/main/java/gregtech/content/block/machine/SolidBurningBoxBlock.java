@@ -28,11 +28,6 @@ public class SolidBurningBoxBlock extends GTFacingMachineBlock implements Entity
     /** GT6 collision height {@code box(0,0,0,1,0.875,1)} — enables {@code entityInside} contact damage. */
     private static final VoxelShape COLLISION_SHAPE = Shapes.box(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D);
 
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.block.Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-
-*///?} else {
-//?}
     public SolidBurningBoxBlock(MachineSpec spec, Properties properties) {
         super(spec, properties);
     }

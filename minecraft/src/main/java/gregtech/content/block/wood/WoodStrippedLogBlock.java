@@ -12,10 +12,6 @@ import net.minecraft.world.level.block.state.BlockState;
  * item family. The old {@code gt6ce:beam_*} ids are aliased to these blocks.</p>
  */
 public class WoodStrippedLogBlock extends RotatedPillarBlock {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<WoodStrippedLogBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     public WoodStrippedLogBlock(Properties properties) {
         super(properties);
     }

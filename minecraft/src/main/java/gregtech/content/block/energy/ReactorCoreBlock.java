@@ -26,10 +26,6 @@ import java.util.List;
 
 /** GT6 single-rod reactor core with shared rod/container interaction. */
 public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
 
     public ReactorCoreBlock(Properties properties) {
         super(properties.noOcclusion());

@@ -24,10 +24,6 @@ import java.util.List;
 
 /** Placeable vessel; the same item fluid data survives placement and removal. */
 public final class PortableContainerBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<PortableContainerBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     private final PortableFluidContainerSpec spec;
     private final VoxelShape shape;
     public PortableContainerBlock(PortableFluidContainerSpec spec, Properties properties) {
