@@ -32,8 +32,7 @@ public final class MaterialDecompositionPlanner {
         MISSING_OUTPUT
     }
 
-    public record FluidInput(
-            MaterialDecompositionRule.Phase phase, String fluid, int millibuckets, boolean declared) {}
+    public record FluidInput(MaterialDecompositionRule.Phase phase, String fluid, int millibuckets, boolean declared) {}
 
     public record DustOutput(MaterialKey material, long units) {}
 
@@ -56,7 +55,6 @@ public final class MaterialDecompositionPlanner {
             long eut,
             long duration,
             List<FluidInput> fluidInputs,
-            boolean solidInput,
             int blockDustCount,
             List<DustOutput> itemOutputs,
             List<FluidOutput> fluidOutputs,
@@ -88,8 +86,7 @@ public final class MaterialDecompositionPlanner {
         GTMaterial material = input.resolve();
         if (rule == null || !rule.routes().contains(route))
             return Result.rejected(Status.NO_PERMISSION, "route is not declared");
-        if (!material.hasComposition())
-            return Result.rejected(Status.NO_COMPOSITION, "material has no composition");
+        if (!material.hasComposition()) return Result.rejected(Status.NO_COMPOSITION, "material has no composition");
         long divider = material.getCompositionDivider();
         if (divider <= 0 || divider > 64)
             return Result.rejected(Status.INVALID_DIVIDER, "divider must be 1..64, found " + divider);
@@ -112,8 +109,7 @@ public final class MaterialDecompositionPlanner {
                         || value.phase() == MaterialDecompositionRule.Phase.GAS)
                 .sorted(Comparator.comparingInt(value -> value.phase().ordinal()))
                 .toList()) {
-            int amount = fluidAmount(
-                    binding.sourceUnits(), binding.millibuckets(), inputUnits, true);
+            int amount = fluidAmount(binding.sourceUnits(), binding.millibuckets(), inputUnits, true);
             if (amount <= 0)
                 return Result.rejected(
                         Status.INVALID_QUANTITY,
@@ -133,7 +129,8 @@ public final class MaterialDecompositionPlanner {
             GTMaterial part = component.material().resolve();
             if (!part.isValid())
                 return Result.rejected(
-                        Status.MISSING_COMPONENT, "unknown component " + component.material().getName());
+                        Status.MISSING_COMPONENT,
+                        "unknown component " + component.material().getName());
             FluidOutput fluid = ambientOutput(part, component.amount());
             if (fluid != null) {
                 fluidOutputs.add(fluid);
@@ -146,8 +143,7 @@ public final class MaterialDecompositionPlanner {
             long units = SourceDecompositionRules.units(component.amount(), U, pulverAmount, false);
             if (units <= 0)
                 return Result.rejected(
-                        Status.INVALID_QUANTITY,
-                        "component " + part.getName() + " cannot represent powder output");
+                        Status.INVALID_QUANTITY, "component " + part.getName() + " cannot represent powder output");
             itemOutputs.add(new DustOutput(new MaterialKey(pulver.getName()), units));
         }
         if (itemOutputs.isEmpty() && fluidOutputs.isEmpty())
@@ -171,7 +167,6 @@ public final class MaterialDecompositionPlanner {
                 eut,
                 duration,
                 fluidInputs,
-                true,
                 blockDustCount,
                 itemOutputs,
                 fluidOutputs,
@@ -189,12 +184,12 @@ public final class MaterialDecompositionPlanner {
                 .findSingle(new MaterialKey(material.getName()), MaterialProcessKeys.DECOMPOSITION);
         if (process.isEmpty() || process.get().value().fluids().isEmpty())
             return genericAmbientOutput(material, phase, units);
-        for (MaterialDecompositionRule.FluidBinding binding : process.get().value().fluids()) {
+        for (MaterialDecompositionRule.FluidBinding binding :
+                process.get().value().fluids()) {
             if (binding.phase() != phase) continue;
             int amount = fluidAmount(binding.sourceUnits(), binding.millibuckets(), units, false);
             if (amount <= 0) return null;
-            return new FluidOutput(
-                    new MaterialKey(material.getName()), phase, binding.fluid(), amount, true);
+            return new FluidOutput(new MaterialKey(material.getName()), phase, binding.fluid(), amount, true);
         }
         return null;
     }
@@ -203,8 +198,7 @@ public final class MaterialDecompositionPlanner {
             GTMaterial material, MaterialDecompositionRule.Phase phase, long units) {
         long amount = units(units, U, 1000, false);
         if (amount <= 0 || amount > Integer.MAX_VALUE) return null;
-        return new FluidOutput(
-                new MaterialKey(material.getName()), phase, material.getName(), (int) amount, false);
+        return new FluidOutput(new MaterialKey(material.getName()), phase, material.getName(), (int) amount, false);
     }
 
     private static int fluidAmount(long sourceUnits, long millibuckets, long units, boolean ceil) {

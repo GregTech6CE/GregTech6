@@ -243,7 +243,7 @@ metadata 使用 builder 挂分类、类型化属性与 flag，不继续给 `Mate
 
 `GregTechMaterials.Material` 的现有查询方法不强加新的抽象方法给旧实现者；新视图通过适配器和新增入口提供。宿主服务能力增加时采用显式能力协商或默认“不支持”，不能默认返回空图误报完整覆盖。旧主机与新 API 组合的失败方式纳入契约测试。
 
-当前 API 版本为 1.8.0。A／B 使用默认 SPI 方法和新增只读类型，旧宿主通过显式“不支持”失败，既有声明实现者保持源码兼容。API 1.5 的 `MaterialProcessKey`／`MaterialProcessesView` 允许附属用自己的 namespace 声明处理规则；API 1.6 的 `MaterialInfoTool` 将工具、组成、形态、tag 和 process 注册为按 `MaterialKey` 关联的独立域索引。API 1.7 提供详细 `MaterialFormRule`、运行期 `MaterialFormsView`、显式统一物品绑定和 item／block／fluid 分离的实际形态查询，同时保留材料组的成员与包含查询。API 1.8 通过 `MaterialProcessKeys.DECOMPOSITION` 承载单一类型化分解规则。旧 `GTMaterial` 工艺访问器和旧组 re-registration 访问器暂时保留并标记弃用，READY 后只转发冻结快照。新增查询身份不改 NBT、原生注册 ID、配方单位或已有材料名。
+当前 API 版本为 1.8.0。A／B 使用默认 SPI 方法和新增只读类型，旧宿主通过显式“不支持”失败，既有声明实现者保持源码兼容。API 1.5 的 `MaterialProcessKey`／`MaterialProcessesView` 允许附属用自己的 namespace 声明处理规则；API 1.6 的 `MaterialInfoTool` 将工具、组成、形态、tag 和 process 注册为按 `MaterialKey` 关联的独立域索引。API 1.7 提供详细 `MaterialFormRule`、运行期 `MaterialFormsView`、显式统一物品绑定和 item／block／fluid 分离的实际形态查询，同时保留材料组的成员与包含查询。API 1.8 通过 `MaterialProcessKeys.DECOMPOSITION` 承载单一类型化分解规则；该规则是路线唯一权威，旧离心／电解 feature 只提供弃用兼容输入。旧 `GTMaterial` 工艺访问器和旧组 re-registration 访问器暂时保留并标记弃用，READY 后只转发冻结快照。新增查询身份不改 NBT、原生注册 ID、配方单位或已有材料名。
 
 ## 影响、落地与验证
 

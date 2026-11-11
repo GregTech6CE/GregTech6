@@ -1,5 +1,6 @@
 package gregtech.content.recipe;
 
+import gregtech.api.material.GTValues;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,7 @@ import java.util.Objects;
 public final class SourcePurifiedCentrifugePlan {
     private SourcePurifiedCentrifugePlan() {}
 
-    public static final long SOURCE_U = 648648000L;
-    public static final long SOURCE_U72 = 9009000L;
+    private static final long SOURCE_U72 = GTValues.U / 72;
     public static final int AMBIENT_K = 293;
 
     public enum Form {

@@ -10,9 +10,10 @@ import java.util.Set;
 /**
  * Declares how a material participates in centrifuge and electrolyzer decomposition.
  *
- * <p>Fluid bindings identify native phase resources and retain both sides of their conversion:
+ * <p>Liquid and gas bindings identify native phase resources and retain both sides of their conversion:
  * a source quantity and the produced millibucket quantity. The value is caller-owned after
- * registration and must not be mutated.</p>
+ * registration and must not be mutated. Routes are the sole runtime permission; legacy material
+ * flags are compatibility mirrors only.</p>
  */
 public record MaterialDecompositionRule(Set<Route> routes, List<FluidBinding> fluids, boolean keepSolidInput) {
     public MaterialDecompositionRule {
@@ -35,8 +36,7 @@ public record MaterialDecompositionRule(Set<Route> routes, List<FluidBinding> fl
 
     public enum Phase {
         LIQUID,
-        GAS,
-        PLASMA
+        GAS
     }
 
     /**

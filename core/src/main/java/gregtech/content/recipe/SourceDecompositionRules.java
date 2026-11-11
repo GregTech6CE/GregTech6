@@ -4,8 +4,6 @@ import java.math.BigInteger;
 
 /** Shared source quantity arithmetic. No registry lookup or per-material recipe special case. */
 public final class SourceDecompositionRules {
-    public static final long SOURCE_U = 648648000L;
-
     private SourceDecompositionRules() {}
 
     /** Returns -1 if the exact nonnegative result cannot be represented as long.

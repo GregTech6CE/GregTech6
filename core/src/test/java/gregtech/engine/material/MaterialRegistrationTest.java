@@ -1,15 +1,12 @@
 package gregtech.engine.material;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import gregtech.api.addon.material.DataKey;
-import gregtech.api.addon.material.MaterialProcessCardinality;
-import gregtech.api.addon.material.MaterialProcessKey;
-import gregtech.api.addon.material.MaterialProcessRule;
+import gregtech.api.addon.material.*;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.content.material.MaterialDefinitions;
+import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,7 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class MaterialRegistrationTest {
     @Test
@@ -238,6 +236,27 @@ class MaterialRegistrationTest {
                 () -> MaterialDefinition.builder(263, "Conflict")
                         .properties(MaterialProperty.FLAMMABLE, MaterialProperty.UNBURNABLE)
                         .build());
+    }
+
+    @Test
+    void typedDecompositionRuleOwnsRoutesAndLegacyFlagsBecomeItsMirror() {
+        var material = new GTMaterial(260, "TestCompound", "TestCompound", 0xFFFFFF).put(MaterialProperty.CENTRIFUGE);
+        var explicit =
+                new MaterialDecompositionRule(Set.of(MaterialDecompositionRule.Route.ELECTROLYSER), List.of(), false);
+        var effective = MaterialInfoRegistry.effectiveDecomposition(explicit, material.getProperties());
+        assertSame(explicit, effective);
+        assertFalse(effective.routes().contains(MaterialDecompositionRule.Route.CENTRIFUGE));
+
+        MaterialInfoRegistry.syncDecompositionFlags(material, effective);
+        assertFalse(material.has(MaterialProperty.CENTRIFUGE));
+        assertTrue(material.has(MaterialProperty.ELECTROLYSER));
+        assertTrue(material.has(MaterialProperty.DECOMPOSABLE));
+
+        var legacyOnly =
+                new GTMaterial(261, "LegacyCompound", "LegacyCompound", 0xFFFFFF).put(MaterialProperty.CENTRIFUGE);
+        var fallback = MaterialInfoRegistry.effectiveDecomposition(null, legacyOnly.getProperties());
+        assertTrue(fallback.routes().contains(MaterialDecompositionRule.Route.CENTRIFUGE));
+        assertFalse(fallback.routes().contains(MaterialDecompositionRule.Route.ELECTROLYSER));
     }
 
     @Test

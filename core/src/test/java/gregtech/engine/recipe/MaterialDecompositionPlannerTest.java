@@ -6,6 +6,7 @@ import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.material.GTValues;
 import gregtech.content.material.MaterialDefinitions;
 import gregtech.content.material.MaterialTestFixture;
+import gregtech.content.recipe.OriginalMaterialFluidUnits;
 import gregtech.content.recipe.SourceDecompositionRules;
 import gregtech.engine.material.MaterialInfoRegistry;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,10 +23,10 @@ class MaterialDecompositionPlannerTest {
     @Test
     void everyRoutedMaterialHasOneCompleteDeclaration() {
         for (var declaration : MaterialDefinitions.declarations()) {
-            boolean centrifuge = declaration.material().properties().contains(
-                    gregtech.api.material.MaterialProperty.CENTRIFUGE);
-            boolean electrolyser = declaration.material().properties().contains(
-                    gregtech.api.material.MaterialProperty.ELECTROLYSER);
+            boolean centrifuge =
+                    declaration.material().properties().contains(gregtech.api.material.MaterialProperty.CENTRIFUGE);
+            boolean electrolyser =
+                    declaration.material().properties().contains(gregtech.api.material.MaterialProperty.ELECTROLYSER);
             if (!centrifuge && !electrolyser) continue;
             var rule = MaterialInfoRegistry.processes(new MaterialKey(declaration.name()))
                     .findSingle(MaterialProcessKeys.DECOMPOSITION)
@@ -43,17 +44,12 @@ class MaterialDecompositionPlannerTest {
                 .findSingle(MaterialProcessKeys.DECOMPOSITION)
                 .orElseThrow()
                 .value();
-        var result = MaterialDecompositionPlanner.plan(
-                material,
-                rule,
-                MaterialDecompositionRule.Route.ELECTROLYSER,
-                6,
-                2);
+        var result =
+                MaterialDecompositionPlanner.plan(material, rule, MaterialDecompositionRule.Route.ELECTROLYSER, 6, 2);
         assertTrue(result.planned(), result.status() + ": " + result.reason());
         var plan = result.plan();
         assertEquals(6L, plan.divider());
         assertEquals(6L * GTValues.U, plan.inputUnits());
-        assertTrue(plan.solidInput());
         assertTrue(plan.electrolyserCatalyst());
         assertEquals(
                 java.util.List.of(
@@ -62,11 +58,7 @@ class MaterialDecompositionPlannerTest {
                 plan.itemOutputs());
         assertEquals(
                 java.util.List.of(new MaterialDecompositionPlanner.FluidOutput(
-                        new MaterialKey("Oxygen"),
-                        MaterialDecompositionRule.Phase.GAS,
-                        "oxygen",
-                        4000,
-                        true)),
+                        new MaterialKey("Oxygen"), MaterialDecompositionRule.Phase.GAS, "oxygen", 4000, true)),
                 plan.fluidOutputs());
         assertEquals(0, plan.droppedItemOutputs());
         assertEquals(0, plan.droppedFluidOutputs());
@@ -80,15 +72,35 @@ class MaterialDecompositionPlannerTest {
                 .orElseThrow()
                 .value();
         assertTrue(rule.routes().isEmpty());
-        assertTrue(rule.fluids().contains(new MaterialDecompositionRule.FluidBinding(
-                MaterialDecompositionRule.Phase.LIQUID, "minecraft:water", SourceDecompositionRules.SOURCE_U, 1000)));
-        assertTrue(rule.fluids().contains(new MaterialDecompositionRule.FluidBinding(
-                MaterialDecompositionRule.Phase.GAS, "steam", SourceDecompositionRules.SOURCE_U, 160000)));
+        assertTrue(rule.fluids()
+                .contains(new MaterialDecompositionRule.FluidBinding(
+                        MaterialDecompositionRule.Phase.LIQUID, "minecraft:water", GTValues.U, 1000)));
+        assertTrue(rule.fluids()
+                .contains(new MaterialDecompositionRule.FluidBinding(
+                        MaterialDecompositionRule.Phase.GAS, "steam", GTValues.U, 160000)));
         assertEquals(
                 MaterialDecompositionPlanner.Status.NO_PERMISSION,
-                MaterialDecompositionPlanner.plan(
-                                material, rule, MaterialDecompositionRule.Route.ELECTROLYSER, 2, 2)
+                MaterialDecompositionPlanner.plan(material, rule, MaterialDecompositionRule.Route.ELECTROLYSER, 2, 2)
                         .status());
+    }
+
+    @Test
+    void decompositionReusesSharedFluidUnitFacts() {
+        assertEquals(GTValues.U, OriginalMaterialFluidUnits.SOURCE_UNIT);
+        var rule = MaterialInfoRegistry.processes(new MaterialKey("Chocolate"))
+                .findSingle(MaterialProcessKeys.DECOMPOSITION)
+                .orElseThrow()
+                .value();
+        var shared = OriginalMaterialFluidUnits.binding("Chocolate", 9783, "liquid");
+        assertTrue(rule.fluids()
+                .contains(new MaterialDecompositionRule.FluidBinding(
+                        MaterialDecompositionRule.Phase.LIQUID,
+                        shared.registryName(),
+                        shared.referenceSourceUnits(),
+                        shared.referenceMillibuckets())));
+        assertEquals(
+                OriginalMaterialFluidUnits.millibuckets(GTValues.U, GTValues.U, 144, false),
+                SourceDecompositionRules.fluidAmount(GTValues.U, GTValues.U, 144, false));
     }
 
     @Test
@@ -98,10 +110,12 @@ class MaterialDecompositionPlannerTest {
                 .orElseThrow()
                 .value();
         assertTrue(rule.keepSolidInput());
-        assertTrue(rule.fluids().contains(new MaterialDecompositionRule.FluidBinding(
-                MaterialDecompositionRule.Phase.LIQUID, "molten.glowstone", SourceDecompositionRules.SOURCE_U, 144)));
-        assertTrue(rule.fluids().contains(new MaterialDecompositionRule.FluidBinding(
-                MaterialDecompositionRule.Phase.GAS, "glowstone", SourceDecompositionRules.SOURCE_U, 250)));
+        assertTrue(rule.fluids()
+                .contains(new MaterialDecompositionRule.FluidBinding(
+                        MaterialDecompositionRule.Phase.LIQUID, "molten.glowstone", GTValues.U, 144)));
+        assertTrue(rule.fluids()
+                .contains(new MaterialDecompositionRule.FluidBinding(
+                        MaterialDecompositionRule.Phase.GAS, "glowstone", GTValues.U, 250)));
         var result = MaterialDecompositionPlanner.plan(
                 gregtech.engine.material.GTMaterialRegistry.get("Glowstone"),
                 rule,
@@ -125,21 +139,15 @@ class MaterialDecompositionPlannerTest {
                 .findSingle(MaterialProcessKeys.DECOMPOSITION)
                 .orElseThrow()
                 .value();
-        var result = MaterialDecompositionPlanner.plan(
-                material,
-                rule,
-                MaterialDecompositionRule.Route.ELECTROLYSER,
-                6,
-                2);
+        var result =
+                MaterialDecompositionPlanner.plan(material, rule, MaterialDecompositionRule.Route.ELECTROLYSER, 6, 2);
         assertTrue(result.planned(), result.status() + ": " + result.reason());
         assertFalse(result.plan().itemOutputs().stream()
                 .anyMatch(output -> output.material().equals(new MaterialKey("Hydrogen"))));
-        assertTrue(result.plan().fluidOutputs().contains(new MaterialDecompositionPlanner.FluidOutput(
-                new MaterialKey("Hydrogen"),
-                MaterialDecompositionRule.Phase.GAS,
-                "Hydrogen",
-                2000,
-                false)));
+        assertTrue(result.plan()
+                .fluidOutputs()
+                .contains(new MaterialDecompositionPlanner.FluidOutput(
+                        new MaterialKey("Hydrogen"), MaterialDecompositionRule.Phase.GAS, "Hydrogen", 2000, false)));
     }
 
     @Test
@@ -149,12 +157,8 @@ class MaterialDecompositionPlannerTest {
                 .findSingle(MaterialProcessKeys.DECOMPOSITION)
                 .orElseThrow()
                 .value();
-        var result = MaterialDecompositionPlanner.plan(
-                material,
-                rule,
-                MaterialDecompositionRule.Route.ELECTROLYSER,
-                1,
-                0);
+        var result =
+                MaterialDecompositionPlanner.plan(material, rule, MaterialDecompositionRule.Route.ELECTROLYSER, 1, 0);
         assertTrue(result.planned(), result.status() + ": " + result.reason());
         assertEquals(1, result.plan().itemOutputs().size());
         assertTrue(result.plan().fluidOutputs().isEmpty());
@@ -171,14 +175,12 @@ class MaterialDecompositionPlannerTest {
                 .value();
         assertEquals(
                 MaterialDecompositionPlanner.Status.NO_PERMISSION,
-                MaterialDecompositionPlanner.plan(
-                                material, rule, MaterialDecompositionRule.Route.CENTRIFUGE, 2, 2)
+                MaterialDecompositionPlanner.plan(material, rule, MaterialDecompositionRule.Route.CENTRIFUGE, 2, 2)
                         .status());
         var iron = gregtech.engine.material.GTMaterialRegistry.get("Iron");
         assertEquals(
                 MaterialDecompositionPlanner.Status.NO_COMPOSITION,
-                MaterialDecompositionPlanner.plan(
-                                iron, rule, MaterialDecompositionRule.Route.ELECTROLYSER, 2, 2)
+                MaterialDecompositionPlanner.plan(iron, rule, MaterialDecompositionRule.Route.ELECTROLYSER, 2, 2)
                         .status());
         assertEquals(-1, SourceDecompositionRules.units(Long.MAX_VALUE, 1, Long.MAX_VALUE, true));
     }

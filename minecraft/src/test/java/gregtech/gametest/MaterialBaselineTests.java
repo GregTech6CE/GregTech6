@@ -715,11 +715,19 @@ public final class MaterialBaselineTests {
         helper.assertTrue(
                 reloadedRecipe != null,
                 "iron ingot recycling remains queryable after reload");
+        var powellite =
+                GTItems.getStack(MaterialPrefix.dust, gregtech.engine.material.GTMaterialRegistry.get("Powellite"), 6);
+        var reloadedDecomposition = find(
+                MachineRecipeMaps.Electrolyzer,
+                List.of(new ItemStack(GTTechnological.selectorTag(0)), powellite),
+                List.of());
+        helper.assertTrue(reloadedDecomposition != null, "decomposition row is rebuilt after reload");
         helper.succeed();
     }
 
     private static List<Integer> ownedCounts() {
         return List.of(gregtech.content.recipe.ExternalOreProcessing.owned().size(),
+                gregtech.content.recipe.DecompositionRecipeLoader.owned().size(),
                 gregtech.content.recipe.ShredderRecyclingRecipes.owned().size(),
                 gregtech.content.recipe.SharedThermalInputRows.owned().size());
     }

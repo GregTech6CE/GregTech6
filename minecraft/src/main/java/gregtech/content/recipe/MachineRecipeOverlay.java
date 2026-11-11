@@ -124,6 +124,7 @@ public final class MachineRecipeOverlay {
         long restoreMillis = (System.nanoTime() - started) / 1_000_000L;
         gregtech.engine.recipe.MaterialUnitRecipes.discardUnregistered();
         long producersStarted = System.nanoTime();
+        DecompositionRecipeLoader.rebuild();
         ExternalOreProcessing.rebuild();
         ShredderRecyclingRecipes.rebuildTagRows();
         gregtech.content.recipe.NonOreMacerationRows.rebuild();
@@ -176,6 +177,7 @@ public final class MachineRecipeOverlay {
         try {
             for (var map : RecipeMap.RECIPE_MAP_LIST) if (map.hasBaseline()) map.restoreBaseline();
             ExternalOreProcessing.clear();
+            DecompositionRecipeLoader.clear();
             ShredderRecyclingRecipes.clearTagRows();
             gregtech.content.recipe.NonOreMacerationRows.clear();
             gregtech.content.recipe.SourceOreOutputRows.clear();
@@ -260,6 +262,7 @@ public final class MachineRecipeOverlay {
         exclude.addAll(CompatRecipes.owned());
         exclude.addAll(PotionBrewingRecipes.owned());
         exclude.addAll(ExternalOreProcessing.owned());
+        exclude.addAll(DecompositionRecipeLoader.owned());
         exclude.addAll(ShredderRecyclingRecipes.owned());
         exclude.addAll(gregtech.content.recipe.NonOreMacerationRows.owned());
         exclude.addAll(gregtech.content.recipe.SourceOreOutputRows.owned());

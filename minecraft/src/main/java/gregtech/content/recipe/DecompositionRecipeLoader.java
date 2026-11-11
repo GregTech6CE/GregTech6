@@ -19,7 +19,10 @@ import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.util.OM;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Set;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -35,15 +38,56 @@ import org.slf4j.Logger;
  * <p>This adapter resolves native items and fluids only. Permissions, phases, quantities, route
  * selection, and output ordering come from {@link MaterialDecompositionPlanner}.</p>
  */
-public class DecompositionRecipeLoader implements InitializationStep {
+public final class DecompositionRecipeLoader implements InitializationStep {
     private static final Logger LOGGER = LogUtils.getLogger();
+    private static final java.util.Map<RecipeMap, Set<Recipe>> OWNED = new IdentityHashMap<>();
 
-    private int added;
-    private int skipped;
-    private int recipes;
+    private static int added;
+    private static int skipped;
+    private static int recipes;
+    private static int bindingIssues;
 
     @Override
     public void run() {
+        rebuild();
+    }
+
+    /** Recipes owned by the decomposition producer in the current overlay generation. */
+    public static synchronized Set<Recipe> owned() {
+        var result = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
+        for (var rows : OWNED.values()) result.addAll(rows);
+        return Set.copyOf(result);
+    }
+
+    /** Removes this producer's rows and diagnostics before the next generation is built. */
+    public static synchronized void clear() {
+        for (var entry : OWNED.entrySet()) entry.getKey().removeAll(entry.getValue());
+        OWNED.clear();
+        added = 0;
+        skipped = 0;
+        recipes = 0;
+        bindingIssues = 0;
+    }
+
+    /** Rebuilds all decomposition rows at a recipe-overlay transaction boundary. */
+    public static synchronized int rebuild() {
+        clear();
+        try {
+            new DecompositionRecipeLoader().build();
+            LOGGER.info(
+                    "[gregtech] Decomposition recipes: {} materials, {} recipes, {} skipped, {} binding issues",
+                    added,
+                    recipes,
+                    skipped,
+                    bindingIssues);
+            return recipes;
+        } catch (RuntimeException | Error failure) {
+            clear();
+            throw failure;
+        }
+    }
+
+    private void build() {
         for (GTMaterial entry : GTMaterialRegistry.allMaterials()) {
             GTMaterial material = entry.resolve();
             if (material != entry || !material.isValid()) continue;
@@ -67,7 +111,6 @@ public class DecompositionRecipeLoader implements InitializationStep {
             if (any) added++;
             else skipped++;
         }
-        LOGGER.info("[gregtech] Decomposition recipes: {} materials, {} recipes, {} skipped", added, recipes, skipped);
     }
 
     private boolean publish(
@@ -87,13 +130,17 @@ public class DecompositionRecipeLoader implements InitializationStep {
             return false;
         }
         var plan = result.plan();
+        if (plan.droppedItemOutputs() > 0 || plan.droppedFluidOutputs() > 0)
+            LOGGER.warn(
+                    "[gregtech] Decomposition {} for {} truncated {} item and {} fluid outputs to map capacity",
+                    route,
+                    material.getName(),
+                    plan.droppedItemOutputs(),
+                    plan.droppedFluidOutputs());
         List<ItemStack> itemOutputs = nativeItemOutputs(plan);
         List<FluidStack> fluidOutputs = nativeFluidOutputs(plan);
         if (itemOutputs == null || fluidOutputs == null) {
-            LOGGER.warn(
-                    "[gregtech] Decomposition {} for {} has an unregistered native output binding",
-                    route,
-                    material.getName());
+            bindingIssues++;
             return false;
         }
 
@@ -110,6 +157,7 @@ public class DecompositionRecipeLoader implements InitializationStep {
                                 route,
                                 material.getName(),
                                 input.fluid());
+                    if (input.declared()) bindingIssues++;
                     continue;
                 }
                 fluidInputAdded = true;
@@ -135,9 +183,24 @@ public class DecompositionRecipeLoader implements InitializationStep {
         List<ItemStack> outputs = new ArrayList<>();
         for (var output : plan.itemOutputs()) {
             GTMaterial target = GTMaterialRegistry.get(output.material().name());
-            if (!target.isValid()) return null;
+            if (!target.isValid()) {
+                LOGGER.warn(
+                        "[gregtech] Decomposition {} for {} cannot resolve item output {}",
+                        plan.route(),
+                        plan.material().name(),
+                        output.material().name());
+                return null;
+            }
             ItemStack dust = OM.dust(target, output.units());
-            if (dust.isEmpty()) return null;
+            if (dust.isEmpty()) {
+                LOGGER.warn(
+                        "[gregtech] Decomposition {} for {} cannot bind {}U of {}",
+                        plan.route(),
+                        plan.material().name(),
+                        output.units(),
+                        output.material().name());
+                return null;
+            }
             outputs.add(dust);
         }
         return outputs;
@@ -151,7 +214,16 @@ public class DecompositionRecipeLoader implements InitializationStep {
                     output.millibuckets(),
                     output.declared(),
                     output.component().name());
-            if (fluid == null || fluid.isEmpty()) return null;
+            if (fluid == null || fluid.isEmpty()) {
+                LOGGER.warn(
+                        "[gregtech] Decomposition {} for {} cannot resolve {} output fluid {} ({} mB)",
+                        plan.route(),
+                        plan.material().name(),
+                        output.phase(),
+                        output.fluid(),
+                        output.millibuckets());
+                return null;
+            }
             outputs.add(fluid);
         }
         return outputs;
@@ -199,6 +271,8 @@ public class DecompositionRecipeLoader implements InitializationStep {
         }
 
         if (map.addRecipe(recipe) == null) return false;
+        OWNED.computeIfAbsent(map, ignored -> Collections.newSetFromMap(new IdentityHashMap<>()))
+                .add(recipe);
         recipes++;
         return true;
     }
