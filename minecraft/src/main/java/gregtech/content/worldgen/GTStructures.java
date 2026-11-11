@@ -40,27 +40,15 @@ public final class GTStructures {
 
     /** {@code gt6ce:gt_dungeon} as a structure type ({@code data/gt6ce/worldgen/structure/gt_dungeon.json}). */
     public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES =
-//? if >=1.21.1 {
-            /*DeferredRegister.create(Registries.STRUCTURE_TYPE, "gt6ce");
-*///?} else {
             DeferredRegister.create(Registries.STRUCTURE_TYPE, GregTechIdentity.REGISTRY_NAMESPACE);
-//?}
 
     /** {@code gt6ce:gt_dungeon_lattice} as a placement type, registered like vanilla's {@code random_spread}. */
     public static final DeferredRegister<StructurePlacementType<?>> PLACEMENT_TYPES =
-//? if >=1.21.1 {
-            /*DeferredRegister.create(Registries.STRUCTURE_PLACEMENT, "gt6ce");
-*///?} else {
             DeferredRegister.create(Registries.STRUCTURE_PLACEMENT, GregTechIdentity.REGISTRY_NAMESPACE);
-//?}
 
     /** The anchor marker piece ({@link GTDungeonAnchorPiece}) needs a piece id to be saved with its chunk. */
     public static final DeferredRegister<StructurePieceType> PIECE_TYPES =
-//? if >=1.21.1 {
-            /*DeferredRegister.create(Registries.STRUCTURE_PIECE, "gt6ce");
-*///?} else {
             DeferredRegister.create(Registries.STRUCTURE_PIECE, GregTechIdentity.REGISTRY_NAMESPACE);
-//?}
 
     /** The dungeon structure's type; its codec is {@link GTDungeonStructure#CODEC}. */
 //? if >=1.21.1 {

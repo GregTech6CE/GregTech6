@@ -12,11 +12,7 @@ import gregtech.api.material.GTMaterial;
 
 import gregtech.content.blockentity.energy.SignalWireBlockEntity;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTSignalWires;
-*///?} else {
-import gregtech.content.registry.GTBlockEntities;
-//?}
+import gregtech.content.registry.GTSignalWires;
 
 import net.minecraft.core.*;
 import net.minecraft.network.chat.Component;
@@ -98,13 +94,8 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
 
-//? if >=1.21.1 {
-        /*return !level.isClientSide && type == GTSignalWires.SIGNAL_WIRE.get() ? (tickLevel, tickPos, tickState,
+        return !level.isClientSide && type == GTSignalWires.SIGNAL_WIRE.get() ? (tickLevel, tickPos, tickState,
                 wireEntity) -> ((SignalWireBlockEntity) wireEntity).tickNetwork() : null;
-*///?} else {
-        return !level.isClientSide && type == GTBlockEntities.SIGNAL_WIRE.get() ? (tickLevel, tickPos, tickState,
-                wireEntity) -> ((SignalWireBlockEntity) wireEntity).tickNetwork() : null;
-//?}
 
     }
 

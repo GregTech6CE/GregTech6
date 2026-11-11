@@ -14,13 +14,9 @@ import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.client.GTToolTooltips;
 
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
-*///?} else {
 import gregtech.content.block.machine.HopperBlock;
 import gregtech.content.block.machine.QueueHopperBlock;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
-//?}
 
 import gregtech.content.registry.GTToolItems;
 import net.minecraft.core.BlockPos;
@@ -148,11 +144,7 @@ public class GTToolItem extends Item {
         }
         BlockPos pos = context.getClickedPos();
 
-//? if >=1.21.1 {
-/*        if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleEntity crucible)) {
-*///?} else {
-        if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEntity crucible)) {
-//?}
+if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEntity crucible)) {
 
             return InteractionResult.PASS;
         }
@@ -317,11 +309,7 @@ public class GTToolItem extends Item {
     @Override
     public String getDescriptionId() {
 
-//? if >=1.21.1 {
-/*        return "item." + "gt6ce" + ".tool." + toolType.id();
-*///?} else {
         return "item." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool." + toolType.id();
-//?}
 
     }
 
@@ -332,11 +320,7 @@ public class GTToolItem extends Item {
         }
         GTMaterial head = GTToolHelper.getHead(stack);
 
-//? if >=1.21.1 {
-/*        return Component.translatable("item." + "gt6ce" + ".tool." + toolType.id() + ".named",
-*///?} else {
         return Component.translatable("item." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool." + toolType.id() + ".named",
-//?}
 
                 MaterialPresentation.name(head), Component.translatable(toolType.translationKey()));
     }

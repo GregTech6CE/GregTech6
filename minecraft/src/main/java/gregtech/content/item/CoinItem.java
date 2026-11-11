@@ -3,11 +3,7 @@ package gregtech.content.item;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.blockentity.misc.CoinPileBlockEntity;
 import gregtech.content.data.MaterialPrefix;
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTCoinPiles;
-*///?} else {
-import gregtech.content.registry.GTDecorBlocks;
-//?}
+import gregtech.content.registry.GTCoinPiles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -91,11 +87,7 @@ public final class CoinItem extends MaterialItem {
                 || !player.mayUseItemAt(target, placement.getClickedFace(), held)))
             return InteractionResult.FAIL;
 
-//? if >=1.21.1 {
-        /*BlockState state = GTCoinPiles.COIN_PILE.get().defaultBlockState();
-*///?} else {
-        BlockState state = GTDecorBlocks.COIN_PILE.get().defaultBlockState();
-//?}
+        BlockState state = GTCoinPiles.COIN_PILE.get().defaultBlockState();
         state = gregtech.engine.GTWaterloggable.getStateForPlacement(state, placement);
         if (!state.canSurvive(level, target)) return InteractionResult.FAIL;
         if (level.isClientSide) return InteractionResult.SUCCESS;

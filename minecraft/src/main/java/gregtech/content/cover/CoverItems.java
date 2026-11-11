@@ -1,8 +1,7 @@
 package gregtech.content.cover;
+
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.platform.Mc;
-
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -32,6 +31,7 @@ public final class CoverItems {
 
     /** Cover behaviours whose item is shared with another role (GT6's registration sites above). */
     public static final String PUMP = "cover_pump";
+
     public static final String CONVEYOR = "cover_conveyor";
     public static final String ROBOT_ARM = "cover_robot_arm";
     public static final String REDSTONE_TORCH = "cover_redstone_torch";
@@ -39,8 +39,7 @@ public final class CoverItems {
     public static final String TAG_SELECTOR = "cover_tag_selector";
 
     /** GT6 {@code CS.VN} voltage order; {@code IL.*} arrays are indexed by these. */
-    private static final String[] TIERS = {
-            "ulv", "lv", "mv", "hv", "ev", "iv", "luv", "zpm", "uv", "puv1", "xv"};
+    private static final String[] TIERS = {"ulv", "lv", "mv", "hv", "ev", "iv", "luv", "zpm", "uv", "puv1", "xv"};
 
     private CoverItems() {}
 
@@ -58,7 +57,9 @@ public final class CoverItems {
         if (stack.getItem() instanceof gregtech.content.item.PanelItemView panel)
             return panel.panelSpec().asphalt() ? CoverUtilityBehaviors.ASPHALT_PANEL : "decorative_panel";
         if (stack.getItem() instanceof gregtech.content.item.CanvasItem) return "canvas_cover";
-        if(stack.getItem() instanceof gregtech.engine.material.MaterialFormItem material&&!MaterialCoverRules.textures(material.getPrefix().getName()).isEmpty())return "material_plate_cover";
+        if (stack.getItem() instanceof gregtech.engine.material.MaterialFormItem material
+                && !MaterialCoverRules.textures(material.getPrefix().getName()).isEmpty())
+            return "material_plate_cover";
         if (key.getNamespace().equals("minecraft")) {
             // GT_API - the vanilla redstone torch (either state) and repeater are covers
             return switch (id) {
@@ -67,36 +68,46 @@ public final class CoverItems {
                 default -> null;
             };
         }
-//? if >=1.21.1 {
-        /*if (!key.getNamespace().equals("gt6ce")) return null;
-*///?} else {
         if (!key.getNamespace().equals(GregTechIdentity.REGISTRY_NAMESPACE)) return null;
-//?}
-        if (id.startsWith("compact_electric_pump_")) return PUMP;               // IL.PUMPS[i]
-        if (id.startsWith("compact_electric_conveyor_")) return CONVEYOR;       // IL.CONVEYERS[i]
-        if (id.startsWith("compact_robot_arm_")) return ROBOT_ARM;              // IL.ROBOT_ARMS[i]
-        if (id.startsWith("integrated_circuit_")) return TAG_SELECTOR;          // GT6 names circuits in ItemIntegratedCircuit
-        if (id.equals(TAG_SELECTOR)) return TAG_SELECTOR;                       // pre- saves
+        if (id.startsWith("compact_electric_pump_")) return PUMP; // IL.PUMPS[i]
+        if (id.startsWith("compact_electric_conveyor_")) return CONVEYOR; // IL.CONVEYERS[i]
+        if (id.startsWith("compact_robot_arm_")) return ROBOT_ARM; // IL.ROBOT_ARMS[i]
+        if (id.startsWith("integrated_circuit_")) return TAG_SELECTOR; // GT6 names circuits in ItemIntegratedCircuit
+        if (id.equals(TAG_SELECTOR)) return TAG_SELECTOR; // pre- saves
         return portCoverId(id) ? id : null;
     }
 
     /** The port's own cover items: the ones GT6 registers with a dedicated cover instance. */
     private static boolean portCoverId(String id) {
-        if (id.startsWith("logistics_display_cpu_") || id.startsWith("filtered_logistics_")
-                || id.startsWith("generic_logistics_") || id.equals("logistics_dump_bus_item")) return true;
-        return id.endsWith("_cover") || id.equals("redstone_conductor_cover_accept")
-                || id.equals("redstone_conductor_cover_emit") || id.equals("drain") || id.equals("air_vent")
-                || id.equals("item_filter") || id.equals("fluid_filter")
+        if (id.startsWith("logistics_display_cpu_")
+                || id.startsWith("filtered_logistics_")
+                || id.startsWith("generic_logistics_")
+                || id.equals("logistics_dump_bus_item")) return true;
+        return id.endsWith("_cover")
+                || id.equals("redstone_conductor_cover_accept")
+                || id.equals("redstone_conductor_cover_emit")
+                || id.equals("drain")
+                || id.equals("air_vent")
+                || id.equals("item_filter")
+                || id.equals("fluid_filter")
                 // GT6 registers these two on items whose names do not end in "_cover" - the
                 // pressure valve is a fluid-pipe cover (CoverPressureValve) and the asphalt cover
                 // is bound to the Asphalt Panel block (Loader_MultiTileEntities). Both could be
                 // attached but never dispatched before, because this list did not name them.
-                || id.equals("pressure_value") || id.equals("panel_asphalt") || id.startsWith("panel_concrete") || id.startsWith("panel_wood")
-                || id.contains("machine_switch") || id.contains("selector") && id.startsWith("redstone")
-                || id.equals("manual_selector") || id.equals("button_panel_selector")
-                || id.startsWith("activity_detector") || id.equals("energy_sensor")
-                || id.equals("progress_sensor") || id.equals("redstone_emitter")
-                || id.startsWith("auto_reboot_switch") || id.equals("cover_controller");
+                || id.equals("pressure_value")
+                || id.equals("panel_asphalt")
+                || id.startsWith("panel_concrete")
+                || id.startsWith("panel_wood")
+                || id.contains("machine_switch")
+                || id.contains("selector") && id.startsWith("redstone")
+                || id.equals("manual_selector")
+                || id.equals("button_panel_selector")
+                || id.startsWith("activity_detector")
+                || id.equals("energy_sensor")
+                || id.equals("progress_sensor")
+                || id.equals("redstone_emitter")
+                || id.startsWith("auto_reboot_switch")
+                || id.equals("cover_controller");
     }
 
     /** True when a machine face accepts this stack as a cover. */
@@ -111,7 +122,8 @@ public final class CoverItems {
     public static int tierIndex(ItemStack stack) {
         String id = path(stack);
         if (id == null) return -1;
-        if (!id.startsWith("compact_electric_pump_") && !id.startsWith("compact_electric_conveyor_")
+        if (!id.startsWith("compact_electric_pump_")
+                && !id.startsWith("compact_electric_conveyor_")
                 && !id.startsWith("compact_robot_arm_")) {
             return -1;
         }

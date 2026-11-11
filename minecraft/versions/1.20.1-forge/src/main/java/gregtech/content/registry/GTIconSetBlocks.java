@@ -1,14 +1,15 @@
 package gregtech.content.registry;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
 import gregtech.content.block.IconSetBlock;
-import java.util.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+
+import java.util.*;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 /**
  * Registers placeable icon-set blocks; renderer-only textures are not blocks. Registry ids are the plain
@@ -18,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
  */
 public final class GTIconSetBlocks {
     private static final List<RegisteredBlock<Block>> ALL = new ArrayList<>();
-    public static RegisteredBlock<Block> LOGISTICS_WIRE;
 
     /**
      * IDs already registered by other registries ({@link GTWoods}, {@link GTDecorBlocks},
@@ -49,6 +49,8 @@ public final class GTIconSetBlocks {
         skip.addAll(Set.of("gearbox_axle", "greg_o_lantern"));
         // GTLongDistance owns the whole catalog. The old single wire id is not in that catalog.
         skip.add("long_dist_wire");
+        // GTLogisticsWire owns the logistics wire block and item.
+        skip.add("logistics_wire");
         for (var spec : gregtech.content.logistics.LongDistanceCatalog.ALL) skip.add(spec.id());
         // GTWoods species — skip log/planks/leaves/beam/sapling for each
         for (String species : Set.of(
@@ -81,7 +83,6 @@ public final class GTIconSetBlocks {
             if (SKIP_IDS.contains(blockId)) continue;
             RegisteredBlock<Block> block =
                     registrar.blockWithoutItem(REGISTRY_NAMESPACE, blockId, () -> createBlock(iconName));
-            if (iconName.equals("logistics_wire")) LOGISTICS_WIRE = block;
             var sandSpec = gregtech.content.block.BlackSandBlock.spec(iconName);
             if (sandSpec != null)
                 GTBlocks.bind(
@@ -229,12 +230,6 @@ public final class GTIconSetBlocks {
             String slug = iconName.substring("crystal_ore_".length());
             String materialName = Character.toUpperCase(slug.charAt(0)) + slug.substring(1);
             return new gregtech.content.block.CrystalOreBlock(propertiesFor(iconName), iconName, materialName);
-        }
-        if (iconName.equals("logistics_wire")) {
-            return new gregtech.content.block.machine.LogisticsWireBlock(BlockBehaviour.Properties.of()
-                    .strength(1.0F, 2.0F)
-                    .requiresCorrectToolForDrops()
-                    .sound(SoundType.METAL));
         }
         if (iconName.equals("long_dist_pipe_item") || iconName.equals("long_dist_pipe_fluid")) {
             var kind = iconName.equals("long_dist_pipe_item")

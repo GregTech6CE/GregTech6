@@ -1,12 +1,17 @@
 package gregtech.client;
 
-import gregtech.content.blockentity.machine.*;
-import gregtech.content.registry.*;
+import gregtech.content.blockentity.machine.KineticSteamEngineBlockEntity;
+import gregtech.content.blockentity.machine.PistonEngineBlockEntity;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTBoilers;
+import gregtech.content.registry.GTEngines;
+import gregtech.content.registry.GTPumps;
 import gregtech.engine.machine.EngineType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 @EventBusSubscriber(
         modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
@@ -46,8 +51,8 @@ public final class EngineClientSetup {
             e.register((s, l, p, t) -> t == 0 ? h.get().spec().material().getColor() : 0xFFFFFF, h.get());
         e.register(
                 (s, l, p, t) ->
-                        t == 0 ? GTLogisticsTank.BLOCK.get().spec().material().getColor() : 0xFFFFFF,
-                GTLogisticsTank.BLOCK.get());
+                        t == 0 ? GTTanks.LOGISTICS_TANK.get().spec().material().getColor() : 0xFFFFFF,
+                GTTanks.LOGISTICS_TANK.get());
         for (var h : GTBoilers.all())
             e.register((s, l, p, t) -> t == 0 ? h.get().spec().material().getColor() : 0xFFFFFF, h.get());
     }
@@ -68,8 +73,8 @@ public final class EngineClientSetup {
                     h.get().asItem());
         e.register(
                 ItemColorARGB.opaque((s, t) ->
-                        t == 0 ? GTLogisticsTank.BLOCK.get().spec().material().getColor() : 0xFFFFFF),
-                GTLogisticsTank.BLOCK.get().asItem());
+                        t == 0 ? GTTanks.LOGISTICS_TANK.get().spec().material().getColor() : 0xFFFFFF),
+                GTTanks.LOGISTICS_TANK.get().asItem());
         for (var h : GTBoilers.all())
             e.register(
                     ItemColorARGB.opaque(
@@ -94,7 +99,7 @@ public final class EngineClientSetup {
                 GTBlockEntities.ADDON_ENERGY_PART.get(), gregtech.client.FunctionalPartRenderer::new);
         gregtech.client.BehaviorMachineClients.collect();
         var behaviorTypes = new java.util.LinkedHashSet<net.minecraft.world.level.block.entity.BlockEntityType<?>>();
-        for (var holder : gregtech.platform.neoforge.machine.BehaviorMachineRegistration.all()) {
+        for (var holder : gregtech.content.registry.BehaviorMachineRegistration.all()) {
             var type = holder.get().blockEntityType();
             if (type != null) behaviorTypes.add(type);
         }

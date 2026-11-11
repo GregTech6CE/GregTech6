@@ -58,11 +58,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
         background = helper.createBlankDrawable(width, height);
     }
     public static RecipeType<Recipe> recipeType(RecipeMap map) {
-//? if >=1.21.1 {
-        /*return RecipeType.create("gt6ce",map.mNameInternal.toLowerCase(Locale.ROOT),Recipe.class);
-*///?} else {
         return RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE,map.mNameInternal.toLowerCase(Locale.ROOT),Recipe.class);
-//?}
     }
     @Override public RecipeType<Recipe> getRecipeType() {return recipeType(map);}
     @Override public Component getTitle() {return Component.translatableWithFallback(map.mNameInternal, map.mNameLocal);}

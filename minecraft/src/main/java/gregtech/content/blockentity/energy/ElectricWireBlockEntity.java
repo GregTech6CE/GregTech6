@@ -11,12 +11,8 @@ import gregtech.content.data.GregTechConstants;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.transport.energy.ElectricNetwork;
 import gregtech.content.transport.energy.ElectricNetworks;
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTWires;
 import net.minecraft.core.HolderLookup;
-*///?} else {
-import gregtech.content.registry.GTBlockEntities;
-//?}
+import gregtech.content.registry.GTWires;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -42,11 +38,7 @@ public class ElectricWireBlockEntity extends BlockEntity implements IEnergyCondu
     private ElectricNetwork.Membership membership;
 
     public ElectricWireBlockEntity(BlockPos pos, BlockState state) {
-//? if >=1.21.1 {
-        /*super(GTWires.ELECTRIC_WIRE.get(), pos, state);
-*///?} else {
-        super(GTBlockEntities.ELECTRIC_WIRE.get(), pos, state);
-//?}
+        super(GTWires.ELECTRIC_WIRE.get(), pos, state);
     }
 
     private WireSpec wireSpec() {

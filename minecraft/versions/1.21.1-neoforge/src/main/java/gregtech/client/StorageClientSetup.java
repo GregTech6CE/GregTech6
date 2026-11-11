@@ -1,7 +1,8 @@
 package gregtech.client;
 
 import gregtech.content.block.inventory.MassStorageBlock;
-import gregtech.platform.neoforge.logistics.StorageRegistries;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTMassStorages;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -18,13 +19,13 @@ public final class StorageClientSetup {
 
     @SubscribeEvent
     public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(StorageRegistries.MASS_STORAGE.get(), MassStorageRenderer::new);
-        event.registerBlockEntityRenderer(StorageRegistries.LOGISTICS_MASS_STORAGE.get(), MassStorageRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.MASS_STORAGE.get(), MassStorageRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.LOGISTICS_MASS_STORAGE.get(), MassStorageRenderer::new);
     }
 
     @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block event) {
-        for (var holder : StorageRegistries.all()) {
+        for (var holder : GTMassStorages.all()) {
             MassStorageBlock block = (MassStorageBlock) holder.get();
             event.register(
                     (state, level, pos, layer) -> layer == 0 && block.material() != null
@@ -36,7 +37,7 @@ public final class StorageClientSetup {
 
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
-        for (var holder : StorageRegistries.all()) {
+        for (var holder : GTMassStorages.all()) {
             MassStorageBlock block = (MassStorageBlock) holder.get();
             event.register(
                     ItemColorARGB.opaque((stack, layer) -> layer == 0 && block.material() != null

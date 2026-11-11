@@ -26,13 +26,8 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
     private final gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition=
             gregtech.engine.multiblock.tracking.FixedStructures.declarative(this,this::structureCells,List.of());
     public static final MultiblockLayout LAYOUT=MultiblockLayout.fromShared(gregtech.content.multiblock.SharedImplosionStructure.LAYOUT);
-//? if >=1.21.1 {
-    /*public ImplosionCompressorControllerBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state) {
+    public ImplosionCompressorControllerBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state) {
         super(type,pos,state);
-*///?} else {
-    public ImplosionCompressorControllerBlockEntity(BlockPos pos,BlockState state) {
-        super(GTBlockEntities.IMPLOSION_COMPRESSOR.get(),pos,state);
-//?}
         setSpec(gregtech.content.machine.BasicMachineDefinitions.from(gregtech.content.multiblock.OriginalMultiblockMachineParameters.implosionCompressor()));
     }
     public static void serverTick(Level level,BlockPos pos,BlockState state,ImplosionCompressorControllerBlockEntity machine) {

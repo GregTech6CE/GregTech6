@@ -285,11 +285,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
      * the same room roll now selects the corresponding material for both scaffold and bars.
      */
     private static void scaffold(GTDungeonData data, int x, int y, int z, Direction facing, boolean brass) {
-//? if >=1.21.1 {
-        /*BlockState state = DungeonBindings.scaffold(brass
-*///?} else {
-        BlockState state = gregtech.content.registry.GTToolBlocks.scaffold(brass
-//?}
+        BlockState state = gregtech.content.registry.GTManualStations.scaffold(brass
                 ? gregtech.content.material.Materials.Brass
                 : gregtech.content.material.Materials.Steel).defaultBlockState();
         if (state != null) data.set(x, y, z, state.setValue(ShapedToolBlock.FACING, facing));

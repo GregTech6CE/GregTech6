@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.platform.neoforge.logistics.LogisticsRegistries;
+import gregtech.content.registry.GTBlockEntities;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -21,6 +21,6 @@ public final class LogisticsClientSetup {
                 gregtech.content.registry.GTBlockEntities.LOGISTICS_CORE.get(), LogisticsCoverRenderer::new);
         event.registerBlockEntityRenderer(
                 gregtech.content.registry.GTBlockEntities.MULTIBLOCK_PORT.get(), LogisticsCoverRenderer::new);
-        event.registerBlockEntityRenderer(LogisticsRegistries.LOGISTICS_WIRE.get(), LogisticsCoverRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.LOGISTICS_WIRE.get(), LogisticsCoverRenderer::new);
     }
 }

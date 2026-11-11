@@ -1,9 +1,11 @@
 package gregtech.engine.machine;
 
 import gregtech.api.material.GTMaterial;
-import java.util.*;
 
-/** Original GTMachines burning-box catalog; shared identities, material tints and ratings. */
+import java.util.ArrayList;
+import java.util.List;
+
+/** Original GT6 burning-box catalog; shared identities, material tints and ratings. */
 public final class BurningBoxDefinitions {
     private BurningBoxDefinitions() {}
 

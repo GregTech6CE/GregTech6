@@ -32,7 +32,6 @@ public final class OriginalSupplementalFuelRows {
     private static List<Row> rows() {
         var rows = new ArrayList<Row>();
         rows.add(burn(4, 1, "glue"));
-        rows.add(burn(16, 4, "coconutmilk"));
 
         rows.add(burn(64, 5, "kerosine", "kerosene"));
         rows.add(burn(64, 5, "petrol", "gasoline"));
@@ -42,8 +41,7 @@ public final class OriginalSupplementalFuelRows {
         rows.add(category(FluidFlags.RUM));
         rows.add(category(FluidFlags.WHISKEY));
         rows.add(category(FluidFlags.VINEGAR));
-        rows.add(burn(16, 6, "binnie.vodka", "potion.vodka", "vodka"));
-        rows.add(burn(16, 12, "potion.dragonblood", "potion.goldencider", "potion.notchesbrew"));
+        rows.add(burn(16, 12, "potion.goldencider", "potion.notchesbrew"));
         rows.add(burn(16, 9, "bioethanol"));
         rows.add(burn(64, 9, "biofuel"));
         rows.add(burn(16, 5, "hootch"));

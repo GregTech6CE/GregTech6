@@ -1,15 +1,13 @@
 package gregtech.client;
-import gregtech.engine.mod.GregTechIdentity;
-
 
 import gregtech.engine.energy.FaceConfig;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-
+import gregtech.engine.mod.GregTechIdentity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 
 /** Shared tooltip formatting utilities for GT6 machines. */
 public final class TooltipHelper {
@@ -19,7 +17,8 @@ public final class TooltipHelper {
     }
 
     public static net.minecraft.network.chat.MutableComponent range(long min, long max) {
-        return min <= 1 ? Component.translatable("tooltip.gt6ce.ui.up_to", max)
+        return min <= 1
+                ? Component.translatable("tooltip.gt6ce.ui.up_to", max)
                 : Component.translatable("tooltip.gt6ce.ui.range", min, max);
     }
 
@@ -30,35 +29,38 @@ public final class TooltipHelper {
         Object[] arguments = new Object[values.length];
         for (int i = 0; i < values.length; i++) {
             Object value = values[i];
-            arguments[i] = value instanceof Component component ? component.copy().withStyle(ChatFormatting.WHITE)
-                    : Component.literal(value instanceof Long || value instanceof Integer
-                            ? formatLong(((Number) value).longValue()) : String.valueOf(value)).withStyle(ChatFormatting.WHITE);
+            arguments[i] = value instanceof Component component
+                    ? component.copy().withStyle(ChatFormatting.WHITE)
+                    : Component.literal(
+                                    value instanceof Long || value instanceof Integer
+                                            ? formatLong(((Number) value).longValue())
+                                            : String.valueOf(value))
+                            .withStyle(ChatFormatting.WHITE);
         }
         return gregtech.engine.fluid.FluidUnits.text(key, arguments).withStyle(color);
     }
 
-    public static void appendPortableBattery(long stored, long capacity, long min, long max,
-                                              String unit, List<Component> lines) {
+    public static void appendPortableBattery(
+            long stored, long capacity, long min, long max, String unit, List<Component> lines) {
         lines.add(stat("tooltip.gt6ce.portable_battery.energy", ChatFormatting.GREEN, stored, capacity, unit));
         lines.add(stat("tooltip.gt6ce.portable_battery.packet", ChatFormatting.AQUA, min, max, unit));
     }
 
-//? if >=1.21.1 {
-    /*private static final String MOD = "gt6ce";
-*///?} else {
     private static final String MOD = GregTechIdentity.REGISTRY_NAMESPACE;
-//?}
 
     // ── Direction names ────────────────────────────────────────────────────
 
     public static String dirName(int dir) {
         return switch (dir) {
-            case FaceConfig.BOTTOM -> Component.translatable("gt.lang.face.bottom").getString();
-            case FaceConfig.TOP    -> Component.translatable("gt.lang.face.top").getString();
-            case FaceConfig.LEFT   -> Component.translatable("gt.lang.face.left").getString();
-            case FaceConfig.RIGHT  -> Component.translatable("gt.lang.face.right").getString();
-            case FaceConfig.FRONT  -> Component.translatable("gt.lang.face.front").getString();
-            case FaceConfig.BACK   -> Component.translatable("gt.lang.face.back").getString();
+            case FaceConfig.BOTTOM ->
+                Component.translatable("gt.lang.face.bottom").getString();
+            case FaceConfig.TOP -> Component.translatable("gt.lang.face.top").getString();
+            case FaceConfig.LEFT -> Component.translatable("gt.lang.face.left").getString();
+            case FaceConfig.RIGHT ->
+                Component.translatable("gt.lang.face.right").getString();
+            case FaceConfig.FRONT ->
+                Component.translatable("gt.lang.face.front").getString();
+            case FaceConfig.BACK -> Component.translatable("gt.lang.face.back").getString();
             default -> "Unknown";
         };
     }
@@ -68,8 +70,9 @@ public final class TooltipHelper {
     public static String dirMaskToString(int mask) {
         if (mask == 0b111111) return Component.translatable("gt.lang.face.any").getString();
         List<String> names = new ArrayList<>(6);
-        for (int d : new int[]{FaceConfig.BOTTOM, FaceConfig.TOP, FaceConfig.LEFT,
-                FaceConfig.RIGHT, FaceConfig.FRONT, FaceConfig.BACK}) {
+        for (int d : new int[] {
+            FaceConfig.BOTTOM, FaceConfig.TOP, FaceConfig.LEFT, FaceConfig.RIGHT, FaceConfig.FRONT, FaceConfig.BACK
+        }) {
             if (FaceConfig.has(mask, d)) names.add(dirName(d));
         }
         return names.isEmpty() ? Component.translatable("gt.lang.face.none").getString() : String.join(", ", names);
@@ -77,8 +80,12 @@ public final class TooltipHelper {
 
     /** Returns "(auto)" if the auto-direction matches, "(no auto)" otherwise. */
     public static String autoLabel(int autoDir, int dir) {
-        return Component.translatable(FaceConfig.autoValid(autoDir) && autoDir == dir
-                ? "tooltip.gt6ce.ui.auto" : "tooltip.gt6ce.ui.no_auto").getString().strip();
+        return Component.translatable(
+                        FaceConfig.autoValid(autoDir) && autoDir == dir
+                                ? "tooltip.gt6ce.ui.auto"
+                                : "tooltip.gt6ce.ui.no_auto")
+                .getString()
+                .strip();
     }
 
     // ── Energy formatting ──────────────────────────────────────────────────
@@ -86,25 +93,30 @@ public final class TooltipHelper {
     /** "32 HU/t (16 to 64, Bottom)" */
     public static Component energyInLine(long nominal, long min, long max, String unit, String dirLabel) {
         return Component.empty()
-                .append(Component.translatable("gt.lang.energy.input").append(": ")
+                .append(Component.translatable("gt.lang.energy.input")
+                        .append(": ")
                         .withStyle(ChatFormatting.GREEN))
                 .append(Component.literal(formatLong(nominal)).withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(" " + unit + "/t").withStyle(ChatFormatting.GREEN))
-                .append(Component.literal(" (").append(Component.translatable("tooltip.gt6ce.ui.range", formatLong(min), formatLong(max))).append(", " + dirLabel + ")")
+                .append(Component.literal(" (")
+                        .append(Component.translatable("tooltip.gt6ce.ui.range", formatLong(min), formatLong(max)))
+                        .append(", " + dirLabel + ")")
                         .withStyle(ChatFormatting.WHITE));
     }
 
     /** "Energy OUT: 32 HU/t" */
     public static MutableComponent energyOutLine(long amount, String unit) {
         return Component.empty()
-                .append(Component.translatable("gt.lang.energy.output").append(": ")
+                .append(Component.translatable("gt.lang.energy.output")
+                        .append(": ")
                         .withStyle(ChatFormatting.RED))
                 .append(Component.literal(formatLong(amount) + " " + unit + "/t")
                         .withStyle(ChatFormatting.WHITE));
     }
 
     public static Component energyInNone() {
-        return Component.translatable("gt.lang.energy.input").append(": ")
+        return Component.translatable("gt.lang.energy.input")
+                .append(": ")
                 .append(Component.translatable("tooltip." + MOD + ".machine.none")
                         .withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.RED);
@@ -123,8 +135,9 @@ public final class TooltipHelper {
             default -> Component.translatable("tooltip." + MOD + ".machine.io." + typeKey);
         };
         List<MutableComponent> parts = new ArrayList<>();
-        for (int d : new int[]{FaceConfig.BOTTOM, FaceConfig.TOP, FaceConfig.LEFT,
-                FaceConfig.RIGHT, FaceConfig.FRONT, FaceConfig.BACK}) {
+        for (int d : new int[] {
+            FaceConfig.BOTTOM, FaceConfig.TOP, FaceConfig.LEFT, FaceConfig.RIGHT, FaceConfig.FRONT, FaceConfig.BACK
+        }) {
             if (FaceConfig.has(mask, d)) {
                 parts.add(Component.literal(dirName(d) + " " + autoLabel(autoMask, d)));
             }
@@ -143,12 +156,18 @@ public final class TooltipHelper {
 
     public static void appendToolInstructions(List<Component> tooltip) {
         ChatFormatting g = ChatFormatting.GRAY;
-        tooltip.add(Component.translatable("tooltip." + MOD + ".machine.tool.screwdriver").withStyle(g));
-        tooltip.add(Component.translatable("tooltip." + MOD + ".machine.tool.monkey_wrench_in").withStyle(g));
-        tooltip.add(Component.translatable("tooltip." + MOD + ".machine.tool.monkey_wrench_out").withStyle(g));
-        tooltip.add(Component.translatable("tooltip." + MOD + ".machine.tool.soft_hammer").withStyle(g));
-        tooltip.add(Component.translatable("tooltip." + MOD + ".machine.tool.magnifying_glass").withStyle(g));
-        tooltip.add(Component.translatable("tooltip." + MOD + ".machine.tool.wrench_facing").withStyle(g));
+        tooltip.add(Component.translatable("tooltip." + MOD + ".machine.tool.screwdriver")
+                .withStyle(g));
+        tooltip.add(Component.translatable("tooltip." + MOD + ".machine.tool.monkey_wrench_in")
+                .withStyle(g));
+        tooltip.add(Component.translatable("tooltip." + MOD + ".machine.tool.monkey_wrench_out")
+                .withStyle(g));
+        tooltip.add(Component.translatable("tooltip." + MOD + ".machine.tool.soft_hammer")
+                .withStyle(g));
+        tooltip.add(Component.translatable("tooltip." + MOD + ".machine.tool.magnifying_glass")
+                .withStyle(g));
+        tooltip.add(Component.translatable("tooltip." + MOD + ".machine.tool.wrench_facing")
+                .withStyle(g));
     }
 
     // ── Blast resistance ────────────────────────────────────────────────
@@ -162,7 +181,8 @@ public final class TooltipHelper {
             case TNT, DYNAMITE -> ChatFormatting.GREEN;
             case IC2_NUKE_UNPROTECTED -> ChatFormatting.AQUA;
         };
-        tooltip.add(Component.translatable("gt.lang.blastresistance").withStyle(ChatFormatting.WHITE)
+        tooltip.add(Component.translatable("gt.lang.blastresistance")
+                .withStyle(ChatFormatting.WHITE)
                 .append(Component.literal(gregtech.engine.block.OriginalBlockTooltipRules.blastNumber(resistance))
                         .withStyle(ChatFormatting.GOLD))
                 .append(Component.literal(" "))

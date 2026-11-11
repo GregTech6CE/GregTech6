@@ -2,9 +2,12 @@ package gregtech.content.item.behavior;
 
 import gregtech.content.item.behavior.ItemBehaviors.Consumable;
 import gregtech.content.item.behavior.ItemBehaviors.Outcome;
+import java.util.List;
 import javax.annotation.Nullable;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.Creeper;
@@ -165,6 +168,31 @@ public final class BehaviorLighter {
                 : FAILED_ROLL_COST;
         if (cost == 0L) return Outcome.refused(prepared);
         return Outcome.acted(consumeFuel(prepared, spec, cost, player));
+    }
+
+    /**
+     * GT6 {@code Behavior_Lighter.getAdditionalToolTips}: the fire hint, the fuel counter or
+     * single-use note, the chance when it is below 100%, and a red warning for a stack that the
+     * behaviour refuses to use.
+     *
+     * <p>Only the used and full variants carry the behaviour in GT6, so the caller filters the
+     * empty and broken variants out ({@link ItemBehaviors#tooltip}).</p>
+     */
+    public static void tooltip(ItemStack stack, LighterSpec spec, List<Component> lines) {
+        lines.add(Component.translatable("gt.behaviour.lighter.tooltip"));
+        if (spec.fuelAmount() > 1) {
+            lines.add(Component.translatable("gt.behaviour.lighter.uses")
+                    .append(" " + spec.can().remaining(stack)));
+        } else {
+            lines.add(Component.translatable("gt.behaviour.singleuse"));
+        }
+        if (spec.chance() < MAX_CHANCE) {
+            lines.add(Component.translatable("gt.behaviour.lighter.chance")
+                    .append(" " + (spec.chance() / 100) + "." + (spec.chance() % 100) + "%"));
+        }
+        if (!spec.accepts(stack)) {
+            lines.add(Component.translatable("gt.lang.requirement.unstacked").withStyle(ChatFormatting.RED));
+        }
     }
 
     /**

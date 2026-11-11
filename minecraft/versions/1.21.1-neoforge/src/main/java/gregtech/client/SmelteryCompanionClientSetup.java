@@ -1,11 +1,12 @@
 package gregtech.client;
 
 import gregtech.content.registry.GTBlockEntities;
-import gregtech.platform.neoforge.smeltery.SmelteryRegistries;
+import gregtech.content.registry.GTSmeltery;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 @EventBusSubscriber(
         modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
@@ -14,7 +15,7 @@ import net.neoforged.neoforge.client.event.*;
 public final class SmelteryCompanionClientSetup {
     @SubscribeEvent
     public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(SmelteryRegistries.MOLD.get(), context -> new SmelteryHullRenderer(context));
+        event.registerBlockEntityRenderer(GTBlockEntities.MOLD.get(), context -> new SmelteryHullRenderer(context));
         event.registerBlockEntityRenderer(
                 GTBlockEntities.MOLD_BASIN.get(), context -> new SmelteryHullRenderer(context));
     }
@@ -22,10 +23,7 @@ public final class SmelteryCompanionClientSetup {
     @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block event) {
         for (var list : java.util.List.of(
-                SmelteryRegistries.molds(),
-                SmelteryRegistries.basins(),
-                SmelteryRegistries.faucets(),
-                SmelteryRegistries.crossings()))
+                GTSmeltery.molds(), GTSmeltery.basins(), GTSmeltery.faucets(), GTSmeltery.crossings()))
             for (var holder : list)
                 event.register(
                         (state, level, pos, index) ->
@@ -36,10 +34,7 @@ public final class SmelteryCompanionClientSetup {
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
         for (var list : java.util.List.of(
-                SmelteryRegistries.molds(),
-                SmelteryRegistries.basins(),
-                SmelteryRegistries.faucets(),
-                SmelteryRegistries.crossings()))
+                GTSmeltery.molds(), GTSmeltery.basins(), GTSmeltery.faucets(), GTSmeltery.crossings()))
             for (var holder : list)
                 event.register(
                         ItemColorARGB.opaque((stack, index) ->

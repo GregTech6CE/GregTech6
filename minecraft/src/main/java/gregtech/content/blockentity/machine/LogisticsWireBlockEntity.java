@@ -8,11 +8,7 @@ import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.logistics.LogisticsHost;
 import gregtech.content.logistics.LogisticsCoverHost;
 import gregtech.content.logistics.LogisticsCovers;
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.logistics.LogisticsRegistries;
-*///?} else {
 import gregtech.content.registry.GTBlockEntities;
-//?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -26,11 +22,7 @@ public final class LogisticsWireBlockEntity extends BlockEntity implements Logis
     private final LogisticsCovers covers = new LogisticsCovers(this, this);
 
     public LogisticsWireBlockEntity(BlockPos pos, BlockState state) {
-//? if >=1.21.1 {
-        /*super(LogisticsRegistries.LOGISTICS_WIRE.get(), pos, state);
-*///?} else {
         super(GTBlockEntities.LOGISTICS_WIRE.get(), pos, state);
-//?}
     }
 
     @Override

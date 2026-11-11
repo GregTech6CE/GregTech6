@@ -1,9 +1,5 @@
 package gregtech.content.worldgen.dungeon;
 
-//? if >=1.21.1 {
-/*import gregtech.content.registry.*;
-*///?} else {
-//?}
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
@@ -20,15 +16,19 @@ import gregtech.content.blockentity.misc.PileBlockEntity;
 import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
-
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.registry.GTDecorBlocks;
-//?}
 import gregtech.content.registry.GTDungeonBlocks;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.SharedDecorBlocks;
+
+//? if >=1.21.1 {
+/*import gregtech.content.registry.*;
+*///?} else {
+import gregtech.content.registry.GTBookShelves;
+import gregtech.content.registry.GTCoinPiles;
+import gregtech.content.registry.GTMetalChests;
+import gregtech.content.registry.GTSafes;
+//?}
 
 //? if >=1.21.1 {
 //?} else {
@@ -448,11 +448,7 @@ public final class GTDungeonData {
      * The choice comes from a separate seeded stream, so the cell's furniture rolls stay untouched.</p>
      */
     public boolean coins(int ax, int ay, int az) {
-//? if >=1.21.1 {
-        /*if (!set(ax, ay, az, GTCoinPiles.COIN_PILE.get().defaultBlockState())) return false;
-*///?} else {
-        if (!set(ax, ay, az, GTDecorBlocks.COIN_PILE.get().defaultBlockState())) return false;
-//?}
+        if (!set(ax, ay, az, GTCoinPiles.COIN_PILE.get().defaultBlockState())) return false;
         BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
         if (level.getBlockEntity(pos) instanceof CoinPileBlockEntity pile) {
             for (int face = 0; face < CoinPileBlockEntity.FACES; face++) {
@@ -539,11 +535,7 @@ public final class GTDungeonData {
      * @param face  GT6's face index, {@code 0..15} (see {@link CoinPileBlockEntity#faceAt})
      * @param count coins on that face, clamped into GT6's cap
      */    public boolean coin(int ax, int ay, int az, int face, int count) {
-//? if >=1.21.1 {
-        /*if (!set(ax, ay, az, GTCoinPiles.COIN_PILE.get().defaultBlockState())) return false;
-*///?} else {
-        if (!set(ax, ay, az, GTDecorBlocks.COIN_PILE.get().defaultBlockState())) return false;
-//?}
+        if (!set(ax, ay, az, GTCoinPiles.COIN_PILE.get().defaultBlockState())) return false;
         BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
         if (level.getBlockEntity(pos) instanceof CoinPileBlockEntity pile) {
             pile.setCoin(rollCoin(ax, ay, az));
@@ -669,20 +661,12 @@ public final class GTDungeonData {
 
     /** GT6 places a dungeon chest with a vanilla loot category; the port uses the 1.20.1 table. */
     public boolean chest(int ax, int ay, int az, String lootTable) {
-//? if >=1.21.1 {
-        /*return chest(ax, ay, az, lootTable, GTMetalChests.chest(gregtech.content.material.Materials.Steel,false), shelfFacing(ax, az));
-*///?} else {
-        return chest(ax, ay, az, lootTable, gregtech.content.registry.GTStorage.chest(gregtech.content.material.Materials.Steel), shelfFacing(ax, az));
-//?}
+        return chest(ax, ay, az, lootTable, GTMetalChests.chest(gregtech.content.material.Materials.Steel, false), shelfFacing(ax, az));
     }
 
     /** GT6 steel mechanical/key safes 2010/3010, retaining the room's loot and key. */
     public boolean safe(int ax, int ay, int az, String lootTable, long keyId, boolean keyLocked) {
-//? if >=1.21.1 {
-        /*var block = GTSafes.safe(gregtech.content.material.Materials.Steel, keyLocked);
-*///?} else {
-        var block = gregtech.content.registry.GTStorage.safe(gregtech.content.material.Materials.Steel, keyLocked);
-//?}
+        var block = GTSafes.safe(gregtech.content.material.Materials.Steel, keyLocked);
         if (!set(ax, ay, az, block.defaultBlockState().setValue(gregtech.content.block.inventory.SafeBlock.FACING, shelfFacing(ax, az)))) return false;
         if (level.getBlockEntity(new BlockPos(x + ax, y + ay, z + az)) instanceof gregtech.content.blockentity.inventory.SafeBlockEntity safe) {
             if (keyLocked) safe.setKeyId(keyId);
@@ -708,11 +692,7 @@ public final class GTDungeonData {
             case 1 -> gregtech.content.material.Materials.Bronze;
             default -> gregtech.content.material.Materials.Steel;
         };
-//? if >=1.21.1 {
-        /*return chest(ax, ay, az, lootTable, GTMetalChests.chest(material,true), facing);
-*///?} else {
-        return chest(ax, ay, az, lootTable, gregtech.content.registry.GTStorage.reinforcedChest(material), facing);
-//?}
+        return chest(ax, ay, az, lootTable, GTMetalChests.chest(material, true), facing);
     }
 
     public boolean corridorChest(int ax, int ay, int az, String lootTable) {
@@ -722,13 +702,8 @@ public final class GTDungeonData {
             case 1 -> gregtech.content.material.Materials.Bronze;
             default -> gregtech.content.material.Materials.Steel;
         };
-//? if >=1.21.1 {
-        /*return chest(ax, ay, az, lootTable, wooden ? GTMetalChests.chest(material,true)
-                : GTMetalChests.chest(material,false), shelfFacing(ax, az));
-*///?} else {
-        return chest(ax, ay, az, lootTable, wooden ? gregtech.content.registry.GTStorage.reinforcedChest(material)
-                : gregtech.content.registry.GTStorage.chest(material), shelfFacing(ax, az));
-//?}
+        return chest(ax, ay, az, lootTable, wooden ? GTMetalChests.chest(material, true)
+                : GTMetalChests.chest(material, false), shelfFacing(ax, az));
     }
 
     /** Shelf loot is stored on the block entity and rolled lazily on interaction or destruction. */
@@ -761,11 +736,7 @@ public final class GTDungeonData {
      * the key back when the shelf is broken - like GT6's shelf, whose inventory drops with it.</p>
      */
     public boolean shelf(int ax, int ay, int az, @Nullable String lootTable, @Nullable ItemStack key, int keySlot) {
-//? if >=1.21.1 {
-        /*if (!set(ax, ay, az, DungeonBindings.block("bookshelf").defaultBlockState()
-*///?} else {
-        if (!set(ax, ay, az, GTDecorBlocks.BOOKSHELF.get().defaultBlockState()
-//?}
+        if (!set(ax, ay, az, GTBookShelves.get("bookshelf").defaultBlockState()
                 .setValue(gregtech.content.block.BookShelfBlock.FACING, shelfFacing(ax, az)))) return false;
         BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
         if (level.getBlockEntity(pos) instanceof gregtech.content.blockentity.inventory.BookShelfBlockEntity shelf) {
@@ -784,11 +755,7 @@ public final class GTDungeonData {
      * {@code NBT_INV_LIST}).
      */
     public boolean chestContents(int ax, int ay, int az, ItemStack... contents) {
-//? if >=1.21.1 {
-        /*if (!set(ax, ay, az, GTMetalChests.chest(gregtech.content.material.Materials.Gold,true)
-*///?} else {
-        if (!set(ax, ay, az, gregtech.content.registry.GTStorage.reinforcedChest(gregtech.content.material.Materials.Gold)
-//?}
+        if (!set(ax, ay, az, GTMetalChests.chest(gregtech.content.material.Materials.Gold, true)
                 .defaultBlockState().setValue(gregtech.content.block.inventory.MetalChestBlock.FACING, shelfFacing(ax, az)))) return false;
         BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
         if (level.getBlockEntity(pos) instanceof gregtech.content.blockentity.inventory.MetalChestBlockEntity chest) {

@@ -272,11 +272,7 @@ public class SensorBlockEntity extends BlockEntity {
                         newValue = source.temperatureK(BlockFace.of(facing.ordinal()));
                         maximum = source.maximumK(BlockFace.of(facing.ordinal()));
                     }
-//? if >=1.21.1 {
-                    /*else if (target instanceof gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity crucible) {
-*///?} else {
-                    else if (target instanceof gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity crucible) {
-//?}
+else if (target instanceof gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity crucible) {
                         newValue = crucible.getTemperature();
                         maximum = crucible.getMeltDownLimitK();
                     }

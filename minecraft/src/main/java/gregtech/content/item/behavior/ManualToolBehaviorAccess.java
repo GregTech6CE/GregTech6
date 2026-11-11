@@ -144,6 +144,20 @@ public final class ManualToolBehaviorAccess {
         return target.onIgnite(level, pos, side, player, igniter, sneaking, hitX, hitY, hitZ);
     }
 
+    /**
+     * Whether the clicked block handles GT6's {@code TOOL_igniter} itself, i.e. would be an
+     * {@code IBlockToolable} in GT6. Every GT machine block is one, whether or not its
+     * {@code onIgnite} accepts this particular click.
+     *
+     * <p>{@code IBlockToolable.Util.onToolClick} never falls back to {@code ToolCompat} for such a
+     * block, so a zero return means "this block declined" rather than "no behaviour here".</p>
+     */
+    public static boolean handlesIgniter(Level level, BlockPos pos) {
+        if (level.getBlockState(pos).getBlock() instanceof gregtech.engine.machine.GTMachineBlock) return true;
+        return level.getBlockEntity(pos) instanceof Ignitable
+                || level.getBlockState(pos).getBlock() instanceof Ignitable;
+    }
+
     /** GT6 {@code ToolCompat}: a TNT block ignited by a GT igniter costs one full unit. */
     public static final long TNT_COST = 10000L;
 

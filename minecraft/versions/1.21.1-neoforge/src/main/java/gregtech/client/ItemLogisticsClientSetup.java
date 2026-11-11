@@ -1,19 +1,18 @@
 package gregtech.client;
 
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTHoppers;
 import gregtech.content.registry.GTItemPipes;
-import gregtech.content.transport.HopperRegistries;
-import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 /** Original material tint, six-facing hopper geometry, pipe shape and covers. */
 @EventBusSubscriber(
@@ -42,12 +41,12 @@ public final class ItemLogisticsClientSetup {
         for (var block : gregtech.content.registry.AddonPipeRegistration.itemBlocks())
             event.register(
                     (state, level, pos, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF, block);
-        for (var entry : HopperRegistries.hoppers()) {
+        for (var entry : GTHoppers.hoppers()) {
             var block = entry.get();
             event.register(
                     (state, level, pos, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF, block);
         }
-        for (var entry : HopperRegistries.queues()) {
+        for (var entry : GTHoppers.queues()) {
             var block = entry.get();
             event.register(
                     (state, level, pos, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF, block);
@@ -68,14 +67,14 @@ public final class ItemLogisticsClientSetup {
                     ItemColorARGB.opaque(
                             (stack, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF),
                     block.asItem());
-        for (var entry : HopperRegistries.hoppers()) {
+        for (var entry : GTHoppers.hoppers()) {
             var block = entry.get();
             event.register(
                     ItemColorARGB.opaque(
                             (stack, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF),
                     block.asItem());
         }
-        for (var entry : HopperRegistries.queues()) {
+        for (var entry : GTHoppers.queues()) {
             var block = entry.get();
             event.register(
                     ItemColorARGB.opaque(
@@ -84,25 +83,16 @@ public final class ItemLogisticsClientSetup {
         }
     }
 
-    @SubscribeEvent
     public static void additional(ModelEvent.RegisterAdditional event) {
         for (String type : new String[] {"hopper", "queuehopper"})
             for (Direction face : Direction.values())
-                event.register(
-                        ModelResourceLocation.standalone(id("block/machine/" + type + "_" + face.getSerializedName())));
+                ClientModelEvents.registerAdditional(
+                        event, id("block/machine/" + type + "_" + face.getSerializedName()));
     }
 
-    @SubscribeEvent
     public static void models(ModelEvent.ModifyBakingResult event) {
-        var models = event.getModels();
-        ItemTransforms transforms = ItemTransforms.NO_TRANSFORMS;
-        for (String path : new String[] {"iron_block", "stone", "dirt"}) {
-            var model = models.get(ModelResourceLocation.inventory(ResourceLocation.withDefaultNamespace(path)));
-            if (model != null && model.isGui3d() && model.getTransforms() != ItemTransforms.NO_TRANSFORMS) {
-                transforms = model.getTransforms();
-                break;
-            }
-        }
+        BakedModelMap models = BakedModelMap.of(event.getModels());
+        ItemTransforms transforms = BlockItemModelHelper.blockItemTransforms();
         for (var entry : GTItemPipes.all()) {
             var block = entry.get();
             var spec = block.spec();
@@ -118,10 +108,7 @@ public final class ItemLogisticsClientSetup {
                             0,
                             overlay)
                     .itemTransforms(transforms);
-            var key = BuiltInRegistries.BLOCK.getKey(block);
-            for (var state : block.getStateDefinition().getPossibleStates())
-                models.put(BlockModelShaper.stateToModelLocation(key, state), model);
-            models.put(ModelResourceLocation.inventory(key), model);
+            BlockItemClientModels.alias(models, block, model, model);
         }
         for (var block : gregtech.content.registry.AddonPipeRegistration.itemBlocks()) {
             var spec = block.spec();
@@ -137,16 +124,12 @@ public final class ItemLogisticsClientSetup {
                             0,
                             overlay)
                     .itemTransforms(transforms);
-            var key = BuiltInRegistries.BLOCK.getKey(block);
-            for (var state : block.getStateDefinition().getPossibleStates())
-                models.put(BlockModelShaper.stateToModelLocation(key, state), model);
-            models.put(ModelResourceLocation.inventory(key), model);
+            BlockItemClientModels.alias(models, block, model, model);
         }
         for (String type : new String[] {"hopper", "queuehopper"}) {
             java.util.Map<Direction, BakedModel> faces = new java.util.EnumMap<>(Direction.class);
             for (Direction face : Direction.values()) {
-                var model = models.get(
-                        ModelResourceLocation.standalone(id("block/machine/" + type + "_" + face.getSerializedName())));
+                var model = models.find(id("block/machine/" + type + "_" + face.getSerializedName()));
                 if (model != null) faces.put(face, model);
             }
             if (faces.size() != 6) {
@@ -156,13 +139,10 @@ public final class ItemLogisticsClientSetup {
             }
             var model = new HopperBakedModel(faces, faces.get(Direction.DOWN));
             java.util.List<net.minecraft.world.level.block.Block> blocks = new java.util.ArrayList<>();
-            if (type.equals("hopper")) HopperRegistries.hoppers().forEach(e -> blocks.add(e.get()));
-            else HopperRegistries.queues().forEach(e -> blocks.add(e.get()));
+            if (type.equals("hopper")) GTHoppers.hoppers().forEach(e -> blocks.add(e.get()));
+            else GTHoppers.queues().forEach(e -> blocks.add(e.get()));
             for (var block : blocks) {
-                var key = BuiltInRegistries.BLOCK.getKey(block);
-                for (var state : block.getStateDefinition().getPossibleStates())
-                    models.put(BlockModelShaper.stateToModelLocation(key, state), model);
-                models.put(ModelResourceLocation.inventory(key), model);
+                BlockItemClientModels.alias(models, block, model, model);
             }
         }
     }

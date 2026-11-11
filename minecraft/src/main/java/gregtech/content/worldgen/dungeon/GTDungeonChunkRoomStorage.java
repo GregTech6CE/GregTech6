@@ -258,9 +258,9 @@ public class GTDungeonChunkRoomStorage extends GTDungeonChunkRoomEmpty {
     private static final int[] AMOUNTS = {16000, 32000, 64000};
     private static final String[][] FLUIDS = {
             // - Wooden Barrel 32714, 16000 mB (GT6's FL.lube is the port's Lubricant).
-            {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Water", "Purple_Drink"},
-            // - Ironwood Barrel 32734, 32000 mB; the water is holy water here.
-            {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Holywater", "Purple_Drink"},
+            {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Water", "Water"},
+            // - Ironwood Barrel 32734, 32000 mB; both special waters are gone.
+            {"Oil_Creosote", "Oil_Seed", "Lubricant", "Glue", "Latex", "Water", "Water"},
             // - Bronze Drum 32102, 64000 mB; normal oil twice, then the five special oils.
             {"Oil_Normal", "Oil_Normal", "Oil_Soulsand", "Oil_Light", "Oil_Medium", "Oil_Heavy",
                     "Oil_ExtraHeavy"}};

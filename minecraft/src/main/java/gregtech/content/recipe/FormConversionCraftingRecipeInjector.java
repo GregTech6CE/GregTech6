@@ -324,13 +324,8 @@ public final class FormConversionCraftingRecipeInjector {
 //?}
         java.util.Map<String, java.util.Map<gregtech.engine.machine.PipeSpec.PipeSize,
                 net.minecraft.world.item.Item>> families = new java.util.LinkedHashMap<>();
-//? if >=1.21.1 {
-        /*for (var holder : gregtech.content.transport.fluid.FluidTransportRegistries.pipes()) {
-            if (!holder.isBound()) continue;
-*///?} else {
         for (var holder : gregtech.content.registry.GTFluidPipes.all()) {
-            if (!holder.isPresent()) continue;
-//?}
+            if (!holder.isBound()) continue;
             var spec = holder.get().spec();
             families.computeIfAbsent(spec.material().getName(), ignored -> new java.util.EnumMap<>(
                     gregtech.engine.machine.PipeSpec.PipeSize.class))

@@ -1,11 +1,7 @@
 package gregtech.compat.jade;
 
 import gregtech.content.block.machine.SmeltingCrucibleBlock;
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
-*///?} else {
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
-//?}
 import gregtech.api.material.GTMaterial;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -34,28 +30,14 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
     @Override
     public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
         var entity = accessor.getBlockEntity();
-//? if >=1.21.1 {
-        /*SmeltingCrucibleEntity crucible = entity instanceof SmeltingCrucibleEntity direct ? direct
-*///?} else {
         SmeltingCrucibleBlockEntity crucible = entity instanceof SmeltingCrucibleBlockEntity direct ? direct
-//?}
                 : entity instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity port
-//? if >=1.21.1 {
-/*// Version-specific branch.
-                    ? (port.crucibleController() instanceof SmeltingCrucibleEntity owner ? owner : null) : null;
-*///?} else {
-// Version-specific branch.
-                    ? port.crucibleController() : null;
-//?}
+                        ? (port.crucibleController() instanceof SmeltingCrucibleBlockEntity owner ? owner : null) : null;
         if (crucible == null) return;
         appendCrucibleData(tag, crucible);
     }
 
-//? if >=1.21.1 {
-    /*public static void appendCrucibleData(CompoundTag tag, SmeltingCrucibleEntity crucible) {
-*///?} else {
     public static void appendCrucibleData(CompoundTag tag, SmeltingCrucibleBlockEntity crucible) {
-//?}
         tag.putLong(NBT_TEMPERATURE, crucible.getTemperature());
         var contents = new net.minecraft.nbt.ListTag();
         for (var stack : crucible.getContentView()) {

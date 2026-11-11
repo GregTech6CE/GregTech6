@@ -1,34 +1,25 @@
 package gregtech.content.registry;
 
-import gregtech.engine.energy.EnergyNodeSpec;
-//? if >=1.21.1 {
-/*import gregtech.content.block.energy.*;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-*///?} else {
-import gregtech.engine.energy.EnergyNodeSpec.Kind;
 import gregtech.content.block.energy.EnergyNodeBlock;
 import gregtech.content.block.energy.MagnetMachineBlock;
 import gregtech.content.block.energy.ReactorCasingBlock;
 import gregtech.content.block.energy.ReactorCore2x2Block;
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
+import gregtech.engine.energy.EnergyNodeSpec;
+import gregtech.engine.energy.EnergyNodeSpec.Kind;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-//?}
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 //? if >=1.21.1 {
 /*import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.*;
 import net.neoforged.neoforge.capabilities.*;
-import java.util.*;
-
-/^* Registered current energy nodes; reactors retain their native registry boundary. ^/
-*///?} else {
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+*///?}
 
 /**
  * GT6 energy-net node devices: electric motors (EU→RU), dynamos (RU→EU),
@@ -36,17 +27,13 @@ import java.util.List;
  * battery boxes / storage cabinets. Rates follow the original
  * {@code Loader_MultiTileEntities} NBT_INPUT/NBT_OUTPUT values.
  */
-//?}
 public final class GTEnergyNodes {
     private static final List<RegisteredBlock<EnergyNodeBlock>> ALL = new ArrayList<>();
 
-//? if >=1.21.1 {
-    /*private GTEnergyNodes() {
+    public static RegisteredBlockEntity<EnergyNodeBlockEntity> ENERGY_NODE;
+
+    private GTEnergyNodes() {
     }
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
-    public static final DeferredHolder<BlockEntityType<?>,
-            BlockEntityType<gregtech.content.blockentity.energy.EnergyNodeBlockEntity>> ENERGY_NODE = ENTITIES.register("energy_node",
-            () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.EnergyNodeBlockEntity::new, supportedBlocks()).build(null));
 
     private static Block[] supportedBlocks() {
         var blocks = new ArrayList<Block>();
@@ -55,24 +42,21 @@ public final class GTEnergyNodes {
         return blocks.toArray(Block[]::new);
     }
 
-    public static void submit(IEventBus bus) {
-        ENTITIES.register(bus);
+//? if >=1.21.1 {
+    /*public static void submit(IEventBus bus) {
         bus.addListener(GTEnergyNodes::capabilities);
     }
 
     private static void capabilities(RegisterCapabilitiesEvent event) {
         var type = ENERGY_NODE.get();
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, type,
-                gregtech.content.blockentity.energy.EnergyNodeBlockEntity::energyCapability);
+                EnergyNodeBlockEntity::energyCapability);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, type,
-                gregtech.content.blockentity.energy.EnergyNodeBlockEntity::itemCapability);
+                EnergyNodeBlockEntity::itemCapability);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, type,
-                gregtech.content.blockentity.energy.EnergyNodeBlockEntity::fluidCapability);
+                EnergyNodeBlockEntity::fluidCapability);
     }
-*///?} else {
-    private GTEnergyNodes() {
-    }
-//?}
+*///?}
 
     public static RegisteredBlock<gregtech.content.block.energy.ReactorCoreBlock> REACTOR_CORE_BLOCK;
     public static RegisteredBlock<ReactorCasingBlock> REACTOR_CASING;
@@ -102,6 +86,10 @@ public final class GTEnergyNodes {
                 block -> new BlockItem(block, new Item.Properties()));
 
         registerSpecifications(registrar);
+        ENERGY_NODE = registrar.blockEntity(
+                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
+                "energy_node",
+                () -> BlockEntityType.Builder.of(EnergyNodeBlockEntity::new, supportedBlocks()).build(null));
     }
 
     public static List<RegisteredBlock<EnergyNodeBlock>> all() {

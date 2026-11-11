@@ -98,11 +98,7 @@ public class MoldBlock extends Block implements EntityBlock, GTMachineBlock, Sim
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-//? if >=1.21.1 {
-        /*return new gregtech.platform.neoforge.smeltery.MoldEntity(pos,state);
-*///?} else {
         return new MoldBlockEntity(pos, state);
-//?}
     }
 
     @Nullable

@@ -6,6 +6,8 @@ import gregtech.content.item.MultiBehaviorItem;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
 /**
@@ -16,10 +18,22 @@ import net.minecraft.world.item.Item;
 public final class GTMultiItems {
     private static final Map<String, RegisteredItem<Item>> BY_ID = new LinkedHashMap<>();
 
+    /**
+     * GT6's {@code TD.Creative.HIDDEN} on the used and broken lighter variants
+     * ({@code MultiItemRandomTools}); the empty and full variants stay in the creative tab.
+     */
+    private static final Set<String> CREATIVE_HIDDEN = Set.of(
+            "match_box", "lighter", "shiny_lighter", "plastic_lighter", "plastic_lighter_broken");
+
     private GTMultiItems() {}
 
     public static Collection<RegisteredItem<Item>> all() {
         return BY_ID.values();
+    }
+
+    /** Whether GT6 hides this multi-item from its creative entries. */
+    public static boolean creativeHidden(ResourceLocation id) {
+        return CREATIVE_HIDDEN.contains(id.getPath());
     }
 
     public static void register(ContentRegistrar registrar) {

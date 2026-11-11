@@ -33,8 +33,7 @@ public final class GTMultiblocks {
             DISTILLATION_TOWER_PART, TANK_WALL, TANK_WALL_DENSE, FIRE_BRICKS,
             IMPLOSION_COMPRESSOR_WALL, LARGE_NIOBIUM_TITANIUM_COIL, LARGE_COPPER_COIL,
             LARGE_IRIDIUM_COIL, DENSE_TITANIUM_WALL, TUNGSTEN_WALL, LIGHTNING_ROD,
-            COKE_OVEN_MAIN, CRYO_DISTILLATION_MAIN, HEAT_EXCHANGER_MAIN, LOGISTICS_CORE,
-            IMPLOSION_COMPRESSOR_MAIN, FUSION_REACTOR_MAIN;
+            COKE_OVEN_MAIN, CRYO_DISTILLATION_MAIN, HEAT_EXCHANGER_MAIN, LOGISTICS_CORE;
     public static RegisteredBlock<BasicMachineBlock> DISTILLATION_TOWER_MAIN;
     public static void registerAll(ContentRegistrar registrar) {
         if (!NAMED.isEmpty()) throw new IllegalStateException("Multiblocks registered twice");
@@ -54,22 +53,8 @@ public final class GTMultiblocks {
         COKE_OVEN_MAIN = controller(registrar, "coke_oven_main", () -> new CokeOvenControllerBlock(properties(6)), ControllerDeclarations.COKE_OVEN);
         CRYO_DISTILLATION_MAIN = controller(registrar, "cryo_distillation_main", () -> new CryoDistillationControllerBlock(properties(6)), ControllerDeclarations.CRYO_DISTILLATION);
         HEAT_EXCHANGER_MAIN = controller(registrar, "heat_exchanger_main", () -> new LargeHeatExchangerControllerBlock(properties(6)), ControllerDeclarations.HEAT_EXCHANGER);
-        //? if >=1.21.1 {
-        /*LOGISTICS_CORE = controller(registrar, "logistics_core", () -> new LogisticsCoreControllerBlock(properties(6)), ControllerDeclarations.LOGISTICS);
+        LOGISTICS_CORE = controller(registrar, "logistics_core", () -> new LogisticsCoreControllerBlock(properties(6)), ControllerDeclarations.LOGISTICS);
         DISTILLATION_TOWER_MAIN = RegisteredBlock.reference("distillation_tower_main");
-        *///?} else {
-        LOGISTICS_CORE = RegisteredBlock.reference("logistics_core");
-        IMPLOSION_COMPRESSOR_MAIN = controller(registrar, "implosion_compressor_main", () -> new ImplosionCompressorControllerBlock(properties(12.5f)), ControllerDeclarations.IMPLOSION);
-        FUSION_REACTOR_MAIN = controller(registrar, "fusion_reactor_main", () -> new FusionReactorControllerBlock(properties(12.5f)), ControllerDeclarations.FUSION);
-        var original = OriginalMultiblockMachineParameters.distillationTower();
-        var spec = new gregtech.engine.machine.BasicMachineSpec(original.id(), original.material(),
-                original.machineName(), original.energy().type().name(), original.energy().tier(), original.energy().energyIn(), original.energy().energyOut(),
-                original.hardness(), original.blastResistance(), gregtech.engine.energy.FaceConfig.from(original.faceConfig()),
-                original.constructionMaterials(), gregtech.content.data.MachineRecipeMaps.DistillationTower,
-                original.options().parallelLimit(), original.energy().energyInMin(), original.energy().energyInMax());
-        DISTILLATION_TOWER_MAIN = RegisteredBlock.wrap(spec.id(),
-                gregtech.engine.machine.MachineRegistry.registerBasicMachine(spec, props -> new MultiblockControllerBlock(spec, props)));
-        //?}
     }
     /** Queues addon casings after the built-in parts. A call before addon machines install does nothing. */
     public static void registerAddonParts(ContentRegistrar registrar) {

@@ -5,7 +5,6 @@ import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.platform.Mc;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -42,14 +41,6 @@ public final class MaterialIcons {
      */
     public static ResourceLocation sharedModelLocation(MaterialTextureSet set, MaterialPrefix prefix) {
         return Mc.gregtechId(MaterialIconDefinitions.modelPath(set, prefix));
-    }
-
-    public static ModelResourceLocation sharedModelInventory(MaterialTextureSet set, MaterialPrefix prefix) {
-        return ModelResourceLocationCompat.inventory(sharedModelLocation(set, prefix));
-    }
-
-    public static ModelResourceLocation sharedModelStandalone(MaterialTextureSet set, MaterialPrefix prefix) {
-        return ModelResourceLocationCompat.standalone(sharedModelLocation(set, prefix));
     }
 
     public static String sharedModelId(GTMaterial material, MaterialPrefix prefix) {

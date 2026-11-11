@@ -1,11 +1,14 @@
 package gregtech.client;
 
 import gregtech.client.gui.BasicMachineScreen;
-import gregtech.platform.neoforge.machine.BasicMachineRegistries;
+import gregtech.content.registry.GTBasicMachines;
+import gregtech.content.registry.GTMenuTypes;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 @EventBusSubscriber(
         modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
@@ -16,10 +19,9 @@ public final class BasicMachineClientSetup {
 
     @SubscribeEvent
     public static void screens(RegisterMenuScreensEvent event) {
-        event.register(BasicMachineRegistries.MENU.get(), BasicMachineScreen::new);
+        event.register(GTMenuTypes.BASIC_MACHINE.get(), BasicMachineScreen::new);
         event.register(
-                BasicMachineRegistries.BEHAVIOR_MENU.get(),
-                (net.minecraft.client.gui.screens.MenuScreens.ScreenConstructor<
+                GTMenuTypes.BEHAVIOR_MACHINE.get(), (net.minecraft.client.gui.screens.MenuScreens.ScreenConstructor<
                                 gregtech.client.gui.BehaviorMachineMenu, gregtech.client.gui.BehaviorMachineHostScreen>)
                         (menu, inventory, title) -> {
                             var machine = menu.machine();
@@ -30,12 +32,12 @@ public final class BasicMachineClientSetup {
                                             menu, inventory, title, custom)
                                     : new gregtech.client.gui.BehaviorMachineScreen(menu, inventory, title);
                         });
-        event.register(BasicMachineRegistries.PART_MENU.get(), gregtech.client.gui.PartScreen::new);
+        event.register(GTMenuTypes.PART.get(), gregtech.client.gui.PartScreen::new);
     }
 
     @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block event) {
-        for (var holder : BasicMachineRegistries.all()) {
+        for (var holder : GTBasicMachines.all()) {
             var block = holder.get();
             event.register(
                     (state, level, pos, index) ->
@@ -46,7 +48,7 @@ public final class BasicMachineClientSetup {
 
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
-        for (var holder : BasicMachineRegistries.all()) {
+        for (var holder : GTBasicMachines.all()) {
             var block = holder.get();
             event.register(
                     ItemColorARGB.opaque((stack, index) ->
@@ -57,7 +59,7 @@ public final class BasicMachineClientSetup {
 
     @SubscribeEvent
     public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
-        for (var type : BasicMachineRegistries.types())
+        for (var type : GTBasicMachines.types())
             event.registerBlockEntityRenderer(type.get(), MachineCoverRenderer::new);
         event.registerBlockEntityRenderer(
                 gregtech.content.registry.GTBlockEntities.COKE_OVEN.get(), MachineCoverRenderer::new);

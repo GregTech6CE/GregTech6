@@ -1,47 +1,43 @@
 package gregtech.client;
 
+import gregtech.platform.Mc;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
-
-import java.util.Map;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 /** Shared block / block-item model aliasing for 3D inventory display. */
 public final class BlockItemClientModels {
     private BlockItemClientModels() {}
 
-//? if >=1.21.1 {
-    /*public static void aliasItemInventory(Map<ModelResourceLocation, BakedModel> models, ResourceLocation itemId,
-*///?} else {
-    public static void aliasItemInventory(Map<ResourceLocation, BakedModel> models, ResourceLocation itemId,
-//?}
-                                        BakedModel itemModel) {
-        models.put(new ModelResourceLocation(itemId, "inventory"), itemModel);
+    /** Replace the inventory model of the block's item. */
+    public static void aliasBlockItem(BakedModelMap models, Block block, BakedModel itemModel) {
+        if (block.asItem() == net.minecraft.world.item.Items.AIR) {
+            return;
+        }
+        ResourceLocation itemId = Mc.itemId(block.asItem());
+        if (itemId != null) {
+            models.put(itemId, "inventory", itemModel);
+        }
     }
 
-//? if >=1.21.1 {
-    /*public static void alias(Map<ModelResourceLocation, BakedModel> models, ResourceLocation registryId,
-*///?} else {
-    public static void alias(Map<ResourceLocation, BakedModel> models, ResourceLocation registryId,
-//?}
-                             ResourceLocation blockModelId, BakedModel blockModel, BakedModel itemModel) {
-        models.put(new ModelResourceLocation(blockModelId, ""), blockModel);
-        models.put(new ModelResourceLocation(registryId, ""), blockModel);
-        models.put(new ModelResourceLocation(registryId, "inventory"), itemModel);
-        models.put(new ModelResourceLocation(registryId, "waterlogged=false"), blockModel);
-        models.put(new ModelResourceLocation(registryId, "waterlogged=true"), blockModel);
-        models.put(new ModelResourceLocation(blockModelId, "waterlogged=false"), blockModel);
-        models.put(new ModelResourceLocation(blockModelId, "waterlogged=true"), blockModel);
+    /** Replace every world state of the block; the block's own state definition decides the keys. */
+    public static void aliasWorldStates(BakedModelMap models, Block block, BakedModel worldModel) {
+        ResourceLocation blockId = Mc.blockId(block);
+        if (blockId == null) {
+            return;
+        }
+        for (BlockState state : block.getStateDefinition().getPossibleStates()) {
+            models.putState(blockId, state, worldModel);
+        }
+    }
+
+    public static void alias(BakedModelMap models, Block block, BakedModel worldModel, BakedModel itemModel) {
+        aliasWorldStates(models, block, worldModel);
+        aliasBlockItem(models, block, itemModel);
     }
 
     public static BakedModel asBlockItem(BakedModel shared) {
         return new BlockItemDisplayBakedModel(shared);
     }
-
-//? if >=1.21.1 {
-//?} else {
-    public static BakedModel asBlockItem(BakedModel shared, int materialColor) {
-        return new MaterialBlockBakedModel(shared);
-    }
-//?}
 }

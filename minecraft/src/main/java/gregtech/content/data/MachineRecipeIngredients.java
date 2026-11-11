@@ -14,13 +14,8 @@ import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.item.MaterialItem;
 import gregtech.platform.Mc;
-//? if >=1.21.1 {
-/*import gregtech.content.transport.fluid.FluidTransportRegistries;
-
-*///?} else {
 import gregtech.content.registry.GTFluidPipes;
 import gregtech.content.registry.GTWires;
-//?}
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -407,13 +402,8 @@ public final class MachineRecipeIngredients {
     private static synchronized void indexPipes() {
         if (pipesBySize != null) return;
         Map<String, Map<GTMaterial, Item>> index = new HashMap<>();
-//? if >=1.21.1 {
-        /*for (var entry : FluidTransportRegistries.pipes()) {
-            if (!entry.isBound()) continue;
-*///?} else {
         for (var entry : GTFluidPipes.all()) {
-            if (!entry.isPresent()) continue;
-//?}
+            if (!entry.isBound()) continue;
             FluidPipeBlock block = entry.get();
             PipeSpec spec = block.spec();
             index.computeIfAbsent(spec.size().name().toLowerCase(java.util.Locale.ROOT), k -> new HashMap<>())

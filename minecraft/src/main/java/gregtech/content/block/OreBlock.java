@@ -1,11 +1,9 @@
 package gregtech.content.block;
-import gregtech.engine.mod.GregTechIdentity;
-//? if >=1.21.1 {
-//?} else {
 import gregtech.engine.material.MaterialPresentation;
-//?}
+import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.content.worldgen.OreHarvest;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.stack.StackData;
@@ -151,20 +149,12 @@ public class OreBlock extends Block implements MaterialBlockLike {
 
     @Override
     public String getDescriptionId() {
-//? if >=1.21.1 {
-        /*return "block." + "gt6ce" + "." + prefix.getRegistryName();
-*///?} else {
         return "block." + GregTechIdentity.REGISTRY_NAMESPACE + "." + prefix.getRegistryName();
-//?}
     }
 
     @Override
     public MutableComponent getName() {
-//? if >=1.21.1 {
-        /*return Component.translatable(getDescriptionId(), Component.translatable(material.getTranslationKey(), material.getDisplayNameFallback()));
-*///?} else {
         return Component.translatable(getDescriptionId(), MaterialPresentation.name(material));
-//?}
     }
 
     /** True for the {@code oreSmall} prefix variant. */
@@ -178,7 +168,7 @@ public class OreBlock extends Block implements MaterialBlockLike {
                           net.minecraft.world.level.block.entity.BlockEntity blockEntity,
                           net.minecraft.world.entity.Entity breaker, ItemStack tool) {
         RandomSource random = level.getRandom();
-        boolean silkTouch = gregtech.content.worldgen.OreHarvest.from(level, tool).silkTouch();
+        boolean silkTouch = OreHarvest.from(level, tool).silkTouch();
 *///?} else {
     public int getExpDrop(BlockState state, LevelReader level, RandomSource random, BlockPos pos,
                           int fortuneLevel, int silkTouchLevel) {
@@ -296,15 +286,9 @@ public class OreBlock extends Block implements MaterialBlockLike {
         // GT6 broken ore is already detached from its intact host and drops as the same 2U block.
         if (isBroken(state)) return Collections.singletonList(withStone(new ItemStack(this), state));
         if(isSmall()) {
-            ItemStack tool=builder.getOptionalParameter(LootContextParams.TOOL);
-            if(tool==null)tool=ItemStack.EMPTY;
-//? if >=1.21.1 {
-            /*int fortune=gregtech.content.worldgen.OreHarvest.from(builder).fortune();
-            boolean silk=gregtech.content.worldgen.OreHarvest.from(builder).silkTouch();
-*///?} else {
-            int fortune=net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.BLOCK_FORTUNE,tool);
-            boolean silk=net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH,tool)>0;
-//?}
+            OreHarvest harvest=OreHarvest.from(builder);
+            int fortune=harvest.fortune();
+            boolean silk=harvest.silkTouch();
             var origin=builder.getOptionalParameter(LootContextParams.ORIGIN);
             BlockPos pos=origin==null?BlockPos.ZERO:BlockPos.containing(origin);
             // GT6 Drops_SmallOre's secondary drop is the host rock's dust, but its argument is not
@@ -313,21 +297,9 @@ public class OreBlock extends Block implements MaterialBlockLike {
             return SmallOreDrops.drops(material,pos,fortune,silk,
                     dust==null?null:GTMaterialRegistry.get(dust));
         }
-        ItemStack tool = builder.getOptionalParameter(LootContextParams.TOOL);
-        if (tool == null) tool = ItemStack.EMPTY;
-//? if >=1.21.1 {
-        /*boolean silk = gregtech.content.worldgen.OreHarvest.from(builder).silkTouch();
-*///?} else {
-        boolean silk = net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(
-                net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH, tool) > 0;
-//?}
-        if (silk) return Collections.singletonList(withStone(new ItemStack(this), state));
-//? if >=1.21.1 {
-        /*int fortune = gregtech.content.worldgen.OreHarvest.from(builder).fortune();
-*///?} else {
-        int fortune = net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(
-                net.minecraft.world.item.enchantment.Enchantments.BLOCK_FORTUNE, tool);
-//?}
+        OreHarvest harvest = OreHarvest.from(builder);
+        if (harvest.silkTouch()) return Collections.singletonList(withStone(new ItemStack(this), state));
+        int fortune = harvest.fortune();
         var raw = gregtech.content.registry.GTItems.getStack(gregtech.content.data.MaterialPrefix.oreRaw,
                 material, 1 + builder.getLevel().random.nextInt(Math.max(0, fortune) + 1));
         return raw.isEmpty() ? Collections.emptyList() : Collections.singletonList(raw);

@@ -6,12 +6,9 @@ import gregtech.content.blockentity.misc.BumbleHiveBlockEntity;
 import gregtech.content.bumble.BumbleBeeGenes;
 import gregtech.content.bumble.BumbleBeeType;
 import gregtech.content.bumble.GTBumbleSpecies;
+import gregtech.content.registry.GTBumbleBlocks;
 import gregtech.platform.Mc;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.registry.GTDecorBlocks;
-//?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -283,11 +280,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
                                     @Nullable CompoundTag overrideGenes) {
         GTBumbleSpecies.Species species = GTBumbleSpecies.byId(colony.speciesId());
         if (species == null) return false;
-//? if >=1.21.1 {
-        /*Block hive = gregtech.content.registry.GTBumbleBlocks.hive(colony.dye());
-*///?} else {
-        Block hive = GTDecorBlocks.hive(colony.dye());
-//?}
+        Block hive = GTBumbleBlocks.hive(colony.dye());
         if (hive == null) return false;
 
         CompoundTag genes = overrideGenes != null ? overrideGenes : genesFor(level, pos, random);

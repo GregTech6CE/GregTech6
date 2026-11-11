@@ -62,13 +62,8 @@ public class TechItem extends Item implements gregtech.engine.recipe.RecipeCatal
         }
         // GT6's IBehavior.getAdditionalToolTips - the data-storage tooltips of the USB stick and
         // the USB drive read the stack's NBT, so they cannot be lang keys; the behaviour layer renders
-        // them (Behavior_DataStorage / Behavior_DataStorage16).
-//? if >=1.21.1 {
-        /*if(gregtech.content.data.UsbDataMedia.isStick(stack))gregtech.content.item.behavior.BehaviorDataStorage.tooltip(stack,tooltip);
-        else if(gregtech.content.data.UsbDataMedia.isDrive(stack))gregtech.content.item.behavior.BehaviorDataStorage16.tooltip(stack,tooltip);
-*///?} else {
+        // them (Behavior_DataStorage / Behavior_DataStorage16), together with the lighter counter.
         gregtech.content.item.behavior.ItemBehaviors.tooltip(stack, tooltip);
-//?}
     }
 
     /**

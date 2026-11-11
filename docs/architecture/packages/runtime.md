@@ -32,18 +32,18 @@
 
 ## 内容注册
 
-`bootstrap.ContentRegistration` 是共享内容家族的唯一顺序：物品 → 方块 → 平台 `blocks` hook → 机器家族 → 平台 `machines` hook → 附属多方块部件 → 创造栏。物品和方块家族只提供一个共享入口（通常是 `register(ContentRegistrar)`），通过 `RegisteredItem` / `RegisteredBlock` 句柄取结果，不直接声明物品或方块 `DeferredRegister`，也不接收 `IEventBus`；创造栏、声音、流体和结构等非物品注册仍由各自的共享注册表持有。
+`bootstrap.ContentRegistration` 是共享内容家族的唯一顺序：物品 → 方块 → 平台 `blocks` hook → 机器家族 → 平台 `machines` hook → 附属多方块部件 → 创造栏。物品和方块家族只提供一个共享入口（通常是 `register(ContentRegistrar)`），通过 `RegisteredItem` / `RegisteredBlock` / `RegisteredBlockEntity` 句柄取结果，不直接声明物品或方块 `DeferredRegister`，也不接收 `IEventBus`；创造栏、声音、流体和结构等非物品注册仍由各自的共享注册表持有。
 
-`ContentRegistrar.shared()` 是唯一的适配器实现：内置命名空间落到 `GTItems.ITEMS`、`GTBlocks.BLOCKS` 和 `GTBlocks.BLOCK_ITEMS`，附属命名空间按 namespace 取独立注册表，不并入 `gt6ce`。平台入口只做三件事：绑定平台服务与前置数据、通过 `ContentRegistration.PlatformContent` 的 `blocks` / `machines` 位置追加平台专属家族、在最后调用一次 `submit()` 提交所有延迟注册表。`submit()` 是唯一的提交点；家族方法只排队，不自带 `IEventBus` 重载，也不调用 `DeferredRegister#register(bus)`。附属命名空间的方块实体表、Menu、能力、声音、网络和其他原生注册仍留在版本层，由各平台入口在同一个 `submit()` 中集中提交。
+`ContentRegistrar.shared()` 是唯一的适配器实现：内置命名空间落到 `GTItems.ITEMS`、`GTBlocks.BLOCKS` 和 `GTBlocks.BLOCK_ITEMS`，附属命名空间按 namespace 取独立注册表，不并入 `gt6ce`。平台入口只做三件事：绑定平台服务与前置数据、通过 `ContentRegistration.PlatformContent` 的 `blocks` / `machines` 位置追加平台专属家族、在最后调用一次 `submit()` 提交所有延迟注册表。`submit()` 是唯一的提交点；家族方法只排队，需要额外提交的家族提供 `submit(IEventBus)`，但不在 `register(ContentRegistrar)` 内提交。附属命名空间的方块实体表通过共享 `GTBlockEntities.entities(namespace)` 排队；Menu、能力、网络和其他原生注册仍由节点入口在同一个 `submit()` 中集中提交。
 
-平台内部装载适配器（Forge 的 `MachineRegistry` / `GTMachines`、`GTBlockEntities`、`GTFluids` 等非物品注册表）仍需使用平台注册类型，它们属于版本层的适配代码，不受“内容家族只使用 `ContentRegistrar`”约束；共享内容家族不得绕过适配器直接写 `GTBlocks` / `GTItems`。
+共享注册表（`GTBlockEntities`、`GTFluids`，内部按版本分支）与节点适配器（NeoForge 的 `SmelteryItemCapabilities`、`BasicMachineRegistries` 等能力与菜单注册）仍需使用平台注册类型，它们属于注册适配代码，不受“内容家族只使用 `ContentRegistrar`”约束；共享内容家族不得绕过适配器直接写 `GTBlocks` / `GTItems`。
 
 新增内容家族时：
 
 1. 在定义层（`core` 或共享 `minecraft/src`）提供数据与工厂；
 2. 家族类实现唯一的共享注册入口，只使用 `ContentRegistrar`；
 3. 把入口加到 `ContentRegistration` 的对应阶段；平台专属家族加到该平台的 `PlatformContent` hook；
-4. 确实需要新的注册对象类型（方块实体、Menu、能力等）时，只扩展平台适配层，不复制共享顺序。
+4. 确实需要新的注册对象类型（方块实体、Menu、能力等）时，只扩展平台适配层，不复制共享顺序；共享 BE 类型优先用 `ContentRegistrar.blockEntity` 排队，节点专属 BE 类型留在节点类。
 
 ## 世界对象如何接规则
 

@@ -95,11 +95,7 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
             if (index == 0) return gregtech.content.material.Materials.Ceramic.getColor();
             if (index == 1) return gregtech.engine.material.GTMaterialRegistry.get(pestleMaterial).resolve().getColor();
         }
-//? if >=1.21.1 {
-        /*return index == 0 ? gregtech.content.registry.GTManualStations.tintOf(kind) : 0xFFFFFF;
-*///?} else {
-        return index == 0 ? gregtech.content.registry.GTToolBlocks.tintOf(kind) : 0xFFFFFF;
-//?}
+        return index == 0 ? gregtech.content.registry.GTManualStations.tintOf(kind) : 0xFFFFFF;
     }
 
     public ManualToolBlockEntity.Kind kind() {

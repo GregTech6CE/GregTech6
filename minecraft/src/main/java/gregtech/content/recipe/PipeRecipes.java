@@ -1,35 +1,27 @@
 package gregtech.content.recipe;
 
-
-import gregtech.engine.machine.ItemPipeSpec;
-import gregtech.engine.machine.PipeSpec;
-import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
 import gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding;
-import gregtech.engine.recipe.MaterialUnitRecipe;
-import gregtech.engine.recipe.Recipe;
-import gregtech.engine.recipe.RecipeMap;
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.data.generated.MaterialWorkability;
-//? if >=1.21.1 {
-/*import gregtech.content.transport.fluid.FluidTransportRegistries;
-*///?} else {
 import gregtech.content.registry.GTFluidPipes;
-//?}
 import gregtech.content.registry.GTItemPipes;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
+import gregtech.engine.machine.ItemPipeSpec;
+import gregtech.engine.machine.PipeSpec;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.recipe.MaterialUnitRecipe;
+import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
 import gregtech.platform.Mc;
-import net.minecraft.world.item.ItemStack;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * GT6's Welder rows that turn curved plates into pipes: {@code Loader_Recipes_Handlers} (hard
@@ -54,7 +46,7 @@ import java.util.Map;
  * the mod unobtainable outside of creative mode.</p>
  */
 public final class PipeRecipes {
-    private static final List<PipeWeldingRules.Row> ROWS=PipeWeldingRules.ROWS;
+    private static final List<PipeWeldingRules.Row> ROWS = PipeWeldingRules.ROWS;
 
     /** Item pipes only exist for these sizes in GT6 ({@code MultiTileEntityPipeItem}). */
     private static final Map<PipeSpec.PipeSize, ItemPipeSpec.ItemPipeSize> ITEM_PIPE_SIZES = Map.of(
@@ -63,33 +55,31 @@ public final class PipeRecipes {
             PipeSpec.PipeSize.HUGE, ItemPipeSpec.ItemPipeSize.HUGE);
 
     /** One registered row, for tests and reports. */
-    public record Entry(String material, PipeSpec.PipeSize size, String output, boolean itemPipe,
-                        Recipe recipe) {}
+    public record Entry(String material, PipeSpec.PipeSize size, String output, boolean itemPipe, Recipe recipe) {}
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
-    private static final List<String> SKIPPED = List.of(
-            "GT6's COATED.NOT condition has no port counterpart; SMITHABLE and FLAMMABLE.NOT are applied");
+    private static final List<String> SKIPPED =
+            List.of("GT6's COATED.NOT condition has no port counterpart; SMITHABLE and FLAMMABLE.NOT are applied");
 
     private static boolean registered;
 
     private PipeRecipes() {}
 
-    public static List<Entry> entries() { return Collections.unmodifiableList(ENTRIES); }
+    public static List<Entry> entries() {
+        return Collections.unmodifiableList(ENTRIES);
+    }
 
-    public static List<String> skipped() { return SKIPPED; }
+    public static List<String> skipped() {
+        return SKIPPED;
+    }
 
     public static int register() {
         if (registered) throw new IllegalStateException("Pipe recipes registered twice");
         registered = true;
 
         Map<String, Map<PipeSpec.PipeSize, ItemStack>> fluid = new HashMap<>();
-//? if >=1.21.1 {
-        /*for (var holder : FluidTransportRegistries.pipes()) {
-            if (!holder.isBound()) continue;
-*///?} else {
         for (var holder : GTFluidPipes.all()) {
-            if (!holder.isPresent()) continue;
-//?}
+            if (!holder.isBound()) continue;
             PipeSpec spec = holder.get().spec();
             fluid.computeIfAbsent(spec.material().getName(), k -> new HashMap<>())
                     .put(spec.size(), new ItemStack(holder.get().asItem()));
@@ -122,8 +112,12 @@ public final class PipeRecipes {
             // smithable (weldable) ones: carbon, plastic, rubber and treated wood pack too.
             bundle(material, fluid);
         }
-        Mc.logger().info("Registered {} GT6 pipe welding rows ({} GT6 rows skipped: {})",
-                ENTRIES.size(), SKIPPED.size(), SKIPPED);
+        Mc.logger()
+                .info(
+                        "Registered {} GT6 pipe welding rows ({} GT6 rows skipped: {})",
+                        ENTRIES.size(),
+                        SKIPPED.size(),
+                        SKIPPED);
         return ENTRIES.size();
     }
 
@@ -144,28 +138,50 @@ public final class PipeRecipes {
             four.setCount(4);
             ItemStack tag = new ItemStack(GTTechnological.selectorTag(4));
             Recipe pack = MachineRecipeMaps.Boxinator.addRecipe2(true, 16, 16, four, tag, quadruple.copy());
-            if (pack != null) ENTRIES.add(new Entry(material.getName(), PipeSpec.PipeSize.QUADRUPLE,
-                    quadruple.getItem().toString(), false, pack));
+            if (pack != null)
+                ENTRIES.add(new Entry(
+                        material.getName(),
+                        PipeSpec.PipeSize.QUADRUPLE,
+                        quadruple.getItem().toString(),
+                        false,
+                        pack));
             Recipe unpack = MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, quadruple.copy(), four.copy());
-            if (unpack != null) ENTRIES.add(new Entry(material.getName(), PipeSpec.PipeSize.MEDIUM,
-                    medium.getItem().toString(), false, unpack));
+            if (unpack != null)
+                ENTRIES.add(new Entry(
+                        material.getName(),
+                        PipeSpec.PipeSize.MEDIUM,
+                        medium.getItem().toString(),
+                        false,
+                        unpack));
         }
         if (small != null && nonuple != null) {
             ItemStack nine = small.copy();
             nine.setCount(9);
             ItemStack tag = new ItemStack(GTTechnological.selectorTag(9));
             Recipe pack = MachineRecipeMaps.Boxinator.addRecipe2(true, 16, 16, nine.copy(), tag, nonuple.copy());
-            if (pack != null) ENTRIES.add(new Entry(material.getName(), PipeSpec.PipeSize.NONUPLE,
-                    nonuple.getItem().toString(), false, pack));
+            if (pack != null)
+                ENTRIES.add(new Entry(
+                        material.getName(),
+                        PipeSpec.PipeSize.NONUPLE,
+                        nonuple.getItem().toString(),
+                        false,
+                        pack));
             Recipe unpack = MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, nonuple.copy(), nine.copy());
-            if (unpack != null) ENTRIES.add(new Entry(material.getName(), PipeSpec.PipeSize.SMALL,
-                    small.getItem().toString(), false, unpack));
+            if (unpack != null)
+                ENTRIES.add(new Entry(
+                        material.getName(),
+                        PipeSpec.PipeSize.SMALL,
+                        small.getItem().toString(),
+                        false,
+                        unpack));
         }
     }
 
-    private static void weld(GTMaterial material, PipeWeldingRules.Row row,
-                             Map<String, Map<PipeSpec.PipeSize, ItemStack>> fluid,
-                             Map<String, Map<ItemPipeSpec.ItemPipeSize, ItemStack>> item) {
+    private static void weld(
+            GTMaterial material,
+            PipeWeldingRules.Row row,
+            Map<String, Map<PipeSpec.PipeSize, ItemStack>> fluid,
+            Map<String, Map<ItemPipeSpec.ItemPipeSize, ItemStack>> item) {
         ItemStack input = GTItems.getStack(MaterialPrefix.plateCurved, material, row.curved());
         if (input.isEmpty()) return;
 
@@ -173,24 +189,26 @@ public final class PipeRecipes {
         boolean itemPipe = false;
         ItemPipeSpec.ItemPipeSize itemSize = ITEM_PIPE_SIZES.get(row.size());
         if (itemSize != null) {
-            ItemStack candidate = item.getOrDefault(material.getName(), Map.of()).get(itemSize);
+            ItemStack candidate =
+                    item.getOrDefault(material.getName(), Map.of()).get(itemSize);
             if (candidate != null && !candidate.isEmpty()) {
                 output = candidate.copy();
                 itemPipe = true;
             }
         }
         if (output.isEmpty()) {
-            ItemStack candidate = fluid.getOrDefault(material.getName(), Map.of()).get(row.size());
+            ItemStack candidate =
+                    fluid.getOrDefault(material.getName(), Map.of()).get(row.size());
             if (candidate == null || candidate.isEmpty()) return;
             output = candidate.copy();
         }
-        int count = row.size() == PipeSpec.PipeSize.TINY ? 2 : 1;   // GT6 pipeTiny 2, all others 1
+        int count = row.size() == PipeSpec.PipeSize.TINY ? 2 : 1; // GT6 pipeTiny 2, all others 1
         output.setCount(count);
 
         // GT6's RecipeMapHandlerPrefix#getCosts with multiplier 64 for the hard pass, and an
         // explicit 16 * <curved plates> for the easy-heatable pass - the same two-branch cost
         // WelderFamilyRecipes uses for the other prefix rows.
-        long ticks = PipeWeldingRules.ticks(material,row);
+        long ticks = PipeWeldingRules.ticks(material, row);
 
         ItemStack tag = new ItemStack(GTTechnological.selectorTag(row.circuit()));
         var template = RecipeMap.make(

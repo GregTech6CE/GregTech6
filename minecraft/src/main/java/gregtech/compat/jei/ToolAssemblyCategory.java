@@ -1,11 +1,7 @@
 package gregtech.compat.jei;
-import gregtech.engine.mod.GregTechIdentity;
 
-
-import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.engine.tool.GTToolType;
-import gregtech.content.item.GTToolItem;
 import gregtech.content.recipe.ToolAssemblyCatalog;
+import gregtech.engine.mod.GregTechIdentity;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -16,9 +12,6 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
-
-import java.util.List;
 
 /**
  * JEI view for the manual tool recipes ({@link gregtech.content.recipe.GTToolAssemblyRecipe}).
@@ -34,12 +27,8 @@ import java.util.List;
 public final class ToolAssemblyCategory {
     private ToolAssemblyCategory() {}
 
-    public static final RecipeType<ToolAssemblyCatalog.ToolAssemblyInfo> TYPE =
-//? if >=1.21.1 {
-            /*RecipeType.create("gt6ce", "tool_assembly", ToolAssemblyCatalog.ToolAssemblyInfo.class);
-*///?} else {
-            RecipeType.create(GregTechIdentity.REGISTRY_NAMESPACE, "tool_assembly", ToolAssemblyCatalog.ToolAssemblyInfo.class);
-//?}
+    public static final RecipeType<ToolAssemblyCatalog.ToolAssemblyInfo> TYPE = RecipeType.create(
+            GregTechIdentity.REGISTRY_NAMESPACE, "tool_assembly", ToolAssemblyCatalog.ToolAssemblyInfo.class);
 
     /** The JEI category: one slot per required form, the tool as output. */
     public static final class Category implements IRecipeCategory<ToolAssemblyCatalog.ToolAssemblyInfo> {
@@ -51,41 +40,74 @@ public final class ToolAssemblyCategory {
             this.icon = gui.createDrawableItemStack(gregtech.compat.common.RecipeViewerIcons.toolAssembly());
         }
 
-        @Override public RecipeType<ToolAssemblyCatalog.ToolAssemblyInfo> getRecipeType() { return TYPE; }
-        @Override public Component getTitle() { return Component.translatable("gt6ce.jei.category.tool_assembly"); }
-        @Override public IDrawable getBackground() { return background; }
-        @Override public IDrawable getIcon() { return icon; }
-
         @Override
-        public void setRecipe(IRecipeLayoutBuilder builder, ToolAssemblyCatalog.ToolAssemblyInfo info,
-                              IFocusGroup focuses) {
-            int index = 0;
-            if (info.pattern() != null) {
-                for (int y=0; y<info.pattern().height(); y++) for (int x=0; x<info.pattern().width(); x++) {
-                    char letter = info.pattern().at(x,y);
-                    if (letter == ' ') continue;
-                    var role = info.pattern().tools().containsKey(letter) ? RecipeIngredientRole.CATALYST : RecipeIngredientRole.INPUT;
-                    builder.addSlot(role, 1+x*18, 1+y*18).setBackground(slot,-1,-1).addItemStacks(info.inputs().get(index++));
-                }
-            } else {
-                for (var stacks : info.inputs()) builder.addSlot(RecipeIngredientRole.INPUT, 1+(index++)*18, 19)
-                    .setBackground(slot,-1,-1).addItemStacks(stacks);
-            }
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 91, 19).setBackground(slot,-1,-1).addItemStack(info.output());
+        public RecipeType<ToolAssemblyCatalog.ToolAssemblyInfo> getRecipeType() {
+            return TYPE;
         }
 
         @Override
-        public void draw(ToolAssemblyCatalog.ToolAssemblyInfo info, IRecipeSlotsView view, GuiGraphics g,
-                         double mx, double my) {
+        public Component getTitle() {
+            return Component.translatable("gt6ce.jei.category.tool_assembly");
+        }
+
+        @Override
+        public IDrawable getBackground() {
+            return background;
+        }
+
+        @Override
+        public IDrawable getIcon() {
+            return icon;
+        }
+
+        @Override
+        public void setRecipe(
+                IRecipeLayoutBuilder builder, ToolAssemblyCatalog.ToolAssemblyInfo info, IFocusGroup focuses) {
+            int index = 0;
+            if (info.pattern() != null) {
+                for (int y = 0; y < info.pattern().height(); y++)
+                    for (int x = 0; x < info.pattern().width(); x++) {
+                        char letter = info.pattern().at(x, y);
+                        if (letter == ' ') continue;
+                        var role = info.pattern().tools().containsKey(letter)
+                                ? RecipeIngredientRole.CATALYST
+                                : RecipeIngredientRole.INPUT;
+                        builder.addSlot(role, 1 + x * 18, 1 + y * 18)
+                                .setBackground(slot, -1, -1)
+                                .addItemStacks(info.inputs().get(index++));
+                    }
+            } else {
+                for (var stacks : info.inputs())
+                    builder.addSlot(RecipeIngredientRole.INPUT, 1 + (index++) * 18, 19)
+                            .setBackground(slot, -1, -1)
+                            .addItemStacks(stacks);
+            }
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 91, 19)
+                    .setBackground(slot, -1, -1)
+                    .addItemStack(info.output());
+        }
+
+        @Override
+        public void draw(
+                ToolAssemblyCatalog.ToolAssemblyInfo info, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
             var font = net.minecraft.client.Minecraft.getInstance().font;
             int y = 58;
             if (info.headAssembly()) {
-                g.drawString(font, Component.translatable("gt6ce.jei.info.tool_head_and_handle"), 1, y, 0xFF404040, false);
+                g.drawString(
+                        font, Component.translatable("gt6ce.jei.info.tool_head_and_handle"), 1, y, 0xFF404040, false);
             } else {
-                g.drawString(font, Component.translatable("gt6ce.jei.info.tool_material_forms",
-                        info.inputs().size()), 1, y, 0xFF404040, false);
+                g.drawString(
+                        font,
+                        Component.translatable(
+                                "gt6ce.jei.info.tool_material_forms",
+                                info.inputs().size()),
+                        1,
+                        y,
+                        0xFF404040,
+                        false);
             }
-            g.drawString(font, Component.translatable("gt6ce.jei.info.tool_any_material"), 1, y + 10, 0xFF707070, false);
+            g.drawString(
+                    font, Component.translatable("gt6ce.jei.info.tool_any_material"), 1, y + 10, 0xFF707070, false);
         }
     }
 }

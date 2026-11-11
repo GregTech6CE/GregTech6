@@ -168,11 +168,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
 
 
-//? if >=1.21.1 {
-/*        if(basicSpec.machineName().equals("fusionreactor"))return (lvl,pos,st,be)->gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity.serverTick(lvl,pos,st,(gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity)be);
-
-*///?} else {
-//?}
+        if(basicSpec.machineName().equals("fusionreactor"))return (lvl,pos,st,be)->gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity.serverTick(lvl,pos,st,(gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity)be);
 
 
         @SuppressWarnings("unchecked")
@@ -192,15 +188,10 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
     public BasicMachineBlockEntity createBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 
 
-//? if >=1.21.1 {
-/*
         if(basicSpec.machineName().equals("fusionreactor"))return new gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity(type,pos,state);
 
         if(basicSpec.machineName().equals("implosioncompressor"))return new gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity(type,pos,state);
 
-
-*///?} else {
-//?}
         return switch (basicSpec.controllerKind()) {
             case COMPACT_MATTER -> new gregtech.content.blockentity.machine.CompactMatterFabricatorBlockEntity(type,pos,state);
 

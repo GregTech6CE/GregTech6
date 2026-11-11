@@ -117,11 +117,7 @@ public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity imple
         finally { be.endMachineChanges(); }
     }
 
-//? if >=1.21.1 {
-    /*protected void tickServer() {
-*///?} else {
-    private void tickServer() {
-//?}
+private void tickServer() {
         long oldEnergy = energy;
         boolean wasBurning = burning;
         long rate = spec.outputRate();

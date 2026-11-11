@@ -122,15 +122,9 @@ public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBl
          */
         public Block block() {
             return switch (this) {
-//? if >=1.21.1 {
-                /*case INGOT -> gregtech.content.registry.GTMaterialPiles.INGOT_PILE.get();
+                case INGOT -> gregtech.content.registry.GTMaterialPiles.INGOT_PILE.get();
                 case PLATE -> gregtech.content.registry.GTMaterialPiles.PLATE_PILE.get();
                 case GEM_PLATE -> gregtech.content.registry.GTMaterialPiles.PLATE_GEM_PILE.get();
-*///?} else {
-                case INGOT -> gregtech.content.registry.GTDecorBlocks.INGOT_PILE.get();
-                case PLATE -> gregtech.content.registry.GTDecorBlocks.PLATE_PILE.get();
-                case GEM_PLATE -> gregtech.content.registry.GTDecorBlocks.PLATE_GEM_PILE.get();
-//?}
             };
         }
     }

@@ -20,6 +20,7 @@
 - `minecraft/versions/1.21.1-neoforge/src/`：NeoForge 版本源码及资源，Java 21。
 - `gradle/`、`minecraft/build.gradle`、`settings.gradle` 决定真实源码集合、生成和打包流程，不能仅凭文件夹名称推断。
 - 共享代码中的 Stonecutter `//?` 条件标记及注释包裹的另一版本代码有实际用途，不能当死代码清除。
+- 跨版本差异的裁决顺序、统一目标和平台 API 例外按[跨版本统一方针](docs/architecture/stonecutter/unification-policy.md)执行。
 
 ## 工作方式
 

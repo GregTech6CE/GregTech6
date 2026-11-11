@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -26,7 +25,6 @@ import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ChunkRenderTypeSet;
@@ -34,13 +32,11 @@ import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
 
 //? if >=1.21.1 {
 /*/^*
@@ -66,26 +62,15 @@ public final class FluidItemClientModels {
 
     private FluidItemClientModels() {}
 
-    @SubscribeEvent
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
-//? if >=1.21.1 {
-        /*event.register(ModelResourceLocation.standalone(SHARED_MODEL));
-*///?} else {
-        event.register(SHARED_MODEL);
-//?}
+        ClientModelEvents.registerAdditional(event, SHARED_MODEL);
     }
 
-    @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
         FluidItemOverrideList.clearCache();
         FluidAppearance.clearCache();
-//? if >=1.21.1 {
-        /*Map<ModelResourceLocation, BakedModel> models = event.getModels();
-        BakedModel shared = models.get(ModelResourceLocation.standalone(SHARED_MODEL));
-*///?} else {
-        Map<ResourceLocation, BakedModel> models = event.getModels();
-        BakedModel shared = models.get(SHARED_MODEL);
-//?}
+        BakedModelMap models = BakedModelMap.of(event.getModels());
+        BakedModel shared = models.find(SHARED_MODEL);
         if (shared == null) {
             return;
         }
@@ -112,7 +97,7 @@ public final class FluidItemClientModels {
             if (itemId == null) {
                 continue;
             }
-            models.put(ModelResourceLocationCompat.inventory(itemId), wrapper);
+            models.put(itemId, "inventory", wrapper);
         }
 //? if >=1.21.1 {
     /*}

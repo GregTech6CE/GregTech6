@@ -3,52 +3,51 @@ package gregtech.content.registry;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.content.block.energy.SignalWireBlock;
+import gregtech.content.blockentity.energy.SignalWireBlockEntity;
 import gregtech.engine.material.ItemMaterialRegistry;
+import java.util.*;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-//? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.*;
-import net.neoforged.bus.api.IEventBus;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-*///?} else {
-//?}
-import java.util.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 /** GT6 source IDs 27000/27006, 27050/27056, 27500/27506. These carry redstone, never EU. */
 public final class GTSignalWires {
     private static final List<RegisteredBlock<SignalWireBlock>> ALL = new ArrayList<>();
-//? if >=1.21.1 {
-    /*public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
-    public static final DeferredHolder<BlockEntityType<?>,
-            BlockEntityType<gregtech.content.blockentity.energy.SignalWireBlockEntity>> SIGNAL_WIRE = ENTITIES.register("signal_wire",
-            () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.SignalWireBlockEntity::new,
-            all().stream().map(RegisteredBlock::get).toArray(Block[]::new)).build(null));
-*///?}
-    private GTSignalWires() {
-    }
-//? if >=1.21.1 {
-    /*public static void submit(IEventBus bus) {
-        ENTITIES.register(bus);
-    }
-*///?}
+    public static RegisteredBlockEntity<SignalWireBlockEntity> SIGNAL_WIRE;
+
+    private GTSignalWires() {}
+
     public static List<RegisteredBlock<SignalWireBlock>> all() {
         return Collections.unmodifiableList(ALL);
     }
+
     public static void register(ContentRegistrar registrar) {
         for (var familySpec : gregtech.content.energy.SignalWireCatalog.families())
-            registerFamily(registrar, familySpec.name(), familySpec.material(), familySpec.range(), familySpec.luminous());
+            registerFamily(
+                    registrar, familySpec.name(), familySpec.material(), familySpec.range(), familySpec.luminous());
+        SIGNAL_WIRE = registrar.blockEntity(
+                gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
+                "signal_wire",
+                () -> BlockEntityType.Builder.of(
+                                SignalWireBlockEntity::new,
+                                all().stream().map(RegisteredBlock::get).toArray(Block[]::new))
+                        .build(null));
     }
 
-    private static void registerFamily(ContentRegistrar registrar, String name, GTMaterial material, int range, boolean luminous) {
-        for (boolean insulated : new boolean[]{false, true}) {
+    private static void registerFamily(
+            ContentRegistrar registrar, String name, GTMaterial material, int range, boolean luminous) {
+        for (boolean insulated : new boolean[] {false, true}) {
             String id = (insulated ? "cable_01_" : "wire_01_") + name;
             var block = registrar.block(
                     gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE,
                     id,
-                    () -> new SignalWireBlock(material, range, insulated,
-                            luminous && !insulated, BlockBehaviour.Properties.of().strength(1, 2).noOcclusion()),
+                    () -> new SignalWireBlock(
+                            material,
+                            range,
+                            insulated,
+                            luminous && !insulated,
+                            BlockBehaviour.Properties.of().strength(1, 2).noOcclusion()),
                     bare -> new BlockItem(bare, new Item.Properties()));
             ALL.add(block);
         }

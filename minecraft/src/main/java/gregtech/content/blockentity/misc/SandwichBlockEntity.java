@@ -3,13 +3,10 @@ package gregtech.content.blockentity.misc;
 import gregtech.content.food.SandwichIngredients;
 import gregtech.content.food.SandwichNutrition;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTSandwich;
 import gregtech.engine.stack.StackCompat;
 import gregtech.platform.Mc;
 
-//? if >=1.21.1 {
-//?} else {
-import gregtech.content.registry.GTDecorBlocks;
-//?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -225,11 +222,7 @@ public final class SandwichBlockEntity extends BlockEntity {
 
     /** Original writeItemNBT stores each ingredient at count one; outer stack carries the batch. */
     public ItemStack sandwichItem(int count) {
-//? if >=1.21.1 {
-        /*ItemStack result = new ItemStack(gregtech.content.registry.GTSandwich.SANDWICH_BLOCK.get().asItem(), count);
-*///?} else {
-        ItemStack result = new ItemStack(GTDecorBlocks.SANDWICH_BLOCK.get().asItem(), count);
-//?}
+        ItemStack result = new ItemStack(GTSandwich.SANDWICH_BLOCK.get().asItem(), count);
         CompoundTag tag = new CompoundTag();
 //? if >=1.21.1 {
         /*writeFields(tag, level==null ? net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(net.minecraft.core.registries.BuiltInRegistries.REGISTRY) : level.registryAccess(), true);

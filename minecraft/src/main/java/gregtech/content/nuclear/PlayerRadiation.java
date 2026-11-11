@@ -35,8 +35,10 @@ public final class PlayerRadiation {
     }
 
     public static void change(Player player, long amount) {
-        // Clamp the delta before addition so even third-party callers cannot overflow it.
-        int value = gregtech.content.food.NutritionRules.change(dose(player), amount);
+        // Clamp the delta before addition so even third-party callers cannot overflow it, then clamp
+        // the sum into GT6's 7-bit range (the former NutritionRules.change contract).
+        long delta = Math.max(-127, Math.min(127, amount));
+        int value = (int) Math.max(0, Math.min(127, dose(player) + delta));
         if (value == 0) player.getPersistentData().remove(KEY);
         else player.getPersistentData().putInt(KEY, value);
     }

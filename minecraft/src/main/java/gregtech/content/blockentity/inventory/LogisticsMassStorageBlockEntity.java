@@ -1,11 +1,7 @@
 package gregtech.content.blockentity.inventory;
 
 import gregtech.content.logistics.LogisticsStorageHost;
-//? if >=1.21.1 {
-/*import gregtech.platform.neoforge.logistics.StorageRegistries;
-*///?} else {
 import gregtech.content.registry.GTBlockEntities;
-//?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -25,11 +21,7 @@ public final class LogisticsMassStorageBlockEntity extends MassStorageBlockEntit
     }
 
     public LogisticsMassStorageBlockEntity(BlockPos pos, BlockState state) {
-//? if >=1.21.1 {
-        /*super(StorageRegistries.LOGISTICS_MASS_STORAGE.get(), pos, state);
-*///?} else {
         super(GTBlockEntities.LOGISTICS_MASS_STORAGE.get(), pos, state);
-//?}
     }
 
 //? if >=1.21.1 {

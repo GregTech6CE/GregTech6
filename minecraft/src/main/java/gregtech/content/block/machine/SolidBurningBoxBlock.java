@@ -45,11 +45,7 @@ public class SolidBurningBoxBlock extends GTFacingMachineBlock implements Entity
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-//? if >=1.21.1 {
-        /*return new gregtech.platform.neoforge.smeltery.SolidBurningBoxEntity(pos, state);
-*///?} else {
         return new SolidBurningBoxBlockEntity(pos, state);
-//?}
     }
 
     @Nullable

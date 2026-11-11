@@ -67,7 +67,6 @@ public final class BedrockFlowerProcessingRecipes extends OriginalRecipeBatch {
         // RM.biomass(ST.make(this, 8, W)) consumes one flower and divides fluid quantities by 8.
         Set<String> seenFluids = new HashSet<>();
         biomass(id, input, "Water", 135, 135, 32, seenFluids);
-        biomass(id, input, "Rotten_Drink", 135, 405, 16, seenFluids);
         biomass(id, input, "Soup_Mushroom", 135, 405, 16, seenFluids);
         List<String> fields = new ArrayList<>(RegisteredFluids.all().keySet());
         fields.sort(Comparator.naturalOrder());

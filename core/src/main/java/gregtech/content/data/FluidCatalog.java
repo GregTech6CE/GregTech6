@@ -249,8 +249,8 @@ public class FluidCatalog {
     /** Materials whose fluid is a vanilla fluid and must not get a GT-generated phase. */
     private static final java.util.Set<String> VANILLA_FLUID_MATERIALS = java.util.Set.of("Water");
     /** Materials whose generated phase fluid is retired and must not reappear. */
-    private static final java.util.Set<String> RETIRED_FLUID_MATERIALS =
-            java.util.Set.of("Pyrotheum", "Cryotheum", "Petrotheum", "Aerotheum", "FreshWater", "SeaWater");
+    private static final java.util.Set<String> RETIRED_FLUID_MATERIALS = java.util.Set.of(
+            "Pyrotheum", "Cryotheum", "Petrotheum", "Aerotheum", "FreshWater", "SeaWater", "HolyWater");
     /** Materials whose molten phase is retired while their gas/liquid phase stays. */
     private static final java.util.Set<String> RETIRED_MOLTEN_MATERIALS =
             java.util.Set.of("Cryolite", "LithiumChloride", "LithiumChlorate", "AluminiumFluoride", "Mercury");
@@ -515,20 +515,16 @@ public class FluidCatalog {
             // =======================================================================
 
             Saltwater = fluid("Saltwater", "saltwater"),
-            Holywater = fluid("Holywater", "holywater").withGlint().withFlags(FluidFlags.MAGIC),
-
             // =======================================================================
             // Milk / Honey / Sap / Cream
             // =======================================================================
 
             Milk = fluid("Milk", "milk").withFlags(FluidFlags.FOOD | FluidFlags.MILK),
-            MilkSoy = fluid("MilkSoy", "soymilk").withFlags(FluidFlags.FOOD | FluidFlags.MILK),
             Milk_Spoiled = fluid("Milk_Spoiled", "spoiledmilk").withFlags(FluidFlags.FOOD | FluidFlags.MILK),
             Honey = fluid("Honey", "honey").withFlags(FluidFlags.FOOD | FluidFlags.HONEY),
             Honeydew = fluid("Honeydew", "honeydew").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
             Ambrosia = fluid("Ambrosia", "potion.ambrosia").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
             RoyalJelly = fluid("RoyalJelly", "royaljelly").withFlags(FluidFlags.FOOD),
-            Sap = fluid("Sap", "sap").withFlags(FluidFlags.FOOD),
             Sap_Rainbow = fluid("Sap_Rainbow", "rainbowsap").withFlags(FluidFlags.FOOD | FluidFlags.MAGIC),
             Sap_Maple = fluid("Sap_Maple", "maplesap").withFlags(FluidFlags.FOOD),
             Syrup_Maple = fluid("Syrup_Maple", "maplesyrup").withFlags(FluidFlags.FOOD),
@@ -544,37 +540,20 @@ public class FluidCatalog {
             ChocolateMilk_Dark =
                     fluid("ChocolateMilk_Dark", "potion.darkchocolatemilk").withFlags(FluidFlags.FOOD),
             Cream_Chocolate = fluid("Cream_Chocolate", "chocolatecream").withFlags(FluidFlags.FOOD),
-            Cream_Coconut = fluid("Cream_Coconut", "coconutcream").withFlags(FluidFlags.FOOD),
             Cream_Nutella = fluid("Cream_Nutella", "nutella").withFlags(FluidFlags.FOOD),
 
             // =======================================================================
             // Juices
             // =======================================================================
 
-            Juice = fluid("Juice", "juice").withFlags(FluidFlags.FOOD | FluidFlags.JUICE),
-            Juice_Kiwi =
-                    fluid("Juice_Kiwi", "kiwijuice")
-                            .withFlags(FluidFlags.FOOD
-                                    | FluidFlags.JUICE
-                                    | FluidFlags.FRUIT_JUICE
-                                    | FluidFlags.CITRUS_JUICE),
             Juice_Lemon =
                     fluid("Juice_Lemon", "binnie.juicelemon")
                             .withFlags(FluidFlags.FOOD
                                     | FluidFlags.JUICE
                                     | FluidFlags.FRUIT_JUICE
                                     | FluidFlags.CITRUS_JUICE),
-            Juice_Persimmon =
-                    fluid("Juice_Persimmon", "persimmonjuice")
-                            .withFlags(FluidFlags.FOOD
-                                    | FluidFlags.JUICE
-                                    | FluidFlags.FRUIT_JUICE
-                                    | FluidFlags.CITRUS_JUICE),
             Juice_Melon =
                     fluid("Juice_Melon", "melonjuice")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
-            Juice_Currant =
-                    fluid("Juice_Currant", "currantjuice")
                             .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
             Juice_Raspberry =
                     fluid("Juice_Raspberry", "raspberryjuice")
@@ -591,24 +570,9 @@ public class FluidCatalog {
             Juice_Strawberry =
                     fluid("Juice_Strawberry", "strawberryjuice")
                             .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
-            Juice_Hellderberry =
-                    fluid("Juice_Hellderberry", "hellderberryjuice")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
-            Juice_Grape_Green =
-                    fluid("Juice_Grape_Green", "grapejuice")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
-            Juice_Grape_Purple =
-                    fluid("Juice_Grape_Purple", "grc.grapewine0")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
             Juice_Apple =
                     fluid("Juice_Apple", "binnie.juiceapple")
                             .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
-            Juice_AppleGrC =
-                    fluid("Juice_AppleGrC", "grc.applecider0")
-                            .withFlags(FluidFlags.FOOD
-                                    | FluidFlags.JUICE
-                                    | FluidFlags.FRUIT_JUICE
-                                    | FluidFlags.NONSTANDARD),
             Juice_Ananas =
                     fluid("Juice_Ananas", "binnie.juicepineapple")
                             .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
@@ -618,34 +582,15 @@ public class FluidCatalog {
             Juice_Cranberry =
                     fluid("Juice_Cranberry", "binnie.juicecranberry")
                             .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
-            Juice_Mango =
-                    fluid("Juice_Mango", "mangojuice")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
             Juice_Pomegranate =
                     fluid("Juice_Pomegranate", "pomegranatejuice")
                             .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
-            Juice_Starfruit =
-                    fluid("Juice_Starfruit", "starfruitjuice")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
-            Juice_Papaya =
-                    fluid("Juice_Papaya", "papayajuice")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
-            Juice_Fig =
-                    fluid("Juice_Fig", "figjuice")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.JUICE | FluidFlags.FRUIT_JUICE),
-            Juice_Coconut =
-                    fluid("Juice_Coconut", "coconutmilk")
-                            .withFlags(FluidFlags.FOOD
-                                    | FluidFlags.JUICE
-                                    | FluidFlags.FRUIT_JUICE
-                                    | FluidFlags.COOKING_OIL),
             Juice_Carrot = fluid("Juice_Carrot", "binnie.juicecarrot").withFlags(FluidFlags.FOOD | FluidFlags.JUICE),
             Juice_Tomato = fluid("Juice_Tomato", "binnie.juicetomato").withFlags(FluidFlags.FOOD | FluidFlags.JUICE),
             Juice_Beet = fluid("Juice_Beet", "beetjuice").withFlags(FluidFlags.FOOD | FluidFlags.JUICE),
             Juice_Pumpkin = fluid("Juice_Pumpkin", "pumpkinjuice").withFlags(FluidFlags.FOOD | FluidFlags.JUICE),
             Juice_Cucumber = fluid("Juice_Cucumber", "cucumberjuice").withFlags(FluidFlags.FOOD | FluidFlags.JUICE),
             Juice_Onion = fluid("Juice_Onion", "onionjuice").withFlags(FluidFlags.FOOD | FluidFlags.JUICE),
-            Juice_Potato = fluid("Juice_Potato", "potatojuice").withFlags(FluidFlags.FOOD | FluidFlags.JUICE),
             Juice_Reed = fluid("Juice_Reed", "reedwater").withFlags(FluidFlags.FOOD | FluidFlags.JUICE),
             Juice_Cactus = fluid("Juice_Cactus", "cactuswater").withFlags(FluidFlags.FOOD | FluidFlags.JUICE),
 
@@ -653,71 +598,19 @@ public class FluidCatalog {
             // Smoothies
             // =======================================================================
 
-            Smoothie_Fruit = fluid("Smoothie_Fruit", "fruitsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Melon = fluid("Smoothie_Melon", "melonsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Kiwi = fluid("Smoothie_Kiwi", "kiwismoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Currant =
-                    fluid("Smoothie_Currant", "currantsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Raspberry =
                     fluid("Smoothie_Raspberry", "raspberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Blackberry =
                     fluid("Smoothie_Blackberry", "blackberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Blueberry =
                     fluid("Smoothie_Blueberry", "blueberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Gooseberry =
-                    fluid("Smoothie_Gooseberry", "gooseberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Strawberry =
-                    fluid("Smoothie_Strawberry", "strawberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Plum = fluid("Smoothie_Plum", "plumsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Peach = fluid("Smoothie_Peach", "peachsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Elderberry =
-                    fluid("Smoothie_Elderberry", "elderberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Grapefruit =
-                    fluid("Smoothie_Grapefruit", "grapefruitsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Lime = fluid("Smoothie_Lime", "limesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Orange =
-                    fluid("Smoothie_Orange", "orangesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Persimmon =
-                    fluid("Smoothie_Persimmon", "persimmonsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Apricot =
-                    fluid("Smoothie_Apricot", "apricotsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Pear = fluid("Smoothie_Pear", "pearsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Grape_Red =
-                    fluid("Smoothie_Grape_Red", "redgrapesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Grape_White =
-                    fluid("Smoothie_Grape_White", "whitegrapesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Grape_Green =
-                    fluid("Smoothie_Grape_Green", "grapesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Grape_Purple =
-                    fluid("Smoothie_Grape_Purple", "purplegrapesmoothie")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Apple = fluid("Smoothie_Apple", "applesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Ananas =
-                    fluid("Smoothie_Ananas", "pineapplesmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Banana =
-                    fluid("Smoothie_Banana", "bananasmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Cherry =
-                    fluid("Smoothie_Cherry", "cherrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
             Smoothie_Cranberry =
                     fluid("Smoothie_Cranberry", "cranberrysmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Lemon = fluid("Smoothie_Lemon", "lemonsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Mango = fluid("Smoothie_Mango", "mangosmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Pomegranate =
-                    fluid("Smoothie_Pomegranate", "pomegranatesmoothie")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Starfruit =
-                    fluid("Smoothie_Starfruit", "starfruitsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Papaya =
-                    fluid("Smoothie_Papaya", "papayasmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Fig = fluid("Smoothie_Fig", "figsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-            Smoothie_Coconut =
-                    fluid("Smoothie_Coconut", "coconutsmoothie").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS),
-
             // =======================================================================
             // Mashes
             // =======================================================================
-
-            Mash_Hops = fluid("Mash_Hops", "hopsmash").withFlags(FluidFlags.FOOD),
 
             // =======================================================================
             // Teas / Soft drinks / Sauces / Condiments
@@ -725,26 +618,12 @@ public class FluidCatalog {
 
             Tea = fluid("Tea", "tea").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS | FluidFlags.TEA),
             Tea_Sweet = fluid("Tea_Sweet", "sweettea").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS | FluidFlags.TEA),
-            Tea_Ice = fluid("Tea_Ice", "icetea").withFlags(FluidFlags.FOOD | FluidFlags.THERMOS | FluidFlags.TEA),
-            Purple_Drink = fluid("Purple_Drink", "purpledrink").withFlags(FluidFlags.FOOD),
             Lemonade = fluid("Lemonade", "potion.lemonade").withFlags(FluidFlags.FOOD),
             Grenade_Juice =
                     fluid("Grenade_Juice", "potion.cavejohnsonsgrenadejuice").withFlags(FluidFlags.FOOD),
-            BAWLS = fluid("BAWLS", "bawls").withFlags(FluidFlags.FOOD),
             Ketchup = fluid("Ketchup", "ketchup").withFlags(FluidFlags.FOOD),
             Mayo = fluid("Mayo", "mayo").withFlags(FluidFlags.FOOD),
-            Dressing = fluid("Dressing", "potion.dressing").withFlags(FluidFlags.FOOD),
             Soup_Mushroom = fluid("Soup_Mushroom", "mushroomsoup").withFlags(FluidFlags.FOOD),
-            Sauce_Chili = fluid("Sauce_Chili", "chillysauce").withFlags(FluidFlags.FOOD),
-            Sauce_Hot = fluid("Sauce_Hot", "potion.hotsauce").withFlags(FluidFlags.FOOD),
-            Sauce_Diabolo = fluid("Sauce_Diabolo", "potion.diabolosauce").withFlags(FluidFlags.FOOD),
-            Sauce_Diablo = fluid("Sauce_Diablo", "potion.diablosauce").withFlags(FluidFlags.FOOD),
-            Sauce_Cow_Level =
-                    fluid("Sauce_Cow_Level", "potion.diablosauce.strong").withFlags(FluidFlags.FOOD),
-            Sauce_BBQ = fluid("Sauce_BBQ", "bbqsauce").withFlags(FluidFlags.FOOD),
-            Vinegar_Grape =
-                    fluid("Vinegar_Grape", "vinegar")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.VINEGAR),
             Vinegar_Apple =
                     fluid("Vinegar_Apple", "applevinegar")
                             .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.VINEGAR),
@@ -771,13 +650,6 @@ public class FluidCatalog {
             Wine_Tomato =
                     fluid("Wine_Tomato", "binnie.winetomato")
                             .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.WINE),
-            Wine_Grape_Green =
-                    fluid("Wine_Grape_Green", "wine")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.WINE),
-            Wine_Grape_Purple =
-                    fluid("Wine_Grape_Purple", "ricardosanchez")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.WINE),
-
             // =======================================================================
             // Ciders
             // =======================================================================
@@ -793,12 +665,6 @@ public class FluidCatalog {
             // Beers / Ales / Stouts
             // =======================================================================
 
-            Beer_Dark =
-                    fluid("Beer_Dark", "darkbeer").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BEER),
-            Beer_Dragonblood =
-                    fluid("Beer_Dragonblood", "potion.dragonblood")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.BEER),
-
             // =======================================================================
             // Liquors / Liqueurs / Spirits / Brandies / Whiskeys
             // =======================================================================
@@ -809,14 +675,8 @@ public class FluidCatalog {
             Rum_Dark =
                     fluid("Rum_Dark", "binnie.rumdark")
                             .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.RUM),
-            Pina_Colada =
-                    fluid("Pina_Colada", "pina.colada")
-                            .withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC | FluidFlags.RUM),
-            Vodka = fluid("Vodka", "binnie.vodka").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
-            Leninade = fluid("Leninade", "potion.leninade").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
             Mead = fluid("Mead", "mead").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
             ShortMead = fluid("ShortMead", "short.mead").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
-            Sake = fluid("Sake", "potion.sake").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
             Alcopops = fluid("Alcopops", "potion.alcopops").withFlags(FluidFlags.FOOD | FluidFlags.ALCOHOLIC),
 
             // =======================================================================
@@ -966,19 +826,8 @@ public class FluidCatalog {
                     fluidMolten("Redstone", "molten.redstone", "Redstone")
                             .withLuminosity(5)
                             .withTemperature(500),
-            Plastic = fluidMolten("Plastic", "molten.plastic", "Plastic").withTemperature(423),
-            // EnderPearl molten already covered by Ender above — skip duplicate registry name
-
-            // =======================================================================
-            // Medicines
-            // =======================================================================
-
-            Med_Heal = fluid("Med_Heal", "medicine.heal"),
-            Med_Laxative = fluid("Med_Laxative", "medicine.laxative"),
-            Rotten_Drink = fluid("Rotten_Drink", "rottendrink")
-
-    // end
-    ;
+            Plastic = fluidMolten("Plastic", "molten.plastic", "Plastic").withTemperature(423);
+    // EnderPearl molten already covered by Ender above — skip duplicate registry name
 
     // =======================================================================
     // Dye fluids

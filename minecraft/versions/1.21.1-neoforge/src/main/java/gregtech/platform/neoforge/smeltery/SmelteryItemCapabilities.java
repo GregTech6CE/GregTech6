@@ -1,5 +1,6 @@
 package gregtech.platform.neoforge.smeltery;
 
+import gregtech.content.registry.GTBlockEntities;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -14,19 +15,19 @@ public final class SmelteryItemCapabilities {
     public static void register(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                SmelteryRegistries.SMELTING_CRUCIBLE.get(),
+                GTBlockEntities.SMELTING_CRUCIBLE.get(),
                 (crucible, side) -> crucible.itemInputHandler(side));
         event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK, SmelteryRegistries.MOLD.get(), (mold, side) -> mold.automation(side));
+                Capabilities.ItemHandler.BLOCK, GTBlockEntities.MOLD.get(), (mold, side) -> mold.automation(side));
         event.registerBlockEntity(
-                Capabilities.FluidHandler.BLOCK, SmelteryRegistries.MOLD.get(), (mold, side) -> mold.automation(side));
+                Capabilities.FluidHandler.BLOCK, GTBlockEntities.MOLD.get(), (mold, side) -> mold.automation(side));
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                gregtech.content.registry.GTBlockEntities.MOLD_BASIN.get(),
+                GTBlockEntities.MOLD_BASIN.get(),
                 (mold, side) -> mold.automation(side));
         event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
-                gregtech.content.registry.GTBlockEntities.MOLD_BASIN.get(),
+                GTBlockEntities.MOLD_BASIN.get(),
                 (mold, side) -> mold.automation(side));
     }
 }

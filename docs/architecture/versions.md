@@ -1,86 +1,55 @@
-# 跨版本兼容：三层结构与归属
+# 跨版本要求与入口
 
-先读[架构](README.md)。节点由 [settings.gradle](../../settings.gradle)定义：`1.20.1-forge` 与 `1.21.1-neoforge`；当前活动/VCS 节点为 Forge，见 [stonecutter.gradle](../../minecraft/stonecutter.gradle)。
+先读[架构](README.md)。节点由 [settings.gradle](../../settings.gradle) 定义：`1.20.1-forge` 与 `1.21.1-neoforge`。两个节点的行为与内容必须一致；版本差异由 Stonecutter 与共享门面承接，不维护两套业务规则。差异的裁决顺序、统一目标和平台 API 例外见[跨版本统一方针](stonecutter/unification-policy.md)。
 
-跨版本兼容按三层组织：共享代码、共享门面、节点实现。
+当前 VCS 节点与活动节点均为 `1.20.1-forge`。两者的区别见[用法](stonecutter/usage.md#vcsversion-与-active)。
 
-## 三层结构
+## 要求
 
-```
-共享代码（两个版本都编译）
-    │ 只依赖版本中立 API
-    ▼
-共享门面（共享代码访问节点能力的通道；内部 //? 或转接）
-    │
-    ▼
-节点实现（只在一个加载器编译）
-```
+| 要求 | 说明 |
+| --- | --- |
+| 行为一致 | 以 parity 声明与原版 GT6 golden 为准；同一输入在两个节点上产生相同结果。确需不同行为时写明原因并分别验证。 |
+| 内容一致 | 材料、配方、机器规则与注册内容在两个节点上对齐。 |
+| 共享输入 | 业务规则、内容定义与共享运行时放 `minecraft/src`；两个节点都编译。 |
+| 节点输入 | 加载器专属入口放 `minecraft/versions/<node>/src`；不引用另一节点专属实现。 |
+| 条件编译 | `//?` 只写在共享输入；只承载平台 API 运行时差异（类/方法不存在、签名、注册表、能力、网络、事件生命周期）。注册归属、列表分叉等差异统一到共享路径。 |
+| 公开签名 | 共享代码的新增公开签名不出现加载器类型；`GTBlocks`/`GTItems` 是已知例外。 |
+| Java 版本 | Forge 使用 Java 17，NeoForge 使用 Java 21；共享代码不能无条件使用只在 21 可用的特性。 |
+| 事实来源 | 版本支持、依赖版本、任务入口与 `vcsVersion` 以仓库配置为准，不以文档示例为准。 |
 
-- **共享代码**：业务规则、内容定义、engine 逻辑，以及共享的 `client`/`mixin`/`event`/`network`/`compat` 包；两个版本都编译；不 import 节点类；新增公开签名不出现加载器类型（`GTBlocks`/`GTItems` 是已知例外）。
-- **共享门面**：共享代码使用的版本中立 API；内部用 `//?` 吸收小差异，或转接节点实现；同名方法必须同义；新增门面必须有调用点。
-- **节点实现**：只在一个加载器编译；加载器专属的注册、生命周期、capability、事件、网络、客户端入口、Mixin、KubeJS 接入。节点侧同名包只放加载器专属入口，共享同名包仍在共享输入。
+## 文档指引
 
-平台能力的调用方向：共享代码 → 共享门面 → 节点实现。节点实现可以调用共享代码的业务逻辑，但不能把加载器类型泄漏回共享层。共享代码不得直接 import 节点实现；节点实现不引用另一节点专属实现。
-
-三层的具体位置与验收见[平台边界](packages/platforms.md)。
-
-## 区分与归属
-
-### 内容分类
-
-- 材料、配方、机器规则、内容目录：共享代码。
-- 通用 Block/BlockEntity/物品逻辑：共享代码。
-- 共享 `client`/`mixin`/`event`/`network`/`compat` 逻辑：共享代码。
-- 工具谓词、耐久、采集规则、栈数据、注册视图等版本中立 API：共享门面。
-- 共享渲染/模型逻辑：共享代码。
-- 加载器客户端入口：节点实现。
-- 共享事件/网络逻辑：共享代码。
-- 加载器事件/网络入口：节点实现。
-- 注册、capability、生命周期、加载器专属 Mixin/KubeJS 接入：节点实现。
-
-### 判断准则
-
-- 两个版本都需要，且没有版本差异：共享代码。
-- 两个版本都需要，差异只是签名、数据格式或注册归属：共享门面。
-- 两个版本都需要，但整类需要不同的加载器 API/生命周期：节点实现。
-- 只有一个版本需要：节点实现。
-- 共享代码需要 import 节点类：共享门面。
-- 节点类只是转发共享代码中的方法：共享代码。
-
-## Stonecutter 用法
-
-`//?` 是共享输入内的条件编译，不是一层。它只承载共享代码无法表达的差异：API 签名、数据格式、注册归属。
-
-- **只写在共享输入**：`minecraft/src` 与 `api/minecraft/src` 由 Stonecutter 处理；节点源 `minecraft/versions/<node>/src` 不经过 Stonecutter，写在其中的 `//?` 不会被处理。
-- **同一调用不分支**：两个版本都有同名同义的方法时，直接调用共享方法。
-- **版本无关代码只写一次**：构造函数、常量、字段和与版本无关的方法体不放进分支。
-- **分支不跨方法边界**：方法签名、闭括号和字段声明保持完整。
-- **分支两侧同义**：只改实现路径，不改输入/输出语义；确需不同行为时写明原因并分别验证。
-- **非活动分支保持可读**：不参与编译，改动后检查失败节点的生成源码；保留非活动分支，但清除占位注释和重复实现。
-
-### 输入与生成结果
-
-主模组共享输入是 `minecraft/src/<sourceSet>/`。节点输入是 `minecraft/versions/<node>/src/<sourceSet>/`。当前 [minecraft/build.gradle](../../minecraft/build.gradle)将节点编译/资源处理接到 `stonecutterGenerate*`，使用节点 `build/generated/stonecutter/<sourceSet>/` 与节点自身源码。游戏侧协议来自内联 API 的 `api/minecraft/src/main/`，同样是共享输入，由 `:api-platform:<node>` 的 Stonecutter 节点处理。公共 `:api` 来自 `api/common/`。主模组依赖这些项目和 core，并将它们各自的输出嵌入最终包。
-
-要修复生成结果中的错误，回到共享输入、条件分支或节点输入。新增类之前检查同全限定名是否已在另一输入出现，不假定节点代码会自动覆盖共享同名类。
+| 要做什么 | 从这里开始 |
+| --- | --- |
+| 裁决版本差异、判断保留还是统一 | [跨版本统一方针](stonecutter/unification-policy.md) |
+| 理解三层结构、内容分类与归属 | [Stonecutter 设计](stonecutter/design.md) |
+| 查 `//?` 写法、输入目录、生成结果与验证命令 | [Stonecutter 用法](stonecutter/usage.md) |
+| 处理具体调用点（BlockEntity、ItemStack、FluidStack、Container、SavedData、Registry、Capability、ClientModel、Facade、Placement、Parity） | [分类总览](stonecutter/categories.md) |
+| 查平台门面、Forge/NeoForge 节点入口与验收 | [平台边界](packages/platforms.md) |
+| 执行双平台编译、格式与 GameTest | [验证与验收](../development/validation/README.md) |
 
 ## 修改步骤
 
-1. 按“区分与归属”分类：共享代码、共享门面或节点实现。
+1. 按[设计](stonecutter/design.md#判断准则)分类：共享代码、共享门面或节点实现。
 2. 检查两个节点的现有实现，不能只查 `platform`。
 3. 先确定共享门面契约，再按参考实现与对齐实现编写。
-4. 按[验证与验收](../development/validation/README.md)执行双平台编译，检查失败节点实际生成源码，随后修改源输入。
+4. 按[用法](stonecutter/usage.md#验证)与[验证与验收](../development/validation/README.md)执行双平台编译，检查失败节点实际生成源码，随后修改源输入。
 5. 按[平台边界](packages/platforms.md)的验收与自动化测试范围执行。
 
 不为普通修改随意切换活动版本。确需切换时先检查工作区、节点任务与生成改写范围，完成后审查是否带入大规模无关格式/分支变动。
 
+## 区分与归属
+
+跨版本代码按共享代码、共享门面、节点实现三层组织；内容分类与六条判断准则见[Stonecutter 设计](stonecutter/design.md#区分与归属)。
+
+平台能力的调用方向是共享代码 → 共享门面 → 节点实现。共享代码不 import 节点类；节点实现不把加载器类型泄漏回共享层。
+
 ## 已知需要单独检查的边界
 
 - Forge 使用 Java 17、NeoForge 使用 Java 21；共享代码不能无条件使用只在 21 可用的特性。
-- 物品 NBT 与数据组件、资源标识构造、注册与能力 API 存在差异，沿已有适配处理。
+- 物品 NBT 与数据组件、资源标识构造、注册与能力 API 存在差异，沿已有适配处理；具体做法见 [ItemStack](stonecutter/ItemStack/README.md)、[Registry](stonecutter/Registry/README.md) 与 [Capability](stonecutter/Capability/README.md)。
 - 两版本数据包目录命名不同，不能把一边 JSON 路径直接拷给另一边。
 - 共享构建对完整 JSON 文档中的 composite loader 名称进行转换；这不是所有资源格式都会自动迁移的保证。
 - 两平台的发行任务和产物区别见[组装检查](../development/validation/checks/assemble.md#产物位置)；游戏侧 API 在平台编译/重映射阶段接入。
 
 版本支持、依赖版本和任务入口以仓库配置为事实来源。升级工具或加载器属于单独任务，不能因文档示例而顺手修改。
-

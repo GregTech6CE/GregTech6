@@ -6,42 +6,13 @@ import gregtech.client.gui.HopperScreen;
 import gregtech.content.block.MaterialBlockItem;
 import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.block.energy.ElectricWireBlock;
-import gregtech.content.block.machine.BasicMachineBlock;
-import gregtech.content.block.machine.BurningBoxBlock;
-import gregtech.content.block.machine.CrucibleCrossingBlock;
-import gregtech.content.block.machine.CrucibleFaucetBlock;
-import gregtech.content.block.machine.CrucibleHullBlockItem;
-import gregtech.content.block.machine.EngineBlock;
-import gregtech.content.block.machine.FluidPipeBlock;
-import gregtech.content.block.machine.GTMachineBlockItem;
-import gregtech.content.block.machine.HopperBlock;
-import gregtech.content.block.machine.HopperBlockItem;
-import gregtech.content.block.machine.ItemPipeBlock;
-import gregtech.content.block.machine.MoldBasinBlock;
-import gregtech.content.block.machine.MoldBlock;
-import gregtech.content.block.machine.QueueHopperBlock;
-import gregtech.content.block.machine.QueueHopperBlockItem;
-import gregtech.content.block.machine.SmeltingCrucibleBlock;
-import gregtech.content.block.machine.SmeltingCrucibleBlockItem;
-import gregtech.content.block.machine.SolidBurningBoxBlock;
-import gregtech.content.block.machine.TankBlock;
+import gregtech.content.block.machine.*;
 import gregtech.content.blockentity.machine.KineticSteamEngineBlockEntity;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 import gregtech.content.item.FluidItem;
-import gregtech.content.registry.GTBlockEntities;
-import gregtech.content.registry.GTBlocks;
-import gregtech.content.registry.GTEnergyNodes;
-import gregtech.content.registry.GTFluidItems;
-import gregtech.content.registry.GTFluidPipes;
-import gregtech.content.registry.GTItemPipes;
-import gregtech.content.registry.GTItems;
-import gregtech.content.registry.GTMenuTypes;
-import gregtech.content.registry.GTTanks;
-import gregtech.content.registry.GTWires;
+import gregtech.content.registry.*;
 import gregtech.engine.fluid.FluidRenderLayers;
-import gregtech.engine.fluid.WaterMixinStatus;
 import gregtech.engine.machine.EngineType;
-import gregtech.engine.machine.MachineRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -49,7 +20,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -87,42 +57,33 @@ public final class GregTechClient {
                                 : 0xFFFFFF,
                         entry.get().asItem()));
         java.util.stream.Stream.concat(
-                        gregtech.content.registry.GTMiscBlocks.ADVANCED_CRAFTING_TABLES.stream(),
-                        gregtech.content.registry.GTMiscBlocks.CHARGING_CRAFTING_TABLES.stream())
+                        gregtech.content.registry.GTCraftingTables.ADVANCED.stream(),
+                        gregtech.content.registry.GTCraftingTables.CHARGING.stream())
                 .forEach(entry -> event.register(
                         (stack, index) -> index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                         entry.get().asItem()));
-        gregtech.content.registry.GTStorage.BOTTLE_CRATES.forEach(entry -> event.register(
+        gregtech.content.registry.GTStorageContainers.BOTTLE_CRATES.forEach(entry -> event.register(
                 (stack, index) -> index == 0 ? entry.get().tintRgb() : 0xFFFFFF,
                 entry.get().asItem()));
-        gregtech.content.registry.GTStorage.DRAWERS.forEach(entry -> event.register(
+        gregtech.content.registry.GTStorageContainers.DRAWERS.forEach(entry -> event.register(
                 (stack, index) -> index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                 entry.get().asItem()));
-        gregtech.content.registry.GTStorage.LOCKERS.forEach(entry -> event.register(
+        gregtech.content.registry.GTStorageContainers.LOCKERS.forEach(entry -> event.register(
                 (stack, index) -> index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                 entry.get().asItem()));
-        java.util.stream.Stream.concat(
-                        gregtech.content.registry.GTStorage.SAFES.stream(),
-                        gregtech.content.registry.GTStorage.KEY_SAFES.stream())
+        gregtech.content.registry.GTSafes.all().stream()
                 .forEach(entry -> event.register(
                         (stack, tintIndex) ->
                                 tintIndex == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                         entry.get().asItem()));
-        for (var entry : java.util.List.of(
-                gregtech.content.registry.GTMiscBlocks.FILTER_ITEMS,
-                gregtech.content.registry.GTMiscBlocks.FILTER_FLUIDS,
-                gregtech.content.registry.GTMiscBlocks.FILTER_ITEMS_FLUIDS,
-                gregtech.content.registry.GTMiscBlocks.FILTER_OREDICT))
+        for (var entry : gregtech.content.registry.GTRelaysFilters.FILTERS)
             event.register(
                     (stack, index) ->
                             index == 0 ? gregtech.content.material.Materials.SteelGalvanized.getColor() : 0xFFFFFF,
                     entry.get().asItem());
-        gregtech.content.registry.GTMiscBlocks.SOURCE_EXTENDERS
-                .values()
-                .forEach(entry -> event.register(
-                        (stack, index) ->
-                                index == 0 ? entry.get().spec().material().getColor() : 0xFFFFFF,
-                        entry.get().asItem()));
+        gregtech.content.registry.GTRelaysFilters.EXTENDERS.forEach(entry -> event.register(
+                (stack, index) -> index == 0 ? entry.get().spec().material().getColor() : 0xFFFFFF,
+                entry.get().asItem()));
         GTItems.ITEMS.getEntries().forEach(entry -> {
             if (entry.get() instanceof gregtech.content.item.PortableFluidContainerItem vessel) {
                 event.register(
@@ -144,16 +105,6 @@ public final class GregTechClient {
                 event.register(
                         (stack, tintIndex) -> tintIndex == 0 ? materialItem.getTintColor() : 0xFFFFFF, entry.get());
         }
-        gregtech.content.registry.GTMiscBlocks.all().forEach(entry -> {
-            if (!(entry.get() instanceof gregtech.content.block.misc.PanelBlock)
-                    && !(entry.get() instanceof gregtech.content.block.misc.AutoToolBlock)
-                    && !(entry.get() instanceof gregtech.content.block.misc.LongDistEndpointBlock)
-                    && !(entry.get() instanceof gregtech.content.block.misc.LongDistanceTransformerBlock))
-                event.register(
-                        (stack, index) ->
-                                index == 0 ? gregtech.content.tool.MiscBlockAppearance.tint(entry.get()) : 0xFFFFFF,
-                        entry.get().asItem());
-        });
         var multiblockTintBlocks = gregtech.content.registry.GTMultiblocks.texturedBlocks().stream()
                 .filter(ro -> ro != null && ro.isPresent())
                 .map(ro -> ro.get())
@@ -258,25 +209,15 @@ public final class GregTechClient {
                 // carries no contents the model could read.
                 event.register((stack, tintIndex) -> 0xFFFFFF, pileItem);
             } else if (entry.get() instanceof GTMachineBlockItem machineItem) {
-                if (machineItem.getBlock() instanceof EngineBlock engine) {
-                    int coreTint = switch (engine.engineType()) {
-                        case ELECTRIC, FLUX -> 0x00FF00;
-                        case STEAM -> 0x0000FF;
-                        case ROTATION -> machineItem.spec().tintRgb();
-                        case DIESEL -> 0xFF6600;
-                    };
+                if (machineItem.getBlock() instanceof TankBlock tank) {
                     event.register(
-                            (stack, tintIndex) -> switch (tintIndex) {
-                                case 0 -> machineItem.spec().tintRgb();
-                                case 1 -> coreTint;
-                                default -> 0xFFFFFF;
-                            },
-                            machineItem);
-                } else {
+                            (stack, tintIndex) -> tintIndex == 0 ? tank.spec().tintRgb() : 0xFFFFFF, machineItem);
+                } else if (machineItem.getBlock() instanceof FluidPipeBlock pipe) {
                     event.register(
-                            (stack, tintIndex) ->
-                                    tintIndex == 0 ? machineItem.spec().tintRgb() : 0xFFFFFF,
-                            machineItem);
+                            (stack, tintIndex) -> tintIndex == 0 ? pipe.spec().tintRgb() : 0xFFFFFF, machineItem);
+                } else if (machineItem.getBlock() instanceof ItemPipeBlock pipe) {
+                    event.register(
+                            (stack, tintIndex) -> tintIndex == 0 ? pipe.spec().tintRgb() : 0xFFFFFF, machineItem);
                 }
             } else if (entry.get() instanceof SmeltingCrucibleBlockItem crucibleItem) {
                 event.register(
@@ -411,21 +352,15 @@ public final class GregTechClient {
 
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
-        for (var entry : java.util.List.of(
-                gregtech.content.registry.GTMiscBlocks.FILTER_ITEMS,
-                gregtech.content.registry.GTMiscBlocks.FILTER_FLUIDS,
-                gregtech.content.registry.GTMiscBlocks.FILTER_ITEMS_FLUIDS,
-                gregtech.content.registry.GTMiscBlocks.FILTER_OREDICT))
+        for (var entry : gregtech.content.registry.GTRelaysFilters.FILTERS)
             event.register(
                     (state, level, pos, index) ->
                             index == 0 ? gregtech.content.material.Materials.SteelGalvanized.getColor() : 0xFFFFFF,
                     entry.get());
-        gregtech.content.registry.GTMiscBlocks.SOURCE_EXTENDERS
-                .values()
-                .forEach(entry -> event.register(
-                        (state, level, pos, index) ->
-                                index == 0 ? entry.get().spec().material().getColor() : 0xFFFFFF,
-                        entry.get()));
+        gregtech.content.registry.GTRelaysFilters.EXTENDERS.forEach(entry -> event.register(
+                (state, level, pos, index) ->
+                        index == 0 ? entry.get().spec().material().getColor() : 0xFFFFFF,
+                entry.get()));
         for (var rod : gregtech.content.registry.GTFuelRods.ALL) {
             event.register(
                     (state, level, pos, tint) -> tint == 0 ? rod.get().tintRgb() : 0xFFFFFF,
@@ -557,16 +492,6 @@ public final class GregTechClient {
                         (state, level, pos, tintIndex) -> tintIndex == 0 ? explosive.tintRgb() : 0xFFFFFF, explosive);
             }
         });
-        gregtech.content.registry.GTMiscBlocks.all().forEach(entry -> {
-            if (!(entry.get() instanceof gregtech.content.block.misc.PanelBlock)
-                    && !(entry.get() instanceof gregtech.content.block.misc.AutoToolBlock)
-                    && !(entry.get() instanceof gregtech.content.block.misc.LongDistEndpointBlock)
-                    && !(entry.get() instanceof gregtech.content.block.misc.LongDistanceTransformerBlock))
-                event.register(
-                        (state, level, pos, index) ->
-                                index == 0 ? gregtech.content.tool.MiscBlockAppearance.tint(entry.get()) : 0xFFFFFF,
-                        entry.get());
-        });
         // Surface rocks: tint from the block entity's material (vein indicators).
         event.register(
                 (state, level, pos, tintIndex) -> {
@@ -580,7 +505,7 @@ public final class GregTechClient {
                     return 0xFFFFFF;
                 },
                 GTBlocks.ROCK.get());
-        MachineRegistry.solidBurningBoxes().forEach(entry -> {
+        GTBurningBoxes.solidBoxes().forEach(entry -> {
             if (!entry.isPresent()) {
                 return;
             }
@@ -588,13 +513,13 @@ public final class GregTechClient {
             int tint = block.spec().tintRgb();
             event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, block);
         });
-        MachineRegistry.burningBoxes().forEach(entry -> {
+        GTBurningBoxes.fuelBoxes().forEach(entry -> {
             if (!entry.isPresent()) return;
             BurningBoxBlock block = entry.get();
             int tint = block.spec().tintRgb();
             event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, block);
         });
-        MachineRegistry.basicMachines().forEach(entry -> {
+        GTBasicMachines.all().forEach(entry -> {
             if (entry.isPresent()) {
                 BasicMachineBlock block = entry.get();
                 int tint = block.basicSpec().material().getColor();
@@ -644,17 +569,17 @@ public final class GregTechClient {
                         entry.get());
             }
         });
-        gregtech.content.registry.GTToolBlocks.manual().forEach(entry -> {
+        gregtech.content.registry.GTManualStations.MANUAL.forEach(entry -> {
             if (entry.isPresent()) {
                 event.register((state, level, pos, tintIndex) -> entry.get().tint(tintIndex), entry.get());
             }
         });
-        if (gregtech.content.registry.GTToolBlocks.CRANK != null
-                && gregtech.content.registry.GTToolBlocks.CRANK.isPresent()) {
+        if (gregtech.content.registry.GTManualStations.CRANK != null
+                && gregtech.content.registry.GTManualStations.CRANK.isPresent()) {
             event.register(
                     (state, level, pos, tintIndex) ->
                             tintIndex == 0 ? gregtech.content.block.tool.CrankBlock.tintRgb() : 0xFFFFFF,
-                    gregtech.content.registry.GTToolBlocks.CRANK.get());
+                    gregtech.content.registry.GTManualStations.CRANK.get());
         }
         GTEnergyNodes.all().forEach(entry -> {
             if (entry.isPresent()) {
@@ -663,44 +588,42 @@ public final class GregTechClient {
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, node);
             }
         });
-        gregtech.content.registry.GTStorage.MASS_STORAGES.forEach(entry -> {
+        gregtech.content.registry.GTMassStorages.MASS_STORAGES.forEach(entry -> {
             if (entry.isPresent() && entry.get().material() != null) {
                 int tint = entry.get().material().getColor();
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, entry.get());
             }
         });
-        gregtech.content.registry.GTStorage.LOGISTICS_MASS_STORAGES.forEach(entry -> {
+        gregtech.content.registry.GTMassStorages.LOGISTICS_MASS_STORAGES.forEach(entry -> {
             if (entry.isPresent()) {
                 int tint = gregtech.content.material.Materials.Black.getColor();
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, entry.get());
             }
         });
-        gregtech.content.registry.GTStorage.METAL_CHESTS.forEach(entry -> {
+        gregtech.content.registry.GTMetalChests.METAL.forEach(entry -> {
             if (entry.isPresent()) {
                 int tint = entry.get().material().getColor();
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, entry.get());
             }
         });
         java.util.stream.Stream.concat(
-                        gregtech.content.registry.GTMiscBlocks.ADVANCED_CRAFTING_TABLES.stream(),
-                        gregtech.content.registry.GTMiscBlocks.CHARGING_CRAFTING_TABLES.stream())
+                        gregtech.content.registry.GTCraftingTables.ADVANCED.stream(),
+                        gregtech.content.registry.GTCraftingTables.CHARGING.stream())
                 .forEach(entry -> event.register(
                         (state, level, pos, index) ->
                                 index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                         entry.get()));
-        gregtech.content.registry.GTStorage.BOTTLE_CRATES.forEach(entry -> event.register(
+        gregtech.content.registry.GTStorageContainers.BOTTLE_CRATES.forEach(entry -> event.register(
                 (state, level, pos, index) -> index == 0 ? entry.get().tintRgb() : 0xFFFFFF, entry.get()));
-        gregtech.content.registry.GTStorage.DRAWERS.forEach(entry -> event.register(
+        gregtech.content.registry.GTStorageContainers.DRAWERS.forEach(entry -> event.register(
                 (state, level, pos, index) ->
                         index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                 entry.get()));
-        gregtech.content.registry.GTStorage.LOCKERS.forEach(entry -> event.register(
+        gregtech.content.registry.GTStorageContainers.LOCKERS.forEach(entry -> event.register(
                 (state, level, pos, index) ->
                         index == 0 ? entry.get().material().getColor() : 0xFFFFFF,
                 entry.get()));
-        java.util.stream.Stream.concat(
-                        gregtech.content.registry.GTStorage.SAFES.stream(),
-                        gregtech.content.registry.GTStorage.KEY_SAFES.stream())
+        gregtech.content.registry.GTSafes.all().stream()
                 .forEach(entry -> event.register(
                         (state, level, pos, tintIndex) ->
                                 tintIndex == 0 ? entry.get().material().getColor() : 0xFFFFFF,
@@ -752,46 +675,46 @@ public final class GregTechClient {
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, entry.get());
             }
         });
-        MachineRegistry.smeltingCrucibles().forEach(entry -> {
+        GTSmeltery.crucibles().forEach(entry -> {
             if (entry.isPresent()) {
                 registerCrucibleTint(event, entry.get());
             }
         });
-        MachineRegistry.moldBasins().forEach(entry -> {
+        GTSmeltery.basins().forEach(entry -> {
             if (entry.isPresent()) {
                 registerCrucibleTint(event, entry.get());
             }
         });
-        MachineRegistry.molds().forEach(entry -> {
+        GTSmeltery.molds().forEach(entry -> {
             if (entry.isPresent()) {
                 registerCrucibleTint(event, entry.get());
             }
         });
-        MachineRegistry.crucibleCrossings().forEach(entry -> {
+        GTSmeltery.crossings().forEach(entry -> {
             if (entry.isPresent()) {
                 registerCrucibleTint(event, entry.get());
             }
         });
-        MachineRegistry.crucibleFaucets().forEach(entry -> {
+        GTSmeltery.faucets().forEach(entry -> {
             if (entry.isPresent()) {
                 registerCrucibleTint(event, entry.get());
             }
         });
-        MachineRegistry.hoppers().forEach(entry -> {
+        GTHoppers.hoppers().forEach(entry -> {
             if (entry.isPresent()) {
                 HopperBlock block = entry.get();
                 int tint = block.spec().tintRgb();
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, block);
             }
         });
-        MachineRegistry.queueHoppers().forEach(entry -> {
+        GTHoppers.queues().forEach(entry -> {
             if (entry.isPresent()) {
                 QueueHopperBlock block = entry.get();
                 int tint = block.spec().tintRgb();
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, block);
             }
         });
-        MachineRegistry.allEngines().forEach(entry -> {
+        GTEngines.all().forEach(entry -> {
             if (entry.isPresent()) {
                 EngineBlock block = entry.get();
                 int tint = block.tintRgb();
@@ -934,8 +857,8 @@ public final class GregTechClient {
 
         event.registerBlockEntityRenderer(GTBlockEntities.METAL_CHEST.get(), MetalChestRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.TANK.get(), TankCoverRenderer::new);
-        event.registerBlockEntityRenderer(GTBlockEntities.ENERGY_NODE.get(), EnergyNodeRenderer::new);
-        event.registerBlockEntityRenderer(GTBlockEntities.CHEMICAL_BATTERY.get(), ChemicalBatteryRenderer::new);
+        event.registerBlockEntityRenderer(GTEnergyNodes.ENERGY_NODE.get(), EnergyNodeRenderer::new);
+        event.registerBlockEntityRenderer(GTChemicalBatteries.CHEMICAL_BATTERY.get(), ChemicalBatteryRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.MASS_STORAGE.get(), MassStorageRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LOGISTICS_MASS_STORAGE.get(), MassStorageRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.MATERIAL_ANVIL.get(), MaterialAnvilRenderer::new);
@@ -958,11 +881,10 @@ public final class GregTechClient {
                 GTBlockEntities.ORIGINAL_LARGE_BOILER.get(), OriginalLargeBoilerBarometerRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LARGE_TURBINE.get(), LargeTurbineRotorRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LARGE_GAS_TURBINE.get(), LargeTurbineRotorRenderer::new);
-        event.registerBlockEntityRenderer(GTBlockEntities.FUSION_REACTOR.get(), MachineCoverRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.COKE_OVEN.get(), MachineCoverRenderer::new);
 
         // Cover plates on basic machine faces
-        for (var blockRO : gregtech.engine.machine.MachineRegistry.basicMachines()) {
+        for (var blockRO : GTBasicMachines.all()) {
             if (!blockRO.isPresent()) continue;
             BlockEntityType<?> beType = blockRO.get().beType();
             if (beType == null) continue;
@@ -972,15 +894,8 @@ public final class GregTechClient {
         }
 
         // Engine BERs — heat-colored core overlay
-        var steamEngines = gregtech.engine.machine.MachineRegistry.steamEngines();
-        var strongSteamEngines = gregtech.engine.machine.MachineRegistry.strongSteamEngines();
-        for (var blockRO : steamEngines) {
-            event.registerBlockEntityRenderer(
-                    (BlockEntityType<KineticSteamEngineBlockEntity>)
-                            (Object) blockRO.get().getBeType(),
-                    SteamEngineRenderer::new);
-        }
-        for (var blockRO : strongSteamEngines) {
+        for (var blockRO : GTEngines.all()) {
+            if (blockRO.get().engineType() != EngineType.STEAM) continue;
             event.registerBlockEntityRenderer(
                     (BlockEntityType<KineticSteamEngineBlockEntity>)
                             (Object) blockRO.get().getBeType(),
@@ -999,14 +914,6 @@ public final class GregTechClient {
                             return item.spec().display(item.stored(stack))
                                     / (float) item.spec().scale();
                         })));
-        // In the IDE, omitting --mixin.config starts the game without an error but restores a
-        // visible border between vanilla water and GT6 world water. Verify the transformed method
-        // itself, independently of fluid tags (which are not loaded yet during client setup).
-        Fluids.WATER.isSame(Fluids.FLOWING_WATER);
-        if (!WaterMixinStatus.wasInvoked()) {
-            throw new IllegalStateException("GregTech water Mixin is inactive: gregtech.mixins.json was not loaded. "
-                    + "Regenerate IDEA runs with gradlew genIntellijRuns and restart runClient.");
-        }
         ItemBlockRenderTypes.setRenderLayer(
                 gregtech.content.registry.GTDecorBlocks.GLASS_CLEAR.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(

@@ -13,26 +13,21 @@ import gregtech.content.registry.GTWires;
 import gregtech.engine.energy.WireSpec;
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.engine.machine.PipeSpec;
-import java.util.Locale;
-import java.util.Map;
-import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
+
+import java.util.Locale;
 
 /**
  * Replaces every pipe/wire/cable blockstate variant with the dynamic
  * {@link PipeWireBakedModel} (GT6 thin-into-thick connection rendering).
  * Items use the same geometry with two opposite connection arms.
  */
-@Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class PipeWireClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -43,10 +38,8 @@ public final class PipeWireClientModels {
 
     private PipeWireClientModels() {}
 
-    @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
-        Map<ResourceLocation, BakedModel> models = event.getModels();
-        BlockItemModelHelper.captureFromVanillaBlockItem(models);
+        BakedModelMap models = BakedModelMap.of(event.getModels());
         int replaced = 0;
 
         for (var entry : GTFluidPipes.all()) {
@@ -129,13 +122,13 @@ public final class PipeWireClientModels {
         LOGGER.info("[{}] Dynamic pipe/wire models: {} state variants replaced", GregTech.NAMESPACE, replaced);
     }
 
-    private static int replace(Map<ResourceLocation, BakedModel> models, Block block, BakedModel model) {
+    private static int replace(BakedModelMap models, Block block, BakedModel model) {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
         if (id == null) return 0;
-        BlockItemClientModels.aliasItemInventory(models, id, BlockItemClientModels.asBlockItem(model));
+        BlockItemClientModels.aliasBlockItem(models, block, BlockItemClientModels.asBlockItem(model));
         int count = 0;
         for (BlockState state : block.getStateDefinition().getPossibleStates()) {
-            models.put(BlockModelShaper.stateToModelLocation(id, state), model);
+            models.putState(id, state, model);
             count++;
         }
         return count;

@@ -6,12 +6,8 @@ import gregtech.engine.energy.IEnergyBlock;
 import gregtech.content.block.energy.GearboxBlock;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MaterialPrefix;
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTGearboxes;
 import net.minecraft.core.HolderLookup;
-*///?} else {
-import gregtech.content.registry.GTBlockEntities;
-//?}
+import gregtech.content.registry.GTGearboxes;
 import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -55,11 +51,7 @@ public class GearboxBlockEntity extends BlockEntity implements IEnergyBlock {
     private long inputTick = Long.MIN_VALUE;
 
     public GearboxBlockEntity(BlockPos pos, BlockState state) {
-//? if >=1.21.1 {
-        /*super(GTGearboxes.GEARBOX.get(), pos, state);
-*///?} else {
-        super(GTBlockEntities.GEARBOX.get(), pos, state);
-//?}
+        super(GTGearboxes.GEARBOX.get(), pos, state);
     }
 
     @Override

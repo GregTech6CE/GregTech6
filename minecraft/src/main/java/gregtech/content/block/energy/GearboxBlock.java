@@ -9,11 +9,7 @@ import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.blockentity.energy.GearboxBlockEntity;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.MaterialItem;
-//? if >=1.21.1 {
-/*import gregtech.content.registry.GTGearboxes;
-*///?} else {
-import gregtech.content.registry.GTBlockEntities;
-//?}
+import gregtech.content.registry.GTGearboxes;
 import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -84,11 +80,7 @@ public class GearboxBlock extends Block implements EntityBlock, ToolInteractionT
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-//? if >=1.21.1 {
-        /*if (level.isClientSide || type != GTGearboxes.GEARBOX.get()) return null;
-*///?} else {
-        if (level.isClientSide || type != GTBlockEntities.GEARBOX.get()) return null;
-//?}
+        if (level.isClientSide || type != GTGearboxes.GEARBOX.get()) return null;
         return (l, pos, s, be) -> GearboxBlockEntity.serverTick(l, pos, s, (GearboxBlockEntity) be);
     }
 

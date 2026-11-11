@@ -45,7 +45,7 @@ public final class GTBottles {
         return "mercury_bottle".equals(itemId) ? 144 : 250;
     }
 
-    /** How many bottles the generated table covers (GT6 registers ~180; the rest are other mods' bottles). */
+    /** How many bottles the generated table covers (this port registers 137). */
     public static int registered() {
         return FLUID_BY_ID.size();
     }

@@ -1,14 +1,17 @@
 package gregtech.content.registry;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
 import gregtech.content.block.IconSetBlock;
-import java.util.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.*;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 /** Complete remaining original icon identities. Existing typed registrations retain ownership. */
 public final class GTRemainingIconBlocks {
@@ -27,7 +30,6 @@ public final class GTRemainingIconBlocks {
     public static void initialize(ContentRegistrar registrar) {
         Set<String> seen = new HashSet<>(buildSkipIds());
         queued(seen, GTBlocks.BLOCKS);
-        seen.addAll(gregtech.platform.neoforge.logistics.LogisticsRegistries.queuedBlockIds());
         for (String icon : gregtech.content.plant.IconPlantCatalog.BLOCK_ICONS) {
             String id = blockId(icon);
             if (seen.add(id)) add(registrar, id, () -> createBlock(icon));
@@ -95,6 +97,8 @@ public final class GTRemainingIconBlocks {
         skip.addAll(Set.of("gearbox_axle", "greg_o_lantern"));
         // GTLongDistance owns the whole catalog. The old single wire id is not in that catalog.
         skip.add("long_dist_wire");
+        // GTLogisticsWire owns the logistics wire block and item.
+        skip.add("logistics_wire");
         for (var spec : gregtech.content.logistics.LongDistanceCatalog.ALL) skip.add(spec.id());
         // GTWoods species — skip log/planks/leaves/sapling for each
         for (String species : Set.of(
@@ -149,12 +153,6 @@ public final class GTRemainingIconBlocks {
             String slug = iconName.substring("crystal_ore_".length());
             String materialName = Character.toUpperCase(slug.charAt(0)) + slug.substring(1);
             return new gregtech.content.block.CrystalOreBlock(propertiesFor(iconName), iconName, materialName);
-        }
-        if (iconName.equals("logistics_wire")) {
-            return new gregtech.content.block.machine.LogisticsWireBlock(BlockBehaviour.Properties.of()
-                    .strength(1.0F, 2.0F)
-                    .requiresCorrectToolForDrops()
-                    .sound(SoundType.METAL));
         }
         if (iconName.equals("long_dist_pipe_item") || iconName.equals("long_dist_pipe_fluid")) {
             var kind = iconName.equals("long_dist_pipe_item")

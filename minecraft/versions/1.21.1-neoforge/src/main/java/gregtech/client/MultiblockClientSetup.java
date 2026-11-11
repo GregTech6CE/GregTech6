@@ -1,10 +1,12 @@
 package gregtech.client;
 
-import gregtech.content.registry.*;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTMultiblocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 /** NeoForge renderer registration and material tints for multiblocks and crucibles. */
 @EventBusSubscriber(
@@ -20,16 +22,14 @@ public final class MultiblockClientSetup {
         event.registerBlockEntityRenderer(
                 GTBlockEntities.ORIGINAL_LARGE_BOILER.get(), OriginalLargeBoilerBarometerRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LARGE_CRUCIBLE.get(), LargeCrucibleRenderer::new);
-        event.registerBlockEntityRenderer(
-                gregtech.platform.neoforge.smeltery.SmelteryRegistries.SMELTING_CRUCIBLE.get(),
-                SmeltingCrucibleRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.SMELTING_CRUCIBLE.get(), SmeltingCrucibleRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LARGE_TURBINE.get(), LargeTurbineRotorRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LARGE_GAS_TURBINE.get(), LargeTurbineRotorRenderer::new);
     }
 
     @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block event) {
-        for (var holder : gregtech.platform.neoforge.smeltery.SmelteryRegistries.crucibles())
+        for (var holder : GTSmeltery.crucibles())
             event.register(
                     (state, level, pos, index) -> {
                         if (index != 0) return 0xFFFFFF;
@@ -37,7 +37,8 @@ public final class MultiblockClientSetup {
                         if (level != null
                                 && pos != null
                                 && level.getBlockEntity(pos)
-                                        instanceof gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity crucible
+                                        instanceof
+                                        gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity crucible
                                 && crucible.isMeltDownWarning()) return CrucibleBlockBakedModel.meltdownRgb(tint);
                         return tint;
                     },
@@ -50,7 +51,7 @@ public final class MultiblockClientSetup {
 
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
-        for (var holder : gregtech.platform.neoforge.smeltery.SmelteryRegistries.crucibles())
+        for (var holder : GTSmeltery.crucibles())
             event.register(
                     ItemColorARGB.opaque(
                             (stack, index) -> index == 0 ? holder.get().spec().tintRgb() : 0xFFFFFF),

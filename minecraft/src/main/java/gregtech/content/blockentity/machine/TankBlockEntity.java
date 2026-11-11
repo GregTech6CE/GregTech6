@@ -14,8 +14,8 @@ import gregtech.content.data.GregTechConstants;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.content.data.MachineRecipeMaps;
-import gregtech.content.registry.GTBlockEntities;
 //?}
+import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTFluids;
 
 //? if >=1.21.1 {
@@ -119,11 +119,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
     }
 
     public TankBlockEntity(BlockPos pos, BlockState state) {
-//? if >=1.21.1 {
-        /*this(FluidTransportRegistries.TANK.get(), pos, state);
-*///?} else {
         this(GTBlockEntities.TANK.get(), pos, state);
-//?}
     }
 
     private static TankSpec specFromState(BlockState state) {

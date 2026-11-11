@@ -4,13 +4,12 @@ import gregtech.api.material.GTValues;
 import gregtech.content.material.Materials;
 import gregtech.engine.fluid.MoltenFluidHandler;
 import gregtech.engine.fluid.MoltenMaterialUnits;
+import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 //? if >=1.21.1 {
-/*import gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
-import net.neoforged.neoforge.fluids.FluidStack;
+/*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 *///?} else {
-import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -41,11 +40,7 @@ public final class CrucibleContainerInteraction {
                 || FluidUtil.getFluidHandler(stack).isPresent();
     }
 
-//? if >=1.21.1 {
-    /*public static InteractionResult interact(SmeltingCrucibleEntity crucible, Player player,
-*///?} else {
-    public static InteractionResult interact(SmeltingCrucibleBlockEntity crucible, Player player,
-//?}
+public static InteractionResult interact(SmeltingCrucibleBlockEntity crucible, Player player,
             InteractionHand hand, BlockPos hitPos) {
         var held = player.getItemInHand(hand);
         if (!handles(held)) return InteractionResult.PASS;

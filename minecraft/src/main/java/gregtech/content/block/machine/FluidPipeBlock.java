@@ -11,11 +11,7 @@ import gregtech.engine.tool.GTToolType;
 import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.PanelCoverInteraction;
-//? if >=1.21.1 {
-/*import gregtech.content.transport.fluid.FluidTransportRegistries;
-*///?} else {
 import gregtech.content.registry.GTBlockEntities;
-//?}
 import gregtech.util.GTEntityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -193,11 +189,7 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
     @Override
     @SuppressWarnings("unchecked")
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-//? if >=1.21.1 {
-        /*if (level.isClientSide || type != FluidTransportRegistries.FLUID_PIPE.get()) return null;
-*///?} else {
         if (level.isClientSide || type != GTBlockEntities.FLUID_PIPE.get()) return null;
-//?}
         return (BlockEntityTicker<T>) (BlockEntityTicker<FluidPipeBlockEntity>)
                 gregtech.content.transport.fluid.FluidPipeTickPhases::enqueue;
     }

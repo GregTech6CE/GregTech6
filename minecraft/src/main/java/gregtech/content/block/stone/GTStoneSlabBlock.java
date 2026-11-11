@@ -1,12 +1,10 @@
 package gregtech.content.block.stone;
-//? if >=1.21.1 {
-//?} else {
 import gregtech.engine.material.MaterialPresentation;
-//?}
 
 import gregtech.engine.GTWaterloggable;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.registry.GTBlocks;
+import gregtech.content.worldgen.OreHarvest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -17,11 +15,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
-//? if >=1.21.1 {
-//?} else {
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-//?}
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -33,7 +26,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -106,11 +98,7 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
 
     @Override
     public MutableComponent getName() {
-//? if >=1.21.1 {
-        /*return Component.translatable(getDescriptionId(), Component.translatable(stoneMaterial.getTranslationKey(), stoneMaterial.getDisplayNameFallback()), variant.displayName());
-*///?} else {
         return Component.translatable(getDescriptionId(), MaterialPresentation.name(stoneMaterial), variant.displayName());
-//?}
     }
 
     @Override
@@ -149,12 +137,7 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
-        ItemStack tool = params.getOptionalParameter(LootContextParams.TOOL);
-//? if >=1.21.1 {
-        /*boolean silkTouch = gregtech.content.worldgen.OreHarvest.from(params).silkTouch();
-*///?} else {
-        boolean silkTouch = tool != null && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0;
-//?}
+        boolean silkTouch = OreHarvest.from(params).silkTouch();
         if (variant == StoneVariant.STONE && !silkTouch) {
             Block cobble = GTBlocks.getStoneSlab(stoneType, StoneVariant.COBBLE);
             if (cobble != null) {

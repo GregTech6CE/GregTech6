@@ -1,11 +1,9 @@
 package gregtech.client;
 
-import gregtech.content.transport.fluid.FluidTransportRegistries;
-import java.util.Locale;
-import net.minecraft.client.renderer.block.BlockModelShaper;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTFluidPipes;
+import gregtech.content.registry.GTTanks;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -13,6 +11,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+
+import java.util.Locale;
 
 /** Original dynamic thin-to-thick pipe geometry, cover plates and material tint, client only. */
 @EventBusSubscriber(
@@ -28,13 +28,13 @@ public final class FluidTransportClientSetup {
 
     @SubscribeEvent
     public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(FluidTransportRegistries.FLUID_PIPE.get(), PipeCoverRenderer::new);
-        event.registerBlockEntityRenderer(FluidTransportRegistries.TANK.get(), TankCoverRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.FLUID_PIPE.get(), PipeCoverRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.TANK.get(), TankCoverRenderer::new);
     }
 
     @SubscribeEvent
     public static void blocks(RegisterColorHandlersEvent.Block event) {
-        for (var entry : FluidTransportRegistries.pipes()) {
+        for (var entry : GTFluidPipes.all()) {
             var block = entry.get();
             event.register(
                     (state, level, pos, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF, block);
@@ -42,7 +42,7 @@ public final class FluidTransportClientSetup {
         for (var block : gregtech.content.registry.AddonPipeRegistration.fluidBlocks())
             event.register(
                     (state, level, pos, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF, block);
-        for (var entry : FluidTransportRegistries.tanks()) {
+        for (var entry : GTTanks.all()) {
             var block = entry.get();
             event.register(
                     (state, level, pos, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF, block);
@@ -51,7 +51,7 @@ public final class FluidTransportClientSetup {
 
     @SubscribeEvent
     public static void items(RegisterColorHandlersEvent.Item event) {
-        for (var entry : FluidTransportRegistries.pipes()) {
+        for (var entry : GTFluidPipes.all()) {
             var block = entry.get();
             event.register(
                     ItemColorARGB.opaque(
@@ -63,7 +63,7 @@ public final class FluidTransportClientSetup {
                     ItemColorARGB.opaque(
                             (stack, layer) -> layer == 0 ? block.spec().tintRgb() : 0xFFFFFF),
                     block.asItem());
-        for (var entry : FluidTransportRegistries.tanks()) {
+        for (var entry : GTTanks.all()) {
             var block = entry.get();
             event.register(
                     ItemColorARGB.opaque(
@@ -72,18 +72,10 @@ public final class FluidTransportClientSetup {
         }
     }
 
-    @SubscribeEvent
     public static void models(ModelEvent.ModifyBakingResult event) {
-        var models = event.getModels();
-        ItemTransforms transforms = ItemTransforms.NO_TRANSFORMS;
-        for (String path : new String[] {"iron_block", "stone", "dirt"}) {
-            var model = models.get(ModelResourceLocation.inventory(ResourceLocation.withDefaultNamespace(path)));
-            if (model != null && model.isGui3d() && model.getTransforms() != ItemTransforms.NO_TRANSFORMS) {
-                transforms = model.getTransforms();
-                break;
-            }
-        }
-        for (var entry : FluidTransportRegistries.pipes()) {
+        BakedModelMap models = BakedModelMap.of(event.getModels());
+        ItemTransforms transforms = BlockItemModelHelper.blockItemTransforms();
+        for (var entry : GTFluidPipes.all()) {
             var block = entry.get();
             var spec = block.spec();
             String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
@@ -97,10 +89,7 @@ public final class FluidTransportClientSetup {
                             0,
                             null)
                     .itemTransforms(transforms);
-            var key = BuiltInRegistries.BLOCK.getKey(block);
-            for (var state : block.getStateDefinition().getPossibleStates())
-                models.put(BlockModelShaper.stateToModelLocation(key, state), model);
-            models.put(ModelResourceLocation.inventory(key), model);
+            BlockItemClientModels.alias(models, block, model, model);
         }
         for (var block : gregtech.content.registry.AddonPipeRegistration.fluidBlocks()) {
             var spec = block.spec();
@@ -115,10 +104,7 @@ public final class FluidTransportClientSetup {
                             0,
                             null)
                     .itemTransforms(transforms);
-            var key = BuiltInRegistries.BLOCK.getKey(block);
-            for (var state : block.getStateDefinition().getPossibleStates())
-                models.put(BlockModelShaper.stateToModelLocation(key, state), model);
-            models.put(ModelResourceLocation.inventory(key), model);
+            BlockItemClientModels.alias(models, block, model, model);
         }
     }
 }
