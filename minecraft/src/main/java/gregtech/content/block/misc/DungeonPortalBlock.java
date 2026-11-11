@@ -58,11 +58,6 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
 
 //? if >=1.21.1 {
     /*@Override
-    public com.mojang.serialization.MapCodec<? extends Block> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-
-    @Override
     protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         return switch (interact(state, level, pos, player, hand, hit)) {

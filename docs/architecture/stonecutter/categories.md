@@ -1,6 +1,6 @@
 # Stonecutter 分类总览
 
-本页是 Stonecutter 分类总览，按作用对象划分 12 个分类，设计、用法与模板见[设计](design.md)、[用法](usage.md)、[模板](templates.md)。
+本页是 Stonecutter 分类总览，按作用对象划分 13 个分类，设计、用法与模板见[设计](design.md)、[用法](usage.md)、[模板](templates.md)。
 
 ## 文件清单
 
@@ -25,6 +25,7 @@
 | Facade | logger、事件总线 |
 | Placement | 注册归属、holder 类型、节点目录、菜单落点、物品类依赖、节点类拆分、创造栏装配、包装类、静态谓词、分支噪声 |
 | BlockCodec（守卫） | 方块类型 codec 的来源、当前作用与 1.21-only stub 规则 |
+| Interaction（守卫） | 方块交互签名 1.20.1 `use` ↔ 1.21.1 `useItemOn`/`useWithoutItem` 适配器 |
 | Parity（守卫） | 行为差异见 decisions/parity；本目录只做折叠前检查 |
 
 ## BlockEntity
@@ -114,6 +115,14 @@
 关键词：Block.codec, MapCodec, MapCodec.unit, simpleCodec, BLOCK_TYPE, BlockTypes, BlockListReport, DirectionalBlock, HorizontalDirectionalBlock, FallingBlock, BushBlock, BaseRailBlock, BaseEntityBlock, EntityBlock, stub codec
 
 分类 README：[BlockCodec/README.md](BlockCodec/README.md)
+
+## Interaction
+
+摘要：方块交互签名 1.20.1 `use` ↔ 1.21.1 `useItemOn`/`useWithoutItem` 的平台差异；身体统一到共享 helper，`//?` 只承载签名适配与结果映射。
+
+关键词：use, useItemOn, useWithoutItem, InteractionResult, ItemInteractionResult, interact, ToolInteractions, ToolInteractionSpec, PASS_TO_DEFAULT_BLOCK_INTERACTION, sidedSuccess
+
+分类 README：[Interaction/README.md](Interaction/README.md)
 
 ## Parity
 
