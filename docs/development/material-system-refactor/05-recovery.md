@@ -94,3 +94,10 @@ JUnit 验证计算边界；GameTest 要通过最终 `RecipeMap`／运行期入�
 - 删除分开的 thermal 输入证明，统一使用 `RecoveryInputProof`，覆盖损坏、内容物、催化剂、容器和空流体限制。
 - 新增 `RecoveryRecipeConflicts`：通用行之间相同输出去重、不同输出失败；专用行可显式替换通用行；通用行遇到专用所有者时让位。Shredder、Vanilla、Anvil、热输入、热回收、胶囊和石材生产端共用该规则。
 - Forge 1.20.1 GameTest 77/77、NeoForge 1.21.1 GameTest 82/82。新增测试覆盖附属热回收 144 mB/U、generic/specific 冲突和显式注册关闭。
+
+## 第三轮审查闭合（2026-11-11）
+
+- Shredder 的动态材料规则使用 `mMaterialRecovery`，损坏栈在最终查询和消耗阶段都被拒绝，完整物品生成时的输出假设不会扩用到缩量状态。
+- Shredder 在发布前按注册 ID 和规范化输入检查静态拥有者，并在发布后复核经 `RecipeMap` 规范化得到的真实输入；同输出 owner 仅保留一个，同时移除对应动态索引。
+- 审计探针在 Forge 和 NeoForge 上均只看到 `recovery:vanilla-generic` 一条铁锭通用回收行；tag-only 动态行、撤销和绑定刷新仍通过。
+- Forge 1.20.1 GameTest 78/78、NeoForge 1.21.1 GameTest 83/83。

@@ -1,15 +1,16 @@
 # 06：统一材料分解
 
-本计划让离心／电解分解的权限、化学组成、输入相态和数量换算来自同一个材料定义上下文。状态：待实施；前置为 [02](02-material-registration.md)、[03](03-properties-and-forms.md)、[04](04-item-composition.md)，并复用 [05](05-recovery.md) 的发布、冲突和诊断约定。
+本计划让离心／电解分解的权限、化学组成、输入相态和数量换算来自同一个材料定义上下文。状态：已实施；前置为 [02](02-material-registration.md)、[03](03-properties-and-forms.md)、[04](04-item-composition.md)，并复用 [05](05-recovery.md) 的发布、冲突和诊断约定。实施与验收记录见[材料重构 06：统一分解验收](../../integration/material-refactor-06-decomposition.md)。
 
 与 [08-D](08-material-data-api.md#d来源与用途索引快照发布) 共用有效分解结果：保留全部输入、产物、选择器角色、相态与单位。材料有化学组成不等于已存在可执行分解来源，图查询不能绕过本计划的工艺权限。
 
 ## 当前入口与目标
 
 - `content.material.catalog.*` 中的 `MaterialDefinition.Composition`：规范化学组成与 divider。
-- 规范声明中的 `DECOMPOSABLE`、`CENTRIFUGE`、`ELECTROLYSER` flag：分解准入；02 已删除旧的 `MaterialCompositionData`／`MaterialDecompositionData` 运行时写入入口。
-- core `content.recipe.SourceDecompositionData`、`SourceDecompositionRules`：输入声明、热学事实及单位规则。
-- Minecraft `content.recipe.SourceDecompositionNativeFacts`、`DecompositionRecipeLoader`：原生相态证明、产物与配方生成。
+- `content.material.catalog.DecompositionMaterials`：各材料的液体／气体／等离子体绑定及 `sourceUnits → mB` 换算；`MaterialDefinitions` 将其作为现有 `MaterialProcessKeys.DECOMPOSITION` 宿主 process 的 `MaterialDecompositionRule` 关联到规范声明。
+- 规范声明中的 `DECOMPOSABLE`、`CENTRIFUGE`、`ELECTROLYSER` flag：兼容读取的路线镜像；实际分解准入由 `MaterialDecompositionRule` 声明，02 已删除旧的 `MaterialCompositionData`／`MaterialDecompositionData` 运行时写入入口。
+- core `content.recipe.SourceDecompositionRules`、`engine.recipe.MaterialDecompositionPlanner`：共享单位换算与纯计划计算，包括权限、组成、相态候选、批量、EUt、时长、产物顺序和槽位截尾。
+- Minecraft `content.recipe.DecompositionNativeAdapter`、`DecompositionRecipeLoader`：解析已注册物品／流体身份，将计划投影并发布为离心／电解配方。
 
 目标是一个材料分解声明配合共享计算器：声明决定允许的 map、组成与相态绑定；计算器产生有单位的计划；游戏适配器只解析已注册形态和流体并发布配方。物品回收不等于材料化学分解，两者共用底层事实，不共用一个不区分工艺的授权开关。
 
@@ -72,3 +73,11 @@ JUnit 验证数学与权限；GameTest 从最终 map 查询并执行至少一个
 建议按“权限声明与负例 → 纯计算器 → 固体绑定 → 流体／气体与附属 → 切换、重载和旧表退出”交付。
 
 完成条件：每个分解候选能说明权限、组成、相态和单位依据；活动定义没有静默悬空引用；两个节点代表例通过；现有明确 parity 差异保留。机器的化学处理能力和槽位未获依据前不在重构中扩大。
+
+## 实施结果（2026-11-11）
+
+- API 1.8 新增唯一类型化 `MaterialProcessKeys.DECOMPOSITION` 和 `MaterialDecompositionRule`。规则同时声明离心／电解路线、液体／气体／等离子体注册身份、`sourceUnits → mB` 换算以及接受流体后是否保留固体输入；没有新增平行材料注册表。附属只能为自己拥有的材料提交该宿主机 process。
+- 规范目录中的 263 个材料现在发布分解上下文：250 个带至少一个可执行路线，13 个仅提供组件相态；69 个材料带显式流体相态。路线权限仍镜像为兼容的 `CENTRIFUGE`、`ELECTROLYSER`、`DECOMPOSABLE` 属性。
+- 旧 `SourceDecompositionData`、`SourceDecompositionNativeFacts` 已由 `DecompositionMaterials` 声明和 `DecompositionNativeAdapter` 取代。`MaterialDecompositionPlanner` 统一计算约简后的输入数量、EUt、时长、相态选择、按声明的一跳粉化目标、输出顺序、槽位截尾及失败状态。
+- 补齐 22 个已有路线但缺少组成的活动材料；`Ironwood`、`SkyStone`、`VibrantAlloy` 因组成依赖已停注材料，保留为明确无分解能力，不伪造替代组成。
+- Forge 1.20.1 以真实 `RecipeProcessor` 执行附属离心配方并核对消耗、时长、EUt 与两类输出，78/78 通过；NeoForge 1.21.1 为 83/83。详见验收记录。

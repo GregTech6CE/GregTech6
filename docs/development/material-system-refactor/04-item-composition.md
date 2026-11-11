@@ -121,3 +121,10 @@ core 的 `engine.material.ItemComposition` 将 prefix、组件、自由文本 so
 - 新增 `declared()` 有效成分视图，用于需要排除外部 tag 回导的消费端。生产代码不再调用仅供诊断的 `explicit()`；原调用已改为读取 `base()` 或 `declared()`。
 - `RecoveryInputProof` 取代分开的 thermal 输入证明，统一校验物品身份、损坏、内容物、催化剂、容器和空流体处理。
 - Forge 1.20.1 GameTest 77/77、NeoForge 1.21.1 GameTest 82/82；双平台生产与测试源码编译、core JUnit 和 ratchet Spotless 通过。
+
+### 第五轮审查闭合（2026-11-11）
+
+- 外部 tag 导入先收集同一物品的全部可识别形态，再交给 `ItemCompositionResolver` 统一合并或报告冲突；歧义项记录物品 ID 和冲突描述后不进入 generation，形态消费者只读取胜出的有效成分。
+- `ItemMaterialRegistry.entries()` 按现有 composition revision 缓存不可变有序快照；同 revision 重复遍历不再复制和排序全量组件。
+- tag generation 内容或 readiness 变化后直接刷新公开形态绑定，查询路径不需要等待下一次平台启动。
+- Forge 1.20.1 GameTest 78/78、NeoForge 1.21.1 GameTest 83/83；双平台生产与测试源码编译通过。

@@ -49,7 +49,7 @@
 - 常见 form 的资源 tag 映射集中在 `MaterialEquivalence`，`CraftingMaterialForms` 不再维护第二份映射。
 - `Any*` 消费者继续使用兼容符号，但成员和包含关系统一读取 `MaterialTagsView` 中的替代组。
 - 补测覆盖 Paper 多组板、NetherQuartz 宝石形态、Iron 物品／方块重量和 Tantalum 强制宝石规则。
-- 当前 API 1.7 增加详细 form 规则、实际绑定视图和分组包含查询。
+- API 1.7 增加详细 form 规则、实际绑定视图和分组包含查询；API 1.8 增加类型化分解规则。
 
 ## 已移除或停止作为权威
 

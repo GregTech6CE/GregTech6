@@ -75,7 +75,7 @@
 - `FuelRule` 是燃料值与残留的唯一类型化声明。完整组件燃料计划从同一组件集合汇总热值和灰烬；同种灰烬合并，不同灰烬或超过单槽容量的结果拒绝燃烧，不再取首组件或截断。按固定 GT6 提交 `3703e403` 修正 WoodRubber、Bamboo、Livingwood、Dreamwood、Greatwood、Silverwood 的热值和灰烬；补 Bentonite 的 18 份 `SodiumHydroxide + 18U Clay` 组成，并按同源删除 Phosphor 的额外 `MELTING`。
 - 布尔 flag 使用统一、与声明顺序无关的闭包：气体同时为液体，离心／电解权限包含 `DECOMPOSABLE`；`FLAMMABLE` 与 `UNBURNABLE` 冲突失败。附属离心／电解声明没有组成时在 READY 前失败，内置遗留组成的数据迁移仍由 06 负责。
 - 流体 phase 修正已直接写回对应 catalog 声明，不再使用 catalog 外的按材料名二次覆盖表。
-- 当前 API 1.7 的 typed `MaterialFormRulesView.rules()` 统一投影 item、block、fluid 定义期规则，`MaterialFormRule` 携带种类、默认材料量和显式请求来源；旧的 `forms()`／`allows()` 明确只表示 item 形态。配置了不存在的 process form 会在 READY 前失败。`MaterialFormsView` 在平台注册完成后发布 item、block、fluid 及 `ItemMaterialRegistry` 显式统一物品的实际绑定；binding 出现 kind 冲突时拒绝发布，规则允许与真实注册仍保持为不同事实。
+- API 1.7 引入的 typed `MaterialFormRulesView.rules()` 统一投影 item、block、fluid 定义期规则，`MaterialFormRule` 携带种类、默认材料量和显式请求来源；旧的 `forms()`／`allows()` 明确只表示 item 形态。配置了不存在的 process form 会在 READY 前失败。`MaterialFormsView` 在平台注册完成后发布 item、block、fluid 及 `ItemMaterialRegistry` 显式统一物品的实际绑定；binding 出现 kind 冲突时拒绝发布，规则允许与真实注册仍保持为不同事实。
 - `MaterialForms` 改为从规范辅助快照读取，不再维护 ID／名称双轨查询。`MaterialGroups.members/contains` 通过 `MaterialTagsView` 读取组关系，现有 `Any*` 配方、tag、工具和终局材料 consumer 已改为读取该视图；旧符号只保留兼容入口。
 - 常见 form 的 tag 映射继续集中在 `MaterialEquivalence`；`CraftingMaterialForms` 已删除第二份映射并复用该入口。更广的配方／世界生成 tag 仍归原领域，外部 tag 候选裁决留给 04。
 - 补测覆盖 Paper 的全部源表多组板、NetherQuartz 的宝石／宝石板／棒、Iron 的物品／方块重量分离，以及 Tantalum 的强制宝石规则。发布期 form 读取改为使用已冻结的辅助快照，避免定义期视图漏掉源表形态。

@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | `api` | API 包的总体契约说明 | `package-info.java` |
 | `api.addon` | 附属发现、身份、生命周期、命名限制与 SPI | `GregTechAddon`、`GregTechAddons`、`AddonRuntime`；声明失败应有上下文 |
-| `api.addon.material` | 材料、前缀、成分、形态、类型化 metadata、分类 tag 和替代组声明 | `MaterialDeclaration`、`MaterialMetadata`、`MaterialTagDeclaration`、`MaterialGroupDeclaration`、`GregTechMaterials` |
+| `api.addon.material` | 材料、前缀、成分、形态、类型化 metadata、分类 tag、替代组和分解声明 | `MaterialDeclaration`、`MaterialMetadata`、`MaterialTagDeclaration`、`MaterialGroupDeclaration`、`MaterialDecompositionRule`、`GregTechMaterials` |
 | `api.addon.machine` | 机器、行为、部件、布局及参数声明 | `AddonMachine.withStructure` 显式绑定；`MultiblockMachine`、`BehaviorMachine`、`LayoutPart`、`AddonMachineContributor` |
 | `api.addon.recipe` | 配方表、坩埚反应、模具、保留输入与概率声明，以及 `gt6ce:machine` 数据包文档 | `RecipeMachine`、`CrucibleReactionDeclaration`、`RecipeOutputChances`、`MachineRecipeDocument`、`MachineRecipeDocuments`、`MachineRecipeDocumentType` |
 | `api.addon.pipe` | 附属物品/流体管道的定义 | `ItemPipeDeclaration`、`FluidPipeDeclaration` |
