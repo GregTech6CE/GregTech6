@@ -2,12 +2,8 @@
 
 package gregtech.api.material;
 
-import gregtech.api.addon.material.GregTechMaterials;
-import gregtech.api.addon.material.MaterialInfoTool;
-import gregtech.api.addon.material.MaterialKey;
-import gregtech.api.addon.material.MaterialProcessKeys;
-import gregtech.api.addon.material.MaterialProcessRule;
-import gregtech.api.addon.material.OreProcessingRule;
+import gregtech.api.addon.material.*;
+
 import java.util.List;
 
 /** Ore byproduct and multiplier queries. */
@@ -30,18 +26,4 @@ public final class OreProcessingMaterialHelper {
                 .orElseGet(() -> new OreProcessingRule(List.of(), 1, 1));
     }
 
-    static List<GTMaterial> legacyByproducts(GTMaterial material) {
-        return rule(material).byproducts().stream()
-                .flatMap(key -> MaterialInfoTool.findMaterial(key).stream())
-                .map(GTMaterial::resolve)
-                .toList();
-    }
-
-    static int legacyOreMultiplier(GTMaterial material) {
-        return rule(material).oreMultiplier();
-    }
-
-    static int legacyProcessingMultiplier(GTMaterial material) {
-        return rule(material).processingMultiplier();
-    }
 }

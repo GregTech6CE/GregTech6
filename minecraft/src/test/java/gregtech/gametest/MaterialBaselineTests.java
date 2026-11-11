@@ -14,6 +14,7 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.GTToolItem;
 import gregtech.content.material.Materials;
+import gregtech.content.recipe.CraftingMaterialForms;
 import gregtech.content.recipe.MachineRecipeOverlay;
 import gregtech.content.recipe.MaterialRecoveryRules;
 import gregtech.content.registry.GTItems;
@@ -435,20 +436,45 @@ public final class MaterialBaselineTests {
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
     public static void tagDrivenShredderRowsFollowTheEffectiveSnapshot(GameTestHelper helper) {
-        var item = Items.END_CRYSTAL;
+        var item = Items.CARROT_ON_A_STICK;
         var stack = new ItemStack(item);
         helper.assertTrue(ItemMaterialRegistry.explicit(item).isEmpty(), "probe item starts without explicit material");
+        var cachedSnapshot = ItemMaterialRegistry.entries();
+        helper.assertTrue(
+                cachedSnapshot == ItemMaterialRegistry.entries(),
+                "unchanged composition revision reuses the traversal snapshot");
         try {
             ItemMaterialRegistry.publishTagCandidates(
                     Map.of(item, List.of(taggedComposition(MaterialPrefix.ingot, Materials.Copper, GTValues.U))));
+            helper.assertFalse(
+                    cachedSnapshot == ItemMaterialRegistry.entries(),
+                    "published tag changes invalidate the traversal snapshot");
             gregtech.content.recipe.ShredderRecyclingRecipes.rebuildTagRows();
             var recipe = find(MachineRecipeMaps.Shredder, List.of(stack), List.of());
             helper.assertTrue(recipe != null, "tag-derived composition creates a Shredder row");
+            helper.assertTrue(recipe.mMaterialRecovery, "tag-derived Shredder row uses recovery admission");
             helper.assertTrue(
                     Arrays.stream(recipe.mOutputs)
                             .anyMatch(output -> output.is(GTItems.getStack(MaterialPrefix.dust, Materials.Copper, 1)
                                     .getItem())),
                     "tag-derived Shredder row uses the resolved composition");
+            var damaged = stack.copy();
+            damaged.setDamageValue(1);
+            helper.assertTrue(
+                    find(MachineRecipeMaps.Shredder, List.of(damaged), List.of()) == null,
+                    "tag-derived Shredder row rejects damaged input");
+            CraftingMaterialForms.rebuild(true);
+            var resolvedForm = CraftingMaterialForms.form(stack);
+            helper.assertTrue(
+                    resolvedForm != null
+                            && resolvedForm.prefix().equals("ingot")
+                            && resolvedForm.material().equals("Copper"),
+                    "form consumers read the resolved tag composition");
+            gregtech.engine.material.MaterialFormContent.publish();
+            helper.assertTrue(
+                    GregTechMaterials.formBindings().find(new MaterialKey("Copper")).stream()
+                            .anyMatch(binding -> binding.id().equals("minecraft:carrot_on_a_stick")),
+                    "published form bindings include the tag-derived item");
 
             ItemMaterialRegistry.publishTagCandidates(Map.of());
             gregtech.content.recipe.ShredderRecyclingRecipes.rebuildTagRows();
@@ -459,9 +485,15 @@ public final class MaterialBaselineTests {
             helper.assertTrue(
                     find(MachineRecipeMaps.Shredder, List.of(stack), List.of()) == null,
                     "removing the tag composition withdraws its Shredder row");
+            gregtech.engine.material.MaterialFormContent.publish();
+            helper.assertFalse(
+                    GregTechMaterials.formBindings().find(new MaterialKey("Copper")).stream()
+                            .anyMatch(binding -> binding.id().equals("minecraft:carrot_on_a_stick")),
+                    "removing the tag composition withdraws its public form binding");
         } finally {
             ItemMaterialRegistry.publishTagCandidates(Map.of());
             gregtech.content.recipe.ShredderRecyclingRecipes.clearTagRows();
+            CraftingMaterialForms.rebuild();
         }
         helper.succeed();
     }

@@ -57,6 +57,15 @@ public final class RecoveryRecipeConflictsTests {
         } finally {
             MachineRecipeMaps.Shredder.removeAll(List.of(generic, specific));
         }
+        var dynamicMatch = row(input, new ItemStack(Items.ARROW), "recovery:test-generic");
+        helper.assertTrue(
+                RecoveryRecipeConflicts.inspect(
+                                MachineRecipeMaps.Shredder,
+                                row(input, new ItemStack(Items.ARROW), "recovery:test-generic"),
+                                dynamicMatch)
+                        .action()
+                        == RecoveryRecipeConflicts.Action.DUPLICATE,
+                "dynamic query results participate in recovery ownership");
         helper.succeed();
     }
 

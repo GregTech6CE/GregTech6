@@ -28,6 +28,8 @@ public final class ItemMaterialRegistry {
 
     private static final Map<Item, ItemComposition> EFFECTIVE = new IdentityHashMap<>();
     private static final Map<Item, ItemComposition> EXPLICIT = new IdentityHashMap<>();
+    private static Map<Item, ItemComposition> effectiveSnapshot = Map.of();
+    private static long effectiveSnapshotRevision = Long.MIN_VALUE;
 
     public enum CompositionLookupState {
         PRESENT,
@@ -134,6 +136,7 @@ public final class ItemMaterialRegistry {
                         .add(new ItemCompositionCandidate(tagged, null));
             }
         }
+        boolean refreshForms;
         synchronized (LOCK) {
             boolean readinessChanged = !tagInputReady;
             var affected = new HashSet<Item>();
@@ -164,7 +167,9 @@ public final class ItemMaterialRegistry {
             TAG_SUBMISSIONS.putAll(staged);
             tagInputReady = true;
             if (changed || readinessChanged) COMPOSITION_REVISION.incrementAndGet();
+            refreshForms = changed || readinessChanged;
         }
+        if (refreshForms) MaterialFormContent.publish();
     }
 
     public static void clearTagCandidates() {
@@ -222,7 +227,12 @@ public final class ItemMaterialRegistry {
     /** Stable by registry id where possible; this is the authoritative bulk traversal view. */
     public static Map<Item, ItemComposition> entries() {
         synchronized (LOCK) {
-            return stableSnapshot(EFFECTIVE);
+            long revision = COMPOSITION_REVISION.get();
+            if (effectiveSnapshotRevision != revision) {
+                effectiveSnapshot = stableSnapshot(EFFECTIVE);
+                effectiveSnapshotRevision = revision;
+            }
+            return effectiveSnapshot;
         }
     }
 
@@ -390,10 +400,14 @@ public final class ItemMaterialRegistry {
     }
 
     private static Map<Item, ItemComposition> stableSnapshot(Map<Item, ItemComposition> source) {
-        var rows = new ArrayList<>(source.entrySet());
-        rows.sort(Comparator.comparing(entry -> implementationId(entry.getKey())));
+        record SnapshotRow(String id, Item item, ItemComposition composition) {}
+        var rows = source.entrySet().stream()
+                .map(entry -> new SnapshotRow(
+                        implementationId(entry.getKey()), entry.getKey(), entry.getValue()))
+                .sorted(Comparator.comparing(SnapshotRow::id))
+                .toList();
         var result = new LinkedHashMap<Item, ItemComposition>();
-        for (var entry : rows) result.put(entry.getKey(), entry.getValue());
+        for (var row : rows) result.put(row.item(), row.composition());
         return Collections.unmodifiableMap(result);
     }
 

@@ -4,6 +4,7 @@ import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.stack.StackCompat;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import net.minecraft.world.item.ItemStack;
 
@@ -21,7 +22,13 @@ final class RecoveryRecipeConflicts {
     private RecoveryRecipeConflicts() {}
 
     static Resolution inspect(RecipeMap map, Recipe candidate) {
+        return inspect(map, candidate, null);
+    }
+
+    /** Includes a row returned by a live query, such as one owned by a material-unit index. */
+    static Resolution inspect(RecipeMap map, Recipe candidate, Recipe matched) {
         Recipe existing = map.findCollision(candidate);
+        if (existing == null && matched != null) existing = matched;
         if (existing == null) existing = guardedCollision(map, candidate);
         if (existing == null) return new Resolution(Action.PUBLISH, null);
         boolean candidateGeneric = generic(candidate);
@@ -41,7 +48,8 @@ final class RecoveryRecipeConflicts {
         if (resolution.action() == Action.PUBLISH) return map.addRecipe(candidate, false, false, false);
         if (resolution.action() == Action.REPLACE_GENERIC) {
             if (map.removeAll(List.of(resolution.existing())) == 0)
-                throw new IllegalStateException("Could not replace generic recovery row " + resolution.existing().mSource);
+                throw new IllegalStateException(
+                        "Could not replace generic recovery row " + resolution.existing().mSource);
             return map.addRecipe(candidate, false, false, false);
         }
         return null;
@@ -49,6 +57,28 @@ final class RecoveryRecipeConflicts {
 
     static boolean generic(Recipe recipe) {
         return recipe != null && recipe.mSource.endsWith("-generic");
+    }
+
+    static Recipe matchingOwner(Recipe candidate, Collection<Recipe> rows) {
+        if (rows == null) return null;
+        for (Recipe row : rows) if (sameOwnedInputs(row, candidate)) return row;
+        return null;
+    }
+
+    private static boolean sameOwnedInputs(Recipe left, Recipe right) {
+        if (left.mInputs.length != right.mInputs.length || left.mFluidInputs.length != right.mFluidInputs.length)
+            return false;
+        for (int i = 0; i < left.mInputs.length; i++) {
+            ItemStack a = left.mInputs[i];
+            ItemStack b = right.mInputs[i];
+            boolean emptyA = a == null || a.isEmpty();
+            boolean emptyB = b == null || b.isEmpty();
+            if (emptyA != emptyB || (!emptyA && (a.getCount() != b.getCount() || !StackCompat.sameItem(a, b))))
+                return false;
+        }
+        for (int i = 0; i < left.mFluidInputs.length; i++)
+            if (!StackCompat.sameFluid(left.mFluidInputs[i], right.mFluidInputs[i])) return false;
+        return true;
     }
 
     /**
@@ -80,8 +110,8 @@ final class RecoveryRecipeConflicts {
     }
 
     private static boolean sameInputs(Recipe left, Recipe right) {
-        if (left.mInputs.length != right.mInputs.length
-                || left.mFluidInputs.length != right.mFluidInputs.length) return false;
+        if (left.mInputs.length != right.mInputs.length || left.mFluidInputs.length != right.mFluidInputs.length)
+            return false;
         for (int i = 0; i < left.mInputs.length; i++) {
             ItemStack a = left.mInputs[i];
             ItemStack b = right.mInputs[i];
@@ -94,12 +124,14 @@ final class RecoveryRecipeConflicts {
         return true;
     }
 
-    private static boolean sameOutputs(Recipe left, Recipe right) {
-        if (left.mOutputs.length != right.mOutputs.length
-                || left.mFluidOutputs.length != right.mFluidOutputs.length)
+    static boolean sameOutputs(Recipe left, Recipe right) {
+        if (left.mOutputs.length != right.mOutputs.length || left.mFluidOutputs.length != right.mFluidOutputs.length)
             return false;
-        for (int i = 0; i < left.mOutputs.length; i++)
-            if (!ItemStack.matches(left.mOutputs[i], right.mOutputs[i])) return false;
+        for (int i = 0; i < left.mOutputs.length; i++) {
+            var first = left.mOutputs[i];
+            var second = right.mOutputs[i];
+            if (first.getCount() != second.getCount() || !StackCompat.sameItem(first, second)) return false;
+        }
         for (int i = 0; i < left.mFluidOutputs.length; i++)
             if (!StackCompat.sameFluid(left.mFluidOutputs[i], right.mFluidOutputs[i])) return false;
         return true;

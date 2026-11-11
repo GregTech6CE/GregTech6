@@ -2,15 +2,9 @@
 
 package gregtech.api.material;
 
-import gregtech.api.addon.material.FuelRule;
-import gregtech.api.addon.material.GregTechMaterials;
-import gregtech.api.addon.material.MaterialInfoTool;
-import gregtech.api.addon.material.MaterialKey;
-import gregtech.api.addon.material.MaterialProcessKeys;
-import gregtech.api.addon.material.MaterialProcessRule;
-import gregtech.api.addon.material.MaterialTarget;
+import gregtech.api.addon.material.*;
+
 import java.util.Optional;
-import org.jspecify.annotations.Nullable;
 
 /** Fuel value and residue queries. */
 public final class FuelMaterialHelper {
@@ -30,19 +24,4 @@ public final class FuelMaterialHelper {
                 .map(MaterialProcessRule::value);
     }
 
-    static long legacyBurnTime(GTMaterial material) {
-        return rule(material).map(FuelRule::burnTime).orElse(0L);
-    }
-
-    static @Nullable GTMaterial legacyResidue(GTMaterial material) {
-        return rule(material)
-                .flatMap(FuelRule::residue)
-                .flatMap(target -> MaterialInfoTool.findMaterial(target.material()))
-                .map(GTMaterial::resolve)
-                .orElse(null);
-    }
-
-    static long legacyResidueAmount(GTMaterial material) {
-        return rule(material).flatMap(FuelRule::residue).map(MaterialTarget::amount).orElse(0L);
-    }
 }

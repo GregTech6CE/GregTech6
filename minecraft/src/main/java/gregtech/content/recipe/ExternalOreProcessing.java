@@ -66,7 +66,7 @@ public final class ExternalOreProcessing {
 
     public static synchronized int rebuild() {
         clearOwnedState();
-        CraftingMaterialForms.rebuild(true);
+        CraftingMaterialForms.rebuild(false);
         var forms = CraftingMaterialForms.nativeAliases();
         var materialData = new IdentityHashMap<Item, List<ItemComposition>>();
         for (var prefix : ExternalOreProcessingRules.COMPOSITION_FORMS)
@@ -85,9 +85,11 @@ public final class ExternalOreProcessing {
                                     true));
             }
         int oreCompositions = materialData.size();
-        taggedCompositions = bindCommonForms(materialData);
+        taggedCompositions = bindTaggedForms(materialData);
         ItemMaterialRegistry.publishTagCandidates(materialData);
         publishedCompositions = materialData.size();
+        CraftingMaterialForms.rebuild(true);
+        forms = CraftingMaterialForms.nativeAliases();
         int added = 0;
         for (var route : ExternalOreProcessingRules.ROUTES) {
             var map = map(route.map());
@@ -205,7 +207,7 @@ public final class ExternalOreProcessing {
             }
         LogUtils.getLogger()
                 .info(
-                        "[gregtech] Bound {} external ore processing rows and {} material compositions from loaded tags ({} ore prefix, {} common form); skipped {} ambiguous common-form items",
+                        "[gregtech] Bound {} external ore processing rows and {} material compositions from loaded tags ({} native prefix, {} tagged form); skipped {} ambiguous tagged items",
                         added,
                         publishedCompositions,
                         oreCompositions,
@@ -214,9 +216,10 @@ public final class ExternalOreProcessing {
         return added;
     }
 
-    /** One unambiguous common-form tag becomes one unit of that GT prefix. Conflicting tags are left untouched. */
-    private static int bindCommonForms(Map<Item, List<ItemComposition>> materialData) {
+    /** Resolve every imported form together so aliases merge and conflicting tags are diagnosed once. */
+    private static int bindTaggedForms(Map<Item, List<ItemComposition>> materialData) {
         var allowed = new HashSet<String>();
+        for (var prefix : ExternalOreProcessingRules.COMPOSITION_FORMS) allowed.add(prefix.getName());
         for (var prefix : ExternalOreProcessingRules.TAGGED_MATERIAL_FORMS) allowed.add(prefix.getName());
         int added = 0;
         int ambiguous = 0;
@@ -226,33 +229,40 @@ public final class ExternalOreProcessing {
             String namespace = id.getNamespace();
             if (namespace.equals("minecraft") || namespace.equals("gt6ce")) continue;
             if (ItemMaterialRegistry.declared(item).isPresent() || materialData.containsKey(item)) continue;
-            var forms = CraftingMaterialForms.taggedForms(new ItemStack(item));
-            boolean common = false;
-            for (var form : forms)
-                if (allowed.contains(form.prefix())) {
-                    common = true;
-                    break;
-                }
-            if (!common) continue;
-            if (forms.size() != 1) {
+            var candidates = new ArrayList<ItemCompositionCandidate>();
+            for (var form : CraftingMaterialForms.taggedForms(new ItemStack(item))) {
+                if (!allowed.contains(form.prefix())) continue;
+                var prefix = gregtech.engine.prefix.PrefixRegistry.byName(form.prefix());
+                var material = GTMaterialRegistry.get(form.material()).resolve();
+                if (prefix == null || !prefix.isValidFor(material) || !material.isValid()) continue;
+                var sourceId = "gt6ce:external-tag/" + id + "/" + prefix.getName() + "/" + material.getName();
+                var source = new ItemCompositionSource(
+                        ItemCompositionSource.Kind.FORM_TAG, sourceId, TAGGED_COMPOSITION_SOURCE, "", "");
+                candidates.add(new ItemCompositionCandidate(
+                        new ItemComposition(
+                                prefix,
+                                List.of(MaterialComponent.of(material, prefix.getMaterialWeight())),
+                                material,
+                                List.of(source),
+                                true),
+                        null));
+            }
+            if (candidates.isEmpty()) continue;
+            ItemComposition resolved;
+            try {
+                resolved = ItemCompositionResolver.resolve(Map.of(item, candidates))
+                        .get(item);
+            } catch (IllegalStateException conflict) {
                 ambiguous++;
+                LogUtils.getLogger()
+                        .warn(
+                                "[gregtech] Ignoring ambiguous external material tags for {}: {}",
+                                id,
+                                conflict.getMessage());
                 continue;
             }
-            var prefix =
-                    gregtech.engine.prefix.PrefixRegistry.byName(forms.get(0).prefix());
-            var material = GTMaterialRegistry.get(forms.get(0).material()).resolve();
-            if (prefix == null
-                    || !allowed.contains(prefix.getName())
-                    || !material.isValid()
-                    || !prefix.isValidFor(material)) continue;
-            materialData
-                    .computeIfAbsent(item, ignored -> new ArrayList<>())
-                    .add(new ItemComposition(
-                            prefix,
-                            List.of(MaterialComponent.of(material, prefix.getMaterialWeight())),
-                            material,
-                            TAGGED_COMPOSITION_SOURCE,
-                            true));
+            if (resolved == null) continue;
+            materialData.computeIfAbsent(item, ignored -> new ArrayList<>()).add(resolved);
             added++;
         }
         ambiguousTaggedItems = ambiguous;

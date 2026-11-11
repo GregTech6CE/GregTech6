@@ -140,8 +140,12 @@ public final class CraftingMaterialForms {
         }
         var known = vanilla.get(stack.getItem());
         if (known != null) return known;
-        var form = MaterialEquivalence.form(stack);
-        return form == null ? null : new Form(form.prefix().getName(), form.material().resolve().getName());
+        var declared = ItemMaterialRegistry.declared(stack.getItem()).orElse(null);
+        if (declared == null
+                || declared.prefix() == null
+                || declared.components().size() != 1
+                || declared.amount() != declared.prefix().getMaterialWeight()) return null;
+        return new Form(declared.prefix().getName(), declared.material().resolve().getName());
     }
 
     public static Form form(ItemStack stack) {
@@ -164,16 +168,9 @@ public final class CraftingMaterialForms {
             .collect(java.util.stream.Collectors.toUnmodifiableSet());
 
     private static Form tagged(ItemStack stack) {
-        // Prefer explicit GT prefix tags over common tags (dense ores can also be in ordinary ores tags).
-        Form common = null;
-        for (var iterator = stack.getTags().iterator(); iterator.hasNext(); ) {
-            var tag = iterator.next();
-            var form = formOf(tag.location());
-            if (form == null) continue;
-            if (tag.location().getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return form;
-            if (common == null) common = form;
-        }
-        return common;
+        var composition = ItemMaterialRegistry.base(stack.getItem()).orElse(null);
+        if (composition == null || composition.prefix() == null) return null;
+        return new Form(composition.prefix().getName(), composition.material().resolve().getName());
     }
 
     /** Every gregtech, forge or c form tag on this item. Callers use a single hit to reject ambiguous items. */
