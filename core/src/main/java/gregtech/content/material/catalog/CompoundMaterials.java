@@ -1156,6 +1156,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("BlackAventurine", 0L)
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("GreenAventurine", "BrownAventurine", "YellowAventurine", "BlueAventurine", "RedAventurine")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("AventurineBlack")
@@ -1242,6 +1243,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("BlackEye", 0L)
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("Hematite", "TigerEye", "CatsEye", "DragonEye", "HawksEye", "TigerIron")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("TigerEyeBlack")
@@ -1522,6 +1524,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("BlueAventurine", 0L)
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts(
                         "GreenAventurine", "BrownAventurine", "YellowAventurine", "BlackAventurine", "RedAventurine")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -1615,6 +1618,10 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("BlueJasper", 0L)
+                .composition(
+                        1L,
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1297296000L),
+                        new MaterialInfoDefinition.Part("Iron", 648648000L))
                 .byproducts("RedJasper", "OceanJasper", "RainforestJasper", "GreenJasper", "YellowJasper")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("JasperBlue")
@@ -1971,6 +1978,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("BrownAventurine", 0L)
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("GreenAventurine", "YellowAventurine", "BlackAventurine", "BlueAventurine", "RedAventurine")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("AventurineBrown")
@@ -2246,6 +2254,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("CatsEye", 0L)
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("Hematite", "TigerEye", "DragonEye", "HawksEye", "BlackEye", "TigerIron")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("TigerEyeGreen")
@@ -2642,6 +2651,10 @@ public final class CompoundMaterials {
                 .localName("ClayBrown")
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .smelting("Ceramic", 648648000L)
+                .composition(
+                        18L,
+                        new MaterialInfoDefinition.Part("LithiumHydroxide", 648648000L),
+                        new MaterialInfoDefinition.Part("Clay", 11675664000L))
                 .byproducts("Clay", "ClayRed")
                 .forms("DUSTS", "ORES", "PLANTS", "PLATES")
                 .build());
@@ -2666,6 +2679,10 @@ public final class CompoundMaterials {
                 .localName("ClayRed")
                 .source("gt6ce", "GregTech 6 Community Edition")
                 .smelting("Ceramic", 648648000L)
+                .composition(
+                        18L,
+                        new MaterialInfoDefinition.Part("PotassiumHydroxide", 648648000L),
+                        new MaterialInfoDefinition.Part("Clay", 11675664000L))
                 .byproducts("Bentonite", "ClayBrown")
                 .forms("DUSTS", "ORES", "PLANTS", "PLATES")
                 .build());
@@ -3392,6 +3409,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("DragonEye", 0L)
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("Hematite", "TigerEye", "CatsEye", "HawksEye", "BlackEye", "TigerIron")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("TigerEyeRed")
@@ -5288,6 +5306,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("GreenAventurine", 0L)
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("BrownAventurine", "YellowAventurine", "BlackAventurine", "BlueAventurine", "RedAventurine")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("AventurineGreen")
@@ -5380,6 +5399,10 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("GreenJasper", 0L)
+                .composition(
+                        1L,
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1297296000L),
+                        new MaterialInfoDefinition.Part("Iron", 648648000L))
                 .byproducts("RedJasper", "OceanJasper", "RainforestJasper", "BlueJasper", "YellowJasper")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("JasperGreen")
@@ -5535,6 +5558,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("HawksEye", 0L)
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("Hematite", "TigerEye", "CatsEye", "DragonEye", "BlackEye", "TigerIron")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("TigerEyeBlue")
@@ -6217,8 +6241,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -6360,6 +6382,10 @@ public final class CompoundMaterials {
                 .localName("Kaolinite")
                 .source("PFAAGeologica", "Per Fabrica Ad Astra")
                 .smelting("Ceramic", 648648000L)
+                .composition(
+                        18L,
+                        new MaterialInfoDefinition.Part("Calcium", 648648000L),
+                        new MaterialInfoDefinition.Part("Clay", 11675664000L))
                 .byproducts("ClayBrown", "Clay")
                 .forms("DUSTS", "ORES", "PLANTS", "PLATES")
                 .build());
@@ -7892,6 +7918,10 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("OceanJasper", 0L)
+                .composition(
+                        1L,
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1297296000L),
+                        new MaterialInfoDefinition.Part("Iron", 648648000L))
                 .byproducts("RedJasper", "RainforestJasper", "BlueJasper", "GreenJasper", "YellowJasper")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("JasperOcean")
@@ -8157,6 +8187,10 @@ public final class CompoundMaterials {
                 .localName("FullersEarth")
                 .source("PFAAGeologica", "Per Fabrica Ad Astra")
                 .smelting("Ceramic", 648648000L)
+                .composition(
+                        18L,
+                        new MaterialInfoDefinition.Part("Magnesium", 648648000L),
+                        new MaterialInfoDefinition.Part("Clay", 11675664000L))
                 .byproducts("Kaolinite", "Bentonite")
                 .forms("DUSTS", "ORES", "PLANTS", "PLATES")
                 .build());
@@ -8944,6 +8978,10 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("RainforestJasper", 0L)
+                .composition(
+                        1L,
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1297296000L),
+                        new MaterialInfoDefinition.Part("Iron", 648648000L))
                 .byproducts("RedJasper", "OceanJasper", "BlueJasper", "GreenJasper", "YellowJasper")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("JasperRainforest")
@@ -9029,6 +9067,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("RedAventurine", 0L)
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts(
                         "GreenAventurine", "BrownAventurine", "YellowAventurine", "BlackAventurine", "BlueAventurine")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
@@ -9123,6 +9162,10 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("RedJasper", 0L)
+                .composition(
+                        1L,
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1297296000L),
+                        new MaterialInfoDefinition.Part("Iron", 648648000L))
                 .byproducts("OceanJasper", "RainforestJasper", "BlueJasper", "GreenJasper", "YellowJasper")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("Jasper")
@@ -11052,6 +11095,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("TigerEye", 0L)
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("Hematite", "CatsEye", "DragonEye", "HawksEye", "BlackEye", "TigerIron")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("TigerEyeYellow")
@@ -11082,6 +11126,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("TigerIron", 0L)
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("Hematite", "TigerEye", "CatsEye", "DragonEye", "HawksEye", "BlackEye")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .build());
@@ -12146,8 +12191,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -12468,6 +12511,7 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("YellowAventurine", 0L)
+                .composition(1L, new MaterialInfoDefinition.Part("SiliconDioxide", 648648000L))
                 .byproducts("GreenAventurine", "BrownAventurine", "BlackAventurine", "BlueAventurine", "RedAventurine")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("AventurineYellow")
@@ -12563,6 +12607,10 @@ public final class CompoundMaterials {
                 .correctedToolStats()
                 .tools(3, 7.0F, 256L, 2)
                 .smelting("YellowJasper", 0L)
+                .composition(
+                        1L,
+                        new MaterialInfoDefinition.Part("SiliconDioxide", 1297296000L),
+                        new MaterialInfoDefinition.Part("Iron", 648648000L))
                 .byproducts("RedJasper", "OceanJasper", "RainforestJasper", "BlueJasper", "GreenJasper")
                 .forms("ARMORS", "DUSTS", "GEMS", "LENSES", "ORES", "PLANTS", "PLATES", "PROJECTILES", "STICKS")
                 .aliases("JasperYellow")

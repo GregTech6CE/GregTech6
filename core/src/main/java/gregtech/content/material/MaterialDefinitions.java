@@ -1,5 +1,9 @@
 package gregtech.content.material;
 
+import gregtech.api.addon.material.MaterialDecompositionRule;
+import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialProcessRule;
+import gregtech.api.material.MaterialProperty;
 import gregtech.content.material.catalog.*;
 import gregtech.engine.material.MaterialDefinition;
 import gregtech.engine.material.MaterialInfoDefinition;
@@ -24,8 +28,29 @@ public final class MaterialDefinitions {
         result.addAll(WoodMaterials.definitions());
         result.addAll(SpecialMaterials.definitions());
         result.addAll(GroupMaterials.definitions());
+        result.replaceAll(MaterialDefinitions::attachDecomposition);
         result.sort(Comparator.comparing(MaterialDefinition.Declaration::name));
         return List.copyOf(result);
+    }
+
+    private static MaterialDefinition.Declaration attachDecomposition(MaterialDefinition.Declaration declaration) {
+        Set<MaterialDecompositionRule.Route> routes = EnumSet.noneOf(MaterialDecompositionRule.Route.class);
+        if (declaration.material().properties().contains(MaterialProperty.CENTRIFUGE))
+            routes.add(MaterialDecompositionRule.Route.CENTRIFUGE);
+        if (declaration.material().properties().contains(MaterialProperty.ELECTROLYSER))
+            routes.add(MaterialDecompositionRule.Route.ELECTROLYSER);
+        MaterialDecompositionRule decomposition = DecompositionMaterials.rule(declaration, routes);
+        if (decomposition == null) return declaration;
+        var processes = new LinkedHashMap<>(declaration.info().processes().rules());
+        processes.put(MaterialProcessKeys.DECOMPOSITION, List.of(MaterialProcessRule.anyForm(decomposition)));
+        var info = declaration.info();
+        return new MaterialDefinition.Declaration(
+                declaration.material(),
+                new MaterialInfoDefinition(
+                        info.tooling(),
+                        info.composition(),
+                        info.relations(),
+                        new MaterialInfoDefinition.Processes(processes)));
     }
 
     private static Map<String, MaterialDefinition> index() {

@@ -128,16 +128,50 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         for (var entry : MATERIALS.entrySet()) {
             GTMaterial material = GTMaterialRegistry.get(entry.getKey().name());
             if (!material.isValid()) continue;
+            var mutable = entry.getValue();
+            var decomposition = mutable.processes.get(MaterialProcessKeys.DECOMPOSITION);
+            Set<MaterialDecompositionRule.Route> routes = EnumSet.noneOf(MaterialDecompositionRule.Route.class);
+            if (material.has(gregtech.api.material.MaterialProperty.CENTRIFUGE))
+                routes.add(MaterialDecompositionRule.Route.CENTRIFUGE);
+            if (material.has(gregtech.api.material.MaterialProperty.ELECTROLYSER))
+                routes.add(MaterialDecompositionRule.Route.ELECTROLYSER);
+            boolean explicitRule = decomposition != null;
+            if (decomposition != null && decomposition.size() == 1) {
+                Object value = decomposition.get(0).value();
+                if (value instanceof MaterialDecompositionRule rule
+                        && !rule.routes().isEmpty()) routes.addAll(rule.routes());
+            }
+            for (ProcessSubmission submission : ADDON_PROCESSES)
+                if (submission.material().equals(entry.getKey())
+                        && submission.process().equals(MaterialProcessKeys.DECOMPOSITION)
+                        && submission.rule().value() instanceof MaterialDecompositionRule rule) {
+                    explicitRule = true;
+                    routes.addAll(rule.routes());
+                }
+            for (var submission : AddonMaterials.processDeclarations())
+                if (submission.declaration().materialName().equals(material.getName())
+                        && submission.declaration().process().equals(MaterialProcessKeys.DECOMPOSITION)
+                        && submission.declaration().value() instanceof MaterialDecompositionRule rule) {
+                    explicitRule = true;
+                    routes.addAll(rule.routes());
+                }
+            if (!explicitRule && !routes.isEmpty()) {
+                var legacy = new MaterialDecompositionRule(routes, List.of(), false);
+                mutable.processes.put(MaterialProcessKeys.DECOMPOSITION, List.of(MaterialProcessRule.anyForm(legacy)));
+            }
             Set<gregtech.api.material.MaterialProperty> normalized =
                     MaterialPropertyRules.normalize(material.getProperties());
             for (var flag : normalized) if (!material.has(flag)) material.put(flag);
-            boolean decomposition = material.has(gregtech.api.material.MaterialProperty.CENTRIFUGE)
-                    || material.has(gregtech.api.material.MaterialProperty.ELECTROLYSER);
-            if (decomposition
-                    && AddonMaterials.owns(material)
-                    && entry.getValue().composition.parts().isEmpty())
+            boolean decomposes = routes.contains(MaterialDecompositionRule.Route.CENTRIFUGE)
+                    || routes.contains(MaterialDecompositionRule.Route.ELECTROLYSER);
+            if (decomposes && entry.getValue().composition.parts().isEmpty())
                 throw new IllegalArgumentException(
-                        "Addon material '" + material.getName() + "' declares decomposition without a composition");
+                        "Material '" + material.getName() + "' declares decomposition without a composition");
+            if (routes.contains(MaterialDecompositionRule.Route.CENTRIFUGE))
+                material.put(gregtech.api.material.MaterialProperty.CENTRIFUGE);
+            if (routes.contains(MaterialDecompositionRule.Route.ELECTROLYSER))
+                material.put(gregtech.api.material.MaterialProperty.ELECTROLYSER);
+            if (decomposes) material.put(gregtech.api.material.MaterialProperty.DECOMPOSABLE);
         }
     }
 
@@ -544,7 +578,7 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
             Objects.requireNonNull(material);
             Objects.requireNonNull(process);
             Objects.requireNonNull(rule);
-            requireNamespace(addonId, process.id());
+            if (!process.equals(MaterialProcessKeys.DECOMPOSITION)) requireNamespace(addonId, process.id());
             if (!process.type().isInstance(rule.value()))
                 throw new IllegalArgumentException("Process value type mismatch for " + process.id());
             if (process.cardinality() == MaterialProcessCardinality.SINGLE) {

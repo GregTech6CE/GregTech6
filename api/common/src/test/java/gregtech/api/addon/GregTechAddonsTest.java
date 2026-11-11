@@ -2,15 +2,14 @@
 
 package gregtech.api.addon;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import gregtech.api.addon.recipe.MachineRecipeDocumentTypes;
-import java.util.List;
-import java.util.function.Consumer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.function.Consumer;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GregTechAddonsTest {
     private static final GregTechAddon.Context CONTEXT = new GregTechAddon.Context("forge", "1.20.1");
@@ -24,8 +23,8 @@ class GregTechAddonsTest {
     void apiVersionCodeMatchesTheMajorAndMinorParts() {
         assertEquals(GregTechAddons.apiMajor() * 1000 + GregTechAddons.apiMinor(), GregTechAddons.apiVersion());
         assertEquals(1, GregTechAddons.apiMajor());
-        assertEquals(7, GregTechAddons.apiMinor());
-        assertEquals(1007, GregTechAddons.apiVersion());
+        assertEquals(8, GregTechAddons.apiMinor());
+        assertEquals(1008, GregTechAddons.apiVersion());
     }
 
     @Test

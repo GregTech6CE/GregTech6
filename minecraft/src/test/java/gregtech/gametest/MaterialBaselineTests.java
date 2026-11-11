@@ -10,6 +10,8 @@ import gregtech.api.material.PulverizationMaterialHelper;
 import gregtech.api.material.SmeltingMaterialHelper;
 import gregtech.content.block.machine.MoldBlock;
 import gregtech.content.block.machine.MoldItemData;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.GTToolItem;
@@ -43,6 +45,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.resources.ResourceLocation;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -83,6 +86,141 @@ public final class MaterialBaselineTests {
         helper.assertFalse(dust.isEmpty(), "host generated the requested dust form");
         helper.assertTrue(find(MachineRecipeMaps.Centrifuge, List.of(dust), List.of()) != null, "SPI decomposition is queryable");
         observe(helper, "spi_dust", dust);
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void addonDecompositionExecutesThroughThePublishedCentrifugeRow(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var pos = helper.absolutePos(new net.minecraft.core.BlockPos(2, 1, 2));
+        var block = BuiltInRegistries.BLOCK.get(
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "centrifuge_bronze"));
+        level.setBlockAndUpdate(pos, block.defaultBlockState());
+        var machine = (BasicMachineBlockEntity) level.getBlockEntity(pos);
+        helper.assertTrue(machine != null, "centrifuge fixture is registered");
+        machine.setSpec(((BasicMachineBlock) block).basicSpec());
+        var material = gregtech.engine.material.GTMaterialRegistry.get("BaselineRuntimeCompound");
+        var dust = GTItems.getStack(MaterialPrefix.dust, material, 3);
+        machine.inventory().setStackInSlot(0, dust);
+        machine.inventoryChanged();
+        var config = new gregtech.engine.machine.RecipeProcessor.Config() {
+            public RecipeMap recipeMap() {
+                return machine.recipeMap();
+            }
+
+            public boolean searchOutputTanks() {
+                return false;
+            }
+
+            public boolean exclusiveOutputs() {
+                return false;
+            }
+
+            public int parallelLimit() {
+                return 1;
+            }
+
+            public boolean parallelScalesDuration() {
+                return true;
+            }
+
+            public boolean cheapOverclocking() {
+                return false;
+            }
+
+            public boolean usesTimeEnergy() {
+                return false;
+            }
+
+            public int efficiency() {
+                return 10_000;
+            }
+
+            public long inputMinimum() {
+                return 16;
+            }
+
+            public long inputMaximum() {
+                return 64;
+            }
+
+            public long nominalEnergyInput() {
+                return 32;
+            }
+
+            public long startupEnergyFor(Recipe recipe) {
+                return 0;
+            }
+        };
+        var io = new gregtech.engine.machine.RecipeProcessor.IO() {
+            public gregtech.engine.machine.MachineInventory inventory() {
+                return machine.autoIOInventory();
+            }
+
+            public net.minecraft.world.level.Level level() {
+                return level;
+            }
+
+            public ItemStack autocraftingProgram() {
+                return ItemStack.EMPTY;
+            }
+
+            public void setStartupEnergy(long value) {}
+
+            public void clearStartupEnergy() {}
+
+            public void markJobStarted() {}
+
+            public net.minecraft.world.level.block.entity.BlockEntity owner() {
+                return machine;
+            }
+        };
+        var gate = new gregtech.engine.machine.RecipeProcessor.Gate() {
+            public boolean structureComplete() {
+                return true;
+            }
+
+            public boolean switchesAllowRunning() {
+                return true;
+            }
+
+            public boolean recipeStartAllowed() {
+                return true;
+            }
+
+            public boolean lightAllowsStart() {
+                return true;
+            }
+        };
+        var processor = new gregtech.engine.machine.RecipeProcessor(config, io, gate);
+        helper.assertTrue(
+                processor.startJob() == gregtech.engine.machine.RecipeProcessor.StartResult.STARTED,
+                "published decomposition row did not start through the shared recipe processor");
+        helper.assertTrue(
+                machine.inventory().getStackInSlot(0).isEmpty(),
+                "centrifuge consumed its decomposition input");
+        helper.assertTrue(
+                processor.recipeDetails() != null
+                        && processor.recipeDetails().duration() == 876
+                        && processor.recipeDetails().power() == 42,
+                "decomposition plan supplied duration and EU/t to the machine: " + processor.recipeDetails());
+        helper.assertTrue(
+                processor.advance(processor.totalWork()),
+                "centrifuge did not complete its planned work; work=" + processor.totalWork()
+                        + ", progress=" + processor.progress());
+        helper.assertTrue(
+                processor.flushOutputs(),
+                "centrifuge did not flush its planned outputs; pending=" + processor.pendingOutputs());
+        var iron = machine.inventory().getStackInSlot(machine.inputSlots());
+        var copper = machine.inventory().getStackInSlot(machine.inputSlots() + 1);
+        helper.assertTrue(
+                iron.is(GTItems.getStack(MaterialPrefix.dust, Materials.Iron, 1).getItem())
+                        && iron.getCount() == 2,
+                "centrifuge emitted two Iron dust");
+        helper.assertTrue(
+                copper.is(GTItems.getStack(MaterialPrefix.dust, Materials.Copper, 1).getItem())
+                        && copper.getCount() == 1,
+                "centrifuge emitted one Copper dust");
         helper.succeed();
     }
 
@@ -287,6 +425,29 @@ public final class MaterialBaselineTests {
         var solid = find(MachineRecipeMaps.Electrolyzer,
                 List.of(new ItemStack(GTTechnological.selectorTag(0)), salt), List.of());
         helper.assertTrue(solid != null, "Powellite decomposition is queryable with mode 0 (accepted #318 rule)");
+        helper.assertTrue(
+                solid.isCatalystInput(0) && Arrays.equals(solid.explicitCatalystInputs(), new int[] {0}),
+                "the electrolyser selector is an explicit presence-only catalyst");
+        helper.assertTrue(
+                solid.mDuration == 1752 && solid.mEUt == 84,
+                "Powellite decomposition retains its planned duration and EU/t");
+        helper.assertTrue(
+                solid.mOutputs.length == 2
+                        && solid.mOutputs[0].is(GTItems.getStack(MaterialPrefix.dust, Materials.Calcium, 1)
+                                .getItem())
+                        && solid.mOutputs[0].getCount() == 1
+                        && solid.mOutputs[1].is(GTItems.getStack(MaterialPrefix.dust, Materials.Molybdenum, 1)
+                                .getItem())
+                        && solid.mOutputs[1].getCount() == 1,
+                "Powellite solid outputs retain declaration order and quantities");
+        helper.assertTrue(
+                Arrays.stream(solid.mFluidOutputs)
+                        .anyMatch(output -> output != null
+                                && output.getAmount() == 4000
+                                && "oxygen".equals(BuiltInRegistries.FLUID
+                                        .getKey(output.getFluid())
+                                        .getPath())),
+                "Powellite oxygen output uses the declared gas conversion");
         var water = new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 3000);
         var liquid = find(MachineRecipeMaps.Electrolyzer,
                 List.of(new ItemStack(GTTechnological.selectorTag(0))), List.of(water));

@@ -2,23 +2,9 @@ package gregtech.content.recipe;
 
 import java.math.BigInteger;
 
-/** Shared source quantity/phase policy. No registry lookup or per-material recipe special case. */
+/** Shared source quantity arithmetic. No registry lookup or per-material recipe special case. */
 public final class SourceDecompositionRules {
     public static final long SOURCE_U = 648648000L;
-
-    public record Binding(String registry, long sourceUnits, long millibuckets) {}
-
-    public record Profile(int id, String name, Binding liquid, Binding gas, boolean keepDust) {}
-
-    public record Thermal(
-            int id,
-            String name,
-            long melting,
-            long boiling,
-            long plasma,
-            Binding liquid,
-            Binding gas,
-            Binding plasmaFluid) {}
 
     private SourceDecompositionRules() {}
 
@@ -35,21 +21,9 @@ public final class SourceDecompositionRules {
         return value.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0 ? -1 : value.longValueExact();
     }
 
-    public static int fluidAmount(Binding binding, long amount, boolean ceil) {
-        if (binding == null) return -1;
-        long value = units(amount, binding.sourceUnits(), binding.millibuckets(), ceil);
+    public static int fluidAmount(long sourceUnits, long sourceMillibuckets, long amount, boolean ceil) {
+        if (sourceUnits <= 0 || sourceMillibuckets <= 0) return -1;
+        long value = units(amount, sourceUnits, sourceMillibuckets, ceil);
         return value > Integer.MAX_VALUE ? -1 : (int) value;
-    }
-    /** Selected absent phase stays absent; never try a lower-temperature phase as fallback. */
-    public static Binding ambient(Thermal material, long temperature) {
-        if (material == null) return null;
-        if (temperature >= material.plasma()) return material.plasmaFluid();
-        if (temperature >= material.boiling()) return material.gas();
-        if (temperature >= material.melting()) return material.liquid();
-        return null;
-    }
-
-    public static boolean solidFallback(boolean liquidAvailable, boolean gasAvailable, boolean keepDust) {
-        return keepDust || !liquidAvailable && !gasAvailable;
     }
 }

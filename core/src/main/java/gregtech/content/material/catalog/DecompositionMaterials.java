@@ -1,6 +1,11 @@
-package gregtech.content.recipe;
+package gregtech.content.material.catalog;
 
-import static gregtech.content.recipe.SourceDecompositionRules.*;
+import gregtech.api.addon.material.MaterialDecompositionRule;
+import gregtech.api.addon.material.MaterialDecompositionRule.Route;
+import gregtech.engine.material.MaterialDefinition;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /** Pinned original 3703e403/W607771f source phase DECLARATIONS, not native texture guesses.
  * 171 current Centrifuge-admitted identities; null phase is source DEFAULT NONE, not an addon ban.
@@ -8,8 +13,24 @@ import static gregtech.content.recipe.SourceDecompositionRules.*;
  * Registry existence is checked at runtime. An input independently tries liquid and gas.
  * Read work/centrifuge-fixed-audit/REPORT.md and phase-source-review.json before integration.
  * Generated REVIEW DRAFT only; source-policy/current-native oracle coverage is not a native pass. */
-public final class SourceDecompositionData {
-    private SourceDecompositionData() {}
+public final class DecompositionMaterials {
+    private static final long SOURCE_U = 648648000L;
+
+    private DecompositionMaterials() {}
+
+    private record Binding(String registry, long sourceUnits, long millibuckets) {}
+
+    private record Profile(int id, String name, Binding liquid, Binding gas, boolean keepDust) {}
+
+    private record Thermal(
+            int id,
+            String name,
+            long melting,
+            long boiling,
+            long plasma,
+            Binding liquid,
+            Binding gas,
+            Binding plasmaFluid) {}
 
     private static final Profile[] INPUTS = {
         new Profile(8001, "Glass", new Binding("glass", SOURCE_U, 144), null, false),
@@ -174,13 +195,43 @@ public final class SourceDecompositionData {
                 null)
     };
 
-    public static Profile input(int id, String name) {
+    private static Profile input(int id, String name) {
         for (Profile p : INPUTS) if (p.id() == id && p.name().equals(name)) return p;
         return null;
     }
 
-    public static Thermal thermal(int id, String name) {
+    private static Thermal thermal(int id, String name) {
         for (Thermal p : AMBIENT) if (p.id() == id && p.name().equals(name)) return p;
         return null;
+    }
+
+    /**
+     * Creates the one typed decomposition value for a canonical declaration. Existing map
+     * permissions are supplied by the caller so this source table never grants a machine route.
+     */
+    public static MaterialDecompositionRule rule(MaterialDefinition.Declaration declaration, Set<Route> routes) {
+        Profile profile = input(declaration.id(), declaration.name());
+        Thermal thermal = thermal(declaration.id(), declaration.name());
+        if (profile == null && thermal == null && routes.isEmpty()) return null;
+        List<MaterialDecompositionRule.FluidBinding> fluids = new ArrayList<>();
+        if (profile != null) {
+            add(fluids, MaterialDecompositionRule.Phase.LIQUID, profile.liquid());
+            add(fluids, MaterialDecompositionRule.Phase.GAS, profile.gas());
+        }
+        if (thermal != null) {
+            add(fluids, MaterialDecompositionRule.Phase.LIQUID, thermal.liquid());
+            add(fluids, MaterialDecompositionRule.Phase.GAS, thermal.gas());
+            add(fluids, MaterialDecompositionRule.Phase.PLASMA, thermal.plasmaFluid());
+        }
+        return new MaterialDecompositionRule(routes, fluids, profile != null && profile.keepDust());
+    }
+
+    private static void add(
+            List<MaterialDecompositionRule.FluidBinding> target,
+            MaterialDecompositionRule.Phase phase,
+            Binding binding) {
+        if (binding != null)
+            target.add(new MaterialDecompositionRule.FluidBinding(
+                    phase, binding.registry(), binding.sourceUnits(), binding.millibuckets()));
     }
 }

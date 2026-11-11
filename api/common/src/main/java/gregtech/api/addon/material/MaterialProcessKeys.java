@@ -2,8 +2,9 @@
 
 package gregtech.api.addon.material;
 
-import java.util.Optional;
 import org.jetbrains.annotations.ApiStatus;
+
+import java.util.Optional;
 
 /** Process keys owned by the GT6CE host. Addons define additional namespaced keys. */
 public final class MaterialProcessKeys {
@@ -12,6 +13,8 @@ public final class MaterialProcessKeys {
     public static final MaterialProcessKey<MaterialTarget> SMELTING = target("smelting");
     public static final MaterialProcessKey<MaterialTarget> CRUSHING = target("crushing");
     public static final MaterialProcessKey<MaterialTarget> PULVERIZING = target("pulverizing");
+    public static final MaterialProcessKey<MaterialDecompositionRule> DECOMPOSITION =
+            key("decomposition", MaterialDecompositionRule.class);
     public static final MaterialProcessKey<FuelRule> FUEL = key("fuel", FuelRule.class);
     public static final MaterialProcessKey<OreProcessingRule> ORE_PROCESSING =
             key("ore_processing", OreProcessingRule.class);

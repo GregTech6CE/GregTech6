@@ -358,11 +358,15 @@ public final class MaterialViews {
         }
         for (var submission : AddonMaterials.processDeclarations()) {
             var declaration = submission.declaration();
-            requireNamespace(submission.addonId(), declaration.process().id());
             GTMaterial material = GTMaterialRegistry.get(declaration.materialName());
             if (!material.isValid())
                 throw new IllegalArgumentException("Addon '" + submission.addonId()
                         + "' process uses unknown material '" + declaration.materialName() + "'");
+            if (!declaration.process().equals(MaterialProcessKeys.DECOMPOSITION))
+                requireNamespace(submission.addonId(), declaration.process().id());
+            else if (!AddonMaterials.owners(material).contains(submission.addonId()))
+                throw new IllegalArgumentException("Addon '" + submission.addonId()
+                        + "' cannot declare decomposition for non-owned material '" + material.getName() + "'");
             var key = new MaterialKey(material.getName());
             var targetRules = processRules.get(key);
             if (targetRules == null)
@@ -384,6 +388,10 @@ public final class MaterialViews {
                 throw new IllegalArgumentException(
                         "Addon '" + submission.addonId() + "' process uses unknown material '"
                                 + submission.material().name() + "'");
+            if (submission.process().equals(MaterialProcessKeys.DECOMPOSITION)
+                    && !AddonMaterials.owners(material).contains(submission.addonId()))
+                throw new IllegalArgumentException("Addon '" + submission.addonId()
+                        + "' cannot declare decomposition for non-owned material '" + material.getName() + "'");
             var key = new MaterialKey(material.getName());
             var targetRules = processRules.get(key);
             if (targetRules == null)
