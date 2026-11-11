@@ -1,8 +1,8 @@
 package gregtech.content.material;
 
 import gregtech.api.material.MaterialComponent;
-import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.block.BlockMaterialWeights;
+import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.GTStoneSlabBlock;
@@ -53,9 +53,7 @@ public final class MaterialItemCompositions {
                         MaterialPrefix.plate, gregtech.content.material.generated.WoodMaterials.WoodTreated)
                 .getItem();
         ItemMaterialRegistry.register(
-                treated,
-                MaterialPrefix.plate,
-                gregtech.content.material.generated.WoodMaterials.WoodTreated);
+                treated, MaterialPrefix.plate, gregtech.content.material.generated.WoodMaterials.WoodTreated);
     }
 
     private static void registerBlockWeights() {
@@ -93,7 +91,9 @@ public final class MaterialItemCompositions {
             var id = BuiltInRegistries.BLOCK.getKey(block);
             if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) continue;
             if (block instanceof BasicMachineBlock machine) {
-                OriginalMachineMaterialData.find(machine.basicSpec().machineName(), machine.basicSpec().tier())
+                OriginalMachineMaterialData.find(
+                                machine.basicSpec().machineName(),
+                                machine.basicSpec().tier())
                         .ifPresent(data -> ItemMaterialRegistry.register(block.asItem(), data));
             }
             MachineConstructionMaterials.block(id.getPath())

@@ -1,7 +1,6 @@
 package gregtech.engine.machine;
 
 import gregtech.api.material.GTMaterial;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -2,7 +2,6 @@ package gregtech.content.material;
 
 import gregtech.api.addon.material.*;
 import gregtech.api.material.GTValues;
-
 import java.util.List;
 import java.util.Set;
 

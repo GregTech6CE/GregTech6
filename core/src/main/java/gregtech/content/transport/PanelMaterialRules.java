@@ -9,7 +9,6 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ReversibleCraftingData;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;

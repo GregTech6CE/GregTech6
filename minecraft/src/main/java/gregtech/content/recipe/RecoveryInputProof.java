@@ -13,8 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 /** Runtime guard shared by every fixed-output material recovery recipe. */
-record RecoveryInputProof(
-        Item item, MaterialPrefix prefix, List<MaterialComponent> components, Item sourceBlock) {
+record RecoveryInputProof(Item item, MaterialPrefix prefix, List<MaterialComponent> components, Item sourceBlock) {
     RecoveryInputProof {
         if (item == null || components == null || components.isEmpty())
             throw new IllegalArgumentException("Recovery input proof is empty");
@@ -22,9 +21,7 @@ record RecoveryInputProof(
     }
 
     static RecoveryInputProof capture(ItemStack input, ItemComposition composition) {
-        return composition == null
-                ? null
-                : capture(input, composition.prefix(), composition.components());
+        return composition == null ? null : capture(input, composition.prefix(), composition.components());
     }
 
     static RecoveryInputProof capture(ItemStack input, MaterialPrefix prefix, List<MaterialComponent> components) {
@@ -34,7 +31,11 @@ record RecoveryInputProof(
     }
 
     static RecoveryInputProof capture(ItemStack input, GTMaterial material, MaterialPrefix prefix, long totalUnits) {
-        if (input == null || input.isEmpty() || material == null || !material.isValid() || totalUnits <= 0
+        if (input == null
+                || input.isEmpty()
+                || material == null
+                || !material.isValid()
+                || totalUnits <= 0
                 || totalUnits % input.getCount() != 0) return null;
         return capture(input, prefix, List.of(MaterialComponent.of(material, totalUnits / input.getCount())));
     }
@@ -49,10 +50,7 @@ record RecoveryInputProof(
         var canonical = ReviewedCinnabarFacts.INSTANCE.blockDust(material, 1);
         if (canonical.isEmpty() || canonical.getItem() != input.getItem()) return null;
         var proof = new RecoveryInputProof(
-                input.getItem(),
-                null,
-                List.of(MaterialComponent.of(material, 9 * GTValues.U)),
-                input.getItem());
+                input.getItem(), null, List.of(MaterialComponent.of(material, 9 * GTValues.U)), input.getItem());
         return proof.matches(input) ? proof : null;
     }
 
@@ -78,8 +76,7 @@ record RecoveryInputProof(
             if (handler != null) {
                 int tanks = handler.getTanks();
                 if (tanks < 0) return false;
-                for (int tank = 0; tank < tanks; tank++)
-                    if (handler.getTankCapacity(tank) != 0) return false;
+                for (int tank = 0; tank < tanks; tank++) if (handler.getTankCapacity(tank) != 0) return false;
             }
             return true;
         } catch (RuntimeException | LinkageError invalidBehavior) {
@@ -96,7 +93,9 @@ record RecoveryInputProof(
                 || block.prefix() != gregtech.engine.prefix.BlockMaterialPrefix.blockDust) return false;
         var weights = gregtech.content.block.BlockMaterialWeights.contained(block.material(), block.prefix());
         return weights.equals(components)
-                && GTMaterialRegistry.get(block.material().getId()) == block.material().resolve()
-                && GTMaterialRegistry.get(block.material().getName()) == block.material().resolve();
+                && GTMaterialRegistry.get(block.material().getId())
+                        == block.material().resolve()
+                && GTMaterialRegistry.get(block.material().getName())
+                        == block.material().resolve();
     }
 }

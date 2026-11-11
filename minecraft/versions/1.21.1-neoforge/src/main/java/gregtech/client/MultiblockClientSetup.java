@@ -2,6 +2,7 @@ package gregtech.client;
 
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTMultiblocks;
+import gregtech.content.registry.GTSmeltery;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

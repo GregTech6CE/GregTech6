@@ -2,10 +2,7 @@ package gregtech.client;
 
 import gregtech.content.blockentity.machine.KineticSteamEngineBlockEntity;
 import gregtech.content.blockentity.machine.PistonEngineBlockEntity;
-import gregtech.content.registry.GTBlockEntities;
-import gregtech.content.registry.GTBoilers;
-import gregtech.content.registry.GTEngines;
-import gregtech.content.registry.GTPumps;
+import gregtech.content.registry.*;
 import gregtech.engine.machine.EngineType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
