@@ -27,8 +27,8 @@ import javax.annotation.Nullable;
  * absent here. These differences are tracked as ALIGN-006 and ALIGN-127.</p>
  *
  * <p>Once the face gate passes, the tool costs at least 100 durability even if
- * ignition fails. Native hooks run before the vanilla TNT/fire fallback, but a
- * zero hook result currently enables that fallback as well (ALIGN-131).</p>
+ * ignition fails. The vanilla TNT/fire fallback runs only when the clicked block does not own
+ * the igniter click, matching GT6's {@code IBlockToolable.Util.onToolClick} split.</p>
  *
  * <p>The server check precedes the roll in this adaptation. The caller supplies
  * the default chance of 30; no matching configuration entry is implemented.</p>
@@ -96,9 +96,12 @@ public final class BehaviorFlintAndTinder {
     }
 
     /**
-     * Ask a native ignition target, then try TNT/fire if its cost is zero.
-     * GT6's IBlockToolable dispatch instead selects the native or compatibility
-     * path by target type; ALIGN-131 tracks the difference.
+     * Ask a native ignition target, then try TNT/fire only when no block owns the click.
+     *
+     * <p>GT6's {@code IBlockToolable.Util.onToolClick} runs the block's own handler for every
+     * {@code IBlockToolable} and {@code ToolCompat} otherwise. A GT machine therefore declining the
+     * igniter returns {@code 0} without lighting a fire in front of itself or consuming the
+     * item.</p>
      *
      * @return the ignition cost in GT6's 1/10000 units, {@code 0} when nothing reacted
      */
@@ -112,9 +115,11 @@ public final class BehaviorFlintAndTinder {
 //?}
         if (cost > 0) return cost;
 //? if >=1.21.1 {
-        /*if (ManualToolBehaviorAccess.primeTnt(level, pos, player)) return ManualToolBehaviorAccess.TNT_COST;   // GT6 ToolCompat
+        /*if (ManualToolBehaviorAccess.handlesIgniter(level, pos)) return 0L;
+        if (ManualToolBehaviorAccess.primeTnt(level, pos, player)) return ManualToolBehaviorAccess.TNT_COST;   // GT6 ToolCompat
         if (ManualToolBehaviorAccess.lightVanillaFire(level, player, pos, side, stack)) return ManualToolBehaviorAccess.TNT_COST;
 *///?} else {
+        if (ItemBehaviors.handlesIgniter(level, pos)) return 0L;
         if (ItemBehaviors.primeTnt(level, pos, player)) return ItemBehaviors.TNT_COST;   // GT6 ToolCompat
         if (ItemBehaviors.lightVanillaFire(level, player, pos, side, stack)) return ItemBehaviors.TNT_COST;
 //?}

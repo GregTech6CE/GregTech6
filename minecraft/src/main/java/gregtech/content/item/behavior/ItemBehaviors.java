@@ -300,18 +300,28 @@ public final class ItemBehaviors {
     /**
      * The tooltip slot of the behaviour layer — GT6's {@code IBehavior.getAdditionalToolTips}.
      *
-     * <p>Two behaviours live here and nowhere else: the USB stick ({@code Behavior_DataStorage}) and the
-     * USB drive ({@code Behavior_DataStorage16}) render the data their item carries, so they have no
-     * click half at all. Dispatch is by id, like every other entry point in this class, and an item
-     * without a tooltip behaviour adds nothing.</p>
+     * <p>The USB stick ({@code Behavior_DataStorage}) and the USB drive
+     * ({@code Behavior_DataStorage16}) render the data their item carries, so they have no click
+     * half at all; the lighter families ({@code Behavior_Lighter}) print their fuel counter and
+     * chance. Dispatch is by id, like every other entry point in this class, and an item without a
+     * tooltip behaviour adds nothing.</p>
      */
     public static void tooltip(ItemStack stack, List<Component> lines) {
         String id = itemId(stack);
         if (id == null) return;
-        if (id.endsWith("_hdd") && id.startsWith("usb")) {
+        if (gregtech.content.data.UsbDataMedia.isDrive(stack)) {
             BehaviorDataStorage16.tooltip(stack, lines);
-        } else if (id.endsWith("_stick") && id.startsWith("usb")) {
+            return;
+        }
+        if (gregtech.content.data.UsbDataMedia.isStick(stack)) {
             BehaviorDataStorage.tooltip(stack, lines);
+            return;
+        }
+        BehaviorLighter.LighterSpec spec = lighterSpec(id);
+        // GT6 attaches Behavior_Lighter to the used and full variants only; an empty or broken
+        // lighter is inert and shows no behaviour tooltip.
+        if (spec != null && (spec.singleUse() || spec.can().matches(stack))) {
+            BehaviorLighter.tooltip(stack, spec, lines);
         }
     }
 
@@ -598,6 +608,20 @@ public final class ItemBehaviors {
         if (target == null) return 0L;
         return target.onIgnite(level, pos, side, player, igniter, sneaking, hitX, hitY, hitZ);
 //?}
+    }
+
+    /**
+     * Whether the clicked block handles GT6's {@code TOOL_igniter} itself, i.e. would be an
+     * {@code IBlockToolable} in GT6. Every GT machine block is one, whether or not its
+     * {@code onIgnite} accepts this particular click.
+     *
+     * <p>{@code IBlockToolable.Util.onToolClick} never falls back to {@code ToolCompat} for such a
+     * block, so a zero return means "this block declined" rather than "no behaviour here".</p>
+     */
+    public static boolean handlesIgniter(Level level, BlockPos pos) {
+        if (level.getBlockState(pos).getBlock() instanceof gregtech.engine.machine.GTMachineBlock) return true;
+        return level.getBlockEntity(pos) instanceof Ignitable
+                || level.getBlockState(pos).getBlock() instanceof Ignitable;
     }
 
     /** GT6 {@code ToolCompat}: a TNT block ignited by a GT igniter costs one full unit. */

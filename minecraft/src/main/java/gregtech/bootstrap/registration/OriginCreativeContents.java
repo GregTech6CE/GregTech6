@@ -167,6 +167,8 @@ public final class OriginCreativeContents {
 //?}
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
+            // GT6 marks the used and broken lighter variants TD.Creative.HIDDEN.
+            if (gregtech.content.registry.GTMultiItems.creativeHidden(itemId)) continue;
 
             if (!gregtech.content.item.CatalogVisibility.visible(new ItemStack(item))) continue;
             items.add(item);
