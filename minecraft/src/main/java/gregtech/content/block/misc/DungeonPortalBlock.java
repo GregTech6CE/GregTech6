@@ -58,22 +58,51 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
 
 //? if >=1.21.1 {
     /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
     }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        ItemStack held = player.getItemInHand(hand);
+        // GT6's magnifying glass report for the link state and the counterpart's coordinates.
+        if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
+            if (!level.isClientSide && level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal)
+                player.displayClientMessage(portal.linkMessage(), false);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        boolean igniter = target == Target.NETHER && held.is(Items.FLINT_AND_STEEL);
+        boolean eye = target == Target.END && held.is(Items.ENDER_EYE);
+        if (!igniter && !eye) return InteractionResult.PASS;
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (!(level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal)) return InteractionResult.PASS;
+        if (igniter) {
+            portal.onIgnite(level, pos, hit.getDirection(), player, held, player.isShiftKeyDown(), 0.5F, 0.5F, 0.5F);
+//? if >=1.21.1 {
+            /*if (!player.isCreative()) held.hurtAndBreak(1, player,
+                    hand == InteractionHand.MAIN_HAND ? net.minecraft.world.entity.EquipmentSlot.MAINHAND
+                    : net.minecraft.world.entity.EquipmentSlot.OFFHAND);
+*///?} else {
+            if (!player.isCreative()) held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
+//?}
+        } else {
+            portal.activate();
+            if (!player.isCreative()) held.shrink(1);
+        }
+        var remote = portal.linkedPortal();
+        if (eye && remote != null) player.displayClientMessage(Component.literal("X: " + remote.getBlockPos().getX()
+                + "   Y: " + remote.getBlockPos().getY() + "   Z: " + remote.getBlockPos().getZ()), false);
+        return InteractionResult.CONSUME;
+    }
+
     public DungeonPortalBlock(Target target, Properties properties) {
         super(properties);
         this.target = target;
@@ -121,44 +150,6 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-    }
-
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-            InteractionHand hand, BlockHitResult hit) {
-        ItemStack held = player.getItemInHand(hand);
-        // GT6's magnifying glass report for the link state and the counterpart's coordinates.
-        if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
-            if (!level.isClientSide && level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal)
-                player.displayClientMessage(portal.linkMessage(), false);
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        boolean igniter = target == Target.NETHER && held.is(Items.FLINT_AND_STEEL);
-        boolean eye = target == Target.END && held.is(Items.ENDER_EYE);
-        if (!igniter && !eye) return InteractionResult.PASS;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (!(level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal)) return InteractionResult.PASS;
-        if (igniter) {
-            portal.onIgnite(level, pos, hit.getDirection(), player, held, player.isShiftKeyDown(), 0.5F, 0.5F, 0.5F);
-//? if >=1.21.1 {
-            /*if (!player.isCreative()) held.hurtAndBreak(1, player,
-                    hand == InteractionHand.MAIN_HAND ? net.minecraft.world.entity.EquipmentSlot.MAINHAND
-                    : net.minecraft.world.entity.EquipmentSlot.OFFHAND);
-*///?} else {
-            if (!player.isCreative()) held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
-//?}
-        } else {
-            portal.activate();
-            if (!player.isCreative()) held.shrink(1);
-        }
-        var remote = portal.linkedPortal();
-        if (eye && remote != null) player.displayClientMessage(Component.literal("X: " + remote.getBlockPos().getX()
-                + "   Y: " + remote.getBlockPos().getY() + "   Z: " + remote.getBlockPos().getZ()), false);
-        return InteractionResult.CONSUME;
     }
 
     /** GT6's portal tooltips ({@code MultiTileEntityMiniPortalNether}, {@code MultiTileEntityMiniPortalEnd}). */

@@ -3,6 +3,7 @@ package gregtech.content.block.machine;
 import gregtech.engine.machine.TankSpec;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.client.TankTooltips;
 //? if >=1.21.1 {
@@ -32,35 +33,22 @@ import javax.annotation.Nullable;
 public class TankBlock extends Block implements EntityBlock {
     private final TankSpec spec;
 
-    public TankBlock(TankSpec spec, Properties properties) {
-        super(properties);
-        this.spec = spec;
-    }
-
-    public TankSpec spec() { return spec; }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new TankBlockEntity(pos, state);
-    }
-
-    @Nullable
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide) return null;
-        if (type != GTBlockEntities.TANK.get()) return null;
-        return (BlockEntityTicker<T>) (BlockEntityTicker<TankBlockEntity>) TankBlockEntity::serverTick;
-    }
-
 //? if >=1.21.1 {
-    /*private InteractionResult useOriginal(BlockState state, Level level, BlockPos pos, Player player,
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return InteractionResult.sidedSuccess(true);
         BlockEntity be = level.getBlockEntity(pos);
         if (!(be instanceof TankBlockEntity tank)) return InteractionResult.PASS;
@@ -105,6 +93,28 @@ public class TankBlock extends Block implements EntityBlock {
         return tank.handleUse(player, hand);
     }
 
+    public TankBlock(TankSpec spec, Properties properties) {
+        super(properties);
+        this.spec = spec;
+    }
+
+    public TankSpec spec() { return spec; }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new TankBlockEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide) return null;
+        if (type != GTBlockEntities.TANK.get()) return null;
+        return (BlockEntityTicker<T>) (BlockEntityTicker<TankBlockEntity>) TankBlockEntity::serverTick;
+    }
+
     @Override
     public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack=new ItemStack(this);
@@ -135,14 +145,4 @@ public class TankBlock extends Block implements EntityBlock {
         return Properties.of()
                 .strength(3.0F, 5.0F);
     }
-//? if >=1.21.1 {
-
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){
-        var result=useOriginal(state,level,pos,player,hand,hit);
-        return result==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:
-                result==InteractionResult.FAIL?net.minecraft.world.ItemInteractionResult.FAIL:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return useOriginal(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
 }

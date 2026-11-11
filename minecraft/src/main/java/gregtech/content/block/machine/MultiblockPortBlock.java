@@ -6,6 +6,30 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public final class MultiblockPortBlock extends Block implements EntityBlock {
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state,
+            net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level,
+            BlockPos pos, net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        if (level.getBlockEntity(pos) instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity part)
+            return gregtech.content.logistics.LogisticsCoverInteraction.use(
+                    part, level, player, hand, hit.getDirection());
+        return net.minecraft.world.InteractionResult.PASS;
+    }
 
     @Override
     public void stepOn(net.minecraft.world.level.Level level, BlockPos pos, BlockState state,
@@ -73,38 +97,6 @@ public final class MultiblockPortBlock extends Block implements EntityBlock {
     public int getLightBlock(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos) {
         return state.getValue(CRUCIBLE_FORMED) ? 0 : super.getLightBlock(state, level, pos);
     }
-//? if >=1.21.1 {
-    /*private net.minecraft.world.InteractionResult interact(BlockState state, net.minecraft.world.level.Level level,
-*///?} else {
-    @Override
-    public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level,
-//?}
-            BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        if (level.getBlockEntity(pos) instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity part)
-            return gregtech.content.logistics.LogisticsCoverInteraction.use(
-                    part, level, player, hand, hit.getDirection());
-        return net.minecraft.world.InteractionResult.PASS;
-    }
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state,
-            net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-    @Override
-    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return interact(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-//?}
     @Override
     public void onRemove(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
             BlockState next, boolean moving) {

@@ -33,6 +33,47 @@ import java.util.List;
 
 /** GT6 bottle crate: nine X/Z cells, whole-stack interaction and inventory-preserving drops. */
 public class BottleCrateBlock extends HorizontalDirectionalBlock implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget, SimpleWaterloggedBlock {
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate)) return InteractionResult.PASS;
+        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        int slot = slotAt(pos, hit);
+        ItemStack stored = crate.items().getStackInSlot(slot);
+        if (!stored.isEmpty()) {
+            int destination = destination(player, stored);
+            if (destination >= 0) {
+                crate.items().setStackInSlot(slot, ItemStack.EMPTY);
+                ItemStack existing = player.getInventory().getItem(destination);
+                if (existing.isEmpty()) player.getInventory().setItem(destination, stored);
+                else existing.grow(stored.getCount());
+                player.getInventory().setChanged();
+            }
+        } else {
+            ItemStack held = player.getItemInHand(hand);
+            if (isBottle(held)) {
+                // The original consumes the held stack even in creative mode.
+                crate.items().setStackInSlot(slot, held.copy());
+                player.setItemInHand(hand, ItemStack.EMPTY);
+            }
+        }
+        return InteractionResult.CONSUME;
+    }
 
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
@@ -87,54 +128,6 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
     public static int slotAt(BlockPos pos, BlockHitResult hit) {
         return gregtech.content.storage.ContainerStorageRules.bottleSlot(
                 hit.getLocation().x - pos.getX(), hit.getLocation().z - pos.getZ());
-    }
-
-//? if >=1.21.1 {
-    /*@Override
-    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state,
-            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-    @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-    public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate)) return InteractionResult.PASS;
-        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        int slot = slotAt(pos, hit);
-        ItemStack stored = crate.items().getStackInSlot(slot);
-        if (!stored.isEmpty()) {
-            int destination = destination(player, stored);
-            if (destination >= 0) {
-                crate.items().setStackInSlot(slot, ItemStack.EMPTY);
-                ItemStack existing = player.getInventory().getItem(destination);
-                if (existing.isEmpty()) player.getInventory().setItem(destination, stored);
-                else existing.grow(stored.getCount());
-                player.getInventory().setChanged();
-            }
-        } else {
-            ItemStack held = player.getItemInHand(hand);
-            if (isBottle(held)) {
-                // The original consumes the held stack even in creative mode.
-                crate.items().setStackInSlot(slot, held.copy());
-                player.setItemInHand(hand, ItemStack.EMPTY);
-            }
-        }
-        return InteractionResult.CONSUME;
     }
 
     /** ST.add(player, stack, true): nonheld merges, selected slot, then other empty slots. */

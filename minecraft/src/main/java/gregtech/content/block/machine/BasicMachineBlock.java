@@ -10,6 +10,8 @@ import gregtech.engine.machine.MachineSpec;
 
 import gregtech.engine.tool.GTToolHelper;
 
+import gregtech.engine.tool.ToolInteractions;
+
 
 
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
@@ -102,7 +104,119 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
 
     private Supplier<BlockEntityType<?>> beTypeSupplier = () -> null;
 
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state,
+            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
 
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?}
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        // Wrench rotation first (from GTFacingMachineBlock)
+        InteractionResult wrenchResult = super.use(state, level, pos, player, hand, hit);
+        if (wrenchResult != InteractionResult.PASS) {
+            return wrenchResult;
+        }
+
+        ItemStack held = player.getItemInHand(hand);
+        BlockEntity be = level.getBlockEntity(pos);
+
+        if (be instanceof BasicMachineBlockEntity panelHost) {
+            var result = gregtech.content.cover.PanelCoverInteraction.use(panelHost, player, hand, hit, false);
+            if (result != InteractionResult.PASS) return result;
+        }
+        // Covers: attach a cover item to the clicked face; crowbar removes it.
+        if (be instanceof BasicMachineBlockEntity coverBe) {
+            if (gregtech.content.cover.CoverPlacement.placing(player) && isCoverItem(held)) {
+                if (!level.isClientSide && coverBe.attachCover(hit.getDirection(), held)) {
+                    if (!player.getAbilities().instabuild) held.shrink(1);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+
+            if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.CROWBAR)) {
+                if (!level.isClientSide) {
+                    ItemStack removed = coverBe.removeCover(hit.getDirection());
+                    if (!removed.isEmpty() && !player.addItem(removed)) {
+                        player.drop(removed, false);
+                    }
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+        }
+
+        // the utility covers of CoverUtilityBehaviors. GT6 CoverCrafting opens a workbench
+        // on a bare-handed click of the cover's face; the item/fluid filters and the item retriever
+        // take the held stack as their filter (CoverFilterItem, CoverFilterFluid,
+        // CoverRetrieverItem), the screwdriver flips whitelist/blacklist and the soft hammer
+        // clears it (CoverFilterItem, CoverRetrieverItem). Nothing here fires when no such cover is on
+        // the clicked face - the checks are all keyed on the face's cover id.
+        if (be instanceof BasicMachineBlockEntity utilityBe) {
+            Direction side = hit.getDirection();
+            String coverId = gregtech.content.cover.CoverItems.behavior(utilityBe.getCover(side));
+
+            if (!utilityBe.consumesTool(held) && gregtech.content.cover.CoverUtilityBehaviors.CRAFTING_TABLE.equals(coverId)) {
+                if (!level.isClientSide) {
+                    gregtech.content.cover.CoverUtilityBehaviors.clickCraftingCover(
+                            player, (net.minecraft.server.level.ServerLevel) level, pos);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            if (!held.isEmpty()) {
+                if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SCREWDRIVER)
+                        && utilityBe.configureFilterCover(side, true, false)) {
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+
+                if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SOFT_HAMMER)
+                        && utilityBe.configureFilterCover(side, false, true)) {
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+                if (!utilityBe.consumesTool(held) && !isCoverItem(held) && utilityBe.clickFilterCover(side, held)) {
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+            }
+        }
+
+        if (be instanceof BasicMachineBlockEntity machine) {
+            var result = machine.useMachineTool(player, hand, hit);
+            if (result != InteractionResult.PASS) return result;
+        }
+        // Fluid injection from held fluid container (GT6: right-click machine with fluid cell)
+        if (!held.isEmpty() && be instanceof BasicMachineBlockEntity basicBe) {
+//? if >=1.21.1 {
+/*            IFluidHandlerItem fluidItem = held.getCapability(Capabilities.FluidHandler.ITEM);
+*///?} else {
+            IFluidHandlerItem fluidItem = held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM)
+                    .resolve().orElse(null);
+//?}
+            if (fluidItem != null && basicBe.getTanksInput() != null && basicBe.getTanksInput().length > 0) {
+                if (!level.isClientSide) {
+                    FluidStack available = fluidItem.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
+                    if (!available.isEmpty()) {
+                        int accepted = basicBe.fill(available, IFluidHandler.FluidAction.SIMULATE);
+                        if (accepted > 0) {
+                            FluidStack drained = fluidItem.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
+                            if (!drained.isEmpty()) {
+                                basicBe.fill(drained, IFluidHandler.FluidAction.EXECUTE);
+                                player.setItemInHand(hand, fluidItem.getContainer());
+                            }
+                        }
+                    }
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+        }
+
+        return useRemainder(state, level, pos, player, hand, be);
+    }
 
     public BasicMachineBlock(BasicMachineSpec basicSpec, Properties properties) {
 
@@ -229,235 +343,6 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
         return be;
 
     }
-
-
-
-
-
-//? if >=1.21.1 {
-/*    private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-
-
-
-                                 InteractionHand hand, BlockHitResult hit) {
-
-        // Wrench rotation first (from GTFacingMachineBlock)
-
-
-
-//? if >=1.21.1 {
-/*        InteractionResult wrenchResult = handleWrench(state, level, pos, player, hand, hit);
-*///?} else {
-        InteractionResult wrenchResult = super.use(state, level, pos, player, hand, hit);
-//?}
-
-
-
-        if (wrenchResult != InteractionResult.PASS) {
-
-            return wrenchResult;
-
-        }
-
-
-
-        ItemStack held = player.getItemInHand(hand);
-
-        BlockEntity be = level.getBlockEntity(pos);
-
-
-
-        if(be instanceof BasicMachineBlockEntity panelHost){
-
-            var result=gregtech.content.cover.PanelCoverInteraction.use(panelHost,player,hand,hit,false);
-
-            if(result!=InteractionResult.PASS)return result;
-
-        }
-
-        // Covers: attach a cover item to the clicked face; crowbar removes it.
-
-        if (be instanceof BasicMachineBlockEntity coverBe) {
-
-            if (gregtech.content.cover.CoverPlacement.placing(player) && isCoverItem(held)) {
-
-                if (!level.isClientSide && coverBe.attachCover(hit.getDirection(), held)) {
-
-                    if (!player.getAbilities().instabuild) held.shrink(1);
-
-                }
-
-                return InteractionResult.sidedSuccess(level.isClientSide);
-
-            }
-
-
-
-            if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.CROWBAR)) {
-
-
-
-                if (!level.isClientSide) {
-
-                    ItemStack removed = coverBe.removeCover(hit.getDirection());
-
-                    if (!removed.isEmpty() && !player.addItem(removed)) {
-
-                        player.drop(removed, false);
-
-                    }
-
-                }
-
-                return InteractionResult.sidedSuccess(level.isClientSide);
-
-            }
-
-        }
-
-
-
-        // the utility covers of CoverUtilityBehaviors. GT6 CoverCrafting opens a workbench
-
-        // on a bare-handed click of the cover's face; the item/fluid filters and the item retriever
-
-        // take the held stack as their filter (CoverFilterItem, CoverFilterFluid,
-
-        // CoverRetrieverItem), the screwdriver flips whitelist/blacklist and the soft hammer
-
-        // clears it (CoverFilterItem, CoverRetrieverItem). Nothing here fires when no such cover is on
-
-        // the clicked face - the checks are all keyed on the face's cover id.
-
-        if (be instanceof BasicMachineBlockEntity utilityBe) {
-
-            Direction side = hit.getDirection();
-
-            String coverId = gregtech.content.cover.CoverItems.behavior(utilityBe.getCover(side));
-
-
-
-            if (!utilityBe.consumesTool(held) && gregtech.content.cover.CoverUtilityBehaviors.CRAFTING_TABLE.equals(coverId)) {
-
-
-
-                if (!level.isClientSide) {
-
-                    gregtech.content.cover.CoverUtilityBehaviors.clickCraftingCover(
-
-                            player, (net.minecraft.server.level.ServerLevel) level, pos);
-
-                }
-
-                return InteractionResult.sidedSuccess(level.isClientSide);
-
-            }
-
-            if (!held.isEmpty()) {
-
-
-
-                if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SCREWDRIVER)
-
-
-
-                        && utilityBe.configureFilterCover(side, true, false)) {
-
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-
-                }
-
-
-
-                if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SOFT_HAMMER)
-
-
-
-                        && utilityBe.configureFilterCover(side, false, true)) {
-
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-
-                }
-
-                if (!utilityBe.consumesTool(held) && !isCoverItem(held) && utilityBe.clickFilterCover(side, held)) {
-
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-
-                }
-
-            }
-
-        }
-
-
-
-        if (be instanceof BasicMachineBlockEntity machine) {
-            var result = machine.useMachineTool(player, hand, hit);
-            if (result != InteractionResult.PASS) return result;
-        }
-
-        // Fluid injection from held fluid container (GT6: right-click machine with fluid cell)
-
-        if (!held.isEmpty() && be instanceof BasicMachineBlockEntity basicBe) {
-
-
-
-//? if >=1.21.1 {
-/*            IFluidHandlerItem fluidItem = held.getCapability(Capabilities.FluidHandler.ITEM);
-*///?} else {
-            IFluidHandlerItem fluidItem = held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM)
-
-                    .resolve().orElse(null);
-//?}
-
-
-
-            if (fluidItem != null && basicBe.getTanksInput() != null && basicBe.getTanksInput().length > 0) {
-
-                if (!level.isClientSide) {
-
-                    FluidStack available = fluidItem.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
-
-                    if (!available.isEmpty()) {
-
-                        int accepted = basicBe.fill(available, IFluidHandler.FluidAction.SIMULATE);
-
-                        if (accepted > 0) {
-
-                            FluidStack drained = fluidItem.drain(accepted, IFluidHandler.FluidAction.EXECUTE);
-
-                            if (!drained.isEmpty()) {
-
-                                basicBe.fill(drained, IFluidHandler.FluidAction.EXECUTE);
-
-                                player.setItemInHand(hand, fluidItem.getContainer());
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-                return InteractionResult.sidedSuccess(level.isClientSide);
-
-            }
-
-        }
-
-
-
-        return useRemainder(state, level, pos, player, hand, be);
-
-    }
-
-
 
     /**
 
@@ -670,22 +555,4 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
         return java.util.List.of(createMachineDrop(state,builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)));
 
     }
-
-
-
-//? if >=1.21.1 {
-/*    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){
-
-        var result=interact(state,level,pos,player,hand,hit);
-
-        return result==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-
-    }
-
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-
-*///?} else {
-//?}
-
-
 }

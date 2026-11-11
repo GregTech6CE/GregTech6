@@ -8,6 +8,7 @@ import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.machine.HopperSpec;
 import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.blockentity.machine.HopperBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -71,6 +72,94 @@ public class HopperBlock extends DirectionalBlock implements EntityBlock, ToolIn
 *///?} else {
 //?}
     private final HopperSpec spec;
+
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state,
+            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+
+    @Override
+    public InteractionResult useScrewdriver(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return use(state, level, pos, player, hand, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        ItemStack held = player.getItemInHand(hand);
+
+        // Monkey wrench: toggle exact mode (original GT6: MultiTileEntityHopper)
+        if (GTToolHelper.isMonkeyWrench(held)) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof HopperBlockEntity hopper) {
+                if (!level.isClientSide) {
+                    hopper.toggleExactMode();
+                    GTToolHelper.damageForUse(held, 1, player);
+                    player.displayClientMessage(
+                            net.minecraft.network.chat.Component.literal(hopper.getModeDescription()), false);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+        }
+
+        // Wrench: click a face to rotate the hopper front to that face
+        if (MachineRotationType.handleWrench(state, level, pos, player, hand, hit,
+                FACING, MachineRotationType.ALL)) {
+            if (!level.isClientSide) {
+                BlockEntity be = level.getBlockEntity(pos);
+                if (be instanceof HopperBlockEntity hopper) {
+                    hopper.onNeighborChanged();
+                }
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof HopperBlockEntity hopper) {
+            // Screwdriver: cycle mode
+            if (GTToolHelper.isScrewdriver(held)) {
+                if (!level.isClientSide) {
+                    hopper.cycleMode(player.isCrouching());
+                    GTToolHelper.damageForUse(held, 1, player);
+                    player.displayClientMessage(
+                            net.minecraft.network.chat.Component.literal(hopper.getModeDescription()), false);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            // Soft hammer: reset mode
+            if (GTToolHelper.isSoftHammer(held)) {
+                if (!level.isClientSide) {
+                    hopper.resetMode();
+                    GTToolHelper.damageForUse(held, 1, player);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            // Magnifying glass: show mode info
+            if (GTToolHelper.isMagnifyingGlass(held)) {
+                if (!level.isClientSide) {
+                    player.displayClientMessage(
+                            net.minecraft.network.chat.Component.literal(hopper.getModeDescription()), false);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            // Empty hand / non-tool: open GUI
+            if (held.isEmpty() || !GTToolHelper.isTool(held)) {
+                if (!level.isClientSide && player instanceof ServerPlayer sp) {
+                    sp.openMenu(hopper);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+        }
+        return InteractionResult.PASS;
+    }
 
     public HopperBlock(HopperSpec spec, Properties properties) {
         super(properties);
@@ -154,86 +243,7 @@ public class HopperBlock extends DirectionalBlock implements EntityBlock, ToolIn
         super.neighborChanged(state, level, pos, block, fromPos, isMoving);
     }
 
-//? if >=1.21.1 {
-    /*private InteractionResult originalUse(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-//?}
-        ItemStack held = player.getItemInHand(hand);
-
-        // Monkey wrench: toggle exact mode (original GT6: MultiTileEntityHopper)
-        if (GTToolHelper.isMonkeyWrench(held)) {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof HopperBlockEntity hopper) {
-                if (!level.isClientSide) {
-                    hopper.toggleExactMode();
-                    GTToolHelper.damageForUse(held, 1, player);
-                    player.displayClientMessage(
-                            net.minecraft.network.chat.Component.literal(hopper.getModeDescription()), false);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-        }
-
-        // Wrench: click a face to rotate the hopper front to that face
-        if (MachineRotationType.handleWrench(state, level, pos, player, hand, hit,
-                FACING, MachineRotationType.ALL)) {
-            if (!level.isClientSide) {
-                BlockEntity be = level.getBlockEntity(pos);
-                if (be instanceof HopperBlockEntity hopper) {
-                    hopper.onNeighborChanged();
-                }
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof HopperBlockEntity hopper) {
-            // Screwdriver: cycle mode
-            if (GTToolHelper.isScrewdriver(held)) {
-                if (!level.isClientSide) {
-                    hopper.cycleMode(player.isCrouching());
-                    GTToolHelper.damageForUse(held, 1, player);
-                    player.displayClientMessage(
-                            net.minecraft.network.chat.Component.literal(hopper.getModeDescription()), false);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            // Soft hammer: reset mode
-            if (GTToolHelper.isSoftHammer(held)) {
-                if (!level.isClientSide) {
-                    hopper.resetMode();
-                    GTToolHelper.damageForUse(held, 1, player);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            // Magnifying glass: show mode info
-            if (GTToolHelper.isMagnifyingGlass(held)) {
-                if (!level.isClientSide) {
-                    player.displayClientMessage(
-                            net.minecraft.network.chat.Component.literal(hopper.getModeDescription()), false);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            // Empty hand / non-tool: open GUI
-            if (held.isEmpty() || !GTToolHelper.isTool(held)) {
-                if (!level.isClientSide && player instanceof ServerPlayer sp) {
-                    sp.openMenu(hopper);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-        }
-        return InteractionResult.PASS;
-    }
-
     /** GT6: snow golem walking over collects a snowball. */
-//? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(originalUse(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return originalUse(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-    @Override public InteractionResult useScrewdriver(BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return originalUse(state,level,pos,player,hand,hit);}
-*///?} else {
-//?}
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (!level.isClientSide && entity instanceof SnowGolem) {

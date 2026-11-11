@@ -23,6 +23,35 @@ import net.minecraft.world.phys.shapes.*;
 import java.util.List;
 
 public final class ChemicalBatteryBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+            BlockPos pos, Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+            Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        var tool=player.getItemInHand(hand);
+        if(!gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))
+            return net.minecraft.world.InteractionResult.PASS;
+        if(!level.isClientSide&&level.getBlockEntity(pos) instanceof ChemicalBatteryBlockEntity be) {
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.portable_battery.energy",be.stored(),spec.capacity(),spec.energyType().getShortName()),true);
+            gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(tool,1,player,
+                    hand==net.minecraft.world.InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
+        }
+        return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
     private final PortableBatterySpec spec;
     private final VoxelShape shape;
     public ChemicalBatteryBlock(PortableBatterySpec spec){
@@ -33,28 +62,6 @@ public final class ChemicalBatteryBlock extends Block implements EntityBlock, Si
     public PortableBatterySpec spec(){return spec;}
     @Override public RenderShape getRenderShape(BlockState state) {
         return spec.barIndicator() ? RenderShape.MODEL : RenderShape.ENTITYBLOCK_ANIMATED;
-    }
-//? if >=1.21.1 {
-    /*private net.minecraft.world.InteractionResult interact(BlockState state,Level level,BlockPos pos,Player player,
-*///?} else {
-    @Override public net.minecraft.world.InteractionResult use(BlockState state,Level level,BlockPos pos,Player player,
-//?}
-            net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){
-        var tool=player.getItemInHand(hand);
-        if(!gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))
-            return net.minecraft.world.InteractionResult.PASS;
-        if(!level.isClientSide&&level.getBlockEntity(pos) instanceof ChemicalBatteryBlockEntity be) {
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.portable_battery.energy",be.stored(),spec.capacity(),spec.energyType().getShortName()),true);
-            gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(tool,1,player,
-                    hand==net.minecraft.world.InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
-        }
-        return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
-//? if >=1.21.1 {
-    /*}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){
-        return interact(state,level,pos,player,hand,hit).consumesAction()?net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide):net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-*///?} else {
-//?}
     }
     @Override public VoxelShape getShape(BlockState s,BlockGetter l,BlockPos p,CollisionContext c){return shape;}
     @Override public BlockEntity newBlockEntity(BlockPos p,BlockState s){return new ChemicalBatteryBlockEntity(p,s);}

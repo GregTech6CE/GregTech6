@@ -39,6 +39,36 @@ import java.util.List;
 public class MetalChestBlock extends HorizontalDirectionalBlock
         implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget {
 
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        // both hands fire use(); handling the off hand double-triggers
+        if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        if (ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (!(level.getBlockEntity(pos) instanceof MetalChestBlockEntity chest))
+            return InteractionResult.PASS;
+        if (level.getBlockState(pos.above()).isRedstoneConductor(level, pos.above()))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (!level.isClientSide && player instanceof ServerPlayer sp) {
+            sp.openMenu(chest);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
     // GT6: 1px inset, 14px tall (0.0625..0.9375 / 0..0.875)
     private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 14, 15);
 
@@ -170,42 +200,6 @@ public class MetalChestBlock extends HorizontalDirectionalBlock
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new MetalChestBlockEntity(pos, state);
-    }
-
-//? if >=1.21.1 {
-    /*@Override
-    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state,
-            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-    @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-    public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        // both hands fire use(); handling the off hand double-triggers
-        if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
-        if (ToolInteractions.use(state, level, pos, player, hand, hit))
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        if (!(level.getBlockEntity(pos) instanceof MetalChestBlockEntity chest))
-            return InteractionResult.PASS;
-        if (level.getBlockState(pos.above()).isRedstoneConductor(level, pos.above()))
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        if (!level.isClientSide && player instanceof ServerPlayer sp) {
-            sp.openMenu(chest);
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override

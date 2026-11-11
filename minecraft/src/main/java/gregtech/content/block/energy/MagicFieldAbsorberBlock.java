@@ -19,6 +19,34 @@ import net.minecraft.world.phys.BlockHitResult;
 import java.util.List;
 
 public final class MagicFieldAbsorberBlock extends Block implements EntityBlock, ToolInteractionTarget {
+//? if >=1.21.1 {
+    /*@Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+            BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        // The facing spec is also what the client overlay previews; dispatch it or the wrench does nothing.
+        if (ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (!GTToolHelper.isSoftHammer(player.getItemInHand(hand))) return InteractionResult.PASS;
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof MagicFieldAbsorberBlockEntity absorber) {
+            absorber.setEnabled(!absorber.enabled());
+            GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
     // The trophy always sits on world UP, so UP cannot be an output face.
     public static final DirectionProperty FACING = DirectionProperty.create("facing", side -> side != Direction.UP);
     public static final BooleanProperty ACTIVE = BlockStateProperties.LIT;
@@ -39,25 +67,9 @@ public final class MagicFieldAbsorberBlock extends Block implements EntityBlock,
     @Override public void neighborChanged(BlockState state, Level level, BlockPos pos, Block source, BlockPos from, boolean moving) {
         if (level.getBlockEntity(pos) instanceof MagicFieldAbsorberBlockEntity absorber) absorber.recheck();
     }
-    private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
-            BlockHitResult hit) {
-        // The facing spec above is also what the client overlay previews; dispatch it or the wrench does nothing.
-        if (ToolInteractions.use(state, level, pos, player, hand, hit))
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        if (!GTToolHelper.isSoftHammer(player.getItemInHand(hand))) return InteractionResult.PASS;
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof MagicFieldAbsorberBlockEntity absorber) {
-            absorber.setEnabled(!absorber.enabled());
-            GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
 //? if >=1.21.1 {
-    /*@Override protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return interact(state, level, pos, player, hand, hit).consumesAction() ? ItemInteractionResult.sidedSuccess(level.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-    }
-    @Override public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tip, TooltipFlag flag) {
+    /*@Override public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tip, TooltipFlag flag) {
 *///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) { return interact(state, level, pos, player, hand, hit); }
     @Override public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tip, TooltipFlag flag) {
 //?}
         tip.add(Component.translatable("gt.tooltip.magicenergyabsorber"));

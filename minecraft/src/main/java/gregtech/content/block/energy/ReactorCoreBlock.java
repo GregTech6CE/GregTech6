@@ -27,6 +27,27 @@ import java.util.List;
 /** GT6 single-rod reactor core with shared rod/container interaction. */
 public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
 
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+            BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        if(level.getBlockEntity(pos) instanceof ReactorCoreBlockEntity core) return gregtech.content.nuclear.ReactorInteraction.use(core,player,hand,hit);
+        return InteractionResult.PASS;
+    }
+
     public ReactorCoreBlock(Properties properties) {
         super(properties.noOcclusion());
         registerDefaultState(stateDefinition.any().setValue(ReactorPorts.HOT, net.minecraft.core.Direction.DOWN).setValue(ReactorPorts.COLD, net.minecraft.core.Direction.DOWN));
@@ -55,17 +76,6 @@ public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.eng
         if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.REACTOR_CORE.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<ReactorCoreBlockEntity>)
                 ReactorCoreBlockEntity::serverTick;
-    }
-
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        if(level.getBlockEntity(pos) instanceof ReactorCoreBlockEntity core) return gregtech.content.nuclear.ReactorInteraction.use(core,player,hand,hit);
-        return InteractionResult.PASS;
     }
 
     @Override
@@ -101,9 +111,4 @@ public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.eng
     @Override public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return ReactorPorts.tool(tool);
     }
-//? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
 }

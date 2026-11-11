@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import gregtech.engine.GTWaterloggable;
 import gregtech.engine.fluid.PortableFluidContainerSpec;
 import gregtech.content.blockentity.tool.PortableContainerBlockEntity;
+import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,6 +27,36 @@ import java.util.List;
 public final class PortableContainerBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     private final PortableFluidContainerSpec spec;
     private final VoxelShape shape;
+//? if >=1.21.1 {
+    /*@Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        if (level.getBlockEntity(pos) instanceof PortableContainerBlockEntity vessel) {
+            if(player.getItemInHand(hand).isEmpty()&&hit.getDirection().getAxis().isHorizontal()
+                    &&gregtech.content.tool.PortableContainerLimits.adjustable(spec)){
+                if(!level.isClientSide){
+                    int limit=vessel.adjustLimit(hit.getLocation().y-pos.getY(),player.isShiftKeyDown());
+                    player.displayClientMessage(gregtech.engine.fluid.FluidUnits.text("message.gt6ce.portable_fluid.limit",limit),true);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            if (level.isClientSide) return InteractionResult.SUCCESS;
+            if (vessel.interact(player, hand, hit.getDirection())) return InteractionResult.CONSUME;
+        }
+        return InteractionResult.PASS;
+    }
     public PortableContainerBlock(PortableFluidContainerSpec spec, Properties properties) {
         super(properties.noOcclusion());
         registerDefaultState(defaultBlockState().setValue(GTWaterloggable.WATERLOGGED, false));
@@ -41,30 +72,6 @@ public final class PortableContainerBlock extends Block implements EntityBlock, 
     @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         if (level.getBlockEntity(pos) instanceof PortableContainerBlockEntity vessel) vessel.setContents(stack);
     }
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-*///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-//?}
-        if (level.getBlockEntity(pos) instanceof PortableContainerBlockEntity vessel) {
-            if(player.getItemInHand(hand).isEmpty()&&hit.getDirection().getAxis().isHorizontal()
-                    &&gregtech.content.tool.PortableContainerLimits.adjustable(spec)){
-                if(!level.isClientSide){
-                    int limit=vessel.adjustLimit(hit.getLocation().y-pos.getY(),player.isShiftKeyDown());
-                    player.displayClientMessage(gregtech.engine.fluid.FluidUnits.text("message.gt6ce.portable_fluid.limit",limit),true);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (level.isClientSide) return InteractionResult.SUCCESS;
-            if (vessel.interact(player, hand, hit.getDirection())) return InteractionResult.CONSUME;
-        }
-        return InteractionResult.PASS;
-    }
-//? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit) {return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         BlockEntity be = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         return List.of(be instanceof PortableContainerBlockEntity vessel ? vessel.contents() : new ItemStack(this));

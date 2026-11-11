@@ -13,19 +13,9 @@ import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 public final class ZpmDischargerBlock extends AutoToolBlock {
-    public static final BooleanProperty ACTIVE=BooleanProperty.create("active");
-    public static final BooleanProperty LOADED=BooleanProperty.create("loaded");
-    private final boolean electric;
-    public ZpmDischargerBlock(Properties p,boolean electric){super(p,ZpmEnergy.PACKET,0);this.electric=electric;registerDefaultState(defaultBlockState().setValue(ACTIVE,false).setValue(LOADED,false));}
-    public boolean electric(){return electric;}
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState>b){super.createBlockStateDefinition(b);b.add(ACTIVE,LOADED);}
-    @Override public BlockEntity newBlockEntity(BlockPos p,BlockState s){return new ZpmDischargerBlockEntity(p,s);}
-    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> t){return l.isClientSide?null:(w,p,state,e)->{if(e instanceof ZpmDischargerBlockEntity z)z.tick();};}
-//? if >=1.21.1 {
-    /*@Override public InteractionResult interact(BlockState s,Level l,BlockPos p,Player player,InteractionHand hand,BlockHitResult hit){
-*///?} else {
-    @Override public InteractionResult use(BlockState s,Level l,BlockPos p,Player player,InteractionHand hand,BlockHitResult hit){
-//?}
+    @Override
+    public InteractionResult use(BlockState s, Level l, BlockPos p, Player player,
+            InteractionHand hand, BlockHitResult hit) {
         if(hand!=InteractionHand.MAIN_HAND)return InteractionResult.PASS;
         if(ToolInteractions.use(s,l,p,player,hand,hit))return InteractionResult.sidedSuccess(l.isClientSide);
         if(!(l.getBlockEntity(p) instanceof ZpmDischargerBlockEntity z))return InteractionResult.PASS;
@@ -38,6 +28,15 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
         }
         return InteractionResult.sidedSuccess(l.isClientSide);
     }
+
+    public static final BooleanProperty ACTIVE=BooleanProperty.create("active");
+    public static final BooleanProperty LOADED=BooleanProperty.create("loaded");
+    private final boolean electric;
+    public ZpmDischargerBlock(Properties p,boolean electric){super(p,ZpmEnergy.PACKET,0);this.electric=electric;registerDefaultState(defaultBlockState().setValue(ACTIVE,false).setValue(LOADED,false));}
+    public boolean electric(){return electric;}
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState>b){super.createBlockStateDefinition(b);b.add(ACTIVE,LOADED);}
+    @Override public BlockEntity newBlockEntity(BlockPos p,BlockState s){return new ZpmDischargerBlockEntity(p,s);}
+    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> t){return l.isClientSide?null:(w,p,state,e)->{if(e instanceof ZpmDischargerBlockEntity z)z.tick();};}
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState s,net.minecraft.world.level.storage.loot.LootParams.Builder b){
         var stack=new net.minecraft.world.item.ItemStack(asItem());
 //? if >=1.21.1 {

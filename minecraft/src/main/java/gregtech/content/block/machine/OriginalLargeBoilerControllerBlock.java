@@ -49,30 +49,21 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
 
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
+    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
 //?}
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-    @Nullable @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-    }
-    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL) : null;
-    }
-    @Override public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
-        if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
-            gregtech.engine.multiblock.tracking.StructureTracking.invalidate(boiler);
-    }
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                           InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
         if (!(level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler))
@@ -91,6 +82,20 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
         return InteractionResult.PASS;
     }
 
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
+    @Nullable @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    }
+    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return GTToolHelper.isMachineWrench(tool)
+                ? ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL) : null;
+    }
+    @Override public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
+        if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
+            gregtech.engine.multiblock.tracking.StructureTracking.invalidate(boiler);
+    }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new OriginalLargeBoilerControllerBlockEntity(pos, state);
     }

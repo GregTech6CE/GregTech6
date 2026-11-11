@@ -159,96 +159,29 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
                 ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
     }
 
-//? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit)==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LIT);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        Direction facing = context.getNearestLookingDirection().getOpposite();
-        return defaultBlockState().setValue(FACING, facing);
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-        if (engineType == EngineType.ROTATION || engineType == EngineType.DIESEL) return Shapes.block();
-        return SHAPES.getOrDefault(state.getValue(FACING), SHAPES.get(Direction.DOWN));
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-        if (engineType == EngineType.ROTATION || engineType == EngineType.DIESEL) return Shapes.block();
-        return SHAPES.getOrDefault(state.getValue(FACING), SHAPES.get(Direction.DOWN));
-    }
-
-    @Override
-    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        if (engineType == EngineType.STEAM || engineType == EngineType.DIESEL) return 0;
-        return state.getValue(LIT) ? 10 : 0;
-    }
-
-    // ── Waterlogging ──────────────────────────────────────────────────────
-
-    // ── BE ────────────────────────────────────────────────────────────────
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        if (beTypeSupplier == null) return null;
-        return beTypeSupplier.get().create(pos, state);
-    }
-
-    @Nullable
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide) return null;
-        return (BlockEntityTicker<T>) switch (engineType) {
-            case ELECTRIC -> (BlockEntityTicker<KineticElectricEngineBlockEntity>)
-                    KineticElectricEngineBlockEntity::serverTick;
-            case FLUX -> (BlockEntityTicker<KineticFluxEngineBlockEntity>)
-                    KineticFluxEngineBlockEntity::serverTick;
-            case STEAM -> (BlockEntityTicker<KineticSteamEngineBlockEntity>)
-                    KineticSteamEngineBlockEntity::serverTick;
-            case ROTATION -> (BlockEntityTicker<KineticRotationEngineBlockEntity>)
-                    KineticRotationEngineBlockEntity::serverTick;
-            case DIESEL -> (BlockEntityTicker<KineticDieselEngineBlockEntity>)
-                    KineticDieselEngineBlockEntity::serverTick;
-        };
-    }
-
-//? if >=1.21.1 {
-    /*@Override public void onRemove(BlockState state,Level level,BlockPos pos,BlockState next,boolean moving){super.onRemove(state,level,pos,next,moving);}
-
-*///?} else {
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.is(newState.getBlock())) {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof EngineBaseBlockEntity engine) {
-                engine.invalidateCaps();
-            }
-        }
-        super.onRemove(state, level, pos, newState, isMoving);
-    }
-//?}
-
     // ── Interaction ───────────────────────────────────────────────────────
 
 //? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
+    /*@Override
+    protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
+    }
+
+    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
 
         // Wrench: 6-directional rotation
@@ -323,6 +256,81 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
 
         return InteractionResult.PASS;
     }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, LIT);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Direction facing = context.getNearestLookingDirection().getOpposite();
+        return defaultBlockState().setValue(FACING, facing);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
+        if (engineType == EngineType.ROTATION || engineType == EngineType.DIESEL) return Shapes.block();
+        return SHAPES.getOrDefault(state.getValue(FACING), SHAPES.get(Direction.DOWN));
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
+        if (engineType == EngineType.ROTATION || engineType == EngineType.DIESEL) return Shapes.block();
+        return SHAPES.getOrDefault(state.getValue(FACING), SHAPES.get(Direction.DOWN));
+    }
+
+    @Override
+    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+        if (engineType == EngineType.STEAM || engineType == EngineType.DIESEL) return 0;
+        return state.getValue(LIT) ? 10 : 0;
+    }
+
+    // ── Waterlogging ──────────────────────────────────────────────────────
+
+    // ── BE ────────────────────────────────────────────────────────────────
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        if (beTypeSupplier == null) return null;
+        return beTypeSupplier.get().create(pos, state);
+    }
+
+    @Nullable
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide) return null;
+        return (BlockEntityTicker<T>) switch (engineType) {
+            case ELECTRIC -> (BlockEntityTicker<KineticElectricEngineBlockEntity>)
+                    KineticElectricEngineBlockEntity::serverTick;
+            case FLUX -> (BlockEntityTicker<KineticFluxEngineBlockEntity>)
+                    KineticFluxEngineBlockEntity::serverTick;
+            case STEAM -> (BlockEntityTicker<KineticSteamEngineBlockEntity>)
+                    KineticSteamEngineBlockEntity::serverTick;
+            case ROTATION -> (BlockEntityTicker<KineticRotationEngineBlockEntity>)
+                    KineticRotationEngineBlockEntity::serverTick;
+            case DIESEL -> (BlockEntityTicker<KineticDieselEngineBlockEntity>)
+                    KineticDieselEngineBlockEntity::serverTick;
+        };
+    }
+
+//? if >=1.21.1 {
+    /*@Override public void onRemove(BlockState state,Level level,BlockPos pos,BlockState next,boolean moving){super.onRemove(state,level,pos,next,moving);}
+
+*///?} else {
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock())) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof EngineBaseBlockEntity engine) {
+                engine.invalidateCaps();
+            }
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
+    }
+//?}
 
     private static FaceConfig cycleFaceConfig(FaceConfig current) {
         // Cycle energy output among front, back, left, right

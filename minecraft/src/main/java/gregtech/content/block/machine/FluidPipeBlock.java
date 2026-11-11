@@ -68,6 +68,116 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
     private final PipeSpec spec;
     private @Nullable Direction placementFace;
 
+    /**
+     * GT6's right-click order on a tile that can carry covers, mirrored from
+     * {@code BasicMachineBlock.use} so a pipe and a machine answer a click the same way.
+     *
+     * <p>{@code ToolInteractions.use} stays first, exactly where {@code super.use} (the wrench
+     * rotation) is on the machine, and the pipe's own responses keep their order:
+     * the magnifying glass, the fluid-container path through
+     * {@link FluidPipeBlockEntity#handleUse} and the shift-empty-hand debug print. Between the two
+     * sits the cover block, in {@code BasicMachineBlock}'s own order —
+     * {@code PanelCoverInteraction.use}, then a held cover item attached to the
+     * clicked face, then the crowbar removing the face's cover,
+     * then the filter covers' screwdriver / soft-hammer configuration
+     * and the filter-setting click.</p>
+     *
+     * <p>A pipe with no cover and no cover item in hand is unaffected: {@code PanelCoverInteraction.use}
+     * returns {@code PASS} for every item that is not a panel, a cover item or a tool, and for a tool
+     * it returns {@code PASS} as soon as {@code PanelCoverRuntime.configure} answers false, which it
+     * does whenever the clicked face has no cover ({@code PanelCoverRuntime}).</p>
+     */
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        ItemStack held = player.getItemInHand(hand);
+
+        if (ToolInteractions.use(state, level, pos, player, hand, hit)) {
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        // Covers on the clicked face — the machine's order, see the method javadoc.
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof FluidPipeBlockEntity coverHost) {
+            InteractionResult panelResult =
+                    PanelCoverInteraction.use(coverHost, player, hand, hit, false);
+            if (panelResult != InteractionResult.PASS) return panelResult;
+
+            if (gregtech.content.cover.CoverPlacement.placing(player) && CoverItems.isCover(held)) {
+                if (!level.isClientSide && coverHost.attachCover(hit.getDirection(), held)) {
+                    if (!player.getAbilities().instabuild) held.shrink(1);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            if (GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) {
+                if (!level.isClientSide) {
+                    ItemStack removed = coverHost.removeCover(hit.getDirection());
+                    if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            if (!held.isEmpty()) {
+                if (GTToolHelper.matchesTool(held, GTToolType.SCREWDRIVER)
+                        && coverHost.configureFilterCover(hit.getDirection(), true, false)) {
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+                if (GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)
+                        && coverHost.configureFilterCover(hit.getDirection(), false, true)) {
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+                if (!CoverItems.isCover(held)
+                        && coverHost.clickFilterCover(hit.getDirection(), held)) {
+                    if (!level.isClientSide) gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(coverHost);
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+            }
+        }
+
+        // Magnifying glass: show pipe network info in chat
+        if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
+            if (level.isClientSide) return InteractionResult.SUCCESS;
+            BlockEntity glassTarget = level.getBlockEntity(pos);
+            if (glassTarget instanceof FluidPipeBlockEntity pipe) {
+                pipe.printNetworkInfo(player);
+                return InteractionResult.CONSUME;
+            }
+        }
+
+        // Fluid container interaction
+        if (!player.isShiftKeyDown()) {
+            BlockEntity fluidTarget = level.getBlockEntity(pos);
+            if (fluidTarget instanceof FluidPipeBlockEntity pipe) {
+                InteractionResult result = pipe.handleUse(player, hand, hit.getDirection());
+                if (result != InteractionResult.PASS) return result;
+            }
+        }
+
+        // Shift-empty-hand: debug info
+        if (player.isShiftKeyDown() && held.isEmpty()) {
+            if (level.isClientSide) return InteractionResult.SUCCESS;
+            BlockEntity debugTarget = level.getBlockEntity(pos);
+            if (debugTarget instanceof FluidPipeBlockEntity pipe) {
+                pipe.printDebug(player);
+                return InteractionResult.CONSUME;
+            }
+        }
+
+        return InteractionResult.PASS;
+    }
+
     public FluidPipeBlock(PipeSpec spec, Properties properties) {
         super(properties);
         this.spec = spec;
@@ -192,126 +302,6 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
         if (level.isClientSide || type != GTBlockEntities.FLUID_PIPE.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<FluidPipeBlockEntity>)
                 gregtech.content.transport.fluid.FluidPipeTickPhases::enqueue;
-    }
-
-//? if >=1.21.1 {
-    /*/^*
-     * GT6's right-click order on a tile that can carry covers, mirrored from
-     * {@code BasicMachineBlock.use} so a pipe and a machine answer a click the same way.
-     *
-     * <p>{@code ToolInteractions.use} stays first, exactly where {@code super.use} (the wrench
-     * rotation) is on the machine, and the pipe's own responses keep their order:
-     * the magnifying glass, the fluid-container path through
-     * {@link FluidPipeBlockEntity#handleUse} and the shift-empty-hand debug print. Between the two
-     * sits the cover block, in {@code BasicMachineBlock}'s own order —
-     * {@code PanelCoverInteraction.use}, then a held cover item attached to the
-     * clicked face, then the crowbar removing the face's cover,
-     * then the filter covers' screwdriver / soft-hammer configuration
-     * and the filter-setting click.</p>
-     *
-     * <p>A pipe with no cover and no cover item in hand is unaffected: {@code PanelCoverInteraction.use}
-     * returns {@code PASS} for every item that is not a panel, a cover item or a tool, and for a tool
-     * it returns {@code PASS} as soon as {@code PanelCoverRuntime.configure} answers false, which it
-     * does whenever the clicked face has no cover ({@code PanelCoverRuntime}).</p>
-     ^/
-    private InteractionResult useOriginal(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    /**
-     * GT6's right-click order on a tile that can carry covers, mirrored from
-     * {@code BasicMachineBlock.use} so a pipe and a machine answer a click the same way.
-     *
-     * <p>{@code ToolInteractions.use} stays first, exactly where {@code super.use} (the wrench
-     * rotation) is on the machine, and the pipe's own responses keep their order:
-     * the magnifying glass, the fluid-container path through
-     * {@link FluidPipeBlockEntity#handleUse} and the shift-empty-hand debug print. Between the two
-     * sits the cover block, in {@code BasicMachineBlock}'s own order —
-     * {@code PanelCoverInteraction.use}, then a held cover item attached to the
-     * clicked face, then the crowbar removing the face's cover,
-     * then the filter covers' screwdriver / soft-hammer configuration
-     * and the filter-setting click.</p>
-     *
-     * <p>A pipe with no cover and no cover item in hand is unaffected: {@code PanelCoverInteraction.use}
-     * returns {@code PASS} for every item that is not a panel, a cover item or a tool, and for a tool
-     * it returns {@code PASS} as soon as {@code PanelCoverRuntime.configure} answers false, which it
-     * does whenever the clicked face has no cover ({@code PanelCoverRuntime}).</p>
-     */
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        ItemStack held = player.getItemInHand(hand);
-
-        if (ToolInteractions.use(state, level, pos, player, hand, hit)) {
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        // Covers on the clicked face — the machine's order, see the method javadoc.
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof FluidPipeBlockEntity coverHost) {
-            InteractionResult panelResult =
-                    PanelCoverInteraction.use(coverHost, player, hand, hit, false);
-            if (panelResult != InteractionResult.PASS) return panelResult;
-
-            if (gregtech.content.cover.CoverPlacement.placing(player) && CoverItems.isCover(held)) {
-                if (!level.isClientSide && coverHost.attachCover(hit.getDirection(), held)) {
-                    if (!player.getAbilities().instabuild) held.shrink(1);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) {
-                if (!level.isClientSide) {
-                    ItemStack removed = coverHost.removeCover(hit.getDirection());
-                    if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (!held.isEmpty()) {
-                if (GTToolHelper.matchesTool(held, GTToolType.SCREWDRIVER)
-                        && coverHost.configureFilterCover(hit.getDirection(), true, false)) {
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                if (GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)
-                        && coverHost.configureFilterCover(hit.getDirection(), false, true)) {
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                if (!CoverItems.isCover(held)
-                        && coverHost.clickFilterCover(hit.getDirection(), held)) {
-                    if (!level.isClientSide) gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(coverHost);
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-            }
-        }
-
-        // Magnifying glass: show pipe network info in chat
-        if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
-            if (level.isClientSide) return InteractionResult.SUCCESS;
-            BlockEntity glassTarget = level.getBlockEntity(pos);
-            if (glassTarget instanceof FluidPipeBlockEntity pipe) {
-                pipe.printNetworkInfo(player);
-                return InteractionResult.CONSUME;
-            }
-        }
-
-        // Fluid container interaction
-        if (!player.isShiftKeyDown()) {
-            BlockEntity fluidTarget = level.getBlockEntity(pos);
-            if (fluidTarget instanceof FluidPipeBlockEntity pipe) {
-                InteractionResult result = pipe.handleUse(player, hand, hit.getDirection());
-                if (result != InteractionResult.PASS) return result;
-            }
-        }
-
-        // Shift-empty-hand: debug info
-        if (player.isShiftKeyDown() && held.isEmpty()) {
-            if (level.isClientSide) return InteractionResult.SUCCESS;
-            BlockEntity debugTarget = level.getBlockEntity(pos);
-            if (debugTarget instanceof FluidPipeBlockEntity pipe) {
-                pipe.printDebug(player);
-                return InteractionResult.CONSUME;
-            }
-        }
-
-        return InteractionResult.PASS;
     }
 
     @Override
@@ -469,15 +459,4 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
         }
         return state;
     }
-
-//? if >=1.21.1 {
-
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){
-        var result=useOriginal(state,level,pos,player,hand,hit);
-        return result==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:
-                result==InteractionResult.FAIL?net.minecraft.world.ItemInteractionResult.FAIL:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return useOriginal(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
 }

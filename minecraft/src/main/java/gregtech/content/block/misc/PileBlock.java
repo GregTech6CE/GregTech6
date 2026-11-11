@@ -180,14 +180,23 @@ public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBl
      * empties its pile removes that block, since in GT6 the pile is its items.</p>
      */
 //? if >=1.21.1 {
-    /*@Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-    public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 *///?} else {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
+            InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof PileBlockEntity pile)) return InteractionResult.PASS;
         // GT6: `if (isClientSide()) return T;` (MultiTileEntityPlaceable) - the client never
         // decides, it only reports the click as handled.

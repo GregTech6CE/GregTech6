@@ -89,12 +89,8 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
         // `SIDES_TOP[aSide]`: the bees are only reachable from above.
         var heldId = Mc.itemId(player.getItemInHand(hand).getItem());
         if (Mc.gregtechId("quicksilver_thermometer").equals(heldId)
@@ -125,11 +121,7 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
-//? if >=1.21.1 {
-        /*return super.interact(state, level, pos, player, hand, hit);
-*///?} else {
         return super.use(state, level, pos, player, hand, hit);
-//?}
     }
 
     /**

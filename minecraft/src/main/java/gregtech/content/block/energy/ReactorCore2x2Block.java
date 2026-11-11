@@ -38,6 +38,29 @@ public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements E
 *///?} else {
 //?}
 
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+            BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public @NotNull InteractionResult use(
+            @NotNull BlockState state, @NotNull Level level,
+            @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand,
+            @NotNull BlockHitResult hit) {
+        if(level.getBlockEntity(pos) instanceof ReactorCore2x2BlockEntity core) return gregtech.content.nuclear.ReactorInteraction.use(core,player,hand,hit);
+        return InteractionResult.PASS;
+    }
+
     public ReactorCore2x2Block() {
         super(Properties.of()
                 .strength(8.0F, 18.0F).noOcclusion()
@@ -81,19 +104,6 @@ public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements E
         };
     }
 
-//? if >=1.21.1 {
-    /*private @NotNull InteractionResult interact(
-*///?} else {
-    @Override
-    public @NotNull InteractionResult use(
-//?}
-            @NotNull BlockState state, @NotNull Level level,
-            @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand,
-            @NotNull BlockHitResult hit) {
-        if(level.getBlockEntity(pos) instanceof ReactorCore2x2BlockEntity core) return gregtech.content.nuclear.ReactorInteraction.use(core,player,hand,hit);
-        return InteractionResult.PASS;
-    }
-
     @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(@NotNull ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
@@ -128,9 +138,4 @@ public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements E
     @Override public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return ReactorPorts.tool(tool);
     }
-//? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
 }

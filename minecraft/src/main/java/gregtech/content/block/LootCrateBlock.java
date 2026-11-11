@@ -2,6 +2,7 @@ package gregtech.content.block;
 
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.platform.Mc;
 
 //? if >=1.21.1 {
@@ -43,6 +44,37 @@ import java.util.List;
  * vanilla tables GT6's loot loader also touches, with {@code chests/simple_dungeon} first.
  */
 public class LootCrateBlock extends Block {
+    /** GT6 {@code onToolClick}: a crowbar pries the crate open. */
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        ItemStack held = player.getItemInHand(hand);
+        if (!GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) return InteractionResult.PASS;
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (!(level instanceof ServerLevel server)) return InteractionResult.PASS;
+        List<ItemStack> loot = rollVanillaLoot(server, pos, level.random);
+        if (!level.removeBlock(pos, false)) return InteractionResult.PASS;
+        for (ItemStack stack : loot) popResource(level, pos, stack);
+        // GT6 also hands the crate itself back (IL.Crate, the port's icon set "crate" block).
+        ItemStack crate = crateStack();
+        if (!crate.isEmpty()) popResource(level, pos, crate);
+        GTToolHelper.damageForToolClickReturn(held, 500, player);
+        return InteractionResult.CONSUME;
+    }
+
     /** GT6's {@code LOOT_TABLES_VANILLA} as 1.20.1 loot tables, dungeon chest first (its fallback). */
     public static final List<ResourceLocation> VANILLA_TABLES = List.of(
             ResourceLocation.withDefaultNamespace("chests/simple_dungeon"),
@@ -84,34 +116,7 @@ public class LootCrateBlock extends Block {
                 candidates.get(random.nextInt(candidates.size()))));
     }
 
-    /** GT6 {@code onToolClick}: a crowbar pries the crate open. */
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        ItemStack held = player.getItemInHand(hand);
-        if (!GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) return InteractionResult.PASS;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (!(level instanceof ServerLevel server)) return InteractionResult.PASS;
-        List<ItemStack> loot = rollVanillaLoot(server, pos, level.random);
-        if (!level.removeBlock(pos, false)) return InteractionResult.PASS;
-        for (ItemStack stack : loot) popResource(level, pos, stack);
-        // GT6 also hands the crate itself back (IL.Crate, the port's icon set "crate" block).
-        ItemStack crate = crateStack();
-        if (!crate.isEmpty()) popResource(level, pos, crate);
-        GTToolHelper.damageForToolClickReturn(held, 500, player);
-        return InteractionResult.CONSUME;
-    }
-
     /** GT6's {@code IL.Crate} — the port's {@code gt6ce:crate} block. */
-//? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit)==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);}
-
-*///?} else {
-//?}
     public static ItemStack crateStack() {
         return crateStack("crate");
     }

@@ -3,11 +3,13 @@ import gregtech.content.tool.FluidAttachmentSpec;
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
 import gregtech.content.registry.GTFluids;
+import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.core.*;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.phys.BlockHitResult;
 //? if >=1.21.1 {
@@ -26,6 +28,45 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
     private final java.util.EnumMap<Direction, net.minecraft.world.phys.shapes.VoxelShape> shapes = new java.util.EnumMap<>(Direction.class);
     private final FluidAttachmentSpec spec;
 
+//? if >=1.21.1 {
+    /*@Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
+        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand,
+                hit)) return InteractionResult.sidedSuccess(level.isClientSide);
+        var facing = state.getValue(FACING);
+        var targetPos = pos.relative(facing);
+        if (!level.hasChunkAt(targetPos)) return InteractionResult.PASS;
+        var target = level.getBlockEntity(targetPos);
+        if (target == null) return InteractionResult.PASS;
+        var handler = attachedHandler(level, targetPos, facing.getOpposite());
+        if (handler == null) return InteractionResult.PASS;
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (player.getItemInHand(hand).isEmpty() && spec.shape().equals("tap"))
+            return pourBelow(level, pos, access(handler)) ? InteractionResult.CONSUME : InteractionResult.PASS;
+        return FluidUtil.interactWithFluidHandler(player, hand, access(handler)) ? InteractionResult.CONSUME : InteractionResult.PASS;
+    }
+
+//? if >=1.21.1 {
+    /*@Override
+    public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,
+            net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        return java.util.List.of(new net.minecraft.world.item.ItemStack(this));
+    }
+*///?}
     public FluidAttachmentBlock(FluidAttachmentSpec spec, Properties properties) {
         super(properties.noOcclusion());
         this.spec = spec;
@@ -177,50 +218,6 @@ public class FluidAttachmentBlock extends net.minecraft.world.level.block.Block 
             }
         };
     }
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-//?}
-        if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
-        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand,
-                hit)) return InteractionResult.sidedSuccess(level.isClientSide);
-        var facing = state.getValue(FACING);
-        var targetPos = pos.relative(facing);
-        if (!level.hasChunkAt(targetPos)) return InteractionResult.PASS;
-        var target = level.getBlockEntity(targetPos);
-        if (target == null) return InteractionResult.PASS;
-        var handler = attachedHandler(level, targetPos, facing.getOpposite());
-        if (handler == null) return InteractionResult.PASS;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (player.getItemInHand(hand).isEmpty() && spec.shape().equals("tap"))
-            return pourBelow(level, pos, access(handler)) ? InteractionResult.CONSUME : InteractionResult.PASS;
-        return FluidUtil.interactWithFluidHandler(player, hand, access(handler)) ? InteractionResult.CONSUME : InteractionResult.PASS;
-    }
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state, Level level,
-            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-
-    @Override
-    public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,
-            net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
-        return java.util.List.of(new net.minecraft.world.item.ItemStack(this));
-    }
-*///?} else {
-//?}
     /** Downward transfer currently uses 250 L by default, 1000 L lava or 144 L molten entries. */
     public static boolean pourBelow(Level level, BlockPos pos, IFluidHandler source) {
         var below = pos.below();

@@ -20,10 +20,27 @@ import net.minecraft.world.phys.shapes.*;
 /** Optical cable connections share the cutter interaction and overlay used by other connectors. */
 public final class LaserFiberBlock extends Block implements EntityBlock,ToolInteractionTarget, SimpleWaterloggedBlock {
 //? if >=1.21.1 {
-    /*@Override protected ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit)==InteractionResult.PASS?ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:ItemInteractionResult.sidedSuccess(level.isClientSide);}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
+    /*@Override
+    protected ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
+        return ToolInteractions.use(state, level, pos, player, hand, hit)
+                ? InteractionResult.sidedSuccess(level.isClientSide)
+                : InteractionResult.PASS;
+    }
+
     public LaserFiberBlock(Properties properties){
         super(properties.noOcclusion());
         var state=defaultBlockState();
@@ -41,14 +58,6 @@ public final class LaserFiberBlock extends Block implements EntityBlock,ToolInte
     }
     @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(new ItemStack(this));}
     @Override public ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool){return GTToolHelper.isWireCutter(tool)?ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LASER):null;}
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){
-*///?} else {
-    @Override public InteractionResult use(BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){
-//?}
-        if(hand!=InteractionHand.MAIN_HAND)return InteractionResult.PASS;
-        return ToolInteractions.use(state,level,pos,player,hand,hit)?InteractionResult.sidedSuccess(level.isClientSide):InteractionResult.PASS;
-    }
     @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving){
         super.onPlace(state,level,pos,old,moving);
         if(level.isClientSide||old.is(this))return;

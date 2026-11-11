@@ -1,11 +1,9 @@
 package gregtech.content.block.energy;
 
+import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import gregtech.engine.energy.EnergyNodeSpec;
-
-
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.ToolInteractionSpec;
-import gregtech.content.blockentity.energy.EnergyNodeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -21,6 +19,26 @@ import net.minecraft.world.phys.BlockHitResult;
 
 /** GT6 bipolar magnet: four input faces, positive front and negative rear output. */
 public final class MagnetMachineBlock extends EnergyNodeBlock {
+    @Override
+    public InteractionResult use(
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        ItemStack tool = player.getItemInHand(hand);
+        if (level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node) {
+            if (GTToolHelper.isSoftHammer(tool)) {
+                if (!level.isClientSide) {
+                    boolean on = node.toggleMagnetEnabled();
+                    player.displayClientMessage(
+                            Component.translatable(
+                                    on ? "message.gt6ce.magnet.enabled" : "message.gt6ce.magnet.disabled"),
+                            true);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+        }
+        return super.use(state, level, pos, player, hand, hit);
+    }
+
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
     public MagnetMachineBlock(EnergyNodeSpec spec, Properties properties) {
@@ -35,34 +53,8 @@ public final class MagnetMachineBlock extends EnergyNodeBlock {
     }
 
     @Override
-//? if >=1.21.1 {
-    /*protected InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         // Only an ordinary wrench rotates the source bipolar poles.
         return GTToolHelper.isMonkeyWrench(tool) ? null : super.toolInteraction(state, tool);
-    }
-
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
-        ItemStack tool = player.getItemInHand(hand);
-        if (level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node) {
-            if (GTToolHelper.isSoftHammer(tool)) {
-                if (!level.isClientSide) {
-                    boolean on = node.toggleMagnetEnabled();
-                    player.displayClientMessage(Component.translatable(on
-                            ? "message.gt6ce.magnet.enabled" : "message.gt6ce.magnet.disabled"), true);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-        }
-//? if >=1.21.1 {
-        /*return super.interact(state, level, pos, player, hand, hit);
-*///?} else {
-        return super.use(state, level, pos, player, hand, hit);
-//?}
     }
 }

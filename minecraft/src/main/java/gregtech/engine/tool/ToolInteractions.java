@@ -4,6 +4,10 @@ import gregtech.util.GTPlacementCode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+//? if >=1.21.1 {
+/*import net.minecraft.world.ItemInteractionResult;
+*///?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -114,4 +118,19 @@ public final class ToolInteractions {
 *///?} else {
 //?}
     }
+
+//? if >=1.21.1 {
+    /*// Maps the shared 1.20-style InteractionResult to the 1.21 useItemOn result.
+    // PASS skips the default block interaction so the shared use body runs once.
+    public static ItemInteractionResult toItemResult(InteractionResult result) {
+        return switch (result) {
+            case SUCCESS -> ItemInteractionResult.SUCCESS;
+            case SUCCESS_NO_ITEM_USED -> ItemInteractionResult.SUCCESS;
+            case CONSUME -> ItemInteractionResult.CONSUME;
+            case CONSUME_PARTIAL -> ItemInteractionResult.CONSUME_PARTIAL;
+            case FAIL -> ItemInteractionResult.FAIL;
+            case PASS -> ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+*///?}
 }

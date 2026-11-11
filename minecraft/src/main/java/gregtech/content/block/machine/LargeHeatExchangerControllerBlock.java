@@ -33,20 +33,35 @@ public class LargeHeatExchangerControllerBlock extends DirectionalBlock implemen
     protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack held, BlockState state, Level level,
             BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
             net.minecraft.world.phys.BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
 
     @Override
     protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return interact(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
     }
 *///?} else {
+    @Override
 //?}
+    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
+        return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
+        if (level.getBlockEntity(pos) instanceof LargeHeatExchangerControllerBlockEntity machine) {
+            if (level.isClientSide) return net.minecraft.world.InteractionResult.SUCCESS;
+//? if >=1.21.1 {
+            /*if (net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler(player, hand,
+                    machine)) return net.minecraft.world.InteractionResult.CONSUME;
+*///?} else {
+            if (net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(player, hand,
+                    machine)) return net.minecraft.world.InteractionResult.CONSUME;
+//?}
+        }
+        return net.minecraft.world.InteractionResult.PASS;
+    }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
         stateBuilder.add(FACING);
@@ -86,29 +101,6 @@ public class LargeHeatExchangerControllerBlock extends DirectionalBlock implemen
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.LARGE_HEAT_EXCHANGER.get()) return null;
         return (tickLevel, tickPos, tickState, blockEntity) -> LargeHeatExchangerControllerBlockEntity.serverTick(tickLevel, tickPos, tickState, (LargeHeatExchangerControllerBlockEntity) blockEntity);
-    }
-
-//? if >=1.21.1 {
-    /*private net.minecraft.world.InteractionResult interact(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-*///?} else {
-    @Override
-    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-//?}
-        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
-        return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
-        if (level.getBlockEntity(pos) instanceof LargeHeatExchangerControllerBlockEntity machine) {
-            if (level.isClientSide) return net.minecraft.world.InteractionResult.SUCCESS;
-//? if >=1.21.1 {
-            /*if (net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler(player, hand,
-                    machine)) return net.minecraft.world.InteractionResult.CONSUME;
-*///?} else {
-            if (net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(player, hand,
-                    machine)) return net.minecraft.world.InteractionResult.CONSUME;
-//?}
-        }
-        return net.minecraft.world.InteractionResult.PASS;
     }
 
     @Override

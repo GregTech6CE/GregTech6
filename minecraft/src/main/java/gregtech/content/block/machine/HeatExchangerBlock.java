@@ -31,6 +31,26 @@ public final class HeatExchangerBlock extends DirectionalBlock implements Entity
     /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() { return com.mojang.serialization.MapCodec.unit(this); }
 *///?} else {
 //?}
+//? if >=1.21.1 {
+    /*@Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        if (ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
+        if (level.getBlockEntity(pos) instanceof HeatExchangerBlockEntity entity) return entity.interact(player, hand);
+        return InteractionResult.PASS;
+    }
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(FACING, ACTIVE); }
     @Override public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         var facing = ctx.getNearestLookingDirection().getOpposite();
@@ -46,20 +66,6 @@ public final class HeatExchangerBlock extends DirectionalBlock implements Entity
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return level.isClientSide || type != gregtech.content.registry.GTBlockEntities.HEAT_EXCHANGER.get() ? null
                 : (world, pos, current, entity) -> ((HeatExchangerBlockEntity)entity).tick();
-    }
-//? if >=1.21.1 {
-    /*@Override protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return interact(state, level, pos, player, hand, hit) == InteractionResult.PASS
-                ? ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION : ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-    @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) { return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit); }
-    private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-*///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-//?}
-        if (ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
-        if (level.getBlockEntity(pos) instanceof HeatExchangerBlockEntity entity) return entity.interact(player, hand);
-        return InteractionResult.PASS;
     }
     @Override public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (!level.isClientSide && state.getValue(ACTIVE)) gregtech.util.GTEntityHelper.applyHeatDamage(entity, Math.min(10F, spec.rate() / 10F));

@@ -2,6 +2,7 @@ package gregtech.content.block.wood;
 
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.material.Materials;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
@@ -36,45 +37,27 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 /** GT6-style tinted log block with fireproof variant support. */
 public class WoodLogBlock extends RotatedPillarBlock {
-    public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
-    private final WoodSpecies species;
-
-    public WoodLogBlock(WoodSpecies species, Properties properties) {
-        super(properties);
-        this.species = species;
-        registerDefaultState(stateDefinition.any().setValue(AXIS, Direction.Axis.Y));
-    }
-
-    public WoodSpecies species() { return species; }
-
-    /** GT6 BlockTreeLogA/B/C: strip a living log into its corresponding stripped log. */
-    public ItemStack toolProduct() {
-        if (species == WoodSpecies.CINNAMON) {
-            // GT6 BlockTreeLogB prefers its own IL.Food_Cinnamon before cinnamon dust.
-            Item bark = Mc.item(
-                    ResourceLocation.fromNamespaceAndPath("gt6ce", "cinnamon_bark"));
-//? if >=1.21.1 {
-            /*if (bark != null && bark != net.minecraft.world.item.Items.AIR) return new ItemStack(bark);
-*///?} else {
-            if (bark != null) return new ItemStack(bark);
-//?}
-            return GTItems.getStack(MaterialPrefix.dust, Materials.Cinnamon);
-        }
-        return GTItems.getStack(MaterialPrefix.dust, Materials.Bark);
-    }
-
     /**
      * Axe/saw/knife produce a stripped log; GT tools also drop bark. A plain axe follows vanilla
      * stripping without the extra bark. GT6's hand drill still makes maple/rainbowood sap holes from
      * a horizontal side, and other clicks leave the log untouched.
      */
 //? if >=1.21.1 {
-    /*private InteractionResult originalUse(BlockState state, Level level, BlockPos pos, Player player,
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(hand);
         boolean gtAxe = GTToolHelper.matchesTool(stack, GTToolType.AXE)
                 || GTToolHelper.matchesTool(stack, GTToolType.DOUBLE_AXE);
@@ -118,6 +101,33 @@ public class WoodLogBlock extends RotatedPillarBlock {
         return InteractionResult.CONSUME;
     }
 
+    public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
+    private final WoodSpecies species;
+
+    public WoodLogBlock(WoodSpecies species, Properties properties) {
+        super(properties);
+        this.species = species;
+        registerDefaultState(stateDefinition.any().setValue(AXIS, Direction.Axis.Y));
+    }
+
+    public WoodSpecies species() { return species; }
+
+    /** GT6 BlockTreeLogA/B/C: strip a living log into its corresponding stripped log. */
+    public ItemStack toolProduct() {
+        if (species == WoodSpecies.CINNAMON) {
+            // GT6 BlockTreeLogB prefers its own IL.Food_Cinnamon before cinnamon dust.
+            Item bark = Mc.item(
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "cinnamon_bark"));
+//? if >=1.21.1 {
+            /*if (bark != null && bark != net.minecraft.world.item.Items.AIR) return new ItemStack(bark);
+*///?} else {
+            if (bark != null) return new ItemStack(bark);
+//?}
+            return GTItems.getStack(MaterialPrefix.dust, Materials.Cinnamon);
+        }
+        return GTItems.getStack(MaterialPrefix.dust, Materials.Bark);
+    }
+
     /** The sap hole GT6 drills into this species' log, or {@code null} when there is none. */
     private TreeHoleBlock drilledHole() {
         return switch (species) {
@@ -134,12 +144,4 @@ public class WoodLogBlock extends RotatedPillarBlock {
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
         return defaultBlockState().setValue(AXIS, ctx.getClickedFace().getAxis());
     }
-//? if >=1.21.1 {
-
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){
-        return switch(originalUse(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};
-    }
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return originalUse(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
 }

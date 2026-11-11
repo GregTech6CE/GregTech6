@@ -2,6 +2,7 @@ package gregtech.content.block.machine;
 
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.machine.GTMachineBlock;
 import gregtech.engine.machine.MachineSpec;
 import gregtech.engine.tool.GTToolHelper;
@@ -50,6 +51,40 @@ public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock im
 
     private final MachineSpec spec;
 
+    /** GT6 wrench rotation: click a face to rotate the machine front to that face. */
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state,
+            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return MachineRotationType.handleWrench(state, level, pos, player, hand, hit,
+                FACING, MachineRotationType.HORIZONTAL)
+                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+    }
+
+//? if >=1.21.1 {
+    /*@Override
+    protected BlockState rotate(BlockState state, net.minecraft.world.level.block.Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    protected BlockState mirror(BlockState state, net.minecraft.world.level.block.Mirror mirror) {
+        return rotate(state, mirror.getRotation(state.getValue(FACING)));
+    }
+*///?}
+
     protected GTFacingMachineBlock(MachineSpec spec, Properties properties) {
         super(properties);
         this.spec = spec;
@@ -78,46 +113,6 @@ public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock im
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-    }
-
-    /** GT6 wrench rotation: click a face to rotate the machine front to that face. */
-//? if >=1.21.1 {
-    /*/^* Original rotation contract, also used by Native subclasses' existing interactions. ^/
-    protected InteractionResult handleWrench(BlockState state, Level level, BlockPos pos, Player player,
-                                             InteractionHand hand, BlockHitResult hit) {
-        return MachineRotationType.handleWrench(state, level, pos, player, hand, hit,
-                FACING, MachineRotationType.HORIZONTAL)
-                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
-    }
-
-*///?} else {
-//?}
-    @Override
-//? if >=1.21.1 {
-    /*protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state,
-            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return handleWrench(state, level, pos, player, hand, hit) == InteractionResult.PASS
-                ? net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-                : net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    @Override
-    protected BlockState rotate(BlockState state, net.minecraft.world.level.block.Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    protected BlockState mirror(BlockState state, net.minecraft.world.level.block.Mirror mirror) {
-        return rotate(state, mirror.getRotation(state.getValue(FACING)));
-*///?} else {
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-                                 InteractionHand hand, BlockHitResult hit) {
-        if (MachineRotationType.handleWrench(state, level, pos, player, hand, hit,
-                FACING, MachineRotationType.HORIZONTAL)) {
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        return InteractionResult.PASS;
-//?}
     }
 
     @Override

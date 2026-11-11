@@ -63,6 +63,79 @@ import java.util.List;
  * with the original spine and side textures.
  */
 public class BookShelfBlock extends HorizontalDirectionalBlock implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
+    /**
+     * GT6's click handling: the click lands in the exact slot the player aimed at (GT6's
+     * {@code tIndex} formula over the 28-slot layout). Ordinary occupied slots give their item back;
+     * buttons and levers activate until taken with sneaking or pincers.
+     */
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        if (ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (!(level.getBlockEntity(pos) instanceof BookShelfBlockEntity shelf)) return InteractionResult.PASS;
+        if (!level.isClientSide) shelf.generateDungeonLoot();
+        // GT6's tCoords are block relative.
+        int slot = BookShelfGeometry.slotAt(state.getValue(FACING), hit.getDirection(),
+                hit.getLocation().x - pos.getX(), hit.getLocation().y - pos.getY(), hit.getLocation().z - pos.getZ());
+        if (slot < 0) return InteractionResult.PASS;
+        ItemStack held = player.getItemInHand(hand);
+        ItemStack stored = shelf.inventory().getStackInSlot(slot);
+
+        // GT6 routes shelf tools before ordinary right-click: pincers take even secret controls,
+        // while a magnifier inspects the item without dislodging it.
+        if (!stored.isEmpty() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
+            if (!level.isClientSide) player.displayClientMessage(stored.getHoverName(), false);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        boolean pincers = GTToolHelper.matchesTool(held, GTToolType.PINCERS);
+
+        // GT6 first activates special controls, then hands other occupied slots to the player.
+        if (!stored.isEmpty()) {
+            if (level.isClientSide) return InteractionResult.SUCCESS;
+            if (!pincers && !player.isShiftKeyDown()) {
+                if (stored.is(Items.OAK_BUTTON) || stored.is(Items.STONE_BUTTON)) {
+                    shelf.pressButton();
+                    level.playSound(null, pos, SoundEvents.WOODEN_BUTTON_CLICK_ON, SoundSource.BLOCKS, 0.5F, 1.0F);
+                    return InteractionResult.CONSUME;
+                }
+                if (stored.is(Items.LEVER) || stored.is(Items.REDSTONE_TORCH)) {
+                    shelf.toggleLever();
+                    level.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.5F, 1.0F);
+                    return InteractionResult.CONSUME;
+                }
+            }
+            ItemStack taken = stored.copy();
+            if (!player.getInventory().add(taken)) return InteractionResult.PASS;
+            shelf.inventory().setStackInSlot(slot, ItemStack.EMPTY);
+            if (pincers) GTToolHelper.damageForUse(held, 1, player);
+            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.5F, 1.0F);
+            return InteractionResult.CONSUME;
+        }
+        if (held.isEmpty() || !GTBookList.canPlace(held)) return InteractionResult.PASS;
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        ItemStack inserted = shelf.inventory().insertItem(slot, held.copyWithCount(1), false);
+        if (inserted.isEmpty()) {
+            if (!player.isCreative()) held.shrink(1);
+            level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 0.6F, 1.0F);
+            return InteractionResult.CONSUME;
+        }
+        return InteractionResult.PASS;
+    }
+
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {
@@ -155,72 +228,6 @@ public class BookShelfBlock extends HorizontalDirectionalBlock implements Entity
     public VoxelShape getBlockSupportShape(BlockState state, BlockGetter level, BlockPos pos) {
         return state.getValue(FACING).getAxis() == Direction.Axis.Z
                 ? NORTH_SOUTH_SUPPORT : EAST_WEST_SUPPORT;
-    }
-
-    /**
-     * GT6's click handling: the click lands in the exact slot the player aimed at (GT6's
-     * {@code tIndex} formula over the 28-slot layout). Ordinary occupied slots give their item back;
-     * buttons and levers activate until taken with sneaking or pincers.
-     */
-//? if >=1.21.1 {
-    /*@Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-    public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        if (ToolInteractions.use(state, level, pos, player, hand, hit))
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        if (!(level.getBlockEntity(pos) instanceof BookShelfBlockEntity shelf)) return InteractionResult.PASS;
-        if (!level.isClientSide) shelf.generateDungeonLoot();
-        // GT6's tCoords are block relative.
-        int slot = BookShelfGeometry.slotAt(state.getValue(FACING), hit.getDirection(),
-                hit.getLocation().x - pos.getX(), hit.getLocation().y - pos.getY(), hit.getLocation().z - pos.getZ());
-        if (slot < 0) return InteractionResult.PASS;
-        ItemStack held = player.getItemInHand(hand);
-        ItemStack stored = shelf.inventory().getStackInSlot(slot);
-
-        // GT6 routes shelf tools before ordinary right-click: pincers take even secret controls,
-        // while a magnifier inspects the item without dislodging it.
-        if (!stored.isEmpty() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
-            if (!level.isClientSide) player.displayClientMessage(stored.getHoverName(), false);
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        boolean pincers = GTToolHelper.matchesTool(held, GTToolType.PINCERS);
-
-        // GT6 first activates special controls, then hands other occupied slots to the player.
-        if (!stored.isEmpty()) {
-            if (level.isClientSide) return InteractionResult.SUCCESS;
-            if (!pincers && !player.isShiftKeyDown()) {
-                if (stored.is(Items.OAK_BUTTON) || stored.is(Items.STONE_BUTTON)) {
-                    shelf.pressButton();
-                    level.playSound(null, pos, SoundEvents.WOODEN_BUTTON_CLICK_ON, SoundSource.BLOCKS, 0.5F, 1.0F);
-                    return InteractionResult.CONSUME;
-                }
-                if (stored.is(Items.LEVER) || stored.is(Items.REDSTONE_TORCH)) {
-                    shelf.toggleLever();
-                    level.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundSource.BLOCKS, 0.5F, 1.0F);
-                    return InteractionResult.CONSUME;
-                }
-            }
-            ItemStack taken = stored.copy();
-            if (!player.getInventory().add(taken)) return InteractionResult.PASS;
-            shelf.inventory().setStackInSlot(slot, ItemStack.EMPTY);
-            if (pincers) GTToolHelper.damageForUse(held, 1, player);
-            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.5F, 1.0F);
-            return InteractionResult.CONSUME;
-        }
-        if (held.isEmpty() || !GTBookList.canPlace(held)) return InteractionResult.PASS;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        ItemStack inserted = shelf.inventory().insertItem(slot, held.copyWithCount(1), false);
-        if (inserted.isEmpty()) {
-            if (!player.isCreative()) held.shrink(1);
-            level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 0.6F, 1.0F);
-            return InteractionResult.CONSUME;
-        }
-        return InteractionResult.PASS;
     }
 
     /**

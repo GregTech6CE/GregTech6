@@ -35,6 +35,31 @@ import java.util.List;
 /** GT6 Ender Garbage Bin: buffers trash and teleports it into the global Garbage Dump. */
 public class EnderGarbageBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        // both hands fire use(); handling the off hand double-triggers
+        if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        if (!(level.getBlockEntity(pos) instanceof EnderGarbageBlockEntity bin)) return InteractionResult.PASS;
+        if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+            serverPlayer.openMenu(bin);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
     // GT6 visual bounds; this port also uses these boxes for its outline and collision.
     private static final VoxelShape SHAPE = Shapes.or(
             Block.box(0, 12, 0, 16, 16, 16),
@@ -84,38 +109,6 @@ public class EnderGarbageBlock extends Block implements EntityBlock, SimpleWater
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.ENDER_GARBAGE.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<EnderGarbageBlockEntity>) EnderGarbageBlockEntity::serverTick;
-    }
-
-//? if >=1.21.1 {
-    /*@Override
-    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-    @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-
-    public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-            InteractionHand hand, BlockHitResult hit) {
-        // both hands fire use(); handling the off hand double-triggers
-        if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
-        if (!(level.getBlockEntity(pos) instanceof EnderGarbageBlockEntity bin)) return InteractionResult.PASS;
-        if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-            serverPlayer.openMenu(bin);
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override

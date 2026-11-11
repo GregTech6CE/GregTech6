@@ -64,6 +64,45 @@ public class CrucibleFaucetBlock extends HorizontalDirectionalBlock implements E
 
     private final CrucibleSpec spec;
 
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        if (!(level.getBlockEntity(pos) instanceof CrucibleFaucetBlockEntity faucet)) {
+            return InteractionResult.PASS;
+        }
+        if (ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        ItemStack held = player.getItemInHand(hand);
+        if (GTToolHelper.isMonkeyWrench(held)) {
+            if (!level.isClientSide) {
+                faucet.toggleAutoPull();
+                announceAutoInput(level, pos, player, hand, faucet, true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (GTToolHelper.isSoftHammer(held)) {
+            if (!level.isClientSide) {
+                faucet.setAutoPull(false);
+                announceAutoInput(level, pos, player, hand, faucet, false);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        return InteractionResult.PASS;
+    }
+
     public CrucibleFaucetBlock(CrucibleSpec spec, Properties properties) {
         super(properties);
         this.spec = spec;
@@ -175,36 +214,6 @@ public class CrucibleFaucetBlock extends HorizontalDirectionalBlock implements E
                 : null;
     }
 
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        if (!(level.getBlockEntity(pos) instanceof CrucibleFaucetBlockEntity faucet)) {
-            return InteractionResult.PASS;
-        }
-        if (ToolInteractions.use(state, level, pos, player, hand, hit))
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        ItemStack held = player.getItemInHand(hand);
-        if (GTToolHelper.isMonkeyWrench(held)) {
-            if (!level.isClientSide) {
-                faucet.toggleAutoPull();
-                announceAutoInput(level, pos, player, hand, faucet, true);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        if (GTToolHelper.isSoftHammer(held)) {
-            if (!level.isClientSide) {
-                faucet.setAutoPull(false);
-                announceAutoInput(level, pos, player, hand, faucet, false);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        return InteractionResult.PASS;
-    }
-
     private static void announceAutoInput(Level level, BlockPos pos, Player player, InteractionHand hand,
                                           CrucibleFaucetBlockEntity faucet, boolean wrenchSound) {
         boolean automatic = faucet.isAutoPull();
@@ -233,9 +242,10 @@ public class CrucibleFaucetBlock extends HorizontalDirectionalBlock implements E
                 .noOcclusion();
     }
 //? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit)==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:net.minecraft.world.ItemInteractionResult.SUCCESS;}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-    @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(new ItemStack(this));}
+    /*@Override
+    public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        return java.util.List.of(new ItemStack(this));
+    }
 *///?} else {
 //?}
 }

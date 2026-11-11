@@ -35,19 +35,52 @@ import java.util.List;
 *///?} else {
 public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget {
 //?}
-    public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
-    private final GTMaterial material;
-    private final int range;
-    private final boolean insulated;
 //? if >=1.21.1 {
-    /*
+    /*@Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+            BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+
+    @Override
+    public InteractionResult useScrewdriver(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        return use(state, level, pos, player, hand, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        if (ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (GTToolHelper.isScrewdriver(player.getItemInHand(hand))) {
+            if (!level.isClientSide && player.mayBuild() && level.mayInteract(player,
+                    pos) && level.getBlockEntity(pos) instanceof SignalWireBlockEntity wire) {
+                wire.setMode((wire.mode() + (player.isShiftKeyDown() ? 15 : 1)) & 15);
+                player.displayClientMessage(Component.translatable("message.gt6ce.signal_wire.mode", wire.mode()), true);
+                GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        return InteractionResult.PASS;
+    }
 
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isWireCutter(tool) ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.REDSTONE) : null;
     }
-*///?} else {
-//?}
+
+    public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
+    private final GTMaterial material;
+    private final int range;
+    private final boolean insulated;
 
     public SignalWireBlock(GTMaterial material, int range, boolean insulated, boolean luminous, Properties properties) {
         super(properties.dynamicShape().lightLevel(state -> luminous ? state.getValue(POWER) : 0));
@@ -98,51 +131,6 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
                 wireEntity) -> ((SignalWireBlockEntity) wireEntity).tickNetwork() : null;
 
     }
-
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
-        if (GTToolHelper.isScrewdriver(player.getItemInHand(hand))) {
-*///?} else {
-    @Override
-    public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return GTToolHelper.isWireCutter(tool) ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.REDSTONE) : null;
-    }
-
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
-        if (GTToolHelper.isScrewdriver(player.getItemInHand(hand))) {
-//?}
-
-            if (!level.isClientSide && player.mayBuild() && level.mayInteract(player,
-                    pos) && level.getBlockEntity(pos) instanceof SignalWireBlockEntity wire) {
-                wire.setMode((wire.mode() + (player.isShiftKeyDown() ? 15 : 1)) & 15);
-                player.displayClientMessage(Component.translatable("message.gt6ce.signal_wire.mode", wire.mode()), true);
-
-                GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);
-
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        return InteractionResult.PASS;
-    }
-
-//? if >=1.21.1 {
-    /*@Override
-    public InteractionResult useScrewdriver(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return interact(state, level, pos, player, hand, hit);
-    }
-
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
-            BlockHitResult hit) {
-        return interact(state, level, pos, player, hand,
-                hit).consumesAction() ? ItemInteractionResult.sidedSuccess(level.isClientSide)
-                : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-    }
-*///?} else {
-//?}
 
     /** Original placement: the clicked support port, then compatible neighbors already open toward us.
      * The initial placement state carries the support bit; validate it after the block entity and

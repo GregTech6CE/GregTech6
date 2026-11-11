@@ -42,10 +42,39 @@ public final class SandwichBlock extends Block implements EntityBlock, SimpleWat
     }
 
 //? if >=1.21.1 {
-    /*@Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit)==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        if (!(level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich)) return InteractionResult.PASS;
+        ItemStack held = player.getItemInHand(hand);
+        if (held.isEmpty()) return InteractionResult.CONSUME;
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        ItemStack container = held.getCraftingRemainingItem();
+        int amount = sandwich.addIngredient(held);
+        if (amount > 0) {
+            if (!player.getAbilities().instabuild) held.shrink(amount);
+            // GT6 returns the container even when ST.use preserves a creative player's ingredient.
+            if (!container.isEmpty()) {
+                ItemStack remainder = container.copyWithCount(container.getCount() * amount);
+                if (!player.getInventory().add(remainder)) player.drop(remainder, false);
+            }
+            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4f, 1f);
+        }
+        return InteractionResult.CONSUME;
+    }
+
     @Override public RenderShape getRenderShape(BlockState state) { return RenderShape.ENTITYBLOCK_ANIMATED; }
 
     @Nullable @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
@@ -78,30 +107,6 @@ public final class SandwichBlock extends Block implements EntityBlock, SimpleWat
         return direction == Direction.DOWN && !canSurvive(state, level, pos)
                 ? net.minecraft.world.level.block.Blocks.AIR.defaultBlockState()
                 : super.updateShape(state, direction, neighborState, level, pos, neighborPos);
-    }
-
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                            InteractionHand hand, BlockHitResult hit) {
-        if (!(level.getBlockEntity(pos) instanceof SandwichBlockEntity sandwich)) return InteractionResult.PASS;
-        ItemStack held = player.getItemInHand(hand);
-        if (held.isEmpty()) return InteractionResult.CONSUME;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        ItemStack container = held.getCraftingRemainingItem();
-        int amount = sandwich.addIngredient(held);
-        if (amount > 0) {
-            if (!player.getAbilities().instabuild) held.shrink(amount);
-            // GT6 returns the container even when ST.use preserves a creative player's ingredient.
-            if (!container.isEmpty()) {
-                ItemStack remainder = container.copyWithCount(container.getCount() * amount);
-                if (!player.getInventory().add(remainder)) player.drop(remainder, false);
-            }
-            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4f, 1f);
-        }
-        return InteractionResult.CONSUME;
     }
 
     @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state,

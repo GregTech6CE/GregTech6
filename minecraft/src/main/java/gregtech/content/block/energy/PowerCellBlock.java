@@ -23,6 +23,35 @@ import net.minecraft.world.phys.shapes.*;
 import java.util.List;
 
 public final class PowerCellBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+            BlockPos pos, Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+            Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        var tool=player.getItemInHand(hand);
+        if(!gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))
+            return net.minecraft.world.InteractionResult.PASS;
+        if(!level.isClientSide&&level.getBlockEntity(pos) instanceof PowerCellBlockEntity be) {
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.electric_tool.energy",be.stored(),spec.capacity()),true);
+            gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(tool,1,player,
+                    hand==net.minecraft.world.InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
+        }
+        return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
     public static final net.minecraft.world.level.block.state.properties.IntegerProperty CHARGE_LEVEL =
             net.minecraft.world.level.block.state.properties.IntegerProperty.create("charge", 0, 15);
     private final PowerCellSpec spec;
@@ -35,28 +64,6 @@ public final class PowerCellBlock extends Block implements EntityBlock, SimpleWa
     @Override protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(GTWaterloggable.WATERLOGGED); builder.add(CHARGE_LEVEL); }
     public PowerCellSpec spec(){return spec;}
-//? if >=1.21.1 {
-    /*private net.minecraft.world.InteractionResult interact(BlockState state,Level level,BlockPos pos,Player player,
-*///?} else {
-    @Override public net.minecraft.world.InteractionResult use(BlockState state,Level level,BlockPos pos,Player player,
-//?}
-            net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){
-        var tool=player.getItemInHand(hand);
-        if(!gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))
-            return net.minecraft.world.InteractionResult.PASS;
-        if(!level.isClientSide&&level.getBlockEntity(pos) instanceof PowerCellBlockEntity be) {
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.electric_tool.energy",be.stored(),spec.capacity()),true);
-            gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(tool,1,player,
-                    hand==net.minecraft.world.InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
-        }
-        return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
-//? if >=1.21.1 {
-    /*}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){
-        return interact(state,level,pos,player,hand,hit).consumesAction()?net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide):net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-*///?} else {
-//?}
-    }
     @Override public VoxelShape getShape(BlockState s,BlockGetter l,BlockPos p,CollisionContext c){return shape;}
     @Override public BlockEntity newBlockEntity(BlockPos p,BlockState s){return new PowerCellBlockEntity(p,s);}
     @Override public void setPlacedBy(Level l,BlockPos p,BlockState s,@javax.annotation.Nullable LivingEntity player,ItemStack stack){

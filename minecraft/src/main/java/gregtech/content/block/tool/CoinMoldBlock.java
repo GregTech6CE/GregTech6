@@ -62,12 +62,8 @@ public final class CoinMoldBlock extends ShapedToolBlock implements EntityBlock 
     }
 
     @Override
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-            InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof CoinMoldBlockEntity mold)) return InteractionResult.PASS;
         if (!player.mayBuild() || !level.mayInteract(player, pos)) return InteractionResult.FAIL;
         ItemStack held = player.getItemInHand(hand);

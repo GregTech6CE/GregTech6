@@ -160,51 +160,30 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
         return super.skipRendering(state, adjacent, direction);
     }
 
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
     @Override
-//? if >=1.21.1 {
-    /*public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
+//?}
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
+            InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
-        if (!(held.getItem() instanceof GTStoneSlabBlockItem slabItem)) {
-//? if >=1.21.1 {
-            /*return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-*///?} else {
-            return InteractionResult.PASS;
-//?}
-        }
-        if (!slabItem.getBlock().equals(this)) {
-//? if >=1.21.1 {
-            /*return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-*///?} else {
-            return InteractionResult.PASS;
-//?}
-        }
+        if (!(held.getItem() instanceof GTStoneSlabBlockItem slabItem)) return InteractionResult.PASS;
+        if (!slabItem.getBlock().equals(this)) return InteractionResult.PASS;
         Direction clicked = hit.getDirection();
-        if (clicked != state.getValue(FACING).getOpposite()) {
-//? if >=1.21.1 {
-            /*return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-*///?} else {
-            return InteractionResult.PASS;
-//?}
-        }
+        if (clicked != state.getValue(FACING).getOpposite()) return InteractionResult.PASS;
         Block full = GTBlocks.getStone(stoneType, variant);
-        if (full == null) {
-//? if >=1.21.1 {
-            /*return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-*///?} else {
-            return InteractionResult.PASS;
-//?}
-        }
-        if (!level.isUnobstructed(full.defaultBlockState(), pos, CollisionContext.of(player))) {
-//? if >=1.21.1 {
-            /*return net.minecraft.world.ItemInteractionResult.FAIL;
-*///?} else {
-            return InteractionResult.FAIL;
-//?}
-        }
+        if (full == null) return InteractionResult.PASS;
+        if (!level.isUnobstructed(full.defaultBlockState(), pos, CollisionContext.of(player))) return InteractionResult.FAIL;
         if (!level.isClientSide) {
             level.setBlockAndUpdate(pos, full.defaultBlockState());
             level.playSound(null, pos, full.defaultBlockState().getSoundType(level, pos, player).getPlaceSound(),
@@ -213,10 +192,6 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
                 held.shrink(1);
             }
         }
-//? if >=1.21.1 {
-        /*return net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-*///?} else {
         return InteractionResult.sidedSuccess(level.isClientSide);
-//?}
     }
 }

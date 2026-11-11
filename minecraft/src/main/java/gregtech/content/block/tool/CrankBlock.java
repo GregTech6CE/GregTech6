@@ -7,6 +7,7 @@ import gregtech.engine.GTWaterloggable;
 import gregtech.engine.energy.EnergyBlockViews;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.content.data.GregTechTags;
+import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -16,6 +17,9 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+//? if >=1.21.1 {
+/*import net.minecraft.world.ItemInteractionResult;
+*///?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -78,22 +82,37 @@ public class CrankBlock extends DirectionalBlock implements SimpleWaterloggedBlo
     }
 
     @Override
-    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
 
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
     }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        // Only the main hand drives the crank; processing the off hand would send a second packet.
+        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        if (!level.isClientSide) {
+            // The event also records other interactions so clicking elsewhere releases the crank.
+            // Record here too for direct native block interactions (no loader event dispatch).
+            CrankInteractionEvents.target(player, pos);
+            // GT6 activation only latches mActive; RU starts on the next server tick.
+            if (!state.getValue(ACTIVE)) {
+                level.setBlock(pos, state.setValue(ACTIVE, true), Block.UPDATE_ALL);
+            }
+            updateMountNeighbors(state, level, pos);
+            level.scheduleTick(pos, this, ACTIVE_TICKS);
+            level.playSound(null, pos, SoundEvents.WOOD_HIT, SoundSource.BLOCKS, 1.0F, 0.7F);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
     public CrankBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(ACTIVE, false).setValue(GTWaterloggable.WATERLOGGED, false));
@@ -201,31 +220,6 @@ public class CrankBlock extends DirectionalBlock implements SimpleWaterloggedBlo
         }
         super.onRemove(state, level, pos, next, moving);
     }
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-            InteractionHand hand, BlockHitResult hit) {
-        // Only the main hand drives the crank; processing the off hand would send a second packet.
-        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
-        if (!level.isClientSide) {
-            // The event also records other interactions so clicking elsewhere releases the crank.
-            // Record here too for direct native block interactions (no loader event dispatch).
-            CrankInteractionEvents.target(player, pos);
-            // GT6 activation only latches mActive; RU starts on the next server tick.
-            if (!state.getValue(ACTIVE)) {
-                level.setBlock(pos, state.setValue(ACTIVE, true), Block.UPDATE_ALL);
-            }
-            updateMountNeighbors(state, level, pos);
-            level.scheduleTick(pos, this, ACTIVE_TICKS);
-            level.playSound(null, pos, SoundEvents.WOOD_HIT, SoundSource.BLOCKS, 1.0F, 0.7F);
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
 //? if >=1.21.1 {
     /*private static int effectLevel(Player player, net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect> effect) {
 *///?} else {

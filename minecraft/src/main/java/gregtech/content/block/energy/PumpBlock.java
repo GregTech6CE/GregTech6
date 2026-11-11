@@ -31,6 +31,27 @@ import java.util.List;
 
 /** GT6 rotational pump — drains fluid blocks using RU power. */
 public class PumpBlock extends Block implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+            BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)
+                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+    }
+
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     private final PumpSpec spec;
@@ -67,35 +88,6 @@ public class PumpBlock extends Block implements EntityBlock, gregtech.engine.too
                         gregtech.content.block.machine.MachineRotationType.ALL)
                 : null;
     }
-
-//? if >=1.21.1 {
-/*    @Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
-            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return interact(state, level, pos, player, hand, hit)
-                ? net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide)
-                : net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-            BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit)
-                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
-    }
-
-    private boolean interact(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit);
-    }
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-                                 InteractionHand hand, BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)
-                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
-    }
-//?}
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {

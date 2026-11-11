@@ -33,8 +33,50 @@ public final class SourceExtenderBlock extends DirectionalBlock implements Entit
     protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
         return com.mojang.serialization.MapCodec.unit(this);
     }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        var tool = player.getItemInHand(hand);
+        if (level.getBlockEntity(pos) instanceof ExtenderBlockEntity host) {
+            var result = gregtech.content.cover.PanelCoverInteraction.use(host, player, hand, hit, true);
+            if (result != InteractionResult.PASS) return result;
+        }
+        if (spec.universal() && (GTToolHelper.isSoftHammer(tool) || GTToolHelper.isScrewdriver(tool))
+                && level.getBlockEntity(pos) instanceof ExtenderBlockEntity relay) {
+            if (!level.isClientSide) {
+                var control = relay.machineControl(spec.bridge ? hit.getDirection() : null);
+                if (!control.available() || (GTToolHelper.isScrewdriver(tool) && !control.supportsMode())) {
+                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.extender.unavailable"), true);
+                    return InteractionResult.CONSUME;
+                }
+                if (GTToolHelper.isScrewdriver(tool)) {
+                    int mode = control.setMode((control.mode() + 1) & 15);
+                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.extender.mode", mode), true);
+                } else {
+                    boolean enabled = control.setEnabled(!control.enabled());
+                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.extender." + (enabled ? "enabled"
+                            : "disabled")), true);
+                }
+                GTToolHelper.damageForUse(tool, 1, player);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        return ToolInteractions.use(state, level, pos, player, hand,
+                hit) ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+    }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, SECONDARY);
@@ -92,40 +134,6 @@ public final class SourceExtenderBlock extends DirectionalBlock implements Entit
                 gregtech.content.block.machine.MachineRotationType.ALL) : null;
     }
 //? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-//?}
-        var tool = player.getItemInHand(hand);
-        if (level.getBlockEntity(pos) instanceof ExtenderBlockEntity host) {
-            var result = gregtech.content.cover.PanelCoverInteraction.use(host, player, hand, hit, true);
-            if (result != InteractionResult.PASS) return result;
-        }
-        if (spec.universal() && (GTToolHelper.isSoftHammer(tool) || GTToolHelper.isScrewdriver(tool))
-                && level.getBlockEntity(pos) instanceof ExtenderBlockEntity relay) {
-            if (!level.isClientSide) {
-                var control = relay.machineControl(spec.bridge ? hit.getDirection() : null);
-                if (!control.available() || (GTToolHelper.isScrewdriver(tool) && !control.supportsMode())) {
-                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.extender.unavailable"), true);
-                    return InteractionResult.CONSUME;
-                }
-                if (GTToolHelper.isScrewdriver(tool)) {
-                    int mode = control.setMode((control.mode() + 1) & 15);
-                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.extender.mode", mode), true);
-                } else {
-                    boolean enabled = control.setEnabled(!control.enabled());
-                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.extender." + (enabled ? "enabled"
-                            : "disabled")), true);
-                }
-                GTToolHelper.damageForUse(tool, 1, player);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        return ToolInteractions.use(state, level, pos, player, hand,
-                hit) ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
-    }
-//? if >=1.21.1 {
     /*@Override
     public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
             java.util.List<net.minecraft.network.chat.Component> lines, TooltipFlag flag) {
@@ -151,25 +159,4 @@ public final class SourceExtenderBlock extends DirectionalBlock implements Entit
     public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         return java.util.List.of(new ItemStack(this));
     }
-//? if >=1.21.1 {
-    /*@Override
-    public net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack held, BlockState state,
-            net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-    @Override
-    public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return interact(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-
-*///?} else {
-//?}
 }

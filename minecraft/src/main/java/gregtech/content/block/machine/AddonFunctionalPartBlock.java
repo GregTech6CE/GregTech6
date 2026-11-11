@@ -21,6 +21,28 @@ import net.minecraft.world.level.block.state.StateDefinition;
  * A part that also emits or accepts energy uses {@link AddonEnergyPartBlock}.
  */
 public class AddonFunctionalPartBlock extends HorizontalDirectionalBlock implements EntityBlock {
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state,
+            Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return FunctionalPartInteraction.interact(level, pos, player, hand, hit);
+    }
+
     private final String addonId;
     private final LayoutPart declaration;
 
@@ -60,29 +82,6 @@ public class AddonFunctionalPartBlock extends HorizontalDirectionalBlock impleme
         return (lvl, pos, blockState, be) -> AddonFunctionalPartBlockEntity.serverTick(lvl, pos, blockState,
                 (AddonFunctionalPartBlockEntity) be);
     }
-
-//? if >=1.21.1 {
-/*    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state,
-            Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return switch (FunctionalPartInteraction.interact(level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-    @Override protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return FunctionalPartInteraction.interact(level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-    @Override public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
-            net.minecraft.world.phys.BlockHitResult hit) {
-        return FunctionalPartInteraction.interact(level, pos, player, hand, hit);
-    }
-//?}
 
     @Override public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
         if (!state.is(next.getBlock()) && !level.isClientSide

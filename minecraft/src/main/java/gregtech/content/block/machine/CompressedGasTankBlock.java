@@ -34,6 +34,28 @@ public class CompressedGasTankBlock extends Block implements EntityBlock {
     private final AddonMachines.AcceptedCompressedGas accepted;
     private Supplier<BlockEntityType<?>> beType = () -> null;
 
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        if (level.isClientSide) return InteractionResult.sidedSuccess(true);
+        if (!(level.getBlockEntity(pos) instanceof CompressedGasTankBlockEntity tank)) return InteractionResult.PASS;
+        return FluidUtil.interactWithFluidHandler(player, hand, tank)
+                ? InteractionResult.CONSUME : InteractionResult.PASS;
+    }
+
     public CompressedGasTankBlock(AddonMachines.AcceptedCompressedGas accepted, Properties properties) {
         super(properties);
         this.accepted = accepted;
@@ -59,19 +81,6 @@ public class CompressedGasTankBlock extends Block implements EntityBlock {
     }
 
 //? if >=1.21.1 {
-    /*private InteractionResult useOriginal(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        if (level.isClientSide) return InteractionResult.sidedSuccess(true);
-        if (!(level.getBlockEntity(pos) instanceof CompressedGasTankBlockEntity tank)) return InteractionResult.PASS;
-        return FluidUtil.interactWithFluidHandler(player, hand, tank)
-                ? InteractionResult.CONSUME : InteractionResult.PASS;
-    }
-
-//? if >=1.21.1 {
     /*@Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
 *///?} else {
     @Override public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
@@ -80,19 +89,4 @@ public class CompressedGasTankBlock extends Block implements EntityBlock {
         tooltip.add(Component.translatable("gt6ce.tank.compressed.store"));
         tooltip.add(Component.translatable("gt6ce.tank.compressed.compressor"));
     }
-
-//? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
-            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        var result = useOriginal(state, level, pos, player, hand, hit);
-        return result == InteractionResult.PASS ? net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-                : result == InteractionResult.FAIL ? net.minecraft.world.ItemInteractionResult.FAIL
-                : net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-    @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-            BlockHitResult hit) {
-        return useOriginal(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-//?}
 }

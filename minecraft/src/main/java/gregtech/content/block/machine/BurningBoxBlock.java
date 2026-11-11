@@ -4,6 +4,7 @@ import gregtech.engine.machine.BurningBoxFuelType;
 import gregtech.engine.machine.MachineSpec;
 import gregtech.content.blockentity.machine.BurningBoxBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.util.GTEntityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
@@ -30,6 +31,47 @@ public class BurningBoxBlock extends GTFacingMachineBlock implements EntityBlock
     private static final VoxelShape COLLISION_SHAPE = Shapes.box(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D);
 
     private final BurningBoxFuelType fuelType;
+
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack,
+            BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?}
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof BurningBoxBlockEntity burningBox) {
+            InteractionResult tool = burningBox.handleToolUse(player, hand, hit);
+            if (tool != InteractionResult.PASS) {
+                return tool;
+            }
+            InteractionResult result = burningBox.handleUse(player, hand, hit);
+            if (result != InteractionResult.PASS) {
+                return result;
+            }
+        }
+//? if >=1.21.1 {
+        /*return InteractionResult.PASS;
+*///?} else {
+        return super.use(state, level, pos, player, hand, hit);
+//?}
+    }
+
+//? if >=1.21.1 {
+    /*@Override
+    protected java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,
+            net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        return java.util.List.of(new net.minecraft.world.item.ItemStack(this));
+    }
+*///?}
 
     public BurningBoxBlock(BurningBoxFuelType fuelType, MachineSpec spec, Properties properties) {
         super(spec, properties);
@@ -70,40 +112,6 @@ public class BurningBoxBlock extends GTFacingMachineBlock implements EntityBlock
         }
         super.onRemove(state, level, pos, newState, isMoving);
     }
-
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-//?}
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof BurningBoxBlockEntity burningBox) {
-            InteractionResult tool = burningBox.handleToolUse(player, hand, hit);
-            if (tool != InteractionResult.PASS) {
-                return tool;
-            }
-            InteractionResult result = burningBox.handleUse(player, hand, hit);
-            if (result != InteractionResult.PASS) {
-                return result;
-            }
-        }
-//? if >=1.21.1 {
-        /*return InteractionResult.PASS;
-*///?} else {
-        return super.use(state, level, pos, player, hand, hit);
-//?}
-    }
-//? if >=1.21.1 {
-
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){
-        InteractionResult result=interact(state,level,pos,player,hand,hit);
-        return result==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-    @Override protected java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(new net.minecraft.world.item.ItemStack(this));}
-*///?} else {
-//?}
 
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {

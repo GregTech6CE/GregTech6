@@ -33,6 +33,109 @@ import java.util.List;
 public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget,
         gregtech.engine.machine.PipeGeometry.FluidConnectorGeometry {
 
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+            BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        // both hands fire use(); handling the off hand double-triggers
+        // (insert+extract in one click, double withdrawals, armor swap-backs)
+        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        ItemStack held = player.getItemInHand(hand);
+        if (!(level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node)) {
+            return InteractionResult.PASS;
+        }
+        if(node.hasControlPanels()&&(!node.getCover(hit.getDirection()).isEmpty()
+                ||gregtech.content.cover.PanelCover.of(held)!=null)){
+            var result=gregtech.content.cover.PanelCoverInteraction.use(node,player,hand,hit,true);
+            if(result.consumesAction())return result;
+        }
+        if (ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (node.isOriginalMotor() && GTToolHelper.isMonkeyWrench(held)) {
+            if (!level.isClientSide) {
+                node.reverseMotor();
+                GTToolHelper.damageForUse(held, 1, player);
+                player.displayClientMessage(Component.literal(node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise"), true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (node.isOriginalMotor() && GTToolHelper.isMagnifyingGlass(held)) {
+            if (!level.isClientSide) {
+                GTToolHelper.damageForUse(held, 1, player);
+                player.displayClientMessage(Component.literal(node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise"), true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        // GT6 rotational transformers reverse with a monkey wrench; the other
+        // invertible energy nodes keep their existing soft-hammer interaction.
+        boolean modeTool = node.isRotationTransformer() || node.isElectricTransformer()
+                ? GTToolHelper.isMonkeyWrench(held) : GTToolHelper.isSoftHammer(held);
+        if (node.isInvertible() && modeTool) {
+            if (!level.isClientSide) {
+                boolean up = node.toggleInverted();
+                if (node.isRotationTransformer() || node.isElectricTransformer()) GTToolHelper.damageForUse(held, 1, player);
+                player.displayClientMessage(Component.translatable(
+                        up ? "message.gt6ce.transformer.step_up" : "message.gt6ce.transformer.step_down"), true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (node.isTurbine() && GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.PLUNGER)) {
+            if (!level.isClientSide) {
+                long removed = node.purgeTurbineSteam();
+                if (removed > 0) GTToolHelper.damageForToolClickReturn(held, removed, player);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        // Return obsolete installed rotors from worlds made by earlier port versions.
+        if (node.isTurbine()) {
+            if (node.hasRotor() && GTToolHelper.matchesTool(held,
+                    gregtech.engine.tool.GTToolType.CROWBAR)) {
+                if (!level.isClientSide) {
+                    ItemStack removed = node.removeRotor();
+                    if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+        }
+        // Battery boxes: install complete energy items, crowbar removes, GUI otherwise
+        if (node.isBatteryBox()) {
+            if (EnergyNodeBlockEntity.batteryCapacityOf(held, node.spec().inType()) > 0) {
+                if (!level.isClientSide && node.installBattery(held)) {
+                    if (!player.getAbilities().instabuild) held.shrink(1);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            if (GTToolHelper.matchesTool(held,
+                    gregtech.engine.tool.GTToolType.CROWBAR)) {
+                if (!level.isClientSide) {
+                    ItemStack removed = node.removeBattery();
+                    if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            if (!level.isClientSide && player instanceof net.minecraft.server.level.ServerPlayer sp) {
+                sp.openMenu(node.batteryMenu());
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        return InteractionResult.PASS;
+    }
+
     private final EnergyNodeSpec spec;
 
     @Override
@@ -120,98 +223,6 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
         return (BlockEntityTicker<T>) (BlockEntityTicker<EnergyNodeBlockEntity>) EnergyNodeBlockEntity::serverTick;
     }
 
-//? if >=1.21.1 {
-    /*protected InteractionResult interact(BlockState state, Level level, BlockPos pos,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos,
-//?}
-            net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        // both hands fire use(); handling the off hand double-triggers
-        // (insert+extract in one click, double withdrawals, armor swap-backs)
-        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
-        ItemStack held = player.getItemInHand(hand);
-        if (!(level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node)) {
-            return InteractionResult.PASS;
-        }
-        if(node.hasControlPanels()&&(!node.getCover(hit.getDirection()).isEmpty()
-                ||gregtech.content.cover.PanelCover.of(held)!=null)){
-            var result=gregtech.content.cover.PanelCoverInteraction.use(node,player,hand,hit,true);
-            if(result.consumesAction())return result;
-        }
-        if (ToolInteractions.use(state, level, pos, player, hand, hit))
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        if (node.isOriginalMotor() && GTToolHelper.isMonkeyWrench(held)) {
-            if (!level.isClientSide) {
-                node.reverseMotor();
-                GTToolHelper.damageForUse(held, 1, player);
-                player.displayClientMessage(Component.literal(node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise"), true);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        if (node.isOriginalMotor() && GTToolHelper.isMagnifyingGlass(held)) {
-            if (!level.isClientSide) {
-                GTToolHelper.damageForUse(held, 1, player);
-                player.displayClientMessage(Component.literal(node.motorCounterClockwise() ? "Counterclockwise" : "Clockwise"), true);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        // GT6 rotational transformers reverse with a monkey wrench; the other
-        // invertible energy nodes keep their existing soft-hammer interaction.
-        boolean modeTool = node.isRotationTransformer() || node.isElectricTransformer()
-                ? GTToolHelper.isMonkeyWrench(held) : GTToolHelper.isSoftHammer(held);
-        if (node.isInvertible() && modeTool) {
-            if (!level.isClientSide) {
-                boolean up = node.toggleInverted();
-                if (node.isRotationTransformer() || node.isElectricTransformer()) GTToolHelper.damageForUse(held, 1, player);
-                player.displayClientMessage(Component.translatable(
-                        up ? "message.gt6ce.transformer.step_up" : "message.gt6ce.transformer.step_down"), true);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        if (node.isTurbine() && GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.PLUNGER)) {
-            if (!level.isClientSide) {
-                long removed = node.purgeTurbineSteam();
-                if (removed > 0) GTToolHelper.damageForToolClickReturn(held, removed, player);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        // Return obsolete installed rotors from worlds made by earlier port versions.
-        if (node.isTurbine()) {
-            if (node.hasRotor() && GTToolHelper.matchesTool(held,
-                    gregtech.engine.tool.GTToolType.CROWBAR)) {
-                if (!level.isClientSide) {
-                    ItemStack removed = node.removeRotor();
-                    if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-        }
-        // Battery boxes: install complete energy items, crowbar removes, GUI otherwise
-        if (node.isBatteryBox()) {
-            if (EnergyNodeBlockEntity.batteryCapacityOf(held, node.spec().inType()) > 0) {
-                if (!level.isClientSide && node.installBattery(held)) {
-                    if (!player.getAbilities().instabuild) held.shrink(1);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (GTToolHelper.matchesTool(held,
-                    gregtech.engine.tool.GTToolType.CROWBAR)) {
-                if (!level.isClientSide) {
-                    ItemStack removed = node.removeBattery();
-                    if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (!level.isClientSide && player instanceof net.minecraft.server.level.ServerPlayer sp) {
-                sp.openMenu(node.batteryMenu());
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        return InteractionResult.PASS;
-    }
-
     @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
@@ -287,8 +298,6 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
     }
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){return interact(state,level,pos,player,hand,hit).consumesAction()?net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide):net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){return interact(state,level,pos,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);}
     @Override public void toolStateChanged(Level level,BlockPos pos,BlockState state) {
         level.invalidateCapabilities(pos);
     }

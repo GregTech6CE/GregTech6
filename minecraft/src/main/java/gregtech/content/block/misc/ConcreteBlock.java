@@ -126,28 +126,31 @@ public class ConcreteBlock extends Block {
     }
 
     /** GT6 BlockConcrete: drill-click consumes one iron/steel stick and preserves the dye. */
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
     @Override
-//? if >=1.21.1 {
-    /*public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state, Level level, BlockPos pos, Player player,
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
+//?}
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
+            InteractionHand hand, BlockHitResult hit) {
         if (reinforced || !GTToolHelper.matchesTool(player.getItemInHand(hand), GTToolType.HAND_DRILL))
-//? if >=1.21.1 {
-            /*return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-*///?} else {
             return InteractionResult.PASS;
-//?}
         int slot = rodSlot(player);
-//? if >=1.21.1 {
-        /*if (slot < 0) return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        if (level.isClientSide) return net.minecraft.world.ItemInteractionResult.SUCCESS;
-        if (!level.setBlock(pos, FixedConstructionColor.recolor(GTConstructionBlocks.CONCRETE_REINFORCED.get().defaultBlockState(),
-                FixedConstructionColor.colorOf(state)), Block.UPDATE_ALL)) return net.minecraft.world.ItemInteractionResult.FAIL;
-*///?} else {
         if (slot < 0) return InteractionResult.PASS;
         if (level.isClientSide) return InteractionResult.SUCCESS;
+//? if >=1.21.1 {
+        /*if (!level.setBlock(pos, FixedConstructionColor.recolor(GTConstructionBlocks.CONCRETE_REINFORCED.get().defaultBlockState(),
+                FixedConstructionColor.colorOf(state)), Block.UPDATE_ALL)) return InteractionResult.FAIL;
+*///?} else {
         if (!level.setBlock(pos, FixedConstructionColor.recolor(GTDecorBlocks.CONCRETE_REINFORCED.get().defaultBlockState(),
                 FixedConstructionColor.colorOf(state)), Block.UPDATE_ALL)) return InteractionResult.FAIL;
 //?}
@@ -156,10 +159,6 @@ public class ConcreteBlock extends Block {
                 hand == InteractionHand.OFF_HAND
                         ? net.minecraft.world.entity.EquipmentSlot.OFFHAND
                         : net.minecraft.world.entity.EquipmentSlot.MAINHAND);
-//? if >=1.21.1 {
-        /*return net.minecraft.world.ItemInteractionResult.CONSUME;
-*///?} else {
         return InteractionResult.CONSUME;
-//?}
     }
 }

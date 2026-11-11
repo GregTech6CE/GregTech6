@@ -35,6 +35,34 @@ public class LockerBlock extends HorizontalDirectionalBlock
 
 //? if >=1.21.1 {
     /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        // A second off-hand callback would immediately swap the armor back.
+        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
+        if (!(level.getBlockEntity(pos) instanceof LockerBlockEntity locker)) return InteractionResult.PASS;
+        if (!level.isClientSide) {
+            locker.swapArmor(player);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+//? if >=1.21.1 {
+    /*@Override
     protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec() {
         return com.mojang.serialization.MapCodec.unit(this);
     }
@@ -95,42 +123,6 @@ public class LockerBlock extends HorizontalDirectionalBlock
                 ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
                         gregtech.content.block.machine.MachineRotationType.HORIZONTAL)
                 : null;
-    }
-
-//? if >=1.21.1 {
-    /*@Override
-    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state,
-            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-    @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-                                            Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-
-    public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        // A second off-hand callback would immediately swap the armor back.
-        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
-        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
-        if (!(level.getBlockEntity(pos) instanceof LockerBlockEntity locker)) return InteractionResult.PASS;
-        if (!level.isClientSide) {
-            locker.swapArmor(player);
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override

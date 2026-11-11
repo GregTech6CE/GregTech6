@@ -34,30 +34,23 @@ import java.util.List;
 
 /** GT6 numeric ID 17999: real top-center drilling controller, output on its upper side. */
 public final class OriginalBedrockDrillControllerBlock extends Block implements gregtech.engine.multiblock.StructurePreviewSource {
-    public OriginalBedrockDrillControllerBlock(Properties properties) {
-        super(properties);
-    }
-
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new BedrockDrillControllerBlockEntity(pos, state);
-    }
-
-    @Nullable
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide || type != GTBlockEntities.BEDROCK_DRILL.get()) return null;
-        return (tickLevel, tickPos, tickState, blockEntity) -> BedrockDrillControllerBlockEntity.serverTick(
-                tickLevel, tickPos, tickState, (BedrockDrillControllerBlockEntity) blockEntity);
-    }
-
 //? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state, Level level,
+            BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill))
         return InteractionResult.PASS;
@@ -82,6 +75,24 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
             return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;
+    }
+
+    public OriginalBedrockDrillControllerBlock(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new BedrockDrillControllerBlockEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide || type != GTBlockEntities.BEDROCK_DRILL.get()) return null;
+        return (tickLevel, tickPos, tickState, blockEntity) -> BedrockDrillControllerBlockEntity.serverTick(
+                tickLevel, tickPos, tickState, (BedrockDrillControllerBlockEntity) blockEntity);
     }
 
     @Override
@@ -160,23 +171,4 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
         drill.load(saved);
 //?}
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state, Level level,
-            BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
-            net.minecraft.world.phys.BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-    @Override
-    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return interact(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-//?}
 }

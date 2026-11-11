@@ -34,6 +34,7 @@ public final class RoadStripeRailBlock extends BaseRailBlock {
                 .setValue(REFLECTOR, false).setValue(WATERLOGGED, false));
     }
 
+    /** GT6 tool-click toggles stripe/reflector metadata bit 8 in place. */
 //? if >=1.21.1 {
     /*@Override
     public com.mojang.serialization.MapCodec<? extends BaseRailBlock> codec() {
@@ -41,19 +42,31 @@ public final class RoadStripeRailBlock extends BaseRailBlock {
     }
 
     @Override
-    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        return interact(state, level, pos, player, hand, hit) == InteractionResult.PASS
-                ? net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-                : net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
 
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
     }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        ItemStack tool = player.getItemInHand(hand);
+        if (!isToggleTool(tool)) return InteractionResult.PASS;
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (!level.setBlock(pos, state.cycle(REFLECTOR), Block.UPDATE_CLIENTS)) return InteractionResult.FAIL;
+        GTToolHelper.damageForToolClickReturn(tool, 1000, player,
+                hand == InteractionHand.OFF_HAND
+                ? net.minecraft.world.entity.EquipmentSlot.OFFHAND
+                : net.minecraft.world.entity.EquipmentSlot.MAINHAND);
+        return InteractionResult.CONSUME;
+    }
+
     @Override
     public Property<RailShape> getShapeProperty() {
         return SHAPE;
@@ -104,24 +117,5 @@ public final class RoadStripeRailBlock extends BaseRailBlock {
         || GTToolHelper.matchesTool(tool, GTToolType.SCISSORS)
         || GTToolHelper.matchesTool(tool, GTToolType.KNIFE)
         || tool.is(Items.SHEARS);
-    }
-
-    /** GT6 tool-click toggles stripe/reflector metadata bit 8 in place. */
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-            InteractionHand hand, BlockHitResult hit) {
-        ItemStack tool = player.getItemInHand(hand);
-        if (!isToggleTool(tool)) return InteractionResult.PASS;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (!level.setBlock(pos, state.cycle(REFLECTOR), Block.UPDATE_CLIENTS)) return InteractionResult.FAIL;
-        GTToolHelper.damageForToolClickReturn(tool, 1000, player,
-                hand == InteractionHand.OFF_HAND
-                ? net.minecraft.world.entity.EquipmentSlot.OFFHAND
-                : net.minecraft.world.entity.EquipmentSlot.MAINHAND);
-        return InteractionResult.CONSUME;
     }
 }

@@ -40,6 +40,73 @@ import java.util.List;
 
 /** GT6 custom gearbox: wrench mounts physical gears; monkey wrench selects axle axis. */
 public class GearboxBlock extends Block implements EntityBlock, ToolInteractionTarget {
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+            BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        ItemStack held = player.getItemInHand(hand);
+        boolean monkey = GTToolHelper.isMonkeyWrench(held);
+        boolean wrench = GTToolHelper.isMachineWrench(held) && !monkey;
+        boolean hammer = GTToolHelper.isSoftHammer(held);
+        boolean glass = GTToolHelper.isMagnifyingGlass(held);
+        if (!monkey && !wrench && !hammer && !glass) return InteractionResult.PASS;
+        Direction side = ToolInteractions.selectedFace(hit);
+        if ((wrench || monkey) && !ToolInteractions.canApply(toolInteraction(state, held),
+                state, level, pos, player, held, side)) return InteractionResult.FAIL;
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (!(level.getBlockEntity(pos) instanceof GearboxBlockEntity gearbox)) return InteractionResult.PASS;
+
+        if (wrench) {
+            if (gearbox.hasGear(side)) {
+                ItemStack gear = gearbox.unmountGear(side);
+                if (!gear.isEmpty() && !player.getInventory().add(gear)) Block.popResource(level, pos, gear);
+            } else {
+                ItemStack gear = GTItems.getStack(MaterialPrefix.gearGt, spec.material());
+                if (gear.isEmpty()) return InteractionResult.PASS;
+                if (!player.getAbilities().instabuild) {
+                    int slot = matchingGearSlot(player, spec);
+                    if (slot < 0) {
+                        player.sendSystemMessage(Component.literal("A matching large gear is required."));
+                        return InteractionResult.CONSUME;
+                    }
+                    player.getInventory().removeItem(slot, 1);
+                }
+                gearbox.mountGear(side);
+            }
+            GTToolHelper.damageForToolClickReturn(held, 10000, player);
+            return InteractionResult.CONSUME;
+        }
+        if (monkey) {
+            gearbox.toggleAxis(side.getAxis());
+            if (gearbox.hasAxis(side.getAxis())) level.setBlockAndUpdate(pos, state.setValue(FACING, side));
+            GTToolHelper.damageForToolClickReturn(held, 10000, player);
+            return InteractionResult.CONSUME;
+        }
+        if (hammer) {
+            gearbox.toggleJammed();
+            GTToolHelper.damageForToolClickReturn(held, 10000, player);
+            return InteractionResult.CONSUME;
+        }
+        player.sendSystemMessage(Component.literal(gearbox.gearsWork()
+                ? gearbox.isJammed() ? "Gears interlocked, but stopped." : "Gears interlocked properly."
+                : "Gears interlocked improperly."));
+        GTToolHelper.damageForToolClickReturn(held, 1, player);
+        return InteractionResult.CONSUME;
+    }
+
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     private final GearboxSpec spec;
 
@@ -113,63 +180,6 @@ public class GearboxBlock extends Block implements EntityBlock, ToolInteractionT
         return -1;
     }
 
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        ItemStack held = player.getItemInHand(hand);
-        boolean monkey = GTToolHelper.isMonkeyWrench(held);
-        boolean wrench = GTToolHelper.isMachineWrench(held) && !monkey;
-        boolean hammer = GTToolHelper.isSoftHammer(held);
-        boolean glass = GTToolHelper.isMagnifyingGlass(held);
-        if (!monkey && !wrench && !hammer && !glass) return InteractionResult.PASS;
-        Direction side = ToolInteractions.selectedFace(hit);
-        if ((wrench || monkey) && !ToolInteractions.canApply(toolInteraction(state, held),
-                state, level, pos, player, held, side)) return InteractionResult.FAIL;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (!(level.getBlockEntity(pos) instanceof GearboxBlockEntity gearbox)) return InteractionResult.PASS;
-
-        if (wrench) {
-            if (gearbox.hasGear(side)) {
-                ItemStack gear = gearbox.unmountGear(side);
-                if (!gear.isEmpty() && !player.getInventory().add(gear)) Block.popResource(level, pos, gear);
-            } else {
-                ItemStack gear = GTItems.getStack(MaterialPrefix.gearGt, spec.material());
-                if (gear.isEmpty()) return InteractionResult.PASS;
-                if (!player.getAbilities().instabuild) {
-                    int slot = matchingGearSlot(player, spec);
-                    if (slot < 0) {
-                        player.sendSystemMessage(Component.literal("A matching large gear is required."));
-                        return InteractionResult.CONSUME;
-                    }
-                    player.getInventory().removeItem(slot, 1);
-                }
-                gearbox.mountGear(side);
-            }
-            GTToolHelper.damageForToolClickReturn(held, 10000, player);
-            return InteractionResult.CONSUME;
-        }
-        if (monkey) {
-            gearbox.toggleAxis(side.getAxis());
-            if (gearbox.hasAxis(side.getAxis())) level.setBlockAndUpdate(pos, state.setValue(FACING, side));
-            GTToolHelper.damageForToolClickReturn(held, 10000, player);
-            return InteractionResult.CONSUME;
-        }
-        if (hammer) {
-            gearbox.toggleJammed();
-            GTToolHelper.damageForToolClickReturn(held, 10000, player);
-            return InteractionResult.CONSUME;
-        }
-        player.sendSystemMessage(Component.literal(gearbox.gearsWork()
-                ? gearbox.isJammed() ? "Gears interlocked, but stopped." : "Gears interlocked properly."
-                : "Gears interlocked improperly."));
-        GTToolHelper.damageForToolClickReturn(held, 1, player);
-        return InteractionResult.CONSUME;
-    }
-
     @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
@@ -182,10 +192,5 @@ public class GearboxBlock extends Block implements EntityBlock, ToolInteractionT
         int gears = data == null ? 0 : data.getByte("gearMask") & 63;
         int axis = data == null ? 0 : Math.min(3, data.getByte("axisCode") & 255);
         gregtech.client.MechanicalBlockTooltips.appendGearbox(spec, gears, axis, getExplosionResistance(), tooltip);
-//? if >=1.21.1 {
-    /*}    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit).consumesAction()?net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide):net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;}
-
-*///?} else {
     }
-//?}
 }

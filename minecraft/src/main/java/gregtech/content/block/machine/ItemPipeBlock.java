@@ -53,6 +53,99 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
     private final ItemPipeSpec spec;
     private @Nullable Direction placementFace;
 
+    /**
+     * GT6's right-click order on a tile that can carry covers, mirrored from
+     * {@code BasicMachineBlock.use} through {@link FluidPipeBlock#use} so a pipe and a machine
+     * answer a click the same way.
+     *
+     * <p>{@code ToolInteractions.use} stays first, exactly where {@code super.use} (the wrench
+     * rotation) is on the machine, and the pipe's own responses keep their order:
+     * the shift-empty-hand debug print. Between the two sits the cover block, in
+     * {@code BasicMachineBlock}'s own order — {@code PanelCoverInteraction.use},
+     * then a held cover item attached to the clicked face, then the crowbar removing
+     * the face's cover, then the filter covers' screwdriver / soft-hammer
+     * configuration and the filter-setting click. The crafting
+     * table cover needs no arm here: an item pipe hosts the item filter and the item retriever
+     * ({@code CoverFilterItem}, {@code CoverRetrieverItem}), and GT6's crafting cover is a machine
+     * cover ({@code CoverCrafting} opens a workbench on the host's own GUI).</p>
+     *
+     * <p>A pipe with no cover and no cover item in hand is unaffected: {@code PanelCoverInteraction.use}
+     * returns {@code PASS} for every item that is not a panel, a cover item or a tool, and for a tool
+     * it returns {@code PASS} as soon as {@code PanelCoverRuntime.configure} answers false, which it
+     * does whenever the clicked face has no cover ({@code PanelCoverRuntime}). The three cover
+     * branches below are all keyed on the face's cover id, so a coverless pipe falls through them to
+     * the unchanged debug path.</p>
+     */
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state,
+            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        ItemStack held = player.getItemInHand(hand);
+
+        if (ToolInteractions.use(state, level, pos, player, hand, hit)) {
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        // Covers on the clicked face — the machine's order, see the method javadoc.
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof ItemPipeBlockEntity coverHost) {
+            InteractionResult panelResult =
+                    PanelCoverInteraction.use(coverHost, player, hand, hit, false);
+            if (panelResult != InteractionResult.PASS) return panelResult;
+
+            if (gregtech.content.cover.CoverPlacement.placing(player) && CoverItems.isCover(held)) {
+                if (!level.isClientSide && coverHost.attachCover(hit.getDirection(), held)) {
+                    if (!player.getAbilities().instabuild) held.shrink(1);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            if (GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) {
+                if (!level.isClientSide) {
+                    ItemStack removed = coverHost.removeCover(hit.getDirection());
+                    if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            if (!held.isEmpty()) {
+                if (GTToolHelper.matchesTool(held, GTToolType.SCREWDRIVER)
+                        && coverHost.configureFilterCover(hit.getDirection(), true, false)) {
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+                if (GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)
+                        && coverHost.configureFilterCover(hit.getDirection(), false, true)) {
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+                if (!CoverItems.isCover(held)
+                        && coverHost.clickFilterCover(hit.getDirection(), held)) {
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+            }
+        }
+
+        // Shift-empty-hand: debug info
+        if (player.isShiftKeyDown() && held.isEmpty()) {
+            if (level.isClientSide) return InteractionResult.SUCCESS;
+            if (be instanceof ItemPipeBlockEntity pipeEntity) {
+                printDebug(player, pipeEntity);
+            }
+            return InteractionResult.CONSUME;
+        }
+
+        return InteractionResult.PASS;
+    }
+
     public ItemPipeBlock(ItemPipeSpec spec, Properties properties) {
         super(properties);
         this.spec = spec;
@@ -156,96 +249,6 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
     }
 
     // No ticker: ItemPipeNetworks schedules covered pipes and pipes holding items.
-
-    /**
-     * GT6's right-click order on a tile that can carry covers, mirrored from
-     * {@code BasicMachineBlock.use} through {@link FluidPipeBlock#use} so a pipe and a machine
-     * answer a click the same way.
-     *
-     * <p>{@code ToolInteractions.use} stays first, exactly where {@code super.use} (the wrench
-     * rotation) is on the machine, and the pipe's own responses keep their order:
-     * the shift-empty-hand debug print. Between the two sits the cover block, in
-     * {@code BasicMachineBlock}'s own order — {@code PanelCoverInteraction.use},
-     * then a held cover item attached to the clicked face, then the crowbar removing
-     * the face's cover, then the filter covers' screwdriver / soft-hammer
-     * configuration and the filter-setting click. The crafting
-     * table cover needs no arm here: an item pipe hosts the item filter and the item retriever
-     * ({@code CoverFilterItem}, {@code CoverRetrieverItem}), and GT6's crafting cover is a machine
-     * cover ({@code CoverCrafting} opens a workbench on the host's own GUI).</p>
-     *
-     * <p>A pipe with no cover and no cover item in hand is unaffected: {@code PanelCoverInteraction.use}
-     * returns {@code PASS} for every item that is not a panel, a cover item or a tool, and for a tool
-     * it returns {@code PASS} as soon as {@code PanelCoverRuntime.configure} answers false, which it
-     * does whenever the clicked face has no cover ({@code PanelCoverRuntime}). The three cover
-     * branches below are all keyed on the face's cover id, so a coverless pipe falls through them to
-     * the unchanged debug path.</p>
-     */
-//? if >=1.21.1 {
-    /*private InteractionResult originalUse(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        ItemStack held = player.getItemInHand(hand);
-
-        if (ToolInteractions.use(state, level, pos, player, hand, hit)) {
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        // Covers on the clicked face — the machine's order, see the method javadoc.
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof ItemPipeBlockEntity coverHost) {
-            InteractionResult panelResult =
-                    PanelCoverInteraction.use(coverHost, player, hand, hit, false);
-            if (panelResult != InteractionResult.PASS) return panelResult;
-
-            if (gregtech.content.cover.CoverPlacement.placing(player) && CoverItems.isCover(held)) {
-                if (!level.isClientSide && coverHost.attachCover(hit.getDirection(), held)) {
-                    if (!player.getAbilities().instabuild) held.shrink(1);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) {
-                if (!level.isClientSide) {
-                    ItemStack removed = coverHost.removeCover(hit.getDirection());
-                    if (!removed.isEmpty() && !player.addItem(removed)) player.drop(removed, false);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (!held.isEmpty()) {
-                if (GTToolHelper.matchesTool(held, GTToolType.SCREWDRIVER)
-                        && coverHost.configureFilterCover(hit.getDirection(), true, false)) {
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                if (GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)
-                        && coverHost.configureFilterCover(hit.getDirection(), false, true)) {
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                if (!CoverItems.isCover(held)
-                        && coverHost.clickFilterCover(hit.getDirection(), held)) {
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-            }
-        }
-
-        // Shift-empty-hand: debug info
-        if (player.isShiftKeyDown() && held.isEmpty()) {
-            if (level.isClientSide) return InteractionResult.SUCCESS;
-            if (be instanceof ItemPipeBlockEntity pipeEntity) {
-                printDebug(player, pipeEntity);
-            }
-            return InteractionResult.CONSUME;
-        }
-
-        return InteractionResult.PASS;
-    }
-
-//? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(originalUse(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return originalUse(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
 
     /** The block entity exists by now: connect the clicked face and everything already adjacent. */
     @Override

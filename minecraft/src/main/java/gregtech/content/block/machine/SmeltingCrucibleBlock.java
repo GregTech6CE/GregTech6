@@ -52,6 +52,32 @@ import javax.annotation.Nullable;
 *///?} else {
 public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachineBlock {
 //?}
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof SmeltingCrucibleBlockEntity crucible
+                && (hit.getDirection() == Direction.UP || VesselInnerFaces.isInnerFace(state, hit))
+                && crucible.canHandleUse(player, hand)) {
+            // Client prediction only — authoritative logic runs in CrucibleInteractionHandler on server.
+            return level.isClientSide ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        }
+        return InteractionResult.PASS;
+    }
+
     /** Hollow interior for rendering — inner 2/16–14/16, open top. */
     private static final VoxelShape INTERIOR = Shapes.box(
             2 / 16.0D, 2 / 16.0D, 2 / 16.0D,
@@ -162,23 +188,6 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
                 : null;
     }
 
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof SmeltingCrucibleBlockEntity crucible
-                && (hit.getDirection() == Direction.UP || VesselInnerFaces.isInnerFace(state, hit))
-                && crucible.canHandleUse(player, hand)) {
-            // Client prediction only — authoritative logic runs in CrucibleInteractionHandler on server.
-            return level.isClientSide ? InteractionResult.SUCCESS : InteractionResult.PASS;
-        }
-        return InteractionResult.PASS;
-    }
-
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
@@ -274,9 +283,7 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
                 .requiresCorrectToolForDrops();
     }
 //? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-    @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder context){return java.util.List.of(new ItemStack(this));}
+    /*@Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder context){return java.util.List.of(new ItemStack(this));}
 *///?} else {
 //?}
 }
