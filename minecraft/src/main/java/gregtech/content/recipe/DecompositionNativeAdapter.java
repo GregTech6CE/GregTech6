@@ -3,6 +3,8 @@ package gregtech.content.recipe;
 import gregtech.api.addon.material.MaterialDecompositionRule;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
+import gregtech.content.registry.GTFluids;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
@@ -32,8 +34,15 @@ final class DecompositionNativeAdapter {
 
     static FluidStack fluid(String registry, int mb) {
         if (registry == null || mb <= 0) return null;
+        if (registry.indexOf(':') >= 0) {
+            ResourceLocation id = ResourceLocation.tryParse(registry);
+            if (id == null || !BuiltInRegistries.FLUID.containsKey(id)) return null;
+            var fluid = BuiltInRegistries.FLUID.get(id);
+            return fluid == Fluids.EMPTY || !id.equals(BuiltInRegistries.FLUID.getKey(fluid))
+                    ? null : new FluidStack(fluid, mb);
+        }
         // Water is vanilla water; it has no GT catalog entry.
-        if ("minecraft:water".equals(registry) || "water".equals(registry))
+        if ("water".equals(registry))
             return new FluidStack(Fluids.WATER, mb);
         // sanitizePath is the port's declared source-registry translation, not material-name aliasing.
         String path = RegisteredFluids.sanitizePath(registry);
@@ -43,7 +52,7 @@ final class DecompositionNativeAdapter {
             var value = GeneratedRecipeResolver.namedFluid(field.getKey(), mb);
             if (value == null || value.isEmpty()) continue;
             var id = BuiltInRegistries.FLUID.getKey(value.getFluid());
-            if (id != null && (id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && id.getPath().equals(path)
+            if (id != null && (id.getNamespace().equals(GTFluids.namespace(e)) && id.getPath().equals(path)
                     || e.usesVanillaFluid() && id.getNamespace().equals("minecraft") && id.getPath().equals(path)))
                 return value;
         }

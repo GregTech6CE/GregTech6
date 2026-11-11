@@ -1,15 +1,19 @@
 package gregtech.content.recipe;
 
 import com.mojang.logging.LogUtils;
+import gregtech.api.addon.material.FormKey;
 import gregtech.api.addon.material.MaterialDecompositionRule;
+import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.material.GTMaterial;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.FluidCatalog;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTTechnological;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialStackItemHelper;
@@ -100,13 +104,13 @@ public final class DecompositionRecipeLoader implements InitializationStep {
                 any |= publish(
                         MachineRecipeMaps.Centrifuge,
                         material,
-                        rule,
+                        declared.get(),
                         MaterialDecompositionRule.Route.CENTRIFUGE);
             if (rule.routes().contains(MaterialDecompositionRule.Route.ELECTROLYSER))
                 any |= publish(
                         MachineRecipeMaps.Electrolyzer,
                         material,
-                        rule,
+                        declared.get(),
                         MaterialDecompositionRule.Route.ELECTROLYSER);
             if (any) added++;
             else skipped++;
@@ -116,8 +120,9 @@ public final class DecompositionRecipeLoader implements InitializationStep {
     private boolean publish(
             RecipeMap map,
             GTMaterial material,
-            MaterialDecompositionRule rule,
+            MaterialProcessRule<MaterialDecompositionRule> declaration,
             MaterialDecompositionRule.Route route) {
+        var rule = declaration.value();
         var result = MaterialDecompositionPlanner.plan(
                 material, rule, route, map.mOutputItemsCount, map.mOutputFluidCount);
         if (!result.planned()) {
@@ -160,15 +165,18 @@ public final class DecompositionRecipeLoader implements InitializationStep {
                     if (input.declared()) bindingIssues++;
                     continue;
                 }
+                if (!allowsFluid(declaration, input, fluid)) continue;
                 fluidInputAdded = true;
                 addedAny |= add(map, null, fluid, itemOutputs, fluidOutputs, plan);
             }
         }
 
         if ((!fluidInputAdded || rule.keepSolidInput()) && map.mInputItemsCount > 0) {
-            ItemStack dust = MaterialStackItemHelper.mat(MaterialPrefix.dust, material, (int) plan.divider());
-            if (!dust.isEmpty()) addedAny |= add(map, dust, null, itemOutputs, fluidOutputs, plan);
-            if (plan.blockDustCount() > 0) {
+            if (allows(declaration, "dust")) {
+                ItemStack dust = MaterialStackItemHelper.mat(MaterialPrefix.dust, material, (int) plan.divider());
+                if (!dust.isEmpty()) addedAny |= add(map, dust, null, itemOutputs, fluidOutputs, plan);
+            }
+            if (allows(declaration, "blockDust") && plan.blockDustCount() > 0) {
                 ItemStack block = GTBlocks.getStack(BlockMaterialPrefix.blockDust, material);
                 if (!block.isEmpty()) {
                     block.setCount(plan.blockDustCount());
@@ -177,6 +185,23 @@ public final class DecompositionRecipeLoader implements InitializationStep {
             }
         }
         return addedAny;
+    }
+
+    private static boolean allows(MaterialProcessRule<?> declaration, String form) {
+        return declaration.forms().isEmpty() || declaration.forms().contains(new FormKey(form));
+    }
+
+    private static boolean allowsFluid(
+            MaterialProcessRule<?> declaration, MaterialDecompositionPlanner.FluidInput input, FluidStack fluid) {
+        if (declaration.forms().isEmpty()) return true;
+        var entry = GTFluids.entryForFluid(fluid.getFluid());
+        if (entry != null) {
+            String form = entry.textureMode() == FluidCatalog.FluidTextureMode.GENERIC_MOLTEN
+                    ? "molten" : entry.gas() ? "gas" : "liquid";
+            return allows(declaration, form);
+        }
+        return input.phase() != null && allows(declaration,
+                input.phase() == MaterialDecompositionRule.Phase.GAS ? "gas" : "liquid");
     }
 
     private static List<ItemStack> nativeItemOutputs(MaterialDecompositionPlanner.Plan plan) {

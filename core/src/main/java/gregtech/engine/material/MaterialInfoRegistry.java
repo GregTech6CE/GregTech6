@@ -6,6 +6,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialToolProfile;
 import gregtech.engine.addon.AddonMaterials;
+import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
 import java.util.*;
 
@@ -118,11 +119,65 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
     static void freeze() {
         if (snapshot != null) return;
         registrationsClosed = true;
+        mergeAddonProcesses();
         normalizeLinkedFlags();
+        validateProcesses();
         validateLinkedToolRegistrations();
         var published = new LinkedHashMap<MaterialKey, PublishedMaterialInfo>();
         MATERIALS.forEach((key, info) -> published.put(key, info.freeze()));
         snapshot = new Snapshot(Map.copyOf(published), Map.copyOf(GROUP_RELATIONS));
+    }
+
+    private static void mergeAddonProcesses() {
+        for (var submission : AddonMaterials.processDeclarations()) {
+            var declaration = submission.declaration();
+            mergeAddonProcess(
+                    submission.addonId(),
+                    new MaterialKey(declaration.materialName()),
+                    declaration.process(),
+                    new MaterialProcessRule<>(declaration.forms(), declaration.value()));
+        }
+        for (var submission : ADDON_PROCESSES)
+            mergeAddonProcess(submission.addonId(), submission.material(), submission.process(), submission.rule());
+    }
+
+    private static void mergeAddonProcess(
+            String addonId, MaterialKey materialKey, MaterialProcessKey<?> process, MaterialProcessRule<?> rule) {
+        GTMaterial material = GTMaterialRegistry.get(materialKey.name());
+        if (!material.isValid())
+            throw new IllegalArgumentException(
+                    "Addon '" + addonId + "' process uses unknown material '" + materialKey.name() + "'");
+        if (!process.equals(MaterialProcessKeys.DECOMPOSITION)) requireNamespace(addonId, process.id());
+        else if (!AddonMaterials.owners(material).contains(addonId))
+            throw new IllegalArgumentException("Addon '" + addonId
+                    + "' cannot declare decomposition for non-owned material '" + material.getName() + "'");
+        var target = MATERIALS.get(new MaterialKey(material.getName()));
+        if (target == null)
+            throw new IllegalArgumentException(
+                    "Addon '" + addonId + "' process uses non-material '" + materialKey.name() + "'");
+        var current = target.processes.computeIfAbsent(process, ignored -> new ArrayList<>());
+        if (process.cardinality() == MaterialProcessCardinality.SINGLE && !current.isEmpty())
+            throw new IllegalArgumentException(
+                    "Single-valued process " + process.id() + " already has a rule for this material");
+        var normalized = normalizeProcessRule("addon '" + addonId + "'", process, rule);
+        if (!current.contains(normalized)) current.add(normalized);
+    }
+
+    private static void validateProcesses() {
+        var types = new LinkedHashMap<DataKey, MaterialProcessKey<?>>();
+        MATERIALS.forEach((material, info) -> info.processes.replaceAll((key, rules) -> {
+            var previous = types.putIfAbsent(key.id(), key);
+            if (previous != null && (previous.type() != key.type() || previous.cardinality() != key.cardinality()))
+                throw new IllegalArgumentException(
+                        "Material process '" + key.id() + "' has conflicting type or cardinality");
+            if (key.cardinality() == MaterialProcessCardinality.SINGLE && rules.size() != 1)
+                throw new IllegalArgumentException("Material " + material.name() + " single-valued process " + key.id()
+                        + " must have exactly one rule, found " + rules.size());
+            return rules.stream()
+                    .<MaterialProcessRule<?>>map(
+                            rule -> normalizeProcessRule("material '" + material.name() + "'", key, rule))
+                    .toList();
+        }));
     }
 
     private static void normalizeLinkedFlags() {
@@ -131,20 +186,6 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
             if (!material.isValid()) continue;
             var mutable = entry.getValue();
             MaterialDecompositionRule explicit = explicitDecomposition(mutable);
-            for (ProcessSubmission submission : ADDON_PROCESSES)
-                if (submission.material().equals(entry.getKey())
-                        && submission.process().equals(MaterialProcessKeys.DECOMPOSITION))
-                    explicit = selectDecomposition(
-                            explicit,
-                            (MaterialDecompositionRule) submission.rule().value(),
-                            "addon '" + submission.addonId() + "'");
-            for (var submission : AddonMaterials.processDeclarations())
-                if (submission.declaration().materialName().equals(material.getName())
-                        && submission.declaration().process().equals(MaterialProcessKeys.DECOMPOSITION))
-                    explicit = selectDecomposition(
-                            explicit,
-                            (MaterialDecompositionRule) submission.declaration().value(),
-                            "addon '" + submission.addonId() + "'");
             MaterialDecompositionRule effective = effectiveDecomposition(explicit, material.getProperties());
             if (explicit == null && effective != null)
                 mutable.processes.put(
@@ -165,12 +206,6 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         if (rules.size() != 1)
             throw new IllegalArgumentException("Single-valued decomposition process has " + rules.size() + " rules");
         return (MaterialDecompositionRule) rules.get(0).value();
-    }
-
-    private static MaterialDecompositionRule selectDecomposition(
-            MaterialDecompositionRule existing, MaterialDecompositionRule candidate, String source) {
-        if (existing == null) return candidate;
-        throw new IllegalArgumentException("Decomposition process already has a rule; duplicate from " + source);
     }
 
     static MaterialDecompositionRule effectiveDecomposition(
@@ -274,15 +309,20 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         return List.copyOf(ADDON_GROUPS);
     }
 
-    static List<ProcessSubmission> processSubmissions() {
-        return List.copyOf(ADDON_PROCESSES);
-    }
-
     private static Set<FormKey> normalizeProcessForms(
             String source, MaterialProcessKey<?> process, Set<FormKey> sourceForms) {
         if (sourceForms.isEmpty()) return sourceForms;
         var forms = new LinkedHashSet<FormKey>();
         for (var form : sourceForms) {
+            if (Set.of("liquid", "gas", "molten").contains(form.name())) {
+                forms.add(form);
+                continue;
+            }
+            var block = BlockPrefixRegistry.byName(form.name());
+            if (block != null) {
+                forms.add(new FormKey(block.getName()));
+                continue;
+            }
             var prefix = PrefixRegistry.byName(form.name());
             if (prefix == null)
                 throw new IllegalArgumentException(

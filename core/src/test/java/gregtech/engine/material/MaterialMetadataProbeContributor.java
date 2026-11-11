@@ -12,14 +12,21 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
     }
 
     public List<MaterialDeclaration> materials() {
+        var material = MaterialDeclaration.builder("MetadataMaterial").dust();
+        if (System.getProperty("material.metadata.scenario", "").contains("Decomposition"))
+            material.liquid().gas();
         return List.of(
-                MaterialDeclaration.builder("MetadataMaterial").dust().build(),
+                material.build(),
                 MaterialDeclaration.builder("MetadataSecond").dust().build());
     }
 
     @Override
     public List<MaterialComposition> compositions() {
-        if (!"infoLegacy".equals(System.getProperty("material.metadata.scenario"))) return List.of();
+        String scenario = System.getProperty("material.metadata.scenario");
+        if (scenario.contains("Decomposition"))
+            return List.of(new MaterialComposition(
+                    "MetadataMaterial", 1, List.of(new MaterialComposition.Part("Iron", GTValues.U)), false));
+        if (!"infoLegacy".equals(scenario)) return List.of();
         return List.of(
                 new MaterialComposition(
                         "MetadataMaterial",
@@ -162,6 +169,15 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
         String scenario = System.getProperty("material.metadata.scenario");
         var key = MaterialProcessKey.multiple(new DataKey(addonId(), "throw_into_water"), String.class);
         return switch (scenario) {
+            case "processDecomposition", "infoDecompositionConflictFailure" ->
+                List.of(new MaterialProcessDeclaration<>(
+                        "MetadataMaterial",
+                        MaterialProcessKeys.DECOMPOSITION,
+                        java.util.Set.of(new FormKey("dust")),
+                        decomposition()));
+            case "processDecompositionOwnerFailure" ->
+                List.of(new MaterialProcessDeclaration<>(
+                        "Iron", MaterialProcessKeys.DECOMPOSITION, java.util.Set.of(), decomposition()));
             case "processes" ->
                 List.of(new MaterialProcessDeclaration<>("Iron", key, java.util.Set.of(new FormKey("dust")), "wet"));
             case "processFormAlias" ->
@@ -201,6 +217,27 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
         String scenario = System.getProperty("material.metadata.scenario");
         var material = new MaterialKey("MetadataMaterial");
         switch (scenario) {
+            case "infoDecomposition",
+                    "infoDecompositionBlock",
+                    "infoDecompositionLiquid",
+                    "infoDecompositionGas",
+                    "infoDecompositionConflictFailure":
+                String form = scenario.equals("infoDecompositionBlock")
+                        ? "blockDust"
+                        : scenario.equals("infoDecompositionLiquid")
+                                ? "liquid"
+                                : scenario.equals("infoDecompositionGas") ? "gas" : "dust";
+                registrar.registerProcess(
+                        material,
+                        MaterialProcessKeys.DECOMPOSITION,
+                        new MaterialProcessRule<>(java.util.Set.of(new FormKey(form)), decomposition()));
+                return;
+            case "infoDecompositionOwnerFailure":
+                registrar.registerProcess(
+                        new MaterialKey("Iron"),
+                        MaterialProcessKeys.DECOMPOSITION,
+                        MaterialProcessRule.anyForm(decomposition()));
+                return;
             case "infoLegacyToolConflictFailure":
                 registrar.registerTool(material, new MaterialToolProfile(1, 3F, 64, 1));
                 return;
@@ -266,5 +303,10 @@ public final class MaterialMetadataProbeContributor implements AddonMaterialCont
                         material,
                         MaterialProcessKey.multiple(new DataKey(addonId(), "typed_process"), String.class),
                         MaterialProcessRule.anyForm("typed"));
+    }
+
+    private static MaterialDecompositionRule decomposition() {
+        return new MaterialDecompositionRule(
+                java.util.Set.of(MaterialDecompositionRule.Route.CENTRIFUGE), List.of(), false);
     }
 }

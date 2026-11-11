@@ -460,6 +460,60 @@ public final class MaterialBaselineTests {
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void decompositionRespectsFormsAndExactFluidIdentities(GameTestHelper helper) {
+        var owned = gregtech.content.recipe.DecompositionRecipeLoader.owned();
+        for (var test : MaterialBaselineAddon.DECOMPOSITIONS) {
+            var material = gregtech.engine.material.GTMaterialRegistry.get(test.material());
+            var key = new MaterialKey(material.getName());
+            helper.assertTrue(MaterialInfoTool.currentProcess(key, MaterialProcessKeys.DECOMPOSITION)
+                            .equals(GregTechMaterials.processes().findSingle(key, MaterialProcessKeys.DECOMPOSITION)),
+                    test.material() + " process queries agree");
+            var dust = GTItems.getStack(MaterialPrefix.dust, material, 9);
+            var block = gregtech.content.registry.GTBlocks.getStack(
+                    gregtech.engine.prefix.BlockMaterialPrefix.blockDust, material);
+            helper.assertFalse(dust.isEmpty() || block.isEmpty(), test.material() + " solid fixtures registered");
+            boolean dustRow = owned.stream().anyMatch(row -> Arrays.stream(row.mInputs)
+                    .anyMatch(input -> input != null && input.is(dust.getItem())));
+            boolean blockRow = owned.stream().anyMatch(row -> Arrays.stream(row.mInputs)
+                    .anyMatch(input -> input != null && input.is(block.getItem())));
+            helper.assertTrue(dustRow == test.form().equals("dust"), test.material() + " dust permission");
+            helper.assertTrue(blockRow == test.form().equals("blockDust"), test.material() + " block permission");
+            String fluidId = test.fluid() == null || !test.fluid().contains(":")
+                    ? "material_baseline_test:" + test.material().toLowerCase(java.util.Locale.ROOT)
+                    : test.fluid();
+            var id = ResourceLocation.tryParse(fluidId);
+            boolean registered = id != null && BuiltInRegistries.FLUID.containsKey(id);
+            boolean allowsFluid = test.form().equals("liquid") || test.form().equals("gas");
+            Recipe row = null;
+            if (registered) {
+                var fluid = BuiltInRegistries.FLUID.get(id);
+                row = owned.stream().filter(candidate -> Arrays.stream(candidate.mFluidInputs)
+                        .anyMatch(input -> input != null && input.getFluid() == fluid)).findFirst().orElse(null);
+            }
+            helper.assertTrue((row != null) == (registered && allowsFluid), test.material() + " fluid permission and identity");
+            if (row != null) {
+                helper.assertTrue(row.mFluidInputs.length == 1 && row.mFluidInputs[0].getAmount() == 1000,
+                        test.material() + " exact fluid conversion after recipe reduction");
+                helper.assertTrue(row.mOutputs.length == 1 && row.mOutputs[0].getCount() == 1
+                                && row.mOutputs[0].is(GTItems.getStack(MaterialPrefix.dust, Materials.Iron, 1).getItem()),
+                        test.material() + " complete solid output");
+                helper.assertTrue(row.mDuration == 292 && row.mEUt == 126,
+                        test.material() + " reduced duration and unchanged EU/t");
+            }
+        }
+        var outputMaterial = gregtech.engine.material.GTMaterialRegistry.get("BaselineFluidOutput");
+        var outputRow = find(MachineRecipeMaps.Centrifuge,
+                List.of(GTItems.getStack(MaterialPrefix.dust, outputMaterial, 2)), List.of());
+        helper.assertTrue(outputRow != null && outputRow.mFluidOutputs.length == 1,
+                "namespaced fluid output does not discard the entire decomposition plan");
+        helper.assertTrue(outputRow.mFluidOutputs[0].getAmount() == 1000
+                        && BuiltInRegistries.FLUID.getKey(outputRow.mFluidOutputs[0].getFluid()).toString()
+                                .equals("material_baseline_test:baselineliquidonly"),
+                "namespaced addon fluid output retains identity and quantity");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
     public static void compositionAdmissionAndCookingPolicyStayIndependent(GameTestHelper helper) {
         var descriptive = ItemMaterialRegistry.entries().entrySet().stream()
                 .filter(entry -> entry.getValue().sources().stream()

@@ -30,6 +30,8 @@
 | `engine.compat` | 可选模组的适配规格和共享规则 | `CompatSpecs` 等；第三方 API 调用留在 Minecraft 层 |
 | `engine.mod` | 模组身份与一次性初始化控制 | `GregTechIdentity`、`SetupOnce`；不成为业务逻辑杂物箱 |
 
+材料 process 的两种附属提交入口都在 `MaterialInfoRegistry` 冻结前合并，统一检查所有权、类型、基数和形态名称；`MaterialViews` 只投影该快照并检查材料实际允许的形态，不再次汇总附属提交。
+
 ## Minecraft 中的执行适配
 
 入口为 [minecraft/gregtech/engine](../../../minecraft/src/main/java/gregtech/engine)。这些同名领域包允许游戏类型，但应尽量复用上表的纯规则。
