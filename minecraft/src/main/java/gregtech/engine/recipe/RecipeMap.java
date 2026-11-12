@@ -480,7 +480,7 @@ public class RecipeMap {
     /** Unify explicit vanilla replacements before collision lookup, as viewers and live aliases do.
      * Exact recipes and identity-sensitive predicates keep their original representatives. */
     private static void canonicalInputs(Recipe recipe) {
-        if (recipe.mExactItemInputs) return;
+        if (recipe.mExactItemInputs || recipe.hasRuntimeResolver()) return;
         for (int i = 0; i < recipe.mInputs.length; i++) {
             if (recipe.itemTag(i) == null && !recipe.hasItemInputGuard(i) && !recipe.hasSameItemInputPredicate(i))
                 recipe.mInputs[i] = gregtech.engine.material.MaterialUnification.canonical(recipe.mInputs[i]);
@@ -1314,10 +1314,10 @@ public class RecipeMap {
         var candidates = lookupTable.candidates(inputItems, inputFluids);
         // Both candidate stages already apply exactItems to every static row; the cached candidate
         // lists keep that split for the same input identities, so the check is not repeated here.
-        Recipe best = bestStaticMatch(candidates.exact(), matcher, needsOutputs, emptyOutputs);
+        Recipe best = bestStaticMatch(candidates.exact(), matcher, inputItems, needsOutputs, emptyOutputs);
         if (best != null) return best;
         // Material aliases, legacy colour alternatives and tag-derived forms retain the full fallback.
-        best = bestStaticMatch(candidates.alternatives(), matcher, needsOutputs, emptyOutputs);
+        best = bestStaticMatch(candidates.alternatives(), matcher, inputItems, needsOutputs, emptyOutputs);
         if (best != null) return best;
         // GT6's subclass overrides run only when the table had no answer, exactly like GT6's
         // `if (rRecipe != null) return rRecipe;` guards at the top of those findRecipe() bodies.
@@ -1341,7 +1341,7 @@ public class RecipeMap {
      * fake, presence-incompatible or non-matching row never shadows a usable variant.
      */
     @javax.annotation.Nullable
-    private Recipe bestStaticMatch(List<Recipe> stage, RecipeInputs.Matcher matcher,
+    private Recipe bestStaticMatch(List<Recipe> stage, RecipeInputs.Matcher matcher, List<ItemStack> inputs,
                                    boolean needsOutputs, boolean emptyOutputs) {
         if (stage.isEmpty()) return null;
         // Explicit priority first; equal priorities keep the row published first. The matcher then
@@ -1355,7 +1355,10 @@ public class RecipeMap {
         for (Recipe candidate : ordered) {
             if (!candidate.mEnabled || candidate.mFakeRecipe || !supportsFluidPresence(candidate)) continue;
             if (needsOutputs && candidate.mNeedsEmptyOutput && !emptyOutputs) continue;
-            if (matcher.matches(candidate, 1)) return candidate;
+            if (!matcher.matches(candidate, 1)) continue;
+            if (!candidate.hasRuntimeResolver()) return candidate;
+            Recipe resolved = candidate.resolveRuntime(inputs);
+            if (resolved != null) return resolved;
         }
         return null;
     }

@@ -1,119 +1,72 @@
 package gregtech.content.registry;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
 import gregtech.GregTech;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.content.block.machine.*;
-import gregtech.engine.machine.CrucibleSpec;
+import gregtech.content.data.MaterialPrefixes;
+import gregtech.content.material.MaterialItemCompositions;
 import gregtech.engine.material.ItemMaterialRegistry;
-import java.util.List;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.ForgeRegistries;
 
-/** Registers GT block items in {@link ItemMaterialRegistry} so F3+H advanced tooltips show material composition. */
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
+/** Forge-only block families after the shared item and block composition pass. */
 public final class GTMaterialRegistration {
     private GTMaterialRegistration() {}
 
-    /** Call from common setup after all blocks are registered. */
+    /** Runs after block items exist and after the platform-neutral composition submissions. */
     public static void registerAll() {
-        GregTech.LOGGER.info("[{}] Registering GT block item materials for F3+H tooltips", GregTech.NAMESPACE);
+        GregTech.LOGGER.info("[{}] Registering GT platform block item materials", GregTech.NAMESPACE);
+        MaterialItemCompositions.registerCommon();
+        int count = registerIconSetOres();
+        count += registerOwnedOres();
+        count += registerPlants();
+        GregTech.LOGGER.info("[{}] Registered {} Forge-specific block item compositions", GregTech.NAMESPACE, count);
+    }
 
+    private static int registerIconSetOres() {
         int count = 0;
-        // Material items carry their identity on the Item instance. Fuel/ash and recovery
-        // consumers use the same composition registry as block items and vanilla forms.
-        for (var holder : GTItems.allEntries()) {
-            if (holder.isPresent() && holder.get() instanceof gregtech.engine.material.MaterialFormItem item) {
-                ItemMaterialRegistry.register(holder.get(), item.getPrefix(), item.getMaterial());
+        for (RegisteredBlock<Block> entry : GTIconSetBlocks.all()) {
+            if (!entry.isPresent()) continue;
+            Block block = entry.get();
+            if (block instanceof gregtech.content.block.BlackSandBlock sand) {
+                ItemMaterialRegistry.register(sand.asItem(), null, sand.material(), GTValues.U * 9);
                 count++;
-            }
-        }
-        // The original GT6 ore unifier treats this placeable block as one
-        // plate of WoodTreated. Keep recipes, material tags and recycling aligned.
-        ItemMaterialRegistry.register(
-                GTItems.getStack(
-                                gregtech.content.data.MaterialPrefix.plate,
-                                gregtech.content.material.generated.WoodMaterials.WoodTreated)
-                        .getItem(),
-                gregtech.content.data.MaterialPrefix.plate,
-                gregtech.content.material.generated.WoodMaterials.WoodTreated);
-        count++;
-        // Wires, cables and signal wires use the same composition rules on both platforms.
-        GTWires.registerCompositions();
-        GTSignalWires.registerCompositions();
-
-        // Source pipe associations and ordinary barrel REV data, shared with NeoForge.
-        count += gregtech.content.recipe.TransportMaterialRegistration.register();
-
-        // Original CR.REV components, including tier parts and multiblock controllers.
-        // Iterate the native registry: several families use their own registration holder.
-        for (var block : net.minecraft.core.registries.BuiltInRegistries.BLOCK) {
-            var id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
-            if (!id.getNamespace().equals(GregTech.NAMESPACE)) continue;
-            if (block instanceof BasicMachineBlock machine) {
-                var spec = machine.basicSpec();
-                var data = gregtech.content.machine.OriginalMachineMaterialData.find(spec.machineName(), spec.tier());
-                if (data.isPresent()) {
-                    ItemMaterialRegistry.register(block.asItem(), data.get());
+            } else if (block instanceof gregtech.content.block.DenseOreBlock ore) {
+                GTMaterial material = ore.material();
+                if (material != null && material.isValid()) {
+                    ItemMaterialRegistry.register(block.asItem(), MaterialPrefixes.oreDense.getDelegate(), material);
+                    count++;
+                }
+            } else if (block instanceof gregtech.content.block.VanillaOreBlock ore) {
+                GTMaterial material = ore.material();
+                if (material != null && material.isValid()) {
+                    ItemMaterialRegistry.register(
+                            block.asItem(), MaterialPrefixes.oreVanillastone.getDelegate(), material);
                     count++;
                 }
             }
-            var data = gregtech.content.machine.MachineConstructionMaterials.block(id.getPath());
-            if (data.isPresent()) {
-                ItemMaterialRegistry.register(block.asItem(), data.get());
+        }
+        return count;
+    }
+
+    private static int registerOwnedOres() {
+        int count = 0;
+        for (RegisteredBlock<? extends Block> entry : GTBlocks.allEntries()) {
+            if (!entry.isPresent()) continue;
+            if (entry.get() instanceof gregtech.content.block.OreBlock ore && !ore.isSmall()) {
+                ItemMaterialRegistry.register(
+                        ore.asItem(), MaterialPrefixes.oreVanillastone.getDelegate(), ore.material());
                 count++;
             }
         }
+        return count;
+    }
 
-        // Smeltery compositions are registered from audited source data in the block loop above.
-
-        gregtech.content.recipe.DiggableRecipes.registerMaterials();
-        gregtech.content.recipe.RegisteredWoodSurvivalRecipes.registerMaterials();
-        count += 8; // Five clay blocks, turf, and two legacy ids; five clay balls are items.
-
-        // GT6 BlockSands metas 0..2 are OP.blockDust forms: one placed sand is nine dust units.
-        // Keep the original sand texture block distinct from the generic MaterialBlock model.
-        for (RegisteredBlock<Block> entry : GTIconSetBlocks.all()) {
-            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.BlackSandBlock sand)) continue;
-            ItemMaterialRegistry.register(sand.asItem(), null, sand.material(), GTValues.U * 9);
-            count++;
-        }
-
-        // GT6 BlockCrystalOres / BlockRockOres register their block items as OP.oreDense.
-        // This is a 4U ore form; no separate material item or replacement model is generated.
-        for (RegisteredBlock<Block> entry : GTIconSetBlocks.all()) {
-            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.DenseOreBlock denseOre)) continue;
-            Block block = entry.get();
-            GTMaterial oreMaterial = denseOre.material();
-            if (oreMaterial == null || !oreMaterial.isValid()) continue;
-            ItemMaterialRegistry.register(
-                    block.asItem(), gregtech.content.data.MaterialPrefixes.oreDense.getDelegate(), oreMaterial);
-            count++;
-        }
-
-        // GT6 BlockVanillaOresA metas 0..15 carry OP.oreVanillastone, an ordinary 2U ore.
-        for (RegisteredBlock<Block> entry : GTIconSetBlocks.all()) {
-            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.VanillaOreBlock ore)) continue;
-            GTMaterial oreMaterial = ore.material();
-            if (oreMaterial == null || !oreMaterial.isValid()) continue;
-            ItemMaterialRegistry.register(
-                    ore.asItem(), gregtech.content.data.MaterialPrefixes.oreVanillastone.getDelegate(), oreMaterial);
-            count++;
-        }
-
-        // GT6's ordinary and broken host-stone ores are both OP.oreVanillastone (2U).
-        // The port shares one block ID per material and marks the broken form in BlockStateTag.
-        for (RegisteredBlock<? extends Block> entry : GTBlocks.allEntries()) {
-            if (!entry.isPresent() || !(entry.get() instanceof gregtech.content.block.OreBlock ore) || ore.isSmall())
-                continue;
-            ItemMaterialRegistry.register(
-                    ore.asItem(), gregtech.content.data.MaterialPrefixes.oreVanillastone.getDelegate(), ore.material());
-            count++;
-        }
-
-        // GT6 BlockGlowtus constructor: each colour carries one quarter-unit of Glowstone.
-        // 1.20.1 has separate block items in place of GT6's 16 metadata values.
+    private static int registerPlants() {
+        int count = 0;
         for (String colour : gregtech.content.worldgen.GTSurfaceFlora.GLOWTUS_COLOURS) {
             Block glowtus = gregtech.content.worldgen.GTSurfaceFlora.glowtus(colour);
             if (glowtus == null) throw new IllegalStateException("Missing glowtus_" + colour);
@@ -121,70 +74,15 @@ public final class GTMaterialRegistration {
                     glowtus.asItem(), null, gregtech.content.material.Materials.Glowstone, GTValues.U4);
             count++;
         }
-
-        // BlockFlowersA/B assign material only to A0/A1 (Wheat), B0/B1 (Acacia)
-        // and B6 (Palm). Their ore indication is not a material composition.
         for (var flower : gregtech.content.plant.BedrockFlowers.ALL) {
             if (flower.material() == null) continue;
-            Block block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, flower.id()));
+            Block block = ForgeRegistries.BLOCKS.getValue(
+                    ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, flower.id()));
             if (block == null || block == net.minecraft.world.level.block.Blocks.AIR)
                 throw new IllegalStateException("Missing GT6 bedrock flower " + flower.id());
             ItemMaterialRegistry.register(block.asItem(), null, flower.material(), GTValues.U);
             count++;
         }
-
-        gregtech.content.recipe.PanelMaterialRegistration.register();
-        GregTech.LOGGER.info("[{}] Registered {} GT block items for material tooltips", GregTech.NAMESPACE, count);
-    }
-
-    @SuppressWarnings("unchecked")
-    private static int registerMachineList(List<?> list, long amount) {
-        int count = 0;
-        for (Object obj : list) {
-            RegistryObject<? extends Block> entry = (RegistryObject<? extends Block>) obj;
-            if (!entry.isPresent()) continue;
-            Block block = entry.get();
-            GTMaterial mat = extractMaterial(block);
-            if (mat == null) continue;
-            ItemMaterialRegistry.register(block.asItem(), null, mat, amount);
-            count++;
-        }
         return count;
-    }
-
-    private static GTMaterial extractMaterial(Block block) {
-        if (block instanceof FluidPipeBlock pb) return pb.spec().material();
-        if (block instanceof ItemPipeBlock pb) return pb.spec().material();
-        if (block instanceof TankBlock tb) return tb.spec().material();
-        return null;
-    }
-
-    private static GTMaterial extractCrucibleMaterial(Block block) {
-        if (block instanceof MoldBlock mb) {
-            CrucibleSpec spec = mb.spec();
-            return spec != null ? spec.material() : null;
-        }
-        if (block instanceof MoldBasinBlock mb) {
-            CrucibleSpec spec = mb.spec();
-            return spec != null ? spec.material() : null;
-        }
-        if (block instanceof CrucibleCrossingBlock cc) {
-            CrucibleSpec spec = cc.spec();
-            return spec != null ? spec.material() : null;
-        }
-        if (block instanceof CrucibleFaucetBlock cf) {
-            CrucibleSpec spec = cf.spec();
-            return spec != null ? spec.material() : null;
-        }
-        if (block instanceof HopperBlock hb) {
-            var spec = hb.spec();
-            return spec != null ? spec.material() : null;
-        }
-        if (block instanceof QueueHopperBlock qb) {
-            var spec = qb.spec();
-            return spec != null ? spec.material() : null;
-        }
-        return null;
     }
 }

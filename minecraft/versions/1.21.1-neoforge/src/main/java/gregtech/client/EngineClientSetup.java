@@ -1,12 +1,14 @@
 package gregtech.client;
 
-import gregtech.content.blockentity.machine.*;
+import gregtech.content.blockentity.machine.KineticSteamEngineBlockEntity;
+import gregtech.content.blockentity.machine.PistonEngineBlockEntity;
 import gregtech.content.registry.*;
 import gregtech.engine.machine.EngineType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 @EventBusSubscriber(
         modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,

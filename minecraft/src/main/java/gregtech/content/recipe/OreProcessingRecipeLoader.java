@@ -402,8 +402,23 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             return false;
         }
         MachineRecipeMaps.Crusher .addRecipe1(true, EU_TIER, 32, input, multiOut);
-        if (!ReviewedCinnabarFacts.supports(material) && !ReviewedOreShredderFacts.supports(material))
-            MachineRecipeMaps.Shredder.addRecipe1(true, EU_TIER, 32, input, multiOut);
+        if (!ReviewedCinnabarFacts.supports(material) && !ReviewedOreShredderFacts.supports(material)) {
+            var recipe = RecipeMap.make(
+                    true,
+                    new ItemStack[] {input},
+                    new ItemStack[] {multiOut},
+                    null,
+                    null,
+                    null,
+                    null,
+                    32,
+                    EU_TIER,
+                    0);
+            if (recipe != null)
+                RecoveryRecipePublisher.publish(
+                        MachineRecipeMaps.Shredder,
+                        RecoveryRecipePublisher.explicit(recipe, "ore-processing/maceration-fallback"));
+        }
         return false;
     }
 
@@ -501,13 +516,32 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             long duration = computeRecycleDuration(material, moltenFluid);
 
             // Melter: item → molten fluid (no item output)
-            MachineRecipeMaps.Melter.addRecipe1(true, EU_TIER, duration, recyclableInput,
-                    (FluidStack) null, moltenFluid, RecipeMap.ZL_IS);
+            publishLegacyThermal(MachineRecipeMaps.Melter, recyclableInput, moltenFluid, duration);
 
             // Smelter: item → molten fluid (no item output)
-            MachineRecipeMaps.Smelter.addRecipe1(true, EU_TIER, duration, recyclableInput,
-                    (FluidStack) null, moltenFluid, RecipeMap.ZL_IS);
+            publishLegacyThermal(MachineRecipeMaps.Smelter, recyclableInput, moltenFluid, duration);
         }
+    }
+
+    private static void publishLegacyThermal(
+            RecipeMap map, ItemStack input, FluidStack output, long duration) {
+        var recipe = RecipeMap.make(
+                true,
+                new ItemStack[] {input.copy()},
+                new ItemStack[0],
+                null,
+                null,
+                new FluidStack[0],
+                new FluidStack[] {output.copy()},
+                duration,
+                EU_TIER,
+                0);
+        if (recipe == null) return;
+        RecoveryRecipePublisher.publish(
+                map,
+                RecoveryRecipePublisher.generic(
+                        recipe.withMaterialRecovery().withSource("recovery:ore-processing-legacy"),
+                        "thermal-ore-processing"));
     }
 
     /**

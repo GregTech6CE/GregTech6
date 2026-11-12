@@ -13,7 +13,6 @@ import gregtech.content.registry.GTWires;
 import gregtech.engine.energy.WireSpec;
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.engine.machine.PipeSpec;
-import java.util.Locale;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -21,6 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
+
+import java.util.Locale;
 
 /**
  * Replaces every pipe/wire/cable blockstate variant with the dynamic

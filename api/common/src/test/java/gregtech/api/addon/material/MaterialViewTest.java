@@ -1,11 +1,12 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later */
 package gregtech.api.addon.material;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Set;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class MaterialViewTest {
     @Test
@@ -103,6 +104,23 @@ class MaterialViewTest {
                 IllegalArgumentException.class,
                 () -> new MaterialProcessDeclaration("Iron", integerProcess, Set.of(), "wrong"));
         assertTrue(invalid.getMessage().contains("type mismatch"));
+    }
+
+    @Test
+    void decompositionRulesRetainNativeQuantitiesAndRejectDuplicatePhases() {
+        var fluid = new MaterialDecompositionRule.FluidBinding(
+                MaterialDecompositionRule.Phase.LIQUID, "molten.iron", 648648000L, 144);
+        var routes = new java.util.HashSet<MaterialDecompositionRule.Route>();
+        routes.add(MaterialDecompositionRule.Route.CENTRIFUGE);
+        var rule = new MaterialDecompositionRule(routes, java.util.List.of(fluid), true);
+        routes.clear();
+        assertEquals(Set.of(MaterialDecompositionRule.Route.CENTRIFUGE), rule.routes());
+        assertThrows(UnsupportedOperationException.class, () -> rule.routes().clear());
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new MaterialDecompositionRule(
+                        Set.of(MaterialDecompositionRule.Route.CENTRIFUGE), java.util.List.of(fluid, fluid), false));
+        assertEquals(MaterialDecompositionRule.class, MaterialProcessKeys.DECOMPOSITION.type());
     }
 
     @Test

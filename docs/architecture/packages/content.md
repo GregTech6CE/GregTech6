@@ -57,7 +57,7 @@
 | `content.data`、`content.data.generated` | 内容数据的原生适配和既有兼容数据；新代码优先放明确领域 |
 | `content.machine` | 基础机器定义在游戏侧的物化和调参，如 `BasicMachineDefinitions` |
 | `content.multiblock` | `ControllerDeclarations` 绑定具体主控，`ControllerStructureLayouts` 从相同声明产生预览；布局与设备规格 |
-| `content.material` | 原版物品成分与材料统一的加载 |
+| `content.material` | 原版物品成分、统一化与模组物品绑定的加载；共享 `MaterialItemCompositions` 汇集两平台纯物品/方块提交 |
 | `content.energy` | 能源设备的具体游戏接入；节点的 `content.fluid` 承担原生流体对象 |
 | `content.transport`、`content.transport.fluid` | 管道定义物化、物品转移适配及流体 tick 阶段 |
 | `content.cover`、`content.logistics` | 覆盖板宿主/交互/信号、`CoverStore` 共享存储与生命周期，及物流核心结构、路由接入 |

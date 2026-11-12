@@ -33,8 +33,17 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
                             java.util.List.of(
                                     MaterialComponent.of(material, 8 * GTValues.U),
                                     MaterialComponent.of(bark, GTValues.U)),
-                            "GT6 WoodEntry",
-                            true));
+                            material,
+                            java.util.List.of(new ItemCompositionSource(
+                                    ItemCompositionSource.Kind.EXPLICIT,
+                                    "gt6ce:wood-log/" + species.id(),
+                                    "GT6 WoodEntry",
+                                    species.id(),
+                                    "")),
+                            true),
+                    ItemCompositionSource.Kind.EXPLICIT,
+                    "gt6ce:wood-log/" + species.id(),
+                    "GT6 WoodEntry");
             ItemMaterialRegistry.register(GTWoods.strippedLog(species).asItem(), null, material, 8 * GTValues.U);
         }
         for (var wood : NaturalWoodCraftingRows.SPECIES) {
@@ -48,7 +57,20 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
             // or 6U of the same material for rotten/mossy wood. PlankEntry contributes 1U.
             gregtech.engine.material.ItemMaterialRegistry.register(
                     item("gt6ce:log_" + wood.kind(), 1).getItem(),
-                    new gregtech.engine.material.ItemComposition(null, components, "GT6 WoodEntry Log1", true));
+                    new gregtech.engine.material.ItemComposition(
+                            null,
+                            components,
+                            material,
+                            java.util.List.of(new gregtech.engine.material.ItemCompositionSource(
+                                    gregtech.engine.material.ItemCompositionSource.Kind.EXPLICIT,
+                                    "gt6ce:wood-log/" + wood.kind(),
+                                    "GT6 WoodEntry Log1",
+                                    wood.kind(),
+                                    "")),
+                            true),
+                    gregtech.engine.material.ItemCompositionSource.Kind.EXPLICIT,
+                    "gt6ce:wood-log/" + wood.kind(),
+                    "GT6 WoodEntry Log1");
             gregtech.engine.material.ItemMaterialRegistry.register(
                     item("gt6ce:planks_" + wood.kind(), 1).getItem(), MaterialPrefix.plate, material, unit);
         }

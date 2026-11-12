@@ -107,13 +107,17 @@ public final class MaterialUnitRecipe {
     }
 
     boolean accepts(ItemStack stack) {
-        if (!active() || stack.isEmpty() || ItemMaterialRegistry.hasStoredContents(stack)) return false;
+        if (!active() || stack.isEmpty()) return false;
+        if (stack.isDamaged() && template.hasRuntimeResolver())
+            return stack.getItem() == template.mInputs[inputIndex].getItem();
+        if (ItemMaterialRegistry.hasStoredContents(stack)) return false;
         Source source = source(stack);
         return source != null && source.guard.test(stack) && RecipeInputs.matches(source.stack, stack);
     }
 
     Recipe resolve(ItemStack offered) {
         if (!accepts(offered)) return null;
+        if (offered.isDamaged() && template.hasRuntimeResolver()) return template.resolveRuntime(List.of(offered));
         Source source = source(offered);
         try {
             var quantities = new ArrayList<Long>();
@@ -169,6 +173,7 @@ public final class MaterialUnitRecipe {
                     .withPresenceFluidInputs(template.explicitPresenceFluidInputs()).withEmptyContainerInputs()
                     .withPriority(template.mPriority);
             if (!template.mSource.isEmpty()) result.withSource(template.mSource);
+            result.mRecoveryOwnership = template.mRecoveryOwnership;
             result.mExplicitCatalystsOnly = template.mExplicitCatalystsOnly;
             result.mExactItemInputs = template.mExactItemInputs;
             result.mNeedsEmptyOutput = template.mNeedsEmptyOutput;

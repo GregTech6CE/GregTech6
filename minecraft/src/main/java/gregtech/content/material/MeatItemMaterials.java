@@ -6,6 +6,7 @@ import gregtech.content.food.GTFoodItems;
 import gregtech.content.food.MeatCutCatalog;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
+import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.ItemMaterialRegistry;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,7 +38,24 @@ public final class MeatItemMaterials {
         var parts = new ArrayList<MaterialComponent>();
         parts.add(MaterialComponent.of(GTMaterialRegistry.get(material), meat));
         if (bone > 0) parts.add(MaterialComponent.of(GTMaterialRegistry.get("Bone"), bone));
-        ItemMaterialRegistry.register(item, new ItemComposition(null, parts, "GT6 MultiItemFood meat cuts", true));
+        String jsonSource = VanillaCompositionLoader.declarationId(item).orElse(null);
+        ItemMaterialRegistry.register(
+                item,
+                new ItemComposition(
+                        null,
+                        parts,
+                        GTMaterialRegistry.get(material),
+                        java.util.List.of(new ItemCompositionSource(
+                                ItemCompositionSource.Kind.EXPLICIT,
+                                "gt6ce:meat-item/" + id,
+                                "GT6 MultiItemFood meat cuts",
+                                id,
+                                "")),
+                        true),
+                ItemCompositionSource.Kind.EXPLICIT,
+                "gt6ce:meat-item/" + id,
+                "GT6 food item data",
+                jsonSource);
         ITEMS.add(item);
     }
 }

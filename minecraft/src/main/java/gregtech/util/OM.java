@@ -4,7 +4,10 @@ import static gregtech.api.material.GTValues.*;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.recipe.MaterialRecoveryRules;
 import gregtech.engine.material.MaterialStackItemHelper;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -41,25 +44,32 @@ public final class OM {
     }
 
     /**
-     * Chooses the best dust/dustSmall/dustTiny/dustDiv72 stack for the given U amount.
-     * Port of GT6 {@code OM.dust(OreDictMaterial, long)}; GT6's block tier (72 U and above resolve
-     * to blocks of dust) is not modelled here.
+     * Returns one dust-slot view from {@link MaterialRecoveryRules#dustSlotPlan(long)}.
+     *
+     * <p>The returned stack represents as much of the amount as one legal stack can hold. A caller
+     * that owns an output array must use {@link #dustAll(GTMaterial, long)} so later piles and the
+     * plan's explicit remainder are not silently discarded.</p>
      */
     public static ItemStack dust(GTMaterial aMaterial, long aMaterialAmount) {
         if (aMaterial == null || aMaterialAmount < U72) return ItemStack.EMPTY;
-        if (aMaterialAmount >= U && (aMaterialAmount >= U * 16 || aMaterialAmount % U == 0)) {
-            ItemStack rStack = mat(MaterialPrefix.dust, aMaterial, aMaterialAmount / U);
-            if (!rStack.isEmpty()) return rStack;
+        var plan = MaterialRecoveryRules.dustSlotPlan(aMaterialAmount);
+        if (plan.piles().isEmpty()) return ItemStack.EMPTY;
+        var pile = plan.piles().get(0);
+        return mat(pile.prefix(), aMaterial, pile.count());
+    }
+
+    /** Expands a complete U amount into every dust stack selected by the shared recovery plan. */
+    public static List<ItemStack> dustAll(GTMaterial aMaterial, long aMaterialAmount) {
+        if (aMaterial == null || aMaterialAmount < U72) return List.of();
+        var plan = MaterialRecoveryRules.dustPlan(aMaterialAmount);
+        if (!plan.complete() || plan.piles().isEmpty()) return List.of();
+        var stacks = new ArrayList<ItemStack>(plan.piles().size());
+        for (var pile : plan.piles()) {
+            var stack = mat(pile.prefix(), aMaterial, pile.count());
+            if (stack.isEmpty()) return List.of();
+            stacks.add(stack);
         }
-        if (aMaterialAmount >= U4 && (aMaterialAmount >= U * 8 || aMaterialAmount % U4 <= aMaterialAmount % U9)) {
-            ItemStack rStack = mat(MaterialPrefix.dustSmall, aMaterial, (aMaterialAmount * 4) / U);
-            if (!rStack.isEmpty()) return rStack;
-        }
-        if (aMaterialAmount >= U9 && (aMaterialAmount >= U || aMaterialAmount % U9 <= aMaterialAmount % U72)) {
-            ItemStack rStack = mat(MaterialPrefix.dustTiny, aMaterial, (aMaterialAmount * 9) / U);
-            if (!rStack.isEmpty()) return rStack;
-        }
-        return mat(MaterialPrefix.dustDiv72, aMaterial, (aMaterialAmount * 72) / U);
+        return List.copyOf(stacks);
     }
 
     // ── Ingots ────────────────────────────────────────────────────────────

@@ -73,6 +73,7 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
     private volatile IndexState state;
     private final AtomicLong revision = new AtomicLong();
     private volatile long observedComposition = -1;
+    private volatile long observedPublication = -1;
     private final Set<Recipe> tagged = Collections.newSetFromMap(new IdentityHashMap<>());
     Collection<Recipe> tagged() { return tagged; }
     private final Deque<Candidates> recent = new ArrayDeque<>();
@@ -227,8 +228,13 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
      */
     long revision() {
         long composition = gregtech.engine.material.ItemMaterialRegistry.compositionRevision();
+        long publication = gregtech.engine.material.MaterialPublication.current().revision();
         if (composition != observedComposition) {
             observedComposition = composition;
+            revision.incrementAndGet();
+        }
+        if (publication != observedPublication) {
+            observedPublication = publication;
             revision.incrementAndGet();
         }
         return revision.get();

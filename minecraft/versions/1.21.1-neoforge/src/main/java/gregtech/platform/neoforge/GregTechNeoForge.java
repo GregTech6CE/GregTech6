@@ -4,60 +4,20 @@ import com.mojang.logging.LogUtils;
 import gregtech.GregTechConfig;
 import gregtech.api.addon.GregTechAddon;
 import gregtech.api.addon.GregTechAddons;
-import gregtech.api.material.*;
 import gregtech.api.mod.ModData;
-import gregtech.content.block.BlockMaterialWeights;
-import gregtech.content.block.MaterialBlockLike;
-import gregtech.content.block.stone.GTStoneBlock;
-import gregtech.content.block.stone.GTStoneSlabBlock;
-import gregtech.content.block.stone.StoneMaterialWeights;
-import gregtech.content.data.BottleFillingRecipePack;
-import gregtech.content.data.MachineRecipeMaps;
-import gregtech.content.data.ManualToolRecipePack;
-import gregtech.content.data.ModReferences;
-import gregtech.content.data.RecipePublishing;
-import gregtech.content.data.TrackCraftingRecipePack;
-import gregtech.content.data.WoodCraftingRecipePack;
-import gregtech.content.machine.MachineConstructionMaterials;
-import gregtech.content.material.ModMaterialUnificationLoader;
-import gregtech.content.material.VanillaCompositionLoader;
-import gregtech.content.material.VanillaMaterialCorrections;
-import gregtech.content.material.VanillaUnificationLoader;
+import gregtech.content.data.*;
 import gregtech.content.multiblock.PlainStructureBlocks;
-import gregtech.content.recipe.DiggableRecipes;
 import gregtech.content.recipe.GTBumbleBeeRecipes;
 import gregtech.content.recipe.MachineRecipeBootstrap;
-import gregtech.content.recipe.PanelMaterialRegistration;
-import gregtech.content.recipe.RegisteredWoodSurvivalRecipes;
-import gregtech.content.recipe.TransportMaterialRegistration;
-import gregtech.content.recipe.VanillaWoodProcessingRecipes;
-import gregtech.content.registry.GTBars;
-import gregtech.content.registry.GTBlackSands;
-import gregtech.content.registry.GTBlocks;
-import gregtech.content.registry.GTDungeonBlocks;
-import gregtech.content.registry.GTItems;
-import gregtech.content.registry.GTProjectiles;
-import gregtech.content.registry.GTSignalWires;
-import gregtech.content.registry.GTSpecialOreBlocks;
-import gregtech.content.registry.GTWires;
-import gregtech.content.registry.MultiblockRegistration;
-import gregtech.engine.addon.AddonCoreServices;
-import gregtech.engine.addon.AddonLoaderServices;
-import gregtech.engine.addon.AddonMaterials;
-import gregtech.engine.addon.AddonPlatformServices;
-import gregtech.engine.addon.ExclusiveOutputMaps;
+import gregtech.content.registry.*;
+import gregtech.engine.addon.*;
 import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.engine.material.ItemComposition;
-import gregtech.engine.material.ItemMaterialRegistry;
-import gregtech.engine.material.MaterialFormItem;
 import gregtech.engine.material.MaterialRoleFlags;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.mod.SetupOnce;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.MachineWorkCost;
-import gregtech.platform.neoforge.machine.BasicMachineRegistries;
 import gregtech.platform.neoforge.registry.NeoContent;
-import java.util.List;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -113,34 +73,11 @@ public final class GregTechNeoForge {
 
     private static void finishSharedSetup() {
         GTProjectiles.registerDispensers();
-        for (var holder : GTItems.allEntries()) {
-            var item = holder.get();
-            var form = (MaterialFormItem) item;
-            ItemMaterialRegistry.register(item, form.getPrefix(), form.getMaterial());
-        }
         GTDungeonBlocks.registerPotPlants();
-        registerBlockCompositions();
-        BasicMachineRegistries.registerCompositions();
-        for (var block : BuiltInRegistries.BLOCK) {
-            var id = BuiltInRegistries.BLOCK.getKey(block);
-            if (!id.getNamespace().equals("gt6ce")) continue;
-            MachineConstructionMaterials.block(id.getPath())
-                    .ifPresent(data -> ItemMaterialRegistry.register(block.asItem(), data));
-        }
         GTSpecialOreBlocks.registerCompositions();
-        DiggableRecipes.registerMaterials();
-        RegisteredWoodSurvivalRecipes.registerMaterials();
         GTBlackSands.registerCompositions();
-        VanillaUnificationLoader.register();
-        ModMaterialUnificationLoader.register();
-        VanillaCompositionLoader.register();
-        VanillaMaterialCorrections.register();
-        GTBars.registerCompositions();
-        GTWires.registerCompositions();
-        GTSignalWires.registerCompositions();
-        VanillaWoodProcessingRecipes.registerMaterials();
-        PanelMaterialRegistration.register();
-        TransportMaterialRegistration.register();
+        gregtech.content.material.MaterialItemCompositions.registerVanillaBindings();
+        gregtech.content.material.MaterialItemCompositions.registerCommon();
         gregtech.engine.material.MaterialFormContent.publish();
         MachineRecipeMaps.bootstrap();
         GTBumbleBeeRecipes.register();
@@ -177,26 +114,5 @@ public final class GregTechNeoForge {
                 GTMaterialRegistry.allMaterials().size(),
                 cost.minimumPower(),
                 cost.totalWork());
-    }
-
-    private static void registerBlockCompositions() {
-        for (var holder : GTBlocks.allEntries()) {
-            var block = holder.get();
-            List<MaterialComponent> weights;
-            if (block instanceof MaterialBlockLike b)
-                weights = BlockMaterialWeights.contained(b.material(), b.prefix());
-            else if (block instanceof GTStoneBlock b)
-                weights = StoneMaterialWeights.contained(b.stoneMaterial(), b.variant(), false);
-            else if (block instanceof GTStoneSlabBlock b)
-                weights = StoneMaterialWeights.contained(b.stoneMaterial(), b.variant(), true);
-            else continue;
-            var components = weights.stream()
-                    .filter(w -> w.material().isValid() && w.amount() > 0)
-                    .map(w -> MaterialComponent.of(w.material(), w.amount()))
-                    .toList();
-            if (!components.isEmpty())
-                ItemMaterialRegistry.register(
-                        block.asItem(), new ItemComposition(null, components, "GT6 block composition", true));
-        }
     }
 }

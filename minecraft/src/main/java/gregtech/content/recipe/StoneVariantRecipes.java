@@ -8,6 +8,7 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.registry.GTItems;
+import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -247,10 +248,25 @@ public final class StoneVariantRecipes {
 
     /** GT6 {@code RM.Shredder.addRecipe1(…)}: the port's stand-in for GT6's {@code OP.blockDust} block. */
     private static void shred(String family, ItemStack in, ItemStack dust, long ticks, ItemStack extra) {
-        if (in.isEmpty() || dust.isEmpty()) return;
-        Recipe recipe = extra == null || extra.isEmpty()
-                ? MachineRecipeMaps.Shredder.addRecipe1(true, 16, ticks, in, dust)
-                : MachineRecipeMaps.Shredder.addRecipe1(true, 16, ticks, in, dust, extra);
+        if (in.isEmpty()
+                || dust.isEmpty()
+                || ItemMaterialRegistry.recoveryRejection(in)
+                        != ItemMaterialRegistry.RecoveryRejection.ELIGIBLE) return;
+        Recipe recipe = new Recipe(
+                new ItemStack[] {in},
+                extra == null || extra.isEmpty()
+                        ? new ItemStack[] {dust}
+                        : new ItemStack[] {dust, extra},
+                null,
+                null,
+                null,
+                null,
+                ticks,
+                16,
+                0).withMaterialRecovery().withSource("recovery:stone-variant");
+        recipe = RecoveryRecipePublisher.publish(
+                MachineRecipeMaps.Shredder,
+                RecoveryRecipePublisher.explicit(recipe, "stone-variant"));
         count(family, recipe);
     }
 

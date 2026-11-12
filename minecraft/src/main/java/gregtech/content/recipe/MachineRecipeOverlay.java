@@ -18,6 +18,8 @@ import gregtech.content.recipe.ExternalOreProcessing;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.ItemMaterialRegistry;
+import gregtech.engine.material.MaterialPublication;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -60,6 +62,7 @@ public final class MachineRecipeOverlay {
     private static int applications;
     private static boolean overlayDumped;
     private static Result lastResult = Result.unchanged();
+    private static volatile MaterialPublication.Stamp lastPublication = MaterialPublication.current();
     private static List<Recipe> furnaceAdded = List.of();
     private static List<Recipe> furnaceRemoved = List.of();
     /** Bumped for every applied overlay; queued index builds compare it so an old pass cannot publish. */
@@ -100,14 +103,16 @@ public final class MachineRecipeOverlay {
 
     public static Result apply(RecipeManager manager) {
         long current = ++generation;
+        ItemMaterialRegistry.TagGenerationCheckpoint checkpoint = null;
         try {
+            checkpoint = ItemMaterialRegistry.beginTagGeneration();
             return applyGeneration(manager, current);
         } catch (RuntimeException failure) {
             // A half-applied overlay would leave some maps restored and others still carrying the
             // previous world's rows. Restore every map and drop the tag-owned producers instead of
             // publishing a partial generation.
             LOGGER.error("[gregtech] Machine recipe overlay generation {} failed; restoring the baseline", current, failure);
-            recover();
+            recover(checkpoint);
             lastResult = new Result(0, 0, 0, 0, baselineRows(), false, true);
             return lastResult;
         }
@@ -124,7 +129,9 @@ public final class MachineRecipeOverlay {
         long restoreMillis = (System.nanoTime() - started) / 1_000_000L;
         gregtech.engine.recipe.MaterialUnitRecipes.discardUnregistered();
         long producersStarted = System.nanoTime();
+        DecompositionRecipeLoader.rebuild();
         ExternalOreProcessing.rebuild();
+        ShredderRecyclingRecipes.rebuildTagRows();
         gregtech.content.recipe.NonOreMacerationRows.rebuild();
         gregtech.content.recipe.SourceOreOutputRows.rebuild();
         SharedPurifiedCentrifugeRows.rebuild();
@@ -161,6 +168,8 @@ public final class MachineRecipeOverlay {
                 baselineRows(), restoreMillis, producersMillis, moved, tally.removed, removeMillis, tally.added,
                 installMillis, tally.priority, tally.rejected);
         if (generation != current) return lastResult;
+        lastPublication = MaterialPublication.platformGenerationPublished(
+                ItemMaterialRegistry.compositionRevision(), current);
         lastResult = new Result(tally.removed, tally.added, tally.rejected, restoreMillis, baselineRows(), false, false);
         applications++;
         if (!overlayDumped) {
@@ -171,10 +180,12 @@ public final class MachineRecipeOverlay {
     }
 
     /** Drops every overlay-owned row and returns the maps to their captured baseline. */
-    private static void recover() {
+    private static void recover(ItemMaterialRegistry.TagGenerationCheckpoint checkpoint) {
         try {
             for (var map : RecipeMap.RECIPE_MAP_LIST) if (map.hasBaseline()) map.restoreBaseline();
-            ExternalOreProcessing.clear();
+            ExternalOreProcessing.clearOwnedRows();
+            DecompositionRecipeLoader.clear();
+            ShredderRecyclingRecipes.clearTagRows();
             gregtech.content.recipe.NonOreMacerationRows.clear();
             gregtech.content.recipe.SourceOreOutputRows.clear();
             SharedPurifiedCentrifugeRows.clear();
@@ -194,11 +205,20 @@ public final class MachineRecipeOverlay {
             for (var map : RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
         } catch (RuntimeException secondary) {
             LOGGER.error("[gregtech] Machine recipe overlay recovery failed", secondary);
+        } finally {
+            if (checkpoint != null) {
+                try {
+                    ItemMaterialRegistry.restoreTagGeneration(checkpoint);
+                } catch (RuntimeException restoreFailure) {
+                    LOGGER.error("[gregtech] Machine recipe overlay composition recovery failed", restoreFailure);
+                }
+            }
         }
     }
 
     public static int applications() { return applications; }
     public static Result lastResult() { return lastResult; }
+    public static MaterialPublication.Stamp lastPublication() { return lastPublication; }
 
     /**
      * Return only Furnace to its state before the last overlay. The oven bridge calls this
@@ -258,6 +278,8 @@ public final class MachineRecipeOverlay {
         exclude.addAll(CompatRecipes.owned());
         exclude.addAll(PotionBrewingRecipes.owned());
         exclude.addAll(ExternalOreProcessing.owned());
+        exclude.addAll(DecompositionRecipeLoader.owned());
+        exclude.addAll(ShredderRecyclingRecipes.owned());
         exclude.addAll(gregtech.content.recipe.NonOreMacerationRows.owned());
         exclude.addAll(gregtech.content.recipe.SourceOreOutputRows.owned());
         exclude.addAll(SharedPurifiedCentrifugeRows.owned());

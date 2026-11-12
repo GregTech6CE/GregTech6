@@ -63,7 +63,7 @@ public final class GTBars {
             };
             var material = GTMaterialRegistry.get(materialName);
             if (!material.isValid()) throw new IllegalStateException("Missing railing material: " + materialName);
-            ItemMaterialRegistry.register(
+            ItemMaterialRegistry.registerDeclared(
                     block.asItem(),
                     new ItemComposition(
                             null,

@@ -1,6 +1,7 @@
 package gregtech.content.recipe;
 
-import java.math.BigInteger;
+import gregtech.api.material.GTValues;
+import gregtech.engine.recipe.UnitConversion;
 
 /**
  * Explicit source phase bindings for audited chemistry and fixed Centrifuge rows.
@@ -8,8 +9,7 @@ import java.math.BigInteger;
  * Physical temperature, texture, and current legacy fluid names do not determine this dimension.
  */
 public final class OriginalMaterialFluidUnits {
-    public static final long SOURCE_UNIT = 648648000L;
-    private static final BigInteger MAX_AMOUNT = BigInteger.valueOf(Integer.MAX_VALUE);
+    public static final long SOURCE_UNIT = GTValues.U;
 
     public record Binding(
             String materialName,
@@ -99,12 +99,6 @@ public final class OriginalMaterialFluidUnits {
      * zero, never coerced to1. This is quantity arithmetic, not zero-volume catalyst semantics.
      */
     public static int millibuckets(long sourceAmount, long sourceUnit, long referenceMillibuckets, boolean roundUp) {
-        if (sourceAmount < 0 || sourceUnit <= 0 || referenceMillibuckets < 0) return -1;
-        BigInteger[] ratio = BigInteger.valueOf(sourceAmount)
-                .multiply(BigInteger.valueOf(referenceMillibuckets))
-                .divideAndRemainder(BigInteger.valueOf(sourceUnit));
-        BigInteger result = ratio[0];
-        if (roundUp && ratio[1].signum() != 0) result = result.add(BigInteger.ONE);
-        return result.compareTo(MAX_AMOUNT) > 0 ? -1 : result.intValue();
+        return UnitConversion.fluidAmount(sourceUnit, referenceMillibuckets, sourceAmount, roundUp);
     }
 }

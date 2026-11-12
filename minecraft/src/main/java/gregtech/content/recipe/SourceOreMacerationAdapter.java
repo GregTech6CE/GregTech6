@@ -13,6 +13,7 @@ import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
 import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
@@ -39,8 +40,22 @@ final class SourceOreMacerationAdapter {
 
     record Definition(ItemStack input, ItemStack[] outputs, long duration) {
         Recipe admit() {
-            return MachineRecipeMaps.Shredder.addRecipe1(
-                    SourceOreShreddingRules.OPTIMIZE, SourceOreShreddingRules.POWER, duration, input, outputs);
+            var recipe = RecipeMap.make(
+                    SourceOreShreddingRules.OPTIMIZE,
+                    new ItemStack[] {input},
+                    outputs,
+                    null,
+                    null,
+                    null,
+                    null,
+                    duration,
+                    SourceOreShreddingRules.POWER,
+                    0);
+            return recipe == null
+                    ? null
+                    : RecoveryRecipePublisher.publishIsolated(
+                            MachineRecipeMaps.Shredder,
+                            RecoveryRecipePublisher.explicit(recipe, "ore-processing/maceration"));
         }
     }
 
@@ -118,7 +133,7 @@ final class SourceOreMacerationAdapter {
                 for (var part : data.components()) {
                     GTMaterial material = part.material().resolve();
                     if (!namespace.equals("gt6ce")
-                            || !data.recoverable()
+                            || !data.bulkRecoveryAllowed()
                             || data.components().size() != 1
                             || data.amount() != data.prefix().getMaterialWeight()
                             || !SourceFurnaceNativeAdapter.nativeForm(
@@ -173,9 +188,9 @@ final class SourceOreMacerationAdapter {
             ItemStack selected = GTItems.getStack(prefix, material.resolve(), 1);
             if (selected.isEmpty()) return NativeForm.absent();
             if (!SourceFurnaceNativeAdapter.nativeForm(prefix, material, selected)) return NativeForm.unknown();
-            var data = ItemMaterialRegistry.explicit(selected.getItem()).orElse(null);
+            var data = ItemMaterialRegistry.base(selected.getItem()).orElse(null);
             if (data == null
-                    || !data.recoverable()
+                    || !data.bulkRecoveryAllowed()
                     || data.prefix() != prefix
                     || data.components().size() != 1
                     || data.material().resolve() != material.resolve()

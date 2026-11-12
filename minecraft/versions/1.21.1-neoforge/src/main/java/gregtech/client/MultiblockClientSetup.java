@@ -1,10 +1,13 @@
 package gregtech.client;
 
-import gregtech.content.registry.*;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTMultiblocks;
+import gregtech.content.registry.GTSmeltery;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 /** NeoForge renderer registration and material tints for multiblocks and crucibles. */
 @EventBusSubscriber(

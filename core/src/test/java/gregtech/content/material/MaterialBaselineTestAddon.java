@@ -1,10 +1,9 @@
 package gregtech.content.material;
 
-import gregtech.api.addon.material.AddonMaterialContributor;
-import gregtech.api.addon.material.MaterialComposition;
-import gregtech.api.addon.material.MaterialDeclaration;
+import gregtech.api.addon.material.*;
 import gregtech.api.material.GTValues;
 import java.util.List;
+import java.util.Set;
 
 /** Loaded only by the isolated SPI test, never by the ordinary material fixture or a release jar. */
 public final class MaterialBaselineTestAddon implements AddonMaterialContributor {
@@ -15,10 +14,16 @@ public final class MaterialBaselineTestAddon implements AddonMaterialContributor
 
     @Override
     public List<MaterialDeclaration> materials() {
-        return List.of(MaterialDeclaration.builder("BaselineCompound")
-                .dust()
-                .centrifuge()
-                .build());
+        return List.of(MaterialDeclaration.builder("BaselineCompound").dust().build());
+    }
+
+    @Override
+    public void materialInfo(MaterialInfoTool.Registrar registrar) {
+        registrar.registerProcess(
+                new MaterialKey("BaselineCompound"),
+                MaterialProcessKeys.DECOMPOSITION,
+                MaterialProcessRule.anyForm(new MaterialDecompositionRule(
+                        Set.of(MaterialDecompositionRule.Route.CENTRIFUGE), List.of(), false)));
     }
 
     @Override

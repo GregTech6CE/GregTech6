@@ -589,6 +589,14 @@ public final class GTMaterial {
         return this;
     }
 
+    /** Removes host-internal capability flags while the material is still mutable. */
+    @ApiStatus.Internal
+    public GTMaterial remove(MaterialProperty... flags) {
+        checkMutable();
+        for (MaterialProperty flag : flags) properties.remove(Objects.requireNonNull(flag));
+        return this;
+    }
+
     public GTMaterial hide() {
         checkMutable();
         return put(MaterialProperty.HIDDEN);

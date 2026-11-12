@@ -5,10 +5,19 @@ import gregtech.content.data.MaterialPrefix;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /** Complete original VanillaUnificationLoader identity/weight table, including secondary components. */
 public final class VanillaUnificationDefinitions {
     private VanillaUnificationDefinitions() {}
+
+    /** Source category used to keep ores and modern raw-metal forms out of generic recovery. */
+    public enum OreInputKind {
+        OTHER,
+        ORE,
+        RAW_METAL,
+        RAW_METAL_BLOCK
+    }
 
     /** Secondary material carried by the same vanilla item, e.g. red sand's iron oxide. */
     public record ExtraComponent(String materialName, long amount) {}
@@ -139,6 +148,23 @@ public final class VanillaUnificationDefinitions {
                 new Entry("tuff", null, "Tuff", 9L * GTValues.U),
                 new Entry("dripstone_block", null, "Dripstone", GTValues.U),
                 new Entry("glass_bottle", null, "Empty", GTValues.U));
+    }
+
+    private static final Set<String> KNOWN_ITEM_PATHS =
+            entries().stream().map(Entry::itemPath).collect(java.util.stream.Collectors.toUnmodifiableSet());
+
+    /**
+     * Classifies a declared vanilla item as ore/raw metal input.
+     *
+     * <p>Raw-metal item and raw-metal block are intentionally distinct: ore processing admits one
+     * according to its own row rather than treating both as a path-name suffix match.</p>
+     */
+    public static OreInputKind oreInputKind(String itemPath) {
+        if (itemPath == null || !KNOWN_ITEM_PATHS.contains(itemPath)) return OreInputKind.OTHER;
+        if (itemPath.endsWith("_ore") || itemPath.equals("ancient_debris")) return OreInputKind.ORE;
+        if (itemPath.startsWith("raw_") && itemPath.endsWith("_block")) return OreInputKind.RAW_METAL_BLOCK;
+        if (itemPath.startsWith("raw_")) return OreInputKind.RAW_METAL;
+        return OreInputKind.OTHER;
     }
 
     /**

@@ -2,11 +2,16 @@
  * Loader_MultiTileEntities and gregapi wood dictionary item data. */
 package gregtech.content.transport;
 
-import gregtech.api.material.*;
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialComponent;
 import gregtech.content.data.MaterialGroups;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.engine.material.*;
-import java.util.*;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.ItemComposition;
+import gregtech.engine.material.ReversibleCraftingData;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Locale;
 
 public final class PanelMaterialRules {
     private PanelMaterialRules() {}
@@ -36,7 +41,10 @@ public final class PanelMaterialRules {
             case "treated" -> "WoodTreated";
             case "wood" -> "Wood";
             case "rainbowood" -> "Rainbowood";
-            default -> suffix.substring(0, 1).toUpperCase(Locale.ROOT) + suffix.substring(1);
+            default ->
+                Arrays.stream(suffix.split("_"))
+                        .map(part -> part.substring(0, 1).toUpperCase(Locale.ROOT) + part.substring(1))
+                        .collect(java.util.stream.Collectors.joining());
         };
         var material = GTMaterialRegistry.get(name);
         if (!material.isValid()) throw new IllegalStateException("Missing panel plank material: " + name);

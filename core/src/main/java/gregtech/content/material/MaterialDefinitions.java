@@ -1,5 +1,8 @@
 package gregtech.content.material;
 
+import gregtech.api.addon.material.MaterialDecompositionRule;
+import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.content.material.catalog.*;
 import gregtech.engine.material.MaterialDefinition;
 import gregtech.engine.material.MaterialInfoDefinition;
@@ -24,8 +27,25 @@ public final class MaterialDefinitions {
         result.addAll(WoodMaterials.definitions());
         result.addAll(SpecialMaterials.definitions());
         result.addAll(GroupMaterials.definitions());
+        result.replaceAll(MaterialDefinitions::attachDecomposition);
+        DecompositionMaterials.validateConsumed(result);
         result.sort(Comparator.comparing(MaterialDefinition.Declaration::name));
         return List.copyOf(result);
+    }
+
+    private static MaterialDefinition.Declaration attachDecomposition(MaterialDefinition.Declaration declaration) {
+        MaterialDecompositionRule decomposition = DecompositionMaterials.rule(declaration);
+        if (decomposition == null) return declaration;
+        var processes = new LinkedHashMap<>(declaration.info().processes().rules());
+        processes.put(MaterialProcessKeys.DECOMPOSITION, List.of(MaterialProcessRule.anyForm(decomposition)));
+        var info = declaration.info();
+        return new MaterialDefinition.Declaration(
+                declaration.material(),
+                new MaterialInfoDefinition(
+                        info.tooling(),
+                        info.composition(),
+                        info.relations(),
+                        new MaterialInfoDefinition.Processes(processes)));
     }
 
     private static Map<String, MaterialDefinition> index() {

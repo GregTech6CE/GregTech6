@@ -55,7 +55,7 @@
 
 ## API 版本
 
-当前分支使用 API `1.7.0`，与模组版本独立；以 [api/common/build.gradle](../api/common/build.gradle) 为准。`GregTechAddons.apiVersion()` 返回 `major * 1000 + minor`，1.7 为 `1007`，不能据此推断某个模组构建兼容。修改内联 API 时同步构建配置与 `GregTechAddons` 的版本。
+当前分支使用 API `1.8.0`，与模组版本独立；以 [api/common/build.gradle](../api/common/build.gradle) 为准。`GregTechAddons.apiVersion()` 返回 `major * 1000 + minor`，1.8 为 `1008`，不能据此推断某个模组构建兼容。修改内联 API 时同步构建配置与 `GregTechAddons` 的版本。
 
 宿主专用的 `StructureGrid` 与 `RecipeMapSpec` 不属于附属契约：它们分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`，编码内置多方块几何和配方表，附属不应依赖。
 
@@ -135,6 +135,7 @@ String json = MachineRecipeDocuments.canonical(document); // 不含 "type"，写
 - `MachineRecipeDocument`、`MachineRecipeRemovalDocument` 是公开记录；`ItemComponent`、`ItemResult`、`FluidComponent` 构造时校验 ID、材料名和数量。
 - `MachineRecipeType.ADDITION`/`REMOVAL` 与 `MachineRecipeFields` 提供类型 ID 和字段名常量，避免附属复制字符串。
 - 1.7 起这些类型不再位于 `gregtech.engine.recipe.data`；依赖旧内部包名的附属需要迁移到公开包。运行时可用 `GregTechAddons.apiVersion() >= 1007` 做特性判断。
+- 1.8 新增 `MaterialProcessKeys.DECOMPOSITION` 与 `MaterialDecompositionRule`；附属可通过自身材料的 `MaterialInfoTool` 流程提交液体／气体换算、路线和固体兜底。该 typed rule 是唯一权限权威；旧 `MaterialDeclaration.centrifuge()`／`electrolyzer()` shortcut 已弃用，仅在不存在 typed rule 时生成默认兼容规则。运行时可用 `GregTechAddons.apiVersion() >= 1008` 做特性判断。
 
 ### 让附属自己的数据包配方进入 overlay
 

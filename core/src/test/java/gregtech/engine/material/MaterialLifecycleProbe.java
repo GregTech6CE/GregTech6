@@ -255,8 +255,24 @@ public final class MaterialLifecycleProbe {
                     .members()
                     .contains(new MaterialKey("Steel")));
         }
+        if (scenario.contains("Decomposition")) {
+            var material = new MaterialKey("MetadataMaterial");
+            var process = MaterialProcessKeys.DECOMPOSITION;
+            checkProcessPublication(material, process);
+            var declared = MaterialViews.catalog()
+                    .processes()
+                    .findSingle(material, process)
+                    .orElseThrow();
+            String form = scenario.endsWith("Block")
+                    ? "blockDust"
+                    : scenario.endsWith("Liquid") ? "liquid" : scenario.endsWith("Gas") ? "gas" : "dust";
+            check(declared.forms().equals(java.util.Set.of(new FormKey(form))));
+            check(declared.value().routes().equals(java.util.Set.of(MaterialDecompositionRule.Route.CENTRIFUGE)));
+            check(GTMaterialRegistry.get(material.name()).has(MaterialProperty.CENTRIFUGE));
+        }
         if (scenario.equals("processes")) {
             var key = MaterialProcessKey.multiple(new DataKey("metadata_test", "throw_into_water"), String.class);
+            checkProcessPublication(new MaterialKey("Iron"), key);
             var rules = MaterialViews.catalog().processes().find(new MaterialKey("Iron"), new FormKey("dust"), key);
             check(rules.size() == 1 && rules.get(0).value().equals("wet"));
             check(MaterialViews.catalog()
@@ -269,6 +285,7 @@ public final class MaterialLifecycleProbe {
                     ? MaterialProcessKey.multiple(new DataKey("metadata_test", "throw_into_water"), String.class)
                     : MaterialProcessKey.multiple(new DataKey("metadata_test", "typed_process"), String.class);
             var iron = new MaterialKey("Iron");
+            checkProcessPublication(iron, key);
             check(MaterialViews.catalog()
                             .processes()
                             .find(iron, new FormKey("itemCasing"), key)
@@ -303,6 +320,7 @@ public final class MaterialLifecycleProbe {
             var material = new MaterialKey("MetadataMaterial");
             var process = new MaterialProcessKey<>(
                     new DataKey("metadata_test", "typed_multi"), String.class, MaterialProcessCardinality.MULTIPLE);
+            checkProcessPublication(material, process);
             var rules = MaterialViews.catalog().processes().find(material, process);
             check(rules.size() == 2);
             check(rules.stream().map(MaterialProcessRule::value).toList().equals(List.of("wet", "dry")));
@@ -315,6 +333,7 @@ public final class MaterialLifecycleProbe {
             var material = new MaterialKey("Iron");
             var process = new MaterialProcessKey<>(
                     new DataKey("metadata_test", "listed_multi"), String.class, MaterialProcessCardinality.MULTIPLE);
+            checkProcessPublication(material, process);
             check(MaterialViews.catalog().processes().find(material, process).size() == 2);
         }
         if (scenario.equals("infoLegacy")) {
@@ -341,6 +360,16 @@ public final class MaterialLifecycleProbe {
         rejects(() -> GTMaterialRegistry.registerDefinition(shared.material()));
         rejects(() -> GTMaterialRegistry.installAddonMaterial(shared, 10001));
         rejects(() -> GTMaterialRegistry.registerAlias("Fe", "Iron"));
+    }
+
+    private static <T> void checkProcessPublication(MaterialKey material, MaterialProcessKey<T> process) {
+        var auxiliary = MaterialInfoRegistry.processes(material).find(process);
+        check(!auxiliary.isEmpty());
+        check(auxiliary.equals(MaterialViews.catalog().processes().find(material, process)));
+        if (process.cardinality() == MaterialProcessCardinality.SINGLE)
+            check(MaterialInfoTool.currentProcess(material, process)
+                    .equals(MaterialViews.catalog().processes().findSingle(material, process)));
+        rejects(() -> auxiliary.clear());
     }
 
     private static void checkEffectiveQueries() {

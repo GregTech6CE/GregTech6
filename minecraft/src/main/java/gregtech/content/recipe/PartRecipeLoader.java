@@ -136,12 +136,16 @@ public class PartRecipeLoader implements InitializationStep {
     private static ItemStack[] machiningOutputs(GTMaterial material, long inputUnits,
                                                 MaterialPrefix out, int outCount, ItemStack output) {
         long remains = inputUnits - out.getMaterialWeight() * outCount;
-        ItemStack dust = pulverizedRemains(material, remains);
-        return dust.isEmpty() ? new ItemStack[]{output} : new ItemStack[]{output, dust};
+        var dust = pulverizedRemains(material, remains);
+        if (dust.isEmpty()) return new ItemStack[] {output};
+        var outputs = new java.util.ArrayList<ItemStack>(dust.size() + 1);
+        outputs.add(output);
+        outputs.addAll(dust);
+        return outputs.toArray(ItemStack[]::new);
     }
 
-    private static ItemStack pulverizedRemains(GTMaterial material, long remains) {
-        return OM.dust(material.getTargetPulverMaterial(),
+    private static java.util.List<ItemStack> pulverizedRemains(GTMaterial material, long remains) {
+        return OM.dustAll(material.getTargetPulverMaterial(),
                 PulverizationRules.amount(remains, material.getTargetPulverAmount()));
     }
 
@@ -213,7 +217,7 @@ public class PartRecipeLoader implements InitializationStep {
                     || block.prefix() != prefix || block.material().resolve() != material) return false;
             long units = 9 * GTValues.U;
             var data = gregtech.engine.material.ItemMaterialRegistry.base(stack.getItem()).orElse(null);
-            if (data != null) return data.recoverable() && data.prefix() == null
+            if (data != null) return data.bulkRecoveryAllowed() && data.prefix() == null
                     && data.components().size() == 1 && data.material().resolve() == material
                     && data.amount() == units;
             // Forge has no general block composition registration; inspect the actual known block.

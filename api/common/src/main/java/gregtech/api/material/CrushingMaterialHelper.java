@@ -2,12 +2,8 @@
 
 package gregtech.api.material;
 
-import gregtech.api.addon.material.GregTechMaterials;
-import gregtech.api.addon.material.MaterialInfoTool;
-import gregtech.api.addon.material.MaterialKey;
-import gregtech.api.addon.material.MaterialProcessKeys;
-import gregtech.api.addon.material.MaterialProcessRule;
-import gregtech.api.addon.material.MaterialTarget;
+import gregtech.api.addon.material.*;
+
 import java.util.Optional;
 
 /** Crushing target queries. */
@@ -30,14 +26,4 @@ public final class CrushingMaterialHelper {
                 .filter(target -> target.amount() > 0);
     }
 
-    static GTMaterial legacyTarget(GTMaterial material) {
-        return target(material)
-                .flatMap(value -> MaterialInfoTool.findMaterial(value.material()))
-                .map(GTMaterial::resolve)
-                .orElse(material.resolve());
-    }
-
-    static long legacyAmount(GTMaterial material) {
-        return target(material).map(MaterialTarget::amount).orElse(0L);
-    }
 }

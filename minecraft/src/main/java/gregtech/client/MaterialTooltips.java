@@ -213,7 +213,7 @@ public final class MaterialTooltips {
             appendFuelTooltip(mat, data.prefix(), data.amount(), tooltip);
             appendFlammableTooltip(mat, tooltip);
         }
-        if (!data.recoverable()) tooltip.add(Component.translatable("tooltip.gt6ce.composition_descriptive").withStyle(ChatFormatting.GRAY));
+        if (!data.bulkRecoveryAllowed()) tooltip.add(Component.translatable("tooltip.gt6ce.composition_descriptive").withStyle(ChatFormatting.GRAY));
 
         if (gregtech.GregTechConfig.materialDetails() && flag.isAdvanced()) {
 

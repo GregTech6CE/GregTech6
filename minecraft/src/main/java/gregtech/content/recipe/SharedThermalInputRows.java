@@ -4,6 +4,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
+import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -57,11 +58,26 @@ public final class SharedThermalInputRows {
         if (!initialized) return;
         var snapshot = new Snapshot();
         var planned = definitions(materials, snapshot);
+        var prepared = new ArrayList<Prepared>();
+        for (var definition : planned) {
+            var recipe = definition.recipe();
+            if (recipe != null) prepared.add(new Prepared(definition, recipe));
+        }
         clearOwned(); DEFERRED.clear(); DEFERRED.addAll(snapshot.deferred); ADMISSIONS.clear();
         try {
-            for (var definition : planned) {
-                Recipe accepted = definition.admit();
+            for (var candidate : prepared) {
+                var definition = candidate.definition();
                 RecipeMap map = definition.row().map();
+                Recipe accepted;
+                if (map == gregtech.content.data.MachineRecipeMaps.Smelter && MoltenMetalUnitRecipes.collect(
+                        candidate.recipe().mInputs[0], candidate.recipe().mFluidOutputs[0],
+                        candidate.recipe().mDuration, candidate.recipe().mEUt, definition.row().inputProof()::matches)) {
+                    accepted = null;
+                } else {
+                    accepted = RecoveryRecipePublisher.publishIsolated(
+                            map,
+                            RecoveryRecipePublisher.explicit(candidate.recipe(), "thermal-input"));
+                }
                 ADMISSIONS.add(new Admission(definition.material().getName(), definition.prefix(), map.mNameInternal, accepted != null));
                 if (accepted != null) OWNED.computeIfAbsent(map, ignored -> Collections.newSetFromMap(new IdentityHashMap<>())).add(accepted);
             }
@@ -74,21 +90,26 @@ public final class SharedThermalInputRows {
             if (row.map() == gregtech.content.data.MachineRecipeMaps.Smelter) visitor.accept(row.input(), row.output());
         }
     }
+    record Prepared(Definition definition, Recipe recipe) {}
+
     record Definition(GTMaterial material, MaterialPrefix prefix, NativeRow row) {
-        Recipe admit() {
+        Recipe recipe() {
             if (row.input().isEmpty() || row.output().isEmpty()) return null;
-            if (row.map() == gregtech.content.data.MachineRecipeMaps.Smelter && MoltenMetalUnitRecipes.collect(
-                    row.input(), row.output(), row.ticks(), row.power(), row.inputProof()::matches)) return null;
             var recipe = RecipeMap.make(true, new ItemStack[]{row.input().copy()}, new ItemStack[0], null, null,
                     new FluidStack[0], new FluidStack[]{row.output().copy()}, row.ticks(), row.power(), 0);
             // Retain the registration proof at lookup and consumption: no damaged or filled input.
             // This existing guard preserves equivalent material aliases, unlike exact-item matching.
-            return recipe == null ? null : row.map().addRecipe(recipe.withMaterialRecovery().withItemInputGuard(0, row.inputProof()::matches));
+            return recipe == null
+                    ? null
+                    : recipe.withMaterialRecovery()
+                            .withItemInputGuard(0, row.inputProof()::matches)
+                            .withSource("recovery:thermal-input");
         }
     }
     static List<Definition> definitions(Collection<GTMaterial> selected, Snapshot snapshot) {
         var out = new ArrayList<Definition>();
         for (var material : unique(selected)) for (var form : SourceThermalInputRules.forms()) {
+            if (AddonMaterials.owns(material)) continue;
             MaterialPrefix prefix = form.prefix();
             if (snapshot.reviewedOwner(prefix, material)) continue;
             ItemStack input = snapshot.selected(prefix, material);
@@ -107,18 +128,8 @@ public final class SharedThermalInputRows {
         }
         ItemStack selected(MaterialPrefix prefix, GTMaterial material) { return GTItems.getStack(prefix, material, 1); }
         boolean reviewedOwner(MaterialPrefix prefix, GTMaterial material) {
-            // Keep these exact prior contracts with their reviewed producer, even if its evidence
-            // later becomes unsupported. This is ownership, not a source processing prohibition.
-            if (material != GTMaterialRegistry.get(material.getName()).resolve()
-                    || !GTMaterialRegistry.isCoreMaterial(material)) return false;
-            if (material.getId() == 9114 && material.getName().equals("Cinnabar"))
-                return prefix == MaterialPrefix.dust || prefix == MaterialPrefix.dustSmall
-                        || prefix == MaterialPrefix.dustTiny || prefix == MaterialPrefix.dustDiv72
-                        || prefix == MaterialPrefix.crushedPurified || prefix == MaterialPrefix.crushedPurifiedTiny
-                        || prefix == MaterialPrefix.crushedCentrifuged || prefix == MaterialPrefix.crushedCentrifugedTiny;
-            boolean metal = material.getId() == 220 && material.getName().equals("Titanium")
-                    || material.getId() == 260 && material.getName().equals("Iron");
-            return metal && (prefix == MaterialPrefix.dustSmall || prefix == MaterialPrefix.dustTiny || prefix == MaterialPrefix.dustDiv72);
+            return material == GTMaterialRegistry.get(material.getName()).resolve()
+                    && ThermalRecoveryOwnership.reviewedSpecialOwner(prefix, material);
         }
     }
 }

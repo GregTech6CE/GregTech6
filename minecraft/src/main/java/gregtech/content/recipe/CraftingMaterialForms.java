@@ -95,7 +95,7 @@ public final class CraftingMaterialForms {
         planks.sort(Comparator.comparing((Item item) -> !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("minecraft"))
                 .thenComparing(item -> BuiltInRegistries.ITEM.getKey(item).toString()));
         for (var item : planks) {
-            var data = ItemMaterialRegistry.explicit(item).orElse(null);
+            var data = ItemMaterialRegistry.declared(item).orElse(null);
             if (data == null || data.prefix() != MaterialPrefix.plate || data.components().size() != 1
                     || data.amount() != GTValues.U || !data.material().has(MaterialProperty.WOOD)) continue;
             var form = new Form("plate", data.material().resolve().getName());
@@ -140,8 +140,12 @@ public final class CraftingMaterialForms {
         }
         var known = vanilla.get(stack.getItem());
         if (known != null) return known;
-        var form = MaterialEquivalence.form(stack);
-        return form == null ? null : new Form(form.prefix().getName(), form.material().resolve().getName());
+        var declared = ItemMaterialRegistry.declared(stack.getItem()).orElse(null);
+        if (declared == null
+                || declared.prefix() == null
+                || declared.components().size() != 1
+                || declared.amount() != declared.prefix().getMaterialWeight()) return null;
+        return new Form(declared.prefix().getName(), declared.material().resolve().getName());
     }
 
     public static Form form(ItemStack stack) {
@@ -164,21 +168,26 @@ public final class CraftingMaterialForms {
             .collect(java.util.stream.Collectors.toUnmodifiableSet());
 
     private static Form tagged(ItemStack stack) {
-        // Prefer explicit GT prefix tags over common tags (dense ores can also be in ordinary ores tags).
-        Form common = null;
-        for (var iterator = stack.getTags().iterator(); iterator.hasNext(); ) {
-            var tag = iterator.next();
-            var form = formOf(tag.location());
-            if (form == null) continue;
-            if (tag.location().getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return form;
-            if (common == null) common = form;
-        }
-        return common;
+        var composition = ItemMaterialRegistry.base(stack.getItem()).orElse(null);
+        if (composition != null && composition.prefix() != null)
+            return new Form(composition.prefix().getName(), composition.material().resolve().getName());
+        return compositionTagForm(taggedFormsInternal(stack));
+    }
+
+    static Form compositionTagForm(List<Form> forms) {
+        var allowed = forms.stream()
+                .filter(form -> ExternalOreProcessingRules.isCompositionForm(form.prefix()))
+                .toList();
+        return allowed.size() == 1 ? allowed.get(0) : null;
     }
 
     /** Every gregtech, forge or c form tag on this item. Callers use a single hit to reject ambiguous items. */
     public static List<Form> taggedForms(ItemStack stack) {
         ensureInitialized();
+        return taggedFormsInternal(stack);
+    }
+
+    private static List<Form> taggedFormsInternal(ItemStack stack) {
         if (stack.isEmpty()) return List.of();
         var found = new ArrayList<Form>();
         var seen = new HashSet<Form>();
@@ -199,6 +208,15 @@ public final class CraftingMaterialForms {
         String group = path.substring(0, slash), prefix = prefixNames.get(group);
         if (prefix == null) prefix = MaterialEquivalence.prefixForCommonGroup(group);
         return prefix == null ? null : new Form(prefix, material);
+    }
+
+    /** Resolves a common tag's material suffix without assigning it to a {@link MaterialPrefix}. */
+    static String tagMaterial(ResourceLocation tag) {
+        ensureInitialized();
+        String namespace = tag.getNamespace(), path = tag.getPath();
+        if (!Set.of("forge", "c").contains(namespace)) return null;
+        int slash = path.lastIndexOf('/');
+        return slash < 0 ? null : materialNames.get(path.substring(slash + 1));
     }
 
     public static Ingredient ingredient(ItemStack input) {

@@ -3,7 +3,6 @@ package gregtech.client;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTFluidPipes;
 import gregtech.content.registry.GTTanks;
-import java.util.Locale;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -12,6 +11,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+
+import java.util.Locale;
 
 /** Original dynamic thin-to-thick pipe geometry, cover plates and material tint, client only. */
 @EventBusSubscriber(

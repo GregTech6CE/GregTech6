@@ -3,12 +3,8 @@
 package gregtech.api.addon.material;
 
 import gregtech.api.addon.AddonNames;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+
+import java.util.*;
 
 /**
  * Pure data for one addon material. GregTech turns it into a generated {@code gt6ce:} material at startup.
@@ -56,14 +52,20 @@ public record MaterialDeclaration(
         /** {@code wireFine} requests only. This does not add the electric wire blocks. */
         WIRES,
         /**
-         * Opts this material's separately declared composition into Centrifuge decomposition.
-         * Does not imply Electrolyzer permission or generate a missing dust/fluid form.
+         * Legacy shortcut for a default Centrifuge decomposition rule.
+         *
+         * @deprecated Register a {@link MaterialDecompositionRule} through
+         *     {@link MaterialInfoTool.Registrar#registerProcess(MaterialProcessDeclaration)}.
          */
+        @Deprecated(since = "1.8.0", forRemoval = false)
         CENTRIFUGE,
         /**
-         * Opts this material's separately declared composition into Electrolyzer decomposition.
-         * Does not imply Centrifuge permission. Both opt-ins may be combined.
+         * Legacy shortcut for a default Electrolyzer decomposition rule.
+         *
+         * @deprecated Register a {@link MaterialDecompositionRule} through
+         *     {@link MaterialInfoTool.Registrar#registerProcess(MaterialProcessDeclaration)}.
          */
+        @Deprecated(since = "1.8.0", forRemoval = false)
         ELECTROLYZER
     }
 
@@ -153,9 +155,11 @@ public record MaterialDeclaration(
         public Builder wires() { features.add(Feature.WIRES); return this; }
 
         /** @see Feature#CENTRIFUGE */
+        @Deprecated(since = "1.8.0", forRemoval = false)
         public Builder centrifuge() { features.add(Feature.CENTRIFUGE); return this; }
 
         /** @see Feature#ELECTROLYZER */
+        @Deprecated(since = "1.8.0", forRemoval = false)
         public Builder electrolyzer() { features.add(Feature.ELECTROLYZER); return this; }
 
         /**

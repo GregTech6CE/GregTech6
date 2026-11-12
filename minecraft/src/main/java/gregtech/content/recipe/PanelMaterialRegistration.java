@@ -11,7 +11,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 
-/** Register once after both vanilla and native material bindings, before recovery recipe creation. */
+/** Register original panel material fallbacks before recovery recipe creation. */
 public final class PanelMaterialRegistration {
     private PanelMaterialRegistration() {}
 
@@ -27,13 +27,14 @@ public final class PanelMaterialRegistration {
         return item;
     }
 
-    private static void known(Item item, ItemComposition data) {
-        // OM.data/addItemData_ preserves an earlier explicit composition.
-        if (ItemMaterialRegistry.base(item).isEmpty()) ItemMaterialRegistry.register(item, data);
+    private static void fallback(Item item, ItemComposition data, String declarationId) {
+        ItemMaterialRegistry.register(
+                item, data, ItemCompositionSource.Kind.RECIPE_REVERSE, declarationId, "GT6 panel material source");
         RECOVERY_ITEMS.add(item);
     }
 
     public static void register() {
+        var fallbackData = new HashMap<String, ItemComposition>();
         for (String kind : List.of("concrete", "asphalt", "cfoam", "cfoam_fresh", "cfoam_slab")) {
             var material = switch (kind) {
                 case "concrete" -> gregtech.content.data.generated.GT6Materials.Stones.Concrete;
@@ -41,30 +42,59 @@ public final class PanelMaterialRegistration {
                 default -> gregtech.content.data.generated.GT6Materials.Compounds.ConstructionFoam;
             };
             long amount = kind.endsWith("_slab") ? GTValues.U / 2 : GTValues.U;
-            known(item("gt6ce:" + kind), new ItemComposition(null, material, amount));
+            var id = "gt6ce:" + kind;
+            var data = new ItemComposition(null, material, amount);
+            fallbackData.put(id, data);
+            fallback(item(id), data, "gt6ce:panel-base/" + kind);
         }
-        known(
-                item("gt6ce:concrete_reinforced"),
-                new ItemComposition(
-                        null,
-                        List.of(
-                                MaterialComponent.of(GTMaterialRegistry.get("Concrete"), GTValues.U),
-                                MaterialComponent.of(
-                                        GTMaterialRegistry.get("Iron"), MaterialPrefix.stick.getMaterialWeight())),
+        var reinforced = new ItemComposition(
+                null,
+                List.of(
+                        MaterialComponent.of(GTMaterialRegistry.get("Concrete"), GTValues.U),
+                        MaterialComponent.of(GTMaterialRegistry.get("Iron"), MaterialPrefix.stick.getMaterialWeight())),
+                GTMaterialRegistry.get("Concrete"),
+                List.of(new ItemCompositionSource(
+                        ItemCompositionSource.Kind.EXPLICIT,
+                        "gt6ce:panel-base/concrete_reinforced",
                         "GT6 BlockConcreteReinforced",
-                        true));
+                        "concrete_reinforced",
+                        "")),
+                true);
+        fallbackData.put("gt6ce:concrete_reinforced", reinforced);
+        fallback(item("gt6ce:concrete_reinforced"), reinforced, "gt6ce:panel-base/concrete_reinforced");
         for (var variant : gregtech.content.registry.GTConstructionVariants.all()) {
             var block = (gregtech.content.block.misc.FixedConstructionColor) variant.get();
-            var composition =
-                    ItemMaterialRegistry.base(item("gt6ce:" + block.family())).orElse(null);
-            if (composition != null) known(variant.get().asItem(), composition);
+            String family = "gt6ce:" + block.family();
+            var composition = fallbackData.get(family);
+            if (composition == null) {
+                composition = gregtech.content.machine.OriginalDeviceMaterialData.block(block.family())
+                        .orElseThrow(() -> new IllegalStateException("Missing panel construction family " + family));
+                fallbackData.put(family, composition);
+            }
+            fallback(
+                    variant.get().asItem(),
+                    composition,
+                    "gt6ce:panel-variant/"
+                            + BuiltInRegistries.ITEM
+                                    .getKey(variant.get().asItem())
+                                    .getPath());
         }
         for (var spec : PanelCatalog.ALL) {
             var input = item(spec.input());
-            if (spec.kind().equals("wood") && spec.input().startsWith("gt6ce:"))
-                known(input, new ItemComposition(null, PanelMaterialRules.plankMaterial(spec), GTValues.U));
-            var inputData = ItemMaterialRegistry.base(input).orElse(null);
-            known(item("gt6ce:" + spec.id()), PanelMaterialRules.panel(inputData));
+            ItemComposition inputData;
+            if (spec.kind().equals("wood")) {
+                inputData = new ItemComposition(null, PanelMaterialRules.plankMaterial(spec), GTValues.U);
+                fallback(
+                        input,
+                        inputData,
+                        "gt6ce:panel-plank-input/"
+                                + BuiltInRegistries.ITEM.getKey(input).getPath());
+            } else {
+                inputData = fallbackData.get(spec.input());
+                if (inputData == null)
+                    throw new IllegalStateException("Missing panel input composition for " + spec.input());
+            }
+            fallback(item("gt6ce:" + spec.id()), PanelMaterialRules.panel(inputData), "gt6ce:panel/" + spec.id());
         }
     }
 }

@@ -3,8 +3,10 @@ package gregtech.engine.material;
 import gregtech.api.addon.AddonNames;
 import gregtech.api.addon.material.*;
 import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialToolProfile;
 import gregtech.engine.addon.AddonMaterials;
+import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
 import java.util.*;
 
@@ -117,28 +119,113 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
     static void freeze() {
         if (snapshot != null) return;
         registrationsClosed = true;
+        mergeAddonProcesses();
         normalizeLinkedFlags();
+        validateProcesses();
         validateLinkedToolRegistrations();
         var published = new LinkedHashMap<MaterialKey, PublishedMaterialInfo>();
         MATERIALS.forEach((key, info) -> published.put(key, info.freeze()));
         snapshot = new Snapshot(Map.copyOf(published), Map.copyOf(GROUP_RELATIONS));
     }
 
+    private static void mergeAddonProcesses() {
+        for (var submission : AddonMaterials.processDeclarations()) {
+            var declaration = submission.declaration();
+            mergeAddonProcess(
+                    submission.addonId(),
+                    new MaterialKey(declaration.materialName()),
+                    declaration.process(),
+                    new MaterialProcessRule<>(declaration.forms(), declaration.value()));
+        }
+        for (var submission : ADDON_PROCESSES)
+            mergeAddonProcess(submission.addonId(), submission.material(), submission.process(), submission.rule());
+    }
+
+    private static void mergeAddonProcess(
+            String addonId, MaterialKey materialKey, MaterialProcessKey<?> process, MaterialProcessRule<?> rule) {
+        GTMaterial material = GTMaterialRegistry.get(materialKey.name());
+        if (!material.isValid())
+            throw new IllegalArgumentException(
+                    "Addon '" + addonId + "' process uses unknown material '" + materialKey.name() + "'");
+        if (!process.equals(MaterialProcessKeys.DECOMPOSITION)) requireNamespace(addonId, process.id());
+        else if (!AddonMaterials.owners(material).contains(addonId))
+            throw new IllegalArgumentException("Addon '" + addonId
+                    + "' cannot declare decomposition for non-owned material '" + material.getName() + "'");
+        var target = MATERIALS.get(new MaterialKey(material.getName()));
+        if (target == null)
+            throw new IllegalArgumentException(
+                    "Addon '" + addonId + "' process uses non-material '" + materialKey.name() + "'");
+        var current = target.processes.computeIfAbsent(process, ignored -> new ArrayList<>());
+        if (process.cardinality() == MaterialProcessCardinality.SINGLE && !current.isEmpty())
+            throw new IllegalArgumentException(
+                    "Single-valued process " + process.id() + " already has a rule for this material");
+        var normalized = normalizeProcessRule("addon '" + addonId + "'", process, rule);
+        if (!current.contains(normalized)) current.add(normalized);
+    }
+
+    private static void validateProcesses() {
+        var types = new LinkedHashMap<DataKey, MaterialProcessKey<?>>();
+        MATERIALS.forEach((material, info) -> info.processes.replaceAll((key, rules) -> {
+            var previous = types.putIfAbsent(key.id(), key);
+            if (previous != null && (previous.type() != key.type() || previous.cardinality() != key.cardinality()))
+                throw new IllegalArgumentException(
+                        "Material process '" + key.id() + "' has conflicting type or cardinality");
+            if (key.cardinality() == MaterialProcessCardinality.SINGLE && rules.size() != 1)
+                throw new IllegalArgumentException("Material " + material.name() + " single-valued process " + key.id()
+                        + " must have exactly one rule, found " + rules.size());
+            return rules.stream()
+                    .<MaterialProcessRule<?>>map(
+                            rule -> normalizeProcessRule("material '" + material.name() + "'", key, rule))
+                    .toList();
+        }));
+    }
+
     private static void normalizeLinkedFlags() {
         for (var entry : MATERIALS.entrySet()) {
             GTMaterial material = GTMaterialRegistry.get(entry.getKey().name());
             if (!material.isValid()) continue;
-            Set<gregtech.api.material.MaterialProperty> normalized =
-                    MaterialPropertyRules.normalize(material.getProperties());
+            var mutable = entry.getValue();
+            MaterialDecompositionRule explicit = explicitDecomposition(mutable);
+            MaterialDecompositionRule effective = effectiveDecomposition(explicit, material.getProperties());
+            if (explicit == null && effective != null)
+                mutable.processes.put(
+                        MaterialProcessKeys.DECOMPOSITION, List.of(MaterialProcessRule.anyForm(effective)));
+            syncDecompositionFlags(material, effective);
+            Set<MaterialProperty> normalized = MaterialPropertyRules.normalize(material.getProperties());
             for (var flag : normalized) if (!material.has(flag)) material.put(flag);
-            boolean decomposition = material.has(gregtech.api.material.MaterialProperty.CENTRIFUGE)
-                    || material.has(gregtech.api.material.MaterialProperty.ELECTROLYSER);
-            if (decomposition
-                    && AddonMaterials.owns(material)
-                    && entry.getValue().composition.parts().isEmpty())
+            boolean decomposes = effective != null && !effective.routes().isEmpty();
+            if (decomposes && entry.getValue().composition.parts().isEmpty())
                 throw new IllegalArgumentException(
-                        "Addon material '" + material.getName() + "' declares decomposition without a composition");
+                        "Material '" + material.getName() + "' declares decomposition without a composition");
         }
+    }
+
+    private static MaterialDecompositionRule explicitDecomposition(MutableMaterialInfo mutable) {
+        var rules = mutable.processes.get(MaterialProcessKeys.DECOMPOSITION);
+        if (rules == null) return null;
+        if (rules.size() != 1)
+            throw new IllegalArgumentException("Single-valued decomposition process has " + rules.size() + " rules");
+        return (MaterialDecompositionRule) rules.get(0).value();
+    }
+
+    static MaterialDecompositionRule effectiveDecomposition(
+            MaterialDecompositionRule explicit, Set<MaterialProperty> properties) {
+        if (explicit != null) return explicit;
+        var routes = EnumSet.noneOf(MaterialDecompositionRule.Route.class);
+        if (properties.contains(MaterialProperty.CENTRIFUGE)) routes.add(MaterialDecompositionRule.Route.CENTRIFUGE);
+        if (properties.contains(MaterialProperty.ELECTROLYSER))
+            routes.add(MaterialDecompositionRule.Route.ELECTROLYSER);
+        return routes.isEmpty() ? null : new MaterialDecompositionRule(routes, List.of(), false);
+    }
+
+    static void syncDecompositionFlags(GTMaterial material, MaterialDecompositionRule rule) {
+        material.remove(MaterialProperty.CENTRIFUGE, MaterialProperty.ELECTROLYSER, MaterialProperty.DECOMPOSABLE);
+        if (rule == null || rule.routes().isEmpty()) return;
+        if (rule.routes().contains(MaterialDecompositionRule.Route.CENTRIFUGE))
+            material.put(MaterialProperty.CENTRIFUGE);
+        if (rule.routes().contains(MaterialDecompositionRule.Route.ELECTROLYSER))
+            material.put(MaterialProperty.ELECTROLYSER);
+        material.put(MaterialProperty.DECOMPOSABLE);
     }
 
     private static void validateLinkedToolRegistrations() {
@@ -222,15 +309,20 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         return List.copyOf(ADDON_GROUPS);
     }
 
-    static List<ProcessSubmission> processSubmissions() {
-        return List.copyOf(ADDON_PROCESSES);
-    }
-
     private static Set<FormKey> normalizeProcessForms(
             String source, MaterialProcessKey<?> process, Set<FormKey> sourceForms) {
         if (sourceForms.isEmpty()) return sourceForms;
         var forms = new LinkedHashSet<FormKey>();
         for (var form : sourceForms) {
+            if (Set.of("liquid", "gas", "molten").contains(form.name())) {
+                forms.add(form);
+                continue;
+            }
+            var block = BlockPrefixRegistry.byName(form.name());
+            if (block != null) {
+                forms.add(new FormKey(block.getName()));
+                continue;
+            }
             var prefix = PrefixRegistry.byName(form.name());
             if (prefix == null)
                 throw new IllegalArgumentException(
@@ -262,13 +354,6 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
                 .toList();
         return Optional.of(
                 new MaterialComposition(material.name(), composition.divider(), parts, composition.crucible()));
-    }
-
-    public static MaterialInfoDefinition.Composition compositionDefinition(MaterialKey key) {
-        var published = publishedMaterial(key, true);
-        return published.isEmpty()
-                ? new MaterialInfoDefinition.Composition(0, List.of(), false)
-                : published.get().definition().composition();
     }
 
     @Override
@@ -544,7 +629,7 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
             Objects.requireNonNull(material);
             Objects.requireNonNull(process);
             Objects.requireNonNull(rule);
-            requireNamespace(addonId, process.id());
+            if (!process.equals(MaterialProcessKeys.DECOMPOSITION)) requireNamespace(addonId, process.id());
             if (!process.type().isInstance(rule.value()))
                 throw new IllegalArgumentException("Process value type mismatch for " + process.id());
             if (process.cardinality() == MaterialProcessCardinality.SINGLE) {

@@ -15,9 +15,9 @@ import java.util.List;
  * {@code divider} is stored as the composition divider. When {@code crucible} is true,
  * GregTech also adds one crucible reaction whose ratios are {@code amount / U} and whose yield is {@code divider};
  * such parts must therefore be whole multiples of {@link GTValues#U}.
- * Composition and crucible participation alone do not permit automatic machine decomposition;
- * opt in with {@link MaterialDeclaration.Builder#centrifuge()} or
- * {@link MaterialDeclaration.Builder#electrolyzer()}.
+ * Composition and crucible participation alone do not permit automatic machine decomposition.
+ * Register a {@link MaterialDecompositionRule} through the typed material-info registrar to add
+ * Centrifuge or Electrolyzer permission.
  */
 public record MaterialComposition(String material, long divider, List<Part> parts, boolean crucible) {
     public MaterialComposition {

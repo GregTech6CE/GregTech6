@@ -38,7 +38,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -68,7 +67,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -99,9 +97,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -129,7 +125,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -160,9 +155,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -191,9 +184,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -222,7 +213,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -249,9 +239,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -281,7 +269,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -309,9 +296,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -339,7 +324,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -364,9 +348,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -391,7 +373,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -420,9 +401,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -449,7 +428,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -482,7 +460,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -510,7 +487,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -538,9 +514,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -576,9 +550,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -607,7 +579,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -638,9 +609,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -669,8 +638,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -700,7 +667,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -730,7 +696,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -761,8 +726,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -789,9 +752,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -817,7 +778,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -869,7 +829,6 @@ public final class OreMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -898,9 +857,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -931,8 +888,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -959,9 +914,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -987,9 +940,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1015,9 +966,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1043,9 +992,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1071,9 +1018,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1099,9 +1044,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1127,7 +1070,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1156,7 +1098,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1188,8 +1129,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1218,9 +1157,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1248,9 +1185,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1278,7 +1213,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1305,7 +1239,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1333,7 +1266,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1363,7 +1295,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1393,7 +1324,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1422,7 +1352,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1451,9 +1380,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1481,7 +1408,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1512,9 +1438,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1539,9 +1463,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1569,7 +1491,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1598,7 +1519,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1627,7 +1547,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1655,7 +1574,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1682,9 +1600,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1714,9 +1630,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1743,7 +1657,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1769,7 +1682,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1801,7 +1713,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1828,8 +1739,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1878,8 +1787,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
@@ -1908,7 +1815,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1938,7 +1844,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -1965,9 +1870,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -1995,7 +1898,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2027,8 +1929,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2077,9 +1977,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2107,9 +2005,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2136,9 +2032,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2168,9 +2062,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2198,7 +2090,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2229,7 +2120,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2259,8 +2149,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2288,7 +2176,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2334,7 +2221,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2364,7 +2250,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2394,7 +2279,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2424,7 +2308,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2453,7 +2336,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2482,7 +2364,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2510,9 +2391,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2540,7 +2419,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2571,9 +2449,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2624,9 +2500,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2656,7 +2530,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2686,9 +2559,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2715,7 +2586,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2746,7 +2616,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2775,7 +2644,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2806,7 +2674,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2834,9 +2701,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2863,9 +2728,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2891,7 +2754,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2918,7 +2780,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -2949,9 +2810,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2977,9 +2836,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -3005,9 +2862,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -3033,9 +2888,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -3061,9 +2914,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -3092,9 +2943,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -3120,9 +2969,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -3147,7 +2994,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -3176,7 +3022,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -3203,7 +3048,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -3231,8 +3075,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -3260,9 +3102,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -3290,9 +3130,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -3320,7 +3158,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -3349,9 +3186,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -3377,9 +3212,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -3407,7 +3240,6 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
@@ -3437,9 +3269,7 @@ public final class OreMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE,
                         MaterialProperty.GENERATE_ORE_PROCESSING,

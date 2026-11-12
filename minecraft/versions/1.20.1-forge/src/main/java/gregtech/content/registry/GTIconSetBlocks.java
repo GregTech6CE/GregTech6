@@ -1,14 +1,15 @@
 package gregtech.content.registry;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
 import gregtech.content.block.IconSetBlock;
-import java.util.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+
+import java.util.*;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 /**
  * Registers placeable icon-set blocks; renderer-only textures are not blocks. Registry ids are the plain

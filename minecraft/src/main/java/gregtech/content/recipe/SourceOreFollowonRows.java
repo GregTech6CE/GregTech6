@@ -49,6 +49,10 @@ public final class SourceOreFollowonRows {
   if(in.isEmpty())return null;
   for(var s:out)if(s==null||s.isEmpty())return null;
   // No collision replacement: return exact accepted identity or null for caller ownership ledger.
+  if(map==MachineRecipeMaps.Shredder||map==MachineRecipeMaps.Anvil)
+   return RecoveryRecipePublisher.publish(map,RecoveryRecipePublisher.explicit(
+       new Recipe(new ItemStack[]{in},out,null,chances,fin,fout,ticks,eut,0),
+       "ore-processing/followon"));
   return map.addRecipe1(false,eut,ticks,chances,in,fin,fout,out);
  }
  /** Source Crushing50-140, bounded RAW input (no host gangue/dense/raw-block extrapolation).

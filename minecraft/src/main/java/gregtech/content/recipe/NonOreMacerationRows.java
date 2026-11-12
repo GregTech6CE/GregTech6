@@ -1,5 +1,6 @@
 package gregtech.content.recipe;
 import gregtech.api.material.GTMaterial;
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MaterialPrefix;
@@ -34,6 +35,10 @@ public final class NonOreMacerationRows {
   if(input==null||input.isEmpty())return; // same missing-form skip as original callsite
   if(reviewed(material)&&!SourceOreInputForms.allowGeneratedInput(material,prefix,input,SourceOreInputForms.Evidence.NO)){
    MATERIALS.add(material);ROWS.define(material,producer,map,optimize,input,outputs,chances,fluids,fluidOutputs,duration,eu);
+  }else if(map==MachineRecipeMaps.Shredder||map==MachineRecipeMaps.Anvil) {
+   Recipe recipe=RecipeMap.make(optimize,new ItemStack[]{input},outputs,null,chances,fluids,fluidOutputs,duration,eu,0);
+   if(recipe!=null)RecoveryRecipePublisher.publish(map,RecoveryRecipePublisher.explicit(
+       recipe,"ore-processing/"+producer));
   }else map.addRecipe(optimize,new ItemStack[]{input},outputs,null,chances,fluids,fluidOutputs,duration,eu,0);
  }
  public static void seal(){ROWS.seal();}

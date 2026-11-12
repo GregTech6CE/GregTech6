@@ -119,7 +119,7 @@ public final class SourceOreInputForms {
                         unsupportedFine = true;
                         continue;
                     }
-                    var explicit = gregtech.engine.material.ItemMaterialRegistry.explicit(item)
+                    var explicit = gregtech.engine.material.ItemMaterialRegistry.base(item)
                             .orElse(null);
                     if (explicit != null
                             && (explicit.prefix() != prefix

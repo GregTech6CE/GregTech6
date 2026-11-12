@@ -175,8 +175,7 @@ public final class RecipeInputs {
             if (recipe.mExactItemInputs && !sameItem(required, available)) return false;
             if (recipe.mRequiresEmptyContainerInputs
                     && gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(available)) return false;
-            return !recipe.mMaterialRecovery
-                    || !available.isDamaged() && gregtech.engine.material.ItemMaterialRegistry.canRecover(available);
+            return !recipe.mMaterialRecovery || gregtech.engine.material.ItemMaterialRegistry.canRecover(available);
         }
 
         private void resetItems() {
@@ -203,7 +202,7 @@ public final class RecipeInputs {
                     itemAccepts[input][slot] = recipe.matchesItemInput(input, available)
                             && (recipe.itemTag(input) != null || !recipe.mExactItemInputs || sameItem(required, available))
                             && (!recipe.mRequiresEmptyContainerInputs || !gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(available))
-                            && (!recipe.mMaterialRecovery || !available.isDamaged() && gregtech.engine.material.ItemMaterialRegistry.canRecover(available));
+                            && (!recipe.mMaterialRecovery || gregtech.engine.material.ItemMaterialRegistry.canRecover(available));
                 }
             }
             int[] itemIdentities = new int[items.size()];

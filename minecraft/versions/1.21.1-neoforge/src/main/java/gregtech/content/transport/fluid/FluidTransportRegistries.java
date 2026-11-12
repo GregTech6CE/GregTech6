@@ -1,7 +1,5 @@
 package gregtech.content.transport.fluid;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
 import gregtech.content.blockentity.machine.FluidPipeBlockEntity;
 import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
@@ -15,6 +13,8 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 /** NeoForge sounds and capabilities for the shared tank/pipe catalog. */
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)

@@ -61,7 +61,7 @@ public class DustFunnelBlockEntity extends BlockEntity {
             return block.prefix() == gregtech.engine.prefix.BlockMaterialPrefix.blockDust;
         // GT6 black sands are their material's blockDust without MaterialBlockLike: they keep their
         // own name and texture, so only the GTBlocks binding identifies them as that form.
-        var data = gregtech.engine.material.ItemMaterialRegistry.explicit(item).orElse(null);
+        var data = gregtech.engine.material.ItemMaterialRegistry.base(item).orElse(null);
         if (data == null || data.components().size() != 1) return false;
         var bound = gregtech.content.registry.GTBlocks.getStack(
                 gregtech.engine.prefix.BlockMaterialPrefix.blockDust, data.material());
@@ -84,10 +84,12 @@ public class DustFunnelBlockEntity extends BlockEntity {
 
     /** GT6 pincers empty the material reservoir, leaving both ordinary slots alone. */
     public ItemStack retrieveFraction() {
+        var plan = material == null
+                ? null
+                : gregtech.content.recipe.MaterialRecoveryRules.dustSlotPlan(amount);
         var out = material == null ? ItemStack.EMPTY : gregtech.util.OM.dust(material, amount);
         if (!out.isEmpty()) {
-            var parts = CrucibleItemInput.parse(out.copyWithCount(1));
-            if (!parts.isEmpty()) amount -= parts.get(0).amount * out.getCount();
+            amount -= plan.representedUnits();
             if (amount <= 0) { amount = 0; material = null; }
             inventoryChanged = true;
             setChanged();

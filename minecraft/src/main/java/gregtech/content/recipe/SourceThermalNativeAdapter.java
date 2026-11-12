@@ -51,12 +51,15 @@ final class SourceThermalNativeAdapter {
  record Outcome(Action action,Reason reason,List<NativeRow> rows) {
   Outcome { rows=List.copyOf(rows); }
  }
- record NativeRow(RecipeMap map,ItemStack input,FluidStack output,long ticks,long power,ThermalInputProof inputProof) {
+ record NativeRow(RecipeMap map,ItemStack input,FluidStack output,long ticks,long power,RecoveryInputProof inputProof) {
   Recipe admit(){
    if(input.isEmpty()||output.isEmpty())return null;
    var recipe=RecipeMap.make(true,new ItemStack[]{input.copy()},new ItemStack[0],null,null,
        new FluidStack[0],new FluidStack[]{output.copy()},ticks,power,0);
-   return recipe==null?null:map.addRecipe(recipe.withItemInputGuard(0,inputProof::matches));
+   return recipe==null?null:RecoveryRecipePublisher.publish(
+       map,RecoveryRecipePublisher.explicit(
+           recipe.withItemInputGuard(0,inputProof::matches).withSource("recovery:thermal-native"),
+           "thermal-native"));
   }
  }
  private static Outcome result(Action action,Reason reason){return new Outcome(action,reason,List.of());}
@@ -134,8 +137,8 @@ final class SourceThermalNativeAdapter {
   if(plan.decision()==SourceThermalRecyclingRules.Decision.UNSUPPORTED)return deferred(Reason.INVALID_RUNTIME_STATS);
   if(plan.decision()==SourceThermalRecyclingRules.Decision.SUPPORTED_NO_ROW)return no(Reason.SOURCE_ZERO_VOLUME);
   var output=fluid.copy();output.setAmount(plan.row().millibuckets());
-  var composition=ItemMaterialRegistry.explicit(selected.getItem()).orElse(null);
-  var inputProof=composition==null?null:ThermalInputProof.capture(selected,material,composition.prefix(),inputUnits);
+  var composition=ItemMaterialRegistry.base(selected.getItem()).orElse(null);
+  var inputProof=composition==null?null:RecoveryInputProof.capture(selected,material,composition.prefix(),inputUnits);
   if(inputProof==null)return deferred(Reason.UNVERIFIED_INPUT_BEHAVIOR);
   var rows=new ArrayList<NativeRow>();
   if(plan.row().melter())rows.add(new NativeRow(MachineRecipeMaps.Melter,selected.copy(),output.copy(),plan.row().ticks(),plan.row().power(),inputProof));
@@ -280,8 +283,8 @@ final class SourceThermalNativeAdapter {
    if(!(stack.getItem() instanceof MaterialFormItem form)||form.getMaterial().resolve()!=material)return -1;
    if(!allowed.contains(form.getPrefix())
        ||GTItems.getStack(form.getPrefix(),material,stack.getCount()).getItem()!=stack.getItem())return -1;
-   var data=ItemMaterialRegistry.explicit(stack.getItem()).orElse(null);
-   if(data==null||!data.recoverable()||data.prefix()!=form.getPrefix()||data.components().size()!=1
+   var data=ItemMaterialRegistry.base(stack.getItem()).orElse(null);
+   if(data==null||!data.bulkRecoveryAllowed()||data.prefix()!=form.getPrefix()||data.components().size()!=1
        ||data.material().resolve()!=material||data.amount()!=form.getPrefix().getMaterialWeight())return -1;
    try{return Math.multiplyExact((long)stack.getCount(),data.amount());}
    catch(ArithmeticException invalid){return -1;}

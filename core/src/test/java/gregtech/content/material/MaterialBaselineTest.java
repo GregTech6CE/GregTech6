@@ -1,7 +1,5 @@
 package gregtech.content.material;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
@@ -9,14 +7,19 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.recipe.MaterialRecoveryRules;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
+import gregtech.engine.material.ItemCompositionSource;
+import gregtech.engine.material.VanillaUnificationDefinitions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class MaterialBaselineTest {
     @BeforeAll
@@ -99,7 +102,8 @@ class MaterialBaselineTest {
         assertNotEquals(
                 MaterialBaselineSnapshot.components(List.of(iron, copper), true),
                 MaterialBaselineSnapshot.components(List.of(copper, iron), true));
-        var composition = new ItemComposition(null, List.of(iron, copper), "normalization fixture", true);
+        var composition =
+                new ItemComposition(null, List.of(iron, copper), Materials.Iron, "normalization fixture", true);
         assertSame(Materials.Iron, composition.material());
         assertThrows(
                 IllegalArgumentException.class,
@@ -166,10 +170,133 @@ class MaterialBaselineTest {
         var graphite = GTMaterialRegistry.get("Graphite");
         assertEquals(GTValues.U, graphite.getTargetSmeltingAmount());
         assertSame(GTMaterialRegistry.get("C"), graphite.getTargetSmeltingMaterial());
-        // Observed truncation is a migration alarm, not authorization to discard eight units.
-        var plan = MaterialRecoveryRules.dust(72 * GTValues.U);
-        assertNotNull(plan);
-        assertSame(MaterialPrefix.dust, plan.prefix());
-        assertEquals(64, plan.count(), "known 72U -> 64U difference; phase 05 must replace this observation");
+        var plan = MaterialRecoveryRules.dustPlan(72 * GTValues.U);
+        assertTrue(plan.complete());
+        assertEquals(72 * GTValues.U, plan.representedUnits());
+        assertEquals(0, plan.remainderUnits());
+        assertEquals(2, plan.stackCount());
+        assertEquals(
+                List.of(
+                        new MaterialRecoveryRules.DustPile(MaterialPrefix.dust, 64),
+                        new MaterialRecoveryRules.DustPile(MaterialPrefix.dust, 8)),
+                plan.piles());
+        var slot = MaterialRecoveryRules.dustSlotPlan(72 * GTValues.U);
+        assertFalse(slot.complete());
+        assertEquals(64 * GTValues.U, slot.representedUnits());
+        assertEquals(8 * GTValues.U, slot.remainderUnits());
+        assertEquals(List.of(new MaterialRecoveryRules.DustPile(MaterialPrefix.dust, 64)), slot.piles());
+        var eighth = MaterialRecoveryRules.dustSlotPlan(9 * GTValues.U72);
+        assertTrue(eighth.complete());
+        assertEquals(9 * GTValues.U72, eighth.representedUnits());
+        assertEquals(List.of(new MaterialRecoveryRules.DustPile(MaterialPrefix.dustDiv72, 9)), eighth.piles());
+
+        var composition = new ItemComposition(
+                null,
+                List.of(MaterialComponent.of(Materials.Gold, 72 * GTValues.U)),
+                Materials.Gold,
+                List.of(new ItemCompositionSource(
+                        ItemCompositionSource.Kind.EXPLICIT, "recovery-test", "test", "", "")),
+                true);
+        var shredder = MaterialRecoveryRules.planShredder(composition, 4);
+        assertTrue(shredder.accepted());
+        assertEquals(2, shredder.stackCount());
+        assertEquals(
+                MaterialRecoveryRules.shredderWork(Materials.Gold),
+                MaterialRecoveryRules.planShredderDamaged(
+                                new ItemComposition(
+                                        null,
+                                        List.of(MaterialComponent.of(Materials.Gold, GTValues.U)),
+                                        Materials.Gold,
+                                        List.of(new ItemCompositionSource(
+                                                ItemCompositionSource.Kind.EXPLICIT,
+                                                "damaged-dynamic-work",
+                                                "test",
+                                                "",
+                                                "")),
+                                        true),
+                                4,
+                                false)
+                        .duration());
+        assertEquals(
+                MaterialRecoveryRules.staticShredderWork(Materials.Gold),
+                MaterialRecoveryRules.planShredderDamaged(
+                                new ItemComposition(
+                                        null,
+                                        List.of(MaterialComponent.of(Materials.Gold, GTValues.U)),
+                                        Materials.Gold,
+                                        List.of(new ItemCompositionSource(
+                                                ItemCompositionSource.Kind.EXPLICIT,
+                                                "damaged-static-work",
+                                                "test",
+                                                "",
+                                                "")),
+                                        true),
+                                4,
+                                true)
+                        .duration());
+        assertEquals(
+                MaterialRecoveryRules.ShredderRejection.OUTPUT_LIMIT,
+                MaterialRecoveryRules.planShredder(composition, 1).rejection());
+        var subFraction = new ItemComposition(
+                null,
+                List.of(MaterialComponent.of(Materials.Gold, 1)),
+                Materials.Gold,
+                List.of(new ItemCompositionSource(
+                        ItemCompositionSource.Kind.EXPLICIT, "recovery-remainder-test", "test", "", "")),
+                true);
+        assertEquals(
+                MaterialRecoveryRules.ShredderRejection.UNREPRESENTABLE_AMOUNT,
+                MaterialRecoveryRules.planShredder(subFraction, 4).rejection());
+        var damagedFraction = new ItemComposition(
+                null,
+                List.of(MaterialComponent.of(Materials.Gold, GTValues.U * 24 / 25)),
+                Materials.Gold,
+                List.of(new ItemCompositionSource(
+                        ItemCompositionSource.Kind.EXPLICIT, "damaged-remainder-test", "test", "", "")),
+                true);
+        assertEquals(
+                MaterialRecoveryRules.ShredderRejection.UNREPRESENTABLE_AMOUNT,
+                MaterialRecoveryRules.planShredder(damagedFraction, 4).rejection());
+        var damagedPlan = MaterialRecoveryRules.planShredderDamaged(damagedFraction, 4, false);
+        assertTrue(damagedPlan.accepted());
+        assertTrue(damagedPlan.outputs().get(0).dust().remainderUnits() > 0);
+        assertTrue(damagedPlan.skippedComponents().stream()
+                .anyMatch(component ->
+                        component.reason() == MaterialRecoveryRules.ShredderRejection.UNREPRESENTABLE_AMOUNT));
+    }
+
+    @Test
+    void shredderProfilesKeepStaticAndDynamicMultipliersSeparate() {
+        assertEquals(
+                256L * Math.max(1, Materials.NetherStar.getToolQuality() + 1),
+                MaterialRecoveryRules.staticShredderWork(Materials.NetherStar));
+        assertEquals(
+                16L * Math.max(1, Materials.Rubber.getToolQuality() + 1),
+                MaterialRecoveryRules.staticShredderWork(Materials.Rubber));
+        assertEquals(
+                64L * Math.max(1, Materials.Firestone.getToolQuality() + 1),
+                MaterialRecoveryRules.shredderWork(Materials.Firestone));
+        assertEquals(
+                2L * Math.max(1, Materials.Rubber.getToolQuality() + 1),
+                MaterialRecoveryRules.shredderWork(Materials.Rubber));
+        assertEquals(
+                2L * Math.max(1, Materials.MeatRotten.getToolQuality() + 1),
+                MaterialRecoveryRules.shredderWork(Materials.MeatRotten));
+    }
+
+    @Test
+    void recoveryOreClassificationKeepsRawItemsAndBlocksDistinct() {
+        assertSame(
+                VanillaUnificationDefinitions.OreInputKind.ORE,
+                VanillaUnificationDefinitions.oreInputKind("copper_ore"));
+        assertSame(
+                VanillaUnificationDefinitions.OreInputKind.RAW_METAL,
+                VanillaUnificationDefinitions.oreInputKind("raw_iron"));
+        assertSame(
+                VanillaUnificationDefinitions.OreInputKind.RAW_METAL_BLOCK,
+                VanillaUnificationDefinitions.oreInputKind("raw_iron_block"));
+        assertSame(
+                VanillaUnificationDefinitions.OreInputKind.OTHER,
+                VanillaUnificationDefinitions.oreInputKind("iron_ingot"));
     }
 }

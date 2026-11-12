@@ -3,6 +3,7 @@ package gregtech.content.material;
 import gregtech.api.material.MaterialComponent;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
+import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.VanillaUnificationDefinitions;
 import java.util.ArrayList;
@@ -20,7 +21,12 @@ public final class VanillaUnificationLoader {
             var material = GTMaterialRegistry.get(definition.materialName());
             if (item == Items.AIR || !material.isValid()) continue;
             if (definition.extraComponents().isEmpty()) {
-                ItemMaterialRegistry.register(item, definition.prefix(), material, definition.amount());
+                ItemMaterialRegistry.register(
+                        item,
+                        new ItemComposition(definition.prefix(), material, definition.amount()),
+                        ItemCompositionSource.Kind.UNIFICATION,
+                        "gt6ce:vanilla-unification/" + definition.itemPath(),
+                        "vanilla identity table");
                 continue;
             }
             var components = new ArrayList<MaterialComponent>();
@@ -30,7 +36,21 @@ public final class VanillaUnificationLoader {
                 if (extraMaterial.isValid()) components.add(MaterialComponent.of(extraMaterial, extra.amount()));
             }
             ItemMaterialRegistry.register(
-                    item, new ItemComposition(definition.prefix(), components, "GT6 unification", true));
+                    item,
+                    new ItemComposition(
+                            definition.prefix(),
+                            components,
+                            material,
+                            java.util.List.of(new ItemCompositionSource(
+                                    ItemCompositionSource.Kind.UNIFICATION,
+                                    "gt6ce:vanilla-unification/" + definition.itemPath(),
+                                    "vanilla identity table",
+                                    definition.itemPath(),
+                                    "")),
+                            true),
+                    ItemCompositionSource.Kind.UNIFICATION,
+                    "gt6ce:vanilla-unification/" + definition.itemPath(),
+                    "vanilla identity table");
         }
     }
 }

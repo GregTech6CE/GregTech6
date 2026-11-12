@@ -152,6 +152,13 @@ public final class MortarGrindingRecipes {
         return OM.dust(target, PulverizationRules.amount(amount, material.getTargetPulverAmount()));
     }
 
+    /** Complete multi-stack form for recipe owners that can retain every output pile. */
+    public static java.util.List<ItemStack> pulverizeAll(GTMaterial material, long amount) {
+        GTMaterial target = material.getTargetPulverMaterial();
+        if (target == null || !target.isValid()) return java.util.List.of();
+        return OM.dustAll(target, PulverizationRules.amount(amount, material.getTargetPulverAmount()));
+    }
+
     /** Port prefix by GT6 name; null when the port has no such form (recorded in {@link #SKIPPED}). */
     private static MaterialPrefix prefixOf(String prefixName) {
         return gregtech.engine.prefix.PrefixRegistry.byName(prefixName);

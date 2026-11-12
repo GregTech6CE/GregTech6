@@ -35,10 +35,17 @@ public final class StoneAndToolSurvivalRecipes {
             var rock=GTItems.getStack(MaterialPrefix.rockGt,material);
             // Original Handlers157 / W162: shredding targets pulver material, not input identity.
             var dust=GTItems.getStack(MaterialPrefix.dustSmall,material.getTargetPulverMaterial().resolve(),9);
-            if(!rock.isEmpty()&&!dust.isEmpty()) {
+            var composition=rock.isEmpty()?null:ItemMaterialRegistry.base(rock.getItem()).orElse(null);
+            if(!rock.isEmpty()&&!dust.isEmpty()
+                    &&ItemMaterialRegistry.recoveryRejection(rock)==ItemMaterialRegistry.RecoveryRejection.ELIGIBLE
+                    &&composition!=null&&composition.components().size()==1
+                    &&composition.material().resolve()==material.resolve()) {
                 var recipe=new Recipe(new ItemStack[]{rock,ItemStack.EMPTY},new ItemStack[]{dust},null,null,null,null,
-                        Math.max(1,36L*(material.getToolQuality()+1L)),16,0);
-                if(MachineRecipeMaps.Anvil.addRecipe(recipe)!=null)ADDED.add(recipe);
+                        Math.max(1,36L*(material.getToolQuality()+1L)),16,0).withMaterialRecovery();
+                if(RecoveryRecipePublisher.publish(
+                        MachineRecipeMaps.Anvil,
+                        RecoveryRecipePublisher.explicit(recipe.withSource("recovery:stone-tool"),"stone-tool"))!=null)
+                    ADDED.add(recipe);
             }
         }
         registerStoneExtrusions();

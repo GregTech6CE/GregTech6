@@ -10,19 +10,25 @@ import gregtech.engine.recipe.*;
 import gregtech.engine.stack.StackCompat;
 import gregtech.platform.Mc;
 import java.util.*;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
 
 /** GT6 RecipeMapShredder decomposition for vanilla and explicitly audited native compositions. */
 public final class VanillaRecoveryRecipes {
     private static final List<Recipe> RECIPES = new ArrayList<>();
+    private static final Map<String, Integer> SKIPPED = new TreeMap<>();
 
     public static List<Recipe> recipes() {
         return Collections.unmodifiableList(RECIPES);
     }
 
+    public static Map<String, Integer> skipped() {
+        return Collections.unmodifiableMap(SKIPPED);
+    }
+
     private VanillaRecoveryRecipes() {}
 
     public static int register() {
+        SKIPPED.clear();
         for (var item : Mc.itemStream()
                 .sorted(Comparator.comparing(i -> Mc.itemId(i).toString()))
                 .toList()) {
@@ -34,43 +40,46 @@ public final class VanillaRecoveryRecipes {
                     && !TransportMaterialRegistration.recoveryItems().contains(item)
                     && !auditedMachine
                     && !meatCut) continue;
-            if (!meatCut && (id.getPath().endsWith("_ore") || id.getPath().startsWith("raw_"))) continue;
             var stack = new ItemStack(item);
-            if (!ItemMaterialRegistry.canRecover(stack)) continue;
-            var data = ItemMaterialRegistry.get(stack).orElseThrow();
+            var rejection = ItemMaterialRegistry.recoveryRejection(stack);
+            if (rejection != ItemMaterialRegistry.RecoveryRejection.ELIGIBLE) {
+                skip("input/" + rejection.name().toLowerCase(Locale.ROOT));
+                continue;
+            }
+            if (!meatCut
+                    && gregtech.engine.material.VanillaUnificationDefinitions.oreInputKind(id.getPath())
+                            != gregtech.engine.material.VanillaUnificationDefinitions.OreInputKind.OTHER) {
+                skip("source-ore-category");
+                continue;
+            }
+            var data = ItemMaterialRegistry.base(item).orElseThrow();
             if (data.prefix() != null
-                    && (data.prefix().getName().startsWith("dust") || data.prefix() == MaterialPrefix.oreRaw)) continue;
-            var crushed = new LinkedHashMap<GTMaterial, Long>();
-            for (var c : data.components()) {
-                var target = c.material().getTargetPulverMaterial();
-                long amount = MaterialRecoveryRules.pulverizedAmount(c.material(), c.amount());
-                if (target != null && amount > 0) crushed.merge(target.resolve(), amount, Long::sum);
+                    && (data.prefix().getName().startsWith("dust") || data.prefix() == MaterialPrefix.oreRaw)) {
+                skip("existing-recovery-family");
+                continue;
+            }
+            var plan = MaterialRecoveryRules.planShredder(data, MachineRecipeMaps.Shredder.mOutputItemsCount);
+            if (!plan.accepted()) {
+                skip("plan/" + plan.rejection().name().toLowerCase(Locale.ROOT));
+                continue;
             }
             var outputs = new ArrayList<ItemStack>();
-            long duration = 0;
-            boolean complete = !crushed.isEmpty();
-            for (var c : crushed.entrySet()) {
-                var dust = dust(c.getKey(), c.getValue());
-                if (dust.isEmpty()) {
-                    complete = false;
-                    break;
-                }
-                // Missing blockDust must not silently truncate a large audited machine to64 piles.
-                // Fractional OM.dust rounding below one selected pile is retained.
-                if (auditedMachine) {
-                    var form = MaterialEquivalence.form(dust);
-                    if (form == null
-                            || c.getValue() - form.prefix().getMaterialWeight() * dust.getCount()
-                                    >= form.prefix().getMaterialWeight()) {
-                        complete = false;
+            boolean bindingsComplete = true;
+            for (var output : plan.outputs()) {
+                for (var pile : output.dust().piles()) {
+                    var dust = GTItems.getStack(pile.prefix(), output.material(), pile.count());
+                    if (dust.isEmpty()) {
+                        bindingsComplete = false;
                         break;
                     }
+                    outputs.add(dust);
                 }
-                outputs.add(dust);
-                long work = MaterialRecoveryRules.shredderWork(c.getKey());
-                duration += (c.getValue() * work + GTValues.U - 1) / GTValues.U;
+                if (!bindingsComplete) break;
             }
-            if (!complete || outputs.size() > MachineRecipeMaps.Shredder.mOutputItemsCount) continue;
+            if (!bindingsComplete) {
+                skip("output/binding-missing");
+                continue;
+            }
             if (outputs.size() == 1
                     && StackCompat.sameItem(stack, outputs.get(0))
                     && outputs.get(0).getCount() == 1) continue;
@@ -81,18 +90,29 @@ public final class VanillaRecoveryRecipes {
                             null,
                             null,
                             null,
-                            Math.max(1, duration),
+                            plan.duration(),
                             16,
                             0)
                     .withMaterialRecovery();
-            // Existing explicit GT6 processing recipes keep priority and their special yields.
-            if (MachineRecipeMaps.Shredder.addRecipe(recipe) != null) RECIPES.add(recipe);
+            recipe.withRuntimeResolver(inputs -> ShredderDamageScaling.resolve(inputs, recipe, false));
+            recipe.withSource("recovery:vanilla-generic");
+            if (RecoveryRecipePublisher.publish(
+                            MachineRecipeMaps.Shredder, RecoveryRecipePublisher.generic(recipe, "vanilla-recovery"))
+                    != null) RECIPES.add(recipe);
+            else skip("existing-owner");
         }
+        Mc.logger()
+                .info("Registered {} composition-driven vanilla recovery recipes; skipped {}", RECIPES.size(), SKIPPED);
         return RECIPES.size();
     }
+
+    private static void skip(String reason) {
+        SKIPPED.merge(reason, 1, Integer::sum);
+    }
+
     /** Admit audited source compositions; coarse legacy hull estimates are not recovery data. */
-    private static boolean originalMachine(Item item) {
-        if (!(item instanceof BlockItem blockItem)) return false;
+    private static boolean originalMachine(net.minecraft.world.item.Item item) {
+        if (!(item instanceof net.minecraft.world.item.BlockItem blockItem)) return false;
         var block = blockItem.getBlock();
         var id = Mc.blockId(block);
         if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
@@ -104,10 +124,5 @@ public final class VanillaRecoveryRecipes {
         var registered = ItemMaterialRegistry.base(item);
         return registered.isPresent()
                 && registered.get().components().equals(expected.get().components());
-    }
-    /** OM.dust pile choice; floor any unrepresentable fraction, never manufacture extra mass. */
-    private static ItemStack dust(GTMaterial material, long amount) {
-        var pile = MaterialRecoveryRules.dust(amount);
-        return pile == null ? ItemStack.EMPTY : GTItems.getStack(pile.prefix(), material, pile.count());
     }
 }

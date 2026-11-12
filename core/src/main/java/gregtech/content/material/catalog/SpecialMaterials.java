@@ -243,8 +243,6 @@ public final class SpecialMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_PLATE,

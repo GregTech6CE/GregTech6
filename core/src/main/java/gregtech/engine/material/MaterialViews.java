@@ -342,70 +342,13 @@ public final class MaterialViews {
             }
         };
 
-        var processTypes = new LinkedHashMap<DataKey, MaterialProcessKey<?>>();
-        var processRules = new LinkedHashMap<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>>();
-        for (var material : materials.keySet()) processRules.put(material, new LinkedHashMap<>());
-        for (var material : materials.keySet()) {
-            MaterialInfoRegistry.processesForPublication(material).rules().forEach((key, rules) -> {
-                String source = "linked material catalog";
-                registerProcessType(processTypes, key, source);
-                for (var rule : rules)
-                    addProcessRule(
-                            processRules.get(material),
-                            key,
-                            MaterialInfoRegistry.normalizeProcessRule(source, key, rule));
-            });
-        }
-        for (var submission : AddonMaterials.processDeclarations()) {
-            var declaration = submission.declaration();
-            requireNamespace(submission.addonId(), declaration.process().id());
-            GTMaterial material = GTMaterialRegistry.get(declaration.materialName());
-            if (!material.isValid())
-                throw new IllegalArgumentException("Addon '" + submission.addonId()
-                        + "' process uses unknown material '" + declaration.materialName() + "'");
-            var key = new MaterialKey(material.getName());
-            var targetRules = processRules.get(key);
-            if (targetRules == null)
-                throw new IllegalArgumentException("Addon '" + submission.addonId() + "' process uses non-material '"
-                        + declaration.materialName() + "'");
-            String source = "addon '" + submission.addonId() + "'";
-            registerProcessType(processTypes, declaration.process(), source);
-            addProcessRule(
-                    targetRules,
-                    declaration.process(),
-                    MaterialInfoRegistry.normalizeProcessRule(
-                            source,
-                            declaration.process(),
-                            new MaterialProcessRule<>(declaration.forms(), declaration.value())));
-        }
-        for (var submission : MaterialInfoRegistry.processSubmissions()) {
-            GTMaterial material = GTMaterialRegistry.get(submission.material().name());
-            if (!material.isValid())
-                throw new IllegalArgumentException(
-                        "Addon '" + submission.addonId() + "' process uses unknown material '"
-                                + submission.material().name() + "'");
-            var key = new MaterialKey(material.getName());
-            var targetRules = processRules.get(key);
-            if (targetRules == null)
-                throw new IllegalArgumentException("Addon '" + submission.addonId() + "' process uses non-material '"
-                        + submission.material().name() + "'");
-            String source = "addon '" + submission.addonId() + "'";
-            registerProcessType(processTypes, submission.process(), source);
-            @SuppressWarnings("unchecked")
-            var process = (MaterialProcessKey<Object>) submission.process();
-            @SuppressWarnings("unchecked")
-            var rule = (MaterialProcessRule<Object>) submission.rule();
-            addProcessRule(targetRules, process, MaterialInfoRegistry.normalizeProcessRule(source, process, rule));
-        }
-        validateProcessForms(processRules, immutableTypedForms);
-        validateProcessCardinality(processRules);
         var immutableProcesses =
                 new LinkedHashMap<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>>();
-        processRules.forEach((material, byProcess) -> {
-            var copied = new LinkedHashMap<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>();
-            byProcess.forEach((key, rules) -> copied.put(key, List.copyOf(rules)));
-            immutableProcesses.put(material, Map.copyOf(copied));
-        });
+        for (var material : materials.keySet())
+            immutableProcesses.put(
+                    material,
+                    MaterialInfoRegistry.processesForPublication(material).rules());
+        validateProcessForms(immutableProcesses, immutableTypedForms);
         MaterialProcessesView processView = new MaterialProcessesView() {
             public <T> List<MaterialProcessRule<T>> find(MaterialKey material, MaterialProcessKey<T> process) {
                 Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> byProcess =
@@ -452,7 +395,7 @@ public final class MaterialViews {
         });
         published = new MaterialCatalogView() {
             public long revision() {
-                return 1;
+                return MaterialPublication.current().materialRevision();
             }
 
             public Optional<MaterialKey> resolve(String name) {
@@ -488,34 +431,6 @@ public final class MaterialViews {
     private static void requireNamespace(String addonId, DataKey key) {
         if (!addonId.equals(key.namespace()))
             throw new IllegalArgumentException("Addon '" + addonId + "' cannot declare key " + key);
-    }
-
-    private static void registerProcessType(
-            Map<DataKey, MaterialProcessKey<?>> processes, MaterialProcessKey<?> key, String source) {
-        var previous = processes.putIfAbsent(key.id(), key);
-        if (previous != null && (previous.type() != key.type() || previous.cardinality() != key.cardinality()))
-            throw new IllegalArgumentException(
-                    "Material process '" + key.id() + "' from " + source + " has conflicting type or cardinality");
-    }
-
-    private static void addProcessRule(
-            Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> rules,
-            MaterialProcessKey<?> key,
-            MaterialProcessRule<?> rule) {
-        List<MaterialProcessRule<?>> current = rules.computeIfAbsent(key, ignored -> new java.util.ArrayList<>());
-        if (key.cardinality() == MaterialProcessCardinality.SINGLE && !current.isEmpty())
-            throw new IllegalArgumentException(
-                    "Single-valued process " + key.id() + " already has a rule for this material");
-        if (!current.contains(rule)) current.add(rule);
-    }
-
-    private static void validateProcessCardinality(
-            Map<MaterialKey, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>>> processRules) {
-        processRules.forEach((material, byProcess) -> byProcess.forEach((key, rules) -> {
-            if (key.cardinality() == MaterialProcessCardinality.SINGLE && rules.size() != 1)
-                throw new IllegalArgumentException("Material " + material.name() + " single-valued process " + key.id()
-                        + " must have exactly one rule, found " + rules.size());
-        }));
     }
 
     private static void validateProcessForms(
