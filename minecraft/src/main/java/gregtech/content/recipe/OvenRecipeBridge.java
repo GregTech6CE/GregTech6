@@ -105,6 +105,7 @@ public final class OvenRecipeBridge {
             // ceramic and mold firing), so only foreign rows are subject to the removal.
             if (cooking && !recipeId.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)
                     && oreDicted(firstInput(recipe)) && oreDicted(result)
+                    && hasPublishedCookingReplacement(firstInput(recipe))
                     && !isRetainedVanillaSmelting(recipeId, recipe, result)) {
                 dropped++;
                 continue;
@@ -515,6 +516,19 @@ public final class OvenRecipeBridge {
     private static boolean oreDicted(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return false;
         return gregtech.engine.material.ItemMaterialRegistry.hasMaterialProcessingRule(stack);
+    }
+
+    /** A foreign cooking row is removable only when a concrete GT furnace row covers the same item. */
+    private static boolean hasPublishedCookingReplacement(ItemStack input) {
+        if (input == null || input.isEmpty()) return false;
+        for (var row : MachineRecipeMaps.Furnace.mRecipeList) {
+            if (!row.mEnabled || row.mHidden || hasFluidInput(row)) continue;
+            ItemStack candidate = firstStack(row.mInputs);
+            ItemStack output = firstStack(row.mOutputs);
+            if (!candidate.isEmpty() && candidate.getCount() == 1 && candidate.is(input.getItem())
+                    && !output.isEmpty()) return true;
+        }
+        return false;
     }
 
     /**

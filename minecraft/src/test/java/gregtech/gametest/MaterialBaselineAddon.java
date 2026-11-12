@@ -22,7 +22,7 @@ public final class MaterialBaselineAddon implements AddonMaterialContributor {
             new DecompositionCase("BaselineDustOnly", "dust", null, false),
             new DecompositionCase("BaselineBlockOnly", "blockDust", null, false),
             new DecompositionCase("BaselineLiquidOnly", "liquid", "material_baseline_test:baselineliquidonly", false),
-            new DecompositionCase("BaselineGasOnly", "gas", null, true),
+            new DecompositionCase("BaselineGasOnly", "gas", "material_baseline_test:baselinegasonly", true),
             new DecompositionCase("BaselineLegacyFluid", "liquid", "baselinelegacyfluid", false),
             new DecompositionCase("BaselineBuiltinFluid", "gas", "gt6ce:oxygen", true),
             new DecompositionCase("BaselineExternalFluid", "liquid", "minecraft:flowing_water", false),

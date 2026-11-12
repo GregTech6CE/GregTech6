@@ -5,6 +5,7 @@ import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialProcessingProperties;
 import gregtech.engine.material.ItemComposition;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -55,14 +56,24 @@ public final class MaterialRecoveryRules {
     }
 
     public static long shredderWork(GTMaterial material) {
-        return (material.getName().contains("Quartz")
+        return (MaterialProcessingProperties.isQuartz(material)
                         ? 64L
-                        : material.hasAny(MaterialProperty.WOOD, MaterialProperty.STONE, MaterialProperty.GEM)
-                                        || gregtech.content.data.generated.MaterialWorkability.isBrittle(material)
+                        : material.hasAny(MaterialProperty.WOOD, MaterialProperty.STONE)
+                                        || MaterialProcessingProperties.isBrittle(material)
+                                        || MaterialProcessingProperties.isBouncy(material)
+                                        || MaterialProcessingProperties.isStretchy(material)
+                                        || MaterialProcessingProperties.isMeat(material)
+                                        || MaterialProcessingProperties.isRotten(material)
                                         || gregtech.content.data.generated.MaterialWorkability.isFood(material)
                                 ? 2L
                                 : 256L)
                 * Math.max(1, material.getToolQuality() + 1);
+    }
+
+    /** Static Shredder prefix rows use 256, or 16 for mortar-grindable materials. */
+    public static long staticShredderWork(GTMaterial material) {
+        long multiplier = MaterialProcessingProperties.isMortarGrindable(material) ? 16L : 256L;
+        return multiplier * Math.max(1, material.getToolQuality() + 1);
     }
 
     /**
@@ -117,8 +128,8 @@ public final class MaterialRecoveryRules {
 
     /**
      * Pure Shredder plan over the complete effective composition. Every positive component is
-     * converted through its own pulverization target; missing targets and output overflow are
-     * reported instead of silently dropping that component.
+     * converted through its own pulverization target; a component without a usable target is
+     * skipped, while output overflow remains an explicit plan rejection.
      */
     public record ShredderPlan(List<ShredderOutput> outputs, long duration, ShredderRejection rejection) {
         public ShredderPlan {
@@ -138,18 +149,28 @@ public final class MaterialRecoveryRules {
     }
 
     public static ShredderPlan planShredder(ItemComposition composition, int outputItemSlots) {
+        return planShredder(composition, outputItemSlots, false);
+    }
+
+    /** Plans a generated static prefix row instead of the dynamic composition fallback. */
+    public static ShredderPlan planShredderStatic(ItemComposition composition, int outputItemSlots) {
+        return planShredder(composition, outputItemSlots, true);
+    }
+
+    private static ShredderPlan planShredder(ItemComposition composition, int outputItemSlots, boolean staticPrefix) {
         if (composition == null || composition.components().isEmpty()) return rejected(ShredderRejection.NO_COMPONENTS);
         if (outputItemSlots <= 0) return rejected(ShredderRejection.OUTPUT_LIMIT);
         try {
             var targetUnits = new LinkedHashMap<GTMaterial, Long>();
+            long inputUnits = 0;
             for (MaterialComponent component : composition.components()) {
                 GTMaterial material = component.material().resolve();
-                if (!material.isValid() || component.amount() <= 0)
-                    return rejected(ShredderRejection.INVALID_COMPONENT);
+                if (!material.isValid() || component.amount() <= 0) continue;
+                inputUnits = Math.addExact(inputUnits, component.amount());
                 GTMaterial target = material.getTargetPulverMaterial();
-                if (target == null) return rejected(ShredderRejection.MISSING_PULVERIZATION_TARGET);
+                if (target == null) continue;
                 target = target.resolve();
-                if (!target.isValid()) return rejected(ShredderRejection.INVALID_PULVERIZATION_TARGET);
+                if (!target.isValid()) continue;
                 long amount = pulverizedAmount(material, component.amount());
                 if (amount > 0) targetUnits.merge(target, amount, Math::addExact);
             }
@@ -158,6 +179,27 @@ public final class MaterialRecoveryRules {
             var outputs = new ArrayList<ShredderOutput>();
             int remainingSlots = outputItemSlots;
             long duration = 0;
+            if (staticPrefix && inputUnits > 0) {
+                GTMaterial source = composition.material();
+                if (source == null || !source.isValid()) {
+                    for (MaterialComponent component : composition.components()) {
+                        GTMaterial candidate = component.material().resolve();
+                        if (candidate.isValid()) {
+                            source = candidate;
+                            break;
+                        }
+                    }
+                }
+                duration = source == null
+                        ? 0
+                        : Math.max(
+                                1,
+                                BigInteger.valueOf(inputUnits)
+                                        .multiply(BigInteger.valueOf(staticShredderWork(source)))
+                                        .add(BigInteger.valueOf(GTValues.U - 1))
+                                        .divide(BigInteger.valueOf(GTValues.U))
+                                        .longValueExact());
+            }
             for (var entry : targetUnits.entrySet()) {
                 if (remainingSlots <= 0) return rejected(ShredderRejection.OUTPUT_LIMIT);
                 var dust = dustPlan(entry.getValue(), remainingSlots);
@@ -170,14 +212,16 @@ public final class MaterialRecoveryRules {
                 if (dust.piles().isEmpty()) continue;
                 outputs.add(new ShredderOutput(entry.getKey(), dust));
                 remainingSlots -= dust.stackCount();
-                long work = shredderWork(entry.getKey());
-                duration = Math.addExact(
-                        duration,
-                        BigInteger.valueOf(entry.getValue())
-                                .multiply(BigInteger.valueOf(work))
-                                .add(BigInteger.valueOf(GTValues.U - 1))
-                                .divide(BigInteger.valueOf(GTValues.U))
-                                .longValueExact());
+                if (!staticPrefix) {
+                    long work = shredderWork(entry.getKey());
+                    duration = Math.addExact(
+                            duration,
+                            BigInteger.valueOf(entry.getValue())
+                                    .multiply(BigInteger.valueOf(work))
+                                    .add(BigInteger.valueOf(GTValues.U - 1))
+                                    .divide(BigInteger.valueOf(GTValues.U))
+                                    .longValueExact());
+                }
             }
             if (outputs.isEmpty()) return rejected(ShredderRejection.NO_COMPONENTS);
             return new ShredderPlan(outputs, Math.max(1, duration), ShredderRejection.NONE);

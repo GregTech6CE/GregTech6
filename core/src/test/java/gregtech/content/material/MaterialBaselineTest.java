@@ -207,6 +207,25 @@ class MaterialBaselineTest {
     }
 
     @Test
+    void shredderProfilesKeepStaticAndDynamicMultipliersSeparate() {
+        assertEquals(
+                256L * Math.max(1, Materials.NetherStar.getToolQuality() + 1),
+                MaterialRecoveryRules.staticShredderWork(Materials.NetherStar));
+        assertEquals(
+                16L * Math.max(1, Materials.Rubber.getToolQuality() + 1),
+                MaterialRecoveryRules.staticShredderWork(Materials.Rubber));
+        assertEquals(
+                64L * Math.max(1, Materials.Firestone.getToolQuality() + 1),
+                MaterialRecoveryRules.shredderWork(Materials.Firestone));
+        assertEquals(
+                2L * Math.max(1, Materials.Rubber.getToolQuality() + 1),
+                MaterialRecoveryRules.shredderWork(Materials.Rubber));
+        assertEquals(
+                2L * Math.max(1, Materials.MeatRotten.getToolQuality() + 1),
+                MaterialRecoveryRules.shredderWork(Materials.MeatRotten));
+    }
+
+    @Test
     void recoveryOreClassificationKeepsRawItemsAndBlocksDistinct() {
         assertSame(
                 VanillaUnificationDefinitions.OreInputKind.ORE,

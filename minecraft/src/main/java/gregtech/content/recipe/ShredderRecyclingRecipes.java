@@ -236,7 +236,7 @@ public final class ShredderRecyclingRecipes {
             skip("empty-composition");
             return null;
         }
-        var plan = MaterialRecoveryRules.planShredder(data, MachineRecipeMaps.Shredder.mOutputItemsCount);
+        var plan = MaterialRecoveryRules.planShredderStatic(data, MachineRecipeMaps.Shredder.mOutputItemsCount);
         if (!plan.accepted()) {
             skip("plan-" + plan.rejection().name().toLowerCase(Locale.ROOT));
             return null;

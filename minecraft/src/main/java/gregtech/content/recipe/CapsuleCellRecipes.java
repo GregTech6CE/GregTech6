@@ -57,8 +57,7 @@ public final class CapsuleCellRecipes {
                     ||ItemMaterialRegistry.recoveryRejection(input)!=ItemMaterialRegistry.RecoveryRejection.ELIGIBLE
                     ||composition.components().size()!=1
                     ||composition.material().resolve()!=spec.material().resolve())continue;
-            boolean brittle=spec.id().startsWith("cell_wax")||spec.id().equals("cell_plastic");
-            long work=(brittle?2L:256L)*Math.max(1,spec.material().getToolQuality()+1);
+            long work=MaterialRecoveryRules.staticShredderWork(spec.material());
             var recipe=new Recipe(new ItemStack[]{input},new ItemStack[]{output},null,null,null,null,(work+8)/9,16,0)
                     .withMaterialRecovery()
                     .withSource("recovery:capsule");

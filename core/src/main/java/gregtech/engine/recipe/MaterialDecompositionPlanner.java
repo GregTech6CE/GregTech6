@@ -116,21 +116,17 @@ public final class MaterialDecompositionPlanner {
                         "fluid input " + binding.fluid() + " cannot represent " + inputUnits + " source units");
             fluidInputs.add(new FluidInput(binding.phase(), binding.fluid(), amount, true));
         }
-        if (fluidInputs.isEmpty()) {
-            long amount = SourceDecompositionRules.units(inputUnits, U, 1000, true);
-            if (amount <= 0 || amount > Integer.MAX_VALUE)
-                return Result.rejected(Status.INVALID_QUANTITY, "generic fluid input cannot represent " + inputUnits);
-            fluidInputs.add(new FluidInput(null, material.getName(), (int) amount, false));
-        }
-
         List<DustOutput> itemOutputs = new ArrayList<>();
         List<FluidOutput> fluidOutputs = new ArrayList<>();
+        Status skippedComponent = null;
+        String skippedReason = "";
         for (MaterialComponent component : material.getCompositionComponents()) {
             GTMaterial part = component.material().resolve();
-            if (!part.isValid())
-                return Result.rejected(
-                        Status.MISSING_COMPONENT,
-                        "unknown component " + component.material().getName());
+            if (!part.isValid()) {
+                skippedComponent = Status.MISSING_COMPONENT;
+                skippedReason = "unknown component " + component.material().getName();
+                continue;
+            }
             FluidOutput fluid = ambientOutput(part, component.amount());
             if (fluid != null) {
                 fluidOutputs.add(fluid);
@@ -138,16 +134,23 @@ public final class MaterialDecompositionPlanner {
             }
             GTMaterial pulver = part.getTargetPulverMaterial().resolve();
             long pulverAmount = part.getTargetPulverAmount();
-            if (!pulver.isValid() || pulverAmount <= 0)
-                return Result.rejected(Status.MISSING_OUTPUT, "component " + part.getName() + " has no powder target");
+            if (!pulver.isValid() || pulverAmount <= 0) {
+                skippedComponent = Status.MISSING_OUTPUT;
+                skippedReason = "component " + part.getName() + " has no powder target";
+                continue;
+            }
             long units = SourceDecompositionRules.units(component.amount(), U, pulverAmount, false);
-            if (units <= 0)
-                return Result.rejected(
-                        Status.INVALID_QUANTITY, "component " + part.getName() + " cannot represent powder output");
+            if (units <= 0) {
+                skippedComponent = Status.INVALID_QUANTITY;
+                skippedReason = "component " + part.getName() + " cannot represent powder output";
+                continue;
+            }
             itemOutputs.add(new DustOutput(new MaterialKey(pulver.getName()), units));
         }
         if (itemOutputs.isEmpty() && fluidOutputs.isEmpty())
-            return Result.rejected(Status.MISSING_OUTPUT, "composition produced no resolvable output");
+            return Result.rejected(
+                    skippedComponent == null ? Status.MISSING_OUTPUT : skippedComponent,
+                    skippedReason.isBlank() ? "composition produced no resolvable output" : skippedReason);
 
         int keptItems = Math.min(itemOutputs.size(), Math.max(0, itemOutputSlots));
         int keptFluids = Math.min(fluidOutputs.size(), Math.max(0, fluidOutputSlots));

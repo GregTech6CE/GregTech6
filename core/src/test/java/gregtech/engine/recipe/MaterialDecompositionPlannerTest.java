@@ -104,6 +104,20 @@ class MaterialDecompositionPlannerTest {
     }
 
     @Test
+    void absentFluidBindingDoesNotInventAUnitlessInput() {
+        var material = gregtech.engine.material.GTMaterialRegistry.get("AluminiumAlloy");
+        var rule = MaterialInfoRegistry.processes(new MaterialKey("AluminiumAlloy"))
+                .findSingle(MaterialProcessKeys.DECOMPOSITION)
+                .orElseThrow()
+                .value();
+        var result =
+                MaterialDecompositionPlanner.plan(material, rule, MaterialDecompositionRule.Route.CENTRIFUGE, 6, 2);
+        assertTrue(result.planned(), result.status() + ": " + result.reason());
+        assertTrue(result.plan().fluidInputs().isEmpty());
+        assertFalse(result.plan().itemOutputs().isEmpty());
+    }
+
+    @Test
     void glowstoneRetainsSolidFallbackAndDeclaredGasScale() {
         var rule = MaterialInfoRegistry.processes(new MaterialKey("Glowstone"))
                 .findSingle(MaterialProcessKeys.DECOMPOSITION)

@@ -144,10 +144,7 @@ public final class DecompositionRecipeLoader implements InitializationStep {
                     plan.droppedFluidOutputs());
         List<ItemStack> itemOutputs = nativeItemOutputs(plan);
         List<FluidStack> fluidOutputs = nativeFluidOutputs(plan);
-        if (itemOutputs == null || fluidOutputs == null) {
-            bindingIssues++;
-            return false;
-        }
+        if (itemOutputs.isEmpty() && fluidOutputs.isEmpty()) return false;
 
         boolean addedAny = false;
         boolean fluidInputAdded = false;
@@ -214,7 +211,8 @@ public final class DecompositionRecipeLoader implements InitializationStep {
                         plan.route(),
                         plan.material().name(),
                         output.material().name());
-                return null;
+                bindingIssues++;
+                continue;
             }
             ItemStack dust = OM.dust(target, output.units());
             if (dust.isEmpty()) {
@@ -224,7 +222,8 @@ public final class DecompositionRecipeLoader implements InitializationStep {
                         plan.material().name(),
                         output.units(),
                         output.material().name());
-                return null;
+                bindingIssues++;
+                continue;
             }
             outputs.add(dust);
         }
@@ -247,7 +246,8 @@ public final class DecompositionRecipeLoader implements InitializationStep {
                         output.phase(),
                         output.fluid(),
                         output.millibuckets());
-                return null;
+                bindingIssues++;
+                continue;
             }
             outputs.add(fluid);
         }

@@ -5,6 +5,7 @@ import gregtech.api.material.*;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.*;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import java.util.*;
@@ -219,6 +220,7 @@ public final class ExternalOreProcessing {
     /** Resolve every imported form together so aliases merge and conflicting tags are diagnosed once. */
     private static int bindTaggedForms(Map<Item, List<ItemComposition>> materialData) {
         var allowed = new HashSet<String>();
+        allowed.add(ExternalOreProcessingRules.TAGGED_ORE_FORM);
         for (var prefix : ExternalOreProcessingRules.COMPOSITION_FORMS) allowed.add(prefix.getName());
         for (var prefix : ExternalOreProcessingRules.TAGGED_MATERIAL_FORMS) allowed.add(prefix.getName());
         int added = 0;
@@ -232,12 +234,26 @@ public final class ExternalOreProcessing {
             var candidates = new ArrayList<ItemCompositionCandidate>();
             for (var form : CraftingMaterialForms.taggedForms(new ItemStack(item))) {
                 if (!allowed.contains(form.prefix())) continue;
-                var prefix = gregtech.engine.prefix.PrefixRegistry.byName(form.prefix());
                 var material = GTMaterialRegistry.get(form.material()).resolve();
-                if (prefix == null || !prefix.isValidFor(material) || !material.isValid()) continue;
-                var sourceId = "gt6ce:external-tag/" + id + "/" + prefix.getName() + "/" + material.getName();
+                if (!material.isValid()) continue;
+                var sourceId = "gt6ce:external-tag/" + id + "/" + form.prefix() + "/" + material.getName();
                 var source = new ItemCompositionSource(
                         ItemCompositionSource.Kind.FORM_TAG, sourceId, TAGGED_COMPOSITION_SOURCE, "", "");
+                if (ExternalOreProcessingRules.TAGGED_ORE_FORM.equals(form.prefix())) {
+                    if (BlockMaterialPrefix.ore == null) continue;
+                    candidates.add(new ItemCompositionCandidate(
+                            new ItemComposition(
+                                    null,
+                                    List.of(MaterialComponent.of(
+                                            material, BlockMaterialPrefix.ore.getMaterialWeight())),
+                                    material,
+                                    List.of(source),
+                                    false),
+                            null));
+                    continue;
+                }
+                var prefix = gregtech.engine.prefix.PrefixRegistry.byName(form.prefix());
+                if (prefix == null || !prefix.isValidFor(material)) continue;
                 candidates.add(new ItemCompositionCandidate(
                         new ItemComposition(
                                 prefix,

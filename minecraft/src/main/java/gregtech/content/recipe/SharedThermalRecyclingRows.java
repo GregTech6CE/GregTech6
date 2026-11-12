@@ -12,7 +12,6 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
-import gregtech.engine.fluid.MoltenFluidHandler;
 import gregtech.engine.recipe.chem.MaterialFluidBinding;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -34,7 +33,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -364,6 +362,7 @@ final class SharedThermalRecyclingRows {
             for (MaterialComponent component : candidate.components()) {
                 GTMaterial material = component.material().resolve();
                 if (!valid(material)) return Outcome.deferred(Reason.UNKNOWN_SOURCE_IDENTITY);
+                if (!declaredMeltable(material)) continue;
                 weight += SourceRecyclingMath.materialWeight(material.getDensity(), component.amount(), SOURCE_UNIT);
                 var declared = SmeltingMaterialHelper.target(material);
                 if (declared.isEmpty()) continue;
@@ -381,22 +380,21 @@ final class SharedThermalRecyclingRows {
 
         var chosen = targetUnits.entrySet().iterator().next();
         GTMaterial target = chosen.getKey();
-        var fields = new LinkedHashSet<String>();
-        for (var binding : MaterialFluidBinding.findAll(target.getName())) fields.add(binding.field());
-        if (fields.isEmpty()) return Outcome.deferred(Reason.DECLARED_PHASE_MISSING);
-        if (fields.size() != 1) return Outcome.deferred(Reason.DECLARED_PHASE_AMBIGUOUS);
+        var bindings = MaterialFluidBinding.findAll(target.getName());
+        if (bindings.isEmpty()) return Outcome.deferred(Reason.DECLARED_PHASE_MISSING);
+        if (bindings.size() != 1) return Outcome.deferred(Reason.DECLARED_PHASE_AMBIGUOUS);
 
-        FluidStack sample = GTFluids.stack(fields.iterator().next(), 1);
+        var binding = bindings.get(0);
+        FluidStack sample = GTFluids.stack(binding.field(), 1);
         if (sample == null || sample.isEmpty())
             return Outcome.deferred(Reason.REQUIRED_NATIVE_FLUID_ABSENT);
-        var ratio = MoltenFluidHandler.ratio(target, sample);
         int millibuckets;
         long ticks;
         try {
             millibuckets = gregtech.content.recipe.OriginalMaterialFluidUnits.millibuckets(
                     chosen.getValue(),
-                    Math.multiplyExact(SOURCE_UNIT, ratio.materialUnits()),
-                    ratio.millibucketsPerUnit(),
+                    binding.referenceUnits(),
+                    binding.referenceMillibuckets(),
                     false);
             if (millibuckets <= 0) return Outcome.none();
             int temperature = sample.getFluid().getFluidType().getTemperature(sample);
@@ -420,6 +418,18 @@ final class SharedThermalRecyclingRows {
             rows.add(new Row(MachineRecipeMaps.Melter, candidate.stack(), output.copy(), ticks, proof));
         rows.add(new Row(MachineRecipeMaps.Smelter, candidate.stack(), output.copy(), ticks, proof));
         return Outcome.ok(rows);
+    }
+
+    /**
+     * Core materials retain the reviewed source gates. Addon-owned materials are authorized by
+     * their published smelting target and phase declaration because the addon API has no separate
+     * BLACKLISTED_SMELTER flag.
+     */
+    private static boolean declaredMeltable(GTMaterial material) {
+        var facts = find(material.getId(), material.getName());
+        if (facts != null)
+            return facts.melting() == Decision.YES && facts.blacklistedSmelter() == Decision.NO;
+        return AddonMaterials.owns(material);
     }
 
     private record PhaseCandidate(

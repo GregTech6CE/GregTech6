@@ -452,6 +452,15 @@ public final class MaterialBaselineTests {
         var liquid = find(MachineRecipeMaps.Electrolyzer,
                 List.of(new ItemStack(GTTechnological.selectorTag(0))), List.of(water));
         helper.assertTrue(liquid != null, "water decomposition is queryable with fluid input");
+        var alloy = gregtech.engine.material.GTMaterialRegistry.get("AluminiumAlloy");
+        var alloyDust = GTItems.getStack(MaterialPrefix.dust, alloy, 45);
+        var alloyBlock = gregtech.content.registry.GTBlocks.getStack(
+                gregtech.engine.prefix.BlockMaterialPrefix.blockDust, alloy);
+        alloyBlock.setCount(5);
+        helper.assertTrue(
+                find(MachineRecipeMaps.Centrifuge, List.of(alloyDust), List.of()) != null
+                        && find(MachineRecipeMaps.Centrifuge, List.of(alloyBlock), List.of()) != null,
+                "AluminiumAlloy without a fluid binding retains both solid decomposition inputs");
         helper.assertTrue(Arrays.stream(solid.mOutputs).anyMatch(s -> s != null && !s.isEmpty())
                 || Arrays.stream(solid.mFluidOutputs).anyMatch(s -> s != null && !s.isEmpty()), "solid decomposition has outputs");
         helper.assertTrue(Arrays.stream(liquid.mFluidOutputs).anyMatch(s -> s != null && !s.isEmpty()), "water decomposition has fluid outputs");
@@ -578,8 +587,8 @@ public final class MaterialBaselineTests {
                         .anyMatch(output -> output != null && !output.isEmpty()),
                 "addon thermal row uses its declared native phase");
         helper.assertTrue(
-                Arrays.stream(recipe.mFluidOutputs).anyMatch(output -> output.getAmount() == 144),
-                "one addon material unit uses the standard 144 mB phase scale");
+                Arrays.stream(recipe.mFluidOutputs).anyMatch(output -> output.getAmount() == 1000),
+                "one addon material unit uses its declared 1000 mB phase scale");
         helper.succeed();
     }
 

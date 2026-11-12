@@ -11,6 +11,8 @@ import java.util.List;
 /** Loader_Recipes_Handlers external-prefix rows; RecipeMapHandlerPrefix:getCosts and Shredding targets. */
 public final class ExternalOreProcessingRules {
     private ExternalOreProcessingRules() {}
+    /** Foreign ore blocks are tags rather than a GT item prefix, but still participate in hand conversion. */
+    public static final String TAGGED_ORE_FORM = "ore";
     /** Explicit external metadata forms; this list never registers GT-owned items. */
     public static final List<MaterialPrefix> EXTERNAL_FORMS = List.of(
             MaterialPrefix.rawOreChunk,
@@ -53,6 +55,13 @@ public final class ExternalOreProcessingRules {
             MaterialPrefix.dustTiny,
             MaterialPrefix.plate,
             MaterialPrefix.stick);
+
+    public static boolean isCompositionForm(String form) {
+        if (TAGGED_ORE_FORM.equals(form)) return true;
+        for (var prefix : COMPOSITION_FORMS) if (prefix.getName().equals(form)) return true;
+        for (var prefix : TAGGED_MATERIAL_FORMS) if (prefix.getName().equals(form)) return true;
+        return false;
+    }
 
     public record Route(String map, MaterialPrefix input, MaterialPrefix output, int count, long multiplier) {
         public long duration(int toolQuality) {
