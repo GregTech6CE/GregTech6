@@ -23,9 +23,7 @@ import net.minecraftforge.fml.common.Mod;
 //?}
 import org.slf4j.Logger;
 
-import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.Map;
 
 //? if >=1.21.1 {
 /*/^* Material inventory models and tint; this subscriber is never loaded on a dedicated server. ^/
@@ -60,7 +58,6 @@ public final class MaterialClientModels {
         BakedModelMap models = BakedModelMap.of(event.getModels());
         int aliased = 0;
         int missing = 0;
-        Map<BakedModel, BakedModel> coinModels = new IdentityHashMap<>();
 
         for (var entry : GTItems.allEntries()) {
             if (!(entry.get() instanceof MaterialFormItem item) || item.getPrefix().isAddon()) {
@@ -77,9 +74,6 @@ public final class MaterialClientModels {
             if (shared == null) {
                 missing++;
                 continue;
-            }
-            if (item instanceof gregtech.content.item.CoinItem) {
-                shared = coinModels.computeIfAbsent(shared, CoinItemBakedModel::new);
             }
             models.put(itemId, "inventory", shared);
             aliased++;

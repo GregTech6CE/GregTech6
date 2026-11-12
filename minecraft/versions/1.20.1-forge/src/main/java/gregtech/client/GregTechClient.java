@@ -202,9 +202,8 @@ public final class GregTechClient {
                     && explosiveItem.getBlock() instanceof gregtech.content.block.tool.DynamiteBlock explosive) {
                 event.register((stack, tintIndex) -> tintIndex == 0 ? explosive.tintRgb() : 0xFFFFFF, explosiveItem);
             } else if (entry.get() instanceof net.minecraft.world.item.BlockItem pileItem
-                    && (pileItem.getBlock() instanceof gregtech.content.block.misc.PileBlock
-                            || pileItem.getBlock() instanceof gregtech.content.block.misc.CoinPileBlock)) {
-                // The four piles are tinted from their block entity in the world; their item form is
+                    && pileItem.getBlock() instanceof gregtech.content.block.misc.PileBlock) {
+                // The three piles are tinted from their block entity in the world; their item form is
                 // GT6's plain UNCOLOURED pile (CS.UNCOLOURED, 0xffffffff), because an item stack
                 // carries no contents the model could read.
                 event.register((stack, tintIndex) -> 0xFFFFFF, pileItem);
@@ -455,22 +454,6 @@ public final class GregTechClient {
                                 var material =
                                         gregtech.content.blockentity.misc.PileBlockEntity.materialOf(pile.stored());
                                 if (material != null) return material.getColor();
-                            }
-                            return 0xFFFFFF;
-                        },
-                        block);
-            } else if (block instanceof gregtech.content.block.misc.CoinPileBlock) {
-                // The same for GT6's coins, which its renderer colours with `mMaterial.fRGBaSolid`
-                // (MultiTileEntityCoin); an unbound pile already carries the port's default
-                // copper coin, so the colour always comes from the pile's own coin item.
-                event.register(
-                        (state, level, pos, tintIndex) -> {
-                            if (tintIndex != 0 || level == null || pos == null) return 0xFFFFFF;
-                            if (level.getBlockEntity(pos)
-                                            instanceof gregtech.content.blockentity.misc.CoinPileBlockEntity pile
-                                    && gregtech.content.block.misc.CoinPileBlock.isCoin(pile.coinItem())) {
-                                return gregtech.content.item.MaterialItem.getMaterial(pile.coinItem())
-                                        .getColor();
                             }
                             return 0xFFFFFF;
                         },
@@ -828,8 +811,6 @@ public final class GregTechClient {
         event.registerBlockEntityRenderer(GTBlockEntities.LOGISTICS_CORE.get(), LogisticsCoverRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.LOGISTICS_WIRE.get(), LogisticsCoverRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.MULTIBLOCK_PORT.get(), LogisticsCoverRenderer::new);
-        event.registerBlockEntityRenderer(GTBlockEntities.COIN_PILE.get(), CoinPileRenderer::new);
-        event.registerBlockEntityRenderer(GTBlockEntities.COIN_MOLD.get(), CoinMoldRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.SANDWICH_BLOCK.get(), SandwichRenderer::new);
         LayoutPartClients.collect();
         event.registerBlockEntityRenderer(GTBlockEntities.ADDON_FUNCTIONAL_PART.get(), FunctionalPartRenderer::new);

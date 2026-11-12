@@ -23,12 +23,10 @@ import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
 import gregtech.content.blockentity.machine.MoldBlockEntity;
 import gregtech.content.blockentity.machine.QueueHopperBlockEntity;
 import gregtech.content.blockentity.misc.BumbleHiveBlockEntity;
-import gregtech.content.blockentity.misc.CoinPileBlockEntity;
 import gregtech.content.blockentity.misc.PileBlockEntity;
 import gregtech.content.blockentity.sensor.SensorBlockEntity;
 import gregtech.content.blockentity.tool.AdvancedButtonBlockEntity;
 import gregtech.content.blockentity.tool.BumbliaryBlockEntity;
-import gregtech.content.blockentity.tool.CoinMoldBlockEntity;
 import gregtech.content.blockentity.tool.DustFunnelBlockEntity;
 import gregtech.content.blockentity.tool.DynamiteBlockEntity;
 import gregtech.content.blockentity.tool.ManualToolBlockEntity;
@@ -66,7 +64,6 @@ public final class CoverAdmission {
             return part.hasFormedController();
         // Original base classes below TileEntityBase06Covers never carry covers.
         if (owner instanceof PileBlockEntity
-                || owner instanceof CoinPileBlockEntity
                 || owner instanceof ProcessingToolBlockEntity) return false;
         // Hosts whose allowCovers(aSide) is a plain F.
         if (owner instanceof MaterialAnvilBlockEntity
@@ -80,7 +77,6 @@ public final class CoverAdmission {
                 // MultiTileEntityCrucible/Smeltery: every crucible refuses covers, large or small.
                 || owner instanceof gregtech.engine.machine.ITileEntityCrucible
                 || owner instanceof SapBagBlockEntity
-                || owner instanceof CoinMoldBlockEntity
                 || owner instanceof DynamiteBlockEntity
                 || owner instanceof BumbleHiveBlockEntity
                 || owner instanceof BushBlockEntity
