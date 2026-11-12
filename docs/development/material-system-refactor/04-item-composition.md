@@ -41,10 +41,10 @@ core 的 `engine.material.ItemComposition` 将 prefix、组件、自由文本 so
 
 ### 3. 独立表达成分与加工准入
 
-1. 内部将 `recoverable` 对应的语义明确命名为批量回收授权。是否存在成分、是否满足某热加工工艺、是否允许批量回收分别判定。
+1. GT6 没有物品级批量回收授权标志。是否存在成分、是否满足某热工艺、具体形态与栈状态是否进入回收行分别判定；legacy `recoverable` 仅保留为兼容输入。
 2. 现有 JSON 键若保持不变，解析时映射到内部语义；若确需改名，提供旧键兼容读取与双键冲突检查，并写明迁移，不静默改变格式。
 3. 栈状态检查统一处理耐久、内容物和实体／流体容器；区分模具形状等纯状态与真实库存，不把所有 NBT／数据组件都视为“含内容物”。基础成分快照不缓存 `ItemStack`，状态缩放在查询时完成。
-4. 损坏比例采用经裁决的整数算法，验证乘法溢出与向下取整。不能简单全局拒绝所有损坏物品，也不能让静态满额配方接受已缩量的物品。
+4. 损坏比例采用经裁决的整数算法，验证乘法溢出与向下取整。Shredder 从缩放后的成分生成实际输出，不能让静态满额假设直接消费已缩量的物品。
 5. `MaterialEquivalence`、库存形态识别和 tooltip 从有效记录读取；物品实例的 prefix／material 可作为身份信息，但不能覆盖实际复合成分。
 6. `OvenRecipeBridge` 区分“成分可查询”和“应该按材料规则改写熔炼”；描述性成分不能自动授权删除原版配方。
 
@@ -80,11 +80,11 @@ core 的 `engine.material.ItemComposition` 将 prefix、组件、自由文本 so
 ## 实施结果（2026-11-09）
 
 - 纯规则新增 `ItemCompositionSource`、`ItemCompositionCandidate`、`ItemCompositionResolver` 和 `ItemCompositionScaling`。候选按结构化来源优先级整条裁决；同级相同内容合并来源，不同内容或回收授权失败；显式覆盖必须命中现存声明并拒绝覆盖环。
-- `ItemComposition` 保存显式主材料、结构化来源列表与独立的批量回收授权。组件按“主材料优先、其余材料稳定排序”归一化，因此提交顺序不再改变结果；兼容访问器只在迁移期转发这些字段。
+- `ItemComposition` 保存显式主材料与结构化来源列表；legacy `bulkRecoveryAllowed` 参数在规范构造时归一为 `true`，兼容访问器只保留源码兼容。回收授权由具体工艺和栈状态决定。组件按“主材料优先、其余材料稳定排序”归一化，因此提交顺序不再改变结果。
 - `ItemMaterialRegistry` 改为显式候选与完整 tag 候选两张输入表，单物品查询和稳定 ID 遍历读取同一有效快照。tag 重载先解析完整替换集，失败时不修改有效结果；只有内容变化才推进 revision。
 - JSON、原版统一化、模组统一化、人工修正、物品/方块构造器、木材和肉类生产端均提交带声明 ID 的候选。木材与肉类定义对 JSON 的既有覆盖改为唯一、可追踪的显式替代，不再依赖加载顺序。
 - `MaterialEquivalence.form()` 只接受单一完整材料形态；复合工具头保留全部组件但不再当作纯主材料。耐久缩放使用无乘法溢出的整除算法。铸模空腔归类为纯形状状态，不再阻止熔化或回收。
-- 成分存在、批量回收授权和炉规则准入已拆开。JSON 中的描述性成分类别不删除原版熔炼行；原生材料形态、统一化与 tag 规则仍可进入炉策略。`OvenRecipeBridge` 通过 `hasMaterialProcessingRule` 使用这一独立判定。
+- 成分存在、回收工艺准入和炉规则准入已拆开。JSON 中的描述性成分类别不删除原版熔炼行；原生材料形态、统一化与 tag 规则仍可进入炉策略。`OvenRecipeBridge` 通过 `hasMaterialProcessingRule` 使用这一独立判定。
 - 共享 `MaterialItemCompositions` 负责物品形态、普通材料块、石材/半砖重量、机器构造材料、线缆、木板、运输构件和原版绑定；Forge 与 NeoForge 入口只追加各自实际注册对象可解析的矿石、植物和机器注册表成分。
 - 检查集 D、F、J、C、G、B 已执行：core 与 API JUnit、格式和路由检查通过，两节点生产及测试源码编译通过，`assembleBothPlatforms` 通过；Forge 1.20.1 实际执行 73 个 GameTest 全部通过，NeoForge 1.21.1 实际执行 78 个 GameTest 全部通过。JSON 负例覆盖未知材料、非正数量、未知 prefix、缺失继承目标及互相矛盾的键。当前测试环境未安装能提供外部 common-form tag 的模组，因此真实有效 tag-only 物品由纯候选测试覆盖；两节点实际重载覆盖了 420 个 ore-prefix tag 候选、快照 revision 与重复重载不累积。公开 API 和游戏内展示未改，未执行 A、M。
 
@@ -93,7 +93,7 @@ core 的 `engine.material.ItemComposition` 将 prefix、组件、自由文本 so
 本轮审查重新区分了 04 自身欠账与后续阶段：失败重载的原子性、结构化来源、加载顺序、JSON 继承、损坏缩放和成分重载断言都属于本页完成条件；05 的发布原子性只覆盖回收／配方行，07 才负责更广泛的旧 API 和内容退出，不能替代这些 04 修复。
 
 - 外部 tag 重载在构建和校验新 generation 前不再清空成分快照；失败发布会保留上一份有效成分，成功发布后才整体替换。回收／配方行的完整事务边界仍由 05 负责。
-- `ItemCompositionCandidate` 移除了未消费的 `itemKey`，`ItemComposition` 移除了无消费者的 `recoverable()` 兼容访问器；legacy 来源构造和注册入口明确标记弃用，结构化入口继续作为迁移目标。
+- `ItemCompositionCandidate` 移除了未消费的 `itemKey`；legacy 来源构造和注册入口明确标记弃用，结构化入口继续作为迁移目标。`recoverable()` 在后续兼容审查中恢复为弃用转发方法。
 - `ItemCompositionSource.reference` 现在承接旧自由文本来源，并在诊断描述中输出；通过结构化注册入口提交时，原来源会保留为引用，不再只留下生产端名称。
 - 显式覆盖允许在目标声明之前注册，最终由 `ItemMaterialRegistry.validateExplicitSnapshot()` 在全部生产端完成后统一严格校验目标存在；注册顺序不再决定覆盖结果。
 - 木料、肉类和现代修正改用 JSON 数据表本身解析声明 ID，不再查询当时的候选快照。`vanilla_compositions.json` 中 88 个使用 `vanilla-unification` 的条目显式写入 `inherit`；无 `prefix`／`inherit` 的其余条目保持无 prefix，不再隐式借用统一化表。
@@ -128,3 +128,12 @@ core 的 `engine.material.ItemComposition` 将 prefix、组件、自由文本 so
 - `ItemMaterialRegistry.entries()` 按现有 composition revision 缓存不可变有序快照；同 revision 重复遍历不再复制和排序全量组件。
 - tag generation 内容或 readiness 变化后直接刷新公开形态绑定，查询路径不需要等待下一次平台启动。
 - Forge 1.20.1 GameTest 78/78、NeoForge 1.21.1 GameTest 83/83；双平台生产与测试源码编译通过。
+
+### 第六轮审查闭合（2026-11-12）
+
+- 冲突契约采用受控来源类别：同一优先级内容一致才合并，不同内容继续失败；显式覆盖继续要求命名现存声明并保留完整覆盖链。`ItemCompositionSource.fromLegacy()` 不再分析自由文本，旧来源统一归入 `LEGACY`。
+- 方块重量、CR.REV、机器构造、运输构件、木材、书本、木桶和铁栏杆等内置生产端改为提交结构化来源；`registerDeclared()` 用于接收已有单一结构化来源的候选，弃用的双参数注册入口只服务旧附属。
+- `ItemCompositionResolver.resolveDetailed()` 保留胜出、被覆盖和低优先级候选及原因；`ItemMaterialRegistry.compositionDiagnosis()` 暴露与有效成分同一 generation 的完整裁决记录。
+- 弃用双参数注册保留同一物品重复旧调用的最后写入语义，避免旧附属因重复声明 ID 无法启动；结构化候选之间仍禁止无声覆盖。legacy 多组件构造恢复历史首组件主材料与数量，`recoverable()` 以弃用别名保留。
+- API 保持 `1.8.0`，发布坐标为 `gregtech:gt6ce-api:1.8.0`；本分支累计包含 1.4—1.8 的材料 API 能力，不需另改 groupId 或 artifactId。
+- 复验通过：`:api:check`、`:core:test`、双平台生产与测试源码编译、ratchet Spotless、路由和注释检查；Forge 1.20.1 GameTest 90/90，NeoForge 1.21.1 GameTest 95/95。首轮 Forge 运行发现 CR.REV 单组件被错误改为无主材料，导致 Stone 铸模失去 45U 数量；兼容推断恢复后全量运行通过。

@@ -52,11 +52,18 @@ public final class WoodenBucketItem extends TechItem {
         super("Wooden Bucket", new Item.Properties().stacksTo(1));
         this.band = band;
         this.content = content;
-        ItemMaterialRegistry.register(this, new ItemComposition(null, List.of(
+        String itemId = WoodenBucketCatalog.itemId(band, content);
+        ItemMaterialRegistry.registerDeclared(this, new ItemComposition(null, List.of(
                 MaterialComponent.of(GTMaterialRegistry.get("Wood"), 3 * GTValues.U),
                 MaterialComponent.of(GTMaterialRegistry.get(band.material()), GTValues.U)),
                 GTMaterialRegistry.get("Wood"),
-                "GT6 MultiItemRandomTools wooden bucket", content.empty()));
+                List.of(new ItemCompositionSource(
+                        ItemCompositionSource.Kind.EXPLICIT,
+                        "gt6ce:item-form/" + itemId,
+                        "GT6 MultiItemRandomTools wooden bucket",
+                        itemId,
+                        "")),
+                content.empty()));
     }
 
     public Band band() {

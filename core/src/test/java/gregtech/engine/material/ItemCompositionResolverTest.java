@@ -55,6 +55,38 @@ class ItemCompositionResolverTest {
     }
 
     @Test
+    void resolutionDiagnosticsRetainReplacedAndLowerPriorityCandidates() {
+        var explicit = candidate("explicit", ItemCompositionSource.Kind.EXPLICIT, Materials.Copper, 4, false);
+        var correction = new ItemCompositionCandidate(
+                composition("correction", ItemCompositionSource.Kind.CORRECTION, Materials.Iron, 4, true), "explicit");
+        var tag = candidate("tag", ItemCompositionSource.Kind.FORM_TAG, Materials.Gold, 1, true);
+
+        var resolution = ItemCompositionResolver.resolveDetailed(
+                        Map.of("test:item", List.of(tag, explicit, correction)))
+                .get("test:item");
+
+        assertEquals(Materials.Iron.resolve(), resolution.selected().material());
+        assertEquals(1, resolution.selectedPriority());
+        var decisions = resolution.decisions().stream()
+                .collect(java.util.stream.Collectors.toMap(
+                        decision -> decision.source().declarationId(), ItemCompositionDecision::status));
+        assertEquals(ItemCompositionDecision.Status.SELECTED, decisions.get("correction"));
+        assertEquals(ItemCompositionDecision.Status.REPLACED, decisions.get("explicit"));
+        assertEquals(ItemCompositionDecision.Status.LOWER_PRIORITY, decisions.get("tag"));
+        assertTrue(resolution.decisions().stream()
+                .filter(decision -> decision.status() == ItemCompositionDecision.Status.REPLACED)
+                .allMatch(decision -> decision.reason().contains("correction")));
+    }
+
+    @Test
+    void legacySourceTextDoesNotChooseASourceCategory() {
+        var source = ItemCompositionSource.fromLegacy("GT6 common form tags");
+
+        assertEquals(ItemCompositionSource.Kind.LEGACY, source.kind());
+        assertTrue(source.note().contains("not inferred"));
+    }
+
+    @Test
     void tagCandidateIsEffectiveWhenNoExplicitLayerExists() {
         var tag = candidate("tag", ItemCompositionSource.Kind.FORM_TAG, Materials.Copper, 1, true);
         var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(tag)))
@@ -159,6 +191,46 @@ class ItemCompositionResolverTest {
                 new ItemComposition(null, List.of(MaterialComponent.of(Materials.Iron, 4)), "legacy probe", true);
 
         assertEquals(Materials.Iron.resolve(), composition.material());
+    }
+
+    @Test
+    void legacyMultiComponentDeclarationsKeepTheirHistoricalFirstPrimary() {
+        var composition = new ItemComposition(
+                null,
+                List.of(MaterialComponent.of(Materials.Copper, 8), MaterialComponent.of(Materials.Iron, 2)),
+                "legacy multi-component probe",
+                true);
+
+        assertEquals(Materials.Copper.resolve(), composition.material());
+        assertEquals(8, composition.amount());
+        assertTrue(composition.recoverable());
+    }
+
+    @Test
+    void legacyRecoveryFlagIsCompatibilityInputWithoutProcessAuthority() {
+        var composition = new ItemComposition(
+                null,
+                List.of(MaterialComponent.of(Materials.Iron, 4)),
+                Materials.Iron,
+                List.of(new ItemCompositionSource(ItemCompositionSource.Kind.LEGACY, "legacy", "test", "", "")),
+                false);
+
+        assertTrue(composition.bulkRecoveryAllowed());
+        assertTrue(composition.recoverable());
+    }
+
+    @Test
+    void reversibleCraftingKeepsTheHistoricalLargestComponentAsPrimary() {
+        var composition = ReversibleCraftingData.perItem(
+                List.of(MaterialComponent.of(Materials.Iron, 2), MaterialComponent.of(Materials.Copper, 8)),
+                1,
+                "test:reversible-primary");
+
+        assertEquals(Materials.Copper.resolve(), composition.material());
+        assertEquals(8, composition.amount());
+        assertEquals(
+                ItemCompositionSource.Kind.RECIPE_REVERSE,
+                composition.sources().get(0).kind());
     }
 
     private static ItemCompositionCandidate candidate(

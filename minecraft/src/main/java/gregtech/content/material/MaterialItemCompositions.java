@@ -13,7 +13,9 @@ import gregtech.content.machine.OriginalMachineMaterialData;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.ItemComposition;
+import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.ItemMaterialRegistry;
+import gregtech.engine.material.ItemMaterialRuntimeFacts;
 import java.util.List;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
@@ -23,6 +25,7 @@ public final class MaterialItemCompositions {
     private MaterialItemCompositions() {}
 
     public static void registerCommon() {
+        ItemMaterialRuntimeFacts.install(ItemMaterialContentFacts.INSTANCE);
         registerMaterialItemForms();
         registerBlockWeights();
         registerMachineConstruction();
@@ -78,10 +81,20 @@ public final class MaterialItemCompositions {
                     .filter(weight -> weight.material().isValid() && weight.amount() > 0)
                     .toList();
             if (!components.isEmpty()) {
+                String itemId = BuiltInRegistries.ITEM.getKey(block.asItem()).toString();
                 ItemMaterialRegistry.register(
                         block.asItem(),
                         new ItemComposition(
-                                null, components, components.get(0).material(), "GT6 block composition", true));
+                                null,
+                                components,
+                                components.get(0).material(),
+                                List.of(new ItemCompositionSource(
+                                        ItemCompositionSource.Kind.BLOCK_WEIGHT,
+                                        "gt6ce:block-weight/" + itemId,
+                                        "GT6 block material weights",
+                                        itemId,
+                                        "")),
+                                true));
             }
         }
     }
@@ -94,10 +107,10 @@ public final class MaterialItemCompositions {
                 OriginalMachineMaterialData.find(
                                 machine.basicSpec().machineName(),
                                 machine.basicSpec().tier())
-                        .ifPresent(data -> ItemMaterialRegistry.register(block.asItem(), data));
+                        .ifPresent(data -> ItemMaterialRegistry.registerDeclared(block.asItem(), data));
             }
             MachineConstructionMaterials.block(id.getPath())
-                    .ifPresent(data -> ItemMaterialRegistry.register(block.asItem(), data));
+                    .ifPresent(data -> ItemMaterialRegistry.registerDeclared(block.asItem(), data));
         }
     }
 }

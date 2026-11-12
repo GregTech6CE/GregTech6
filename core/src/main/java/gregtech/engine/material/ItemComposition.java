@@ -13,8 +13,14 @@ public record ItemComposition(
         List<MaterialComponent> components,
         GTMaterial primaryMaterial,
         List<ItemCompositionSource> sources,
-        boolean bulkRecoveryAllowed) {
+        /**
+         * Legacy declaration input retained for source compatibility. GT6 has no item-level bulk
+         * recovery permission; every composition is normalized to this value and recovery admission
+         * is decided by the concrete process and stack state.
+         */
+        @Deprecated(forRemoval = false) boolean bulkRecoveryAllowed) {
     public ItemComposition {
+        bulkRecoveryAllowed = true;
         var merged = new LinkedHashMap<GTMaterial, Long>();
         for (var c : components) {
             if (!c.material().isValid() || c.amount() <= 0)
@@ -56,6 +62,12 @@ public record ItemComposition(
                         "",
                         "")),
                 true);
+    }
+
+    /** Compatibility accessor; item-level authorization is no longer a GT6 recovery condition. */
+    @Deprecated(forRemoval = false)
+    public boolean recoverable() {
+        return true;
     }
 
     /** @deprecated Submit structured provenance through {@link ItemCompositionSource}. */
@@ -109,17 +121,11 @@ public record ItemComposition(
     }
 
     /**
-     * Legacy declarations often omitted an explicit primary. Keep that migration-time inference
-     * out of the canonical constructor so scaling can preserve an intentionally missing primary.
+     * Legacy declarations often omitted an explicit primary. Preserve their historical first-component
+     * result here while keeping inference out of the canonical constructor.
      */
     private static GTMaterial inferredPrimary(List<MaterialComponent> components) {
-        if (components == null) return MaterialSentinels.INVALID;
-        GTMaterial inferred = null;
-        for (var component : components) {
-            GTMaterial material = component.material().resolve();
-            if (inferred != null && inferred != material) return MaterialSentinels.INVALID;
-            inferred = material;
-        }
-        return inferred == null ? MaterialSentinels.INVALID : inferred;
+        if (components == null || components.isEmpty()) return MaterialSentinels.INVALID;
+        return components.get(0).material().resolve();
     }
 }

@@ -18,6 +18,8 @@ import gregtech.content.recipe.ExternalOreProcessing;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.ItemMaterialRegistry;
+import gregtech.engine.material.MaterialPublication;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -60,6 +62,7 @@ public final class MachineRecipeOverlay {
     private static int applications;
     private static boolean overlayDumped;
     private static Result lastResult = Result.unchanged();
+    private static volatile MaterialPublication.Stamp lastPublication = MaterialPublication.current();
     private static List<Recipe> furnaceAdded = List.of();
     private static List<Recipe> furnaceRemoved = List.of();
     /** Bumped for every applied overlay; queued index builds compare it so an old pass cannot publish. */
@@ -123,6 +126,7 @@ public final class MachineRecipeOverlay {
         for (var map : RecipeMap.RECIPE_MAP_LIST) moved += map.restoreBaseline();
         long restoreMillis = (System.nanoTime() - started) / 1_000_000L;
         gregtech.engine.recipe.MaterialUnitRecipes.discardUnregistered();
+        ItemMaterialRegistry.beginTagGeneration();
         long producersStarted = System.nanoTime();
         DecompositionRecipeLoader.rebuild();
         ExternalOreProcessing.rebuild();
@@ -163,6 +167,8 @@ public final class MachineRecipeOverlay {
                 baselineRows(), restoreMillis, producersMillis, moved, tally.removed, removeMillis, tally.added,
                 installMillis, tally.priority, tally.rejected);
         if (generation != current) return lastResult;
+        lastPublication = MaterialPublication.platformGenerationPublished(
+                ItemMaterialRegistry.compositionRevision(), current);
         lastResult = new Result(tally.removed, tally.added, tally.rejected, restoreMillis, baselineRows(), false, false);
         applications++;
         if (!overlayDumped) {
@@ -203,6 +209,7 @@ public final class MachineRecipeOverlay {
 
     public static int applications() { return applications; }
     public static Result lastResult() { return lastResult; }
+    public static MaterialPublication.Stamp lastPublication() { return lastPublication; }
 
     /**
      * Return only Furnace to its state before the last overlay. The oven bridge calls this

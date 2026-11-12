@@ -6,7 +6,6 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.data.generated.RecyclablePrefixes;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
@@ -41,7 +40,7 @@ import net.minecraft.world.item.ItemStack;
  * "<em>1 item → its pulverized remains</em>" in the Shredder. The loop runs twice: the multiplier is 256
  * for materials that are not {@code MORTAR} grindable and 16 for the ones that are, so brittle materials
  * recycle cheaply. The port imports the prefix filter result through
- * {@code tools/extract_gt6_recyclable_prefixes.py} ({@link RecyclablePrefixes}, 107 names) and the
+ * {@code tools/extract_gt6_recyclable_prefixes.py} and
  * {@code MORTAR} flag through {@code tools/extract_gt6_workability.py}.
  * <p>
  * This is GT6's "recycle anything into dust" mechanic: a broken tool head, a spare gear or an old casing
@@ -81,10 +80,11 @@ public final class ShredderRecyclingRecipes {
     public static int register() {
         if (registered) throw new IllegalStateException("Shredder recycling recipes registered twice");
         registered = true;
+        MachineRecipeMaps.Shredder.addDynamicRecipes(1000, (items, fluids) -> ShredderDamageScaling.findDamaged(items));
         SKIP_REASONS.clear();
         refreshStaticRows();
         TreeSet<String> missing = new TreeSet<>();
-        for (String name : RecyclablePrefixes.NAMES) {
+        for (String name : RecoveryFormCatalog.shredderNames()) {
             MaterialPrefix prefix = PrefixRegistry.byName(name);
             var blockPrefix = java.util.Optional.ofNullable(
                             gregtech.content.data.MaterialPrefixes.all().get(name))
@@ -99,7 +99,7 @@ public final class ShredderRecyclingRecipes {
             recycle(entry.getKey(), ENTRIES, STATIC_OWNERS);
         }
         for (var entry : gregtech.content.data.MaterialPrefixes.all().entrySet()) {
-            if (!RecyclablePrefixes.NAMES.contains(PrefixRegistry.sourceName(entry.getKey()))) continue;
+            if (!RecoveryFormCatalog.shredder(PrefixRegistry.sourceName(entry.getKey()))) continue;
             var blockPrefix = entry.getValue().getBlockDelegate();
             if (blockPrefix == null) continue;
             for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
@@ -138,7 +138,7 @@ public final class ShredderRecyclingRecipes {
         try {
             for (var candidate : planned) {
                 if (candidate == null || candidate.rule() == null) continue;
-                var published = publish(candidate, TAG_OWNERS);
+                var published = publish(candidate, TAG_OWNERS, true);
                 if (published == null) {
                     skip("tag-existing-owner");
                     continue;
@@ -165,13 +165,12 @@ public final class ShredderRecyclingRecipes {
     }
 
     private static boolean allows(MaterialPrefix prefix) {
-        return RecyclablePrefixes.NAMES.contains(PrefixRegistry.sourceName(prefix.getName()));
+        return RecoveryFormCatalog.shredder(PrefixRegistry.sourceName(prefix.getName()));
     }
 
     /** Same container rule as the source listener; filled cell forms are not empty-shell recycling. */
     private static boolean containerForm(MaterialPrefix prefix) {
-        String source = PrefixRegistry.sourceName(prefix.getName());
-        return source.equals("chemtube") || source.equals("cell") || source.equals("capcellcon");
+        return RecoveryFormCatalog.container(PrefixRegistry.sourceName(prefix.getName()));
     }
 
     private static List<Map.Entry<net.minecraft.world.item.Item, ItemComposition>> sortedEntries() {
@@ -200,7 +199,7 @@ public final class ShredderRecyclingRecipes {
         if (data == null || form == null) return;
         var candidate = prepare(input, data, form);
         if (candidate == null || candidate.rule() == null) return;
-        var published = publish(candidate, owners);
+        var published = publish(candidate, owners, false);
         if (published == null) skip("existing-owner");
         else destination.add(new Entry(candidate.name(), published));
     }
@@ -268,7 +267,10 @@ public final class ShredderRecyclingRecipes {
                 16,
                 0);
         if (template == null) return null;
-        template.withMaterialRecovery().withSource(GENERIC_SOURCE);
+        template.withMaterialRecovery()
+                .withSource(GENERIC_SOURCE)
+                .withRuntimeResolver(inputs -> ShredderDamageScaling.resolve(inputs, template, true));
+        RecoveryRecipePublisher.generic(template, "shredder-recycling");
         var rule = new MaterialUnitRecipe(
                 template,
                 0,
@@ -288,22 +290,30 @@ public final class ShredderRecyclingRecipes {
                         0)
                 .withMaterialRecovery()
                 .withSource(GENERIC_SOURCE);
+        RecoveryRecipePublisher.generic(probe, "shredder-recycling");
         return new Planned(form.name(), rule, probe);
     }
 
-    private static Recipe publish(Planned planned, Map<ResourceLocation, Recipe> owners) {
+    private static Recipe publish(Planned planned, Map<ResourceLocation, Recipe> owners, boolean isolated) {
         var map = MachineRecipeMaps.Shredder;
         var ownerKey = ownerKey(planned.probe().mInputs[0]);
         var existing = owners.get(ownerKey);
         if (existing == null)
-            existing = RecoveryRecipeConflicts.matchingOwner(planned.probe(), STATIC_ROWS.get(ownerKey));
-        var resolution = RecoveryRecipeConflicts.inspect(map, planned.probe(), existing);
-        if (resolution.action() == RecoveryRecipeConflicts.Action.REPLACE_GENERIC) {
+            existing = RecoveryRecipePublisher.matchingInputs(planned.probe(), STATIC_ROWS.get(ownerKey));
+        RecoveryRecipePublisher.Resolution resolution;
+        try {
+            resolution = RecoveryRecipePublisher.inspect(map, planned.probe());
+        } catch (RecoveryRecipePublisher.RecoveryConflictException conflict) {
+            if (!isolated) throw conflict;
+            skip("isolated-conflict");
+            return null;
+        }
+        if (resolution.action() == RecoveryRecipePublisher.Action.REPLACE_GENERIC) {
             map.removeAll(List.of(resolution.existing()));
             owners.entrySet().removeIf(entry -> entry.getValue() == resolution.existing());
         }
-        if (resolution.action() != RecoveryRecipeConflicts.Action.PUBLISH
-                && resolution.action() != RecoveryRecipeConflicts.Action.REPLACE_GENERIC) return null;
+        if (resolution.action() != RecoveryRecipePublisher.Action.PUBLISH
+                && resolution.action() != RecoveryRecipePublisher.Action.REPLACE_GENERIC) return null;
         var published = planned.rule().publish(map);
         if (published != null) {
             owners.put(ownerKey, published);
@@ -316,9 +326,9 @@ public final class ShredderRecyclingRecipes {
         for (var entry : List.copyOf(ENTRIES)) {
             var row = entry.recipe();
             var ownerKey = ownerKey(row.mInputs[0]);
-            var owner = RecoveryRecipeConflicts.matchingOwner(row, STATIC_ROWS.get(ownerKey));
+            var owner = RecoveryRecipePublisher.matchingInputs(row, STATIC_ROWS.get(ownerKey));
             if (owner == null) continue;
-            if (!RecoveryRecipeConflicts.sameOutputs(owner, row))
+            if (!RecoveryRecipePublisher.sameOutputs(owner, row))
                 throw new IllegalStateException("Conflicting Shredder ownership for " + entry.input());
             var rule = STATIC_RULES.remove(row);
             if (rule != null) rule.remove();
@@ -366,7 +376,7 @@ public final class ShredderRecyclingRecipes {
         }
         if (input.getItem() instanceof BlockItem blockItem
                 && blockItem.getBlock() instanceof MaterialBlockLike block
-                && RecyclablePrefixes.NAMES.contains(
+                && RecoveryFormCatalog.shredder(
                         PrefixRegistry.sourceName(block.prefix().getName()))) {
             return new RecyclableForm(
                     null, PrefixRegistry.sourceName(block.prefix().getName()));

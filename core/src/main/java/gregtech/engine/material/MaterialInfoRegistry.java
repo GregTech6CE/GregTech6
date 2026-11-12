@@ -356,13 +356,6 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
                 new MaterialComposition(material.name(), composition.divider(), parts, composition.crucible()));
     }
 
-    public static MaterialInfoDefinition.Composition compositionDefinition(MaterialKey key) {
-        var published = publishedMaterial(key, true);
-        return published.isEmpty()
-                ? new MaterialInfoDefinition.Composition(0, List.of(), false)
-                : published.get().definition().composition();
-    }
-
     @Override
     public Optional<MaterialToolProfile> currentTool(MaterialKey key) {
         if (GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.FAILED)

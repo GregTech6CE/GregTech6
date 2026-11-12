@@ -126,6 +126,20 @@ final class FamilyRowTablesTest {
         assertTrue(!RecyclablePrefixes.NAMES.contains("dust"));
         assertTrue(!RecyclablePrefixes.NAMES.contains("crushed"));
         assertTrue(!RecyclablePrefixes.NAMES.contains("wireGt01"));
+        assertTrue(RecoveryFormCatalog.shredder("gearGt"));
+        assertFalse(RecoveryFormCatalog.thermal("crushed"));
+        assertTrue(RecoveryFormCatalog.thermal("pipeSmall"));
+        assertTrue(RecoveryFormCatalog.container("capcellcon"));
+    }
+
+    @Test
+    void externalTagFormsCoverVariableCommonMaterialShapes() {
+        var names = ExternalOreProcessingRules.TAGGED_MATERIAL_FORMS.stream()
+                .map(MaterialPrefix::getName)
+                .toList();
+        assertTrue(names.containsAll(List.of("gearGt", "ring", "bolt", "screw", "foil")));
+        assertEquals("storage_blocks", ExternalOreProcessingRules.TAGGED_STORAGE_BLOCK_GROUP);
+        assertEquals("cables", ExternalOreProcessingRules.TAGGED_CABLE_GROUP);
     }
 
     @Test

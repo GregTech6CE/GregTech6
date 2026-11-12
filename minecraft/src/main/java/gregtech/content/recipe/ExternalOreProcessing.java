@@ -50,7 +50,7 @@ public final class ExternalOreProcessing {
     /** Remove only this adapter's exact rows; other mods' processing rows remain registered. */
     public static synchronized void clear() {
         clearOwnedState();
-        ItemMaterialRegistry.clearTagCandidates();
+        ItemMaterialRegistry.beginTagGeneration();
     }
 
     private static void clearOwnedState() {
@@ -102,8 +102,18 @@ public final class ExternalOreProcessing {
                 for (var item : entry.getValue()) {
                     if (!ExternalOreProcessingRules.allows(material) || output.isEmpty()) continue;
                     // Prefix handlers disable optimizing; costs use the larger input/output unit amount.
-                    var recipe = map.addRecipe1(
-                            false, 16, route.duration(material.getToolQuality()), new ItemStack(item), output.copy());
+                    var recipe = publishRoute(
+                            map,
+                            new Recipe(
+                                    new ItemStack[] {new ItemStack(item)},
+                                    new ItemStack[] {output.copy()},
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    route.duration(material.getToolQuality()),
+                                    16,
+                                    0));
                     if (recipe != null) {
                         OWNED.computeIfAbsent(map, unused -> Collections.newSetFromMap(new IdentityHashMap<>()))
                                 .add(recipe);
@@ -120,19 +130,23 @@ public final class ExternalOreProcessing {
                 if (!route.allows(material)) continue;
                 var target = route.outputMaterial(material);
                 var dust = route.pulverizedRemains()
-                        ? MortarGrindingRecipes.pulverize(
+                        ? MortarGrindingRecipes.pulverizeAll(
                                 material, route.input().getMaterialWeight())
-                        : output(MaterialPrefix.dust, target, route.dustCount());
+                        : java.util.List.of(output(MaterialPrefix.dust, target, route.dustCount()));
                 var fines =
                         route.fines() ? output(MaterialPrefix.dustTiny, target, route.fineCount()) : ItemStack.EMPTY;
                 if (dust.isEmpty() || (route.fines() && fines.isEmpty())) continue;
                 for (var item : entry.getValue()) {
-                    var outputs = fines.isEmpty()
-                            ? new ItemStack[] {dust.copy()}
-                            : new ItemStack[] {dust.copy(), fines.copy()};
-                    var recipe = route.requiresEmptySlot()
-                            ? map.addRecipe(new Recipe(
-                                    new ItemStack[] {new ItemStack(item), ItemStack.EMPTY},
+                    var outputRows = new ArrayList<ItemStack>(dust.size() + (fines.isEmpty() ? 0 : 1));
+                    for (var dustStack : dust) outputRows.add(dustStack.copy());
+                    if (!fines.isEmpty()) outputRows.add(fines.copy());
+                    var outputs = outputRows.toArray(ItemStack[]::new);
+                    var recipe = publishRoute(
+                            map,
+                            new Recipe(
+                                    route.requiresEmptySlot()
+                                            ? new ItemStack[] {new ItemStack(item), ItemStack.EMPTY}
+                                            : new ItemStack[] {new ItemStack(item)},
                                     outputs,
                                     null,
                                     null,
@@ -140,8 +154,7 @@ public final class ExternalOreProcessing {
                                     null,
                                     route.duration(material),
                                     16,
-                                    0))
-                            : map.addRecipe1(false, 16, route.duration(material), new ItemStack(item), outputs);
+                                    0));
                     if (recipe != null) {
                         OWNED.computeIfAbsent(map, unused -> Collections.newSetFromMap(new IdentityHashMap<>()))
                                 .add(recipe);
@@ -232,7 +245,8 @@ public final class ExternalOreProcessing {
             if (namespace.equals("minecraft") || namespace.equals("gt6ce")) continue;
             if (ItemMaterialRegistry.declared(item).isPresent() || materialData.containsKey(item)) continue;
             var candidates = new ArrayList<ItemCompositionCandidate>();
-            for (var form : CraftingMaterialForms.taggedForms(new ItemStack(item))) {
+            var stack = new ItemStack(item);
+            for (var form : CraftingMaterialForms.taggedForms(stack)) {
                 if (!allowed.contains(form.prefix())) continue;
                 var material = GTMaterialRegistry.get(form.material()).resolve();
                 if (!material.isValid()) continue;
@@ -260,6 +274,36 @@ public final class ExternalOreProcessing {
                                 List.of(MaterialComponent.of(material, prefix.getMaterialWeight())),
                                 material,
                                 List.of(source),
+                                true),
+                        null));
+            }
+            var seenSpecialTags = new HashSet<String>();
+            for (var tag : stack.getTags().map(itemTag -> itemTag.location()).toList()) {
+                String tagNamespace = tag.getNamespace(), path = tag.getPath();
+                if (!Set.of("forge", "c").contains(tagNamespace)) continue;
+                int slash = path.lastIndexOf('/');
+                if (slash < 0) continue;
+                String group = path.substring(0, slash);
+                long amount;
+                if (group.equals(ExternalOreProcessingRules.TAGGED_STORAGE_BLOCK_GROUP)) amount = 9 * GTValues.U;
+                else if (group.equals(ExternalOreProcessingRules.TAGGED_CABLE_GROUP)) amount = GTValues.U / 2;
+                else continue;
+                String materialName = CraftingMaterialForms.tagMaterial(tag);
+                if (materialName == null || !seenSpecialTags.add(group + "/" + materialName)) continue;
+                var material = GTMaterialRegistry.get(materialName).resolve();
+                if (!material.isValid()) continue;
+                var sourceId = "gt6ce:external-tag/" + id + "/" + group + "/" + material.getName();
+                candidates.add(new ItemCompositionCandidate(
+                        new ItemComposition(
+                                null,
+                                List.of(MaterialComponent.of(material, amount)),
+                                material,
+                                List.of(new ItemCompositionSource(
+                                        ItemCompositionSource.Kind.FORM_TAG,
+                                        sourceId,
+                                        TAGGED_COMPOSITION_SOURCE,
+                                        "",
+                                        "")),
                                 true),
                         null));
             }
@@ -294,6 +338,12 @@ public final class ExternalOreProcessing {
             case "Mortar" -> MachineRecipeMaps.Mortar;
             default -> throw new IllegalArgumentException("Unknown source external ore map " + name);
         };
+    }
+
+    private static Recipe publishRoute(RecipeMap map, Recipe recipe) {
+        if (map != MachineRecipeMaps.Shredder && map != MachineRecipeMaps.Anvil) return map.addRecipe(recipe);
+        return RecoveryRecipePublisher.publishIsolated(
+                map, RecoveryRecipePublisher.explicit(recipe, "external-ore/dynamic"));
     }
 
     private static ItemStack output(MaterialPrefix prefix, GTMaterial material, int count) {

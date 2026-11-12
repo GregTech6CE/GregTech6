@@ -21,6 +21,7 @@ import gregtech.content.recipe.MachineRecipeOverlay;
 import gregtech.content.recipe.MaterialRecoveryRules;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
+import gregtech.engine.fluid.PortableFluidContainerSpec;
 import gregtech.engine.machine.crucible.CrucibleItemInput;
 import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ItemMaterialRegistry;
@@ -264,6 +265,7 @@ public final class MaterialBaselineTests {
         for (Item item : List.of(Items.IRON_BLOCK, Items.COPPER_BLOCK)) {
             var stack = new ItemStack(item);
             helper.assertTrue(ItemMaterialRegistry.get(stack).isPresent(), "missing composition: " + id(stack));
+            helper.assertTrue(ItemMaterialRegistry.canRecover(stack), "storage block is recoverable: " + id(stack));
             observe(helper, id(stack), stack);
         }
         helper.succeed();
@@ -309,6 +311,14 @@ public final class MaterialBaselineTests {
                         && plan.piles().get(0).equals(new MaterialRecoveryRules.DustPile(MaterialPrefix.dust, 64))
                         && plan.piles().get(1).equals(new MaterialRecoveryRules.DustPile(MaterialPrefix.dust, 8)),
                 "72U uses legal 64 dust plus 8 dust stacks");
+        var oneSlot = gregtech.util.OM.dust(Materials.Gold, 72 * GTValues.U);
+        var allSlots = gregtech.util.OM.dustAll(Materials.Gold, 72 * GTValues.U);
+        helper.assertTrue(
+                oneSlot.getCount() == 64
+                        && allSlots.size() == 2
+                        && allSlots.get(0).getCount() == 64
+                        && allSlots.get(1).getCount() == 8,
+                "single-slot and complete dust adapters project the same plan");
         var recipe = find(MachineRecipeMaps.Shredder, List.of(stack), List.of());
         helper.assertTrue(recipe != null, "72U item has a queryable recycling recipe");
         helper.assertTrue(
@@ -322,6 +332,29 @@ public final class MaterialBaselineTests {
                 "final shredder row preserves 72U Gold");
         write(helper, "72u.tsv", List.of("input\t" + describe(stack), "plan\t" + plan.piles(),
                 "lookup\t" + (recipe == null ? "absent" : signature(MachineRecipeMaps.Shredder, recipe))));
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void capsuleRecyclingUsesTheSharedStaticShredderPlan(GameTestHelper helper) {
+        var spec = Arrays.stream(PortableFluidContainerSpec.values())
+                .filter(candidate -> candidate.id().equals("cell_tin"))
+                .findFirst()
+                .orElseThrow();
+        var input = new ItemStack(gregtech.platform.Mc.item(
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "fluid_" + spec.id())));
+        var composition = ItemMaterialRegistry.get(input).orElseThrow();
+        var expected = MaterialRecoveryRules.planShredderStatic(
+                composition, MachineRecipeMaps.Shredder.mOutputItemsCount);
+        var recipe = find(MachineRecipeMaps.Shredder, List.of(input), List.of());
+        helper.assertTrue(expected.accepted() && recipe != null, "capsule Shredder recipe exists");
+        helper.assertTrue(recipe.mDuration == expected.duration(), "capsule duration comes from the shared plan");
+        helper.assertTrue(
+                recipe.mRecoveryOwnership != null
+                        && recipe.mRecoveryOwnership.scope()
+                                == Recipe.RecoveryOwnership.Scope.EXPLICIT
+                        && recipe.mRecoveryOwnership.family().equals("capsule-cell"),
+                "capsule row carries typed explicit ownership");
         helper.succeed();
     }
 
@@ -370,15 +403,23 @@ public final class MaterialBaselineTests {
         observe(helper, "tool_partial", tool);
         helper.assertTrue(
                 ItemMaterialRegistry.recoveryRejection(tool)
-                        == ItemMaterialRegistry.RecoveryRejection.DAMAGED,
-                "partial tools retain scaled composition but are explicitly rejected by full-output recipes");
+                        == ItemMaterialRegistry.RecoveryRejection.ELIGIBLE,
+                "partial tools retain an eligible scaled composition");
+        var expectedHalf = MaterialRecoveryRules.planShredder(half, MachineRecipeMaps.Shredder.mOutputItemsCount);
+        var halfRecipe = find(MachineRecipeMaps.Shredder, List.of(tool), List.of());
+        helper.assertTrue(
+                expectedHalf.accepted() && halfRecipe != null,
+                "partial tools query the Shredder from their remaining composition");
+        helper.assertTrue(
+                halfRecipe.mOutputs.length == expectedHalf.stackCount(),
+                "partial tools recover exactly the scaled Shredder output");
         tool.setDamageValue(tool.getMaxDamage());
         helper.assertTrue(ItemMaterialRegistry.get(tool).orElseThrow().components().isEmpty(), "exhausted tool has no positive material");
         helper.assertFalse(ItemMaterialRegistry.canRecover(tool), "no recovery from exhausted tool");
         helper.assertTrue(
                 ItemMaterialRegistry.recoveryRejection(tool)
-                        == ItemMaterialRegistry.RecoveryRejection.DAMAGED,
-                "exhausted recovery rejection remains attributable to item state");
+                        == ItemMaterialRegistry.RecoveryRejection.NO_COMPONENTS,
+                "exhausted recovery rejection names the empty composition");
         observe(helper, "tool_exhausted", tool);
         var nativeTool = GTToolItem.create(GTToolType.PICKAXE, Materials.Iron, gregtech.engine.material.GTMaterialRegistry.get("Wood"));
         helper.assertFalse(nativeTool.isEmpty(), "native material tool exists");
@@ -527,17 +568,18 @@ public final class MaterialBaselineTests {
         var descriptive = ItemMaterialRegistry.entries().entrySet().stream()
                 .filter(entry -> entry.getValue().sources().stream()
                         .anyMatch(source -> source.kind() == ItemCompositionSource.Kind.VANILLA_JSON))
-                .filter(entry -> !entry.getValue().bulkRecoveryAllowed())
                 .findFirst()
                 .orElseThrow();
         var stack = new ItemStack(descriptive.getKey());
         helper.assertTrue(ItemMaterialRegistry.get(stack).isPresent(), "descriptive composition is queryable");
         helper.assertTrue(ItemMaterialRegistry.canMelt(stack), "composition existence remains independently meltable");
-        helper.assertFalse(ItemMaterialRegistry.canRecover(stack), "descriptive composition does not grant bulk recovery");
+        helper.assertTrue(
+                ItemMaterialRegistry.canRecover(stack),
+                "GT6 has no separate item-level bulk recovery authorization");
         helper.assertTrue(
                 ItemMaterialRegistry.recoveryRejection(stack)
-                        == ItemMaterialRegistry.RecoveryRejection.NOT_BULK_RECOVERABLE,
-                "recovery rejection names missing bulk authorization");
+                        == ItemMaterialRegistry.RecoveryRejection.ELIGIBLE,
+                "composition admission remains independent of the selected process");
         helper.assertFalse(
                 ItemMaterialRegistry.hasMaterialProcessingRule(stack),
                 "descriptive vanilla data does not delete material cooking rules");
@@ -600,7 +642,30 @@ public final class MaterialBaselineTests {
         try {
             ItemMaterialRegistry.publishTagCandidates(Map.of(item, List.of(first)));
             var effective = ItemMaterialRegistry.base(item).orElseThrow();
+            var diagnosis = ItemMaterialRegistry.compositionDiagnosis(item).orElseThrow();
+            helper.assertTrue(
+                    effective.equals(diagnosis.selected()),
+                    "composition diagnosis exposes the effective selection");
+            helper.assertTrue(
+                    diagnosis.decisions().stream()
+                            .anyMatch(decision -> decision.status()
+                                    == gregtech.engine.material.ItemCompositionDecision.Status.SELECTED),
+                    "composition diagnosis records the selected source");
             long revision = ItemMaterialRegistry.compositionRevision();
+            var generation = ItemMaterialRegistry.compositionState();
+
+            ItemMaterialRegistry.beginTagGeneration();
+            var pending = ItemMaterialRegistry.compositionState();
+            helper.assertFalse(pending.tagInputReady(), "a new tag generation starts before its input is ready");
+            helper.assertTrue(
+                    pending.tagGeneration() == generation.tagGeneration() + 1,
+                    "starting a session advances the tag generation exactly once");
+            helper.assertTrue(
+                    ItemMaterialRegistry.base(item).isEmpty(),
+                    "a new generation does not expose the previous server's tag candidates");
+            helper.assertTrue(pending.explicitClosed(), "explicit definitions remain process-static");
+            ItemMaterialRegistry.publishTagCandidates(Map.of(item, List.of(first)));
+            revision = ItemMaterialRegistry.compositionRevision();
 
             IllegalStateException conflict = null;
             try {
@@ -622,11 +687,13 @@ public final class MaterialBaselineTests {
             helper.assertTrue(
                     ItemMaterialRegistry.base(item).isEmpty(),
                     "removed tag candidates drop the effective composition");
+            helper.assertTrue(
+                    ItemMaterialRegistry.compositionDiagnosis(item).isEmpty(),
+                    "removed tag candidates also withdraw their diagnosis");
 
             var descriptive = ItemMaterialRegistry.entries().entrySet().stream()
                     .filter(entry -> entry.getValue().sources().stream()
                             .anyMatch(source -> source.kind() == ItemCompositionSource.Kind.VANILLA_JSON))
-                    .filter(entry -> !entry.getValue().bulkRecoveryAllowed())
                     .findFirst()
                     .orElseThrow();
             var declaredItem = descriptive.getKey();
@@ -685,8 +752,8 @@ public final class MaterialBaselineTests {
             var damaged = stack.copy();
             damaged.setDamageValue(1);
             helper.assertTrue(
-                    find(MachineRecipeMaps.Shredder, List.of(damaged), List.of()) == null,
-                    "tag-derived Shredder row rejects damaged input");
+                    find(MachineRecipeMaps.Shredder, List.of(damaged), List.of()) != null,
+                    "tag-derived Shredder row rebuilds output from damaged input");
             CraftingMaterialForms.rebuild(true);
             var resolvedForm = CraftingMaterialForms.form(stack);
             helper.assertTrue(
@@ -770,6 +837,13 @@ public final class MaterialBaselineTests {
         helper.assertTrue(
                 ItemMaterialRegistry.compositionRevision() >= compositionRevision,
                 "reload invalidates composition-dependent caches");
+        helper.assertTrue(
+                MachineRecipeOverlay.lastPublication().recipeRevision() == MachineRecipeOverlay.generation(),
+                "the successful recipe overlay publishes one stable material/composition/recipe stamp");
+        helper.assertTrue(
+                MachineRecipeOverlay.lastPublication().compositionRevision()
+                        == ItemMaterialRegistry.compositionRevision(),
+                "the publication stamp names the composition snapshot used by the recipe overlay");
         helper.assertTrue(
                 compositions.equals(compositionSnapshot()),
                 "repeat reload preserves effective composition membership and values");

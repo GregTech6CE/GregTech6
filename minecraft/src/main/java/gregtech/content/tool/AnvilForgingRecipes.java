@@ -4,6 +4,7 @@ import static gregtech.content.data.MaterialPrefix.*;
 
 import gregtech.api.material.*;
 import gregtech.content.data.*;
+import gregtech.content.recipe.RecoveryRecipePublisher;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.*;
 import gregtech.engine.recipe.Recipe;
@@ -34,16 +35,20 @@ public final class AnvilForgingRecipes {
                 long units = rule.first().getMaterialWeight()
                         + (rule.second() == null ? 0 : rule.second().getMaterialWeight());
                 var recipe = new Recipe(
-                        new ItemStack[] {first, second},
-                        scrap.isEmpty() ? new ItemStack[] {out} : new ItemStack[] {out, scrap},
-                        null,
-                        scrap.isEmpty() ? null : new long[] {10000, 9000},
-                        null,
-                        null,
-                        AnvilRecipeDefinitions.duration(units, material.getToolQuality()),
-                        64,
-                        0);
-                if (MachineRecipeMaps.Anvil.addRecipe(recipe, true, false, material.has(MaterialProperty.HIDDEN))
+                                new ItemStack[] {first, second},
+                                scrap.isEmpty() ? new ItemStack[] {out} : new ItemStack[] {out, scrap},
+                                null,
+                                scrap.isEmpty() ? null : new long[] {10000, 9000},
+                                null,
+                                null,
+                                AnvilRecipeDefinitions.duration(units, material.getToolQuality()),
+                                64,
+                                0)
+                        .withSource("anvil:forging");
+                if (RecoveryRecipePublisher.publish(
+                                MachineRecipeMaps.Anvil,
+                                RecoveryRecipePublisher.explicit(recipe, "anvil-forging"),
+                                material.has(MaterialProperty.HIDDEN))
                         != null) count++;
             }
         }

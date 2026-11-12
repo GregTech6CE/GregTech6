@@ -180,6 +180,11 @@ class MaterialBaselineTest {
                         new MaterialRecoveryRules.DustPile(MaterialPrefix.dust, 64),
                         new MaterialRecoveryRules.DustPile(MaterialPrefix.dust, 8)),
                 plan.piles());
+        var slot = MaterialRecoveryRules.dustSlotPlan(72 * GTValues.U);
+        assertFalse(slot.complete());
+        assertEquals(64 * GTValues.U, slot.representedUnits());
+        assertEquals(8 * GTValues.U, slot.remainderUnits());
+        assertEquals(List.of(new MaterialRecoveryRules.DustPile(MaterialPrefix.dust, 64)), slot.piles());
 
         var composition = new ItemComposition(
                 null,
@@ -204,6 +209,19 @@ class MaterialBaselineTest {
         assertEquals(
                 MaterialRecoveryRules.ShredderRejection.UNREPRESENTABLE_AMOUNT,
                 MaterialRecoveryRules.planShredder(subFraction, 4).rejection());
+        var damagedFraction = new ItemComposition(
+                null,
+                List.of(MaterialComponent.of(Materials.Gold, GTValues.U * 24 / 25)),
+                Materials.Gold,
+                List.of(new ItemCompositionSource(
+                        ItemCompositionSource.Kind.EXPLICIT, "damaged-remainder-test", "test", "", "")),
+                true);
+        assertEquals(
+                MaterialRecoveryRules.ShredderRejection.UNREPRESENTABLE_AMOUNT,
+                MaterialRecoveryRules.planShredder(damagedFraction, 4).rejection());
+        var damagedPlan = MaterialRecoveryRules.planShredderDamaged(damagedFraction, 4, false);
+        assertTrue(damagedPlan.accepted());
+        assertTrue(damagedPlan.outputs().get(0).dust().remainderUnits() > 0);
     }
 
     @Test

@@ -6,11 +6,13 @@ import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.material.GTValues;
 import gregtech.content.material.MaterialDefinitions;
 import gregtech.content.material.MaterialTestFixture;
+import gregtech.content.material.catalog.DecompositionMaterials;
 import gregtech.content.recipe.OriginalMaterialFluidUnits;
-import gregtech.content.recipe.SourceDecompositionRules;
 import gregtech.engine.material.MaterialInfoRegistry;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,19 +24,30 @@ class MaterialDecompositionPlannerTest {
 
     @Test
     void everyRoutedMaterialHasOneCompleteDeclaration() {
+        int routed = 0;
+        int phaseOnly = 0;
         for (var declaration : MaterialDefinitions.declarations()) {
-            boolean centrifuge =
-                    declaration.material().properties().contains(gregtech.api.material.MaterialProperty.CENTRIFUGE);
-            boolean electrolyser =
-                    declaration.material().properties().contains(gregtech.api.material.MaterialProperty.ELECTROLYSER);
-            if (!centrifuge && !electrolyser) continue;
-            var rule = MaterialInfoRegistry.processes(new MaterialKey(declaration.name()))
+            var declarationProcess = declaration.info().processes().findSingle(MaterialProcessKeys.DECOMPOSITION);
+            if (declarationProcess.isEmpty()) continue;
+            var rule = declarationProcess.orElseThrow().value();
+            boolean centrifuge = rule.routes().contains(MaterialDecompositionRule.Route.CENTRIFUGE);
+            boolean electrolyser = rule.routes().contains(MaterialDecompositionRule.Route.ELECTROLYSER);
+            if (centrifuge || electrolyser) routed++;
+            else phaseOnly++;
+            var published = MaterialInfoRegistry.processes(new MaterialKey(declaration.name()))
                     .findSingle(MaterialProcessKeys.DECOMPOSITION)
                     .orElseThrow(() -> new AssertionError("missing decomposition rule: " + declaration.name()));
-            assertEquals(centrifuge, rule.value().routes().contains(MaterialDecompositionRule.Route.CENTRIFUGE));
-            assertEquals(electrolyser, rule.value().routes().contains(MaterialDecompositionRule.Route.ELECTROLYSER));
-            assertFalse(declaration.info().composition().parts().isEmpty(), declaration.name());
+            assertEquals(rule, published.value());
+            if (centrifuge || electrolyser)
+                assertFalse(declaration.info().composition().parts().isEmpty(), declaration.name());
         }
+        assertEquals(250, routed);
+        assertEquals(13, phaseOnly);
+    }
+
+    @Test
+    void decompositionSourceRowsRequireAnActiveConsumer() {
+        assertThrows(IllegalStateException.class, () -> DecompositionMaterials.validateConsumed(List.of()));
     }
 
     @Test
@@ -100,7 +113,7 @@ class MaterialDecompositionPlannerTest {
                         shared.referenceMillibuckets())));
         assertEquals(
                 OriginalMaterialFluidUnits.millibuckets(GTValues.U, GTValues.U, 144, false),
-                SourceDecompositionRules.fluidAmount(GTValues.U, GTValues.U, 144, false));
+                UnitConversion.fluidAmount(GTValues.U, GTValues.U, 144, false));
     }
 
     @Test
@@ -196,6 +209,6 @@ class MaterialDecompositionPlannerTest {
                 MaterialDecompositionPlanner.Status.NO_COMPOSITION,
                 MaterialDecompositionPlanner.plan(iron, rule, MaterialDecompositionRule.Route.ELECTROLYSER, 2, 2)
                         .status());
-        assertEquals(-1, SourceDecompositionRules.units(Long.MAX_VALUE, 1, Long.MAX_VALUE, true));
+        assertEquals(-1, UnitConversion.units(Long.MAX_VALUE, 1, Long.MAX_VALUE, true));
     }
 }

@@ -42,7 +42,10 @@ public final class StoneAndToolSurvivalRecipes {
                     &&composition.material().resolve()==material.resolve()) {
                 var recipe=new Recipe(new ItemStack[]{rock,ItemStack.EMPTY},new ItemStack[]{dust},null,null,null,null,
                         Math.max(1,36L*(material.getToolQuality()+1L)),16,0).withMaterialRecovery();
-                if(MachineRecipeMaps.Anvil.addRecipe(recipe)!=null)ADDED.add(recipe);
+                if(RecoveryRecipePublisher.publish(
+                        MachineRecipeMaps.Anvil,
+                        RecoveryRecipePublisher.explicit(recipe.withSource("recovery:stone-tool"),"stone-tool"))!=null)
+                    ADDED.add(recipe);
             }
         }
         registerStoneExtrusions();

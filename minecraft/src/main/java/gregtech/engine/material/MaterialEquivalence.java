@@ -20,7 +20,8 @@ public final class MaterialEquivalence {
         Map.entry("dustSmall","small_dusts"),Map.entry("dustTiny","tiny_dusts"),Map.entry("gem","gems"),
         Map.entry("plate","plates"),Map.entry("stick","rods"),Map.entry("stickLong","long_rods"),
         Map.entry("gearGt","gears"),Map.entry("ring","rings"),Map.entry("bolt","bolts"),Map.entry("screw","screws"),
-        Map.entry("foil","foils"),Map.entry("wireGt01","wires"),Map.entry("oreRaw","raw_materials"),
+        Map.entry("gearGtSmall","small_gears"),Map.entry("foil","foils"),Map.entry("wireGt01","wires"),
+        Map.entry("oreRaw","raw_materials"),
         Map.entry("ore","ores"),Map.entry("rawOreChunk","raw_ore_chunks"));
     private MaterialEquivalence() {}
     public static Form form(ItemStack stack) {

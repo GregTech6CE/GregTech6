@@ -1,10 +1,7 @@
 package gregtech.engine.material;
 
 import gregtech.api.material.*;
-import gregtech.content.block.machine.MoldBlock;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.recipe.ClayMoldCatalog;
-import gregtech.engine.stack.StackData;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,13 +18,16 @@ import org.jetbrains.annotations.Nullable;
 public final class ItemMaterialRegistry {
     private static final Object LOCK = new Object();
     private static final Map<Item, List<ItemCompositionCandidate>> EXPLICIT_SUBMISSIONS = new IdentityHashMap<>();
+    private static final Map<Item, ItemCompositionCandidate> LEGACY_SUBMISSIONS = new IdentityHashMap<>();
     private static final Map<Item, List<ItemCompositionCandidate>> TAG_SUBMISSIONS = new IdentityHashMap<>();
     private static final AtomicLong COMPOSITION_REVISION = new AtomicLong();
     private static boolean tagInputReady;
     private static boolean explicitClosed;
+    private static long tagGeneration;
 
     private static final Map<Item, ItemComposition> EFFECTIVE = new IdentityHashMap<>();
     private static final Map<Item, ItemComposition> EXPLICIT = new IdentityHashMap<>();
+    private static final Map<Item, ItemCompositionResolution> DIAGNOSTICS = new IdentityHashMap<>();
     private static Map<Item, ItemComposition> effectiveSnapshot = Map.of();
     private static long effectiveSnapshotRevision = Long.MIN_VALUE;
 
@@ -36,6 +36,8 @@ public final class ItemMaterialRegistry {
         ABSENT,
         TAG_INPUT_NOT_READY
     }
+
+    public record CompositionState(long revision, long tagGeneration, boolean tagInputReady, boolean explicitClosed) {}
 
     private ItemMaterialRegistry() {}
 
@@ -80,9 +82,17 @@ public final class ItemMaterialRegistry {
         }
     }
 
-    /** Compatibility entry point: the composition's structured source decides its candidate priority. */
+    /**
+     * Compatibility entry point for old addons. Repeated calls for one item retain the historical
+     * last-write behavior; use {@link #registerDeclared(Item, ItemComposition)} for structured sources.
+     */
     @Deprecated(forRemoval = false)
     public static void register(Item item, ItemComposition data) {
+        submitLegacy(item, data);
+    }
+
+    /** Registers a composition whose single structured source already identifies its producer. */
+    public static void registerDeclared(Item item, ItemComposition data) {
         submit(item, data, null);
     }
 
@@ -98,8 +108,26 @@ public final class ItemMaterialRegistry {
             String declarationId,
             String producer,
             @Nullable String replacesSourceId) {
-        ItemCompositionSource source =
-                new ItemCompositionSource(kind, declarationId, producer, sourceReference(data), "");
+        register(
+                item,
+                data,
+                kind,
+                declarationId,
+                producer,
+                replacesSourceId,
+                ItemCompositionSource.MaterialProcessingAuthority.DEFAULT);
+    }
+
+    public static void register(
+            Item item,
+            ItemComposition data,
+            ItemCompositionSource.Kind kind,
+            String declarationId,
+            String producer,
+            @Nullable String replacesSourceId,
+            ItemCompositionSource.MaterialProcessingAuthority materialProcessingAuthority) {
+        ItemCompositionSource source = new ItemCompositionSource(
+                kind, declarationId, producer, sourceReference(data), "", List.of(), materialProcessingAuthority);
         submit(
                 item,
                 new ItemComposition(
@@ -143,25 +171,39 @@ public final class ItemMaterialRegistry {
             affected.addAll(TAG_SUBMISSIONS.keySet());
             affected.addAll(staged.keySet());
             var resolved = new IdentityHashMap<Item, ItemComposition>();
+            var diagnostics = new IdentityHashMap<Item, ItemCompositionResolution>();
             for (Item item : affected) {
                 var itemCandidates = new ArrayList<ItemCompositionCandidate>();
                 var explicit = EXPLICIT_SUBMISSIONS.get(item);
                 if (explicit != null) itemCandidates.addAll(explicit);
+                var legacy = LEGACY_SUBMISSIONS.get(item);
+                if (legacy != null) itemCandidates.add(legacy);
                 var tags = staged.get(item);
                 if (tags != null) itemCandidates.addAll(tags);
                 if (itemCandidates.isEmpty()) continue;
-                var value = ItemCompositionResolver.resolve(Map.of(item, itemCandidates))
+                var resolution = ItemCompositionResolver.resolveDetailed(Map.of(item, itemCandidates))
                         .get(item);
-                if (value != null) resolved.put(item, value);
+                if (resolution != null) {
+                    resolved.put(item, resolution.selected());
+                    diagnostics.put(item, resolution);
+                }
             }
             boolean changed = false;
             for (Item item : affected) {
                 ItemComposition previous = EFFECTIVE.get(item);
                 ItemComposition replacement = resolved.get(item);
-                if (Objects.equals(previous, replacement)) continue;
-                changed = true;
-                if (replacement == null) EFFECTIVE.remove(item);
-                else EFFECTIVE.put(item, replacement);
+                var resolution = diagnostics.get(item);
+                if (replacement == null) {
+                    if (previous == null) continue;
+                    changed = true;
+                    EFFECTIVE.remove(item);
+                    DIAGNOSTICS.remove(item);
+                } else {
+                    DIAGNOSTICS.put(item, resolution);
+                    if (Objects.equals(previous, replacement)) continue;
+                    changed = true;
+                    EFFECTIVE.put(item, replacement);
+                }
             }
             TAG_SUBMISSIONS.clear();
             TAG_SUBMISSIONS.putAll(staged);
@@ -176,9 +218,35 @@ public final class ItemMaterialRegistry {
         publishTagCandidates(Map.of());
     }
 
+    /**
+     * Starts a new external-tag generation. Explicit definitions remain process-static, while the
+     * previous session's tag candidates stop being observable until their replacement is published.
+     */
+    public static void beginTagGeneration() {
+        boolean refresh;
+        synchronized (LOCK) {
+            long before = COMPOSITION_REVISION.get();
+            boolean hadGeneration = tagInputReady || !TAG_SUBMISSIONS.isEmpty();
+            var affected = new HashSet<>(TAG_SUBMISSIONS.keySet());
+            TAG_SUBMISSIONS.clear();
+            tagInputReady = false;
+            tagGeneration++;
+            for (Item item : affected) updateItemLocked(item, true);
+            if (COMPOSITION_REVISION.get() == before && hadGeneration) COMPOSITION_REVISION.incrementAndGet();
+            refresh = hadGeneration;
+        }
+        if (refresh) MaterialFormContent.publish();
+    }
+
     /** Candidate caches depend on the complete effective composition snapshot. */
     public static long compositionRevision() {
         return COMPOSITION_REVISION.get();
+    }
+
+    public static CompositionState compositionState() {
+        synchronized (LOCK) {
+            return new CompositionState(COMPOSITION_REVISION.get(), tagGeneration, tagInputReady, explicitClosed);
+        }
     }
 
     /** Validates deferred replacement targets after all built-in and recipe-side producers have submitted. */
@@ -205,8 +273,16 @@ public final class ItemMaterialRegistry {
 
     /** Effective composition whose winner is not an external resource-tag import. */
     public static Optional<ItemComposition> declared(Item item) {
-        return base(item).filter(composition -> composition.sources().stream()
-                .noneMatch(source -> source.kind() == ItemCompositionSource.Kind.FORM_TAG));
+        return base(item)
+                .filter(composition -> composition.sources().stream()
+                        .noneMatch(source -> source.kind() == ItemCompositionSource.Kind.FORM_TAG));
+    }
+
+    /** Complete effective arbitration record, including replaced and lower-priority candidates. */
+    public static Optional<ItemCompositionResolution> compositionDiagnosis(Item item) {
+        synchronized (LOCK) {
+            return Optional.ofNullable(DIAGNOSTICS.get(item));
+        }
     }
 
     /** Distinguishes a missing composition from a snapshot whose tag input has not been published yet. */
@@ -246,10 +322,7 @@ public final class ItemMaterialRegistry {
         return Optional.of(ItemCompositionScaling.scale(data, remaining, maximum));
     }
 
-    /**
-     * GT6 {@code OM.anydata_} admission for the melting crucible: any registered composition is
-     * meltable, including rows marked descriptive for bulk recovery.
-     */
+    /** GT6 {@code OM.anydata_} admission for the melting crucible. */
     public static boolean canMelt(ItemStack stack) {
         var data = get(stack);
         if (data.isEmpty() || data.get().components().isEmpty()) return false;
@@ -261,14 +334,18 @@ public final class ItemMaterialRegistry {
     /**
      * Why a stack may or may not enter a bulk recovery recipe.
      *
-     * <p>Composition availability, damage, stored contents and the bulk-recovery declaration are
-     * separate facts. Runtime rows can distinguish a design rejection from a missing binding.</p>
+     * <p>Composition availability, stored contents and container state are recovery facts. GT6 has
+     * no item-level recovery permission, so actual damaged compositions remain eligible.</p>
      */
     public enum RecoveryRejection {
         ELIGIBLE,
         NO_COMPOSITION,
         NO_COMPONENTS,
+        /** @deprecated No longer emitted; retained for binary and source compatibility. */
+        @Deprecated(forRemoval = false)
         NOT_BULK_RECOVERABLE,
+        /** @deprecated Damaged compositions are eligible and scaled by their process. */
+        @Deprecated(forRemoval = false)
         DAMAGED,
         STORED_CONTENTS,
         UNSUPPORTED_CONTAINER
@@ -276,18 +353,16 @@ public final class ItemMaterialRegistry {
 
     public static RecoveryRejection recoveryRejection(ItemStack stack) {
         if (stack.isEmpty()) return RecoveryRejection.NO_COMPOSITION;
-        var data = base(stack.getItem()).orElse(null);
+        var data = get(stack).orElse(null);
         if (data == null) return RecoveryRejection.NO_COMPOSITION;
         if (data.components().isEmpty()) return RecoveryRejection.NO_COMPONENTS;
-        if (!data.bulkRecoveryAllowed()) return RecoveryRejection.NOT_BULK_RECOVERABLE;
-        if (stack.isDamaged()) return RecoveryRejection.DAMAGED;
         if (hasStoredContents(stack)) return RecoveryRejection.STORED_CONTENTS;
         if (stack.getItem() instanceof net.minecraft.world.item.BucketItem
                 && !stack.is(net.minecraft.world.item.Items.BUCKET)) return RecoveryRejection.UNSUPPORTED_CONTAINER;
         return RecoveryRejection.ELIGIBLE;
     }
 
-    /** Bulk-machine recovery authorization, independent of composition existence and melting. */
+    /** Item-side recovery admission; the concrete recipe still owns its form and process checks. */
     public static boolean canRecover(ItemStack stack) {
         return recoveryRejection(stack) == RecoveryRejection.ELIGIBLE;
     }
@@ -298,49 +373,12 @@ public final class ItemMaterialRegistry {
         synchronized (LOCK) {
             var composition = EFFECTIVE.get(stack.getItem());
             return composition != null
-                    && composition.sources().stream()
-                            .anyMatch(source -> authorizesMaterialProcessingRule(stack.getItem(), source));
+                    && composition.sources().stream().anyMatch(ItemCompositionSource::allowsMaterialProcessingRule);
         }
-    }
-
-    private static boolean authorizesMaterialProcessingRule(Item item, ItemCompositionSource source) {
-        return switch (source.kind()) {
-            case VANILLA_JSON -> gregtech.content.material.VanillaCompositionLoader.inheritsVanillaUnification(item);
-            case CORRECTION, BLOCK_WEIGHT -> false;
-            default -> true;
-        };
     }
 
     public static boolean hasStoredContents(ItemStack stack) {
-        if (stack.getItem() instanceof net.minecraft.world.item.BlockItem item
-                && item.getBlock() instanceof gregtech.content.block.inventory.LootChestBlock) {
-//? if >=1.21.1 {
-            /*var loot = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-                        if (loot == null || !loot.copyTag().getBoolean("GTLootGenerated")) return true;
-*///?} else {
-            var loot = stack.getTagElement("BlockEntityTag");
-            if (loot == null || !loot.getBoolean("GTLootGenerated")) return true;
-//?}
-        }
-        var tag = StackData.read(stack);
-        if (tag != null
-                && (hasStoredBlockEntityData(stack, tag.getCompound("BlockEntityTag"))
-                        || tag.contains("Items")
-                        || tag.contains("EntityTag")
-                        || tag.contains("ChargedProjectiles"))) return true;
-//? if >=1.21.1 {
-        /*        var blockData = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-                return (blockData != null && hasStoredBlockEntityData(stack, blockData.copyTag()))
-                        || stack.has(net.minecraft.core.component.DataComponents.ENTITY_DATA)
-                        || stack.has(net.minecraft.core.component.DataComponents.BUCKET_ENTITY_DATA)
-                        || stack.has(net.minecraft.core.component.DataComponents.CONTAINER_LOOT)
-                        || stack.has(net.minecraft.core.component.DataComponents.CHARGED_PROJECTILES)
-                        || (stack.get(net.minecraft.core.component.DataComponents.CONTAINER) != null
-                            && !stack.get(net.minecraft.core.component.DataComponents.CONTAINER).equals(
-                                    net.minecraft.world.item.component.ItemContainerContents.EMPTY));
-*///?} else {
-        return false;
-//?}
+        return ItemMaterialRuntimeFacts.hasStoredContents(stack);
     }
 
     private static void submit(Item item, ItemComposition data, @Nullable String replacesSourceId) {
@@ -350,8 +388,7 @@ public final class ItemMaterialRegistry {
                     "Submitted item composition must have exactly one source: " + data.source());
         var candidate = new ItemCompositionCandidate(data, replacesSourceId);
         synchronized (LOCK) {
-            if (explicitClosed)
-                throw new IllegalStateException("Explicit item composition registration is closed");
+            if (explicitClosed) throw new IllegalStateException("Explicit item composition registration is closed");
             var candidates = EXPLICIT_SUBMISSIONS.computeIfAbsent(item, ignored -> new ArrayList<>());
             var previous = candidates.stream()
                     .filter(existing -> existing.sourceId().equals(candidate.sourceId()))
@@ -370,14 +407,46 @@ public final class ItemMaterialRegistry {
         }
     }
 
+    private static void submitLegacy(Item item, ItemComposition data) {
+        if (item == null || data == null) return;
+        var previousSource = data.sources().isEmpty() ? null : data.sources().get(0);
+        var source = new ItemCompositionSource(
+                ItemCompositionSource.Kind.LEGACY,
+                "gt6ce:legacy-item-composition/" + implementationId(item),
+                "deprecated ItemMaterialRegistry.register(Item, ItemComposition)",
+                sourceReference(data),
+                previousSource == null
+                        ? ""
+                        : "original category=" + previousSource.kind().name().toLowerCase(Locale.ROOT));
+        var compatibility = new ItemComposition(
+                data.prefix(), data.components(), data.primaryMaterial(), List.of(source), data.bulkRecoveryAllowed());
+        var candidate = new ItemCompositionCandidate(compatibility, null);
+        synchronized (LOCK) {
+            if (explicitClosed) throw new IllegalStateException("Explicit item composition registration is closed");
+            var previous = LEGACY_SUBMISSIONS.put(item, candidate);
+            try {
+                updateItemLocked(item, false);
+            } catch (RuntimeException failure) {
+                if (previous == null) LEGACY_SUBMISSIONS.remove(item);
+                else LEGACY_SUBMISSIONS.put(item, previous);
+                updateItemLocked(item, false);
+                throw failure;
+            }
+        }
+    }
+
     private static void updateItemLocked(Item item, boolean requireReplacementTargets) {
         var explicitCandidates = EXPLICIT_SUBMISSIONS.get(item);
-        if (explicitCandidates == null || explicitCandidates.isEmpty()) {
+        var legacy = LEGACY_SUBMISSIONS.get(item);
+        if ((explicitCandidates == null || explicitCandidates.isEmpty()) && legacy == null) {
             EXPLICIT.remove(item);
         } else {
+            var submitted = new ArrayList<ItemCompositionCandidate>();
+            if (explicitCandidates != null) submitted.addAll(explicitCandidates);
+            if (legacy != null) submitted.add(legacy);
             var explicit = (requireReplacementTargets
-                            ? ItemCompositionResolver.resolve(Map.of(item, explicitCandidates))
-                            : ItemCompositionResolver.resolveLenient(Map.of(item, explicitCandidates)))
+                            ? ItemCompositionResolver.resolve(Map.of(item, submitted))
+                            : ItemCompositionResolver.resolveLenient(Map.of(item, submitted)))
                     .get(item);
             if (explicit == null) EXPLICIT.remove(item);
             else EXPLICIT.put(item, explicit);
@@ -385,25 +454,33 @@ public final class ItemMaterialRegistry {
         var combined = new IdentityHashMap<Item, List<ItemCompositionCandidate>>();
         var explicit = EXPLICIT_SUBMISSIONS.get(item);
         if (explicit != null) combined.put(item, explicit);
+        legacy = LEGACY_SUBMISSIONS.get(item);
+        if (legacy != null)
+            combined.computeIfAbsent(item, ignored -> new ArrayList<>()).add(legacy);
         var tags = TAG_SUBMISSIONS.get(item);
         if (tags != null)
             combined.computeIfAbsent(item, ignored -> new ArrayList<>()).addAll(tags);
-        var replacement = (requireReplacementTargets
-                        ? ItemCompositionResolver.resolve(combined)
-                        : ItemCompositionResolver.resolveLenient(combined))
+        var resolution = (requireReplacementTargets
+                        ? ItemCompositionResolver.resolveDetailed(combined)
+                        : ItemCompositionResolver.resolveDetailedLenient(combined))
                 .get(item);
+        var replacement = resolution == null ? null : resolution.selected();
         var previous = EFFECTIVE.get(item);
         boolean changed = !Objects.equals(previous, replacement);
-        if (replacement == null) EFFECTIVE.remove(item);
-        else EFFECTIVE.put(item, replacement);
+        if (replacement == null) {
+            EFFECTIVE.remove(item);
+            DIAGNOSTICS.remove(item);
+        } else {
+            EFFECTIVE.put(item, replacement);
+            DIAGNOSTICS.put(item, resolution);
+        }
         if (changed) COMPOSITION_REVISION.incrementAndGet();
     }
 
     private static Map<Item, ItemComposition> stableSnapshot(Map<Item, ItemComposition> source) {
         record SnapshotRow(String id, Item item, ItemComposition composition) {}
         var rows = source.entrySet().stream()
-                .map(entry -> new SnapshotRow(
-                        implementationId(entry.getKey()), entry.getKey(), entry.getValue()))
+                .map(entry -> new SnapshotRow(implementationId(entry.getKey()), entry.getKey(), entry.getValue()))
                 .sorted(Comparator.comparing(SnapshotRow::id))
                 .toList();
         var result = new LinkedHashMap<Item, ItemComposition>();
@@ -433,20 +510,5 @@ public final class ItemMaterialRegistry {
         if (composition.sources().isEmpty()) return "";
         var source = composition.sources().get(0);
         return source.reference().isBlank() ? source.description() : source.reference();
-    }
-
-    private static boolean hasStoredBlockEntityData(ItemStack stack, net.minecraft.nbt.CompoundTag tag) {
-        if (tag.isEmpty()) return false;
-        if (stack.getItem() instanceof net.minecraft.world.item.BlockItem item
-                && item.getBlock() instanceof MoldBlock
-                && Set.of("id", ClayMoldCatalog.SHAPE_KEY).containsAll(tag.getAllKeys())
-                && "gt6ce:mold".equals(tag.getString("id"))) return false;
-        // Old empty chest drops carry loot bookkeeping even though their inventory drops separately.
-        // Only admit those known keys; inventories, pending loot, covers and unknown data stay protected.
-        if (!(stack.getItem() instanceof net.minecraft.world.item.BlockItem item)
-                || !(item.getBlock() instanceof gregtech.content.block.inventory.MetalChestBlock)) return true;
-        if (!Set.of("id", "GTLootGenerated", "GTDungeonLootSeed").containsAll(tag.getAllKeys())) return true;
-        return item.getBlock() instanceof gregtech.content.block.inventory.LootChestBlock
-                && !tag.getBoolean("GTLootGenerated");
     }
 }

@@ -74,7 +74,9 @@ public final class SharedThermalInputRows {
                         candidate.recipe().mDuration, candidate.recipe().mEUt, definition.row().inputProof()::matches)) {
                     accepted = null;
                 } else {
-                    accepted = RecoveryRecipeConflicts.publish(map, candidate.recipe());
+                    accepted = RecoveryRecipePublisher.publishIsolated(
+                            map,
+                            RecoveryRecipePublisher.explicit(candidate.recipe(), "thermal-input"));
                 }
                 ADMISSIONS.add(new Admission(definition.material().getName(), definition.prefix(), map.mNameInternal, accepted != null));
                 if (accepted != null) OWNED.computeIfAbsent(map, ignored -> Collections.newSetFromMap(new IdentityHashMap<>())).add(accepted);

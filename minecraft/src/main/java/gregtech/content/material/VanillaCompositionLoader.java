@@ -51,7 +51,11 @@ public final class VanillaCompositionLoader {
                                             && row.get("recoverable").getAsBoolean()),
                     ItemCompositionSource.Kind.VANILLA_JSON,
                     declarationId(entry.getKey()),
-                    "vanilla_compositions.json");
+                    "vanilla_compositions.json",
+                    null,
+                    inheritsVanillaUnification(item)
+                            ? ItemCompositionSource.MaterialProcessingAuthority.ALLOW
+                            : ItemCompositionSource.MaterialProcessingAuthority.DENY);
         }
         if (!errors.isEmpty()) throw new IllegalStateException("Unresolved vanilla materials: " + errors);
     }

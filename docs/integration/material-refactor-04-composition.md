@@ -27,7 +27,7 @@
 - 组件归一化以显式主材料为首，其余材料稳定排序。JSON 多组件行的主材料由行内首项声明；GT6 定义必须显式提供主材料。
 - 复合形态不再满足 `MaterialEquivalence.form()` 的纯形态条件，但完整组件仍用于 tooltip、熔化、回收和分解。
 - 铸模空腔是与真实库存不同的纯状态；无内容物的带形状铸模继续允许熔化和批量回收。
-- `recoverable` 旧 JSON 键兼容读取并映射为批量回收授权；同时提供 `bulkRecovery` 时两者冲突即失败。成分存在、熔化准入、批量回收和炉策略互不替代。
+- `recoverable` 与 `bulkRecovery` 旧 JSON 键继续做兼容读取和相互冲突校验，但不再形成物品级回收门槛；规范 `ItemComposition` 将该兼容值归一为 `true`。成分存在、熔化准入、具体回收工艺和炉策略互不替代。
 - CR.REV、显式 GT 材料定义、统一化和 tag 规则仍可授权炉策略；vanilla JSON 描述性行与人工描述修正不会单独删除原版熔炼行。
 
 ## 检查结果
@@ -83,3 +83,12 @@
 - 新增 `declared()`，过滤外部 tag 赢家；生产消费者不再把诊断用 `explicit()` 当权威输入。
 - 输入证明统一为 `RecoveryInputProof`，移除重复的 thermal 状态检查。
 - 完整 `:core:test`、双平台生产与测试源码编译、GameTest 源码编译和 ratchet Spotless 通过；Forge 1.20.1 GameTest 77/77，NeoForge 1.21.1 GameTest 82/82。
+
+## 第五轮审查闭合（2026-11-12）
+
+- 来源裁决确定为受控类别与显式覆盖链；同一优先级内容不一致失败，自由文本不再反向决定来源类别。方块重量、CR.REV 和其余内置生产端改用结构化来源。
+- `ItemCompositionResolver.resolveDetailed()` 与 `ItemMaterialRegistry.compositionDiagnosis()` 保留胜出、被覆盖和低优先级候选及原因，tag generation 变化时诊断与有效快照同步更新。
+- 弃用双参数注册仅对旧附属保留最后写入兼容；结构化和 tag 候选继续严格校验。legacy 多组件主材料／数量与 `recoverable()` 兼容行为已恢复。
+- API 1.8.0 与 `gregtech:gt6ce-api:1.8.0` 发布坐标作为本轮累计材料 API 变更的最终版本决定。
+- 执行且通过：`:api:check`、`:core:test`、Forge／NeoForge 生产与测试源码编译、ratchet Spotless、验证路由及注释检查；Forge 1.20.1 GameTest 90/90，NeoForge 1.21.1 GameTest 95/95。
+- 首轮 Forge GameTest 发现 CR.REV 单组件的主材料被清除，Stone 铸模因此未保留 45U 构造数量；恢复兼容主材料推断后最终全量通过。

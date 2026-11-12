@@ -12,6 +12,7 @@ import gregtech.engine.recipe.Recipe;
 import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import java.util.ArrayList;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
@@ -42,13 +43,16 @@ public final class CapsuleCellRecipes {
     public static int registerRecycling() {
         int count=0;
         for(var spec:PortableFluidContainerSpec.values())if(spec.shapeId().equals("cell")) {
-            var output=GTItems.getStack(MaterialPrefix.dustTiny,spec.material(),1);
-            if(output.isEmpty())throw new IllegalStateException("Missing capsule recycling dust: "+spec.id());
             var input=new ItemStack(Mc.item(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())));
             var composition=ItemMaterialRegistry.base(input.getItem()).orElse(null);
             if(composition==null) {
                 var data=new ItemComposition(null,java.util.List.of(MaterialComponent.of(spec.material(),GTValues.U9)),
-                        spec.material(),"capsule-cell material",true);
+                        spec.material(),java.util.List.of(new ItemCompositionSource(
+                                ItemCompositionSource.Kind.EXPLICIT,
+                                "gt6ce:capsule-cell/"+spec.id(),
+                                "capsule-cell material",
+                                spec.id(),
+                                "")),true);
                 ItemMaterialRegistry.register(input.getItem(),data,ItemCompositionSource.Kind.EXPLICIT,
                         "gt6ce:capsule-cell/"+spec.id(),"PortableFluidContainerSpec");
                 composition=ItemMaterialRegistry.base(input.getItem()).orElse(null);
@@ -57,11 +61,25 @@ public final class CapsuleCellRecipes {
                     ||ItemMaterialRegistry.recoveryRejection(input)!=ItemMaterialRegistry.RecoveryRejection.ELIGIBLE
                     ||composition.components().size()!=1
                     ||composition.material().resolve()!=spec.material().resolve())continue;
-            long work=MaterialRecoveryRules.staticShredderWork(spec.material());
-            var recipe=new Recipe(new ItemStack[]{input},new ItemStack[]{output},null,null,null,null,(work+8)/9,16,0)
+            var plan=MaterialRecoveryRules.planShredderStatic(
+                    composition,MachineRecipeMaps.Shredder.mOutputItemsCount);
+            if(!plan.accepted())continue;
+            var outputs=new ArrayList<ItemStack>();
+            for(var planned:plan.outputs())for(var pile:planned.dust().piles()) {
+                var output=GTItems.getStack(pile.prefix(),planned.material(),pile.count());
+                if(output.isEmpty()) {
+                    outputs.clear();
+                    break;
+                }
+                outputs.add(output);
+            }
+            if(outputs.isEmpty())continue;
+            var recipe=new Recipe(new ItemStack[]{input},outputs.toArray(ItemStack[]::new),null,null,null,null,
+                    plan.duration(),16,0)
                     .withMaterialRecovery()
                     .withSource("recovery:capsule");
-            if(RecoveryRecipeConflicts.publish(MachineRecipeMaps.Shredder,recipe)!=null)count++;
+            if(RecoveryRecipePublisher.publish(
+                    MachineRecipeMaps.Shredder,RecoveryRecipePublisher.explicit(recipe,"capsule-cell"))!=null)count++;
         }
         return count;
     }

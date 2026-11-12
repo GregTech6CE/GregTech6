@@ -57,7 +57,6 @@ public final class CompoundMaterials {
                 .atomicProperties(0, 0, 0, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.ELEMENT,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -132,9 +131,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -169,8 +166,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -225,8 +220,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -281,7 +274,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -307,8 +299,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -362,9 +352,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -421,9 +409,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -453,12 +439,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("NH₃")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.ACID, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Ammonia")
                 .composition(
                         4L,
@@ -478,9 +459,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -514,8 +493,6 @@ public final class CompoundMaterials {
                 .atomicProperties(0, 0, 0, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.ELEMENT,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -569,9 +546,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -604,9 +579,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -646,8 +619,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -678,8 +649,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -733,8 +702,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -815,9 +782,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -853,9 +818,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -931,8 +894,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -1002,9 +963,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
@@ -1046,8 +1005,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -1100,9 +1057,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -1140,9 +1095,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -1173,8 +1126,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -1227,9 +1178,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -1259,7 +1208,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -1289,8 +1237,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -1346,9 +1292,7 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -1455,8 +1399,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -1508,9 +1450,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -1541,7 +1481,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -1574,7 +1513,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -1602,9 +1540,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -1640,8 +1576,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -1675,8 +1609,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.BOULE,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -1712,8 +1644,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -1768,9 +1698,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -1805,7 +1733,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -1831,8 +1758,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -1905,8 +1830,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -1962,9 +1885,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -1992,7 +1913,7 @@ public final class CompoundMaterials {
                 .density(1.0F)
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
                 .localName("Butane")
                 .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
                 .build());
@@ -2007,7 +1928,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -2031,12 +1951,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("CO₂")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.ELECTROLYSER,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Carbon Dioxide")
                 .composition(
                         3L,
@@ -2055,12 +1970,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("CO")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.ELECTROLYSER,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Carbon Monoxide")
                 .composition(
                         2L,
@@ -2079,13 +1989,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("CO₃")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.ELECTROLYSER,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.ACID, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Carbon Trioxide")
                 .composition(
                         4L,
@@ -2105,8 +2009,6 @@ public final class CompoundMaterials {
                 .atomicProperties(0, 0, 0, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.ELEMENT,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -2187,8 +2089,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -2238,9 +2138,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -2271,8 +2169,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -2326,9 +2222,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
@@ -2386,9 +2280,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2474,7 +2366,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -2500,7 +2391,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -2524,12 +2414,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("Cocoa(C₁₂H₂₂O₁₁)")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.DUST,
-                        MaterialProperty.GENERATE_DUST,
-                        MaterialProperty.UNIT)
+                .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
                 .localName("Chocolate")
                 .source("harvestcraft", "HarvestCraft")
                 .composition(
@@ -2550,9 +2435,7 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_FOIL,
@@ -2640,9 +2523,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
@@ -2668,9 +2549,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
@@ -2697,9 +2576,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2725,9 +2602,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -2755,8 +2630,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -2811,8 +2684,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -2864,8 +2735,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -2919,8 +2788,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -3059,7 +2926,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -3163,7 +3029,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -3189,8 +3054,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -3259,7 +3122,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -3291,7 +3153,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -3333,9 +3194,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -3368,7 +3227,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -3393,9 +3251,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -3426,7 +3282,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -3480,8 +3335,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -3860,8 +3713,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -3915,8 +3766,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -3970,8 +3819,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -4030,7 +3877,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -4104,9 +3950,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -4143,8 +3987,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -4174,8 +4016,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -4229,8 +4069,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -4284,9 +4122,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -4317,8 +4153,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -4346,8 +4180,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -4391,7 +4223,7 @@ public final class CompoundMaterials {
                 .density(1.0F)
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
                 .localName("Ethylene")
                 .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
                 .build());
@@ -4406,7 +4238,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -4442,7 +4273,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -4466,7 +4296,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -4494,9 +4323,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
@@ -4520,8 +4347,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -4575,8 +4400,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -4714,8 +4537,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -4768,8 +4589,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -4835,7 +4654,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -4906,7 +4724,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -4955,8 +4772,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -4983,8 +4798,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -5042,12 +4855,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("C₃H₈O₃")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.ELECTROLYSER,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Glycerol")
                 .composition(
                         14L,
@@ -5066,12 +4874,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("C₃H₅N₃O₉")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.ELECTROLYSER,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Glyceryl")
                 .composition(
                         20L,
@@ -5092,9 +4895,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -5130,9 +4931,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -5161,9 +4960,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -5192,9 +4989,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -5224,7 +5019,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -5266,7 +5060,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -5290,9 +5083,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -5322,7 +5113,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -5355,7 +5145,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -5383,9 +5172,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -5419,8 +5206,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.BOULE,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -5456,7 +5241,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -5481,9 +5265,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -5542,9 +5324,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -5587,7 +5367,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("D₂O")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
                 .localName("Heavy Water")
                 .composition(
                         3L,
@@ -5607,9 +5387,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -5644,12 +5422,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("HeNe")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Helium-Neon")
                 .composition(
                         2L,
@@ -5687,9 +5460,7 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -5768,8 +5539,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -5827,8 +5596,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -5886,8 +5653,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -5943,8 +5708,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -5966,12 +5729,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("HCl")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.ACID, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Hydrochloric Acid")
                 .composition(
                         2L,
@@ -5991,9 +5749,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
@@ -6017,12 +5773,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("HF")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.ACID, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Hydrogen Fluoride")
                 .composition(
                         2L,
@@ -6041,11 +5792,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("H₂O₂")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Hydrogen Peroxide")
                 .source("ihl", "IHL")
                 .composition(
@@ -6065,12 +5812,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("H₂S")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.ACID, MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Hydrosulfuric Acid")
                 .composition(
                         3L,
@@ -6127,8 +5869,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -6316,8 +6056,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -6371,9 +6109,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
@@ -6414,8 +6150,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -6468,8 +6202,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -6531,9 +6263,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -6585,9 +6315,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -6614,9 +6342,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.MELTING,
@@ -6657,7 +6383,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -6683,9 +6408,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
@@ -6709,7 +6432,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -6733,12 +6455,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("(C₆(H₂O)₅)₃Ma")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.DUST,
-                        MaterialProperty.GENERATE_DUST,
-                        MaterialProperty.UNIT)
+                .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
                 .localName("LiveRoot")
                 .source("TwilightForest", "Twilight Forest")
                 .composition(
@@ -6773,8 +6490,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -6828,7 +6543,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -6858,8 +6572,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -6914,7 +6626,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -6948,7 +6659,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -7001,7 +6711,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -7026,9 +6735,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -7122,12 +6829,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("CH₄")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.ELECTROLYSER,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Methane")
                 .composition(
                         5L,
@@ -7146,12 +6848,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("(CH₄)(H₂O)₂")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.DUST,
-                        MaterialProperty.GENERATE_DUST,
-                        MaterialProperty.UNIT)
+                .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
                 .localName("Methane Ice")
                 .composition(
                         2L,
@@ -7222,9 +6919,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -7254,9 +6949,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -7350,8 +7043,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -7406,7 +7097,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -7514,8 +7204,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -7574,8 +7262,6 @@ public final class CompoundMaterials {
                 .properties(
                         MaterialProperty.ALLOY,
                         MaterialProperty.BOULE,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -7627,8 +7313,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -7675,8 +7359,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -7728,7 +7410,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -7754,9 +7435,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -7803,12 +7482,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("NO₂")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.ELECTROLYSER,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Nitrogen Dioxide")
                 .composition(
                         3L,
@@ -7827,12 +7501,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("NO")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.ELECTROLYSER,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Nitrogen Monoxide")
                 .composition(
                         2L,
@@ -7866,9 +7535,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -7902,9 +7569,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -7965,9 +7630,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -7994,9 +7657,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -8026,9 +7687,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -8056,7 +7715,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -8086,8 +7744,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.BOULE,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -8122,8 +7778,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -8176,9 +7830,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
                         MaterialProperty.MELTING,
@@ -8238,9 +7890,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -8298,9 +7948,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.FLAMMABLE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.MELTING,
@@ -8328,9 +7976,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -8361,8 +8007,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -8394,7 +8038,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -8425,7 +8068,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -8455,7 +8097,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -8532,7 +8173,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -8557,7 +8197,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -8583,7 +8222,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -8607,9 +8245,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
@@ -8632,7 +8268,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -8657,9 +8292,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
@@ -8683,7 +8316,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -8708,7 +8340,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -8733,7 +8364,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -8758,7 +8388,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -8782,7 +8411,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -8819,7 +8447,7 @@ public final class CompoundMaterials {
                 .density(1.0F)
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
                 .localName("Propane")
                 .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
                 .build());
@@ -8832,7 +8460,7 @@ public final class CompoundMaterials {
                 .density(1.0F)
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
                 .localName("Propylene")
                 .forms("CONTAINERS", "CONTAINERS_GAS", "PLANTS")
                 .build());
@@ -8851,8 +8479,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.BOULE,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -8927,9 +8553,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -8962,9 +8586,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -8998,8 +8620,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -9051,9 +8671,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -9084,7 +8702,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -9117,7 +8734,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -9145,9 +8761,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -9181,8 +8795,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -9262,8 +8874,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -9319,8 +8929,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -9357,8 +8965,6 @@ public final class CompoundMaterials {
                 .properties(
                         MaterialProperty.ALLOY,
                         MaterialProperty.BOULE,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -9414,7 +9020,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -9440,8 +9045,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -9545,8 +9148,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.BOULE,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -9617,8 +9218,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.BOULE,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -9681,7 +9280,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("HDO")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
                 .localName("Semiheavy Water")
                 .composition(
                         3L,
@@ -9703,8 +9302,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -9823,9 +9420,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -9861,7 +9456,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -9886,7 +9480,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -9913,7 +9506,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -9938,9 +9530,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
@@ -9963,9 +9553,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
                         MaterialProperty.UUM)
@@ -9990,7 +9578,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -10015,7 +9602,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -10040,7 +9626,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -10065,7 +9650,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -10089,7 +9673,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -10115,8 +9698,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -10170,8 +9751,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -10236,9 +9815,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -10272,9 +9849,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -10310,8 +9885,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -10370,7 +9943,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -10393,11 +9965,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("H₂O")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Steam")
                 .composition(
                         3L,
@@ -10417,7 +9985,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -10474,8 +10041,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -10530,8 +10095,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -10644,8 +10207,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -10699,7 +10260,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -10725,7 +10285,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -10823,8 +10382,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -10880,9 +10437,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -10974,7 +10529,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -11024,8 +10578,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -11079,9 +10631,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -11110,9 +10660,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -11142,8 +10690,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -11199,8 +10745,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -11241,7 +10785,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -11266,9 +10809,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -11303,8 +10844,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -11358,8 +10897,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -11414,8 +10951,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -11470,7 +11005,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("T₂O")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
                 .localName("Tritiated Water")
                 .composition(
                         3L,
@@ -11491,8 +11026,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -11551,7 +11084,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -11605,8 +11137,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -11664,7 +11194,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_ORE_PROCESSING,
@@ -11693,8 +11222,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -11749,7 +11276,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("U-235F₆")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
                 .localName("Uranium-235 Hexafluoride")
                 .composition(
                         7L,
@@ -11768,11 +11295,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("U-235F₄")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.DUST,
-                        MaterialProperty.GENERATE_DUST,
-                        MaterialProperty.UNIT)
+                .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
                 .properties(MaterialProperty.MOLTEN)
                 .localName("Uranium-235 Tetrafluoride")
                 .composition(
@@ -11792,7 +11315,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("UF₆")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
                 .localName("Uranium-238 Hexafluoride")
                 .composition(
                         7L,
@@ -11811,11 +11334,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("UF₄")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.DUST,
-                        MaterialProperty.GENERATE_DUST,
-                        MaterialProperty.UNIT)
+                .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
                 .properties(MaterialProperty.MOLTEN)
                 .localName("Uranium-238 Tetrafluoride")
                 .composition(
@@ -11835,7 +11354,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("UF₆")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(MaterialProperty.DECOMPOSABLE, MaterialProperty.GAS, MaterialProperty.LIQUID)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID)
                 .localName("Uranium Hexafluoride")
                 .composition(
                         7L,
@@ -11854,11 +11373,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("UF₄")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.DUST,
-                        MaterialProperty.GENERATE_DUST,
-                        MaterialProperty.UNIT)
+                .properties(MaterialProperty.DUST, MaterialProperty.GENERATE_DUST, MaterialProperty.UNIT)
                 .properties(MaterialProperty.MOLTEN)
                 .localName("Uranium Tetrafluoride")
                 .composition(
@@ -11879,9 +11394,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -11916,8 +11429,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -11969,8 +11480,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -12024,8 +11533,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -12079,8 +11586,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -12136,8 +11641,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
@@ -12239,7 +11742,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -12263,11 +11765,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("H₂O")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Water")
                 .source("minecraft", "Minecraft")
                 .composition(
@@ -12288,11 +11786,7 @@ public final class CompoundMaterials {
                 .chemicalFormula("H₂O")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("WaterDistilled")
                 .source("IC2", "IndustrialCraft 2")
                 .composition(
@@ -12407,7 +11901,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -12436,8 +11929,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -12471,7 +11962,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.UNIT,
@@ -12495,9 +11985,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -12527,7 +12015,6 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -12563,7 +12050,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ACID,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -12591,9 +12077,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,
@@ -12627,8 +12111,6 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.BOULE,
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
@@ -12663,9 +12145,7 @@ public final class CompoundMaterials {
                 .alpha(255)
                 .properties(
                         MaterialProperty.ALLOY,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_FOIL,
@@ -12717,9 +12197,7 @@ public final class CompoundMaterials {
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.DUST,
-                        MaterialProperty.ELECTROLYSER,
                         MaterialProperty.GEM,
                         MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_LENS,

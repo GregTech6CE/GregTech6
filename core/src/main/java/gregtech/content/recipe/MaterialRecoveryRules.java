@@ -2,14 +2,13 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialComponent;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.MaterialProcessingProperties;
 import gregtech.engine.material.ItemComposition;
+import gregtech.engine.material.ItemRecoveryPlanner;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -21,6 +20,35 @@ import java.util.List;
  */
 public final class MaterialRecoveryRules {
     private MaterialRecoveryRules() {}
+
+    private static final List<MaterialPrefix> DUST_FORMS =
+            List.of(MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny, MaterialPrefix.dustDiv72);
+
+    private static final ItemRecoveryPlanner.MaterialFacts FACTS = new ItemRecoveryPlanner.MaterialFacts() {
+        private final List<ItemRecoveryPlanner.DustForm> dustForms = DUST_FORMS.stream()
+                .map(prefix -> new ItemRecoveryPlanner.DustForm(prefix.getName(), prefix.getMaterialWeight()))
+                .toList();
+
+        @Override
+        public long pulverizedAmount(GTMaterial source, long amount) {
+            return MaterialRecoveryRules.pulverizedAmount(source, amount);
+        }
+
+        @Override
+        public long dynamicShredderWork(GTMaterial material) {
+            return shredderWork(material);
+        }
+
+        @Override
+        public long staticShredderWork(GTMaterial material) {
+            return MaterialRecoveryRules.staticShredderWork(material);
+        }
+
+        @Override
+        public List<ItemRecoveryPlanner.DustForm> dustForms() {
+            return dustForms;
+        }
+    };
 
     public record DustPile(MaterialPrefix prefix, int count) {
         public DustPile {
@@ -86,6 +114,17 @@ public final class MaterialRecoveryRules {
         return dustPlan(amount, Integer.MAX_VALUE);
     }
 
+    /**
+     * One-slot view of the same dust allocation used by full Shredder plans.
+     *
+     * <p>Consumers that return one stack consume {@link DustPlan#representedUnits()} and may leave
+     * {@link DustPlan#remainderUnits()} for a later retrieval. Recipe producers that own an output
+     * array must use {@link #dustPlan(long)} and retain every pile.</p>
+     */
+    public static DustPlan dustSlotPlan(long amount) {
+        return dustPlan(amount, 1);
+    }
+
     private static DustPlan dustPlan(long amount, int maximumStacks) {
         if (amount < 0 || maximumStacks <= 0)
             throw new IllegalArgumentException("Dust amount and stack limit must be positive");
@@ -149,88 +188,41 @@ public final class MaterialRecoveryRules {
     }
 
     public static ShredderPlan planShredder(ItemComposition composition, int outputItemSlots) {
-        return planShredder(composition, outputItemSlots, false);
+        return convert(ItemRecoveryPlanner.planShredder(composition, outputItemSlots, FACTS, false));
     }
 
     /** Plans a generated static prefix row instead of the dynamic composition fallback. */
     public static ShredderPlan planShredderStatic(ItemComposition composition, int outputItemSlots) {
-        return planShredder(composition, outputItemSlots, true);
+        return convert(ItemRecoveryPlanner.planShredder(composition, outputItemSlots, FACTS, true));
     }
 
-    private static ShredderPlan planShredder(ItemComposition composition, int outputItemSlots, boolean staticPrefix) {
-        if (composition == null || composition.components().isEmpty()) return rejected(ShredderRejection.NO_COMPONENTS);
-        if (outputItemSlots <= 0) return rejected(ShredderRejection.OUTPUT_LIMIT);
-        try {
-            var targetUnits = new LinkedHashMap<GTMaterial, Long>();
-            long inputUnits = 0;
-            for (MaterialComponent component : composition.components()) {
-                GTMaterial material = component.material().resolve();
-                if (!material.isValid() || component.amount() <= 0) continue;
-                inputUnits = Math.addExact(inputUnits, component.amount());
-                GTMaterial target = material.getTargetPulverMaterial();
-                if (target == null) continue;
-                target = target.resolve();
-                if (!target.isValid()) continue;
-                long amount = pulverizedAmount(material, component.amount());
-                if (amount > 0) targetUnits.merge(target, amount, Math::addExact);
-            }
-            if (targetUnits.isEmpty()) return rejected(ShredderRejection.NO_COMPONENTS);
-
-            var outputs = new ArrayList<ShredderOutput>();
-            int remainingSlots = outputItemSlots;
-            long duration = 0;
-            if (staticPrefix && inputUnits > 0) {
-                GTMaterial source = composition.material();
-                if (source == null || !source.isValid()) {
-                    for (MaterialComponent component : composition.components()) {
-                        GTMaterial candidate = component.material().resolve();
-                        if (candidate.isValid()) {
-                            source = candidate;
-                            break;
-                        }
-                    }
-                }
-                duration = source == null
-                        ? 0
-                        : Math.max(
-                                1,
-                                BigInteger.valueOf(inputUnits)
-                                        .multiply(BigInteger.valueOf(staticShredderWork(source)))
-                                        .add(BigInteger.valueOf(GTValues.U - 1))
-                                        .divide(BigInteger.valueOf(GTValues.U))
-                                        .longValueExact());
-            }
-            for (var entry : targetUnits.entrySet()) {
-                if (remainingSlots <= 0) return rejected(ShredderRejection.OUTPUT_LIMIT);
-                var dust = dustPlan(entry.getValue(), remainingSlots);
-                if (!dust.complete()) {
-                    return rejected(
-                            dust.stackCount() >= remainingSlots
-                                    ? ShredderRejection.OUTPUT_LIMIT
-                                    : ShredderRejection.UNREPRESENTABLE_AMOUNT);
-                }
-                if (dust.piles().isEmpty()) continue;
-                outputs.add(new ShredderOutput(entry.getKey(), dust));
-                remainingSlots -= dust.stackCount();
-                if (!staticPrefix) {
-                    long work = shredderWork(entry.getKey());
-                    duration = Math.addExact(
-                            duration,
-                            BigInteger.valueOf(entry.getValue())
-                                    .multiply(BigInteger.valueOf(work))
-                                    .add(BigInteger.valueOf(GTValues.U - 1))
-                                    .divide(BigInteger.valueOf(GTValues.U))
-                                    .longValueExact());
-                }
-            }
-            if (outputs.isEmpty()) return rejected(ShredderRejection.NO_COMPONENTS);
-            return new ShredderPlan(outputs, Math.max(1, duration), ShredderRejection.NONE);
-        } catch (ArithmeticException overflow) {
-            return rejected(ShredderRejection.OVERFLOW);
-        }
+    /** Source {@code OM.dust} floors a damaged amount to the finest representable dust form. */
+    public static ShredderPlan planShredderDamaged(
+            ItemComposition composition, int outputItemSlots, boolean staticPrefix) {
+        return convert(ItemRecoveryPlanner.planShredder(composition, outputItemSlots, FACTS, staticPrefix, true));
     }
 
-    private static ShredderPlan rejected(ShredderRejection rejection) {
-        return new ShredderPlan(List.of(), 0, rejection);
+    private static ShredderPlan convert(ItemRecoveryPlanner.ShredderPlan plan) {
+        var outputs = plan.outputs().stream()
+                .map(output -> new ShredderOutput(output.material(), convert(output.dust())))
+                .toList();
+        return new ShredderPlan(
+                outputs,
+                plan.duration(),
+                ShredderRejection.valueOf(plan.rejection().name()));
+    }
+
+    private static DustPlan convert(ItemRecoveryPlanner.DustPlan plan) {
+        var piles = plan.piles().stream()
+                .map(pile -> new DustPile(prefix(pile.form()), pile.count()))
+                .toList();
+        return new DustPlan(piles, plan.representedUnits(), plan.remainderUnits());
+    }
+
+    private static MaterialPrefix prefix(ItemRecoveryPlanner.DustForm form) {
+        return DUST_FORMS.stream()
+                .filter(prefix -> prefix.getName().equals(form.id()) && prefix.getMaterialWeight() == form.weight())
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Unknown dust form from recovery plan: " + form.id()));
     }
 }

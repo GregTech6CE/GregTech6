@@ -84,10 +84,12 @@ public class DustFunnelBlockEntity extends BlockEntity {
 
     /** GT6 pincers empty the material reservoir, leaving both ordinary slots alone. */
     public ItemStack retrieveFraction() {
+        var plan = material == null
+                ? null
+                : gregtech.content.recipe.MaterialRecoveryRules.dustSlotPlan(amount);
         var out = material == null ? ItemStack.EMPTY : gregtech.util.OM.dust(material, amount);
         if (!out.isEmpty()) {
-            var parts = CrucibleItemInput.parse(out.copyWithCount(1));
-            if (!parts.isEmpty()) amount -= parts.get(0).amount * out.getCount();
+            amount -= plan.representedUnits();
             if (amount <= 0) { amount = 0; material = null; }
             inventoryChanged = true;
             setChanged();

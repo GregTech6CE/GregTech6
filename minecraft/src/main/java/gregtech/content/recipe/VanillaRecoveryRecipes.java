@@ -94,8 +94,11 @@ public final class VanillaRecoveryRecipes {
                             16,
                             0)
                     .withMaterialRecovery();
+            recipe.withRuntimeResolver(inputs -> ShredderDamageScaling.resolve(inputs, recipe, false));
             recipe.withSource("recovery:vanilla-generic");
-            if (RecoveryRecipeConflicts.publish(MachineRecipeMaps.Shredder, recipe) != null) RECIPES.add(recipe);
+            if (RecoveryRecipePublisher.publish(
+                            MachineRecipeMaps.Shredder, RecoveryRecipePublisher.generic(recipe, "vanilla-recovery"))
+                    != null) RECIPES.add(recipe);
             else skip("existing-owner");
         }
         Mc.logger()

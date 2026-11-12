@@ -7,9 +7,9 @@
 ## 当前入口与目标
 
 - `content.material.catalog.*` 中的 `MaterialDefinition.Composition`：规范化学组成与 divider。
-- `content.material.catalog.DecompositionMaterials`：各材料的液体／气体绑定及 `sourceUnits → mB` 换算；`MaterialDefinitions` 将其作为现有 `MaterialProcessKeys.DECOMPOSITION` 宿主 process 的 `MaterialDecompositionRule` 关联到规范声明。
-- 规范声明中的 `DECOMPOSABLE`、`CENTRIFUGE`、`ELECTROLYSER` flag：typed rule 的只读兼容镜像；实际分解准入只读取 `MaterialDecompositionRule`。旧 feature／flag 仅在材料没有 typed rule 时生成一次默认兼容规则，不能再与 typed rule 的路线求并集。
-- core `content.recipe.SourceDecompositionRules`、`engine.recipe.MaterialDecompositionPlanner`：共享单位换算与纯计划计算，包括权限、组成、相态候选、批量、EUt、时长、产物顺序和槽位截尾。
+- `content.material.catalog.DecompositionMaterials`：分解路线、各材料的液体／气体绑定及 `sourceUnits → mB` 换算的唯一内容声明；`MaterialDefinitions` 将其作为现有 `MaterialProcessKeys.DECOMPOSITION` 宿主 process 的 `MaterialDecompositionRule` 关联到规范声明。
+- typed rule 是已知分解路线的唯一运行时权威；`DECOMPOSABLE`、`CENTRIFUGE`、`ELECTROLYSER` 只在安装完成后作为 `GTMaterial` 的兼容镜像，不再出现在规范材料的固有属性中。旧附属 feature／flag 仅在附属没有 typed rule 时生成一次兼容规则，不能与显式规则求并集。
+- core `engine.recipe.UnitConversion`、`engine.recipe.MaterialDecompositionPlanner`：共享单位换算与纯计划计算，包括权限、组成、相态候选、批量、EUt、时长、产物顺序和槽位截尾。
 - Minecraft `content.recipe.DecompositionNativeAdapter`、`DecompositionRecipeLoader`：解析已注册物品／流体身份，将计划投影并发布为离心／电解配方。
 
 目标是一个材料分解声明配合共享计算器：声明决定允许的 map、组成与相态绑定；计算器产生有单位的计划；游戏适配器只解析已注册形态和流体并发布配方。物品回收不等于材料化学分解，两者共用底层事实，不共用一个不区分工艺的授权开关。
@@ -28,7 +28,7 @@
 
 ### 2. 抽出纯计划计算
 
-1. 复用并收敛 `SourceDecompositionRules` 中整数换算；其他兼容类只允许引用同一常量并转发算法，不再保存独立数字副本。
+1. 复用并收敛 `UnitConversion` 中整数换算；其他兼容类只允许引用同一常量并转发算法，不再保存独立数字副本。
 2. 以显式 divider 与组成量计算输入批量，保留必要的公因数约简；区分来源基准单位与当前 `GTValues.U`。
 3. 明确每个绑定的输入向上取整、输出向下取整、不可表示和溢出处理；在最终缩窄到 int 前校验范围。
 4. 固体产物的 pulver 目标、液体／气体／熔融态选择、温度条件和有语义的输出顺序逐项来自已核对规则；不能因统一模型把“一跳目标”递归化。
@@ -86,6 +86,21 @@ JUnit 验证数学与权限；GameTest 从最终 map 查询并执行至少一个
 
 - typed decomposition rule 现在是路线唯一权威；旧 route flag／feature 只在其缺失时合成默认规则，显式规则的 route 集合会完整覆盖并回写兼容 flag，不再求并集。
 - `DecompositionRecipeLoader` 记录并暴露 overlay-owned rows，接入 `MachineRecipeOverlay` 的 baseline 排除、逐代重建和失败恢复；真实资源重载增加 owned 数量与电解配方可查询断言。
-- 材料单位以 `GTValues.U` 为唯一常量，换算统一到 `SourceDecompositionRules`；分解表与旧来源表共享的液体／气体 binding 改为读取同一数据。
+- 材料单位以 `GTValues.U` 为唯一常量，换算统一到引擎层 `UnitConversion`；分解表与旧来源表共享的液体／气体 binding 改为读取同一数据。
 - 删除没有消费者的等离子体 API 与表字段；分解表的热学温度字段重新用于拒绝与规范材料物性不一致的数据。
 - 验证：API 108 个 JUnit、core 159 个 JUnit、API 契约、双平台生产及测试源码编译通过；Forge 78/78、NeoForge 83/83 GameTest 通过。
+
+## PR #374 步骤五闭合（2026-11-12）
+
+- 路线、相态和换算声明统一由 `DecompositionMaterials` 持有；规范材料目录不再自行声明 `CENTRIFUGE`、`ELECTROLYSER` 或 `DECOMPOSABLE`。`MaterialDefinitions` 一次生成 typed rule，`MaterialInfoRegistry` 冻结时只把 rule 单向投影为兼容 flag，不再从 flag 反向补全已有 typed rule。
+- `DecompositionMaterials.validateConsumed(...)` 在规范目录装配后按 `(id, name)` 反查每条 `INPUTS`／`AMBIENT` 行和每条路线。重复行、没有规范材料所有者、存在所有者但 typed rule 未保留该行或路线不一致都会终止初始化；确需停用的行必须列入显式停用集合，不能静默留下孤儿数据。
+- 流体内容范围不是 typed 分解声明的定稿前置。`MaterialDecompositionRule` 保存的是固定来源中的候选原生流体身份与单位换算；issue #369 最终若收缩熔融流体，只会让对应运行时绑定缺失并产生既有诊断，不要求重写路线、组成或分解规则。反过来，若决定补配熔化器／EMI，也只改变原生流体与配方投影。两类决定通过 `DecompositionNativeAdapter` 的解析边界解耦。
+- 复验通过：完整 `:core:test` 171 个 JUnit、ratchet Spotless、路由闭合与注释检查；Forge 1.20.1 GameTest 90/90，NeoForge 1.21.1 GameTest 95/95，两个节点均完成真实启动、分解发布和材料重载。
+
+## PR #374 步骤六闭合（2026-11-12）
+
+- 材料定义与显式物品成分是进程内一次性定义，不随世界切换或资源重载再次注册；`MaterialCatalogView.revision()` 返回该材料定义的发布版本。标签成分、有效成分快照和机器配方是平台侧可重新发布的内容；`MaterialPublication` 仅在整代配方发布成功后提交同时包含材料版本、成分 revision 与 overlay generation 的稳定 stamp，失败代不会覆盖上一份成功 stamp。
+- 标签成分状态按发布代次归属：每次 overlay 开始时先递增代次、撤销上一代的标签候选并进入 `TAG_INPUT_NOT_READY`，完整替换发布后才重新变为 ready。服务端停止通过同一入口清理；`explicitClosed` 不复位，因为显式定义在 JVM 生命周期内不可重载。
+- 异常策略按影响范围固定：显式成分同级歧义、静态内置配方所有权冲突和初始化结构损坏终止启动；外部 tag、数据包或附属派生的单条回收候选冲突由 `RecoveryRecipePublisher.publishIsolated(...)` 记录并跳过该行；分解候选缺绑定或不可表示时保留既有逐项诊断；overlay 生产器出现非行级结构性异常时整代回滚并恢复 baseline。
+- 纯计划不再反向读取内容配方类：`MaterialDecompositionPlanner` 使用引擎层 `UnitConversion`；回收计划由 `ItemRecoveryPlanner` 接收 `MaterialFacts`。原版炉处理授权随 `ItemCompositionSource` 提交，方块特定“空内容”判定经 `ItemMaterialRuntimeFacts` 由内容层注入，材料 registry 不再直接识别模具、箱子或原版成分 JSON 类。
+- 删除无消费者的 `MaterialInfoRegistry.compositionDefinition(...)`。需要组成时继续使用公开 `MaterialInfoTool.composition(...)` 或内部当前快照查询，不保留第二份冻结读取入口。

@@ -214,7 +214,7 @@ public final class DecompositionRecipeLoader implements InitializationStep {
                 bindingIssues++;
                 continue;
             }
-            ItemStack dust = OM.dust(target, output.units());
+            var dust = OM.dustAll(target, output.units());
             if (dust.isEmpty()) {
                 LOGGER.warn(
                         "[gregtech] Decomposition {} for {} cannot bind {}U of {}",
@@ -225,7 +225,7 @@ public final class DecompositionRecipeLoader implements InitializationStep {
                 bindingIssues++;
                 continue;
             }
-            outputs.add(dust);
+            outputs.addAll(dust);
         }
         return outputs;
     }

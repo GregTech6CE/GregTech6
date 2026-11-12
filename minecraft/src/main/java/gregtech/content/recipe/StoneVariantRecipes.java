@@ -264,7 +264,9 @@ public final class StoneVariantRecipes {
                 ticks,
                 16,
                 0).withMaterialRecovery().withSource("recovery:stone-variant");
-        recipe = RecoveryRecipeConflicts.publish(MachineRecipeMaps.Shredder, recipe);
+        recipe = RecoveryRecipePublisher.publish(
+                MachineRecipeMaps.Shredder,
+                RecoveryRecipePublisher.explicit(recipe, "stone-variant"));
         count(family, recipe);
     }
 

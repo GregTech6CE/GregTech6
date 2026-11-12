@@ -119,6 +119,24 @@ public class Recipe {
     public long mPriority;
 
     /**
+     * Structured recovery ownership. Generic rows are fallback rows for an input family; explicit
+     * rows are returned by the producer that owns the more specific receiver or form.
+     */
+    public RecoveryOwnership mRecoveryOwnership;
+
+    public record RecoveryOwnership(String family, Scope scope) {
+        public enum Scope {
+            GENERIC,
+            EXPLICIT
+        }
+
+        public RecoveryOwnership {
+            if (family == null || family.isBlank() || scope == null)
+                throw new IllegalArgumentException("Recovery ownership");
+        }
+    }
+
+    /**
      * Which producer published this row ({@code datapack:<id>}, {@code addon}); empty means the
      * built-in content tables. Diagnostics and the recipe dump read it; it never participates in
      * matching.
@@ -136,6 +154,12 @@ public class Recipe {
 
     /** Marks the explicit selection order; see {@link #mPriority}. */
     public Recipe withPriority(long priority) { mPriority = priority; return this; }
+
+    /** Marks generic or explicit recovery ownership; see {@link #mRecoveryOwnership}. */
+    public Recipe withRecoveryOwnership(String family, RecoveryOwnership.Scope scope) {
+        mRecoveryOwnership = new RecoveryOwnership(family, scope);
+        return this;
+    }
 
     /** Records the producing entry point; see {@link #mSource}. */
     public Recipe withSource(String source) { mSource = source == null ? "" : source; return this; }
@@ -166,6 +190,33 @@ public class Recipe {
 
     private java.util.Map<Integer, java.util.function.Predicate<ItemStack>> sameItemInputPredicates = java.util.Map.of();
     private java.util.Map<Integer, java.util.function.Predicate<ItemStack>> itemInputGuards = java.util.Map.of();
+
+    /** Builds the executable row for a state-dependent stack, currently damaged recovery items. */
+    @FunctionalInterface
+    public interface RuntimeResolver {
+        @javax.annotation.Nullable
+        Recipe resolve(java.util.List<ItemStack> inputs);
+    }
+
+    private RuntimeResolver runtimeResolver;
+
+    /**
+     * Adds a runtime row builder without changing static viewer/map identity. The caller keeps the
+     * template's ownership, priority and source on the returned row.
+     */
+    public Recipe withRuntimeResolver(RuntimeResolver resolver) {
+        runtimeResolver = java.util.Objects.requireNonNull(resolver, "runtime resolver");
+        return this;
+    }
+
+    public boolean hasRuntimeResolver() {
+        return runtimeResolver != null;
+    }
+
+    @javax.annotation.Nullable
+    public Recipe resolveRuntime(java.util.List<ItemStack> inputs) {
+        return runtimeResolver == null ? null : runtimeResolver.resolve(inputs);
+    }
 
     /**
      * Adds a restriction after ordinary ingredient matching, retaining material/tag aliases and any

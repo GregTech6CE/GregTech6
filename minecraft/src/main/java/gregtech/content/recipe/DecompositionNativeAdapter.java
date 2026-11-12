@@ -1,5 +1,7 @@
 package gregtech.content.recipe;
 
+import gregtech.engine.recipe.UnitConversion;
+
 import gregtech.api.addon.material.MaterialDecompositionRule;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
@@ -19,7 +21,7 @@ final class DecompositionNativeAdapter {
 
     static FluidStack fluid(MaterialDecompositionRule.FluidBinding binding, long amount, boolean up) {
         if (binding == null) return null;
-        int mb = SourceDecompositionRules.fluidAmount(
+        int mb = UnitConversion.fluidAmount(
                 binding.sourceUnits(), binding.millibuckets(), amount, up);
         return fluid(binding.fluid(), mb);
     }

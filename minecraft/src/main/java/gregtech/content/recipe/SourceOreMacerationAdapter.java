@@ -13,6 +13,7 @@ import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
 import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
@@ -39,8 +40,22 @@ final class SourceOreMacerationAdapter {
 
     record Definition(ItemStack input, ItemStack[] outputs, long duration) {
         Recipe admit() {
-            return MachineRecipeMaps.Shredder.addRecipe1(
-                    SourceOreShreddingRules.OPTIMIZE, SourceOreShreddingRules.POWER, duration, input, outputs);
+            var recipe = RecipeMap.make(
+                    SourceOreShreddingRules.OPTIMIZE,
+                    new ItemStack[] {input},
+                    outputs,
+                    null,
+                    null,
+                    null,
+                    null,
+                    duration,
+                    SourceOreShreddingRules.POWER,
+                    0);
+            return recipe == null
+                    ? null
+                    : RecoveryRecipePublisher.publishIsolated(
+                            MachineRecipeMaps.Shredder,
+                            RecoveryRecipePublisher.explicit(recipe, "ore-processing/maceration"));
         }
     }
 

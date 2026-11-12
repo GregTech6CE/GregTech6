@@ -1,10 +1,8 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.stack.StackCompat;
@@ -13,7 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 /** Runtime guard shared by every fixed-output material recovery recipe. */
-record RecoveryInputProof(Item item, MaterialPrefix prefix, List<MaterialComponent> components, Item sourceBlock) {
+record RecoveryInputProof(Item item, MaterialPrefix prefix, List<MaterialComponent> components) {
     RecoveryInputProof {
         if (item == null || components == null || components.isEmpty())
             throw new IllegalArgumentException("Recovery input proof is empty");
@@ -26,7 +24,7 @@ record RecoveryInputProof(Item item, MaterialPrefix prefix, List<MaterialCompone
 
     static RecoveryInputProof capture(ItemStack input, MaterialPrefix prefix, List<MaterialComponent> components) {
         if (input == null || input.isEmpty() || components == null || components.isEmpty()) return null;
-        var proof = new RecoveryInputProof(input.getItem(), prefix, components, null);
+        var proof = new RecoveryInputProof(input.getItem(), prefix, components);
         return proof.matches(input) ? proof : null;
     }
 
@@ -38,20 +36,6 @@ record RecoveryInputProof(Item item, MaterialPrefix prefix, List<MaterialCompone
                 || totalUnits <= 0
                 || totalUnits % input.getCount() != 0) return null;
         return capture(input, prefix, List.of(MaterialComponent.of(material, totalUnits / input.getCount())));
-    }
-
-    /** Forge's one source-proven ordinary block composition has no item snapshot entry. */
-    static RecoveryInputProof captureCinnabarBlock(ItemStack input, GTMaterial material) {
-        if (input == null
-                || input.isEmpty()
-                || material == null
-                || material.getId() != 9114
-                || !"Cinnabar".equals(material.getName())) return null;
-        var canonical = ReviewedCinnabarFacts.INSTANCE.blockDust(material, 1);
-        if (canonical.isEmpty() || canonical.getItem() != input.getItem()) return null;
-        var proof = new RecoveryInputProof(
-                input.getItem(), null, List.of(MaterialComponent.of(material, 9 * GTValues.U)), input.getItem());
-        return proof.matches(input) ? proof : null;
     }
 
     boolean matches(ItemStack offered) {
@@ -67,9 +51,8 @@ record RecoveryInputProof(Item item, MaterialPrefix prefix, List<MaterialCompone
                     || copy.hasCraftingRemainingItem()
                     || !copy.getCraftingRemainingItem().isEmpty()) return false;
             var data = ItemMaterialRegistry.get(copy).orElse(null);
-            if (data == null) {
-                if (!sourceBlockComposition(copy)) return false;
-            } else if (!ItemMaterialRegistry.canRecover(copy)
+            if (data == null) return false;
+            if (!ItemMaterialRegistry.canRecover(copy)
                     || data.prefix() != prefix
                     || !data.components().equals(components)) return false;
             var handler = StackCompat.fluidHandler(copy);
@@ -82,20 +65,5 @@ record RecoveryInputProof(Item item, MaterialPrefix prefix, List<MaterialCompone
         } catch (RuntimeException | LinkageError invalidBehavior) {
             return false;
         }
-    }
-
-    private boolean sourceBlockComposition(ItemStack stack) {
-        if (sourceBlock == null
-                || stack.getItem() != sourceBlock
-                || prefix != null
-                || !(stack.getItem() instanceof gregtech.content.block.MaterialBlockItem item)
-                || !(item.getBlock() instanceof gregtech.content.block.MaterialBlockLike block)
-                || block.prefix() != gregtech.engine.prefix.BlockMaterialPrefix.blockDust) return false;
-        var weights = gregtech.content.block.BlockMaterialWeights.contained(block.material(), block.prefix());
-        return weights.equals(components)
-                && GTMaterialRegistry.get(block.material().getId())
-                        == block.material().resolve()
-                && GTMaterialRegistry.get(block.material().getName())
-                        == block.material().resolve();
     }
 }

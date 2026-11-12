@@ -2,12 +2,12 @@ package gregtech.content.material.catalog;
 
 import gregtech.api.addon.material.MaterialDecompositionRule;
 import gregtech.api.addon.material.MaterialDecompositionRule.Route;
+import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.material.GTValues;
 import gregtech.content.recipe.OriginalMaterialFluidUnits;
 import gregtech.engine.material.MaterialDefinition;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 
 /**
  * Source decomposition phase declarations transcribed from GT6 commit
@@ -23,6 +23,48 @@ public final class DecompositionMaterials {
     private record Profile(int id, String name, Binding liquid, Binding gas, boolean keepDust) {}
 
     private record Thermal(int id, String name, long melting, long boiling, Binding liquid, Binding gas) {}
+
+    private record RowKey(int id, String name) {}
+
+    // Canonical route authority; GTMaterial properties are compatibility mirrors created after freezing.
+    private static final String CENTRIFUGE_MATERIALS =
+            "AluminiumAlloy AluminiumBrass Alumite AnnealedCopper AquaRegia ArsenicBronze ArsenicCopper Basalt "
+                    + "BatteryAlloy BismuthBronze BlackBronze BlackSteel BlueAlloy BluePhosphorus BlueSapphire "
+                    + "BlueSteel Brass Bronze CastIron CdInAgAlloy Chocolate Cinnabar CobaltBrass CobaltHexahydrate "
+                    + "Coltan ConductiveIron Constantan DamascusSteel Diatomite Duranium ElectricalSteel "
+                    + "ElectrotineAlloy Electrum EnderEye Enderium EnderiumBase EnergiumCyan EnergiumRed FierySteel "
+                    + "Fireleaf FlamascusSteel Flint GarnetSand Glass Glowstone GreenSapphire HSSE HSSG HSSS "
+                    + "HeliumNeon HydratedCoal Invar Kanthal Knightmetal Komatiite Lapis Limestone LiveRoot Lumium "
+                    + "Magnalium Marble MethaneIce Netherite Nichrome NikolineAlloy Nikolite NiobiumTitanium Niter "
+                    + "OilShale OrangeSapphire Osmiridium Phosphorus Pitchblende Porcelain Pumice PurpleSapphire "
+                    + "QuartzSand RedAlloy RedPhosphorus RedSteel Redstone RedstoneAlloy RoseGold Ruby Sapphire "
+                    + "Shale Signalum SolderingAlloy Soularium StainlessSteel SteelGalvanized Steeleaf SterlingSilver "
+                    + "TantalumHafniumCarbide Thaumium TinAlloy TitaniumIridium Trinaquadalloy Trinitanium Tritanium "
+                    + "TungstenCarbide Tungstensteel Ultimet VanadiumGallium VanadiumMagnetite VanadiumSteel "
+                    + "Vibramantium VibraniumSilver VibraniumSteel WhitePhosphorus WroughtIron YellowSapphire";
+    private static final String ELECTROLYSER_MATERIALS =
+            "Almandine Alunite Amazonite Amethyst Andradite Apatite Aquamarine Asbestos Azurite BalasRuby Barite "
+                    + "Bastnasite Bentonite Biotite Bixbite BlackAventurine BlackEye BlackVitriol BlueAventurine "
+                    + "BlueJasper BlueTopaz Bone Bromargyrite BrownAventurine CarbonDioxide CarbonMonoxide "
+                    + "CarbonTrioxide Carborundum Cassiterite CatsEye Celestine Ceramic Charcoal Chromite "
+                    + "ChromiumDioxide ClayBrown ClayRed Coal CoalCoke Columbite Datolite DiduraniumTrioxide Dioptase "
+                    + "DragonEye DuraniumHexaastatide DuraniumHexabromide DuraniumHexachloride DuraniumHexafluoride "
+                    + "DuraniumHexaiodide Emerald EnderPearl FerrousChloride Garnierite Glauconite Glycerol Glyceryl "
+                    + "Goshenite Granite GraniteBlack GraniteRed GreenAventurine GreenJasper Grossular HawksEye "
+                    + "Heliodor HexafluorosilicicAcid HydrogenBorate IodineSalt Kaolinite Kyanite Lazurite Lepidolite "
+                    + "Lignite LigniteCoke LithiumHydroxide Malachite Maxixe Methane Mica Monazite Morganite "
+                    + "NitroCarbon NitrogenDioxide NitrogenMonoxide Obsidian OceanJasper OnyxBlack OnyxRed Opal "
+                    + "Palygorskite Peridot PetroleumCoke Phosphate Phosphorite Pollucite PotassiumFeldspar "
+                    + "PotassiumFluoride PotassiumHydroxide PotassiumNitrate Powellite Pyrope RainforestJasper "
+                    + "RedAventurine RedJasper SaltedWater Saltwater Smithsonite Sodalite SodiumFluoride "
+                    + "SodiumHydroxide SodiumNitrate Sperrylite Spessartine Spinel Spodumene Talc Tantalite Tanzanite "
+                    + "TigerEye TigerIron Topaz TritaniumDioxide TritaniumHexaastatide TritaniumHexabromide "
+                    + "TritaniumHexachloride TritaniumHexafluoride TritaniumHexaiodide Trona Uvarovite "
+                    + "VanadiumPentoxide Vermiculite Wollastonite Wulfenite YellowAventurine YellowJasper "
+                    + "YttriumBariumCuprate Zeolite Zircon";
+    private static final Map<String, Set<Route>> ROUTES = routes();
+    // Add accepted source rows here only when their current lack of a consumer is deliberate.
+    private static final Set<RowKey> INTENTIONALLY_DISABLED = Set.of();
 
     private static final Profile[] INPUTS = {
         new Profile(8001, "Glass", new Binding("glass", GTValues.U, 144), null, false),
@@ -192,11 +234,28 @@ public final class DecompositionMaterials {
         return new Binding(binding.registryName(), binding.referenceSourceUnits(), binding.referenceMillibuckets());
     }
 
-    /**
-     * Creates the one typed decomposition value for a canonical declaration. Existing map
-     * permissions are supplied by the caller so this source table never grants a machine route.
-     */
-    public static MaterialDecompositionRule rule(MaterialDefinition.Declaration declaration, Set<Route> routes) {
+    private static Map<String, Set<Route>> routes() {
+        var result = new LinkedHashMap<String, EnumSet<Route>>();
+        addRoutes(result, CENTRIFUGE_MATERIALS, Route.CENTRIFUGE);
+        addRoutes(result, ELECTROLYSER_MATERIALS, Route.ELECTROLYSER);
+        var immutable = new LinkedHashMap<String, Set<Route>>();
+        result.forEach((name, routes) -> immutable.put(name, Set.copyOf(routes)));
+        return Map.copyOf(immutable);
+    }
+
+    private static void addRoutes(Map<String, EnumSet<Route>> target, String names, Route route) {
+        for (String name : names.split("\\s+")) {
+            if (name.isEmpty()) continue;
+            if (target.computeIfAbsent(name, ignored -> EnumSet.noneOf(Route.class))
+                    .contains(route))
+                throw new IllegalStateException("Duplicate decomposition route " + route + " for " + name);
+            target.get(name).add(route);
+        }
+    }
+
+    /** Creates the one typed decomposition value for a canonical declaration. */
+    public static MaterialDecompositionRule rule(MaterialDefinition.Declaration declaration) {
+        Set<Route> routes = ROUTES.getOrDefault(declaration.name(), Set.of());
         Profile profile = input(declaration.id(), declaration.name());
         Thermal thermal = thermal(declaration.id(), declaration.name());
         if (profile == null && thermal == null && routes.isEmpty()) return null;
@@ -214,6 +273,66 @@ public final class DecompositionMaterials {
             add(fluids, MaterialDecompositionRule.Phase.GAS, thermal.gas());
         }
         return new MaterialDecompositionRule(routes, fluids, profile != null && profile.keepDust());
+    }
+
+    /**
+     * Fails when a source row or route has no canonical owner, or when the owner did not retain
+     * the row in its typed decomposition rule.
+     */
+    public static void validateConsumed(List<MaterialDefinition.Declaration> declarations) {
+        var byRow = new LinkedHashMap<RowKey, MaterialDefinition.Declaration>();
+        var byName = new LinkedHashMap<String, MaterialDefinition.Declaration>();
+        for (var declaration : declarations) {
+            if (declaration.id() <= 0) continue;
+            var key = new RowKey(declaration.id(), declaration.name());
+            if (byRow.putIfAbsent(key, declaration) != null)
+                throw new IllegalStateException("Duplicate canonical material row: " + key);
+            byName.put(declaration.name(), declaration);
+        }
+        requireUniqueRows("input", INPUTS);
+        requireUniqueRows("ambient", AMBIENT);
+        for (Profile profile : INPUTS) validateRow(new RowKey(profile.id(), profile.name()), byRow);
+        for (Thermal thermal : AMBIENT) validateRow(new RowKey(thermal.id(), thermal.name()), byRow);
+        ROUTES.forEach((name, expected) -> {
+            var declaration = byName.get(name);
+            if (declaration == null)
+                throw new IllegalStateException("Decomposition routes have no canonical material: " + name);
+            var declared = declaration
+                    .info()
+                    .processes()
+                    .findSingle(MaterialProcessKeys.DECOMPOSITION)
+                    .orElseThrow(() ->
+                            new IllegalStateException("Decomposition routes were not consumed for material: " + name))
+                    .value();
+            if (!declared.routes().equals(expected))
+                throw new IllegalStateException("Decomposition routes disagree for material: " + name);
+        });
+    }
+
+    private static void requireUniqueRows(String kind, Profile[] rows) {
+        var keys = new HashSet<RowKey>();
+        for (Profile row : rows)
+            if (!keys.add(new RowKey(row.id(), row.name())))
+                throw new IllegalStateException("Duplicate decomposition " + kind + " row: " + row);
+    }
+
+    private static void requireUniqueRows(String kind, Thermal[] rows) {
+        var keys = new HashSet<RowKey>();
+        for (Thermal row : rows)
+            if (!keys.add(new RowKey(row.id(), row.name())))
+                throw new IllegalStateException("Duplicate decomposition " + kind + " row: " + row);
+    }
+
+    private static void validateRow(RowKey key, Map<RowKey, MaterialDefinition.Declaration> declarations) {
+        if (INTENTIONALLY_DISABLED.contains(key)) return;
+        var declaration = declarations.get(key);
+        if (declaration == null)
+            throw new IllegalStateException("Decomposition data row has no canonical material: " + key);
+        declaration
+                .info()
+                .processes()
+                .findSingle(MaterialProcessKeys.DECOMPOSITION)
+                .orElseThrow(() -> new IllegalStateException("Decomposition data row was not consumed: " + key));
     }
 
     private static void add(

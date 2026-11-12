@@ -135,7 +135,9 @@ public final class AnvilShreddingRecipes {
                         0)
                 .withMaterialRecovery();
         recipe.withSource("recovery:anvil-generic");
-        if (RecoveryRecipeConflicts.publish(MachineRecipeMaps.Anvil, recipe) != null) {
+        if (RecoveryRecipePublisher.publish(
+                        MachineRecipeMaps.Anvil, RecoveryRecipePublisher.generic(recipe, "anvil-shredding"))
+                != null) {
             ENTRIES.add(new Entry(
                     row.input().getName() + " -> " + row.output().getName() + " x" + row.outCount()
                             + (byproduct.isEmpty()

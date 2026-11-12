@@ -206,6 +206,15 @@ public final class CraftingMaterialForms {
         return prefix == null ? null : new Form(prefix, material);
     }
 
+    /** Resolves a common tag's material suffix without assigning it to a {@link MaterialPrefix}. */
+    static String tagMaterial(ResourceLocation tag) {
+        ensureInitialized();
+        String namespace = tag.getNamespace(), path = tag.getPath();
+        if (!Set.of("forge", "c").contains(namespace)) return null;
+        int slash = path.lastIndexOf('/');
+        return slash < 0 ? null : materialNames.get(path.substring(slash + 1));
+    }
+
     public static Ingredient ingredient(ItemStack input) {
         ensureInitialized();
         var expected = form(input);

@@ -37,7 +37,17 @@ public final class VanillaUnificationLoader {
             }
             ItemMaterialRegistry.register(
                     item,
-                    new ItemComposition(definition.prefix(), components, material, "GT6 unification", true),
+                    new ItemComposition(
+                            definition.prefix(),
+                            components,
+                            material,
+                            java.util.List.of(new ItemCompositionSource(
+                                    ItemCompositionSource.Kind.UNIFICATION,
+                                    "gt6ce:vanilla-unification/" + definition.itemPath(),
+                                    "vanilla identity table",
+                                    definition.itemPath(),
+                                    "")),
+                            true),
                     ItemCompositionSource.Kind.UNIFICATION,
                     "gt6ce:vanilla-unification/" + definition.itemPath(),
                     "vanilla identity table");

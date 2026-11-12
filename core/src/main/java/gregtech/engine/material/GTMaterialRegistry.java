@@ -1,18 +1,15 @@
 package gregtech.engine.material;
 
-import gregtech.api.material.*;
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialProperty;
+import gregtech.api.material.MaterialSentinels;
 import gregtech.api.mod.ModData;
 import gregtech.content.data.ModReferences;
 import gregtech.content.material.MaterialDefinitions;
 import gregtech.engine.addon.AddonCoreServices;
 import gregtech.engine.addon.AddonMaterials;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+
+import java.util.*;
 import java.util.function.BiConsumer;
 
 /** Validated identity installation, keyed linking and one-way publication of the material directory. */
@@ -249,6 +246,7 @@ public final class GTMaterialRegistry {
             MaterialInfoRegistry.freeze();
             MaterialViews.publish();
             STATE.freeze();
+            MaterialPublication.materialDefinitionsPublished(1);
             phase = RegistrationPhase.READY;
         } catch (RuntimeException | Error failure) {
             definitionsOpen = false;

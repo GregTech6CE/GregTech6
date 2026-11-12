@@ -23,8 +23,7 @@ public final class HeatExchangerCatalog {
 
         public gregtech.engine.material.ItemComposition composition() {
             long unit = gregtech.api.material.GTValues.U;
-            return new gregtech.engine.material.ItemComposition(
-                    null,
+            return gregtech.engine.material.ReversibleCraftingData.perItem(
                     List.of(
                             gregtech.api.material.MaterialComponent.of(material, (dense() ? 26 : 8) * unit),
                             gregtech.api.material.MaterialComponent.of(
@@ -36,8 +35,8 @@ public final class HeatExchangerCatalog {
                                             ? ImportedMaterialData.Cu
                                             : ImportedMaterialData.AnnealedCopper,
                                     (dense() ? 9 : 2) * unit)),
-                    "GT6 Loader_MultiTileEntities " + sourceId + " CR.REV",
-                    true);
+                    1,
+                    "GT6 Loader_MultiTileEntities " + sourceId + " CR.REV");
         }
     }
 

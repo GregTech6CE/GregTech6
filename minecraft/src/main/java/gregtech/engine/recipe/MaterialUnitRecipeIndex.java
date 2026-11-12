@@ -105,7 +105,8 @@ final class MaterialUnitRecipeIndex {
                 row = rule.resolve(stack);
                 if (row != null && cacheable) batches.put(key, row);
             }
-            if (row != null && matcher.matches(row, 1)
+            boolean runtime = stack.isDamaged() && rule.template.hasRuntimeResolver();
+            if (row != null && (runtime || matcher.matches(row, 1))
                     && (best == null || row.mPriority > best.mPriority)) best = row;
         }
         return best;

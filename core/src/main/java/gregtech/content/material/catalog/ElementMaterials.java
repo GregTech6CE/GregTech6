@@ -5061,12 +5061,7 @@ public final class ElementMaterials {
                 .chemicalFormula("(H₂O)(KCl)")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.ELECTROLYSER,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("Saltedwater")
                 .composition(
                         4L,
@@ -5084,12 +5079,7 @@ public final class ElementMaterials {
                 .chemicalFormula("(H₂O)(NaCl)")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.ELECTROLYSER,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("SaltWater")
                 .composition(
                         4L,
@@ -5509,11 +5499,7 @@ public final class ElementMaterials {
                 .chemicalFormula("SO₂")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("SulphurDioxide")
                 .composition(
                         3L,
@@ -5532,11 +5518,7 @@ public final class ElementMaterials {
                 .chemicalFormula("SO₃")
                 .atomicProperties(43, 43, 55, 0)
                 .alpha(255)
-                .properties(
-                        MaterialProperty.DECOMPOSABLE,
-                        MaterialProperty.GAS,
-                        MaterialProperty.LIQUID,
-                        MaterialProperty.UUM)
+                .properties(MaterialProperty.GAS, MaterialProperty.LIQUID, MaterialProperty.UUM)
                 .localName("SulphurTrioxide")
                 .composition(
                         4L,
@@ -6386,8 +6368,6 @@ public final class ElementMaterials {
                 .atomicProperties(0, 0, 0, 0)
                 .alpha(255)
                 .properties(
-                        MaterialProperty.CENTRIFUGE,
-                        MaterialProperty.DECOMPOSABLE,
                         MaterialProperty.ELEMENT,
                         MaterialProperty.GENERATE_DENSEPLATE,
                         MaterialProperty.GENERATE_DUST,

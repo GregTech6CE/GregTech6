@@ -395,7 +395,7 @@ public final class MaterialViews {
         });
         published = new MaterialCatalogView() {
             public long revision() {
-                return 1;
+                return MaterialPublication.current().materialRevision();
             }
 
             public Optional<MaterialKey> resolve(String name) {

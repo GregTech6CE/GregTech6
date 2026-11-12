@@ -64,47 +64,6 @@ final class SharedThermalRecyclingRows {
 
     record Deferred(String source, String reason) {}
 
-    /** Source {@code OP} prefixes carrying RECYCLABLE (pinned commit 3703e403). */
-    private static final Set<String> RECYCLABLE = Set.of(
-            "crushed", "crushedTiny", "crushedPurified", "crushedPurifiedTiny", "crushedCentrifuged",
-            "crushedCentrifugedTiny", "rockGt", "rawOreChunk", "clump", "cluster", "pebbles", "rubble",
-            "chunk", "crystalline", "reduced", "cleanGravel", "dirtyGravel", "dust", "dustSmall",
-            "dustTiny", "dustDiv72", "ingotQuintuple", "ingotQuadruple", "ingotTriple", "ingotDouble",
-            "ingot", "billet", "chunkGt", "nugget", "gem", "gemChipped", "gemFlawed", "gemFlawless",
-            "gemExquisite", "gemLegendary", "bouleGt", "crystalPure", "crystal", "lens", "scrapGt",
-            "plateSteamcraft", "plateDense", "plateQuintuple", "plateQuadruple", "plateTriple",
-            "plateDouble", "plate", "plateGem", "plateTiny", "plateGemTiny", "plateCurved", "compressed",
-            "sheetGt", "foil", "stick", "stickLong", "bolt", "screw", "round", "ring", "chain", "spring",
-            "springSmall", "wireFine", "minecartWheels", "gearGt", "gearGtSmall", "railGt", "casingSmall",
-            "casingMachine", "casingMachineDouble", "casingMachineQuadruple", "casingMachineDense", "rotor",
-            "cell", "toolHeadSaw", "toolHeadFile", "toolHeadChisel", "toolHeadBuzzSaw",
-            "toolHeadChainsaw", "toolHeadWrench", "toolHeadDrill", "toolHeadSword", "toolHeadPickaxe",
-            "toolHeadShovel", "toolHeadSpade", "toolHeadAxe", "toolHeadHoe", "toolHeadSense",
-            "toolHeadPlow", "toolHeadHammer", "toolHeadScrewdriver", "toolHeadBuilderwand",
-            "toolHeadConstructionPickaxe", "toolHeadPickaxeGem", "toolHeadAxeDouble",
-            "toolHeadUniversalSpade", "toolHeadArrow", "toolHeadRawSaw", "toolHeadRawChisel",
-            "toolHeadRawSword", "toolHeadRawPickaxe", "toolHeadRawShovel", "toolHeadRawSpade",
-            "toolHeadRawUniversalSpade", "toolHeadRawAxe", "toolHeadRawAxeDouble", "toolHeadRawHoe",
-            "toolHeadRawSense", "toolHeadRawPlow", "toolHeadRawArrow", "toolSword", "toolPickaxe",
-            "toolShovel", "toolAxe", "toolHoe", "toolShears", "bulletGtSmall", "bulletGtMedium",
-            "bulletGtLarge", "arrowGtWood", "arrowGtPlastic", "armorHelmet", "armorChestplate",
-            "armorLeggings", "armorBoots", "frameGt", "capcellcon", "pipeTiny", "pipeSmall",
-            "pipeMedium", "pipeLarge", "pipeHuge", "pipeQuadruple", "pipeNonuple", "pipeRestrictiveTiny",
-            "pipeRestrictiveSmall", "pipeRestrictiveMedium", "pipeRestrictiveLarge",
-            "pipeRestrictiveHuge", "wireGt16", "wireGt15", "wireGt14", "wireGt13", "wireGt12", "wireGt11",
-            "wireGt10", "wireGt09", "wireGt08", "wireGt07", "wireGt06", "wireGt05", "wireGt04", "wireGt03",
-            "wireGt02", "wireGt01", "cableGt12", "cableGt08", "cableGt04", "cableGt02", "cableGt01",
-            "blockGem", "blockDust", "blockIngot", "blockPlate", "blockPlateGem", "blockSolid",
-            "oreberry");
-
-    /**
-     * The listener rejects prefixes carrying ORE or ORE_PROCESSING_DIRTY before conversion.
-     * {@code OP.java} marks clump/reduced/cleanGravel CLEAN and crystalline REFINED, so they stay
-     * recyclable (the DIRTY ore forms below are the ones the source skips).
-     */
-    private static final Set<String> ORE_FORMS = Set.of(
-            "chunk", "cluster", "crushed", "crushedTiny", "dirtyGravel", "pebbles", "rawOreChunk", "rubble");
-
     private SharedThermalRecyclingRows() {}
 
     static void initialize() {
@@ -214,11 +173,13 @@ final class SharedThermalRecyclingRows {
                     0);
             return recipe == null
                     ? null
-                    : RecoveryRecipeConflicts.publish(
+                    : RecoveryRecipePublisher.publishIsolated(
                             map,
-                            recipe.withMaterialRecovery()
-                                    .withItemInputGuard(0, proof::matches)
-                                    .withSource("recovery:thermal-generic"));
+                            RecoveryRecipePublisher.generic(
+                                    recipe.withMaterialRecovery()
+                                            .withItemInputGuard(0, proof::matches)
+                                            .withSource("recovery:thermal-generic"),
+                                    "thermal-recycling"));
         }
     }
 
@@ -256,14 +217,13 @@ final class SharedThermalRecyclingRows {
     private static boolean allows(MaterialPrefix prefix) {
         if (prefix == null) return true;
         String source = PrefixRegistry.sourceName(prefix.getName());
-        return RECYCLABLE.contains(source) && !ORE_FORMS.contains(source);
+        return RecoveryFormCatalog.thermal(source);
     }
 
     /** Fluid/tube container forms: the source listener rejects filled containers, keeping only the empty item. */
     private static boolean containerForm(MaterialPrefix prefix) {
         if (prefix == null) return false;
-        String source = PrefixRegistry.sourceName(prefix.getName());
-        return source.equals("chemtube") || source.equals("cell") || source.equals("capcellcon");
+        return RecoveryFormCatalog.container(PrefixRegistry.sourceName(prefix.getName()));
     }
 
     private static Outcome plan(Candidate candidate, SourceThermalNativeAdapter.Snapshot snapshot) {

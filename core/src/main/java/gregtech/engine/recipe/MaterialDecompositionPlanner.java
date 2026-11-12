@@ -7,7 +7,6 @@ import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialComponent;
 import gregtech.api.material.MaterialProperty;
-import gregtech.content.recipe.SourceDecompositionRules;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -139,7 +138,7 @@ public final class MaterialDecompositionPlanner {
                 skippedReason = "component " + part.getName() + " has no powder target";
                 continue;
             }
-            long units = SourceDecompositionRules.units(component.amount(), U, pulverAmount, false);
+            long units = UnitConversion.units(component.amount(), U, pulverAmount, false);
             if (units <= 0) {
                 skippedComponent = Status.INVALID_QUANTITY;
                 skippedReason = "component " + part.getName() + " cannot represent powder output";
@@ -205,11 +204,11 @@ public final class MaterialDecompositionPlanner {
     }
 
     private static int fluidAmount(long sourceUnits, long millibuckets, long units, boolean ceil) {
-        long value = SourceDecompositionRules.units(units, sourceUnits, millibuckets, ceil);
+        long value = UnitConversion.units(units, sourceUnits, millibuckets, ceil);
         return value > Integer.MAX_VALUE ? -1 : (int) value;
     }
 
     private static long units(long amount, long from, long to, boolean ceil) {
-        return SourceDecompositionRules.units(amount, from, to, ceil);
+        return UnitConversion.units(amount, from, to, ceil);
     }
 }

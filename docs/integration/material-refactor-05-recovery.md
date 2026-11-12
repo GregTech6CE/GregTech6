@@ -27,7 +27,7 @@
 - 72U 不再变成 64U。计划按 64 的单栈上限分组为 64U 和 8U 两个合法 dust 栈；更小的余量用 small、tiny、1/72 dust 继续表示。低于 1/72 dust 的不可表示部分不会静默丢弃。
 - Shredder 计划逐组件转换粉碎目标并合并同目标材料；任一组件缺少有效目标时，整个候选带原因拒绝，不再保留“至少一个组件成功就发布”的半套输出。
 - 配方输出超过机器槽位、计划数量溢出或最终 item 绑定缺失时，生产端拒绝该候选并计入诊断；不会生成超栈、负数量或静默截断配方。
-- `RecoveryRejection` 分开报告 `NO_COMPOSITION`、`NO_COMPONENTS`、`NOT_BULK_RECOVERABLE`、`DAMAGED`、`STORED_CONTENTS` 和 `UNSUPPORTED_CONTAINER`。静态满额配方因此不会接受损坏物品，铸模空腔仍不属于盛装内容。
+- `RecoveryRejection` 分开报告 `NO_COMPOSITION`、`NO_COMPONENTS`、`STORED_CONTENTS` 和 `UNSUPPORTED_CONTAINER`；`NOT_BULK_RECOVERABLE` 与 `DAMAGED` 仅保留兼容枚举，不再产生。损坏 Shredder 输入从剩余成分重建输出，其他固定输出热行继续由各自输入证明保护，铸模空腔仍不属于盛装内容。
 - Vanilla ore、raw metal item 和 raw metal block 使用 `VanillaUnificationDefinitions.OreInputKind` 明确分类；原矿物品与块分别进入自己的工艺，不靠 `raw_` 前缀字符串决定。
 - 热回收候选直接读取有效物品成分，方块与石材不再从类对象重算第二份组分量。输入快照和最终查询在同一发布 generation 中构建。
 - `rockGt` 的普通 Anvil 行只由 `StoneAndToolSurvivalRecipes` 声明；`AnvilShreddingRecipes` 不再重复提供同一候选。
@@ -57,7 +57,7 @@
 
 ## 剩余边界
 
-- 损坏物品目前由固定满额回收行明确拒绝，并保留原始物品；其按耐久缩放后的有效成分仍可用于查询和非批量消费者。要把“部分损坏物品按比例批量回收”变成可执行行，需要在现有 `RecipeMap` 查询解析中增加按实际 stack 缩放输出的动态规则，并先取得 GT6 行为依据；本轮没有用固定配方伪造该能力。
+- Shredder 已按 GT6 恢复损坏物品的比例回收：静态 prefix 和动态成分行在查询时读取缩放后的有效成分并重算输出、时长；低于一个 1/72 dust 的尾部按 `OM.dust` 向下取整丢弃。热回收等仍依赖固定输出量的工艺继续拒绝损坏栈。
 - 21 个源 prefix 在当前端口没有可生成的 item form，相关候选保持缺失诊断；不能用同名猜测物重建它们。
 
 ## 审查闭合（2026-11-10）
@@ -72,6 +72,6 @@
 
 - 热回收所有权改由 `ThermalRecoveryOwnership` 单点判断，附属材料不再因非 core 被排除。
 - 附属材料从已发布 smelting target 与唯一流体绑定生成热回收行；标准绑定 1U 输出 144 mB，小型形态按同一比例换算。
-- `RecoveryInputProof` 统一运行时输入限制；`RecoveryRecipeConflicts` 统一 generic/specific 归属、去重和不同输出冲突。
+- `RecoveryInputProof` 统一运行时输入限制；`RecoveryRecipePublisher` 统一 generic/specific 归属、去重和不同输出冲突，所有权记录在配方上，guarded rows 通过输入索引查询冲突。
 - 运行时注册行数：Forge 4142 条热回收输入、NeoForge 4174 条；附加热回收行在两个节点均可查询。
 - Forge 1.20.1 GameTest 77/77，NeoForge 1.21.1 GameTest 82/82；双平台生产与测试源码编译、core JUnit、ratchet Spotless 通过。

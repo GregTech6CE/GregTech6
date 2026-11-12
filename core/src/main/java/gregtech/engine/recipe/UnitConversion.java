@@ -1,21 +1,25 @@
-package gregtech.content.recipe;
+package gregtech.engine.recipe;
 
 import java.math.BigInteger;
 
-/** Shared source quantity arithmetic. No registry lookup or per-material recipe special case. */
-public final class SourceDecompositionRules {
-    private SourceDecompositionRules() {}
+/** Exact integer unit conversion shared by recipes and content projections. */
+public final class UnitConversion {
+    private UnitConversion() {}
 
-    /** Returns -1 if the exact nonnegative result cannot be represented as long.
-     * Intermediate material U amounts are long (45U > Integer.MAX_VALUE), never fluid int. */
+    /**
+     * Returns -1 if the exact nonnegative result cannot be represented as a long.
+     *
+     * <p>Intermediate material amounts stay as {@code long}; truncating to an {@code int} is a
+     * separate caller decision.</p>
+     */
     public static long units(long amount, long from, long to, boolean ceil) {
         if (amount < 0 || from <= 0 || to < 0) return -1;
         if (amount == 0 || to == 0) return 0;
-        if (from == to) return amount; // original UT.Code.units identity branch
-        BigInteger[] q = BigInteger.valueOf(amount)
+        if (from == to) return amount;
+        BigInteger[] quotient = BigInteger.valueOf(amount)
                 .multiply(BigInteger.valueOf(to))
                 .divideAndRemainder(BigInteger.valueOf(from));
-        BigInteger value = ceil && q[1].signum() != 0 ? q[0].add(BigInteger.ONE) : q[0];
+        BigInteger value = ceil && quotient[1].signum() != 0 ? quotient[0].add(BigInteger.ONE) : quotient[0];
         return value.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0 ? -1 : value.longValueExact();
     }
 

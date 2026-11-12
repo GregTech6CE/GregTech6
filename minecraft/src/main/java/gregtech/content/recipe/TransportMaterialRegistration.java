@@ -24,7 +24,7 @@ public final class TransportMaterialRegistration {
         String key = gregtech.engine.addon.AddonPipes.namespace(id) + ":" + id;
         var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(key));
         if (item == Items.AIR) throw new IllegalStateException("Missing native transport material item " + key);
-        ItemMaterialRegistry.register(item, data);
+        ItemMaterialRegistry.registerDeclared(item, data);
         RECOVERY_ITEMS.add(item);
         if (data.prefix() != null) {
             ResourceLocation itemId = ResourceLocation.parse(key);
@@ -48,7 +48,7 @@ public final class TransportMaterialRegistration {
         TransportMaterialRules.logisticsComponents().forEach((id, data) -> {
             var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:" + id));
             if (item == Items.AIR) throw new IllegalStateException("Missing logistics component " + id);
-            ItemMaterialRegistry.register(item, data);
+            ItemMaterialRegistry.registerDeclared(item, data);
         });
         var logistics = gregtech.content.transport.fluid.LogisticsTankSpec.spec();
         bind(logistics.id(), TransportMaterialRules.tank(logistics).orElseThrow());

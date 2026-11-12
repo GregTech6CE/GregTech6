@@ -2,10 +2,16 @@
  * Adapted from CR.shaped, OreDictItemData and OreDictManager.setItemData_. */
 package gregtech.engine.material;
 
-import gregtech.api.material.*;
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialComponent;
+import gregtech.api.material.MaterialSentinels;
 import gregtech.content.data.MaterialGroups;
 import gregtech.content.data.generated.GT6Materials;
-import java.util.*;
+
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /** CR.REV: sum known consumed inputs, then divide each component by the output count. */
 public final class ReversibleCraftingData {
@@ -24,7 +30,21 @@ public final class ReversibleCraftingData {
                 .filter(e -> e.getValue() / outputCount > 0)
                 .map(e -> MaterialComponent.of(e.getKey(), e.getValue() / outputCount))
                 .toList();
-        return new ItemComposition(null, components, source, true);
+        GTMaterial primary = components.isEmpty()
+                ? MaterialSentinels.INVALID
+                : components.get(0).material().resolve();
+        String sourceId = source == null || source.isBlank() ? "gt6ce:recipe-reverse" : source;
+        return new ItemComposition(
+                null,
+                components,
+                primary,
+                List.of(new ItemCompositionSource(
+                        ItemCompositionSource.Kind.RECIPE_REVERSE,
+                        sourceId,
+                        "reversible crafting inputs",
+                        sourceId,
+                        "")),
+                true);
     }
 
     /** Original ANY reversing groups have concrete output targets; reuse the existing identities. */

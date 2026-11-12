@@ -239,6 +239,16 @@ class MaterialRegistrationTest {
     }
 
     @Test
+    void canonicalDecompositionFlagsComeOnlyFromTheTypedRule() {
+        for (var declaration : MaterialDefinitions.declarations())
+            for (var property :
+                    List.of(MaterialProperty.CENTRIFUGE, MaterialProperty.ELECTROLYSER, MaterialProperty.DECOMPOSABLE))
+                assertFalse(
+                        declaration.material().properties().contains(property),
+                        declaration.name() + " declares decomposition mirror " + property);
+    }
+
+    @Test
     void typedDecompositionRuleOwnsRoutesAndLegacyFlagsBecomeItsMirror() {
         var material = new GTMaterial(260, "TestCompound", "TestCompound", 0xFFFFFF).put(MaterialProperty.CENTRIFUGE);
         var explicit =

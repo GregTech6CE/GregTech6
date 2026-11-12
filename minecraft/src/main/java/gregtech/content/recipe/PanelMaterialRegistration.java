@@ -53,7 +53,12 @@ public final class PanelMaterialRegistration {
                         MaterialComponent.of(GTMaterialRegistry.get("Concrete"), GTValues.U),
                         MaterialComponent.of(GTMaterialRegistry.get("Iron"), MaterialPrefix.stick.getMaterialWeight())),
                 GTMaterialRegistry.get("Concrete"),
-                "GT6 BlockConcreteReinforced",
+                List.of(new ItemCompositionSource(
+                        ItemCompositionSource.Kind.EXPLICIT,
+                        "gt6ce:panel-base/concrete_reinforced",
+                        "GT6 BlockConcreteReinforced",
+                        "concrete_reinforced",
+                        "")),
                 true);
         fallbackData.put("gt6ce:concrete_reinforced", reinforced);
         fallback(item("gt6ce:concrete_reinforced"), reinforced, "gt6ce:panel-base/concrete_reinforced");

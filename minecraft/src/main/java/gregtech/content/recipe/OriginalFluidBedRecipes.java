@@ -46,9 +46,9 @@ final class OriginalFluidBedRecipes {
                     continue;
                 }
                 long ashUnits = OriginalFluidBedFuelRows.ashUnits(fuel, form);
-                ItemStack ash = ashUnits < GTValues.U72
-                        ? ItemStack.EMPTY
-                        : OM.dust(GTMaterialRegistry.get(fuel.ashMaterialId()), ashUnits);
+                var ash = ashUnits < GTValues.U72
+                        ? java.util.List.<ItemStack>of()
+                        : OM.dustAll(GTMaterialRegistry.get(fuel.ashMaterialId()), ashUnits);
                 // A representable declared ash output must not disappear if its form is unavailable.
                 if (ashUnits >= GTValues.U72 && ash.isEmpty()) {
                     skipped++;
@@ -59,7 +59,7 @@ final class OriginalFluidBedRecipes {
                 var template = RecipeMap.make(
                         true,
                         new ItemStack[] {input},
-                        new ItemStack[] {ash},
+                        ash.toArray(ItemStack[]::new),
                         null,
                         null,
                         new FluidStack[] {calciteInput},

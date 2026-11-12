@@ -17,55 +17,63 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
-public final class RecoveryRecipeConflictsTests {
-    private RecoveryRecipeConflictsTests() {}
+public final class RecoveryRecipePublisherTests {
+    private RecoveryRecipePublisherTests() {}
 
     @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
     public static void genericRecoveryConflictsAreExplicitAndSpecificWins(GameTestHelper helper) {
         var input = new ItemStack(Items.DRAGON_EGG);
-        Recipe generic = row(input, new ItemStack(Items.ARROW), "recovery:test-generic");
-        Recipe specific = row(input, new ItemStack(Items.SPECTRAL_ARROW), "recovery:test-specific");
+        Recipe generic = generic(row(input, new ItemStack(Items.ARROW), "test:fallback"));
+        Recipe specific = explicit(row(input, new ItemStack(Items.SPECTRAL_ARROW), "test:owner"));
         try {
             helper.assertTrue(
-                    RecoveryRecipeConflicts.publish(MachineRecipeMaps.Shredder, generic) != null,
+                    RecoveryRecipePublisher.publish(MachineRecipeMaps.Shredder, generic) != null,
                     "first generic row publishes");
             helper.assertTrue(
-                    RecoveryRecipeConflicts.publish(MachineRecipeMaps.Shredder, copy(generic)) == null,
+                    RecoveryRecipePublisher.publish(MachineRecipeMaps.Shredder, copy(generic)) == null,
                     "equivalent generic row deduplicates");
 
             boolean conflict = false;
             try {
-                RecoveryRecipeConflicts.publish(
+                RecoveryRecipePublisher.publish(
                         MachineRecipeMaps.Shredder,
-                        row(input, new ItemStack(Items.DRAGON_BREATH), "recovery:other-generic"));
+                        generic(row(input, new ItemStack(Items.DRAGON_BREATH), "test:other-fallback")));
             } catch (IllegalStateException expected) {
                 conflict = expected.getMessage().contains("Conflicting recovery rows");
             }
             helper.assertTrue(conflict, "different generic outputs fail with a conflict");
+            helper.assertTrue(
+                    RecoveryRecipePublisher.publishIsolated(
+                                    MachineRecipeMaps.Shredder,
+                                    generic(row(input, new ItemStack(Items.DRAGON_BREATH), "test:isolated-conflict")))
+                            == null,
+                    "an external row conflict is isolated instead of aborting the generation");
+            helper.assertTrue(
+                    MachineRecipeMaps.Shredder.mRecipeList.stream()
+                            .anyMatch(row -> "test:fallback".equals(row.mSource)),
+                    "the existing row survives an isolated candidate conflict");
 
             helper.assertTrue(
-                    RecoveryRecipeConflicts.publish(MachineRecipeMaps.Shredder, specific) != null,
+                    RecoveryRecipePublisher.publish(MachineRecipeMaps.Shredder, specific) != null,
                     "specific owner replaces a generic row");
             helper.assertTrue(
                     MachineRecipeMaps.Shredder.mRecipeList.stream()
-                            .anyMatch(row -> "recovery:test-specific".equals(row.mSource)),
+                            .anyMatch(row -> "test:owner".equals(row.mSource)),
                     "specific row is published");
             helper.assertFalse(
                     MachineRecipeMaps.Shredder.mRecipeList.stream()
-                            .anyMatch(row -> "recovery:test-generic".equals(row.mSource)),
+                            .anyMatch(row -> "test:fallback".equals(row.mSource)),
                     "generic row is withdrawn");
         } finally {
             MachineRecipeMaps.Shredder.removeAll(List.of(generic, specific));
         }
-        var dynamicMatch = row(input, new ItemStack(Items.ARROW), "recovery:test-generic");
         helper.assertTrue(
-                RecoveryRecipeConflicts.inspect(
+                RecoveryRecipePublisher.inspect(
                                 MachineRecipeMaps.Shredder,
-                                row(input, new ItemStack(Items.ARROW), "recovery:test-generic"),
-                                dynamicMatch)
+                                generic(row(input, new ItemStack(Items.ARROW), "test:fallback")))
                         .action()
-                        == RecoveryRecipeConflicts.Action.DUPLICATE,
-                "dynamic query results participate in recovery ownership");
+                        == RecoveryRecipePublisher.Action.PUBLISH,
+                "source text does not participate in recovery ownership");
         helper.succeed();
     }
 
@@ -81,10 +89,19 @@ public final class RecoveryRecipeConflictsTests {
                         16,
                         0)
                 .withMaterialRecovery()
+                .withItemInputGuard(0, stack -> true)
                 .withSource(source);
     }
 
     private static Recipe copy(Recipe source) {
-        return row(new ItemStack(Items.DRAGON_EGG), new ItemStack(Items.ARROW), source.mSource);
+        return generic(row(new ItemStack(Items.DRAGON_EGG), new ItemStack(Items.ARROW), "test:copy"));
+    }
+
+    private static Recipe generic(Recipe recipe) {
+        return RecoveryRecipePublisher.generic(recipe, "test-generic");
+    }
+
+    private static Recipe explicit(Recipe recipe) {
+        return RecoveryRecipePublisher.explicit(recipe, "test-explicit");
     }
 }

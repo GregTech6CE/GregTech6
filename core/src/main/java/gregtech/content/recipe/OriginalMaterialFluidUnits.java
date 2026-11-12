@@ -1,6 +1,7 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTValues;
+import gregtech.engine.recipe.UnitConversion;
 
 /**
  * Explicit source phase bindings for audited chemistry and fixed Centrifuge rows.
@@ -98,6 +99,6 @@ public final class OriginalMaterialFluidUnits {
      * zero, never coerced to1. This is quantity arithmetic, not zero-volume catalyst semantics.
      */
     public static int millibuckets(long sourceAmount, long sourceUnit, long referenceMillibuckets, boolean roundUp) {
-        return SourceDecompositionRules.fluidAmount(sourceUnit, referenceMillibuckets, sourceAmount, roundUp);
+        return UnitConversion.fluidAmount(sourceUnit, referenceMillibuckets, sourceAmount, roundUp);
     }
 }
