@@ -45,13 +45,66 @@ import java.util.List;
 public final class LogisticsWireBlock extends Block implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
 //? if >=1.21.1 {
     /*@Override
-    public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return GTToolHelper.isWireCutter(tool)
-        ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LOGISTICS) : null;
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
 
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
+        if (level.getBlockEntity(pos) instanceof LogisticsWireBlockEntity wire) {
+            var coverResult = gregtech.content.logistics.LogisticsCoverInteraction.use(
+                    wire, level, player, hand, hit.getDirection());
+            if (coverResult != InteractionResult.PASS) return coverResult;
+        }
+        if (!GTToolHelper.isWireCutter(player.getItemInHand(hand))) return InteractionResult.PASS;
+        if (!level.isClientSide) {
+            Direction side = ToolInteractions.selectedFace(hit);
+//? if >=1.21.1 {
+            /*var property = PipeConnections.propFor(side);
+*///?} else {
+            var property = ElectricWireBlock.propFor(side);
+//?}
+            boolean open = !state.getValue(property);
+            BlockPos neighborPos = pos.relative(side);
+            if (open && (level.getBlockEntity(pos) instanceof gregtech.content.logistics.LogisticsCoverHost host
+                    && !host.logisticsCovers().get(side).isEmpty()
+                    || level.getBlockEntity(neighborPos) instanceof gregtech.content.logistics.LogisticsCoverHost otherHost
+                            && !otherHost.logisticsCovers().get(side.getOpposite()).isEmpty())) return InteractionResult.FAIL;
+            if (open && level.hasChunkAt(neighborPos)) {
+                var neighbor = level.getBlockState(neighborPos);
+                boolean allowed = level.getBlockEntity(neighborPos) instanceof LogisticsHost host
+                        ? host.canLogistics(side.getOpposite())
+                        : neighbor.isAir() || !neighbor.getFluidState().isEmpty();
+                if (!allowed) return InteractionResult.FAIL;
+            }
+            level.setBlockAndUpdate(pos, state.setValue(property, open));
+            if (level.hasChunkAt(neighborPos) && level.getBlockState(neighborPos).getBlock() instanceof LogisticsWireBlock)
+                level.setBlockAndUpdate(neighborPos, level.getBlockState(neighborPos).setValue(
+//? if >=1.21.1 {
+                        /*PipeConnections.propFor(side.getOpposite())
+*///?} else {
+                        ElectricWireBlock.propFor(side.getOpposite())
+//?}
+                        , open));
+            GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return GTToolHelper.isWireCutter(tool)
+                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LOGISTICS) : null;
+    }
+
     public LogisticsWireBlock(Properties properties) {
         super(properties.noOcclusion());
         var initial = defaultBlockState();
@@ -85,70 +138,6 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new LogisticsWireBlockEntity(pos, state);
-    }
-
-//? if >=1.21.1 {
-    /*protected InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return GTToolHelper.isWireCutter(tool)
-        ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LOGISTICS) : null;
-    }
-
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                           InteractionHand hand, BlockHitResult hit) {
-        if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
-        if (level.getBlockEntity(pos) instanceof LogisticsWireBlockEntity wire) {
-            var coverResult = gregtech.content.logistics.LogisticsCoverInteraction.use(
-                    wire, level, player, hand, hit.getDirection());
-            if (coverResult != InteractionResult.PASS) return coverResult;
-        }
-//? if >=1.21.1 {
-        /*if (!GTToolHelper.isWireCutter(player.getItemInHand(hand))) return InteractionResult.PASS;
-        if (!level.isClientSide) {
-            Direction side = ToolInteractions.selectedFace(hit);
-            var property = PipeConnections.propFor(side);
-            boolean open = !state.getValue(property);
-            BlockPos neighborPos = pos.relative(side);
-            if (open && (level.getBlockEntity(pos) instanceof gregtech.content.logistics.LogisticsCoverHost host
-                    && !host.logisticsCovers().get(side).isEmpty()
-                    || level.getBlockEntity(neighborPos) instanceof gregtech.content.logistics.LogisticsCoverHost otherHost
-                            && !otherHost.logisticsCovers().get(side.getOpposite()).isEmpty())) return InteractionResult.FAIL;
-            if (open && level.hasChunkAt(neighborPos)) {
-                var neighbor = level.getBlockState(neighborPos);
-                boolean allowed = level.getBlockEntity(neighborPos) instanceof LogisticsHost host
-                        ? host.canLogistics(side.getOpposite())
-                        : neighbor.isAir() || !neighbor.getFluidState().isEmpty();
-                if (!allowed) return InteractionResult.FAIL;
-            }
-            level.setBlockAndUpdate(pos, state.setValue(property, open));
-            if (level.hasChunkAt(neighborPos) && level.getBlockState(neighborPos).getBlock() instanceof LogisticsWireBlock)
-                level.setBlockAndUpdate(neighborPos,
-                        level.getBlockState(neighborPos).setValue(PipeConnections.propFor(side.getOpposite()), open));
-            GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    @Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
-                                           InteractionHand hand, BlockHitResult hit) {
-        var result = interact(state, level, pos, player, hand, hit);
-        return result == InteractionResult.PASS ? net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-                : result == InteractionResult.FAIL ? net.minecraft.world.ItemInteractionResult.FAIL
-                : net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-*///?} else {
-        return ToolInteractions.use(state, level, pos, player, hand, hit)
-                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
-//?}
     }
 
     @Override

@@ -4,8 +4,12 @@ import gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -125,17 +129,29 @@ public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock
         super.onRemove(state, level, pos, next, moving);
     }
 //? if >=1.21.1 {
-    /*private net.minecraft.world.InteractionResult interact(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){if(gregtech.engine.tool.ToolInteractions.use(state,level,pos,player,hand,hit))return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);if(level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity be)return level.isClientSide?(be.canHandleUse(player,hand)?net.minecraft.world.InteractionResult.SUCCESS:net.minecraft.world.InteractionResult.PASS):be.tryUse(player,hand,hit);return net.minecraft.world.InteractionResult.PASS;}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){return interact(state,level,pos,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);}
-    @Override public List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder context){return List.of(new ItemStack(this));}
-*///?} else {
-    @Override public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
-            net.minecraft.world.phys.BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)
-                ? net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide)
-                : net.minecraft.world.InteractionResult.PASS;
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
+        if (level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity be)
+            return level.isClientSide
+                    ? (be.canHandleUse(player, hand) ? InteractionResult.SUCCESS : InteractionResult.PASS)
+                    : be.tryUse(player, hand, hit);
+        return InteractionResult.PASS;
+    }
+//? if >=1.21.1 {
+    /*@Override public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder context) { return List.of(new ItemStack(this)); }
+*///?} else {
 //?}
 }
