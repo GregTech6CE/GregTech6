@@ -26,7 +26,6 @@ import java.util.Set;
  * handing its reserved type to another chunk whose generation order is unpredictable.</p>
  */
 public final class GTDungeonSharedState {
-    private static final long COIN_SALT = 0x434F494E5F475436L;
     private static final long WORKSHOP_KEY_SALT = 0x574F524B5F4B4559L;
     private static final long LIBRARY_KEY_SALT = 0x4C4942525F4B4559L;
 
@@ -42,8 +41,6 @@ public final class GTDungeonSharedState {
 
     public static GTDungeonSharedState create(byte[][] layout, long dungeonSeed) {
         CellState[][] states = new CellState[layout.length][layout[0].length];
-        String coin = GTDungeonData.COIN_METALS[RandomSource.create(dungeonSeed ^ COIN_SALT)
-                .nextInt(GTDungeonData.COIN_METALS.length)];
         Set<String> claimedTags = new HashSet<>();
         boolean[] generatedKeys = new boolean[GTDungeonGenerator.KEY_COUNT];
 
@@ -58,7 +55,7 @@ public final class GTDungeonSharedState {
                 int workshopSlot = workshopRoll.nextInt(18);
                 int[] libraryKeys = libraryKeys(dungeonSeed, i, j);
                 states[i][j] = new CellState(chosen, Set.copyOf(claimedTags),
-                        generatedKeys.clone(), coin, workshopKey, workshopSlot, libraryKeys);
+                        generatedKeys.clone(), workshopKey, workshopSlot, libraryKeys);
                 String tag = tagFor(chosen);
                 if (tag != null) {
                     claimedTags.add(tag);
@@ -78,7 +75,7 @@ public final class GTDungeonSharedState {
             for (int j = 1; j < layout[i].length - 1; j++) {
                 if (layout[i][j] >= 0) continue;
                 states[i][j] = new CellState(null, Set.copyOf(claimedTags),
-                        generatedKeys.clone(), coin, -1, -1, new int[0]);
+                        generatedKeys.clone(), -1, -1, new int[0]);
                 if (layout[i][j] == GTDungeonLayout.BARRACKS) {
                     for (int key : new int[]{0, 1, 3, 4}) generatedKeys[key] = true;
                 }
@@ -126,17 +123,15 @@ public final class GTDungeonSharedState {
         private final GTDungeonChunk chosenRoom;
         private final Set<String> tagsBefore;
         private final boolean[] keysBefore;
-        private final String coinMetal;
         private final int workshopKey;
         private final int workshopSlot;
         private final int[] libraryKeys;
 
         private CellState(GTDungeonChunk chosenRoom, Set<String> tagsBefore, boolean[] keysBefore,
-                          String coinMetal, int workshopKey, int workshopSlot, int[] libraryKeys) {
+                          int workshopKey, int workshopSlot, int[] libraryKeys) {
             this.chosenRoom = chosenRoom;
             this.tagsBefore = tagsBefore;
             this.keysBefore = keysBefore;
-            this.coinMetal = coinMetal;
             this.workshopKey = workshopKey;
             this.workshopSlot = workshopSlot;
             this.libraryKeys = libraryKeys;
@@ -145,7 +140,6 @@ public final class GTDungeonSharedState {
         public GTDungeonChunk chosenRoom() { return chosenRoom; }
         public Set<String> tagsBefore() { return tagsBefore; }
         public boolean[] keysBefore() { return keysBefore.clone(); }
-        public String coinMetal() { return coinMetal; }
         public int workshopKey() { return workshopKey; }
         public int workshopSlot() { return workshopSlot; }
         public int libraryKey(int row) { return libraryKeys[(row - 1) - (row > 3 ? 1 : 0)]; }

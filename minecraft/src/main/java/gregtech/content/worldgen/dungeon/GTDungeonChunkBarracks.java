@@ -238,11 +238,11 @@ public class GTDungeonChunkBarracks extends GTDungeonChunkRoomEmpty {
         data.safe(11, 1, 14, LOOT[data.next(LOOT.length)], data.keyIds[4], true);
         data.shelf(12, 1, 14, LOOT[data.next(LOOT.length)], key, keySlot);
 
-        // - a 1-in-2 chance for loose coins next to every chest.
-        if (data.next1in2()) data.coins(4, 2, 1);
-        if (data.next1in2()) data.coins(4, 2, 14);
-        if (data.next1in2()) data.coins(11, 2, 1);
-        if (data.next1in2()) data.coins(11, 2, 14);
+        // - a 1-in-2 chance for loose ingots next to every chest (GT6's coins).
+        if (data.next1in2()) data.pile(4, 2, 1, GTDungeonData.PileKind.INGOT);
+        if (data.next1in2()) data.pile(4, 2, 14, GTDungeonData.PileKind.INGOT);
+        if (data.next1in2()) data.pile(11, 2, 1, GTDungeonData.PileKind.INGOT);
+        if (data.next1in2()) data.pile(11, 2, 14, GTDungeonData.PileKind.INGOT);
 
         return true;
     }

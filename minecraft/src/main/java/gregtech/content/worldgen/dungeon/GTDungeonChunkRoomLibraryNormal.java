@@ -13,8 +13,8 @@ import gregtech.content.registry.GTWoods;
  * Port of GT6's {@code DungeonChunkRoomLibraryNormal}
  * ({@code DungeonChunkRoomLibraryNormal}): GT6's plain library room.
  * It is {@link GTDungeonChunkRoomLibrary}'s reading hall plus, on every side of the cell that has no
- * neighbour, a low wall of two shelves in slab supports, with coins, pots, a cup and up to two ZPM
- * modules in front of it.
+ * neighbour, a low wall of two shelves in slab supports, with ingot piles (GT6's coins), pots, a cup
+ * and up to two ZPM modules in front of it.
  *
  * <p>GT6's class is the normal-wood variant of the library; the Mystcraft and Thaumcraft libraries share
  * the base class but are other-mod content and are not ported, so this is the only library the port
@@ -44,7 +44,7 @@ import gregtech.content.registry.GTWoods;
  *   <li><b>Cell height.</b> This subclass only decorates local 1 and 2, far below GT6's ceiling, so
  *       {@link GTDungeonChunkRoomLibrary}'s nine block tall hall needs no remapping here and GT6's
  *       coordinates are kept as they are.</li>
- *   <li><b>Rolls.</b> Every roll GT6 makes in this subclass is kept: the two {@code next1in4} coin rolls,
+ *   <li><b>Rolls.</b> Every roll GT6 makes in this subclass is kept: the two {@code next1in4} pile rolls,
  *       the two {@code next(16)} ZPM rolls and the {@code next(2)} cup offset, in GT6's order.</li>
  * </ul>
  */
@@ -88,11 +88,11 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
             data.shelf(14, 1, 9, SHELF_LOOT);
             data.set(14, 1, 10, shelfSupport());
 
-            if (data.next1in4()) data.coins(14, 2, 5);
+            if (data.next1in4()) data.pile(14, 2, 5, GTDungeonData.PileKind.INGOT);
             didNotGenerateZPM = potOrZpm(data, 14, 2, 6, didNotGenerateZPM);
             data.next(2); // Night-vision cup removed; keep the layout roll.
             didNotGenerateZPM = potOrZpm(data, 14, 2, 9, didNotGenerateZPM);
-            if (data.next1in4()) data.coins(14, 2, 10);
+            if (data.next1in4()) data.pile(14, 2, 10, GTDungeonData.PileKind.INGOT);
         }
         if (!data.connected(-1, 0)) {
             data.set(1, 1, 5, shelfSupport());
@@ -102,11 +102,11 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
             data.shelf(1, 1, 9, SHELF_LOOT);
             data.set(1, 1, 10, shelfSupport());
 
-            if (data.next1in4()) data.coins(1, 2, 5);
+            if (data.next1in4()) data.pile(1, 2, 5, GTDungeonData.PileKind.INGOT);
             didNotGenerateZPM = potOrZpm(data, 1, 2, 6, didNotGenerateZPM);
             data.next(2); // Night-vision cup removed; keep the layout roll.
             didNotGenerateZPM = potOrZpm(data, 1, 2, 9, didNotGenerateZPM);
-            if (data.next1in4()) data.coins(1, 2, 10);
+            if (data.next1in4()) data.pile(1, 2, 10, GTDungeonData.PileKind.INGOT);
         }
         if (!data.connected(0, 1)) {
             data.set(5, 1, 14, shelfSupport());
@@ -116,11 +116,11 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
             data.shelf(9, 1, 14, SHELF_LOOT);
             data.set(10, 1, 14, shelfSupport());
 
-            if (data.next1in4()) data.coins(5, 2, 14);
+            if (data.next1in4()) data.pile(5, 2, 14, GTDungeonData.PileKind.INGOT);
             didNotGenerateZPM = potOrZpm(data, 6, 2, 14, didNotGenerateZPM);
             data.next(2); // Night-vision cup removed; keep the layout roll.
             didNotGenerateZPM = potOrZpm(data, 9, 2, 14, didNotGenerateZPM);
-            if (data.next1in4()) data.coins(10, 2, 14);
+            if (data.next1in4()) data.pile(10, 2, 14, GTDungeonData.PileKind.INGOT);
         }
         if (!data.connected(0, -1)) {
             data.set(5, 1, 1, shelfSupport());
@@ -130,11 +130,11 @@ public class GTDungeonChunkRoomLibraryNormal extends GTDungeonChunkRoomLibrary {
             data.shelf(9, 1, 1, SHELF_LOOT);
             data.set(10, 1, 1, shelfSupport());
 
-            if (data.next1in4()) data.coins(5, 2, 1);
+            if (data.next1in4()) data.pile(5, 2, 1, GTDungeonData.PileKind.INGOT);
             didNotGenerateZPM = potOrZpm(data, 6, 2, 1, didNotGenerateZPM);
             data.next(2); // Night-vision cup removed; keep the layout roll.
             didNotGenerateZPM = potOrZpm(data, 9, 2, 1, didNotGenerateZPM);
-            if (data.next1in4()) data.coins(10, 2, 1);
+            if (data.next1in4()) data.pile(10, 2, 1, GTDungeonData.PileKind.INGOT);
         }
 
         return true;

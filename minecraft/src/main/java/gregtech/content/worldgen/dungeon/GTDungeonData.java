@@ -4,14 +4,12 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.plant.BedrockFlowers;
-import gregtech.content.block.misc.CoinPileBlock;
 import gregtech.content.block.misc.ColoredGlassBlock;
 import gregtech.content.block.misc.ConcreteBlock;
 import gregtech.content.block.misc.PileBlock;
 import gregtech.content.block.stone.GTStoneSlabBlock;
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.block.stone.StoneVariant;
-import gregtech.content.blockentity.misc.CoinPileBlockEntity;
 import gregtech.content.blockentity.misc.PileBlockEntity;
 import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.content.data.MaterialPrefix;
@@ -25,7 +23,6 @@ import gregtech.content.registry.SharedDecorBlocks;
 /*import gregtech.content.registry.*;
 *///?} else {
 import gregtech.content.registry.GTBookShelves;
-import gregtech.content.registry.GTCoinPiles;
 import gregtech.content.registry.GTMetalChests;
 import gregtech.content.registry.GTSafes;
 //?}
@@ -82,21 +79,16 @@ import java.util.Set;
  * <ul>
  *   <li>GT6's own {@code BlocksGT.Concrete}/{@code Glass}/{@code GlowGlass} colour families use
  *       their 16-colour port blockstates, in GT6's dye metadata order.</li>
- *   <li>GT6's decorative multi-tiles (coin piles, ingot/plate/gem-plate piles, cups, shelves and the
+ *   <li>GT6's decorative multi-tiles (ingot/plate/gem-plate piles, cups, shelves and the
  *       corridor's wall decorations) become the port's own blocks. The piles keep GT6's stored contents
- *       now: {@link #pile} fills a {@link PileBlockEntity} with a real material stack and {@link #coins}
- *       rolls GT6's sixteen {@code gt.coin.stacksize.<i>} faces onto a {@link CoinPileBlockEntity}, both
- *       under GT6's own NBT keys. The piles also draw GT6's own geometry from those stacks - one box per
- *       stored ingot and plate, one quarter-block coin per occupied face, in the material's colour
- *       ({@code PileBlock.STACK} and {@code CoinPileBlock.COINS}) - and the only thing GT6 draws that the
- *       port cannot is its per-face 3D coin image, the two 16x16 shape bitmaps with their 128x128 top
- *       and bottom sheets ({@code MultiTileEntityCoin}); the port draws GT6's flat coin
- *       instead, which is the renderer GT6 itself falls back to with its 3D coins off.</li>
- *   <li>Coins: GT6's dungeon writes no coin material at all ({@code DungeonData}), leaving
- *       its pile uncoloured, while the port's coins are real items. {@link #coins} therefore binds the
- *       pile to one metal of {@link #COIN_METALS}, GT6's own dungeon coin list
- *       ({@code WorldgenDungeonGT}). A dungeon-wide seed picks that metal once through
- *       {@link GTDungeonSharedState}, so every pile of the dungeon agrees without cross-chunk state.</li>
+ *       now: {@link #pile} fills a {@link PileBlockEntity} with a real material stack under GT6's own
+ *       NBT keys. The piles also draw GT6's own geometry from those stacks - one box per stored ingot
+ *       and plate, in the material's colour ({@code PileBlock.STACK}).</li>
+ *   <li>Coins: GT6's dungeon coin piles ({@code DungeonData}) are removed together with the coin
+ *       system; every site places an ingot pile instead ({@link #pile} with {@link PileKind#INGOT}).
+ *       {@link #PILE_METALS} keeps GT6's storage-room list and adds the silver, gold and platinum of
+ *       GT6's old dungeon coin list ({@code WorldgenDungeonGT}); each pile draws its own metal from
+ *       the cell's stream, so one dungeon can show several metals.</li>
  *   <li>Loot: GT6 fills its own shelf/chest multi-tiles from {@code ChestGenHooks}. The port places
  *       its GT shelf and material chest with corresponding 1.20.1 loot tables.</li>
  *   <li>Flower pots: GT6 fills a vanilla pot with one of thirteen vanilla plants or its A/B indicator
@@ -351,9 +343,15 @@ public final class GTDungeonData {
      * GT6's storage-room metal list ({@code DungeonChunkRoomStorage}), by port material name. GT6
      * passes it to {@code ingots_or_plates} for the loose piles of that room; the port's {@link #pile}
      * rolls from it when a room passes no list of its own.
+     *
+     * <p>The silver, gold and platinum entries are the port's addition: the ingot piles that replace
+     * the removed coin piles keep the precious metals of GT6's old dungeon coin list
+     * ({@code WorldgenDungeonGT}), two silver, two gold and one platinum. Among the seventeen entries
+     * their share is five in seventeen, below the five in eight of the eight-entry coin list.</p>
      */
     public static final String[] PILE_METALS = {"Copper", "Copper", "Tin", "Bronze", "Iron", "Iron", "Iron",
-            "Steel", "Steel", "StainlessSteel", "StainlessSteel", "DamascusSteel"};
+            "Steel", "Steel", "StainlessSteel", "StainlessSteel", "DamascusSteel",
+            "Silver", "Silver", "Gold", "Gold", "Platinum"};
 
     /**
      * GT6's gem list ({@code DungeonChunkRoomStorage}) reduced to the gem and crystal entries GT6's
@@ -363,21 +361,6 @@ public final class GTDungeonData {
      */
     public static final String[] PILE_GEMS = {"Diamond", "Emerald", "Ruby", "GreenSapphire", "BlueSapphire",
             "Amethyst", "NetherQuartz", "CertusQuartz", "Lapis", "Redstone", "Glowstone", "Apatite", "Coal"};
-
-    /**
-     * GT6's dungeon coin materials ({@code WorldgenDungeonGT}):
-     * {@code UT.Code.select(MT.NULL, MT.Cu, MT.Cu, MT.Cu, MT.Ag, MT.Ag, MT.Au, MT.Au, MT.Pt)} - one of
-     * eight equally likely entries, so copper 3/8, silver 2/8, gold 2/8 and platinum 1/8.
-     *
-     * <p>GT6's newer dungeon ({@code DungeonData}) writes no material at all and leaves its
-     * pile uncoloured ({@code MultiTileEntityCoin}); the port's coin is a real item that has
-     * to name the metal it is made of, so a dungeon pile rolls GT6's own coin list - the one the older
-     * {@code WorldgenDungeonGT} used for exactly this purpose. The names are the port's
-     * ({@code ElementMaterials.java} Copper, Silver and Platinum; Gold is the
-     * element material of the same file).</p>
-     */
-    public static final String[] COIN_METALS =
-            {"Copper", "Copper", "Copper", "Silver", "Silver", "Gold", "Gold", "Platinum"};
 
     /**
      * GT6's loot crate ({@code MultiTileEntityLootCrate}, 32110): the corridor scatters it in the
@@ -432,56 +415,6 @@ public final class GTDungeonData {
     }
 
     /**
-     * GT6's coin pile ({@code DungeonData}).
-     *
-     * <p>GT6 rolls every one of the sixteen faces with {@code next1in3() ? next(8) : 0}, then overwrites
-     * one random face with {@code 1 + next(8)} - so a dungeon coin pile always carries at least one coin
-     * and never more than eight per face. Both bytes are written through
-     * {@link CoinPileBlockEntity#setFaceCount}, which keeps GT6's cap of sixteen coins per face
-     * ({@code MultiTileEntityCoin}).</p>
-     *
-     * <p>Port difference: GT6's dungeon coins carry no material, the port's have to, so the pile is
-     * bound to the dungeon's one chosen metal of {@link #COIN_METALS} afterwards ({@link #rollCoin}).
-     * The choice comes from a separate seeded stream, so the cell's furniture rolls stay untouched.</p>
-     */
-    public boolean coins(int ax, int ay, int az) {
-        if (!set(ax, ay, az, GTCoinPiles.COIN_PILE.get().defaultBlockState())) return false;
-        BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
-        if (level.getBlockEntity(pos) instanceof CoinPileBlockEntity pile) {
-            for (int face = 0; face < CoinPileBlockEntity.FACES; face++) {
-                pile.setFaceCount(face, next1in3() ? next(8) : 0);          // GT6 DungeonData rolls each face
-            }
-            pile.setFaceCount(next(CoinPileBlockEntity.FACES), 1 + next(8)); // GT6 DungeonData rolls the extra pile
-            // GT6 hands the multi-tile its material through the placed NBT; the port has to set it on
-            // the block entity. After the faces, so that GT6's draws above are not disturbed.
-            pile.setCoin(rollCoin(ax, ay, az));
-        }
-        return true;
-    }
-
-    /**
-     * One coin of GT6's {@link #COIN_METALS}, selected from a stream of its own.
-     *
-     * <p>Worldgen uses the dungeon-wide metal from {@link GTDungeonSharedState}. Standalone room tests
-     * and direct helper calls retain the position-seeded fallback. Neither draws from the cell's room
-     * stream, so later furniture and loot rolls stay untouched.</p>
-     */
-    private ItemStack rollCoin(int ax, int ay, int az) {
-        if (sharedState != null) {
-            ItemStack dungeonCoin = GTItems.getStack(MaterialPrefix.coin,
-                    GTMaterialRegistry.get(sharedState.coinMetal()));
-            return dungeonCoin.isEmpty() ? CoinPileBlock.defaultCoin() : dungeonCoin;
-        }
-        RandomSource pick = RandomSource.create(level.getSeed()
-                ^ ((long) (x + ax) * 341873128712L)
-                ^ ((long) (z + az) * 132897987541L)
-                ^ (long) (y + ay) * 42317861L);
-        ItemStack coin = GTItems.getStack(MaterialPrefix.coin,
-                GTMaterialRegistry.get(COIN_METALS[pick.nextInt(COIN_METALS.length)]));
-        return coin.isEmpty() ? CoinPileBlock.defaultCoin() : coin;
-    }
-
-    /**
      * GT6's {@code UT.Code.select(aReplacement, aArray)} ({@code UT.java}, the {@code E...} overload):
      * one random element of a list, or the replacement when the list is empty.
      *
@@ -499,7 +432,7 @@ public final class GTDungeonData {
     /**
      * The port's stand-in for GT6's {@code RNGSUS} at one position: a stream seeded from the world seed
      * and the coordinates, so it is reproducible and consumes nothing from {@link #random}. The salt
-     * keeps it apart from {@link #rollCoin}'s stream, which is seeded the same way.
+     * keeps it apart from any other position-seeded stream.
      */
     private RandomSource wandering(int ax, int ay, int az) {
         return RandomSource.create(level.getSeed()
@@ -523,22 +456,6 @@ public final class GTDungeonData {
 *///?} else {
         return block == null ? gregtech.content.registry.GTTanks.WOOD_BARREL.get() : block;
 //?}
-    }
-
-    /**
-     * A coin pile with one face filled to a fixed count - the port's explicit form of GT6's face bytes
-     * ({@code DungeonData}), for a room that wants a specific pile and for tests.
-     *
-     * @param face  GT6's face index, {@code 0..15} (see {@link CoinPileBlockEntity#faceAt})
-     * @param count coins on that face, clamped into GT6's cap
-     */    public boolean coin(int ax, int ay, int az, int face, int count) {
-        if (!set(ax, ay, az, GTCoinPiles.COIN_PILE.get().defaultBlockState())) return false;
-        BlockPos pos = new BlockPos(x + ax, y + ay, z + az);
-        if (level.getBlockEntity(pos) instanceof CoinPileBlockEntity pile) {
-            pile.setCoin(rollCoin(ax, ay, az));
-            pile.setFaceCount(face, count);
-        }
-        return true;
     }
 
     /**
@@ -786,7 +703,7 @@ public final class GTDungeonData {
      *
      * <p>Port difference: GT6 stores the fluid in its tile entity NBT and the port splits it that way,
      * so the amount is written after the block was placed and the block entity exists (the same two
-     * step pattern {@link #chest} and {@link #coins} use). A {@code null} stack places the container
+     * step pattern {@link #chest} and {@link #pile} use). A {@code null} stack places the container
      * empty, which is what GT6's own measuring pot write does.</p>
      */
     public boolean tank(int ax, int ay, int az, Block block, @Nullable FluidStack fluid) {
