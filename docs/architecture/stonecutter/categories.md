@@ -78,9 +78,9 @@
 
 ## Capability
 
-摘要：能力 API、`LazyOptional` / `Optional` 与共享 BE 的能力暴露的差异。
+摘要：能力 API、`LazyOptional` / `Optional` 与共享 BE 的能力暴露、共享代码消费邻居能力的差异。
 
-关键词：ForgeCapabilities, Capabilities, LazyOptional, Optional, FluidUtil, IFluidHandlerItem, CapabilityItemHandler, IItemHandler, RegisterCapabilitiesEvent, getCapability
+关键词：ForgeCapabilities, Capabilities, LazyOptional, Optional, FluidUtil, IFluidHandlerItem, CapabilityItemHandler, IItemHandler, RegisterCapabilitiesEvent, getCapability, BlockCapabilityCache, AdjacentCapabilityCache
 
 分类 README：[Capability/README.md](Capability/README.md)
 
