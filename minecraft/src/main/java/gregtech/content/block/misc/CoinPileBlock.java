@@ -82,8 +82,6 @@ import java.util.List;
  *   <li>The bare {@code coin_pile} block item starts empty because it carries no material; placing a
  *       material coin item instead seeds the clicked cell, as GT6's {@code onPlaced} does.
  *       </li>
- *   <li>GT6 merges dropped coins into a matching nearby pile or creates a new pile after 200 ticks
- *       ({@code IMTE_OnDespawn}); {@link CoinItemExpireHandler} handles this.</li>
  * </ul>
  */
 public class CoinPileBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
