@@ -74,7 +74,8 @@ final class ShredderDamageScaling {
             if (prefix != null && !RecoveryFormCatalog.shredder(PrefixRegistry.sourceName(prefix.getName()))) {
                 return null;
             }
-            boolean staticPrefix = prefix != null;
+            // This provider is reached only after the static lookup missed; use the dynamic rule.
+            boolean staticPrefix = false;
             var plan = MaterialRecoveryRules.planShredderDamaged(
                     composition, MachineRecipeMaps.Shredder.mOutputItemsCount, staticPrefix);
             if (!plan.accepted()) return null;

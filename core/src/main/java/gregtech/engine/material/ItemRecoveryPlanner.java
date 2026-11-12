@@ -82,10 +82,29 @@ public final class ItemRecoveryPlanner {
         }
     }
 
-    public record ShredderPlan(List<ShredderOutput> outputs, long duration, ShredderRejection rejection) {
+    /** A component that could not contribute an output to the plan. */
+    public record SkippedComponent(String material, long amount, ShredderRejection reason) {
+        public SkippedComponent {
+            if (material == null || material.isBlank()) throw new IllegalArgumentException("Skipped material");
+            Objects.requireNonNull(reason, "reason");
+            if (amount < 0) throw new IllegalArgumentException("Skipped amount must not be negative");
+        }
+    }
+
+    public record ShredderPlan(
+            List<ShredderOutput> outputs,
+            long duration,
+            ShredderRejection rejection,
+            List<SkippedComponent> skippedComponents) {
         public ShredderPlan {
             outputs = List.copyOf(outputs);
             Objects.requireNonNull(rejection, "rejection");
+            skippedComponents = List.copyOf(skippedComponents);
+        }
+
+        /** Compatibility constructor for callers that do not need component diagnostics. */
+        public ShredderPlan(List<ShredderOutput> outputs, long duration, ShredderRejection rejection) {
+            this(outputs, duration, rejection, List.of());
         }
 
         public boolean accepted() {
@@ -116,19 +135,44 @@ public final class ItemRecoveryPlanner {
         if (outputItemSlots <= 0) return rejected(ShredderRejection.OUTPUT_LIMIT);
         try {
             var targetUnits = new LinkedHashMap<GTMaterial, Long>();
+            var skippedComponents = new ArrayList<SkippedComponent>();
             long inputUnits = 0;
             for (MaterialComponent component : composition.components()) {
                 GTMaterial material = component.material().resolve();
-                if (!material.isValid() || component.amount() <= 0) continue;
+                if (!material.isValid() || component.amount() <= 0) {
+                    skippedComponents.add(new SkippedComponent(
+                            component.material().getName(),
+                            Math.max(0, component.amount()),
+                            ShredderRejection.INVALID_COMPONENT));
+                    continue;
+                }
                 inputUnits = Math.addExact(inputUnits, component.amount());
                 GTMaterial target = material.getTargetPulverMaterial();
-                if (target == null) continue;
+                if (target == null) {
+                    skippedComponents.add(new SkippedComponent(
+                            material.getName(), component.amount(), ShredderRejection.MISSING_PULVERIZATION_TARGET));
+                    continue;
+                }
                 target = target.resolve();
-                if (!target.isValid()) continue;
+                if (!target.isValid()) {
+                    skippedComponents.add(new SkippedComponent(
+                            material.getName(), component.amount(), ShredderRejection.INVALID_PULVERIZATION_TARGET));
+                    continue;
+                }
                 long amount = facts.pulverizedAmount(material, component.amount());
-                if (amount > 0) targetUnits.merge(target, amount, Math::addExact);
+                if (amount <= 0) {
+                    skippedComponents.add(new SkippedComponent(
+                            material.getName(), component.amount(), ShredderRejection.UNREPRESENTABLE_AMOUNT));
+                    continue;
+                }
+                targetUnits.merge(target, amount, Math::addExact);
             }
-            if (targetUnits.isEmpty()) return rejected(ShredderRejection.NO_COMPONENTS);
+            if (targetUnits.isEmpty())
+                return rejected(
+                        skippedComponents.isEmpty()
+                                ? ShredderRejection.NO_COMPONENTS
+                                : skippedComponents.get(0).reason(),
+                        skippedComponents);
 
             var outputs = new ArrayList<ShredderOutput>();
             int remainingSlots = outputItemSlots;
@@ -144,44 +188,53 @@ public final class ItemRecoveryPlanner {
                         }
                     }
                 }
-                duration = source == null
-                        ? 0
-                        : duration(inputUnits, facts.staticShredderWork(source));
+                duration = source == null ? 0 : duration(inputUnits, facts.staticShredderWork(source));
             }
             for (var entry : targetUnits.entrySet()) {
                 if (remainingSlots <= 0) return rejected(ShredderRejection.OUTPUT_LIMIT);
-                var dust = dustPlan(entry.getValue(), remainingSlots, facts.dustForms());
+                var dust = planDust(entry.getValue(), remainingSlots, facts.dustForms());
                 if (!dust.complete()) {
                     if (dropDustRemainder && !dust.piles().isEmpty()) {
                         outputs.add(new ShredderOutput(entry.getKey(), dust));
+                        if (dust.remainderUnits() > 0)
+                            skippedComponents.add(new SkippedComponent(
+                                    entry.getKey().getName(),
+                                    dust.remainderUnits(),
+                                    ShredderRejection.UNREPRESENTABLE_AMOUNT));
                         remainingSlots -= dust.stackCount();
                         if (!staticPrefix)
                             duration = Math.addExact(
-                                    duration,
-                                    duration(entry.getValue(), facts.dynamicShredderWork(entry.getKey())));
+                                    duration, duration(entry.getValue(), facts.dynamicShredderWork(entry.getKey())));
                         continue;
                     }
+                    if (dust.remainderUnits() > 0)
+                        skippedComponents.add(new SkippedComponent(
+                                entry.getKey().getName(),
+                                dust.remainderUnits(),
+                                ShredderRejection.UNREPRESENTABLE_AMOUNT));
                     return rejected(
                             dust.stackCount() >= remainingSlots
                                     ? ShredderRejection.OUTPUT_LIMIT
-                                    : ShredderRejection.UNREPRESENTABLE_AMOUNT);
+                                    : ShredderRejection.UNREPRESENTABLE_AMOUNT,
+                            skippedComponents);
                 }
                 if (dust.piles().isEmpty()) continue;
                 outputs.add(new ShredderOutput(entry.getKey(), dust));
                 remainingSlots -= dust.stackCount();
                 if (!staticPrefix)
                     duration = Math.addExact(
-                            duration,
-                            duration(entry.getValue(), facts.dynamicShredderWork(entry.getKey())));
+                            duration, duration(entry.getValue(), facts.dynamicShredderWork(entry.getKey())));
             }
-            if (outputs.isEmpty()) return rejected(ShredderRejection.NO_COMPONENTS);
-            return new ShredderPlan(outputs, Math.max(1, duration), ShredderRejection.NONE);
+            if (outputs.isEmpty()) return rejected(ShredderRejection.NO_COMPONENTS, skippedComponents);
+            return new ShredderPlan(outputs, Math.max(1, duration), ShredderRejection.NONE, skippedComponents);
         } catch (ArithmeticException overflow) {
             return rejected(ShredderRejection.OVERFLOW);
         }
     }
 
-    private static DustPlan dustPlan(long amount, int maximumStacks, List<DustForm> forms) {
+    /** Groups dust amounts using the supplied form order. */
+    public static DustPlan planDust(long amount, int maximumStacks, List<DustForm> forms) {
+        Objects.requireNonNull(forms, "forms");
         if (amount < 0 || maximumStacks <= 0)
             throw new IllegalArgumentException("Dust amount and stack limit must be positive");
         var piles = new ArrayList<DustPile>(Math.min(maximumStacks, 4));
@@ -211,6 +264,10 @@ public final class ItemRecoveryPlanner {
     }
 
     private static ShredderPlan rejected(ShredderRejection rejection) {
-        return new ShredderPlan(List.of(), 0, rejection);
+        return rejected(rejection, List.of());
+    }
+
+    private static ShredderPlan rejected(ShredderRejection rejection, List<SkippedComponent> skippedComponents) {
+        return new ShredderPlan(List.of(), 0, rejection, skippedComponents);
     }
 }

@@ -88,9 +88,17 @@ public final class RecoveryRecipePublisher {
         if (map == null || candidate == null || candidate.mRecoveryOwnership == null)
             throw new IllegalArgumentException("Recovery publication requires a map, row and ownership");
         Recipe existing = map.findCollision(candidate);
-        if (existing == null) existing = indexedCollision(map, candidate);
+        if (existing == null) {
+            existing = indexedCollision(map, candidate);
+        } else if (!sameFamily(existing, candidate)) {
+            Recipe preferred = indexedCollision(map, candidate);
+            if (preferred != null && sameFamily(preferred, candidate)) existing = preferred;
+        }
         if (existing == null) return new Resolution(Action.PUBLISH, null);
+        return resolve(candidate, existing);
+    }
 
+    private static Resolution resolve(Recipe candidate, Recipe existing) {
         boolean candidateGeneric = generic(candidate);
         boolean existingGeneric = generic(existing);
         if (candidateGeneric && existingGeneric) {
@@ -112,8 +120,13 @@ public final class RecoveryRecipePublisher {
     /** Finds an already indexed row with the same owned inputs, ignoring execution conditions. */
     public static Recipe matchingInputs(Recipe candidate, Collection<Recipe> rows) {
         if (rows == null) return null;
-        for (Recipe row : rows) if (sameOwnedInputs(row, candidate)) return row;
-        return null;
+        Recipe fallback = null;
+        for (Recipe row : rows) {
+            if (!sameOwnedInputs(row, candidate)) continue;
+            if (sameFamily(row, candidate)) return row;
+            if (fallback == null) fallback = row;
+        }
+        return fallback;
     }
 
     private static Recipe mark(Recipe recipe, String family, Recipe.RecoveryOwnership.Scope scope) {
@@ -144,15 +157,18 @@ public final class RecoveryRecipePublisher {
      */
     private static Recipe indexedCollision(RecipeMap map, Recipe candidate) {
         Set<Recipe> checked = Collections.newSetFromMap(new IdentityHashMap<>());
+        Recipe fallback = null;
         for (ItemStack input : candidate.mInputs) {
             if (input == null || input.isEmpty()) continue;
             for (Recipe existing : map.mRecipeItemMap.getOrDefault(input.getItem(), List.of())) {
                 if (existing == candidate || !existing.mEnabled || existing.mFakeRecipe || !checked.add(existing))
                     continue;
-                if (sameExecution(existing, candidate) && sameInputs(existing, candidate)) return existing;
+                if (!sameExecution(existing, candidate) || !sameInputs(existing, candidate)) continue;
+                if (sameFamily(existing, candidate)) return existing;
+                if (fallback == null) fallback = existing;
             }
         }
-        return null;
+        return fallback;
     }
 
     private static boolean sameExecution(Recipe left, Recipe right) {
@@ -201,6 +217,17 @@ public final class RecoveryRecipePublisher {
 
     private static RecoveryConflictException conflict(Recipe candidate, Recipe existing) {
         return new RecoveryConflictException("Conflicting recovery rows with the same inputs and conditions: existing "
-                + existing.mSource + " and candidate " + candidate.mSource);
+                + existing.mSource + " [" + family(existing) + "] and candidate " + candidate.mSource + " ["
+                + family(candidate) + "]");
+    }
+
+    private static boolean sameFamily(Recipe left, Recipe right) {
+        return left.mRecoveryOwnership != null
+                && right.mRecoveryOwnership != null
+                && left.mRecoveryOwnership.family().equals(right.mRecoveryOwnership.family());
+    }
+
+    private static String family(Recipe recipe) {
+        return recipe.mRecoveryOwnership == null ? "unowned" : recipe.mRecoveryOwnership.family();
     }
 }

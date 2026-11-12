@@ -42,6 +42,18 @@ public final class MaterialDecompositionPlanner {
             int millibuckets,
             boolean declared) {}
 
+    /** A composition component that could not produce a planned output. */
+    public record ComponentIssue(Status status, String component, long amount, String reason) {
+        public ComponentIssue {
+            if (status == null
+                    || component == null
+                    || component.isBlank()
+                    || amount < 0
+                    || reason == null
+                    || reason.isBlank()) throw new IllegalArgumentException("Invalid decomposition component issue");
+        }
+    }
+
     /**
      * A platform-neutral executable plan. Fluid inputs remain separate alternatives; the adapter
      * resolves their registered identities and applies the solid fallback rule.
@@ -59,7 +71,44 @@ public final class MaterialDecompositionPlanner {
             List<FluidOutput> fluidOutputs,
             int droppedItemOutputs,
             int droppedFluidOutputs,
-            boolean electrolyserCatalyst) {}
+            boolean electrolyserCatalyst,
+            List<ComponentIssue> skippedComponents) {
+        public Plan {
+            skippedComponents = List.copyOf(skippedComponents);
+        }
+
+        /** Compatibility constructor for callers that do not consume component diagnostics. */
+        public Plan(
+                MaterialKey material,
+                MaterialDecompositionRule.Route route,
+                long divider,
+                long inputUnits,
+                long eut,
+                long duration,
+                List<FluidInput> fluidInputs,
+                int blockDustCount,
+                List<DustOutput> itemOutputs,
+                List<FluidOutput> fluidOutputs,
+                int droppedItemOutputs,
+                int droppedFluidOutputs,
+                boolean electrolyserCatalyst) {
+            this(
+                    material,
+                    route,
+                    divider,
+                    inputUnits,
+                    eut,
+                    duration,
+                    fluidInputs,
+                    blockDustCount,
+                    itemOutputs,
+                    fluidOutputs,
+                    droppedItemOutputs,
+                    droppedFluidOutputs,
+                    electrolyserCatalyst,
+                    List.of());
+        }
+    }
 
     public record Result(Status status, String reason, Plan plan) {
         public boolean planned() {
@@ -117,13 +166,15 @@ public final class MaterialDecompositionPlanner {
         }
         List<DustOutput> itemOutputs = new ArrayList<>();
         List<FluidOutput> fluidOutputs = new ArrayList<>();
-        Status skippedComponent = null;
-        String skippedReason = "";
+        List<ComponentIssue> skippedComponents = new ArrayList<>();
         for (MaterialComponent component : material.getCompositionComponents()) {
             GTMaterial part = component.material().resolve();
             if (!part.isValid()) {
-                skippedComponent = Status.MISSING_COMPONENT;
-                skippedReason = "unknown component " + component.material().getName();
+                skippedComponents.add(new ComponentIssue(
+                        Status.MISSING_COMPONENT,
+                        component.material().getName(),
+                        Math.max(0, component.amount()),
+                        "unknown component " + component.material().getName()));
                 continue;
             }
             FluidOutput fluid = ambientOutput(part, component.amount());
@@ -134,22 +185,32 @@ public final class MaterialDecompositionPlanner {
             GTMaterial pulver = part.getTargetPulverMaterial().resolve();
             long pulverAmount = part.getTargetPulverAmount();
             if (!pulver.isValid() || pulverAmount <= 0) {
-                skippedComponent = Status.MISSING_OUTPUT;
-                skippedReason = "component " + part.getName() + " has no powder target";
+                skippedComponents.add(new ComponentIssue(
+                        Status.MISSING_OUTPUT,
+                        part.getName(),
+                        Math.max(0, component.amount()),
+                        "component " + part.getName() + " has no powder target"));
                 continue;
             }
             long units = UnitConversion.units(component.amount(), U, pulverAmount, false);
             if (units <= 0) {
-                skippedComponent = Status.INVALID_QUANTITY;
-                skippedReason = "component " + part.getName() + " cannot represent powder output";
+                skippedComponents.add(new ComponentIssue(
+                        Status.INVALID_QUANTITY,
+                        part.getName(),
+                        Math.max(0, component.amount()),
+                        "component " + part.getName() + " cannot represent powder output"));
                 continue;
             }
             itemOutputs.add(new DustOutput(new MaterialKey(pulver.getName()), units));
         }
         if (itemOutputs.isEmpty() && fluidOutputs.isEmpty())
             return Result.rejected(
-                    skippedComponent == null ? Status.MISSING_OUTPUT : skippedComponent,
-                    skippedReason.isBlank() ? "composition produced no resolvable output" : skippedReason);
+                    skippedComponents.isEmpty()
+                            ? Status.MISSING_OUTPUT
+                            : skippedComponents.get(0).status(),
+                    skippedComponents.isEmpty()
+                            ? "composition produced no resolvable output"
+                            : skippedComponents.get(0).reason());
 
         int keptItems = Math.min(itemOutputs.size(), Math.max(0, itemOutputSlots));
         int keptFluids = Math.min(fluidOutputs.size(), Math.max(0, fluidOutputSlots));
@@ -174,7 +235,8 @@ public final class MaterialDecompositionPlanner {
                 fluidOutputs,
                 droppedItems,
                 droppedFluids,
-                route == MaterialDecompositionRule.Route.ELECTROLYSER));
+                route == MaterialDecompositionRule.Route.ELECTROLYSER,
+                skippedComponents));
     }
 
     private static FluidOutput ambientOutput(GTMaterial material, long units) {

@@ -171,10 +171,14 @@ public final class CraftingMaterialForms {
         var composition = ItemMaterialRegistry.base(stack.getItem()).orElse(null);
         if (composition != null && composition.prefix() != null)
             return new Form(composition.prefix().getName(), composition.material().resolve().getName());
-        var forms = taggedFormsInternal(stack);
-        return forms.size() == 1 && ExternalOreProcessingRules.isCompositionForm(forms.get(0).prefix())
-                ? forms.get(0)
-                : null;
+        return compositionTagForm(taggedFormsInternal(stack));
+    }
+
+    static Form compositionTagForm(List<Form> forms) {
+        var allowed = forms.stream()
+                .filter(form -> ExternalOreProcessingRules.isCompositionForm(form.prefix()))
+                .toList();
+        return allowed.size() == 1 ? allowed.get(0) : null;
     }
 
     /** Every gregtech, forge or c form tag on this item. Callers use a single hit to reject ambiguous items. */

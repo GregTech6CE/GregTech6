@@ -25,7 +25,7 @@
 ## 行为裁决
 
 - 72U 不再变成 64U。计划按 64 的单栈上限分组为 64U 和 8U 两个合法 dust 栈；更小的余量用 small、tiny、1/72 dust 继续表示。低于 1/72 dust 的不可表示部分不会静默丢弃。
-- Shredder 计划逐组件转换粉碎目标并合并同目标材料；任一组件缺少有效目标时，整个候选带原因拒绝，不再保留“至少一个组件成功就发布”的半套输出。
+- Shredder 计划逐组件转换粉碎目标并合并同目标材料；无法解析的组件进入逐项 `skippedComponents` 诊断后跳过，只有全部组件都无法产出时才拒绝整条候选。
 - 配方输出超过机器槽位、计划数量溢出或最终 item 绑定缺失时，生产端拒绝该候选并计入诊断；不会生成超栈、负数量或静默截断配方。
 - `RecoveryRejection` 分开报告 `NO_COMPOSITION`、`NO_COMPONENTS`、`STORED_CONTENTS` 和 `UNSUPPORTED_CONTAINER`；`NOT_BULK_RECOVERABLE` 与 `DAMAGED` 仅保留兼容枚举，不再产生。损坏 Shredder 输入从剩余成分重建输出，其他固定输出热行继续由各自输入证明保护，铸模空腔仍不属于盛装内容。
 - Vanilla ore、raw metal item 和 raw metal block 使用 `VanillaUnificationDefinitions.OreInputKind` 明确分类；原矿物品与块分别进入自己的工艺，不靠 `raw_` 前缀字符串决定。

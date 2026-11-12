@@ -104,7 +104,7 @@ JUnit 验证计算边界；GameTest 要通过最终 `RecipeMap`／运行期入�
 
 ## PR #374 步骤三闭合（2026-11-12）
 
-- `MaterialRecoveryRules.dustPlan()` 是完整粉尘输出与余量的权威计算；`dustSlotPlan()` 复用同一分配算法，只保留一个栈视图。`OM.dust()` 返回该单栈投影，`OM.dustAll()` 返回完整栈列表。能够容纳多输出的分解、零件余料、流化床和外部矿石入口改用完整列表；Dust Funnel 按计划实际表示的 U 数扣减库存。
+- `MaterialRecoveryRules.dustPlan()` 是完整粉尘输出与余量的权威计算；`dustSlotPlan()` 保留源 `OM.dust()` 的单栈选择规则，并单独报告该栈未表示的余量。`OM.dust()` 返回该兼容单栈，`OM.dustAll()` 返回完整栈列表。能够容纳多输出的分解、零件余料、流化床和外部矿石入口改用完整列表；Dust Funnel 按计划实际表示的 U 数扣减库存。
 - `CapsuleCellRecipes.registerRecycling()` 改用 `planShredderStatic()`，输出形态和时长与静态 Shredder 生产端共用同一计划，不再内联胶囊专用时长公式。
 - 朱砂 9114 的专用 Melter／Smelter 行和块级输入证明已删除，不再绕过常规 `MELTING` 与相态绑定；`bulkRecoveryAllowed` 只作为 legacy 兼容输入归一保留。
 - common form tag 补齐齿轮、小齿轮、环、螺栓、螺丝和箔；`storage_blocks` 与 `cables` 在没有一对 `MaterialPrefix` 身份时直接生成 9U／1/2U 成分候选。

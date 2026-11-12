@@ -297,9 +297,6 @@ public final class ShredderRecyclingRecipes {
     private static Recipe publish(Planned planned, Map<ResourceLocation, Recipe> owners, boolean isolated) {
         var map = MachineRecipeMaps.Shredder;
         var ownerKey = ownerKey(planned.probe().mInputs[0]);
-        var existing = owners.get(ownerKey);
-        if (existing == null)
-            existing = RecoveryRecipePublisher.matchingInputs(planned.probe(), STATIC_ROWS.get(ownerKey));
         RecoveryRecipePublisher.Resolution resolution;
         try {
             resolution = RecoveryRecipePublisher.inspect(map, planned.probe());

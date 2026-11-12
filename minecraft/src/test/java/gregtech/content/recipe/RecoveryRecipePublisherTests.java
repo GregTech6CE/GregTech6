@@ -95,6 +95,29 @@ public final class RecoveryRecipePublisherTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
+    public static void matchingInputsPrefersTheSameRecoveryFamily(GameTestHelper helper) {
+        var input = new ItemStack(Items.DRAGON_EGG);
+        Recipe first = RecoveryRecipePublisher.generic(
+                row(input, new ItemStack(Items.ARROW), "test:first-family"), "first-family");
+        Recipe second = RecoveryRecipePublisher.generic(
+                row(input, new ItemStack(Items.ARROW), "test:second-family"), "second-family");
+        helper.assertTrue(
+                RecoveryRecipePublisher.matchingInputs(second, List.of(first, second)) == second,
+                "family-aware owner lookup does not select a different family first");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
+    public static void mixedTagsIgnoreNonCompositionForms(GameTestHelper helper) {
+        var ore = new OriginalFormConversions.Form("ore", "Tin");
+        var raw = new OriginalFormConversions.Form("oreRaw", "Tin");
+        helper.assertTrue(
+                ore.equals(CraftingMaterialForms.compositionTagForm(List.of(raw, ore))),
+                "an allowed ore tag survives an unrelated recognized tag");
+        helper.succeed();
+    }
+
     private static Recipe row(ItemStack input, ItemStack output, String source) {
         return new Recipe(
                         new ItemStack[] {input.copy()},

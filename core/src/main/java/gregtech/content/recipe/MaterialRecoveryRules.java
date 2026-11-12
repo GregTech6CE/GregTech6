@@ -8,7 +8,6 @@ import gregtech.content.material.MaterialProcessingProperties;
 import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ItemRecoveryPlanner;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -115,36 +114,34 @@ public final class MaterialRecoveryRules {
     }
 
     /**
-     * One-slot view of the same dust allocation used by full Shredder plans.
+     * One-stack projection retaining the source {@code OM.dust} selection rules.
      *
-     * <p>Consumers that return one stack consume {@link DustPlan#representedUnits()} and may leave
-     * {@link DustPlan#remainderUnits()} for a later retrieval. Recipe producers that own an output
-     * array must use {@link #dustPlan(long)} and retain every pile.</p>
+     * <p>The full plan remains authoritative for output arrays. This compatibility view leaves any
+     * amount that cannot be represented by its selected single stack in
+     * {@link DustPlan#remainderUnits()}.</p>
      */
     public static DustPlan dustSlotPlan(long amount) {
-        return dustPlan(amount, 1);
+        if (amount < 0) throw new IllegalArgumentException("Dust amount must not be negative");
+        if (amount == 0) return new DustPlan(List.of(), 0, 0);
+        if (amount >= GTValues.U && (amount >= GTValues.U * 16 || amount % GTValues.U == 0))
+            return onePile(amount, MaterialPrefix.dust);
+        if (amount >= GTValues.U4 && (amount >= GTValues.U * 8 || amount % GTValues.U4 <= amount % GTValues.U9))
+            return onePile(amount, MaterialPrefix.dustSmall);
+        if (amount >= GTValues.U9 && (amount >= GTValues.U || amount % GTValues.U9 <= amount % GTValues.U72))
+            return onePile(amount, MaterialPrefix.dustTiny);
+        return onePile(amount, MaterialPrefix.dustDiv72);
     }
 
     private static DustPlan dustPlan(long amount, int maximumStacks) {
-        if (amount < 0 || maximumStacks <= 0)
-            throw new IllegalArgumentException("Dust amount and stack limit must be positive");
-        var piles = new ArrayList<DustPile>(Math.min(maximumStacks, 4));
-        long remaining = amount;
-        long represented = 0;
-        for (MaterialPrefix prefix : List.of(
-                MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny, MaterialPrefix.dustDiv72)) {
-            long weight = prefix.getMaterialWeight();
-            if (weight <= 0 || remaining < weight) continue;
-            while (remaining >= weight) {
-                if (piles.size() >= maximumStacks) return new DustPlan(piles, represented, remaining);
-                int count = (int) Math.min(64, remaining / weight);
-                piles.add(new DustPile(prefix, count));
-                long units = Math.multiplyExact(weight, count);
-                represented = Math.addExact(represented, units);
-                remaining = Math.subtractExact(remaining, units);
-            }
-        }
-        return new DustPlan(piles, represented, remaining);
+        return convert(ItemRecoveryPlanner.planDust(amount, maximumStacks, FACTS.dustForms()));
+    }
+
+    private static DustPlan onePile(long amount, MaterialPrefix prefix) {
+        long weight = prefix.getMaterialWeight();
+        int count = (int) Math.min(64, amount / weight);
+        if (count <= 0) return new DustPlan(List.of(), 0, amount);
+        long represented = Math.multiplyExact(weight, count);
+        return new DustPlan(List.of(new DustPile(prefix, count)), represented, amount - represented);
     }
 
     public enum ShredderRejection {
@@ -165,15 +162,33 @@ public final class MaterialRecoveryRules {
         }
     }
 
+    /** A component that was omitted from the executable Shredder plan. */
+    public record SkippedComponent(String material, long amount, ShredderRejection reason) {
+        public SkippedComponent {
+            if (material == null || material.isBlank() || amount < 0 || reason == null)
+                throw new IllegalArgumentException("Invalid skipped Shredder component");
+        }
+    }
+
     /**
      * Pure Shredder plan over the complete effective composition. Every positive component is
      * converted through its own pulverization target; a component without a usable target is
      * skipped, while output overflow remains an explicit plan rejection.
      */
-    public record ShredderPlan(List<ShredderOutput> outputs, long duration, ShredderRejection rejection) {
+    public record ShredderPlan(
+            List<ShredderOutput> outputs,
+            long duration,
+            ShredderRejection rejection,
+            List<SkippedComponent> skippedComponents) {
         public ShredderPlan {
             outputs = List.copyOf(outputs);
+            skippedComponents = List.copyOf(skippedComponents);
             if (rejection == null) throw new IllegalArgumentException("Missing shredder rejection");
+        }
+
+        /** Compatibility constructor for callers that do not consume component diagnostics. */
+        public ShredderPlan(List<ShredderOutput> outputs, long duration, ShredderRejection rejection) {
+            this(outputs, duration, rejection, List.of());
         }
 
         public boolean accepted() {
@@ -206,10 +221,11 @@ public final class MaterialRecoveryRules {
         var outputs = plan.outputs().stream()
                 .map(output -> new ShredderOutput(output.material(), convert(output.dust())))
                 .toList();
-        return new ShredderPlan(
-                outputs,
-                plan.duration(),
-                ShredderRejection.valueOf(plan.rejection().name()));
+        var skipped = plan.skippedComponents().stream()
+                .map(component ->
+                        new SkippedComponent(component.material(), component.amount(), rejection(component.reason())))
+                .toList();
+        return new ShredderPlan(outputs, plan.duration(), rejection(plan.rejection()), skipped);
     }
 
     private static DustPlan convert(ItemRecoveryPlanner.DustPlan plan) {
@@ -224,5 +240,18 @@ public final class MaterialRecoveryRules {
                 .filter(prefix -> prefix.getName().equals(form.id()) && prefix.getMaterialWeight() == form.weight())
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Unknown dust form from recovery plan: " + form.id()));
+    }
+
+    private static ShredderRejection rejection(ItemRecoveryPlanner.ShredderRejection rejection) {
+        return switch (rejection) {
+            case NONE -> ShredderRejection.NONE;
+            case NO_COMPONENTS -> ShredderRejection.NO_COMPONENTS;
+            case INVALID_COMPONENT -> ShredderRejection.INVALID_COMPONENT;
+            case MISSING_PULVERIZATION_TARGET -> ShredderRejection.MISSING_PULVERIZATION_TARGET;
+            case INVALID_PULVERIZATION_TARGET -> ShredderRejection.INVALID_PULVERIZATION_TARGET;
+            case UNREPRESENTABLE_AMOUNT -> ShredderRejection.UNREPRESENTABLE_AMOUNT;
+            case OUTPUT_LIMIT -> ShredderRejection.OUTPUT_LIMIT;
+            case OVERFLOW -> ShredderRejection.OVERFLOW;
+        };
     }
 }

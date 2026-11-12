@@ -185,6 +185,10 @@ class MaterialBaselineTest {
         assertEquals(64 * GTValues.U, slot.representedUnits());
         assertEquals(8 * GTValues.U, slot.remainderUnits());
         assertEquals(List.of(new MaterialRecoveryRules.DustPile(MaterialPrefix.dust, 64)), slot.piles());
+        var eighth = MaterialRecoveryRules.dustSlotPlan(9 * GTValues.U72);
+        assertTrue(eighth.complete());
+        assertEquals(9 * GTValues.U72, eighth.representedUnits());
+        assertEquals(List.of(new MaterialRecoveryRules.DustPile(MaterialPrefix.dustDiv72, 9)), eighth.piles());
 
         var composition = new ItemComposition(
                 null,
@@ -196,6 +200,40 @@ class MaterialBaselineTest {
         var shredder = MaterialRecoveryRules.planShredder(composition, 4);
         assertTrue(shredder.accepted());
         assertEquals(2, shredder.stackCount());
+        assertEquals(
+                MaterialRecoveryRules.shredderWork(Materials.Gold),
+                MaterialRecoveryRules.planShredderDamaged(
+                                new ItemComposition(
+                                        null,
+                                        List.of(MaterialComponent.of(Materials.Gold, GTValues.U)),
+                                        Materials.Gold,
+                                        List.of(new ItemCompositionSource(
+                                                ItemCompositionSource.Kind.EXPLICIT,
+                                                "damaged-dynamic-work",
+                                                "test",
+                                                "",
+                                                "")),
+                                        true),
+                                4,
+                                false)
+                        .duration());
+        assertEquals(
+                MaterialRecoveryRules.staticShredderWork(Materials.Gold),
+                MaterialRecoveryRules.planShredderDamaged(
+                                new ItemComposition(
+                                        null,
+                                        List.of(MaterialComponent.of(Materials.Gold, GTValues.U)),
+                                        Materials.Gold,
+                                        List.of(new ItemCompositionSource(
+                                                ItemCompositionSource.Kind.EXPLICIT,
+                                                "damaged-static-work",
+                                                "test",
+                                                "",
+                                                "")),
+                                        true),
+                                4,
+                                true)
+                        .duration());
         assertEquals(
                 MaterialRecoveryRules.ShredderRejection.OUTPUT_LIMIT,
                 MaterialRecoveryRules.planShredder(composition, 1).rejection());
@@ -222,6 +260,9 @@ class MaterialBaselineTest {
         var damagedPlan = MaterialRecoveryRules.planShredderDamaged(damagedFraction, 4, false);
         assertTrue(damagedPlan.accepted());
         assertTrue(damagedPlan.outputs().get(0).dust().remainderUnits() > 0);
+        assertTrue(damagedPlan.skippedComponents().stream()
+                .anyMatch(component ->
+                        component.reason() == MaterialRecoveryRules.ShredderRejection.UNREPRESENTABLE_AMOUNT));
     }
 
     @Test
