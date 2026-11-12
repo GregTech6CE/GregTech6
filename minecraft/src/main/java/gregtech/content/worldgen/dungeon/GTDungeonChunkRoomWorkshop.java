@@ -109,9 +109,9 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
         // GT6 4011: stainless steel drawer with four pages of material-specific workshop parts.
         WorkshopDrawerSupplies.place(data,1,1,3);
 
-        // GT6: the mechanical safe with jungle loot and the coin pile on top.
+        // GT6: the mechanical safe with jungle loot; its coin pile on top becomes an ingot pile.
         data.safe(1, 2, 3, LOOT_JUNGLE, 0, false);
-        data.coins(1, 3, 3);
+        data.pile(1, 3, 3, GTDungeonData.PileKind.INGOT);
 
         // GT6 5011 with its original steel parts and Invar lighter inventory.
         WorkshopCraftingSupplies.place(data,1,1,4);
