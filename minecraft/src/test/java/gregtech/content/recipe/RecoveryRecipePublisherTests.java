@@ -1,6 +1,8 @@
 package gregtech.content.recipe;
 
 import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
 import java.util.List;
 import net.minecraft.gametest.framework.GameTest;
@@ -74,6 +76,22 @@ public final class RecoveryRecipePublisherTests {
                         .action()
                         == RecoveryRecipePublisher.Action.PUBLISH,
                 "source text does not participate in recovery ownership");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
+    public static void cinnabarUsesOrdinaryThermalOwnership(GameTestHelper helper) {
+        var cinnabar = GTMaterialRegistry.get("Cinnabar");
+        helper.assertFalse(
+                ThermalRecoveryOwnership.reviewedSpecialOwner(MaterialPrefix.dust, cinnabar),
+                "Cinnabar dust is not a reviewed special thermal owner");
+        helper.assertFalse(
+                ThermalRecoveryOwnership.reviewedSpecialOwner(MaterialPrefix.crushedPurified, cinnabar),
+                "processed Cinnabar forms are not a reviewed special thermal owner");
+        helper.assertTrue(
+                ThermalRecoveryOwnership.reviewedSpecialOwner(
+                        MaterialPrefix.dustSmall, GTMaterialRegistry.get("Titanium")),
+                "the bounded Ti dust-fraction owner remains explicit");
         helper.succeed();
     }
 

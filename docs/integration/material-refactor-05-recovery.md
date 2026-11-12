@@ -75,3 +75,10 @@
 - `RecoveryInputProof` 统一运行时输入限制；`RecoveryRecipePublisher` 统一 generic/specific 归属、去重和不同输出冲突，所有权记录在配方上，guarded rows 通过输入索引查询冲突。
 - 运行时注册行数：Forge 4142 条热回收输入、NeoForge 4174 条；附加热回收行在两个节点均可查询。
 - Forge 1.20.1 GameTest 77/77，NeoForge 1.21.1 GameTest 82/82；双平台生产与测试源码编译、core JUnit、ratchet Spotless 通过。
+
+## PR #374 复核补正（2026-11-12）
+
+- `ReviewedCinnabarThermalRecipes`、`SourceThermalNativeAdapter`、`OreProcessingRecipeLoader` 和 `VanillaStoneMachineRecipes` 的 Melter／Smelter／石质 Shredder 写入全部进入 `RecoveryRecipePublisher`，补上材料回收族的直写旁路。
+- 标签代次开始前的成分状态成为可回滚检查点；overlay 失败时恢复上一代标签候选、有效成分、诊断、readiness、generation 与 composition revision，同时保持上一份成功 `MaterialPublication` 不变。
+- `ThermalRecoveryOwnership` 不再包含 9114／`Cinnabar` 前缀特例，只保留 Ti／Fe 审计分数组。
+- 执行且通过：双平台生产与测试源码编译、`:minecraft:spotlessCheck`、Forge 1.20.1 GameTest 92/92、NeoForge 1.21.1 GameTest 97/97。

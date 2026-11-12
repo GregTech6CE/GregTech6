@@ -39,6 +39,35 @@ public final class ItemMaterialRegistry {
 
     public record CompositionState(long revision, long tagGeneration, boolean tagInputReady, boolean explicitClosed) {}
 
+    /**
+     * Opaque state captured before a tag generation starts. A failed generation restores this
+     * checkpoint so the effective snapshot and its revision still describe the last publication.
+     */
+    public static final class TagGenerationCheckpoint {
+        private final Map<Item, List<ItemCompositionCandidate>> tagSubmissions;
+        private final Map<Item, ItemComposition> effective;
+        private final Map<Item, ItemCompositionResolution> diagnostics;
+        private final long revision;
+        private final long tagGeneration;
+        private final boolean tagInputReady;
+        private boolean restored;
+
+        private TagGenerationCheckpoint(
+                Map<Item, List<ItemCompositionCandidate>> tagSubmissions,
+                Map<Item, ItemComposition> effective,
+                Map<Item, ItemCompositionResolution> diagnostics,
+                long revision,
+                long tagGeneration,
+                boolean tagInputReady) {
+            this.tagSubmissions = tagSubmissions;
+            this.effective = effective;
+            this.diagnostics = diagnostics;
+            this.revision = revision;
+            this.tagGeneration = tagGeneration;
+            this.tagInputReady = tagInputReady;
+        }
+    }
+
     private ItemMaterialRegistry() {}
 
     public static void register(Item item, @Nullable MaterialPrefix prefix, GTMaterial material) {
@@ -222,12 +251,20 @@ public final class ItemMaterialRegistry {
      * Starts a new external-tag generation. Explicit definitions remain process-static, while the
      * previous session's tag candidates stop being observable until their replacement is published.
      */
-    public static void beginTagGeneration() {
+    public static TagGenerationCheckpoint beginTagGeneration() {
+        TagGenerationCheckpoint checkpoint;
         boolean refresh;
         synchronized (LOCK) {
             long before = COMPOSITION_REVISION.get();
             boolean hadGeneration = tagInputReady || !TAG_SUBMISSIONS.isEmpty();
             var affected = new HashSet<>(TAG_SUBMISSIONS.keySet());
+            checkpoint = new TagGenerationCheckpoint(
+                    copyTagSubmissions(TAG_SUBMISSIONS),
+                    new IdentityHashMap<>(EFFECTIVE),
+                    new IdentityHashMap<>(DIAGNOSTICS),
+                    before,
+                    tagGeneration,
+                    tagInputReady);
             TAG_SUBMISSIONS.clear();
             tagInputReady = false;
             tagGeneration++;
@@ -236,6 +273,34 @@ public final class ItemMaterialRegistry {
             refresh = hadGeneration;
         }
         if (refresh) MaterialFormContent.publish();
+        return checkpoint;
+    }
+
+    /**
+     * Restores the complete tag-dependent state when an enclosing platform generation fails.
+     * Explicit declarations are process-static and intentionally remain outside this checkpoint.
+     */
+    public static void restoreTagGeneration(TagGenerationCheckpoint checkpoint) {
+        if (checkpoint == null) throw new IllegalArgumentException("Missing tag-generation checkpoint");
+        synchronized (LOCK) {
+            if (checkpoint.restored)
+                throw new IllegalStateException("Tag-generation checkpoint has already been restored");
+            if (tagGeneration != checkpoint.tagGeneration + 1)
+                throw new IllegalStateException("Tag-generation checkpoint is no longer current");
+            checkpoint.restored = true;
+            TAG_SUBMISSIONS.clear();
+            TAG_SUBMISSIONS.putAll(copyTagSubmissions(checkpoint.tagSubmissions));
+            EFFECTIVE.clear();
+            EFFECTIVE.putAll(checkpoint.effective);
+            DIAGNOSTICS.clear();
+            DIAGNOSTICS.putAll(checkpoint.diagnostics);
+            COMPOSITION_REVISION.set(checkpoint.revision);
+            tagGeneration = checkpoint.tagGeneration;
+            tagInputReady = checkpoint.tagInputReady;
+            effectiveSnapshot = Map.of();
+            effectiveSnapshotRevision = Long.MIN_VALUE;
+        }
+        MaterialFormContent.publish();
     }
 
     /** Candidate caches depend on the complete effective composition snapshot. */
@@ -486,6 +551,13 @@ public final class ItemMaterialRegistry {
         var result = new LinkedHashMap<Item, ItemComposition>();
         for (var row : rows) result.put(row.item(), row.composition());
         return Collections.unmodifiableMap(result);
+    }
+
+    private static Map<Item, List<ItemCompositionCandidate>> copyTagSubmissions(
+            Map<Item, List<ItemCompositionCandidate>> source) {
+        var copy = new IdentityHashMap<Item, List<ItemCompositionCandidate>>();
+        for (var entry : source.entrySet()) copy.put(entry.getKey(), List.copyOf(entry.getValue()));
+        return copy;
     }
 
     private static boolean sameCandidate(ItemCompositionCandidate left, ItemCompositionCandidate right) {

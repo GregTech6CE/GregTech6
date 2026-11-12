@@ -103,14 +103,16 @@ public final class MachineRecipeOverlay {
 
     public static Result apply(RecipeManager manager) {
         long current = ++generation;
+        ItemMaterialRegistry.TagGenerationCheckpoint checkpoint = null;
         try {
+            checkpoint = ItemMaterialRegistry.beginTagGeneration();
             return applyGeneration(manager, current);
         } catch (RuntimeException failure) {
             // A half-applied overlay would leave some maps restored and others still carrying the
             // previous world's rows. Restore every map and drop the tag-owned producers instead of
             // publishing a partial generation.
             LOGGER.error("[gregtech] Machine recipe overlay generation {} failed; restoring the baseline", current, failure);
-            recover();
+            recover(checkpoint);
             lastResult = new Result(0, 0, 0, 0, baselineRows(), false, true);
             return lastResult;
         }
@@ -126,7 +128,6 @@ public final class MachineRecipeOverlay {
         for (var map : RecipeMap.RECIPE_MAP_LIST) moved += map.restoreBaseline();
         long restoreMillis = (System.nanoTime() - started) / 1_000_000L;
         gregtech.engine.recipe.MaterialUnitRecipes.discardUnregistered();
-        ItemMaterialRegistry.beginTagGeneration();
         long producersStarted = System.nanoTime();
         DecompositionRecipeLoader.rebuild();
         ExternalOreProcessing.rebuild();
@@ -179,10 +180,10 @@ public final class MachineRecipeOverlay {
     }
 
     /** Drops every overlay-owned row and returns the maps to their captured baseline. */
-    private static void recover() {
+    private static void recover(ItemMaterialRegistry.TagGenerationCheckpoint checkpoint) {
         try {
             for (var map : RecipeMap.RECIPE_MAP_LIST) if (map.hasBaseline()) map.restoreBaseline();
-            ExternalOreProcessing.clear();
+            ExternalOreProcessing.clearOwnedRows();
             DecompositionRecipeLoader.clear();
             ShredderRecyclingRecipes.clearTagRows();
             gregtech.content.recipe.NonOreMacerationRows.clear();
@@ -204,6 +205,14 @@ public final class MachineRecipeOverlay {
             for (var map : RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
         } catch (RuntimeException secondary) {
             LOGGER.error("[gregtech] Machine recipe overlay recovery failed", secondary);
+        } finally {
+            if (checkpoint != null) {
+                try {
+                    ItemMaterialRegistry.restoreTagGeneration(checkpoint);
+                } catch (RuntimeException restoreFailure) {
+                    LOGGER.error("[gregtech] Machine recipe overlay composition recovery failed", restoreFailure);
+                }
+            }
         }
     }
 

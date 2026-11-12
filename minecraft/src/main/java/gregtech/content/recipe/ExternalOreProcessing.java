@@ -53,6 +53,11 @@ public final class ExternalOreProcessing {
         ItemMaterialRegistry.beginTagGeneration();
     }
 
+    /** Removes adapter rows without starting a replacement tag generation. */
+    static synchronized void clearOwnedRows() {
+        clearOwnedState();
+    }
+
     private static void clearOwnedState() {
         // Restore displaced source rows before removing them; otherwise an old mirror can resurrect this reload's
         // predecessors.

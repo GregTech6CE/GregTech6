@@ -56,7 +56,10 @@ final class SourceThermalNativeAdapter {
    if(input.isEmpty()||output.isEmpty())return null;
    var recipe=RecipeMap.make(true,new ItemStack[]{input.copy()},new ItemStack[0],null,null,
        new FluidStack[0],new FluidStack[]{output.copy()},ticks,power,0);
-   return recipe==null?null:map.addRecipe(recipe.withItemInputGuard(0,inputProof::matches));
+   return recipe==null?null:RecoveryRecipePublisher.publish(
+       map,RecoveryRecipePublisher.explicit(
+           recipe.withItemInputGuard(0,inputProof::matches).withSource("recovery:thermal-native"),
+           "thermal-native"));
   }
  }
  private static Outcome result(Action action,Reason reason){return new Outcome(action,reason,List.of());}

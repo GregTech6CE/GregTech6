@@ -111,7 +111,13 @@ public final class VanillaStoneMachineRecipes {
     private static void add(RecipeMap map, Recipe recipe) {
         for (var input : recipe.mInputs) if (input.isEmpty()) return;
         for (var output : recipe.mOutputs) if (output.isEmpty()) return;
-        if (map.addRecipe(recipe, true, false, false, false) != null) added++;
+        Recipe accepted = map == MachineRecipeMaps.Smelter || map == MachineRecipeMaps.Shredder
+                ? RecoveryRecipePublisher.publish(
+                        map,
+                        RecoveryRecipePublisher.explicit(
+                                recipe.withSource("recovery:vanilla-stone"), "vanilla-stone"))
+                : map.addRecipe(recipe, true, false, false, false);
+        if (accepted != null) added++;
     }
 
     private static ItemStack vanilla(String path) { return item("minecraft:" + path); }

@@ -1,9 +1,9 @@
 package gregtech.content.recipe;
 
+import com.mojang.logging.LogUtils;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.stack.StackCompat;
-import com.mojang.logging.LogUtils;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;

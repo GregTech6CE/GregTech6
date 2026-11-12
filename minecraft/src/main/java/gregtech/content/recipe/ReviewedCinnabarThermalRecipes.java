@@ -72,6 +72,9 @@ public final class ReviewedCinnabarThermalRecipes {
   if(proof==null||input.isEmpty()||output.isEmpty())return null;
   var recipe=RecipeMap.make(true,new ItemStack[]{input.copy()},new ItemStack[0],null,null,
       new FluidStack[0],new FluidStack[]{output.copy()},ticks,16,0);
-  return recipe==null?null:map.addRecipe(recipe.withItemInputGuard(0,proof::matches));
+  return recipe==null?null:RecoveryRecipePublisher.publish(
+      map,RecoveryRecipePublisher.explicit(
+          recipe.withItemInputGuard(0,proof::matches).withSource("recovery:reviewed-thermal"),
+          "thermal-reviewed"));
  }
 }

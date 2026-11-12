@@ -27,6 +27,7 @@ import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.MaterialEquivalence;
+import gregtech.engine.material.MaterialPublication;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.tool.GTToolType;
@@ -719,6 +720,43 @@ public final class MaterialBaselineTests {
                 closed = expected.getMessage().contains("closed");
             }
             helper.assertTrue(closed, "explicit item composition registration closes after final validation");
+        } finally {
+            ItemMaterialRegistry.publishTagCandidates(Map.of(item, List.of()));
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void failedTagGenerationRestoresThePreviousPublicationState(GameTestHelper helper) {
+        var item = Items.DRAGON_EGG;
+        var previous = taggedComposition(Materials.Copper, 4);
+        try {
+            ItemMaterialRegistry.publishTagCandidates(Map.of(item, List.of(previous)));
+            var previousComposition = ItemMaterialRegistry.base(item).orElseThrow();
+            var previousDiagnosis = ItemMaterialRegistry.compositionDiagnosis(item).orElseThrow();
+            var previousState = ItemMaterialRegistry.compositionState();
+            var previousPublication = MaterialPublication.current();
+
+            var checkpoint = ItemMaterialRegistry.beginTagGeneration();
+            ItemMaterialRegistry.publishTagCandidates(
+                    Map.of(item, List.of(taggedComposition(Materials.Iron, GTValues.U))));
+            helper.assertFalse(
+                    previousComposition.equals(ItemMaterialRegistry.base(item).orElseThrow()),
+                    "a pending tag generation can replace the effective composition");
+
+            ItemMaterialRegistry.restoreTagGeneration(checkpoint);
+            helper.assertTrue(
+                    previousComposition.equals(ItemMaterialRegistry.base(item).orElseThrow()),
+                    "rolling back a failed generation restores the previous effective composition");
+            helper.assertTrue(
+                    previousDiagnosis.equals(ItemMaterialRegistry.compositionDiagnosis(item).orElseThrow()),
+                    "rolling back a failed generation restores the previous composition diagnosis");
+            helper.assertTrue(
+                    previousState.equals(ItemMaterialRegistry.compositionState()),
+                    "rolling back a failed generation restores readiness, generation and revision state");
+            helper.assertTrue(
+                    previousPublication == MaterialPublication.current(),
+                    "rolling back a failed generation leaves the last successful publication untouched");
         } finally {
             ItemMaterialRegistry.publishTagCandidates(Map.of(item, List.of()));
         }
