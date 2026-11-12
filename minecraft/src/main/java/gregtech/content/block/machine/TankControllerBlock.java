@@ -137,14 +137,14 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
             net.minecraft.world.level.storage.loot.LootParams.Builder context) {
         ItemStack result = new ItemStack(this);
         if (context.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
-                instanceof MultiblockTankControllerBlockEntity tank)
+                instanceof MultiblockTankControllerBlockEntity tank) {
 //? if >=1.21.1 {
-        /*result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(tank,
-                tank.saveWithId(tank.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithId(tank.getLevel().registryAccess()));
 *///?} else {
-        result.addTagElement("BlockEntityTag", gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(result, data);
+        }
         return java.util.List.of(result);
     }
 
@@ -157,26 +157,21 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
         ItemStack result = new ItemStack(this);
-        if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank)
+        if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank) {
 //? if >=1.21.1 {
-        /*result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(tank,
-                tank.saveWithId(tank.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithId(tank.getLevel().registryAccess()));
 *///?} else {
-        result.addTagElement("BlockEntityTag", gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(result, data);
+        }
         return result;
     }
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state,
             @Nullable net.minecraft.world.entity.LivingEntity placer, ItemStack stack) {
-//? if >=1.21.1 {
-        /*var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        net.minecraft.nbt.CompoundTag saved = component == null ? null : component.copyTag();
-*///?} else {
-        net.minecraft.nbt.CompoundTag saved = stack.getTagElement("BlockEntityTag");
-//?}
+        net.minecraft.nbt.CompoundTag saved = gregtech.engine.stack.BlockEntityData.read(stack);
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank && saved != null)
 //? if >=1.21.1 {
         /*tank.loadAdditional(saved, level.registryAccess());

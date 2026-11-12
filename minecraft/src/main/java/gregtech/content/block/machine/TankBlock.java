@@ -121,12 +121,10 @@ public class TankBlock extends Block implements EntityBlock {
         if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof TankBlockEntity tank) {
 //? if >=1.21.1 {
             /*var data = tank.saveItemData(builder.getLevel().registryAccess());
-            if (!data.isEmpty()) stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                    net.minecraft.world.item.component.CustomData.of(data));
 *///?} else {
             var data = tank.saveItemData();
-            if (!data.isEmpty()) stack.addTagElement("BlockEntityTag", data);
 //?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return java.util.List.of(stack);
     }

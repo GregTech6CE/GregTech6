@@ -47,12 +47,14 @@ public final class OriginalLightningRodControllerBlock extends Block implements 
 
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
         ItemStack stack = new ItemStack(this);
-        if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof LightningRodControllerBlockEntity rod)
+        if (context.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof LightningRodControllerBlockEntity rod) {
 //? if >=1.21.1 {
-            /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(rod,rod.saveWithId(rod.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod, rod.saveWithId(rod.getLevel().registryAccess()));
 *///?} else {
-            stack.addTagElement("BlockEntityTag", gregtech.content.cover.ComponentCoverFallback.forItem(rod,rod.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod, rod.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return List.of(stack);
     }
 
@@ -62,25 +64,23 @@ public final class OriginalLightningRodControllerBlock extends Block implements 
     @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
         ItemStack stack = new ItemStack(this);
-        if (level.getBlockEntity(pos) instanceof LightningRodControllerBlockEntity rod)
+        if (level.getBlockEntity(pos) instanceof LightningRodControllerBlockEntity rod) {
 //? if >=1.21.1 {
-            /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(rod,rod.saveWithId(rod.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod, rod.saveWithId(rod.getLevel().registryAccess()));
 *///?} else {
-            stack.addTagElement("BlockEntityTag", gregtech.content.cover.ComponentCoverFallback.forItem(rod,rod.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod, rod.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return stack;
     }
 
     @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state,
                                       @Nullable LivingEntity placer, ItemStack stack) {
-//? if >=1.21.1 {
-        /*var saved = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-*///?} else {
-        var saved = stack.getTagElement("BlockEntityTag");
-//?}
+        var saved = gregtech.engine.stack.BlockEntityData.read(stack);
         if (saved != null && level.getBlockEntity(pos) instanceof LightningRodControllerBlockEntity rod)
 //? if >=1.21.1 {
-            /*rod.restorePersistentState(saved.copyTag(),level.registryAccess());
+            /*rod.restorePersistentState(saved,level.registryAccess());
 *///?} else {
             rod.load(saved);
 //?}

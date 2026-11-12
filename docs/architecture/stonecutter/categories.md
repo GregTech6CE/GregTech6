@@ -38,9 +38,9 @@
 
 ## ItemStack
 
-摘要：物品栈的 provider 签名、自定义数据存储、线格式、旧数据迁移、身份比较与封面过滤器 provider。
+摘要：物品栈的 provider 签名、自定义数据存储、类型化组件门面、线格式、旧数据迁移、身份比较与封面过滤器 provider。
 
-关键词：ItemStack, ItemStack#save, ItemStack#parseOptional, CUSTOM_DATA, CustomData, StackData, ItemStack#getTag, ItemStack#getOrCreateTag, ItemStack#setTag, ItemStack#hasTag, hasAnyData, hasCustomData, isSameItemSameTags, isSameItemSameComponents, StackCompat.sameItem, BLOCK_ENTITY_DATA, registryAccess, setItemFilter, setFluidFilter
+关键词：ItemStack, ItemStack#save, ItemStack#parseOptional, CUSTOM_DATA, CustomData, StackData, BlockEntityData, BlockStateData, BLOCK_ENTITY_DATA, BLOCK_STATE, BlockItemStateProperties, BlockEntityTag, BlockStateTag, ItemStack#getTag, ItemStack#getOrCreateTag, ItemStack#setTag, ItemStack#hasTag, hasAnyData, hasCustomData, isSameItemSameTags, isSameItemSameComponents, StackCompat.sameItem, registryAccess, setItemFilter, setFluidFilter
 
 分类 README：[ItemStack/README.md](ItemStack/README.md)
 

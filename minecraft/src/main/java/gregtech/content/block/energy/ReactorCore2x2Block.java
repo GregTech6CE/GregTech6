@@ -127,10 +127,12 @@ public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements E
         var stack=new ItemStack(this);
         if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof gregtech.content.blockentity.energy.ReactorCoreBlockEntity core){
 //? if >=1.21.1 {
-            /*var tag=gregtech.content.cover.ComponentCoverFallback.forItem(core,core.saveWithId(builder.getLevel().registryAccess()));tag.remove("gt.rods");tag.remove("gt.overflow");tag.remove("gt.neutrons");tag.putBoolean("gt.stopped",true);stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(tag));
+            /*var tag=gregtech.content.cover.ComponentCoverFallback.forItem(core,core.saveWithId(builder.getLevel().registryAccess()));
 *///?} else {
-            var tag=gregtech.content.cover.ComponentCoverFallback.forItem(core,core.saveWithoutMetadata());tag.remove("gt.rods");tag.remove("gt.overflow");tag.remove("gt.neutrons");tag.putBoolean("gt.stopped",true);stack.getOrCreateTag().put("BlockEntityTag",tag);
+            var tag=gregtech.content.cover.ComponentCoverFallback.forItem(core,core.saveWithoutMetadata());
 //?}
+            tag.remove("gt.rods");tag.remove("gt.overflow");tag.remove("gt.neutrons");tag.putBoolean("gt.stopped",true);
+            gregtech.engine.stack.BlockEntityData.write(stack, tag);
         }
         ReactorPorts.saveItemState(stack, state);
         return java.util.List.of(stack);

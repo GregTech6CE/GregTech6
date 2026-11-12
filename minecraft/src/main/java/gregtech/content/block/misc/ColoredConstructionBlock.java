@@ -27,13 +27,7 @@ public class ColoredConstructionBlock extends Block {
         if (stack.getItem() instanceof BlockItem item && item.getBlock() instanceof FixedConstructionColor fixed) return fixed.color();
         DyeColor fallback = stack.getItem() instanceof BlockItem item && item.getBlock().defaultBlockState().hasProperty(COLOR)
                 ? item.getBlock().defaultBlockState().getValue(COLOR) : DyeColor.WHITE;
-//? if >=1.21.1 {
-        /*var data = stack.get(net.minecraft.core.component.DataComponents.BLOCK_STATE);
-        return data == null ? fallback : DyeColor.byName(data.properties().get("color"), fallback);
-*///?} else {
-        var data = stack.getTagElement("BlockStateTag");
-        return data == null ? fallback : DyeColor.byName(data.getString("color"), fallback);
-//?}
+        return DyeColor.byName(gregtech.engine.stack.BlockStateData.getProperty(stack, "color"), fallback);
     }
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         return List.of(ConcreteBlock.coloredItem(this, FixedConstructionColor.colorOf(state)));

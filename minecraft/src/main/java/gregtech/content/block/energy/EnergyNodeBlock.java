@@ -230,18 +230,9 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
 //?}
         if (gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(spec)) {
-//? if >=1.21.1 {
-            /*var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-            var data = component == null ? new net.minecraft.nbt.CompoundTag() : component.copyTag();
-*///?} else {
-            var data = stack.getTagElement("BlockEntityTag");
-//?}
+            var data = gregtech.engine.stack.BlockEntityData.readOrEmpty(stack);
             gregtech.client.EnergyDeviceTooltips.append(spec,
-//? if >=1.21.1 {
-                    /*data.getBoolean("gt.inverted"), getExplosionResistance(), tooltip);
-*///?} else {
-                    data != null && data.getBoolean("gt.inverted"), getExplosionResistance(), tooltip);
-//?}
+                    data.getBoolean("gt.inverted"), getExplosionResistance(), tooltip);
             return;
         }
         String outUnit = spec.outType().getShortName();

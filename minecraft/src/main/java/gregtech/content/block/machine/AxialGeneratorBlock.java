@@ -79,11 +79,14 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements gr
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) { return defaultBlockState().setValue(FACING,context.getNearestLookingDirection().getOpposite()); }
     @Override public List<ItemStack> getDrops(BlockState state,LootParams.Builder builder) {
         var stack=new ItemStack(this);
+        if(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AxialGeneratorBlockEntity machine) {
 //? if >=1.21.1 {
-        /*if(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AxialGeneratorBlockEntity machine)stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithId(machine.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithId(machine.getLevel().registryAccess()));
 *///?} else {
-        if(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AxialGeneratorBlockEntity machine)stack.getOrCreateTag().put("BlockEntityTag",gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return List.of(stack);
     }
 //? if >=1.21.1 {

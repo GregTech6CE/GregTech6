@@ -38,12 +38,14 @@ public final class LaserConverterBlock extends AutoToolBlock {
     public LaserSpec spec() { return spec; }
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack=new net.minecraft.world.item.ItemStack(this);
-        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LaserConverterBlockEntity laser)
+        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LaserConverterBlockEntity laser) {
 //? if >=1.21.1 {
-            /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(laser,laser.saveWithId(builder.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(laser, laser.saveWithId(builder.getLevel().registryAccess()));
 *///?} else {
-            stack.getOrCreateTag().put("BlockEntityTag",gregtech.content.cover.ComponentCoverFallback.forItem(laser,laser.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(laser, laser.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return java.util.List.of(stack);
     }
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) {

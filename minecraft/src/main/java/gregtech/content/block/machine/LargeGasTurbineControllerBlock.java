@@ -90,11 +90,14 @@ public class LargeGasTurbineControllerBlock extends DirectionalBlock
     }
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){
         var stack=new net.minecraft.world.item.ItemStack(this);
+        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LargeGasTurbineControllerBlockEntity machine) {
 //? if >=1.21.1 {
-        /*if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LargeGasTurbineControllerBlockEntity machine)stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithId(machine.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithId(machine.getLevel().registryAccess()));
 *///?} else {
-        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LargeGasTurbineControllerBlockEntity machine)stack.getOrCreateTag().put("BlockEntityTag",gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return java.util.List.of(stack);
     }
 }

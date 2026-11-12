@@ -168,23 +168,13 @@ public class DustFunnelBlock extends Block implements EntityBlock {
         if (mode == 0) return stack;
         CompoundTag data = new CompoundTag();
         data.putInt(MODE_TAG, Math.floorMod(mode, 5));
-//? if >=1.21.1 {
-        /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                net.minecraft.world.item.component.CustomData.of(data));
-*///?} else {
-        stack.addTagElement("BlockEntityTag", data);
-//?}
+        gregtech.engine.stack.BlockEntityData.write(stack, data);
         return stack;
     }
 
     @Nullable
     private static CompoundTag blockEntityTag(ItemStack stack) {
-//? if >=1.21.1 {
-        /*var data = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        return data == null ? null : data.copyTag();
-*///?} else {
-        return stack.getTagElement("BlockEntityTag");
-//?}
+        return gregtech.engine.stack.BlockEntityData.read(stack);
     }
 
     @Override

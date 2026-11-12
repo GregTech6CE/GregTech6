@@ -125,14 +125,14 @@ public class FilterBlock extends net.minecraft.world.level.block.DirectionalBloc
             net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack = new net.minecraft.world.item.ItemStack(this);
         var entity = builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY);
+        if (entity instanceof FilterBlockEntity) {
 //? if >=1.21.1 {
-        /*if (entity instanceof FilterBlockEntity) stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(entity,
-                        entity.saveWithId(builder.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(entity, entity.saveWithId(builder.getLevel().registryAccess()));
 *///?} else {
-        if (entity instanceof FilterBlockEntity) stack.getOrCreateTag().put("BlockEntityTag",
-                gregtech.content.cover.ComponentCoverFallback.forItem(entity, entity.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(entity, entity.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return java.util.List.of(stack);
     }
 }

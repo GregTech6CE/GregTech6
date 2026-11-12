@@ -17,7 +17,9 @@
 | 子类型 | 说明 | 文档 | 关键词 |
 | --- | --- | --- | --- |
 | provider | `ItemStack#save` / `parseOptional` 的 provider 参数 | [provider.md](provider.md) | save, parseOptional |
-| storage | `tag` ↔ `CUSTOM_DATA`、`StackData`、谓词、类型化组件 | [storage.md](storage.md) | CUSTOM_DATA, StackData |
+| storage | `tag` ↔ `CUSTOM_DATA`、`StackData`、谓词 | [storage.md](storage.md) | CUSTOM_DATA, StackData |
+| block-entity-data | `BlockEntityTag` ↔ `BLOCK_ENTITY_DATA`、`BlockEntityData` 门面 | [block-entity-data.md](block-entity-data.md) | BLOCK_ENTITY_DATA, BlockEntityData, CustomData |
+| block-state-data | `BlockStateTag` ↔ `BLOCK_STATE`、`BlockStateData` 门面 | [block-state-data.md](block-state-data.md) | BLOCK_STATE, BlockStateData, BlockItemStateProperties |
 | wire-format | `{id, Count, tag}` → `{id, count, components}` | [wire-format.md](wire-format.md) | Count, components |
 | migration | 旧 `tag` 搬进 `CUSTOM_DATA` | [migration.md](migration.md) | tag, CUSTOM_DATA |
 | identity | `isSameItemSameTags` ↔ `isSameItemSameComponents` | [identity.md](identity.md) | StackCompat.sameItem |

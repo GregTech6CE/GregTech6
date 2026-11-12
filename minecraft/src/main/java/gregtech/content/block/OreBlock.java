@@ -122,13 +122,7 @@ public class OreBlock extends Block implements MaterialBlockLike {
     }
 
     public static boolean isBrokenStack(ItemStack stack) {
-//? if >=1.21.1 {
-        /*return "true".equals(stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_STATE,
-                net.minecraft.world.item.component.BlockItemStateProperties.EMPTY).properties().get(BROKEN.getName()));
-*///?} else {
-        var data = StackData.read(stack);
-        return data != null && "true".equals(data.getCompound("BlockStateTag").getString(BROKEN.getName()));
-//?}
+        return "true".equals(gregtech.engine.stack.BlockStateData.getProperty(stack, BROKEN.getName()));
     }
 
     /** The host rock of a state; any state that is not an ore block reads as {@link OreHostStone#STONE}. */
@@ -193,26 +187,20 @@ public class OreBlock extends Block implements MaterialBlockLike {
         OreHostStone stone = stoneOf(state);
         boolean broken = isBroken(state);
         if (stone == OreHostStone.STONE && !broken) return stack;
+        gregtech.engine.stack.BlockStateData.with(stack, STONE.getName(), stone.id());
+        if (broken) gregtech.engine.stack.BlockStateData.with(stack, BROKEN.getName(), "true");
 //? if >=1.21.1 {
-        /*var properties = stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_STATE,
-                net.minecraft.world.item.component.BlockItemStateProperties.EMPTY).with(STONE, stone);
-        if (broken) properties = properties.with(BROKEN, true);
-        stack.set(net.minecraft.core.component.DataComponents.BLOCK_STATE, properties);
-        // Modern host state is an item component, with no fictitious stored block entity.
+        /*// Modern host state is an item component, with no fictitious stored block entity.
 *///?} else {
-        StackData.update(stack, tag -> {
-            CompoundTag stateTag = new CompoundTag();
-            stateTag.putString(STONE.getName(), stone.id());
-            if (broken) stateTag.putString(BROKEN.getName(), "true");
-            tag.put("BlockStateTag", stateTag);
-            if (!broken) {
-                // Only intact ore predates the block-state migration. New broken ore has no legacy
-                // entity, so do not mark it as a filled container in material recovery.
+        if (!broken) {
+            // Only intact ore predates the block-state migration. New broken ore has no legacy
+            // entity, so do not mark it as a filled container in material recovery.
+            StackData.update(stack, tag -> {
                 CompoundTag entityTag = new CompoundTag();
                 entityTag.putString(OreBlockEntity.TAG_STONE, stone.id());
                 tag.put("BlockEntityTag", entityTag);
-            }
-        });
+            });
+        }
 //?}
         return stack;
     }
@@ -229,11 +217,8 @@ public class OreBlock extends Block implements MaterialBlockLike {
 
     /** The host rock an ore item carries: {@code BlockStateTag} first, then the legacy {@code BlockEntityTag}. */
     public static OreHostStone stoneOfStack(ItemStack stack) {
-//? if >=1.21.1 {
-        /*var properties = stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_STATE,
-                net.minecraft.world.item.component.BlockItemStateProperties.EMPTY).properties();
-        if (properties.containsKey(STONE.getName())) return OreHostStone.byId(properties.get(STONE.getName()));
-*///?}
+        String stone = gregtech.engine.stack.BlockStateData.getProperty(stack, STONE.getName());
+        if (stone != null) return OreHostStone.byId(stone);
         CompoundTag data = StackData.read(stack);
         if (data != null) {
             CompoundTag stateTag = data.getCompound("BlockStateTag");

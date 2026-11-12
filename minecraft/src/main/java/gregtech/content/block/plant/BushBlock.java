@@ -177,13 +177,7 @@ public class BushBlock extends Block implements EntityBlock, SimpleWaterloggedBl
     }
 
     private static String packedBerry(ItemStack stack) {
-//? if >=1.21.1 {
-        /*var data = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        return data == null ? "" : data.copyTag().getString("berry");
-*///?} else {
-        CompoundTag data = stack.getTagElement("BlockEntityTag");
-        return data == null ? "" : data.getString("berry");
-//?}
+        return gregtech.engine.stack.BlockEntityData.readOrEmpty(stack).getString("berry");
     }
 
     @Override
@@ -201,10 +195,8 @@ public class BushBlock extends Block implements EntityBlock, SimpleWaterloggedBl
                 var data=new CompoundTag();data.putString("berry",bush.berryId());
 //? if >=1.21.1 {
                 /*data.putString("id",net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(bush.getType()).toString());
-                var stack=new ItemStack(this);stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));return stack;
-*///?} else {
-                var stack=new ItemStack(this);stack.addTagElement("BlockEntityTag",data);return stack;
-//?}
+*///?}
+                var stack=new ItemStack(this);gregtech.engine.stack.BlockEntityData.write(stack,data);return stack;
             }
         }
         return new ItemStack(this);
@@ -232,12 +224,7 @@ public class BushBlock extends Block implements EntityBlock, SimpleWaterloggedBl
             if (level.getBlockEntity(pos) instanceof BushBlockEntity bush) bush.refreshSupport();
             return;
         }
-//? if >=1.21.1 {
-        /*var packedData=stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        CompoundTag data=packedData==null?null:packedData.copyTag();
-*///?} else {
-        CompoundTag data = stack.getTagElement("BlockEntityTag");
-//?}
+        CompoundTag data = gregtech.engine.stack.BlockEntityData.read(stack);
         if (data == null || !data.contains("berry", Tag.TAG_STRING)) return;
         String berryId = data.getString("berry");
         if (gregtech.content.registry.GTBushes.byBerry(berryId) == null) return;

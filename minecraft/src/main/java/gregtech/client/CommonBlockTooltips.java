@@ -150,12 +150,7 @@ public final class CommonBlockTooltips {
     }
 
     static CompoundTag blockData(ItemStack stack) {
-//? if >=1.21.1 {
-        /*var data = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        return data == null ? null : data.copyTag();
-*///?} else {
-        return stack.getTagElement("BlockEntityTag");
-//?}
+        return gregtech.engine.stack.BlockEntityData.read(stack);
     }
 
     public static boolean containsKey(List<Component> lines, String key) {

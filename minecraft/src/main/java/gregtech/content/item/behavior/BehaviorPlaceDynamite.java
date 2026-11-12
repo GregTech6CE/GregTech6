@@ -32,14 +32,7 @@ public final class BehaviorPlaceDynamite {
             if (!(inventoryStack.getItem() instanceof BlockItem item) || !(item.getBlock() instanceof DynamiteBlock)) continue;
             // Use a copy: neither failed placement nor the temporary SUNK tag can alter inventory NBT.
             var placed = inventoryStack.copy();
-//? if >=1.21.1 {
-            /*var stateProperties=placed.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_STATE,net.minecraft.world.item.component.BlockItemStateProperties.EMPTY);
-            placed.set(net.minecraft.core.component.DataComponents.BLOCK_STATE,stateProperties.with(DynamiteBlock.SUNK,true));
-*///?} else {
-            var stateTag = placed.getOrCreateTag().getCompound("BlockStateTag");
-            stateTag.putString("sunk", "true");
-            placed.getOrCreateTag().put("BlockStateTag", stateTag);
-//?}
+            gregtech.engine.stack.BlockStateData.with(placed, "sunk", "true");
             var hit = new BlockHitResult(context.getClickLocation(), context.getClickedFace(), support, context.isInside());
             var placement = new UseOnContext(level, player, context.getHand(), placed, hit);
             // ItemStack.useOn retains Forge block-place snapshots and protection-event rollback.

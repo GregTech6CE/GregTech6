@@ -39,13 +39,7 @@ public final class PortableTankHandler implements IFluidHandlerItem {
     }
 
     private CompoundTag data() {
-//? if >=1.21.1 {
-        /*var data = container.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        return data == null ? new CompoundTag() : data.copyTag();
-*///?} else {
-        var data = container.getTagElement("BlockEntityTag");
-        return data == null ? new CompoundTag() : data.copy();
-//?}
+        return gregtech.engine.stack.BlockEntityData.readOrEmpty(container);
     }
 
     private void save() {
@@ -64,13 +58,8 @@ public final class PortableTankHandler implements IFluidHandlerItem {
         /*if (data.size() == 1 && data.contains("id")) data.remove("id");
         if (!data.isEmpty()) data.putString("id", net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE
                 .getKey(gregtech.content.registry.GTBlockEntities.TANK.get()).toString());
-        if (data.isEmpty()) container.remove(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        else container.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                net.minecraft.world.item.component.CustomData.of(data));
-*///?} else {
-        if (data.isEmpty()) container.removeTagKey("BlockEntityTag");
-        else container.addTagElement("BlockEntityTag", data);
-//?}
+*///?}
+        gregtech.engine.stack.BlockEntityData.write(container, data);
     }
 
     @Override public ItemStack getContainer() { return container; }

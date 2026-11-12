@@ -1,6 +1,7 @@
 /* Adapted from GregTech-6 Team's CoverTextureCanvas / visual recipe maps, LGPL-3.0-or-later. */
 package gregtech.content.cover;
 
+import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -9,13 +10,11 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import java.util.*;
 
 /** Native block-state boundary; stored names/properties survive changes to runtime registry order. */
 public final class CanvasData {
 
-    private CanvasData() {
-    }
+    private CanvasData() {}
 
     public static boolean isCanvas(ItemStack stack) {
         return stack.getItem() instanceof gregtech.content.item.CanvasItem;
@@ -54,12 +53,14 @@ public final class CanvasData {
 
     public static CanvasRules.Image fromState(BlockState state) {
         var values = new TreeMap<String, String>();
-        for (var entry : state.getValues().entrySet()) values.put(entry.getKey().getName(), valueName(entry.getKey(), entry.getValue()));
-        return CanvasRules.image(BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString(), values);
+        for (var entry : state.getValues().entrySet())
+            values.put(entry.getKey().getName(), valueName(entry.getKey(), entry.getValue()));
+        return CanvasRules.image(
+                BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString(), values);
     }
-    @SuppressWarnings({
-        "unchecked", "rawtypes"
-    }) private static String valueName(Property property, Comparable value) {
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static String valueName(Property property, Comparable value) {
         return property.getName(value);
     }
 
@@ -86,23 +87,17 @@ public final class CanvasData {
         var state = mapped(stack);
         if (state == null && stack.getItem() instanceof BlockItem item) {
             state = item.getBlock().defaultBlockState();
-//? if >=1.21.1 {
-            /*var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_STATE);
-            var properties = new CompoundTag();
-            if (component != null) component.properties().forEach(properties::putString);
-*///?} else {
-            var properties = CoverStackData.readOrEmpty(stack).getCompound("BlockStateTag");
-//?}
-            for (String key : properties.getAllKeys()) {
-                var property = state.getBlock().getStateDefinition().getProperty(key);
-                if (property != null) state = set(state, property, properties.getString(key));
+            var properties = gregtech.engine.stack.BlockStateData.readProperties(stack);
+            for (var entry : properties.entrySet()) {
+                var property = state.getBlock().getStateDefinition().getProperty(entry.getKey());
+                if (property != null) state = set(state, property, entry.getValue());
             }
             if (item.getBlock() instanceof gregtech.content.block.misc.ColoredConstructionBlock)
-            state = gregtech.content.block.misc.FixedConstructionColor.recolor(state,
-                    gregtech.content.block.misc.ColoredConstructionBlock.itemColor(stack));
+                state = gregtech.content.block.misc.FixedConstructionColor.recolor(
+                        state, gregtech.content.block.misc.ColoredConstructionBlock.itemColor(stack));
             if (item.getBlock() instanceof gregtech.content.block.misc.ColoredGlassBlock)
-            state = gregtech.content.block.misc.FixedConstructionColor.recolor(state,
-                    gregtech.content.block.misc.ColoredGlassBlock.itemColor(stack));
+                state = gregtech.content.block.misc.FixedConstructionColor.recolor(
+                        state, gregtech.content.block.misc.ColoredGlassBlock.itemColor(stack));
         }
         return state == null ? null : fromState(state);
     }
@@ -134,7 +129,9 @@ public final class CanvasData {
 
     public static void tooltip(CompoundTag data, List<Component> lines) {
         var state = state(read(data));
-        if (state != null) lines.add(Component.translatable("gt.tooltip.canvas.image").append(state.getBlock().getName()).withStyle(
-                net.minecraft.ChatFormatting.AQUA));
+        if (state != null)
+            lines.add(Component.translatable("gt.tooltip.canvas.image")
+                    .append(state.getBlock().getName())
+                    .withStyle(net.minecraft.ChatFormatting.AQUA));
     }
 }

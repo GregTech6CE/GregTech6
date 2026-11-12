@@ -16,11 +16,7 @@ public final class PlacedReactorRodBlockEntity extends BlockEntity {
         if (stack.isEmpty() || stack.getItem() != getBlockState().getBlock().asItem()) return;
         stored = stack.copyWithCount(1);
         // BlockEntityTag is not needed inside our stack and must not grow recursively.
-//? if >=1.21.1 {
-        /*stored.remove(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-*///?} else {
-        if (stored.hasTag()) stored.getTag().remove("BlockEntityTag");
-//?}
+        gregtech.engine.stack.BlockEntityData.remove(stored);
         setChanged();
     }
 //? if >=1.21.1 {

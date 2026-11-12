@@ -26,12 +26,10 @@ public final class TankTooltips {
 //? if >=1.21.1 {
     /*public static void appendTank(TankSpec spec, net.minecraft.world.item.ItemStack stack,
                                   net.minecraft.core.HolderLookup.Provider lookup, List<Component> tooltip) {
-        var stored = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        var data = stored == null ? null : stored.copyTag();
 *///?} else {
     public static void appendTank(TankSpec spec, net.minecraft.world.item.ItemStack stack, List<Component> tooltip) {
-        var data = stack.getTagElement("BlockEntityTag");
 //?}
+        var data = gregtech.engine.stack.BlockEntityData.read(stack);
         var tank = new gregtech.engine.fluid.FluidTankGT(spec.capacity());
 //? if >=1.21.1 {
         /*if (data != null && data.contains("gt.tank")) tank.readFromNBT(data.getCompound("gt.tank"), lookup == null

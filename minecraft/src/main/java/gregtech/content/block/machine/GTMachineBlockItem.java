@@ -18,12 +18,7 @@ public class GTMachineBlockItem extends BlockItem {
 
     @Override
     public int getMaxStackSize(ItemStack stack) {
-//? if >=1.21.1 {
-        /*var stored = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        var tag = stored == null ? null : stored.copyTag();
-*///?} else {
-        var tag = stack.getTagElement("BlockEntityTag");
-//?}
+        var tag = gregtech.engine.stack.BlockEntityData.read(stack);
         if (getBlock() instanceof TankBlock
                 && tag != null
                 && tag.getCompound("gt.tank").getLong("Amount") > 0) return 1;

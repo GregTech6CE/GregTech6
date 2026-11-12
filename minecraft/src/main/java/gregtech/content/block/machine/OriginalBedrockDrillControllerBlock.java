@@ -127,11 +127,7 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
 //?}
             data.remove("gt.output");
             // The output slot is dropped separately by onRemove.
-//? if >=1.21.1 {
-            /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.of(data));
-*///?} else {
-            stack.addTagElement("BlockEntityTag", data);
-//?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return List.of(stack);
     }
@@ -145,28 +141,24 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
         ItemStack stack = new ItemStack(this);
-        if (level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill)
+        if (level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill) {
 //? if >=1.21.1 {
-        /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(drill,
-                drill.saveWithId(drill.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill, drill.saveWithId(drill.getLevel().registryAccess()));
 *///?} else {
-        stack.addTagElement("BlockEntityTag", gregtech.content.cover.ComponentCoverFallback.forItem(drill, drill.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill, drill.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return stack;
     }
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state,
             @Nullable LivingEntity placer, ItemStack stack) {
-//? if >=1.21.1 {
-        /*var saved = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-*///?} else {
-        var saved = stack.getTagElement("BlockEntityTag");
-//?}
+        var saved = gregtech.engine.stack.BlockEntityData.read(stack);
         if (saved != null && level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill)
 //? if >=1.21.1 {
-        /*drill.restorePersistentState(saved.copyTag(), level.registryAccess());
+        /*drill.restorePersistentState(saved, level.registryAccess());
 *///?} else {
         drill.load(saved);
 //?}

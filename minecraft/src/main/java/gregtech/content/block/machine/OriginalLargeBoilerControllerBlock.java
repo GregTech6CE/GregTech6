@@ -113,12 +113,7 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
     @Override public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
 //?}
                                           List<Component> tooltip, TooltipFlag flag) {
-//? if >=1.21.1 {
-        /*var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        var data = component == null ? null : component.copyTag();
-*///?} else {
-        var data = stack.getTagElement("BlockEntityTag");
-//?}
+        var data = gregtech.engine.stack.BlockEntityData.read(stack);
         int efficiency = data != null && data.contains("gt.efficiency") ? data.getInt("gt.efficiency") : 10000;
         gregtech.client.FunctionalBlockTooltips.appendLargeBoiler(variant.originalId(), efficiency, getExplosionResistance(), tooltip);
     }
@@ -128,12 +123,14 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
         if (entity instanceof OriginalLargeBoilerControllerBlockEntity boiler && boiler.barometerValue() > 4)
             return List.of();
         ItemStack drop = new ItemStack(this);
-        if (entity instanceof OriginalLargeBoilerControllerBlockEntity boiler)
+        if (entity instanceof OriginalLargeBoilerControllerBlockEntity boiler) {
 //? if >=1.21.1 {
-            /*drop.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(boiler,boiler.saveWithId(boiler.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(boiler, boiler.saveWithId(boiler.getLevel().registryAccess()));
 *///?} else {
-            drop.addTagElement("BlockEntityTag", gregtech.content.cover.ComponentCoverFallback.forItem(boiler,boiler.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(boiler, boiler.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(drop, data);
+        }
         return List.of(drop);
     }
 //? if >=1.21.1 {
@@ -142,22 +139,19 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
     @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
         ItemStack stack = new ItemStack(this);
-        if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
+        if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler) {
 //? if >=1.21.1 {
-            /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(boiler,boiler.saveWithId(boiler.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(boiler, boiler.saveWithId(boiler.getLevel().registryAccess()));
 *///?} else {
-            stack.addTagElement("BlockEntityTag", gregtech.content.cover.ComponentCoverFallback.forItem(boiler,boiler.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(boiler, boiler.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return stack;
     }
     @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state,
                                       @Nullable LivingEntity placer, ItemStack stack) {
-//? if >=1.21.1 {
-        /*var component=stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        var saved=component==null?null:component.copyTag();
-*///?} else {
-        var saved = stack.getTagElement("BlockEntityTag");
-//?}
+        var saved = gregtech.engine.stack.BlockEntityData.read(stack);
         if (saved != null && level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
 //? if >=1.21.1 {
             /*boiler.loadAdditional(saved,level.registryAccess());

@@ -15,21 +15,17 @@ public final class ZpmEnergy {
     public static boolean isModule(ItemStack stack){return stack.is(gregtech.content.registry.GTLasers.ZPM.get().asItem());}
 //?}
     public static long stored(ItemStack stack){
-//? if >=1.21.1 {
-/*        if(!isModule(stack))return 0;
-        return ZpmWorkRules.charge(stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getLong(KEY));
-*///?} else {
-        if(!isModule(stack)||!StackData.hasAnyData(stack))return 0;
-        return ZpmWorkRules.charge(StackData.readOrEmpty(stack).getCompound("BlockEntityTag").getLong(KEY));
-//?}
+        if(!isModule(stack))return 0;
+        return ZpmWorkRules.charge(gregtech.engine.stack.BlockEntityData.readOrEmpty(stack).getLong(KEY));
     }
     public static void set(ItemStack stack,long charge){
         if(!isModule(stack))throw new IllegalArgumentException("Not a ZPM");
+        gregtech.engine.stack.BlockEntityData.update(stack, data -> {
 //? if >=1.21.1 {
-/*        var data=stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag();data.putString("id","gt6ce:zpm_module");data.putLong(KEY,ZpmWorkRules.charge(charge));stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
-*///?} else {
-        StackData.update(stack,tag->{var data=tag.getCompound("BlockEntityTag");data.putLong(KEY,ZpmWorkRules.charge(charge));tag.put("BlockEntityTag",data);});
-//?}
+/*            data.putString("id","gt6ce:zpm_module");
+*///?}
+            data.putLong(KEY,ZpmWorkRules.charge(charge));
+        });
     }
 //? if >=1.21.1 {
     /*public static ItemStack charged(){var stack=new ItemStack(gregtech.content.registry.GTZpmArtifacts.ZPM.get());set(stack,CAPACITY);return stack;}

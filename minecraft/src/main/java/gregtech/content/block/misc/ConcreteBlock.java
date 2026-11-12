@@ -68,26 +68,15 @@ public class ConcreteBlock extends Block {
         Block variant = gregtech.content.registry.GTConstructionVariants.coloredBlock(block, color);
         if (variant != null) return new ItemStack(variant);
         ItemStack stack = new ItemStack(block);
-//? if >=1.21.1 {
-        /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_STATE,new net.minecraft.world.item.component.BlockItemStateProperties(java.util.Map.of("color",color.getName())));
-*///?} else {
-        CompoundTag stateTag = new CompoundTag();
-        stateTag.putString("color", color.getName());
-        stack.addTagElement("BlockStateTag", stateTag);
-//?}
+        gregtech.engine.stack.BlockStateData.writeProperties(stack, java.util.Map.of("color", color.getName()));
         return stack;
     }
 
     public static DyeColor itemColor(ItemStack stack) {
         if (stack.getItem() instanceof net.minecraft.world.item.BlockItem item
                 && item.getBlock() instanceof FixedConstructionColor fixed) return fixed.color();
-//? if >=1.21.1 {
-        /*var data=stack.get(net.minecraft.core.component.DataComponents.BLOCK_STATE);
-        return data==null?DyeColor.LIGHT_GRAY:DyeColor.byName(data.properties().getOrDefault("color","light_gray"),DyeColor.LIGHT_GRAY);
-*///?} else {
-        CompoundTag tag = stack.getTagElement("BlockStateTag");
-        return tag == null ? DyeColor.LIGHT_GRAY : DyeColor.byName(tag.getString("color"), DyeColor.LIGHT_GRAY);
-//?}
+        String color = gregtech.engine.stack.BlockStateData.getProperty(stack, "color");
+        return DyeColor.byName(color == null ? "light_gray" : color, DyeColor.LIGHT_GRAY);
     }
 
     /** GT6 CS.DYES_INT, in DyeColor rather than GT6 metadata order. */

@@ -39,11 +39,14 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> t){return l.isClientSide?null:(w,p,state,e)->{if(e instanceof ZpmDischargerBlockEntity z)z.tick();};}
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState s,net.minecraft.world.level.storage.loot.LootParams.Builder b){
         var stack=new net.minecraft.world.item.ItemStack(asItem());
+        if(b.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ZpmDischargerBlockEntity z) {
 //? if >=1.21.1 {
-        /*if(b.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ZpmDischargerBlockEntity z)stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(z,z.saveWithId(b.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(z, z.saveWithId(b.getLevel().registryAccess()));
 *///?} else {
-        if(b.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ZpmDischargerBlockEntity z)stack.getOrCreateTag().put("BlockEntityTag",gregtech.content.cover.ComponentCoverFallback.forItem(z,z.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(z, z.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return java.util.List.of(stack);
     }
 //? if >=1.21.1 {

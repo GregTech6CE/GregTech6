@@ -183,12 +183,10 @@ public class GearboxBlock extends Block implements EntityBlock, ToolInteractionT
     @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        var data = component == null ? null : component.copyTag();
 *///?} else {
     public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        var data = stack.getTagElement("BlockEntityTag");
 //?}
+        var data = gregtech.engine.stack.BlockEntityData.read(stack);
         int gears = data == null ? 0 : data.getByte("gearMask") & 63;
         int axis = data == null ? 0 : Math.min(3, data.getByte("axisCode") & 255);
         gregtech.client.MechanicalBlockTooltips.appendGearbox(spec, gears, axis, getExplosionResistance(), tooltip);

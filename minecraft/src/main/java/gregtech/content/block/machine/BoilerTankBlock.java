@@ -150,12 +150,10 @@ public class BoilerTankBlock extends Block implements EntityBlock, gregtech.engi
     @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<Component> tooltip, TooltipFlag flag) {
-        var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        var data = component == null ? null : component.copyTag();
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        var data = stack.getTagElement("BlockEntityTag");
 //?}
+        var data = gregtech.engine.stack.BlockEntityData.read(stack);
         int efficiency = data != null && data.contains("gt.efficiency") ? data.getShort("gt.efficiency") : 10000;
         gregtech.client.FunctionalBlockTooltips.appendBoiler(spec, efficiency, getExplosionResistance(), tooltip);
     }

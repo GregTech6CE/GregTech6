@@ -12,13 +12,7 @@ public final class HeatExchangerData {
     }
 
     public static HeatExchangerRules.Settings settings(ItemStack stack) {
-//? if >=1.21.1 {
-        /*var stored = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        var data = stored == null ? null : stored.copyTag();
-*///?} else {
-        var data = stack.getTagElement("BlockEntityTag");
-//?}
-        return settings(data);
+        return settings(gregtech.engine.stack.BlockEntityData.read(stack));
     }
 
     public static HeatExchangerRules.Settings settings(CompoundTag tag) {

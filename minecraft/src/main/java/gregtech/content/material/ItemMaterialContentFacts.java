@@ -19,13 +19,8 @@ final class ItemMaterialContentFacts implements ItemMaterialRuntimeFacts.StoredC
     @Override
     public boolean hasStoredContents(ItemStack stack) {
         if (stack.getItem() instanceof BlockItem item && item.getBlock() instanceof LootChestBlock) {
-//? if >=1.21.1 {
-            /*var loot = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-            if (loot == null || !loot.copyTag().getBoolean("GTLootGenerated")) return true;
-*///?} else {
-            var loot = stack.getTagElement("BlockEntityTag");
+            var loot = gregtech.engine.stack.BlockEntityData.read(stack);
             if (loot == null || !loot.getBoolean("GTLootGenerated")) return true;
-//?}
         }
         var tag = StackData.read(stack);
         if (tag != null
