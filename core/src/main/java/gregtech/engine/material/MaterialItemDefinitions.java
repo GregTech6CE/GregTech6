@@ -92,7 +92,6 @@ public final class MaterialItemDefinitions {
                 MaterialPrefix.wireFine,
                 MaterialPrefix.minecartWheels,
                 MaterialPrefix.railGt,
-                MaterialPrefix.coin,
                 MaterialPrefix.toolHeadSword,
                 MaterialPrefix.toolHeadRawSword,
                 MaterialPrefix.toolHeadPickaxe,
