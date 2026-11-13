@@ -16,10 +16,6 @@ public final class WoodenBucketCatalog {
         public boolean empty() {
             return offset == 0;
         }
-
-        public boolean discardOnly() {
-            return offset == 5;
-        }
     }
 
     public static final List<Band> BANDS = List.of(
@@ -39,7 +35,6 @@ public final class WoodenBucketCatalog {
             new Content("milk", "Milk (you cannot drink out of Buckets!)", 2, List.of("Milk")),
             new Content("latex", "Latex", 3, List.of("Latex")),
             new Content("creosote", "Creosote Oil", 4, List.of("Oil_Creosote")),
-            new Content("sea_water", "Sea Water (you cannot place this!)", 5, List.of("Saltwater")),
             new Content("rubber_sap", "Rubber Tree Sap", 6, List.of("Resin_Rubber")),
             new Content("spruce_resin", "Spruce Tree Resin", 7, List.of("Resin_Spruce")),
             new Content("honey", "Honey", 8, List.of("Honey")),
