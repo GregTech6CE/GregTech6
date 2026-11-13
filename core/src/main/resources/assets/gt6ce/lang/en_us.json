@@ -12563,7 +12563,6 @@
   "message.gt6ce.reactor.status": "Reactor rods: %s/4",
   "message.gt6ce.reactor.stopped": "Stopped",
   "message.gt6ce.safe.locked": "This Safe belongs to someone else",
-  "message.gt6ce.signal_wire.mode": "Internal redstone source: %s",
   "message.gt6ce.storage.auto_output_off": "Won't fill Inventories below",
   "message.gt6ce.storage.auto_output_on": "Will fill Inventories below",
   "message.gt6ce.storage.filter_keep": "Keep filter when empty",
