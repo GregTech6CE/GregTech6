@@ -36,8 +36,10 @@ public final class VanillaRecoveryRecipes {
             boolean auditedMachine = originalMachine(item);
             boolean meatCut = gregtech.content.material.MeatItemMaterials.contains(item);
             if (!id.getNamespace().equals("minecraft")
-                    && !PanelMaterialRegistration.recoveryItems().contains(item)
-                    && !TransportMaterialRegistration.recoveryItems().contains(item)
+                    && !gregtech.content.material.PanelMaterialCompositions.recoveryItems()
+                            .contains(item)
+                    && !gregtech.content.material.TransportMaterialCompositions.recoveryItems()
+                            .contains(item)
                     && !auditedMachine
                     && !meatCut) continue;
             var stack = new ItemStack(item);

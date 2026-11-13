@@ -2,9 +2,9 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
 import gregtech.content.block.wood.WoodSpecies;
 import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialGroups;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
@@ -105,8 +105,6 @@ public final class TreatedWoodRecipes extends OriginalRecipeBatch {
         "pipeQuadruple",
         "pipeNonuple"
     };
-    /** Wood-property materials that GT6's {@code ANY.WoodUntreated} does not contain. */
-    private static final Set<String> NOT_UNTREATED_WOOD = Set.of("PetrifiedWood");
 
     private TreatedWoodRecipes() {}
 
@@ -131,14 +129,11 @@ public final class TreatedWoodRecipes extends OriginalRecipeBatch {
     /** Every untreated wood form GT6's Bath handler converts, scaled by the prefix's material amount. */
     private void materialBath() {
         GTMaterial treated = GTMaterialRegistry.get("WoodTreated").resolve();
-        GTMaterial polished = GTMaterialRegistry.get("WoodPolished").resolve();
         // GT6 stamps one recipe per (input stack, fluid); shared items such as vanilla sticks are
         // reached through several wood identities and must not repeat.
         Set<String> used = new HashSet<>();
-        for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
-            if (!material.isValid() || !material.has(MaterialProperty.WOOD)) continue;
-            if (material == treated || material == polished) continue;
-            if (NOT_UNTREATED_WOOD.contains(material.getName())) continue;
+        GTMaterial polished = GTMaterialRegistry.get("WoodPolished").resolve();
+        for (GTMaterial material : MaterialGroups.members(MaterialGroups.WoodUntreated)) {
             for (String form : WOOD_FORM_PREFIXES) {
                 MaterialPrefix prefix = PrefixRegistry.byName(form);
                 if (prefix != null)

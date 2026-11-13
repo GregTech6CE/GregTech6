@@ -2,6 +2,7 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.ItemMaterialRegistry;
@@ -49,10 +50,13 @@ public final class SourceGemGradeResolver {
             external = stack;
         }
         if (!external.isEmpty()) return external;
-        var decision = ReviewedSiftingGemForms.decision(material, prefix);
-        if (decision == ReviewedOreSourceProfile.Decision.UNKNOWN)
-            decision = ReviewedOreSourceProfile.decision(material, ReviewedOreSourceProfile.Rule.GRADED_GEM);
-        if (decision != ReviewedOreSourceProfile.Decision.NO && !canonical.isEmpty()) return canonical;
+        var exclusions = MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_SIFTING_EXCLUSIONS)
+                .orElse(new MaterialFactKeys.PrefixExclusions(java.util.Set.of()));
+        var decision = exclusions.excludes(prefix.getName())
+                ? MaterialFactKeys.Decision.NO
+                : MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_GRADED_GEM)
+                        .orElse(MaterialFactKeys.Decision.UNKNOWN);
+        if (decision != MaterialFactKeys.Decision.NO && !canonical.isEmpty()) return canonical;
         return copyAmount(ordinaryGem, fallbackCount);
     }
 

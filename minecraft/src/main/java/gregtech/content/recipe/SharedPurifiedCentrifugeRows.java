@@ -6,6 +6,8 @@ import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.*;
+import gregtech.content.material.MaterialFactKeys;
+import gregtech.content.material.catalog.MaterialFluidUnitFacts;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTFluids;
 import gregtech.util.OM;
@@ -157,21 +159,19 @@ public final class SharedPurifiedCentrifugeRows {
   }
 
  }
- // Source DATA only, not recipe/material admission: explicit fluids and default gas registrations
- // cover the six ambient positive bindings in current539 input observations. Other phases defer.
  private record PhaseBinding(int id,String name,String phase,String field,String nativeId,int mb,int melting,int boiling){}
- private static final List<PhaseBinding> PHASES=List.of(
-  new PhaseBinding(21,"Helium3","gas","GenGas_Helium3","gt6ce:helium3",1000,1,4),
-  new PhaseBinding(90,"Fluorine","gas","GenGas_Fluorine","gt6ce:fluorine",1000,53,85),
-  new PhaseBinding(800,"Mercury","liquid","GenLiquid_Mercury","gt6ce:mercury",144,234,629),
-  new PhaseBinding(9791,"Honey","liquid","Honey","gt6ce:honey",1000,273,373),
-  new PhaseBinding(9793,"Honeydew","liquid","Honeydew","gt6ce:honeydew",1000,273,373),
-  new PhaseBinding(9802,"Ice","liquid","Ice","gt6ce:ice",1000,273,373));
- private static PhaseBinding binding(GTMaterial m,String phase){for(var b:PHASES)if(b.id==m.getId()&&b.name.equals(m.getName())&&(phase==null||b.phase.equals(phase)))return b;return null;}
+ private static PhaseBinding binding(GTMaterial m,String phase){
+  var value=MaterialFactKeys.value(m,MaterialFactKeys.SOURCE_PURIFIED_CENTRIFUGE_PHASE).orElse(null);
+  if(value==null||(phase!=null&&!value.phase().equals(phase)))return null;
+  var unit=MaterialFluidUnitFacts.binding(m,value.phase());
+  if(unit==null)return null;
+  return new PhaseBinding(m.getId(),m.getName(),value.phase(),unit.fluidField(),
+      "gt6ce:"+unit.registryName(),(int)unit.referenceMillibuckets(),value.meltingKelvin(),value.boilingKelvin());
+ }
  private static boolean sourceBindingOwned(PhaseBinding binding){
   var entry=FluidCatalog.get(binding.field);
   if(entry==null||!FluidCatalog.canonicalField(binding.field).equals(binding.field))return false;
-  if(binding.id==800)return ReviewedOreGeneratedFluids.mercury(entry);
+  if(binding.id==800)return SourceGeneratedFluidAdapter.mercury(entry);
   if(binding.id==21||binding.id==90)return FluidCatalog.isGeneratedGasLiquidDefinition(binding.field,entry)
       &&binding.name.equals(entry.materialKey())&&entry.gas()
       &&entry.registryName().equals(binding.nativeId.substring("gt6ce:".length()));
@@ -196,16 +196,11 @@ public final class SharedPurifiedCentrifugeRows {
   return source.phase.equals("gas")?!facts.properties.contains(MaterialProperty.GAS)
       :!facts.properties.contains(MaterialProperty.LIQUID)&&!facts.properties.contains(MaterialProperty.MOLTEN);
  }
- private static final List<NoPhaseBinding> DEFAULT_NONE=List.of(
-  new NoPhaseBinding(1120,"Copernicium","liquid",150,357),
-  new NoPhaseBinding(1180,"Oganesson","gas",258,263),
-
-  new NoPhaseBinding(9110,"Celestine","liquid",275,455),
-  new NoPhaseBinding(9199,"DuraniumHexafluoride","liquid",216,428),
-  new NoPhaseBinding(9801,"Snow","liquid",273,373),
-  new NoPhaseBinding(9851,"OilSand","liquid",100,400),
-  new NoPhaseBinding(9852,"CrudeOil","liquid",100,400));
- static NoPhaseBinding defaultNone(GTMaterial m){for(var d:DEFAULT_NONE)if(d.id==m.getId()&&d.name.equals(m.getName()))return d;return null;}
+ static NoPhaseBinding defaultNone(GTMaterial m){
+  var value=MaterialFactKeys.value(m,MaterialFactKeys.SOURCE_PURIFIED_CENTRIFUGE_NO_DEFAULT).orElse(null);
+  return value==null?null:new NoPhaseBinding(m.getId(),m.getName(),value.phase(),
+      value.meltingKelvin(),value.boilingKelvin());
+ }
  private static Definition legacy(GTMaterial m){
   if(!m.isValid()||!MaterialPrefix.crushed.isValidFor(m)||!MaterialPrefix.crushedCentrifuged.isValidFor(m))return null;
   // Preserve old producer suppression decisions only in its unresolved compatibility branch.

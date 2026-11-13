@@ -5,6 +5,8 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
+import gregtech.content.material.catalog.MaterialFluidUnitFacts;
 import gregtech.content.item.MaterialItem;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTFluids;
@@ -26,7 +28,9 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.*;
 import java.util.function.BiFunction;
 import static gregtech.api.material.GTValues.U;
-import static gregtech.content.recipe.SourceRecyclingFacts.*;
+import static gregtech.content.material.MaterialFactKeys.Decision;
+import static gregtech.content.material.MaterialFactKeys.Identity;
+import static gregtech.content.material.catalog.SourceRecyclingMaterialFacts.*;
 
 /** Shared source thermal proof for the existing OM-selected1U input and audited exact form inputs.
  * No registrations, material mutations, map sweeps or new global unit conventions.
@@ -82,9 +86,9 @@ final class SourceThermalNativeAdapter {
  private static Outcome inspect(GTMaterial raw,ItemStack selected,Snapshot snapshot,MaterialPrefix prefix){
   if(raw==null)return unsupported(Reason.UNKNOWN_SOURCE_IDENTITY);
   if(selected==null||selected.isEmpty())return deferred(Reason.INPUT_ABSENT);
-  GTMaterial material=raw.resolve();Facts source=find(material.getId(),material.getName());
+  GTMaterial material=raw.resolve();Facts source=MaterialFactKeys.sourceRecycling(material).orElse(null);
   if(!identity(material,source==null?null:source.identity()))return unsupported(Reason.UNKNOWN_SOURCE_IDENTITY);
-  if(source.portDefaults()==null)return unsupported(Reason.UNKNOWN_SOURCE_FACT); // Output-only Water/Lava.
+  if(!source.inputEligible())return unsupported(Reason.UNKNOWN_SOURCE_FACT);
   Reason changed=snapshot.materialOverride(material,source);
   if(changed!=null)return unsupported(changed);
   long inputUnits=U;
@@ -102,7 +106,7 @@ final class SourceThermalNativeAdapter {
   if(source.melting()!=Decision.YES||source.blacklistedSmelter()!=Decision.NO||source.targetUnitsPerU()<0)
    return unsupported(Reason.UNKNOWN_SOURCE_FACT);
   GTMaterial target=GTMaterialRegistry.get(source.target().name());
-  Facts targetSource=find(source.target().id(),source.target().name());
+  Facts targetSource=MaterialFactKeys.sourceRecycling(target).orElse(null);
   if(!identity(target,source.target())||targetSource==null)return unsupported(Reason.UNKNOWN_SOURCE_IDENTITY);
   changed=snapshot.materialOverride(target,targetSource);
   if(changed!=null)return unsupported(changed);
@@ -153,40 +157,14 @@ final class SourceThermalNativeAdapter {
       &&GTMaterialRegistry.isCoreMaterial(m)&&!AddonMaterials.owns(m)&&!m.has(MaterialProperty.ANTIMATTER);
  }
  record NativeBinding(String field,String registry,FluidCatalog.FluidEntry declaration,boolean finalized) {}
- private static NativeBinding declared(String field,String registry,FluidCatalog.FluidEntry declaration){
-  return new NativeBinding(field,registry,declaration,false);
- }
- private static NativeBinding finalized(String name,FluidCatalog.FluidEntry declaration){
-  return new NativeBinding("GenMolten_"+name,"molten."+name.toLowerCase(Locale.ROOT),declaration,true);
- }
  /** Explicit native spellings are bindings, not newly registered aliases or material-name guesses. */
  static NativeBinding nativeBinding(GTMaterial target,Binding source){
-  NativeBinding special=switch(target.getId()){
-
-   case 8001->declared("Glass","glass",FluidCatalog.Glass);
-   case 8211->declared("Blaze","blaze",FluidCatalog.Blaze);
-
-   case 8218->declared("Plastic","molten.plastic",FluidCatalog.Plastic);
-
-   case 8318->declared("Ender","molten.enderpearl",FluidCatalog.Ender);
-   case 8333->declared("Redstone","molten.redstone",FluidCatalog.Redstone);
-
-
-   case 9810->declared("Lava","lava",FluidCatalog.Lava);
-   case 9883->declared("CFoam","ic2constructionfoam",FluidCatalog.CFoam);
-   case 8217->finalized("Rubber",FluidCatalog.Molten_Rubber);
-   case 8235->finalized("Wax",FluidCatalog.Molten_Wax);
-   case 8236->finalized("WaxBee",FluidCatalog.Molten_WaxBee);
-   case 8238->finalized("WaxParaffin",FluidCatalog.Molten_WaxParaffin);
-   case 8239->finalized("WaxPlant",FluidCatalog.Molten_WaxPlant);
-   case 9703->finalized("Sugar",FluidCatalog.Molten_Sugar);
-   case 9780->finalized("Cheese",FluidCatalog.Molten_Cheese);
-   case 9783->finalized("Chocolate",FluidCatalog.Molten_Chocolate);
-   // These original molten salts retain their established port liquid IDs, with source144/U.
-   case 8009,8010,8029,8033->new NativeBinding("GenLiquid_"+target.getName(),target.getName().toLowerCase(Locale.ROOT),null,false);
-   default->null;
-  };
-  if(special!=null)return special;
+  var exact=MaterialFluidUnitFacts.binding(target,source.accessor().name().toLowerCase(Locale.ROOT));
+  if(exact!=null){
+   var declaration=FluidCatalog.all().get(exact.fluidField());
+   return new NativeBinding(exact.fluidField(),exact.registryName(),declaration,
+       exact.fluidField().startsWith("GenMolten_"));
+  }
   String lower=target.getName().toLowerCase(Locale.ROOT),path=source.sourceRegistryPath();
   if(path.equals("molten."+lower))return new NativeBinding("GenMolten_"+target.getName(),path,null,false);
   if(path.equals(lower))return new NativeBinding(FluidCatalog.canonicalField("GenLiquid_"+target.getName()),path,null,false);
@@ -231,8 +209,7 @@ final class SourceThermalNativeAdapter {
    return new SourceThermalRecyclingRules.Stats(input.getDensity(),target.getMeltingPoint());
   }
   Reason materialOverride(GTMaterial material,Facts source){
-   PortDefaults defaults=contextDefaults(source.identity().id(),source.identity().name());
-   if(defaults==null)return Reason.UNKNOWN_SOURCE_FACT;
+   PortDefaults defaults=source.portDefaults();
    if(material.has(MaterialProperty.MELTING)!=defaults.melting())return Reason.MATERIAL_ELIGIBILITY_OVERRIDE;
    var target=material.getTargetSmeltingMaterial();
    if(target==null||!target.isValid())return Reason.MATERIAL_TARGET_OVERRIDE;target=target.resolve();
@@ -284,7 +261,7 @@ final class SourceThermalNativeAdapter {
    if(!allowed.contains(form.getPrefix())
        ||GTItems.getStack(form.getPrefix(),material,stack.getCount()).getItem()!=stack.getItem())return -1;
    var data=ItemMaterialRegistry.base(stack.getItem()).orElse(null);
-   if(data==null||!data.bulkRecoveryAllowed()||data.prefix()!=form.getPrefix()||data.components().size()!=1
+   if(data==null||data.prefix()!=form.getPrefix()||data.components().size()!=1
        ||data.material().resolve()!=material||data.amount()!=form.getPrefix().getMaterialWeight())return -1;
    try{return Math.multiplyExact((long)stack.getCount(),data.amount());}
    catch(ArithmeticException invalid){return -1;}

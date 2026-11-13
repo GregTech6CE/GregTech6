@@ -12687,8 +12687,6 @@
   "tooltip.gt6ce.chemical_battery.place": "Sneak to place; stored charge is retained when picked up",
   "tooltip.gt6ce.coin_mold.1": "Place a tiny metal plate on top, strike it with a hammer, and take the coin",
   "tooltip.gt6ce.coin_mold.2": "No GUI; click to interact (top or sides)",
-  "tooltip.gt6ce.composition_descriptive": "Composition reference only; not enabled for bulk recovery",
-  "tooltip.gt6ce.composition_nonmaterial": "No recoverable bulk material (technical/entity item)",
   "tooltip.gt6ce.contained_materials": "Contained Materials:",
   "tooltip.gt6ce.crucible.acidproof": "Acid Proof!",
   "tooltip.gt6ce.crucible.contact_damage": "Causes Damage when touched while active!",

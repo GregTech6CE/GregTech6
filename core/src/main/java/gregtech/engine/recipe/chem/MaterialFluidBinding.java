@@ -1,7 +1,7 @@
 package gregtech.engine.recipe.chem;
 
 import gregtech.content.data.FluidCatalog;
-import gregtech.content.recipe.OriginalMaterialFluidUnits;
+import gregtech.content.material.catalog.MaterialFluidUnitFacts;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -20,7 +20,7 @@ public record MaterialFluidBinding(
         int referenceMillibuckets) {
 
     public int millibuckets(MaterialAmount amount, Rounding rounding) {
-        int value = OriginalMaterialFluidUnits.millibuckets(
+        int value = MaterialFluidUnitFacts.millibuckets(
                 amount.units(), referenceUnits, referenceMillibuckets, rounding == Rounding.CEIL);
         if (value <= 0) throw new IllegalArgumentException("Fluid amount out of range: " + amount);
         return value;
@@ -96,7 +96,7 @@ public record MaterialFluidBinding(
             FluidPhase phase = fluid.gas() ? FluidPhase.GAS : FluidPhase.LIQUID;
             int reference = reference(materialKey, field, fluid, phase);
             var binding = new MaterialFluidBinding(
-                    materialKey, phase, field, fluid.registryName(), OriginalMaterialFluidUnits.SOURCE_UNIT, reference);
+                    materialKey, phase, field, fluid.registryName(), MaterialFluidUnitFacts.SOURCE_UNIT, reference);
             var key = new Key(binding.material(), binding.phase());
             var previous = out.putIfAbsent(key, binding);
             if (previous != null && previous.referenceMillibuckets() != reference)
@@ -107,7 +107,8 @@ public record MaterialFluidBinding(
     }
 
     private static int reference(String material, String field, FluidCatalog.FluidEntry entry, FluidPhase phase) {
-        var explicit = OriginalMaterialFluidUnits.binding(material, phase.sourceName());
+        var resolved = gregtech.engine.material.GTMaterialRegistry.get(material);
+        var explicit = resolved.isValid() ? MaterialFluidUnitFacts.binding(resolved, phase.sourceName()) : null;
         if (explicit != null) {
             long millibuckets = explicit.referenceMillibuckets();
             if (millibuckets <= 0 || millibuckets > Integer.MAX_VALUE)
@@ -117,8 +118,7 @@ public record MaterialFluidBinding(
         boolean molten = entry.textureMode() == FluidCatalog.FluidTextureMode.GENERIC_MOLTEN
                 || FluidCatalog.isGeneratedMoltenDefinition(field, entry);
         if (molten) {
-            var resolved = gregtech.engine.material.GTMaterialRegistry.get(material);
-            return resolved != null && resolved.isValid()
+            return resolved.isValid()
                     ? gregtech.engine.fluid.MoltenMaterialUnits.ratio(resolved).millibucketsPerUnit()
                     : 144;
         }

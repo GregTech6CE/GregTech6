@@ -1,31 +1,31 @@
-package gregtech.content.recipe;
+package gregtech.content.material.catalog;
 
+import gregtech.api.addon.material.MaterialProcessRule;
+import gregtech.content.material.MaterialFactKeys;
+import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialInfoDefinition;
+
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
 /**
  * Bounded, exact-identity washing facts from original GT6 MT at
  * 3703e40308c8c030763fd6297dea8b210d2a77b1 (W: 607771f74acb0fe647f7e9412676e72094799545).
- * Includes every source positive (20 Mercury, 12 Persulfate, 29 Firestone; 59 identities),
- * including the nine inherited refractmetal Firestone tags at MT. The 109 explicit
- * negatives are source-declared candidates of the 159 reviewed positive-candidate/tag cases,
- * not a blanket default for SupplementalMaterials, addons, or arbitrary matching names.
+ * Includes every source positive tag edge (20 Mercury, 12 Persulfate, 29 Firestone; 54
+ * identities). The current 142 exact identity rows also retain reviewed negatives and
+ * multi-tag declarations; they are not a blanket default for SupplementalMaterials, addons,
+ * or arbitrary matching names.
  * IDs AND canonical names must agree; callers must separately verify native provenance
  * and must not use these facts as defaults for unreviewed or replaced material identities.
  */
-public final class SourceOreWashingData {
-    private SourceOreWashingData() {}
+public final class SourceWashingMaterialFacts {
+    private SourceWashingMaterialFacts() {}
 
     public enum Tag {
         MERCURY,
         PERSULFATE,
         FIRESTONE
-    }
-
-    public enum Decision {
-        YES,
-        NO,
-        UNKNOWN
     }
 
     public record Binding(int materialId, String materialName, Set<Tag> tags, int sourceLine) {
@@ -184,24 +184,24 @@ public final class SourceOreWashingData {
             row(9214, "Stannite", 3721),
             row(9216, "Arsenopyrite", 3715));
 
-    public static List<Binding> bindings() {
-        return BINDINGS;
-    }
-
-    public static Binding binding(int id, String canonicalName) {
+    private static Binding binding(int id, String canonicalName) {
         for (Binding binding : BINDINGS)
             if (binding.materialId() == id && binding.materialName().equals(canonicalName)) return binding;
         return null;
     }
-    /** Null means unreviewed, not a known empty source tag set. */
-    public static Set<Tag> expectedTags(int id, String canonicalName) {
-        Binding binding = binding(id, canonicalName);
-        return binding == null ? null : binding.tags();
-    }
 
-    public static Decision decision(int id, String canonicalName, Tag tag) {
-        Binding binding = binding(id, canonicalName);
-        if (binding == null || tag == null) return Decision.UNKNOWN;
-        return binding.tags().contains(tag) ? Decision.YES : Decision.NO;
+    public static MaterialDefinition.Declaration apply(MaterialDefinition.Declaration declaration) {
+        Binding binding = binding(declaration.id(), declaration.name());
+        if (binding == null) return declaration;
+        var info = declaration.info();
+        var rules = new LinkedHashMap<>(info.processes().rules());
+        rules.put(MaterialFactKeys.SOURCE_WASHING, List.of(MaterialProcessRule.anyForm(binding)));
+        return new MaterialDefinition.Declaration(
+                declaration.material(),
+                new MaterialInfoDefinition(
+                        info.tooling(),
+                        info.composition(),
+                        info.relations(),
+                        new MaterialInfoDefinition.Processes(rules)));
     }
 }

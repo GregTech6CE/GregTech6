@@ -1,19 +1,18 @@
-package gregtech.content.recipe;
+package gregtech.content.material.catalog;
 
 // source-rows: the per-row MT line numbers are transcription labels.
-import gregtech.api.material.GTMaterial;
-import gregtech.content.data.MaterialPrefix;
-import gregtech.content.registry.GTItems;
-import gregtech.engine.material.GTMaterialRegistry;
-import java.util.ArrayList;
+import gregtech.api.addon.material.MaterialProcessRule;
+import gregtech.content.material.MaterialFactKeys;
+import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialInfoDefinition;
+import java.util.LinkedHashMap;
 import java.util.List;
-import net.minecraft.world.item.ItemStack;
 
 /** Explicit MT.lens roles, including diamond/emerald/sapphire/garnet/jasper/tigereye/aventurine factories.
  * Source: GregTech6 3703e40308c8c030763fd6297dea8b210d2a77b1, MT.java.
  * Color is a crafting role, never inferred from RGB. IDs and canonical names guard native identities.
  */
-public final class SourceLensRoles {
+public final class SourceLensMaterialFacts {
     public enum Color {
         WHITE,
         RED,
@@ -86,28 +85,27 @@ public final class SourceLensRoles {
             new Role(8450, "BlueAventurine", Color.BLUE) /* MT:1421 */,
             new Role(8451, "RedAventurine", Color.RED) /* MT:1422 */);
 
-    private SourceLensRoles() {}
+    private SourceLensMaterialFacts() {}
 
-    public static Color color(GTMaterial material) {
-        if (material == null || !material.isValid() || gregtech.engine.addon.AddonMaterials.owns(material)) return null;
-        for (Role role : ROLES)
-            if (material.getId() == role.id
-                    && material.getName().replace(" ", "").equals(role.name)
-                    && GTMaterialRegistry.get(role.id) == material
-                    && GTMaterialRegistry.get(role.name) == material) return role.color;
-        return null;
+    public static MaterialDefinition.Declaration apply(MaterialDefinition.Declaration declaration) {
+        for (Role role : ROLES) {
+            if (role.id != declaration.id()) continue;
+            if (!materialNameMatches(role.name, declaration.name())) continue;
+            var info = declaration.info();
+            var rules = new LinkedHashMap<>(info.processes().rules());
+            rules.put(MaterialFactKeys.SOURCE_LENS_ROLE, List.of(MaterialProcessRule.anyForm(role.color)));
+            return new MaterialDefinition.Declaration(
+                    declaration.material(),
+                    new MaterialInfoDefinition(
+                            info.tooling(),
+                            info.composition(),
+                            info.relations(),
+                            new MaterialInfoDefinition.Processes(rules)));
+        }
+        return declaration;
     }
 
-    /** Only actual registered native lens holders; recipe matching retains normal form/tag equivalence. */
-    public static List<ItemStack> lenses(Color color) {
-        var result = new ArrayList<ItemStack>();
-        for (Role role : ROLES) {
-            if (role.color != color) continue;
-            var material = GTMaterialRegistry.get(role.id);
-            if (color(material) != color) continue;
-            var lens = GTItems.getStack(MaterialPrefix.lens, material, 1);
-            if (!lens.isEmpty()) result.add(lens);
-        }
-        return List.copyOf(result);
+    private static boolean materialNameMatches(String source, String port) {
+        return source.equals(port);
     }
 }

@@ -18,8 +18,8 @@ import net.minecraftforge.fluids.FluidStack;
 //?}
 import static gregtech.api.material.GTValues.U;
 /** Bounded source thermal adapter for whole dust metal and reviewed Ti/Fe dust fractions. */
-public final class ReviewedCinnabarThermalRecipes {
- private ReviewedCinnabarThermalRecipes(){}
+public final class SourceDustThermalRecipes {
+ private SourceDustThermalRecipes(){}
  private record MetalFraction(MaterialPrefix prefix,long amount,int millibuckets,long titaniumTicks,long ironTicks){}
  private static final MetalFraction[] METAL_FRACTIONS={
   new MetalFraction(MaterialPrefix.dustSmall,U/4,36,129,207),
@@ -34,7 +34,7 @@ public final class ReviewedCinnabarThermalRecipes {
  private static boolean emitWholeDustMetal(GTMaterial material){
   if(material==null||!material.isValid())return false;
   material=material.resolve();String field="GenMolten_"+material.getName();
-  if(!ReviewedOreGeneratedFluids.wholeDustMetal(material,RegisteredFluids.get(field)))return false;
+  if(!SourceGeneratedFluidAdapter.wholeDustMetal(material,RegisteredFluids.get(field)))return false;
   var input=GTItems.getStack(MaterialPrefix.dust,material,1);
   // Both native registrars install an explicit self/dust/U composition for every material item.
   // Exact equivalent compositions are harmless; changed/mixed/unrecoverable bindings still defer.

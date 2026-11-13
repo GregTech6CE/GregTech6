@@ -1,13 +1,14 @@
 package gregtech.content.recipe;
 
-import static gregtech.content.recipe.SourceOreWashingRules.Availability;
-import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
-
 import gregtech.api.material.GTValues;
 import gregtech.content.data.MaterialPrefix;
+
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
+
+import static gregtech.content.material.MaterialFactKeys.Decision;
+import static gregtech.content.recipe.SourceOreWashingRules.Availability;
 
 /**
  * The six explicit Shredder handlers, original GT6 3703e40308c8c030763fd6297dea8b210d2a77b1,

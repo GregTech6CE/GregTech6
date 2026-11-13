@@ -1,13 +1,11 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTValues;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.Materials;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
-import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
@@ -43,17 +41,6 @@ public final class DiggableRecipes {
 
     public static List<Recipe> entries() {
         return List.copyOf(ENTRIES);
-    }
-
-    /** GT6 {@code OM.data}: five clay blocks and turf contain four units; clay balls one unit. */
-    public static void registerMaterials() {
-        for (Variant row : PACKABLE) {
-            if (row.material() == null) continue; // GT6 UNUSED.Mud has no composition.
-            ItemMaterialRegistry.register(item(row.block()), null, row.material(), GTValues.U * 4);
-            ItemMaterialRegistry.register(item(row.ball()), null, row.material(), GTValues.U);
-        }
-        ItemMaterialRegistry.register(item("turf"), null, Materials.Peat, GTValues.U * 4);
-        // Retired diggable_* IDs resolve through registry aliases to these same material entries.
     }
 
     public static int register() {

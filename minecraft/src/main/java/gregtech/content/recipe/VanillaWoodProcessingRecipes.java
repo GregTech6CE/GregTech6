@@ -3,7 +3,6 @@ package gregtech.content.recipe;
 import gregtech.api.material.*;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.material.VanillaCompositionLoader;
 import gregtech.content.plant.WoodSlabCatalog;
 import gregtech.engine.material.*;
 import net.minecraft.world.item.ItemStack;
@@ -14,45 +13,6 @@ public final class VanillaWoodProcessingRecipes extends OriginalRecipeBatch {
     private static final String[] WOODS = {
         "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry"
     };
-    /** WoodDictionary replaces the generic vanilla item table before dependent recipes/panels. */
-    public static void registerMaterials() {
-        for (String wood : WOODS) registerMaterials(wood, "log", "wood");
-        for (String wood : new String[] {"crimson", "warped"}) registerMaterials(wood, "stem", "hyphae");
-    }
-
-    private static void registerMaterials(String wood, String... types) {
-        var material = RegisteredWoodSurvivalRecipes.material(wood);
-        var bark = GTMaterialRegistry.get("Bark");
-        for (String type : types) {
-            String raw = wood + "_" + type;
-            registerWoodComposition(
-                    raw,
-                    new ItemComposition(
-                            null,
-                            java.util.List.of(
-                                    MaterialComponent.of(material, 8 * GTValues.U),
-                                    MaterialComponent.of(bark, GTValues.U)),
-                            material,
-                            "GT6 WoodEntry (modern wood binding)",
-                            true));
-            registerWoodComposition("stripped_" + raw, new ItemComposition(null, material, 8 * GTValues.U));
-        }
-        registerWoodComposition(wood + "_planks", new ItemComposition(MaterialPrefix.plate, material, GTValues.U));
-        registerWoodComposition(wood + "_stairs", new ItemComposition(null, material, 3 * GTValues.U / 4));
-        registerWoodComposition(wood + "_slab", new ItemComposition(null, material, GTValues.U / 2));
-    }
-
-    private static void registerWoodComposition(String path, ItemComposition composition) {
-        var item = mc(path, 1).getItem();
-        String jsonSource = VanillaCompositionLoader.declarationId(item).orElse(null);
-        ItemMaterialRegistry.register(
-                item,
-                composition,
-                ItemCompositionSource.Kind.EXPLICIT,
-                "gt6ce:wood-entry/" + path,
-                "GT6 wood material binding",
-                jsonSource);
-    }
 
     public static int register() {
         for (String wood : WOODS) INSTANCE.wood(wood);

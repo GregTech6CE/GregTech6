@@ -5,9 +5,10 @@ import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.material.GTValues;
 import gregtech.content.material.MaterialDefinitions;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.material.MaterialTestFixture;
 import gregtech.content.material.catalog.DecompositionMaterials;
-import gregtech.content.recipe.OriginalMaterialFluidUnits;
+import gregtech.content.material.catalog.MaterialFluidUnitFacts;
 import gregtech.engine.material.MaterialInfoRegistry;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -99,20 +100,28 @@ class MaterialDecompositionPlannerTest {
 
     @Test
     void decompositionReusesSharedFluidUnitFacts() {
-        assertEquals(GTValues.U, OriginalMaterialFluidUnits.SOURCE_UNIT);
+        assertEquals(GTValues.U, MaterialFluidUnitFacts.SOURCE_UNIT);
         var rule = MaterialInfoRegistry.processes(new MaterialKey("Chocolate"))
                 .findSingle(MaterialProcessKeys.DECOMPOSITION)
                 .orElseThrow()
                 .value();
-        var shared = OriginalMaterialFluidUnits.binding("Chocolate", 9783, "liquid");
+        var shared = MaterialInfoRegistry.processes(new MaterialKey("Chocolate"))
+                .findSingle(MaterialFactKeys.MATERIAL_FLUID_UNIT)
+                .orElseThrow()
+                .value()
+                .units()
+                .stream()
+                .filter(binding -> binding.phase().equals("liquid"))
+                .findFirst()
+                .orElseThrow();
         assertTrue(rule.fluids()
                 .contains(new MaterialDecompositionRule.FluidBinding(
                         MaterialDecompositionRule.Phase.LIQUID,
-                        shared.registryName(),
+                        shared.registryPath(),
                         shared.referenceSourceUnits(),
                         shared.referenceMillibuckets())));
         assertEquals(
-                OriginalMaterialFluidUnits.millibuckets(GTValues.U, GTValues.U, 144, false),
+                MaterialFluidUnitFacts.millibuckets(GTValues.U, GTValues.U, 144, false),
                 UnitConversion.fluidAmount(GTValues.U, GTValues.U, 144, false));
     }
 

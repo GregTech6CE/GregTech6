@@ -199,10 +199,7 @@ public final class MaterialTooltips {
             return;
         }
         GTMaterial mat = data.material();
-        if (mat.getId() <= 0) {
-            if (flag.isAdvanced()) tooltip.add(Component.translatable("tooltip.gt6ce.composition_nonmaterial").withStyle(ChatFormatting.GRAY));
-            return;
-        }
+        if (mat.getId() <= 0) return;
 
         String chemical = data.components().size() == 1 ? mat.getResolvedTooltipChemical() : "";
         if (gregtech.GregTechConfig.chemicalFormulas() && chemical != null && !chemical.isEmpty()) {
@@ -213,8 +210,6 @@ public final class MaterialTooltips {
             appendFuelTooltip(mat, data.prefix(), data.amount(), tooltip);
             appendFlammableTooltip(mat, tooltip);
         }
-        if (!data.bulkRecoveryAllowed()) tooltip.add(Component.translatable("tooltip.gt6ce.composition_descriptive").withStyle(ChatFormatting.GRAY));
-
         if (gregtech.GregTechConfig.materialDetails() && flag.isAdvanced()) {
 
             tooltip.add(Component.translatable("tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".contained_materials")

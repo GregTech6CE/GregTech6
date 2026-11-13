@@ -1,10 +1,13 @@
 /* Gregorius Techneticies / GregTech-6 Team source rules, LGPL-3.0-or-later. */
 package gregtech.content.recipe;
 
-import gregtech.api.material.*;
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.GTValues;
+import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
-import gregtech.engine.material.*;
+import gregtech.content.material.MaterialFactKeys;
+
 import java.math.BigInteger;
 import java.util.List;
 
@@ -38,7 +41,7 @@ public final class FurnaceSmeltingRules {
     public static boolean allows(GTMaterial material) {
         if (material == null || !material.isValid()) return false;
         var decision = OreSourcePolicy.furnaceDecision(material);
-        return decision == SourceRecyclingFacts.Decision.UNKNOWN
+        return decision == MaterialFactKeys.Decision.UNKNOWN
                 ? legacyAllows(material)
                 : reviewedAllows(decision, material.resolve().has(MaterialProperty.HIDDEN));
     }
@@ -51,8 +54,8 @@ public final class FurnaceSmeltingRules {
     }
     /** Shared routing guard for known source decisions. UNKNOWN callers choose their own old fallback;
      * the source FURNACE fact itself is not rewritten to pretend HIDDEN means source UNUSED. */
-    public static boolean reviewedAllows(SourceRecyclingFacts.Decision decision, boolean hidden) {
-        return decision == SourceRecyclingFacts.Decision.YES && !hidden;
+    public static boolean reviewedAllows(MaterialFactKeys.Decision decision, boolean hidden) {
+        return decision == MaterialFactKeys.Decision.YES && !hidden;
     }
     /** Target solidifying amount is U, not the source material's smelting amount again. */
     public static long amount(long formAmount, long smeltingPerUnit) {

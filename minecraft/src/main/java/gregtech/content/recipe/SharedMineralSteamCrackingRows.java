@@ -31,6 +31,12 @@ import java.util.Set;
 public final class SharedMineralSteamCrackingRows {
     private static final Set<Recipe> OWNED = Collections.newSetFromMap(new IdentityHashMap<>());
     private static final Map<GTMaterial, String> STATUS = new IdentityHashMap<>();
+    private record SourceWax(int id, String name) {}
+    private static final List<SourceWax> SOURCE_WAXES = List.of(
+            new SourceWax(8235, "Wax"),
+            new SourceWax(8236, "WaxBee"),
+            new SourceWax(8238, "WaxParaffin"),
+            new SourceWax(8239, "WaxPlant"));
     private static boolean initialized;
 
     private SharedMineralSteamCrackingRows() {}
@@ -65,7 +71,7 @@ public final class SharedMineralSteamCrackingRows {
         var snapshot = new Snapshot();
         // These are source ANY.Wax factory members, not a mineral admission whitelist.
         // The original source binds each to 144 mB/U; unavailable wax fluids are skipped.
-        var waxes = ReviewedCinnabarFacts.sourceWaxes();
+        var waxes = sourceWaxes();
         for (GTMaterial alias : GTMaterialRegistry.allMaterials()) {
             GTMaterial material = alias.resolve();
             if (!seen.add(material)) continue;
@@ -93,8 +99,8 @@ public final class SharedMineralSteamCrackingRows {
                 if (environment.kind() == SourcePurifiedCentrifugePlan.EnvironmentKind.FLUID) {
                     var binding = environment.binding();
                     // Original first rounds U/18 UP, then multiplies that result by nine.
-                    millibuckets[index] = OriginalMaterialFluidUnits.millibuckets(
-                            OriginalMaterialFluidUnits.SOURCE_UNIT / 18,
+                    millibuckets[index] = gregtech.content.material.catalog.MaterialFluidUnitFacts.millibuckets(
+                            gregtech.content.material.catalog.MaterialFluidUnitFacts.SOURCE_UNIT / 18,
                             binding.referenceSourceUnits(), binding.referenceMillibuckets(), true);
                     if (millibuckets[index] < 0) {
                         statuses.put(material, "UNRESOLVED:byproduct-volume-" + index);
@@ -107,8 +113,8 @@ public final class SharedMineralSteamCrackingRows {
             int count = 0;
             for (GTMaterial wax : waxes) for (int scale : new int[]{9, 1}) {
                 FluidStack waxFluid = OreFluidBindingAdapter.liquid(wax,
-                        scale == 9 ? OriginalMaterialFluidUnits.SOURCE_UNIT
-                                : OriginalMaterialFluidUnits.SOURCE_UNIT / 9, true);
+                        scale == 9 ? gregtech.content.material.catalog.MaterialFluidUnitFacts.SOURCE_UNIT
+                                : gregtech.content.material.catalog.MaterialFluidUnitFacts.SOURCE_UNIT / 9, true);
                 if (waxFluid.isEmpty()) continue;
                 FluidStack steam = GTFluids.stack("Steam", 160 * scale);
                 FluidStack water = GTFluids.stack("Water", scale);
@@ -144,6 +150,19 @@ public final class SharedMineralSteamCrackingRows {
             clear();
             throw failure;
         }
+    }
+
+    private static List<GTMaterial> sourceWaxes() {
+        var values = new ArrayList<GTMaterial>(4);
+        for (SourceWax source : SOURCE_WAXES) {
+            var material = GTMaterialRegistry.get(source.name());
+            if (material.isValid()
+                    && !gregtech.engine.addon.AddonMaterials.owns(material)
+                    && GTMaterialRegistry.isCoreMaterial(material)
+                    && material.resolve().getId() == source.id
+                    && material.resolve().getName().equals(source.name)) values.add(material.resolve());
+        }
+        return List.copyOf(values);
     }
 
     private static final class Snapshot {

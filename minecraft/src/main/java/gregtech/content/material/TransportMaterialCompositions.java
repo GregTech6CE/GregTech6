@@ -1,7 +1,8 @@
-package gregtech.content.recipe;
+package gregtech.content.material;
 
 import gregtech.api.material.*;
 import gregtech.content.transport.*;
+import gregtech.content.transport.TransportMaterialRules;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.engine.material.*;
@@ -11,8 +12,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 
 /** Bind the actual native block items before material recovery recipes are created. */
-public final class TransportMaterialRegistration {
-    private TransportMaterialRegistration() {}
+public final class TransportMaterialCompositions {
+    private TransportMaterialCompositions() {}
 
     private static final Set<Item> RECOVERY_ITEMS = Collections.newSetFromMap(new IdentityHashMap<>());
 

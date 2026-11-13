@@ -1,9 +1,11 @@
 /* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
  * Source constructors and CR.REV bookkeeping: panel-material-source-20261006.json. */
-package gregtech.content.recipe;
+package gregtech.content.material;
 
 import gregtech.api.material.*;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.transport.PanelCatalog;
+import gregtech.content.transport.PanelMaterialRules;
 import gregtech.content.transport.*;
 import gregtech.engine.material.*;
 import java.util.*;
@@ -12,8 +14,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 
 /** Register original panel material fallbacks before recovery recipe creation. */
-public final class PanelMaterialRegistration {
-    private PanelMaterialRegistration() {}
+public final class PanelMaterialCompositions {
+    private PanelMaterialCompositions() {}
 
     private static final Set<Item> RECOVERY_ITEMS = Collections.newSetFromMap(new IdentityHashMap<>());
 

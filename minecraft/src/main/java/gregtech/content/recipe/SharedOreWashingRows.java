@@ -6,6 +6,9 @@ import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
+import gregtech.content.material.catalog.MaterialFluidUnitFacts;
+import gregtech.content.material.catalog.SourceWashingMaterialFacts;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTItems;
@@ -29,6 +32,7 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.*;
 import java.util.function.BiFunction;
 import static gregtech.api.material.GTValues.U;
+import static gregtech.content.material.MaterialFactKeys.Decision;
 import static gregtech.content.recipe.SourceOreWashingRules.*;
 
 /** Original Ores Bath/water Sluice, Handlers Petrotheum and explicit Cryotheum rows.
@@ -140,11 +144,11 @@ public final class SharedOreWashingRows {
         new FluidStack[]{sluice.copy()},size.ticks(),SLUICE_POWER));
    }
   }
-  for(var tag:SourceOreWashingData.Tag.values()){
+  for(var tag:SourceWashingMaterialFacts.Tag.values()){
    var selection=selectByproduct(m,by,candidate->s.tag(candidate,tag),candidate->s.purified(Size.TINY,candidate,1).availability());
    if(!s.ready(m,"bath/"+tag,selection.availability()))continue;
    GTMaterial product=selection.material();
-   if(tag==SourceOreWashingData.Tag.MERCURY){
+   if(tag==SourceWashingMaterialFacts.Tag.MERCURY){
     for(Size size:Size.values()){
      var outputs=bathOutputs(m,product,size,s);if(outputs==null)continue;
      var mercury=s.fluid("GenLiquid_Mercury",size.mercuryMb());if(!s.fluidReady(m,"mercury/"+size,mercury))continue;
@@ -153,7 +157,7 @@ public final class SharedOreWashingRows {
     }
    }else{
     // Loader_Recipes_Ores names Firestone first; a retired reagent material is skipped, not fatal.
-    String[] reagents=tag==SourceOreWashingData.Tag.PERSULFATE?new String[]{"SodiumPersulfate","PotassiumPersulfate"}
+    String[] reagents=tag==SourceWashingMaterialFacts.Tag.PERSULFATE?new String[]{"SodiumPersulfate","PotassiumPersulfate"}
         :new String[]{"Firestone","Pyrotheum","Octine"};
     for(String reagentName:reagents)for(BathShape shape:bathShapes()){
      String route="bath/"+tag+"/"+reagentName+"/"+shape;
@@ -161,7 +165,7 @@ public final class SharedOreWashingRows {
      if(!s.ready(m,route,reagent.availability()))continue;
      var outputs=bathOutputs(m,product,shape.outputSize(),s);if(outputs==null)continue;
      FluidStack[] steam=new FluidStack[0];
-     if(tag==SourceOreWashingData.Tag.FIRESTONE){
+     if(tag==SourceWashingMaterialFacts.Tag.FIRESTONE){
       var fluid=s.fluid("Steam",shape.outputSize().steamMb());if(!s.fluidReady(m,route,fluid))continue;steam=new FluidStack[]{fluid};
      }
      var input=s.input(shape.input(),m,shape.inputCount());if(!s.ready(m,route,input.availability()))continue;
@@ -252,7 +256,7 @@ public final class SharedOreWashingRows {
    if(direct.availability()==Availability.UNKNOWN)return direct;
    ItemStack canonical=GTItems.getStack(prefix,m,count);
    ItemStack reviewed=SourceOreOutputRows.resolvingOutputs(()->SourceOreInputForms.reviewedOreOutput(prefix,m,count));
-   if(ReviewedCrushedFormGeneration.excludedBuiltin(m,prefix,canonical)){
+   if(SourceCrushedFormAdapter.excludedBuiltin(m,prefix,canonical)){
     // That helper returns the canonical legacy stack only for ambiguous/unsupported aliases.
     if(!canonical.isEmpty()&&ItemStack.matches(canonical,reviewed))return NativeForm.unknown();
     return reviewed.isEmpty()?NativeForm.absent():NativeForm.present(reviewed);
@@ -279,10 +283,12 @@ public final class SharedOreWashingRows {
        ||form.material().resolve()!=m.resolve())return NativeForm.unknown();
    stack.setCount(count);return NativeForm.present(stack);
   }
-  SourceOreWashingData.Decision tag(GTMaterial m,SourceOreWashingData.Tag tag){
+  Decision tag(GTMaterial m,SourceWashingMaterialFacts.Tag tag){
    if(m==null||!m.isValid()||!GTMaterialRegistry.isCoreMaterial(m.resolve())||AddonMaterials.owns(m.resolve()))
-    return SourceOreWashingData.Decision.UNKNOWN;
-   return SourceOreWashingData.decision(m.getId(),m.getName(),tag);
+    return Decision.UNKNOWN;
+   var rule=MaterialFactKeys.value(m,MaterialFactKeys.SOURCE_WASHING).orElse(null);
+   if(rule==null)return Decision.UNKNOWN;
+   return rule.tags().contains(tag)?Decision.YES:Decision.NO;
   }
   FluidStack fluid(String field,int amount){return checkedFluid(field,amount,definitions,fluidLookup);}
  }
@@ -300,14 +306,15 @@ public final class SharedOreWashingRows {
    case "DistW"->FluidCatalog.DistW;case "Sluice"->FluidCatalog.Sluice;
    case "Steam"->FluidCatalog.Steam;default->null;};
   if(field.equals("GenLiquid_Mercury")){
-   if(!ReviewedOreGeneratedFluids.mercury(entry))return FluidStack.EMPTY;
+   if(!SourceGeneratedFluidAdapter.mercury(entry))return FluidStack.EMPTY;
   }else if(entry!=builtin||!FluidCatalog.isBuiltInDefinition(entry))return FluidStack.EMPTY;
   // Reviewed original material identities determine unit conversion; names alone do not establish it.
-  var binding=switch(field){case "GenLiquid_Mercury"->ReviewedOreFluidBindings.liquid(800,"Mercury");
+  var binding=switch(field){case "GenLiquid_Mercury"->MaterialFluidUnitFacts.binding(
+      GTMaterialRegistry.get("Mercury"),"liquid");
 default->null;};
   boolean materialLiquid=field.equals("GenLiquid_Mercury");
-  if(materialLiquid&&(binding==null||!binding.field().equals(field)
-      ||!binding.registryPath().equals(entry.registryName())))return FluidStack.EMPTY;
+  if(materialLiquid&&(binding==null||!binding.fluidField().equals(field)
+      ||!binding.registryName().equals(entry.registryName())))return FluidStack.EMPTY;
   var stack=lookup.apply(field,amount);if(stack==null||stack.isEmpty()||stack.getAmount()!=amount)return FluidStack.EMPTY;
   String expected="gt6ce:"+FluidCatalog.sanitizePath(entry.registryName());
   if(!BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString().equals(expected))return FluidStack.EMPTY;

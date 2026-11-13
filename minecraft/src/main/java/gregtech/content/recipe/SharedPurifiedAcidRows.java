@@ -5,6 +5,7 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.catalog.MaterialFluidUnitFacts;
 import gregtech.content.registry.GTFluids;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -23,8 +24,8 @@ import static gregtech.content.recipe.SharedOreWashingRows.NativeForm;
 import static gregtech.content.recipe.SourceOreWashingRules.Availability;
 import static gregtech.content.recipe.SourcePurifiedAcidData.*;
 import static gregtech.content.recipe.SourcePurifiedAcidRules.*;
-import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
-import static gregtech.content.recipe.SourceRecyclingFacts.Identity;
+import static gregtech.content.material.MaterialFactKeys.Decision;
+import static gregtech.content.material.MaterialFactKeys.Identity;
 
 /** Source Ores108-159 purified acid Bath calls, independent of ordinary ore washing gates.
  * First admission is deliberately after existing static/imported producers. Ownership is only
@@ -158,7 +159,7 @@ public final class SharedPurifiedAcidRows {
         @Override public Availability fluid(Phase phase, long amount) {
             var key = new SourcePurifiedAcidData.Fluid(phase, amount);
             var result = fluids.computeIfAbsent(key, ignored -> snapshot.fluid(phase, amount));
-            if (result.availability() == Availability.UNKNOWN) problem = "/phase:" + phase.nativeField();
+            if (result.availability() == Availability.UNKNOWN) problem = "/phase:" + phase.name();
             return result.availability();
         }
     }
@@ -170,7 +171,7 @@ public final class SharedPurifiedAcidRows {
     }
     private static boolean sourceIdentity(GTMaterial material) {
         // This table supplies identity evidence only, never thermal target/flag permissions.
-        return canonical(material) && (SourceRecyclingFacts.find(material.getId(), material.getName()) != null
+        return canonical(material) && (gregtech.content.material.MaterialFactKeys.sourceRecycling(material).isPresent()
                 || reviewedIdentity(identity(material)));
     }
     record NativeFluid(Availability availability, FluidStack stack) {
@@ -216,28 +217,34 @@ public final class SharedPurifiedAcidRows {
             return canonical(material) && identity.matches(material.getId(), material.getName()) ? material : null;
         }
         NativeFluid fluid(Phase phase, long amount) {
-            if (phase == null || amount <= 0 || amount > Integer.MAX_VALUE || material(phase.material()) == null)
+            GTMaterial material = phase == null ? null : material(phase.material());
+            if (material == null || amount <= 0 || amount > Integer.MAX_VALUE)
                 return NativeFluid.unknown();
             // Water is vanilla water; it has no GT catalog entry.
             if (phase == Phase.WATER) return NativeFluid.present(new FluidStack(Fluids.WATER, (int) amount));
-            String field = phase.nativeField();
+            String nativePhase = phase.state() == State.GAS ? "gas" : "liquid";
+            var binding = MaterialFluidUnitFacts.binding(material, nativePhase);
+            if (binding == null
+                    || binding.referenceSourceUnits() != gregtech.api.material.GTValues.U
+                    || binding.referenceMillibuckets() != 1000) return NativeFluid.unknown();
+            String field = binding.fluidField();
             var entry = fluidDefinitions.get(field);
             if (entry == null || !FluidCatalog.canonicalField(field).equals(field) || FluidCatalog.get(field) != entry
                     || entry.gas() != (phase.state() == State.GAS)) return NativeFluid.unknown();
             if (phase == Phase.HYDROGEN) {
                 if (entry != FluidCatalog.Hydrogen || !FluidCatalog.isBuiltInDefinition(entry)) return NativeFluid.unknown();
-                if (!phase.material().name().equals(FluidCatalog.boundMaterial(entry.registryName())))
+                if (!material.getName().equals(FluidCatalog.boundMaterial(entry.registryName())))
                     return NativeFluid.unknown();
             } else if (!FluidCatalog.isGeneratedGasLiquidDefinition(field, entry)
-                    || !phase.material().name().equals(entry.materialKey())) return NativeFluid.unknown();
-            String expectedPath = "gt6ce:" + FluidCatalog.sanitizePath(entry.registryName());
-            if (!phase.registryId().equals(expectedPath)) return NativeFluid.unknown();
+                    || !material.getName().equals(entry.materialKey())) return NativeFluid.unknown();
+            String expectedPath = "gt6ce:" + FluidCatalog.sanitizePath(binding.registryName());
+            if (!binding.registryName().equals(entry.registryName())) return NativeFluid.unknown();
             var stack = lookup.apply(field, (int)amount);
             if (stack == null || stack.isEmpty() || stack.getAmount() != amount
-                    || !BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString().equals(phase.registryId()))
+                    || !BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString().equals(expectedPath))
                 return NativeFluid.unknown();
             if (GTFluids.entryForFluid(stack.getFluid()) != entry) return NativeFluid.unknown();
-            // All eighteen source phases are positively evidenced. A missing native output holder
+            // All seventeen source phases are positively evidenced. A missing native output holder
             // is UNKNOWN too, never source ABSENT that could silently discard a vitriol/gas product.
             return NativeFluid.present(stack);
         }

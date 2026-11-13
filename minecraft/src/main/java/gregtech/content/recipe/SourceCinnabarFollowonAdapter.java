@@ -5,6 +5,7 @@ import static gregtech.content.recipe.SourceOreFollowonRows.Evidence.*;
 
 import gregtech.api.material.*;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.*;
@@ -19,33 +20,26 @@ import net.minecraft.world.level.block.Blocks;
  * Source MT3709/w3803; Ores generic loop; Handlers145-150; reviewed oracle48fe504f.
  * No recipe is registered here; no list removal and no item/fluid ID changes.
  */
-public final class ReviewedCinnabarFacts implements SourceOreFollowonRows.Facts {
-    public static final ReviewedCinnabarFacts INSTANCE = new ReviewedCinnabarFacts();
+public final class SourceCinnabarFollowonAdapter implements SourceOreFollowonRows.Facts {
+    public static final SourceCinnabarFollowonAdapter INSTANCE = new SourceCinnabarFollowonAdapter();
 
-    private ReviewedCinnabarFacts() {}
+    private SourceCinnabarFollowonAdapter() {}
 
-    private record Identity(int id, String name) {}
-
-    private static final Identity CINNABAR = new Identity(9114, "Cinnabar");
-    private static final Identity[] BYPRODUCTS = {
-        new Identity(8333, "Redstone"),
-        new Identity(160, "Sulfur"),
-        new Identity(8341, "Glowstone"),
-        new Identity(340, "Selenium")
-    };
-
-    private static boolean identity(GTMaterial m, Identity i) {
+    private static boolean identity(GTMaterial m, MaterialFactKeys.Identity i) {
         return m != null
                 && m.isValid()
                 && !AddonMaterials.owns(m)
                 && GTMaterialRegistry.isCoreMaterial(m.resolve())
-                && m.resolve().getId() == i.id
-                && m.resolve().getName().equals(i.name);
+                && m.resolve().getId() == i.id()
+                && m.resolve().getName().equals(i.name());
     }
 
-    private static boolean hasExternalFormProfile() {
+    private static boolean hasExternalFormProfile(MaterialFactKeys.CinnabarFollowonRule rule) {
         // This bounded adapter is not an external unifier. Defer instead of manufacturing builtin replacements.
-        Set<String> names = Set.of("Cinnabar", "Redstone", "Sulfur", "Glowstone", "Selenium", "SluiceSand");
+        Set<String> names = new HashSet<>();
+        names.add(rule.cinnabar().name());
+        rule.byproducts().forEach(value -> names.add(value.name()));
+        names.add(rule.sluiceSand().name());
         if (AddonMaterials.acceptedForms().stream().anyMatch(f -> names.contains(f.materialName()))) return true;
         for (var item : gregtech.engine.material.ItemMaterialRegistry.entries().keySet()) {
             String ns = BuiltInRegistries.ITEM.getKey(item).getNamespace();
@@ -56,25 +50,37 @@ public final class ReviewedCinnabarFacts implements SourceOreFollowonRows.Facts 
         return false;
     }
 
+    private static MaterialFactKeys.CinnabarFollowonRule cinnabarRule() {
+        var material = GTMaterialRegistry.get(9114);
+        if (!material.isValid()
+                || !material.getName().equals("Cinnabar")
+                || !GTMaterialRegistry.isCoreMaterial(material)
+                || AddonMaterials.owns(material)) return null;
+        return MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_CINNABAR_FOLLOWON)
+                .orElse(null);
+    }
+
     public static boolean supports(GTMaterial m) {
         return INSTANCE.eligible(m) == YES;
     }
 
     @Override
     public SourceOreFollowonRows.Evidence eligible(GTMaterial m) {
-        if (!identity(m, CINNABAR) || hasExternalFormProfile()) return UNKNOWN;
+        var rule = cinnabarRule();
+        if (rule == null || !identity(m, rule.cinnabar()) || hasExternalFormProfile(rule)) return UNKNOWN;
         m = m.resolve();
         if (m.has(MaterialProperty.ANTIMATTER)
                 || m.getToolQuality() != 0
                 || m.getOreMultiplier() != 1
                 || m.getOreProcessingMultiplier() != 1
-                || !identity(m.getTargetCrushingMaterial(), CINNABAR)
+                || !identity(m.getTargetCrushingMaterial(), rule.cinnabar())
                 || m.getTargetCrushingAmount() != U
-                || !identity(m.getTargetPulverMaterial(), CINNABAR)
+                || !identity(m.getTargetPulverMaterial(), rule.cinnabar())
                 || m.getTargetPulverAmount() != U) return UNKNOWN;
         var by = m.getByProducts();
-        if (by.size() != BYPRODUCTS.length) return UNKNOWN;
-        for (int i = 0; i < by.size(); i++) if (!identity(by.get(i), BYPRODUCTS[i])) return UNKNOWN;
+        if (by.size() != rule.byproducts().size()) return UNKNOWN;
+        for (int i = 0; i < by.size(); i++)
+            if (!identity(by.get(i), rule.byproducts().get(i))) return UNKNOWN;
         return YES; // proof is this source profile, not missing flags or current generated-form presence
     }
 
@@ -90,10 +96,13 @@ public final class ReviewedCinnabarFacts implements SourceOreFollowonRows.Facts 
 
     @Override
     public SourceOreFollowonRows.Environment environment(GTMaterial m, long units) {
+        var rule = cinnabarRule();
+        if (rule == null || rule.byproducts().size() < 3) return new SourceOreFollowonRows.Environment(UNKNOWN, null);
         // Baseline source DEF_ENV_TEMP293 < melting500/388/500. Never infer from missing molten fluid.
-        int melt = identity(m, BYPRODUCTS[0])
+        int melt = identity(m, rule.byproducts().get(0))
                 ? 500
-                : identity(m, BYPRODUCTS[1]) ? 388 : identity(m, BYPRODUCTS[2]) ? 500 : -1;
+                : identity(m, rule.byproducts().get(1)) ? 388
+                : identity(m, rule.byproducts().get(2)) ? 500 : -1;
         if (melt < 0 || m.resolve().getMeltingPoint() != melt)
             return new SourceOreFollowonRows.Environment(UNKNOWN, null);
         return new SourceOreFollowonRows.Environment(YES, null);
@@ -102,10 +111,12 @@ public final class ReviewedCinnabarFacts implements SourceOreFollowonRows.Facts 
     @Override
     public ItemStack direct(MaterialPrefix p, GTMaterial m, int n) {
         if (m == null || n < 1) return ItemStack.EMPTY;
+        var rule = cinnabarRule();
+        if (rule == null) return ItemStack.EMPTY;
         // Source-backed forms used by this bounded rule slice; allow no arbitrary legacy-only graded form.
-        boolean base = identity(m, CINNABAR);
+        boolean base = identity(m, rule.cinnabar());
         boolean by = false;
-        for (var id : BYPRODUCTS) by |= identity(m, id);
+        for (var id : rule.byproducts()) by |= identity(m, id);
         boolean ore = p == MaterialPrefix.crushed
                 || p == MaterialPrefix.crushedTiny
                 || p == MaterialPrefix.crushedPurified
@@ -117,7 +128,7 @@ public final class ReviewedCinnabarFacts implements SourceOreFollowonRows.Facts 
                 || p == MaterialPrefix.dustSmall
                 || p == MaterialPrefix.dustDiv72;
         boolean grade = p == MaterialPrefix.gem || p == MaterialPrefix.gemFlawless || p == MaterialPrefix.gemExquisite;
-        boolean sand = identity(m, new Identity(8102, "SluiceSand"));
+        boolean sand = identity(m, rule.sluiceSand());
         if (!((base && (ore || dust || grade || p == MaterialPrefix.oreRaw))
                 || (by && (ore || dust))
                 || (sand && dust))) return ItemStack.EMPTY;
@@ -126,13 +137,11 @@ public final class ReviewedCinnabarFacts implements SourceOreFollowonRows.Facts 
 
     @Override
     public ItemStack blockDust(GTMaterial m, int n) {
-        if (!identity(m, CINNABAR)) return ItemStack.EMPTY;
+        var rule = cinnabarRule();
+        if (rule == null || !identity(m, rule.cinnabar())) return ItemStack.EMPTY;
         var block = BuiltInRegistries.BLOCK.get(
                 ResourceLocation.parse("gt6ce:" + BlockMaterialPrefix.blockDust.getBlockId(m.resolve())));
         return block == Blocks.AIR ? ItemStack.EMPTY : new ItemStack(block, n);
     }
 
-    public static List<GTMaterial> sourceWaxes() {
-        return SourceWaxMaterials.materials();
-    }
 }

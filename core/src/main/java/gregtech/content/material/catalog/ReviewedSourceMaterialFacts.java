@@ -1,28 +1,28 @@
-package gregtech.content.recipe;
+package gregtech.content.material.catalog;
 
+import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.addon.AddonMaterials;
-import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.api.material.MaterialProperty;
+import gregtech.content.material.MaterialFactKeys;
+import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialInfoDefinition;
 
-/** Generated from reviewed-source-policy.json. Incomplete by design; absent is UNKNOWN. */
-public final class ReviewedOreSourceProfile {
-    public enum Decision {
-        YES,
-        NO,
-        UNKNOWN;
+import java.util.*;
 
-        public boolean orLegacy(boolean legacy) {
-            return this == UNKNOWN ? legacy : this == YES;
-        }
-    }
+import static gregtech.content.material.MaterialFactKeys.Decision;
 
-    public enum Rule {
+/** Bounded source facts whose scope is an exact built-in material identity. */
+public final class ReviewedSourceMaterialFacts {
+    private ReviewedSourceMaterialFacts() {}
+
+    private enum Rule {
         FURNACE,
         GRADED_GEM
     }
 
     private record Entry(int id, String name, Rule rule, Decision decision) {}
 
+    /** FURNACE and GRADED_GEM decisions from the reviewed source-policy extract. */
     private static final Entry[] ENTRIES = {
         new Entry(30, "Lithium", Rule.FURNACE, Decision.YES),
         new Entry(31, "Lithium-6", Rule.FURNACE, Decision.YES),
@@ -226,15 +226,99 @@ public final class ReviewedOreSourceProfile {
         new Entry(9114, "Cinnabar", Rule.GRADED_GEM, Decision.YES),
     };
 
-    private ReviewedOreSourceProfile() {}
+    /** Paired MT direct magnetic-tag positives; omission is UNKNOWN, never a negative. */
+    private static final Map<Integer, String> MAGNETIC = Map.ofEntries(
+            Map.entry(250, "Manganese"),
+            Map.entry(260, "Iron"),
+            Map.entry(270, "Cobalt"),
+            Map.entry(278, "Cobalt60"),
+            Map.entry(280, "Nickel"),
+            Map.entry(600, "Neodymium"),
+            Map.entry(670, "Holmium"),
+            Map.entry(830, "Bismuth"),
+            Map.entry(2220, "Adamantium"),
+            Map.entry(8030, "FerrousChloride"),
+            Map.entry(8234, "VanadiumPentoxide"),
+            Map.entry(8247, "Basalz"),
+            Map.entry(8630, "Steel"),
+            Map.entry(8634, "DamascusSteel"),
+            Map.entry(8635, "Tungstensteel"),
+            Map.entry(8643, "WroughtIron"),
+            Map.entry(8645, "IronMagnetic"),
+            Map.entry(8646, "SteelMagnetic"),
+            Map.entry(8647, "NeodymiumMagnetic"),
+            Map.entry(8653, "VanadiumSteel"),
+            Map.entry(8661, "Invar"),
+            Map.entry(8662, "Constantan"),
+            Map.entry(8672, "Ironwood"),
+            Map.entry(8673, "Steeleaf"),
+            Map.entry(8674, "Knightmetal"),
+            Map.entry(8675, "FierySteel"),
+            Map.entry(8679, "Thaumium"),
+            Map.entry(8685, "ChromiumDioxide"),
+            Map.entry(8697, "FlamascusSteel"),
+            Map.entry(8698, "Fireleaf"),
+            Map.entry(8704, "VibraniumSteel"),
+            Map.entry(8706, "Vibramantium"),
+            Map.entry(8727, "ConductiveIron"),
+            Map.entry(8730, "ElectricalSteel"),
+            Map.entry(8744, "AncientDebris"),
+            Map.entry(8745, "Netherite"),
+            Map.entry(8746, "NetherizedDiamond"),
+            Map.entry(8747, "Efrine"),
+            Map.entry(8784, "Adamantine"),
+            Map.entry(8803, "CastIron"),
+            Map.entry(9003, "BasalticMineralSand"),
+            Map.entry(9004, "GraniticMineralSand"),
+            Map.entry(9104, "Hematite"),
+            Map.entry(9106, "BrownLimonite"),
+            Map.entry(9115, "Cobaltite"),
+            Map.entry(9118, "Garnierite"),
+            Map.entry(9120, "Ilmenite"),
+            Map.entry(9122, "Magnetite"),
+            Map.entry(9125, "Pyrite"),
+            Map.entry(9126, "Pyrolusite"),
+            Map.entry(9137, "YellowLimonite"),
+            Map.entry(9143, "VanadiumMagnetite"),
+            Map.entry(9145, "Pentlandite"));
 
-    public static Decision decision(GTMaterial material, Rule rule) {
-        if (material == null || !material.isValid()) return Decision.UNKNOWN;
-        material = material.resolve();
-        if (AddonMaterials.owns(material) || !GTMaterialRegistry.isCoreMaterial(material)) return Decision.UNKNOWN;
-        for (Entry row : ENTRIES)
-            if (row.id == material.getId() && row.name.equals(material.getName()) && row.rule == rule)
-                return row.decision;
-        return Decision.UNKNOWN;
+    private static final Set<String> SIFTING_ABSENT = Set.of("gemLegendary", "gemExquisite", "gemFlawless");
+
+    public static MaterialDefinition.Declaration applyOne(MaterialDefinition.Declaration declaration) {
+        var info = declaration.info();
+        var rules = new LinkedHashMap<>(info.processes().rules());
+        for (var entry : ENTRIES) {
+            if (entry.id != declaration.id()
+                    || !GTMaterial.sanitize(entry.name).equals(declaration.name())) continue;
+            var key = entry.rule == Rule.FURNACE ? MaterialFactKeys.SOURCE_FURNACE : MaterialFactKeys.SOURCE_GRADED_GEM;
+            rules.put(key, List.of(MaterialProcessRule.anyForm(entry.decision)));
+        }
+        if (declaration.id() == 9802 && declaration.name().equals("Ice")) {
+            rules.put(
+                    MaterialFactKeys.SOURCE_SIFTING_EXCLUSIONS,
+                    List.of(MaterialProcessRule.anyForm(new MaterialFactKeys.PrefixExclusions(SIFTING_ABSENT))));
+        }
+
+        var material = declaration.material();
+        if (MAGNETIC.get(declaration.id()) != null
+                && MAGNETIC.get(declaration.id()).equals(declaration.name())) {
+            var properties = EnumSet.noneOf(MaterialProperty.class);
+            properties.addAll(material.properties());
+            properties.add(MaterialProperty.MAGNETIC);
+            material = new MaterialDefinition(
+                    material.identity(),
+                    material.presentation(),
+                    material.physical(),
+                    properties,
+                    material.source());
+        }
+        if (rules.equals(info.processes().rules()) && material == declaration.material()) return declaration;
+        return new MaterialDefinition.Declaration(
+                material,
+                new MaterialInfoDefinition(
+                        info.tooling(),
+                        info.composition(),
+                        info.relations(),
+                        new MaterialInfoDefinition.Processes(rules)));
     }
 }

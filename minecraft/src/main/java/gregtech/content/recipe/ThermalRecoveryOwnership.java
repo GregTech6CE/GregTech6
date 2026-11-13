@@ -2,6 +2,7 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 
@@ -20,8 +21,9 @@ final class ThermalRecoveryOwnership {
         if (material == null || !material.isValid()) return false;
         material = material.resolve();
         if (!GTMaterialRegistry.isCoreMaterial(material)) return false;
-        boolean metal = material.getId() == 220 && "Titanium".equals(material.getName())
-                || material.getId() == 260 && "Iron".equals(material.getName());
+        boolean metal = MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_GENERATED_FLUID)
+                .map(rules -> rules.rules().stream().anyMatch(rule -> rule.wholeDustMetal()))
+                .orElse(false);
         return metal
                 && (prefix == MaterialPrefix.dustSmall
                         || prefix == MaterialPrefix.dustTiny

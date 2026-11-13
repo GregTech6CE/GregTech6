@@ -1,5 +1,6 @@
 package gregtech.content.material;
 
+import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
 import gregtech.content.block.BlockMaterialWeights;
 import gregtech.content.block.MaterialBlockLike;
@@ -12,12 +13,16 @@ import gregtech.content.machine.MachineConstructionMaterials;
 import gregtech.content.machine.OriginalMachineMaterialData;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
+import gregtech.engine.fluid.PortableFluidContainerSpec;
 import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.ItemMaterialRuntimeFacts;
 import java.util.List;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
 /** Pure item and block composition submissions shared by both loader entry points. */
@@ -29,14 +34,15 @@ public final class MaterialItemCompositions {
         registerMaterialItemForms();
         registerBlockWeights();
         registerMachineConstruction();
-        gregtech.content.recipe.DiggableRecipes.registerMaterials();
-        gregtech.content.recipe.RegisteredWoodSurvivalRecipes.registerMaterials();
-        gregtech.content.recipe.VanillaWoodProcessingRecipes.registerMaterials();
+        registerSingleItemMaterials();
+        registerCapsuleCells();
+        registerDiggableMaterials();
+        WoodMaterialCompositions.register();
         gregtech.content.registry.GTBars.registerCompositions();
         gregtech.content.registry.GTWires.registerCompositions();
         gregtech.content.registry.GTSignalWires.registerCompositions();
-        gregtech.content.recipe.PanelMaterialRegistration.register();
-        gregtech.content.recipe.TransportMaterialRegistration.register();
+        PanelMaterialCompositions.register();
+        TransportMaterialCompositions.register();
     }
 
     public static void registerVanillaBindings() {
@@ -112,5 +118,69 @@ public final class MaterialItemCompositions {
             MachineConstructionMaterials.block(id.getPath())
                     .ifPresent(data -> ItemMaterialRegistry.registerDeclared(block.asItem(), data));
         }
+    }
+
+    private static void registerDiggableMaterials() {
+        for (var row : gregtech.content.recipe.DiggableRecipes.packable()) {
+            if (row.material() == null) continue;
+            ItemMaterialRegistry.register(item("gt6ce:" + row.block()), null, row.material(), GTValues.U * 4);
+            ItemMaterialRegistry.register(item("gt6ce:" + row.ball()), null, row.material(), GTValues.U);
+        }
+        ItemMaterialRegistry.register(
+                item("gt6ce:turf"), null, gregtech.content.material.Materials.Peat, GTValues.U * 4);
+    }
+
+    private static void registerSingleItemMaterials() {
+        ItemMaterialRegistry.register(
+                item("gt6ce:dry_bark"), null, gregtech.engine.material.GTMaterialRegistry.get("Bark"), GTValues.U / 2);
+        for (var row : gregtech.content.recipe.OriginalSingleItemCatalog.COMPOUNDS) {
+            ItemMaterialRegistry.register(
+                    item("gt6ce:" + row.item()),
+                    null,
+                    gregtech.engine.material.GTMaterialRegistry.get(row.material()),
+                    GTValues.U / 9);
+        }
+        ItemMaterialRegistry.register(
+                item("gt6ce:scrap_meat"),
+                null,
+                gregtech.engine.material.GTMaterialRegistry.get("MeatRaw"),
+                2 * GTValues.U);
+        ItemMaterialRegistry.register(
+                item("gt6ce:raw_meat_bar"),
+                MaterialPrefix.ingot,
+                gregtech.engine.material.GTMaterialRegistry.get("MeatRaw"),
+                GTValues.U);
+        ItemMaterialRegistry.register(
+                item("gt6ce:cooked_meat_bar"),
+                MaterialPrefix.ingot,
+                gregtech.engine.material.GTMaterialRegistry.get("MeatCooked"),
+                GTValues.U);
+    }
+
+    private static void registerCapsuleCells() {
+        for (var spec : PortableFluidContainerSpec.values()) {
+            if (!spec.shapeId().equals("cell")) continue;
+            var item = item("gt6ce:fluid_" + spec.id());
+            if (ItemMaterialRegistry.base(item).isPresent()) continue;
+            ItemMaterialRegistry.registerDeclared(
+                    item,
+                    new ItemComposition(
+                            null,
+                            List.of(MaterialComponent.of(spec.material(), GTValues.U9)),
+                            spec.material(),
+                            List.of(new ItemCompositionSource(
+                                    ItemCompositionSource.Kind.EXPLICIT,
+                                    "gt6ce:capsule-cell/" + spec.id(),
+                                    "capsule-cell material",
+                                    spec.id(),
+                                    "")),
+                            true));
+        }
+    }
+
+    private static Item item(String id) {
+        Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));
+        if (item == Items.AIR) throw new IllegalStateException("Missing material item " + id);
+        return item;
     }
 }

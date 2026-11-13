@@ -54,8 +54,6 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
     private static final String[] DUST_FORMS = {"dust", "dustSmall", "dustTiny"};
     private static final int[] DUST_COUNTS = {1, 4, 9};
     private static final long PAPER_TICKS = 16;
-    /** Wood-property materials the source ANY.Wood does not contain. */
-    private static final Set<String> NOT_ANY_WOOD_DUST = Set.of("PetrifiedWood");
     private static final long CONVERSION_TICKS = 144;
 
     private final Set<String> used = new HashSet<>();
@@ -74,13 +72,7 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
     }
 
     private void paper() {
-        Set<GTMaterial> sources = new LinkedHashSet<>();
-        for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
-            GTMaterial resolved = material.resolve();
-            if (!resolved.isValid() || !resolved.has(MaterialProperty.WOOD)) continue;
-            if (NOT_ANY_WOOD_DUST.contains(resolved.getName())) continue;
-            sources.add(resolved);
-        }
+        Set<GTMaterial> sources = new LinkedHashSet<>(MaterialGroups.members(MaterialGroups.Wood));
         for (String name : new String[] {"Bark", "Paper"}) {
             GTMaterial material = GTMaterialRegistry.get(name);
             if (material.isValid()) sources.add(material);

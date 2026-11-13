@@ -5,6 +5,7 @@ import static gregtech.content.recipe.SourceOreFollowonRows.Evidence.*;
 
 import gregtech.api.material.*;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.*;
@@ -16,25 +17,10 @@ import net.minecraft.world.item.ItemStack;
  * The roster is independently reviewed; Centrifuge byproducts and ambient phases do not own these rows.
  * No claims for foreign/unknown forms, non-self targets, other input families or other machines.
  */
-public final class ReviewedOreShredderFacts implements SourceOreFollowonRows.Facts {
-    public static final ReviewedOreShredderFacts INSTANCE = new ReviewedOreShredderFacts();
+public final class SourceOreFollowonAdapter implements SourceOreFollowonRows.Facts {
+    public static final SourceOreFollowonAdapter INSTANCE = new SourceOreFollowonAdapter();
 
-    private ReviewedOreShredderFacts() {}
-
-    private record Profile(int id, String name, int quality, boolean mortar) {}
-
-    private static final List<Profile> PROFILES = List.of(
-            new Profile(290, "Copper", 0, true),
-            new Profile(9117, "Galena", 0, true),
-            new Profile(8346, "NetherQuartz", 3, true),
-            new Profile(9111, "Chalcopyrite", 0, true),
-            new Profile(9145, "Pentlandite", 0, true),
-            new Profile(9130, "Sphalerite", 0, true),
-            new Profile(9132, "Tetrahedrite", 0, true),
-            new Profile(9125, "Pyrite", 0, true),
-            new Profile(280, "Nickel", 2, true),
-            new Profile(9116, "Cooperite", 0, true),
-            new Profile(9137, "YellowLimonite", 0, true));
+    private SourceOreFollowonAdapter() {}
     private static final List<MaterialPrefix> INPUTS = List.of(
             MaterialPrefix.crushed,
             MaterialPrefix.crushedPurified,
@@ -45,12 +31,11 @@ public final class ReviewedOreShredderFacts implements SourceOreFollowonRows.Fac
     private static final List<MaterialPrefix> OUTPUTS =
             List.of(MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny, MaterialPrefix.dustDiv72);
 
-    private static Profile profile(GTMaterial material) {
+    private static MaterialFactKeys.OreShredderProfile profile(GTMaterial material) {
         if (material == null || !material.isValid()) return null;
         var m = material.resolve();
         if (!GTMaterialRegistry.isCoreMaterial(m) || AddonMaterials.owns(m)) return null;
-        for (var row : PROFILES) if (m.getId() == row.id() && m.getName().equals(row.name())) return row;
-        return null;
+        return MaterialFactKeys.value(m, MaterialFactKeys.SOURCE_ORE_SHREDDER).orElse(null);
     }
 
     private static boolean usedPrefix(String prefix) {
@@ -58,15 +43,15 @@ public final class ReviewedOreShredderFacts implements SourceOreFollowonRows.Fac
                 || OUTPUTS.stream().anyMatch(p -> p.getName().equals(prefix));
     }
 
-    private static boolean externalForms(Profile row) {
+    private static boolean externalForms(GTMaterial material) {
         if (AddonMaterials.acceptedForms().stream()
-                .anyMatch(f -> f.materialName().equals(row.name()) && usedPrefix(f.prefixName()))) return true;
+                .anyMatch(f -> f.materialName().equals(material.getName()) && usedPrefix(f.prefixName()))) return true;
         for (var item : ItemMaterialRegistry.entries().keySet()) {
             String namespace = BuiltInRegistries.ITEM.getKey(item).getNamespace();
             if (namespace.equals("gt6ce") || namespace.equals("minecraft")) continue;
             var form = MaterialEquivalence.form(new ItemStack(item));
             if (form != null
-                    && form.material().resolve().getName().equals(row.name())
+                    && form.material().resolve().getName().equals(material.getName())
                     && usedPrefix(form.prefix().getName())) return true;
         }
         return false;
@@ -98,7 +83,7 @@ public final class ReviewedOreShredderFacts implements SourceOreFollowonRows.Fac
                 || m.getToolQuality() != row.quality()
                 || m.getTargetPulverMaterial().resolve() != m
                 || m.getTargetPulverAmount() != U
-                || externalForms(row)) return UNKNOWN;
+                || externalForms(m)) return UNKNOWN;
         // MORTAR/ORES are positive source facts, not inferred from port item existence.
         for (var prefix : INPUTS) if (nativeForm(prefix, m, 1).isEmpty()) return UNKNOWN;
         for (var prefix : OUTPUTS) if (nativeForm(prefix, m, 1).isEmpty()) return UNKNOWN;

@@ -1,12 +1,16 @@
-package gregtech.content.recipe;
+package gregtech.content.material.catalog;
 
-import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
-
+import gregtech.api.addon.material.MaterialProcessRule;
+import gregtech.content.material.MaterialFactKeys;
+import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialInfoDefinition;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
  * Producer-local MORTAR facts for 997 exact default input identities. Original GT6 is pinned at
- * 3703e40308c8c030763fd6297dea8b210d2a77b1. SourceRecyclingFacts supplies ONLY the canonical identity
+ * 3703e40308c8c030763fd6297dea8b210d2a77b1. SourceRecyclingMaterialFacts supplies ONLY the canonical identity
  * and declaration location; its thermal flags, smelting targets and native fingerprints are not gates.
  *
  * <p>Both positive and negative sets were closed over MT factories/declarations. Element metal and
@@ -22,10 +26,10 @@ import java.util.Set;
  * not proof of a native item's ownership, registration, generation eligibility or output availability.
  * External/addon overrides must be handled by the native caller before using these facts.
  */
-public final class SourceOreMacerationFacts {
-    private SourceOreMacerationFacts() {}
+public final class SourceMacerationMaterialFacts {
+    private SourceMacerationMaterialFacts() {}
 
-    // 589 source positives: factory closure, original element condition, or explicit declaration.
+    // 588 source positives: factory closure, original element condition, or explicit declaration.
     private static final Set<Integer> MORTAR_YES = Set.of(
             30, 31, 40, 60, 110, 120, 130, 150, 160, 190, 200, 260, 270, 278, 280, 290, 300, 310, 320, 330, 370, 380,
             470, 480, 490, 500, 510, 520, 550, 560, 570, 580, 630, 700, 780, 790, 800, 810, 820, 830, 840, 850, 870,
@@ -86,10 +90,23 @@ public final class SourceOreMacerationFacts {
             9133, 9134, 9135, 9140, 9141, 9164, 9169, 9183, 9192, 9193, 9194, 9195, 9196, 9197, 9198, 9199, 9200, 9201,
             9202, 9203, 9204, 9205, 9206, 9207, 9208, 9209, 9217, 9820, 9824, 9825, 9827, 9844, 9851, 9852, 9853, 9883);
 
-    public static Decision mortar(int id, String canonicalName) {
-        if (SourceRecyclingFacts.find(id, canonicalName) == null) return Decision.UNKNOWN;
-        if (MORTAR_YES.contains(id)) return Decision.YES;
-        if (MORTAR_NO.contains(id)) return Decision.NO;
-        return Decision.UNKNOWN;
+    public static MaterialDefinition.Declaration apply(MaterialDefinition.Declaration declaration) {
+        if (SourceRecyclingMaterialFacts.find(declaration.id(), declaration.name()) == null) return declaration;
+        var decision = MORTAR_YES.contains(declaration.id())
+                ? MaterialFactKeys.Decision.YES
+                : MORTAR_NO.contains(declaration.id())
+                        ? MaterialFactKeys.Decision.NO
+                        : MaterialFactKeys.Decision.UNKNOWN;
+        if (decision == MaterialFactKeys.Decision.UNKNOWN) return declaration;
+        var info = declaration.info();
+        var rules = new LinkedHashMap<>(info.processes().rules());
+        rules.put(MaterialFactKeys.SOURCE_MACERATION, List.of(MaterialProcessRule.anyForm(decision)));
+        return new MaterialDefinition.Declaration(
+                declaration.material(),
+                new MaterialInfoDefinition(
+                        info.tooling(),
+                        info.composition(),
+                        info.relations(),
+                        new MaterialInfoDefinition.Processes(rules)));
     }
 }

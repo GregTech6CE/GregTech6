@@ -1,18 +1,17 @@
 package gregtech.content.recipe;
 
-import static gregtech.api.material.GTValues.U;
-import static gregtech.content.recipe.SourceOreCrushingRules.Form;
-import static gregtech.content.recipe.SourceOreCrushingRules.Resolver;
-import static gregtech.content.recipe.SourceOreCrushingRules.Slot;
-import static gregtech.content.recipe.SourceOreCrushingRules.Stack;
-import static gregtech.content.recipe.SourceOreWashingRules.Availability;
-import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
-import static gregtech.content.recipe.SourceRecyclingFacts.Identity;
+import gregtech.content.block.stone.OreHostFacts;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import static gregtech.api.material.GTValues.U;
+import static gregtech.content.material.MaterialFactKeys.Decision;
+import static gregtech.content.material.MaterialFactKeys.Identity;
+import static gregtech.content.recipe.SourceOreCrushingRules.*;
+import static gregtech.content.recipe.SourceOreWashingRules.Availability;
 
 /**
  * The OilSand ore-registration Centrifuge event, not generic material decomposition.
@@ -90,7 +89,7 @@ public final class SourceOilSandRules {
         };
         // OP 115/117/118: 2U, DUST_ORE, and no byproduct assignment in the source init closure.
         if (sediment != null) return new HostProfile(sediment, WEIGHT_STANDARD, List.of());
-        var host = SourceOreCrushingFacts.hostProfile(nativeHostId);
+        var host = OreHostFacts.hostProfile(nativeHostId);
         return host == null
                 ? null
                 : new HostProfile(
@@ -108,7 +107,7 @@ public final class SourceOilSandRules {
     /** False means unproved mode, not source NO. Sediment, Deepslate and Gneiss broken modes are
      * not inferred merely from their ordinary prefix definitions. */
     public static boolean hasBrokenSourcePair(String nativeHostId) {
-        return SourceOreCrushingFacts.hasBrokenSourcePair(nativeHostId);
+        return OreHostFacts.hasBrokenSourcePair(nativeHostId);
     }
 
     public static Result plan(Request request, Resolver resolver) {

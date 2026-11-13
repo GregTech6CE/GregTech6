@@ -3,6 +3,7 @@ package gregtech.content.recipe;
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.material.catalog.SourceLensMaterialFacts.Color;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import gregtech.content.registry.GTBlocks;
 import gregtech.engine.recipe.Recipe;
@@ -14,7 +15,7 @@ import net.minecraft.world.item.Items;
 
 /** BlockStones and Loader_Recipes_OreDict, native stone and generator engravings. */
 public final class LaserStoneRecipes {
-    public record Entry(String family, StoneType stone, SourceLensRoles.Color color, Recipe recipe) {}
+    public record Entry(String family, StoneType stone, Color color, Recipe recipe) {}
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
     private static boolean registered;
@@ -25,7 +26,7 @@ public final class LaserStoneRecipes {
         return Collections.unmodifiableList(ENTRIES);
     }
 
-    public static StoneVariant output(SourceLensRoles.Color color) {
+    public static StoneVariant output(Color color) {
         return switch (color) {
             case WHITE -> StoneVariant.BRICKS_CHISELED;
             case RED -> StoneVariant.TILES;
@@ -42,29 +43,21 @@ public final class LaserStoneRecipes {
         if (registered) return 0;
         registered = true;
         for (var stone : StoneType.values())
-            for (var color : SourceLensRoles.Color.values())
-                for (var lens : SourceLensRoles.lenses(color)) {
+            for (var color : Color.values())
+                for (var lens : SourceLensRecipeItems.lenses(color)) {
                     var inputBlock = GTBlocks.getStone(stone, StoneVariant.SMOOTH);
                     var outputBlock = GTBlocks.getStone(stone, output(color));
                     if (inputBlock == null || outputBlock == null)
                         throw new IllegalStateException("Missing native laser stone " + stone + "/" + color);
                     var input = new ItemStack(inputBlock);
                     var output = new ItemStack(outputBlock);
-                    add(
-                            "stone",
-                            stone,
-                            color,
-                            input,
-                            lens,
-                            output,
-                            color == SourceLensRoles.Color.WHITE ? 64 : 16,
-                            false);
+                    add("stone", stone, color, input, lens, output, color == Color.WHITE ? 64 : 16, false);
                 }
-        for (var lens : SourceLensRoles.lenses(SourceLensRoles.Color.WHITE)) {
+        for (var lens : SourceLensRecipeItems.lenses(Color.WHITE)) {
             add(
                     "vanilla",
                     null,
-                    SourceLensRoles.Color.WHITE,
+                    Color.WHITE,
                     new ItemStack(Items.STONE),
                     lens,
                     new ItemStack(Items.CHISELED_STONE_BRICKS),
@@ -83,13 +76,13 @@ public final class LaserStoneRecipes {
         var input = GeneratedRecipeResolver.resolveSpec("tech:" + id + ":1");
         if (input == null || input.isEmpty())
             throw new IllegalStateException("Missing source laser generator module " + id);
-        add("module", null, SourceLensRoles.Color.WHITE, input, lens, output, 128, true);
+        add("module", null, Color.WHITE, input, lens, output, 128, true);
     }
 
     private static void add(
             String family,
             StoneType stone,
-            SourceLensRoles.Color color,
+            Color color,
             ItemStack input,
             ItemStack lens,
             ItemStack output,

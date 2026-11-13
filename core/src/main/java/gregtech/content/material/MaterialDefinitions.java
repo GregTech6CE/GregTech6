@@ -27,6 +27,17 @@ public final class MaterialDefinitions {
         result.addAll(WoodMaterials.definitions());
         result.addAll(SpecialMaterials.definitions());
         result.addAll(GroupMaterials.definitions());
+        result.replaceAll(ReviewedSourceMaterialFacts::applyOne);
+        result.replaceAll(ReviewedOreMaterialFacts::apply);
+        result.replaceAll(SourceMacerationMaterialFacts::apply);
+        result.replaceAll(SourceWashingMaterialFacts::apply);
+        result.replaceAll(MaterialFluidUnitFacts::apply);
+        result.replaceAll(GenerifyingMaterialFacts::apply);
+        result.replaceAll(SourceExtrusionMaterialFacts::apply);
+        result.replaceAll(SourceLensMaterialFacts::apply);
+        result.replaceAll(SourceRecyclingMaterialFacts::apply);
+        result.replaceAll(SourceOreCrushingMaterialFacts::apply);
+        result.replaceAll(PurifiedCentrifugeMaterialFacts::apply);
         result.replaceAll(MaterialDefinitions::attachDecomposition);
         DecompositionMaterials.validateConsumed(result);
         result.sort(Comparator.comparing(MaterialDefinition.Declaration::name));

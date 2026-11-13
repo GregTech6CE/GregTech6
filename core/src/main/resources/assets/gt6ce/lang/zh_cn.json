@@ -96384,8 +96384,6 @@
   "tooltip.gt6ce.chemical_battery.place": "Sneak to place; stored charge is retained when picked up",
   "tooltip.gt6ce.coin_mold.1": "在顶部放置一块小型金属板，用锤敲击后取出硬币",
   "tooltip.gt6ce.coin_mold.2": "没有 GUI；点击顶部或侧面进行交互",
-  "tooltip.gt6ce.composition_descriptive": "Composition reference only; not enabled for bulk recovery",
-  "tooltip.gt6ce.composition_nonmaterial": "No recoverable bulk material (technical/entity item)",
   "tooltip.gt6ce.contained_materials": "含有材料:",
   "tooltip.gt6ce.crucible.acidproof": "Acid Proof!",
   "tooltip.gt6ce.crucible.contact_damage": "当它在运作的时候接触会受伤!",

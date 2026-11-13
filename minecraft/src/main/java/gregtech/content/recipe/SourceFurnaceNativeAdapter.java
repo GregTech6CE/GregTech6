@@ -8,6 +8,7 @@ import gregtech.content.block.VanillaOreBlock;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.registry.GTBlocks;
 import gregtech.engine.material.MaterialFormItem;
 import gregtech.engine.prefix.BlockMaterialPrefix;
@@ -21,7 +22,7 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
+import static gregtech.content.material.MaterialFactKeys.Decision;
 
 /** The native block branch of Loader_OreProcessing, not the oreRaw form listener.
  * Source permissions govern only this producer; they grant no authority to delete cooking rows.
@@ -51,9 +52,12 @@ final class SourceFurnaceNativeAdapter {
         if (material == null || !material.isValid() || input == null || input.isEmpty()) return false;
         if (nativeForm(prefix, material, input))
             return OreSourcePolicy.furnaceInput(material) && !OreSourcePolicy.usesReviewedFurnaceListener(material);
-        var old = ReviewedOreSourceProfile.decision(material, ReviewedOreSourceProfile.Rule.FURNACE);
-        return old.orLegacy(material.has(MaterialProperty.MELTING))
-                && !(old == ReviewedOreSourceProfile.Decision.YES && FurnaceSmeltingRules.legacyAllows(material));
+        var decision = MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_FURNACE)
+                .orElse(MaterialFactKeys.Decision.UNKNOWN);
+        return (decision == Decision.UNKNOWN
+                        ? material.has(MaterialProperty.MELTING)
+                        : decision == Decision.YES)
+                && !(decision == Decision.YES && FurnaceSmeltingRules.legacyAllows(material));
     }
 
     static boolean listenerAllows(MaterialPrefix prefix, GTMaterial material, ItemStack input) {

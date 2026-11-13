@@ -1,14 +1,15 @@
 package gregtech.content.recipe;
 
-import static gregtech.content.recipe.SourceOreWashingRules.Availability;
-import static gregtech.content.recipe.SourcePurifiedAcidData.*;
-import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
-import static gregtech.content.recipe.SourceRecyclingFacts.Identity;
-
 import gregtech.content.data.MaterialPrefix;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static gregtech.content.material.MaterialFactKeys.Decision;
+import static gregtech.content.material.MaterialFactKeys.Identity;
+import static gregtech.content.recipe.SourceOreWashingRules.Availability;
+import static gregtech.content.recipe.SourcePurifiedAcidData.*;
 
 /**
  * Purified-acid Bath algorithms from GT6 3703e40308c8c030763fd6297dea8b210d2a77b1,
@@ -80,7 +81,7 @@ public final class SourcePurifiedAcidRules {
     public interface Resolver {
         /** Exact direct form and quantity, without purified/refined fallback or target conversion. */
         Availability item(MaterialPrefix prefix, Identity material, int count);
-        /** Source absence differs from unavailable native binding: these 18 source phases exist,
+        /** Source absence differs from unavailable native binding: these 17 source phases exist,
          * so an unproved/replaced/missing native holder must be UNKNOWN, not silently discarded. */
         Availability fluid(Phase phase, long millibuckets);
     }

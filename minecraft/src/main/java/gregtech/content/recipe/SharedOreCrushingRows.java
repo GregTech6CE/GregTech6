@@ -50,7 +50,7 @@ public final class SharedOreCrushingRows {
     static Candidate candidate(GTMaterial material, ItemStack input, boolean raw) {
         if (startup == null || sealed) throw new IllegalStateException("Crushing capture is not open");
         // Preserve the already reviewed raw Cinnabar helper and its baseline Recipe identity.
-        if (raw && ReviewedCinnabarFacts.supports(material)) return null;
+        if (raw && SourceCinnabarFollowonAdapter.supports(material)) return null;
         return SourceOreCrushingAdapter.candidate(material, input, raw, startup);
     }
 

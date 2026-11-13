@@ -27,7 +27,7 @@ import java.util.function.Predicate;
 import static gregtech.content.recipe.SourceOreCrushingAdapter.Candidate;
 import static gregtech.content.recipe.SourceOreCrushingAdapter.NativeKind;
 import static gregtech.content.recipe.SourceOreCrushingAdapter.Domain;
-import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
+import static gregtech.content.material.MaterialFactKeys.Decision;
 import static gregtech.content.recipe.SourceOilSandRules.*;
 
 /** The OilSand ore-registration Centrifuge event, independent of the Crusher/Hammer handlers.

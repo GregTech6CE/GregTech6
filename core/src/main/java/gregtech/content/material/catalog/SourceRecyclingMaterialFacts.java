@@ -1,13 +1,15 @@
-package gregtech.content.recipe;
+package gregtech.content.material.catalog;
+
+import gregtech.api.addon.material.MaterialProcessRule;
+import gregtech.content.material.MaterialFactKeys;
+import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialInfoDefinition;
+
+import java.util.*;
 
 import static gregtech.api.material.GTValues.U;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import static gregtech.content.material.MaterialFactKeys.Decision;
+import static gregtech.content.material.MaterialFactKeys.Identity;
 
 /**
  * Finite facts for the existing dust-or-ingot 1U thermal recycling producer, not global material metadata.
@@ -23,14 +25,8 @@ import java.util.Set;
  * loop at 657-662. Source density is not inferred here: the planner consumes valid runtime density,
  * target melting and actual fluid temperature without claiming imported-stat parity.
  */
-public final class SourceRecyclingFacts {
-    private SourceRecyclingFacts() {}
-
-    public enum Decision {
-        YES,
-        NO,
-        UNKNOWN
-    }
+public final class SourceRecyclingMaterialFacts {
+    private SourceRecyclingMaterialFacts() {}
 
     public enum PhaseKind {
         DEFAULT_BINDING,
@@ -44,15 +40,6 @@ public final class SourceRecyclingFacts {
         GAS
     }
 
-    public record Identity(int id, String name) {
-        public Identity {
-            Objects.requireNonNull(name);
-        }
-
-        public boolean matches(int materialId, String canonicalName) {
-            return id == materialId && name.equals(canonicalName);
-        }
-    }
     /** The source path is provenance, not a promise of the same modern native registry spelling. */
     public record Binding(
             String sourceRegistryPath,
@@ -97,6 +84,7 @@ public final class SourceRecyclingFacts {
             long targetUnitsPerU,
             Phase phase,
             PortDefaults portDefaults,
+            boolean inputEligible,
             int sourceLine) {
         public Facts {
             Objects.requireNonNull(identity);
@@ -105,6 +93,7 @@ public final class SourceRecyclingFacts {
             Objects.requireNonNull(furnace);
             Objects.requireNonNull(target);
             Objects.requireNonNull(phase);
+            Objects.requireNonNull(portDefaults);
             if (targetUnitsPerU < 0 || sourceLine <= 0) throw new IllegalArgumentException("Invalid source fact");
         }
     }
@@ -143,34 +132,46 @@ public final class SourceRecyclingFacts {
     private static final Set<Integer> OPTIONAL_EXTERNAL = Set.of(
             120, 130, 220, 260, 270, 280, 290, 300, 320, 470, 500, 780, 790, 820, 8318, 8333, 8341, 8600, 8610, 8630,
             8661, 8700, 8702, 8708, 8709, 8710, 8752);
+    private static final Map<Integer, String> SOURCE_MOLTEN_FLUIDS = Map.ofEntries(
+            Map.entry(62, "Carbon14"),
+            Map.entry(1250, "TritaniumElemental"),
+            Map.entry(1260, "Trinium"),
+            Map.entry(1450, "DuraniumElemental"),
+            Map.entry(1740, "Naquadah"),
+            Map.entry(1741, "NaquadahEnriched"),
+            Map.entry(1742, "Naquadria"),
+            Map.entry(8020, "PotassiumCarbonate"),
+            Map.entry(8026, "TungstenTrioxide"),
+            Map.entry(8030, "FerrousChloride"),
+            Map.entry(8034, "LithiumPerchlorate"),
+            Map.entry(8266, "Asphalt"),
+            Map.entry(8500, "Stone"),
+            Map.entry(9120, "Ilmenite"),
+            Map.entry(9192, "Rutile"));
 
     private static final Map<Integer, Facts> BY_ID = createFacts();
-    private static final List<Facts> ALL = List.copyOf(BY_ID.values());
-    // These two output-only identities have no default 1U input, but their own target metadata
-    // still participates in the Melter target-to-Calcite gate. Reviewed port defaults, not source flags.
-    private static final Map<Integer, PortDefaults> TARGET_ONLY_DEFAULTS = Map.of(
-            9800, new PortDefaults(false, new Identity(9800, "Water"), U, false),
-            9810, new PortDefaults(false, new Identity(9810, "Lava"), U, false));
     /** Null means unsupported identity, never an implicit source-negative decision. */
-    public static Facts find(int id, String canonicalName) {
+    static Facts find(int id, String canonicalName) {
         Facts value = BY_ID.get(id);
         return value != null && value.identity().matches(id, canonicalName) ? value : null;
     }
 
-    public static PortDefaults defaults(int id, String canonicalName) {
-        Facts facts = find(id, canonicalName);
-        return facts == null ? null : facts.portDefaults();
-    }
-    /** Includes the two reviewed target-only profiles; this does not grant input-form eligibility. */
-    public static PortDefaults contextDefaults(int id, String canonicalName) {
-        Facts facts = find(id, canonicalName);
-        return facts == null
-                ? null
-                : facts.portDefaults() != null ? facts.portDefaults() : TARGET_ONLY_DEFAULTS.get(id);
-    }
-
-    public static List<Facts> all() {
-        return ALL;
+    public static MaterialDefinition.Declaration apply(MaterialDefinition.Declaration declaration) {
+        Facts facts = find(declaration.id(), declaration.name());
+        if (facts == null) return declaration;
+        var info = declaration.info();
+        var rules = new java.util.LinkedHashMap<>(info.processes().rules());
+        rules.put(MaterialFactKeys.SOURCE_RECYCLING, List.of(MaterialProcessRule.anyForm(facts)));
+        if (declaration.name().equals(SOURCE_MOLTEN_FLUIDS.get(declaration.id()))) {
+            rules.put(MaterialFactKeys.SOURCE_MOLTEN_FLUID, List.of(MaterialProcessRule.anyForm(Boolean.TRUE)));
+        }
+        return new MaterialDefinition.Declaration(
+                declaration.material(),
+                new MaterialInfoDefinition(
+                        info.tooling(),
+                        info.composition(),
+                        info.relations(),
+                        new MaterialInfoDefinition.Processes(rules)));
     }
 
     private static Decision decision(int flags, int bit) {
@@ -199,8 +200,12 @@ public final class SourceRecyclingFacts {
                     binding,
                     optional);
             boolean melting = decision(seed.flags(), M) == Decision.YES;
-            PortDefaults port = null;
-            if (id != 9800 && id != 9810) {
+            boolean inputEligible = id != 9800 && id != 9810;
+            PortDefaults port;
+            if (!inputEligible) {
+                // Output-only identities still carry target metadata for Melter context queries.
+                port = new PortDefaults(false, seed.identity(), U, false);
+            } else {
                 boolean nativeMelting = PORT_EXTRA_MELTING.contains(id) || (melting && !PORT_NO_MELTING.contains(id));
                 boolean self = PORT_SELF_TARGET.contains(id);
                 port = new PortDefaults(
@@ -220,6 +225,7 @@ public final class SourceRecyclingFacts {
                             seed.amount(),
                             phase,
                             port,
+                            inputEligible,
                             seed.sourceLine()));
         }
         for (int id : bindings.keySet())

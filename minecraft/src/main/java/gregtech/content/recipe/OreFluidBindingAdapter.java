@@ -1,6 +1,8 @@
 package gregtech.content.recipe;
 import gregtech.api.material.GTMaterial;
+import gregtech.content.material.catalog.MaterialFluidUnitFacts;
 import gregtech.engine.addon.AddonMaterials;
+import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.registry.GTFluids;
 import net.minecraft.core.registries.BuiltInRegistries;
 //? if >=1.21.1 {
@@ -20,23 +22,26 @@ public final class OreFluidBindingAdapter {
   * Only the reviewed ID/name binding table can resolve here; never infer an arbitrary fluid alias.
   */
  static FluidStack sourceLiquid(int sourceId,String sourceName,long sourceAmount,boolean roundUp) {
-  var b=ReviewedOreFluidBindings.liquid(sourceId,sourceName);
-  int mb=ReviewedOreFluidBindings.amount(b,sourceAmount,roundUp);
+  var material=GTMaterialRegistry.get(sourceId);
+  if(!material.isValid()||!material.getName().equals(sourceName))return FluidStack.EMPTY;
+  var b=MaterialFluidUnitFacts.binding(material,"liquid");
+  int mb=b==null?-1:MaterialFluidUnitFacts.millibuckets(
+      sourceAmount,b.referenceSourceUnits(),b.referenceMillibuckets(),roundUp);
   if(b==null||mb<=0)return FluidStack.EMPTY;
-  var stack=GTFluids.stack(b.field(),mb);
+  var stack=GTFluids.stack(b.fluidField(),mb);
   if(stack==null||stack.isEmpty())return FluidStack.EMPTY;
   var key=BuiltInRegistries.FLUID.getKey(stack.getFluid());
-  String nativePath=switch(b.field()) {
+  String nativePath=switch(b.fluidField()) {
    case "GenMolten_Wax" -> "molten_wax";
    case "GenMolten_WaxBee" -> "molten_waxbee";
    case "GenMolten_WaxParaffin" -> "molten_waxparaffin";
    case "GenMolten_WaxPlant" -> "molten_waxplant";
    case "GenLiquid_Mercury" -> "mercury";
-   default -> throw new IllegalStateException("No reviewed native identity: "+b.field());
+   default -> throw new IllegalStateException("No reviewed native identity: "+b.fluidField());
   };
-  var entry=gregtech.content.data.RegisteredFluids.get(b.field());
+  var entry=gregtech.content.data.RegisteredFluids.get(b.fluidField());
   if(entry==null||!(gregtech.content.data.RegisteredFluids.isBuiltInDefinition(entry)
-       || (b.field().equals("GenLiquid_Mercury") && ReviewedOreGeneratedFluids.mercury(entry)))||!entry.registryName().equals(b.registryPath()))
+       || (b.fluidField().equals("GenLiquid_Mercury") && SourceGeneratedFluidAdapter.mercury(entry)))||!entry.registryName().equals(b.registryName()))
    throw new IllegalStateException("Reviewed source catalog identity mismatch: "+b);
   if(!key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)||!key.getPath().equals(nativePath))
    throw new IllegalStateException("Reviewed source fluid binding identity mismatch: "+b+" -> "+key);

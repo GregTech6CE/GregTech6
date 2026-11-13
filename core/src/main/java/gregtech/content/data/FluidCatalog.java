@@ -3,6 +3,8 @@ package gregtech.content.data;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.generated.MaterialForms;
+import gregtech.content.material.MaterialDefinitions;
+import gregtech.content.material.MaterialFactKeys;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -991,33 +993,16 @@ public class FluidCatalog {
     }
 
     /**
-     * Missing imported MOLTEN declarations, not new general material properties.
-     * GT6 3703e40308c8c030763fd6297dea8b210d2a77b1 MT;
-     * Loader_Fluids creates these phases through FL.createMolten.
-     * Keep this finite ID/name proof local to fluid generation: MELTING, METAL, item forms,
-     * targets and compatibility overrides must not be inferred or mutated from it.
+     * Missing imported MOLTEN declarations are material facts. Fluid generation only consumes the
+     * typed process; MELTING, METAL, item forms, targets and overrides are not inferred from it.
      */
-    private static boolean hasReviewedSourceMoltenPhase(GTMaterial material) {
+    private static boolean hasSourceMoltenPhase(GTMaterial material) {
         if (!gregtech.engine.material.GTMaterialRegistry.isCoreMaterial(material)) return false;
-        String name = switch (material.getId()) {
-            case 62 -> "Carbon14";
-            case 1250 -> "TritaniumElemental";
-            case 1260 -> "Trinium";
-            case 1450 -> "DuraniumElemental";
-            case 1740 -> "Naquadah";
-            case 1741 -> "NaquadahEnriched";
-            case 1742 -> "Naquadria";
-            case 8020 -> "PotassiumCarbonate";
-            case 8026 -> "TungstenTrioxide";
-            case 8030 -> "FerrousChloride";
-            case 8034 -> "LithiumPerchlorate";
-            case 8266 -> "Asphalt";
-            case 8500 -> "Stone";
-            case 9120 -> "Ilmenite";
-            case 9192 -> "Rutile";
-            default -> null;
-        };
-        return material.getName().equals(name);
+        return MaterialDefinitions.info(material.getName())
+                .processes()
+                .findSingle(MaterialFactKeys.SOURCE_MOLTEN_FLUID)
+                .map(rule -> rule.value().booleanValue())
+                .orElse(false);
     }
 
     /**
@@ -1043,7 +1028,7 @@ public class FluidCatalog {
                     && !material.has(MaterialProperty.METAL)
                     && !material.has(MaterialProperty.ALLOY)
                     && !MaterialForms.has(material, "MOLTEN")
-                    && !hasReviewedSourceMoltenPhase(material)) {
+                    && !hasSourceMoltenPhase(material)) {
                 continue;
             }
             String field = "GenMolten_" + material.getName();

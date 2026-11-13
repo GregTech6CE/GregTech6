@@ -1,6 +1,5 @@
 package gregtech.content.data;
 
-import gregtech.api.material.*;
 import java.util.List;
 
 /** Source1 scanner/printer/replicator work and material-form preference. Units remain at the platform boundary. */
@@ -20,10 +19,6 @@ public final class MaterialDataRules {
     public static final long DATA_ENERGY_PER_NUCLEON = 65536;
 
     public static final int ENVIRONMENT_KELVIN = 293;
-
-    /** Compatibility name from the earlier port; its value is duration, not packet power. */
-    @Deprecated
-    public static final long REPLICATOR_POWER_PER_NUCLEON = REPLICATOR_TICKS_PER_NUCLEON;
 
     public enum AmbientPhase {
         SOLID,

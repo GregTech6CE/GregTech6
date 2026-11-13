@@ -3,7 +3,9 @@ package gregtech.content.recipe;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.block.*;
+import gregtech.content.block.stone.OreHostFacts;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.registry.GTBlocks;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -31,8 +33,8 @@ import static gregtech.api.material.GTValues.U;
 import static gregtech.content.recipe.SharedOreWashingRows.NativeForm;
 import static gregtech.content.recipe.SourceOreWashingRules.Availability;
 import static gregtech.content.recipe.SourceOreCrushingRules.*;
-import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
-import static gregtech.content.recipe.SourceRecyclingFacts.Identity;
+import static gregtech.content.material.MaterialFactKeys.Decision;
+import static gregtech.content.material.MaterialFactKeys.Identity;
 
 /** Native ownership and host decoding for the source ore handlers, not a global ore unifier. */
 final class SourceOreCrushingAdapter {
@@ -100,12 +102,12 @@ final class SourceOreCrushingAdapter {
             // example); one row with a host-set predicate covers all of them, as the source does.
             var hostsByProfile = new LinkedHashMap<String, List<OreHostStone>>();
             for (OreHostStone host : OreHostStone.values()) {
-                if (SourceOreCrushingFacts.hostDecision(host.id()) != Decision.YES) continue;
-                var profile = SourceOreCrushingFacts.hostProfile(host.id());
+                if (OreHostFacts.hostDecision(host.id()) != Decision.YES) continue;
+                var profile = OreHostFacts.hostProfile(host.id());
                 hostsByProfile.computeIfAbsent(profile.sourcePrefix(), ignored -> new ArrayList<>()).add(host);
             }
             for (var hosts : hostsByProfile.values()) {
-                var profile = SourceOreCrushingFacts.hostProfile(hosts.get(0).id());
+                var profile = OreHostFacts.hostProfile(hosts.get(0).id());
                 var gangue = s.gangueList(profile);
                 if (gangue == null)
                     return none(Action.LEGACY_UNSUPPORTED, "gangue-provenance:" + hosts.get(0).id());
@@ -123,7 +125,7 @@ final class SourceOreCrushingAdapter {
                 };
                 Recipe row = make(machine, representative, result, matches, s);
                 if (row == null) return none(Action.DEFERRED_NO_ROW, "native-normalization");
-                if (SourceOreCrushingFacts.hasBrokenSourcePair(hosts.get(0).id())) {
+                if (OreHostFacts.hasBrokenSourcePair(hosts.get(0).id())) {
                     var alternatives = new ArrayList<ItemStack>();
                     for (OreHostStone host : hosts) {
                         alternatives.add(OreBlock.withStone(candidate.input(), block.stateFor(host)));
@@ -143,7 +145,7 @@ final class SourceOreCrushingAdapter {
         if (candidate.kind() == NativeKind.FIXED_STONE) {
             String host = s.vanillaHost(candidate.input());
             if (!"none".equals(host)) {
-                var profile = SourceOreCrushingFacts.hostProfile(host);
+                var profile = OreHostFacts.hostProfile(host);
                 Gangue fixed = profile == null ? null : s.gangue(profile);
                 if (fixed == null) return none(Action.LEGACY_UNSUPPORTED, "stone-gangue-provenance");
                 gangue.add(fixed);
@@ -214,10 +216,10 @@ final class SourceOreCrushingAdapter {
     /** Strict evidence reader, intentionally not OreHostStone.byId's unknown-to-STONE convenience. */
     static HostSelection classifyHost(ItemStack stack) {
         HostData data = hostData(stack);
-        Decision host = SourceOreCrushingFacts.hostDecision(data.host());
+        Decision host = OreHostFacts.hostDecision(data.host());
         if (host == Decision.NO) return new HostSelection(Domain.SOURCE_NO, data.host(), data.broken());
         if (!data.knownMode() || host == Decision.UNKNOWN
-                || data.broken() && !SourceOreCrushingFacts.hasBrokenSourcePair(data.host()))
+                || data.broken() && !OreHostFacts.hasBrokenSourcePair(data.host()))
             return new HostSelection(Domain.UNKNOWN_HOST, data.host(), data.broken());
         return new HostSelection(Domain.SOURCE_PROFILE, data.host(), data.broken());
     }
@@ -260,7 +262,7 @@ final class SourceOreCrushingAdapter {
         @Override boolean identity(GTMaterial material) {
             return material != null && material.isValid() && material.resolve() == material
                     && GTMaterialRegistry.isCoreMaterial(material) && !AddonMaterials.owns(material)
-                    && SourceOreCrushingFacts.pulverizingCinnabar(material.getId(), material.getName()) != Decision.UNKNOWN;
+                    && MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_ORE_CRUSHING).isPresent();
         }
         boolean context(GTMaterial material) {
             // OilSand's Centrifuge event does not disable these independent source handlers.
@@ -314,7 +316,7 @@ final class SourceOreCrushingAdapter {
         }
         private static boolean composition(ItemStack input, MaterialPrefix prefix, GTMaterial material, long amount, boolean optional) {
             var data = ItemMaterialRegistry.base(input.getItem()).orElse(null);
-            return data == null ? optional : data.bulkRecoveryAllowed() && data.prefix() == prefix && data.components().size() == 1
+            return data == null ? optional : data.prefix() == prefix && data.components().size() == 1
                     && data.material().resolve() == material && data.amount() == amount;
         }
         @Override GTMaterial target(GTMaterial material) {
@@ -325,22 +327,22 @@ final class SourceOreCrushingAdapter {
         int processingMultiplier(GTMaterial material) { return material.getOreProcessingMultiplier(); }
         Input input(GTMaterial material, GTMaterial target) {
             return new Input(id(material), id(target), amount(material), oreMultiplier(material), processingMultiplier(material),
-                    quality(material), new Bonus(SourceOreCrushingFacts.pulverizingCinnabar(material.getId(), material.getName()),
+                    quality(material), new Bonus(crushing(material).pulverizing(),
                     byproduct(material, 800, "Mercury"), byproduct(material, 9114, "Cinnabar"), byproduct(material, 8333, "Redstone")),
-                    SourceOreCrushingFacts.hexorium(material.getId(), material.getName()));
+                    crushing(material).hexorium());
         }
         private boolean byproduct(GTMaterial material, int id, String name) {
             return material.getByProducts().stream().map(GTMaterial::resolve)
                     .anyMatch(m -> identity(m) && m.getId() == id && m.getName().equals(name));
         }
         /** Null is an unresolved gangue identity; an empty list is a source host without gangue. */
-        List<Gangue> gangueList(SourceOreCrushingFacts.HostProfile profile) {
+        List<Gangue> gangueList(OreHostFacts.HostProfile profile) {
             if (!profile.hasGangue()) return List.of();
             Gangue gangue = gangue(profile);
             return gangue == null ? null : List.of(gangue);
         }
 
-        Gangue gangue(SourceOreCrushingFacts.HostProfile profile) {
+        Gangue gangue(OreHostFacts.HostProfile profile) {
             GTMaterial material = profile.gangueMaterial() == null ? null : material(profile.gangueMaterial());
             GTMaterial target = material == null ? null : target(material);
             return !identity(material) || !identity(target) ? null
@@ -352,6 +354,9 @@ final class SourceOreCrushingAdapter {
                     && identity(material) ? material : null;
         }
         Availability available(Form form, Identity material, int count) { return resolve(form, material).availability(); }
+        private MaterialFactKeys.OreCrushingFact crushing(GTMaterial material) {
+            return MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_ORE_CRUSHING).orElseThrow();
+        }
         ItemStack stack(Stack stack) {
             NativeForm resolved = resolve(stack.form(), stack.material());
             if (resolved.availability() != Availability.PRESENT) return ItemStack.EMPTY;

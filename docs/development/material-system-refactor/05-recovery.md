@@ -6,7 +6,7 @@
 
 ## 当前入口与目标
 
-实际生产端包括 `VanillaRecoveryRecipes`、`ShredderRecyclingRecipes`、`AnvilShreddingRecipes`、`SharedThermalRecyclingRows`、`SharedThermalInputRows`、`SourceThermalNativeAdapter`、`OreProcessingRecipeLoader`、`ReviewedCinnabarThermalRecipes`、`ExternalOreProcessing`、`StoneVariantRecipes`、`CapsuleCellRecipes` 等。清理和重载还涉及 `MachineRecipeLifecycle`、`MachineRecipeOverlay`、`ExternalOreRecipeLifecycle`、`MoltenMetalUnitRecipes`。
+实际生产端包括 `VanillaRecoveryRecipes`、`ShredderRecyclingRecipes`、`AnvilShreddingRecipes`、`SharedThermalRecyclingRows`、`SharedThermalInputRows`、`SourceThermalNativeAdapter`、`OreProcessingRecipeLoader`、`SourceDustThermalRecipes`、`ExternalOreProcessing`、`StoneVariantRecipes`、`CapsuleCellRecipes` 等。清理和重载还涉及 `MachineRecipeLifecycle`、`MachineRecipeOverlay`、`ExternalOreRecipeLifecycle`、`MoltenMetalUnitRecipes`。
 
 目标数据流是“有效成分＋栈状态＋指定工艺 → 回收计划 → 原生配方或运行期处理”。计划包含输入基准量、完整输出量、耗时／能量、输入限制以及不能执行的原因；计算规则不持有 `ItemStack`，游戏层负责绑定物品、流体与机器槽。
 
@@ -115,7 +115,7 @@ JUnit 验证计算边界；GameTest 要通过最终 `RecipeMap`／运行期入�
 
 ## PR #374 复核补正（2026-11-12）
 
-- `ReviewedCinnabarThermalRecipes`、`SourceThermalNativeAdapter`、`OreProcessingRecipeLoader` 与 `VanillaStoneMachineRecipes` 遗留的 Melter／Smelter／石质 Shredder 直写全部改经 `RecoveryRecipePublisher`。审核、native 和石材分支使用 explicit ownership，兼容回退使用 generic ownership，不再绕过 typed family 冲突处理。
+- `SourceDustThermalRecipes`、`SourceThermalNativeAdapter`、`OreProcessingRecipeLoader` 与 `VanillaStoneMachineRecipes` 遗留的 Melter／Smelter／石质 Shredder 直写全部改经 `RecoveryRecipePublisher`。审核、native 和石材分支使用 explicit ownership，兼容回退使用 generic ownership，不再绕过 typed family 冲突处理。
 - `ItemMaterialRegistry.beginTagGeneration()` 返回上一代检查点；`MachineRecipeOverlay` 失败恢复时回滚标签候选、有效成分、诊断、readiness、tag generation 与 composition revision。上一份 `MaterialPublication` stamp 保持不变。
 - `ThermalRecoveryOwnership` 删除 9114／`Cinnabar` 及其 dust／crushed 前缀硬编码，只保留已审核的 Ti／Fe 粉尘分数组所有者。GameTest 同时覆盖失败代回滚与朱砂普通所有权。
 - 验证通过：双平台生产与测试源码编译、`:minecraft:spotlessCheck`、Forge 1.20.1 GameTest 92/92、NeoForge 1.21.1 GameTest 97/97。

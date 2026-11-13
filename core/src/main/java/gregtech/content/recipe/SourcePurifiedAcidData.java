@@ -1,9 +1,8 @@
 package gregtech.content.recipe;
 
-import static gregtech.api.material.GTValues.U;
-import static gregtech.content.recipe.SourceRecyclingFacts.Identity;
-
 import java.util.List;
+
+import static gregtech.content.material.MaterialFactKeys.Identity;
 
 /**
  * Finite purified-acid families from GT6 3703e40308c8c030763fd6297dea8b210d2a77b1,
@@ -19,40 +18,31 @@ public final class SourcePurifiedAcidData {
         LIQUID,
         GAS
     }
-    /** All 18 bindings are 1000 mB/U. Source ambient fluid() calls resolve liquid at 293 K;
-     * HF/HCl/H/NO/Cl calls explicitly request gas. The native field/path is a binding assertion,
-     * not permission to resolve an arbitrary same-name external registry entry. */
+    /** The phase selects a recipe material; binding and unit facts live in the material catalog. */
     public enum Phase {
-        AQUAREGIA(id(9827, "AquaRegia"), State.LIQUID, "GenLiquid_AquaRegia", "gt6ce:aquaregia"),
-        BLUEVITRIOL(id(8404, "BlueVitriol"), State.LIQUID, "GenLiquid_BlueVitriol", "gt6ce:bluevitriol"),
-        CHLOROPLATINICACID(
-                id(8401, "ChloroplatinicAcid"),
-                State.LIQUID,
-                "GenLiquid_ChloroplatinicAcid",
-                "gt6ce:chloroplatinicacid"),
-        CHLORINE(id(170, "Chlorine"), State.GAS, "GenGas_Chlorine", "gt6ce:chlorine"),
-        CYANVITRIOL(id(8408, "CyanVitriol"), State.LIQUID, "GenLiquid_CyanVitriol", "gt6ce:cyanvitriol"),
-        GRAYVITRIOL(id(8410, "GrayVitriol"), State.LIQUID, "GenLiquid_GrayVitriol", "gt6ce:grayvitriol"),
-        GREENVITRIOL(id(8405, "GreenVitriol"), State.LIQUID, "GenLiquid_GreenVitriol", "gt6ce:greenvitriol"),
-        HYDROGEN(id(10, "Hydrogen"), State.GAS, "Hydrogen", "gt6ce:hydrogen"),
-        SULFURICACID(id(9824, "SulfuricAcid"), State.LIQUID, "GenLiquid_SulfuricAcid", "gt6ce:sulfuricacid"),
-        HYDROCHLORICACID(id(9826, "HydrochloricAcid"), State.GAS, "GenGas_HydrochloricAcid", "gt6ce:hydrochloricacid"),
-        HYDROGENFLUORIDE(id(9829, "HydrogenFluoride"), State.GAS, "GenGas_HydrogenFluoride", "gt6ce:hydrogenfluoride"),
-        NITROGENMONOXIDE(id(9837, "NitrogenMonoxide"), State.GAS, "GenGas_NitrogenMonoxide", "gt6ce:nitrogenmonoxide"),
-        PINKVITRIOL(id(8407, "PinkVitriol"), State.LIQUID, "GenLiquid_PinkVitriol", "gt6ce:pinkvitriol"),
-        REDVITRIOL(id(8406, "RedVitriol"), State.LIQUID, "GenLiquid_RedVitriol", "gt6ce:redvitriol"),
-        VITRIOLOFCLAY(id(8412, "VitriolOfClay"), State.LIQUID, "GenLiquid_VitriolOfClay", "gt6ce:vitriolofclay"),
-        WATER(id(9800, "Water"), State.LIQUID, "minecraft:water", "minecraft:water"),
-        WHITEVITRIOL(id(8409, "WhiteVitriol"), State.LIQUID, "GenLiquid_WhiteVitriol", "gt6ce:whitevitriol");
+        AQUAREGIA(id(9827, "AquaRegia"), State.LIQUID),
+        BLUEVITRIOL(id(8404, "BlueVitriol"), State.LIQUID),
+        CHLOROPLATINICACID(id(8401, "ChloroplatinicAcid"), State.LIQUID),
+        CHLORINE(id(170, "Chlorine"), State.GAS),
+        CYANVITRIOL(id(8408, "CyanVitriol"), State.LIQUID),
+        GRAYVITRIOL(id(8410, "GrayVitriol"), State.LIQUID),
+        GREENVITRIOL(id(8405, "GreenVitriol"), State.LIQUID),
+        HYDROGEN(id(10, "Hydrogen"), State.GAS),
+        SULFURICACID(id(9824, "SulfuricAcid"), State.LIQUID),
+        HYDROCHLORICACID(id(9826, "HydrochloricAcid"), State.GAS),
+        HYDROGENFLUORIDE(id(9829, "HydrogenFluoride"), State.GAS),
+        NITROGENMONOXIDE(id(9837, "NitrogenMonoxide"), State.GAS),
+        PINKVITRIOL(id(8407, "PinkVitriol"), State.LIQUID),
+        REDVITRIOL(id(8406, "RedVitriol"), State.LIQUID),
+        VITRIOLOFCLAY(id(8412, "VitriolOfClay"), State.LIQUID),
+        WATER(id(9800, "Water"), State.LIQUID),
+        WHITEVITRIOL(id(8409, "WhiteVitriol"), State.LIQUID);
         private final Identity material;
         private final State state;
-        private final String nativeField, registryId;
 
-        Phase(Identity material, State state, String nativeField, String registryId) {
+        Phase(Identity material, State state) {
             this.material = material;
             this.state = state;
-            this.nativeField = nativeField;
-            this.registryId = registryId;
         }
 
         public Identity material() {
@@ -61,22 +51,6 @@ public final class SourcePurifiedAcidData {
 
         public State state() {
             return state;
-        }
-
-        public String nativeField() {
-            return nativeField;
-        }
-
-        public String registryId() {
-            return registryId;
-        }
-
-        public long millibucketsPerUnit() {
-            return 1000;
-        }
-
-        public long materialUnit() {
-            return U;
         }
     }
 
@@ -322,7 +296,9 @@ public final class SourcePurifiedAcidData {
 
     public static boolean reviewedIdentity(Identity material) {
         if (material == null) return false;
-        return FAMILIES.stream().anyMatch(f -> f.members().contains(material))
+        return java.util.Arrays.stream(Phase.values())
+                        .anyMatch(phase -> phase.material().equals(material))
+                || FAMILIES.stream().anyMatch(f -> f.members().contains(material))
                 || MANGANESE_DEFAULTS.stream().anyMatch(d -> d.material().equals(material));
     }
 

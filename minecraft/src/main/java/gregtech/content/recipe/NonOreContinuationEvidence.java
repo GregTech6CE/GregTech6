@@ -2,6 +2,7 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.*;
@@ -60,7 +61,9 @@ public final class NonOreContinuationEvidence {
         Set<GTMaterial> defer = Collections.newSetFromMap(new IdentityHashMap<>());
         Set<String> triggers = triggers();
         for (var material : candidates) {
-            if (ReviewedOreInputProfile.decision(material) != ReviewedOreInputProfile.Evidence.NO) defer.add(material);
+            if (MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_ORE_INPUT)
+                            .orElse(MaterialFactKeys.Decision.UNKNOWN)
+                    != MaterialFactKeys.Decision.NO) defer.add(material);
             // Explicit startup request is material-wide defer, even when only one intermediate requested.
             if (AddonMaterials.acceptedForms().stream()
                     .anyMatch(f -> f.materialName().equals(material.getName()) && triggers.contains(f.prefixName())))
@@ -78,7 +81,6 @@ public final class NonOreContinuationEvidence {
                 var data = ItemMaterialRegistry.base(stack.getItem()).orElse(null);
                 if (data != null
                         && (data.prefix() != prefix
-                                || !data.bulkRecoveryAllowed()
                                 || data.components().size() != 1
                                 || data.material().resolve() != material
                                 || data.amount() != prefix.getMaterialWeight())) defer.add(material);
@@ -91,7 +93,6 @@ public final class NonOreContinuationEvidence {
                 GTMaterial material = part.material().resolve();
                 if (!candidates.contains(material)) continue;
                 if (!canonicalSelf(entry.getKey(), data.prefix(), material)
-                        || !data.bulkRecoveryAllowed()
                         || data.components().size() != 1
                         || data.amount() != data.prefix().getMaterialWeight()) defer.add(material);
             }

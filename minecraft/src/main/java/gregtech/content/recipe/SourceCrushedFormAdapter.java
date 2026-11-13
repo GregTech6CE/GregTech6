@@ -2,6 +2,7 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.*;
@@ -12,36 +13,17 @@ import net.minecraft.world.item.ItemStack;
  * Recipe-local only: existing registry IDs and logical prefix validity remain unchanged.
  * This is NOT ORES-property evidence; oreRaw, rock and dust are never excluded here.
  */
-public final class ReviewedCrushedFormGeneration {
-    private ReviewedCrushedFormGeneration() {}
+public final class SourceCrushedFormAdapter {
+    private SourceCrushedFormAdapter() {}
 
     public static boolean sourceExcluded(GTMaterial material, MaterialPrefix prefix) {
-        if (material == null || !excludedPrefix(prefix)) return false;
+        if (material == null || prefix == null) return false;
         material = material.resolve();
         if (!material.isValid() || !GTMaterialRegistry.isCoreMaterial(material) || AddonMaterials.owns(material))
             return false;
-        String expected = switch (material.getId()) {
-            case 2220 -> "Adamantium";
-            case 260 -> "Iron";
-            case 140 -> "Silicon";
-            case 130 -> "Aluminium";
-            case 220 -> "Titanium";
-            case 740 -> "Tungsten";
-            case 90 -> "Fluorine";
-            case 730 -> "Tantalum";
-            case 410 -> "Niobium";
-            default -> null;
-        };
-        return expected != null && expected.equals(material.getName());
-    }
-
-    public static boolean excludedPrefix(MaterialPrefix prefix) {
-        return prefix == MaterialPrefix.crushed
-                || prefix == MaterialPrefix.crushedTiny
-                || prefix == MaterialPrefix.crushedPurified
-                || prefix == MaterialPrefix.crushedPurifiedTiny
-                || prefix == MaterialPrefix.crushedCentrifuged
-                || prefix == MaterialPrefix.crushedCentrifugedTiny;
+        return MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_CRUSHED_EXCLUSIONS)
+                .map(rule -> rule.excludes(prefix.getName()))
+                .orElse(false);
     }
 
     /** Conservative builtin ownership check. External/accepted/changed metadata are UNKNOWN.
@@ -66,7 +48,6 @@ public final class ReviewedCrushedFormGeneration {
         var explicit = ItemMaterialRegistry.base(canonical.getItem()).orElse(null);
         if (explicit != null
                 && (explicit.prefix() != prefix
-                        || !explicit.bulkRecoveryAllowed()
                         || explicit.components().size() != 1
                         || explicit.material().resolve() != material
                         || explicit.amount() != prefix.getMaterialWeight())) return false;

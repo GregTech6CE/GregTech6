@@ -6,6 +6,7 @@ import gregtech.engine.material.*;
 import gregtech.engine.material.*;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.*;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.RegisteredBlock;
@@ -161,8 +162,11 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         long smeltAmount = material.getTargetSmeltingAmount();
         GTMaterial smeltTarget = material.getTargetSmeltingMaterial();
         if (smeltTarget == null || !smeltTarget.isValid() || smeltAmount <= 0) return;
-        if (!ReviewedOreSourceProfile.decision(material, ReviewedOreSourceProfile.Rule.FURNACE)
-                .orLegacy(material.has(MaterialProperty.MELTING))) return;
+        var furnace = MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_FURNACE)
+                .orElse(MaterialFactKeys.Decision.UNKNOWN);
+        if (!(furnace == MaterialFactKeys.Decision.YES
+                || furnace == MaterialFactKeys.Decision.UNKNOWN
+                        && material.has(MaterialProperty.MELTING))) return;
 
         ItemStack smeltOutput = OM.dustOrIngot(smeltTarget, smeltAmount);
         if (smeltOutput.isEmpty()) {
@@ -307,9 +311,9 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         } else {
             // Unreviewed/external/startup overrides retain original direct admission and ordering.
             // GT6 crusher has two guaranteed primary outputs; hammer has one.
-            if (ReviewedCinnabarFacts.supports(material)
+            if (SourceCinnabarFollowonAdapter.supports(material)
                     && oreInput.getItem()==mat(MaterialPrefix.oreRaw,material,1).getItem()) {
-                SourceOreFollowonRows.rawCrusher(material,ReviewedCinnabarFacts.INSTANCE);
+                SourceOreFollowonRows.rawCrusher(material,SourceCinnabarFollowonAdapter.INSTANCE);
             } else SharedOreCrushingRows.capture(crushing, MachineRecipeMaps.Crusher,
                     MachineRecipeMaps.Crusher.addRecipe1(true, EU_TIER, 128L * count * quality, oreInput, out, out.copy()));
             SharedOreCrushingRows.capture(crushing, MachineRecipeMaps.Hammer,
@@ -356,9 +360,9 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             if (pulverizeOne(MaterialPrefix.crushedPurifiedTiny, material, 1, MaterialPrefix.dustTiny, U9)) claimed.add(MaterialPrefix.crushedPurifiedTiny);
             // Hand off only unclaimed shapes to the previous reviewed producer, not duplicate registrations.
             if (claimed.size() < SourceOreShreddingRules.shapes().size()) {
-                if (ReviewedCinnabarFacts.supports(material)) SourceOreFollowonRows.shredder(material,ReviewedCinnabarFacts.INSTANCE,claimed);
-                else if (ReviewedOreShredderFacts.supports(material))
-                    SourceOreFollowonRows.shredder(material, ReviewedOreShredderFacts.INSTANCE,claimed);
+                if (SourceCinnabarFollowonAdapter.supports(material)) SourceOreFollowonRows.shredder(material,SourceCinnabarFollowonAdapter.INSTANCE,claimed);
+                else if (SourceOreFollowonAdapter.supports(material))
+                    SourceOreFollowonRows.shredder(material, SourceOreFollowonAdapter.INSTANCE,claimed);
             }
         }
     }
@@ -373,7 +377,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         if (!inputPref.isValidFor(material) || input.isEmpty()) return false;
         ItemStack output = stackFor(outputPref, material, outAmount);
         if (output.isEmpty()) return false;
-        if (ReviewedCinnabarFacts.supports(material) || ReviewedOreShredderFacts.supports(material)) {
+        if (SourceCinnabarFollowonAdapter.supports(material) || SourceOreFollowonAdapter.supports(material)) {
             // Unsupported contexts preserve the former reviewed Crusher/follow-on split.
             MachineRecipeMaps.Crusher.addRecipe1(true,16,64,new long[]{CHANCE_100,CHANCE_10,CHANCE_10},input,output,ItemStack.EMPTY,ItemStack.EMPTY);
         } else if (NonOreMacerationRows.reviewed(material)) {
@@ -402,7 +406,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             return false;
         }
         MachineRecipeMaps.Crusher .addRecipe1(true, EU_TIER, 32, input, multiOut);
-        if (!ReviewedCinnabarFacts.supports(material) && !ReviewedOreShredderFacts.supports(material)) {
+        if (!SourceCinnabarFollowonAdapter.supports(material) && !SourceOreFollowonAdapter.supports(material)) {
             var recipe = RecipeMap.make(
                     true,
                     new ItemStack[] {input},
@@ -491,7 +495,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             GTMaterial material = mat.resolve();
             if (!material.isValid()) continue;
             if (material.has(MaterialProperty.ANTIMATTER)) continue;
-            if (ReviewedCinnabarThermalRecipes.emitIfSupported(material)) continue;
+            if (SourceDustThermalRecipes.emitIfSupported(material)) continue;
 
             ItemStack recyclableInput = OM.dustOrIngot(material, U);
             var thermal = SourceThermalNativeAdapter.inspect(material, recyclableInput, thermalSnapshot);
