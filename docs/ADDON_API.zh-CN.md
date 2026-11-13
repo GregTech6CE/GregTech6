@@ -39,9 +39,9 @@
 
 | 产物坐标 | 内容与输出 |
 | --- | --- |
-| `gregtech:gt6ce-api:1.7.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
-| `gregtech:gt6ce-addon-sdk-1.20.1-forge:1.7.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
-| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:1.7.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-api:1.8.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
+| `gregtech:gt6ce-addon-sdk-1.20.1-forge:1.8.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:1.8.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
 
 这些是构建配置中的坐标，不表示已发布到公共 Maven 仓库。版本规则见下节[API 版本](#api-版本)。
 
@@ -135,7 +135,6 @@ String json = MachineRecipeDocuments.canonical(document); // 不含 "type"，写
 - `MachineRecipeDocument`、`MachineRecipeRemovalDocument` 是公开记录；`ItemComponent`、`ItemResult`、`FluidComponent` 构造时校验 ID、材料名和数量。
 - `MachineRecipeType.ADDITION`/`REMOVAL` 与 `MachineRecipeFields` 提供类型 ID 和字段名常量，避免附属复制字符串。
 - 1.7 起这些类型不再位于 `gregtech.engine.recipe.data`；依赖旧内部包名的附属需要迁移到公开包。运行时可用 `GregTechAddons.apiVersion() >= 1007` 做特性判断。
-- 1.8 新增 `MaterialProcessKeys.DECOMPOSITION` 与 `MaterialDecompositionRule`；附属可通过自身材料的 `MaterialInfoTool` 流程提交液体／气体换算、路线和固体兜底。该 typed rule 是唯一权限权威；旧 `MaterialDeclaration.centrifuge()`／`electrolyzer()` shortcut 已弃用，仅在不存在 typed rule 时生成默认兼容规则。运行时可用 `GregTechAddons.apiVersion() >= 1008` 做特性判断。
 
 ### 让附属自己的数据包配方进入 overlay
 
@@ -177,9 +176,9 @@ public final class CompressorDocument implements MachineRecipeDocumentProvider {
 
 追加走 typed schema；移除用 `GT6CE.removeMachine(event, spec)`，整表清空用 `GT6CE.clearMap(event, map)`。脚本仍须使用目标平台匹配的 KubeJS 版本；两节点的序列化实现不同，不能照搬另一版本的语法。
 
-## 材料目录（API 1.6）
+## 材料目录与分解规则（API 1.6–1.8）
 
-材料和 metadata 仍通过 `AddonMaterialContributor` 提交。材料初始化 READY 后，`GregTechMaterials.catalog()` 返回当前会话的不可变 `MaterialCatalogView`：`resolve(name)` 解析规范名和别名，`find(MaterialKey)` 只返回真实材料，材料组不会伪装成可加工材料。旧宿主没有该服务时明确抛出 `UnsupportedOperationException`，未就绪时明确报告阶段，不以空集合掩盖失败。
+材料和 metadata 仍通过 `AddonMaterialContributor` 提交；系统设计边界详见[材料系统设计](decisions/material-system/README.md)。材料初始化 READY 后，`GregTechMaterials.catalog()` 返回当前会话的不可变 `MaterialCatalogView`：`resolve(name)` 解析规范名和别名，`find(MaterialKey)` 只返回真实材料，材料组不会伪装成可加工材料。旧宿主没有该服务时明确抛出 `UnsupportedOperationException`，未就绪时明确报告阶段，不以空集合掩盖失败。
 
 `metadata()` 可给真实材料添加本附属 namespace 的分类 tag、flag 和类型化值。`materialTags()` 声明 tag 包含关系，`materialGroups()` 声明替代组及其材料／子组。附属只能定义自身 addon id namespace 的 tag、组和 property key；给其他材料添加描述 tag 允许，但修改其他材料的 property、flag、形态或加工能力仍需所有权。未知引用、同 key 异类型、跨所有者冲突、tag 包含环和组环均阻止材料初始化进入 READY。
 
@@ -198,7 +197,24 @@ MaterialGroupDeclaration family = new MaterialGroupDeclaration(
         Set.of());
 ```
 
-分类 tag 只表达描述关系，不会自动生成形态、启用燃料、允许回收或授权分解；替代组成员关系也只供明确声明了组匹配的消费者使用。`catalog().forms()` 返回冻结的 item／block／fluid 定义期规则，`MaterialFormRule` 区分种类、默认材料量和显式附属请求；平台完成注册后，`catalog().formBindings()` 返回实际 item／block／fluid 绑定，并包含 `ItemMaterialRegistry` 的显式统一物品。规则允许不等于实际注册，实际绑定也不推导配方或获取来源。
+分类 tag 只表达描述关系，不会自动生成形态、启用燃料、允许回收或授权分解；替代组成员关系也只供明确声明了组匹配的消费者使用。API 1.7 起，`catalog().forms()`（`MaterialFormRulesView`）返回冻结的 item／block／fluid 定义期规则，`MaterialFormRule` 区分种类、默认材料量和显式附属请求；平台完成注册后，`catalog().formBindings()`（`MaterialFormsView`）返回实际 item／block／fluid 绑定，并包含 `ItemMaterialRegistry` 的显式统一物品。规则允许不等于实际注册，实际绑定也不推导配方或获取来源。
+
+API 1.8 新增 `MaterialProcessKeys.DECOMPOSITION` 与 `MaterialDecompositionRule(Set<Route> routes, List<FluidBinding> fluids, boolean keepSolidInput)`，作为材料离心／电解分解路线的唯一类型化权威声明（运行时可用 `GregTechAddons.apiVersion() >= 1008` 判断支持情况）。附属应在 `AddonMaterialContributor#materialInfo(MaterialInfoTool.Registrar)` 中为自己拥有的材料注册：
+
+```java
+registrar.registerProcess(
+        new MaterialKey("MyAlloy"),
+        MaterialProcessKeys.DECOMPOSITION,
+        MaterialProcessRule.anyForm(new MaterialDecompositionRule(
+                Set.of(MaterialDecompositionRule.Route.CENTRIFUGE),
+                List.of(new MaterialDecompositionRule.FluidBinding(
+                        MaterialDecompositionRule.Phase.LIQUID, "gt6ce:molten.my_alloy", 1L, 144L)),
+                true)));
+```
+
+- `FluidBinding` 按相态（`LIQUID` / `GAS`）分别声明绑定流体注册名及 `sourceUnits -> millibuckets` 换算比例，每种相态至多一条；
+- `keepSolidInput` 控制在原生流体可用时是否保留固体粉末输入兜底；
+- 旧 `MaterialDeclaration.centrifuge()`／`electrolyzer()` 快捷方法已弃用，仅在材料不存在类型化分解规则时生成一次默认兼容规则，不再与类型化规则求并集。
 
 ## 多方块声明（API 1.3）
 

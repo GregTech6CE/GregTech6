@@ -54,4 +54,4 @@ issue  source  kind  target  expected
 
 JUnit XML 在 `<module>/build/test-results/test/TEST-*.xml`，HTML 报告在 `<module>/build/reports/tests/test/`。
 
-材料基线入口为 `gregtech.content.material.MaterialBaselineTest`。它在三个独立 JVM 中区分无附属重复启动和测试 SPI 附属，原始投影写入根目录 `work/material-system-refactor/core/`；不使用生产 reset。源表引用的逐行历史依据在 `core/src/test/resources/gregtech/material-reference-history.tsv`；悬空引用与 ID/name 矛盾必须为零，不能用快照允许列表认可错误。历史分类必须核对来源，不能自动重录。字段、权威期望和限制见[材料基线报告](../../../integration/material-baseline.md)。
+材料基线入口为 `gregtech.content.material.MaterialBaselineTest`。它在三个独立 JVM 中区分无附属重复启动和测试 SPI 附属，原始投影写入调试输出目录；不使用生产 reset。源表引用的逐行历史依据在 `core/src/test/resources/gregtech/material-reference-history.tsv`；悬空引用与 ID/name 矛盾必须为零，不能用快照允许列表认可错误。历史分类必须核对来源，不能自动重录。材料系统设计、周期与权威口径见[材料系统设计](../../../decisions/material-system/README.md)。

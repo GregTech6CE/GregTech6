@@ -70,8 +70,8 @@
 | 可复用且随代码演进的开发/检查脚本 | `tools/<scope>/`，脚本、自带数据与该目录 `README.md` 同放，README 注明输入、依赖、输出与运行方式 |
 | 长期开发指南 | `docs/development/` |
 | 架构与包职责 | `docs/architecture/` |
-| 跨模组/跨平台对照、来源、验证结论 | `docs/integration/` |
-| 长期架构决策及取舍 | `docs/decisions/` |
+| 跨模组兼容、联动内容与冲突结论 | `docs/integration/` |
+| 长期系统设计、跨平台边界与取舍 | `docs/decisions/` |
 
 **不要往任何 `src/` 放任务笔记、agent 交接、部署记录、日志、文档草稿、临时探针或一次性迁移脚本。** JavaDoc、必要的 `package-info.java` 和随模组分发的许可证是真正源码/资源的例外；不要新建 `src/docs/` 存放工作文档。
 

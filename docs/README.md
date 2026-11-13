@@ -13,8 +13,8 @@
 | 选择检查、运行命令和记录结果证据 | [验证与验收](development/validation/README.md) |
 | 开发附属、SDK 或 KubeJS 扩展 | [附属 API](ADDON_API.zh-CN.md) |
 | 制作 GUI 或查找协作约定 | [开发指南](development/README.md) |
-| 保存跨平台、跨模组或上游对照结论 | [集成、来源与验证结论](integration/README.md) |
-| 查询或记录长期取舍、与原版的差异 | [决策](decisions/README.md) |
+| 保存跨模组联动与兼容审计结论 | [跨模组兼容与联动](integration/README.md) |
+| 查询或记录系统设计、跨平台与原版差异 | [决策](decisions/README.md) |
 | 查看版本方针与路线图 | [路线图](roadmap/v1.0.md) |
 
 文档的维护规则见[文档 AGENTS.md](AGENTS.md)。

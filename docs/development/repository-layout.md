@@ -36,15 +36,15 @@
 | 检查选择、注意事项和运行命令 | [validation](validation/README.md) |
 | 分层、系统原理与资源机制 | [architecture](../architecture/README.md) |
 | 包职责、边界与验收条件 | [architecture/packages](../architecture/packages/README.md) |
-| 跨平台、跨模组与上游对照结论 | [integration](../integration/README.md) |
-| 长期取舍与原版差异 | [decisions](../decisions/README.md) |
+| 跨模组兼容、联动内容与冲突结论 | [integration](../integration/README.md) |
+| 系统设计、跨平台差异与长期取舍 | [decisions](../decisions/README.md) |
 | 单个开发工具的依赖、参数与输出 | 对应 `tools/<scope>/README.md` |
 
 顶层文档入口以导航为主；正文放在所属专题，其他页面链接引用。工作过程先留在 `work/<任务名>/`，形成可复用结论后再归档。
 
 ## 临时内容如何沉淀
 
-例如排查管道传输问题：一次性分析脚本与完整日志放 `work/fluid-pipe-check/`；可复用的检查器整理到 `tools/<scope>/` 并在该目录 README 记录用法；跨平台行为结论放 `docs/integration/`；算法边界补到架构文档。无需给每次小改动建立长期记录。
+例如排查管道传输问题：一次性分析脚本与完整日志放 `work/fluid-pipe-check/`；可复用的检查器整理到 `tools/<scope>/` 并在该目录 README 记录用法；跨平台长期差异放 `docs/decisions/platform/`；跨模组兼容与冲突结论放 `docs/integration/`；算法边界补到架构文档。无需给每次小改动建立长期记录。
 
 开发用探针优先放 `work/`，不会自动参与生产编译；若要长期保留为自动测试，接入合适测试源码集及依赖，并记录运行命令；测试目录与案例表约定见[验证与验收](validation/README.md)。不要把探针改名成业务类混入 `src/main/java/`。
 

@@ -74,7 +74,7 @@
 
 先检查 core 目录是否已有定义，再定位游戏注册及 bootstrap。材料可能涉及前缀、形态、流体、配方和渲染；机器可能涉及 Block、BlockEntity、注册、结构、GUI、同步和资源。只补一张表通常不足以完成内容接入。
 
-涉及旧 GT6 数据时保存可追溯来源、单位转换与差异，提炼到 [integration](../../integration/README.md)。不要因 `Original*` 名字而声称完整还原。生成表来源缺失时先记录局限，参见[生成物说明](../resources.md)。验收与自动化测试范围见下。
+涉及跨模组联动时的来源、单位转换与冲突处理提炼到 [integration](../../integration/README.md)；材料目录、形态、成分、回收与分解的系统设计见[材料系统设计](../../decisions/material-system/README.md)，偏离原 GT6 的有意差异登记到 [parity](../../decisions/parity/README.md)。不要因 `Original*` 名字而声称完整还原。生成表来源缺失时先记录局限，参见[生成物说明](../resources.md)。验收与自动化测试范围见下。
 
 ## 验收
 
@@ -99,7 +99,7 @@
   - 线缆、管道、轴、电池、覆盖板与储罐的实际传输、断开与方向变化。
   - 材料物品/方块注册与统一化；矿脉或结构的注册存在性。
 - 现有测试集
-  - `MaterialBaselineTest` 与共享 `MaterialBaselineTests` 提供材料源表引用审计、独立 JVM 快照、测试材料 SPI、成分与回收／分解及真实重载入口；观察与正确性依据分开，见[材料基线](../../integration/material-baseline.md)。
+  - `MaterialBaselineTest` 与共享 `MaterialBaselineTests` 提供材料源表引用审计、独立 JVM 快照、测试材料 SPI、成分与回收／分解及真实重载入口；契约与不变量见[材料系统设计](../../decisions/material-system/README.md)。
   - core 静态 TSV 与 GameTest TSV 由对应 JUnit/GameTest 维护；用例覆盖物品管道路由与调度回归。
   - `core/src/test` 的材料目录、标签名翻译、熔融浇筑与配方引擎测试；`api/common` 的材料、机器、能源模型测试。
   - 机器 tick、多方块、能源网络、物流、世界生成完整流程等仍是待补范围。

@@ -34,7 +34,7 @@
 
 - 参考场景通过（GameTest 或等价验证）。
 - 注册 ID、capability 方向、模拟/实际资源转移、序列化、生命周期时机、客户端/专用服务端隔离逐项检查。
-- 共享门面契约以 NeoForge 行为作为基准；偏差记录到 [integration](../../../integration/README.md)。
+- 共享门面契约以 NeoForge 行为作为基准；长期平台级取舍与差异记录到[跨平台决策与差异](../../../decisions/platform/README.md)。
 - 发行产物、数据生成与版本资源路径按[组装检查](../../../development/validation/checks/assemble.md)与[资源指南](../../resources.md)检查；版本元数据与 Mixin 配置按节点检查。
 - 只验证 NeoForge 时，明确写出 Forge 未覆盖。
 

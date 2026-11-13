@@ -36,7 +36,7 @@ GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTe
 
 ### 配方回归案例表
 
-材料领域的 `MaterialBaselineTests` 验证存储块的成分与两类准入、72U 附魔金苹果的规划和实际回收输出、复合钻头、耐久缩放、容器与有形状铸模、压模机模具、固体／流体分解及 test-source 材料 SPI。`material_baseline_reload` 为仅含一个测试的独立批次，等待两次真实资源重载；拥有规则数和固定样例必须稳定。原始投影写入根目录 `work/material-system-refactor/runtime/<MC>/<运行目录>/`。已知错误行为明确标为观察，不能当作正确性依据；字段、复现与未覆盖范围见[材料基线报告](../../../integration/material-baseline.md)。
+材料领域的 `MaterialBaselineTests` 验证存储块的成分与两类准入、72U 附魔金苹果的规划和实际回收输出、复合钻头、耐久缩放、容器与有形状铸模、压模机模具、固体／流体分解、形态绑定刷新及 test-source 材料 SPI。`material_baseline_reload` 为仅含一个测试的独立批次，等待两次真实资源重载；拥有规则数和固定样例必须稳定。已知错误行为明确标为观察，不能当作正确性依据；材料成分、回收与分解契约见[材料系统设计](../../../decisions/material-system/README.md)。
 
 `decompositionRespectsFormsAndExactFluidIdentities` 通过测试 SPI 声明 dust-only、blockDust-only、liquid-only 和 gas-only 分解，检查形态限制、流体输入不会错误抑制允许的固体兜底、本体完整 ID、附属完整 ID／旧裸路径、外部原版流体 ID、未知及非法 ID，以及附属流体输出的身份和数量。
 
