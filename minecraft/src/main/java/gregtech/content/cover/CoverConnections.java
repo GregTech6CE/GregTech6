@@ -29,9 +29,11 @@ public final class CoverConnections {
     }
 
     public static boolean canConnect(Level level, BlockPos pos, Direction side) {
-        return !(level.getBlockEntity(pos) instanceof PanelCoverHost host && blocks(host, side))
-                && !(level.getBlockEntity(pos.relative(side)) instanceof PanelCoverHost other
-                        && blocks(other, side.getOpposite()));
+        if (level.getBlockEntity(pos) instanceof PanelCoverHost host && blocks(host, side)) return false;
+        BlockPos otherPos = pos.relative(side);
+        return !(level.hasChunkAt(otherPos)
+                && level.getBlockEntity(otherPos) instanceof PanelCoverHost other
+                && blocks(other, side.getOpposite()));
     }
 
     private static net.minecraft.world.level.block.state.properties.BooleanProperty property(
@@ -49,16 +51,19 @@ public final class CoverConnections {
         if (level == null || level.isClientSide) return;
         var state = owner.getBlockState();
         var bit = property(state, side);
-        if (bit == null) return;
-        if (state.getValue(bit) != connected)
+        if (bit != null && state.getValue(bit) != connected)
             level.setBlockAndUpdate(owner.getBlockPos(), state.setValue(bit, connected));
         var adjacent = owner.getBlockPos().relative(side);
         if (!level.hasChunkAt(adjacent)) return;
         var other = level.getBlockState(adjacent);
         var opposite = property(other, side.getOpposite());
-        if (opposite != null
-                && other.getBlock().getClass() == state.getBlock().getClass()
-                && other.getValue(opposite) != connected)
+        if (opposite == null) return;
+        boolean sameClass =
+                bit != null && other.getBlock().getClass() == state.getBlock().getClass();
+        if ((sameClass && other.getValue(opposite) != connected)
+                || (!connected
+                        && other.getBlock() instanceof gregtech.content.block.machine.LogisticsWireBlock
+                        && other.getValue(opposite)))
             level.setBlockAndUpdate(adjacent, other.setValue(opposite, connected));
     }
 

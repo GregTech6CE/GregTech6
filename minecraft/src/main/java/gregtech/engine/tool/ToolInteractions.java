@@ -50,8 +50,8 @@ public final class ToolInteractions {
         if (!level.hasChunkAt(otherPos) || !level.mayInteract(player, otherPos)) return false;
         BlockState other = level.getBlockState(otherPos);
         if(spec.connection()==ToolInteractionSpec.ConnectionKind.LOGISTICS&&!state.getValue(spec.connection().property(side))
-                &&(level.getBlockEntity(pos) instanceof gregtech.content.logistics.LogisticsCoverHost host&&!host.logisticsCovers().get(side).isEmpty()
-                ||level.getBlockEntity(otherPos) instanceof gregtech.content.logistics.LogisticsCoverHost otherHost&&!otherHost.logisticsCovers().get(side.getOpposite()).isEmpty()))return false;
+                &&(gregtech.content.block.machine.LogisticsWireBlock.hasBlockingCover(level,pos,otherPos,side)
+                ||!gregtech.content.block.machine.LogisticsWireBlock.canOpenToward(level,otherPos,side.getOpposite())))return false;
         var otherSpec = describe(other, tool);
         return otherSpec == null || otherSpec.connection() != spec.connection()
                 || spec.connection() != ToolInteractionSpec.ConnectionKind.AXLE
