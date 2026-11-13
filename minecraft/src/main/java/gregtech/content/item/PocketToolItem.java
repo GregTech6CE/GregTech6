@@ -54,7 +54,7 @@ public final class PocketToolItem extends GTToolItem {
 //? if >=1.21.1 {
 /*    if(state.getBlock() instanceof gregtech.engine.tool.ScrewdriverUseTarget target){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return target.useScrewdriver(state,context.getLevel(),context.getClickedPos(),context.getPlayer(),context.getHand(),hit);}}
 *///?} else {
-    if(state.getBlock() instanceof gregtech.content.block.machine.HopperBlock||state.getBlock() instanceof gregtech.content.block.machine.QueueHopperBlock||state.getBlock() instanceof gregtech.content.block.energy.SignalWireBlock){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return state.use(context.getLevel(),context.getPlayer(),context.getHand(),hit);}}
+    if(state.getBlock() instanceof gregtech.content.block.machine.HopperBlock||state.getBlock() instanceof gregtech.content.block.machine.QueueHopperBlock){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return state.use(context.getLevel(),context.getPlayer(),context.getHand(),hit);}}
 //?}
    return super.useOn(context);}
  @Override public net.minecraft.world.InteractionResult interactLivingEntity(ItemStack stack,net.minecraft.world.entity.player.Player player,net.minecraft.world.entity.LivingEntity entity,net.minecraft.world.InteractionHand hand){

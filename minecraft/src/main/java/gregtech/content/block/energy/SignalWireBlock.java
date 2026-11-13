@@ -30,8 +30,7 @@ import java.util.List;
 
 /** Six independent ports; the common cutter spec also drives the client face overlay. */
 //? if >=1.21.1 {
-/*public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget,
-        gregtech.engine.tool.ScrewdriverUseTarget, SimpleWaterloggedBlock {
+/*public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget, SimpleWaterloggedBlock {
 *///?} else {
 public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget {
 //?}
@@ -47,12 +46,6 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
             BlockHitResult hit) {
         return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
     }
-
-    @Override
-    public InteractionResult useScrewdriver(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        return use(state, level, pos, player, hand, hit);
-    }
 *///?} else {
     @Override
 //?}
@@ -60,15 +53,6 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
             InteractionHand hand, BlockHitResult hit) {
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
-        if (GTToolHelper.isScrewdriver(player.getItemInHand(hand))) {
-            if (!level.isClientSide && player.mayBuild() && level.mayInteract(player,
-                    pos) && level.getBlockEntity(pos) instanceof SignalWireBlockEntity wire) {
-                wire.setMode((wire.mode() + (player.isShiftKeyDown() ? 15 : 1)) & 15);
-                player.displayClientMessage(Component.translatable("message.gt6ce.signal_wire.mode", wire.mode()), true);
-                GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
         return InteractionResult.PASS;
     }
 

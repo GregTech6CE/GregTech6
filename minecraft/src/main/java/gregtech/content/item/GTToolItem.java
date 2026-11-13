@@ -175,8 +175,7 @@ if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEnt
         if (state.getBlock() instanceof gregtech.engine.tool.ScrewdriverUseTarget) {
 
 *///?} else {
-        if (state.getBlock() instanceof HopperBlock || state.getBlock() instanceof QueueHopperBlock
-                || state.getBlock() instanceof gregtech.content.block.energy.SignalWireBlock) {
+        if (state.getBlock() instanceof HopperBlock || state.getBlock() instanceof QueueHopperBlock) {
 //?}
             Player player = context.getPlayer();
             InteractionHand hand = context.getHand();

@@ -118,24 +118,18 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
             return usable ? gregtech.content.item.behavior.BehaviorPlaceWoodworkingSupplies.use(context)
                     : net.minecraft.world.InteractionResult.PASS;
         }
-        if (toolName.equals("Screwdriver") && player != null && player.isShiftKeyDown() && stack.getCount() == 1) {
+//? if >=1.21.1 {
+/*        if (toolName.equals("Screwdriver") && player != null && player.isShiftKeyDown() && stack.getCount() == 1) {
             var level = context.getLevel();
             var pos = context.getClickedPos();
             var state = level.getBlockState(pos);
-//? if >=1.21.1 {
-/*            if (state.getBlock() instanceof gregtech.engine.tool.ScrewdriverUseTarget target) {
-*///?} else {
-            if (state.getBlock() instanceof gregtech.content.block.energy.SignalWireBlock) {
-//?}
+            if (state.getBlock() instanceof gregtech.engine.tool.ScrewdriverUseTarget target) {
                 var hit = new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),
                         context.getClickedFace(), pos, context.isInside());
-//? if >=1.21.1 {
-/*                return target.useScrewdriver(state, level, pos, player, context.getHand(), hit);
-*///?} else {
-                return state.use(level, player, context.getHand(), hit);
-//?}
+                return target.useScrewdriver(state, level, pos, player, context.getHand(), hit);
             }
         }
+*///?}
         if (!toolName.equals("Wrench") || player == null || !player.isShiftKeyDown() || stack.getCount() != 1)
             return net.minecraft.world.InteractionResult.PASS;
         var level = context.getLevel();

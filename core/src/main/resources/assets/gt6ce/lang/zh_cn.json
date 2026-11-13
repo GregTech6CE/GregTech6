@@ -96576,7 +96576,7 @@
   "tooltip.gt6ce.scanner.infinite": "Works as Infinite Energy Battery",
   "tooltip.gt6ce.sensor.kilogibblometer.boiler": "For large boiler pressure: 1 kGibbl = 1,000,000 L. Reads the controller through an assembled boiler wall.",
   "tooltip.gt6ce.shapeless_recipes": "无序合成配方的数量为:",
-  "tooltip.gt6ce.signal_wire.controls": "Wire cutter: connect ports. Screwdriver: source 0–15; sneak to decrease.",
+  "tooltip.gt6ce.signal_wire.controls": "剪线钳：连接端口。",
   "tooltip.gt6ce.signal_wire.range": "Redstone: approximately %s blocks per signal level",
   "tooltip.gt6ce.smeltery.face.top": "顶面",
   "tooltip.gt6ce.smeltery.interact": "没有界面，右键以放入/取出物品!",

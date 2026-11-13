@@ -12862,7 +12862,7 @@
   "tooltip.gt6ce.scanner.energy": "%s / %s EU - Size: %s",
   "tooltip.gt6ce.scanner.infinite": "Works as Infinite Energy Battery",
   "tooltip.gt6ce.shapeless_recipes": "Has Shapeless Recipes with Amounts: ",
-  "tooltip.gt6ce.signal_wire.controls": "Wire cutter: connect ports. Screwdriver: source 0–15; sneak to decrease.",
+  "tooltip.gt6ce.signal_wire.controls": "Wire cutter: connect ports.",
   "tooltip.gt6ce.signal_wire.range": "Redstone: approximately %s blocks per signal level",
   "tooltip.gt6ce.smeltery.face.top": "Top",
   "tooltip.gt6ce.smeltery.interact": "No GUI. Click to interact!",
