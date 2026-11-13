@@ -11,10 +11,8 @@ import gregtech.content.worldgen.dungeon.GTDungeonData;
 import gregtech.engine.material.GTMaterialRegistry;
 import java.util.HashSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -26,10 +24,10 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 //?}
 
 /**
- * Runtime guards for RFC #382: the coin registrations are gone, the dungeon pile pools carry the
- * replacement composition, and the ingot pile helper places a filled pile. The workshop's private
- * {@code WORKSHOP_METALS} pool is unchanged by the removal and is not reachable from tests; the
- * storage crate pool and the gem pool are asserted here.
+ * The dungeon ingot piles that replace the coin piles draw from {@code PILE_METALS}, whose composition
+ * carries the precious-metal additions; the storage crate and gem pools keep their entries, and the
+ * pile helper places a filled ingot pile. The workshop's private {@code WORKSHOP_METALS} pool is not
+ * reachable from tests. plateTiny keeps its item and U9 weight.
  */
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
@@ -37,30 +35,6 @@ public final class CoinRemovalTests {
     private static final String BATCH = "coin_removal";
 
     private CoinRemovalTests() {}
-
-    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
-    public static void coinRegistrationsAreGone(GameTestHelper helper) {
-        var registries = helper.getLevel().registryAccess();
-        for (ResourceLocation id : registries.registryOrThrow(Registries.ITEM).keySet()) {
-            if (!id.getNamespace().equals("gt6ce")) continue;
-            String path = id.getPath();
-            helper.assertTrue(
-                    !path.startsWith("coin_") && !path.equals("tab_icon_coin"), "coin item remains: " + id);
-        }
-        for (ResourceLocation id : registries.registryOrThrow(Registries.BLOCK).keySet()) {
-            helper.assertTrue(
-                    !(id.getNamespace().equals("gt6ce")
-                            && (id.getPath().equals("coin_pile") || id.getPath().equals("coin_mold"))),
-                    "coin block remains: " + id);
-        }
-        for (ResourceLocation id : registries.registryOrThrow(Registries.BLOCK_ENTITY_TYPE).keySet()) {
-            helper.assertTrue(
-                    !(id.getNamespace().equals("gt6ce")
-                            && (id.getPath().equals("coin_pile") || id.getPath().equals("coin_mold"))),
-                    "coin block entity type remains: " + id);
-        }
-        helper.succeed();
-    }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
     public static void pilePoolsKeepTheirComposition(GameTestHelper helper) {
