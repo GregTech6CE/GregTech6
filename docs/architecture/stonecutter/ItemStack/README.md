@@ -10,7 +10,7 @@
 | 线格式 | `{id, Count, tag}` | `{id, count, components}` | [wire-format.md](wire-format.md) |
 | 旧数据 | `tag` | `components["minecraft:custom_data"]` | [migration.md](migration.md) |
 | 身份比较 | `isSameItemSameTags` | `isSameItemSameComponents` | [identity.md](identity.md) |
-| 封面过滤器 | `setItemFilter(installed, held)` | `setItemFilter(installed, held, level.registryAccess())` | [registry-access.md](registry-access.md) |
+| 封面过滤器 | `setItemFilter(installed, held)` | `setItemFilter(installed, held, level.registryAccess())` | [cover-filter-provider.md](cover-filter-provider.md) |
 
 ## 子类型
 
@@ -23,4 +23,5 @@
 | wire-format | `{id, Count, tag}` → `{id, count, components}` | [wire-format.md](wire-format.md) | Count, components |
 | migration | 旧 `tag` 搬进 `CUSTOM_DATA` | [migration.md](migration.md) | tag, CUSTOM_DATA |
 | identity | `isSameItemSameTags` ↔ `isSameItemSameComponents` | [identity.md](identity.md) | StackCompat.sameItem |
-| registry-access | provider 参数统一：签名/委托重载/调用点分支经 NbtCompat 收敛 | [registry-access.md](registry-access.md) | registryAccess, setItemFilter, setFluidFilter, 委托重载, NbtCompat |
+| registry-access | provider 委托重载与调用点参数分支（通用，NbtCompat 收敛） | [registry-access.md](registry-access.md) | registryAccess, 委托重载, save(tag), NbtCompat |
+| cover-filter-provider | CoverUtilityBehaviors 六过滤器方法的 provider 签名统一 | [cover-filter-provider.md](cover-filter-provider.md) | CoverUtilityBehaviors, itemFilter, fluidFilter, setItemFilter, setFluidFilter |
