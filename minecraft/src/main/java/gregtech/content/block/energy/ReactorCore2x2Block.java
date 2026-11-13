@@ -125,15 +125,7 @@ public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements E
     }
     @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){
         var stack=new ItemStack(this);
-        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof gregtech.content.blockentity.energy.ReactorCoreBlockEntity core){
-//? if >=1.21.1 {
-            /*var tag=gregtech.content.cover.ComponentCoverFallback.forItem(core,core.saveWithId(builder.getLevel().registryAccess()));
-*///?} else {
-            var tag=gregtech.content.cover.ComponentCoverFallback.forItem(core,core.saveWithoutMetadata());
-//?}
-            tag.remove("gt.rods");tag.remove("gt.overflow");tag.remove("gt.neutrons");tag.putBoolean("gt.stopped",true);
-            gregtech.engine.stack.BlockEntityData.write(stack, tag);
-        }
+        // GT6 keeps coolant, heat and rods out of the item; rods drop separately via BlockContents.
         ReactorPorts.saveItemState(stack, state);
         return java.util.List.of(stack);
     }

@@ -53,6 +53,7 @@ public final class OriginalLightningRodControllerBlock extends Block implements 
 *///?} else {
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod, rod.saveWithoutMetadata());
 //?}
+            data.remove("gt.energy");
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return List.of(stack);
@@ -70,6 +71,7 @@ public final class OriginalLightningRodControllerBlock extends Block implements 
 *///?} else {
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(rod, rod.saveWithoutMetadata());
 //?}
+            data.remove("gt.energy");
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return stack;

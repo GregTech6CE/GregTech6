@@ -44,6 +44,8 @@ public final class LaserConverterBlock extends AutoToolBlock {
 *///?} else {
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(laser, laser.saveWithoutMetadata());
 //?}
+            data.remove("gt.laser.energy");
+            data.remove("gt.stopped");
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return java.util.List.of(stack);

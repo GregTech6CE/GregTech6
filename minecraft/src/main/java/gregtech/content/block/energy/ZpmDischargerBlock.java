@@ -45,6 +45,8 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
 *///?} else {
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(z, z.saveWithoutMetadata());
 //?}
+            data.remove("gt.zpm.buffer");
+            data.remove("gt.stopped");
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return java.util.List.of(stack);

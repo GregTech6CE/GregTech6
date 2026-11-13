@@ -126,6 +126,9 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill, drill.saveWithoutMetadata());
 //?}
             data.remove("gt.output");
+            data.remove("gt.drill_energy");
+            data.remove("gt.stone_type");
+            data.remove("gt.lubricant");
             // The output slot is dropped separately by onRemove.
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
@@ -147,6 +150,10 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
 *///?} else {
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill, drill.saveWithoutMetadata());
 //?}
+            data.remove("gt.output");
+            data.remove("gt.drill_energy");
+            data.remove("gt.stone_type");
+            data.remove("gt.lubricant");
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return stack;

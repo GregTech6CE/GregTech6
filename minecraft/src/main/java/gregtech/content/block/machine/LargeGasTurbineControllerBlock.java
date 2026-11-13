@@ -96,6 +96,13 @@ public class LargeGasTurbineControllerBlock extends DirectionalBlock
 *///?} else {
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithoutMetadata());
 //?}
+            data.remove("gt.ru");
+            data.remove("gt.fuel");
+            data.remove("gt.stopped");
+            data.remove("gt.rotor_formed");
+            data.remove("gt.rotor_active");
+            data.remove("gt.tank");
+            for (int i = 0; i < 3; i++) data.remove("gt.exhaust" + i);
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return java.util.List.of(stack);

@@ -143,6 +143,8 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
 *///?} else {
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata());
 //?}
+            data.remove("gt.tank");
+            data.remove("gt.size");
             gregtech.engine.stack.BlockEntityData.write(result, data);
         }
         return java.util.List.of(result);
@@ -163,6 +165,8 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
 *///?} else {
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata());
 //?}
+            data.remove("gt.tank");
+            data.remove("gt.size");
             gregtech.engine.stack.BlockEntityData.write(result, data);
         }
         return result;

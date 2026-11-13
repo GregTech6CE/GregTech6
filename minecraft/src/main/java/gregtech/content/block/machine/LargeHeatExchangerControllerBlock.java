@@ -113,6 +113,12 @@ public class LargeHeatExchangerControllerBlock extends DirectionalBlock implemen
 *///?} else {
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithoutMetadata());
 //?}
+            data.remove("gt.energy");
+            data.remove("gt.active");
+            data.remove("gt.active.data");
+            data.remove("gt.state.str");
+            data.remove("gt.hot");
+            data.remove("gt.cold");
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return java.util.List.of(stack);

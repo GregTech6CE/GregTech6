@@ -85,6 +85,11 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements gr
 *///?} else {
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithoutMetadata());
 //?}
+            data.remove("gt.axial.energy");
+            data.remove("gt.stopped");
+            data.remove("gt.overloaded");
+            data.remove("gt.rotor_formed");
+            data.remove("gt.rotor_active");
             gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return List.of(stack);
