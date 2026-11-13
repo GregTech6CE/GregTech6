@@ -258,6 +258,13 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtec
         return result;
     }
 
+    /** Creative/EMI convenience: a fully charged tool with the given head material. Survival crafting stays uncharged. */
+    public ItemStack assembledCharged(gregtech.api.material.GTMaterial material, long batteryCapacity) {
+        ItemStack result = assembled(material, batteryCapacity);
+        StackData.update(result, tag -> tag.putLong("gt.charge", batteryCapacity));
+        return result;
+    }
+
     public gregtech.api.material.GTMaterial headMaterial(ItemStack stack) {
         var head=gregtech.engine.tool.GTToolHelper.getHead(stack);
         return head!=null && head.isValid() ? head : gregtech.content.material.Materials.Steel;

@@ -37,6 +37,12 @@ final class EmiCatalogRepair {
         for (var stack : original) {
             if (!stack.getId().getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) continue;
             var item = stack.getItemStack();
+            // Mirror the creative tab: EMI gives charged top-quality electric tools for testing.
+            if (item.getItem() instanceof gregtech.content.item.ElectricToolItem electric) {
+                sorted.add(EmiStack.of(electric.assembledCharged(gregtech.content.material.Materials.Adamantium,
+                        electric.getEnergyCapacity(item, gregtech.content.data.GregTechTags.Energy.EU))));
+                continue;
+            }
 //? if >=1.21.1 {
             /*var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(item);
 *///?} else {

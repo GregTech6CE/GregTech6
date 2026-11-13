@@ -168,7 +168,8 @@ public final class OriginCreativeContents {
                 var type=tool.toolType(); var head=type==gregtech.engine.tool.GTToolType.GEM_PICK?gregtech.content.material.Materials.Diamond:gregtech.content.material.Materials.Steel;
                 page.add(GTToolItem.create(type,head,type.requiresHeadAssembly()?gregtech.content.material.generated.WoodMaterials.Wood:head));
             } else if(item instanceof ElectricToolItem electric) {
-                page.add(electric.assembled(gregtech.content.material.Materials.Steel,electric.getEnergyCapacity(new ItemStack(item),gregtech.content.data.GregTechTags.Energy.EU)));
+                // Creative convenience: fully charged with a top-quality head so testing is not gated by charge or harvest quality.
+                page.add(electric.assembledCharged(gregtech.content.material.Materials.Adamantium,electric.getEnergyCapacity(new ItemStack(item),gregtech.content.data.GregTechTags.Energy.EU)));
             } else if(item instanceof ChemicalBatteryItem battery) {
                 page.add(new ItemStack(item));var charged=new ItemStack(item);battery.setCharge(charged,battery.spec().capacity());page.add(charged);
             } else if(item instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.misc.FixedConstructionColor) {
