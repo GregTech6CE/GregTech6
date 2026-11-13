@@ -123,14 +123,8 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
         if (entity instanceof OriginalLargeBoilerControllerBlockEntity boiler && boiler.barometerValue() > 4)
             return List.of();
         ItemStack drop = new ItemStack(this);
-        if (entity instanceof OriginalLargeBoilerControllerBlockEntity boiler) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(boiler, boiler.saveWithId(boiler.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(boiler, boiler.saveWithoutMetadata());
-//?}
-            gregtech.engine.stack.BlockEntityData.write(drop, data);
-        }
+        if (entity instanceof OriginalLargeBoilerControllerBlockEntity boiler)
+            gregtech.engine.stack.BlockEntityData.write(drop, boiler.saveItemConfig());
         return List.of(drop);
     }
 //? if >=1.21.1 {
@@ -139,25 +133,15 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
     @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
         ItemStack stack = new ItemStack(this);
-        if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler) {
-//? if >=1.21.1 {
-            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(boiler, boiler.saveWithId(boiler.getLevel().registryAccess()));
-*///?} else {
-            var data = gregtech.content.cover.ComponentCoverFallback.forItem(boiler, boiler.saveWithoutMetadata());
-//?}
-            gregtech.engine.stack.BlockEntityData.write(stack, data);
-        }
+        if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
+            gregtech.engine.stack.BlockEntityData.write(stack, boiler.saveItemConfig());
         return stack;
     }
     @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state,
                                       @Nullable LivingEntity placer, ItemStack stack) {
         var saved = gregtech.engine.stack.BlockEntityData.read(stack);
         if (saved != null && level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
-//? if >=1.21.1 {
-            /*boiler.loadAdditional(saved,level.registryAccess());
-*///?} else {
-            boiler.load(saved);
-//?}
+            boiler.loadItemConfig(saved);
     }
 //? if >=1.21.1 {
     /*@Override public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {

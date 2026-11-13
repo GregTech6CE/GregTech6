@@ -129,6 +129,25 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     public int barometerValue() { return barometer; }
     public IFluidHandler directFluidHandler() { return controllerFluids; }
 
+    /** Portable item payload: repair state only, never stored water, steam or heat. */
+    public CompoundTag saveItemConfig() {
+        var tag = new CompoundTag();
+        tag.putInt("gt.efficiency", efficiency);
+        return tag;
+    }
+
+    /** Legacy stacks can still carry live boiler state, so placement always rebuilds from empty tanks. */
+    public void loadItemConfig(CompoundTag tag) {
+        efficiency = tag.contains("gt.efficiency")
+                ? gregtech.content.machine.OriginalFunctionalTooltipData.boilerEfficiency(tag.getInt("gt.efficiency")) : 10_000;
+        heat = 0;
+        cooldown = 128;
+        barometer = 0;
+        structureOkay = false;
+        water.setEmpty();
+        steam.setEmpty();
+    }
+
     private Direction front() { return getBlockState().getValue(HorizontalDirectionalBlock.FACING); }
     private BlockPos bodyCentre() { return worldPosition.relative(front().getOpposite()); }
 
