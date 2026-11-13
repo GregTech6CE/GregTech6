@@ -84,7 +84,7 @@ import java.util.Set;
  *       now: {@link #pile} fills a {@link PileBlockEntity} with a real material stack under GT6's own
  *       NBT keys. The piles also draw GT6's own geometry from those stacks - one box per stored ingot
  *       and plate, in the material's colour ({@code PileBlock.STACK}).</li>
- *   <li>Coins: GT6's dungeon coin piles ({@code DungeonData}) are removed together with the coin
+ *   <li>Coins: the port removes GT6's dungeon coin piles ({@code DungeonData}) together with the coin
  *       system; every site places an ingot pile instead ({@link #pile} with {@link PileKind#INGOT}).
  *       {@link #PILE_METALS} keeps GT6's storage-room list and adds the silver, gold and platinum of
  *       GT6's old dungeon coin list ({@code WorldgenDungeonGT}); each pile draws its own metal from
