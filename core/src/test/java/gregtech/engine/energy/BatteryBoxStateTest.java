@@ -22,11 +22,25 @@ class BatteryBoxStateTest {
             this.stored = stored;
         }
 
-        public boolean accepts() { return true; }
-        public boolean canInject(long v) { return v >= tierVoltage / 2 && v <= tierVoltage * 2; }
-        public boolean canExtract(long v) { return source && canInject(v); }
-        public long stored() { return stored; }
-        public long capacity() { return capacity; }
+        public boolean accepts() {
+            return true;
+        }
+
+        public boolean canInject(long v) {
+            return v >= tierVoltage / 2 && v <= tierVoltage * 2;
+        }
+
+        public boolean canExtract(long v) {
+            return source && canInject(v);
+        }
+
+        public long stored() {
+            return stored;
+        }
+
+        public long capacity() {
+            return capacity;
+        }
 
         public long extract(long v, long p) {
             if (!canExtract(v)) return 0;
