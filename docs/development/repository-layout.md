@@ -37,7 +37,6 @@
 | 分层、系统原理与资源机制 | [architecture](../architecture/README.md) |
 | 包职责、边界与验收条件 | [architecture/packages](../architecture/packages/README.md) |
 | 跨平台、跨模组与上游对照结论 | [integration](../integration/README.md) |
-| 交付与实例更新流程、脱敏执行记录 | [operations](../operations/README.md) |
 | 长期取舍与原版差异 | [decisions](../decisions/README.md) |
 | 单个开发工具的依赖、参数与输出 | 对应 `tools/<scope>/README.md` |
 
@@ -45,7 +44,7 @@
 
 ## 临时内容如何沉淀
 
-例如排查管道传输问题：一次性分析脚本与完整日志放 `work/fluid-pipe-check/`；可复用的检查器整理到 `tools/<scope>/` 并在该目录 README 记录用法；跨平台行为结论放 `docs/integration/`；算法边界补到架构文档；若确实执行了实例更新，再写 `docs/operations/records/`。无需给每次小改动建立长期记录。
+例如排查管道传输问题：一次性分析脚本与完整日志放 `work/fluid-pipe-check/`；可复用的检查器整理到 `tools/<scope>/` 并在该目录 README 记录用法；跨平台行为结论放 `docs/integration/`；算法边界补到架构文档。无需给每次小改动建立长期记录。
 
 开发用探针优先放 `work/`，不会自动参与生产编译；若要长期保留为自动测试，接入合适测试源码集及依赖，并记录运行命令；测试目录与案例表约定见[验证与验收](validation/README.md)。不要把探针改名成业务类混入 `src/main/java/`。
 
@@ -59,7 +58,7 @@
 
 ## .gitignore 的边界
 
-规则覆盖构建、运行实例、IDE、本地环境、工具缓存与 `work/`，保留 Wrapper JAR、资源 JSON、生成内容表和 `docs/operations/records/`。历史本地笔记位置继续忽略，新笔记使用 `work/`。
+规则覆盖构建、运行实例、IDE、本地环境、工具缓存与 `work/`，保留 Wrapper JAR、资源 JSON 和生成内容表。历史本地笔记位置继续忽略，新笔记使用 `work/`。
 
 不要用 `*.jar`、`*.json`、`*.md` 或任意 `generated/` 的全局规则掩盖真实输入；也不要随意 `git add -f`。`.gitignore` 不影响已跟踪文件，也不保护秘密；若凭据已经提交，仅新增忽略规则不能消除泄露。
 

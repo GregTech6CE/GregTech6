@@ -17,4 +17,4 @@
 
 Forge `runData` 目前直接输出至该节点的 `src/main/resources/`，运行后须审查生成差异，不能当无副作用检查；资源规则见 [runtime 包](../docs/architecture/packages/runtime.md)，游戏内确认按[验证与验收](../docs/development/validation/README.md)执行。NeoForge 是否有某个开发任务，以实际 Gradle 任务为准。
 
-共享修改默认双平台编译；打包验收使用 Forge `distributionJar` 和 NeoForge `jar`。检查步骤见[验证与验收](../docs/development/validation/README.md)。Forge 中间 JAR 不用于部署。文档、探针、截图和部署记录遵循根目录归属表。
+共享修改默认双平台编译；打包验收使用 Forge `distributionJar` 和 NeoForge `jar`。检查步骤见[验证与验收](../docs/development/validation/README.md)。Forge 中间 JAR 不用于部署。文档、探针和截图遵循根目录归属表。

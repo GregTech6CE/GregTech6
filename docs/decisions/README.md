@@ -4,7 +4,7 @@
 
 先读[现有架构](../architecture/README.md)，确有长期选择需要保存时复制[模板](TEMPLATE.md)，按主题命名。状态使用“提议 / 接受 / 废止 / 被替代”；提议不是已实施事实。
 
-决定改变时保留原背景，标明新决定链接；最终使用方式仍须同步架构/开发指南，不能只留在决策历史里。证据放 [integration](../integration/README.md)，部署结果放 [operations](../operations/README.md)。
+决定改变时保留原背景，标明新决定链接；最终使用方式仍须同步架构/开发指南，不能只留在决策历史里。证据放 [integration](../integration/README.md)。
 
 ## 目录
 

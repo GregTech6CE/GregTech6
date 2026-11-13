@@ -71,7 +71,6 @@
 | 长期开发指南 | `docs/development/` |
 | 架构与包职责 | `docs/architecture/` |
 | 跨模组/跨平台对照、来源、验证结论 | `docs/integration/` |
-| 发布/部署流程、可提交的脱敏执行记录 | `docs/operations/`、`docs/operations/records/` |
 | 长期架构决策及取舍 | `docs/decisions/` |
 
 **不要往任何 `src/` 放任务笔记、agent 交接、部署记录、日志、文档草稿、临时探针或一次性迁移脚本。** JavaDoc、必要的 `package-info.java` 和随模组分发的许可证是真正源码/资源的例外；不要新建 `src/docs/` 存放工作文档。
