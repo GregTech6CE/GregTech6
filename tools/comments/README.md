@@ -1,6 +1,6 @@
 # comments
 
-按根 [`AGENTS.md`](../../AGENTS.md) 的注释规范检查 Java 注释。脚本只读，不修改文件，不启动 Gradle。
+本目录提供 Java 注释的静态合规检查脚本，按[Java 注释规范](../../docs/development/comments.md)检查行号引用、历史叙述与上游符号有效性，并支持验证一次提交是否仅修改注释。脚本只读运行，不修改文件，也不启动 Gradle。
 
 ## 依赖
 
@@ -28,7 +28,7 @@ python tools/comments/check_comment_refs.py
 python tools/comments/check_comment_refs.py --diff origin/master...HEAD
 
 # 同时校验上游符号是否存在
-python tools/comments/check_comment_refs.py --upstream D:/Baobao/projects/dev/java/cruciblecraft-template-1.21.1/gt6_code/gregtech6/src/main/java
+python tools/comments/check_comment_refs.py --upstream <path/to/gregtech6/src/main/java>
 ```
 
 ### 输出与退出码

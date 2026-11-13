@@ -1,6 +1,6 @@
 # NeoForge 实现（参考）
 
-返回[平台边界](../platforms.md)。NeoForge 节点是当前参考实现，Forge 对齐此行为。
+NeoForge 节点是当前参考实现，Forge 对齐此行为。
 
 ## 代码位置
 

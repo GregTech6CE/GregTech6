@@ -1,11 +1,12 @@
 # 开发指南
 
-| 主题 | 内容 |
-| --- | --- |
-| [开发上手](getting-started.md) | 工具链、首次构建与排错 |
-| [文件与产物归属](repository-layout.md) | 源码、测试、工具、文档和临时材料的位置 |
-| [验证与验收](validation/README.md) | 改动路径路由、检查命令与结果证据 |
-| [碎片贴图与机器 GUI 模板](gui-templates.md) | 模板格式、素材引用和界面接入 |
-| [Issue 分类与标签](github-issue-tags.md) | 问题分类与协作约定 |
+本目录提供项目的日常开发规范与操作指南，覆盖环境搭建、目录归属、Java 注释标准、测试验证流程、GUI 模板制作以及 Issue 协作标签约定。
 
-其他主题见[GT6CE 文档](../README.md)，开发工具用法见[工具目录](../../tools/README.md)。
+| 主题 | 说明 |
+| --- | --- |
+| [开发上手](getting-started.md) | 工具链配置、首次构建与常见排错顺序 |
+| [文件与产物归属](repository-layout.md) | 源码、测试、工具、文档与临时材料的存放边界 |
+| [Java 注释规范](comments.md) | 注释编写原则、符号引用格式与纯数据表约定 |
+| [验证与验收](validation/README.md) | 改动路径路由、检查命令与结果报告标准 |
+| [碎片贴图与机器 GUI 模板](gui-templates.md) | 九宫格面板、精灵图引用与模板接入方法 |
+| [Issue 分类与标签](github-issue-tags.md) | Issue 类型、性质、领域与分流标签约定 |

@@ -1,6 +1,6 @@
 # GUI 模板检查与预览
 
-从仓库根目录运行。模板格式、接入方法见[开发指南](../../docs/development/gui-templates.md)。
+本目录提供机器 GUI 模板、别名、图标引用与精灵图完整性的静态检查，以及离线 HTML/PNG 预览生成工具，无需启动游戏即可校验模板布局。从仓库根目录运行，模板格式与接入方法见[开发指南](../../docs/development/gui-templates.md)。
 
 仅检查需要 Python 3，无第三方依赖。输出 PNG/HTML 预览另需 Pillow（`python -m pip install Pillow`）。
 

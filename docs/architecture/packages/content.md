@@ -1,6 +1,6 @@
 # content：定义、目录与游戏内容
 
-返回[包索引](README.md)。core 的 content 描述“有什么”，Minecraft 的 content 将其变为游戏里的具体对象。前者可以包含声明性的规则计算；后者确实包含 BlockEntity 与游戏逻辑，不能仅因包名就把它们当不可变数据。
+core 的 content 描述“有什么”，Minecraft 的 content 将其变为游戏里的具体对象。前者可以包含声明性的规则计算；后者包含 BlockEntity 与游戏逻辑，按实际代码职责界定而非仅凭包名视为不可变数据。
 
 ## core：定义与内容表
 

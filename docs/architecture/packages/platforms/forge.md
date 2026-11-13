@@ -1,6 +1,6 @@
 # Forge 实现（对齐 NeoForge）
 
-返回[平台边界](../platforms.md)。Forge 节点对齐 NeoForge 参考实现，偏差必须记录并验证；不能用 Forge 行为反向定义共享门面。
+Forge 节点对齐 NeoForge 参考实现，以 NeoForge 行为定义共享门面；保留偏差时须记录并验证。
 
 ## 代码位置
 

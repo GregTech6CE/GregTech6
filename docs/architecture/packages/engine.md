@@ -1,6 +1,6 @@
 # engine：执行、状态与算法
 
-返回[包索引](README.md)。先读 core 中的规则，再查 Minecraft 层如何喂入世界/栈数据；不要从 BlockEntity 的全部细节反推公共契约。
+先读 core 中的规则，再查 Minecraft 层如何喂入世界与物品栈数据，以核心契约为基准而非从 BlockEntity 细节反推。
 
 ## core 中各包的职责
 

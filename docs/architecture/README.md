@@ -7,12 +7,13 @@
 | 源码层 | 职责 | 允许的方向 |
 | --- | --- | --- |
 | `api/common`（内联自 GregTech6API） | Java 17 公共协议、模型、声明与宿主服务接口 | 运行时仅依赖 JDK；主库接为 `:api` |
-| `core` | 纯 Java 内容定义、规则、状态与共享资源 | 依赖 api，不依赖 Minecraft 层 |
-| `api/minecraft`（内联自 GregTech6API） | 含 Minecraft/加载器类型的公开协议 | `:api-platform:<node>` 依赖公共 API 及平台类型，不依赖 core 或模组 main |
-| `minecraft/src` | 游戏对象、共享运行时与跨版本输入 | 可调用 core；版本差异由 Stonecutter/适配承接 |
-| `minecraft/versions/*/src` | 原生加载器入口与版本差异 | 组合共享输入及 core，不引用另一节点专属实现 |
+| `core` | Java 17 纯 Java 内容定义、规则、状态与共享资源 | 依赖 api，与 Minecraft 及加载器解耦 |
+| `api/minecraft`（内联自 GregTech6API） | 含 Minecraft/加载器类型的公开协议 | `:api-platform:<node>` 依赖公共 API 及平台类型，与 core、模组 main 解耦 |
+| `minecraft/src` | 游戏对象、共享运行时与跨版本 Stonecutter 输入 | 可调用 core；版本差异由 Stonecutter/适配承接 |
+| `minecraft/versions/1.20.1-forge/src` | Forge 1.20.1 原生入口与版本差异（Java 17） | 组合共享输入及 core，保持与 NeoForge 节点隔离 |
+| `minecraft/versions/1.21.1-neoforge/src` | NeoForge 1.21.1 原生入口与版本差异（Java 21） | 组合共享输入及 core，保持与 Forge 节点隔离 |
 
-两个节点不是把两套源码同时塞进一个模组。Stonecutter 生成各节点的共享输入，再与节点源码编译，见[跨版本指南](versions.md)。
+模组 ID 与身份命名以 `GregTechIdentity` 和各节点加载器元数据为准；`gradle/`、`settings.gradle` 与 `build.gradle` 决定真实的源码集合、生成任务与打包流程。两个节点通过 Stonecutter 各自生成共享输入后再与节点源码编译，详情见[跨版本指南](versions.md)。
 
 ## 第二层：职责
 
@@ -32,6 +33,9 @@ API 独立编译，不依赖实现；core 不依赖 Minecraft。content 定义�
 
 例如新增机器：公开扩展需求先考虑 API；参数和布局属于 content；耗能/进度/产出规则属于 engine；Block/BlockEntity 承载世界状态；bootstrap 与平台注册接入生命周期；network 同步；client 展示。并非每次改动都要新建所有层，先复用现有路径。
 
-继续读[包职责索引](packages/README.md)，只展开当前任务对应专题。资源与生成输入另见[资源指南](resources.md)。
+继续按任务查阅：
 
-跨版本要求见[跨版本要求与入口](versions.md)；Stonecutter 的三层设计、用法与具体调用例子见[设计](stonecutter/design.md)、[用法](stonecutter/usage.md)、[分类总览](stonecutter/categories.md)。
+- [包职责索引](packages/README.md)：按领域包定位入口、边界与验收要求。
+- [资源与生成内容](resources.md)：区分生产资源、维护的生成表与可再生构建输出。
+- [跨版本要求与入口](versions.md)：双平台节点的一致性要求与修改流程。
+- [Stonecutter 跨版本维护](stonecutter/README.md)：三层结构、统一方针、`//?` 语法与差异分类案例。

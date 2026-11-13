@@ -1,6 +1,6 @@
 # 发行资源检查
 
-`check_compact_model_json.py` 使用 Python 3 标准库，只读取文件，不修改源码或 JAR。
+本目录提供发行包资源完整性检查脚本。`check_compact_model_json.py` 使用 Python 3 标准库只读校验打包结果，核对模板化模型、方块状态 JSON 与 PNG 资源在发行 JAR 中的语义和字节一致性。
 
 输入是当前构建的发行 JAR，以及同一次构建的 core 和平台资源输出目录。先完成对应平台的发行构建，再在仓库根目录执行，例如：
 

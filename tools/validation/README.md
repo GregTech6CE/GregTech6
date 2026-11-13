@@ -1,6 +1,6 @@
 # validation
 
-只读路由与一致性检查，供 [`docs/development/validation`](../../docs/development/validation/README.md) 使用。脚本不写文件，不启动游戏，不调用 Gradle。
+本目录提供验证路由计算与文档闭合校验脚本 `route.py`，供[验证与验收](../../docs/development/validation/README.md)流程读取 `routes.yaml`、定位受影响检查项并检查检查文档结构与链接。脚本只读运行，不写入文件、不启动游戏且不调用 Gradle。
 
 ## 依赖
 
