@@ -46,7 +46,6 @@ public final class MaterialIconDefinitions {
     }
 
     public static String sharedModelJson(MaterialTextureSet set, MaterialPrefix prefix) {
-        if (prefix == MaterialPrefix.coin) return "{\"parent\":\"gt6ce:item/coin_minted\"}";
         return generatedModelJson(set, prefix);
     }
 
