@@ -208,8 +208,7 @@ public class PileBlock extends Block implements EntityBlock, SimpleWaterloggedBl
         if (pile.canAccept(held)) {
             int moved = pile.add(held);
             if (moved <= 0) return InteractionResult.PASS;   // a full pile takes nothing
-            // shrinks the held stack unconditionally - unlike its coin pile, which
-            // spares a creative player (MultiTileEntityCoin).
+            // GT6's MultiTileEntityPlaceable shrinks the held stack unconditionally here.
             held.shrink(moved);
             playCollect(level, pos);
             return InteractionResult.CONSUME;

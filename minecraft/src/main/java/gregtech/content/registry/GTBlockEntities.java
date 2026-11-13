@@ -83,12 +83,6 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
     public static final Supplier<BlockEntityType<gregtech.content.block.misc.ChargingCraftingTableBlockEntity>> CHARGING_CRAFTING_TABLE =
             BLOCK_ENTITIES.register("charging_crafting_table",()->BlockEntityType.Builder.of(gregtech.content.block.misc.ChargingCraftingTableBlockEntity::new,GTCraftingTables.CHARGING.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
-    public static final Supplier<BlockEntityType<gregtech.content.blockentity.tool.CoinMoldBlockEntity>> COIN_MOLD =
-            BLOCK_ENTITIES.register("coin_mold",()->BlockEntityType.Builder.of(gregtech.content.blockentity.tool.CoinMoldBlockEntity::new,GTManualStations.COIN_MOLD.get()).build(null));
-
-    public static final Supplier<BlockEntityType<gregtech.content.blockentity.misc.CoinPileBlockEntity>> COIN_PILE =
-            BLOCK_ENTITIES.register("coin_pile",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.CoinPileBlockEntity::new,GTCoinPiles.COIN_PILE.get()).build(null));
-
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity>> COKE_OVEN =
             BLOCK_ENTITIES.register("coke_oven",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "coke_oven"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "coke_oven")).build(null));
 
