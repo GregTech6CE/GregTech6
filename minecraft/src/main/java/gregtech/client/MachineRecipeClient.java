@@ -61,11 +61,13 @@ public final class MachineRecipeClient {
     private static void apply(RecipeManager recipes) {
         // Integrated server and client share the static maps. The server pass already applied them.
         if (ServerLifecycleHooks.getCurrentServer() != null) return;
-        MachineRecipeOverlay.apply(recipes);
+        if (MachineRecipeOverlay.apply(recipes).failed()) return;
         // A dedicated client also needs the furnace bridge: the machine-visible oven rows only
         // exist after it runs, and the synced recipe list alone does not recreate them locally.
         var connection = Minecraft.getInstance().getConnection();
         if (connection != null) OvenRecipeBridge.apply(recipes, connection.registryAccess());
+        MaterialProcessSnapshot.Store.publish(
+                MachineRecipeOverlay.lastPublication(), MachineRecipeOverlay.generation());
         // The row set is final now; build on the task queue so the sync thread is not blocked.
         // A newer tag update supersedes this pass and its queued build.
         long generation = MachineRecipeOverlay.generation();

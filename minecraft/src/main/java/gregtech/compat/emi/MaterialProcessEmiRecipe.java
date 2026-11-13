@@ -31,13 +31,25 @@ public final class MaterialProcessEmiRecipe implements EmiRecipe {
             };
 
     private final MaterialProcessDisplay.Page page;
+    private final List<MaterialProcessDisplay.Page> queryPages;
+    private final int queryPage;
     private final ResourceLocation id;
     private final List<EmiIngredient> inputs;
     private final List<EmiIngredient> catalysts;
     private final List<EmiStack> outputs;
 
     public MaterialProcessEmiRecipe(MaterialProcessDisplay.Page page) {
-        this.page = page;
+        this(List.of(page), 0);
+    }
+
+    public MaterialProcessEmiRecipe(List<MaterialProcessDisplay.Page> pages) {
+        this(pages, 0);
+    }
+
+    private MaterialProcessEmiRecipe(List<MaterialProcessDisplay.Page> pages, int index) {
+        queryPages = List.copyOf(pages);
+        queryPage = index;
+        this.page = queryPages.get(index);
         id = ResourceLocation.fromNamespaceAndPath(
                 "gt6ce",
                 "/material_process/"
@@ -167,16 +179,29 @@ public final class MaterialProcessEmiRecipe implements EmiRecipe {
 
             @Override
             public boolean mouseClicked(int x, int y, int button) {
+                if (queryPages.size() > 1 && pageCounterContains(x, y) && (button == 0 || button == 1)) {
+                    int next = Math.floorMod(queryPage + (button == 0 ? 1 : -1), queryPages.size());
+                    dev.emi.emi.api.EmiApi.displayRecipe(new MaterialProcessEmiRecipe(queryPages, next));
+                    return true;
+                }
                 return MaterialProcessPanel.click(page, x, y, button);
             }
 
             @Override
             public List<ClientTooltipComponent> getTooltip(int x, int y) {
+                if (queryPages.size() > 1 && pageCounterContains(x, y))
+                    return List.of(ClientTooltipComponent.create(
+                            Component.translatable("gt6ce.jei.material_process.page_controls")
+                                    .getVisualOrderText()));
                 return MaterialProcessPanel.tooltip(page, x, y).stream()
                         .map(line -> ClientTooltipComponent.create(line.getVisualOrderText()))
                         .toList();
             }
         });
+    }
+
+    private static boolean pageCounterContains(int x, int y) {
+        return x >= MaterialProcessPanel.WIDTH - 38 && x < MaterialProcessPanel.WIDTH && y >= 0 && y < 12;
     }
 
     private static final class PortSlot extends SlotWidget {

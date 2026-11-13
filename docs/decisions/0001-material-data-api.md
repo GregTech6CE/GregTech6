@@ -1,10 +1,10 @@
 # 0001：材料数据 API 与加工关系视图
 
-- 状态：部分实施；A（薄视图与 metadata）已完成，B 的 tag／替代组定义与查询随计划 02 完成，C 的形态规则、实际资源绑定与 tag 桥接声明随计划 03 完成；D—E 仍待实施。
+- 状态：部分实施；A（薄视图与 metadata）已完成，B 的 tag／替代组定义与查询随计划 02 完成，C 的形态规则、实际资源绑定与 tag 桥接声明随计划 03 完成；D—E 的内部快照、core 图和 JEI／EMI 接入已实施，运行期与远程／人工验收尚未闭合。
 - 日期、作者、关联任务：2026-11-07，材料系统重构设计；关联 [#351](https://github.com/GregTech6CE/GregTech6/issues/351) 与材料标签、形态、获取途径和处理图整合需求。
 - 替代／被替代关系：无；补充[材料重构计划](../development/material-system-refactor/README.md)，不替代现行 API 契约。
 
-本文确定数据边界、查询接口和扩展方式。分步实现与验证见[计划 08](../development/material-system-refactor/08-material-data-api.md)。A—C 的视图、metadata、分类与形态内容快照已经发布；来源和处理图接口仍是后续设计轮廓。
+本文确定数据边界、查询接口和扩展方式。分步实现与验证见[计划 08](../development/material-system-refactor/08-material-data-api.md)。A—C 的视图、metadata、分类与形态内容快照已经发布；来源和处理图已有模组实现层入口，尚未作为独立 API JAR 的公共服务发布；下文未落地的公共接口仍为设计轮廓。
 
 ## 背景与约束
 

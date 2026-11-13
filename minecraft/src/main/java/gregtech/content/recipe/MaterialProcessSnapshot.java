@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import gregtech.api.addon.material.DataKey;
 import gregtech.api.addon.recipe.RecipeOutputChances;
 import gregtech.api.material.GTMaterial;
+import gregtech.content.block.OreBlock;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.worldgen.MaterialWorldgenFacts;
@@ -40,10 +41,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -59,7 +61,7 @@ import org.slf4j.Logger;
 public final class MaterialProcessSnapshot {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final char[] HEX = "0123456789abcdef".toCharArray();
-    private static final MaterialProcessSnapshot EMPTY = empty();
+    private static final AtomicLong RESOURCE_GENERATIONS = new AtomicLong();
 
     public record NativeRecipe(RecipeMap map, Recipe recipe, int index) {
         public NativeRecipe {
@@ -88,15 +90,16 @@ public final class MaterialProcessSnapshot {
             new Notice("coverage_active_worldgen", 0),
             new Notice("partial_dynamic_selectors", 0),
             new Notice("partial_unknown_roles", 0));
+    private static final MaterialProcessSnapshot EMPTY = empty();
 
     private record Bucket(List<Step> steps, Map<String, Resource> roots) {}
 
     private final MaterialProcessGraph.Snapshot snapshot;
-    private final Map<String, Bucket> buckets;
+    private final Map<DataKey, Resource> resources;
+    private final MaterialProcessGraph graph;
     private final List<Root> roots;
     private final Map<DataKey, NativeRecipe> nativeRecipes;
     private final Map<DataKey, NativeWorldgen> worldgen;
-    private final Map<String, MaterialProcessGraph> graphs = new ConcurrentHashMap<>();
 
     private MaterialProcessSnapshot(
             MaterialProcessGraph.Snapshot snapshot,
@@ -105,7 +108,18 @@ public final class MaterialProcessSnapshot {
             Map<DataKey, NativeRecipe> nativeRecipes,
             Map<DataKey, NativeWorldgen> worldgen) {
         this.snapshot = snapshot;
-        this.buckets = Map.copyOf(buckets);
+        var resources = new LinkedHashMap<DataKey, Resource>();
+        var steps = new LinkedHashMap<DataKey, Step>();
+        buckets.values().forEach(bucket -> bucket.steps.forEach(step -> steps.putIfAbsent(step.reference(), step)));
+        var builder = MaterialProcessGraph.builder(snapshot);
+        COVERAGE.forEach(notice -> builder.notice(notice.code(), notice.omitted()));
+        for (Step step : steps.values()) {
+            builder.add(step);
+            step.inputs().forEach(port -> resources.putIfAbsent(port.resource().key(), port.resource()));
+            step.outputs().forEach(port -> resources.putIfAbsent(port.resource().key(), port.resource()));
+        }
+        this.resources = Map.copyOf(resources);
+        this.graph = builder.build();
         this.roots = List.copyOf(roots);
         this.nativeRecipes = Map.copyOf(nativeRecipes);
         this.worldgen = Map.copyOf(worldgen);
@@ -120,17 +134,13 @@ public final class MaterialProcessSnapshot {
     }
 
     public Optional<Resource> resource(DataKey key) {
-        for (Bucket bucket : buckets.values()) {
-            for (Resource resource : bucket.roots.values())
-                if (resource.key().equals(key)) return Optional.of(resource);
-        }
-        return Optional.empty();
+        return Optional.ofNullable(resources.get(key));
     }
 
     public Query query(DataKey root, Direction direction, Budgets budgets) {
         Optional<Resource> resource = resource(root);
         if (resource.isEmpty()) return new Query(snapshot, root, direction, List.of(), List.of(), COVERAGE, false);
-        return graph(resource.get().material()).query(root, direction, budgets);
+        return graph.query(root, direction, budgets);
     }
 
     public Optional<NativeRecipe> recipe(DataKey reference) {
@@ -143,16 +153,6 @@ public final class MaterialProcessSnapshot {
 
     public boolean samePublication(MaterialPublication.Stamp publication) {
         return snapshot.publication().equals(publication);
-    }
-
-    private MaterialProcessGraph graph(String material) {
-        return graphs.computeIfAbsent(material, key -> {
-            Bucket bucket = buckets.get(key);
-            var builder = MaterialProcessGraph.builder(snapshot);
-            COVERAGE.forEach(notice -> builder.notice(notice.code(), notice.omitted()));
-            if (bucket != null) bucket.steps.forEach(builder::add);
-            return builder.build();
-        });
     }
 
     private static MaterialProcessSnapshot empty() {
@@ -169,8 +169,17 @@ public final class MaterialProcessSnapshot {
             MaterialPublication.Stamp publication,
             long sessionGeneration,
             MaterialWorldgenFacts.Snapshot worldgenFacts) {
+        return build(publication, sessionGeneration, worldgenFacts, RecipeMap.RECIPE_MAP_LIST);
+    }
+
+    static MaterialProcessSnapshot build(
+            MaterialPublication.Stamp publication,
+            long sessionGeneration,
+            MaterialWorldgenFacts.Snapshot worldgenFacts,
+            Iterable<RecipeMap> maps) {
         Objects.requireNonNull(publication);
         Objects.requireNonNull(worldgenFacts);
+        long resourceGeneration = RESOURCE_GENERATIONS.incrementAndGet();
         var graphSnapshot = new MaterialProcessGraph.Snapshot(
                 publication,
                 sessionGeneration,
@@ -180,7 +189,7 @@ public final class MaterialProcessSnapshot {
         var mutable = new LinkedHashMap<String, MutableBucket>();
         var nativeRecipes = new LinkedHashMap<DataKey, NativeRecipe>();
         var nativeWorldgen = new LinkedHashMap<DataKey, NativeWorldgen>();
-        for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
+        for (RecipeMap map : maps) {
             var rows = new ArrayList<Recipe>(map.mRecipeList);
             for (int index = 0; index < rows.size(); index++) {
                 Recipe recipe = rows.get(index);
@@ -188,12 +197,15 @@ public final class MaterialProcessSnapshot {
                 if (recipe.mFakeRecipe && !hasMaterialUnitInput(recipe)) continue;
                 var built = recipeStep(map, recipe, index, publication.revision(), sessionGeneration);
                 if (built == null) continue;
+                built = scoped(built, publication.revision(), resourceGeneration);
                 addStep(mutable, built.step, built.materials);
                 nativeRecipes.put(built.step.reference(), new NativeRecipe(map, recipe, index));
             }
         }
         for (MaterialWorldgenFacts.Fact fact : worldgenFacts.facts()) {
             var built = worldgenStep(fact, publication.revision(), sessionGeneration);
+            if (built == null) continue;
+            built = scoped(built, publication.revision(), resourceGeneration);
             addStep(mutable, built.step, built.materials);
             nativeWorldgen.put(built.step.reference(), new NativeWorldgen(fact));
         }
@@ -212,14 +224,21 @@ public final class MaterialProcessSnapshot {
         var inputs = new ArrayList<Port>();
         var outputs = new ArrayList<Port>();
         var materials = new LinkedHashSet<String>();
+        var auxiliaryInputs = new ArrayList<String>();
+        String nativeStep = path(map.mNameInternal) + "/" + index;
         boolean mainInput = false;
         for (int input = 0; input < recipe.mInputs.length; input++) {
             ItemStack stack = recipe.mInputs[input];
             if (stack == null || stack.isEmpty()) continue;
-            Port port = itemPort(stack, recipe, input, false, !mainInput);
+            if (recipe.isCatalystInput(input)) {
+                auxiliaryInputs.add("auxiliary catalyst: " + BuiltInRegistries.ITEM.getKey(stack.getItem())
+                        + itemStateSuffix(stack) + " x" + stack.getCount());
+                continue;
+            }
+            Port port = itemPort(stack, recipe, input, false, !mainInput, nativeStep);
             if (port == null) continue;
             inputs.add(port);
-            materials.add(port.resource().material());
+            addMaterial(materials, port);
             mainInput |= port.main();
         }
         for (int input = 0; input < recipe.mFluidInputs.length; input++) {
@@ -228,17 +247,17 @@ public final class MaterialProcessSnapshot {
             Port port = fluidPort(stack, recipe, input, false, !mainInput);
             if (port == null) continue;
             inputs.add(port);
-            materials.add(port.resource().material());
+            addMaterial(materials, port);
             mainInput |= port.main();
         }
         boolean mainOutput = false;
         for (int output = 0; output < recipe.mOutputs.length; output++) {
             ItemStack stack = recipe.mOutputs[output];
             if (stack == null || stack.isEmpty()) continue;
-            Port port = itemPort(stack, recipe, output, true, !mainOutput);
+            Port port = itemPort(stack, recipe, output, true, !mainOutput, nativeStep);
             if (port == null) continue;
             outputs.add(port);
-            materials.add(port.resource().material());
+            addMaterial(materials, port);
             mainOutput |= port.main();
         }
         for (int output = 0; output < recipe.mFluidOutputs.length; output++) {
@@ -247,7 +266,7 @@ public final class MaterialProcessSnapshot {
             Port port = fluidPort(stack, recipe, output, true, !mainOutput);
             if (port == null) continue;
             outputs.add(port);
-            materials.add(port.resource().material());
+            addMaterial(materials, port);
             mainOutput |= port.main();
         }
         if (materials.isEmpty()) return null;
@@ -257,6 +276,7 @@ public final class MaterialProcessSnapshot {
                 "process/machine/" + mapPath + "/" + index + "/" + Long.toUnsignedString(publication, 36)
                         + "/" + Long.toUnsignedString(session, 36));
         var details = new ArrayList<String>();
+        details.addAll(auxiliaryInputs);
         details.add("map: " + map.mNameInternal);
         details.add("duration: " + recipe.mDuration + " ticks");
         details.add("energy: " + recipe.mEUt + " EU/t");
@@ -279,17 +299,17 @@ public final class MaterialProcessSnapshot {
     }
 
     private static Port itemPort(
-            ItemStack stack, Recipe recipe, int index, boolean output, boolean mainCandidate) {
+            ItemStack stack, Recipe recipe, int index, boolean output, boolean mainCandidate, String nativeStep) {
         String prefix;
         GTMaterial material;
         String state;
         Amount amount;
         Recipe.MaterialInputDisplay display = recipe.materialInputDisplay(index);
-        TagKey<net.minecraft.world.item.Item> tag = recipe.itemTag(index);
+        TagKey<net.minecraft.world.item.Item> tag = output ? null : recipe.itemTag(index);
         String nativeSuffix = itemStateSuffix(stack);
         if (!output && display != null) {
             var representative = material(stack);
-            if (representative == null) return null;
+            if (representative == null) return nativeItemPort(stack, recipe, index, output, mainCandidate, nativeStep);
             material = representative;
             prefix = "unit";
             var alternatives = display.alternatives().stream()
@@ -298,15 +318,16 @@ public final class MaterialProcessSnapshot {
                     .map(BuiltInRegistries.ITEM::getKey)
                     .distinct()
                     .map(ResourceLocation::toString)
-                    .sorted()
                     .limit(8)
+                    .sorted()
                     .toList();
-            state = "unit:" + (tag == null ? "" : "tag=" + tag.location() + "|")
-                    + (alternatives.isEmpty() ? display.rounding().name() : String.join(",", alternatives));
+            tag = display.tag() == null ? tag : display.tag();
+            state = "unit:" + "rounding=" + display.rounding().name() + "|"
+                    + (tag == null ? "" : "tag=" + tag.location() + "|") + String.join(",", alternatives);
             amount = new Amount(display.amount(), AmountUnit.MATERIAL_UNIT);
         } else {
             var equivalent = MaterialEquivalence.form(stack);
-            if (equivalent == null) return null;
+            if (equivalent == null) return nativeItemPort(stack, recipe, index, output, mainCandidate, nativeStep);
             material = equivalent.material().resolve();
             if (!material.isValid()) return null;
             prefix = equivalent.prefix().getName();
@@ -333,15 +354,16 @@ public final class MaterialProcessSnapshot {
         if (!output && recipe.viewerInputNote(index).length() > 0)
             details.add(recipe.viewerInputNote(index));
         return new Port(
-                itemResource(material, prefix, state), role, amount, chance, mainCandidate, details);
+                itemSelector(itemResource(material, prefix, state), recipe, index, output, nativeStep),
+                role, amount, chance, mainCandidate, details);
     }
 
     private static Port fluidPort(
             FluidStack stack, Recipe recipe, int index, boolean output, boolean mainCandidate) {
         RegisteredFluids.FluidEntry entry = GTFluids.entryForFluid(stack.getFluid());
         GTMaterial material = entry == null ? null : FluidVisualPolicy.material(entry).resolve();
-        if (material == null || !material.isValid()) return null;
-        TagKey<net.minecraft.world.level.material.Fluid> tag = recipe.fluidTag(index);
+        if (material != null && !material.isValid()) material = null;
+        TagKey<net.minecraft.world.level.material.Fluid> tag = output ? null : recipe.fluidTag(index);
         String nativeSuffix = fluidStateSuffix(stack);
         String state = tag == null
                 ? "fluid:" + BuiltInRegistries.FLUID.getKey(stack.getFluid()) + nativeSuffix
@@ -357,8 +379,8 @@ public final class MaterialProcessSnapshot {
         if (tag == null && !nativeSuffix.isEmpty()) details.add("native fluid data is present");
         return new Port(
                 new Resource(
-                        resourceKey("fluid", material, "fluid", phase, state),
-                        material.getName(),
+                        material == null ? nativeResourceKey("fluid", state) : resourceKey("fluid", material, "fluid", phase, state),
+                        material == null ? "unknown" : material.getName(),
                         "fluid",
                         phase,
                         state),
@@ -374,7 +396,7 @@ public final class MaterialProcessSnapshot {
         var merged = new LinkedHashMap<DataKey, Port>();
         var materials = new LinkedHashSet<String>();
         for (MaterialWorldgenFacts.Ore ore : fact.ores()) {
-            Resource resource = itemResource(ore.material(), "ore", ore.itemState());
+            Resource resource = worldgenResource(ore);
             var details = new ArrayList<>(ore.details());
             details.add("dimension: " + fact.dimension());
             details.add("height: " + ore.minY() + ".." + ore.maxY());
@@ -432,6 +454,84 @@ public final class MaterialProcessSnapshot {
                 state);
     }
 
+    private static void addMaterial(Set<String> materials, Port port) {
+        if (!port.resource().material().equals("unknown")) materials.add(port.resource().material());
+    }
+
+    private static Port nativeItemPort(
+            ItemStack stack, Recipe recipe, int index, boolean output, boolean main, String nativeStep) {
+        GTMaterial material = material(stack);
+        String state = "item:" + BuiltInRegistries.ITEM.getKey(stack.getItem()) + itemStateSuffix(stack);
+        String form = "item";
+        if (stack.getItem() instanceof BlockItem block
+                && block.getBlock() instanceof OreBlock ore) {
+            material = ore.material().resolve();
+            form = ore.isSmall() ? "oreSmall" : "oreVanillastone";
+        }
+        var tag = output ? null : recipe.itemTag(index);
+        if (tag != null) state = "tag:" + tag.location();
+        Resource resource = material == null
+                ? new Resource(
+                        nativeResourceKey("item", state),
+                        "unknown", "item", "solid", state)
+                : itemResource(material, form, state);
+        var details = new ArrayList<String>();
+        details.add("native item: " + BuiltInRegistries.ITEM.getKey(stack.getItem()));
+        details.add("material form is not classified; see the original recipe for matching conditions");
+        if (!output && recipe.hasItemInputGuard(index)) details.add("native item-input guard");
+        if (!output && recipe.hasSameItemInputPredicate(index)) details.add("native item-state predicate");
+        if (!output && !recipe.viewerInputNote(index).isEmpty()) details.add(recipe.viewerInputNote(index));
+        return new Port(itemSelector(resource, recipe, index, output, nativeStep), output ? Role.UNKNOWN : Role.CONSUMED,
+                new Amount(stack.getCount(), AmountUnit.ITEM),
+                output ? OptionalInt.of(recipe.getOutputChance(index)) : OptionalInt.empty(), main, details);
+    }
+
+    private static Resource itemSelector(Resource resource, Recipe recipe, int index, boolean output, String nativeStep) {
+        if (output || recipe.materialInputDisplay(index) == null
+                && !recipe.hasItemInputGuard(index) && !recipe.hasSameItemInputPredicate(index)) return resource;
+        var key = new DataKey(resource.key().namespace(), resource.key().path() + "/selector/" + nativeStep + "/" + index);
+        return new Resource(key, resource.material(), resource.form(), resource.phase(), resource.state());
+    }
+
+    private static DataKey nativeResourceKey(String kind, String state) {
+        return new DataKey("gt6ce", "resource/native/" + kind + "/" + path(state) + "/"
+                + Integer.toUnsignedString(state.hashCode(), 36));
+    }
+
+    private static Resource worldgenResource(MaterialWorldgenFacts.Ore ore) {
+        String state = ore.itemState();
+        if (state.startsWith("item:")) {
+            ResourceLocation id = ResourceLocation.tryParse(state.substring("item:".length()));
+            if (id != null) {
+                var form = MaterialEquivalence.form(new ItemStack(BuiltInRegistries.ITEM.get(id)));
+                if (form != null && form.material().resolve() == ore.material().resolve())
+                    return itemResource(ore.material(), form.prefix().getName(), state);
+                var item = BuiltInRegistries.ITEM.get(id);
+                if (item instanceof BlockItem block
+                        && block.getBlock() instanceof OreBlock nativeOre
+                        && nativeOre.material().resolve() == ore.material().resolve())
+                    return itemResource(ore.material(), nativeOre.isSmall() ? "oreSmall" : "oreVanillastone", state);
+            }
+        }
+        return itemResource(ore.material(), "worldgen", state);
+    }
+
+    private static BuiltStep scoped(BuiltStep built, long publication, long session) {
+        Step step = built.step;
+        return new BuiltStep(new Step(step.reference(), step.name(),
+                step.inputs().stream().map(port -> scoped(port, publication, session)).toList(),
+                step.outputs().stream().map(port -> scoped(port, publication, session)).toList(),
+                step.details(), step.resolved()), built.materials);
+    }
+
+    private static Port scoped(Port port, long publication, long session) {
+        Resource resource = port.resource();
+        var key = new DataKey(resource.key().namespace(), resource.key().path() + "/generation/"
+                + Long.toUnsignedString(publication, 36) + "/" + Long.toUnsignedString(session, 36));
+        return new Port(new Resource(key, resource.material(), resource.form(), resource.phase(), resource.state()),
+                port.role(), port.amount(), port.chance(), port.main(), port.details());
+    }
+
     private static DataKey resourceKey(
             String kind, GTMaterial material, String form, String phase, String state) {
         return new DataKey(
@@ -486,10 +586,11 @@ public final class MaterialProcessSnapshot {
 
     private static int rootRank(String form) {
         return switch (form) {
-            case "ore" -> 0;
-            case "oreRaw" -> 1;
+            case "ore", "oreVanillastone" -> 0;
+            case "oreRaw", "oreDense" -> 1;
             case "crushed" -> 2;
             case "dust" -> 3;
+            case "oreSmall" -> 5;
             case "fluid" -> 6;
             default -> 4;
         };
@@ -575,9 +676,15 @@ public final class MaterialProcessSnapshot {
 
         public static synchronized MaterialProcessSnapshot publish(
                 MaterialPublication.Stamp publication, long sessionGeneration) {
+            if (sessionGeneration <= 0 || MachineRecipeOverlay.lastResult().failed()) return current;
             try {
                 long started = System.nanoTime();
                 var worldgen = MaterialWorldgenFacts.capture();
+                if (current.samePublication(publication)
+                        && current.snapshot.sessionGeneration() == sessionGeneration
+                        && current.snapshot.formRevision() == gregtech.engine.material.MaterialViews.contentRevision()
+                        && current.snapshot.tagGeneration() == ItemMaterialRegistry.compositionState().tagGeneration()
+                        && current.snapshot.worldgenRevision() == worldgen.revision()) return current;
                 MaterialProcessSnapshot built =
                         MaterialProcessSnapshot.build(publication, sessionGeneration, worldgen);
                 previous = current;

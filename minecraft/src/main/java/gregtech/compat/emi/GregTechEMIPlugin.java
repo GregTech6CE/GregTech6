@@ -200,7 +200,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                             : gregtech.engine.material.MaterialProcessGraph.Direction.SOURCES,
                     this);
             if (pages.isEmpty()) return false;
-            dev.emi.emi.api.EmiApi.displayRecipe(new MaterialProcessEmiRecipe(pages.get(0)));
+            dev.emi.emi.api.EmiApi.displayRecipe(new MaterialProcessEmiRecipe(pages));
             return true;
         }
     }

@@ -44,7 +44,11 @@ public final class RecipePublication {
         RecipeManager manager = server.getRecipeManager();
         Collection<?> current = manager.getRecipes();
         var applied = APPLIED.get(manager);
-        if (applied != null && applied.size() == current.size() && applied.containsAll(current)) return;
+        if (applied != null && applied.size() == current.size() && applied.containsAll(current)) {
+            MaterialProcessSnapshot.Store.publish(
+                    MachineRecipeOverlay.lastPublication(), MachineRecipeOverlay.generation());
+            return;
+        }
         RegistryAccess access = server.registryAccess();
 //? if >=1.21.1 {
         /*var working = new RecipeManager(access);
@@ -57,6 +61,9 @@ public final class RecipePublication {
         OvenRecipeBridge.apply(working, access);
         dedup(working, access);
         manager.replaceRecipes(working.getRecipes());
+        if (!MachineRecipeOverlay.lastResult().failed())
+            MaterialProcessSnapshot.Store.publish(
+                    MachineRecipeOverlay.lastPublication(), MachineRecipeOverlay.generation());
 //? if >=1.21.1 {
         /*ShapelessRecipeTooltipIndex.rebuild(manager, access);
 *///?} else {
@@ -98,6 +105,7 @@ public final class RecipePublication {
 
     /** Drops the generation snapshot after the server stops; the next world starts fresh. */
     public static void clear() {
+        MaterialProcessSnapshot.Store.clear(MaterialProcessSnapshot.Store.current());
         APPLIED.clear();
     }
 }

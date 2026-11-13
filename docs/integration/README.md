@@ -12,3 +12,5 @@
 - [材料重构 05：统一回收计算与生成](material-refactor-05-recovery.md)：成分驱动的回收计划、精确数量、主要生产端和重载诊断。
 - [材料重构 06：统一分解](material-refactor-06-decomposition.md)：规则化权限、相态与单位、纯计划、配方发布和执行验收。
 - [材料重构 07-E：材料与形态注册项审计](material-refactor-07-roster.md)：124 个形态族的来源、消费者、去留决定和双平台一致性。
+
+- [材料处理快照与共享图验证](material-process-snapshot.md)：发布时点、端口身份、跨材料查询、预算和 viewer 接入的回归范围与剩余验收。

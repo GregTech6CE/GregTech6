@@ -58,18 +58,37 @@ public final class MaterialWorldgenFacts {
         private final List<Fact> facts;
         private final long revision;
 
-        private Snapshot(List<Fact> facts) {
+        public Snapshot(List<Fact> facts) {
             this.facts = List.copyOf(facts);
             long hash = 1_125_899_906_842_589L;
-            for (Fact fact : facts)
-                hash = 31 * hash
-                        + (((long) (fact.id.hashCode() * 31
-                                        + fact.dimension.hashCode()
-                                        + fact.minY
-                                        + fact.maxY
-                                        + fact.ores.hashCode()))
-                                ^ (hash >>> 32));
+            for (Fact fact : facts) {
+                hash = hash(hash, fact.id());
+                hash = hash(hash, fact.name());
+                hash = hash(hash, fact.kind().name());
+                hash = hash(hash, fact.dimension());
+                hash = hash(hash, Integer.toString(fact.minY()));
+                hash = hash(hash, Integer.toString(fact.maxY()));
+                hash = hash(hash, Integer.toString(fact.weight()));
+                hash = hash(hash, Integer.toString(fact.totalWeight()));
+                hash = hash(hash, Integer.toString(fact.ores().size()));
+                for (Ore ore : fact.ores()) {
+                    hash = hash(hash, ore.material().resolve().getName());
+                    hash = hash(hash, ore.itemState());
+                    hash = hash(hash, Integer.toString(ore.minY()));
+                    hash = hash(hash, Integer.toString(ore.maxY()));
+                    hash = hash(hash, Integer.toString(ore.amount()));
+                    hash = hash(hash, Integer.toString(ore.chanceDivisor()));
+                    hash = hash(hash, Integer.toString(ore.details().size()));
+                    for (String detail : ore.details()) hash = hash(hash, detail);
+                }
+            }
             revision = hash & Long.MAX_VALUE;
+        }
+
+        private static long hash(long hash, String value) {
+            hash = 31 * hash + value.length();
+            for (int index = 0; index < value.length(); index++) hash = 31 * hash + value.charAt(index);
+            return hash;
         }
 
         public List<Fact> facts() {
@@ -111,6 +130,7 @@ public final class MaterialWorldgenFacts {
                 addVeinOre(ores, vein.bottom(), minY, maxY, "bottom");
                 addVeinOre(ores, vein.between(), minY, maxY, "between");
                 addVeinOre(ores, vein.spread(), minY, maxY, "spread");
+                if (ores.isEmpty()) continue;
                 facts.add(new Fact(
                         "large/" + dimension + "/" + vein.name(),
                         vein.name(),
@@ -127,14 +147,9 @@ public final class MaterialWorldgenFacts {
 
     private static void addVeinOre(List<Ore> out, GTMaterial material, int minY, int maxY, String layer) {
         if (material == null || !material.resolve().isValid()) return;
-        out.add(new Ore(
-                material.resolve(),
-                itemState(oreItem(material.resolve())),
-                minY,
-                maxY,
-                1,
-                0,
-                List.of("vein layer: " + layer)));
+        Item item = oreItem(material.resolve());
+        if (item == Items.AIR) return;
+        out.add(new Ore(material.resolve(), itemState(item), minY, maxY, 1, 0, List.of("vein layer: " + layer)));
     }
 
     private static void appendSmallOres(List<Fact> facts) {
@@ -148,6 +163,8 @@ public final class MaterialWorldgenFacts {
             for (GTOreVeins.SmallOre ore : GTOreVeins.activeSmallOres(dimension)) {
                 GTMaterial material = ore.material().resolve();
                 if (!material.isValid()) continue;
+                Item item = smallOreItem(material);
+                if (item == Items.AIR) continue;
                 int minY = remapped ? GTWorldgenScale.remapY(ore.minY()) : ore.minY();
                 int maxY = remapped ? GTWorldgenScale.remapY(ore.maxY()) : ore.maxY();
                 facts.add(new Fact(
@@ -160,13 +177,7 @@ public final class MaterialWorldgenFacts {
                         0,
                         0,
                         List.of(new Ore(
-                                material,
-                                itemState(smallOreItem(material)),
-                                minY,
-                                maxY,
-                                ore.amount(),
-                                0,
-                                List.of("blocks per chunk")))));
+                                material, itemState(item), minY, maxY, ore.amount(), 0, List.of("blocks per chunk")))));
             }
         }
     }
@@ -197,9 +208,11 @@ public final class MaterialWorldgenFacts {
                 if (layer.noDeep()) min = Math.max(min, GTWorldgenScale.remapY(24));
                 int max = Math.min(GTWorldgenScale.BAND_TOP - 1, GTWorldgenScale.remapY(definition.maxY()));
                 if (min > max) continue;
+                Item item = explicitItem(material, rule);
+                if (item == Items.AIR) continue;
                 ores.add(new Ore(
                         material,
-                        itemState(explicitItem(material, rule)),
+                        itemState(item),
                         min,
                         max,
                         1,
@@ -233,6 +246,8 @@ public final class MaterialWorldgenFacts {
         for (GTBedrockOres.BedrockOre row : rows) {
             GTMaterial material = row.material().resolve();
             if (!material.isValid()) continue;
+            Item item = oreItem(material);
+            if (item == Items.AIR) continue;
             facts.add(new Fact(
                     "bedrock/" + dimension + "/" + row.name(),
                     row.name(),
@@ -244,7 +259,7 @@ public final class MaterialWorldgenFacts {
                     0,
                     List.of(new Ore(
                             material,
-                            itemState(oreItem(material)),
+                            itemState(item),
                             GTWorldgenScale.WORLD_FLOOR,
                             GTWorldgenScale.WORLD_FLOOR + 2,
                             1,
@@ -259,17 +274,13 @@ public final class MaterialWorldgenFacts {
     }
 
     private static Item oreItem(GTMaterial material) {
-        String path =
-                material.getName().replaceAll("([a-z0-9])([A-Z])", "$1_$2").toLowerCase(Locale.ROOT);
-        Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "ore_" + path));
-        return item == Items.AIR ? Items.STONE : item;
+        String path = material.getName().toLowerCase(Locale.ROOT);
+        return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "ore_" + path));
     }
 
     private static Item smallOreItem(GTMaterial material) {
-        String path =
-                material.getName().replaceAll("([a-z0-9])([A-Z])", "$1_$2").toLowerCase(Locale.ROOT);
-        Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "ore_small_" + path));
-        return item == Items.AIR ? oreItem(material) : item;
+        String path = material.getName().toLowerCase(Locale.ROOT);
+        return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "ore_small_" + path));
     }
 
     private static String itemState(Item item) {

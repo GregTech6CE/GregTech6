@@ -125,6 +125,45 @@ final class MaterialProcessGraphTest {
         return edge.confirmed();
     }
 
+    @Test
+    void portsTruncatedAtTheDepthBoundaryStillReportPartialCoverage() {
+        var graph = MaterialProcessGraph.builder(SNAPSHOT)
+                .add(step(
+                        "split",
+                        List.of(port(resource("ore"), Role.CONSUMED, "ore")),
+                        List.of(
+                                port(resource("one"), Role.UNKNOWN, "dust"),
+                                port(resource("two"), Role.UNKNOWN, "dust"))))
+                .build();
+        for (Direction direction : Direction.values()) {
+            DataKey root = direction == Direction.USES ? resource("ore") : resource("one");
+            var result = graph.query(root, direction, new Budgets(0, 8, 1, 8));
+            assertTrue(result.truncated());
+            assertTrue(
+                    result.notices().stream().anyMatch(notice -> notice.code().equals("port_limit")));
+        }
+    }
+
+    @Test
+    void edgesNeverReferToPortsDiscardedByTheBudget() {
+        var graph = MaterialProcessGraph.builder(SNAPSHOT)
+                .add(step(
+                        "split",
+                        List.of(port(resource("ore"), Role.CONSUMED, "ore")),
+                        List.of(
+                                port(resource("one"), Role.UNKNOWN, "dust"),
+                                port(resource("two"), Role.UNKNOWN, "dust"))))
+                .add(step(
+                        "use",
+                        List.of(port(resource("two"), Role.CONSUMED, "dust")),
+                        List.of(port(resource("end"), Role.UNKNOWN, "dust"))))
+                .build();
+        var result = graph.query(resource("two"), Direction.BOTH, new Budgets(4, 8, 1, 8));
+        assertEquals(2, result.steps().size());
+        assertTrue(result.edges().isEmpty());
+        assertTrue(result.truncated());
+    }
+
     private static DataKey resource(String name) {
         return new DataKey("gt6ce", "resource/" + name);
     }

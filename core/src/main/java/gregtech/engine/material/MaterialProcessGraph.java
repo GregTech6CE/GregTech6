@@ -1,7 +1,6 @@
 package gregtech.engine.material;
 
 import gregtech.api.addon.material.DataKey;
-
 import java.util.*;
 
 /**
@@ -217,6 +216,8 @@ public final class MaterialProcessGraph {
             visited.put(node.reference, node.depth);
             IndexedStep indexed = steps.get(node.reference);
             if (indexed == null) continue;
+            omittedPorts += Math.max(0, indexed.step.inputs().size() - budgets.maxPortsPerSide());
+            omittedPorts += Math.max(0, indexed.step.outputs().size() - budgets.maxPortsPerSide());
             if (node.depth >= budgets.maxDepth()) {
                 if (direction != Direction.USES)
                     omittedDepth += indexed.step.inputs().stream()
@@ -237,7 +238,6 @@ public final class MaterialProcessGraph {
             boolean expandOutputs = direction != Direction.SOURCES;
             if (expandInputs) {
                 int available = Math.min(indexed.step.inputs().size(), budgets.maxPortsPerSide());
-                omittedPorts += indexed.step.inputs().size() - available;
                 for (int index = 0; index < available && !stopped; index++) {
                     Port port = indexed.step.inputs().get(index);
                     for (IndexedStep source :
@@ -268,7 +268,6 @@ public final class MaterialProcessGraph {
             }
             if (expandOutputs && !stopped) {
                 int available = Math.min(indexed.step.outputs().size(), budgets.maxPortsPerSide());
-                omittedPorts += indexed.step.outputs().size() - available;
                 for (int index = 0; index < available && !stopped; index++) {
                     Port port = indexed.step.outputs().get(index);
                     for (IndexedStep target :
@@ -307,8 +306,14 @@ public final class MaterialProcessGraph {
                 .sorted(Map.Entry.comparingByValue())
                 .map(entry -> boundedStep(steps.get(entry.getKey()).step, budgets.maxPortsPerSide()))
                 .toList();
+        var retained = new HashMap<DataKey, Step>();
+        resultSteps.forEach(step -> retained.put(step.reference(), step));
         var resultEdges = edges.keySet().stream()
                 .filter(edge -> visited.containsKey(edge.source()) && visited.containsKey(edge.target()))
+                .filter(edge -> retained.get(edge.source()).outputs().stream()
+                        .anyMatch(port -> port.resource().key().equals(edge.resource())))
+                .filter(edge -> retained.get(edge.target()).inputs().stream()
+                        .anyMatch(port -> port.resource().key().equals(edge.resource())))
                 .toList();
         var resultNotices = new ArrayList<>(notices);
         truncations.forEach((code, omitted) -> resultNotices.add(new Notice(code, omitted)));
@@ -336,15 +341,17 @@ public final class MaterialProcessGraph {
             ArrayDeque<Node> queue,
             Set<DataKey> queued) {
         int omitted = 0;
-        var starts = new LinkedHashSet<IndexedStep>();
-        if (sources) starts.addAll(outputs.getOrDefault(root, List.of()));
-        if (uses) starts.addAll(inputs.getOrDefault(root, List.of()));
-        for (IndexedStep start : starts) {
-            if (queued.size() >= budgets.maxSteps()) {
-                omitted++;
-                continue;
+        for (List<IndexedStep> starts : List.of(
+                sources ? outputs.getOrDefault(root, List.of()) : List.<IndexedStep>of(),
+                uses ? inputs.getOrDefault(root, List.of()) : List.<IndexedStep>of())) {
+            for (int index = 0; index < starts.size(); index++) {
+                if (queued.size() >= budgets.maxSteps()) {
+                    omitted += starts.size() - index;
+                    break;
+                }
+                IndexedStep start = starts.get(index);
+                if (queued.add(start.step.reference())) queue.addLast(new Node(start.step.reference(), depth));
             }
-            if (queued.add(start.step.reference())) queue.addLast(new Node(start.step.reference(), depth));
         }
         return omitted;
     }
@@ -413,15 +420,19 @@ public final class MaterialProcessGraph {
             int order = steps.size();
             IndexedStep indexed = new IndexedStep(order, step);
             steps.put(step.reference(), indexed);
+            var inputResources = new HashSet<DataKey>();
             for (Port port : step.inputs()) {
                 register(port.resource());
-                inputs.computeIfAbsent(port.resource().key(), ignored -> new ArrayList<>())
-                        .add(indexed);
+                if (inputResources.add(port.resource().key()))
+                    inputs.computeIfAbsent(port.resource().key(), ignored -> new ArrayList<>())
+                            .add(indexed);
             }
+            var outputResources = new HashSet<DataKey>();
             for (Port port : step.outputs()) {
                 register(port.resource());
-                outputs.computeIfAbsent(port.resource().key(), ignored -> new ArrayList<>())
-                        .add(indexed);
+                if (outputResources.add(port.resource().key()))
+                    outputs.computeIfAbsent(port.resource().key(), ignored -> new ArrayList<>())
+                            .add(indexed);
             }
             return this;
         }

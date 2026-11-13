@@ -79,6 +79,7 @@
   "gt6ce.jei.material_process.role.byproduct": "Byproduct",
   "gt6ce.jei.material_process.role.unknown": "Output role: unknown",
   "gt6ce.jei.material_process.material_title": "%s processing",
+  "gt6ce.jei.material_process.page_controls": "Page counter: left-click for next page, right-click for previous page.",
   "gt6ce.jei.material_process.port_name": "%s / %s",
   "gt6ce.jei.material_process.amount.items": "Amount: %s items",
   "gt6ce.jei.material_process.amount.units": "Amount: %s U",

@@ -81,6 +81,7 @@
   "gt6ce.jei.material_process.role.byproduct": "副产物",
   "gt6ce.jei.material_process.role.unknown": "产物角色：未知",
   "gt6ce.jei.material_process.material_title": "%s 加工",
+  "gt6ce.jei.material_process.page_controls": "点击页码：左键下一页，右键上一页。",
   "gt6ce.jei.material_process.port_name": "%s／%s",
   "gt6ce.jei.material_process.amount.items": "数量：%s 件",
   "gt6ce.jei.material_process.amount.units": "数量：%s U",

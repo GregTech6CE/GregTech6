@@ -143,7 +143,7 @@ public final class MaterialProcessProjection {
             item(id).ifPresent(item -> icons.add(new ItemStack(item)));
         } else if (state.startsWith("unit:")) {
             String alternatives = state.substring("unit:".length());
-            int separator = alternatives.indexOf('|');
+            int separator = alternatives.lastIndexOf('|');
             if (separator >= 0) alternatives = alternatives.substring(separator + 1);
             for (String value : alternatives.split(",")) {
                 if (icons.size() >= MaterialProcessDisplay.MAX_ICONS) break;
