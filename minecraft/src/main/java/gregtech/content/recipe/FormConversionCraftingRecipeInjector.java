@@ -39,9 +39,6 @@ import java.util.Locale;
  * reserve their source offset. XToY requires exactly the same material in every occupied cell.
  */
 public final class FormConversionCraftingRecipeInjector {
-    private static final List<Conversion> ONE_TO_MANY = OriginalFormConversions.FIXED.stream().filter(Conversion::single).toList();
-    private static final List<Conversion> MANY_TO_MANY = OriginalFormConversions.FIXED.stream().filter(c -> !c.single()).toList();
-
     private static final List<String> REGISTERED = new ArrayList<>();
     /** Source constructor replacement rules also guard plain recipes added after the reload lifecycle. */
     public static boolean disallowsPlainRecipe(ResourceLocation id,
@@ -163,13 +160,8 @@ public final class FormConversionCraftingRecipeInjector {
 
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (!material.isValid()) continue; // Both source crafting constructors default to MT.NULL.NOT.
-            for (Conversion conversion : ONE_TO_MANY) {
-                ItemStack in = item(conversion.input(), material, 1);
-                ItemStack out = item(conversion.output(), material, conversion.outputCount());
-                if (in.isEmpty() || out.isEmpty()) continue;
-                register(recipes, conversion, material, in, out);
-            }
-            for (Conversion conversion : MANY_TO_MANY) {
+            // FIXED already lists single-input rows before many-input rows (source order).
+            for (Conversion conversion : OriginalFormConversions.FIXED) {
                 ItemStack in = item(conversion.input(), material, 1);
                 ItemStack out = item(conversion.output(), material, conversion.outputCount());
                 if (in.isEmpty() || out.isEmpty()) continue;

@@ -2,10 +2,7 @@ package gregtech.content.block.machine;
 
 import gregtech.engine.machine.CrucibleSpec;
 import gregtech.engine.machine.crucible.CrucibleHazards;
-//? if >=1.21.1 {
-//?} else {
 import gregtech.engine.machine.GTMachineBlock;
-//?}
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.content.blockentity.machine.SmeltingCrucibleBlockEntity;
@@ -42,12 +39,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 /** Smelting crucible shell (GT6 {@code MultiTileEntitySmeltery}). */
-//? if >=1.21.1 {
-/*public class SmeltingCrucibleBlock extends Block implements EntityBlock {
-    @Override public com.mojang.serialization.MapCodec<SmeltingCrucibleBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
 public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachineBlock {
-//?}
 //? if >=1.21.1 {
     /*@Override
     protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
@@ -233,11 +225,7 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
         if (!level.isClientSide && GTToolHelper.isMachineWrench(tool)) {
             level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             if (GTToolHelper.canCollectMachineDrop(tool, state)) {
-//? if >=1.21.1 {
-                /*ItemStack machine = new ItemStack(this);
-*///?} else {
-                ItemStack machine = getCloneItemStack(level, pos, state);
-//?}
+                ItemStack machine = new ItemStack(this);
                 gregtech.content.cover.CoverDrops.capture(state,(net.minecraft.server.level.ServerLevel)level,blockEntity,java.util.List.of(machine));
                 if (!machine.isEmpty()) {
                     if (!player.getInventory().add(machine)) {
@@ -275,7 +263,9 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
                 .requiresCorrectToolForDrops();
     }
 //? if >=1.21.1 {
-    /*@Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder context){return java.util.List.of(new ItemStack(this));}
+    /*// Kept pending a parity decision: bypasses the loot table's survives_explosion condition,
+    // so explosion drops differ from 1.20.1. Do not fold into the shared loot path silently.
+    @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder context){return java.util.List.of(new ItemStack(this));}
 *///?} else {
 //?}
 }

@@ -23,11 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-//? if >=1.21.1 {
-/*import net.minecraft.world.level.block.state.properties.DirectionProperty;
-*///?} else {
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-//?}
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -40,11 +36,10 @@ import javax.annotation.Nullable;
 /**
  * Horizontal machine shell (GT6 {@code TileEntityBase09FacingSingle} placement).
  */
-//? if >=1.21.1 {
-/*public abstract class GTFacingMachineBlock extends Block implements GTMachineBlock, ToolInteractionTarget {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-*///?} else {
 public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock implements GTMachineBlock, ToolInteractionTarget {
+//? if >=1.21.1 {
+    /*@Override public com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
+*///?} else {
 //?}
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     private static final VoxelShape SHAPE = Shapes.block();
@@ -72,18 +67,6 @@ public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock im
                 FACING, MachineRotationType.HORIZONTAL)
                 ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
     }
-
-//? if >=1.21.1 {
-    /*@Override
-    protected BlockState rotate(BlockState state, net.minecraft.world.level.block.Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    protected BlockState mirror(BlockState state, net.minecraft.world.level.block.Mirror mirror) {
-        return rotate(state, mirror.getRotation(state.getValue(FACING)));
-    }
-*///?}
 
     protected GTFacingMachineBlock(MachineSpec spec, Properties properties) {
         super(properties);

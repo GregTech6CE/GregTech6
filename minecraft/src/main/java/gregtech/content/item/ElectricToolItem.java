@@ -17,11 +17,7 @@ import gregtech.platform.Mc;
 
 /** GT6 electric tool base — stores EU and consumes power on use. */
 
-//? if >=1.21.1 {
-/*public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtech.engine.tool.PoweredToolItem {
-*///?} else {
-public class ElectricToolItem extends TieredItem implements IItemEnergy {
-//?}
+public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtech.engine.tool.PoweredToolItem {
 
     private final long capacity;
     private final int tier;
@@ -47,11 +43,13 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
     }
 
 
-//? if >=1.21.1 {
-/*    public boolean canHarvest(ItemStack stack,net.minecraft.world.level.block.state.BlockState state){return isCorrectToolForDrops(stack,state);}
-    public float harvestSpeed(ItemStack stack){return Math.max(Float.MIN_NORMAL,2*headMaterial(stack).getToolSpeed());}
-*///?} else {
-//?}
+    @Override public boolean canHarvest(ItemStack stack, net.minecraft.world.level.block.state.BlockState state) {
+        return gregtech.content.tool.ElectricWrenchHarvest.canHarvest(this, stack, state);
+    }
+
+    @Override public float harvestSpeed(ItemStack stack) {
+        return gregtech.content.tool.ElectricWrenchHarvest.speed(this, stack);
+    }
 
     public gregtech.content.tool.ElectricToolCatalog.Definition definition(){return gregtech.content.tool.ElectricToolCatalog.of(toolName,tier);}
     public String toolName() { return toolName; }

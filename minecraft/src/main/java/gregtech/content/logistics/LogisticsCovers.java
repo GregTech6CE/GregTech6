@@ -139,10 +139,6 @@ public final class LogisticsCovers {
                 }
             }
     }
-//? if >=1.21.1 {
-//?} else {
-    public void save(CompoundTag tag) { save(tag, null); }
-//?}
 
     public void load(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         for (int faceIndex = 0; faceIndex < faces.length; faceIndex++)
@@ -158,10 +154,6 @@ public final class LogisticsCovers {
                     tag.getByte(NBT_PREFIX + faceIndex + ".visual"))) : 0);
         }
     }
-//? if >=1.21.1 {
-//?} else {
-    public void load(CompoundTag tag) { load(tag, null); }
-//?}
 
     public void dropAll() {
         for (int faceIndex = 0; faceIndex < faces.length; faceIndex++) {

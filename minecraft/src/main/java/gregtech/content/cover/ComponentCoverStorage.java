@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with GregTech. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package gregtech.content.cover;
+
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -31,6 +31,7 @@ public final class ComponentCoverStorage {
     private final PanelCoverHost host;
     private ItemStack[] covers;
     private final PanelCoverRuntime panels;
+
     public ComponentCoverStorage(PanelCoverHost host) {
         this.host = host;
         panels = new PanelCoverRuntime(host);
@@ -50,8 +51,11 @@ public final class ComponentCoverStorage {
     }
 
     public boolean attach(Direction side, ItemStack stack) {
-        if (stack.isEmpty() || !get(side).isEmpty() || !panels.canAttach(side,stack)
-                || !CoverItems.isCover(stack) || !CoverAdmission.allowCover(host.coverOwner(), side, stack)) return false;
+        if (stack.isEmpty()
+                || !get(side).isEmpty()
+                || !panels.canAttach(side, stack)
+                || !CoverItems.isCover(stack)
+                || !CoverAdmission.allowCover(host.coverOwner(), side, stack)) return false;
         if (covers == null) {
             covers = new ItemStack[6];
             java.util.Arrays.fill(covers, ItemStack.EMPTY);
@@ -81,24 +85,25 @@ public final class ComponentCoverStorage {
         for (var side : Direction.values())
             gregtech.engine.inventory.BlockContents.drop(host.coverOwner(), remove(side));
     }
+
     public void save(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        if(covers==null)return;
-        for(var side:Direction.values())if(!get(side).isEmpty())tag.put("gt_cover_"+side.ordinal(),gregtech.engine.stack.NbtCompat.saveItem(get(side),lookup));
+        if (covers == null) return;
+        for (var side : Direction.values())
+            if (!get(side).isEmpty())
+                tag.put("gt_cover_" + side.ordinal(), gregtech.engine.stack.NbtCompat.saveItem(get(side), lookup));
     }
-//? if >=1.21.1 {
-//?} else {
-    public void save(CompoundTag tag) { save(tag, null); }
-//?}
+
     public void load(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
-        for(var side:Direction.values()) {
-            var key="gt_cover_"+side.ordinal();
-            if(tag.contains(key)){if(covers==null){covers=new ItemStack[6];java.util.Arrays.fill(covers,ItemStack.EMPTY);}covers[side.ordinal()]=gregtech.engine.stack.NbtCompat.readItem(tag.getCompound(key),lookup);}
-            else if(covers!=null)covers[side.ordinal()]=ItemStack.EMPTY;
+        for (var side : Direction.values()) {
+            var key = "gt_cover_" + side.ordinal();
+            if (tag.contains(key)) {
+                if (covers == null) {
+                    covers = new ItemStack[6];
+                    java.util.Arrays.fill(covers, ItemStack.EMPTY);
+                }
+                covers[side.ordinal()] = gregtech.engine.stack.NbtCompat.readItem(tag.getCompound(key), lookup);
+            } else if (covers != null) covers[side.ordinal()] = ItemStack.EMPTY;
         }
         panels.loaded();
     }
-//? if >=1.21.1 {
-//?} else {
-    public void load(CompoundTag tag) { load(tag, null); }
-//?}
 }

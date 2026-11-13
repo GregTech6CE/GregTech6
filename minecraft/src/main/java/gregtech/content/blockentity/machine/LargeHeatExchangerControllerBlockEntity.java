@@ -520,8 +520,8 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         /*HeatExchangerData.restore(hot, tag.getCompound(tag.contains("gt.hot") ? "gt.hot" : "gt.tank.0"), settings.inputCapacity(), lookup);
         HeatExchangerData.restore(cold, tag.getCompound(tag.contains("gt.cold") ? "gt.cold" : "gt.tank.1"), Long.MAX_VALUE, lookup);
 *///?} else {
-        HeatExchangerData.restore(hot, tag.getCompound(tag.contains("gt.hot") ? "gt.hot" : "gt.tank.0"), settings.inputCapacity());
-        HeatExchangerData.restore(cold, tag.getCompound(tag.contains("gt.cold") ? "gt.cold" : "gt.tank.1"), Long.MAX_VALUE);
+        HeatExchangerData.restore(hot, tag.getCompound(tag.contains("gt.hot") ? "gt.hot" : "gt.tank.0"), settings.inputCapacity(), null);
+        HeatExchangerData.restore(cold, tag.getCompound(tag.contains("gt.cold") ? "gt.cold" : "gt.tank.1"), Long.MAX_VALUE, null);
 //?}
     }
 }

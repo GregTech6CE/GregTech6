@@ -68,17 +68,19 @@ public final class BlockHarvestEvents {
   if(level>3 || original.isPresent()) {
    int actual=stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric?electric.headMaterial(stack).getToolQuality()+(electric.toolName().equals("Chainsaw")?1:0):
      GTToolHelper.isTool(stack)?GTToolHelper.getHarvestLevel(stack):
-//? if >=1.21.1 {
-     /*stack.getItem() instanceof net.minecraft.world.item.TieredItem tool?vanillaLevel(tool.getTier()):-1;
-*///?} else {
-     stack.getItem() instanceof net.minecraft.world.item.TieredItem tool?tool.getTier().getLevel():-1;
-//?}
+     stack.getItem() instanceof net.minecraft.world.item.TieredItem tool?vanillaLevel(tool.getTier()):-1;
    if(actual<level && (actual>=0 || level>3)) event.setCanHarvest(false);
   }
  }
-//? if >=1.21.1 {
- /*private static int vanillaLevel(net.minecraft.world.item.Tier tier){return tier==net.minecraft.world.item.Tiers.NETHERITE?4:tier==net.minecraft.world.item.Tiers.DIAMOND?3:tier==net.minecraft.world.item.Tiers.IRON?2:tier==net.minecraft.world.item.Tiers.STONE?1:tier==net.minecraft.world.item.Tiers.WOOD||tier==net.minecraft.world.item.Tiers.GOLD?0:-1;}
-
-*///?} else {
-//?}
+ // Same mapping as the spike path above; Tier.getLevel() no longer exists on 1.21.
+ private static int vanillaLevel(net.minecraft.world.item.Tier tier) {
+  if (!(tier instanceof net.minecraft.world.item.Tiers t)) return -1;
+  return switch (t) {
+   case WOOD, GOLD -> 0;
+   case STONE -> 1;
+   case IRON -> 2;
+   case DIAMOND -> 3;
+   case NETHERITE -> 4;
+  };
+ }
 }

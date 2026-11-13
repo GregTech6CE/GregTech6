@@ -138,16 +138,6 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
 
     private final EnergyNodeSpec spec;
 
-    @Override
-    public double fluidConnectorHalf(BlockState state, Direction face) {
-        if (spec.kind() != EnergyNodeSpec.Kind.TURBINE) return gregtech.engine.machine.PipeGeometry.NONE;
-        Direction front = state.getValue(FACING);
-        if (face == front) return gregtech.engine.machine.PipeGeometry.NONE;
-        return gregtech.engine.machine.PipeGeometry.virtual(face.getAxis() == front.getAxis() ? 4 : 2);
-    }
-
-//? if >=1.21.1 {
-//?} else {
     public EnergyNodeBlock(EnergyNodeSpec spec, Properties properties) {
         super(properties);
         this.spec = spec;
@@ -156,7 +146,14 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
         registerDefaultState(initial);
     }
 
-//?}
+    @Override
+    public double fluidConnectorHalf(BlockState state, Direction face) {
+        if (spec.kind() != EnergyNodeSpec.Kind.TURBINE) return gregtech.engine.machine.PipeGeometry.NONE;
+        Direction front = state.getValue(FACING);
+        if (face == front) return gregtech.engine.machine.PipeGeometry.NONE;
+        return gregtech.engine.machine.PipeGeometry.virtual(face.getAxis() == front.getAxis() ? 4 : 2);
+    }
+
     @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         boolean fixed = spec.id().startsWith("battery_eu");
         if ((gregtech.content.energy.OriginalThermalConverter.handles(spec) || gregtech.content.energy.MagnetMachineDefinitions.handles(spec)) && GTToolHelper.isMonkeyWrench(tool)) return null;
@@ -167,17 +164,6 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
                 ? ToolInteractionSpec.facing(FACING, spec.kind() == EnergyNodeSpec.Kind.SOLAR
                     ? gregtech.content.block.machine.MachineRotationType.BOTTOM_HORIZONTAL
                     : gregtech.content.block.machine.MachineRotationType.ALL) : null;
-//? if >=1.21.1 {
-    /*}
-
-    public EnergyNodeBlock(EnergyNodeSpec spec, Properties properties) {
-        super(properties);
-        this.spec = spec;
-        BlockState initial = defaultBlockState().setValue(FACING,
-                spec.kind() == EnergyNodeSpec.Kind.SOLAR ? Direction.DOWN : Direction.NORTH);
-        registerDefaultState(initial);
-*///?} else {
-//?}
     }
 
     public EnergyNodeSpec spec() { return spec; }

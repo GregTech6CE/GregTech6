@@ -8,6 +8,7 @@ import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.tool.VanillaWrenchTargets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.FrontAndTop;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
@@ -30,8 +31,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 //? if >=1.21.1 {
-/*import net.minecraft.core.FrontAndTop;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+/*import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -102,11 +102,7 @@ public final class VanillaWrenchHandler {
         BlockState next = switch (action) {
             case PILLAR -> state.setValue(BlockStateProperties.AXIS, nextAxis(state.getValue(BlockStateProperties.AXIS)));
             case FACING -> state.setValue(VanillaWrenchTargets.facing(state), side);
-//? if >=1.21.1 {
-/*            case CRAFTER -> crafterNext(state, side);
-*///?} else {
-            case CRAFTER -> state;
-//?}
+            case CRAFTER -> crafterNext(state, side);
             case DIODE -> state.setValue(BlockStateProperties.HORIZONTAL_FACING,
                     state.getValue(BlockStateProperties.HORIZONTAL_FACING).getClockWise());
             case POP, NONE -> state;
@@ -135,7 +131,8 @@ public final class VanillaWrenchHandler {
             return Action.POP;
         }
 //? if >=1.21.1 {
-/*        if (state.getBlock() == Blocks.CRAFTER) {
+/*        // Blocks.CRAFTER is 1.21-only; the crafter does not exist on 1.20.1.
+        if (state.getBlock() == Blocks.CRAFTER) {
             return crafterFront(state) == side ? Action.POP : Action.CRAFTER;
         }
 *///?}
@@ -173,8 +170,8 @@ public final class VanillaWrenchHandler {
                 || state.getValue(BlockStateProperties.CHEST_TYPE) == ChestType.SINGLE;
     }
 
-//? if >=1.21.1 {
-/*    // The crafter stores a front/top pair, so only the front is re-aimed; the top follows it.
+    // The crafter stores a front/top pair, so only the front is re-aimed; the top follows it.
+    // Unreachable on 1.20.1, where the crafter block does not exist.
     private static Direction crafterFront(BlockState state) {
         return state.getValue(BlockStateProperties.ORIENTATION).front();
     }
@@ -188,7 +185,6 @@ public final class VanillaWrenchHandler {
         }
         return state;
     }
-*///?}
 
     /** GT6 order: {@code (meta + 4) & 15} walks Y → X → Z in the 1.7.10 pillar metadata. */
     private static Direction.Axis nextAxis(Direction.Axis axis) {

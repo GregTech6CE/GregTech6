@@ -43,13 +43,13 @@ public final class LogisticsTankBlockEntity extends TankBlockEntity implements L
     @Override
     protected void saveAdditional(net.minecraft.nbt.CompoundTag tag) {
         super.saveAdditional(tag);
-        logisticsCovers.save(tag);
+        logisticsCovers.save(tag, null);
     }
 
     @Override
     public void load(net.minecraft.nbt.CompoundTag tag) {
         super.load(tag);
-        logisticsCovers.load(tag);
+        logisticsCovers.load(tag, null);
     }
 //?}
     @Override

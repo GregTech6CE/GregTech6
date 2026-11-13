@@ -173,11 +173,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
         for (int y = UNDERGROUND_MIN_Y; y < UNDERGROUND_MAX_Y; y++) {
             BlockPos pos = new BlockPos(x, GTWorldgenScale.remapY(level, y), z);
             BlockState state = level.getBlockState(pos);
-//? if >=1.21.1 {
-            /*if (!isRock(state)) continue;
-*///?} else {
             if (!GTPitFeature.isRock(state)) continue;
-//?}
             if (!state.isSolidRender(level, pos)) continue;
             if (!embedded(level, pos)) continue;
             return placeHive(level, pos, UNDERGROUND, random, null);
@@ -262,11 +258,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
         if (contact.is(Blocks.RED_SAND)) return RED_SAND;
         if (contact.is(BlockTags.SAND) || contact.is(Blocks.SANDSTONE) || contact.is(Blocks.RED_SANDSTONE)
                 || contact.is(Blocks.SMOOTH_SANDSTONE)) return SAND;
-//? if >=1.21.1 {
-        /*if (contact.is(Blocks.GRAVEL) || isRock(contact)) return ROCK;
-*///?} else {
         if (contact.is(Blocks.GRAVEL) || GTPitFeature.isRock(contact)) return ROCK;
-//?}
         if (contact.is(Blocks.GRASS_BLOCK) || contact.is(Blocks.MOSS_BLOCK)) return GRASS;
         if (contact.is(BlockTags.DIRT)) return DIRT;
         // GT6's own comment: magical bumbles are the default, so they stay obtainable.
@@ -400,8 +392,4 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
             ResourceKey.create(Registries.CONFIGURED_FEATURE,
                     ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_bumble_hives"));
-//? if >=1.21.1 {
-    /*private static boolean isRock(BlockState state){return state.is(BlockTags.BASE_STONE_OVERWORLD)||state.is(BlockTags.STONE_BRICKS)||state.is(Blocks.OBSIDIAN)||state.is(Blocks.DEEPSLATE);}
-*///?} else {
-//?}
 }

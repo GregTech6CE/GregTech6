@@ -116,7 +116,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
 //? if >=1.21.1 {
     /*@Override public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) { lid.shouldBeOpen(tag.getBoolean("Open")); componentCovers.load(tag,lookup); }
 *///?} else {
-    @Override public void handleUpdateTag(CompoundTag tag) { lid.shouldBeOpen(tag.getBoolean("Open")); componentCovers.load(tag); }
+    @Override public void handleUpdateTag(CompoundTag tag) { lid.shouldBeOpen(tag.getBoolean("Open")); componentCovers.load(tag, null); }
 //?}
 
     private final ItemStackHandler inventory = new ItemStackHandler(54) {
@@ -293,7 +293,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        componentCovers.save(tag);
+        componentCovers.save(tag, null);
         saveData(tag, null);
     }
 //?}
@@ -315,7 +315,7 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        componentCovers.load(tag);
+        componentCovers.load(tag, null);
         loadData(tag, null);
     }
 //?}

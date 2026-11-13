@@ -39,11 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 /** GT6 rotational axle block — RU conductor with pipe-style 6-way connections. */
-//? if >=1.21.1 {
-/*public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.machine.PipeGeometry.AxleConnectorGeometry, ToolInteractionTarget {
-*///?} else {
-public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget {
-//?}
+public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.machine.PipeGeometry.AxleConnectorGeometry, ToolInteractionTarget {
 //? if >=1.21.1 {
     /*@Override
     protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
@@ -204,10 +200,8 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
         gregtech.client.MechanicalBlockTooltips.appendAxle(spec, getExplosionResistance(), tooltip);
     }
 
-//? if >=1.21.1 {
-    /*@Override public double axleHalfThickness(){return spec.halfThickness();}
-*///?} else {
-//?}
+    @Override public double axleHalfThickness(){return spec.halfThickness();}
+
     @Override public int getFlammability(BlockState state,BlockGetter level,BlockPos pos,Direction face) {
         return spec.material()==gregtech.content.material.generated.WoodMaterials.WoodTreated?150:0;
     }

@@ -24,8 +24,6 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import java.util.LinkedHashMap;
-import java.util.Map;
 *///?} else {
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.SoundActions;
@@ -36,15 +34,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 //?}
 
-/** Neo fluid registry adapter for the same original catalog and registry paths as Forge. */
 //? if >=1.21.1 {
 //?} else {
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Consumer;
+//?}
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /** GT6 fluid registry holder — DeferredRegisters and lookup maps populated by {@code Loader_Fluids}. */
-//?}
 public final class GTFluids {
     private static final java.util.Set<FluidType> NON_LIQUID_TYPES =
             java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
@@ -102,11 +99,11 @@ public final class GTFluids {
     public static final DeferredRegister<Fluid> FLUIDS =
             DeferredRegister.create(ForgeRegistries.FLUIDS, GregTechIdentity.REGISTRY_NAMESPACE);
 
-    private static final Map<String, DeferredRegister<FluidType>> ADDON_FLUID_TYPES = new HashMap<>();
-    private static final Map<String, DeferredRegister<Fluid>> ADDON_FLUIDS = new HashMap<>();
-    private static final Map<String, RegistryObject<Fluid>> STILL_BY_FIELD = new HashMap<>();
-    private static final Map<String, RegistryObject<Fluid>> FLOWING_BY_FIELD = new HashMap<>();
-    private static final Map<ResourceLocation, RegisteredFluids.FluidEntry> ENTRY_BY_TYPE_ID = new HashMap<>();
+    private static final Map<String, DeferredRegister<FluidType>> ADDON_FLUID_TYPES = new LinkedHashMap<>();
+    private static final Map<String, DeferredRegister<Fluid>> ADDON_FLUIDS = new LinkedHashMap<>();
+    private static final Map<String, RegistryObject<Fluid>> STILL_BY_FIELD = new LinkedHashMap<>();
+    private static final Map<String, RegistryObject<Fluid>> FLOWING_BY_FIELD = new LinkedHashMap<>();
+    private static final Map<ResourceLocation, RegisteredFluids.FluidEntry> ENTRY_BY_TYPE_ID = new LinkedHashMap<>();
 
     /** The fluid-type register for a namespace; addon namespaces get their own register. */
     public static DeferredRegister<FluidType> fluidTypes(String namespace) {
@@ -163,11 +160,8 @@ public final class GTFluids {
     /** Creates a GT6 {@link FluidType} with GT6-specific density, viscosity, luminosity, temperature, and client extensions. */
 //?}
     public static FluidType createFluidType(RegisteredFluids.FluidEntry entry) {
-//? if >=1.21.1 {
-        /*var properties = FluidType.Properties.create().density(FluidPhysicalProperties.density(entry))
-                .viscosity(FluidPhysicalProperties.viscosity(entry))
-                .temperature(entry.temperature()).lightLevel(entry.luminosity()).canConvertToSource(false).supportsBoating(false).canHydrate(false).canSwim(false).canDrown(false);
-*///?} else {
+        // GT6 water-material fluids clear fall distance on entry (golden Material.water);
+        // non-liquids override both values below.
         FluidType.Properties properties = FluidType.Properties.create()
                 .density(FluidPhysicalProperties.density(entry))
                 .viscosity(FluidPhysicalProperties.viscosity(entry))
@@ -180,7 +174,6 @@ public final class GTFluids {
                 .canDrown(false)
                 .fallDistanceModifier(0.0F)
                 .motionScale(0.007D);
-//?}
         boolean nonLiquid = FluidPhysicalProperties.nonLiquid(entry);
         properties.sound(SoundActions.BUCKET_FILL, net.minecraft.sounds.SoundEvents.BUCKET_FILL)
                 .sound(SoundActions.BUCKET_EMPTY, net.minecraft.sounds.SoundEvents.BUCKET_EMPTY);

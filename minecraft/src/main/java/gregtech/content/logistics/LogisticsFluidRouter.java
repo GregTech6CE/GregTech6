@@ -68,7 +68,7 @@ public final class LogisticsFluidRouter {
                 /*FluidStack filter = type.filtered()
                         ? LogisticsCoverInteraction.fluidFilter(cover, level.registryAccess()) : FluidStack.EMPTY;
 *///?} else {
-                FluidStack filter = type.filtered() ? LogisticsCoverInteraction.fluidFilter(cover) : FluidStack.EMPTY;
+                FluidStack filter = type.filtered() ? LogisticsCoverInteraction.fluidFilter(cover, null) : FluidStack.EMPTY;
 //?}
                 if (type.filtered() && filter.isEmpty()) continue;
                 BlockPos targetPos = hostPos.relative(face);

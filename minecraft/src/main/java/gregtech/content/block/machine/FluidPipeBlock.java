@@ -371,11 +371,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
 
     @Override
     public float getDestroyProgress(BlockState state, Player player, BlockGetter level, BlockPos pos) {
-//? if >=1.21.1 {
-//?} else {
         if (player.getMainHandItem().getItem() instanceof gregtech.content.item.ElectricToolItem)
             return super.getDestroyProgress(state, player, level, pos);
-//?}
         ItemStack tool = player.getMainHandItem();
         MaterialTextureSet texSet = spec.material().getTextureSet();
         float hardness = state.getDestroySpeed(level, pos);
@@ -407,11 +404,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
 
     @Override
     public boolean canHarvestBlock(BlockState state, BlockGetter level, BlockPos pos, Player player) {
-//? if >=1.21.1 {
-//?} else {
         if (player.getMainHandItem().getItem() instanceof gregtech.content.item.ElectricToolItem electric)
             return gregtech.content.tool.ElectricWrenchHarvest.canHarvest(electric, player.getMainHandItem(), state);
-//?}
         ItemStack tool = player.getMainHandItem();
         MaterialTextureSet texSet = spec.material().getTextureSet();
         if (texSet == MaterialTextureSet.RUBBER) {

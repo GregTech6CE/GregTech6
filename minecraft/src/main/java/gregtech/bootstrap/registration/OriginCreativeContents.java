@@ -15,7 +15,7 @@ public final class OriginCreativeContents {
     private OriginCreativeContents() {}
     private static Map<String,List<ItemStack>> pages;
 //? if >=1.21.1 {
-    /*private static Object pagesEnchantmentRegistry;
+    /*private static net.minecraft.core.HolderLookup.RegistryLookup<?> pagesEnchantmentRegistry;
 *///?}
     public static String family(Item item) {
         String id=BuiltInRegistries.ITEM.getKey(item).getPath();
@@ -29,11 +29,8 @@ public final class OriginCreativeContents {
         // Shapes are accessories, even when their translated name matches "Extruder".
         if(id.startsWith("extruder_shape_") || id.startsWith("low_heat_extruder_shape_")) return "molds";
 
-//? if >=1.21.1 {
-/*        if(item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem) return "fluids";
-*///?} else {
-        if(item instanceof gregtech.content.item.FluidItem) return "fluids";
-//?}
+        // Fluid display items are node-specific classes; both nodes register them as fluid_item_<path>.
+        if(id.startsWith("fluid_item_")) return "fluids";
 
         if(item instanceof BlockItem b) {
             var block=b.getBlock(); String type=block.getClass().getSimpleName();
@@ -127,26 +124,6 @@ public final class OriginCreativeContents {
         for(String family:CreativeTabCatalog.FAMILIES)result.put(family,new ArrayList<>());
         var items=new ArrayList<Item>();
         for(var item:BuiltInRegistries.ITEM) {
-//? if >=1.21.1 {
-/*            var itemId = BuiltInRegistries.ITEM.getKey(item);
-            boolean addonMachine = item instanceof BlockItem blockItem
-                    && (blockItem.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine
-                    && !REGISTRY_NAMESPACE.equals(machine.basicSpec().namespace())
-                    || blockItem.getBlock() instanceof gregtech.content.block.machine.BehaviorMachineBlock behavior
-                    && !REGISTRY_NAMESPACE.equals(behavior.accepted().addonId()));
-            boolean addonPipe = item instanceof BlockItem pipeItem
-                    && (pipeItem.getBlock() instanceof gregtech.content.block.machine.FluidPipeBlock
-                    || pipeItem.getBlock() instanceof gregtech.content.block.machine.ItemPipeBlock);
-            boolean addonPart = item instanceof BlockItem partItem
-                    && (partItem.getBlock() instanceof gregtech.content.block.machine.MultiblockPortBlock
-                    || partItem.getBlock() instanceof gregtech.content.block.machine.AddonEnergyPartBlock
-                    || partItem.getBlock() instanceof gregtech.content.block.machine.AddonFunctionalPartBlock);
-            boolean addonDrum = item instanceof BlockItem drumItem
-                    && drumItem.getBlock() instanceof gregtech.content.block.machine.CompressedGasTankBlock;
-            boolean addonFluid = item instanceof gregtech.platform.neoforge.fluid.FluidDisplayItem;
-            if ((!itemId.getNamespace().equals(REGISTRY_NAMESPACE) && !addonMachine && !addonPipe && !addonPart && !addonDrum && !addonFluid)
-                    || item instanceof MaterialFormItem && !(item instanceof EnergyCrystalItem) || item instanceof CreativeTabIconItem) continue;
-*///?} else {
             var itemId = BuiltInRegistries.ITEM.getKey(item);
             boolean addonMachine = item instanceof BlockItem blockItem
                     && (blockItem.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine
@@ -162,9 +139,9 @@ public final class OriginCreativeContents {
                     || partItem.getBlock() instanceof gregtech.content.block.machine.AddonFunctionalPartBlock);
             boolean addonDrum = item instanceof BlockItem drumItem
                     && drumItem.getBlock() instanceof gregtech.content.block.machine.CompressedGasTankBlock;
-            boolean addonFluid = item instanceof gregtech.content.item.FluidItem;
-            if((!itemId.getNamespace().equals(REGISTRY_NAMESPACE) && !addonMachine && !addonPipe && !addonPart && !addonDrum && !addonFluid)||item instanceof MaterialFormItem && !(item instanceof EnergyCrystalItem)||item instanceof CreativeTabIconItem)continue;
-//?}
+            boolean addonFluid = itemId.getPath().startsWith("fluid_item_");
+            if ((!itemId.getNamespace().equals(REGISTRY_NAMESPACE) && !addonMachine && !addonPipe && !addonPart && !addonDrum && !addonFluid)
+                    || item instanceof MaterialFormItem && !(item instanceof EnergyCrystalItem) || item instanceof CreativeTabIconItem) continue;
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
             // GT6 marks the used and broken lighter variants TD.Creative.HIDDEN.

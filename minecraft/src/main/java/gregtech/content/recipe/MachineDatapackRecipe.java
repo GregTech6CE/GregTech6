@@ -175,7 +175,8 @@ public final class MachineDatapackRecipe implements Recipe<CraftingContainer> {
                         addition ? MachineRecipeFields.EU_PER_TICK : MachineRecipeFields.CLEAR,
                         addition ? MachineRecipeFields.DURATION : MachineRecipeFields.CLEAR,
                         addition ? MachineRecipeFields.SPECIAL : MachineRecipeFields.CLEAR,
-                        addition ? MachineRecipeFields.PRIORITY : MachineRecipeFields.CLEAR
+                        addition ? MachineRecipeFields.PRIORITY : MachineRecipeFields.CLEAR,
+                        addition ? MachineRecipeFields.MATERIAL_INPUT : MachineRecipeFields.CLEAR
                 ).distinct().map(ops::createString);
             }
 *///?} else {

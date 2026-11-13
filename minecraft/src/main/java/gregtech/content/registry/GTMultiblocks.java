@@ -109,12 +109,7 @@ public final class GTMultiblocks {
     public static Block[] portBlocks() {
         var blocks = new ArrayList<Block>();
         for (var part : parts()) {
-            Block block = part.get();
-            //? if >=1.21.1 {
-            /*blocks.add(block);
-            *///?} else {
-            if (block instanceof MultiblockPortBlock) blocks.add(block);
-            //?}
+            blocks.add(part.get());
         }
         for (var part : ADDON_PARTS)
             if (!(part.block().get() instanceof AddonEnergyPartBlock)

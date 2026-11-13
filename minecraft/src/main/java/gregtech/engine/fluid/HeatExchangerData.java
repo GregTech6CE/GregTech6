@@ -30,19 +30,13 @@ public final class HeatExchangerData {
         tag.putString("gt.fuelmap", settings.fuelMap());
         tag.putString("gt.energy.emitted", settings.energyId());
     }
-//? if >=1.21.1 {
-    /*public static void restore(FluidTankGT tank, CompoundTag data, long capacity, net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public static void restore(FluidTankGT tank, CompoundTag data, long capacity) {
-//?}
+    /** 1.20.1 ignores the lookup; its fluid codec reads the legacy envelope directly. */
+    public static void restore(FluidTankGT tank, CompoundTag data, long capacity, net.minecraft.core.HolderLookup.Provider lookup) {
         // Source setCapacity never discards an over-capacity saved amount.
         tank.setEmpty();
         tank.setCapacity(capacity);
-//? if >=1.21.1 {
-        /*// An empty long-tank envelope only has Amount/Capacity, not a fluid codec payload.
+        // An empty long-tank envelope only has Amount/Capacity, not a fluid codec payload.
         if (!data.contains("Fluid") && !data.contains("FluidName") && !data.contains("id")) return;
-*///?} else {
-//?}
         var fluidTag = data.contains("Fluid") ? data.getCompound("Fluid") : data;
 //? if >=1.21.1 {
         /*var fluid = FluidStackNbt.read(lookup, fluidTag);

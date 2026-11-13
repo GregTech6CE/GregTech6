@@ -91,7 +91,7 @@ public final class LogisticsItemRouter {
                 /*ItemStack filter = type.filtered()
                         ? LogisticsCoverInteraction.itemFilter(cover,level.registryAccess()) : ItemStack.EMPTY;
 *///?} else {
-                ItemStack filter = type.filtered() ? LogisticsCoverInteraction.itemFilter(cover) : ItemStack.EMPTY;
+                ItemStack filter = type.filtered() ? LogisticsCoverInteraction.itemFilter(cover, null) : ItemStack.EMPTY;
 //?}
                 if (type.filtered() && filter.isEmpty())
                     continue;
