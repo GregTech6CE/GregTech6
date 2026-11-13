@@ -118,7 +118,19 @@ configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
                 // The ratchet target is a plain file list, so the FileTree exclude and the
                 // stonecutter targetExclude do not apply to it; filter them here instead.
                 def excluded = stonecutterPaths.get()
-                return diff.standardOutput.asText.get().readLines()
+                def paths = diff.standardOutput.asText.get().readLines()
+                // git diff omits untracked files; a newly created source is still a local
+                // edit and must be checked before it is staged.
+                def untracked = spotlessProject.providers.exec {
+                    workingDir spotlessProject.projectDir
+                    commandLine 'git', '-c', 'core.quotepath=false', 'ls-files', '--others',
+                            '--exclude-standard', '--', ':(glob)src/**/*.java'
+                    ignoreExitValue = true
+                }
+                if (untracked.result.get().exitValue == 0) {
+                    paths.addAll(untracked.standardOutput.asText.get().readLines())
+                }
+                return paths
                         .findAll { String path ->
                             path && !excluded.contains(path) && !path.contains('/generated/')
                         }
@@ -142,8 +154,19 @@ configure(spotlessProjects.collect { project(it) }) { spotlessProject ->
 
 tasks.register('format') {
     group = 'build'
-    description = 'Formats core, shared Minecraft sources and both version nodes with Spotless.'
+    description = 'Applies Spotless formatting to core, buildtools, shared Minecraft sources and both version nodes. ' +
+            'Locally the ratchet limits this to files changed against origin/master; CI checks the full tree.'
     dependsOn spotlessProjects.collect { "${it}:spotlessApply" }
+}
+
+// Symmetric to 'format': one task that checks every module so a partial task list cannot
+// skip a project's formatting. Locally ratchet-scoped to the branch's changed files.
+tasks.register('checkFormat') {
+    group = 'build'
+    description = 'Checks Spotless formatting across core, buildtools, shared Minecraft sources and both version nodes. ' +
+            'Run before pushing: locally the ratchet limits it to files changed against origin/master; ' +
+            'CI additionally checks the full tree.'
+    dependsOn spotlessProjects.collect { "${it}:spotlessCheck" }
 }
 
 apply from: 'gradle/stonecutter-native.gradle'
