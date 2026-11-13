@@ -429,6 +429,17 @@ public final class GTToolHelper {
         return type.canCollect() && matchesTool(stack, type);
     }
 
+    /**
+     * GT6 {@code MultiItemTool.getDigSpeed(...)}: a wrench digs at all only when usable and of at
+     * least the required quality. Electric wrenches compare quality in {@code ElectricWrenchHarvest}
+     * and stay on their own path.
+     */
+    public static boolean wrenchReachesQuality(ItemStack stack, int requiredQuality) {
+        if (!isMachineWrench(stack)) return false;
+        if (!isTool(stack)) return true;
+        return isUsable(stack) && getHarvestLevel(stack) >= requiredQuality;
+    }
+
     /** GT6 {@code MultiItemTool#getDigSpeed} for wrench nodes: {@code speedMultiplier * mToolSpeed}. */
     public static float getMachineHarvestSpeed(ItemStack stack) {
 

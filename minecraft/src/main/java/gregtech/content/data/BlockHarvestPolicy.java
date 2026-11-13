@@ -70,6 +70,8 @@ public final class BlockHarvestPolicy {
  public static int level(Block block) {
   if(block instanceof gregtech.content.block.machine.TankBlock)return 0;
   var original=source(block);if(original.isPresent())return original.get().level();
+  if(block instanceof gregtech.content.block.machine.FluidPipeBlock pipe) return pipe.harvestLevel();
+  if(block instanceof gregtech.content.block.machine.ItemPipeBlock pipe) return pipe.harvestLevel();
   if(block instanceof gregtech.content.block.misc.LongDistPipeBlock) return 3;
   if(block instanceof gregtech.content.block.misc.LongDistEndpointBlock endpoint) return endpoint.material().getToolQuality();
   if(block instanceof gregtech.content.block.misc.LongDistanceTransformerBlock endpoint) return endpoint.material().getToolQuality();

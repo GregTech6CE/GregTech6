@@ -348,7 +348,9 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
             }
         } else {
             if (GTToolHelper.isMachineWrench(tool)) {
-                return GTToolHelper.getMachineHarvestSpeed(tool) / hardness / 30.0F;
+                return GTToolHelper.wrenchReachesQuality(tool, harvestLevel())
+                        ? GTToolHelper.getMachineHarvestSpeed(tool) / hardness / 30.0F
+                        : 0.0F;
             }
         }
         return super.getDestroyProgress(state, player, level, pos);
@@ -365,9 +367,14 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
         } else if (texSet == MaterialTextureSet.WOOD) {
             if (tool.getItem() instanceof AxeItem || GTToolHelper.matchesTool(tool, GTToolType.AXE)) return true;
         } else {
-            if (GTToolHelper.isMachineWrench(tool)) return true;
+            if (GTToolHelper.isMachineWrench(tool)) return GTToolHelper.wrenchReachesQuality(tool, harvestLevel());
         }
         return super.canHarvestBlock(state, level, pos, player);
+    }
+
+    /** GT6 registers each pipe with its material's tool quality as the block harvest level. */
+    public int harvestLevel() {
+        return Math.max(0, spec.material().getToolQuality());
     }
 
     public static Properties defaultProperties(ItemPipeSpec spec) {
