@@ -24,7 +24,8 @@ public final class MoldGridGeometry {
     private MoldGridGeometry() {}
 
     public static boolean solid(int shape, int row, int col) {
-        return (shape & (1 << (row * CELLS + col))) == 0;
+        // GT6 indexes mold cells x-major; {@code row} is the z index and {@code col} the x index.
+        return (shape & (1 << (col * CELLS + row))) == 0;
     }
 
     /** Receives one visible face: x/z bounds in 0..16 block texture space and its 0..16 UVs. */

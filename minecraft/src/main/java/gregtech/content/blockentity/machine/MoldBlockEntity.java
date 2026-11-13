@@ -356,7 +356,7 @@ public class MoldBlockEntity extends gregtech.content.blockentity.GTEnergyBlockE
         gridX = Math.max(0, Math.min(4, gridX));
         gridZ = Math.max(0, Math.min(4, gridZ));
 
-        int bit = 1 << (gridZ * 5 + gridX);
+        int bit = 1 << (gridX * 5 + gridZ);
         // GT6: bit=1 = carved away, bit=0 = solid. Re-chiseling a carved cell reports no change.
         if ((moldShape & bit) != 0) return false;
         moldShape |= bit;
