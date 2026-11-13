@@ -179,8 +179,6 @@ public final class GregTechConfig {
         TOOL_SOUNDS("general.sound_tools", true, true),
         GT_ALPHA("general.useGTAlphaBlending", true, true),
         MC_ALPHA("general.useMCAlphaBlending", true, true),
-        COINS_WORLD_3D("general.use3DCoins", true, true),
-        COINS_ITEM_3D("general.use3DCoinsInv", true, true),
         COVER_SNEAK("covers.require_sneaking", true);
 
         private final String key;
