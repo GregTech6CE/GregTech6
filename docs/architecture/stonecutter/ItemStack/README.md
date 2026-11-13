@@ -11,7 +11,6 @@
 | 旧数据 | `tag` | `components["minecraft:custom_data"]` | [migration.md](migration.md) |
 | 身份比较 | `isSameItemSameTags` | `isSameItemSameComponents` | [identity.md](identity.md) |
 | 封面过滤器 | `setItemFilter(installed, held)` | `setItemFilter(installed, held, level.registryAccess())` | [registry-access.md](registry-access.md) |
-| 委托重载 | `save(tag)` 转 `save(tag, null)` | 仅 `save(tag, lookup)` | [delegate-overload.md](delegate-overload.md) |
 
 ## 子类型
 
@@ -24,5 +23,4 @@
 | wire-format | `{id, Count, tag}` → `{id, count, components}` | [wire-format.md](wire-format.md) | Count, components |
 | migration | 旧 `tag` 搬进 `CUSTOM_DATA` | [migration.md](migration.md) | tag, CUSTOM_DATA |
 | identity | `isSameItemSameTags` ↔ `isSameItemSameComponents` | [identity.md](identity.md) | StackCompat.sameItem |
-| registry-access | 封面过滤器写入时的 `HolderLookup.Provider` 参数 | [registry-access.md](registry-access.md) | registryAccess, setItemFilter, setFluidFilter |
-| delegate-overload | 1.20 单参委托重载的删留（纯 1.20 委托删、共享调用者适配器留） | [delegate-overload.md](delegate-overload.md) | save(tag), 委托重载, null |
+| registry-access | provider 参数统一：签名/委托重载/调用点分支经 NbtCompat 收敛 | [registry-access.md](registry-access.md) | registryAccess, setItemFilter, setFluidFilter, 委托重载, NbtCompat |
