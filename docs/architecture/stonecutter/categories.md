@@ -15,7 +15,7 @@
 | 分类 | 主要差异 |
 | --- | --- |
 | BlockEntity | `saveAdditional` / `loadAdditional` / `getUpdateTag` / `loadStatic` 的 provider 参数 |
-| ItemStack | `ItemStack#save`、`tag` ↔ `CUSTOM_DATA`、线格式、旧 tag 迁移、身份比较、封面过滤器 provider |
+| ItemStack | `ItemStack#save`、`tag` ↔ `CUSTOM_DATA`、线格式、旧 tag 迁移、身份比较、封面过滤器 provider、委托重载删留 |
 | FluidStack | `FluidStack#save`、`tag` ↔ components、线格式、身份比较 |
 | Container | `ContainerHelper#saveAllItems` / `loadAllItems` 的 provider 参数 |
 | SavedData | `SavedData.Factory` 的 provider 参数 |
@@ -38,9 +38,9 @@
 
 ## ItemStack
 
-摘要：物品栈的 provider 签名、自定义数据存储、类型化组件门面、线格式、旧数据迁移、身份比较与封面过滤器 provider。
+摘要：物品栈的 provider 签名、自定义数据存储、类型化组件门面、线格式、旧数据迁移、身份比较、封面过滤器 provider 与委托重载删留。
 
-关键词：ItemStack, ItemStack#save, ItemStack#parseOptional, CUSTOM_DATA, CustomData, StackData, BlockEntityData, BlockStateData, BLOCK_ENTITY_DATA, BLOCK_STATE, BlockItemStateProperties, BlockEntityTag, BlockStateTag, ItemStack#getTag, ItemStack#getOrCreateTag, ItemStack#setTag, ItemStack#hasTag, hasAnyData, hasCustomData, isSameItemSameTags, isSameItemSameComponents, StackCompat.sameItem, registryAccess, setItemFilter, setFluidFilter
+关键词：ItemStack, ItemStack#save, ItemStack#parseOptional, CUSTOM_DATA, CustomData, StackData, BlockEntityData, BlockStateData, BLOCK_ENTITY_DATA, BLOCK_STATE, BlockItemStateProperties, BlockEntityTag, BlockStateTag, ItemStack#getTag, ItemStack#getOrCreateTag, ItemStack#setTag, ItemStack#hasTag, hasAnyData, hasCustomData, isSameItemSameTags, isSameItemSameComponents, StackCompat.sameItem, registryAccess, setItemFilter, setFluidFilter, 委托重载, save(tag), 单参委托
 
 分类 README：[ItemStack/README.md](ItemStack/README.md)
 

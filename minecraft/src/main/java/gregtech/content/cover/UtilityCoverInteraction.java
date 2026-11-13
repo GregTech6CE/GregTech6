@@ -28,7 +28,7 @@ public final class UtilityCoverInteraction {
             return new FluidStack(bottle.fluid(), 250);
 //? if >=1.21.1 {
         /*if (held.getItem() instanceof net.minecraft.world.item.BucketItem bucket)
-            return new FluidStack(((gregtech.mixin.BucketContentAccessor) bucket).gregtech$bucketContent(), 1000);
+            return new FluidStack(bucket.content, 1000);
 *///?} else {
         if (held.getItem() instanceof net.minecraft.world.item.BucketItem bucket)
             return new FluidStack(bucket.getFluid(), 1000);
@@ -69,13 +69,9 @@ public final class UtilityCoverInteraction {
                 if(!level.isClientSide){if(GTToolHelper.matchesTool(held,GTToolType.SOFT_HAMMER))CoverUtilityBehaviors.clearFilter(installed);else CoverUtilityBehaviors.toggleFilterMode(installed);host.panels().changed();GTToolHelper.damageForUse(held,1,player);}
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
-//? if >=1.21.1 {
-            /*if(!host.consumesTool(held)){
-                if(!level.isClientSide){if(item)CoverUtilityBehaviors.setItemFilter(installed,held,level.registryAccess());else CoverUtilityBehaviors.setFluidFilter(installed,sample(held),level.registryAccess());host.panels().changed();}
-*///?} else {
+            // 两节点统一调 3 参：1.20 经 CoverUtilityBehaviors 的 provider 适配器忽略 lookup。
             if(!host.consumesTool(held)){
-                if(!level.isClientSide){if(item)CoverUtilityBehaviors.setItemFilter(installed,held);else CoverUtilityBehaviors.setFluidFilter(installed,sample(held));host.panels().changed();}
-//?}
+                if(!level.isClientSide){if(item)CoverUtilityBehaviors.setItemFilter(installed,held,level.registryAccess());else CoverUtilityBehaviors.setFluidFilter(installed,sample(held),level.registryAccess());host.panels().changed();}
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
