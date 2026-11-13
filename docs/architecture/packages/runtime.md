@@ -70,7 +70,7 @@ Block 处理放置、形状和交互分发；BlockEntity 保存实例状态、�
 
 GUI 模板、碎片图标与 JEI/EMI 的布局接入见[GUI 开发指南](../../development/gui-templates.md)，平台差异见[平台包](platforms.md)。
 
-矿物处理前端由 `compat.common.MaterialProcessDisplay` 接受已完成有界查询的投影，`client.MaterialProcessPanel` 负责布局和交互，`compat.jei.MaterialProcessCategory` 接到原生槽位与索引。当前只注册未接入说明页，没有具体材料、服务端来源索引或远程同步；调用契约与预算见[展示接入](../../development/material-process-display.md)。这些类型不能成为第二套材料目录或配方事实表。
+矿物处理由 `content.recipe.MaterialProcessSnapshot` 从成功发布点绑定最终机器配方与活动世界生成，`engine.material.MaterialProcessGraph` 提供有界查询，`compat.common.MaterialProcessProjection` 再构造 JEI／EMI 共用的展示页。`client.MaterialProcessPanel` 负责布局和交互，`compat.jei.MaterialProcessCategory` 与 `compat.emi.MaterialProcessEmiRecipe` 只做原生槽位、索引和事件适配。调用契约与预算见[展示接入](../../development/material-process-display.md)；这些类型不能成为第二套材料目录或配方事实表。
 
 第三方集成沿配置与现有入口条件加载，`compileOnly` 只说明编译依赖形态，不能保证类加载安全。
 

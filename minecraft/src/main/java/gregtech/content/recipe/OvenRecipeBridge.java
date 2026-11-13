@@ -173,6 +173,9 @@ public final class OvenRecipeBridge {
                 + " (NEVER_FURNACE materials yield scrap instead); {} material rows dropped; {} GT"
                 + " furnace rows added to the vanilla furnace.", mirrored, unsmelted, dropped, fuelled);
         gregtech.content.recipe.MachineRecipeOverlay.reapplyFurnace(manager);
+        MaterialProcessSnapshot.Store.publish(
+                gregtech.content.recipe.MachineRecipeOverlay.lastPublication(),
+                gregtech.content.recipe.MachineRecipeOverlay.generation());
     }
 
     /**

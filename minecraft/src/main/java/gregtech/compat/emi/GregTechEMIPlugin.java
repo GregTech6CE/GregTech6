@@ -8,6 +8,7 @@ import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
 import gregtech.compat.jei.RecipeMachines;
 import gregtech.content.item.GTToolItem;
+import gregtech.content.recipe.MaterialProcessSnapshot;
 import gregtech.engine.recipe.RecipeMap;
 import java.util.Locale;
 import net.minecraft.network.chat.Component;
@@ -36,6 +37,11 @@ public final class GregTechEMIPlugin implements EmiPlugin {
 
     @Override
     public void register(EmiRegistry registry) {
+        var processSnapshot = MaterialProcessSnapshot.Store.current();
+        var processNavigation = new ProcessNavigation(processSnapshot);
+        MaterialProcessEmiRecipe.register(
+                registry,
+                gregtech.compat.common.MaterialProcessProjection.initialPages(processSnapshot, processNavigation));
         gregtech.client.gui.RecipeViewerNavigation.registerEmi(map -> {
             var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.mNameInternal.toLowerCase(Locale.ROOT));
             var manager = dev.emi.emi.api.EmiApi.getRecipeManager();
@@ -160,5 +166,42 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             if (stack.getItemStack().getItem() instanceof GTToolItem) return true;
         }
         return false;
+    }
+
+    private static final class ProcessNavigation implements gregtech.compat.common.MaterialProcessDisplay.Navigation {
+        private final MaterialProcessSnapshot snapshot;
+
+        private ProcessNavigation(MaterialProcessSnapshot snapshot) {
+            this.snapshot = snapshot;
+        }
+
+        @Override
+        public boolean openRecipe(gregtech.api.addon.material.DataKey reference) {
+            if (!MaterialProcessSnapshot.Store.current(snapshot)) return false;
+            var nativeRecipe = snapshot.recipe(reference);
+            if (nativeRecipe.isEmpty()) return false;
+            var row = nativeRecipe.get();
+            var id = ResourceLocation.fromNamespaceAndPath(
+                    "gt6ce", "/machine/" + row.map().mNameInternal.toLowerCase(Locale.ROOT) + "/" + row.index());
+            var recipe = dev.emi.emi.api.EmiApi.getRecipeManager().getRecipe(id);
+            if (recipe == null) return false;
+            dev.emi.emi.api.EmiApi.displayRecipe(recipe);
+            return true;
+        }
+
+        @Override
+        public boolean openForm(gregtech.api.addon.material.DataKey resource, boolean uses) {
+            if (!MaterialProcessSnapshot.Store.current(snapshot)) return false;
+            var pages = gregtech.compat.common.MaterialProcessProjection.pages(
+                    snapshot,
+                    resource,
+                    uses
+                            ? gregtech.engine.material.MaterialProcessGraph.Direction.USES
+                            : gregtech.engine.material.MaterialProcessGraph.Direction.SOURCES,
+                    this);
+            if (pages.isEmpty()) return false;
+            dev.emi.emi.api.EmiApi.displayRecipe(new MaterialProcessEmiRecipe(pages.get(0)));
+            return true;
+        }
     }
 }

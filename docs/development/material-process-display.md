@@ -1,8 +1,8 @@
 # 矿物处理 JEI 展示接入
 
-本文说明[计划 08-E](material-system-refactor/08-material-data-api.md#e有界矿物处理图与消费者迁移)的前端接入契约。当前只提供展示模型、布局和 JEI 分类，默认注册一张“尚未接入加工数据”的说明页；没有连接任何具体材料、配方索引或世界生成数据。08-D 的快照发布、远程同步、core 图查询与 EMI 接入仍未实现，不能将本页当作它们已经完成的证明。
+本文说明[计划 08-E](material-system-refactor/08-material-data-api.md#e有界矿物处理图与消费者迁移)的前端接入契约。生产路径现在从同一 `MaterialProcessSnapshot` 取得有界 core 图结果，并在 JEI 与 EMI 中共享 `Page` 和 `MaterialProcessPanel`。空状态 `unbound()` 只在没有成功发布快照时使用；具体机器行、世界生成、远程客户端和人工点击仍需按验证范围分别验收。
 
-这是 Minecraft 实现层的客户端调用接口，随模组编译，不是独立 API JAR 的公共材料服务，也不改变 API 1.8.0。只在客户端和已安装 JEI 的路径调用分类；无 JEI 的服务端入口不得引用它。
+这是 Minecraft 实现层的客户端调用接口，随模组编译，不是独立 API JAR 的公共材料服务，也不改变 API 1.8.0。分类和面板只在已安装 JEI／EMI 的客户端路径加载；无 viewer 的专用服务端入口不得引用它们。
 
 ## 入口与职责
 
@@ -15,8 +15,13 @@
 | `MaterialProcessDisplay.Page` | 每页至多两个步骤，保留全图关联、覆盖说明和绑定到同一查询结果的跳转回调 |
 | `gregtech.client.MaterialProcessPanel` | 固定 280×216 的坐标、绘制、悬停与点击；不依赖 JEI／EMI |
 | `gregtech.compat.jei.MaterialProcessCategory` | 原生 JEI 槽位、索引、事件和 tooltip；分类类型为 `TYPE`，标识为 `gt6ce:material_process` |
+| `gregtech.compat.emi.MaterialProcessEmiRecipe` | EMI 分类、原生索引和共享面板适配；不读取材料目录或配方表 |
+| `gregtech.content.recipe.MaterialProcessSnapshot` | 绑定一次完整发布、会话和世界生成 revision；索引最终机器行与符号选择器 |
+| `gregtech.content.worldgen.MaterialWorldgenFacts` | 只含活动世界生成事实，不构造原生图标 |
+| `gregtech.engine.material.MaterialProcessGraph` | core 有界前向／反向查询、循环终止和显式预算截断 |
+| `gregtech.compat.common.MaterialProcessProjection` | 把 core 查询转成快照内 `DataKey`、有限图标和展示 `Page` |
 
-复用现有 `DataKey` 表达展示引用，复用 `RecipeOutputChances.CERTAIN` 的万分比契约、JEI 原生槽位、分页、配方索引与运行期注册。没有另建 SPI、全局来源缓存、锁、服务端查询协议或材料事实表。未来 EMI 适配可共用展示模型与面板，不能在共用类型中引用 JEI 类。
+复用现有 `DataKey` 表达展示引用，复用 `RecipeOutputChances.CERTAIN` 的万分比契约、viewer 原生槽位、分页、配方索引与运行期注册。没有另建 SPI、全局来源缓存、锁、服务端查询协议或材料事实表。JEI 与 EMI 共用展示模型和面板，任何共用类型都不能引用具体 viewer 类。
 
 ## 构造契约
 
@@ -55,7 +60,7 @@ var pages = MaterialProcessDisplay.pages(title, steps, connections, notices, nav
 registration.addRecipes(MaterialProcessCategory.TYPE, pages);
 ```
 
-这里的 `title`、`steps`、`connections`、`notices`、`navigation` 是调用方的局部变量；示例不宣称存在尚未实现的材料图查询服务。接入正式生产者时替换 `GregTechJEIPlugin.registerRecipes` 中的 `unbound()` 注册，不要同时注册占位页与正式结果。
+这里的 `title`、`steps`、`connections`、`notices`、`navigation` 是调用方的局部变量。生产路径由 `MaterialProcessProjection.initialPages(...)` 从当前 `MaterialProcessSnapshot` 生成这些值；`MaterialProcessDisplay.unbound()` 只用于没有成功发布快照的显式空状态，不能与正式结果同时注册。
 
 `Navigation` 由内容适配器创建并捕获该次查询的会话／generation。每次跳转先检查当前版本，过期或不能解析时返回 `false`，不得跳转到新版本中“相似”的配方。不要捕获旧 `Level`／服务器实例，也不要从客户端直接扫描集成服务器表。生产者应将未来 `ProcessRef` 和实际材料形态引用映射到展示引用，适配器使用原生服务重新解析；UI 不发明第二个快照协议。
 
@@ -67,10 +72,10 @@ runtime.getRecipesGui().showRecipes(category, List.of(recipe), List.of());
 
 `category` 和 `recipe` 必须来自当前有效原生引用；`RecipeViewerNavigation.open(map)` 只打开整个机器分类，不能替代这一步的精确定位。形态跳转应重新查询对应有界来源／用途，而不是按图标猜材料。
 
-动态打开查询结果可复用 JEI `IRecipeManager.getRecipeCategory(TYPE)` 和 `IRecipesGui.showRecipes(category, pages, List.of())`；优先让结果仅随当前显示布局存活。若使用运行期 `addRecipes`，调用方必须负责重载、断线、换服以及旧记录和回调的释放；`hideRecipes` 只是隐藏，不能当作回收旧快照的手段。当前展示层不订阅这些生命周期，也不持有运行期结果。
+动态打开查询结果可复用 JEI `IRecipeManager.getRecipeCategory(TYPE)` 和 `IRecipesGui.showRecipes(category, pages, List.of())`；优先让结果仅随当前显示布局存活。若使用运行期 `addRecipes`，调用方必须负责重载、断线、换服以及旧记录和回调的释放；`hideRecipes` 只是隐藏，不能当作回收旧快照的手段。`MachineRecipeClient` 在断线时清除当前快照，`MaterialProcessSnapshot.Store` 只保留当前成功代和一代前代；展示页本身不缓存材料目录或配方表。
 
 ## 验证范围
 
 检查路由为 `runtime`／语言资源 `content`；双平台编译、格式、资源打包与相关 JUnit 命令见[验证入口](validation/README.md)。[游戏检查](validation/checks/manual-ingame.md#矿物处理展示页)分别覆盖两平台及后续远程接线。
 
-当前没有具体材料接入，不能验收真实洗矿／合金数据、远程 generation 或原生配方跳转正确性。界面测试输入应由客户端测试调用方提供受控投影，禁止为演示把材料来源和假配方加入生产表。
+当前生产页覆盖最终机器配方与活动世界生成；tag／unit 选择器保持符号形式，没有可靠角色信息的输出保持未知。真实洗矿／合金、两次重载、远程 generation、JEI／EMI 精确跳转及两平台人工点击仍必须分别记录。测试不得为演示把假配方或额外材料来源写入生产表。

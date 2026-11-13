@@ -1,5 +1,6 @@
 package gregtech.compat.jei;
 
+import gregtech.content.recipe.MaterialProcessSnapshot;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.platform.Mc;
@@ -26,7 +27,12 @@ import java.util.Map;
  */
 @JeiPlugin
 public final class GregTechJEIPlugin implements IModPlugin {
+    private mezz.jei.api.runtime.IJeiRuntime runtime;
+    private MaterialProcessSnapshot processSnapshot;
+    private MaterialProcessCategory processCategory;
+
     @Override public void onRuntimeAvailable(mezz.jei.api.runtime.IJeiRuntime runtime) {
+        this.runtime = runtime;
         gregtech.client.gui.RecipeViewerNavigation.registerJei(map -> {
             if (!categories.containsKey(map)) return false;
             runtime.getRecipesGui().showTypes(java.util.List.of(RecipeMapCategory.recipeType(map)));
@@ -39,6 +45,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
     }
 
     @Override public void onRuntimeUnavailable() {
+        runtime = null;
+        processSnapshot = null;
         gregtech.client.gui.RecipeViewerNavigation.clearJei();
     }
 
@@ -94,7 +102,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new MultiblockInfoCategory(guiHelper));
         registration.addRecipeCategories(new ToolAssemblyCategory.Category(guiHelper));
         registration.addRecipeCategories(new MoldChiselCategory(guiHelper));
-        registration.addRecipeCategories(new MaterialProcessCategory(guiHelper));
+        processCategory = new MaterialProcessCategory(guiHelper);
+        registration.addRecipeCategories(processCategory);
         registration.addRecipeCategories(
                 new WorldgenInfoCategories.VeinCategory(guiHelper),
                 new WorldgenInfoCategories.SmallOreCategory(guiHelper),
@@ -183,7 +192,10 @@ public final class GregTechJEIPlugin implements IModPlugin {
 //?}
 
         registration.addRecipes(MoldChiselCategory.TYPE, gregtech.compat.common.MoldChiselDisplay.recipes());
-        registration.addRecipes(MaterialProcessCategory.TYPE, gregtech.compat.common.MaterialProcessDisplay.unbound());
+        processSnapshot = MaterialProcessSnapshot.Store.current();
+        var processNavigation = new ProcessNavigation(processSnapshot);
+        registration.addRecipes(MaterialProcessCategory.TYPE,
+                gregtech.compat.common.MaterialProcessProjection.initialPages(processSnapshot, processNavigation));
         var unitTags = gregtech.compat.common.MaterialUnitTagDisplay.entries();
         for (var family : MaterialUnitTagCategory.FAMILIES)
             registration.addRecipes(MaterialUnitTagCategory.type(family), MaterialUnitTagCategory.pages(family, unitTags));
@@ -221,5 +233,36 @@ public final class GregTechJEIPlugin implements IModPlugin {
             }
         }
         return new ItemStack(Items.ANVIL);
+    }
+
+    private final class ProcessNavigation implements gregtech.compat.common.MaterialProcessDisplay.Navigation {
+        private final MaterialProcessSnapshot snapshot;
+
+        private ProcessNavigation(MaterialProcessSnapshot snapshot) {
+            this.snapshot = snapshot;
+        }
+
+        @Override
+        public boolean openRecipe(gregtech.api.addon.material.DataKey reference) {
+            if (runtime == null || !MaterialProcessSnapshot.Store.current(snapshot)) return false;
+            var nativeRecipe = snapshot.recipe(reference);
+            if (nativeRecipe.isEmpty()) return false;
+            var row = nativeRecipe.get();
+            var category = categories.get(row.map());
+            if (category == null) return false;
+            runtime.getRecipesGui().showRecipes(category, List.of(row.recipe()), List.of());
+            return true;
+        }
+
+        @Override
+        public boolean openForm(gregtech.api.addon.material.DataKey resource, boolean uses) {
+            if (runtime == null || !MaterialProcessSnapshot.Store.current(snapshot)) return false;
+            var direction = uses
+                    ? gregtech.engine.material.MaterialProcessGraph.Direction.USES
+                    : gregtech.engine.material.MaterialProcessGraph.Direction.SOURCES;
+            var pages = gregtech.compat.common.MaterialProcessProjection.pages(snapshot, resource, direction, this);
+            runtime.getRecipesGui().showRecipes(processCategory, pages, List.of());
+            return true;
+        }
     }
 }

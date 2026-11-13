@@ -21,9 +21,11 @@ import gregtech.content.item.GTToolItem;
 import gregtech.content.material.Materials;
 import gregtech.content.recipe.CraftingMaterialForms;
 import gregtech.content.recipe.MachineRecipeOverlay;
+import gregtech.content.recipe.MaterialProcessSnapshot;
 import gregtech.content.recipe.MaterialRecoveryRules;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
+import gregtech.content.worldgen.MaterialWorldgenFacts;
 import gregtech.engine.fluid.PortableFluidContainerSpec;
 import gregtech.engine.machine.crucible.CrucibleItemInput;
 import gregtech.engine.material.ItemComposition;
@@ -884,6 +886,50 @@ public final class MaterialBaselineTests {
         awaitReload(helper, applications, compositionRevision, compositions, before, sample);
     }
 
+    @GameTest(template = "test_empty", batch = "material_baseline_reload", timeoutTicks = 600)
+    public static void materialProcessSnapshotIsBoundedAndCurrent(GameTestHelper helper) {
+        var snapshot = MaterialProcessSnapshot.Store.current();
+        var worldgen = MaterialWorldgenFacts.capture();
+        helper.assertTrue(
+                snapshot.samePublication(MachineRecipeOverlay.lastPublication()),
+                "process graph uses the successful material publication");
+        helper.assertTrue(
+                snapshot.snapshot().worldgenRevision() == worldgen.revision(),
+                "process graph binds the active worldgen fact revision");
+        helper.assertFalse(worldgen.facts().isEmpty(), "active worldgen facts are present");
+        helper.assertTrue(
+                worldgen.revision() == MaterialWorldgenFacts.capture().revision(),
+                "worldgen fact revision is stable");
+        helper.assertTrue(
+                worldgen.facts().stream()
+                        .allMatch(fact -> !fact.ores().isEmpty()
+                                && fact.minY() <= fact.maxY()
+                                && fact.ores().stream().allMatch(ore -> ore.minY() <= ore.maxY())),
+                "worldgen facts retain bounded, ordered native heights");
+        helper.assertFalse(snapshot.roots().isEmpty(), "process graph exposes published material roots");
+        var budgets = gregtech.engine.material.MaterialProcessGraph.Budgets.DEFAULT;
+        for (var root : snapshot.roots().stream().limit(24).toList()) {
+            var first = snapshot.query(
+                    root.resource(), gregtech.engine.material.MaterialProcessGraph.Direction.BOTH, budgets);
+            var second = snapshot.query(
+                    root.resource(), gregtech.engine.material.MaterialProcessGraph.Direction.BOTH, budgets);
+            helper.assertTrue(first.steps().size() <= budgets.maxSteps(), "step budget is enforced");
+            helper.assertTrue(first.edges().size() <= budgets.maxEdges(), "edge budget is enforced");
+            helper.assertFalse(first.notices().isEmpty(), "coverage is always reported");
+            helper.assertTrue(first.steps().equals(second.steps()), "repeated queries have stable steps");
+            helper.assertTrue(first.edges().equals(second.edges()), "repeated queries have stable edges");
+            var references = first.steps().stream()
+                    .map(gregtech.engine.material.MaterialProcessGraph.Step::reference)
+                    .collect(java.util.stream.Collectors.toSet());
+            helper.assertTrue(
+                    first.edges().stream()
+                            .allMatch(edge -> references.contains(edge.source())
+                                    && references.contains(edge.target())),
+                    "every edge endpoint belongs to the bounded query result");
+        }
+        helper.succeed();
+    }
+
     private static void awaitReload(
             GameTestHelper helper,
             int applications,
@@ -919,6 +965,9 @@ public final class MaterialBaselineTests {
                 MachineRecipeOverlay.lastPublication().compositionRevision()
                         == ItemMaterialRegistry.compositionRevision(),
                 "the publication stamp names the composition snapshot used by the recipe overlay");
+        helper.assertTrue(
+                MaterialProcessSnapshot.Store.current().samePublication(MachineRecipeOverlay.lastPublication()),
+                "the process graph republished with the successful recipe generation");
         helper.assertTrue(
                 compositions.equals(compositionSnapshot()),
                 "repeat reload preserves effective composition membership and values");

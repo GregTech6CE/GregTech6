@@ -170,6 +170,7 @@ public final class MachineRecipeOverlay {
         if (generation != current) return lastResult;
         lastPublication = MaterialPublication.platformGenerationPublished(
                 ItemMaterialRegistry.compositionRevision(), current);
+        MaterialProcessSnapshot.Store.publish(lastPublication, current);
         lastResult = new Result(tally.removed, tally.added, tally.rejected, restoreMillis, baselineRows(), false, false);
         applications++;
         if (!overlayDumped) {

@@ -1,0 +1,439 @@
+package gregtech.engine.material;
+
+import gregtech.api.addon.material.DataKey;
+
+import java.util.*;
+
+/**
+ * Immutable semantic process graph for one published material generation.
+ *
+ * <p>The graph owns no native recipe or world-generation objects. Queries traverse only their
+ * published ports and return bounded immutable rows for a viewer adapter to project.</p>
+ */
+public final class MaterialProcessGraph {
+    /** One transaction boundary with the form, tag and active worldgen revisions used by the rows. */
+    public record Snapshot(
+            MaterialPublication.Stamp publication,
+            long sessionGeneration,
+            long formRevision,
+            long tagGeneration,
+            long worldgenRevision) {
+        public Snapshot {
+            Objects.requireNonNull(publication);
+            if (sessionGeneration <= 0 || formRevision < 0 || tagGeneration < 0 || worldgenRevision < 0)
+                throw new IllegalArgumentException("Invalid process graph snapshot");
+        }
+    }
+
+    public enum Direction {
+        SOURCES,
+        USES,
+        BOTH
+    }
+
+    public enum Role {
+        CONSUMED,
+        CATALYST,
+        PRESENCE,
+        PRIMARY,
+        BYPRODUCT,
+        UNKNOWN
+    }
+
+    public enum AmountUnit {
+        ITEM,
+        MATERIAL_UNIT,
+        MILLIBUCKET,
+        UNKNOWN
+    }
+
+    /** Resource identity keeps material, form, phase and native selector/state separate. */
+    public record Resource(DataKey key, String material, String form, String phase, String state) {
+        public Resource {
+            Objects.requireNonNull(key);
+            requireText(material, "material");
+            requireText(form, "form");
+            requireText(phase, "phase");
+            requireText(state, "state");
+        }
+    }
+
+    public record Amount(long value, AmountUnit unit) {
+        public Amount {
+            if (value < 0) throw new IllegalArgumentException("Negative process amount");
+            Objects.requireNonNull(unit);
+        }
+
+        public static Amount unknown() {
+            return new Amount(0, AmountUnit.UNKNOWN);
+        }
+    }
+
+    public record Port(
+            Resource resource, Role role, Amount amount, OptionalInt chance, boolean main, List<String> details) {
+        public Port {
+            Objects.requireNonNull(resource);
+            Objects.requireNonNull(role);
+            Objects.requireNonNull(amount);
+            Objects.requireNonNull(chance);
+            if (chance.isPresent() && (chance.getAsInt() < 1 || chance.getAsInt() > 10_000))
+                throw new IllegalArgumentException("Invalid process chance");
+            details = List.copyOf(details);
+        }
+
+        public boolean output() {
+            return role == Role.PRIMARY || role == Role.BYPRODUCT || role == Role.UNKNOWN;
+        }
+    }
+
+    public record Step(
+            DataKey reference,
+            String name,
+            List<Port> inputs,
+            List<Port> outputs,
+            List<String> details,
+            boolean resolved) {
+        public Step {
+            Objects.requireNonNull(reference);
+            requireText(name, "process step name");
+            inputs = List.copyOf(inputs);
+            outputs = List.copyOf(outputs);
+            if (inputs.stream().anyMatch(Port::output) || outputs.stream().anyMatch(port -> !port.output()))
+                throw new IllegalArgumentException("Port role on wrong side");
+            if (inputs.stream().filter(Port::main).count() > 1
+                    || outputs.stream().filter(Port::main).count() > 1)
+                throw new IllegalArgumentException("Multiple main process ports");
+            details = List.copyOf(details);
+        }
+    }
+
+    public record Edge(DataKey source, DataKey target, DataKey resource, boolean confirmed) {
+        public Edge {
+            Objects.requireNonNull(source);
+            Objects.requireNonNull(target);
+            Objects.requireNonNull(resource);
+        }
+    }
+
+    public record Budgets(int maxDepth, int maxSteps, int maxPortsPerSide, int maxEdges) {
+        public static final Budgets DEFAULT = new Budgets(8, 64, 64, 128);
+
+        public Budgets {
+            if (maxDepth < 0 || maxSteps <= 0 || maxPortsPerSide <= 0 || maxEdges < 0)
+                throw new IllegalArgumentException("Invalid process graph budget");
+        }
+    }
+
+    public record Notice(String code, int omitted) {
+        public Notice {
+            requireText(code, "process notice code");
+            if (omitted < 0) throw new IllegalArgumentException("Negative process notice count");
+        }
+    }
+
+    public record Query(
+            Snapshot snapshot,
+            DataKey root,
+            Direction direction,
+            List<Step> steps,
+            List<Edge> edges,
+            List<Notice> notices,
+            boolean truncated) {
+        public Query {
+            Objects.requireNonNull(snapshot);
+            Objects.requireNonNull(root);
+            Objects.requireNonNull(direction);
+            steps = List.copyOf(steps);
+            edges = List.copyOf(edges);
+            notices = List.copyOf(notices);
+        }
+    }
+
+    private record IndexedStep(int order, Step step) {}
+
+    private record Node(DataKey reference, int depth) {}
+
+    private final Snapshot snapshot;
+    private final Map<DataKey, IndexedStep> steps;
+    private final Map<DataKey, Resource> resources;
+    private final Map<DataKey, List<IndexedStep>> inputs;
+    private final Map<DataKey, List<IndexedStep>> outputs;
+    private final List<Notice> notices;
+
+    private MaterialProcessGraph(Builder builder) {
+        snapshot = builder.snapshot;
+        steps = Map.copyOf(builder.steps);
+        resources = Map.copyOf(builder.resources);
+        inputs = freezeOccurrences(builder.inputs);
+        outputs = freezeOccurrences(builder.outputs);
+        notices = List.copyOf(builder.notices);
+    }
+
+    public static Builder builder(Snapshot snapshot) {
+        return new Builder(snapshot);
+    }
+
+    public Snapshot snapshot() {
+        return snapshot;
+    }
+
+    public List<Resource> resources() {
+        return resources.values().stream()
+                .sorted(Comparator.comparing(resource -> resource.key().toString()))
+                .toList();
+    }
+
+    /**
+     * Traverse from one resource occurrence. The adjacency index is already published; this method
+     * never enumerates unrelated steps or expands a selector into its member matrix.
+     */
+    public Query query(DataKey root, Direction direction, Budgets budgets) {
+        Objects.requireNonNull(root);
+        Objects.requireNonNull(direction);
+        Objects.requireNonNull(budgets);
+        if (!resources.containsKey(root))
+            return new Query(snapshot, root, direction, List.of(), List.of(), notices, false);
+
+        var queue = new ArrayDeque<Node>();
+        var queued = new HashSet<DataKey>();
+        boolean startsSources = direction != Direction.USES;
+        boolean startsUses = direction != Direction.SOURCES;
+        int omittedSteps = enqueue(root, startsSources, startsUses, 0, budgets, queue, queued);
+        var visited = new LinkedHashMap<DataKey, Integer>();
+        var edges = new LinkedHashMap<Edge, Boolean>();
+        var truncations = new LinkedHashMap<String, Integer>();
+        int omittedPorts = 0;
+        int omittedEdges = 0;
+        int omittedDepth = 0;
+        boolean stopped = false;
+
+        while (!queue.isEmpty() && !stopped) {
+            Node node = queue.removeFirst();
+            if (visited.containsKey(node.reference)) continue;
+            if (visited.size() >= budgets.maxSteps()) {
+                addNotice(truncations, "node_limit", 1);
+                break;
+            }
+            visited.put(node.reference, node.depth);
+            IndexedStep indexed = steps.get(node.reference);
+            if (indexed == null) continue;
+            if (node.depth >= budgets.maxDepth()) {
+                if (direction != Direction.USES)
+                    omittedDepth += indexed.step.inputs().stream()
+                            .limit(budgets.maxPortsPerSide())
+                            .map(port -> outputs.getOrDefault(port.resource().key(), List.of()))
+                            .mapToInt(occurrences -> unseen(occurrences, visited, queued))
+                            .sum();
+                if (direction != Direction.SOURCES)
+                    omittedDepth += indexed.step.outputs().stream()
+                            .limit(budgets.maxPortsPerSide())
+                            .map(port -> inputs.getOrDefault(port.resource().key(), List.of()))
+                            .mapToInt(occurrences -> unseen(occurrences, visited, queued))
+                            .sum();
+                continue;
+            }
+
+            boolean expandInputs = direction != Direction.USES;
+            boolean expandOutputs = direction != Direction.SOURCES;
+            if (expandInputs) {
+                int available = Math.min(indexed.step.inputs().size(), budgets.maxPortsPerSide());
+                omittedPorts += indexed.step.inputs().size() - available;
+                for (int index = 0; index < available && !stopped; index++) {
+                    Port port = indexed.step.inputs().get(index);
+                    for (IndexedStep source :
+                            outputs.getOrDefault(port.resource().key(), List.of())) {
+                        Edge edge = new Edge(
+                                source.step.reference(),
+                                node.reference,
+                                port.resource().key(),
+                                confirmed(source, indexed));
+                        if (edges.putIfAbsent(edge, Boolean.TRUE) == null && edges.size() > budgets.maxEdges()) {
+                            edges.remove(edge);
+                            omittedEdges++;
+                            stopped = true;
+                            break;
+                        }
+                        if (stopped) break;
+                        if (!visited.containsKey(source.step.reference())
+                                && !queued.contains(source.step.reference())) {
+                            if (queued.size() >= budgets.maxSteps()) {
+                                omittedSteps++;
+                                continue;
+                            }
+                            queue.addLast(new Node(source.step.reference(), node.depth + 1));
+                            queued.add(source.step.reference());
+                        }
+                    }
+                }
+            }
+            if (expandOutputs && !stopped) {
+                int available = Math.min(indexed.step.outputs().size(), budgets.maxPortsPerSide());
+                omittedPorts += indexed.step.outputs().size() - available;
+                for (int index = 0; index < available && !stopped; index++) {
+                    Port port = indexed.step.outputs().get(index);
+                    for (IndexedStep target :
+                            inputs.getOrDefault(port.resource().key(), List.of())) {
+                        Edge edge = new Edge(
+                                node.reference,
+                                target.step.reference(),
+                                port.resource().key(),
+                                confirmed(indexed, target));
+                        if (edges.putIfAbsent(edge, Boolean.TRUE) == null && edges.size() > budgets.maxEdges()) {
+                            edges.remove(edge);
+                            omittedEdges++;
+                            stopped = true;
+                            break;
+                        }
+                        if (stopped) break;
+                        if (!visited.containsKey(target.step.reference())
+                                && !queued.contains(target.step.reference())) {
+                            if (queued.size() >= budgets.maxSteps()) {
+                                omittedSteps++;
+                                continue;
+                            }
+                            queue.addLast(new Node(target.step.reference(), node.depth + 1));
+                            queued.add(target.step.reference());
+                        }
+                    }
+                }
+            }
+        }
+
+        addNotice(truncations, "node_limit", omittedSteps);
+        addNotice(truncations, "port_limit", omittedPorts);
+        addNotice(truncations, "edge_limit", omittedEdges);
+        addNotice(truncations, "depth_limit", omittedDepth);
+        var resultSteps = visited.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .map(entry -> boundedStep(steps.get(entry.getKey()).step, budgets.maxPortsPerSide()))
+                .toList();
+        var resultEdges = edges.keySet().stream()
+                .filter(edge -> visited.containsKey(edge.source()) && visited.containsKey(edge.target()))
+                .toList();
+        var resultNotices = new ArrayList<>(notices);
+        truncations.forEach((code, omitted) -> resultNotices.add(new Notice(code, omitted)));
+        if (resultSteps.isEmpty()
+                && resultNotices.stream()
+                        .noneMatch(notice ->
+                                notice.code().equals("no_" + direction.name().toLowerCase())))
+            resultNotices.add(new Notice("no_" + direction.name().toLowerCase(), 0));
+        return new Query(
+                snapshot,
+                root,
+                direction,
+                resultSteps,
+                resultEdges,
+                List.copyOf(resultNotices),
+                !truncations.isEmpty());
+    }
+
+    private int enqueue(
+            DataKey root,
+            boolean sources,
+            boolean uses,
+            int depth,
+            Budgets budgets,
+            ArrayDeque<Node> queue,
+            Set<DataKey> queued) {
+        int omitted = 0;
+        var starts = new LinkedHashSet<IndexedStep>();
+        if (sources) starts.addAll(outputs.getOrDefault(root, List.of()));
+        if (uses) starts.addAll(inputs.getOrDefault(root, List.of()));
+        for (IndexedStep start : starts) {
+            if (queued.size() >= budgets.maxSteps()) {
+                omitted++;
+                continue;
+            }
+            if (queued.add(start.step.reference())) queue.addLast(new Node(start.step.reference(), depth));
+        }
+        return omitted;
+    }
+
+    private Step boundedStep(Step step, int maxPorts) {
+        return new Step(
+                step.reference(),
+                step.name(),
+                boundedPorts(step.inputs(), maxPorts),
+                boundedPorts(step.outputs(), maxPorts),
+                step.details(),
+                step.resolved());
+    }
+
+    private static List<Port> boundedPorts(List<Port> ports, int maxPorts) {
+        return ports.size() <= maxPorts ? ports : List.copyOf(ports.subList(0, maxPorts));
+    }
+
+    private static boolean confirmed(IndexedStep source, IndexedStep target) {
+        return source.step.resolved() && target.step.resolved();
+    }
+
+    private static int unseen(List<IndexedStep> occurrences, Map<DataKey, Integer> visited, Set<DataKey> queued) {
+        int count = 0;
+        for (IndexedStep occurrence : occurrences)
+            if (!visited.containsKey(occurrence.step.reference()) && !queued.contains(occurrence.step.reference()))
+                count++;
+        return count;
+    }
+
+    private static void addNotice(Map<String, Integer> notices, String code, int count) {
+        if (count > 0) notices.merge(code, count, Math::addExact);
+    }
+
+    private static Map<DataKey, List<IndexedStep>> freezeOccurrences(Map<DataKey, List<IndexedStep>> source) {
+        var frozen = new HashMap<DataKey, List<IndexedStep>>(source.size());
+        source.forEach((key, values) -> frozen.put(key, List.copyOf(values)));
+        return Map.copyOf(frozen);
+    }
+
+    private static void requireText(String value, String name) {
+        if (value == null || value.isBlank()) throw new IllegalArgumentException("Missing " + name);
+    }
+
+    public static final class Builder {
+        private final Snapshot snapshot;
+        private final Map<DataKey, IndexedStep> steps = new LinkedHashMap<>();
+        private final Map<DataKey, Resource> resources = new LinkedHashMap<>();
+        private final Map<DataKey, List<IndexedStep>> inputs = new HashMap<>();
+        private final Map<DataKey, List<IndexedStep>> outputs = new HashMap<>();
+        private final List<Notice> notices = new ArrayList<>();
+
+        private Builder(Snapshot snapshot) {
+            this.snapshot = Objects.requireNonNull(snapshot);
+        }
+
+        public Builder notice(String code, int omitted) {
+            notices.add(new Notice(code, omitted));
+            return this;
+        }
+
+        public Builder add(Step step) {
+            Objects.requireNonNull(step);
+            if (steps.containsKey(step.reference()))
+                throw new IllegalArgumentException("Duplicate process step " + step.reference());
+            int order = steps.size();
+            IndexedStep indexed = new IndexedStep(order, step);
+            steps.put(step.reference(), indexed);
+            for (Port port : step.inputs()) {
+                register(port.resource());
+                inputs.computeIfAbsent(port.resource().key(), ignored -> new ArrayList<>())
+                        .add(indexed);
+            }
+            for (Port port : step.outputs()) {
+                register(port.resource());
+                outputs.computeIfAbsent(port.resource().key(), ignored -> new ArrayList<>())
+                        .add(indexed);
+            }
+            return this;
+        }
+
+        private void register(Resource resource) {
+            Resource previous = resources.putIfAbsent(resource.key(), resource);
+            if (previous != null && !previous.equals(resource))
+                throw new IllegalArgumentException("Process resource key has conflicting identity: " + resource.key());
+        }
+
+        public MaterialProcessGraph build() {
+            return new MaterialProcessGraph(this);
+        }
+    }
+}

@@ -16,7 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-/** Actual world generation catalogs, independent of optional recipe browsers. */
+/** Legacy icon-bearing worldgen viewer projection; process facts come from {@code MaterialWorldgenFacts}. */
 public class WorldgenInfoData {
     protected WorldgenInfoData() {}
 

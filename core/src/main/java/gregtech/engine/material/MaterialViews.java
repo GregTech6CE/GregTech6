@@ -23,6 +23,7 @@ public final class MaterialViews {
     private record GroupSubmission(String addonId, MaterialGroupDeclaration declaration) {}
 
     private static MaterialCatalogView published;
+    private static long contentRevision;
     private static volatile MaterialFormsView formBindings = new MaterialFormsView() {
         public Set<MaterialFormBinding> find(MaterialKey material) {
             return Set.of();
@@ -549,5 +550,10 @@ public final class MaterialViews {
                 return immutable.getOrDefault(java.util.Objects.requireNonNull(material), Set.of());
             }
         };
+        contentRevision++;
+    }
+
+    public static synchronized long contentRevision() {
+        return contentRevision;
     }
 }
