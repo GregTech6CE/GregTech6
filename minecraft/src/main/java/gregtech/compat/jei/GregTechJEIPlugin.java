@@ -94,6 +94,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new MultiblockInfoCategory(guiHelper));
         registration.addRecipeCategories(new ToolAssemblyCategory.Category(guiHelper));
         registration.addRecipeCategories(new MoldChiselCategory(guiHelper));
+        registration.addRecipeCategories(new MaterialProcessCategory(guiHelper));
         registration.addRecipeCategories(
                 new WorldgenInfoCategories.VeinCategory(guiHelper),
                 new WorldgenInfoCategories.SmallOreCategory(guiHelper),
@@ -182,6 +183,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
 //?}
 
         registration.addRecipes(MoldChiselCategory.TYPE, gregtech.compat.common.MoldChiselDisplay.recipes());
+        registration.addRecipes(MaterialProcessCategory.TYPE, gregtech.compat.common.MaterialProcessDisplay.unbound());
         var unitTags = gregtech.compat.common.MaterialUnitTagDisplay.entries();
         for (var family : MaterialUnitTagCategory.FAMILIES)
             registration.addRecipes(MaterialUnitTagCategory.type(family), MaterialUnitTagCategory.pages(family, unitTags));

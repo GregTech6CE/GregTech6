@@ -3,7 +3,10 @@ package gregtech.content.material;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialComponent;
 import gregtech.content.block.BlockMaterialWeights;
+import gregtech.content.block.DenseOreBlock;
 import gregtech.content.block.MaterialBlockLike;
+import gregtech.content.block.OreBlock;
+import gregtech.content.block.VanillaOreBlock;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.GTStoneSlabBlock;
@@ -32,6 +35,7 @@ public final class MaterialItemCompositions {
     public static void registerCommon() {
         ItemMaterialRuntimeFacts.install(ItemMaterialContentFacts.INSTANCE);
         registerMaterialItemForms();
+        registerOwnedOreCompositions();
         registerBlockWeights();
         registerMachineConstruction();
         registerSingleItemMaterials();
@@ -103,6 +107,36 @@ public final class MaterialItemCompositions {
                                 true));
             }
         }
+    }
+
+    private static void registerOwnedOreCompositions() {
+        for (var holder : GTBlocks.allEntries()) {
+            if (holder.isPresent()) registerOreBlockComposition(holder.get());
+        }
+    }
+
+    /**
+     * Gives an actual ore block the same material-form identity independent of which loader-specific
+     * registry owns it.
+     */
+    public static boolean registerOreBlockComposition(Block block) {
+        MaterialPrefix prefix;
+        gregtech.api.material.GTMaterial material;
+        if (block instanceof DenseOreBlock ore) {
+            prefix = MaterialPrefix.oreDense;
+            material = ore.material();
+        } else if (block instanceof VanillaOreBlock ore) {
+            prefix = MaterialPrefix.oreVanillastone;
+            material = ore.material();
+        } else if (block instanceof OreBlock ore && !ore.isSmall()) {
+            prefix = MaterialPrefix.oreVanillastone;
+            material = ore.material();
+        } else {
+            return false;
+        }
+        if (material == null || !material.isValid()) return false;
+        ItemMaterialRegistry.register(block.asItem(), prefix, material);
+        return true;
     }
 
     private static void registerMachineConstruction() {

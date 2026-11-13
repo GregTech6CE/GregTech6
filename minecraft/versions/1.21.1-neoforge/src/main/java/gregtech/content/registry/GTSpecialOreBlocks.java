@@ -1,18 +1,20 @@
 package gregtech.content.registry;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
 import gregtech.content.block.*;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialItemCompositions;
 import gregtech.engine.material.ItemMaterialRegistry;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 /** Actual original crystal/rock/vanilla ore blocks from GTIconSetBlocks; no decorative substitutes. */
 public final class GTSpecialOreBlocks {
@@ -79,11 +81,7 @@ public final class GTSpecialOreBlocks {
 
     public static void registerCompositions() {
         for (var holder : ALL) {
-            Block block = holder.get();
-            if (block instanceof DenseOreBlock ore)
-                ItemMaterialRegistry.register(block.asItem(), MaterialPrefix.oreDense, ore.material());
-            else if (block instanceof VanillaOreBlock ore)
-                ItemMaterialRegistry.register(block.asItem(), MaterialPrefix.oreVanillastone, ore.material());
+            MaterialItemCompositions.registerOreBlockComposition(holder.get());
         }
         ItemMaterialRegistry.register(
                 GTItems.getStack(MaterialPrefix.plate, gregtech.content.material.generated.WoodMaterials.WoodTreated)

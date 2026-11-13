@@ -1,9 +1,7 @@
 package gregtech.content.registry;
 
 import gregtech.GregTech;
-import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-import gregtech.content.data.MaterialPrefixes;
 import gregtech.content.material.MaterialItemCompositions;
 import gregtech.engine.material.ItemMaterialRegistry;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +19,6 @@ public final class GTMaterialRegistration {
         GregTech.LOGGER.info("[{}] Registering GT platform block item materials", GregTech.NAMESPACE);
         MaterialItemCompositions.registerCommon();
         int count = registerIconSetOres();
-        count += registerOwnedOres();
         count += registerPlants();
         GregTech.LOGGER.info("[{}] Registered {} Forge-specific block item compositions", GregTech.NAMESPACE, count);
     }
@@ -34,33 +31,7 @@ public final class GTMaterialRegistration {
             if (block instanceof gregtech.content.block.BlackSandBlock sand) {
                 ItemMaterialRegistry.register(sand.asItem(), null, sand.material(), GTValues.U * 9);
                 count++;
-            } else if (block instanceof gregtech.content.block.DenseOreBlock ore) {
-                GTMaterial material = ore.material();
-                if (material != null && material.isValid()) {
-                    ItemMaterialRegistry.register(block.asItem(), MaterialPrefixes.oreDense.getDelegate(), material);
-                    count++;
-                }
-            } else if (block instanceof gregtech.content.block.VanillaOreBlock ore) {
-                GTMaterial material = ore.material();
-                if (material != null && material.isValid()) {
-                    ItemMaterialRegistry.register(
-                            block.asItem(), MaterialPrefixes.oreVanillastone.getDelegate(), material);
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
-
-    private static int registerOwnedOres() {
-        int count = 0;
-        for (RegisteredBlock<? extends Block> entry : GTBlocks.allEntries()) {
-            if (!entry.isPresent()) continue;
-            if (entry.get() instanceof gregtech.content.block.OreBlock ore && !ore.isSmall()) {
-                ItemMaterialRegistry.register(
-                        ore.asItem(), MaterialPrefixes.oreVanillastone.getDelegate(), ore.material());
-                count++;
-            }
+            } else if (MaterialItemCompositions.registerOreBlockComposition(block)) count++;
         }
         return count;
     }

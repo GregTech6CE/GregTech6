@@ -11,6 +11,9 @@ import gregtech.api.material.SmeltingMaterialHelper;
 import gregtech.content.block.machine.MoldBlock;
 import gregtech.content.block.machine.MoldItemData;
 import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.block.DenseOreBlock;
+import gregtech.content.block.OreBlock;
+import gregtech.content.block.VanillaOreBlock;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
@@ -48,6 +51,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -254,6 +258,39 @@ public final class MaterialBaselineTests {
                 "ores".equals(MaterialEquivalence.commonGroup("ore"))
                         && "raw_ore_chunks".equals(MaterialEquivalence.commonGroup("rawOreChunk")),
                 "external ore tag names remain mapped");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void oreBlocksUseTheirDeclaredMaterialForm(GameTestHelper helper) {
+        int checked = 0;
+        for (Block block : BuiltInRegistries.BLOCK) {
+            MaterialPrefix expected;
+            gregtech.api.material.GTMaterial material;
+            if (block instanceof DenseOreBlock ore) {
+                expected = MaterialPrefix.oreDense;
+                material = ore.material();
+            } else if (block instanceof VanillaOreBlock ore) {
+                expected = MaterialPrefix.oreVanillastone;
+                material = ore.material();
+            } else if (block instanceof OreBlock ore && !ore.isSmall()) {
+                expected = MaterialPrefix.oreVanillastone;
+                material = ore.material();
+            } else {
+                continue;
+            }
+            checked++;
+            var item = block.asItem();
+            var composition = ItemMaterialRegistry.base(item).orElse(null);
+            helper.assertTrue(composition != null, "missing ore composition: " + id(new ItemStack(item)));
+            helper.assertTrue(
+                    composition.prefix() == expected,
+                    "wrong ore form: " + id(new ItemStack(item)) + " -> " + composition.prefix());
+            helper.assertTrue(
+                    composition.material().resolve() == material.resolve(),
+                    "wrong ore material: " + id(new ItemStack(item)));
+        }
+        helper.assertTrue(checked > 0, "no registered ore block was checked");
         helper.succeed();
     }
 

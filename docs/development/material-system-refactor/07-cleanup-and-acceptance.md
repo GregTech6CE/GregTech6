@@ -1,6 +1,6 @@
 # 07：清理与双平台整体验收
 
-本计划在数据与执行路径已收敛后移除旧实现，审计无消费内容，完成用户可见行为与双平台验收。状态：内部清理已实施；[02](02-material-registration.md)—[06](06-decomposition.md) 已合入 master。07-A—D 的首轮清理已完成并通过 core 测试与双平台编译；07-E 已完成文档点名的高优先级形态定向审计，但完整注册项清单和 07-F 最终验收仍未完成；[08](08-material-data-api.md)-D—E 也尚未实施，因此不能把全部 07 标为完成。
+本计划在数据与执行路径已收敛后移除旧实现，审计无消费内容，完成用户可见行为与双平台验收。状态：内部清理与 07-E 已实施；[02](02-material-registration.md)—[06](06-decomposition.md) 已合入 master。07-A—E 的实现已完成并通过单元测试、双平台编译和双平台 GameTest；07-F 最终验收与客户端确认仍未完成；[08](08-material-data-api.md)-D—E 也尚未实施，因此不能把全部 07 标为完成。
 
 本页原清单按 master `f096a79ee`（2026-11-12）核对源码。2026-11-13 已完成首轮内部迁移：材料事实归入 `content.material.catalog` 的类型化 process 规则，运行时消费者改经材料查询，recipe 包只保留配方模板、特殊工艺和原生适配。下文保留旧类名用于追溯删除对象；实际新入口见“本轮实施结果”。
 
@@ -124,7 +124,7 @@
 
 ### 07-E 定向审计记录
 
-2026-11-13 使用最终双平台 GameTest 生成的 `reload-items.tsv` 与源码配方入口做了首轮定向审计。注册数是实际发布物品数，不是 Java 字符串命中数；两端完全相同，因此没有观察到版本专属缺口。
+2026-11-13 使用最终双平台 GameTest 生成的 `reload-items.tsv`、`reload-forms.tsv`、`reload-block-forms.tsv` 与源码配方入口完成全量定向审计。注册数是实际发布对象数，不是 Java 字符串命中数。最终 Forge 与 NeoForge 均为 124 个形态族、31,137 个材料物品和 3,532 个材料方块形态，逐族计数一致；完整清单、九类无静态配方来源项的证据和源码补证见[07-E 材料与形态注册项审计](../../integration/material-refactor-07-roster.md)。
 
 | 形态 | 实际注册物品数（Forge／NeoForge） | 已确认获得途径 | 已确认消费终端 | 本轮决定 |
 | --- | --- | --- | --- | --- |
@@ -134,7 +134,7 @@
 | `gearGt`／`gearGtSmall` | 407／407 | 挤压、木材配方、坩埚模具及材料形态转换 | 旋转动力设备、齿轮箱、工作站建造、纳米制造和配方输入 | 保留；不是可批量注销的兼容形态 |
 | `itemCasing` | 407／407 | 挤压与材料形态转换 | Welder、石墨烯路线、电源单元和机器建造输入 | 保留；源版 `casingSmall` 别名仍有实际消费者 |
 
-本次没有找到足以删除上述注册项的无来源、无终端证据，因此没有改变物品 ID、NBT、配方身份或存档兼容性。完整来源／用途边仍由 08-D—E 的最终处理图验收覆盖。
+审计发现 NeoForge 原先只为 16 个 `oreVanillastone` 物品提交成分，Forge 为 396 个。共享 `MaterialItemCompositions` 现在按实际 `DenseOreBlock`、`VanillaOreBlock` 和非小型 `OreBlock` 统一提交，现有注册 ID 不变，最终两边均为 396。其余 123 个形态族没有找到足以删除的无来源、无终端证据，因此全部保留；没有改变物品 ID、NBT、配方身份或存档兼容性。完整来源／用途边仍由 08-D—E 的最终处理图验收覆盖。
 
 ### 4. 整理 tooltip 与语言
 
@@ -189,8 +189,8 @@
 - J：`./gradlew :core:test`，core 全套 174 tests 通过；新增事实投影计数覆盖全部迁移类别。
 - C：`./gradlew compileBothPlatforms`，Forge 与 NeoForge 节点均编译通过。
 - F（改动范围）：`-PspotlessRatchet=HEAD` 的 core 与 Minecraft 格式检查通过；`git diff --check` 与注释引用检查通过。
-- G：最终代码在全新目录 `work/material-system-refactor/07-review2-forge-20261113` 与 `07-review2-neo-20261113` 分别运行 Forge／NeoForge `runGameTestServer`，结果为 94/94 与 99/99；两节点均执行 `material_baseline`、`material_baseline_reload` 和配方发布批次。
-- B（首轮）：两个平台实际发行 JAR 构建成功；最新 JAR 中未发现已删除旧类、GameTest 类、案例 TSV 或测试模板。
+- G：当前代码在全新目录 `work/material-system-refactor/07e/gametest-forge` 与 `gametest-neo` 分别运行 Forge／NeoForge `runGameTestServer`，结果为 95/95 与 100/100；两节点均执行 `material_baseline`、`material_baseline_reload`、新增矿石形态遍历和配方发布批次。
+- B（首轮、当前修复前）：两个平台当时实际发行 JAR 构建成功；当前 07-E 成分修复后的发行包留待 07-F 重验。
 
 执行但失败或阻塞：
 
@@ -198,7 +198,6 @@
 
 尚未执行：
 
-- 07-E 的完整材料／形态清单裁决；`chain`、`minecartWheels`、`billet`、两种齿轮和 `itemCasing` 的定向审计已完成。
 - 07-F / 08-D—E 的有效来源／用途索引、有界处理图和远程客户端验收。
 - 客户端 tooltip、JEI/EMI 展示及机器实际交互的人工验收。
 
@@ -223,6 +222,6 @@
 | 07-E | 材料／形态去留与必要迁移 | 定向审计可先开始；删注册项必须单独提供可达性、存档和 parity 依据 |
 | 07-F | 全链路、处理图、远程客户端与发行包总验收 | 08-D—E 完成；按本页矩阵补齐，分别记录两个平台与未覆盖场景 |
 
-07-A—D 无需等待 08-D—E；07-E 的定向审计也可以先开展。08 的有效来源与共享图仍是 07-F 的交付前置，不能用内部清理完成替代。每个切片的检查按实际改动路径与总计划检查集执行，不把纯文档清单的检查结果沿用为实施代码的验收结果。
+07-A—E 已完成；08 的有效来源与共享图仍是 07-F 的交付前置，不能用内部清理和 07-E 注册项清单替代。每个切片的检查按实际改动路径与总计划检查集执行，不把纯文档清单的检查结果沿用为实施代码的验收结果。
 
 仅删除内部代码时，可回退对应小变更并恢复旧适配器；一旦删除了世界中可持久化的身份，恢复源码不等于恢复已保存的数据，必须在实施删除前选择并验证迁移／保留读取策略。测试世界使用隔离副本，不对真实服务器执行本计划。
