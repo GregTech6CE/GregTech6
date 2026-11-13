@@ -43,7 +43,6 @@
     "CoverWalkMixin",
     "CoverCollisionMixin",
     "CoverSignalMixin",
-    "BucketContentAccessor",
     "PotionBrewingAccessor",
     "PotionBrewingMixAccessor",
     "MaterialArrowEnchantmentMixin",
