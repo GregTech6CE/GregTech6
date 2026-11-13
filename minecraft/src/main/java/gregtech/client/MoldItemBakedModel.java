@@ -26,14 +26,14 @@ import java.util.*;
 
 /** The same 5x5 cavity grid as the world mold, selected from the native block-item shape data. */
 public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
-    private final List<BakedQuad> grid;
-    private final TextureAtlasSprite gridSprite;
+    private final BakedModel gridPass;
     private final ItemOverrides overrides;
+
     public MoldItemBakedModel(BakedModel hull, TextureAtlasSprite sprite) { this(hull,sprite,0,false); }
+
     private MoldItemBakedModel(BakedModel hull,TextureAtlasSprite sprite,int shape,boolean fixed) {
         super(hull);
-        gridSprite=Objects.requireNonNull(sprite,"Baked mold grid sprite");
-        grid=grid(shape,gridSprite);
+        gridPass = gridPass(hull, Objects.requireNonNull(sprite,"Baked mold grid sprite"), shape);
         var variants=new LinkedHashMap<Integer,BakedModel>(16,0.75f,true) {
             @Override protected boolean removeEldestEntry(Map.Entry<Integer,BakedModel> entry) {return size()>32;}
         };
@@ -42,10 +42,11 @@ public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
                                                 @Nullable LivingEntity entity,int seed) {
                 int shape=MoldItemData.shape(stack)&MoldShapes.SHAPE_MASK;
                 if(shape==0)return original;
-                return variants.computeIfAbsent(shape,key->new MoldItemBakedModel(hull,gridSprite,key,true));
+                return variants.computeIfAbsent(shape,key->new MoldItemBakedModel(hull,sprite,key,true));
             }
         };
     }
+
     // Borrow the sprite from this reload's baked template; ModelManager's atlas is not ready here.
     static TextureAtlasSprite gridSprite(BakedModel template) {
         var random=RandomSource.create(0);
@@ -54,52 +55,59 @@ public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
         for(var quad:quads) if(quad.getTintIndex()==0) return quad.getSprite();
         return template.getParticleIcon();
     }
-    private static List<BakedQuad> grid(int shape,TextureAtlasSprite sprite) {
+
+    @Nullable
+    private static BakedModel gridPass(BakedModel hull,TextureAtlasSprite sprite,int shape) {
+        if((shape&MoldShapes.SHAPE_MASK)==MoldGridGeometry.ALL_CAVITIES) return null;
         var bakery=new FaceBakery();
-        var quads=new ArrayList<BakedQuad>();
-        // Existing world mold geometry: 12px square, 2.4px cells, y=1..3px; bit 1 is a cavity.
-        for(int row=0;row<5;row++)for(int col=0;col<5;col++) {
-            if((shape&(1<<(row*5+col)))!=0)continue;
-            float x=2+col*2.4f,z=2+row*2.4f;
-            var from=new Vector3f(x,1,z);var to=new Vector3f(x+2.4f,3,z+2.4f);
-            for(var direction:Direction.values()) {
-                float[] uv = switch (direction) {
-                    case UP -> new float[]{x, z, x+2.4f, z+2.4f};
-                    case DOWN -> new float[]{x, 16-z-2.4f, x+2.4f, 16-z};
-                    case NORTH -> new float[]{16-x-2.4f, 13, 16-x, 15};
-                    case SOUTH -> new float[]{x, 13, x+2.4f, 15};
-                    case WEST -> new float[]{z, 13, z+2.4f, 15};
-                    case EAST -> new float[]{16-z-2.4f, 13, 16-z, 15};
-                };
-                var face=new BlockElementFace(null,0,"",new BlockFaceUV(uv,0));
+        var bySide=new EnumMap<Direction,List<BakedQuad>>(Direction.class);
+        // Existing world mold geometry: 12px square, 2.4px cells raised from 1px to 3px above the plate.
+        MoldGridGeometry.forEachVisibleFace(shape,(side,x0,z0,x1,z1,u0,v0,u1,v1)->{
+            var from=new Vector3f(x0,MoldGridGeometry.BOTTOM,z0);
+            var to=new Vector3f(x1,MoldGridGeometry.TOP,z1);
+            var face=new BlockElementFace(null,0,"",new BlockFaceUV(new float[]{u0,v0,u1,v1},0));
 //? if >=1.21.1 {
-                /*quads.add(bakery.bakeQuad(from,to,face,sprite,direction,BlockModelRotation.X0_Y0,null,true));
+            /*var quad=bakery.bakeQuad(from,to,face,sprite,side,BlockModelRotation.X0_Y0,null,true);
 *///?} else {
-                quads.add(bakery.bakeQuad(from,to,face,sprite,direction,BlockModelRotation.X0_Y0,null,true,
-                        ResourceLocation.fromNamespaceAndPath("gt6ce","mold_item_grid")));
+            var quad=bakery.bakeQuad(from,to,face,sprite,side,BlockModelRotation.X0_Y0,null,true,
+                    ResourceLocation.fromNamespaceAndPath("gt6ce","mold_item_grid"));
 //?}
-            }
-        }
-        return List.copyOf(quads);
+            bySide.computeIfAbsent(side,key->new ArrayList<>()).add(quad);
+        });
+        if(bySide.isEmpty()) return null;
+        return new GridPass(hull,bySide);
     }
-    private List<BakedQuad> withGrid(List<BakedQuad> hull,@Nullable Direction side) {
-        if(side!=null||grid.isEmpty())return hull;
-        var result=new ArrayList<BakedQuad>(hull);result.addAll(grid);return result;
-    }
-    @Override public List<BakedQuad> getQuads(@Nullable BlockState state,@Nullable Direction side,RandomSource random) {
-        return withGrid(super.getQuads(state,side,random),side);
-    }
-    @Override public List<BakedQuad> getQuads(@Nullable BlockState state,@Nullable Direction side,RandomSource random,
-                                             ModelData data,@Nullable net.minecraft.client.renderer.RenderType layer) {
-        return withGrid(super.getQuads(state,side,random,data,layer),side);
-    }
+
     @Override public ItemOverrides getOverrides(){return overrides;}
     /** BakedModelWrapper otherwise returns the hull and drops the grid before item rendering. */
     @Override public BakedModel applyTransform(net.minecraft.world.item.ItemDisplayContext context,
                                                com.mojang.blaze3d.vertex.PoseStack pose, boolean leftHand) {
-        originalModel.applyTransform(context, pose, leftHand);
+        originalModel.applyTransform(context,pose,leftHand);
         return this;
     }
-    /** The native item renderer otherwise unwraps the hull's passes and loses this cavity grid. */
-    @Override public List<BakedModel> getRenderPasses(ItemStack stack, boolean fabulous) { return List.of(this); }
+    /** Keep the hull's own passes (layer render types and transforms) and append the shape grid as its own pass. */
+    @Override public List<BakedModel> getRenderPasses(ItemStack stack, boolean fabulous) {
+        var passes=new ArrayList<>(originalModel.getRenderPasses(stack,fabulous));
+        if(gridPass!=null) passes.add(gridPass);
+        return List.copyOf(passes);
+    }
+
+    /** The cavity grid holds no hull quads, so hull render types, lighting and transforms stay untouched. */
+    private static final class GridPass extends BakedModelWrapper<BakedModel> {
+        private final Map<Direction,List<BakedQuad>> quads;
+        private GridPass(BakedModel hull,Map<Direction,List<BakedQuad>> quads) {
+            super(hull);
+            var copy=new EnumMap<Direction,List<BakedQuad>>(Direction.class);
+            quads.forEach((side,list)->copy.put(side,List.copyOf(list)));
+            this.quads=copy;
+        }
+        @Override public List<BakedQuad> getQuads(@Nullable BlockState state,@Nullable Direction side,RandomSource random) {
+            return side==null ? List.of() : quads.getOrDefault(side,List.of());
+        }
+        @Override public List<BakedQuad> getQuads(@Nullable BlockState state,@Nullable Direction side,RandomSource random,
+                                                 ModelData data,@Nullable net.minecraft.client.renderer.RenderType layer) {
+            return side==null ? List.of() : quads.getOrDefault(side,List.of());
+        }
+        @Override public List<BakedModel> getRenderPasses(ItemStack stack, boolean fabulous) { return List.of(this); }
+    }
 }

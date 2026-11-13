@@ -95,9 +95,8 @@ public final class SmelteryClientModels {
             BakedModel worldModel = new CrucibleBlockBakedModel(shared);
             BakedModel itemModel = BlockItemClientModels.asBlockItem(shared);
             if (block instanceof MoldBlock) {
-                BakedModel gridTemplate = models.find(CrucibleMoldIcons.sharedModelLocation(MaterialTextureSet.METALLIC));
-                itemModel = new MoldItemBakedModel(itemModel,
-                        MoldItemBakedModel.gridSprite(gridTemplate == null ? shared : gridTemplate));
+                // The grid must use this mold's own hull texture, exactly like the placed block.
+                itemModel = new MoldItemBakedModel(itemModel, MoldItemBakedModel.gridSprite(shared));
             }
             BlockItemClientModels.alias(models, block, worldModel, itemModel);
             aliased++;
