@@ -30,7 +30,6 @@ public final class GTManualStations {
     public static final List<RegisteredBlock<ScaffoldBlock>> SCAFFOLDS = new ArrayList<>();
     public static final List<RegisteredBlock<RopeBlock>> ROPES = new ArrayList<>();
     public static final List<RegisteredBlock<ShapedToolBlock>> SHAPED = new ArrayList<>();
-    public static RegisteredBlock<CoinMoldBlock> COIN_MOLD;
     public static RegisteredBlock<DustFunnelBlock> DUST_FUNNEL;
     public static RegisteredBlock<SapBagBlock> SAP_BAG;
     public static RegisteredBlock<AdvancedButtonBlock> ADVANCED_BUTTON;
@@ -71,16 +70,6 @@ public final class GTManualStations {
     }
 
     public static void initialize(ContentRegistrar registrar) {
-        COIN_MOLD = registrar.blockWithoutItem(
-                REGISTRY_NAMESPACE,
-                "coin_mold",
-                () -> new CoinMoldBlock(BlockBehaviour.Properties.of()
-                        .mapColor(MapColor.METAL)
-                        .strength(6f, 6f)
-                        .requiresCorrectToolForDrops()
-                        .sound(SoundType.METAL)));
-        SHAPED.add((RegisteredBlock) COIN_MOLD);
-        item(registrar, "coin_mold", COIN_MOLD);
         for (var v : gregtech.content.tool.UtilityToolRules.ROPES) {
             var b = registrar.blockWithoutItem(
                     REGISTRY_NAMESPACE,
