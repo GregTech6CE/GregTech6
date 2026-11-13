@@ -129,7 +129,19 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
                 return target.useScrewdriver(state, level, pos, player, context.getHand(), hit);
             }
         }
-*///?}
+*///?} else {
+        if (toolName.equals("Screwdriver") && player != null && player.isShiftKeyDown() && stack.getCount() == 1) {
+            var level = context.getLevel();
+            var pos = context.getClickedPos();
+            var state = level.getBlockState(pos);
+            if (state.getBlock() instanceof gregtech.content.block.machine.HopperBlock
+                    || state.getBlock() instanceof gregtech.content.block.machine.QueueHopperBlock) {
+                var hit = new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),
+                        context.getClickedFace(), pos, context.isInside());
+                return state.use(level, player, context.getHand(), hit);
+            }
+        }
+//?}
         if (!toolName.equals("Wrench") || player == null || !player.isShiftKeyDown() || stack.getCount() != 1)
             return net.minecraft.world.InteractionResult.PASS;
         var level = context.getLevel();
