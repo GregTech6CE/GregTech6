@@ -68,7 +68,6 @@ public final class CreativeTabCatalog {
             "panels",
             "ropes",
             "tool_blocks",
-            "coins",
             "equipment",
             "bottles",
             "nature_foods",

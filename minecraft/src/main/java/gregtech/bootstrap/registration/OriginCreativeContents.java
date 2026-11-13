@@ -88,7 +88,6 @@ public final class OriginCreativeContents {
             if(id.startsWith("co2_laser"))return "lasers";
             if(id.startsWith("auto_hammer")||id.startsWith("auto_igniter"))return "automatic_tools";
             if(id.startsWith("zpm_discharger"))return "zpm";
-            if(id.startsWith("coin"))return "coins";
             if(id.startsWith("sand_"))return "stones";
             if(id.startsWith("clay_"))return "iconsets";
             if(id.startsWith("bars_")||id.startsWith("spike"))return "tool_blocks";
