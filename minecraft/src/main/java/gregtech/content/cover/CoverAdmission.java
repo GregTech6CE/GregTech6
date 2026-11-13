@@ -63,8 +63,7 @@ public final class CoverAdmission {
         if (owner instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity part)
             return part.hasFormedController();
         // Original base classes below TileEntityBase06Covers never carry covers.
-        if (owner instanceof PileBlockEntity
-                || owner instanceof ProcessingToolBlockEntity) return false;
+        if (owner instanceof PileBlockEntity || owner instanceof ProcessingToolBlockEntity) return false;
         // Hosts whose allowCovers(aSide) is a plain F.
         if (owner instanceof MaterialAnvilBlockEntity
                 || owner instanceof SensorBlockEntity

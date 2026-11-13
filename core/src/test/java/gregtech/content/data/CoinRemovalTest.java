@@ -38,7 +38,8 @@ class CoinRemovalTest {
     @Test
     void coinMoldRecipeRowIsGone() {
         assertTrue(
-                OriginalSurvivalRecipes.allRows().stream().noneMatch(row -> row.id().equals("coin_mold")),
+                OriginalSurvivalRecipes.allRows().stream()
+                        .noneMatch(row -> row.id().equals("coin_mold")),
                 "the survival recipe table has no coin_mold row");
     }
 
