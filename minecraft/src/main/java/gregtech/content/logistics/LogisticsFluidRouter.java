@@ -64,12 +64,7 @@ public final class LogisticsFluidRouter {
                         && type.role() != LogisticsCoverType.Role.EXPORT
                         && type.role() != LogisticsCoverType.Role.STORAGE)) continue;
 
-//? if >=1.21.1 {
-                /*FluidStack filter = type.filtered()
-                        ? LogisticsCoverInteraction.fluidFilter(cover, level.registryAccess()) : FluidStack.EMPTY;
-*///?} else {
-                FluidStack filter = type.filtered() ? LogisticsCoverInteraction.fluidFilter(cover, null) : FluidStack.EMPTY;
-//?}
+                FluidStack filter = type.filtered() ? LogisticsCoverInteraction.fluidFilter(cover, level.registryAccess()) : FluidStack.EMPTY;
                 if (type.filtered() && filter.isEmpty()) continue;
                 BlockPos targetPos = hostPos.relative(face);
                 if (!level.hasChunkAt(targetPos)) continue;

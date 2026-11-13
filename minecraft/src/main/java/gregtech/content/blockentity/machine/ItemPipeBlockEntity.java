@@ -334,11 +334,7 @@ public class ItemPipeBlockEntity extends BlockEntity
                     ItemStack cover = getCover(side);
                     boolean acted = CoverUtilityBehaviors.tickRetriever(
                             level, worldPosition, side, this,
-//? if >=1.21.1 {
-                            /*CoverUtilityBehaviors.itemFilter(cover,level.registryAccess()),
-*///?} else {
-                            CoverUtilityBehaviors.itemFilter(cover),
-//?}
+                            CoverUtilityBehaviors.itemFilter(cover, level.registryAccess()),
                             MachineCoverSpec.inverted(cover),
                             coverTicks, retrieverPending(face) || resumed);
                     if (acted) setRetrieverPending(face, false);
@@ -367,11 +363,7 @@ public class ItemPipeBlockEntity extends BlockEntity
         String id = coverIdOf(side);
         if (id == null || held == null || held.isEmpty()) return false;
         if (CoverUtilityBehaviors.FILTER_ITEM.equals(id) || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id)) {
-//? if >=1.21.1 {
-            /*return CoverUtilityBehaviors.setItemFilter(getCover(side),held,level.registryAccess());
-*///?} else {
-            return CoverUtilityBehaviors.setItemFilter(getCover(side), held);
-//?}
+            return CoverUtilityBehaviors.setItemFilter(getCover(side), held, level.registryAccess());
         }
         return false;
     }
@@ -411,11 +403,7 @@ public class ItemPipeBlockEntity extends BlockEntity
      * everything.</p>
      */
     public boolean coverFilterPermits(Direction side, ItemStack candidate) {
-//? if >=1.21.1 {
-        /*return !coverStore.shuttered(side) && CoverUtilityBehaviors.itemFilterPermits(getCover(side),coverStore.stopped(),candidate,level.registryAccess());
-*///?} else {
-        return !coverStore.shuttered(side) && CoverUtilityBehaviors.itemFilterPermits(getCover(side), coverStore.stopped(), candidate);
-//?}
+        return !coverStore.shuttered(side) && CoverUtilityBehaviors.itemFilterPermits(getCover(side), coverStore.stopped(), candidate, level.registryAccess());
     }
 
     /**

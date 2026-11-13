@@ -87,12 +87,7 @@ public final class LogisticsItemRouter {
                 LogisticsCoverType type = LogisticsCoverType.of(cover);
                 if (type == null || !type.routesItems() || type.role() == LogisticsCoverType.Role.DISPLAY)
                     continue;
-//? if >=1.21.1 {
-                /*ItemStack filter = type.filtered()
-                        ? LogisticsCoverInteraction.itemFilter(cover,level.registryAccess()) : ItemStack.EMPTY;
-*///?} else {
-                ItemStack filter = type.filtered() ? LogisticsCoverInteraction.itemFilter(cover, null) : ItemStack.EMPTY;
-//?}
+                ItemStack filter = type.filtered() ? LogisticsCoverInteraction.itemFilter(cover, level.registryAccess()) : ItemStack.EMPTY;
                 if (type.filtered() && filter.isEmpty())
                     continue;
                 BlockPos targetPosition = hostPosition.relative(face);

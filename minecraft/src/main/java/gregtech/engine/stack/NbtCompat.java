@@ -58,7 +58,16 @@ public final class NbtCompat {
 
     public static FluidStack readFluid(CompoundTag tag, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
-/*        return FluidStack.parseOptional(provider(lookup), tag);
+/*        if (!tag.contains("FluidName")) return FluidStack.parseOptional(provider(lookup), tag);
+        // Legacy Forge FluidName/Amount identity envelope (formerly FluidStackNbt.read).
+        net.minecraft.resources.ResourceLocation id = net.minecraft.resources.ResourceLocation.tryParse(tag.getString("FluidName"));
+        if (id == null || !net.minecraft.core.registries.BuiltInRegistries.FLUID.containsKey(id)) return FluidStack.EMPTY;
+        var fluid = net.minecraft.core.registries.BuiltInRegistries.FLUID.get(id);
+        if (fluid == net.minecraft.world.level.material.Fluids.EMPTY) return FluidStack.EMPTY;
+        var result = new FluidStack(fluid, Math.max(1, tag.getInt("Amount")));
+        if (tag.contains("Tag")) result.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                net.minecraft.world.item.component.CustomData.of(tag.getCompound("Tag")));
+        return result;
 *///?} else {
         return FluidStack.loadFluidStackFromNBT(tag);
 //?}
