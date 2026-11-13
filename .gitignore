@@ -16,8 +16,8 @@ crash-reports/
 .classpath
 .project
 .settings/
-bin/main/
-bin/test/
+**/bin/main/
+**/bin/test/
 *.iml
 *.ipr
 *.iws
