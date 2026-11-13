@@ -1,5 +1,7 @@
 package gregtech.engine.recipe;
 
+import static gregtech.api.material.GTValues.U;
+
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialDecompositionRule;
 import gregtech.api.addon.material.MaterialKey;
@@ -7,12 +9,9 @@ import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialComponent;
 import gregtech.api.material.MaterialProperty;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
-import static gregtech.api.material.GTValues.U;
 
 /** Pure decomposition planning shared by recipe publication and content-source projections. */
 public final class MaterialDecompositionPlanner {

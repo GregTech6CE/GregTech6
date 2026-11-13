@@ -8,7 +8,6 @@ import gregtech.content.data.ModReferences;
 import gregtech.content.material.MaterialDefinitions;
 import gregtech.engine.addon.AddonCoreServices;
 import gregtech.engine.addon.AddonMaterials;
-
 import java.util.*;
 import java.util.function.BiConsumer;
 

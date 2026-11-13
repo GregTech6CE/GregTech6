@@ -1,15 +1,14 @@
 package gregtech.content.recipe;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import gregtech.api.material.GTValues;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.RecyclablePrefixes;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.engine.recipe.chem.MaterialAmount;
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /** Pins the hand-written family tables to the original {@code Loader_Recipes_Handlers} rows. */
 final class FamilyRowTablesTest {

@@ -1,5 +1,7 @@
 package gregtech.engine.recipe;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import gregtech.api.addon.material.MaterialDecompositionRule;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKeys;
@@ -9,12 +11,9 @@ import gregtech.content.material.MaterialTestFixture;
 import gregtech.content.material.catalog.DecompositionMaterials;
 import gregtech.content.recipe.OriginalMaterialFluidUnits;
 import gregtech.engine.material.MaterialInfoRegistry;
+import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MaterialDecompositionPlannerTest {
     @BeforeAll

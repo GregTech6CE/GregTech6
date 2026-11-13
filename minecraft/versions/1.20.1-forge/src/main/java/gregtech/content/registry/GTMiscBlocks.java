@@ -1,13 +1,12 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.misc.PanelBlock;
+import java.util.function.Supplier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-
-import java.util.function.Supplier;
-
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 /** N10: decorative panels. */
 public final class GTMiscBlocks {

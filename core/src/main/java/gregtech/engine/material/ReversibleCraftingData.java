@@ -7,7 +7,6 @@ import gregtech.api.material.MaterialComponent;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.content.data.MaterialGroups;
 import gregtech.content.data.generated.GT6Materials;
-
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;

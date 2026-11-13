@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils;
 import gregtech.GregTech;
 import gregtech.content.registry.GTHoppers;
 import gregtech.content.registry.RegisteredBlock;
+import java.util.EnumMap;
+import java.util.Map;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -12,9 +14,6 @@ import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-
-import java.util.EnumMap;
-import java.util.Map;
 
 /**
  * Hopper / queuehopper shared model registration and bake-time aliasing.

@@ -1,6 +1,9 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.content.block.IconSetBlock;
+import java.util.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -8,10 +11,6 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.*;
-
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 /** Complete remaining original icon identities. Existing typed registrations retain ownership. */
 public final class GTRemainingIconBlocks {

@@ -1,19 +1,18 @@
 package gregtech.content.food;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.data.generated.GTBottlesGen;
 import gregtech.content.data.generated.GTDrinksGen;
 import gregtech.content.data.generated.GTFoodItemsGen;
-import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.RecordComponent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /** Guards the RFC #363 removal: five statistics are gone, radiation and the bottle items stay. */
 class NutritionRemovalTest {

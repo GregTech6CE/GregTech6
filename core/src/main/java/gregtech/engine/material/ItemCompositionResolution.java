@@ -10,8 +10,8 @@ public record ItemCompositionResolution(
         Objects.requireNonNull(selected, "selected");
         decisions = List.copyOf(Objects.requireNonNull(decisions, "decisions"));
         if (decisions.isEmpty()) throw new IllegalArgumentException("decisions must not be empty");
-        boolean selectedCandidatePresent = decisions.stream()
-                .anyMatch(decision -> decision.status() == ItemCompositionDecision.Status.SELECTED);
+        boolean selectedCandidatePresent =
+                decisions.stream().anyMatch(decision -> decision.status() == ItemCompositionDecision.Status.SELECTED);
         if (!selectedCandidatePresent) throw new IllegalArgumentException("decisions need a selected candidate");
     }
 }

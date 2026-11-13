@@ -1,5 +1,7 @@
 package gregtech.content.registry;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
 import gregtech.GregTech;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
@@ -9,8 +11,6 @@ import gregtech.engine.material.ItemMaterialRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 /** Forge-only block families after the shared item and block composition pass. */
 public final class GTMaterialRegistration {
