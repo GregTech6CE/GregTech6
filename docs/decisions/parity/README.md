@@ -28,6 +28,8 @@
 | 量子存储器数字补零 | 客户端配置 `display.mass_storage_leading_zeroes` 默认关闭，与原版一样只显示实际位数；开启后数量补足六位，满仓仍显示 `100%`。 | 为 [#315](https://github.com/GregTech6CE/GregTech6/issues/315) 保留可选显示样式，不改变存量。 |
 | 钼钙矿、钼铅矿分解 | 原版粉末离心分解改为电解机配方，使用模式 0 的选择器；分解成分和产量保持不变。矿石加工中的离心步骤不变。 | 按 [#318](https://github.com/GregTech6CE/GregTech6/issues/318) 将化合物分解归入电解。 |
 | 储罐手动灌取 | 默认需要流体工具；关闭 `general.TanksRequireFluidTools` 才允许桶等容器直接右键灌取。 | 提供可选便捷交互，不影响管道自动化。 |
+| 电锯自动收集 | 锯类工具（`SAW.canCollect=true`）破坏可采掘方块（如木壳机器）时掉落直接进背包，满则溢出；原版电锯 `canCollect=false` 不自动收集，仅扳手类收集。 | QoL：减少电锯伐木/拆木壳机器的拾取操作；有意保留的偏差。 |
+| 电池盒直接插电池 | 持电池右键电池盒直接插入充电槽，空手右键开 GUI；原版右键只开 GUI，电池需在 GUI 槽放置。 | QoL：简化电池装填；有意保留的偏差。 |
 | 幽匿材料 | 新增独立 `Sculk`，物性和工具属性参照 Blaze，但身份分开。 | 支持现代 MC 幽匿物品。 |
 | 现代石材 | 补充 `Tuff`、`MudBrick`、`RedNetherBrick`、`Purpur` 材料。 | 支持现代 MC 石材加工。 |
 | 工具合并修复 | 可开启 `recipes.allow_tool_merging`；同工具、同头柄材料合并修复，默认关闭。 | 提供可选的现代 MC 修复方式。 |
