@@ -1,56 +1,34 @@
 package gregtech.content.registry;
-import gregtech.engine.mod.GregTechIdentity;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
-//? if >=1.21.1 {
-/*import gregtech.content.transport.fluid.FluidTransportRegistries;
-*///?} else {
-//?}
+import java.util.function.Supplier;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.registries.DeferredHolder;
+/*import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.DeferredRegister;
 *///?} else {
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 //?}
 
-/** GT6 custom sound events — registered to {@code ForgeRegistries.SOUND_EVENTS}. */
-
-/** Original three sound identities, using the already registered Native sound registry. */
+/** GT6 custom sound events — registered to the native sound registry. */
 public final class GTSounds {
-//? if >=1.21.1 {
-    /*public static final DeferredRegister<SoundEvent> REGISTRY = FluidTransportRegistries.SOUNDS;
-    public static final DeferredHolder<SoundEvent, SoundEvent> WRENCH = FluidTransportRegistries.WRENCH;
-    public static final DeferredHolder<SoundEvent, SoundEvent> SCREWDRIVER = register("screwdriver");
-    public static final DeferredHolder<SoundEvent, SoundEvent> BEEP = register("beep");
-*///?} else {
     public static final DeferredRegister<SoundEvent> REGISTRY =
-            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, GregTechIdentity.REGISTRY_NAMESPACE);
-//?}
-
 //? if >=1.21.1 {
-    /*private GTSounds() {}
-    private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
+            /*DeferredRegister.create(Registries.SOUND_EVENT, REGISTRY_NAMESPACE);
+*///?} else {
+            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, REGISTRY_NAMESPACE);
+//?}
+    public static final Supplier<SoundEvent> WRENCH = register("wrench");
+    public static final Supplier<SoundEvent> SCREWDRIVER = register("screwdriver");
+    public static final Supplier<SoundEvent> BEEP = register("beep");
+
+    private GTSounds() {}
+
+    private static Supplier<SoundEvent> register(String name) {
         return REGISTRY.register(name, () -> SoundEvent.createVariableRangeEvent(
                 ResourceLocation.fromNamespaceAndPath(REGISTRY_NAMESPACE, name)));
-*///?} else {
-    public static final RegistryObject<SoundEvent> WRENCH   = register("wrench");
-    public static final RegistryObject<SoundEvent> SCREWDRIVER = register("screwdriver");
-    public static final RegistryObject<SoundEvent> BEEP     = register("beep");
-
-    private static RegistryObject<SoundEvent> register(String name) {
-        return REGISTRY.register(name, () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, (name).toLowerCase())));
-//?}
     }
-
-//? if >=1.21.1 {
-    /*/^* Initialize before FluidTransportRegistries attaches this same register to the mod bus. ^/
-    public static void bootstrap() {}
-*///?} else {
-    private GTSounds() {}
-//?}
 }

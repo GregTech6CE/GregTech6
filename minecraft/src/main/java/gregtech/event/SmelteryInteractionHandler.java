@@ -9,10 +9,7 @@ import gregtech.content.blockentity.machine.CrucibleFaucetBlockEntity;
 import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
 import gregtech.content.blockentity.machine.MoldBlockEntity;
 
-//? if >=1.21.1 {
-//?} else {
 import gregtech.content.registry.GTSounds;
-//?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -133,11 +130,7 @@ public final class SmelteryInteractionHandler {
         if (!(event.getState().getBlock() instanceof GTMachineBlock)) return;
         Player player = event.getPlayer();
         if (GTToolHelper.isMachineWrench(player.getMainHandItem())) {
-//? if >=1.21.1 {
-            /*event.getLevel().playSound(null, event.getPos(), gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-*///?} else {
             event.getLevel().playSound(null, event.getPos(), GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-//?}
         }
     }
 
@@ -212,11 +205,7 @@ public final class SmelteryInteractionHandler {
                                 "jade.gt6ce.direction." + clickedFace.getName()), net.minecraft.network.chat.Component.translatable(
                                 (mold.getAutoPullDirections() & (1 << clickedFace.ordinal())) != 0 ? "options.on" : "options.off")), true);
             }
-//? if >=1.21.1 {
-            /*level.playSound(null, mold.getBlockPos(), gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-*///?} else {
             level.playSound(null, mold.getBlockPos(), GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-//?}
             GTToolHelper.damageForUse(held, 1, player);
             player.swing(hand);
             return InteractionResult.CONSUME;
@@ -304,11 +293,7 @@ public final class SmelteryInteractionHandler {
                                 "jade.gt6ce.direction." + clickedFace.getName()), net.minecraft.network.chat.Component.translatable(
                                 (mold.getAutoPullDirections() & (1 << clickedFace.ordinal())) != 0 ? "options.on" : "options.off")), true);
             }
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-*///?} else {
             level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-//?}
             consumed = true;
         } else if (GTToolHelper.matchesTool(held, GTToolType.PINCERS)) {
             boolean pickedUp = mold.tryPickupWithPincers(player, true);

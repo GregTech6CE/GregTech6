@@ -21,11 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.level.Level;
-//? if >=1.21.1 {
-/*import gregtech.content.transport.fluid.FluidTransportRegistries;
-*///?} else {
 import gregtech.content.registry.GTSounds;
-//?}
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -235,11 +231,7 @@ public class SmeltingCrucibleBlock extends Block implements EntityBlock, GTMachi
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state,
                               @Nullable BlockEntity blockEntity, ItemStack tool) {
         if (!level.isClientSide && GTToolHelper.isMachineWrench(tool)) {
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-*///?} else {
             level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-//?}
             if (GTToolHelper.canCollectMachineDrop(tool, state)) {
 //? if >=1.21.1 {
                 /*ItemStack machine = new ItemStack(this);

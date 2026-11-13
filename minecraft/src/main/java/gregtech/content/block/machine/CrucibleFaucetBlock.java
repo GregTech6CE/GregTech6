@@ -221,15 +221,9 @@ public class CrucibleFaucetBlock extends HorizontalDirectionalBlock implements E
                 Component.translatable(automatic
                         ? "message.gt6ce.faucet.auto_input.automatic"
                         : "message.gt6ce.faucet.auto_input.redstone")), true);
-//? if >=1.21.1 {
-        /*var sound = wrenchSound
-                ? gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get()
-                : net.minecraft.sounds.SoundEvents.ANVIL_LAND;
-*///?} else {
         var sound = wrenchSound
                 ? gregtech.content.registry.GTSounds.WRENCH.get()
                 : net.minecraft.sounds.SoundEvents.ANVIL_LAND;
-//?}
         level.playSound(null, pos, sound, net.minecraft.sounds.SoundSource.BLOCKS, wrenchSound ? 1.0F : 0.1F, 1.0F);
         GTToolHelper.damageForToolClickReturn(player.getItemInHand(hand), 10000, player);
     }

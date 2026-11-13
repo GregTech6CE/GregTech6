@@ -2,7 +2,6 @@ package gregtech.platform.neoforge.registry;
 
 import gregtech.bootstrap.ContentRegistration;
 import gregtech.content.registry.*;
-import gregtech.content.transport.fluid.FluidTransportRegistries;
 import gregtech.content.worldgen.GTFeatures;
 import gregtech.platform.neoforge.enchantment.GTEnchantmentEffectTypes;
 import gregtech.platform.neoforge.fluid.FluidRegistries;
@@ -38,7 +37,6 @@ public final class NeoContent implements ContentRegistration.PlatformContent {
         GTStorageContainers.initialize(registrar);
         GTRelaysFilters.initialize(registrar);
         GTManualStations.initialize(registrar);
-        GTZpmArtifacts.initialize(registrar);
         GTRemainingDecor.initialize(registrar);
         GTMetalChests.initialize(registrar);
         GTBumbleBlocks.initialize(registrar);
@@ -51,7 +49,6 @@ public final class NeoContent implements ContentRegistration.PlatformContent {
         AddonSensorRegistration.register(registrar);
         GTMassStorages.initialize(registrar);
         GTLogisticsWire.register(registrar);
-        GTSounds.bootstrap();
         GTFluidPipes.registerAll(registrar);
         GTTanks.registerAll(registrar);
         GTBasicMachines.registerAll(registrar);
@@ -64,7 +61,7 @@ public final class NeoContent implements ContentRegistration.PlatformContent {
     /** Attaches every shared, addon and platform content register exactly once. */
     public void submit() {
         FluidRegistries.submit(bus);
-        FluidTransportRegistries.submit(bus);
+        GTSounds.REGISTRY.register(bus);
         BasicMachineRegistries.submit(bus);
         SmelteryRegistries.submit(bus);
         GTEnchantmentEffectTypes.submit(bus);

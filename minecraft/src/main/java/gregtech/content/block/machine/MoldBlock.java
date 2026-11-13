@@ -10,10 +10,7 @@ import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 
-//? if >=1.21.1 {
-//?} else {
 import gregtech.content.registry.GTSounds;
-//?}
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -143,11 +140,7 @@ public class MoldBlock extends Block implements EntityBlock, GTMachineBlock, Sim
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state,
                               @Nullable BlockEntity blockEntity, ItemStack tool) {
         if (!level.isClientSide && GTToolHelper.isMachineWrench(tool)) {
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-*///?} else {
             level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-//?}
             if (GTToolHelper.canCollectMachineDrop(tool, state)) {
 //? if >=1.21.1 {
                 /*ItemStack machine = getCloneItemStack(state,null,level,pos,player);

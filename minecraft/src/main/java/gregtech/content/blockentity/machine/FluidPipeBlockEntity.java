@@ -47,7 +47,6 @@ import net.minecraft.world.phys.AABB;
 //? if >=1.21.1 {
 /*import net.minecraft.core.HolderLookup;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import gregtech.content.transport.fluid.FluidTransportRegistries;
 import gregtech.platform.neoforge.transport.FluidTransportEnvironment;
 
 

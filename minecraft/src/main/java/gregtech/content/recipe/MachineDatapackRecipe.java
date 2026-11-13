@@ -24,7 +24,6 @@ import com.mojang.serialization.RecordBuilder;
 import net.minecraft.core.HolderLookup;
 *///?} else {
 //?}
-import net.minecraft.core.NonNullList;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -41,7 +40,6 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.world.item.crafting.Ingredient;
 *///?} else {
 //?}
 import net.minecraft.world.item.crafting.Recipe;
@@ -140,16 +138,11 @@ public final class MachineDatapackRecipe implements Recipe<CraftingContainer> {
 //?}
     @Override public boolean isSpecial() { return true; }
 //? if >=1.21.1 {
-/*    @Override public NonNullList<Ingredient> getIngredients() { return NonNullList.create(); }
-*///?} else {
+/**///?} else {
     @Override public ResourceLocation getId() { return id; }
 //?}
     @Override public RecipeSerializer<?> getSerializer() { return addition != null ? ADDITION : REMOVAL; }
     @Override public RecipeType<?> getType() { return addition != null ? ADDITION_TYPE.get() : REMOVAL_TYPE.get(); }
-//? if >=1.21.1 {
-/**///?} else {
-    @Override public NonNullList<net.minecraft.world.item.crafting.Ingredient> getIngredients() { return NonNullList.create(); }
-//?}
 
 //? if >=1.21.1 {
 /*    public static final RecipeSerializer<MachineDatapackRecipe> ADDITION = serializer(true);
@@ -240,51 +233,39 @@ public final class MachineDatapackRecipe implements Recipe<CraftingContainer> {
             @Override public String toString() { return name; }
         };
     }
+*///?}
 
-    private static <T> Map<String, Object> values(DynamicOps<T> ops, MapLike<T> input) {
-*///?} else {
-    static Map<String, Object> values(JsonObject json) {
-//?}
-        var map = new LinkedHashMap<String, Object>();
 //? if >=1.21.1 {
-/*        input.entries().forEach(pair -> {
+/*    private static <T> Map<String, Object> values(DynamicOps<T> ops, MapLike<T> input) {
+        var map = new LinkedHashMap<String, Object>();
+        input.entries().forEach(pair -> {
             String key = ops.getStringValue(pair.getFirst()).result().orElseThrow();
             map.put(key, value(ops.convertTo(JsonOps.INSTANCE, pair.getSecond())));
         });
-*///?} else {
+        return map;
+    }
+*///?}
+
+    static Map<String, Object> values(JsonObject json) {
+        var map = new LinkedHashMap<String, Object>();
         for (var entry : json.entrySet()) map.put(entry.getKey(), value(entry.getValue()));
-//?}
         return map;
     }
 
     private static Map<String, Object> parse(String json) {
-        JsonObject object = JsonParser.parseString(json).getAsJsonObject();
-        var map = new LinkedHashMap<String, Object>();
-        for (var entry : object.entrySet()) map.put(entry.getKey(), value(entry.getValue()));
-        return map;
+        return values(JsonParser.parseString(json).getAsJsonObject());
     }
 
     private static Object value(JsonElement element) {
         if (element == null || element.isJsonNull()) return null;
-//? if >=1.21.1 {
-/*        if (element.isJsonObject()) {
-            var map = new LinkedHashMap<String, Object>();
-            for (var entry : element.getAsJsonObject().entrySet()) map.put(entry.getKey(), value(entry.getValue()));
-            return map;
-        }
-*///?} else {
         if (element.isJsonObject()) return values(element.getAsJsonObject());
-//?}
         if (element.isJsonArray()) {
             var list = new ArrayList<Object>();
             JsonArray array = element.getAsJsonArray();
             for (var child : array) list.add(value(child));
             return list;
         }
-//? if >=1.21.1 {
-/**///?} else {
         if (!element.isJsonPrimitive()) throw new JsonParseException("Unsupported JSON value");
-//?}
         JsonPrimitive primitive = element.getAsJsonPrimitive();
         if (primitive.isBoolean()) return primitive.getAsBoolean();
         if (primitive.isNumber()) return primitive.getAsNumber();

@@ -70,9 +70,9 @@
 
 ## Registry
 
-摘要：注册表查找、`ResourceLocation` 构造与标签目录命名。
+摘要：注册表查找、`ResourceLocation` 构造、标签目录命名与配方序列化器 API 形态。
 
-关键词：BuiltInRegistries, ForgeRegistries, Mc.item, GregTech.id, fromNamespaceAndPath, ResourceLocation, tags/items, tags/item, GregTechIdentity
+关键词：BuiltInRegistries, ForgeRegistries, Mc.item, GregTech.id, fromNamespaceAndPath, ResourceLocation, tags/items, tags/item, GregTechIdentity, RecipeSerializer, RecipeHolder, fromJson, streamCodec
 
 分类 README：[Registry/README.md](Registry/README.md)
 

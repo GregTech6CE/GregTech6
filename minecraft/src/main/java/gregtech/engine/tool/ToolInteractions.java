@@ -101,11 +101,7 @@ public final class ToolInteractions {
         }
         if (spec.connection() == null && !level.setBlockAndUpdate(pos, next)) return true;
         if (state.getBlock() instanceof ToolInteractionTarget target) target.toolStateChanged(level, pos, next,spec);
-//? if >=1.21.1 {
-        /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(),
-*///?} else {
         level.playSound(null, pos, gregtech.content.registry.GTSounds.WRENCH.get(),
-//?}
                 net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
         if (spec.connection() == null) GTToolHelper.damageForToolClickReturn(player.getItemInHand(hand), 10000, player);
         else GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);

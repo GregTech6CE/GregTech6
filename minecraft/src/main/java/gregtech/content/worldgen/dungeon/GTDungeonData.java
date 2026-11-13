@@ -30,10 +30,7 @@ import gregtech.content.registry.GTMetalChests;
 import gregtech.content.registry.GTSafes;
 //?}
 
-//? if >=1.21.1 {
-//?} else {
 import gregtech.content.registry.GTLasers;
-//?}
 import gregtech.content.worldgen.GTSurfaceFlora;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
@@ -872,11 +869,7 @@ public final class GTDungeonData {
     /** GT6's two-in-three charged dungeon artifact; persist charge in the existing module. */
     public boolean zpm(int ax, int ay, int az, boolean active) {
         if (!gregtech.GregTechConfig.Rule.ZPMS.enabled()) return false;
-//? if >=1.21.1 {
-        /*if (!set(ax, ay, az, GTZpmArtifacts.ZPM.get().defaultBlockState())) return false;
-*///?} else {
         if (!set(ax, ay, az, GTLasers.ZPM.get().defaultBlockState())) return false;
-//?}
         if (!(level.getBlockEntity(new BlockPos(x + ax,y + ay,z + az))
                 instanceof gregtech.content.blockentity.energy.ZpmModuleBlockEntity module))
             throw new IllegalStateException("Dungeon ZPM entity missing");

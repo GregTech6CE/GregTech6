@@ -383,7 +383,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
             if (target != getFrontFacing()) {
                 level.setBlock(worldPosition,getBlockState().setValue(gregtech.content.block.machine.GTFacingMachineBlock.FACING,target),3);
                 level.invalidateCapabilities(worldPosition);
-                level.playSound(null,worldPosition,gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(),SoundSource.BLOCKS,1,1);
+                level.playSound(null,worldPosition,gregtech.content.registry.GTSounds.WRENCH.get(),SoundSource.BLOCKS,1,1);
                 GTToolHelper.damageForToolClickReturn(held,10000L,player);
             }
 *///?} else {

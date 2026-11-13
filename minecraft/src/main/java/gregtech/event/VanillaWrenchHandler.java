@@ -213,12 +213,7 @@ public final class VanillaWrenchHandler {
     }
 
     private static void playWrench(Level level, BlockPos pos) {
-//? if >=1.21.1 {
-        /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(),
-                SoundSource.BLOCKS, 1.0F, 1.0F);
-*///?} else {
         level.playSound(null, pos, gregtech.content.registry.GTSounds.WRENCH.get(),
                 SoundSource.BLOCKS, 1.0F, 1.0F);
-//?}
     }
 }

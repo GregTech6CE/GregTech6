@@ -34,7 +34,6 @@ public final class GTMultiblocks {
             IMPLOSION_COMPRESSOR_WALL, LARGE_NIOBIUM_TITANIUM_COIL, LARGE_COPPER_COIL,
             LARGE_IRIDIUM_COIL, DENSE_TITANIUM_WALL, TUNGSTEN_WALL, LIGHTNING_ROD,
             COKE_OVEN_MAIN, CRYO_DISTILLATION_MAIN, HEAT_EXCHANGER_MAIN, LOGISTICS_CORE;
-    public static RegisteredBlock<BasicMachineBlock> DISTILLATION_TOWER_MAIN;
     public static void registerAll(ContentRegistrar registrar) {
         if (!NAMED.isEmpty()) throw new IllegalStateException("Multiblocks registered twice");
         GTHeatExchangers.registerAll(registrar);
@@ -54,7 +53,6 @@ public final class GTMultiblocks {
         CRYO_DISTILLATION_MAIN = controller(registrar, "cryo_distillation_main", () -> new CryoDistillationControllerBlock(properties(6)), ControllerDeclarations.CRYO_DISTILLATION);
         HEAT_EXCHANGER_MAIN = controller(registrar, "heat_exchanger_main", () -> new LargeHeatExchangerControllerBlock(properties(6)), ControllerDeclarations.HEAT_EXCHANGER);
         LOGISTICS_CORE = controller(registrar, "logistics_core", () -> new LogisticsCoreControllerBlock(properties(6)), ControllerDeclarations.LOGISTICS);
-        DISTILLATION_TOWER_MAIN = RegisteredBlock.reference("distillation_tower_main");
     }
     /** Queues addon casings after the built-in parts. A call before addon machines install does nothing. */
     public static void registerAddonParts(ContentRegistrar registrar) {
@@ -145,10 +143,6 @@ public final class GTMultiblocks {
     public static List<RegisteredBlock<Block>> tanks() { return range(17001, 17067); }
     public static List<RegisteredBlock<Block>> texturedBlocks() {
         var blocks = new LinkedHashSet<>(NAMED.values()); blocks.addAll(CONTROLLERS.values());
-        //? if >=1.21.1 {
-        //?} else {
-        blocks.add(RegisteredBlock.reference("distillation_tower_main"));
-        //?}
         return List.copyOf(blocks);
     }
     public static int tintOf(Block block) {

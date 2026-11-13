@@ -151,19 +151,11 @@ public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock im
                     );
                 }
             }
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-*///?} else {
             level.playSound(null, pos, gregtech.content.registry.GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-//?}
             return;
         }
         if (!level.isClientSide && GTToolHelper.isMachineWrench(tool)) {
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-*///?} else {
             level.playSound(null, pos, gregtech.content.registry.GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-//?}
         }
         super.playerDestroy(level, player, pos, state, blockEntity, tool);
     }

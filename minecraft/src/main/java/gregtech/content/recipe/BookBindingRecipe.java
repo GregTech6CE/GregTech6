@@ -46,13 +46,10 @@ public final class BookBindingRecipe extends ShapelessRecipe {
 //?}
     }
     @Override public RecipeSerializer<?> getSerializer(){return SERIALIZER;}
-//? if >=1.21.1 {
-    /*private static final com.mojang.serialization.MapCodec<BookBindingRecipe> CODEC=new ShapelessRecipe.Serializer().codec().xmap(BookBindingRecipe::new,r->r.base);
-*///?} else {
-//?}
     public static final RecipeSerializer<BookBindingRecipe> SERIALIZER=new RecipeSerializer<>() {
 //? if >=1.21.1 {
-        /*public com.mojang.serialization.MapCodec<BookBindingRecipe> codec(){return CODEC;}
+        /*private static final com.mojang.serialization.MapCodec<BookBindingRecipe> CODEC=new ShapelessRecipe.Serializer().codec().xmap(BookBindingRecipe::new,r->r.base);
+        public com.mojang.serialization.MapCodec<BookBindingRecipe> codec(){return CODEC;}
         public net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf,BookBindingRecipe> streamCodec(){return net.minecraft.network.codec.ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());}
 *///?} else {
         private final ShapelessRecipe.Serializer vanilla=new ShapelessRecipe.Serializer();

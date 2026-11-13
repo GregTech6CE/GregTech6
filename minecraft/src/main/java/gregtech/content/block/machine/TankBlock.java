@@ -6,11 +6,7 @@ import gregtech.engine.tool.GTToolType;
 import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.client.TankTooltips;
-//? if >=1.21.1 {
-/*import gregtech.content.transport.fluid.FluidTransportRegistries;
-*///?} else {
 import gregtech.content.registry.GTSounds;
-//?}
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
@@ -61,26 +57,16 @@ public class TankBlock extends Block implements EntityBlock {
             player.displayClientMessage(net.minecraft.network.chat.Component.translatable(tank.isAutoOutput()
                     ? "tooltip.gt6ce.tank.info.auto_output"
                     : "tooltip.gt6ce.tank.info.no_auto_output"), true);
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            GTToolHelper.damageForUse(held, 1, player);
-*///?} else {
             level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             GTToolHelper.damageForUse(held, 1, player);
-//?}
             return InteractionResult.CONSUME;
         }
 
         // Soft Hammer: toggle states
         if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)) {
             tank.toggleSoftHammerState();
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
-            GTToolHelper.damageForUse(held, 1, player);
-*///?} else {
             level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
             GTToolHelper.damageForUse(held, 1, player);
-//?}
             return InteractionResult.CONSUME;
         }
 

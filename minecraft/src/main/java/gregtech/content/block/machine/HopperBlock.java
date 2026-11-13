@@ -269,11 +269,7 @@ public class HopperBlock extends DirectionalBlock implements EntityBlock, ToolIn
                             0.2F, (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F);
                 }
             }
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-*///?} else {
             level.playSound(null, pos, gregtech.content.registry.GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-//?}
             return;
         }
         super.playerDestroy(level, player, pos, state, blockEntity, tool);
