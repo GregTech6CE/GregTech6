@@ -59,7 +59,7 @@ public final class NbtCompat {
     public static FluidStack readFluid(CompoundTag tag, HolderLookup.Provider lookup) {
 //? if >=1.21.1 {
 /*        if (!tag.contains("FluidName")) return FluidStack.parseOptional(provider(lookup), tag);
-        // Legacy Forge FluidName/Amount identity envelope (formerly FluidStackNbt.read).
+        // Legacy Forge FluidName/Amount identity envelope.
         net.minecraft.resources.ResourceLocation id = net.minecraft.resources.ResourceLocation.tryParse(tag.getString("FluidName"));
         if (id == null || !net.minecraft.core.registries.BuiltInRegistries.FLUID.containsKey(id)) return FluidStack.EMPTY;
         var fluid = net.minecraft.core.registries.BuiltInRegistries.FLUID.get(id);

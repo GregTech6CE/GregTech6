@@ -312,9 +312,9 @@ public class FluidTankGT implements IFluidHandler {
 //?}
         storage.restore(tag.getLong("Amount"), tag.contains("Capacity") ? tag.getLong("Capacity") : null);
 //? if >=1.21.1 {
-        /*if (tag.contains("Fluid")) fluid = FluidStackNbt.read(lookup, tag.getCompound("Fluid"));
+        /*if (tag.contains("Fluid")) fluid = gregtech.engine.stack.NbtCompat.readFluid(tag.getCompound("Fluid"), lookup);
 *///?} else {
-        if (tag.contains("Fluid")) fluid = FluidStack.loadFluidStackFromNBT(tag.getCompound("Fluid"));
+        if (tag.contains("Fluid")) fluid = gregtech.engine.stack.NbtCompat.readFluid(tag.getCompound("Fluid"), null);
 //?}
         else fluid = FluidStack.EMPTY;
         // A removed or unknown fluid must not leave an amount without a fluid behind.

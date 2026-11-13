@@ -8,8 +8,7 @@ import net.minecraft.world.item.ItemStack;
 
 public final class HeatExchangerData {
 
-    private HeatExchangerData() {
-    }
+    private HeatExchangerData() {}
 
     public static HeatExchangerRules.Settings settings(ItemStack stack) {
         return settings(gregtech.engine.stack.BlockEntityData.read(stack));
@@ -18,7 +17,8 @@ public final class HeatExchangerData {
     public static HeatExchangerRules.Settings settings(CompoundTag tag) {
         var defaults = HeatExchangerRules.DEFAULTS;
         if (tag == null) return defaults;
-        return new HeatExchangerRules.Settings(tag.contains("gt.output") ? tag.getLong("gt.output") : defaults.rate(),
+        return new HeatExchangerRules.Settings(
+                tag.contains("gt.output") ? tag.getLong("gt.output") : defaults.rate(),
                 tag.contains("gt.eff") ? tag.getInt("gt.eff") : defaults.efficiency(),
                 tag.contains("gt.fuelmap") ? tag.getString("gt.fuelmap") : defaults.fuelMap(),
                 tag.contains("gt.energy.emitted") ? tag.getString("gt.energy.emitted") : defaults.energyId());
@@ -31,19 +31,17 @@ public final class HeatExchangerData {
         tag.putString("gt.energy.emitted", settings.energyId());
     }
     /** 1.20.1 ignores the lookup; its fluid codec reads the legacy envelope directly. */
-    public static void restore(FluidTankGT tank, CompoundTag data, long capacity, net.minecraft.core.HolderLookup.Provider lookup) {
+    public static void restore(
+            FluidTankGT tank, CompoundTag data, long capacity, net.minecraft.core.HolderLookup.Provider lookup) {
         // Source setCapacity never discards an over-capacity saved amount.
         tank.setEmpty();
         tank.setCapacity(capacity);
         // An empty long-tank envelope only has Amount/Capacity, not a fluid codec payload.
         if (!data.contains("Fluid") && !data.contains("FluidName") && !data.contains("id")) return;
         var fluidTag = data.contains("Fluid") ? data.getCompound("Fluid") : data;
-//? if >=1.21.1 {
-        /*var fluid = FluidStackNbt.read(lookup, fluidTag);
-*///?} else {
-        var fluid = net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(fluidTag);
-//?}
-        long amount = data.contains("Fluid") ? data.getLong("Amount")
+        var fluid = gregtech.engine.stack.NbtCompat.readFluid(fluidTag, lookup);
+        long amount = data.contains("Fluid")
+                ? data.getLong("Amount")
                 : data.contains("LAmount") ? data.getLong("LAmount") : fluid.getAmount();
         if (!fluid.isEmpty() && amount > 0) tank.setFluid(fluid, amount);
     }
