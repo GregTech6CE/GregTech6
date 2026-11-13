@@ -71,6 +71,7 @@ public class GregTech {
             initialize("material linking", new MaterialLinkBootstrap(), new MaterialItemRegistration());
             gregtech.engine.material.MaterialFormContent.publish();
             gregtech.content.recipe.ForgePotionBrewing.registerExtraIngredients();
+            gregtech.content.recipe.GTBumbleBeeRecipes.registerDisplayRows();
             gregtech.content.recipe.MachineRecipeBootstrap.load();
             gregtech.api.addon.GregTechAddons.dispatchRecipesReady(
                     new gregtech.api.addon.GregTechAddon.Context("forge", "1.20.1"));

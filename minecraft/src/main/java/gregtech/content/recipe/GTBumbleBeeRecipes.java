@@ -11,15 +11,9 @@ import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTItems;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
-
 /*import net.neoforged.neoforge.fluids.FluidStack;
-
-import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import org.jetbrains.annotations.Nullable;
 
@@ -82,11 +76,6 @@ import java.util.List;
  *       fake so the machine can never run one ({@link #registerDisplayRows()}).</li>
  * </ul>
  */
-//? if >=1.21.1 {
-//?} else {
-@Mod.EventBusSubscriber(modid = gregtech.GregTech.MODID,
-        bus = Mod.EventBusSubscriber.Bus.MOD)
-//?}
 public final class GTBumbleBeeRecipes {
 
     /** GT6's - the honey a single scan consumes ({@code FL.amount(aFluids[0], 10)}). */
@@ -128,22 +117,13 @@ public final class GTBumbleBeeRecipes {
      * {@code Loader_MultiTileEntities} -&gt; {@code GTBasicMachines} -&gt;
      * {@code BasicMachineDefinitions} -&gt; {@code MachineRecipeMaps.byMachineName}), i.e. before Forge has
      * filled the item and fluid registries. The display rows need real bee items and a honey fluid, so
-     * they are registered in common setup instead ({@link #onCommonSetup}).</p>
+     * they are registered in common setup instead (node entry points call {@link #registerDisplayRows()}).</p>
      */
     public static synchronized int register() {
         if (registered) return 0;
         registered = true;
         MachineRecipeMaps.Bumblelyzer.dynamicRecipes(GTBumbleBeeRecipes::find);
         return 1;
-//? if >=1.21.1 {
-//?} else {
-    }
-
-    /** Registers GT6's display rows once the registries are filled; see {@link #register()}. */
-    @SubscribeEvent
-    public static void onCommonSetup(net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) {
-        event.enqueueWork(GTBumbleBeeRecipes::registerDisplayRows);
-//?}
     }
 
     /** Whether the provider is installed. */

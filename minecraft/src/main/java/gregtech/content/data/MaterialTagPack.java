@@ -256,18 +256,6 @@ public final class MaterialTagPack extends AbstractPackResources {
                     }
                 }
                 continue;
-//? if >=1.21.1 {
-            /*}
-            if(item instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.BlackSandBlock sand) {
-                String name=MaterialEquivalence.materialName(sand.material());
-                for(String kind:List.of("item","block")) {
-                    add(tags,"gt6ce",kind,"block_dust/"+name,id.toString());
-                    add(tags,"forge",kind,"storage_blocks/"+name,id.toString());
-                }
-                add(tags,"minecraft","block","mineable/shovel",id.toString());
-                addMaterial(blocksByMaterial,sand.material(),id.toString());
-*///?} else {
-//?}
             }
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike m) {
                 String name=MaterialEquivalence.materialName(m.material());
@@ -289,8 +277,6 @@ public final class MaterialTagPack extends AbstractPackResources {
                 materialBlockItems.putIfAbsent(m.material().resolve().getName()+"|"+m.prefix().getName(),id.toString());
             }
 
-//? if >=1.21.1 {
-//?} else {
             if(item instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.BlackSandBlock sand) {
                 String name=MaterialEquivalence.materialName(sand.material());
                 for(String kind:List.of("items","blocks")) {
@@ -300,7 +286,6 @@ public final class MaterialTagPack extends AbstractPackResources {
                 add(tags,"minecraft","blocks","mineable/shovel",id.toString());
                 addMaterial(blocksByMaterial,sand.material(),id.toString());
             }
-//?}
             if(item instanceof BlockItem b) {
                 var block=b.getBlock();
                 if(block instanceof gregtech.content.block.machine.FluidPipeBlock pipe
@@ -308,13 +293,8 @@ public final class MaterialTagPack extends AbstractPackResources {
                     add(tags,"gt6ce","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
                 if(block instanceof gregtech.content.block.machine.ItemPipeBlock pipe
                         && ironMaterials.contains(pipe.spec().material().resolve()) && !pipe.spec().size().restrictive())
-//? if >=1.21.1 {
-                    /*add(tags,"gt6ce","item","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
-                if(block instanceof gregtech.engine.energy.WireMaterialLike wire) {
-*///?} else {
                     add(tags,"gt6ce","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
-                if(block instanceof gregtech.content.block.energy.ElectricWireBlock wire) {
-//?}
+                if(block instanceof gregtech.engine.energy.WireMaterialLike wire) {
                     String wireForm=(wire.spec().insulated()?"cable_":"wire_")+String.format(java.util.Locale.ROOT,"%02d",wire.spec().size());
                     String wireMaterial=MaterialEquivalence.materialName(wire.spec().material());
                     add(tags,"gt6ce","items",wireForm+"/"+wireMaterial,id.toString());

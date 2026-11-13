@@ -1,14 +1,13 @@
 package gregtech.content.recipe;
 
-import gregtech.engine.mod.SetupOnce;
+import com.mojang.logging.LogUtils;
 import gregtech.bootstrap.InitializationStep;
+import gregtech.content.data.FuelRecipeMaps;
 import gregtech.content.nuclear.ReactorRodRecipes;
 import gregtech.content.tool.AnvilRecipeDefinitions;
-import gregtech.content.data.FuelRecipeMaps;
-import com.mojang.logging.LogUtils;
-import org.slf4j.Logger;
-
+import gregtech.engine.mod.SetupOnce;
 import java.util.function.IntSupplier;
+import org.slf4j.Logger;
 
 /**
  * Ordered machine-recipe initialization shared by both loaders.
@@ -62,10 +61,8 @@ public final class MachineRecipeBootstrap {
         register("ReactorRodRecipes", ReactorRodRecipes::register);
         runStep("AlloyRecipeLoader", new AlloyRecipeLoader());
         runStep("DecompositionRecipeLoader", new DecompositionRecipeLoader());
-        // Forge initializes fuel maps with its base data. NeoForge does so here.
-//? if >=1.21.1 {
-        /*runStep("fuel maps", FuelRecipeMaps::bootstrap);
-*///?}
+        // Idempotent assertion; Forge also runs it during base-data initialization.
+        runStep("fuel maps", FuelRecipeMaps::bootstrap);
         runStep("FuelRecipeLoader", new FuelRecipeLoader());
         register("ConcreteMixerRecipes", ConcreteMixerRecipes::register);
         register("DynamiteMixerRecipes", DynamiteMixerRecipes::register);
@@ -105,8 +102,10 @@ public final class MachineRecipeBootstrap {
         runStep("GTExtruderRecipes", gregtech.content.recipe.generated.GTExtruderRecipes::register);
         runStep("GTVanillaRecipes", gregtech.content.recipe.generated.GTVanillaRecipes::register);
         runStep("GTTemporaryRecipes", gregtech.content.recipe.generated.GTTemporaryRecipes::register);
-        runStep("GTOreRecipes", () -> gregtech.content.recipe.generated.GTOreRecipes
-                .register(gregtech.GregTechConfig.easyU235Extraction()));
+        runStep(
+                "GTOreRecipes",
+                () -> gregtech.content.recipe.generated.GTOreRecipes.register(
+                        gregtech.GregTechConfig.easyU235Extraction()));
         // Comb and technology rows live inside GT6 item classes, outside the loader tables.
         runStep("GTCombRecipes", gregtech.content.recipe.generated.GTCombRecipes::register);
         runStep("GTTechnologyRecipes", gregtech.content.recipe.generated.GTTechnologyRecipes::register);

@@ -2,10 +2,7 @@ package gregtech.content.registry;
 
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
-//? if >=1.21.1 {
-/*import gregtech.engine.fluid.FluidVisualPolicy;
-*///?} else {
-//?}
+import gregtech.engine.fluid.FluidVisualPolicy;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -18,10 +15,6 @@ import gregtech.engine.fluid.FluidPhysicalProperties;
 import net.minecraft.network.chat.Component;
 //?}
 import net.minecraft.resources.ResourceLocation;
-//? if >=1.21.1 {
-//?} else {
-import net.minecraft.sounds.SoundEvents;
-//?}
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {
 /*import net.neoforged.bus.api.IEventBus;
@@ -346,7 +339,7 @@ public final class GTFluids {
 
     /** Raw color for grayscale templates; client rendering uses FluidAppearance for texture-aware tint. */
     public static int resolveTint(RegisteredFluids.FluidEntry entry) {
-        return gregtech.engine.fluid.FluidVisualPolicy.rawTint(entry);
+        return FluidVisualPolicy.rawTint(entry);
     }
 //?}
 }

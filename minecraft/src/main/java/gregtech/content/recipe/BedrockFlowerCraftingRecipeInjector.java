@@ -31,11 +31,6 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 
-//? if >=1.21.1 {
-//?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
-
 import java.util.ArrayList;
 import java.util.List;
 
