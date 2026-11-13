@@ -40,6 +40,15 @@ final class OmniMachineInfo {
                                 blocked ? "collect_outputs" : tool.work().isEmpty() ? "waiting" : "manual_work"));
                 for (int i = 0; i < outputs.size(); i++) info.item("output", i, outputs.get(i));
             }
+        } else if (entity instanceof AdvancedButtonBlockEntity button) {
+            String mode = button.isLampMode() ? "lamp" : button.maxLength() > 0 ? "button" : "switch";
+            info.line("mode", JadeInspection.label("advanced_button_" + mode));
+            info.line("strength", button.strength());
+            if (button.maxLength() > 0) info.line("pulse_length", button.maxLength());
+            info.line(
+                    "polarity",
+                    JadeInspection.label(button.isInverted() ? "advanced_button_inverted" : "advanced_button_normal"));
+            info.line("signal", JadeInspection.label(button.isActive() ? "signal_active" : "signal_idle"));
         } else if (entity instanceof ProcessingToolBlockEntity tool) {
             info.groupedInventory();
             int inputs = tool.recipes().mInputItemsCount;
