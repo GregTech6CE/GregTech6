@@ -67,11 +67,11 @@ public final class LargeCrucibleRenderer implements BlockEntityRenderer<LargeCru
 *///?} else {
         if (be.isMeltDownWarning()) tint = CrucibleBlockBakedModel.meltdownRgb(tint);
 //?}
-        var facing = be.getBlockState().getValue(gregtech.content.block.machine.LargeCrucibleControllerBlock.FACING);
         for (var face : faces) {
             String part = face == net.minecraft.core.Direction.UP ? "top"
                     : face == net.minecraft.core.Direction.DOWN ? "bottom" : "side";
-            String front = face == facing ? "_front" : "";
+            // GT6 MultiTileEntityCrucible keeps its default side UP with no rotatable sides.
+            String front = face == net.minecraft.core.Direction.UP ? "_front" : "";
             float shade = be.getLevel() == null ? 1 : be.getLevel().getShade(face, true);
             var sprites = new net.minecraft.client.renderer.texture.TextureAtlasSprite[2];
             for (int layer = 0; layer < 2; layer++) {
