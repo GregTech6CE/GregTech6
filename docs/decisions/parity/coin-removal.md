@@ -17,7 +17,7 @@
 | 横向接入 | 删除 Jade 硬币堆显示分支、`CoverAdmission` 两条拒绝、`ComponentCoverCapabilitiesMixin` 一条目标、NeoForge 储物容器能力一条登记、`CoinItemExpireHandler` 订阅与类（硬币掉落 200 tick 合并）。 | 接入点随内容移除；材料堆显示与封面准入走既有分支。 |
 | 配置 | 删除 `general.use3DCoins`、`general.use3DCoinsInv` 两键，旧 TOML 值由加载器忽略。 | 3D 硬币开关随渲染移除。 |
 | 创造页 | 删除 `coins` 页签族与 `itemGroup.gt6ce.coin*`；页签与图标由前缀泛型生成，停注后自然消失。 | 创造页随内容移除。 |
-| 资源 | 删除 212 个硬币专用文件（core 207、共享 1、Forge 4），共 322,644 B（git LF 口径）；jar 净收益实测 Forge 141,278 B、NeoForge 142,498 B；明细见[附录A](#附录a-资源清理)。 | 全部资源经引用核对为硬币专用，无与非硬币内容共用者；减少模组体积。 |
+| 资源 | 删除 212 个硬币专用文件（core 207、共享 1、Forge 4），共 322,644 B（git LF 口径）；jar 净收益实测 Forge 129,068 B、NeoForge 130,257 B；明细见[附录A](#附录a-资源清理)。 | 全部资源经引用核对为硬币专用，无与非硬币内容共用者；减少模组体积。 |
 | 语言键 | 英文删 10 条、中文删 15 条，其中 9 条为遗留键（4 条现代键无注册对象、5 条旧版中文键无读取者）；明细见[附录B](#附录b-语言键)。 | 随内容清理，避免无主键。 |
 | 存档兼容 | 硬币物品/方块/方块实体按既有缺失注册方式处理，`gt.coin.*` NBT 成孤儿数据；已放置硬币堆中的硬币不返还，不新增迁移工具。 | 本端无物品迁移机制；保持既有缺失注册处理方式。 |
 | 附属影响 | 删除的公开类型与成员均为源码级不兼容变更，主要包括 `CoinItem`、`CoinPileBlock`、`CoinMoldBlock`、两者方块实体、`GTCoinPiles`、`CoinStampPattern`、`CoinPileRules`、`MaterialPrefix.coin`、`MaterialPrefixes.coin`、`GTDungeonData.COIN_METALS`、`coins(...)`、`coin(...)`、`CellState.coinMetal()`，均不在公开 API 清单内；`GTDungeonData.PILE_METALS` 为公开静态字段，扩充改变以默认池调用的附属代码，仓库内无此类调用者。coin 在 `api/` 全模块零出现，API 版本不变。 | 满足 `gt6Coin` 谓词的附属材料此前自动获得硬币物品，前缀删除后该行为消失。 |
@@ -33,7 +33,7 @@
 | 堆组 | 1 | 227 | `stack_groups/material_forms/coin.json` |
 | 合计 | 212 | 322,644 | core 207 + 共享 `models/block/tool/coin_mold.json` 1 + Forge 孤儿 4（1 blockstate + 3 模型，659 B） |
 
-字节为 git LF 规范化口径。`material_icons/<set>/` 删 `coin.png` 与 `coin_overlay.png` 两组共 82 个，目录本身保留；`models/item/material/<set>/` 同理只删 `coin.json`。jar 净收益以 master @ e4a5fa76e 新鲜基线对照实测：Forge 141,278 B、NeoForge 142,498 B（压缩后差值，两节点均仅 coin 条目差异）；`compact-model-json` 去重索引中 coin 路径已为 0。
+字节为 git LF 规范化口径。`material_icons/<set>/` 删 `coin.png` 与 `coin_overlay.png` 两组共 82 个，目录本身保留；`models/item/material/<set>/` 同理只删 `coin.json`。jar 净收益以 master @ eded653bb 新鲜基线对照实测：Forge 129,068 B、NeoForge 130,257 B（压缩后差值，两节点均仅 coin 条目差异）；`compact-model-json` 去重索引中 coin 路径已为 0。
 
 ## 附录B 语言键
 
