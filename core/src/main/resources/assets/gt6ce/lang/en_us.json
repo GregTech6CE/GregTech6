@@ -61,6 +61,7 @@
   "gt6ce.jei.material_process.title": "Mineral Processing",
   "gt6ce.jei.material_process.section.sources": "Sources",
   "gt6ce.jei.material_process.section.internal": "Conversions",
+  "gt6ce.jei.material_process.section.recovery": "Recovery",
   "gt6ce.jei.material_process.section.uses": "Uses",
   "gt6ce.jei.material_process.cluster": "%s x%s",
   "gt6ce.jei.material_process.group_count": "This group contains %s steps.",

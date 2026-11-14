@@ -243,6 +243,11 @@ public final class GregTechJEIPlugin implements IModPlugin {
         }
 
         @Override
+        public boolean valid() {
+            return MaterialProcessSnapshot.Store.current(snapshot);
+        }
+
+        @Override
         public boolean openStack(ItemStack stack, boolean uses) {
             if (runtime == null || !MaterialProcessSnapshot.Store.current(snapshot) || stack.isEmpty()) return false;
             var role = uses ? mezz.jei.api.recipe.RecipeIngredientRole.INPUT : mezz.jei.api.recipe.RecipeIngredientRole.OUTPUT;

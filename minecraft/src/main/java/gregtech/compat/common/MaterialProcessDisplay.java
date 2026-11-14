@@ -140,7 +140,8 @@ public final class MaterialProcessDisplay {
             List<Component> details,
             java.util.Optional<SpecialProcess> specialProcess,
             boolean resolved,
-            boolean worldGenerated) {
+            boolean worldGenerated,
+            boolean genericRecovery) {
         public Step {
             Objects.requireNonNull(reference);
             name = name.copy();
@@ -156,6 +157,19 @@ public final class MaterialProcessDisplay {
         @Override
         public ItemStack icon() {
             return icon.copy();
+        }
+
+        public Step(
+                DataKey reference,
+                Component name,
+                ItemStack icon,
+                List<Port> inputs,
+                List<Port> outputs,
+                List<Component> details,
+                java.util.Optional<SpecialProcess> specialProcess,
+                boolean resolved,
+                boolean worldGenerated) {
+            this(reference, name, icon, inputs, outputs, details, specialProcess, resolved, worldGenerated, false);
         }
 
         public Step(
@@ -205,6 +219,7 @@ public final class MaterialProcessDisplay {
     public enum Section {
         SOURCES("gt6ce.jei.material_process.section.sources"),
         INTERNAL("gt6ce.jei.material_process.section.internal"),
+        RECOVERY("gt6ce.jei.material_process.section.recovery"),
         USES("gt6ce.jei.material_process.section.uses");
 
         private final String label;
@@ -219,6 +234,7 @@ public final class MaterialProcessDisplay {
     }
 
     public static java.util.Optional<Section> section(Step step, String material) {
+        if (step.genericRecovery()) return java.util.Optional.of(Section.RECOVERY);
         boolean input = step.inputs().stream()
                 .anyMatch(
                         port -> port.role() == Role.CONSUMED && port.material().equals(material));
@@ -248,6 +264,10 @@ public final class MaterialProcessDisplay {
      * return false for expired or unsupported targets. Implementations run on the client thread.
      */
     public interface Navigation {
+        default boolean valid() {
+            return true;
+        }
+
         Navigation NONE = new Navigation() {
             @Override
             public boolean openForm(DataKey resource, boolean uses) {

@@ -63,6 +63,7 @@
   "gt6ce.jei.material_process.title": "矿物处理",
   "gt6ce.jei.material_process.section.sources": "来源",
   "gt6ce.jei.material_process.section.internal": "内部转换",
+  "gt6ce.jei.material_process.section.recovery": "回收",
   "gt6ce.jei.material_process.section.uses": "去向",
   "gt6ce.jei.material_process.cluster": "%s ×%s",
   "gt6ce.jei.material_process.group_count": "本组包含 %s 个步骤。",

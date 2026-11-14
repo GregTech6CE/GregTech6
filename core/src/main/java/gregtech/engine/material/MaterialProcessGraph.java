@@ -160,7 +160,7 @@ public final class MaterialProcessGraph {
         }
     }
 
-    private record IndexedStep(int order, Step step) {}
+    private record IndexedStep(int order, Step step, boolean genericRecovery) {}
 
     private record Node(DataKey reference, int depth) {}
 
@@ -248,7 +248,7 @@ public final class MaterialProcessGraph {
                 if (direction != Direction.USES)
                     omittedDepth += indexed.step.inputs().stream()
                             .limit(budgets.maxPortsPerSide())
-                            .map(port -> outputs.getOrDefault(port.resource().key(), List.of()))
+                            .map(port -> sources(port.resource().key()))
                             .mapToInt(occurrences -> unseen(occurrences, visited, queued))
                             .sum();
                 if (direction != Direction.SOURCES)
@@ -266,8 +266,7 @@ public final class MaterialProcessGraph {
                 int available = Math.min(indexed.step.inputs().size(), budgets.maxPortsPerSide());
                 for (int index = 0; index < available && !stopped; index++) {
                     Port port = indexed.step.inputs().get(index);
-                    for (IndexedStep source :
-                            outputs.getOrDefault(port.resource().key(), List.of())) {
+                    for (IndexedStep source : sources(port.resource().key())) {
                         Edge edge = new Edge(
                                 source.step.reference(),
                                 node.reference,
@@ -370,13 +369,14 @@ public final class MaterialProcessGraph {
         if (rootResource == null)
             return new Query(snapshot, root, Direction.BOTH, List.of(), List.of(), notices, false);
 
-        var selected = new java.util.TreeSet<IndexedStep>(Comparator.comparingInt(IndexedStep::order));
+        var selected = new java.util.TreeSet<IndexedStep>(
+                Comparator.comparing(IndexedStep::genericRecovery).thenComparingInt(IndexedStep::order));
         List<Resource> materialResources = rootResource.material().equals("unknown")
                 ? List.of(rootResource)
                 : resourcesByMaterial.getOrDefault(rootResource.material(), List.of());
         for (Resource resource : materialResources) {
             selected.addAll(inputs.getOrDefault(resource.key(), List.of()));
-            selected.addAll(outputs.getOrDefault(resource.key(), List.of()));
+            selected.addAll(sources(resource.key()));
         }
         var retained = new ArrayList<IndexedStep>(Math.min(selected.size(), budgets.maxSteps()));
         int omittedSteps = 0;
@@ -450,7 +450,7 @@ public final class MaterialProcessGraph {
             Set<DataKey> queued) {
         int omitted = 0;
         for (List<IndexedStep> starts : List.of(
-                sources ? outputs.getOrDefault(root, List.of()) : List.<IndexedStep>of(),
+                sources ? sources(root) : List.<IndexedStep>of(),
                 uses ? inputs.getOrDefault(root, List.of()) : List.<IndexedStep>of())) {
             for (int index = 0; index < starts.size(); index++) {
                 if (queued.size() >= budgets.maxSteps()) {
@@ -473,6 +473,12 @@ public final class MaterialProcessGraph {
                 step.details(),
                 step.specialProcess(),
                 step.resolved());
+    }
+
+    private List<IndexedStep> sources(DataKey resource) {
+        return outputs.getOrDefault(resource, List.of()).stream()
+                .filter(indexed -> !indexed.genericRecovery())
+                .toList();
     }
 
     private static List<Port> boundedPorts(List<Port> ports, int maxPorts) {
@@ -523,11 +529,16 @@ public final class MaterialProcessGraph {
         }
 
         public Builder add(Step step) {
+            return add(step, false);
+        }
+
+        /** Generic recovery remains a use of its input, without advertising every reclaimable item as a source. */
+        public Builder add(Step step, boolean genericRecovery) {
             Objects.requireNonNull(step);
             if (steps.containsKey(step.reference()))
                 throw new IllegalArgumentException("Duplicate process step " + step.reference());
             int order = steps.size();
-            IndexedStep indexed = new IndexedStep(order, step);
+            IndexedStep indexed = new IndexedStep(order, step, genericRecovery);
             steps.put(step.reference(), indexed);
             var inputResources = new HashSet<DataKey>();
             for (Port port : step.inputs()) {

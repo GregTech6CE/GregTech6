@@ -22,16 +22,16 @@
 
 接口与测试输入契约见[展示接入](../../material-process-display.md)。生产页已连接 `MaterialProcessSnapshot`，JEI 与 EMI 复用同一图和面板；没有成功快照时才显示未接入说明。
 
-1. 在 JEI／EMI 中打开真实材料的“矿物处理”。页面应直接显示依赖图，没有分类分栏。连续链水平向右，替代路线和分叉就近分行；未分类步骤、无外部入口环及自环不能消失。不同 GUI 缩放下右侧、底部裁剪正确。
-2. 切割机三种润滑剂相同主物品／机器图标／产物时只显示一条路线，全部原生步骤仍保留，辅料不生成图节点，通过右上角 `+` 和 tooltip 查看。物品和机器均左击普通来源、右击普通用途，不精确锁定原配方；常规 tooltip 只显示名称；`+` 区域只列合并配方数与辅料名。数量、概率、时间、能量和 native guard 仍保存在原生配方。锤子加工应使用 EMI 同分类已有图标，其他工具／多方块类别也应一致。
+1. 在 JEI／EMI 中打开真实材料的“矿物处理”。页面应直接显示同一张画布上有内容的来源／内部转换／回收／去向区域、区标题与相邻区域分割线，空区域不留占位；世界生成和泉进入来源区；无切换或分页。连续链水平向右，替代路线和分叉就近分行；未分类步骤、无外部入口环及自环不能消失。不同 GUI 缩放下右侧、底部裁剪正确。
+2. 切割机三种润滑剂相同主物品／机器图标／首产物时只显示一条路线，次要输出不同也应共用机器、保留各分支，全部原生步骤仍保留，辅料不生成图节点，通过右上角 `+` 和 tooltip 查看。EMI 物品和机器使用原生槽位，确认自定义来源／用途绑定、点击释放、R/U、收藏及拖动物品均与普通 EMI 槽位一致，不精确锁定原配方；JEI 沿用普通来源／用途 focus；EMI 使用原生 tooltip，JEI 常规 tooltip 只显示名称；`+` 区域只列合并配方数与辅料名。非 1 件产量、U／mB 和非必然概率在图标上可见，精度保留至原生百分比；确定的 1 件产出不加数量／概率角标，未知概率显示 `?%`。共享资源采用生产端口的量，多个变体的不同量显示多值／省略号并可悬停查看；时间、能量和 native guard 仍保存在原生配方。锤子加工应使用 EMI 同分类已有图标，其他工具／多方块类别也应一致。
 3. 资源局部副本带 `↗`，回流带 `↩`，悬停同步突出相关实例和箭头。相同显示代表跨 selector 共享节点，不同 NBT／组件状态分开；同图标不能补造跨步骤关联。连接均为单段直线，分支斜向相连，输入无箭头、输出有箭头；遮挡图标的长边和回流改用局部副本，没有顶部回流通道。确认关系不因循环改为虚线。
 4. 对带 NBT／组件物品与真实流体，逐个副本检查左／右击、R/U、tooltip 和 EMI ingredient provider；流体代理应查询实际流体。各节点使用实际显示的完整物品／流体状态查询，无法恢复时保留符号，不用无数据假栈。
-5. 来源／内部转换／去向仅在工序 tooltip 说明；“本材料＋辅料 → 本材料其他形态＋副产物”仍属内部转换。工具、存在条件及额外辅料／副产物均不扩展生产路线。主材料的多输入、多输出分支仍保留。
-6. 大图初始和复位保持至少 75% 可读比例并定位代表链；小图适配视口。滚轮围绕鼠标缩放，顶部 `−／+` 缩放；空白处左右、上下拖动有效。在 100%、25% 和约 8% 比例下确认线宽、虚线间距及箭头与图标同比缩小，不出现盖住整图的固定尺寸箭头。缩放和平移后，图标、`+`、tooltip、点击及 EMI 悬停命中一致。
+5. 来源／内部转换／回收／去向决定横向分区，不依据机器名称分组；“本材料＋辅料 → 本材料其他形态＋副产物”仍属内部转换。工具、存在条件及额外辅料／副产物均不扩展生产路线。主材料的多输入、多输出分支仍保留。相同机器和首产物的替代形态应折叠为三列网格，共用一根输入线；用多种木材产树皮的路线确认辅料、输入形态数、次要产物、批量和概率不同也会合并，差异可在普通配方查询中查看。透镜或螺栓加工等本材料多输出按端口顺序紧邻排成至多三列网格，共用输出箭头；共享资源也不能把产物挤到其他配方之外。逐格验证原生查询、悬停和 EMI 命中；同一组矩形内部不能插入其他路线的节点或连线。通用研磨／熔化回收配方同时核对 GENERIC 归属及 Shredder／Melter／Smelter 配方表，砧敲碎等普通加工不得进入回收区或被从材料来源中隐藏；回收途径在内部转换后、去向前的独立回收区展示，不能因产出少量粉末就铺成粉末来源；显式来源配方仍应存在。
+6. 独立路线应紧凑排列成多列，局部副本不在远处预留依赖列，短配方也不被其他路线的宽网格撑开。大图初始和复位保持至少 75% 可读比例并定位代表链；小图适配视口。滚轮围绕鼠标缩放，顶部 `−／+` 缩放；空白处左右、上下拖动有效。在 100%、25% 和约 8% 比例下确认线宽、虚线间距及箭头与图标同比缩小，不出现盖住整图的固定尺寸箭头。缩放和平移后，图标、`+`、tooltip、点击及 EMI 悬停命中一致。
 7. 连续重载两次后确认配方增删同步、旧引用拒绝跳转；断线／换服不沿用回调。布局副本数不改变配方数量或原生 viewer 索引；方法标签只来自 API target／reagent 声明。
 8. 两平台分别检查 JEI-only、EMI-only 和双装环境，双装沿既有去重规则。另验无 viewer 的专用服务端与独立远程客户端；未实际执行的场景不能用编译或集成服务器静态表代替。
 
-`MaterialProcessSnapshotTests` 中的 `presentationPreservesNativeItemState`、`overviewGroupsVisibleRoutesAndHidesAuxiliaries`、`overviewAlignsChainsAndPreservesFeedback`、`overviewSharesHubsWithoutInventingConnections` 和 `overviewKeepsDenseEdgesLocal` 覆盖原生状态、锤子分类图标、辅料隐藏、原始步骤保留、外观去重、公共资源集中、连续链、顺序稳定、循环、副本、密集图直线避让和关联保留。编译这些测试不代表已运行 GameTest；箭头外观、真实 EMI 查询和鼠标手感仍需人工确认。
+`MaterialProcessSnapshotTests` 中的 `presentationPreservesNativeItemState`、`overviewGroupsVisibleRoutesAndHidesAuxiliaries`、`overviewAlignsChainsAndPreservesFeedback`、`overviewSharesHubsWithoutInventingConnections` 、`overviewKeepsDenseEdgesLocal`、`overviewKeepsFirstOutputAndVariantsTogether` 、`recoveryOwnershipAndMachineKindDriveOverviewClassification` 和 `overviewSeparatesSourcesConversionsAndUses`、`overviewFoldsAlternativeInputsAndKeepsProductGridsLocal`、`overviewShowsPortYieldsAndOrdersRecoveryAfterConversions`、`overviewFoldsSimilarRoutesAcrossNativeRecipeDifferences` 和 `overviewPacksLocalRoutesWithoutInvisibleDependencies` 覆盖原生状态、锤子分类图标、辅料隐藏、原始步骤保留、外观去重、公共资源集中、连续链、顺序稳定、循环、副本、密集图直线避让和关联保留。编译这些测试不代表已运行 GameTest；箭头外观、真实 EMI 查询和鼠标手感仍需人工确认。
 
 ## 注意事项
 

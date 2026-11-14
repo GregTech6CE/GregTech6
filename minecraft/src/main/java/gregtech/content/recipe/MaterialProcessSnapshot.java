@@ -69,6 +69,14 @@ public final class MaterialProcessSnapshot {
             Objects.requireNonNull(recipe);
             if (index < 0) throw new IllegalArgumentException("Invalid native recipe index");
         }
+
+        /** Publication fallback ownership also covers ordinary processing such as anvil crushing. */
+        public boolean genericRecovery() {
+            return RecoveryRecipePublisher.generic(recipe)
+                    && (map == gregtech.content.data.MachineRecipeMaps.Shredder
+                            || map == gregtech.content.data.MachineRecipeMaps.Melter
+                            || map == gregtech.content.data.MachineRecipeMaps.Smelter);
+        }
     }
 
     public record NativeWorldgen(MaterialWorldgenFacts.Fact fact) {
@@ -114,7 +122,8 @@ public final class MaterialProcessSnapshot {
         var builder = MaterialProcessGraph.builder(snapshot);
         COVERAGE.forEach(notice -> builder.notice(notice.code(), notice.omitted()));
         for (Step step : steps.values()) {
-            builder.add(step);
+            NativeRecipe nativeRecipe = nativeRecipes.get(step.reference());
+            builder.add(step, nativeRecipe != null && nativeRecipe.genericRecovery());
             step.inputs().forEach(port -> resources.putIfAbsent(port.resource().key(), port.resource()));
             step.outputs().forEach(port -> resources.putIfAbsent(port.resource().key(), port.resource()));
         }

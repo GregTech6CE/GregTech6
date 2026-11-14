@@ -54,7 +54,18 @@ public final class MaterialProcessPanel {
             try {
                 graphics.pose().translate(panX, BODY_TOP + panY, 0);
                 graphics.pose().scale((float) zoom, (float) zoom, 1);
+                for (var band : overview.bands()) {
+                    graphics.fill(band.left() + 2, 2, band.right() - 2, 24, 0xffb8b8b8);
+                    text(graphics, band.section().label(), band.left() + 6, 8, band.right() - band.left() - 12, TEXT);
+                    if (band.left() > 0) graphics.fill(band.left(), 2, band.left() + 1, overview.height(), 0xff999999);
+                }
                 drawEdges(graphics, hovered);
+                for (var grid : overview.grids()) {
+                    graphics.fill(grid.left(), grid.top(), grid.right(), grid.bottom(), 0xff777777);
+                    for (int y = grid.top(); y < grid.bottom(); y += 24)
+                        for (int x = grid.left(); x < grid.right(); x += 24)
+                            graphics.fill(x + 1, y + 1, x + 23, y + 23, 0xffb0b0b0);
+                }
                 for (Node node : overview.nodes()) {
                     if (!visible(node)) continue;
                     if (related(node, hovered))
@@ -64,6 +75,10 @@ public final class MaterialProcessPanel {
                             : node.port().icons().stream().findFirst().orElse(ItemStack.EMPTY);
                     if (icon.isEmpty()) text(graphics, Component.literal("?"), node.x - 3, node.y - 4, 10, MUTED);
                     else graphics.renderItem(icon, node.x - 8, node.y - 8);
+                    if (!node.machine()) {
+                        smallText(graphics, node.quantityBadge(), node.x + 10, node.y + 3, 0xffffffff, true);
+                        smallText(graphics, node.chanceBadge(), node.x - 10, node.y - 10, GOLD, false);
+                    }
                     if (node.machine() && node.extra()) smallText(graphics, "+", node.x + 9, node.y - 12, GOLD, false);
                     if (!node.machine() && (node.copy || node.returning))
                         smallText(graphics, node.returning ? "↩" : "↗", node.x + 8, node.y - 12, MUTED, false);
@@ -109,13 +124,29 @@ public final class MaterialProcessPanel {
         if (mouseX < 0 || mouseX >= WIDTH || mouseY < BODY_TOP || mouseY >= FOOTER) return null;
         double x = worldX(mouseX), y = worldY(mouseY);
         for (Node node : overview.nodes())
-            if (x >= node.x - 10 && x <= node.x + 13 && y >= node.y - 14 && y <= node.y + 11) return node;
+            if (x >= node.x - 11 && x < node.x + 12 && y >= node.y - 12 && y < node.y + 12) return node;
         return null;
     }
 
     public List<ItemStack> stacksAt(double mouseX, double mouseY) {
         Node node = hit(mouseX, mouseY);
-        if (node == null) return List.of();
+        return node == null ? List.of() : stacks(node);
+    }
+
+    public List<Node> nodes() {
+        return overview.nodes();
+    }
+
+    public PreviewViewport.Bounds bounds(Node node) {
+        return new PreviewViewport.Bounds(
+                (int) Math.max(0, Math.floor(panX + (node.x - 11) * zoom)),
+                (int) Math.max(BODY_TOP, Math.floor(BODY_TOP + panY + (node.y - 12) * zoom)),
+                (int) Math.min(WIDTH, Math.ceil(panX + (node.x + 12) * zoom)),
+                (int) Math.min(FOOTER, Math.ceil(BODY_TOP + panY + (node.y + 12) * zoom)));
+    }
+
+    public List<ItemStack> stacks(Node node) {
+        if (!page.navigation().valid()) return List.of();
         if (node.machine())
             return selected(node).icon().isEmpty()
                     ? List.of()
@@ -142,8 +173,23 @@ public final class MaterialProcessPanel {
         Component name = icon.isEmpty()
                 ? (node.machine() ? selected(node).name() : node.port().name())
                 : icon.getHoverName();
-        if (!node.machine() || !node.extra() || worldX(mouseX) < node.x + 6 || worldY(mouseY) > node.y - 6)
-            return List.of(name);
+        if (!node.machine()) {
+            List<List<Component>> variants = node.badgePorts().stream()
+                    .map(port -> List.of(
+                            port.amount(),
+                            port.chance().isPresent()
+                                    ? Component.translatable(
+                                            "gt6ce.jei.chance", port.chance().getAsInt() / 100.0)
+                                    : Component.translatable("gt6ce.jei.material_process.chance_unknown")))
+                    .distinct()
+                    .toList();
+            if (variants.size() <= 1) return List.of(name);
+            var lines = new ArrayList<Component>();
+            lines.add(name);
+            variants.forEach(lines::addAll);
+            return List.copyOf(lines);
+        }
+        if (!node.extra() || worldX(mouseX) < node.x + 6 || worldY(mouseY) > node.y - 6) return List.of(name);
         var lines = new ArrayList<Component>();
         lines.add(name);
         if (node.steps.size() > 1)
@@ -159,6 +205,15 @@ public final class MaterialProcessPanel {
     }
 
     public boolean click(double mouseX, double mouseY, int button) {
+        if (clickControls(mouseX, mouseY, button)) return true;
+        if (button != 0 && button != 1) return false;
+        Node node = hit(mouseX, mouseY);
+        if (node == null) return false;
+        if (!node.machine()) return page.navigation().openPort(node.port(), button == 1);
+        return page.navigation().openStack(selected(node).icon(), button == 1);
+    }
+
+    public boolean clickControls(double mouseX, double mouseY, int button) {
         if (button != 0 && button != 1) return false;
         if (button == 0 && mouseY >= 0 && mouseY < 14) {
             if (mouseX >= WIDTH - 29 && mouseX < WIDTH) {
@@ -174,10 +229,7 @@ public final class MaterialProcessPanel {
                 return true;
             }
         }
-        Node node = hit(mouseX, mouseY);
-        if (node == null) return false;
-        if (!node.machine()) return page.navigation().openPort(node.port(), button == 1);
-        return page.navigation().openStack(selected(node).icon(), button == 1);
+        return false;
     }
 
     public boolean press(double mouseX, double mouseY, int button) {
@@ -236,9 +288,17 @@ public final class MaterialProcessPanel {
     }
 
     private void drawEdges(GuiGraphics graphics, Node hovered) {
-        for (var edge : overview.edges()) {
-            int color = related(edge.from(), hovered) || related(edge.to(), hovered) ? 0xff986c26 : TEXT;
-            var path = edge.path();
+        record Wire(List<MaterialProcessOverview.Point> path, boolean output) {}
+        var wires = new java.util.LinkedHashMap<Wire, List<MaterialProcessOverview.Edge>>();
+        for (var edge : overview.edges())
+            wires.computeIfAbsent(new Wire(edge.path(), edge.endpoint().output()), ignored -> new ArrayList<>())
+                    .add(edge);
+        for (var entry : wires.entrySet()) {
+            boolean highlighted = entry.getValue().stream()
+                    .anyMatch(edge -> related(edge.from(), hovered) || related(edge.to(), hovered));
+            boolean confirmed = entry.getValue().stream().allMatch(MaterialProcessOverview.Edge::confirmed);
+            int color = highlighted ? 0xff986c26 : TEXT;
+            var path = entry.getKey().path();
             for (int index = 1; index < path.size(); index++) {
                 var from = path.get(index - 1);
                 var to = path.get(index);
@@ -248,8 +308,8 @@ public final class MaterialProcessPanel {
                         from.y(),
                         to.x(),
                         to.y(),
-                        !edge.confirmed(),
-                        edge.endpoint().output() && index == path.size() - 1,
+                        !confirmed,
+                        entry.getKey().output() && index == path.size() - 1,
                         color);
             }
         }

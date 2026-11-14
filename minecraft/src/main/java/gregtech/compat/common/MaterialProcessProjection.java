@@ -92,7 +92,10 @@ public final class MaterialProcessProjection {
                 step.details().stream().map(MaterialProcessProjection::literal).toList(),
                 specialProcess,
                 step.resolved(),
-                snapshot.worldgen(step.reference()).isPresent());
+                snapshot.worldgen(step.reference()).isPresent(),
+                snapshot.recipe(step.reference())
+                        .map(MaterialProcessSnapshot.NativeRecipe::genericRecovery)
+                        .orElse(false));
     }
 
     private static Optional<gregtech.api.addon.material.SpecialProcessMethod> specialMethod(

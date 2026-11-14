@@ -36,7 +36,7 @@ GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTe
 
 ### 配方回归案例表
 
-材料处理的 `MaterialProcessSnapshotTests` 验证输入 tag 不污染输出、跨材料路线、世界生成形态与完整 revision、普通共同原料、辅助工具说明、过期资源拒绝和同代索引复用；`material_process` 批次不写生产配方。
+材料处理的 `MaterialProcessSnapshotTests` 验证输入 tag 不污染输出、跨材料路线、世界生成形态与完整 revision、普通共同原料、辅助工具说明、相似路线跨辅料／概率／输入形态合并、砧加工与研磨／熔化回收的分类、局部副本无隐形依赖占位、独立路线紧凑排布、过期资源拒绝和同代索引复用；`material_process` 批次不写生产配方。
 
 材料领域的 `MaterialBaselineTests` 验证存储块的成分与两类准入、72U 附魔金苹果的规划和实际回收输出、复合钻头、耐久缩放、容器与有形状铸模、压模机模具、固体／流体分解及 test-source 材料 SPI。`material_baseline_reload` 为仅含一个测试的独立批次，等待两次真实资源重载；拥有规则数和固定样例必须稳定。原始投影写入根目录 `work/material-system-refactor/runtime/<MC>/<运行目录>/`。已知错误行为明确标为观察，不能当作正确性依据；字段、复现与未覆盖范围见[材料基线报告](../../../integration/material-baseline.md)。
 

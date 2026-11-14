@@ -174,13 +174,8 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         }
 
         @Override
-        public boolean openStack(ItemStack icon, boolean uses) {
-            if (!MaterialProcessSnapshot.Store.current(snapshot) || icon.isEmpty()) return false;
-            var stack = MaterialProcessEmiStacks.of(icon);
-            if (stack.isEmpty()) return false;
-            if (uses) dev.emi.emi.api.EmiApi.displayUses(stack);
-            else dev.emi.emi.api.EmiApi.displayRecipes(stack);
-            return true;
+        public boolean valid() {
+            return MaterialProcessSnapshot.Store.current(snapshot);
         }
 
         @Override

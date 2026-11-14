@@ -208,6 +208,46 @@ final class MaterialProcessGraphTest {
         return new DataKey("gt6ce", "resource/" + name);
     }
 
+    @Test
+    void genericRecoveryIsAnInputUseAndDoesNotSpendTheSourceBudget() {
+        var iron = resource("iron");
+        var copper = resource("copper");
+        var dust = resource("iron_dust");
+        var reclaim = step(
+                "reclaim",
+                List.of(port(copper, Role.CONSUMED, "copper", "Copper")),
+                List.of(port(dust, Role.UNKNOWN, "dust", "Iron")));
+        var internal = step(
+                "internal_recovery",
+                List.of(port(iron, Role.CONSUMED, "iron")),
+                List.of(port(dust, Role.UNKNOWN, "dust")));
+        var source = step(
+                "ordinary_source",
+                List.of(port(copper, Role.CONSUMED, "copper", "Copper")),
+                List.of(port(iron, Role.UNKNOWN, "iron")));
+        var graph = MaterialProcessGraph.builder(SNAPSHOT)
+                .add(reclaim, true)
+                .add(internal, true)
+                .add(source)
+                .build();
+        var material = graph.queryMaterial(dust, new Budgets(0, 2, 16, 16));
+        assertEquals(List.of(source, internal), material.steps());
+        assertEquals(
+                List.of(source),
+                graph.queryMaterial(dust, new Budgets(0, 1, 16, 16)).steps());
+        assertFalse(material.truncated());
+        assertTrue(graph.query(dust, Direction.SOURCES, Budgets.DEFAULT).steps().isEmpty());
+        assertEquals(
+                List.of(reclaim),
+                graph.query(copper, Direction.USES, new Budgets(0, 1, 16, 16)).steps());
+        assertEquals(
+                List.of(source),
+                graph.query(iron, Direction.SOURCES, Budgets.DEFAULT).steps());
+        assertEquals(
+                List.of(internal),
+                graph.query(iron, Direction.USES, new Budgets(0, 8, 16, 16)).steps());
+    }
+
     private static Port port(DataKey key, Role role, String state) {
         return port(key, role, state, "Iron");
     }

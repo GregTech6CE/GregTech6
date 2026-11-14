@@ -70,7 +70,7 @@ Block 处理放置、形状和交互分发；BlockEntity 保存实例状态、�
 
 GUI 模板、碎片图标与 JEI/EMI 的布局接入见[GUI 开发指南](../../development/gui-templates.md)，平台差异见[平台包](platforms.md)。
 
-矿物处理由 `content.recipe.MaterialProcessSnapshot` 从最终配方提交点绑定机器配方与活动世界生成，`engine.material.MaterialProcessGraph` 提供有界查询，`compat.common.MaterialProcessProjection` 再构造 JEI／EMI 共用的展示页。`compat.common.MaterialProcessOverview` 负责原生端口实例、拓扑层级、连续链、局部副本和排线，`client.MaterialProcessPanel` 负责可读视口、副本／回流标记与原生交互；EMI 的 `MaterialProcessEmiStacks` 把显示流体代理还原为原生索引和查询句柄。`compat.jei.MaterialProcessCategory` 与 `compat.emi.MaterialProcessEmiRecipe` 只做原生槽位、索引和事件适配。调用契约与预算见[展示接入](../../development/material-process-display.md)；这些类型不能成为第二套材料目录或配方事实表。
+矿物处理由 `content.recipe.MaterialProcessSnapshot` 从最终配方提交点绑定机器配方与活动世界生成，`engine.material.MaterialProcessGraph` 提供有界查询，`compat.common.MaterialProcessProjection` 再构造 JEI／EMI 共用的展示页。`compat.common.MaterialProcessOverview` 负责按机器／首产物合并相似路线、原生端口实例、可见拓扑层级、连续链、局部副本、输入／产物网格、独立路线紧凑排布、端口产量角标和排线，`client.MaterialProcessPanel` 负责可读视口、副本／回流标记与原生交互；EMI 的 `MaterialProcessEmiStacks` 把显示流体代理还原为原生索引和查询句柄。`compat.jei.MaterialProcessCategory` 与 `compat.emi.MaterialProcessEmiRecipe` 只做原生槽位、索引和事件适配。调用契约与预算见[展示接入](../../development/material-process-display.md)；这些类型不能成为第二套材料目录或配方事实表。
 
 第三方集成沿配置与现有入口条件加载，`compileOnly` 只说明编译依赖形态，不能保证类加载安全。
 

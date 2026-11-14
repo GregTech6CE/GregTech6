@@ -97,6 +97,44 @@ public final class MaterialProcessSnapshotTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void overviewFoldsSimilarRoutesAcrossNativeRecipeDifferences(GameTestHelper helper) {
+        var alternatives = new ArrayList<gregtech.compat.common.MaterialProcessDisplay.Step>();
+        for (int index = 0; index < 4; index++) {
+            var output = layoutPort("bark", true);
+            var variableOutput = new gregtech.compat.common.MaterialProcessDisplay.Port(
+                    output.resource(), output.material(), output.name(), output.icons(), output.role(), false,
+                    output.amount(), net.minecraft.network.chat.Component.literal(Integer.toString(index + 1)),
+                    java.util.OptionalInt.of(2500 * (index + 1)), output.details(), output.identity());
+            var inputs = new ArrayList<>(List.of(layoutPort("wood_" + index, false),
+                    displayPort("lubricant_" + index, "Other", index % 2 == 0 ? Items.WATER_BUCKET : Items.LAVA_BUCKET, false)));
+            if (index == 1) inputs.add(layoutPort("extra_wood", false));
+            alternatives.add(new gregtech.compat.common.MaterialProcessDisplay.Step(
+                    new gregtech.api.addon.material.DataKey("test", "wood_" + index),
+                    net.minecraft.network.chat.Component.literal("cutter"), new ItemStack(Items.STONECUTTER), inputs,
+                    index == 3 ? List.of(variableOutput, layoutPort("wood_dust", true)) : List.of(variableOutput),
+                    List.of(), java.util.Optional.empty(), true));
+        }
+        var graph = new gregtech.compat.common.MaterialProcessOverview(layoutPage(alternatives, List.of()));
+        var machines = graph.nodes().stream().filter(node -> node.machine()).toList();
+        helper.assertTrue(machines.size() == 1 && machines.get(0).steps.size() == 4,
+                "similar wood routes fold despite different input sets, auxiliaries, yields and probabilities");
+        helper.assertTrue(graph.grids().stream().anyMatch(grid -> grid.members.size() == 5)
+                        && graph.grids().stream().anyMatch(grid -> grid.members.size() == 2),
+                "alternative inputs and variant products remain visible beside the shared machine");
+        helper.assertTrue(graph.nodes().stream().filter(node -> !node.machine())
+                        .anyMatch(node -> node.port().identity().equals("bark") && node.chanceBadge().equals("…%")),
+                "a shared product preserves the different native probabilities");
+        for (var step : alternatives) for (boolean output : List.of(false, true)) {
+            var ports = output ? step.outputs() : step.inputs();
+            for (var port : ports) helper.assertTrue(
+                    machines.get(0).endpoints.stream().anyMatch(endpoint -> endpoint.step() == step && endpoint.port() == port)
+                            || machines.get(0).auxiliaries.contains(port),
+                    "every original port survives visual folding");
+        }
+        helper.succeed();
+    }
+
     private static gregtech.compat.common.MaterialProcessDisplay.Port displayPort(
             String reference, String material, net.minecraft.world.item.Item item, boolean output) {
         var name = net.minecraft.network.chat.Component.literal(reference);
@@ -200,7 +238,7 @@ public final class MaterialProcessSnapshotTests {
                 "local copies retain all native steps");
         helper.assertTrue(graph.nodes().stream().anyMatch(node -> node.copy && node.returning),
                 "dense feedback uses marked local resources");
-        helper.assertTrue(graph.nodes().stream().mapToInt(node -> node.y).min().orElseThrow() == 24,
+        helper.assertTrue(graph.nodes().stream().mapToInt(node -> node.y).min().orElseThrow() == 52,
                 "feedback does not reserve empty lanes above the graph");
         for (var edge : graph.edges()) {
             helper.assertTrue(edge.path().size() == 2 && edge.to().layer > edge.from().layer,
@@ -213,11 +251,12 @@ public final class MaterialProcessSnapshotTests {
                         "copied and shared connections retain exact native ports");
             var from = edge.path().get(0);
             var to = edge.path().get(1);
+            helper.assertTrue(to.x() > from.x(), "visible routes read from left to right");
             double slope = (double) (to.y() - from.y()) / (to.x() - from.x());
             for (var node : graph.nodes()) {
-                if (node.layer <= edge.from().layer || node.layer >= edge.to().layer) continue;
-                double leftY = from.y() + (node.x - 12 - from.x()) * slope;
-                double rightY = from.y() + (node.x + 12 - from.x()) * slope;
+                if (node == edge.from() || node == edge.to() || node.x + 12 <= from.x() || node.x - 12 >= to.x()) continue;
+                double leftY = from.y() + (Math.max(node.x - 12, from.x()) - from.x()) * slope;
+                double rightY = from.y() + (Math.min(node.x + 12, to.x()) - from.x()) * slope;
                 helper.assertTrue(
                         Math.max(leftY, rightY) < node.y - 14 || Math.min(leftY, rightY) > node.y + 14,
                         "direct connections avoid intermediate icons and markers");
@@ -230,6 +269,200 @@ public final class MaterialProcessSnapshotTests {
                                 layoutPage(steps, List.of())))),
                 "dense cyclic layouts are stable when input order changes");
         helper.assertTrue(graph.connections().isEmpty(), "local copies do not invent logical associations");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void overviewPacksLocalRoutesWithoutInvisibleDependencies(GameTestHelper helper) {
+        var random = new java.util.Random(42);
+        var steps = new ArrayList<gregtech.compat.common.MaterialProcessDisplay.Step>();
+        var links = new ArrayList<gregtech.compat.common.MaterialProcessDisplay.Connection>();
+        for (int index = 0; index < 100; index++)
+            steps.add(layoutStep("packed_" + index, "form_" + random.nextInt(40), "form_" + random.nextInt(40)));
+        for (var source : steps) for (var target : steps)
+            if (source.outputs().get(0).resource().equals(target.inputs().get(0).resource()))
+                links.add(new gregtech.compat.common.MaterialProcessDisplay.Connection(source.reference(), target.reference(),
+                        source.outputs().get(0).resource(), true));
+        var graph = new gregtech.compat.common.MaterialProcessOverview(layoutPage(steps, links));
+        var local = new gregtech.compat.common.MaterialProcessOverview(layoutPage(steps, List.of()));
+        helper.assertTrue(layoutPositions(graph).equals(layoutPositions(local)) && graph.connections().size() == links.size(),
+                "retained native associations do not stretch copies into invisible dependency columns");
+        helper.assertTrue(graph.width() < 1000 && graph.height() < 1000,
+                "dense local recipe blocks use a compact canvas");
+        var islands = new ArrayList<gregtech.compat.common.MaterialProcessDisplay.Step>();
+        for (int index = 0; index < 24; index++) islands.add(layoutStep("island_" + index, "input_" + index, "output_" + index));
+        var packed = new gregtech.compat.common.MaterialProcessOverview(layoutPage(islands, List.of()));
+        helper.assertTrue(packed.width() < 600 && packed.height() < 600
+                        && packed.nodes().stream().filter(node -> node.machine()).count() == 24,
+                "independent routes fill adjacent shelves while retaining every route");
+        for (var first : graph.nodes()) for (var second : graph.nodes())
+            if (first != second) helper.assertTrue(Math.abs(first.x - second.x) >= 24 || Math.abs(first.y - second.y) >= 24,
+                    "packing keeps resource and machine boxes separate");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void overviewKeepsFirstOutputAndVariantsTogether(GameTestHelper helper) {
+        var base = layoutStep("lens", "gem", "lens");
+        var steps = new ArrayList<gregtech.compat.common.MaterialProcessDisplay.Step>();
+        for (int index = 0; index < 2; index++)
+            steps.add(new gregtech.compat.common.MaterialProcessDisplay.Step(
+                    new gregtech.api.addon.material.DataKey("test", "lens_" + index), base.name(), base.icon(),
+                    base.inputs(), List.of(base.outputs().get(0), layoutPort("a_dust_" + index, true)),
+                    List.of(), java.util.Optional.empty(), true));
+        for (int index = 0; index < 12; index++)
+            steps.add(layoutStep("other_" + index, "gem", "other_output_" + index));
+        var graph = new gregtech.compat.common.MaterialProcessOverview(layoutPage(steps, List.of()));
+        var machine = graph.nodes().stream().filter(node -> node.machine() && node.steps.size() == 2)
+                .findFirst().orElseThrow();
+        var outputs = graph.edges().stream().filter(edge -> edge.from() == machine).toList();
+        helper.assertTrue(outputs.size() == 3, "variants share a machine while retaining their distinct outputs");
+        var grid = graph.grids().stream().filter(value -> value.members.contains(outputs.get(0).to())).findFirst().orElseThrow();
+        helper.assertTrue(grid.members.size() == 3 && grid.members.stream().allMatch(node -> node.y == machine.y),
+                "variant products occupy adjacent cells inside their recipe block");
+        helper.assertTrue(outputs.stream().map(edge -> edge.path()).distinct().count() == 1,
+                "one output arrow connects the machine to the whole product grid");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void recoveryOwnershipAndMachineKindDriveOverviewClassification(GameTestHelper helper) {
+        var foreign = RecoveryRecipePublisher.generic(row(new ItemStack[] {new ItemStack(Items.IRON_INGOT)},
+                Items.COPPER_INGOT), "test-recycling");
+        var local = RecoveryRecipePublisher.generic(row(new ItemStack[] {new ItemStack(Items.COPPER_INGOT)},
+                Items.IRON_INGOT), "test-recycling");
+        var ordinary = row(new ItemStack[] {new ItemStack(Items.GOLD_INGOT)}, Items.COPPER_INGOT);
+        for (var recoveryMap : List.of(gregtech.content.data.MachineRecipeMaps.Shredder,
+                gregtech.content.data.MachineRecipeMaps.Melter, gregtech.content.data.MachineRecipeMaps.Smelter))
+            helper.assertTrue(new MaterialProcessSnapshot.NativeRecipe(recoveryMap, local, 0).genericRecovery(),
+                    "generic grinding and melting routes are recovery");
+        helper.assertTrue(!new MaterialProcessSnapshot.NativeRecipe(gregtech.content.data.MachineRecipeMaps.Anvil, local, 0).genericRecovery()
+                        && !new MaterialProcessSnapshot.NativeRecipe(gregtech.content.data.MachineRecipeMaps.Shredder, ordinary, 0).genericRecovery(),
+                "anvil fallback ownership and ordinary shredder recipes do not imply recovery");
+        var map = new RecipeMap(new ArrayList<>(List.of(foreign, local, ordinary)),
+                "gt.test.process.recovery", "Test", "textures/gui/test", 9, 9, 0, 0, 0, 0, 0,
+                false, false, false, false);
+        RecipeMap.unregister(map);
+        var snapshot = MaterialProcessSnapshot.build(MaterialPublication.current(), 1,
+                new MaterialWorldgenFacts.Snapshot(List.of()), List.of(map));
+        var root = snapshot.roots().stream().filter(value -> value.material().equals("Copper")).findFirst().orElseThrow();
+        var query = snapshot.queryMaterial(root.resource(), new Budgets(0, 8, 16, 16));
+        helper.assertTrue(query.steps().size() == 3,
+                "fallback ownership on an ordinary process does not hide its material sources");
+        var page = gregtech.compat.common.MaterialProcessProjection.pages(snapshot, root.resource(),
+                gregtech.compat.common.MaterialProcessDisplay.Navigation.NONE).get(0);
+        helper.assertTrue(page.steps().stream().noneMatch(value -> value.genericRecovery()),
+                "projection and source indexing use the same recovery classification");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void overviewSeparatesSourcesConversionsAndUses(GameTestHelper helper) {
+        var source = new gregtech.compat.common.MaterialProcessDisplay.Step(
+                new gregtech.api.addon.material.DataKey("test", "source"),
+                net.minecraft.network.chat.Component.literal("source"), new ItemStack(Items.STONECUTTER),
+                List.of(displayPort("foreign", "Other", Items.IRON_INGOT, false)), List.of(layoutPort("ore", true)),
+                List.of(), java.util.Optional.empty(), true);
+        var use = new gregtech.compat.common.MaterialProcessDisplay.Step(
+                new gregtech.api.addon.material.DataKey("test", "use"),
+                net.minecraft.network.chat.Component.literal("use"), new ItemStack(Items.STONECUTTER),
+                List.of(layoutPort("dust", false)), List.of(displayPort("foreign_product", "Other", Items.GOLD_INGOT, true)),
+                List.of(), java.util.Optional.empty(), true);
+        var uncertain = layoutConnection("source", "convert", "ore");
+        var links = List.of(new gregtech.compat.common.MaterialProcessDisplay.Connection(
+                uncertain.source(), uncertain.target(), uncertain.resource(), false),
+                layoutConnection("convert", "use", "dust"));
+        var graph = new gregtech.compat.common.MaterialProcessOverview(
+                layoutPage(List.of(use, layoutStep("convert", "ore", "dust"), source), links));
+        helper.assertTrue(graph.bands().size() == 3 && graph.connections().size() == 2,
+                "one overview preserves all associations and only allocates populated bands");
+        helper.assertTrue(graph.edges().stream().filter(edge -> !edge.endpoint().output()
+                        && edge.endpoint().step().reference().equals(uncertain.target())).noneMatch(edge -> edge.confirmed()),
+                "cross-band associations retain their uncertainty after local layout");
+        for (var node : graph.nodes()) if (node.machine()) {
+            var band = graph.bands().stream().filter(value -> value.section() == node.section).findFirst().orElseThrow();
+            helper.assertTrue(node.x >= band.left() && node.x < band.right(),
+                    "machines stay in their semantic source, conversion or use band");
+        }
+        helper.assertTrue(graph.nodes().stream().filter(node -> !node.machine()
+                        && (node.port().identity().equals("ore") || node.port().identity().equals("dust")))
+                        .allMatch(node -> node.copy),
+                "boundary material instances carry copy markers instead of crossing separators with long wires");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void overviewFoldsAlternativeInputsAndKeepsProductGridsLocal(GameTestHelper helper) {
+        var alternatives = new ArrayList<gregtech.compat.common.MaterialProcessDisplay.Step>();
+        for (int index = 0; index < 13; index++) alternatives.add(layoutStep("smelt_" + index, "form_" + index, "molten"));
+        var graph = new gregtech.compat.common.MaterialProcessOverview(layoutPage(alternatives, List.of()));
+        var grid = graph.grids().get(0);
+        helper.assertTrue(grid.members.size() == 13 && grid.right() - grid.left() == 72
+                        && grid.bottom() - grid.top() == 120,
+                "thirteen alternative inputs occupy a three-column, five-row inventory");
+        helper.assertTrue(graph.nodes().stream().filter(node -> node.machine()).count() == 1
+                        && graph.nodes().stream().filter(node -> node.machine()).findFirst().orElseThrow().steps.size() == 13,
+                "alternative forms share one machine while retaining all native recipes");
+        helper.assertTrue(graph.edges().stream().filter(edge -> !edge.endpoint().output()).map(edge -> edge.path()).distinct().count() == 1,
+                "all input cells connect through one trunk");
+        var yields = new ArrayList<gregtech.compat.common.MaterialProcessDisplay.Step>();
+        for (int count : List.of(2, 4)) {
+            var nativeStep = layoutStep("yield_" + count, "form_" + count, "molten");
+            var nativePort = nativeStep.outputs().get(0);
+            var port = new gregtech.compat.common.MaterialProcessDisplay.Port(nativePort.resource(), nativePort.material(), nativePort.name(),
+                    nativePort.icons(), nativePort.role(), false, net.minecraft.network.chat.Component.literal(count + " items"),
+                    net.minecraft.network.chat.Component.literal(Integer.toString(count)), nativePort.chance(), nativePort.details(), nativePort.identity());
+            yields.add(new gregtech.compat.common.MaterialProcessDisplay.Step(nativeStep.reference(), nativeStep.name(), nativeStep.icon(),
+                    nativeStep.inputs(), List.of(port), List.of(), java.util.Optional.empty(), true));
+        }
+        var yieldGraph = new gregtech.compat.common.MaterialProcessOverview(layoutPage(yields, List.of()));
+        helper.assertTrue(yieldGraph.grids().size() == 1 && yieldGraph.nodes().stream().anyMatch(node -> !node.machine() && node.quantityBadge().equals("2/4")),
+                "different batch yields do not prevent form folding or overwrite each other's quantities");
+        var positions = layoutPositions(graph);
+        java.util.Collections.reverse(alternatives);
+        helper.assertTrue(positions.equals(layoutPositions(new gregtech.compat.common.MaterialProcessOverview(layoutPage(alternatives, List.of())))),
+                "folded grids do not depend on snapshot order");
+        var base = layoutStep("bolt", "bolt", "small_dust");
+        var bolt = new gregtech.compat.common.MaterialProcessDisplay.Step(base.reference(), base.name(), base.icon(), base.inputs(),
+                List.of(base.outputs().get(0), layoutPort("tiny_dust", true)), List.of(), java.util.Optional.empty(), true);
+        var products = new gregtech.compat.common.MaterialProcessOverview(layoutPage(
+                List.of(bolt, layoutStep("small_source", "ore", "small_dust"), layoutStep("tiny_use", "tiny_dust", "ingot")), List.of()));
+        helper.assertTrue(products.grids().stream().anyMatch(value -> value.members.size() == 2
+                        && value.members.stream().map(node -> node.port().identity()).collect(java.util.stream.Collectors.toSet())
+                                .equals(java.util.Set.of("small_dust", "tiny_dust"))),
+                "a bolt's two products stay adjacent even when one has other producers and the other has consumers");
+        var manyOutputs = new ArrayList<gregtech.compat.common.MaterialProcessDisplay.Port>();
+        for (int index = 0; index < 128; index++) manyOutputs.add(layoutPort("many_" + index, true));
+        var many = new gregtech.compat.common.MaterialProcessDisplay.Step(base.reference(), base.name(), base.icon(), base.inputs(),
+                manyOutputs, List.of(), java.util.Optional.empty(), true);
+        var large = new gregtech.compat.common.MaterialProcessOverview(layoutPage(
+                List.of(many, layoutStep("consume", "many_0", "result")), List.of()));
+        helper.assertTrue(large.grids().stream().anyMatch(value -> value.members.size() == 128),
+                "long-edge detection uses the grid anchor instead of detaching a tall grid's first cell");
+        for (var edge : products.edges()) for (var endpoint : edge.endpoints())
+            helper.assertTrue((endpoint.output() ? endpoint.step().outputs() : endpoint.step().inputs()).get(endpoint.index()) == endpoint.port(),
+                    "grid cells and shared trunks retain exact native endpoint ownership");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void overviewShowsPortYieldsAndOrdersRecoveryAfterConversions(GameTestHelper helper) {
+        var base = layoutPort("dust", true);
+        var output = new gregtech.compat.common.MaterialProcessDisplay.Port(base.resource(), base.material(), base.name(), base.icons(), base.role(),
+                base.main(), net.minecraft.network.chat.Component.literal("2 items"), net.minecraft.network.chat.Component.literal("2"),
+                java.util.OptionalInt.of(1111), base.details(), base.identity());
+        var step = layoutStep("grind", "bolt", "dust");
+        var recovery = new gregtech.compat.common.MaterialProcessDisplay.Step(step.reference(), step.name(), step.icon(), step.inputs(),
+                List.of(output), List.of(), java.util.Optional.empty(), true, false, true);
+        var graph = new gregtech.compat.common.MaterialProcessOverview(layoutPage(List.of(recovery), List.of()));
+        var product = graph.nodes().stream().filter(node -> !node.machine() && node.endpoints.stream().anyMatch(endpoint -> endpoint.output()))
+                .findFirst().orElseThrow();
+        helper.assertTrue(product.quantityBadge().equals("2") && product.chanceBadge().equals("11.11%"),
+                "quantity and basis-point probability are rendered without reconstructing them from icon counts");
+        helper.assertTrue(graph.bands().stream().map(value -> value.section()).toList().equals(List.of(
+                        gregtech.compat.common.MaterialProcessDisplay.Section.RECOVERY)),
+                "a recovery-only page does not reserve space for three empty bands");
+        helper.assertTrue(product.returning, "recovery products retain their return marker");
         helper.succeed();
     }
 

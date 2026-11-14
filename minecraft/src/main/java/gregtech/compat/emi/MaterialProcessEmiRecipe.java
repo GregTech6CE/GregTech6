@@ -152,16 +152,8 @@ public final class MaterialProcessEmiRecipe implements EmiRecipe {
             }
 
             @Override
-            public EmiIngredient ingredientAt(double x, double y) {
-                return EmiIngredient.of(panel.stacksAt(x, y).stream()
-                        .map(MaterialProcessEmiStacks::of)
-                        .filter(stack -> !stack.isEmpty())
-                        .toList());
-            }
-
-            @Override
             public boolean mouseClicked(int x, int y, int button) {
-                return panel.click(x, y, button);
+                return panel.clickControls(x, y, button);
             }
 
             @Override
@@ -186,5 +178,38 @@ public final class MaterialProcessEmiRecipe implements EmiRecipe {
                         .toList();
             }
         });
+        for (var node : panel.nodes()) {
+            var icons = panel.stacks(node);
+            if (icons.isEmpty()) continue;
+            widgets.add(new dev.emi.emi.api.widget.SlotWidget(MaterialProcessEmiStacks.of(icons.get(0)), 0, 0) {
+                @Override
+                public Bounds getBounds() {
+                    var bounds = panel.bounds(node);
+                    return new Bounds(
+                            bounds.left(),
+                            bounds.top(),
+                            Math.max(0, bounds.right() - bounds.left()),
+                            Math.max(0, bounds.bottom() - bounds.top()));
+                }
+
+                @Override
+                public EmiIngredient getStack() {
+                    return page.navigation().valid() ? super.getStack() : EmiStack.EMPTY;
+                }
+
+                @Override
+                public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {}
+
+                @Override
+                public List<ClientTooltipComponent> getTooltip(int x, int y) {
+                    var details = panel.tooltip(x, y);
+                    return details.size() > 1
+                            ? details.stream()
+                                    .map(line -> ClientTooltipComponent.create(line.getVisualOrderText()))
+                                    .toList()
+                            : super.getTooltip(x, y);
+                }
+            });
+        }
     }
 }
