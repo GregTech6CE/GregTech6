@@ -155,6 +155,10 @@ def modProperties = [
         mod_authors: rootProject.property('mod_authors')
 ]
 
+// Shared with Forge and core: only changed resources are copied, deletions reach the output,
+// and texture metadata is dropped on the way through.
+apply from: rootProject.file('gradle/incremental-resources.gradle')
+
 tasks.named('processResources', ProcessResources).configure {
     inputs.properties(modProperties)
     filesMatching('META-INF/neoforge.mods.toml') {
@@ -182,5 +186,7 @@ tasks.named('jar', Jar).configure {
     duplicatesStrategy = DuplicatesStrategy.FAIL
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+    // Embedded resource outputs can contain directories whose files were deleted.
+    includeEmptyDirs = false
     manifest.attributes('Implementation-Version': project.version.toString())
 }

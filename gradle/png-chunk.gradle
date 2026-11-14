@@ -1,0 +1,240 @@
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.StandardCopyOption
+import java.util.zip.CRC32
+import java.util.zip.DeflaterOutputStream
+
+/**
+ * Removes the PNG chunks that the client never reads.
+ *
+ * Texture editors embed colour profiles, timestamps, gamma hints and similar metadata.
+ * The renderer decodes the image data and ignores everything else, so those chunks only
+ * inflate the delivered archive. Filtering between the source tree and the build output
+ * keeps the committed textures untouched and keeps the reduced bytes out of version
+ * control.
+ *
+ * Image data is never decoded or re-encoded: every retained chunk (length field, type,
+ * payload and checksum) is copied byte for byte, so the visible image is identical.
+ */
+class PngChunkFilter {
+    static final byte[] SIGNATURE = [(byte) 0x89, (byte) 0x50, (byte) 0x4E, (byte) 0x47,
+                                     (byte) 0x0D, (byte) 0x0A, (byte) 0x1A, (byte) 0x0A] as byte[]
+
+    /** Image header, palette, transparency, pixels and end marker: the chunks the game reads. */
+    static final Set<String> RETAINED = ['IHDR', 'PLTE', 'tRNS', 'IDAT', 'IEND'] as Set
+
+    static final String HEADER_CHUNK = 'IHDR'
+    static final String END_CHUNK = 'IEND'
+
+    /** Bytes around a chunk payload: the length field, the type and the checksum. */
+    static final int CHUNK_OVERHEAD = 12
+
+    static boolean isPng(byte[] input) {
+        if (input == null || input.length < SIGNATURE.length) return false
+        for (int index = 0; index < SIGNATURE.length; index++) {
+            if (input[index] != SIGNATURE[index]) return false
+        }
+        return true
+    }
+
+    /**
+     * Returns the input itself when it already carries only retained chunks and no trailing
+     * bytes, otherwise a new array holding the signature and the retained chunks in order.
+     * The result is stable: filtering it again returns the same bytes.
+     *
+     * @throws PngFormatException when the bytes are not a structurally valid PNG stream
+     */
+    static byte[] strip(byte[] input) {
+        if (!isPng(input)) throw new PngFormatException('missing PNG signature')
+        int position = SIGNATURE.length
+        boolean sawHeader = false
+        boolean sawEnd = false
+        int dropped = 0
+        List<int[]> kept = []
+        while (position < input.length) {
+            if (input.length - position < CHUNK_OVERHEAD) {
+                throw new PngFormatException("truncated chunk header at byte ${position}")
+            }
+            long length = readLength(input, position)
+            if (length > input.length - position - CHUNK_OVERHEAD) {
+                throw new PngFormatException("chunk at byte ${position} exceeds the remaining bytes")
+            }
+            String type = readType(input, position)
+            if (!sawHeader && type != HEADER_CHUNK) {
+                throw new PngFormatException("first chunk is ${type}, expected ${HEADER_CHUNK}")
+            }
+            if (type == HEADER_CHUNK) sawHeader = true
+            int span = (int) length + CHUNK_OVERHEAD
+            if (RETAINED.contains(type)) {
+                kept.add([position, span] as int[])
+            } else {
+                dropped++
+            }
+            position += span
+            if (type == END_CHUNK) {
+                sawEnd = true
+                break
+            }
+        }
+        if (!sawHeader) throw new PngFormatException("missing ${HEADER_CHUNK} chunk")
+        if (!sawEnd) throw new PngFormatException("missing ${END_CHUNK} chunk")
+        // Trailing bytes after IEND are never read, so they count as dropped content too.
+        if (dropped == 0 && position == input.length) return input
+        int size = SIGNATURE.length
+        kept.each { int[] span -> size += span[1] }
+        byte[] output = new byte[size]
+        System.arraycopy(input, 0, output, 0, SIGNATURE.length)
+        int cursor = SIGNATURE.length
+        kept.each { int[] span ->
+            System.arraycopy(input, span[0], output, cursor, span[1])
+            cursor += span[1]
+        }
+        return output
+    }
+
+    /** Rewrites the file when filtering changed it. Returns true when the bytes were replaced. */
+    static boolean filterFile(Path file) {
+        byte[] input = Files.readAllBytes(file)
+        byte[] output = strip(input)
+        if (output.is(input)) return false
+        Path temporary = file.resolveSibling(file.fileName.toString() + '.filtering')
+        Files.write(temporary, output)
+        Files.move(temporary, file, StandardCopyOption.REPLACE_EXISTING)
+        return true
+    }
+
+    /** Builds one chunk with a valid checksum; the fixture and tests reuse it. */
+    static byte[] chunk(String type, byte[] payload) {
+        byte[] typeBytes = type.getBytes(StandardCharsets.US_ASCII)
+        byte[] output = new byte[payload.length + CHUNK_OVERHEAD]
+        writeLength(output, 0, payload.length)
+        System.arraycopy(typeBytes, 0, output, 4, 4)
+        System.arraycopy(payload, 0, output, 8, payload.length)
+        CRC32 checksum = new CRC32()
+        checksum.update(typeBytes)
+        checksum.update(payload)
+        writeLength(output, payload.length + 8, (int) checksum.value)
+        return output
+    }
+
+    /** Joins arrays into one; used by the fixture where an operator would build a list. */
+    static byte[] concat(byte[]... parts) {
+        int size = 0
+        parts.each { byte[] part -> size += part.length }
+        byte[] output = new byte[size]
+        int cursor = 0
+        parts.each { byte[] part ->
+            System.arraycopy(part, 0, output, cursor, part.length)
+            cursor += part.length
+        }
+        output
+    }
+
+    private static long readLength(byte[] input, int offset) {
+        ((input[offset] & 0xFFL) << 24) | ((input[offset + 1] & 0xFFL) << 16) |
+                ((input[offset + 2] & 0xFFL) << 8) | (input[offset + 3] & 0xFFL)
+    }
+
+    private static void writeLength(byte[] output, int offset, int value) {
+        output[offset] = (byte) (value >>> 24)
+        output[offset + 1] = (byte) (value >>> 16)
+        output[offset + 2] = (byte) (value >>> 8)
+        output[offset + 3] = (byte) value
+    }
+
+    private static String readType(byte[] input, int offset) {
+        for (int index = 0; index < 4; index++) {
+            int value = input[offset + 4 + index] & 0xFF
+            boolean letter = (value >= 0x41 && value <= 0x5A) || (value >= 0x61 && value <= 0x7A)
+            if (!letter) throw new PngFormatException("invalid chunk type at byte ${offset}")
+        }
+        new String(input, offset + 4, 4, StandardCharsets.US_ASCII)
+    }
+}
+
+/** Raised when bytes cannot be read as a PNG chunk stream. */
+class PngFormatException extends GradleException {
+    PngFormatException(String message) {
+        super(message)
+    }
+}
+
+/**
+ * Rewrites one PNG in place, dropping metadata chunks. Applied scripts own their classes,
+ * so resource tasks reach the filter through this project extension instead of the type.
+ */
+ext.stripPngMetadata = { File file ->
+    try {
+        PngChunkFilter.filterFile(file.toPath())
+    } catch (PngFormatException invalid) {
+        // A damaged or non-PNG file still ships unchanged rather than failing the build;
+        // check_png_metadata.py reports it during resource audits.
+        logger.warn("[png] ${file}: ${invalid.message}; kept as-is")
+        false
+    }
+}
+
+/** Revision of the retained-chunk set; raise it whenever the filter's decisions change. */
+ext.pngChunkFilterVersion = 1
+
+// A one-pixel image with a colour profile, a text chunk and trailing bytes stands in for real
+// texture files; the checks assert that only the retained chunks and their exact bytes
+// survive. Runs on every project that applies this script and writes only under build/.
+tasks.register('verifyPngFilter') {
+    group = 'verification'
+    description = 'Checks the PNG chunk filter against synthetic in-memory images.'
+    def scratch = layout.buildDirectory.dir('tmp/png-filter')
+    doLast {
+        File directory = scratch.get().asFile
+        byte[] header = new byte[13]
+        header[3] = (byte) 1 // width
+        header[7] = (byte) 1 // height
+        header[8] = (byte) 8 // bit depth
+        header[9] = (byte) 6 // colour type: truecolour with alpha
+
+        def pixels = new ByteArrayOutputStream()
+        new DeflaterOutputStream(pixels).withCloseable { stream -> stream.write(new byte[5]) }
+        byte[] identity = PngChunkFilter.chunk('IDAT', pixels.toByteArray())
+        byte[] profile = PngChunkFilter.chunk('iCCP', 'profile'.getBytes(StandardCharsets.US_ASCII))
+        profile[profile.length - 1] = (byte) 0 // corrupt checksum: keeping this chunk would break decoding
+        byte[] physical = PngChunkFilter.chunk('pHYs', new byte[9])
+        byte[] text = PngChunkFilter.chunk('tEXt', 'comment'.getBytes(StandardCharsets.US_ASCII))
+        byte[] headerChunk = PngChunkFilter.chunk('IHDR', header)
+        byte[] endChunk = PngChunkFilter.chunk('IEND', new byte[0])
+        byte[] trailing = new byte[3]
+
+        byte[] source = PngChunkFilter.concat(PngChunkFilter.SIGNATURE, headerChunk, physical, profile,
+                identity, text, endChunk, trailing)
+        assert PngChunkFilter.isPng(source)
+        byte[] filtered = PngChunkFilter.strip(source)
+        byte[] expected = PngChunkFilter.concat(PngChunkFilter.SIGNATURE, headerChunk, identity, endChunk)
+        assert Arrays.equals(filtered, expected): 'retained chunks must be copied verbatim'
+        assert PngChunkFilter.strip(filtered).is(filtered): 'filter must be idempotent'
+
+        boolean rejected = false
+        try {
+            PngChunkFilter.strip('not a png'.getBytes(StandardCharsets.US_ASCII))
+        } catch (PngFormatException expectedError) {
+            rejected = true
+        }
+        assert rejected: 'non-PNG input must be rejected'
+
+        rejected = false
+        try {
+            PngChunkFilter.strip(Arrays.copyOf(source, 20))
+        } catch (PngFormatException expectedError) {
+            rejected = true
+        }
+        assert rejected: 'truncated input must be rejected'
+
+        File file = new File(directory, 'sample.png')
+        file.parentFile.mkdirs()
+        file.bytes = source
+        assert PngChunkFilter.filterFile(file.toPath()): 'a file with metadata must be rewritten'
+        assert Arrays.equals(file.bytes, expected)
+        assert !PngChunkFilter.filterFile(file.toPath()): 'a filtered file must not be rewritten again'
+
+        logger.lifecycle('PNG chunk filter: retained chunks verbatim, metadata dropped, output stable.')
+    }
+}

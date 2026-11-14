@@ -43,7 +43,7 @@ Forge 默认实例在节点内 `run/`，NeoForge 客户端/服务端在 `run-cli
 
 可选集成开关：`-PkubejsRuntime=true`、`-PcompatRuntime=ie|mek|ae|pr|hc`（每次选择一个值）、`-PemiSmoke=true`、`-PemiOnlySmoke=true`。具体依赖见 [Forge 配置](../../../../gradle/platform-forge.gradle)与 [NeoForge 配置](../../../../gradle/platform-neoforge.gradle)；加载依赖不代表集成已通过验证。
 
-`-PdirectCoreClasspath=true`、`-PdirectCoreResources=true` 是本地运行优化；常规打包验收保持默认配置。
+`-PdirectCoreClasspath=true`、`-PdirectCoreResources=true` 是本地运行优化；常规打包验收保持默认配置。`directCoreResources` 跳过 core 的 `processResources`，贴图以源码原样加载，`iCCP`、`pHYs` 等元数据块仍然存在，`IDAT` 块过滤也不生效：本地看到的画面不能代表发行包，资源相关验收仍需按默认配置重新打包一次。
 
 修改 GUI 模板、别名、图标引用或 PNG 时，先做静态预览：
 

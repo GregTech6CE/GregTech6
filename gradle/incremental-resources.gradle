@@ -1,33 +1,75 @@
+import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.FileTree
+import org.gradle.api.file.FileType
+import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.tasks.*
 import org.gradle.language.jvm.tasks.ProcessResources
+import org.gradle.work.ChangeType
 import org.gradle.work.Incremental
 import org.gradle.work.InputChanges
-import org.gradle.work.ChangeType
 import java.nio.file.Files
+import java.nio.file.Path
+
+// Texture metadata is stripped while the resources are copied, so the delivered jar and the
+// processed output directory always agree. See gradle/png-chunk.gradle for the filter itself.
+apply from: rootProject.file('gradle/png-chunk.gradle')
 
 /** Preserve the ForgeGradle ProcessResources/CopySpec contract, but copy only changed inputs.
  * Gradle handles full rebuilds and snapshots; removed inputs are explicitly removed from output.
  * The annotation is not inherited from ProcessResources, so the subclass opts in explicitly.
+ *
+ * A manifest lists the paths this task emitted. It lets a full sync recognize outputs that no
+ * input produces any more, including files written before the manifest existed.
  */
 @CacheableTask
 abstract class IncrementalProcessResources extends ProcessResources {
     private FileTree trackedSource
-    private FileTree fingerprintSource
+    private boolean fingerprintConfigured
+
+    /**
+     * Directories whose contents decide whether the task runs. They point at the plain
+     * resource roots rather than the copy spec's filtered tree; see the override below.
+     */
+    @Internal
+    abstract ConfigurableFileCollection getFingerprintSource()
 
     /** Fingerprint these directories instead of the copy spec's filtered source tree. */
-    void fingerprintFrom(FileTree tree) {
-        fingerprintSource = tree
+    void fingerprintFrom(Object tree) {
+        fingerprintSource.from(tree)
+        fingerprintConfigured = true
     }
 
-    @Override @InputFiles @SkipWhenEmpty @IgnoreEmptyDirectories @PathSensitive(PathSensitivity.RELATIVE)
+    /** Relative paths emitted by the previous execution, one per line. */
+    @OutputFile
+    abstract RegularFileProperty getManifestFile()
+
+    /**
+     * Resource files whose contents the task copies.
+     *
+     * SourceSet.resources carries an exclude spec that asks javaSource.contains(file) for every
+     * resource file, which stats the Java roots once per file, so the configured plain roots are
+     * fingerprinted instead; a file the filter would drop only causes a spurious run, never a
+     * missing output.
+     *
+     * This is marked internal on purpose. The inherited declaration is skip-when-empty, and a
+     * task that skips itself when the last resource is deleted keeps that resource in the
+     * output: `incrementalInputs` below is the input Gradle snapshots and diffs instead.
+     */
+    @Override @Internal
     FileTree getSource() {
-        // SourceSet.resources carries an exclude spec that asks javaSource.contains(file)
-        // for every resource file, which stats the Java roots once per file. The copy spec
-        // keeps that filter; fingerprint the plain directories instead. A file the filter
-        // would drop only causes a spurious run, never a missing output.
-        if (trackedSource == null) trackedSource = fingerprintSource ?: super.getSource()
+        // The tree is cached because Gradle matches the incremental changes against this exact
+        // value; the collection behind it stays lazy, so directories a build script assigns
+        // after this script applies are still seen.
+        if (trackedSource == null) {
+            trackedSource = fingerprintConfigured ? fingerprintSource.asFileTree : super.getSource()
+        }
         trackedSource
+    }
+
+    /** The one incremental input: additions, modifications and removals all reach the action. */
+    @Incremental @InputFiles @IgnoreEmptyDirectories @PathSensitive(PathSensitivity.RELATIVE)
+    FileTree getIncrementalInputs() {
+        source
     }
 
     // The inherited action deletes every previous output before copying. The incremental action
@@ -36,42 +78,142 @@ abstract class IncrementalProcessResources extends ProcessResources {
 
     @TaskAction
     void copyChangedResources(InputChanges changes) {
-        Set<String> changed = new HashSet<>()
+        // Resolve the input tree before touching the output so the change list and the copy read
+        // the same state, and so a provider that reads the source set has already run.
+        FileTree tracked = source
+        Path output = destinationDir.toPath().toAbsolutePath().normalize()
+        File manifest = manifestFile.get().asFile
+        // An emptied output directory is reported as an incremental run, but every file has to
+        // come back; only a genuinely populated directory can rely on untouched outputs.
+        boolean full = !changes.incremental || !Files.isDirectory(output)
+        Set<String> changed = new LinkedHashSet<>()
+        Set<String> written = new LinkedHashSet<>()
+        Set<String> removedPaths = new LinkedHashSet<>()
         int removed = 0
-        def output = destinationDir.toPath().toAbsolutePath().normalize()
-        changes.getFileChanges(source).each { change ->
-            if (change.fileType == org.gradle.api.file.FileType.DIRECTORY) return
+        changes.getFileChanges(tracked).each { change ->
+            if (change.fileType == FileType.DIRECTORY) return
+            String path = change.normalizedPath.replace('\\', '/')
             if (change.changeType == ChangeType.REMOVED) {
-                def target = output.resolve(change.normalizedPath).normalize()
-                if (!target.startsWith(output)) throw new GradleException("Resource path escapes output: ${change.normalizedPath}")
+                Path target = output.resolve(path).normalize()
+                if (!target.startsWith(output)) throw new GradleException("Resource path escapes output: ${path}")
                 if (Files.deleteIfExists(target)) removed++
-            } else changed.add(change.normalizedPath.replace('\\', '/'))
+                pruneEmptyParents(output, target)
+                removedPaths.add(path)
+            } else {
+                changed.add(path)
+            }
         }
-        if (!changed.isEmpty()) {
+        if (full || !changed.isEmpty()) {
             def original = rootSpec
             project.copy {
                 with original
                 into output.toFile()
                 includeEmptyDirs = false
                 eachFile { details ->
-                    if (!changed.contains(details.relativePath.pathString)) details.exclude()
+                    if (details.directory) return
+                    String path = details.relativePath.pathString
+                    if (full || changed.contains(path)) {
+                        written.add(path)
+                    } else {
+                        details.exclude()
+                    }
                 }
             }
         }
-        logger.lifecycle("Resources: ${changed.size()} changed, ${removed} removed (${changes.incremental ? 'incremental' : 'full'}).")
+        // Stale files carry no input of their own, so only a full run can recognize them.
+        int stale = full ? deleteUnwritten(output, written) : 0
+        def strip = project.ext.stripPngMetadata
+        int filtered = 0
+        if (strip != null) {
+            written.findAll { String path -> path.toLowerCase(Locale.ROOT).endsWith('.png') }.each { String path ->
+                File file = output.resolve(path).toFile()
+                if (file.isFile() && strip(file)) filtered++
+            }
+        }
+        Set<String> current = new LinkedHashSet<>()
+        if (!full) {
+            current.addAll(readManifest(manifest))
+            current.removeAll(removedPaths)
+            current.removeAll(written)
+        }
+        current.addAll(written)
+        writeManifest(manifest, current)
+        logger.lifecycle("Resources: ${written.size()} written, ${removed} removed, " +
+                "${stale} stale, ${filtered} PNG filtered (${full ? 'full' : 'incremental'}).")
+    }
+
+    Set<String> readManifest(File manifest) {
+        Set<String> paths = new LinkedHashSet<>()
+        if (!manifest.isFile()) return paths
+        manifest.eachLine('UTF-8') { String line ->
+            String path = line.trim()
+            if (path) paths.add(path)
+        }
+        paths
+    }
+
+    void writeManifest(File manifest, Set<String> paths) {
+        manifest.parentFile?.mkdirs()
+        manifest.withWriter('UTF-8') { writer ->
+            paths.toSorted().each { String path -> writer.write(path + '\n') }
+        }
+    }
+
+    /** Deletes every file under the output that the copy did not write; returns the count. */
+    int deleteUnwritten(Path output, Set<String> written) {
+        File root = output.toFile()
+        if (!root.isDirectory()) return 0
+        List<File> stale = []
+        root.eachFileRecurse { File file ->
+            if (!file.isFile()) return
+            String relative = output.relativize(file.toPath()).toString().replace('\\', '/')
+            if (!written.contains(relative)) stale.add(file)
+        }
+        int deleted = 0
+        stale.each { File file ->
+            if (Files.deleteIfExists(file.toPath())) deleted++
+            pruneEmptyParents(output, file.toPath())
+        }
+        deleted
+    }
+
+    /** Removes the directories a deleted file leaves empty, stopping at the output root. */
+    static void pruneEmptyParents(Path output, Path target) {
+        Path parent = target.parent
+        while (parent != null && !parent.equals(output) && parent.startsWith(output)) {
+            String[] children = parent.toFile().list()
+            if (children == null || children.length > 0) return
+            Files.deleteIfExists(parent)
+            parent = parent.parent
+        }
     }
 }
 
 tasks.replace('processResources', IncrementalProcessResources).configure {
-    fingerprintFrom(project.files(sourceSets.main.resources.srcDirs).asFileTree)
+    // The resource roots only reach their final list once the platform script and the version
+    // node have configured the source set, so read them through a provider.
+    fingerprintFrom(project.provider { project.sourceSets.main.resources.srcDirs })
+    manifestFile.set(layout.buildDirectory.file("tmp/resource-sync/${name}.manifest"))
+    filteringCharset = 'UTF-8'
+    // Bumping the filter version makes Gradle run a full sync, so outputs copied under older
+    // filtering rules cannot survive next to freshly filtered files.
+    inputs.property('pngChunkFilter', project.ext.pngChunkFilterVersion)
     into layout.buildDirectory.dir('resources/main')
 }
 
 // Small isolated integration fixture; never part of runClient or normal builds.
+// Create source/{metadata.txt,keep.txt,drop.txt} in the fixture directory, then:
+//   * run the task: every file is created;
+//   * delete drop.txt and run again: the output must lose that file and its empty directory;
+//   * pass -PresourceSyncToken=second: metadata.txt is rewritten from the new value;
+//   * delete the manifest under build/tmp/resource-sync and run again: the file list is rebuilt
+//     and any output the inputs do not produce is removed.
 if (project.hasProperty('resourceSyncFixture')) {
+    def fixture = project.file(project.property('resourceSyncFixture'))
     tasks.register('verifyResourceSync', IncrementalProcessResources) {
-        from file("${project.property('resourceSyncFixture')}/source")
-        into file("${project.property('resourceSyncFixture')}/output")
+        from new File(fixture, 'source')
+        into new File(fixture, 'output')
+        manifestFile.set(layout.buildDirectory.file("tmp/resource-sync/${name}.manifest"))
         filteringCharset = 'UTF-8'
         def value = project.findProperty('resourceSyncToken') ?: 'first'
         inputs.property('token', value)

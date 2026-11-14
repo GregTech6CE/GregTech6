@@ -27,7 +27,9 @@
 
 Forge `runData` 的 `--output` 当前直接指向 `minecraft/versions/1.20.1-forge/src/main/resources/`，见 [Forge 配置](../../gradle/platform-forge.gradle)。它会写生产输入，不能把整个运行结果无审查提交，也不能当成仅读取的验证命令；运行后的审查与检查要求见 [content 包](packages/content.md)。运行工作目录 `run-data/` 本身仍被忽略。
 
-[增量资源脚本](../../gradle/incremental-resources.gradle)负责资源同步，共享资源体积较大。不要为了排查而随意复制整个目录、改 ZIP64、取消重复项失败检查或每次清缓存。新增资源后先检查来源，再按 [content 包](packages/content.md) 的资源规则检查两节点 `processResources` 与发行 JAR。
+[增量资源脚本](../../gradle/incremental-resources.gradle)负责资源同步，共享资源体积较大。它按源文件增量复制，删除的源文件同时从 `build/resources/main` 移除，并用 `build/tmp/resource-sync/` 下的清单裁决完整重建时需要清理的旧产物；空目录不会被复制或保留。不要为了排查而随意复制整个目录、改 ZIP64、取消重复项失败检查或每次清缓存。新增资源后先检查来源，再按 [content 包](packages/content.md) 的资源规则检查两节点 `processResources` 与发行 JAR。
+
+复制过程同时经 [PNG 块过滤](../../gradle/png-chunk.gradle)处理贴图：只保留 `IHDR`、`PLTE`、`tRNS`、`IDAT`、`IEND`，逐字节复制块内容，不解码也不重编码 IDAT，因此画面与源文件完全一致，而编辑器写入的 `iCCP`、`pHYs`、`tIME`、`tEXt` 等元数据块不会进入产物。过滤只发生在构建输出，提交树中的原始贴图保持不变；`-PdirectCoreResources=true` 直接以源码目录作为资源输出并跳过 `processResources`，该优化下过滤不生效。检查方式见 [发行资源检查](../../tools/resources/README.md)。
 
 资源路径与游戏内观察见 [content 包](packages/content.md)。只在明确用途下保留必要的精简示例或文档插图，原始截图留 `work/`。
 

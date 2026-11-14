@@ -10,6 +10,7 @@ on:
       - 'gradle/**'
       - 'tools/buildtools/**'
       - 'tools/comments/**'
+      - 'tools/resources/**'
       - 'gradlew'
       - 'gradlew.bat'
       - 'build.gradle'
@@ -92,6 +93,27 @@ jobs:
           ":minecraft:${{ matrix.node }}:compileTestJava"
           ":minecraft:${{ matrix.node }}:spotlessCheck"
           -Pmod_version=${{ steps.version.outputs.version }}
+      - name: Verify packaged resources
+        run: |
+          set -euo pipefail
+          metadata=META-INF/mods.toml
+          if [[ "${{ matrix.loader }}" == "neoforge" ]]; then metadata=META-INF/neoforge.mods.toml; fi
+          jar=""
+          for candidate in minecraft/versions/${{ matrix.node }}/build/libs/*.jar; do
+            if unzip -p "$candidate" "$metadata" >/dev/null 2>&1; then
+              if [[ -n "$jar" ]]; then
+                echo "Expected one installable mod jar, found more" >&2
+                exit 1
+              fi
+              jar="$candidate"
+            fi
+          done
+          test -n "$jar"
+          python tools/resources/check_compact_model_json.py "$jar" \
+            --resources core/build/resources/main minecraft/versions/${{ matrix.node }}/build/resources/main
+          python tools/resources/check_png_metadata.py "$jar" --strict
+          python tools/resources/check_png_metadata.py core/build/resources/main \
+            minecraft/versions/${{ matrix.node }}/build/resources/main --strict
       - name: Upload platform artifacts
         uses: actions/upload-artifact@v4
         with:
