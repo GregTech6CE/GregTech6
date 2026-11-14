@@ -45,4 +45,6 @@ tasks.named('jar', Jar).configure {
     zip64 = true
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+    // Empty directories come from deleted resources; they add entries without adding assets.
+    includeEmptyDirs = false
 }

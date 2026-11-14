@@ -17,9 +17,6 @@ public final class CrucibleContentIcons {
     /** Fixed gray solid fill — always metallic {@code blockraw}. */
     public static final ResourceLocation SOLID_GRAY_BASE = Mc.gregtechId("block/material_icons/metallic/blockraw");
 
-    public static final ResourceLocation SOLID_GRAY_OVERLAY =
-            Mc.gregtechId("block/material_icons/metallic/blockraw_overlay");
-
     private CrucibleContentIcons() {}
 
     /** Vanadium raw ore gray ({@code Materials.Vanadium} / GT6 {@code CA_GRAY_64}-like). */
@@ -55,20 +52,8 @@ public final class CrucibleContentIcons {
                 net.minecraft.client.renderer.LightTexture.sky(ambient));
     }
 
-    /** @deprecated use {@link #moltenAppearance(GTMaterial)} */
-    @Deprecated
-    public static ResourceLocation moltenBase(GTMaterial material) {
-        return moltenAppearance(material).baseTexture();
-    }
-
-    /** @deprecated use {@link #moltenAppearance(GTMaterial)} */
-    @Deprecated
-    public static ResourceLocation moltenOverlay(GTMaterial material) {
-        return moltenAppearance(material).overlayTexture();
-    }
-
-    public static ResourceLocation blockIcon(MaterialTextureSet set, String prefix, boolean overlay) {
-        String file = prefix + (overlay ? "_overlay" : "");
-        return Mc.gregtechId("block/material_icons/" + set.folder() + "/" + file);
+    /** One shared block icon for a material texture set, e.g. {@code metallic/blockdust}. */
+    public static ResourceLocation blockIcon(MaterialTextureSet set, String prefix) {
+        return Mc.gregtechId("block/material_icons/" + set.folder() + "/" + prefix);
     }
 }

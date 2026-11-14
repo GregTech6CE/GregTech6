@@ -1,6 +1,7 @@
 package gregtech.client;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -155,5 +156,13 @@ final class ArmRenderHelper {
     static TextureAtlasSprite getSprite(ResourceLocation id) {
         return net.minecraft.client.Minecraft.getInstance()
                 .getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(id);
+    }
+
+    /** The block-atlas sprite for {@code id}, or {@code null} when no such texture was stitched. */
+    static TextureAtlasSprite findSprite(ResourceLocation id) {
+        TextureAtlas atlas = net.minecraft.client.Minecraft.getInstance()
+                .getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS);
+        TextureAtlasSprite sprite = atlas.getSprite(id);
+        return sprite == atlas.getSprite(MissingTextureAtlasSprite.getLocation()) ? null : sprite;
     }
 }

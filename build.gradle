@@ -9,7 +9,9 @@ group = mod_group_id
 
 // Incremental resource moves can leave empty old directories in build outputs.
 // Only files define mod content; never retain those directories in a delivered jar.
-subprojects {
+// All projects, not only subprojects: the Stonecutter version nodes and the API platform
+// nodes build jars of their own and carry the same directory entries.
+allprojects {
     tasks.withType(org.gradle.jvm.tasks.Jar).configureEach { includeEmptyDirs = false }
 }
 

@@ -3,8 +3,7 @@
   "textures": {
     "layer0": "gt6ce:item/material_icons/dull/stick",
     "layer1": "gt6ce:item/material_icons/dull/toolheadpickaxe",
-    "layer2": "gt6ce:item/material_icons/dull/toolheadpickaxe_overlay",
-    "layer3": "gt6ce:item/material_icons/dull/toolheadpickaxegem",
-    "layer4": "gt6ce:item/material_icons/dull/toolheadpickaxegem_overlay"
+    "layer2": "gt6ce:item/material_icons/dull/toolheadpickaxegem",
+    "layer3": "gt6ce:item/material_icons/dull/toolheadpickaxegem_overlay"
   }
 }

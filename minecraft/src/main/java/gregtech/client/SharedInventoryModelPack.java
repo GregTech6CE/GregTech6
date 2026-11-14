@@ -6,12 +6,19 @@ import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.block.OreBlock;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.item.CreativeTabIconItem;
+import gregtech.content.registry.AddonPipeRegistration;
+import gregtech.content.registry.GTAxles;
+import gregtech.content.registry.GTFluidPipes;
+import gregtech.content.registry.GTItemPipes;
+import gregtech.content.registry.GTSignalWires;
+import gregtech.content.registry.GTWires;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.*;
 import net.minecraft.server.packs.repository.*;
 import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.block.Block;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.client.event.ModelEvent;
@@ -81,7 +88,6 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         // Many material items refer to the same template. Check the classpath once per parent.
         Map<ResourceLocation, Boolean> templates = new HashMap<>();
         emitStructureParts(result);
-        emitAddonPipes(result);
         emitCompressedTanks(result);
         emitAddonBlockPrefixes(result);
         for (var item : BuiltInRegistries.ITEM) {
@@ -172,9 +178,15 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         // serves its original bytes, so a user pack can override aliases independently.
         JsonResourceAliases.resources().forEach((path, bytes) ->
                 result.put(location(path.substring("/assets/gt6ce/".length())), bytes));
+        // Emitted after the aliases so a generated template can never shadow a transport placeholder.
+        int beforePlaceholders = result.size();
+        emitTransportPlaceholders(result);
+        int placeholders = result.size() - beforePlaceholders;
         resources = Collections.unmodifiableMap(result);
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Shared inventory resources: {} item references, {} templates, {} missing static blockstates",
-                result.size() - states, references.size(), states);
+        com.mojang.logging.LogUtils.getLogger()
+                .info("[gregtech] Shared inventory resources: {} item references, {} templates,"
+                        + " {} missing static blockstates, {} transport placeholders",
+                        result.size() - states - placeholders, references.size(), states, placeholders);
         return resources;
     }
 
@@ -243,19 +255,43 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         }
     }
 
-    /** Placeholder so the bakery has a model to replace with the dynamic pipe shape. */
-    private static void emitAddonPipes(Map<ResourceLocation, byte[]> result) {
-        String blockstate = "{\"variants\":{\"\":{\"model\":\"gt6ce:block/machine/pipe_tiny_steel_core\"}}}";
-        String item = "{\"parent\":\"gt6ce:block/machine/pipe_tiny_steel_core\"}";
-        for (var block : gregtech.content.registry.AddonPipeRegistration.fluidBlocks()) emitPipe(result, block, blockstate, item);
-        for (var block : gregtech.content.registry.AddonPipeRegistration.itemBlocks()) emitPipe(result, block, blockstate, item);
+    /**
+     * Transport blocks, wires, cables and axles are baked into generated geometry, so their static
+     * blockstate and inventory JSON only has to hand the bakery a loaded model. The stone template is
+     * already registered as a shared model and needs no per-block file on disk.
+     */
+    private static void emitTransportPlaceholders(Map<ResourceLocation, byte[]> result) {
+        byte[] blockstate = ("{\"variants\":{\"\":{\"model\":\"" + STONE_TEMPLATE + "\"}}}")
+                .getBytes(StandardCharsets.UTF_8);
+        byte[] item = ("{\"parent\":\"" + STONE_TEMPLATE + "\"}").getBytes(StandardCharsets.UTF_8);
+        for (var entry : GTFluidPipes.all()) {
+            if (entry.isPresent()) emitPlaceholder(result, entry.get(), blockstate, item);
+        }
+        for (var block : AddonPipeRegistration.fluidBlocks()) emitPlaceholder(result, block, blockstate, item);
+        for (var entry : GTItemPipes.all()) {
+            if (entry.isPresent()) emitPlaceholder(result, entry.get(), blockstate, item);
+        }
+        for (var block : AddonPipeRegistration.itemBlocks()) emitPlaceholder(result, block, blockstate, item);
+        for (var entry : GTWires.all()) {
+            if (entry.isPresent()) emitPlaceholder(result, entry.get(), blockstate, item);
+        }
+        for (var entry : GTSignalWires.all()) {
+            if (entry.isPresent()) emitPlaceholder(result, entry.get(), blockstate, item);
+        }
+        for (var entry : GTAxles.all()) {
+            if (entry.isPresent()) emitPlaceholder(result, entry.get(), blockstate, item);
+        }
     }
 
-    private static void emitPipe(Map<ResourceLocation, byte[]> result, net.minecraft.world.level.block.Block block,
-                                 String blockstate, String item) {
-        ResourceLocation id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
-        result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), blockstate.getBytes(StandardCharsets.UTF_8));
-        result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), item.getBytes(StandardCharsets.UTF_8));
+    /**
+     * Written unconditionally: the pack is registered at the bottom position, so an installed
+     * resource pack still wins, and the bakery replaces both entries before anything renders.
+     */
+    private static void emitPlaceholder(Map<ResourceLocation, byte[]> result, Block block,
+                                        byte[] blockstate, byte[] item) {
+        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+        result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), blockstate);
+        result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), item);
     }
 
     private static ResourceLocation location(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }

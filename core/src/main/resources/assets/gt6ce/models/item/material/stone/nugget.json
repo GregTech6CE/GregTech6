@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "gt6ce:item/material_icons/stone/nugget",
-    "layer1": "gt6ce:item/material_icons/stone/nugget_overlay"
+    "layer0": "gt6ce:item/material_icons/stone/nugget"
   }
 }

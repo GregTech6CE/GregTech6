@@ -285,6 +285,8 @@ tasks.named('jar', Jar).configure {
     duplicatesStrategy = DuplicatesStrategy.FAIL
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+    // Merged resource outputs can contain directories whose files were deleted.
+    includeEmptyDirs = false
     manifest {
         attributes([
                 'Specification-Title'     : mod_id,
@@ -320,6 +322,7 @@ def distributionJar = tasks.register('distributionJar', Jar) {
     duplicatesStrategy = DuplicatesStrategy.FAIL
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+    includeEmptyDirs = false
     zip64 = true
     // Merge the complete platform manifest, including MixinGradle's late additions.
     doFirst {

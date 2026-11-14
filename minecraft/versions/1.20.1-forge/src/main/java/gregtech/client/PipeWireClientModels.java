@@ -33,7 +33,6 @@ public final class PipeWireClientModels {
     private static final ResourceLocation WIRE_TEX = GregTech.id("block/material_icons/metallic/wire");
     private static final ResourceLocation RUBBER_TEX = GregTech.id("block/material_icons/rubber/pipeside");
     private static final ResourceLocation RESTRICTOR_TEX = GregTech.id("block/iconsets/pipe_restrictor");
-    private static final ResourceLocation AXLE_TEX = GregTech.id("block/iconsets/axle");
 
     private PipeWireClientModels() {}
 
