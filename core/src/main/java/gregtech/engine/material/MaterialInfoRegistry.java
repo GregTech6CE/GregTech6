@@ -26,6 +26,8 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
     private static final List<TagDeclarationSubmission> ADDON_TAG_DECLARATIONS = new ArrayList<>();
     private static final List<GroupSubmission> ADDON_GROUPS = new ArrayList<>();
     private static final List<ProcessSubmission> ADDON_PROCESSES = new ArrayList<>();
+    private static final List<SpecialProcessSubmission> ADDON_SPECIAL_PROCESSES = new ArrayList<>();
+    private static final Map<DataKey, SpecialProcessMethod> SPECIAL_PROCESSES = new LinkedHashMap<>();
     private static boolean registrationsClosed;
     private static volatile Snapshot snapshot;
 
@@ -49,6 +51,8 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
 
     public record ProcessSubmission(
             String addonId, MaterialKey material, MaterialProcessKey<?> process, MaterialProcessRule<?> rule) {}
+
+    public record SpecialProcessSubmission(String addonId, SpecialProcessMethod method) {}
 
     private record ToolSubmission(String addonId, MaterialKey material, MaterialToolProfile profile) {}
 
@@ -122,6 +126,7 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         mergeAddonProcesses();
         normalizeLinkedFlags();
         validateProcesses();
+        validateSpecialProcesses();
         validateLinkedToolRegistrations();
         var published = new LinkedHashMap<MaterialKey, PublishedMaterialInfo>();
         MATERIALS.forEach((key, info) -> published.put(key, info.freeze()));
@@ -178,6 +183,42 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
                             rule -> normalizeProcessRule("material '" + material.name() + "'", key, rule))
                     .toList();
         }));
+    }
+
+    private static void validateSpecialProcesses() {
+        for (var submission : ADDON_SPECIAL_PROCESSES)
+            installSpecialProcess(new SpecialProcessSubmission(submission.addonId(), submission.method()));
+        for (var entry : MATERIALS.entrySet()) {
+            for (var ruleEntry : entry.getValue().processes.entrySet()) {
+                var method = SPECIAL_PROCESSES.get(ruleEntry.getKey().id());
+                boolean special =
+                        ruleEntry.getValue().stream().anyMatch(rule -> rule.value() instanceof SpecialProcessValue);
+                if (!special) continue;
+                if (method == null || !method.process().equals(ruleEntry.getKey()))
+                    throw new IllegalArgumentException("Missing special process method "
+                            + ruleEntry.getKey().id());
+                for (var rule : ruleEntry.getValue()) {
+                    if (rule.value() instanceof SpecialProcessValue.Target target) {
+                        if (!target.inputCounts().keySet().equals(rule.forms()))
+                            throw new IllegalArgumentException(
+                                    "Special process target forms do not match rule forms for "
+                                            + entry.getKey().name() + " in "
+                                            + method.process().id());
+                    } else if (!(rule.value() instanceof SpecialProcessValue.Reagent)) {
+                        throw new IllegalArgumentException("Invalid special process value for "
+                                + entry.getKey().name());
+                    }
+                }
+            }
+        }
+    }
+
+    private static void installSpecialProcess(SpecialProcessSubmission submission) {
+        var method = submission.method();
+        requireNamespace(submission.addonId(), method.process().id());
+        if (SPECIAL_PROCESSES.putIfAbsent(method.process().id(), method) != null)
+            throw new IllegalArgumentException(
+                    "Duplicate special process method " + method.process().id());
     }
 
     private static void normalizeLinkedFlags() {
@@ -307,6 +348,18 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
 
     static List<GroupSubmission> groupSubmissions() {
         return List.copyOf(ADDON_GROUPS);
+    }
+
+    public static List<SpecialProcessMethod> specialProcesses() {
+        return List.copyOf(SPECIAL_PROCESSES.values());
+    }
+
+    /** Installs a built-in method declaration before the special-process registry closes. */
+    public static void installBuiltinSpecialProcess(SpecialProcessMethod method) {
+        if (snapshot != null) throw new IllegalStateException("Material auxiliary registrations are frozen");
+        if (SPECIAL_PROCESSES.putIfAbsent(method.process().id(), method) != null)
+            throw new IllegalArgumentException(
+                    "Duplicate special process method " + method.process().id());
     }
 
     private static Set<FormKey> normalizeProcessForms(
@@ -619,6 +672,15 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
             Objects.requireNonNull(declaration);
             requireNamespace(addonId, declaration.key().id());
             ADDON_GROUPS.add(new GroupSubmission(addonId, declaration));
+            return this;
+        }
+
+        @Override
+        public MaterialInfoTool.Registrar registerSpecialProcess(SpecialProcessMethod method) {
+            requireOpen();
+            Objects.requireNonNull(method);
+            requireNamespace(addonId, method.process().id());
+            ADDON_SPECIAL_PROCESSES.add(new SpecialProcessSubmission(addonId, method));
             return this;
         }
 

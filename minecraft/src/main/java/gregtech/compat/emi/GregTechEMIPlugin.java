@@ -14,7 +14,6 @@ import java.util.Locale;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 /** Native EMI integration: machine maps are independent of the vanilla RecipeManager and JEI. */
 @EmiEntrypoint
@@ -63,6 +62,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         });
         gregtech.engine.fluid.FluidContainerDisplayBinding.invalidate();
         FluidScreenStackProvider.register(registry);
+        registry.addGenericStackProvider(EmiWidgetInput::stackAt);
         WoodenBucketLookupRecipe.register(registry);
         FormConversionEmiRecipe.register(registry);
         registry.addRecipeHandler(
@@ -102,9 +102,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                     || map.mRecipeList.stream().noneMatch(r -> r.mEnabled && !r.mHidden)
                             && !map.hasDynamicEnumeration()) continue;
             var workstations = machines.getOrDefault(map, java.util.List.of());
-            ItemStack icon = workstations.isEmpty() ? new ItemStack(Items.ANVIL) : workstations.get(0);
-            var preferred = gregtech.compat.common.RecipeViewerIcons.map(map);
-            if (!preferred.isEmpty()) icon = preferred;
+            ItemStack icon = gregtech.compat.common.RecipeViewerIcons.category(map, machines);
             var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.mNameInternal.toLowerCase(Locale.ROOT));
             var category = new EmiRecipeCategory(id, EmiStack.of(icon)) {
                 @Override
@@ -176,31 +174,21 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         }
 
         @Override
-        public boolean openRecipe(gregtech.api.addon.material.DataKey reference) {
-            if (!MaterialProcessSnapshot.Store.current(snapshot)) return false;
-            var nativeRecipe = snapshot.recipe(reference);
-            if (nativeRecipe.isEmpty()) return false;
-            var row = nativeRecipe.get();
-            var id = ResourceLocation.fromNamespaceAndPath(
-                    "gt6ce", "/machine/" + row.map().mNameInternal.toLowerCase(Locale.ROOT) + "/" + row.index());
-            var recipe = dev.emi.emi.api.EmiApi.getRecipeManager().getRecipe(id);
-            if (recipe == null) return false;
-            dev.emi.emi.api.EmiApi.displayRecipe(recipe);
+        public boolean openStack(ItemStack icon, boolean uses) {
+            if (!MaterialProcessSnapshot.Store.current(snapshot) || icon.isEmpty()) return false;
+            var stack = MaterialProcessEmiStacks.of(icon);
+            if (stack.isEmpty()) return false;
+            if (uses) dev.emi.emi.api.EmiApi.displayUses(stack);
+            else dev.emi.emi.api.EmiApi.displayRecipes(stack);
             return true;
         }
 
         @Override
         public boolean openForm(gregtech.api.addon.material.DataKey resource, boolean uses) {
             if (!MaterialProcessSnapshot.Store.current(snapshot)) return false;
-            var pages = gregtech.compat.common.MaterialProcessProjection.pages(
-                    snapshot,
-                    resource,
-                    uses
-                            ? gregtech.engine.material.MaterialProcessGraph.Direction.USES
-                            : gregtech.engine.material.MaterialProcessGraph.Direction.SOURCES,
-                    this);
+            var pages = gregtech.compat.common.MaterialProcessProjection.pages(snapshot, resource, this);
             if (pages.isEmpty()) return false;
-            dev.emi.emi.api.EmiApi.displayRecipe(new MaterialProcessEmiRecipe(pages));
+            dev.emi.emi.api.EmiApi.displayRecipe(new MaterialProcessEmiRecipe(pages.get(0)));
             return true;
         }
     }

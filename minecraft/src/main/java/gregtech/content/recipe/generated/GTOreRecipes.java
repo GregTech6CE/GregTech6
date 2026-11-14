@@ -38,7 +38,7 @@ public final class GTOreRecipes {
         ChemRecipeResolver.exclude(SOURCE + "owned",
                 "magnetic-separator block dust and purified sifter rows are owned by their reviewed producers");
         ChemRecipeResolver.exclude(SOURCE + "108-159",
-                "the purified-acid vitriol loops are owned by SharedPurifiedAcidRows");
+                "the purified-acid vitriol loops are owned by SharedSpecialProcessRows");
         ChemRecipeResolver.exclude(SOURCE + "54-57/174-190",
                 "bedrock, moon and end rows need retired materials; Cryotheum/Pyrotheum loops need retired fluids");
         ChemRecipeResolver.exclude(SOURCE + "63",

@@ -38,6 +38,7 @@ public final class MaterialDefinitions {
         result.replaceAll(SourceRecyclingMaterialFacts::apply);
         result.replaceAll(SourceOreCrushingMaterialFacts::apply);
         result.replaceAll(PurifiedCentrifugeMaterialFacts::apply);
+        result.replaceAll(gregtech.content.recipe.SpecialProcessMaterialFacts::apply);
         result.replaceAll(MaterialDefinitions::attachDecomposition);
         DecompositionMaterials.validateConsumed(result);
         result.sort(Comparator.comparing(MaterialDefinition.Declaration::name));

@@ -64,7 +64,7 @@
 
 ## C：形态视图与资源 tag 桥接
 
-状态：已实施本轮内容快照范围。API 1.7 将定义期规则扩展为 item／block／fluid，发布运行期实际绑定并把显式统一物品纳入实际表示；当前 API 1.8 继续提供同一形态快照契约。规则资源与兼容资源保持区分。平台注册后发布内容快照与资源 tag 桥接声明，外部 tag 成员仍作为 04 的低优先级候选输入。
+状态：已实施本轮内容快照范围。API 1.7 将定义期规则扩展为 item／block／fluid，发布运行期实际绑定并把显式统一物品纳入实际表示；当前 API 1.9 继续提供同一形态快照契约，并增加 cross-material special process 方法、target／reagent 规则和派生标签。规则资源与兼容资源保持区分。平台注册后发布内容快照与资源 tag 桥接声明，外部 tag 成员仍作为 04 的低优先级候选输入。
 
 2026-11-11 审查闭合：外部 tag generation 通过统一候选裁决后立即刷新公开形态绑定；冲突项在导入阶段带物品 ID 和声明差异记录。Forge 与 NeoForge 的审计探针均观察到新增 tag 表示进入 `formBindings()`，撤销后退出。
 
@@ -145,7 +145,7 @@ D 的查询结果必须绑定一个完整发布上下文：`MaterialPublication.
 
 ## E：有界矿物处理图与消费者迁移
 
-已提供 core 有界语义图、共享 Minecraft 投影、与 viewer 无关的布局以及 JEI／EMI 分类。构造字段、角色、概率、分页、折叠、交互和生命周期契约统一见[矿物处理 JEI 展示接入](../material-process-display.md)。`unbound()` 现在只在没有成功发布快照时作为显式空状态，不再由正式注册路径常驻。
+已提供 core 有界语义图、材料页直连查询、共享 Minecraft 投影、与 viewer 无关的可平移布局以及 JEI／EMI 分类。构造字段、角色、概率、三区分区、工艺组折叠、交互和生命周期契约统一见[矿物处理图展示接入](../material-process-display.md)。`unbound()` 现在只在没有成功发布快照时作为显式空状态，不再由正式注册路径常驻。
 
 ### 接入链
 
@@ -159,7 +159,7 @@ D 已发布来源／用途索引
 
 职责边界：
 
-- D 决定哪些关系存在及覆盖范围；E 决定如何在预算内查询和截断；展示层只做分页、布局、索引与交互，不读取配方表、材料目录或世界生成数据。
+- D 决定哪些关系存在及覆盖范围；E 决定如何在预算内查询和截断；展示层只做分区、平移、工艺组折叠、索引与交互，不读取配方表、材料目录或世界生成数据。
 - core 图先按查询预算完成遍历并返回不可变结果，再由内容适配器构造展示值。`MaterialProcessDisplay` 的 64 步、128 条关联、每步每侧 64 个端口和每端口 16 个图标是展示上限，不能代替图遍历的深度、节点、端口和边预算，也不能先枚举完整候选再截断。
 - 一个步骤保存联合输入与全部输出；主路线仅是布局提示，不得从槽位顺序推断主／副角色。未知角色、未知概率、未解析条件和部分覆盖必须继续可见，不能为了画出完整路线改写成确定边。
 - 图边只来自 D 的关系或明确确认的适配关系。显示层不得按相同图标补边，不把 tag／unit 代表图标当成候选全集，也不从显示图反向生成配方或授权。
@@ -176,9 +176,11 @@ D 已发布来源／用途索引
 
 ### 实施结果
 
-- `MaterialProcessGraph` 在 core 中按 `SOURCES`、`USES`、`BOTH` 遍历，使用跨材料共享索引，限制深度、步骤、每侧端口和关联数量；循环按步骤访问集终止，稳定保留截断原因。
+- `MaterialProcessGraph` 在 core 中保留 `SOURCES`、`USES`、`BOTH` 递归遍历，并新增材料级直连查询：覆盖该材料全部形态的直接步骤，但不沿另一材料继续递归，限制步骤、每侧端口和关联数量；循环按步骤访问集终止，稳定保留截断原因。
 - `MaterialProcessProjection` 只把已查询结果转成展示值。物品、流体、tag 和 unit 选择器保持独立引用；tag／unit 只提供有限代表，不展开候选全集。
+- API 1.9 增加 `SpecialProcessMethod`／`SpecialProcessValue`：辅料与目标材料使用同一 typed process key，`Target` 提供配方计划，`Reagent` 标记辅料输入。`SharedSpecialProcessRows` 生成并标记最终配方，`MaterialTagPack` 从相同规则派生 target／reagent 资源 tag。旧 `SourcePurifiedAcidData`、`SourcePurifiedAcidRules` 与 `SharedPurifiedAcidRows` 已删除。
 - JEI 与 EMI 共用 `MaterialProcessPanel` 和同一 `Page` 列表。工艺点击定位当前快照中的原生机器配方，资源左右击重新查询该快照的形态来源／用途。
+- `MaterialProcessPanel` 只折叠携带 method ID 的步骤；原先按步骤名达到阈值折叠的规则已删除，普通配方直接平铺。
 - JEI 与 EMI 的分类仅由客户端注册；`MaterialProcessSnapshot` 与 core 图不引用 viewer 类型，专用服务端可独立构建和查询。
 
 ### 独立验收

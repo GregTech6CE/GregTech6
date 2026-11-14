@@ -8,7 +8,6 @@ import gregtech.content.recipe.MaterialProcessSnapshot;
 import gregtech.engine.material.MaterialProcessGraph;
 import gregtech.engine.material.MaterialProcessGraph.AmountUnit;
 import gregtech.engine.material.MaterialProcessGraph.Budgets;
-import gregtech.engine.material.MaterialProcessGraph.Direction;
 import gregtech.engine.material.MaterialProcessGraph.Notice;
 import gregtech.engine.material.MaterialProcessGraph.Port;
 import gregtech.engine.material.MaterialProcessGraph.Query;
@@ -32,15 +31,18 @@ import net.minecraftforge.fluids.FluidStack;
 
 /** Converts one already bounded semantic query into native viewer values. */
 public final class MaterialProcessProjection {
-    private static final Budgets INITIAL_BUDGET = new Budgets(4, 10, 64, 128);
+    private static final Budgets MATERIAL_PAGE_BUDGET =
+            new Budgets(0, MaterialProcessDisplay.MAX_STEPS, MaterialProcessDisplay.MAX_PORTS,
+                    MaterialProcessDisplay.MAX_CONNECTIONS);
 
     private MaterialProcessProjection() {}
 
     public static List<MaterialProcessDisplay.Page> initialPages(
             MaterialProcessSnapshot snapshot, MaterialProcessDisplay.Navigation navigation) {
         var pages = new ArrayList<MaterialProcessDisplay.Page>();
+        var workstations = RecipeViewerIcons.categories();
         for (MaterialProcessSnapshot.Root root : snapshot.roots()) {
-            var rootPages = pages(snapshot, root.resource(), Direction.BOTH, INITIAL_BUDGET, navigation);
+            var rootPages = pages(snapshot, root.resource(), MATERIAL_PAGE_BUDGET, navigation, workstations);
             pages.addAll(rootPages);
         }
         return pages.isEmpty() ? MaterialProcessDisplay.unbound() : List.copyOf(pages);
@@ -49,49 +51,87 @@ public final class MaterialProcessProjection {
     public static List<MaterialProcessDisplay.Page> pages(
             MaterialProcessSnapshot snapshot,
             DataKey root,
-            Direction direction,
             MaterialProcessDisplay.Navigation navigation) {
-        return pages(snapshot, root, direction, Budgets.DEFAULT, navigation);
+        return pages(snapshot, root, MATERIAL_PAGE_BUDGET, navigation, RecipeViewerIcons.categories());
     }
 
     private static List<MaterialProcessDisplay.Page> pages(
             MaterialProcessSnapshot snapshot,
             DataKey root,
-            Direction direction,
             Budgets budgets,
-            MaterialProcessDisplay.Navigation navigation) {
-        Query query = snapshot.query(root, direction, budgets);
-        var steps = query.steps().stream().map(MaterialProcessProjection::step).toList();
+            MaterialProcessDisplay.Navigation navigation,
+            java.util.Map<gregtech.engine.recipe.RecipeMap, ItemStack> workstations) {
+        Query query = snapshot.queryMaterial(root, budgets);
+        var steps = query.steps().stream().map(step -> step(snapshot, step, workstations)).toList();
         var connections = query.edges().stream()
                 .map(edge -> new MaterialProcessDisplay.Connection(
                         edge.source(), edge.target(), edge.resource(), edge.confirmed()))
                 .toList();
         var notices = query.notices().stream().map(MaterialProcessProjection::notice).toList();
         if (notices.isEmpty()) notices = List.of(Component.translatable("gt6ce.jei.material_process.partial_unknown"));
-        Component title = title(query.root(), snapshot.resource(query.root()).orElse(null));
-        return MaterialProcessDisplay.pages(title, steps, connections, notices, navigation);
+        Resource resource = snapshot.resource(query.root()).orElse(null);
+        Component title = title(query.root(), resource);
+        String material = resource == null ? "" : resource.material();
+        return MaterialProcessDisplay.pages(title, material, steps, connections, notices, navigation);
     }
 
-    private static MaterialProcessDisplay.Step step(Step step) {
+    private static MaterialProcessDisplay.Step step(MaterialProcessSnapshot snapshot, Step step,
+            java.util.Map<gregtech.engine.recipe.RecipeMap, ItemStack> workstations) {
+        Optional<MaterialProcessDisplay.SpecialProcess> specialProcess = step.specialProcess()
+                .flatMap(id -> specialMethod(id).map(method -> new MaterialProcessDisplay.SpecialProcess(
+                        id, Component.translatable(method.displayNameKey()))));
         return new MaterialProcessDisplay.Step(
                 step.reference(),
                 Component.literal(step.name()),
-                step.inputs().stream().map(MaterialProcessProjection::port).toList(),
-                step.outputs().stream().map(MaterialProcessProjection::port).toList(),
+                snapshot.recipe(step.reference())
+                        .map(recipe -> workstations.getOrDefault(recipe.map(), new ItemStack(net.minecraft.world.item.Items.ANVIL)))
+                        .orElseGet(() -> snapshot.worldgen(step.reference()).isPresent()
+                                ? new ItemStack(net.minecraft.world.item.Items.IRON_PICKAXE) : ItemStack.EMPTY),
+                step.inputs().stream().map(port -> port(port, snapshot.recipe(step.reference()).orElse(null))).toList(),
+                step.outputs().stream().map(port -> port(port, snapshot.recipe(step.reference()).orElse(null))).toList(),
                 step.details().stream().map(MaterialProcessProjection::literal).toList(),
-                step.resolved());
+                specialProcess,
+                step.resolved(),
+                snapshot.worldgen(step.reference()).isPresent());
     }
 
-    private static MaterialProcessDisplay.Port port(Port port) {
+    private static Optional<gregtech.api.addon.material.SpecialProcessMethod> specialMethod(
+            DataKey id) {
+        MaterialCatalogView catalog;
+        try {
+            catalog = gregtech.engine.material.MaterialViews.catalog();
+        } catch (IllegalStateException notReady) {
+            return Optional.empty();
+        }
+        return catalog.specialProcesses().find(id);
+    }
+
+    private static MaterialProcessDisplay.Port port(Port port, MaterialProcessSnapshot.NativeRecipe nativeRecipe) {
+        List<ItemStack> icons = nativeIcons(port.resource(), nativeRecipe);
+        String identity = port.resource().state();
+        if (!icons.isEmpty()) {
+            ItemStack representative = icons.get(0);
+            if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(representative)) {
+//? if >=1.21.1 {
+                /*var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(representative);
+*///?} else {
+                var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(representative);
+//?}
+                if (!fluid.isEmpty()) identity = MaterialProcessSnapshot.fluidDisplayState(fluid);
+            } else identity = MaterialProcessSnapshot.itemDisplayState(representative);
+        }
         return new MaterialProcessDisplay.Port(
                 port.resource().key(),
+                port.resource().material(),
                 name(port.resource()),
-                icons(port.resource()),
+                icons,
                 role(port.role()),
                 port.main(),
                 amount(port.amount().value(), port.amount().unit()),
+                quantity(port.amount().value(), port.amount().unit()),
                 port.chance(),
-                port.details().stream().map(MaterialProcessProjection::literal).toList());
+                port.details().stream().map(MaterialProcessProjection::literal).toList(),
+                identity);
     }
 
     private static Component title(DataKey root, Resource resource) {
@@ -131,6 +171,68 @@ public final class MaterialProcessProjection {
 
     private static Component literal(String value) {
         return Component.literal(value);
+    }
+
+    private static List<ItemStack> nativeIcons(Resource resource, MaterialProcessSnapshot.NativeRecipe row) {
+        String state = resource.state();
+        if (row != null) {
+            var recipe = row.recipe();
+            if (state.startsWith("tag:")) {
+                String tag = state.substring("tag:".length());
+                if (resource.form().equals("fluid")) {
+                    for (int index = 0; index < recipe.mFluidInputs.length; index++) {
+                        var key = recipe.fluidTag(index);
+                        var stack = recipe.mFluidInputs[index];
+                        if (key != null && key.location().toString().equals(tag) && stack != null && !stack.isEmpty()
+                                && MaterialProcessSnapshot.fluidDisplayState(stack).contains("#")) {
+                            var display = fluidDisplay(stack);
+                            return display.isEmpty() ? List.of() : List.of(display);
+                        }
+                    }
+                } else {
+                    for (int index = 0; index < recipe.mInputs.length; index++) {
+                        var key = recipe.itemTag(index);
+                        var stack = recipe.mInputs[index];
+                        if (key != null && key.location().toString().equals(tag) && stack != null && !stack.isEmpty()
+                                && MaterialProcessSnapshot.itemDisplayState(stack).contains("#"))
+                            return List.of(stack.copyWithCount(1));
+                    }
+                }
+            }
+            if (state.startsWith("fluid:")) {
+                for (FluidStack stack : java.util.stream.Stream.concat(
+                        java.util.Arrays.stream(recipe.mFluidInputs), java.util.Arrays.stream(recipe.mFluidOutputs)).toList())
+                    if (stack != null && !stack.isEmpty() && MaterialProcessSnapshot.fluidDisplayState(stack).equals(state)) {
+                        ItemStack display = fluidDisplay(stack);
+                        return display.isEmpty() ? List.of() : List.of(display);
+                    }
+            }
+            if (state.startsWith("item:") || state.startsWith("unit:")) {
+                var candidates = new ArrayList<ItemStack>();
+                candidates.addAll(java.util.Arrays.asList(recipe.mInputs));
+                candidates.addAll(java.util.Arrays.asList(recipe.mOutputs));
+                if (state.startsWith("unit:"))
+                    for (int index = 0; index < recipe.mInputs.length; index++) {
+                        var display = recipe.materialInputDisplay(index);
+                        if (display != null) candidates.addAll(display.alternatives());
+                    }
+                var result = new ArrayList<ItemStack>();
+                for (ItemStack stack : candidates) {
+                    if (stack == null || stack.isEmpty()) continue;
+                    boolean matches = state.startsWith("item:") ? MaterialProcessSnapshot.itemDisplayState(stack).equals(state)
+                            : java.util.Arrays.asList(state.substring(state.lastIndexOf('|') + 1).split(","))
+                                    .contains(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
+                    if (matches && result.stream().noneMatch(existing -> gregtech.engine.stack.StackCompat.sameItem(existing, stack))) {
+                        result.add(stack.copyWithCount(1));
+                        if (result.size() >= MaterialProcessDisplay.MAX_ICONS) break;
+                    }
+                }
+                if (!result.isEmpty()) return List.copyOf(result);
+            }
+        }
+        // A fingerprint is not a serialized stack. Never replace a stateful value with an untagged look-alike.
+        if ((state.startsWith("item:") || state.startsWith("fluid:")) && state.contains("#")) return List.of();
+        return icons(resource);
     }
 
     private static List<ItemStack> icons(Resource resource) {
@@ -212,6 +314,15 @@ public final class MaterialProcessProjection {
             case BYPRODUCT -> MaterialProcessDisplay.Role.BYPRODUCT;
             case UNKNOWN -> MaterialProcessDisplay.Role.UNKNOWN;
         };
+    }
+
+    private static Component quantity(long value, AmountUnit unit) {
+        return Component.literal(switch (unit) {
+            case ITEM -> value == 1 ? "" : Long.toString(value);
+            case MATERIAL_UNIT -> value + "U";
+            case MILLIBUCKET -> value + "mB";
+            case UNKNOWN -> "?";
+        });
     }
 
     private static Component amount(long value, AmountUnit unit) {

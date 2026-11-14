@@ -144,7 +144,7 @@ public final class MachineRecipeOverlay {
         SharedOreCrushingRows.rebuild();
         SharedOilSandRows.rebuild();
         // New purified-acid calls do not displace the earlier imported/static Bath producers.
-        SharedPurifiedAcidRows.rebuild();
+        SharedSpecialProcessRows.rebuild();
         MoltenMetalUnitRecipes.begin();
         SharedThermalInputRows.rebuild();
         SharedThermalRecyclingRows.rebuild();
@@ -161,6 +161,7 @@ public final class MachineRecipeOverlay {
         long removeMillis = (System.nanoTime() - removeStarted) / 1_000_000L;
         var installStarted = System.nanoTime();
         for (var marker : markers) if (marker.addition() != null) install(marker.id(), marker.addition(), tally);
+        SharedSpecialProcessRows.annotateCurrent();
         long installMillis = (System.nanoTime() - installStarted) / 1_000_000L;
         rememberFurnaceChanges(furnaceBefore);
         LOGGER.info("[gregtech] Machine recipe overlay baseline {} rows, restore {} ms, producers {} ms, moved {}, "
@@ -195,7 +196,7 @@ public final class MachineRecipeOverlay {
             SharedOreSiftingRows.clear();
             SharedOreCrushingRows.clear();
             SharedOilSandRows.clear();
-            SharedPurifiedAcidRows.clear();
+            SharedSpecialProcessRows.clear();
             SharedThermalInputRows.clear();
             SharedThermalRecyclingRows.clear();
             MoltenMetalUnitRecipes.clear();
@@ -289,7 +290,7 @@ public final class MachineRecipeOverlay {
         exclude.addAll(SharedOreSiftingRows.owned());
         exclude.addAll(SharedOreCrushingRows.baselineExcluded());
         exclude.addAll(SharedOilSandRows.baselineExcluded());
-        exclude.addAll(SharedPurifiedAcidRows.owned());
+        exclude.addAll(SharedSpecialProcessRows.owned());
         exclude.addAll(SharedThermalInputRows.owned());
         exclude.addAll(SharedThermalRecyclingRows.owned());
         // Maps created after the first reload still get one baseline. A captured map keeps its first snapshot.

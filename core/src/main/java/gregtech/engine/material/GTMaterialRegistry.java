@@ -8,7 +8,6 @@ import gregtech.content.data.ModReferences;
 import gregtech.content.material.MaterialDefinitions;
 import gregtech.engine.addon.AddonCoreServices;
 import gregtech.engine.addon.AddonMaterials;
-
 import java.util.*;
 import java.util.function.BiConsumer;
 
@@ -229,6 +228,7 @@ public final class GTMaterialRegistry {
                 definitionsOpen = false;
             }
             MaterialInfoRegistry.resolveAddonRegistrations();
+            gregtech.content.recipe.SpecialProcessMethods.install();
             MaterialInfoRegistry.closeRegistrations();
             phase = RegistrationPhase.LINKS;
             MaterialLinker.validate(MaterialDefinitions.declarations(), BY_NAME::get);

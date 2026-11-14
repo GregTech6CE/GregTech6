@@ -91,6 +91,7 @@ public final class MaterialProcessGraph {
             List<Port> inputs,
             List<Port> outputs,
             List<String> details,
+            Optional<DataKey> specialProcess,
             boolean resolved) {
         public Step {
             Objects.requireNonNull(reference);
@@ -103,6 +104,17 @@ public final class MaterialProcessGraph {
                     || outputs.stream().filter(Port::main).count() > 1)
                 throw new IllegalArgumentException("Multiple main process ports");
             details = List.copyOf(details);
+            Objects.requireNonNull(specialProcess);
+        }
+
+        public Step(
+                DataKey reference,
+                String name,
+                List<Port> inputs,
+                List<Port> outputs,
+                List<String> details,
+                boolean resolved) {
+            this(reference, name, inputs, outputs, details, Optional.empty(), resolved);
         }
     }
 
@@ -155,6 +167,7 @@ public final class MaterialProcessGraph {
     private final Snapshot snapshot;
     private final Map<DataKey, IndexedStep> steps;
     private final Map<DataKey, Resource> resources;
+    private final Map<String, List<Resource>> resourcesByMaterial;
     private final Map<DataKey, List<IndexedStep>> inputs;
     private final Map<DataKey, List<IndexedStep>> outputs;
     private final List<Notice> notices;
@@ -163,6 +176,19 @@ public final class MaterialProcessGraph {
         snapshot = builder.snapshot;
         steps = Map.copyOf(builder.steps);
         resources = Map.copyOf(builder.resources);
+        var byMaterial = new HashMap<String, List<Resource>>();
+        resources
+                .values()
+                .forEach(resource -> byMaterial
+                        .computeIfAbsent(resource.material(), ignored -> new ArrayList<>())
+                        .add(resource));
+        var frozenByMaterial = new HashMap<String, List<Resource>>(byMaterial.size());
+        byMaterial.forEach((material, values) -> frozenByMaterial.put(
+                material,
+                values.stream()
+                        .sorted(Comparator.comparing(resource -> resource.key().toString()))
+                        .toList()));
+        resourcesByMaterial = Map.copyOf(frozenByMaterial);
         inputs = freezeOccurrences(builder.inputs);
         outputs = freezeOccurrences(builder.outputs);
         notices = List.copyOf(builder.notices);
@@ -332,6 +358,88 @@ public final class MaterialProcessGraph {
                 !truncations.isEmpty());
     }
 
+    /**
+     * Return every step directly adjacent to any form of the root's material. Unlike {@link #query}, this
+     * does not recurse through another material, so a common reagent cannot pull unrelated downstream chains
+     * into the page. Internal form conversions, immediate sources and immediate uses share this one result.
+     */
+    public Query queryMaterial(DataKey root, Budgets budgets) {
+        Objects.requireNonNull(root);
+        Objects.requireNonNull(budgets);
+        Resource rootResource = resources.get(root);
+        if (rootResource == null)
+            return new Query(snapshot, root, Direction.BOTH, List.of(), List.of(), notices, false);
+
+        var selected = new java.util.TreeSet<IndexedStep>(Comparator.comparingInt(IndexedStep::order));
+        List<Resource> materialResources = rootResource.material().equals("unknown")
+                ? List.of(rootResource)
+                : resourcesByMaterial.getOrDefault(rootResource.material(), List.of());
+        for (Resource resource : materialResources) {
+            selected.addAll(inputs.getOrDefault(resource.key(), List.of()));
+            selected.addAll(outputs.getOrDefault(resource.key(), List.of()));
+        }
+        var retained = new ArrayList<IndexedStep>(Math.min(selected.size(), budgets.maxSteps()));
+        int omittedSteps = 0;
+        for (IndexedStep indexed : selected) {
+            if (retained.size() >= budgets.maxSteps()) {
+                omittedSteps++;
+                continue;
+            }
+            retained.add(indexed);
+        }
+
+        int omittedPorts = 0;
+        for (IndexedStep indexed : retained) {
+            omittedPorts += Math.max(0, indexed.step.inputs().size() - budgets.maxPortsPerSide());
+            omittedPorts += Math.max(0, indexed.step.outputs().size() - budgets.maxPortsPerSide());
+        }
+        var resultSteps = retained.stream()
+                .map(indexed -> boundedStep(indexed.step, budgets.maxPortsPerSide()))
+                .toList();
+        var retainedByReference = new HashMap<DataKey, Step>();
+        resultSteps.forEach(step -> retainedByReference.put(step.reference(), step));
+
+        var resultEdges = new LinkedHashSet<Edge>();
+        int omittedEdges = 0;
+        for (IndexedStep source : retained) {
+            for (Port port : source.step.outputs()) {
+                if (!port.resource().material().equals(rootResource.material())) continue;
+                for (IndexedStep target : inputs.getOrDefault(port.resource().key(), List.of())) {
+                    if (!retainedByReference.containsKey(target.step.reference())) continue;
+                    Edge edge = new Edge(
+                            source.step.reference(),
+                            target.step.reference(),
+                            port.resource().key(),
+                            confirmed(source, target));
+                    if (resultEdges.contains(edge)) continue;
+                    if (resultEdges.size() >= budgets.maxEdges()) {
+                        omittedEdges++;
+                        continue;
+                    }
+                    resultEdges.add(edge);
+                }
+            }
+        }
+
+        var truncations = new LinkedHashMap<String, Integer>();
+        addNotice(truncations, "node_limit", omittedSteps);
+        addNotice(truncations, "port_limit", omittedPorts);
+        addNotice(truncations, "edge_limit", omittedEdges);
+        var resultNotices = new ArrayList<>(notices);
+        truncations.forEach((code, omitted) -> resultNotices.add(new Notice(code, omitted)));
+        if (resultSteps.isEmpty()
+                && resultNotices.stream().noneMatch(notice -> notice.code().equals("no_both")))
+            resultNotices.add(new Notice("no_both", 0));
+        return new Query(
+                snapshot,
+                root,
+                Direction.BOTH,
+                resultSteps,
+                List.copyOf(resultEdges),
+                List.copyOf(resultNotices),
+                !truncations.isEmpty());
+    }
+
     private int enqueue(
             DataKey root,
             boolean sources,
@@ -363,6 +471,7 @@ public final class MaterialProcessGraph {
                 boundedPorts(step.inputs(), maxPorts),
                 boundedPorts(step.outputs(), maxPorts),
                 step.details(),
+                step.specialProcess(),
                 step.resolved());
     }
 

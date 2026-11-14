@@ -31,7 +31,7 @@
 | Minecraft [SharedPurifiedCentrifugeRows](../../../minecraft/src/main/java/gregtech/content/recipe/SharedPurifiedCentrifugeRows.java) | 六条相态记录与七条显式无默认相态记录 | 已迁入 `PurifiedCentrifugeMaterialFacts` 的两个材料 process；原生注册字段／所有权、离心槽位、概率、重载发布和兼容分支仍留 recipe |
 | [MaterialFluidUnitFacts](../../../core/src/main/java/gregtech/content/material/catalog/MaterialFluidUnitFacts.java) 与 core `engine.recipe.chem.MaterialFluidBinding` | 材料相态／单位／流体身份绑定，后者从材料视图和流体目录建立索引 | 绑定事实进入 `MATERIAL_FLUID_UNIT` process；`UnitConversion` 只保留换算机制 |
 | Minecraft [SourceThermalNativeAdapter](../../../minecraft/src/main/java/gregtech/content/recipe/SourceThermalNativeAdapter.java) 的 `nativeBinding()` | Glass、Blaze、Plastic、Ender、Redstone、Lava、CFoam、蜡及熔盐等原生字段／ID | 精确字段和单位从 `MaterialFluidUnitFacts` 查询；特殊原生持有检查与配方适配仍在游戏侧 |
-| core [SourcePurifiedAcidData](../../../core/src/main/java/gregtech/content/recipe/SourcePurifiedAcidData.java) | 酸洗 `Phase` 的材料选择；`MANGANESE_DEFAULTS` 中重复的材料副产物快照 | `Phase` 的原生字段、相态和 1000 mB/U 已归入 `MaterialFluidUnitFacts`，recipe 只保留材料选择器。酸洗 `FAMILIES` 的共同反应物、配比和尾产物继续保留。`manganeseDefaults()`／`matchesManganeseDefault()` 未找到外部调用，但 `reviewedIdentity()` 仍使用默认表确认身份，不能把整表当死测试数据删除；先拆出仍生效的身份范围，再决定默认快照是否进入测试 |
+| core [SpecialProcessData](../../../core/src/main/java/gregtech/content/recipe/SpecialProcessData.java) 与 `SpecialProcessMaterialFacts` | 酸洗 `Phase` 的材料选择、固定 target/reagent 规则和动态锰规则 | `Phase` 的原生字段、相态和 1000 mB/U 归入 `MaterialFluidUnitFacts`；酸洗材料列表、共同反应物、配比和尾产物通过 API 1.9 的 `SpecialProcessValue.Target／Reagent` 挂到 typed process。旧 `SourcePurifiedAcidData`、`SourcePurifiedAcidRules` 与 `SharedPurifiedAcidRows` 已删除 |
 | core [SourceRollingWireRules](../../../core/src/main/java/gregtech/content/recipe/SourceRollingWireRules.java) 的 `physicalWire()` | Netherite／Naquadah 的额外线材族准入 | 已迁入 `SOURCE_ADDITIONAL_WIRE_FAMILY`；轧制／拉丝模板、工时与实际线材族注册仍留 recipe |
 | Minecraft [MaterialFormConversionRecipes](../../../minecraft/src/main/java/gregtech/content/recipe/MaterialFormConversionRecipes.java) 的 `compressor()` | Ice 的 `dust → plateGem` 排除 | 已迁入 `COMPRESSOR_DUST_TO_GEM_PLATE`，与筛矿高级宝石限制保持独立；装箱、拆箱、压缩模板仍留 recipe |
 | core `OreHostFacts` 的 `HOSTS`／`BROKEN_SOURCE_PAIRS` | 宿主岩石、矿石 prefix、4U 脉石和破碎矿块表示关系；`SourceOilSandRules` 也消费 | 已位于石材内容声明；原生 host ID 解析和机器对脉石的产出策略仍留 recipe；不写入矿物化学组成 |
@@ -56,7 +56,7 @@
 
 | 对象 | 保留原因与边界 |
 | --- | --- |
-| `GTChemRecipes` 的铝土矿高压釜、`SourcePurifiedAcidData.FAMILIES`／`SourcePurifiedAcidRules` | 明确反应物、流体、比例和产物的特殊化学工艺；共用材料不等于材料属性。仅抽离重复身份／单位绑定 |
+| `GTChemRecipes` 的铝土矿高压釜、`SpecialProcessData` 的 fixed families | 明确反应物、流体、比例和产物的特殊化学工艺；共用材料不等于材料属性。target／reagent 规则进入 API 1.9，重复身份／单位绑定仍由材料目录提供 |
 | `SourceAlloyRecipes`、`SourceOilSandRules`、`SourceOreSiftingRules.specialRows()`、`SourceOreMagneticRules.blockRows()` | 显式合金、油砂事件、特殊筛矿和固定磁选路线；输入／输出／概率就是配方内容，不因含材料名单而整体材料化 |
 | `TechnologyIngredients.PISTON_METALS`、`craftingRedstone()` | 工艺局部的原料替代集合和形态选择。可以声明为配方专用组，不能由此推导全局“可做所有机械零件”能力，也不能合并不同语义的 `Any*` 组 |
 | `PolarizerMaterialRecipes` 的材料对、`BathMaterialRecipes` 的材料转化与流体、`UtilityProcessingRecipes` 的木材提取产率 | 当前表达具体工艺的输入／输出或用量；应保留为配方关系。若以后确认为跨消费者的通用 target，可另行收敛声明，不能仅凭材料名称硬编码认定应全局化 |
@@ -66,7 +66,7 @@
 ## 五、实施顺序与验收补充
 
 1. 通用目标、挤压、透镜、研钵、洗矿、相态单位和固定成分写入已完成迁移。
-2. `MaterialWorkability`、`SourceLatheMaterialProfiles`、`SourcePurifiedAcidData` 等混合对象仍需在 07-E 定向审计中逐字段裁决去留；没有足够来源时保留并记录缺口。
+2. `MaterialWorkability`、`SourceLatheMaterialProfiles` 等混合对象仍需在 07-E 定向审计中逐字段裁决去留；特殊处理系列已迁移到 API 1.9，不再保留酸洗专用声明 API。
 3. 对局部工艺例外继续按“材料加工声明”或“显式配方声明”裁决；不能用全局 flag 扩大效果。
 
 源码中的数量注释也需要核实：`SourceOreMacerationFacts` 注释写 589 个正例／997 个身份，实际集合为 588 个正例加 408 个负例；`SourceOreWashingData` 注释中的 59／159 等口径与实际 142 个身份行、54 个含正例 tag 的身份不一致。酸洗相态迁移时确认实际枚举为 17 个，旧注释的 18 已修正。

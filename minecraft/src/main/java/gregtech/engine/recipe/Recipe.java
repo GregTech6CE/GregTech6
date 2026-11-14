@@ -14,6 +14,7 @@ import net.minecraftforge.fluids.FluidStack;
  * and fluids, processing duration, energy cost, and output chances.</p>
  */
 public class Recipe {
+    private gregtech.api.addon.material.DataKey specialProcess;
     private static final ItemStack[] NO_ITEMS = new ItemStack[0];
     private static final FluidStack[] NO_FLUIDS = new FluidStack[0];
     private static final long[] NO_CHANCES = new long[0];
@@ -142,6 +143,16 @@ public class Recipe {
      * matching.
      */
     public String mSource = "";
+
+    /** Explicit special-process method ownership; ordinary rows stay null. */
+    public Recipe withSpecialProcess(gregtech.api.addon.material.DataKey process) {
+        specialProcess = process;
+        return this;
+    }
+
+    public gregtech.api.addon.material.DataKey specialProcess() {
+        return specialProcess;
+    }
 
     /**
      * Map-assigned publication order. Used only as the deterministic tie-breaker between rows of

@@ -1,237 +1,291 @@
 package gregtech.client;
 
-import gregtech.api.addon.recipe.RecipeOutputChances;
+import com.mojang.math.Axis;
 import gregtech.compat.common.MaterialProcessDisplay.Page;
-import gregtech.compat.common.MaterialProcessDisplay.Port;
-import gregtech.compat.common.MaterialProcessDisplay.Role;
-import gregtech.compat.common.MaterialProcessDisplay.Step;
+import gregtech.compat.common.MaterialProcessOverview;
+import gregtech.compat.common.MaterialProcessOverview.Node;
+import gregtech.compat.jei.PreviewViewport;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 
-/** Viewer-independent geometry and rendering; native ingredient widgets use exactly these slot positions. */
+/** A readable viewport onto the cached topology layout and its native port instances. */
 public final class MaterialProcessPanel {
     public static final int WIDTH = 280, HEIGHT = 216;
-    public static final int HEADER = 30, STEP_HEIGHT = 80, FOOTER = 196;
-    private static final int SIDE_LIMIT = 6;
-    private static final int MAIN_X = 132, STEP_X = 103, STEP_WIDTH = 74;
-    private static final int TEXT = 0xff404040, MUTED = 0xff707070, ACCENT = 0xff537962;
+    private static final int BODY_TOP = 17, FOOTER = 203;
+    private static final int TEXT = 0xff383838, MUTED = 0xff777777, GOLD = 0xffffcc44;
+    private static final double MIN_ZOOM = 0.0001, MAX_ZOOM = 3;
+    private final Page page;
+    private final MaterialProcessOverview overview;
+    private double zoom, panX, panY;
 
-    public record Slot(Port port, int x, int y, boolean output) {
-        public boolean contains(double mouseX, double mouseY) {
-            return mouseX >= x && mouseX < x + 16 && mouseY >= y && mouseY < y + 16;
-        }
+    public MaterialProcessPanel(Page page) {
+        this.page = page;
+        overview = new MaterialProcessOverview(page);
+        fit();
     }
 
-    private MaterialProcessPanel() {}
-
-    public static List<Slot> slots(Step step, int row) {
-        var slots = new ArrayList<Slot>();
-        addSlots(slots, step.inputs(), row, false);
-        addSlots(slots, step.outputs(), row, true);
-        return List.copyOf(slots);
-    }
-
-    private static void addSlots(List<Slot> slots, List<Port> ports, int row, boolean output) {
-        int side = 0;
-        for (var port : ports) {
-            if (port.main()) {
-                slots.add(new Slot(port, MAIN_X, HEADER + row * STEP_HEIGHT + (output ? 57 : 0), output));
-            } else if (side < SIDE_LIMIT) {
-                slots.add(new Slot(
-                        port,
-                        (output ? 202 : 10) + side % 3 * 23,
-                        HEADER + row * STEP_HEIGHT + 23 + side / 3 * 24,
-                        output));
-                side++;
+    public void draw(GuiGraphics graphics, double mouseX, double mouseY) {
+        graphics.fill(0, 0, WIDTH, HEIGHT, 0xffc6c6c6);
+        text(graphics, page.title(), 4, 2, WIDTH - 122, TEXT);
+        text(graphics, Component.literal("−"), WIDTH - 114, 2, 12, TEXT);
+        text(
+                graphics,
+                Component.literal(java.math.BigDecimal.valueOf(zoom * 100)
+                                .setScale(zoom < 0.01 ? 2 : 0, java.math.RoundingMode.HALF_UP)
+                                .stripTrailingZeros()
+                                .toPlainString()
+                        + "%"),
+                WIDTH - 98,
+                2,
+                33,
+                MUTED);
+        text(graphics, Component.literal("+"), WIDTH - 61, 2, 12, TEXT);
+        text(graphics, Component.translatable("gt6ce.jei.material_process.reset"), WIDTH - 28, 2, 26, MUTED);
+        graphics.flush();
+        var viewport = PreviewViewport.screenBounds(graphics.pose().last().pose(), 0, BODY_TOP, WIDTH, FOOTER);
+        graphics.enableScissor(viewport.left(), viewport.top(), viewport.right(), viewport.bottom());
+        Node hovered = hit(mouseX, mouseY);
+        try {
+            graphics.pose().pushPose();
+            try {
+                graphics.pose().translate(panX, BODY_TOP + panY, 0);
+                graphics.pose().scale((float) zoom, (float) zoom, 1);
+                drawEdges(graphics, hovered);
+                for (Node node : overview.nodes()) {
+                    if (!visible(node)) continue;
+                    if (related(node, hovered))
+                        graphics.fill(node.x - 10, node.y - 10, node.x + 11, node.y + 11, 0xffe5e5e5);
+                    ItemStack icon = node.machine()
+                            ? selected(node).icon()
+                            : node.port().icons().stream().findFirst().orElse(ItemStack.EMPTY);
+                    if (icon.isEmpty()) text(graphics, Component.literal("?"), node.x - 3, node.y - 4, 10, MUTED);
+                    else graphics.renderItem(icon, node.x - 8, node.y - 8);
+                    if (node.machine() && node.extra()) smallText(graphics, "+", node.x + 9, node.y - 12, GOLD, false);
+                    if (!node.machine() && (node.copy || node.returning))
+                        smallText(graphics, node.returning ? "↩" : "↗", node.x + 8, node.y - 12, MUTED, false);
+                }
+            } finally {
+                graphics.pose().popPose();
             }
+        } finally {
+            graphics.flush();
+            graphics.disableScissor();
         }
-    }
-
-    public static void draw(Page page, GuiGraphics graphics, double mouseX, double mouseY) {
-        text(graphics, page.title(), 2, 1, WIDTH - 42, TEXT);
-        text(graphics, Component.literal(page.number() + "/" + page.total()), WIDTH - 38, 1, 38, MUTED);
-        text(graphics, Component.translatable("gt6ce.jei.material_process.inputs"), 5, 16, 90, MUTED);
-        text(graphics, Component.translatable("gt6ce.jei.material_process.route"), 103, 16, 75, ACCENT);
-        text(graphics, Component.translatable("gt6ce.jei.material_process.outputs"), 194, 16, 86, MUTED);
-        for (int row = 0; row < page.steps().size(); row++) {
-            var step = page.steps().get(row);
-            int top = HEADER + row * STEP_HEIGHT;
-            int color = step.resolved() ? ACCENT : MUTED;
-            if (step.inputs().stream().anyMatch(Port::main))
-                line(graphics, MAIN_X + 8, top + 17, MAIN_X + 8, top + 26, color, !step.resolved());
-            graphics.fill(
-                    STEP_X,
-                    top + 26,
-                    STEP_X + STEP_WIDTH,
-                    top + 45,
-                    processContains(row, mouseX, mouseY) ? 0xffd6e2d9 : 0xffe7e7e7);
-            text(graphics, step.name(), STEP_X + 3, top + 32, STEP_WIDTH - 6, color);
-            var displayed = slots(step, row);
-            for (var slot : displayed) {
-                int portColor = slot.port().role() == Role.BYPRODUCT ? 0xffb68a42 : color;
-                boolean uncertain = !step.resolved()
-                        || slot.output()
-                                && (slot.port().chance().isEmpty()
-                                        || slot.port().chance().getAsInt() < RecipeOutputChances.CERTAIN);
-                if (slot.port().main() && slot.output()) {
-                    arrow(graphics, MAIN_X + 8, top + 53, portColor);
-                    line(graphics, MAIN_X + 8, top + 45, MAIN_X + 8, top + 53, portColor, uncertain);
-                }
-                if (!slot.port().main()) {
-                    int middle = slot.output() ? 188 : 88;
-                    line(
-                            graphics,
-                            slot.output() ? STEP_X + STEP_WIDTH : STEP_X - 2,
-                            top + 35,
-                            middle,
-                            top + 35,
-                            portColor,
-                            uncertain);
-                    line(graphics, middle, top + 35, middle, slot.y() + 8, portColor, uncertain);
-                    line(
-                            graphics,
-                            middle,
-                            slot.y() + 8,
-                            slot.output() ? slot.x() - 2 : slot.x() + 17,
-                            slot.y() + 8,
-                            portColor,
-                            uncertain);
-                }
-            }
-            for (var slot : displayed) {
-                graphics.fill(slot.x() - 1, slot.y() - 1, slot.x() + 17, slot.y() + 17, 0xffa0a0a0);
-                graphics.fill(slot.x(), slot.y(), slot.x() + 16, slot.y() + 16, 0xffeeeeee);
-                if (!slot.port().hasIcons())
-                    text(graphics, Component.literal("?"), slot.x() + 5, slot.y() + 4, 10, MUTED);
-                if (!step.resolved()
-                        || slot.output()
-                                && (slot.port().chance().isEmpty()
-                                        || slot.port().chance().getAsInt() < RecipeOutputChances.CERTAIN))
-                    graphics.fill(slot.x() + 14, slot.y() - 1, slot.x() + 17, slot.y() + 2, 0xffc79c42);
-            }
-            overflow(graphics, step.inputs(), 5, top + 68);
-            overflow(graphics, step.outputs(), 202, top + 68);
-            long links = page.connections().stream()
-                    .filter(connection -> connection.source().equals(step.reference())
-                            || connection.target().equals(step.reference()))
-                    .count();
-            if (links > 0)
-                text(
-                        graphics,
-                        Component.translatable("gt6ce.jei.material_process.links", links),
-                        153,
-                        top + 65,
-                        45,
-                        MUTED);
-            if (row + 1 < page.steps().size()) {
-                var next = page.steps().get(row + 1);
-                for (var connection : page.connections()) {
-                    if (!connection.source().equals(step.reference())
-                            || !connection.target().equals(next.reference())) continue;
-                    boolean mainOutput = step.outputs().stream()
-                            .anyMatch(port -> port.main() && port.resource().equals(connection.resource()));
-                    boolean mainInput = next.inputs().stream()
-                            .anyMatch(port -> port.main() && port.resource().equals(connection.resource()));
-                    if (mainOutput && mainInput) {
-                        boolean uncertain = !connection.confirmed()
-                                || !step.resolved()
-                                || !next.resolved()
-                                || step.outputs().stream()
-                                        .filter(Port::main)
-                                        .anyMatch(port -> port.chance().isEmpty()
-                                                || port.chance().getAsInt() < RecipeOutputChances.CERTAIN);
-                        line(graphics, MAIN_X + 8, top + 74, MAIN_X + 8, top + 77, ACCENT, uncertain);
-                        arrow(graphics, MAIN_X + 8, top + 77, ACCENT);
-                    }
-                }
-            }
-        }
-        if (page.steps().isEmpty()) {
-            var font = Minecraft.getInstance().font;
+        if (overview.nodes().isEmpty())
             graphics.drawWordWrap(
-                    font, Component.translatable("gt6ce.jei.material_process.empty"), 14, 66, WIDTH - 28, MUTED);
-            graphics.drawWordWrap(font, page.notices().get(0), 14, 90, WIDTH - 28, MUTED);
-        }
-        graphics.fill(0, FOOTER - 3, WIDTH, FOOTER - 2, 0xffb0b0b0);
-        text(graphics, page.notices().get(0), 2, FOOTER, WIDTH - 4, MUTED);
-        text(graphics, Component.translatable("gt6ce.jei.material_process.controls"), 2, FOOTER + 11, WIDTH - 4, MUTED);
+                    Minecraft.getInstance().font,
+                    Component.translatable("gt6ce.jei.material_process.empty"),
+                    12,
+                    BODY_TOP + 28,
+                    WIDTH - 24,
+                    MUTED);
+        text(graphics, Component.literal("i"), 4, FOOTER + 3, 12, MUTED);
     }
 
-    public static List<Component> tooltip(Page page, double mouseX, double mouseY) {
-        if (mouseY >= FOOTER - 3) return page.notices();
-        if (mouseY < HEADER) return List.of(page.title());
-        for (int row = 0; row < page.steps().size(); row++) {
-            var step = page.steps().get(row);
-            if (processContains(row, mouseX, mouseY)
-                    || mouseX >= 153
-                            && mouseX < 198
-                            && mouseY >= HEADER + row * STEP_HEIGHT + 64
-                            && mouseY < HEADER + row * STEP_HEIGHT + 77) {
-                var lines = new ArrayList<Component>();
-                lines.add(step.name());
-                lines.addAll(step.details());
-                if (!step.resolved()) lines.add(Component.translatable("gt6ce.jei.material_process.unresolved"));
-                for (var connection : page.connections()) {
-                    if (connection.source().equals(step.reference())
-                            || connection.target().equals(step.reference()))
-                        lines.add(Component.translatable(
-                                "gt6ce.jei.material_process.connection",
-                                connection.source().toString(),
-                                connection.target().toString(),
-                                connection.resource().toString(),
-                                Component.translatable(
-                                        connection.confirmed()
-                                                ? "gt6ce.jei.material_process.confirmed"
-                                                : "gt6ce.jei.material_process.unresolved")));
-                }
-                lines.add(Component.translatable("gt6ce.jei.material_process.open_recipe"));
-                return lines;
-            }
-            for (var slot : slots(step, row))
-                if (slot.contains(mouseX, mouseY)) return slot.port().tooltip();
-            int top = HEADER + row * STEP_HEIGHT;
-            if (mouseY >= top + 67 && mouseY < top + 79) {
-                var ports = mouseX < STEP_X ? step.inputs() : mouseX >= 194 ? step.outputs() : List.<Port>of();
-                var hidden = ports.stream()
-                        .filter(port -> !port.main())
-                        .skip(SIDE_LIMIT)
-                        .toList();
-                if (!hidden.isEmpty()) {
-                    var lines = new ArrayList<Component>();
-                    lines.add(Component.translatable("gt6ce.jei.material_process.more", hidden.size()));
-                    for (var port : hidden) lines.addAll(port.tooltip());
-                    return lines;
-                }
-            }
-        }
-        return List.of();
+    private gregtech.compat.common.MaterialProcessDisplay.Step selected(Node node) {
+        return node.steps.get(0);
     }
 
-    public static boolean click(Page page, double mouseX, double mouseY, int button) {
+    private static boolean related(Node node, Node hovered) {
+        return node == hovered
+                || hovered != null
+                        && !node.machine()
+                        && !hovered.machine()
+                        && node.port().identity().equals(hovered.port().identity());
+    }
+
+    private boolean visible(Node node) {
+        return node.x + 12 >= worldX(0)
+                && node.x - 12 <= worldX(WIDTH)
+                && node.y + 12 >= worldY(BODY_TOP)
+                && node.y - 14 <= worldY(FOOTER);
+    }
+
+    private Node hit(double mouseX, double mouseY) {
+        if (mouseX < 0 || mouseX >= WIDTH || mouseY < BODY_TOP || mouseY >= FOOTER) return null;
+        double x = worldX(mouseX), y = worldY(mouseY);
+        for (Node node : overview.nodes())
+            if (x >= node.x - 10 && x <= node.x + 13 && y >= node.y - 14 && y <= node.y + 11) return node;
+        return null;
+    }
+
+    public List<ItemStack> stacksAt(double mouseX, double mouseY) {
+        Node node = hit(mouseX, mouseY);
+        if (node == null) return List.of();
+        if (node.machine())
+            return selected(node).icon().isEmpty()
+                    ? List.of()
+                    : List.of(selected(node).icon());
+        return node.port().hasIcons() ? List.of(node.port().icons().get(0)) : List.of();
+    }
+
+    public List<Component> tooltip(double mouseX, double mouseY) {
+        if (mouseY < BODY_TOP && mouseX >= WIDTH - 118)
+            return List.of(Component.translatable(
+                    mouseX >= WIDTH - 29
+                            ? "gt6ce.jei.material_process.reset_hint"
+                            : "gt6ce.jei.material_process.zoom_hint"));
+        if (mouseY >= FOOTER) {
+            var lines = new ArrayList<>(page.notices());
+            lines.add(Component.translatable("gt6ce.jei.material_process.pan"));
+            return List.copyOf(lines);
+        }
+        Node node = hit(mouseX, mouseY);
+        if (node == null) return List.of();
+        ItemStack icon = node.machine()
+                ? selected(node).icon()
+                : node.port().icons().stream().findFirst().orElse(ItemStack.EMPTY);
+        Component name = icon.isEmpty()
+                ? (node.machine() ? selected(node).name() : node.port().name())
+                : icon.getHoverName();
+        if (!node.machine() || !node.extra() || worldX(mouseX) < node.x + 6 || worldY(mouseY) > node.y - 6)
+            return List.of(name);
+        var lines = new ArrayList<Component>();
+        lines.add(name);
+        if (node.steps.size() > 1)
+            lines.add(Component.translatable("gt6ce.jei.material_process.variants", node.steps.size()));
+        var names = new java.util.LinkedHashMap<String, Component>();
+        for (var port : node.auxiliaries) {
+            Component label = port.hasIcons() ? port.icons().get(0).getHoverName() : port.name();
+            names.putIfAbsent(label.getString(), label);
+        }
+        lines.addAll(names.values().stream().limit(12).toList());
+        if (names.size() > 12) lines.add(Component.literal("…"));
+        return List.copyOf(lines);
+    }
+
+    public boolean click(double mouseX, double mouseY, int button) {
         if (button != 0 && button != 1) return false;
-        for (int row = 0; row < page.steps().size(); row++) {
-            var step = page.steps().get(row);
-            if (button == 0 && step.resolved() && processContains(row, mouseX, mouseY))
-                return page.navigation().openRecipe(step.reference());
-            for (var slot : slots(step, row))
-                if (slot.contains(mouseX, mouseY))
-                    return page.navigation().openForm(slot.port().resource(), button == 1);
+        if (button == 0 && mouseY >= 0 && mouseY < 14) {
+            if (mouseX >= WIDTH - 29 && mouseX < WIDTH) {
+                fit();
+                return true;
+            }
+            if (mouseX >= WIDTH - 118 && mouseX < WIDTH - 101) {
+                zoomAt(WIDTH / 2.0, (BODY_TOP + FOOTER) / 2.0, zoom / 1.25);
+                return true;
+            }
+            if (mouseX >= WIDTH - 65 && mouseX < WIDTH - 46) {
+                zoomAt(WIDTH / 2.0, (BODY_TOP + FOOTER) / 2.0, zoom * 1.25);
+                return true;
+            }
         }
-        return false;
+        Node node = hit(mouseX, mouseY);
+        if (node == null) return false;
+        if (!node.machine()) return page.navigation().openPort(node.port(), button == 1);
+        return page.navigation().openStack(selected(node).icon(), button == 1);
     }
 
-    private static boolean processContains(int row, double mouseX, double mouseY) {
-        int top = HEADER + row * STEP_HEIGHT;
-        return mouseX >= STEP_X && mouseX < STEP_X + STEP_WIDTH && mouseY >= top + 26 && mouseY < top + 45;
+    public boolean press(double mouseX, double mouseY, int button) {
+        return (button == 0 || button == 1)
+                && mouseX >= 0
+                && mouseX < WIDTH
+                && mouseY >= BODY_TOP
+                && mouseY < FOOTER
+                && hit(mouseX, mouseY) == null;
     }
 
-    private static void overflow(GuiGraphics graphics, List<Port> ports, int x, int y) {
-        long count = ports.stream().filter(port -> !port.main()).count() - SIDE_LIMIT;
-        if (count > 0)
-            text(graphics, Component.translatable("gt6ce.jei.material_process.more", count), x, y, 76, MUTED);
+    public boolean drag(int button, double dx, double dy) {
+        if (button != 0 && button != 1) return false;
+        panX += dx;
+        panY += dy;
+        return true;
+    }
+
+    public boolean scroll(double mouseX, double mouseY, double delta) {
+        if (mouseX < 0 || mouseX >= WIDTH || mouseY < BODY_TOP || mouseY >= FOOTER || delta == 0) return false;
+        zoomAt(mouseX, mouseY, zoom * Math.pow(1.15, Math.max(-8, Math.min(8, delta))));
+        return true;
+    }
+
+    private double worldX(double x) {
+        return (x - panX) / zoom;
+    }
+
+    private double worldY(double y) {
+        return (y - BODY_TOP - panY) / zoom;
+    }
+
+    private void zoomAt(double x, double y, double requested) {
+        double wx = worldX(x), wy = worldY(y);
+        zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, requested));
+        panX = x - wx * zoom;
+        panY = y - BODY_TOP - wy * zoom;
+    }
+
+    private void fit() {
+        zoom = Math.max(
+                0.75,
+                Math.min(
+                        1,
+                        Math.min(
+                                (WIDTH - 12.0) / Math.max(1, overview.width()),
+                                (FOOTER - BODY_TOP - 12.0) / Math.max(1, overview.height()))));
+        if (overview.width() * zoom <= WIDTH && overview.height() * zoom <= FOOTER - BODY_TOP) {
+            panX = (WIDTH - overview.width() * zoom) / 2;
+            panY = (FOOTER - BODY_TOP - overview.height() * zoom) / 2;
+        } else {
+            Node anchor = overview.anchor();
+            panX = WIDTH / 3.0 - (anchor == null ? 0 : anchor.x) * zoom;
+            panY = (FOOTER - BODY_TOP) / 2.0 - (anchor == null ? 0 : anchor.y) * zoom;
+        }
+    }
+
+    private void drawEdges(GuiGraphics graphics, Node hovered) {
+        for (var edge : overview.edges()) {
+            int color = related(edge.from(), hovered) || related(edge.to(), hovered) ? 0xff986c26 : TEXT;
+            var path = edge.path();
+            for (int index = 1; index < path.size(); index++) {
+                var from = path.get(index - 1);
+                var to = path.get(index);
+                segment(
+                        graphics,
+                        from.x(),
+                        from.y(),
+                        to.x(),
+                        to.y(),
+                        !edge.confirmed(),
+                        edge.endpoint().output() && index == path.size() - 1,
+                        color);
+            }
+        }
+    }
+
+    private void segment(
+            GuiGraphics graphics,
+            double sx,
+            double sy,
+            double tx,
+            double ty,
+            boolean dashed,
+            boolean arrow,
+            int color) {
+        stroke(graphics, sx, sy, tx, ty, color, dashed);
+        if (!arrow || tx < worldX(0) || tx >= worldX(WIDTH) || ty < worldY(BODY_TOP) || ty >= worldY(FOOTER)) return;
+        double angle = Math.atan2(ty - sy, tx - sx);
+        graphics.pose().pushPose();
+        try {
+            graphics.pose().translate(tx, ty, 0);
+            graphics.pose().mulPose(Axis.ZP.rotationDegrees((float) Math.toDegrees(angle)));
+            MaterialProcessArrows.head(graphics, color);
+        } finally {
+            graphics.pose().popPose();
+        }
+    }
+
+    private static void smallText(GuiGraphics graphics, String value, int x, int y, int color, boolean right) {
+        if (value.isEmpty()) return;
+        var font = Minecraft.getInstance().font;
+        float scale = Math.min(0.65F, 22F / Math.max(1, font.width(value)));
+        graphics.pose().pushPose();
+        graphics.pose().translate(x, y, 200);
+        graphics.pose().scale(scale, scale, 1);
+        graphics.drawString(font, value, right ? -font.width(value) : 0, 0, color, true);
+        graphics.pose().popPose();
     }
 
     private static void text(GuiGraphics graphics, Component value, int x, int y, int width, int color) {
@@ -245,19 +299,32 @@ public final class MaterialProcessPanel {
                 false);
     }
 
-    private static void arrow(GuiGraphics graphics, int x, int y, int color) {
-        graphics.fill(x - 2, y, x + 3, y + 1, color);
-        graphics.fill(x - 1, y + 1, x + 2, y + 2, color);
-        graphics.fill(x, y + 2, x + 1, y + 3, color);
-    }
-
-    private static void line(GuiGraphics graphics, int x1, int y1, int x2, int y2, int color, boolean dashed) {
-        int length = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1));
-        for (int offset = 0; offset <= length; offset++) {
-            if (dashed && offset % 5 >= 3) continue;
-            int x = x1 + Integer.signum(x2 - x1) * offset;
-            int y = y1 + Integer.signum(y2 - y1) * offset;
-            graphics.fill(x, y, x + 1, y + 1, color);
+    private void stroke(GuiGraphics graphics, double x1, double y1, double x2, double y2, int color, boolean dashed) {
+        double dx = x2 - x1, dy = y2 - y1, from = 0, to = 1;
+        double[] p = {-dx, dx, -dy, dy},
+                q = {x1 - worldX(-1), worldX(WIDTH + 1) - x1, y1 - worldY(BODY_TOP - 1), worldY(FOOTER + 1) - y1};
+        for (int side = 0; side < 4; side++) {
+            if (p[side] == 0) {
+                if (q[side] < 0) return;
+            } else {
+                double ratio = q[side] / p[side];
+                if (p[side] < 0) from = Math.max(from, ratio);
+                else to = Math.min(to, ratio);
+                if (from > to) return;
+            }
+        }
+        double length = Math.hypot(dx, dy), visible = (to - from) * length;
+        if (visible < 0.1) return;
+        graphics.pose().pushPose();
+        try {
+            graphics.pose().translate(x1 + from * dx, y1 + from * dy, 0);
+            graphics.pose().mulPose(Axis.ZP.rotationDegrees((float) Math.toDegrees(Math.atan2(dy, dx))));
+            if (!dashed) graphics.fill(0, 0, (int) Math.ceil(visible), 1, color);
+            else
+                for (int x = 0; x < visible; x += 6)
+                    graphics.fill(x, 0, Math.min(x + 3, (int) Math.ceil(visible)), 1, color);
+        } finally {
+            graphics.pose().popPose();
         }
     }
 }

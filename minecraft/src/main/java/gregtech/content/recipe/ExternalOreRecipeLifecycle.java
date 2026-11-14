@@ -35,7 +35,7 @@ public final class ExternalOreRecipeLifecycle {
         SharedOreSiftingRows.clear();
         SharedOreCrushingRows.clear();
         SharedOilSandRows.clear();
-        SharedPurifiedAcidRows.clear();
+        SharedSpecialProcessRows.clear();
         SharedThermalInputRows.clear();
         SharedThermalRecyclingRows.clear();
         MoltenMetalUnitRecipes.clear();

@@ -16,7 +16,7 @@
 | `SourceExtrusionRules.DATA` | `SourceExtrusionMaterialFacts` | `SourceExtruderRecipes`、`MaterialPrefix`、`MaterialPrefixes` | 挤压能力、锻造目标和可锻性归入材料事实；数量计算与配方向 recipe 门面保留 |
 | `SourceOreMacerationFacts`、`SourceOreWashingData`、`SourceOreCrushingFacts` | `SourceMacerationMaterialFacts`、`SourceWashingMaterialFacts`、`SourceOreCrushingMaterialFacts`、`OreHostFacts` | 研钵、洗矿、Crusher／Hammer、OilSand | 材料能力与宿主岩石事实分开；Hexorium 产物策略仍留 recipe |
 | `SourceLensRoles.ROLES` | `SourceLensMaterialFacts` | `ElectronicsRecipes`、`LaserStoneRecipes` | 透镜颜色角色进入材料 process；原生物品解析留在 `SourceLensRecipeItems` |
-| `OriginalMaterialFluidUnits`、`SourcePurifiedAcidData.Phase` 的绑定字段、`PurifiedCentrifugeMaterialFacts` 的重复流体字段 | `MaterialFluidUnitFacts` | 分解、酸洗、离心、热回收、洗矿、化学解析 | 流体身份、相态和单位只由 `MATERIAL_FLUID_UNIT` 提供；配方枚举保留材料选择与工艺配比，不再保存第二份原生字段／单位 |
+| `OriginalMaterialFluidUnits`、`SpecialProcessData.Phase` 的绑定字段、`PurifiedCentrifugeMaterialFacts` 的重复流体字段 | `MaterialFluidUnitFacts` | 分解、酸洗、离心、热回收、洗矿、化学解析 | 流体身份、相态和单位只由 `MATERIAL_FLUID_UNIT` 提供；API 1.9 的 target／reagent typed rules 保留材料选择与工艺配比，不再保存第二份原生字段／单位 |
 | `PanelMaterialRegistration`、`TransportMaterialRegistration` | `PanelMaterialCompositions`、`TransportMaterialCompositions` | `MaterialItemCompositions`、`VanillaRecoveryRecipes` | 固定成分安装不再由 recipe 生产类承担 |
 | `RegisteredWoodSurvivalRecipes.registerMaterials()`、`VanillaWoodProcessingRecipes.registerMaterials()`、`DiggableRecipes.registerMaterials()`、单物品与空胶囊写入 | `WoodMaterialCompositions`、`MaterialItemCompositions` | 木材、黏土、食物条、化合物和空胶囊回收 | 固定成分在配方发布前显式登记；配方类只发布配方 |
 | `MaterialTooltips.appendForeign()` 的失效回收分支 | 04 有效成分快照 | 普通／高级 tooltip | 删除 `composition_nonmaterial`、`composition_descriptive` 及其语言键 |

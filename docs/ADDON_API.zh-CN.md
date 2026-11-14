@@ -55,11 +55,39 @@
 
 ## API 版本
 
-当前分支使用 API `1.8.0`，与模组版本独立；以 [api/common/build.gradle](../api/common/build.gradle) 为准。`GregTechAddons.apiVersion()` 返回 `major * 1000 + minor`，1.8 为 `1008`，不能据此推断某个模组构建兼容。修改内联 API 时同步构建配置与 `GregTechAddons` 的版本。
+当前分支使用 API `1.9.0`，与模组版本独立；以 [api/common/build.gradle](../api/common/build.gradle) 为准。`GregTechAddons.apiVersion()` 返回 `major * 1000 + minor`，1.9 为 `1009`，不能据此推断某个模组构建兼容。修改内联 API 时同步构建配置与 `GregTechAddons` 的版本。
 
 宿主专用的 `StructureGrid` 与 `RecipeMapSpec` 不属于附属契约：它们分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`，编码内置多方块几何和配方表，附属不应依赖。
 
 公共 API 的契约检查、SDK 与平台检查见[验证与验收](development/validation/README.md)。移动到 API 包的可变模型或内部辅助类不自动获得长期兼容保证。
+
+## 特殊处理方法（API 1.9）
+
+`SpecialProcessMethod` 复用现有 `MaterialProcessKey` 作为 method ID，并把目标材料和辅料规则放在同一张 typed process 表中：
+
+```java
+var key = MaterialProcessKey.multiple(
+        new DataKey("example", "special_process/wash"), SpecialProcessValue.class);
+var method = new SpecialProcessMethod(key, "gt.recipe.bath", "example.special_process.wash");
+
+registrar.registerSpecialProcess(method);
+registrar.registerProcess(materialA, key, new MaterialProcessRule<>(
+        Set.of(new FormKey("crushedPurified")),
+        new SpecialProcessValue.Target(
+                Map.of(new FormKey("crushedPurified"), 1),
+                List.of(new SpecialProcessValue.ItemOutput(
+                        materialB,
+                        List.of(new SpecialProcessValue.FormCount(new FormKey("crushedCentrifuged"), 1)),
+                        10_000)),
+                List.of(),
+                1_000,
+                200,
+                16)));
+registrar.registerProcess(reagent, key, new MaterialProcessRule<>(
+        Set.of(new FormKey("liquid")), new SpecialProcessValue.Reagent()));
+```
+
+Target 的 `inputCounts` 键必须与 `MaterialProcessRule.forms()` 完全一致。`reagentAmount` 对物品规则表示数量，对液体／气体规则表示 mB。方法发布后，`MaterialCatalogView.specialProcesses()` 暴露方法声明，材料目录的 `processes()` 暴露 target／reagent 规则；宿主同时推导 method target／reagent 材料 tag，并按声明表单生成物品／流体 tag。材料图只折叠带 method ID 的配方。
 
 ## 机器配方数据包（API 1.7）
 
@@ -136,6 +164,7 @@ String json = MachineRecipeDocuments.canonical(document); // 不含 "type"，写
 - `MachineRecipeType.ADDITION`/`REMOVAL` 与 `MachineRecipeFields` 提供类型 ID 和字段名常量，避免附属复制字符串。
 - 1.7 起这些类型不再位于 `gregtech.engine.recipe.data`；依赖旧内部包名的附属需要迁移到公开包。运行时可用 `GregTechAddons.apiVersion() >= 1007` 做特性判断。
 - 1.8 新增 `MaterialProcessKeys.DECOMPOSITION` 与 `MaterialDecompositionRule`；附属可通过自身材料的 `MaterialInfoTool` 流程提交液体／气体换算、路线和固体兜底。该 typed rule 是唯一权限权威；旧 `MaterialDeclaration.centrifuge()`／`electrolyzer()` shortcut 已弃用，仅在不存在 typed rule 时生成默认兼容规则。运行时可用 `GregTechAddons.apiVersion() >= 1008` 做特性判断。
+- 1.9 新增 `SpecialProcessMethod`、`SpecialProcessValue` 与 `SpecialProcessesView`。一个 method 使用现有 `MaterialProcessKey<SpecialProcessValue>` 把 `Target` 规则挂到可处理材料、把 `Reagent` 规则挂到辅料材料；宿主据此生成配方、折叠材料图并派生 target／reagent 标签。运行时可用 `GregTechAddons.apiVersion() >= 1009` 做特性判断。
 
 ### 让附属自己的数据包配方进入 overlay
 

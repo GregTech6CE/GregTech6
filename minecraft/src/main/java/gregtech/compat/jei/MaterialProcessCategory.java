@@ -3,7 +3,8 @@ package gregtech.compat.jei;
 import gregtech.client.MaterialProcessPanel;
 import gregtech.compat.common.MaterialProcessDisplay.Page;
 import gregtech.compat.common.MaterialProcessDisplay.Port;
-import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.Map;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -25,6 +26,7 @@ import net.minecraft.world.item.Items;
 public final class MaterialProcessCategory implements IRecipeCategory<Page> {
     public static final RecipeType<Page> TYPE = RecipeType.create("gt6ce", "material_process", Page.class);
     private final IDrawable icon;
+    private final Map<Page, MaterialProcessPanel> views = new IdentityHashMap<>();
 
     public MaterialProcessCategory(IGuiHelper helper) {
         icon = helper.createDrawableItemStack(new ItemStack(Items.MAP));
@@ -57,20 +59,12 @@ public final class MaterialProcessCategory implements IRecipeCategory<Page> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, Page page, IFocusGroup focuses) {
-        for (int row = 0; row < page.steps().size(); row++) {
-            var step = page.steps().get(row);
-            var visible = MaterialProcessPanel.slots(step, row);
-            for (var slot : visible) {
-                if (!slot.port().hasIcons()) continue;
-                builder.addSlot(role(slot.port()), slot.x(), slot.y())
-                        .addItemStacks(slot.port().icons())
-                        .addRichTooltipCallback(
-                                (view, tooltip) -> tooltip.addAll(slot.port().tooltip()));
-            }
-            var ports = new ArrayList<Port>(step.inputs());
-            ports.addAll(step.outputs());
-            for (var port : ports)
-                if (visible.stream().noneMatch(slot -> slot.port() == port) && port.hasIcons())
+        for (var step : page.steps()) {
+            for (var port : step.inputs())
+                if (port.hasIcons())
+                    builder.addInvisibleIngredients(role(port)).addItemStacks(port.icons());
+            for (var port : step.outputs())
+                if (port.hasIcons())
                     builder.addInvisibleIngredients(role(port)).addItemStacks(port.icons());
         }
     }
@@ -85,6 +79,7 @@ public final class MaterialProcessCategory implements IRecipeCategory<Page> {
 
     @Override
     public void createRecipeExtras(IRecipeExtrasBuilder builder, Page page, IFocusGroup focuses) {
+        var panel = view(page);
         builder.addGuiEventListener(new IJeiGuiEventListener() {
             @Override
             public ScreenRectangle getArea() {
@@ -93,18 +88,39 @@ public final class MaterialProcessCategory implements IRecipeCategory<Page> {
 
             @Override
             public boolean mouseClicked(double mouseX, double mouseY, int button) {
-                return MaterialProcessPanel.click(page, mouseX, mouseY, button);
+                return panel.click(mouseX, mouseY, button) || panel.press(mouseX, mouseY, button);
             }
+
+            @Override
+            public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+                return panel.drag(button, dragX, dragY);
+            }
+
+//? if >=1.21.1 {
+            /*@Override
+            public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+                return panel.scroll(mouseX, mouseY, scrollY);
+            }
+*///?} else {
+            @Override
+            public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+                return panel.scroll(mouseX, mouseY, delta);
+            }
+//?}
         });
     }
 
     @Override
     public void draw(Page page, IRecipeSlotsView slots, GuiGraphics graphics, double mouseX, double mouseY) {
-        MaterialProcessPanel.draw(page, graphics, mouseX, mouseY);
+        view(page).draw(graphics, mouseX, mouseY);
     }
 
     @Override
     public void getTooltip(ITooltipBuilder tooltip, Page page, IRecipeSlotsView slots, double mouseX, double mouseY) {
-        tooltip.addAll(MaterialProcessPanel.tooltip(page, mouseX, mouseY));
+        tooltip.addAll(view(page).tooltip(mouseX, mouseY));
+    }
+
+    private MaterialProcessPanel view(Page page) {
+        return views.computeIfAbsent(page, MaterialProcessPanel::new);
     }
 }

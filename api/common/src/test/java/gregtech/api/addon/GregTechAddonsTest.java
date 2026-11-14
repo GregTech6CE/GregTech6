@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GregTechAddonsTest {
     private static final GregTechAddon.Context CONTEXT = new GregTechAddon.Context("forge", "1.20.1");
@@ -23,8 +23,8 @@ class GregTechAddonsTest {
     void apiVersionCodeMatchesTheMajorAndMinorParts() {
         assertEquals(GregTechAddons.apiMajor() * 1000 + GregTechAddons.apiMinor(), GregTechAddons.apiVersion());
         assertEquals(1, GregTechAddons.apiMajor());
-        assertEquals(8, GregTechAddons.apiMinor());
-        assertEquals(1008, GregTechAddons.apiVersion());
+        assertEquals(9, GregTechAddons.apiMinor());
+        assertEquals(1009, GregTechAddons.apiVersion());
     }
 
     @Test

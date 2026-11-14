@@ -121,6 +121,46 @@ final class MaterialProcessGraphTest {
         assertEquals("cast", uses.steps().get(0).name());
     }
 
+    @Test
+    void materialQueryKeepsEveryDirectFormAndStopsAtAnotherMaterial() {
+        DataKey ore = new DataKey("gt6ce", "resource/iron/ore");
+        DataKey crushed = new DataKey("gt6ce", "resource/iron/crushed");
+        DataKey dust = new DataKey("gt6ce", "resource/iron/dust");
+        DataKey sourceMaterial = new DataKey("gt6ce", "resource/copper/ore");
+        DataKey productMaterial = new DataKey("gt6ce", "resource/copper/ingot");
+        DataKey farther = new DataKey("gt6ce", "resource/gold/ingot");
+        var graph = MaterialProcessGraph.builder(SNAPSHOT)
+                .add(step(
+                        "source",
+                        List.of(port(sourceMaterial, Role.CONSUMED, "copper ore", "Copper")),
+                        List.of(port(ore, Role.UNKNOWN, "iron ore", "Iron"))))
+                .add(step(
+                        "crush",
+                        List.of(port(ore, Role.CONSUMED, "iron ore", "Iron")),
+                        List.of(port(crushed, Role.UNKNOWN, "iron crushed", "Iron"))))
+                .add(step(
+                        "grind",
+                        List.of(port(crushed, Role.CONSUMED, "iron crushed", "Iron")),
+                        List.of(port(dust, Role.UNKNOWN, "iron dust", "Iron"))))
+                .add(step(
+                        "use",
+                        List.of(port(dust, Role.CONSUMED, "iron dust", "Iron")),
+                        List.of(port(productMaterial, Role.UNKNOWN, "copper ingot", "Copper"))))
+                .add(step(
+                        "transitive",
+                        List.of(port(productMaterial, Role.CONSUMED, "copper ingot", "Copper")),
+                        List.of(port(farther, Role.UNKNOWN, "gold ingot", "Gold"))))
+                .build();
+
+        var result = graph.queryMaterial(ore, new Budgets(0, 64, 64, 128));
+
+        assertEquals(
+                List.of("source", "crush", "grind", "use"),
+                result.steps().stream().map(Step::name).toList());
+        assertEquals(3, result.edges().size());
+        assertFalse(result.truncated());
+    }
+
     private static boolean edgeIsConfirmed(MaterialProcessGraph.Edge edge) {
         return edge.confirmed();
     }
@@ -169,9 +209,13 @@ final class MaterialProcessGraphTest {
     }
 
     private static Port port(DataKey key, Role role, String state) {
+        return port(key, role, state, "Iron");
+    }
+
+    private static Port port(DataKey key, Role role, String state, String material) {
         boolean output = role == Role.PRIMARY || role == Role.BYPRODUCT || role == Role.UNKNOWN;
         return new Port(
-                new Resource(key, "Iron", "dust", "solid", state),
+                new Resource(key, material, "dust", "solid", state),
                 role,
                 new Amount(1, state.startsWith("unit:") ? AmountUnit.MATERIAL_UNIT : AmountUnit.ITEM),
                 output ? OptionalInt.of(10_000) : OptionalInt.empty(),

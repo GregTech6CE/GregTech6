@@ -4,6 +4,7 @@ import gregtech.api.material.GTValues;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.material.VanillaUnificationDefinitions;
 import gregtech.content.block.MaterialBlockLike;
+import gregtech.content.registry.GTFluids;
 import gregtech.platform.Mc;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.fluid.FluidDisplayItem;import net.minecraft.network.chat.Component;
@@ -385,6 +386,16 @@ public final class MaterialTagPack extends AbstractPackResources {
             tag.addAll(values);
             tag.addAll(blocksByMaterial.getOrDefault(name,Set.of()));
         });
+        for (var fluid : GTFluids.entries().entrySet()) {
+            String bound = fluid.getValue().materialKey();
+            if (bound == null) bound = RegisteredFluids.boundMaterial(fluid.getValue().registryName());
+            if (bound == null) continue;
+            var material = gregtech.engine.material.GTMaterialRegistry.get(bound);
+            if (material == null || !material.isValid()) continue;
+            add(tags, "gt6ce", "fluids", "fluid/" + MaterialEquivalence.materialName(material.resolve()),
+                    fluid.getKey().toString());
+        }
+        addSpecialProcessTags(tags);
         // Wood form tags for the wooden-pipe recipes (GT6's OD.plankAnyWood / OD.beamWood): vanilla
         // planks and slabs join through nested tag references, the port's own species are listed.
         // The beam identity is the modern stripped log, so vanilla stripped logs join it as well.
@@ -536,6 +547,42 @@ public final class MaterialTagPack extends AbstractPackResources {
     private static void addMaterial(Map<String,Set<String>> target,gregtech.api.material.GTMaterial material,String value) {
         if(material==null||!material.isValid())return;
         target.computeIfAbsent(MaterialEquivalence.materialName(material),k->new TreeSet<>()).add(value);
+    }
+
+    private static void addSpecialProcessTags(Map<String, Set<String>> tags) {
+        var catalog = gregtech.engine.material.MaterialViews.catalog();
+        for (var method : catalog.specialProcesses().methods()) {
+            for (var material : catalog.materials()) {
+                for (var rule : catalog.processes().find(material.key(), method.process())) {
+                    String tagPath = rule.value() instanceof gregtech.api.addon.material.SpecialProcessValue.Target
+                            ? method.targetTag().path()
+                            : rule.value() instanceof gregtech.api.addon.material.SpecialProcessValue.Reagent
+                                    ? method.reagentTag().path()
+                                    : null;
+                    if (tagPath == null) continue;
+                    String materialName = gregtech.engine.material.MaterialEquivalence.materialName(
+                            gregtech.engine.material.GTMaterialRegistry.get(material.key().name()).resolve());
+                    if (rule.forms().isEmpty()) {
+                        add(tags, method.process().id().namespace(), "items", tagPath,
+                                "#gt6ce:material/" + materialName);
+                        add(tags, method.process().id().namespace(), "fluids", tagPath,
+                                "#gt6ce:fluid/" + materialName);
+                        continue;
+                    }
+                    for (var form : rule.forms()) {
+                        if (Set.of("liquid", "gas", "molten").contains(form.name())) {
+                            add(tags, method.process().id().namespace(), "fluids", tagPath,
+                                    "#gt6ce:fluid/" + materialName);
+                        } else {
+                            var prefix = gregtech.engine.prefix.PrefixRegistry.byName(form.name());
+                            if (prefix != null)
+                                add(tags, method.process().id().namespace(), "items", tagPath,
+                                        "#gt6ce:" + prefix.getRegistryName() + "/" + materialName);
+                        }
+                    }
+                }
+            }
+        }
     }
     private static void add(Map<String,Set<String>> tags,String ns,String kind,String path,String value) {
 //? if >=1.21.1 {

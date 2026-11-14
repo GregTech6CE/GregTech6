@@ -170,6 +170,17 @@ public interface MaterialDataSnapshot {
 
 **关系以步骤为中心，是多输入、多输出的关系。** 合金必须保留 Copper 与 Tin 同时作为输入；清洗剂、选择器和催化剂也保留角色。不能画成“有 Copper 就能获得 Bronze”的无条件单边。
 
+#### 4.1 特殊处理方法
+
+特殊处理不新增跨材料目标大表，而是复用 typed process：
+
+- `SpecialProcessMethod` 绑定一个 `MaterialProcessKey<SpecialProcessValue>`、配方表和展示键。
+- 可处理材料在同一 key 上注册 `SpecialProcessValue.Target`；Target 保存输入表单计数、物品／流体产物、概率、辅料量、时长和能耗。
+- 辅料材料在同一 key 上注册 `SpecialProcessValue.Reagent`；其表单由普通 `MaterialProcessRule.forms()` 表达。
+- 宿主生成配方后把 method ID 写入最终 `Recipe`；材料图只按该 ID 折叠步骤。没有 method ID 的配方平铺，不按步骤名猜测。
+- target／reagent 材料 tag 从 typed rules 派生；资源 tag 再根据规则表单生成，避免标签与配方双写。
+- 同一配方匹配多个 method 时视为声明冲突；静默选择会让不同内容顺序改变路线含义。
+
 ### 5. 各来源的发布方式
 
 1. **普通配方**：从最终有效 `RecipeMap`、原版 `RecipeManager` 及必要的输入约束投影。保留数据包替换、删除、启用状态；来源索引不再次计算产物。
@@ -243,7 +254,7 @@ metadata 使用 builder 挂分类、类型化属性与 flag，不继续给 `Mate
 
 `GregTechMaterials.Material` 的现有查询方法不强加新的抽象方法给旧实现者；新视图通过适配器和新增入口提供。宿主服务能力增加时采用显式能力协商或默认“不支持”，不能默认返回空图误报完整覆盖。旧主机与新 API 组合的失败方式纳入契约测试。
 
-当前 API 版本为 1.8.0。A／B 使用默认 SPI 方法和新增只读类型，旧宿主通过显式“不支持”失败，既有声明实现者保持源码兼容。API 1.5 的 `MaterialProcessKey`／`MaterialProcessesView` 允许附属用自己的 namespace 声明处理规则；API 1.6 的 `MaterialInfoTool` 将工具、组成、形态、tag 和 process 注册为按 `MaterialKey` 关联的独立域索引。API 1.7 提供详细 `MaterialFormRule`、运行期 `MaterialFormsView`、显式统一物品绑定和 item／block／fluid 分离的实际形态查询，同时保留材料组的成员与包含查询。API 1.8 通过 `MaterialProcessKeys.DECOMPOSITION` 承载单一类型化分解规则；该规则是路线唯一权威，旧离心／电解 feature 只提供弃用兼容输入。旧 `GTMaterial` 工艺访问器和旧组 re-registration 访问器暂时保留并标记弃用，READY 后只转发冻结快照。新增查询身份不改 NBT、原生注册 ID、配方单位或已有材料名。
+当前 API 版本为 1.9.0。A／B 使用默认 SPI 方法和新增只读类型，旧宿主通过显式“不支持”失败，既有声明实现者保持源码兼容。API 1.5 的 `MaterialProcessKey`／`MaterialProcessesView` 允许附属用自己的 namespace 声明处理规则；API 1.6 的 `MaterialInfoTool` 将工具、组成、形态、tag 和 process 注册为按 `MaterialKey` 关联的独立域索引。API 1.7 提供详细 `MaterialFormRule`、运行期 `MaterialFormsView`、显式统一物品绑定和 item／block／fluid 分离的实际形态查询，同时保留材料组的成员与包含查询。API 1.8 通过 `MaterialProcessKeys.DECOMPOSITION` 承载单一类型化分解规则；该规则是路线唯一权威，旧离心／电解 feature 只提供弃用兼容输入。API 1.9 用一个 `SpecialProcessMethod` 绑定 `MaterialProcessKey<SpecialProcessValue>`、配方表和展示键；同一 key 下的 `Target`／`Reagent` 规则分别挂在可处理材料和辅料材料上，宿主生成配方并派生标签。材料图只能按该 method 身份折叠，普通配方不参与名称推断。旧 `GTMaterial` 工艺访问器和旧组 re-registration 访问器暂时保留并标记弃用，READY 后只转发冻结快照。新增查询身份不改 NBT、原生注册 ID、配方单位或已有材料名。
 
 ## 影响、落地与验证
 

@@ -243,24 +243,29 @@ public final class GregTechJEIPlugin implements IModPlugin {
         }
 
         @Override
-        public boolean openRecipe(gregtech.api.addon.material.DataKey reference) {
-            if (runtime == null || !MaterialProcessSnapshot.Store.current(snapshot)) return false;
-            var nativeRecipe = snapshot.recipe(reference);
-            if (nativeRecipe.isEmpty()) return false;
-            var row = nativeRecipe.get();
-            var category = categories.get(row.map());
-            if (category == null) return false;
-            runtime.getRecipesGui().showRecipes(category, List.of(row.recipe()), List.of());
+        public boolean openStack(ItemStack stack, boolean uses) {
+            if (runtime == null || !MaterialProcessSnapshot.Store.current(snapshot) || stack.isEmpty()) return false;
+            var role = uses ? mezz.jei.api.recipe.RecipeIngredientRole.INPUT : mezz.jei.api.recipe.RecipeIngredientRole.OUTPUT;
+            var factory = runtime.getJeiHelpers().getFocusFactory();
+            var focuses = new ArrayList<mezz.jei.api.recipe.IFocus<?>>();
+            if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
+//? if >=1.21.1 {
+                /*var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(stack);
+                if (!fluid.isEmpty()) focuses.add(factory.createFocus(role, mezz.jei.api.neoforge.NeoForgeTypes.FLUID_STACK, fluid));
+*///?} else {
+                var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(stack);
+                if (!fluid.isEmpty()) focuses.add(factory.createFocus(role, mezz.jei.api.forge.ForgeTypes.FLUID_STACK, fluid));
+//?}
+            } else focuses.add(factory.createFocus(role, mezz.jei.api.constants.VanillaTypes.ITEM_STACK, stack));
+            if (focuses.isEmpty()) return false;
+            runtime.getRecipesGui().show(focuses);
             return true;
         }
 
         @Override
         public boolean openForm(gregtech.api.addon.material.DataKey resource, boolean uses) {
             if (runtime == null || !MaterialProcessSnapshot.Store.current(snapshot)) return false;
-            var direction = uses
-                    ? gregtech.engine.material.MaterialProcessGraph.Direction.USES
-                    : gregtech.engine.material.MaterialProcessGraph.Direction.SOURCES;
-            var pages = gregtech.compat.common.MaterialProcessProjection.pages(snapshot, resource, direction, this);
+            var pages = gregtech.compat.common.MaterialProcessProjection.pages(snapshot, resource, this);
             runtime.getRecipesGui().showRecipes(processCategory, pages, List.of());
             return true;
         }

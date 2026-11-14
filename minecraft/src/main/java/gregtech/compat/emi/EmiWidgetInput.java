@@ -59,6 +59,18 @@ public final class EmiWidgetInput {
                 new org.joml.Matrix4f(graphics.pose().last().pose()).invert()));
     }
 
+    public static dev.emi.emi.api.stack.EmiStackInteraction stackAt(Screen screen, double x, double y) {
+        if (screen != frameScreen) return dev.emi.emi.api.stack.EmiStackInteraction.EMPTY;
+        for (int index = surfaces.size() - 1; index >= 0; index--) {
+            var surface = surfaces.get(index);
+            if (!surface.contains(x, y)) continue;
+            var local = surface.local(x, y);
+            var ingredient = surface.widget().ingredientAt(local.x(), local.y());
+            if (!ingredient.isEmpty()) return new dev.emi.emi.api.stack.EmiStackInteraction(ingredient);
+        }
+        return dev.emi.emi.api.stack.EmiStackInteraction.EMPTY;
+    }
+
     public static boolean pressed(Screen screen, double x, double y, int button) {
         clearCapture();
         if (screen != frameScreen) return false;

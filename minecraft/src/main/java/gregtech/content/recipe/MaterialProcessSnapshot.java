@@ -143,6 +143,12 @@ public final class MaterialProcessSnapshot {
         return graph.query(root, direction, budgets);
     }
 
+    public Query queryMaterial(DataKey root, Budgets budgets) {
+        if (resource(root).isEmpty())
+            return new Query(snapshot, root, Direction.BOTH, List.of(), List.of(), COVERAGE, false);
+        return graph.queryMaterial(root, budgets);
+    }
+
     public Optional<NativeRecipe> recipe(DataKey reference) {
         return Optional.ofNullable(nativeRecipes.get(reference));
     }
@@ -295,7 +301,15 @@ public final class MaterialProcessSnapshot {
                     .map(ResourceLocation::toString)
                     .toList());
         return new BuiltStep(
-                new Step(reference, map.mNameInternal, inputs, outputs, details, true), materials);
+                new Step(
+                        reference,
+                        map.mNameInternal,
+                        inputs,
+                        outputs,
+                        details,
+                        Optional.ofNullable(recipe.specialProcess()),
+                        true),
+                materials);
     }
 
     private static Port itemPort(
@@ -521,7 +535,7 @@ public final class MaterialProcessSnapshot {
         return new BuiltStep(new Step(step.reference(), step.name(),
                 step.inputs().stream().map(port -> scoped(port, publication, session)).toList(),
                 step.outputs().stream().map(port -> scoped(port, publication, session)).toList(),
-                step.details(), step.resolved()), built.materials);
+                step.details(), step.specialProcess(), step.resolved()), built.materials);
     }
 
     private static Port scoped(Port port, long publication, long session) {
@@ -602,6 +616,15 @@ public final class MaterialProcessSnapshot {
                 .replace(',', '/')
                 .replaceAll("[^a-z0-9/._-]", "_");
         return path.isBlank() ? "unknown" : path;
+    }
+
+    /** State-sensitive display identity, independent of query scopes and per-recipe selectors. */
+    public static String itemDisplayState(ItemStack stack) {
+        return "item:" + BuiltInRegistries.ITEM.getKey(stack.getItem()) + itemStateSuffix(stack);
+    }
+
+    public static String fluidDisplayState(FluidStack stack) {
+        return "fluid:" + BuiltInRegistries.FLUID.getKey(stack.getFluid()) + fluidStateSuffix(stack);
     }
 
     private static String itemStateSuffix(ItemStack stack) {

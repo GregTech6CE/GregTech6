@@ -36,6 +36,23 @@ public final class RecipeViewerIcons {
         return stack;
     }
 
+    /** Use the same category identity for the process graph and the native viewer. */
+    public static ItemStack category(RecipeMap map, java.util.Map<RecipeMap, java.util.List<ItemStack>> machines) {
+        ItemStack preferred = map(map);
+        if (!preferred.isEmpty()) return preferred;
+        var workstations = machines.getOrDefault(map, java.util.List.of());
+        return workstations.isEmpty()
+                ? new ItemStack(net.minecraft.world.item.Items.ANVIL)
+                : workstations.get(0).copy();
+    }
+
+    public static java.util.Map<RecipeMap, ItemStack> categories() {
+        var machines = gregtech.compat.jei.RecipeMachines.collect();
+        var icons = new java.util.HashMap<RecipeMap, ItemStack>();
+        for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) icons.put(map, category(map, machines));
+        return icons;
+    }
+
     public static ItemStack map(RecipeMap map) {
         if (map == MachineRecipeMaps.ByProductList)
             return GTItems.getStack(MaterialPrefix.dust, GTMaterialRegistry.get("Platinum"));

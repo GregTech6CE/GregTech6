@@ -171,6 +171,11 @@ public final class MaterialInfoTool {
 
         Registrar registerGroup(MaterialGroupDeclaration declaration);
 
+        /** Declares one special process method; target and reagent rules use its typed process key. */
+        default Registrar registerSpecialProcess(SpecialProcessMethod method) {
+            throw new UnsupportedOperationException("This material info host does not expose special processes");
+        }
+
         /**
          * Registers a typed process rule. The rule value must be treated as immutable after this call.
          */
