@@ -22,6 +22,11 @@ public final class CrucibleRenderSprites {
         return sprite;
     }
 
+    public static boolean hasTexture(ResourceLocation texture) {
+        TextureAtlas atlas = atlas();
+        return atlas.getSprite(texture) != atlas.getSprite(MissingTextureAtlasSprite.getLocation());
+    }
+
     private static TextureAtlas atlas() {
         return Minecraft.getInstance().getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS);
     }
