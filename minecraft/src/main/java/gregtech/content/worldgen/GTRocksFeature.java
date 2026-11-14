@@ -108,9 +108,10 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
             }
             if (!rockGround(state)) return false;
             BlockPos above = cursor.above();
-            // GT6's `WD.easyRep`: the block above must be replaceable — air, a snow layer or the
-            // plants the vanilla REPLACEABLE tag covers, not just air.
-            if (!replaceable(level.getBlockState(above))) return false;
+            // GT6's `WD.easyRep`: the block above must be replaceable — air, a snow layer, leaves,
+            // fire, or the plants the vanilla REPLACEABLE tag covers, and not filled with liquid.
+            BlockState aboveState = level.getBlockState(above);
+            if (!aboveState.getFluidState().isEmpty() || !replaceable(aboveState)) return false;
             return placeRock(level, above, litterFor(random));
         }
         return false;
@@ -123,11 +124,16 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * GT6's {@code WD.easyRep}: what a rock may be placed into — air, a snow layer, or anything the
-     * vanilla replaceable tag covers (grass, ferns, flowers); GT6's rocks sit on top of low plants.
+     * GT6's {@code WD.easyRep}: what a rock may replace — air, snow layers, leaves, fire, or
+     * anything covered by the vanilla {@code REPLACEABLE} tag (grass, ferns, flowers).
      */
     public static boolean replaceable(BlockState state) {
-        return state.isAir() || state.is(BlockTags.REPLACEABLE) || state.is(Blocks.SNOW);
+        return state.isAir()
+                || state.is(BlockTags.REPLACEABLE)
+                || state.is(Blocks.SNOW)
+                || state.is(BlockTags.LEAVES)
+                || state.is(Blocks.FIRE)
+                || state.is(Blocks.SOUL_FIRE);
     }
 
     /** Selects the retained surface-litter contents. */
