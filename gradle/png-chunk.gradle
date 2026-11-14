@@ -15,7 +15,9 @@ import java.util.zip.DeflaterOutputStream
  * control.
  *
  * Image data is never decoded or re-encoded: every retained chunk (length field, type,
- * payload and checksum) is copied byte for byte, so the visible image is identical.
+ * payload and checksum) is copied byte for byte, so decoded pixel values and palette data are
+ * identical (ancillary colour-management chunks such as gAMA, sRGB and cHRM are dropped with
+ * other metadata).
  */
 class PngChunkFilter {
     static final byte[] SIGNATURE = [(byte) 0x89, (byte) 0x50, (byte) 0x4E, (byte) 0x47,
@@ -181,10 +183,12 @@ ext.pngChunkFilterVersion = 1
 // A one-pixel image with a colour profile, a text chunk and trailing bytes stands in for real
 // texture files; the checks assert that only the retained chunks and their exact bytes
 // survive. Runs on every project that applies this script and writes only under build/.
-tasks.register('verifyPngFilter') {
+def verifyPngFilter = tasks.register('verifyPngFilter') {
     group = 'verification'
     description = 'Checks the PNG chunk filter against synthetic in-memory images.'
     def scratch = layout.buildDirectory.dir('tmp/png-filter')
+    inputs.property('pngChunkFilterVersion', pngChunkFilterVersion)
+    outputs.dir(scratch)
     doLast {
         File directory = scratch.get().asFile
         byte[] header = new byte[13]
@@ -237,4 +241,8 @@ tasks.register('verifyPngFilter') {
 
         logger.lifecycle('PNG chunk filter: retained chunks verbatim, metadata dropped, output stable.')
     }
+}
+
+tasks.named('check').configure {
+    dependsOn(verifyPngFilter)
 }

@@ -99,7 +99,8 @@ jobs:
           metadata=META-INF/mods.toml
           if [[ "${{ matrix.loader }}" == "neoforge" ]]; then metadata=META-INF/neoforge.mods.toml; fi
           jar=""
-          for candidate in minecraft/versions/${{ matrix.node }}/build/libs/*.jar; do
+          for candidate in minecraft/versions/${{ matrix.node }}/build/libs/*-${{ steps.version.outputs.version }}.jar; do
+            [[ -f "$candidate" ]] || continue
             if unzip -p "$candidate" "$metadata" >/dev/null 2>&1; then
               if [[ -n "$jar" ]]; then
                 echo "Expected one installable mod jar, found more" >&2

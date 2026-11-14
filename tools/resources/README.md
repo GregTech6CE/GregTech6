@@ -9,7 +9,7 @@
 输入是当前构建的发行 JAR，以及同一次构建的 core 和平台资源输出目录。先完成对应平台的发行构建，再在仓库根目录执行，例如：
 
 ```powershell
-python tools/resources/check_compact_model_json.py minecraft/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-1.0.2.jar --resources core/build/resources/main minecraft/versions/1.21.1-neoforge/build/resources/main
+python tools/resources/check_compact_model_json.py minecraft/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-<version>.jar --resources core/build/resources/main minecraft/versions/1.21.1-neoforge/build/resources/main
 ```
 
 按当前版本号调整 JAR 文件名。Forge 使用 `distributionJar` 的 `build/libs` 产物，不使用中间 JAR。
@@ -28,7 +28,7 @@ PNG 比较的是处理后产物：`processResources` 在复制时剥离贴图元
 
 ```powershell
 # 发行产物必须零元数据、零尾随字节、零保留块 CRC 错误
-python tools/resources/check_png_metadata.py minecraft/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-1.0.2.jar --strict
+python tools/resources/check_png_metadata.py minecraft/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-<version>.jar --strict
 python tools/resources/check_png_metadata.py core/build/resources/main minecraft/versions/1.21.1-neoforge/build/resources/main --strict
 
 # 源码树允许保留编辑器元数据：给出基线即变成只对未登记文件报错
