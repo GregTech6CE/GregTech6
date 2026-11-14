@@ -12,9 +12,6 @@ public final class CrucibleMoldIcons {
     }
 
     public static String sharedModelJson(MaterialTextureSet set) {
-        return SmelteryModelHelper.compositeModelJson(
-                set,
-                SmelteryModelHelper.MOLD_ELEMENTS_TINTED,
-                SmelteryModelHelper.overlayOnly(SmelteryModelHelper.MOLD_ELEMENTS_TINTED));
+        return SmelteryModelHelper.hullModelJson(set, SmelteryModelHelper.MOLD_ELEMENTS_TINTED, null);
     }
 }

@@ -98,11 +98,11 @@ public final class MaterialFluidVisuals {
         GTMaterial resolved = material.resolve();
         MaterialTextureSet set = MaterialIcons.resolveTextureSet(resolved);
         int color = gregtech.engine.fluid.FluidVisualPolicy.moltenTint(resolved);
-        return new Appearance(
-                CrucibleContentIcons.blockIcon(set, "molten", false),
-                CrucibleContentIcons.blockIcon(set, "molten", true),
-                color,
-                true);
+        // Per-set molten icons carry the whole look and their paired overlays are empty, so only
+        // the base is requested; a set without an icon uses the neutral molten template.
+        ResourceLocation base = FluidAppearance.texture(
+                CrucibleContentIcons.blockIcon(set, "molten"), gregtech.engine.fluid.FluidTexturePolicy.Kind.MOLTEN);
+        return new Appearance(base, null, color, true);
     }
 
     private static String defaultMoltenRegistry(GTMaterial material) {

@@ -62,19 +62,6 @@ public final class MaterialAnvilRenderer implements BlockEntityRenderer<Material
                         CrucibleRenderSprites.resolve(texture),
                         rgb,
                         light);
-                var detail =
-                        ResourceLocation.fromNamespaceAndPath(texture.getNamespace(), texture.getPath() + "_overlay");
-                // Detail layers retain their own colors; a missing overlay must stay transparent.
-                if (CrucibleRenderSprites.hasTexture(detail)) {
-                    AnvilCuboidRenderer.draw(
-                            pose.last(),
-                            buffers.getBuffer(RenderType.entityCutoutNoCull(
-                                    net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS)),
-                            bounds,
-                            CrucibleRenderSprites.resolve(detail),
-                            0xFFFFFF,
-                            light);
-                }
             } else if (stack.getItem() instanceof BlockItem blockItem
                     && blockItem.getBlock().defaultBlockState().getRenderShape() == RenderShape.MODEL) {
                 // A FIXED item transform may flatten, shrink or hide an ore item.
@@ -133,15 +120,5 @@ public final class MaterialAnvilRenderer implements BlockEntityRenderer<Material
                 CrucibleRenderSprites.resolve(texture),
                 rgb,
                 light);
-        var detail = ResourceLocation.fromNamespaceAndPath(texture.getNamespace(), texture.getPath() + "_overlay");
-        if (CrucibleRenderSprites.hasTexture(detail))
-            AnvilCuboidRenderer.draw(
-                    pose.last(),
-                    buffers.getBuffer(RenderType.entityCutoutNoCull(
-                            net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS)),
-                    bounds,
-                    CrucibleRenderSprites.resolve(detail),
-                    0xFFFFFF,
-                    light);
     }
 }

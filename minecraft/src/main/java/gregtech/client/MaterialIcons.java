@@ -31,8 +31,8 @@ public final class MaterialIcons {
         return Mc.gregtechId(MaterialIconDefinitions.texturePath(set, prefix, overlay));
     }
 
-    public static String modelJson(GTMaterial material, MaterialPrefix prefix) {
-        return MaterialIconDefinitions.modelJson(material, prefix);
+    public static String modelJson(GTMaterial material, MaterialPrefix prefix, boolean overlay) {
+        return MaterialIconDefinitions.modelJson(material, prefix, overlay);
     }
 
     /**
@@ -47,7 +47,7 @@ public final class MaterialIcons {
         return MaterialIconDefinitions.modelPath(resolveTextureSet(material), prefix);
     }
 
-    public static String sharedModelJson(MaterialTextureSet set, MaterialPrefix prefix) {
-        return MaterialIconDefinitions.sharedModelJson(set, prefix);
+    public static String sharedModelJson(MaterialTextureSet set, MaterialPrefix prefix, boolean overlay) {
+        return MaterialIconDefinitions.sharedModelJson(set, prefix, overlay);
     }
 }
