@@ -69,6 +69,7 @@ public final class SpecialProcessData {
             fluidOutputs = List.copyOf(fluidOutputs);
         }
     }
+
     public static final Identity MNO2 = id(9126, "Pyrolusite"),
             MNCL2 = id(8031, "ManganeseChloride"),
             PGS = id(8103, "PlatinumGroupSludge"),
@@ -197,6 +198,7 @@ public final class SpecialProcessData {
                     f(Phase.HYDROGENFLUORIDE, 500),
                     List.of(),
                     Tail.GRAPHITE));
+
     public static List<Family> families() {
         return FAMILIES;
     }

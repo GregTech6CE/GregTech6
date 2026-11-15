@@ -28,10 +28,26 @@ public final class OreHostFacts {
 
     private static final Map<String, HostProfile> HOSTS = createHosts();
     private static final Set<String> BROKEN_SOURCE_PAIRS = Set.of(
-            "oreVanillastone", "oreNetherrack", "oreEndstone", "oreBlackgranite", "oreRedgranite",
-            "oreBasalt", "oreMarble", "oreLimestone", "oreVanillagranite", "oreDiorite", "oreAndesite",
-            "oreKomatiite", "oreGreenschist", "oreBlueschist", "oreKimberlite", "oreQuartzite",
-            "oreLightprismarine", "oreDarkprismarine", "oreSlate", "oreShale");
+            "oreVanillastone",
+            "oreNetherrack",
+            "oreEndstone",
+            "oreBlackgranite",
+            "oreRedgranite",
+            "oreBasalt",
+            "oreMarble",
+            "oreLimestone",
+            "oreVanillagranite",
+            "oreDiorite",
+            "oreAndesite",
+            "oreKomatiite",
+            "oreGreenschist",
+            "oreBlueschist",
+            "oreKimberlite",
+            "oreQuartzite",
+            "oreLightprismarine",
+            "oreDarkprismarine",
+            "oreSlate",
+            "oreShale");
 
     public static HostProfile hostProfile(String nativeHostId) {
         return nativeHostId == null ? null : HOSTS.get(nativeHostId);

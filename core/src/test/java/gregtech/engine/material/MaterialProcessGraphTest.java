@@ -166,6 +166,148 @@ final class MaterialProcessGraphTest {
     }
 
     @Test
+    void materialPageKeepsLargeRecipesAndDenseConnections() {
+        var builder = MaterialProcessGraph.builder(SNAPSHOT);
+        var common = resource("common");
+        var outputs = new java.util.ArrayList<Port>();
+        for (int index = 0; index < 160; index++)
+            outputs.add(port(resource("product_" + index), Role.UNKNOWN, "product_" + index));
+        builder.add(step("large", List.of(port(common, Role.CONSUMED, "common")), outputs));
+        for (int index = 0; index < 70; index++) {
+            builder.add(step("producer_" + index, List.of(), List.of(port(common, Role.UNKNOWN, "common"))));
+            builder.add(step("consumer_" + index, List.of(port(common, Role.CONSUMED, "common")), List.of()));
+        }
+        for (int index = 0; index < 600; index++)
+            builder.add(step(
+                    "route_" + index,
+                    List.of(),
+                    List.of(port(resource("local_" + index), Role.UNKNOWN, "local_" + index))));
+        var graph = builder.build();
+        var query = graph.queryMaterial(common, Budgets.MATERIAL_PAGE);
+        assertEquals(741, query.steps().size());
+        assertEquals(4970, query.edges().size());
+        assertEquals(160, query.steps().get(0).outputs().size());
+        assertFalse(query.truncated());
+        assertTrue(query.notices().isEmpty());
+    }
+
+    @Test
+    void compactMaterialQueryStoresDenseAndCyclicAssociationsAsPortIncidence() {
+        var builder = MaterialProcessGraph.builder(SNAPSHOT);
+        var common = resource("dense_common");
+        var input = port(common, Role.CONSUMED, "common");
+        var output = port(common, Role.UNKNOWN, "common");
+        for (int index = 0; index < 10_000; index++) {
+            builder.add(step("dense_source_" + index, List.of(), List.of(output)));
+            builder.add(step("dense_use_" + index, List.of(input), List.of()));
+        }
+        builder.add(step("dense_loop", List.of(input), List.of(output)));
+        var graph = builder.build();
+        var query = graph.queryMaterial(common);
+        assertEquals(20_001, query.steps().size());
+        assertEquals(query.steps(), graph.materialSteps(common));
+        assertEquals(1, query.flows().size());
+        var flow = query.flows().get(0);
+        assertEquals(10_001, flow.sources().size());
+        assertEquals(10_001, flow.targets().size());
+        assertEquals(100_020_001L, flow.connectionCount());
+        assertTrue(flow.sources().contains(new DataKey("gt6ce", "step/dense_loop")));
+        assertTrue(flow.targets().contains(new DataKey("gt6ce", "step/dense_loop")));
+        assertTrue(query.notices().isEmpty());
+    }
+
+    @Test
+    void compactFlowsPreserveExactResourcesAndConfirmationWithoutInventingSelectorLinks() {
+        var first = resource("selector_first");
+        var second = resource("selector_second");
+        var produced = port(first, Role.UNKNOWN, "same_display");
+        var used = port(first, Role.CONSUMED, "same_display");
+        var other = port(second, Role.CONSUMED, "same_display");
+        var source = new Step(
+                new DataKey("gt6ce", "step/unconfirmed"),
+                "unconfirmed",
+                List.of(),
+                List.of(produced),
+                List.of(),
+                false);
+        var graph = MaterialProcessGraph.builder(SNAPSHOT)
+                .add(source)
+                .add(step("local_loop", List.of(used), List.of(produced)))
+                .add(step("independent_selector", List.of(other), List.of()))
+                .build();
+        var compact = graph.queryMaterial(first);
+        var expanded = graph.queryMaterial(first, new Budgets(0, 32, 32, 128));
+        var restored = new java.util.HashSet<Edge>();
+        for (Flow flow : compact.flows())
+            for (DataKey from : flow.sources())
+                for (DataKey to : flow.targets())
+                    restored.add(new Edge(
+                            from,
+                            to,
+                            flow.resource(),
+                            graph.step(from).orElseThrow().resolved()
+                                    && graph.step(to).orElseThrow().resolved()));
+        assertEquals(expanded.steps(), compact.steps());
+        assertEquals(new java.util.HashSet<>(expanded.edges()), restored);
+        assertEquals(1, compact.flows().size());
+        assertEquals(
+                List.of(new DataKey("gt6ce", "step/local_loop")),
+                compact.flows().get(0).targets());
+        assertTrue(restored.stream().anyMatch(edge -> !edge.confirmed()));
+    }
+
+    @Test
+    void invalidRowsDoNotPoisonPublishedIndexesOrDiscardValidRows() {
+        var ore = resource("ore");
+        var dust = resource("dust");
+        var valid = step("valid", List.of(port(ore, Role.CONSUMED, "ore")), List.of(port(dust, Role.UNKNOWN, "dust")));
+        var conflict = step(
+                "conflict",
+                List.of(port(resource("partial"), Role.CONSUMED, "partial")),
+                List.of(port(ore, Role.UNKNOWN, "another_state")));
+        var intraRow = step(
+                "intra_row",
+                List.of(port(resource("intra"), Role.CONSUMED, "one")),
+                List.of(port(resource("intra"), Role.UNKNOWN, "two")));
+        var next = step("next", List.of(port(dust, Role.CONSUMED, "dust")), List.of());
+        var graph = MaterialProcessGraph.builder(SNAPSHOT)
+                .add(valid)
+                .add(valid)
+                .add(conflict)
+                .add(intraRow)
+                .add(next)
+                .build();
+        assertEquals(
+                List.of(valid, next),
+                graph.queryMaterial(ore, Budgets.MATERIAL_PAGE).steps());
+        assertEquals(
+                List.of(ore, dust).stream()
+                        .sorted(java.util.Comparator.comparing(DataKey::toString))
+                        .toList(),
+                graph.resources().stream().map(Resource::key).toList());
+        assertTrue(graph.step(conflict.reference()).isEmpty());
+        assertTrue(graph.step(intraRow.reference()).isEmpty());
+        assertEquals(
+                3,
+                graph.queryMaterial(ore, Budgets.MATERIAL_PAGE).notices().stream()
+                        .filter(notice -> notice.code().equals("invalid_process_data"))
+                        .mapToInt(Notice::omitted)
+                        .sum());
+    }
+
+    @Test
+    void mainHintsMayRepeatAndWrongSidePortsAreRemovedWithoutConfirmingTheRow() {
+        var first = port(resource("first"), Role.CONSUMED, "first");
+        var second = port(resource("second"), Role.CONSUMED, "second");
+        first = new Port(first.resource(), first.role(), first.amount(), first.chance(), true, first.details());
+        second = new Port(second.resource(), second.role(), second.amount(), second.chance(), true, second.details());
+        var row = step("hints", List.of(first, second), List.of(first));
+        assertEquals(2, row.inputs().size());
+        assertTrue(row.outputs().isEmpty());
+        assertFalse(row.resolved());
+    }
+
+    @Test
     void portsTruncatedAtTheDepthBoundaryStillReportPartialCoverage() {
         var graph = MaterialProcessGraph.builder(SNAPSHOT)
                 .add(step(
@@ -202,6 +344,63 @@ final class MaterialProcessGraphTest {
         assertEquals(2, result.steps().size());
         assertTrue(result.edges().isEmpty());
         assertTrue(result.truncated());
+    }
+
+    @Test
+    void materialEdgesUseTheRetainedPortsBeforeSpendingTheEdgeBudget() {
+        var first = resource("first");
+        var second = resource("second");
+        var third = resource("third");
+        var graph = MaterialProcessGraph.builder(SNAPSHOT)
+                .add(step(
+                        "producer",
+                        List.of(port(resource("raw"), Role.CONSUMED, "raw")),
+                        List.of(
+                                port(first, Role.UNKNOWN, "first"),
+                                port(second, Role.UNKNOWN, "second"),
+                                port(third, Role.UNKNOWN, "third"))))
+                .add(step(
+                        "consumer",
+                        List.of(
+                                port(third, Role.CONSUMED, "third"),
+                                port(first, Role.CONSUMED, "first"),
+                                port(second, Role.CONSUMED, "second")),
+                        List.of(port(resource("end"), Role.UNKNOWN, "end"))))
+                .build();
+        for (int ports = 1; ports <= 3; ports++) {
+            for (int edges : List.of(0, 1, 3)) {
+                var result = graph.queryMaterial(first, new Budgets(0, 8, ports, edges));
+                int available = ports == 1 ? 0 : ports == 2 ? 1 : 3;
+                assertEquals(Math.min(available, edges), result.edges().size());
+                for (Edge edge : result.edges()) {
+                    var source = result.steps().stream()
+                            .filter(row -> row.reference().equals(edge.source()))
+                            .findFirst()
+                            .orElseThrow();
+                    var target = result.steps().stream()
+                            .filter(row -> row.reference().equals(edge.target()))
+                            .findFirst()
+                            .orElseThrow();
+                    assertTrue(source.outputs().stream()
+                            .anyMatch(port -> port.resource().key().equals(edge.resource())));
+                    assertTrue(target.inputs().stream()
+                            .anyMatch(port -> port.resource().key().equals(edge.resource())));
+                }
+                int omittedPorts = 2 * (3 - ports);
+                assertEquals(
+                        omittedPorts,
+                        result.notices().stream()
+                                .filter(notice -> notice.code().equals("port_limit"))
+                                .mapToInt(Notice::omitted)
+                                .sum());
+                assertEquals(
+                        Math.max(0, available - edges),
+                        result.notices().stream()
+                                .filter(notice -> notice.code().equals("edge_limit"))
+                                .mapToInt(Notice::omitted)
+                                .sum());
+            }
+        }
     }
 
     private static DataKey resource(String name) {

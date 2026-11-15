@@ -6,7 +6,6 @@ import gregtech.content.block.wood.WoodSpecies;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.plant.WoodSlabCatalog;
 import gregtech.content.recipe.NaturalWoodCraftingRows;
-import gregtech.content.recipe.RegisteredWoodSurvivalRecipes;
 import gregtech.content.registry.GTWoods;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
@@ -55,8 +54,7 @@ public final class WoodMaterialCompositions {
                     ItemCompositionSource.Kind.EXPLICIT,
                     "gt6ce:wood-log/" + species.id(),
                     "GT6 WoodEntry");
-            ItemMaterialRegistry.register(
-                    GTWoods.strippedLog(species).asItem(), null, material, 8 * GTValues.U);
+            ItemMaterialRegistry.register(GTWoods.strippedLog(species).asItem(), null, material, 8 * GTValues.U);
         }
     }
 
@@ -64,9 +62,8 @@ public final class WoodMaterialCompositions {
         for (var wood : NaturalWoodCraftingRows.SPECIES) {
             var material = GTMaterialRegistry.get(wood.material());
             var bark = GTMaterialRegistry.get(wood.barkMaterial());
-            var components = List.of(
-                    MaterialComponent.of(material, 5 * GTValues.U),
-                    MaterialComponent.of(bark, GTValues.U));
+            var components =
+                    List.of(MaterialComponent.of(material, 5 * GTValues.U), MaterialComponent.of(bark, GTValues.U));
             ItemMaterialRegistry.register(
                     item("gt6ce:log_" + wood.kind()),
                     new ItemComposition(
@@ -89,9 +86,9 @@ public final class WoodMaterialCompositions {
     }
 
     private static void registerVanillaWoods() {
-        for (String wood : new String[] {
-            "oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry"
-        }) registerVanillaWood(wood, "log", "wood");
+        for (String wood :
+                new String[] {"oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry"})
+            registerVanillaWood(wood, "log", "wood");
         registerVanillaWood("crimson", "stem", "hyphae");
         registerVanillaWood("warped", "stem", "hyphae");
     }

@@ -111,7 +111,9 @@ public final class MaterialProcessSnapshot {
     private final Map<DataKey, NativeRecipe> nativeRecipes;
     private final Map<DataKey, NativeWorldgen> worldgen;
     private final Map<DataKey, List<ItemStack>> viewerIcons;
-    private final Map<DataKey, ItemStack> viewerMachines;
+    private record ViewerRecipe(String process, ItemStack machine) {}
+
+    private final Map<DataKey, ViewerRecipe> viewerRecipes;
 
     private MaterialProcessSnapshot(
             MaterialProcessGraph.Snapshot snapshot,
@@ -131,7 +133,7 @@ public final class MaterialProcessSnapshot {
             Map<DataKey, NativeRecipe> nativeRecipes,
             Map<DataKey, NativeWorldgen> worldgen,
             Map<DataKey, List<ItemStack>> viewerIcons,
-            Map<DataKey, ItemStack> viewerMachines,
+            Map<DataKey, ViewerRecipe> viewerRecipes,
             List<Notice> coverage) {
         this.snapshot = snapshot;
         this.resourceGeneration = resourceGeneration;
@@ -143,25 +145,45 @@ public final class MaterialProcessSnapshot {
         for (Step step : steps.values()) {
             NativeRecipe nativeRecipe = nativeRecipes.get(step.reference());
             builder.add(step, nativeRecipe != null && nativeRecipe.genericRecovery());
+        }
+        this.graph = builder.build();
+        int suppliedSteps = steps.size();
+        steps.entrySet().removeIf(entry -> graph.step(entry.getKey()).isEmpty());
+        for (Step step : steps.values()) {
             step.inputs().forEach(port -> resources.putIfAbsent(port.resource().key(), port.resource()));
             step.outputs().forEach(port -> resources.putIfAbsent(port.resource().key(), port.resource()));
         }
         this.resources = Map.copyOf(resources);
         this.steps = Map.copyOf(steps);
-        this.graph = builder.build();
-        this.roots = List.copyOf(roots);
-        this.nativeRecipes = Map.copyOf(nativeRecipes);
-        this.worldgen = Map.copyOf(worldgen);
+        this.roots = suppliedSteps == steps.size() ? List.copyOf(roots) : roots.stream().map(root -> {
+            var candidates = new LinkedHashMap<String, Resource>();
+            for (Resource resource : buckets.get(root.material()).roots().values()) {
+                Resource retained = resources.get(resource.key());
+                if (retained != null && retained.material().equals(root.material()))
+                    candidates.put(retained.key().toString(), retained);
+            }
+            return candidates.isEmpty() ? null : bestRoot(root.material(), candidates);
+        }).filter(Objects::nonNull).toList();
+        var retainedNative = new LinkedHashMap<DataKey, NativeRecipe>();
+        nativeRecipes.forEach((key, value) -> {
+            if (steps.containsKey(key)) retainedNative.put(key, value);
+        });
+        this.nativeRecipes = Map.copyOf(retainedNative);
+        var retainedWorldgen = new LinkedHashMap<DataKey, NativeWorldgen>();
+        worldgen.forEach((key, value) -> {
+            if (steps.containsKey(key)) retainedWorldgen.put(key, value);
+        });
+        this.worldgen = Map.copyOf(retainedWorldgen);
         var retainedIcons = new LinkedHashMap<DataKey, List<ItemStack>>();
         viewerIcons.forEach((key, value) -> {
             if (resources.containsKey(key)) retainedIcons.put(key, value);
         });
         this.viewerIcons = Map.copyOf(retainedIcons);
-        var retainedMachines = new LinkedHashMap<DataKey, ItemStack>();
-        viewerMachines.forEach((key, value) -> {
-            if (steps.containsKey(key)) retainedMachines.put(key, value);
+        var retainedRecipes = new LinkedHashMap<DataKey, ViewerRecipe>();
+        viewerRecipes.forEach((key, value) -> {
+            if (steps.containsKey(key)) retainedRecipes.put(key, value);
         });
-        this.viewerMachines = Map.copyOf(retainedMachines);
+        this.viewerRecipes = Map.copyOf(retainedRecipes);
     }
 
     public List<ItemStack> viewerIcons(DataKey resource) {
@@ -169,7 +191,16 @@ public final class MaterialProcessSnapshot {
     }
 
     public ItemStack viewerMachine(DataKey step) {
-        return viewerMachines.getOrDefault(step, ItemStack.EMPTY).copy();
+        var recipe = viewerRecipes.get(step);
+        return recipe == null ? ItemStack.EMPTY : recipe.machine().copy();
+    }
+
+    public String process(DataKey step) {
+        var recipe = nativeRecipes.get(step);
+        if (recipe != null) return recipe.map().mNameInternal;
+        var viewer = viewerRecipes.get(step);
+        var value = steps.get(step);
+        return viewer != null ? viewer.process() : value == null ? "" : value.name();
     }
 
     /** Starts a client-local view whose processing rows come exclusively from the viewer. */
@@ -199,6 +230,14 @@ public final class MaterialProcessSnapshot {
         if (resource(root).isEmpty())
             return new Query(snapshot, root, Direction.BOTH, List.of(), List.of(), COVERAGE, false);
         return graph.queryMaterial(root, budgets);
+    }
+
+    public MaterialProcessGraph.MaterialQuery queryMaterial(DataKey root) {
+        return graph.queryMaterial(root);
+    }
+
+    public List<Step> materialSteps(DataKey root) {
+        return graph.materialSteps(root);
     }
 
     public Optional<NativeRecipe> recipe(DataKey reference) {
@@ -248,13 +287,26 @@ public final class MaterialProcessSnapshot {
         var mutable = new LinkedHashMap<String, MutableBucket>();
         var nativeRecipes = new LinkedHashMap<DataKey, NativeRecipe>();
         var nativeWorldgen = new LinkedHashMap<DataKey, NativeWorldgen>();
+        int invalid = 0;
         for (RecipeMap map : maps) {
             var rows = new ArrayList<Recipe>(map.mRecipeList);
             for (int index = 0; index < rows.size(); index++) {
                 Recipe recipe = rows.get(index);
+                if (recipe == null) {
+                    LOGGER.warn("Discarded null material process recipe in {} at index {}", map.mNameInternal, index);
+                    invalid++;
+                    continue;
+                }
                 if (!recipe.mEnabled || recipe.mHidden) continue;
                 if (recipe.mFakeRecipe && !hasMaterialUnitInput(recipe)) continue;
-                var built = recipeStep(map, recipe, index, publication.revision(), sessionGeneration);
+                BuiltStep built;
+                try {
+                    built = recipeStep(map, recipe, index, publication.revision(), sessionGeneration);
+                } catch (RuntimeException failure) {
+                    LOGGER.warn("Discarded invalid material process recipe in {} at index {}", map.mNameInternal, index, failure);
+                    invalid++;
+                    continue;
+                }
                 if (built == null) continue;
                 built = scoped(built, publication.revision(), resourceGeneration);
                 addStep(mutable, built.step, built.materials);
@@ -274,8 +326,10 @@ public final class MaterialProcessSnapshot {
                 .map(entry -> bestRoot(entry.getKey(), entry.getValue().roots))
                 .sorted(Comparator.comparing(Root::material, String.CASE_INSENSITIVE_ORDER))
                 .toList();
+        var coverage = new ArrayList<>(COVERAGE);
+        if (invalid > 0) coverage.add(new Notice("invalid_process_data", invalid));
         return new MaterialProcessSnapshot(
-                graphSnapshot, resourceGeneration, buckets, roots, nativeRecipes, nativeWorldgen);
+                graphSnapshot, resourceGeneration, buckets, roots, nativeRecipes, nativeWorldgen, Map.of(), Map.of(), coverage);
     }
 
     private static BuiltStep recipeStep(
@@ -741,7 +795,7 @@ public final class MaterialProcessSnapshot {
         private final Map<String, MutableBucket> buckets = new LinkedHashMap<>();
         private final Map<DataKey, NativeRecipe> recipes = new LinkedHashMap<>();
         private final Map<DataKey, List<ItemStack>> icons = new LinkedHashMap<>();
-        private final Map<DataKey, ItemStack> machines = new LinkedHashMap<>();
+        private final Map<DataKey, ViewerRecipe> viewerRecipes = new LinkedHashMap<>();
         private final Map<RecipeMap, Set<Recipe>> selected = new java.util.IdentityHashMap<>();
         private final Map<RecipeMap, Map<Recipe, DataKey>> nativeReferences = new java.util.IdentityHashMap<>();
         private int omitted;
@@ -760,22 +814,26 @@ public final class MaterialProcessSnapshot {
         }
 
         /** Reuses GT matching, unit quantities and recovery ownership, once per visible native row. */
-        public void machine(RecipeMap map, Recipe recipe) {
-            if (!selected.computeIfAbsent(map, ignored -> java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()))
-                    .add(recipe)) return;
+        public boolean machine(RecipeMap map, Recipe recipe) {
+            if (!recipe.mEnabled || recipe.mHidden || recipe.mFakeRecipe && !hasMaterialUnitInput(recipe)) return false;
+            var rows = selected.computeIfAbsent(map, ignored -> java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()));
+            if (rows.contains(recipe)) return true;
             DataKey reference = nativeReferences.getOrDefault(map, Map.of()).get(recipe);
             if (reference != null) {
                 add(source.steps.get(reference));
                 recipes.put(reference, source.nativeRecipes.get(reference));
-                return;
+                rows.add(recipe);
+                return true;
             }
             int index = map.mRecipeList.size() + recipes.size();
             BuiltStep built = recipeStep(map, recipe, index,
                     source.snapshot.publication().revision(), source.snapshot.sessionGeneration());
-            if (built == null) return;
+            if (built == null) return false;
             built = scoped(built, source.snapshot.publication().revision(), source.resourceGeneration);
             addStep(buckets, built.step, built.materials);
             recipes.put(built.step.reference(), new NativeRecipe(map, recipe, index));
+            rows.add(recipe);
+            return true;
         }
 
         public Port item(ItemStack stack, Role role, long amount, OptionalInt chance) {
@@ -851,10 +909,20 @@ public final class MaterialProcessSnapshot {
 
         public void recipe(DataKey reference, String name, ItemStack machine,
                 List<Port> inputs, List<Port> outputs, List<String> details) {
-            boolean resolved = java.util.stream.Stream.concat(inputs.stream(), outputs.stream())
+            recipe(reference, name, machine, inputs, outputs, details, true);
+        }
+
+        public void recipe(DataKey reference, String name, ItemStack machine,
+                List<Port> inputs, List<Port> outputs, List<String> details, boolean resolved) {
+            recipe(reference, name, name, machine, inputs, outputs, details, resolved);
+        }
+
+        public void recipe(DataKey reference, String process, String name, ItemStack machine,
+                List<Port> inputs, List<Port> outputs, List<String> details, boolean resolved) {
+            resolved &= java.util.stream.Stream.concat(inputs.stream(), outputs.stream())
                     .noneMatch(port -> port.resource().state().startsWith("selector:"));
             add(new Step(reference, name, inputs, outputs, details, resolved));
-            if (!machine.isEmpty()) machines.put(reference, machine.copyWithCount(1));
+            viewerRecipes.put(reference, new ViewerRecipe(process, machine.copyWithCount(1)));
         }
 
         private void add(Step step) {
@@ -873,7 +941,7 @@ public final class MaterialProcessSnapshot {
             coverage.add(new Notice("coverage_viewer_recipes", 0));
             coverage.add(new Notice("partial_viewer_recipes", omitted));
             return new MaterialProcessSnapshot(source.snapshot, source.resourceGeneration, frozen, roots, recipes,
-                    source.worldgen, icons, machines, coverage);
+                    source.worldgen, icons, viewerRecipes, coverage);
         }
     }
 

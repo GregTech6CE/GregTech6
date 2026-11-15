@@ -32,20 +32,16 @@ public final class MaterialFactKeys {
         }
     }
 
-    public static final MaterialProcessKey<Decision> SOURCE_FURNACE =
-            single("source_furnace", Decision.class);
-    public static final MaterialProcessKey<Decision> SOURCE_GRADED_GEM =
-            single("source_graded_gem", Decision.class);
-    public static final MaterialProcessKey<Decision> SOURCE_ORE_INPUT =
-            single("source_ore_input", Decision.class);
+    public static final MaterialProcessKey<Decision> SOURCE_FURNACE = single("source_furnace", Decision.class);
+    public static final MaterialProcessKey<Decision> SOURCE_GRADED_GEM = single("source_graded_gem", Decision.class);
+    public static final MaterialProcessKey<Decision> SOURCE_ORE_INPUT = single("source_ore_input", Decision.class);
     public static final MaterialProcessKey<PrefixExclusions> SOURCE_SIFTING_EXCLUSIONS =
             single("source_sifting_exclusions", PrefixExclusions.class);
     public static final MaterialProcessKey<PrefixExclusions> SOURCE_CRUSHED_EXCLUSIONS =
             single("source_crushed_exclusions", PrefixExclusions.class);
     public static final MaterialProcessKey<OreShredderProfile> SOURCE_ORE_SHREDDER =
             single("source_ore_shredder", OreShredderProfile.class);
-    public static final MaterialProcessKey<Decision> SOURCE_MACERATION =
-            single("source_maceration", Decision.class);
+    public static final MaterialProcessKey<Decision> SOURCE_MACERATION = single("source_maceration", Decision.class);
     public static final MaterialProcessKey<SourceWashingMaterialFacts.Binding> SOURCE_WASHING =
             single("source_washing", SourceWashingMaterialFacts.Binding.class);
     public static final MaterialProcessKey<MaterialFluidUnits> MATERIAL_FLUID_UNIT =
@@ -62,8 +58,7 @@ public final class MaterialFactKeys {
             single("source_generated_fluid", GeneratedFluidRules.class);
     public static final MaterialProcessKey<SourceRecyclingMaterialFacts.Facts> SOURCE_RECYCLING =
             single("source_recycling", SourceRecyclingMaterialFacts.Facts.class);
-    public static final MaterialProcessKey<Boolean> SOURCE_MOLTEN_FLUID =
-            single("source_molten_fluid", Boolean.class);
+    public static final MaterialProcessKey<Boolean> SOURCE_MOLTEN_FLUID = single("source_molten_fluid", Boolean.class);
     public static final MaterialProcessKey<OreCrushingFact> SOURCE_ORE_CRUSHING =
             single("source_ore_crushing", OreCrushingFact.class);
     public static final MaterialProcessKey<PurifiedCentrifugePhase> SOURCE_PURIFIED_CENTRIFUGE_PHASE =
@@ -176,7 +171,8 @@ public final class MaterialFactKeys {
 
     public static <T> Optional<T> value(GTMaterial material, MaterialProcessKey<T> key) {
         if (material == null || !material.isValid()) return Optional.empty();
-        return MaterialInfoTool.currentProcess(new MaterialKey(material.resolve().getName()), key)
+        return MaterialInfoTool.currentProcess(
+                        new MaterialKey(material.resolve().getName()), key)
                 .map(rule -> rule.value());
     }
 

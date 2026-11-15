@@ -4,9 +4,9 @@ package gregtech.content.material;
 
 import gregtech.api.material.*;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.transport.*;
 import gregtech.content.transport.PanelCatalog;
 import gregtech.content.transport.PanelMaterialRules;
-import gregtech.content.transport.*;
 import gregtech.engine.material.*;
 import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;

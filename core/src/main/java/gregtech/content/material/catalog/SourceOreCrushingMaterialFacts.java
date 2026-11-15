@@ -29,10 +29,8 @@ public final class SourceOreCrushingMaterialFacts {
                         new MaterialInfoDefinition.Processes(rules)));
     }
 
-    private static MaterialFactKeys.Decision pulverizing(
-            int id, String name, MaterialFactKeys.HexoriumKind hexorium) {
-        if (hexorium != MaterialFactKeys.HexoriumKind.NONE)
-            return MaterialFactKeys.Decision.NO;
+    private static MaterialFactKeys.Decision pulverizing(int id, String name, MaterialFactKeys.HexoriumKind hexorium) {
+        if (hexorium != MaterialFactKeys.HexoriumKind.NONE) return MaterialFactKeys.Decision.NO;
         return id == 800 && name.equals("Mercury")
                         || id == 8333 && name.equals("Redstone")
                         || id == 9114 && name.equals("Cinnabar")
@@ -42,21 +40,26 @@ public final class SourceOreCrushingMaterialFacts {
 
     private static MaterialFactKeys.HexoriumKind hexorium(int id, String name) {
         return switch (id) {
-            case 9224 -> name.equals("HexoriumBlack")
-                    ? MaterialFactKeys.HexoriumKind.BLACK_WHITE
-                    : MaterialFactKeys.HexoriumKind.NONE;
-            case 9239 -> name.equals("HexoriumWhite")
-                    ? MaterialFactKeys.HexoriumKind.BLACK_WHITE
-                    : MaterialFactKeys.HexoriumKind.NONE;
-            case 9225 -> name.equals("HexoriumRed")
-                    ? MaterialFactKeys.HexoriumKind.RED_GREEN_BLUE
-                    : MaterialFactKeys.HexoriumKind.NONE;
-            case 9226 -> name.equals("HexoriumGreen")
-                    ? MaterialFactKeys.HexoriumKind.RED_GREEN_BLUE
-                    : MaterialFactKeys.HexoriumKind.NONE;
-            case 9228 -> name.equals("HexoriumBlue")
-                    ? MaterialFactKeys.HexoriumKind.RED_GREEN_BLUE
-                    : MaterialFactKeys.HexoriumKind.NONE;
+            case 9224 ->
+                name.equals("HexoriumBlack")
+                        ? MaterialFactKeys.HexoriumKind.BLACK_WHITE
+                        : MaterialFactKeys.HexoriumKind.NONE;
+            case 9239 ->
+                name.equals("HexoriumWhite")
+                        ? MaterialFactKeys.HexoriumKind.BLACK_WHITE
+                        : MaterialFactKeys.HexoriumKind.NONE;
+            case 9225 ->
+                name.equals("HexoriumRed")
+                        ? MaterialFactKeys.HexoriumKind.RED_GREEN_BLUE
+                        : MaterialFactKeys.HexoriumKind.NONE;
+            case 9226 ->
+                name.equals("HexoriumGreen")
+                        ? MaterialFactKeys.HexoriumKind.RED_GREEN_BLUE
+                        : MaterialFactKeys.HexoriumKind.NONE;
+            case 9228 ->
+                name.equals("HexoriumBlue")
+                        ? MaterialFactKeys.HexoriumKind.RED_GREEN_BLUE
+                        : MaterialFactKeys.HexoriumKind.NONE;
             default -> MaterialFactKeys.HexoriumKind.NONE;
         };
     }

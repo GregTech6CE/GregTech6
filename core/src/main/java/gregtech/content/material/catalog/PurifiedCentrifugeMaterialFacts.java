@@ -12,6 +12,7 @@ public final class PurifiedCentrifugeMaterialFacts {
     private PurifiedCentrifugeMaterialFacts() {}
 
     private record Phase(int id, String name, MaterialFactKeys.PurifiedCentrifugePhase value) {}
+
     private record None(int id, String name, MaterialFactKeys.PurifiedCentrifugeNoDefault value) {}
 
     private static final List<Phase> PHASES = List.of(
@@ -26,7 +27,8 @@ public final class PurifiedCentrifugeMaterialFacts {
             new None(1120, "Copernicium", new MaterialFactKeys.PurifiedCentrifugeNoDefault("liquid", 150, 357)),
             new None(1180, "Oganesson", new MaterialFactKeys.PurifiedCentrifugeNoDefault("gas", 258, 263)),
             new None(9110, "Celestine", new MaterialFactKeys.PurifiedCentrifugeNoDefault("liquid", 275, 455)),
-            new None(9199, "DuraniumHexafluoride", new MaterialFactKeys.PurifiedCentrifugeNoDefault("liquid", 216, 428)),
+            new None(
+                    9199, "DuraniumHexafluoride", new MaterialFactKeys.PurifiedCentrifugeNoDefault("liquid", 216, 428)),
             new None(9801, "Snow", new MaterialFactKeys.PurifiedCentrifugeNoDefault("liquid", 273, 373)),
             new None(9851, "OilSand", new MaterialFactKeys.PurifiedCentrifugeNoDefault("liquid", 100, 400)),
             new None(9852, "CrudeOil", new MaterialFactKeys.PurifiedCentrifugeNoDefault("liquid", 100, 400)));
@@ -44,7 +46,8 @@ public final class PurifiedCentrifugeMaterialFacts {
         if (phase != null)
             rules.put(MaterialFactKeys.SOURCE_PURIFIED_CENTRIFUGE_PHASE, List.of(MaterialProcessRule.anyForm(phase)));
         if (none != null)
-            rules.put(MaterialFactKeys.SOURCE_PURIFIED_CENTRIFUGE_NO_DEFAULT, List.of(MaterialProcessRule.anyForm(none)));
+            rules.put(
+                    MaterialFactKeys.SOURCE_PURIFIED_CENTRIFUGE_NO_DEFAULT, List.of(MaterialProcessRule.anyForm(none)));
         return new MaterialDefinition.Declaration(
                 declaration.material(),
                 new MaterialInfoDefinition(

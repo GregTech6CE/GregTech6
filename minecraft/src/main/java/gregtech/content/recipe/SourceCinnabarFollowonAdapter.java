@@ -101,8 +101,9 @@ public final class SourceCinnabarFollowonAdapter implements SourceOreFollowonRow
         // Baseline source DEF_ENV_TEMP293 < melting500/388/500. Never infer from missing molten fluid.
         int melt = identity(m, rule.byproducts().get(0))
                 ? 500
-                : identity(m, rule.byproducts().get(1)) ? 388
-                : identity(m, rule.byproducts().get(2)) ? 500 : -1;
+                : identity(m, rule.byproducts().get(1))
+                        ? 388
+                        : identity(m, rule.byproducts().get(2)) ? 500 : -1;
         if (melt < 0 || m.resolve().getMeltingPoint() != melt)
             return new SourceOreFollowonRows.Environment(UNKNOWN, null);
         return new SourceOreFollowonRows.Environment(YES, null);
@@ -143,5 +144,4 @@ public final class SourceCinnabarFollowonAdapter implements SourceOreFollowonRow
                 ResourceLocation.parse("gt6ce:" + BlockMaterialPrefix.blockDust.getBlockId(m.resolve())));
         return block == Blocks.AIR ? ItemStack.EMPTY : new ItemStack(block, n);
     }
-
 }

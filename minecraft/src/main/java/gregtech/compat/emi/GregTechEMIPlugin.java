@@ -177,6 +177,11 @@ public final class GregTechEMIPlugin implements EmiPlugin {
     public static java.util.List<EmiRecipe> addMaterialProcesses(
             java.util.List<EmiRecipe> recipes,
             java.util.Map<EmiRecipeCategory, java.util.List<dev.emi.emi.api.stack.EmiIngredient>> workstations) {
+        long started = System.nanoTime();
+        // A repeated bake replaces our previous pages instead of retaining their snapshots and indexes.
+        recipes = recipes.stream()
+                .filter(recipe -> !(recipe instanceof MaterialProcessEmiRecipe))
+                .toList();
         var source = MaterialProcessSnapshot.Store.current();
         var captured = MaterialProcessEmiRecipes.capture(source, recipes, workstations);
         var snapshot = captured.snapshot();
@@ -184,18 +189,35 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         var navigation = new ProcessNavigation(snapshot, source, captured.information(), captured.links());
         var result = new java.util.ArrayList<>(recipes);
         var materials = new java.util.HashSet<String>();
-        for (var page : gregtech.compat.common.MaterialProcessProjection.initialPages(snapshot, navigation))
-            if (!page.material().isEmpty()) {
-                result.add(new MaterialProcessEmiRecipe(page.withInformation(
-                        captured.information().getOrDefault(page.material(), java.util.List.of()))));
-                materials.add(page.material());
-            }
+        for (var root : snapshot.roots()) {
+            var information = captured.information().getOrDefault(root.material(), java.util.List.of());
+            var indexedPorts = new java.util.ArrayList<>(
+                    gregtech.compat.common.MaterialProcessProjection.indexedPorts(snapshot, root.resource()));
+            information.forEach(entry -> indexedPorts.addAll(entry.index()));
+            result.add(new MaterialProcessEmiRecipe(
+                    root.material(),
+                    () -> navigation.valid()
+                            ? gregtech.compat.common.MaterialProcessProjection.pages(
+                                            snapshot, root.resource(), navigation)
+                                    .get(0)
+                                    .withInformation(information)
+                            : gregtech.compat.common.MaterialProcessDisplay.unbound()
+                                    .get(0),
+                    indexedPorts));
+            materials.add(root.material());
+        }
         captured.information().forEach((material, entries) -> {
             if (!materials.contains(material))
                 result.add(
                         new MaterialProcessEmiRecipe(gregtech.compat.common.MaterialProcessProjection.informationPage(
                                 material, entries, navigation)));
         });
+        com.mojang.logging.LogUtils.getLogger()
+                .info(
+                        "[gregtech] EMI material process index: {} materials from {} viewer recipes in {} ms; pages build on demand",
+                        result.size() - recipes.size(),
+                        recipes.size(),
+                        (System.nanoTime() - started) / 1_000_000L);
         return java.util.List.copyOf(result);
     }
 

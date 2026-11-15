@@ -21,6 +21,7 @@ public final class SourceOreFollowonAdapter implements SourceOreFollowonRows.Fac
     public static final SourceOreFollowonAdapter INSTANCE = new SourceOreFollowonAdapter();
 
     private SourceOreFollowonAdapter() {}
+
     private static final List<MaterialPrefix> INPUTS = List.of(
             MaterialPrefix.crushed,
             MaterialPrefix.crushedPurified,

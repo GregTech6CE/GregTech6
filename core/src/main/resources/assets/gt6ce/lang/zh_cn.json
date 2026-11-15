@@ -118,6 +118,7 @@
   "gt6ce.jei.material_process.coverage.node_limit": "达到深度或节点预算，省略了 %s 个后续步骤。",
   "gt6ce.jei.material_process.coverage.port_limit": "达到端口预算，省略了 %s 个端口。",
   "gt6ce.jei.material_process.coverage.edge_limit": "达到关联预算，省略了 %s 条关联。",
+  "gt6ce.jei.material_process.coverage.invalid_data": "已剔除 %s 条无效加工数据，详情见日志。",
   "gt6ce.jei.material_process.no_sources": "查询范围内没有已发布的来源。",
   "gt6ce.jei.material_process.no_uses": "查询范围内没有已发布的用途。",
   "gt6ce.jei.material_process.no_both": "查询范围内没有相连的已发布来源或用途。",

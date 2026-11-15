@@ -7,9 +7,11 @@ import java.util.*;
  * Immutable semantic process graph for one published material generation.
  *
  * <p>The graph owns no native recipe or world-generation objects. Queries traverse only their
- * published ports and return bounded immutable rows for a viewer adapter to project.</p>
+ * published ports and return immutable rows for a viewer adapter to project, with optional query budgets.</p>
  */
 public final class MaterialProcessGraph {
+    private static final System.Logger LOGGER = System.getLogger("gt6ce.material.process");
+
     /** One transaction boundary with the form, tag and active worldgen revisions used by the rows. */
     public record Snapshot(
             MaterialPublication.Stamp publication,
@@ -98,11 +100,17 @@ public final class MaterialProcessGraph {
             requireText(name, "process step name");
             inputs = List.copyOf(inputs);
             outputs = List.copyOf(outputs);
-            if (inputs.stream().anyMatch(Port::output) || outputs.stream().anyMatch(port -> !port.output()))
-                throw new IllegalArgumentException("Port role on wrong side");
-            if (inputs.stream().filter(Port::main).count() > 1
-                    || outputs.stream().filter(Port::main).count() > 1)
-                throw new IllegalArgumentException("Multiple main process ports");
+            var validInputs = inputs.stream().filter(port -> !port.output()).toList();
+            var validOutputs = outputs.stream().filter(Port::output).toList();
+            if (validInputs.size() != inputs.size() || validOutputs.size() != outputs.size()) {
+                LOGGER.log(
+                        System.Logger.Level.WARNING,
+                        "Discarded ports on the wrong side of process step {0}",
+                        reference);
+                resolved = false;
+            }
+            inputs = validInputs;
+            outputs = validOutputs;
             details = List.copyOf(details);
             Objects.requireNonNull(specialProcess);
         }
@@ -126,8 +134,24 @@ public final class MaterialProcessGraph {
         }
     }
 
+    /** Exact resource incidence; each source/target pair is implicit instead of allocated as an edge. */
+    public record Flow(DataKey resource, List<DataKey> sources, List<DataKey> targets) {
+        public Flow {
+            Objects.requireNonNull(resource);
+            sources = List.copyOf(sources);
+            targets = List.copyOf(targets);
+        }
+
+        public long connectionCount() {
+            return (long) sources.size() * targets.size();
+        }
+    }
+
     public record Budgets(int maxDepth, int maxSteps, int maxPortsPerSide, int maxEdges) {
         public static final Budgets DEFAULT = new Budgets(8, 64, 64, 128);
+        /** Explicit expansion budget; viewer pages use {@link MaterialProcessGraph#queryMaterial(DataKey)} instead. */
+        public static final Budgets MATERIAL_PAGE =
+                new Budgets(0, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
 
         public Budgets {
             if (maxDepth < 0 || maxSteps <= 0 || maxPortsPerSide <= 0 || maxEdges < 0)
@@ -156,6 +180,18 @@ public final class MaterialProcessGraph {
             Objects.requireNonNull(direction);
             steps = List.copyOf(steps);
             edges = List.copyOf(edges);
+            notices = List.copyOf(notices);
+        }
+    }
+
+    /** A complete material page whose storage follows port occurrences, not producer/consumer products. */
+    public record MaterialQuery(
+            Snapshot snapshot, DataKey root, List<Step> steps, List<Flow> flows, List<Notice> notices) {
+        public MaterialQuery {
+            Objects.requireNonNull(snapshot);
+            Objects.requireNonNull(root);
+            steps = List.copyOf(steps);
+            flows = List.copyOf(flows);
             notices = List.copyOf(notices);
         }
     }
@@ -202,10 +238,66 @@ public final class MaterialProcessGraph {
         return snapshot;
     }
 
+    public Optional<Step> step(DataKey reference) {
+        IndexedStep indexed = steps.get(reference);
+        return indexed == null ? Optional.empty() : Optional.of(indexed.step());
+    }
+
     public List<Resource> resources() {
         return resources.values().stream()
                 .sorted(Comparator.comparing(resource -> resource.key().toString()))
                 .toList();
+    }
+
+    public List<Step> materialSteps(DataKey root) {
+        Resource resource = resources.get(Objects.requireNonNull(root));
+        return resource == null
+                ? List.of()
+                : selectMaterial(resource).stream().map(IndexedStep::step).toList();
+    }
+
+    /** Keeps every direct row and association without enumerating a resource's source/target cross-product. */
+    public MaterialQuery queryMaterial(DataKey root) {
+        Objects.requireNonNull(root);
+        Resource resource = resources.get(root);
+        if (resource == null) return new MaterialQuery(snapshot, root, List.of(), List.of(), notices);
+        var selected = selectMaterial(resource);
+        var references = new HashSet<DataKey>();
+        selected.forEach(indexed -> references.add(indexed.step().reference()));
+        var flows = new ArrayList<Flow>();
+        for (Resource local : materialResources(resource)) {
+            var sources = outputs.getOrDefault(local.key(), List.of()).stream()
+                    .map(indexed -> indexed.step().reference())
+                    .filter(references::contains)
+                    .toList();
+            var targets = inputs.getOrDefault(local.key(), List.of()).stream()
+                    .map(indexed -> indexed.step().reference())
+                    .filter(references::contains)
+                    .toList();
+            if (!sources.isEmpty() && !targets.isEmpty()) flows.add(new Flow(local.key(), sources, targets));
+        }
+        var resultNotices = new ArrayList<>(notices);
+        if (selected.isEmpty()
+                && resultNotices.stream().noneMatch(notice -> notice.code().equals("no_both")))
+            resultNotices.add(new Notice("no_both", 0));
+        return new MaterialQuery(
+                snapshot, root, selected.stream().map(IndexedStep::step).toList(), flows, resultNotices);
+    }
+
+    private List<Resource> materialResources(Resource root) {
+        return root.material().equals("unknown")
+                ? List.of(root)
+                : resourcesByMaterial.getOrDefault(root.material(), List.of());
+    }
+
+    private List<IndexedStep> selectMaterial(Resource root) {
+        var selected = new TreeSet<IndexedStep>(
+                Comparator.comparing(IndexedStep::genericRecovery).thenComparingInt(IndexedStep::order));
+        for (Resource resource : materialResources(root)) {
+            selected.addAll(inputs.getOrDefault(resource.key(), List.of()));
+            selected.addAll(sources(resource.key()));
+        }
+        return List.copyOf(selected);
     }
 
     /**
@@ -369,15 +461,7 @@ public final class MaterialProcessGraph {
         if (rootResource == null)
             return new Query(snapshot, root, Direction.BOTH, List.of(), List.of(), notices, false);
 
-        var selected = new java.util.TreeSet<IndexedStep>(
-                Comparator.comparing(IndexedStep::genericRecovery).thenComparingInt(IndexedStep::order));
-        List<Resource> materialResources = rootResource.material().equals("unknown")
-                ? List.of(rootResource)
-                : resourcesByMaterial.getOrDefault(rootResource.material(), List.of());
-        for (Resource resource : materialResources) {
-            selected.addAll(inputs.getOrDefault(resource.key(), List.of()));
-            selected.addAll(sources(resource.key()));
-        }
+        var selected = selectMaterial(rootResource);
         var retained = new ArrayList<IndexedStep>(Math.min(selected.size(), budgets.maxSteps()));
         int omittedSteps = 0;
         for (IndexedStep indexed : selected) {
@@ -398,14 +482,22 @@ public final class MaterialProcessGraph {
                 .toList();
         var retainedByReference = new HashMap<DataKey, Step>();
         resultSteps.forEach(step -> retainedByReference.put(step.reference(), step));
+        var retainedInputs = new HashMap<DataKey, Set<DataKey>>();
+        resultSteps.forEach(step -> {
+            var keys = new HashSet<DataKey>();
+            step.inputs().forEach(port -> keys.add(port.resource().key()));
+            retainedInputs.put(step.reference(), keys);
+        });
 
         var resultEdges = new LinkedHashSet<Edge>();
         int omittedEdges = 0;
         for (IndexedStep source : retained) {
-            for (Port port : source.step.outputs()) {
+            for (Port port : retainedByReference.get(source.step.reference()).outputs()) {
                 if (!port.resource().material().equals(rootResource.material())) continue;
                 for (IndexedStep target : inputs.getOrDefault(port.resource().key(), List.of())) {
-                    if (!retainedByReference.containsKey(target.step.reference())) continue;
+                    if (!retainedInputs
+                            .getOrDefault(target.step.reference(), Set.of())
+                            .contains(port.resource().key())) continue;
                     Edge edge = new Edge(
                             source.step.reference(),
                             target.step.reference(),
@@ -465,6 +557,7 @@ public final class MaterialProcessGraph {
     }
 
     private Step boundedStep(Step step, int maxPorts) {
+        if (step.inputs().size() <= maxPorts && step.outputs().size() <= maxPorts) return step;
         return new Step(
                 step.reference(),
                 step.name(),
@@ -535,32 +628,43 @@ public final class MaterialProcessGraph {
         /** Generic recovery remains a use of its input, without advertising every reclaimable item as a source. */
         public Builder add(Step step, boolean genericRecovery) {
             Objects.requireNonNull(step);
-            if (steps.containsKey(step.reference()))
-                throw new IllegalArgumentException("Duplicate process step " + step.reference());
+            if (steps.containsKey(step.reference())) {
+                LOGGER.log(System.Logger.Level.WARNING, "Discarded duplicate process step {0}", step.reference());
+                return notice("invalid_process_data", 1);
+            }
+            // Validate the whole row before changing any index; a rejected row must leave no partial resources.
+            var additions = new HashMap<DataKey, Resource>();
+            for (List<Port> ports : List.of(step.inputs(), step.outputs()))
+                for (Port port : ports) {
+                    Resource resource = port.resource();
+                    Resource previous = additions.putIfAbsent(resource.key(), resource);
+                    if (previous == null) previous = resources.get(resource.key());
+                    if (previous != null && !previous.equals(resource)) {
+                        LOGGER.log(
+                                System.Logger.Level.WARNING,
+                                "Discarded process step {0}: conflicting resource identity {1}",
+                                step.reference(),
+                                resource.key());
+                        return notice("invalid_process_data", 1);
+                    }
+                }
             int order = steps.size();
             IndexedStep indexed = new IndexedStep(order, step, genericRecovery);
             steps.put(step.reference(), indexed);
+            resources.putAll(additions);
             var inputResources = new HashSet<DataKey>();
             for (Port port : step.inputs()) {
-                register(port.resource());
                 if (inputResources.add(port.resource().key()))
                     inputs.computeIfAbsent(port.resource().key(), ignored -> new ArrayList<>())
                             .add(indexed);
             }
             var outputResources = new HashSet<DataKey>();
             for (Port port : step.outputs()) {
-                register(port.resource());
                 if (outputResources.add(port.resource().key()))
                     outputs.computeIfAbsent(port.resource().key(), ignored -> new ArrayList<>())
                             .add(indexed);
             }
             return this;
-        }
-
-        private void register(Resource resource) {
-            Resource previous = resources.putIfAbsent(resource.key(), resource);
-            if (previous != null && !previous.equals(resource))
-                throw new IllegalArgumentException("Process resource key has conflicting identity: " + resource.key());
         }
 
         public MaterialProcessGraph build() {

@@ -1,6 +1,8 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later */
 package gregtech.api.contracts;
 
+import gregtech.api.addon.material.*;
+
 import java.util.List;
 
 /** Only the delivered API JAR participates in this consumer. */

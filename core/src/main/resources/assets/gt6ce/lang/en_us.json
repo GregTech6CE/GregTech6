@@ -116,6 +116,7 @@
   "gt6ce.jei.material_process.coverage.node_limit": "Depth stopped at the graph budget; %s additional steps were omitted.",
   "gt6ce.jei.material_process.coverage.port_limit": "Port budget reached; %s ports were omitted.",
   "gt6ce.jei.material_process.coverage.edge_limit": "Edge budget reached; %s links were omitted.",
+  "gt6ce.jei.material_process.coverage.invalid_data": "%s invalid process records were omitted; see the log for details.",
   "gt6ce.jei.material_process.no_sources": "No published source in the queried range.",
   "gt6ce.jei.material_process.no_uses": "No published use in the queried range.",
   "gt6ce.jei.material_process.no_both": "No connected published source or use in the queried range.",

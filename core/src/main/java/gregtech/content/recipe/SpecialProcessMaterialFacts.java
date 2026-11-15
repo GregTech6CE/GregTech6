@@ -37,8 +37,7 @@ public final class SpecialProcessMaterialFacts {
     }
 
     private static void attachReagents(
-            String name,
-            Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> processes) {
+            String name, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> processes) {
         if (name.equals("SulfuricAcid")) reagent(processes, SpecialProcessMethods.SULFURIC_ACID_LEACHING, "liquid");
         if (name.equals("AquaRegia")) reagent(processes, SpecialProcessMethods.AQUA_REGIA_LEACHING, "liquid");
         if (name.equals("HydrogenFluoride"))
@@ -58,10 +57,10 @@ public final class SpecialProcessMaterialFacts {
             if (member == null) continue;
             var method = method(family.fluidInput().phase());
             if (method == null) continue;
-            processes.computeIfAbsent(method, ignored -> new ArrayList<>())
+            processes
+                    .computeIfAbsent(method, ignored -> new ArrayList<>())
                     .add(new MaterialProcessRule<>(
-                            INPUT_COUNTS.keySet(),
-                            fixedTarget(new MaterialKey(declaration.name()), family)));
+                            INPUT_COUNTS.keySet(), fixedTarget(new MaterialKey(declaration.name()), family)));
         }
     }
 
@@ -81,7 +80,9 @@ public final class SpecialProcessMaterialFacts {
         return new SpecialProcessValue.Target(
                 INPUT_COUNTS,
                 itemOutputs,
-                family.fluidOutputs().stream().map(SpecialProcessMaterialFacts::fluidOutput).toList(),
+                family.fluidOutputs().stream()
+                        .map(SpecialProcessMaterialFacts::fluidOutput)
+                        .toList(),
                 family.fluidInput().millibuckets(),
                 256,
                 0);
@@ -92,9 +93,7 @@ public final class SpecialProcessMaterialFacts {
             Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> processes) {
         var material = declaration.material();
         if (material.properties().contains(gregtech.api.material.MaterialProperty.ANTIMATTER)) return;
-        boolean mnDioxideByproduct = declaration.info()
-                .processes()
-                .find(MaterialProcessKeys.ORE_PROCESSING).stream()
+        boolean mnDioxideByproduct = declaration.info().processes().find(MaterialProcessKeys.ORE_PROCESSING).stream()
                 .map(MaterialProcessRule::value)
                 .anyMatch(rule -> rule.byproducts().stream()
                         .anyMatch(byproduct -> byproduct.name().equals("Pyrolusite")));
@@ -115,7 +114,8 @@ public final class SpecialProcessMaterialFacts {
                                 10_000)),
                 List.of(
                         new SpecialProcessValue.FluidOutput(
-                                new MaterialKey("Water"), List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
+                                new MaterialKey("Water"),
+                                List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
                                 3_000),
                         new SpecialProcessValue.FluidOutput(
                                 new MaterialKey("Chlorine"),
@@ -124,68 +124,71 @@ public final class SpecialProcessMaterialFacts {
                 4_000,
                 256,
                 0);
-        processes.computeIfAbsent(
-                        SpecialProcessMethods.HYDROCHLORIC_ACID_MANGANESE_LEACHING,
-                        ignored -> new ArrayList<>())
+        processes
+                .computeIfAbsent(
+                        SpecialProcessMethods.HYDROCHLORIC_ACID_MANGANESE_LEACHING, ignored -> new ArrayList<>())
                 .add(new MaterialProcessRule<>(INPUT_COUNTS.keySet(), target));
     }
 
     private static void attachStaticAquaRegiaTargets(
-            String name,
-            Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> processes) {
+            String name, Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> processes) {
         SpecialProcessValue.Target target = switch (name) {
-            case "Gold" -> aquaRegiaTarget(
-                    "Gold",
-                    "Copper",
-                    new SpecialProcessValue.FluidOutput(
-                            new MaterialKey("ChloroauricAcid"),
-                            List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
-                            3_000),
-                    new SpecialProcessValue.FluidOutput(
-                            new MaterialKey("NitrogenMonoxide"),
-                            List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
-                            1_000),
-                    new SpecialProcessValue.FluidOutput(
-                            new MaterialKey("Water"),
-                            List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
-                            3_000),
-                    6_500);
-            case "Copper" -> aquaRegiaTarget(
-                    "Copper",
-                    "Cobalt",
-                    new SpecialProcessValue.FluidOutput(
-                            new MaterialKey("ChloroauricAcid"),
-                            List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
-                            3_000),
-                    new SpecialProcessValue.FluidOutput(
-                            new MaterialKey("NitrogenMonoxide"),
-                            List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
-                            1_000),
-                    new SpecialProcessValue.FluidOutput(
-                            new MaterialKey("Water"),
-                            List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
-                            3_000),
-                    6_500);
-            case "Tin", "Cassiterite" -> aquaRegiaTarget(
-                    name,
-                    "Zinc",
-                    new SpecialProcessValue.FluidOutput(
-                            new MaterialKey("StannicChloride"),
-                            List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
-                            2_500),
-                    new SpecialProcessValue.FluidOutput(
-                            new MaterialKey("HydrochloricAcid"),
-                            List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
-                            4_000),
-                    new SpecialProcessValue.FluidOutput(
-                            new MaterialKey("NitrogenDioxide"),
-                            List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
-                            3_000),
-                    13_000);
+            case "Gold" ->
+                aquaRegiaTarget(
+                        "Gold",
+                        "Copper",
+                        new SpecialProcessValue.FluidOutput(
+                                new MaterialKey("ChloroauricAcid"),
+                                List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
+                                3_000),
+                        new SpecialProcessValue.FluidOutput(
+                                new MaterialKey("NitrogenMonoxide"),
+                                List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
+                                1_000),
+                        new SpecialProcessValue.FluidOutput(
+                                new MaterialKey("Water"),
+                                List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
+                                3_000),
+                        6_500);
+            case "Copper" ->
+                aquaRegiaTarget(
+                        "Copper",
+                        "Cobalt",
+                        new SpecialProcessValue.FluidOutput(
+                                new MaterialKey("ChloroauricAcid"),
+                                List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
+                                3_000),
+                        new SpecialProcessValue.FluidOutput(
+                                new MaterialKey("NitrogenMonoxide"),
+                                List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
+                                1_000),
+                        new SpecialProcessValue.FluidOutput(
+                                new MaterialKey("Water"),
+                                List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
+                                3_000),
+                        6_500);
+            case "Tin", "Cassiterite" ->
+                aquaRegiaTarget(
+                        name,
+                        "Zinc",
+                        new SpecialProcessValue.FluidOutput(
+                                new MaterialKey("StannicChloride"),
+                                List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
+                                2_500),
+                        new SpecialProcessValue.FluidOutput(
+                                new MaterialKey("HydrochloricAcid"),
+                                List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
+                                4_000),
+                        new SpecialProcessValue.FluidOutput(
+                                new MaterialKey("NitrogenDioxide"),
+                                List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
+                                3_000),
+                        13_000);
             default -> null;
         };
         if (target == null) return;
-        processes.computeIfAbsent(SpecialProcessMethods.AQUA_REGIA_LEACHING, ignored -> new ArrayList<>())
+        processes
+                .computeIfAbsent(SpecialProcessMethods.AQUA_REGIA_LEACHING, ignored -> new ArrayList<>())
                 .add(new MaterialProcessRule<>(INPUT_COUNTS.keySet(), target));
     }
 
@@ -204,8 +207,7 @@ public final class SpecialProcessMaterialFacts {
                     new MaterialKey(byproduct),
                     List.of(new SpecialProcessValue.FormCount(CENTRIFUGED_TINY, 2)),
                     5_000));
-        return new SpecialProcessValue.Target(
-                INPUT_COUNTS, items, List.of(first, second, third), acid, 256, 0);
+        return new SpecialProcessValue.Target(INPUT_COUNTS, items, List.of(first, second, third), acid, 256, 0);
     }
 
     private static SpecialProcessValue.FluidOutput fluidOutput(SpecialProcessData.Fluid fluid) {
@@ -230,7 +232,8 @@ public final class SpecialProcessMaterialFacts {
             Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> processes,
             MaterialProcessKey<SpecialProcessValue> method,
             String form) {
-        processes.computeIfAbsent(method, ignored -> new ArrayList<>())
+        processes
+                .computeIfAbsent(method, ignored -> new ArrayList<>())
                 .add(new MaterialProcessRule<>(Set.of(form(form)), new SpecialProcessValue.Reagent()));
     }
 

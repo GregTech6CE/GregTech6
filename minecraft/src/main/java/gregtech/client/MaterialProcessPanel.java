@@ -182,9 +182,8 @@ public final class MaterialProcessPanel {
                         outline(graphics, node.x - 13, node.y - 13, node.x + 14, node.y + 14, 0xffa7dba0);
                         outline(graphics, node.x - 12, node.y - 12, node.x + 13, node.y + 13, 0xffbce7b6);
                     }
-                    ItemStack icon = node.machine()
-                            ? selected(node).icon()
-                            : node.port().icons().stream().findFirst().orElse(ItemStack.EMPTY);
+                    ItemStack icon =
+                            node.machine() ? selected(node).icon() : node.port().icon();
                     if (icon.isEmpty()) text(graphics, Component.literal("?"), node.x - 3, node.y - 4, 10, MUTED);
                     else graphics.renderItem(icon, node.x - 8, node.y - 8);
                     if (!node.machine()) {
@@ -263,7 +262,7 @@ public final class MaterialProcessPanel {
             return selected(node).icon().isEmpty()
                     ? List.of()
                     : List.of(selected(node).icon());
-        return node.port().hasIcons() ? List.of(node.port().icons().get(0)) : List.of();
+        return node.port().hasIcons() ? List.of(node.port().icon()) : List.of();
     }
 
     public List<Component> tooltip(double mouseX, double mouseY) {
@@ -291,9 +290,7 @@ public final class MaterialProcessPanel {
         }
         Node node = hit(mouseX, mouseY);
         if (node == null) return List.of();
-        ItemStack icon = node.machine()
-                ? selected(node).icon()
-                : node.port().icons().stream().findFirst().orElse(ItemStack.EMPTY);
+        ItemStack icon = node.machine() ? selected(node).icon() : node.port().icon();
         Component name = icon.isEmpty()
                 ? (node.machine() ? selected(node).name() : node.port().name())
                 : icon.getHoverName();
@@ -320,7 +317,7 @@ public final class MaterialProcessPanel {
             lines.add(Component.translatable("gt6ce.jei.material_process.variants", node.steps.size()));
         var names = new java.util.LinkedHashMap<String, Component>();
         for (var port : node.auxiliaries) {
-            Component label = port.hasIcons() ? port.icons().get(0).getHoverName() : port.name();
+            Component label = port.hasIcons() ? port.icon().getHoverName() : port.name();
             names.putIfAbsent(label.getString(), label);
         }
         lines.addAll(names.values().stream().limit(12).toList());

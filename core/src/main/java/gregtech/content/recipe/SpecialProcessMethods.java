@@ -9,13 +9,13 @@ import java.util.List;
 
 /** Built-in special process methods and their stable target/reagent process keys. */
 public final class SpecialProcessMethods {
-    public static final MaterialProcessKey<SpecialProcessValue> SULFURIC_ACID_LEACHING = process(
-            "sulfuric_acid_leaching");
+    public static final MaterialProcessKey<SpecialProcessValue> SULFURIC_ACID_LEACHING =
+            process("sulfuric_acid_leaching");
     public static final MaterialProcessKey<SpecialProcessValue> AQUA_REGIA_LEACHING = process("aqua_regia_leaching");
-    public static final MaterialProcessKey<SpecialProcessValue> HYDROFLUORIC_ACID_LEACHING = process(
-            "hydrofluoric_acid_leaching");
-    public static final MaterialProcessKey<SpecialProcessValue> HYDROCHLORIC_ACID_MANGANESE_LEACHING = process(
-            "hydrochloric_acid_manganese_leaching");
+    public static final MaterialProcessKey<SpecialProcessValue> HYDROFLUORIC_ACID_LEACHING =
+            process("hydrofluoric_acid_leaching");
+    public static final MaterialProcessKey<SpecialProcessValue> HYDROCHLORIC_ACID_MANGANESE_LEACHING =
+            process("hydrochloric_acid_manganese_leaching");
 
     private static final List<SpecialProcessMethod> METHODS = List.of(
             method(SULFURIC_ACID_LEACHING),
@@ -35,11 +35,12 @@ public final class SpecialProcessMethods {
 
     private static SpecialProcessMethod method(MaterialProcessKey<SpecialProcessValue> process) {
         return new SpecialProcessMethod(
-                process, "gt.recipe.bath", "gt6ce.special_process." + process.id().path().replace('/', '.'));
+                process,
+                "gt.recipe.bath",
+                "gt6ce.special_process." + process.id().path().replace('/', '.'));
     }
 
     private static MaterialProcessKey<SpecialProcessValue> process(String path) {
-        return MaterialProcessKey.multiple(
-                new DataKey("gt6ce", "special_process/" + path), SpecialProcessValue.class);
+        return MaterialProcessKey.multiple(new DataKey("gt6ce", "special_process/" + path), SpecialProcessValue.class);
     }
 }

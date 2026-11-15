@@ -1,25 +1,27 @@
 package gregtech.compat.common;
 
+import com.mojang.logging.LogUtils;
 import gregtech.api.addon.material.DataKey;
 import gregtech.api.addon.recipe.RecipeOutputChances;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.OptionalInt;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import org.slf4j.Logger;
 
 /**
- * Client presentation values for an already bounded process query. This is not a source index or an execution model.
+ * Client presentation values for a material process query. This is not a source index or an execution model.
  * No material catalog, native recipe enumeration, or viewer API is accessed here.
  */
 public final class MaterialProcessDisplay {
-    public static final int MAX_STEPS = 512;
-    public static final int MAX_PORTS = 128;
+    private static final Logger LOGGER = LogUtils.getLogger();
+    /** Only limits automatic icon sampling from selectors, never steps, ports or supplied representatives. */
     public static final int MAX_ICONS = 16;
-    public static final int MAX_CONNECTIONS = 4096;
 
     /** Roles come from the producer; neither slot order nor quantity establishes a primary output. */
     public enum Role {
@@ -52,19 +54,27 @@ public final class MaterialProcessDisplay {
         public Port {
             Objects.requireNonNull(resource);
             Objects.requireNonNull(identity);
-            if (material == null || material.isBlank())
-                throw new IllegalArgumentException("Missing process port material");
+            if (material == null || material.isBlank()) {
+                LOGGER.warn("Missing material for process resource {}; retaining it as unknown", resource);
+                material = "unknown";
+            }
             name = name.copy();
             amount = amount.copy();
             quantity = quantity.copy();
             Objects.requireNonNull(role);
             Objects.requireNonNull(chance);
-            if (icons.size() > MAX_ICONS) throw new IllegalArgumentException("Too many display representatives");
-            icons = icons.stream().map(ItemStack::copy).toList();
-            if (icons.stream().anyMatch(ItemStack::isEmpty))
-                throw new IllegalArgumentException("Use an empty icon list for symbolic resources");
-            if (chance.isPresent() && (chance.getAsInt() < 1 || chance.getAsInt() > RecipeOutputChances.CERTAIN))
-                throw new IllegalArgumentException("Invalid output chance");
+            var validIcons = icons.stream()
+                    .filter(Objects::nonNull)
+                    .filter(stack -> !stack.isEmpty())
+                    .toList();
+            if (validIcons.size() != icons.size())
+                LOGGER.warn("Discarded {} empty display icons for {}", icons.size() - validIcons.size(), resource);
+            icons = validIcons.stream().map(ItemStack::copy).toList();
+            if (chance.isPresent() && (chance.getAsInt() < 1 || chance.getAsInt() > RecipeOutputChances.CERTAIN)) {
+                LOGGER.warn(
+                        "Invalid display chance {} for {}; retaining an unknown chance", chance.getAsInt(), resource);
+                chance = OptionalInt.empty();
+            }
             details = copyText(details);
         }
 
@@ -104,6 +114,14 @@ public final class MaterialProcessDisplay {
             return !icons.isEmpty();
         }
 
+        public int iconCount() {
+            return icons.size();
+        }
+
+        public ItemStack icon() {
+            return icons.isEmpty() ? ItemStack.EMPTY : icons.get(0).copy();
+        }
+
         public List<Component> tooltip() {
             var lines = new ArrayList<Component>();
             lines.add(name);
@@ -130,7 +148,20 @@ public final class MaterialProcessDisplay {
         }
     }
 
-    /** All co-inputs and outputs belong to this one step. Main is a layout hint, separate from the output role. */
+    /** All exact source/target associations for one resource, stored without allocating their cross-product. */
+    public record Flow(DataKey resource, List<DataKey> sources, List<DataKey> targets) {
+        public Flow {
+            Objects.requireNonNull(resource);
+            sources = List.copyOf(sources);
+            targets = List.copyOf(targets);
+        }
+
+        public long connectionCount() {
+            return (long) sources.size() * targets.size();
+        }
+    }
+
+    /** All ports belong to one step. Process is the producer's stable category, independent of the translated name. */
     public record Step(
             DataKey reference,
             Component name,
@@ -141,22 +172,50 @@ public final class MaterialProcessDisplay {
             java.util.Optional<SpecialProcess> specialProcess,
             boolean resolved,
             boolean worldGenerated,
-            boolean genericRecovery) {
+            boolean genericRecovery,
+            String process) {
         public Step {
             Objects.requireNonNull(reference);
             name = name.copy();
             icon = icon.copy();
-            inputs = List.copyOf(inputs);
-            outputs = List.copyOf(outputs);
-            validatePorts(inputs, false);
-            validatePorts(outputs, true);
+            var validInputs = validPorts(inputs, false, reference);
+            var validOutputs = validPorts(outputs, true, reference);
+            resolved &= validInputs.size() == inputs.size() && validOutputs.size() == outputs.size();
+            inputs = validInputs;
+            outputs = validOutputs;
             details = copyText(details);
             Objects.requireNonNull(specialProcess);
+            Objects.requireNonNull(process);
         }
 
         @Override
         public ItemStack icon() {
             return icon.copy();
+        }
+
+        public Step(
+                DataKey reference,
+                Component name,
+                ItemStack icon,
+                List<Port> inputs,
+                List<Port> outputs,
+                List<Component> details,
+                java.util.Optional<SpecialProcess> specialProcess,
+                boolean resolved,
+                boolean worldGenerated,
+                boolean genericRecovery) {
+            this(
+                    reference,
+                    name,
+                    icon,
+                    inputs,
+                    outputs,
+                    details,
+                    specialProcess,
+                    resolved,
+                    worldGenerated,
+                    genericRecovery,
+                    name.getString());
         }
 
         public Step(
@@ -293,7 +352,7 @@ public final class MaterialProcessDisplay {
         };
 
         default boolean openPort(Port port, boolean uses) {
-            return port.hasIcons() && openStack(port.icons().get(0), uses);
+            return port.hasIcons() && openStack(port.icon(), uses);
         }
 
         default boolean openStack(ItemStack stack, boolean uses) {
@@ -317,20 +376,47 @@ public final class MaterialProcessDisplay {
             int number,
             int total,
             Navigation navigation,
-            List<Information> information) {
+            List<Information> information,
+            List<Flow> flows) {
         public Page {
             title = title.copy();
-            if (material == null) throw new IllegalArgumentException("Missing process page material");
-            steps = List.copyOf(steps);
-            connections = List.copyOf(connections);
+            material = Objects.requireNonNullElse(material, "");
+            int suppliedSteps = steps.size(), suppliedConnections = connections.size(), suppliedFlows = flows.size();
+            steps = validSteps(steps);
+            var ports = new PortIndex(steps);
+            connections = validConnections(connections, ports);
+            flows = validFlows(flows, ports);
             notices = copyText(notices);
+            if (notices.isEmpty())
+                notices = List.of(Component.translatable("gt6ce.jei.material_process.partial_unknown"));
+            int discarded = suppliedSteps
+                    - steps.size()
+                    + suppliedConnections
+                    - connections.size()
+                    + suppliedFlows
+                    - flows.size();
+            if (discarded > 0) {
+                var coverage = new ArrayList<>(notices);
+                coverage.add(Component.translatable("gt6ce.jei.material_process.coverage.invalid_data", discarded));
+                notices = List.copyOf(coverage);
+            }
             information = List.copyOf(information);
             Objects.requireNonNull(navigation);
-            if (steps.size() > MAX_STEPS
-                    || connections.size() > MAX_CONNECTIONS
-                    || number < 1
-                    || total < number
-                    || notices.isEmpty()) throw new IllegalArgumentException("Invalid process display page");
+            number = Math.max(1, number);
+            total = Math.max(number, total);
+        }
+
+        public Page(
+                Component title,
+                String material,
+                List<Step> steps,
+                List<Connection> connections,
+                List<Component> notices,
+                int number,
+                int total,
+                Navigation navigation,
+                List<Information> information) {
+            this(title, material, steps, connections, notices, number, total, navigation, information, List.of());
         }
 
         public Page(
@@ -346,7 +432,8 @@ public final class MaterialProcessDisplay {
         }
 
         public Page withInformation(List<Information> information) {
-            return new Page(title, material, steps, connections, notices, number, total, navigation, information);
+            return new Page(
+                    title, material, steps, connections, notices, number, total, navigation, information, flows);
         }
 
         /** Foreign reagents and byproducts belong to the recipe, not to this material's viewer index. */
@@ -371,24 +458,6 @@ public final class MaterialProcessDisplay {
             List<Connection> connections,
             List<Component> notices,
             Navigation navigation) {
-        if (steps.size() > MAX_STEPS) throw new IllegalArgumentException("Process query exceeds display budget");
-        if (connections.size() > MAX_CONNECTIONS) throw new IllegalArgumentException("Too many process connections");
-        var references = new HashMap<DataKey, Step>();
-        for (var step : steps)
-            if (references.putIfAbsent(step.reference(), step) != null)
-                throw new IllegalArgumentException("Duplicate process reference");
-        var uniqueConnections = new HashSet<Connection>();
-        for (var connection : connections) {
-            if (!references.containsKey(connection.source())
-                    || !references.containsKey(connection.target())
-                    || !uniqueConnections.add(connection))
-                throw new IllegalArgumentException("Invalid process connection");
-            if (references.get(connection.source()).outputs().stream()
-                            .noneMatch(port -> port.resource().equals(connection.resource()))
-                    || references.get(connection.target()).inputs().stream()
-                            .noneMatch(port -> port.resource().equals(connection.resource())))
-                throw new IllegalArgumentException("Connection does not match process ports");
-        }
         return List.of(new Page(title, material, steps, connections, notices, 1, 1, navigation));
     }
 
@@ -406,11 +475,86 @@ public final class MaterialProcessDisplay {
         return role == Role.PRIMARY || role == Role.BYPRODUCT || role == Role.UNKNOWN;
     }
 
-    private static void validatePorts(List<Port> ports, boolean output) {
-        if (ports.size() > MAX_PORTS || ports.stream().filter(Port::main).count() > 1)
-            throw new IllegalArgumentException("Invalid process ports");
-        for (var port : ports)
-            if (isOutput(port.role()) != output) throw new IllegalArgumentException("Port role on wrong side");
+    private static List<Port> validPorts(List<Port> ports, boolean output, DataKey reference) {
+        var valid = ports.stream()
+                .filter(Objects::nonNull)
+                .filter(port -> isOutput(port.role()) == output)
+                .toList();
+        if (valid.size() != ports.size())
+            LOGGER.warn(
+                    "Discarded {} invalid {} ports for {}",
+                    ports.size() - valid.size(),
+                    output ? "output" : "input",
+                    reference);
+        return valid;
+    }
+
+    private static List<Step> validSteps(List<Step> steps) {
+        var references = new LinkedHashMap<DataKey, Step>();
+        for (Step step : steps) {
+            if (step == null) {
+                LOGGER.warn("Discarded null material process step");
+            } else if (references.putIfAbsent(step.reference(), step) != null) {
+                LOGGER.warn("Discarded duplicate material process step {}", step.reference());
+            }
+        }
+        return List.copyOf(references.values());
+    }
+
+    private static final class PortIndex {
+        private final java.util.Map<DataKey, java.util.Set<DataKey>> inputs = new HashMap<>(),
+                outputs = new HashMap<>();
+
+        private PortIndex(List<Step> steps) {
+            for (Step step : steps) {
+                inputs.put(step.reference(), resources(step.inputs()));
+                outputs.put(step.reference(), resources(step.outputs()));
+            }
+        }
+
+        private boolean contains(DataKey step, DataKey resource, boolean output) {
+            return (output ? outputs : inputs)
+                    .getOrDefault(step, java.util.Set.of())
+                    .contains(resource);
+        }
+    }
+
+    private static List<Connection> validConnections(List<Connection> connections, PortIndex ports) {
+        var unique = new HashSet<Connection>();
+        var valid = new ArrayList<Connection>();
+        for (Connection connection : connections) {
+            if (connection == null
+                    || !ports.contains(connection.source(), connection.resource(), true)
+                    || !ports.contains(connection.target(), connection.resource(), false)) {
+                LOGGER.warn("Discarded material process connection with missing endpoint ports: {}", connection);
+            } else if (unique.add(connection)) valid.add(connection);
+        }
+        return List.copyOf(valid);
+    }
+
+    private static List<Flow> validFlows(List<Flow> flows, PortIndex ports) {
+        var valid = new ArrayList<Flow>();
+        for (Flow flow : flows) {
+            var sources = flow.sources().stream()
+                    .filter(source -> ports.contains(source, flow.resource(), true))
+                    .distinct()
+                    .toList();
+            var targets = flow.targets().stream()
+                    .filter(target -> ports.contains(target, flow.resource(), false))
+                    .distinct()
+                    .toList();
+            if (sources.size() != flow.sources().size()
+                    || targets.size() != flow.targets().size())
+                LOGGER.warn("Discarded invalid material process flow endpoints for {}", flow.resource());
+            if (!sources.isEmpty() && !targets.isEmpty()) valid.add(new Flow(flow.resource(), sources, targets));
+        }
+        return List.copyOf(valid);
+    }
+
+    private static java.util.Set<DataKey> resources(List<Port> ports) {
+        var result = new HashSet<DataKey>();
+        ports.forEach(port -> result.add(port.resource()));
+        return result;
     }
 
     private static List<Component> copyText(List<Component> lines) {

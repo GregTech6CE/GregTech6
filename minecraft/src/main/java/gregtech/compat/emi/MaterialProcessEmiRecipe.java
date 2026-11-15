@@ -11,9 +11,13 @@ import dev.emi.emi.api.widget.WidgetHolder;
 import gregtech.client.MaterialProcessPanel;
 import gregtech.compat.common.MaterialProcessDisplay;
 import gregtech.compat.common.RecipeViewerIcons;
-import java.util.ArrayList;
+import gregtech.content.recipe.MaterialProcessSnapshot;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Supplier;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
@@ -31,7 +35,8 @@ public final class MaterialProcessEmiRecipe implements EmiRecipe {
                 }
             };
 
-    private final MaterialProcessDisplay.Page page;
+    private final Supplier<MaterialProcessDisplay.Page> pageFactory;
+    private MaterialProcessDisplay.Page page;
     private MaterialProcessPanel panel;
     private List<EmiStack> focus = List.of();
     private final ResourceLocation id;
@@ -40,15 +45,22 @@ public final class MaterialProcessEmiRecipe implements EmiRecipe {
     private final List<EmiStack> outputs;
 
     public MaterialProcessEmiRecipe(MaterialProcessDisplay.Page page) {
+        this(page.material(), () -> page, page.indexedPorts());
         this.page = page;
-        id = ResourceLocation.fromNamespaceAndPath("gt6ce", "/material_process/" + path(page.material()));
-        var inputs = new ArrayList<EmiIngredient>();
-        var catalysts = new ArrayList<EmiIngredient>();
-        var outputs = new ArrayList<EmiStack>();
-        for (var port : page.indexedPorts()) add(port, inputs, catalysts, outputs);
-        this.inputs = List.copyOf(inputs);
-        this.catalysts = List.copyOf(catalysts);
-        this.outputs = List.copyOf(outputs);
+    }
+
+    /** Index getters never resolve the page; EMI calls them for every recipe during each bake. */
+    public MaterialProcessEmiRecipe(String material, Supplier<MaterialProcessDisplay.Page> pageFactory,
+            List<MaterialProcessDisplay.Port> indexedPorts) {
+        this.pageFactory = Objects.requireNonNull(pageFactory);
+        id = ResourceLocation.fromNamespaceAndPath("gt6ce", "/material_process/" + path(material));
+        var inputs = new LinkedHashMap<String, EmiStack>();
+        var catalysts = new LinkedHashMap<String, EmiStack>();
+        var outputs = new LinkedHashMap<String, EmiStack>();
+        for (var port : indexedPorts) add(port, inputs, catalysts, outputs);
+        this.inputs = List.copyOf(inputs.values());
+        this.catalysts = List.copyOf(catalysts.values());
+        this.outputs = List.copyOf(outputs.values());
     }
 
     private static String path(String material) {
@@ -58,27 +70,20 @@ public final class MaterialProcessEmiRecipe implements EmiRecipe {
 
     private static void add(
             MaterialProcessDisplay.Port port,
-            List<EmiIngredient> inputs,
-            List<EmiIngredient> catalysts,
-            List<EmiStack> outputs) {
-        if (!port.hasIcons()) return;
-        var stacks = stacks(port);
-        var ingredient = EmiIngredient.of(stacks);
-        switch (port.role()) {
-            case CONSUMED -> inputs.add(ingredient);
-            case CATALYST, PRESENCE -> catalysts.add(ingredient);
-            case PRIMARY, BYPRODUCT, UNKNOWN -> outputs.addAll(stacks);
+            Map<String, EmiStack> inputs,
+            Map<String, EmiStack> catalysts,
+            Map<String, EmiStack> outputs) {
+        var index = switch (port.role()) {
+            case CONSUMED -> inputs;
+            case CATALYST, PRESENCE -> catalysts;
+            case PRIMARY, BYPRODUCT, UNKNOWN -> outputs;
+        };
+        for (var icon : port.icons()) {
+            String state = MaterialProcessSnapshot.itemDisplayState(icon);
+            if (index.containsKey(state)) continue;
+            var stack = MaterialProcessEmiStacks.of(icon);
+            if (!stack.isEmpty()) index.put(state, stack);
         }
-    }
-
-    private static List<EmiStack> stacks(MaterialProcessDisplay.Port port) {
-        return port.icons().stream()
-                .map(MaterialProcessEmiStacks::of)
-                .filter(stack -> !stack.isEmpty())
-                .map(stack -> port.chance().isPresent()
-                        ? stack.setChance(port.chance().getAsInt() / 10_000F)
-                        : stack)
-                .toList();
     }
 
     public static void register(EmiRegistry registry, List<MaterialProcessDisplay.Page> pages) {
@@ -156,6 +161,7 @@ public final class MaterialProcessEmiRecipe implements EmiRecipe {
     @Override
     public void addWidgets(WidgetHolder widgets) {
         if (panel == null) {
+            if (page == null) page = pageFactory.get();
             panel = new MaterialProcessPanel(page);
             focusPanel();
         }

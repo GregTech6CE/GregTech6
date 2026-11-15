@@ -1,5 +1,6 @@
 package gregtech.compat.common;
 
+import com.mojang.logging.LogUtils;
 import gregtech.api.addon.material.DataKey;
 import gregtech.api.addon.material.MaterialCatalogView;
 import gregtech.api.addon.material.MaterialKey;
@@ -7,10 +8,8 @@ import gregtech.api.addon.material.MaterialView;
 import gregtech.content.recipe.MaterialProcessSnapshot;
 import gregtech.engine.material.MaterialProcessGraph;
 import gregtech.engine.material.MaterialProcessGraph.AmountUnit;
-import gregtech.engine.material.MaterialProcessGraph.Budgets;
 import gregtech.engine.material.MaterialProcessGraph.Notice;
 import gregtech.engine.material.MaterialProcessGraph.Port;
-import gregtech.engine.material.MaterialProcessGraph.Query;
 import gregtech.engine.material.MaterialProcessGraph.Resource;
 import gregtech.engine.material.MaterialProcessGraph.Step;
 import java.util.ArrayList;
@@ -29,11 +28,9 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 
-/** Converts one already bounded semantic query into native viewer values. */
+/** Converts one material-local semantic query into native viewer values. */
 public final class MaterialProcessProjection {
-    private static final Budgets MATERIAL_PAGE_BUDGET =
-            new Budgets(0, MaterialProcessDisplay.MAX_STEPS, MaterialProcessDisplay.MAX_PORTS,
-                    MaterialProcessDisplay.MAX_CONNECTIONS);
+    private static final org.slf4j.Logger LOGGER = LogUtils.getLogger();
 
     private MaterialProcessProjection() {}
 
@@ -42,7 +39,7 @@ public final class MaterialProcessProjection {
         var pages = new ArrayList<MaterialProcessDisplay.Page>();
         var workstations = RecipeViewerIcons.categories();
         for (MaterialProcessSnapshot.Root root : snapshot.roots()) {
-            var rootPages = pages(snapshot, root.resource(), MATERIAL_PAGE_BUDGET, navigation, workstations);
+            var rootPages = pages(snapshot, root.resource(), navigation, workstations);
             pages.addAll(rootPages);
         }
         return pages.isEmpty() ? MaterialProcessDisplay.unbound() : List.copyOf(pages);
@@ -52,7 +49,32 @@ public final class MaterialProcessProjection {
             MaterialProcessSnapshot snapshot,
             DataKey root,
             MaterialProcessDisplay.Navigation navigation) {
-        return pages(snapshot, root, MATERIAL_PAGE_BUDGET, navigation, RecipeViewerIcons.categories());
+        return pages(snapshot, root, navigation, RecipeViewerIcons.categories());
+    }
+
+    private record IndexPort(DataKey resource, MaterialProcessGraph.Role role) {}
+
+    /** Viewer registration needs unique material resource/role representatives, without any graph or layout. */
+    public static List<MaterialProcessDisplay.Port> indexedPorts(MaterialProcessSnapshot snapshot, DataKey root) {
+        Resource resource = snapshot.resource(root).orElse(null);
+        if (resource == null) return List.of();
+        var ports = new java.util.LinkedHashMap<IndexPort, MaterialProcessDisplay.Port>();
+        for (Step step : snapshot.materialSteps(root)) {
+            var recipe = snapshot.recipe(step.reference()).orElse(null);
+            for (List<Port> side : List.of(step.inputs(), step.outputs()))
+                for (Port port : side) {
+                    if (!port.resource().material().equals(resource.material())) continue;
+                    var key = new IndexPort(port.resource().key(), port.role());
+                    var existing = ports.get(key);
+                    if (existing != null && existing.hasIcons()) continue;
+                    try {
+                        ports.put(key, port(snapshot, port, recipe));
+                    } catch (RuntimeException failure) {
+                        LOGGER.warn("Discarded invalid material process index resource {}", port.resource().key(), failure);
+                    }
+                }
+        }
+        return List.copyOf(ports.values());
     }
 
     public static MaterialProcessDisplay.Page informationPage(String material,
@@ -66,21 +88,28 @@ public final class MaterialProcessProjection {
     private static List<MaterialProcessDisplay.Page> pages(
             MaterialProcessSnapshot snapshot,
             DataKey root,
-            Budgets budgets,
             MaterialProcessDisplay.Navigation navigation,
             java.util.Map<gregtech.engine.recipe.RecipeMap, ItemStack> workstations) {
-        Query query = snapshot.queryMaterial(root, budgets);
-        var steps = query.steps().stream().map(step -> step(snapshot, step, workstations)).toList();
-        var connections = query.edges().stream()
-                .map(edge -> new MaterialProcessDisplay.Connection(
-                        edge.source(), edge.target(), edge.resource(), edge.confirmed()))
+        var query = snapshot.queryMaterial(root);
+        var steps = new ArrayList<MaterialProcessDisplay.Step>();
+        for (Step step : query.steps()) {
+            try {
+                steps.add(step(snapshot, step, workstations));
+            } catch (RuntimeException failure) {
+                LOGGER.warn("Discarded invalid material process display step {}", step.reference(), failure);
+            }
+        }
+        var flows = query.flows().stream()
+                .map(flow -> new MaterialProcessDisplay.Flow(flow.resource(), flow.sources(), flow.targets()))
                 .toList();
-        var notices = query.notices().stream().map(MaterialProcessProjection::notice).toList();
+        List<Component> notices = new ArrayList<>(query.notices().stream().map(MaterialProcessProjection::notice).toList());
+        if (steps.size() != query.steps().size())
+            notices.add(Component.translatable("gt6ce.jei.material_process.coverage.invalid_data", query.steps().size() - steps.size()));
         if (notices.isEmpty()) notices = List.of(Component.translatable("gt6ce.jei.material_process.partial_unknown"));
         Resource resource = snapshot.resource(query.root()).orElse(null);
         Component title = title(query.root(), resource);
         String material = resource == null ? "" : resource.material();
-        return MaterialProcessDisplay.pages(title, material, steps, connections, notices, navigation);
+        return List.of(new MaterialProcessDisplay.Page(title, material, steps, List.of(), notices, 1, 1, navigation, List.of(), flows));
     }
 
     private static MaterialProcessDisplay.Step step(MaterialProcessSnapshot snapshot, Step step,
@@ -103,7 +132,8 @@ public final class MaterialProcessProjection {
                 snapshot.worldgen(step.reference()).isPresent(),
                 snapshot.recipe(step.reference())
                         .map(MaterialProcessSnapshot.NativeRecipe::genericRecovery)
-                        .orElse(false));
+                        .orElse(false),
+                snapshot.process(step.reference()));
     }
 
     private static Optional<gregtech.api.addon.material.SpecialProcessMethod> specialMethod(
@@ -360,6 +390,8 @@ public final class MaterialProcessProjection {
                 Component.translatable("gt6ce.jei.material_process.coverage.dynamic_selectors");
             case "partial_unknown_roles" ->
                 Component.translatable("gt6ce.jei.material_process.coverage.unknown_roles");
+            case "invalid_process_data" ->
+                Component.translatable("gt6ce.jei.material_process.coverage.invalid_data", notice.omitted());
             case "node_limit" ->
                 Component.translatable("gt6ce.jei.material_process.coverage.node_limit", notice.omitted());
             case "port_limit" ->

@@ -9,7 +9,6 @@ import gregtech.api.material.MaterialComponent;
 import gregtech.content.data.ImportedMaterialData;
 import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ReversibleCraftingData;
-
 import java.util.*;
 
 /** Known source recipe components in exact CS.U units; unknown tag data is never replaced by an arbitrary ingredient. */

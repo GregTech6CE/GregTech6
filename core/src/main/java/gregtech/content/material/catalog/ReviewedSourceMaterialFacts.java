@@ -288,8 +288,7 @@ public final class ReviewedSourceMaterialFacts {
         var info = declaration.info();
         var rules = new LinkedHashMap<>(info.processes().rules());
         for (var entry : ENTRIES) {
-            if (entry.id != declaration.id()
-                    || !GTMaterial.sanitize(entry.name).equals(declaration.name())) continue;
+            if (entry.id != declaration.id() || !GTMaterial.sanitize(entry.name).equals(declaration.name())) continue;
             var key = entry.rule == Rule.FURNACE ? MaterialFactKeys.SOURCE_FURNACE : MaterialFactKeys.SOURCE_GRADED_GEM;
             rules.put(key, List.of(MaterialProcessRule.anyForm(entry.decision)));
         }
@@ -306,11 +305,7 @@ public final class ReviewedSourceMaterialFacts {
             properties.addAll(material.properties());
             properties.add(MaterialProperty.MAGNETIC);
             material = new MaterialDefinition(
-                    material.identity(),
-                    material.presentation(),
-                    material.physical(),
-                    properties,
-                    material.source());
+                    material.identity(), material.presentation(), material.physical(), properties, material.source());
         }
         if (rules.equals(info.processes().rules()) && material == declaration.material()) return declaration;
         return new MaterialDefinition.Declaration(

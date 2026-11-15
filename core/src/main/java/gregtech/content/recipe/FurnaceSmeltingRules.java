@@ -7,7 +7,6 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
 import gregtech.content.material.MaterialFactKeys;
-
 import java.math.BigInteger;
 import java.util.List;
 

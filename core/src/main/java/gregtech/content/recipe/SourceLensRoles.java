@@ -13,7 +13,8 @@ public final class SourceLensRoles {
 
     public static SourceLensMaterialFacts.Color color(GTMaterial material) {
         if (material == null || !material.isValid() || AddonMaterials.owns(material)) return null;
-        return MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_LENS_ROLE).orElse(null);
+        return MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_LENS_ROLE)
+                .orElse(null);
     }
 
     public static List<GTMaterial> materials(SourceLensMaterialFacts.Color color) {

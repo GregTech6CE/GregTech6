@@ -7,7 +7,6 @@ import gregtech.content.material.MaterialFactKeys;
 import gregtech.engine.material.MaterialDefinition;
 import gregtech.engine.material.MaterialInfoDefinition;
 import gregtech.engine.recipe.UnitConversion;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
@@ -77,14 +76,7 @@ public final class MaterialFluidUnitFacts {
         new Binding("Helium3", 21, "gas", "GenGas_Helium3", "helium3", SOURCE_UNIT, 1000),
         new Binding("Honey", 9791, "liquid", "Honey", "honey", SOURCE_UNIT, 1000),
         new Binding("Honeydew", 9793, "liquid", "Honeydew", "honeydew", SOURCE_UNIT, 1000),
-        new Binding(
-                "HydrochloricAcid",
-                9826,
-                "gas",
-                "GenGas_HydrochloricAcid",
-                "hydrochloricacid",
-                SOURCE_UNIT,
-                1000),
+        new Binding("HydrochloricAcid", 9826, "gas", "GenGas_HydrochloricAcid", "hydrochloricacid", SOURCE_UNIT, 1000),
         new Binding("HydrogenFluoride", 9829, "gas", "GenGas_HydrogenFluoride", "hydrogenfluoride", SOURCE_UNIT, 1000),
         new Binding("Hydrogen", 10, "gas", "Hydrogen", "hydrogen", SOURCE_UNIT, 1000),
         new Binding("Ice", 9802, "liquid", "Ice", "ice", SOURCE_UNIT, 1000),
@@ -162,7 +154,8 @@ public final class MaterialFluidUnitFacts {
     public static MaterialDefinition.Declaration apply(MaterialDefinition.Declaration declaration) {
         var values = new java.util.ArrayList<MaterialFactKeys.MaterialFluidUnit>();
         for (Binding binding : BINDINGS) {
-            if (binding.materialId() != declaration.id() || !binding.materialName().equals(declaration.name())) continue;
+            if (binding.materialId() != declaration.id()
+                    || !binding.materialName().equals(declaration.name())) continue;
             values.add(new MaterialFactKeys.MaterialFluidUnit(
                     binding.phase(),
                     binding.fluidField(),

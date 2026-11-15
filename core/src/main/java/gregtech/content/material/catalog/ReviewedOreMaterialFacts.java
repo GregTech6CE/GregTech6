@@ -112,20 +112,16 @@ public final class ReviewedOreMaterialFacts {
         }
         var shredder = SHREDDER.get(declaration.id());
         if (shredder != null && shredder.name().equals(name)) {
-            rules.put(
-                    MaterialFactKeys.SOURCE_ORE_SHREDDER,
-                    List.of(MaterialProcessRule.anyForm(shredder.profile())));
+            rules.put(MaterialFactKeys.SOURCE_ORE_SHREDDER, List.of(MaterialProcessRule.anyForm(shredder.profile())));
         }
         if (name.equals(CRUSHED_SOURCE_MATERIALS.get(declaration.id()))) {
             rules.put(
                     MaterialFactKeys.SOURCE_CRUSHED_EXCLUSIONS,
-                    List.of(MaterialProcessRule.anyForm(
-                            new MaterialFactKeys.PrefixExclusions(CRUSHED_EXCLUSIONS))));
+                    List.of(MaterialProcessRule.anyForm(new MaterialFactKeys.PrefixExclusions(CRUSHED_EXCLUSIONS))));
         }
         if (declaration.id() == 9114 && name.equals("Cinnabar")) {
             rules.put(
-                    MaterialFactKeys.SOURCE_CINNABAR_FOLLOWON,
-                    List.of(MaterialProcessRule.anyForm(CINNABAR_FOLLOWON)));
+                    MaterialFactKeys.SOURCE_CINNABAR_FOLLOWON, List.of(MaterialProcessRule.anyForm(CINNABAR_FOLLOWON)));
         }
         var generatedFluid = generatedFluid(declaration.id(), name);
         if (generatedFluid != null) {
@@ -137,13 +133,11 @@ public final class ReviewedOreMaterialFacts {
         if (declaration.id() == 8745 && name.equals("Netherite")
                 || declaration.id() == 1740 && name.equals("Naquadah")) {
             rules.put(
-                    MaterialFactKeys.SOURCE_ADDITIONAL_WIRE_FAMILY,
-                    List.of(MaterialProcessRule.anyForm(Boolean.TRUE)));
+                    MaterialFactKeys.SOURCE_ADDITIONAL_WIRE_FAMILY, List.of(MaterialProcessRule.anyForm(Boolean.TRUE)));
         }
         if (declaration.id() == 9802 && name.equals("Ice")) {
             rules.put(
-                    MaterialFactKeys.COMPRESSOR_DUST_TO_GEM_PLATE,
-                    List.of(MaterialProcessRule.anyForm(Boolean.FALSE)));
+                    MaterialFactKeys.COMPRESSOR_DUST_TO_GEM_PLATE, List.of(MaterialProcessRule.anyForm(Boolean.FALSE)));
         }
         if (rules.equals(info.processes().rules())) return declaration;
         return new MaterialDefinition.Declaration(
@@ -157,16 +151,19 @@ public final class ReviewedOreMaterialFacts {
 
     private static MaterialFactKeys.GeneratedFluidRule generatedFluid(int id, String name) {
         return switch (id) {
-            case 800 -> name.equals("Mercury")
-                    ? new MaterialFactKeys.GeneratedFluidRule("GenLiquid_Mercury", "mercury", 300, 0F, false)
-                    : null;
-            case 220 -> name.equals("Titanium")
-                    ? new MaterialFactKeys.GeneratedFluidRule(
-                            "GenMolten_Titanium", "molten.titanium", 1941, 4.54F, true)
-                    : null;
-            case 260 -> name.equals("Iron")
-                    ? new MaterialFactKeys.GeneratedFluidRule("GenMolten_Iron", "molten.iron", 1811, 7.874F, true)
-                    : null;
+            case 800 ->
+                name.equals("Mercury")
+                        ? new MaterialFactKeys.GeneratedFluidRule("GenLiquid_Mercury", "mercury", 300, 0F, false)
+                        : null;
+            case 220 ->
+                name.equals("Titanium")
+                        ? new MaterialFactKeys.GeneratedFluidRule(
+                                "GenMolten_Titanium", "molten.titanium", 1941, 4.54F, true)
+                        : null;
+            case 260 ->
+                name.equals("Iron")
+                        ? new MaterialFactKeys.GeneratedFluidRule("GenMolten_Iron", "molten.iron", 1811, 7.874F, true)
+                        : null;
             default -> null;
         };
     }

@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import net.minecraft.world.item.ItemStack;
 
-/** A bounded layout of native steps; resource copies never introduce recipe facts. */
+/** A layout of material-local native steps; resource copies never introduce recipe facts. */
 public final class MaterialProcessOverview {
     /** The original port, including its side and slot, survives sharing and local copying. */
     public record Endpoint(Step step, boolean output, int index, Port port) {
@@ -96,7 +96,7 @@ public final class MaterialProcessOverview {
                     || steps.stream()
                             .anyMatch(step -> java.util.stream.Stream.concat(
                                             step.inputs().stream(), step.outputs().stream())
-                                    .anyMatch(port -> port.icons().size() > 1));
+                                    .anyMatch(port -> port.iconCount() > 1));
         }
 
         public final List<Port> auxiliaries = new ArrayList<>();
@@ -139,15 +139,17 @@ public final class MaterialProcessOverview {
     public static final class Edge {
         private Node from, to;
         private final Endpoint endpoint;
+        private final boolean primary;
         private final List<Endpoint> endpoints = new ArrayList<>();
         private boolean confirmed;
         private boolean feedback;
         private List<Point> path = List.of();
 
-        private Edge(Node from, Node to, Endpoint endpoint) {
+        private Edge(Node from, Node to, Endpoint endpoint, boolean primary) {
             this.from = from;
             this.to = to;
             this.endpoint = endpoint;
+            this.primary = primary;
             endpoints.add(endpoint);
             confirmed = endpoint.step().resolved();
         }
@@ -199,7 +201,9 @@ public final class MaterialProcessOverview {
         }
     }
 
-    private record RouteKey(IconKey icon, String fallback, List<String> inputs, String output, boolean recovery) {}
+    private record RouteKey(IconKey machine, boolean output, List<String> resources) {}
+
+    private record VisiblePorts(List<Port> inputs, List<Port> outputs) {}
 
     private record EdgeKey(Node from, Node to) {}
 
@@ -233,6 +237,8 @@ public final class MaterialProcessOverview {
     private final List<Band> bands = new ArrayList<>();
     private final List<InformationCard> information = new ArrayList<>();
     private final List<Connection> connections;
+    private final List<MaterialProcessDisplay.Flow> flows;
+    private final Set<DataKey> unresolved = new HashSet<>();
     private final Map<Node, Node> next = new HashMap<>(), previous = new HashMap<>();
     private final Set<Arc> feedback = new HashSet<>();
     private final List<RecipeFrame> frames = new ArrayList<>();
@@ -245,6 +251,8 @@ public final class MaterialProcessOverview {
     }
 
     private MaterialProcessOverview(Page page, boolean partition) {
+        flows = page.flows();
+        for (Step step : page.steps()) if (!step.resolved()) unresolved.add(step.reference());
         connections = page.connections().stream()
                 .sorted(Comparator.comparing(
                         connection -> connection.source() + ":" + connection.target() + ":" + connection.resource()))
@@ -254,35 +262,31 @@ public final class MaterialProcessOverview {
             return;
         }
         var resources = new LinkedHashMap<String, Node>();
-        var routes = new LinkedHashMap<RouteKey, Node>();
-        var wires = new LinkedHashMap<EdgeKey, Edge>();
-        for (Step step : page.steps().stream()
+        var ordered = page.steps().stream()
                 .sorted(Comparator.comparing(value -> value.reference().toString()))
-                .toList()) {
-            List<Port> visibleInputs = visible(step.inputs(), page.material(), false);
-            List<Port> visibleOutputs = visible(step.outputs(), page.material(), true);
-            ItemStack icon = step.icon();
-            // Similar routes share a machine and primary product; native recipe differences stay in the details.
-            var key = new RouteKey(
-                    new IconKey(icon),
-                    icon.isEmpty() ? step.reference().toString() : "",
-                    visibleOutputs.isEmpty() ? identities(visibleInputs) : List.of(),
-                    visibleOutputs.isEmpty() ? "" : visibleOutputs.get(0).identity(),
-                    step.genericRecovery());
-            Node machine = routes.computeIfAbsent(key, ignored -> {
-                var node = new Node(
-                        "step:" + step.reference(),
-                        MaterialProcessDisplay.section(step, page.material()).orElse(null));
-                nodes.add(node);
-                return node;
-            });
+                .toList();
+        var visibility = new HashMap<DataKey, VisiblePorts>();
+        for (Step step : ordered)
+            visibility.put(
+                    step.reference(),
+                    new VisiblePorts(
+                            visible(step.inputs(), page.material(), false),
+                            visible(step.outputs(), page.material(), true)));
+        var routes = routes(ordered, visibility, page.material());
+        var wires = new LinkedHashMap<EdgeKey, Edge>();
+        for (Step step : ordered) {
+            Node machine = routes.get(step.reference());
             machine.steps.add(step);
             for (boolean output : List.of(false, true)) {
                 List<Port> ports = output ? step.outputs() : step.inputs();
-                List<Port> visible = output ? visibleOutputs : visibleInputs;
+                List<Port> visible = output
+                        ? visibility.get(step.reference()).outputs()
+                        : visibility.get(step.reference()).inputs();
+                Set<Port> shown = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+                shown.addAll(visible);
                 for (int index = 0; index < ports.size(); index++) {
                     Port port = ports.get(index);
-                    if (!visible.contains(port)) {
+                    if (!shown.contains(port)) {
                         machine.auxiliaries.add(port);
                         continue;
                     }
@@ -304,7 +308,7 @@ public final class MaterialProcessOverview {
                     Node from = output ? machine : resource, to = output ? resource : machine;
                     Edge edge = wires.get(new EdgeKey(from, to));
                     if (edge == null) {
-                        edge = new Edge(from, to, endpoint);
+                        edge = new Edge(from, to, endpoint, port == visible.get(0));
                         wires.put(new EdgeKey(from, to), edge);
                         edges.add(edge);
                     } else {
@@ -329,6 +333,53 @@ public final class MaterialProcessOverview {
                 .filter(node -> !node.machine() && node.port().material().equals(page.material()))
                 .min(Comparator.<Node>comparingInt(node -> -chainLength(node)).thenComparing(node -> node.key))
                 .orElse(nodes.isEmpty() ? null : nodes.get(0));
+    }
+
+    private Map<DataKey, Node> routes(List<Step> ordered, Map<DataKey, VisiblePorts> visibility, String material) {
+        var candidates = new LinkedHashMap<RouteKey, List<Step>>();
+        for (Step step : ordered) {
+            ItemStack icon = step.icon();
+            if (icon.isEmpty()) continue;
+            var machine = new IconKey(icon);
+            List<Port> inputs = visibility.get(step.reference()).inputs();
+            List<Port> outputs = visibility.get(step.reference()).outputs();
+            if (!inputs.isEmpty())
+                candidates
+                        .computeIfAbsent(new RouteKey(machine, false, identities(inputs)), ignored -> new ArrayList<>())
+                        .add(step);
+            if (!outputs.isEmpty())
+                candidates
+                        .computeIfAbsent(new RouteKey(machine, true, identities(outputs)), ignored -> new ArrayList<>())
+                        .add(step);
+        }
+        var groups = candidates.entrySet().stream()
+                .sorted(Comparator.<Map.Entry<RouteKey, List<Step>>>comparingInt(
+                                entry -> -entry.getValue().size())
+                        .thenComparing(entry -> !entry.getKey().output())
+                        .thenComparing(
+                                entry -> entry.getValue().get(0).reference().toString()))
+                .toList();
+        var result = new HashMap<DataKey, Node>();
+        // Fold one shared side at a time. Transitive input/output unions would invent a cross-product of routes.
+        for (var group : groups) {
+            var available = group.getValue().stream()
+                    .filter(step -> !result.containsKey(step.reference()))
+                    .toList();
+            if (available.size() < 2) continue;
+            Node machine = machine(available.get(0), material);
+            for (Step step : available) result.put(step.reference(), machine);
+        }
+        for (Step step : ordered)
+            if (!result.containsKey(step.reference())) result.put(step.reference(), machine(step, material));
+        return result;
+    }
+
+    private Node machine(Step step, String material) {
+        var node = new Node(
+                "step:" + step.reference(),
+                MaterialProcessDisplay.section(step, material).orElse(null));
+        nodes.add(node);
+        return node;
     }
 
     public List<Node> nodes() {
@@ -429,6 +480,9 @@ public final class MaterialProcessOverview {
         Set<String> uncertain = new HashSet<>();
         for (Connection connection : connections)
             if (!connection.confirmed()) uncertain.add(connection.target() + ":" + connection.resource());
+        for (var flow : flows)
+            if (flow.sources().stream().anyMatch(unresolved::contains))
+                for (DataKey target : flow.targets()) uncertain.add(target + ":" + flow.resource());
         for (Edge edge : edges)
             if (edge.endpoints.stream()
                     .anyMatch(endpoint -> !endpoint.output()
@@ -479,7 +533,8 @@ public final class MaterialProcessOverview {
             for (Grid original : graph.grids)
                 grids.add(new Grid(original.members.stream().map(copies::get).toList()));
             for (Edge original : graph.edges) {
-                var edge = new Edge(copies.get(original.from), copies.get(original.to), original.endpoint);
+                var edge = new Edge(
+                        copies.get(original.from), copies.get(original.to), original.endpoint, original.primary);
                 edge.endpoints.clear();
                 edge.endpoints.addAll(original.endpoints);
                 edge.confirmed = original.confirmed;
@@ -524,6 +579,10 @@ public final class MaterialProcessOverview {
         return connections;
     }
 
+    public List<MaterialProcessDisplay.Flow> flows() {
+        return flows;
+    }
+
     public Node anchor() {
         return anchor;
     }
@@ -559,9 +618,7 @@ public final class MaterialProcessOverview {
     }
 
     private static ItemStack icon(Node node) {
-        return node.machine()
-                ? node.steps.get(0).icon()
-                : node.port().icons().stream().findFirst().orElse(ItemStack.EMPTY);
+        return node.machine() ? node.steps.get(0).icon() : node.port().icon();
     }
 
     private void frameRecipes() {
@@ -662,14 +719,7 @@ public final class MaterialProcessOverview {
     }
 
     private static boolean primary(Edge edge) {
-        Node machine = edge.from.machine() ? edge.from : edge.to;
-        int first = machine.endpoints.stream()
-                .filter(endpoint -> endpoint.output() == edge.endpoint.output())
-                .filter(endpoint -> endpoint.step() == edge.endpoint.step())
-                .mapToInt(Endpoint::index)
-                .min()
-                .orElse(edge.endpoint.index());
-        return edge.endpoint.index() == first;
+        return edge.primary;
     }
 
     private boolean splitLongEdges() {

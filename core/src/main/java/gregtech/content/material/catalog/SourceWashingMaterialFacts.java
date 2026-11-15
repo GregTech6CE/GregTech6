@@ -4,7 +4,6 @@ import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.content.material.MaterialFactKeys;
 import gregtech.engine.material.MaterialDefinition;
 import gregtech.engine.material.MaterialInfoDefinition;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
