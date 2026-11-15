@@ -4,7 +4,6 @@ import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.block.OreBlock;
-import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.item.CreativeTabIconItem;
 import gregtech.content.registry.AddonPipeRegistration;
 import gregtech.content.registry.GTAxles;
@@ -12,6 +11,7 @@ import gregtech.content.registry.GTFluidPipes;
 import gregtech.content.registry.GTItemPipes;
 import gregtech.content.registry.GTSignalWires;
 import gregtech.content.registry.GTWires;
+import gregtech.engine.machine.OrthogonalMachineModels;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.*;
@@ -157,8 +157,9 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                     parent = BlockMaterialIcons.sharedModelLocation(MaterialTextureSet.NONE, icon.blockPrefix());
                 }
             } else if (item instanceof BlockItem blockItem) {
-                if (blockItem.getBlock() instanceof BasicMachineBlock machine) {
-                    parent = location("block/machine/basic/" + machine.basicSpec().machineName());
+                if (OrthogonalMachineFamilies.usesTable(blockItem.getBlock())) {
+                    // The inventory model is baked from the table; the item JSON only has to load.
+                    parent = STONE_TEMPLATE;
                 } else if (blockItem.getBlock() instanceof OreBlock) {
                     parent = STONE_TEMPLATE;
                 } else if (blockItem.getBlock() instanceof MaterialBlockLike material) {
@@ -197,16 +198,53 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         // serves its original bytes, so a user pack can override aliases independently.
         JsonResourceAliases.resources().forEach((path, bytes) ->
                 result.put(location(path.substring("/assets/gt6ce/".length())), bytes));
+        // Spec models come last: a row is the generated replacement for the static file the
+        // aliases above still carry, so the generated one has to win inside this pack.
+        int specs = emitMachineModelSpecs(result);
         // Emitted after the aliases so a generated template can never shadow a transport placeholder.
         int beforePlaceholders = result.size();
         emitTransportPlaceholders(result);
+        int machinePlaceholders = emitMachinePlaceholders(result);
         int placeholders = result.size() - beforePlaceholders;
         com.mojang.logging.LogUtils.getLogger()
                 .info("[gregtech] Shared inventory resources: {} item references, {} templates, {} shared material models,"
-                        + " {} missing static blockstates, {} transport placeholders",
-                        result.size() - states - placeholders - sharedModels, references.size(), sharedModels,
-                        states, placeholders);
+                        + " {} missing static blockstates, {} machine model specs, {} placeholders ({} machines)",
+                        result.size() - states - placeholders - sharedModels - specs, references.size(), sharedModels,
+                        states, specs, placeholders, machinePlaceholders);
         return Collections.unmodifiableMap(result);
+    }
+
+    /**
+     * One-line spec model per {@code machine_models.tsv} row. Any remaining blockstate, item or
+     * parent reference to a migrated machine resolves here instead of a static JSON tree.
+     */
+    private static int emitMachineModelSpecs(Map<ResourceLocation, byte[]> result) {
+        for (String modelPath : OrthogonalMachineModels.all().keySet()) {
+            String json = "{\"loader\":\"" + gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE
+                    + ":orthogonal_machine\",\"spec\":\"" + modelPath + "\"}";
+            result.put(location("models/" + modelPath + ".json"), json.getBytes(StandardCharsets.UTF_8));
+        }
+        return OrthogonalMachineModels.all().size();
+    }
+
+    /**
+     * Machines are baked from the table, so their blockstate and inventory JSON only has to hand the
+     * bakery a loaded model. Written unconditionally at the bottom position, exactly like
+     * {@link #emitTransportPlaceholders}: an installed resource pack still wins, and the bake
+     * replaces both entries before anything renders.
+     */
+    private static int emitMachinePlaceholders(Map<ResourceLocation, byte[]> result) {
+        byte[] blockstate = ("{\"variants\":{\"\":{\"model\":\"" + STONE_TEMPLATE + "\"}}}")
+                .getBytes(StandardCharsets.UTF_8);
+        byte[] item = ("{\"parent\":\"" + STONE_TEMPLATE + "\"}").getBytes(StandardCharsets.UTF_8);
+        int emitted = 0;
+        for (Block block : OrthogonalMachineFamilies.blocks()) {
+            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+            if (result.putIfAbsent(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"),
+                    blockstate) == null) emitted++;
+            result.putIfAbsent(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), item);
+        }
+        return emitted;
     }
 
     /**

@@ -282,6 +282,42 @@ public final class GregTechClient {
                         entry.get().asItem());
             }
         });
+        // Machine shells carry tintindex 0 and their detail pass -1; the item needs the same
+        // colour source as the placed block, so the inventory icon matches the world.
+        GTBurningBoxes.solidBoxes().forEach(entry -> {
+            if (!entry.isPresent()) return;
+            int tint = entry.get().spec().tintRgb();
+            event.register(
+                    (stack, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF,
+                    entry.get().asItem());
+        });
+        GTBurningBoxes.fuelBoxes().forEach(entry -> {
+            if (!entry.isPresent()) return;
+            int tint = entry.get().spec().tintRgb();
+            event.register(
+                    (stack, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF,
+                    entry.get().asItem());
+        });
+        GTBasicMachines.all().forEach(entry -> {
+            if (!entry.isPresent()) return;
+            int tint = entry.get().basicSpec().material().getColor();
+            event.register(
+                    (stack, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF,
+                    entry.get().asItem());
+        });
+        GTEngines.all().forEach(entry -> {
+            if (!entry.isPresent()) return;
+            EngineBlock block = entry.get();
+            int tint = block.tintRgb();
+            int core = switch (block.engineType()) {
+                case STEAM -> 0x0000FF;
+                case ELECTRIC, FLUX -> 0x00FF00;
+                case ROTATION -> tint;
+                case DIESEL -> 0xFF6600;
+            };
+            event.register(
+                    (stack, tintIndex) -> tintIndex == 0 ? tint : tintIndex == 1 ? core : 0xFFFFFF, block.asItem());
+        });
         gregtech.content.registry.AddonPipeRegistration.fluidBlocks().forEach(pipe -> {
             int tint = pipe.spec().material().getColor();
             event.register((stack, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, pipe.asItem());

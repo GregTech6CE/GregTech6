@@ -19,8 +19,10 @@ public final class PartDesignClientModels {
 
     public static void register(ModelEvent.RegisterAdditional event) {
         for (var folder : PartDesigns.folders().entrySet()) {
-            for (int design = 1; design <= folder.getValue(); design++)
+            for (int design = 1; design <= folder.getValue(); design++) {
+                if (blankDesign(folder.getKey(), design)) continue;
                 ClientModelEvents.registerAdditional(event, id(modelPath(folder.getKey(), design)));
+            }
         }
     }
 
@@ -36,6 +38,7 @@ public final class PartDesignClientModels {
             String folder = PartDesigns.folder(path);
             var designs = new BakedModel[max + 1];
             for (int design = 1; design <= max; design++) {
+                if (blankDesign(folder, design)) continue;
                 designs[design] = models.find(id(modelPath(folder, design)));
                 if (designs[design] == null) missing++;
             }
@@ -55,6 +58,10 @@ public final class PartDesignClientModels {
 
     private static ResourceLocation id(String path) {
         return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.MOD_ID, path);
+    }
+
+    private static boolean blankDesign(String folder, int design) {
+        return design == 4 && ("metalwall".equals(folder) || "metalwalldense".equals(folder));
     }
 
     private static String modelPath(String folder, int design) {

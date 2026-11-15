@@ -11,10 +11,4 @@ public final class HopperIcons {
     public static ResourceLocation sharedModelLocation(String type, Direction facing) {
         return GregTech.id("block/machine/" + type + "_" + facing.getSerializedName());
     }
-
-    public static String sharedModelJson(String texPath, Direction facing) {
-        String elementsTinted = SmelteryModelHelper.hopperElements(facing, true);
-        String elementsOverlay = SmelteryModelHelper.hopperElements(facing, false);
-        return SmelteryModelHelper.hopperCompositeJson(texPath, elementsTinted, elementsOverlay);
-    }
 }

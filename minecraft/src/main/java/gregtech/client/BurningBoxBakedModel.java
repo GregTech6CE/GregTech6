@@ -30,8 +30,12 @@ import java.util.Map;
 
 /** Picks facing + lit overlay variant; tint via block/item color handlers ({@code tintindex} 0). */
 public final class BurningBoxBakedModel implements BakedModel {
+    /**
+     * Break effect while the box has no baked table row yet: the kinetic steam pipe shares the
+     * box's casing art. The row's own particle sprite wins whenever there is one.
+     */
     private static final ResourceLocation PARTICLE =
-            Mc.gregtechId("block/machines/generators/burning_solid/colored/top");
+            Mc.gregtechId("block/machines/casing/kinetic_steam_colored_pipe");
 
     private final Map<Direction, BakedModel> idleByFacing;
     private final Map<Direction, BakedModel> activeByFacing;
@@ -41,10 +45,12 @@ public final class BurningBoxBakedModel implements BakedModel {
 
     public BurningBoxBakedModel(Map<Direction, BakedModel> idleByFacing,
                                 Map<Direction, BakedModel> activeByFacing,
-                                BakedModel itemModel) {
+                                BakedModel itemModel,
+                                @Nullable TextureAtlasSprite particle) {
         this.idleByFacing = idleByFacing;
         this.activeByFacing = activeByFacing;
         this.itemModel = itemModel;
+        this.particle = particle;
     }
 
     @Override
@@ -96,7 +102,9 @@ public final class BurningBoxBakedModel implements BakedModel {
     @Override
     public TextureAtlasSprite getParticleIcon() {
         if (particle == null) {
-            particle = Minecraft.getInstance().getModelManager()
+            // Only reached while the burning boxes still come from the static models.
+            particle = Minecraft.getInstance()
+                    .getModelManager()
                     .getAtlas(TextureAtlas.LOCATION_BLOCKS)
                     .getSprite(PARTICLE);
         }

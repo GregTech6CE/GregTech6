@@ -40,4 +40,15 @@ public final class BlockItemClientModels {
     public static BakedModel asBlockItem(BakedModel shared) {
         return new BlockItemDisplayBakedModel(shared);
     }
+
+    /**
+     * Item model that shows {@code guiShared} in the inventory and {@code worldShared} in the hand,
+     * on the ground and in item frames; each bake is wrapped as a block item first.
+     */
+    public static BakedModel asBlockItem(BakedModel guiShared, BakedModel worldShared) {
+        if (guiShared == worldShared) {
+            return asBlockItem(guiShared);
+        }
+        return new DisplayContextItemBakedModel(asBlockItem(guiShared), asBlockItem(worldShared));
+    }
 }

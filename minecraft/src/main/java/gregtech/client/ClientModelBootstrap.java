@@ -53,6 +53,7 @@ public final class ClientModelBootstrap {
 
     @SubscribeEvent
     public static void registerGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
+        OrthogonalMachineModelLoader.loaders(event);
         SharedInventoryModelPack.loaders(event);
     }
 

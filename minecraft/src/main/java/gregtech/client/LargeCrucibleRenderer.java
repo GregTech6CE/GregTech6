@@ -73,12 +73,10 @@ public final class LargeCrucibleRenderer implements BlockEntityRenderer<LargeCru
             // GT6 MultiTileEntityCrucible keeps its default side UP with no rotatable sides.
             String front = face == net.minecraft.core.Direction.UP ? "_front" : "";
             float shade = be.getLevel() == null ? 1 : be.getLevel().getShade(face, true);
-            var sprites = new net.minecraft.client.renderer.texture.TextureAtlasSprite[2];
-            for (int layer = 0; layer < 2; layer++) {
-                sprites[layer] = CrucibleRenderSprites.resolve(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
-                        "gt6ce", "block/machines/multiblockmains/crucible/"
-                                + (layer == 0 ? "colored" : "overlay") + front + "/" + part));
-            }
+            // Only the coloured shell exists: the original hull has no separate detail pass.
+            var sprite = CrucibleRenderSprites.resolve(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                    "gt6ce", "block/machines/multiblockmains/crucible/colored" + front + "/" + part));
+            float su0 = sprite.getU0(), su1 = sprite.getU1(), sv0 = sprite.getV0(), sv1 = sprite.getV1();
             // A wall spans three blocks. Split every face on block boundaries and light each
             // corner from the four blocks just outside it; cells sharing a corner get the same
             // value, so the wall stays continuous while one adjacent block only dims its corner.
@@ -88,16 +86,11 @@ public final class LargeCrucibleRenderer implements BlockEntityRenderer<LargeCru
                 // top surface, so their texture has to line up across the corners.
                 float[] uv = cellUv(face, cell, HULL_MIN, 0, HULL_MIN, HULL_MAX, HULL_HEIGHT, HULL_MAX);
                 int[] lights = cornerLights(be, face, cell, fallbackLight);
-                for (int layer = 0; layer < 2; layer++) {
-                    var sprite = sprites[layer];
-                    float su0 = sprite.getU0(), su1 = sprite.getU1(), sv0 = sprite.getV0(), sv1 = sprite.getV1();
-                    int rgb = layer == 0 ? tint : 0xFFFFFF;
-                    LargeCrucibleHullFace.draw(pose.last(), out, face,
-                            cell[0], cell[1], cell[2], cell[3], cell[4], cell[5],
-                            su0 + uv[0] * (su1 - su0), su0 + uv[1] * (su1 - su0),
-                            sv0 + uv[2] * (sv1 - sv0), sv0 + uv[3] * (sv1 - sv0),
-                            rgb, shade, lights);
-                }
+                LargeCrucibleHullFace.draw(pose.last(), out, face,
+                        cell[0], cell[1], cell[2], cell[3], cell[4], cell[5],
+                        su0 + uv[0] * (su1 - su0), su0 + uv[1] * (su1 - su0),
+                        sv0 + uv[2] * (sv1 - sv0), sv0 + uv[3] * (sv1 - sv0),
+                        tint, shade, lights);
             }
         }
     }

@@ -49,8 +49,11 @@ public final class LogisticsCoverRenderer<T extends BlockEntity & LogisticsCover
                 };
                 String prefix = "block/machines/covers/logistics/display/" + name + "/";
                 drawSurface(blockEntity, pose, vertices, side, prefix + "underlay", surfaceOffset + .0006, light);
-                drawSurface(blockEntity, pose, vertices, side, prefix + host.logisticsCovers().displayVisual(side),
-                        surfaceOffset + .0008, light);
+                // Frame 0 is the empty meter: the underlay already draws it, so skip the blank plate.
+                int visual = host.logisticsCovers().displayVisual(side);
+                if (visual != 0) {
+                    drawSurface(blockEntity, pose, vertices, side, prefix + visual, surfaceOffset + .0008, light);
+                }
             } else {
                 var itemModel = Minecraft.getInstance().getItemRenderer().getModel(stack, blockEntity.getLevel(), null, 0);
 //? if >=1.21.1 {

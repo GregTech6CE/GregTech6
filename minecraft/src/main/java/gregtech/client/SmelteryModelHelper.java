@@ -218,8 +218,8 @@ public final class SmelteryModelHelper {
     // === Hopper geometry (per-facing nozzle) ===
 
     /** Generate the hopper geometry for a given facing: bowl + funnel + per-facing nozzle (4px high for sides, none for UP). */
-    public static String hopperElements(Direction facing, boolean tinted) {
-        String tint = tinted ? ",\"tintindex\":0" : "";
+    public static String hopperElements(Direction facing) {
+        String tint = ",\"tintindex\":0";
         String bowl = cubeElement(0, 10, 0, 16, 16, 16, tint, null, null, null);
         // Funnel: skip "up" face (not visible, covers nozzle connection area)
         String funnel = cubeElement(4, 4, 4, 12, 10, 12, tint, null, java.util.Set.of("up"), null);
@@ -291,8 +291,13 @@ public final class SmelteryModelHelper {
         return cubeElement(x1, y1, z1, x2, y2, z2, tint, cull, null, null);
     }
 
-    /** Compose a {@code forge:composite} JSON string for a hopper model with the given textures and elements. */
-    public static String hopperCompositeJson(String texPath, String elementsTinted, String elementsOverlay) {
+    /**
+     * Block model JSON for a hopper: one tinted shell pass.
+     *
+     * <p>Hoppers and queue hoppers have no detail texture, so there is no second composite child to
+     * draw — the old overlay pass only doubled the geometry without adding a pixel.
+     */
+    public static String hopperModelJson(String texPath, String elementsTinted) {
 //? if >=1.21.1 {
         /*return """
                 {
@@ -301,8 +306,8 @@ public final class SmelteryModelHelper {
                     "layer0": {
                       "parent": "minecraft:block/block",
                       "textures": {
-                        "down": "gt6ce:block/machines/%s/colored/bottom",
-                        "up": "gt6ce:block/machines/%s/colored/top",
+                        "down": "gt6ce:block/machines/casing/hull",
+                        "up": "gt6ce:block/machines/hopper/colored/top",
                         "north": "gt6ce:block/machines/%s/colored/side",
                         "south": "gt6ce:block/machines/%s/colored/side",
                         "west": "gt6ce:block/machines/%s/colored/side",
@@ -310,23 +315,10 @@ public final class SmelteryModelHelper {
                       },
                       "elements": %s,
                       "render_type": "minecraft:solid"
-                    },
-                    "layer1": {
-                      "parent": "minecraft:block/block",
-                      "textures": {
-                        "down": "gt6ce:block/machines/%s/overlay/bottom",
-                        "up": "gt6ce:block/machines/%s/overlay/top",
-                        "north": "gt6ce:block/machines/%s/overlay/side",
-                        "south": "gt6ce:block/machines/%s/overlay/side",
-                        "west": "gt6ce:block/machines/%s/overlay/side",
-                        "east": "gt6ce:block/machines/%s/overlay/side"
-                      },
-                      "elements": %s,
-                      "render_type": "minecraft:cutout"
                     }
                   }
                 }
-                """.formatted(texPath, texPath, texPath, texPath, texPath, texPath,
+                """.formatted(texPath, texPath, texPath, texPath,
 *///?} else {
         return """
                 {
@@ -335,8 +327,8 @@ public final class SmelteryModelHelper {
                     "layer0": {
                       "parent": "minecraft:block/block",
                       "textures": {
-                        "down": "gt6ce:block/machines/%s/colored/bottom",
-                        "up": "gt6ce:block/machines/%s/colored/top",
+                        "down": "gt6ce:block/machines/casing/hull",
+                        "up": "gt6ce:block/machines/hopper/colored/top",
                         "north": "gt6ce:block/machines/%s/colored/side",
                         "south": "gt6ce:block/machines/%s/colored/side",
                         "west": "gt6ce:block/machines/%s/colored/side",
@@ -344,27 +336,12 @@ public final class SmelteryModelHelper {
                       },
                       "elements": %s,
                       "render_type": "minecraft:solid"
-                    },
-                    "layer1": {
-                      "parent": "minecraft:block/block",
-                      "textures": {
-                        "down": "gt6ce:block/machines/%s/overlay/bottom",
-                        "up": "gt6ce:block/machines/%s/overlay/top",
-                        "north": "gt6ce:block/machines/%s/overlay/side",
-                        "south": "gt6ce:block/machines/%s/overlay/side",
-                        "west": "gt6ce:block/machines/%s/overlay/side",
-                        "east": "gt6ce:block/machines/%s/overlay/side"
-                      },
-                      "elements": %s,
-                      "render_type": "minecraft:cutout"
                     }
                   }
                 }
-                """.formatted(texPath, texPath, texPath, texPath, texPath, texPath,
+                """.formatted(texPath, texPath, texPath, texPath,
 //?}
-                        elementsTinted,
-                        texPath, texPath, texPath, texPath, texPath, texPath,
-                        elementsOverlay);
+                        elementsTinted);
     }
 
     private static String repeat(String value, int count) {

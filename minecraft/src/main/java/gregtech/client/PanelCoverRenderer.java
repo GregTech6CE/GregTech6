@@ -43,8 +43,11 @@ public final class PanelCoverRenderer {
             case BUTTONS ->
                 List.of("buttonselector/" + BUTTON_STYLES[Math.floorMod(style, 8)], "buttonselector/" + (value & 15));
             case EMITTER -> List.of("redstoneemitter/underlay", "redstoneemitter/" + (value & 15));
+            // A drained display has no bar to draw, and the "0" overlay is blank art.
             case ENERGY_DISPLAY ->
-                List.of("energydisplay/underlay", "energydisplay/" + Math.max(0, Math.min(10, value)));
+                value <= 0
+                        ? List.of("energydisplay/underlay")
+                        : List.of("energydisplay/underlay", "energydisplay/" + Math.min(10, value));
             case STATUS -> {
                 String folder = "statusdisplay/" + (Math.floorMod(style, 2) == 0 ? "bottom/" : "top/");
                 var layers = new ArrayList<String>();

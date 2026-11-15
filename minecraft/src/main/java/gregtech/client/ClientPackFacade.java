@@ -8,12 +8,14 @@ import net.minecraft.server.packs.repository.PackSource;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.model.geometry.IGeometryLoader;
+import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackSelectionConfig;
 import java.util.Optional;
 *///?} else {
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.model.geometry.IGeometryLoader;
+import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
 //?}
 
 /** Loader-specific pack and geometry-loader wiring kept in one place. */
@@ -42,8 +44,8 @@ public final class ClientPackFacade {
 //?}
     }
 
-    public static void registerGeometryLoader(ModelEvent.RegisterGeometryLoaders event, ResourceLocation id,
-                                              IGeometryLoader<SharedInventoryModelPack.Reference> loader) {
+    public static <G extends IUnbakedGeometry<G>> void registerGeometryLoader(
+            ModelEvent.RegisterGeometryLoaders event, ResourceLocation id, IGeometryLoader<G> loader) {
 //? if >=1.21.1 {
         /*event.register(id, loader);
 *///?} else {
