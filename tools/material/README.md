@@ -36,4 +36,4 @@ python3 tools/material/audit_roster.py \
 
 ## 维护
 
-快照列格式变化时同步修改 `recipe_items`、物品 prefix 读取和方块形态读取。最终清单口径变化时应同时更新 [07-E 验收报告](../../docs/integration/material-refactor-07-roster.md)。
+快照列格式变化时同步修改 `recipe_items`、物品 prefix 读取和方块形态读取。若重新建立常驻快照入口，长期字段口径应写入对应的架构或验证文档。

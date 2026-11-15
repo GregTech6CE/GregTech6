@@ -70,11 +70,11 @@ Block 处理放置、形状和交互分发；BlockEntity 保存实例状态、�
 
 GUI 模板、碎片图标与 JEI/EMI 的布局接入见[GUI 开发指南](../../development/gui-templates.md)，平台差异见[平台包](platforms.md)。
 
-矿物处理由 `content.recipe.MaterialProcessSnapshot` 从最终配方提交点绑定机器配方与活动世界生成，`engine.material.MaterialProcessGraph` 提供有界查询，`compat.common.MaterialProcessProjection` 再构造 JEI／EMI 共用的展示页。`compat.common.MaterialProcessOverview` 负责按可见机器及完整共同输入或输出集合合并相似路线、原生端口实例、可见拓扑层级、连续链、局部副本、输入／产物网格、独立路线紧凑排布、端口产量角标、排线、配方浅色边界及同物品匹配，`client.MaterialProcessPanel` 负责带绿色目标外框的 100% 查询聚焦、窗口自适应视口、副本／回流标记与原生交互；`client.MaterialProcessScreen` 承载全屏浏览与返回原查看器；EMI 的 `MaterialProcessEmiStacks` 把显示流体代理还原为原生索引和查询句柄。`compat.jei.MaterialProcessCategory` 与 `compat.emi.MaterialProcessEmiRecipe` 只做原生槽位、仅限页面材料的索引和事件适配；EMI 索引按完整原生状态去重，注册时不构造全部页面，实际打开时再查询完整步骤与按资源压缩的 `Flow` 关联；EMI 查询目标由客户端可选的 `EmiMaterialProcessFocusMixin` 传入。调用契约与预算见[展示接入](../../development/material-process-display.md)；这些类型不能成为第二套材料目录或配方事实表。
+矿物处理由 `content.recipe.MaterialProcessSnapshot` 从最终配方提交点绑定机器配方与活动世界生成，`engine.material.MaterialProcessGraph` 提供有界查询，`compat.common.MaterialProcessProjection` 再构造 JEI／EMI 共用的展示页。`compat.common.MaterialProcessOverview` 负责按可见机器及完整共同输入或输出集合合并相似路线、原生端口实例、可见拓扑层级、连续链、局部副本、输入／产物网格、独立路线紧凑排布、端口产量角标、排线、配方浅色边界及同物品匹配，`client.MaterialProcessPanel` 负责带绿色目标外框的 100% 查询聚焦、窗口自适应视口、副本／回流标记与原生交互；`client.MaterialProcessScreen` 承载全屏浏览与返回原查看器；EMI 的 `MaterialProcessEmiStacks` 把显示流体代理还原为原生索引和查询句柄。`compat.jei.MaterialProcessCategory` 与 `compat.emi.MaterialProcessEmiRecipe` 只做原生槽位、仅限页面材料的索引和事件适配；EMI 索引按完整原生状态去重，注册时不构造全部页面，实际打开时再查询完整步骤与按资源压缩的 `Flow` 关联；EMI 查询目标由客户端可选的 `EmiMaterialProcessFocusMixin` 传入。调用契约与预算以这些类型的 JavaDoc 和本包职责为准；它们不能成为第二套材料目录或配方事实表。
 
 第三方集成沿配置与现有入口条件加载，`compileOnly` 只说明编译依赖形态，不能保证类加载安全。
 
-EMI 材料页的数据准入由 `compat.emi.MaterialProcessEmiRecipes` 处理：在 `EmiMaterialProcessRecipesMixin` 取得最终可见配方后，统一接入 GT、工作台及其他模组的完整加工关系；GT 行优先复用原生单位、概率及回收归属，材料单位模板不受自动配方树开关影响。可读取的非树加工以未确认关系接入；说明、结构和动态模式页保留为信息。加工行按 EMI ID 和完整端口语义去重。合成网格空位不阻止完整配方进入加工图；通用标签／候选浏览页不进入信息区。其他相关信息和无法完整读取的条目按主材料关联、按 EMI ID 去重，保留在来源区底部的信息卡片，通过原页面跳转查看，不生成加工边。`MaterialProcessSnapshot.ViewerBuilder` 只构造本次客户端视图，不更改服务端配方。JEI 仍使用原生 GT 快照；具体覆盖、候选原料和生命周期边界见[EMI 配方来源与准入](../../development/material-process-display.md#emi-配方来源与准入)。
+EMI 材料页的数据准入由 `compat.emi.MaterialProcessEmiRecipes` 处理：在 `EmiMaterialProcessRecipesMixin` 取得最终可见配方后，统一接入 GT、工作台及其他模组的完整加工关系；GT 行优先复用原生单位、概率及回收归属，材料单位模板不受自动配方树开关影响。可读取的非树加工以未确认关系接入；说明、结构和动态模式页保留为信息。加工行按 EMI ID 和完整端口语义去重。合成网格空位不阻止完整配方进入加工图；通用标签／候选浏览页不进入信息区。其他相关信息和无法完整读取的条目按主材料关联、按 EMI ID 去重，保留在来源区底部的信息卡片，通过原页面跳转查看，不生成加工边。`MaterialProcessSnapshot.ViewerBuilder` 只构造本次客户端视图，不更改服务端配方。JEI 仍使用原生 GT 快照；具体覆盖、候选原料和生命周期边界按[游戏内人工验收](../../development/validation/checks/manual-ingame.md#矿物处理展示页)核对。
 
 ## 验收
 
