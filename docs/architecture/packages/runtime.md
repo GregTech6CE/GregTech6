@@ -68,7 +68,7 @@ Block 处理放置、形状和交互分发；BlockEntity 保存实例状态、�
 
 当前 `client.gui` 也包含 `BasicMachineContainerMenu`、`MachineMenuTransfers`、`SlotInput` 等双端使用的容器协议/逻辑。不能只因路径带 `client` 就把整个包限为客户端加载；逐类区分 Screen 与 Menu/Slot，后者仍须在服务端校验库存操作。
 
-GUI 模板、碎片图标与 JEI/EMI 的布局接入见[GUI 开发指南](../../development/gui-templates.md)，平台差异见[平台包](platforms.md)。
+GUI 模板、碎片图标与 JEI/EMI 的布局接入见[GUI 开发指南](../../addon/gui-templates.md)，平台差异见[平台包](platforms.md)。
 
 第三方集成沿配置与现有入口条件加载，`compileOnly` 只说明编译依赖形态，不能保证类加载安全。
 

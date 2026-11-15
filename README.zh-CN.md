@@ -84,7 +84,7 @@ GT6CE **仍在持续开发中**。移植工作尚未全部完成，配方、交�
 | [开发文档总入口](docs/README.md) · [Agent 指南](AGENTS.md) | 文档导航、工作规范与目录归属 |
 | [开发上手](docs/development/getting-started.md) · [验证与验收](docs/development/validation/README.md) | 环境搭建、构建运行与验证流程 |
 | [架构与包职责](docs/architecture/README.md) | 源码分层、平台适配与包职责说明 |
-| [Addon API 与 KubeJS](docs/ADDON_API.zh-CN.md) | 扩展契约、SDK 构建与脚本集成 |
+| [Addon API 与 KubeJS](docs/addon/README.md) | 扩展契约、SDK 构建与脚本集成 |
 | [路线图](docs/roadmap/v1.0.md) | 开发方针、架构规划、版本节点与协作约定 |
 
 ## 许可证

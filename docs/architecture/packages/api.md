@@ -4,7 +4,7 @@
 
 ## 独立公共 API
 
-源码入口为 [api/gregtech/api](../../../api/common/src/main/java/gregtech/api)，`common/` 接为 `:api`。模块使用 Java 17，core 和游戏侧 API 单向依赖它；来源、版本与消费方式见[附属 API](../../ADDON_API.zh-CN.md#独立库与-sdk-构建)。以下表内路径相对于 `gregtech`。
+源码入口为 [api/gregtech/api](../../../api/common/src/main/java/gregtech/api)，`common/` 接为 `:api`。模块使用 Java 17，core 和游戏侧 API 单向依赖它；来源、版本与消费方式见[附属 API](../../addon/l0-setup.md#独立库与-sdk-构建)。以下表内路径相对于 `gregtech`。
 
 | 包 | 应当承担 | 代表入口/关注点 |
 | --- | --- | --- |
@@ -45,7 +45,7 @@
 
 宿主入口是 `ControllerDeclaration.multiblock(namespace, path, factory, binding)`。`ControllerBinding` 明确给出主控实体类、方块实体注册 ID 和结构工厂；配方机另外绑定单元布局供应器。声明在 `MultiblockRegistration` 注册后，共同驱动运行时识别、JEI/EMI 和建筑之杖；独立主控的方块实体适用方块列表也从声明生成。启动时扫描实际方块注册表，校验漏登记、主控类/实体类型不匹配和空结构。
 
-多方块声明、端口和诊断的消费契约见[附属 API](../../ADDON_API.zh-CN.md)，内部执行见[engine 多方块运行时](engine.md#多方块运行时)。
+多方块声明和端口的消费契约见[多方块专题](../../addon/multiblocks.md)，查询与诊断见 [L5](../../addon/l5-query-and-diagnostics.md)；内部执行见[engine 多方块运行时](engine.md#多方块运行时)。
 
 ## 验收
 

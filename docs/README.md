@@ -10,7 +10,7 @@
 | 源码架构与跨版本 | [架构总览](architecture/README.md) | 源码分层、包职责边界、资源与 Stonecutter 跨版本维护 |
 | 跨模组兼容与联动 | [兼容与联动](integration/README.md) | 联动内容、配方协调与冲突审计结论 |
 | 长期设计决策 | [长期决策](decisions/README.md) | 材料系统设计、跨平台边界与原版 GT6 特性差异 |
-| 附属与脚本开发 | [附属 API](ADDON_API.zh-CN.md) | 公开扩展契约、SDK 构建与 KubeJS 集成 |
+| 附属与脚本开发 | [附属 API](addon/README.md) | 公开扩展契约、SDK 构建与 KubeJS 集成 |
 | 项目路线与协作 | [v1.0 路线图](roadmap/v1.0.md) | 开发方针、版本里程碑与问题/PR/RFC 协作方式 |
 
 ## 文档维护

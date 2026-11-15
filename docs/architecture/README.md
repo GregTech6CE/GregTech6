@@ -27,7 +27,7 @@
 | `client` / `network` / `event` / `mixin` / `compat` | 如何展示、同步、接入事件与外部生态？ | 绕过服务端权威规则 |
 | `util` | 哪些小工具确实跨领域通用？ | 暂时不知道放哪的业务代码 |
 
-API 独立编译，不依赖实现；core 不依赖 Minecraft。content 定义与 engine 执行通过明确类型协作，二者仍有历史交叉引用，不能把整个仓库理解成严格无环的包依赖图。API 独立版本与迁移方式见[附属 API](../ADDON_API.zh-CN.md)。
+API 独立编译，不依赖实现；core 不依赖 Minecraft。content 定义与 engine 执行通过明确类型协作，二者仍有历史交叉引用，不能把整个仓库理解成严格无环的包依赖图。API 独立版本与迁移方式见[附属 API](../addon/README.md)。
 
 ## 第三层：按领域追踪
 

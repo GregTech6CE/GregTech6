@@ -84,7 +84,7 @@ Built mod JARs are placed under `minecraft/versions/<version-loader>/build/libs/
 | [Developer Documentation](docs/README.md) · [Agent Guide](AGENTS.md) | Documentation entry, engineering rules, and repository layout (Chinese) |
 | [Getting Started](docs/development/getting-started.md) · [Validation](docs/development/validation/README.md) | Toolchain setup, build tasks, dev runs, and verification checks (Chinese) |
 | [Architecture & Packages](docs/architecture/README.md) | Source layers, platform adapters, and package responsibilities (Chinese) |
-| [Addon API & KubeJS](docs/ADDON_API.zh-CN.md) | Extension contracts, SDK artifacts, and KubeJS integration (Chinese) |
+| [Addon API & KubeJS](docs/addon/README.md) | Extension contracts, SDK artifacts, and KubeJS integration (Chinese) |
 | [Roadmap](docs/roadmap/v1.0.md) | Guiding principles, architecture, milestones, and contribution workflow (Chinese) |
 
 ## License

@@ -15,7 +15,7 @@
 | Forge 最终模组 | `:minecraft:1.20.1-forge:distributionJar` → 节点 `build/libs/` |
 | NeoForge 最终模组 | `:minecraft:1.21.1-neoforge:jar` → 节点 `build/libs/` |
 | 公共 API 库 | `:api:assemble` → `api/common/build/libs/` |
-| 附属平台 SDK | 节点 `addonSdk` → 节点 `build/addon-sdk/`；坐标与消费方式见[附属 API](../../../ADDON_API.zh-CN.md#独立库与-sdk-构建) |
+| 附属平台 SDK | 节点 `addonSdk` → 节点 `build/addon-sdk/`；坐标与消费方式见[附属 API](../../../addon/l0-setup.md#独立库与-sdk-构建) |
 
 节点目录为 `minecraft/versions/<version-loader>/`。两平台最终模组均携带 core、公共 API 与游戏 API；公共库与 SDK 是开发依赖。
 

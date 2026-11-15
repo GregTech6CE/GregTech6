@@ -4,7 +4,7 @@
 
 | 目录 | 应当放什么 | 不应放什么 |
 | --- | --- | --- |
-| `api/` | 内联 API 源码，由 `:api`、`:api-platform` 直接编译；来源与版本见[附属 API](../ADDON_API.zh-CN.md#独立库与-sdk-构建) | 未说明兼容影响的公共 API 改动 |
+| `api/` | 内联 API 源码，由 `:api`、`:api-platform` 直接编译；来源与版本见[附属 API](../addon/l0-setup.md#独立库与-sdk-构建) | 未说明兼容影响的公共 API 改动 |
 | `api/common/src/main/java/` | Java 17 公共协议、模型、声明与宿主服务接口 | core 实现、内容目录、游戏类型、任务报告 |
 | `api/common/src/test/` | 仅依赖公共 API JAR 的消费者与契约回归 | 主模组实现和资源 |
 | `core/src/main/java/` | 平台无关内容定义、运行规则 | 游戏 API、加载器适配、任务报告 |
@@ -33,6 +33,7 @@
 | 内容 | 维护位置 |
 | --- | --- |
 | 环境、开发步骤与专题操作 | [development](README.md) |
+| 附属、数据包、KubeJS 与附属 GUI 的编写指南 | [addon](../addon/README.md) |
 | 检查选择、注意事项和运行命令 | [validation](validation/README.md) |
 | 分层、系统原理与资源机制 | [architecture](../architecture/README.md) |
 | 包职责、边界与验收条件 | [architecture/packages](../architecture/packages/README.md) |

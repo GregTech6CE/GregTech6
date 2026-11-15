@@ -4,7 +4,7 @@
 
 ## 环境与首次检查
 
-1. 普通 `git clone` 即可；API 源码已内联，无需初始化子模块，来源与版本见[附属 API](../ADDON_API.zh-CN.md#独立库与-sdk-构建)。
+1. 普通 `git clone` 即可；API 源码已内联，无需初始化子模块，来源与版本见[附属 API](../addon/l0-setup.md#独立库与-sdk-构建)。
 2. 准备 JDK 17 与 21。core 和 Forge 节点使用 17，NeoForge 节点使用 21；`JAVA_HOME` 决定启动 Gradle 的 JVM，`JAVA17_HOME`、`JAVA21_HOME` 用于发现工具链。
 3. 使用仓库 Wrapper：Linux/macOS 为 `./gradlew`，Windows PowerShell 为 `.\gradlew.bat`。当前 Wrapper 为 Gradle 8.8，Stonecutter 为 0.7.11。
 4. 首次运行需要下载 Gradle、插件及游戏依赖。执行 `./gradlew --version`，按需用 `./gradlew projects` 和目标节点的 `tasks --all` 查询任务。
