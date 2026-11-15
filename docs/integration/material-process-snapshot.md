@@ -38,18 +38,15 @@ JEI 与 EMI 同装时，JEI 提前返回是已有桥接去重约定；本模组�
 python tools/validation/route.py check
 python tools/comments/check_comment_refs.py --diff HEAD
 git diff --check
-./gradlew :minecraft:1.20.1-forge:runGameTestServer -PgameTestHeap=4g -PgameTestDirectory=../../../work/material-process-review/gametest-forge
-./gradlew :minecraft:1.21.1-neoforge:runGameTestServer -PgameTestHeap=4g -PgameTestDirectory=../../../work/material-process-review/gametest-neoforge
 ```
 
-`MaterialProcessGraphTest` 包含循环、共同输入、前反向查询、各项预算、深度边界的端口截断及裁剪后的边合法性。`MaterialProcessSnapshotTests` 使用未发布到生产 Store 的小型原生行集，验证跨材料链、世界生成形态、普通共同原料、工具说明、物品／流体输出身份及快照引用隔离；另检查世界生成 revision 与相同上下文的索引复用。现有 `MaterialBaselineTests` 覆盖真实两次资源重载及成功发布戳。
-
-原始日志位于本机忽略目录 `work/material-process-review/`，不随仓库提交。GameTest 用例数、平台与最终结果见下文；Gradle 退出成功不能代替游戏测试统计。
+`MaterialProcessGraphTest` 包含循环、共同输入、前反向查询、各项预算、深度边界的端口截断及裁剪后的边合法性。展示投影、世界生成形态、物品／流体状态和布局示例不再保留逐场景 GameTest；这些行为按[人工检查](../development/validation/checks/manual-ingame.md#矿物处理展示页)使用真实 JEI／EMI 验收。
 
 ## 验证结果与剩余事项
 
-- 执行且通过：`MaterialProcessGraphTest` 7 项；API `SpecialProcessValueTest` 与 `apiContracts`；材料页单测覆盖全部形态直连、跨区边和停止于另一材料。GameTest 从实际加载的物品／流体标签系统确认王水 target tag 只含声明的 purified 形态，reagent tag 只含王水液体。Spotless、双平台生产／测试源码编译、双平台发行包组装、Forge 99 项 GameTest、NeoForge 104 项 GameTest、资源 JSON 与发行 JAR 检查、路由和注释检查均通过。
-- 执行但失败或阻塞：无。
-- 尚未执行：独立远程客户端、JEI-only／EMI-only／双装实际拖拽、工艺组展开与截图、无 viewer 的独立客户端、附属差异与世界生成开关矩阵。
+以下 GameTest 结果是移除一次性展示快照测试前的历史证据，不能代表当前测试数。当前常驻的纯规则入口为 `MaterialProcessGraphTest`，客户端展示仍需人工验收。
+
+- 历史执行且通过：`MaterialProcessGraphTest`、API `SpecialProcessValueTest`、`apiContracts`，以及清理前 Forge 99 项、NeoForge 104 项 GameTest。
+- 尚未执行：独立远程客户端、JEI-only／EMI-only／双装实际拖拽、路线折叠、全屏、无 viewer 的独立客户端、附属差异与世界生成开关矩阵。
 
 08 的 A—C 已有定义与形态入口；D—E 已有内部来源／用途快照、符号选择器、共享材料页图和 API 1.9 的显式特殊工艺所有权。tag／unit 仍保持符号投影，不能声称枚举了全部动态工艺或完整可执行路线；本轮不新增网络同步协议。远程同代数据、断线／换服、实际 viewer 拖拽／折叠与精确跳转仍需要按[人工检查](../development/validation/checks/manual-ingame.md#矿物处理展示页)记录实际结果。局部图模型通过不能替代这些场景。

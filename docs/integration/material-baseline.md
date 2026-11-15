@@ -2,6 +2,8 @@
 
 本页记录[计划 01](../development/material-system-refactor/01-baseline.md)的观察口径、已审阅的历史引用和可重复测试入口。当前行为快照用于发现迁移变化；正确性依据另列，不能通过重录快照认可缺陷。
 
+专用的基线快照、独立 JVM 生命周期矩阵和测试附属材料在生产验证后已删除。本页数值与测试名称仅作为历史证据保留，当前代码不再生成这些投影。
+
 ## 范围与状态
 
 源码基线为 `2e5627aa9da706416251ae83538a62cfc07a8783`，调查日期为 2026-11-07。本次新增测试、测试数据和文档，并独立清理形态表误抽取的一个局部变量键；没有改变实际材料、配方、初始化顺序、API 或持久化格式。开工已有未跟踪的重构计划和设计提议，均保留。工作期间外部修改 `.gitignore`，新增 `/docs` 忽略规则，也保留；新增文档因此不会自动出现在 Git 未跟踪列表中。
@@ -17,10 +19,10 @@
 | 类型 | 存放位置 | 用途 |
 | --- | --- | --- |
 | 当前行为 | 根目录 `work/material-system-refactor/core/`、`runtime/<MC>/<运行目录>/` | 全量材料、别名、引用、形态、成分、配方及代表案例；不提交原始 dump |
-| 权威期望 | `MaterialBaselineTest`、`MaterialBaselineTests` 中注明依据的断言 | 固定 GT6 事实、现有 parity 决策、公开 SPI 契约 |
+| 权威期望 | 当时基线测试中的断言与现行材料纯规则测试 | 固定 GT6 事实、现有 parity 决策、公开 SPI 契约 |
 | 已知差异 | 本页、测试中明确标记的 observation、测试资源中的历史引用清单 | 让后续修改显露差异；不赋予当前错误行为正确性 |
 
-core 快照在独立 JVM 中各初始化一次，不提供生产 reset。无附属环境连续采集两次，比较材料、prefix、别名和引用四份排序后的 TSV；第三个 JVM 通过临时 ServiceLoader 资源加载测试附属，并验证内建材料投影不变。游戏测试附属由 test source set 的 SPI 服务文件发现，不要求安装真实联动模组。
+历史 core 快照在独立 JVM 中各初始化一次。无附属环境连续采集两次，比较材料、prefix、别名和引用四份排序后的 TSV；第三个 JVM 通过临时 ServiceLoader 资源加载测试附属。该入口和游戏测试附属均已移除，避免为一次性审计长期向测试运行注册额外材料。
 
 材料投影区分原始对象、`resolve()` 后身份与有效性；内建 ID 保留，附属数值 ID 写为 `dynamic`，用所有者和注册名表示稳定身份。属性、别名和无语义集合排序，化学组成与副产物的顺序保留。物品组件排序前单列主材料；prefix 重量与实际生成物品分开，不生成全部材料与 prefix 的笛卡尔积。
 
@@ -30,7 +32,7 @@ core 快照在独立 JVM 中各初始化一次，不提供生产 reset。无附�
 
 ## 引用审计
 
-`MaterialReferenceAudit` 检查已提交的组成声明、分解 ID/name 行、形态表、UUM ID 集合和七类加工目标；组成表采用当前 literal bind 语法，并核对解析行数，语法变化不能静默漏行。仅看注册后对象会遗漏被 `bind` 跳过的输入，所以源表和有效图都检查。
+历史 `MaterialReferenceAudit` 检查已提交的组成声明、分解 ID/name 行、形态表、UUM ID 集合和七类加工目标；该测试工具已删除。下文的分类与数量只记录当时审计结果。
 
 首次审阅 4,069 条引用后，移除 1 条误抽取行。最终审计 4,068 条：2,032 条直接有效、1,729 条可映射别名、307 条已解释的历史／停注引用；当前悬空引用与 ID/name 矛盾均为零。这些数量仅描述本次观察；测试不把固定总数当作永久容差。
 
@@ -38,7 +40,7 @@ core 快照在独立 JVM 中各初始化一次，不提供生产 reset。无附�
 
 - 有数值 ID 的停注材料从[现有移除决策](../decisions/parity/material-removal.md)读取，不能因为查不到就自动允许。
 - 归一化后的 GT6 字段别名与当前注册名分别记录。能识别别名不代表生产 `MaterialForms.of` 一定命中了对应 fallback。
-- `material-reference-history.tsv` 逐条限定表、owner、字段、目标和 ID，并给出固定 GT6 的 `unused`／`deprecated`、未分配 ID 的 `valgem(0)` 或现有移除决策。它只标注已确认的历史行，不创建第二份生产材料事实，也不允许同名新引用出现在其他字段。
+- 历史 `material-reference-history.tsv` 逐条限定表、owner、字段、目标和 ID，并给出固定 GT6 的 `unused`／`deprecated`、未分配 ID 的 `valgem(0)` 或现有移除决策。该清单已随基线测试删除。
 - `MaterialForms` 的 `rmaterial` 来自 GT6 `MT.create` 的局部变量 `rMaterial`，不是材料。作为独立小清理，仅删除提交表中的该行，然后开启“当前未知错误必须为零”的严格断言；没有用期望文件豁免它。原生成脚本不在仓库，固定 GT6 原始输入已核对，未臆造可再生成流程。此键没有有效材料和 `MaterialForms.count` 生产调用者，不涉及任何材料／物品移除、ID 或存档迁移；后续恢复生成器时须排除局部变量。
 
 新增悬空引用、ID/name 矛盾、非法物品组件会失败。负例直接构造缺失材料引用、铁 ID 配铜名和负数材料量；缺失引用异常包含表、材料、字段和目标。另在 `work/` 编译独立负例探针，注入假引用后进程确实以 1 退出；正常输入的完整 core 测试随后恢复通过；负例未改动生产输入。历史清单不豁免这些负例。01 阶段保留的 `MaterialCompositionData` 等生成表因缺少可复现脚本未重写；02 随后将其运行时事实迁入规范目录并删除旧写入入口。
@@ -85,14 +87,14 @@ NeoForge 的 386 条移除全部来自 `gt.recipe.fermenter` 的药水相关行�
 
 ## 复现与执行记录
 
-所有命令从仓库根执行，标准命令与注意事项见 [JUnit](../development/validation/checks/junit.md)、[编译](../development/validation/checks/compile.md)、[GameTest](../development/validation/checks/gametest.md)和[格式](../development/validation/checks/format.md)。定向入口为：
+所有命令从仓库根执行，标准命令与注意事项见 [JUnit](../development/validation/checks/junit.md)、[编译](../development/validation/checks/compile.md)、[GameTest](../development/validation/checks/gametest.md)和[格式](../development/validation/checks/format.md)。当前材料纯规则入口为：
 
 ```bash
-./gradlew :core:test --tests 'gregtech.content.material.MaterialBaselineTest'
+./gradlew :core:test --tests 'gregtech.engine.material.*' --tests 'gregtech.engine.recipe.MaterialDecompositionPlannerTest'
 ./gradlew :minecraft:1.20.1-forge:compileTestJava :minecraft:1.21.1-neoforge:compileTestJava
 ```
 
-GameTest 使用检查文档已有的 `gameTestDirectory` 指定不同隔离目录，避免第二次启动复用第一次的世界或配置。重复启动后逐文件比较排序的 TSV；跨版本物品以注册 ID 交集比较，版本独有物品另列，配方差异只作调查线索。
+基线 TSV 不再生成，因此不能继续运行后文的重复采集命令作为当前验收；保留的 `work/material-system-refactor/` 原始文件仅用于追溯历史结论。
 
 默认开发环境会加载 JEI/Jade。无可选模组采集仅从 `runtimeOnly` 移除这两个查看器，保留全部编译 API，并核对实际加载列表只有 Minecraft、加载器和 GT6CE。复现时把下面内容保存到本地 `work/material-system-refactor/no-optional.init.gradle`：
 

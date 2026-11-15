@@ -12,7 +12,7 @@
 - `reload-recipes.tsv`
 - `reload-tags.tsv`
 
-这些文件由共享 `MaterialBaselineTests` 生成。必须使用同一次首次启动或重载代，不能混用不同运行目录。
+这些文件来自已删除的历史材料基线 GameTest。当前测试集不再生成新快照；本工具仅用于复核仍保存在 `work/` 中的历史证据，不能把旧目录当作当前实现验证。
 
 ## 运行
 

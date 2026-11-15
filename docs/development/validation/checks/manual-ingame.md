@@ -33,11 +33,9 @@ EMI 数据源还需核对：工作台压块／拆块、熔炉和已安装第三�
 7. 连续重载两次后确认配方增删同步、旧引用拒绝跳转；断线／换服不沿用回调。布局副本数不改变配方数量或原生 viewer 索引；方法标签只来自 API target／reagent 声明。
 8. 两平台分别检查 JEI-only、EMI-only 和双装环境，双装沿既有去重规则。另验无 viewer 的专用服务端与独立远程客户端；未实际执行的场景不能用编译或集成服务器静态表代替。
 
-`MaterialProcessSnapshotTests` 中的 `presentationPreservesNativeItemState`、`overviewGroupsVisibleRoutesAndHidesAuxiliaries`、`overviewAlignsChainsAndPreservesFeedback`、`overviewSharesHubsWithoutInventingConnections` 、`overviewKeepsDenseEdgesLocal`、`overviewKeepsFirstOutputAndVariantsTogether` 、`recoveryOwnershipAndMachineKindDriveOverviewClassification` 和 `overviewSeparatesSourcesConversionsAndUses`、`overviewFoldsAlternativeInputsAndKeepsProductGridsLocal`、`overviewShowsPortYieldsAndOrdersRecoveryAfterConversions`、`overviewFoldsSimilarRoutesAcrossNativeRecipeDifferences` 和 `overviewPacksLocalRoutesWithoutInvisibleDependencies` 覆盖原生状态、锤子分类图标、辅料隐藏、原始步骤保留、外观去重、公共资源集中、连续链、顺序稳定、循环、副本、密集图直线避让和关联保留。编译这些测试不代表已运行 GameTest；箭头外观、真实 EMI 查询和鼠标手感仍需人工确认。
+材料展示页不再维护逐布局场景的示例 GameTest。原状态、辅料隐藏、路线折叠、连续链、循环、副本、排布和关联保留必须直接按上述步骤做真实查看器验收；core 的图测试只证明纯数据与查询预算，不证明投影布局或鼠标手感。
 
 ## 注意事项
-
-`overviewIndexesOnlyItsOwnMaterialAndFindsNativeFocus`、`overviewMatchesItemsAcrossCopiesAndKeepsRecipesSeparate` 与 `overviewFramesRecipesWithoutEnclosingTheirNeighbors` 覆盖查询索引、原生状态目标、同物品副本匹配及配方边框边界；不代替目标绿色外框、动态视口、全屏往返、两平台 `EmiApi.setPages` Mixin 命中与真实查看器的鼠标／键盘验收。
 
 - 使用隔离实例；EULA 由操作者自行处理；完整日志、截图与实例配置放 `work/<任务名>/`，公共记录只保留脱敏结论。
 - 记录提交或源码状态、JDK、Minecraft 与加载器版本、GT6CE 构建、依赖模组及版本、配置差异。

@@ -99,7 +99,7 @@
   - 线缆、管道、轴、电池、覆盖板与储罐的实际传输、断开与方向变化。
   - 材料物品/方块注册与统一化；矿脉或结构的注册存在性。
 - 现有测试集
-  - `MaterialBaselineTest` 与共享 `MaterialBaselineTests` 提供材料源表引用审计、独立 JVM 快照、测试材料 SPI、成分与回收／分解及真实重载入口；观察与正确性依据分开，见[材料基线](../../integration/material-baseline.md)。
+  - 材料注册、成分解析、分解计划和过程图分别由 `MaterialRegistrationTest`、`ItemCompositionResolverTest`、`MaterialDecompositionPlannerTest` 与 `MaterialProcessGraphTest` 覆盖；一次性基线快照和运行时测试附属已移除。
   - core 静态 TSV 与 GameTest TSV 由对应 JUnit/GameTest 维护；用例覆盖物品管道路由与调度回归。
   - `core/src/test` 的材料目录、标签名翻译、熔融浇筑与配方引擎测试；`api/common` 的材料、机器、能源模型测试。
   - 机器 tick、多方块、能源网络、物流、世界生成完整流程等仍是待补范围。

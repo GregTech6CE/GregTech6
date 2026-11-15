@@ -7,13 +7,11 @@ import gregtech.api.material.MaterialSentinels;
 import gregtech.content.material.MaterialDefinitions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -296,81 +294,5 @@ class MaterialRegistrationTest {
         }
         var almandine = MaterialDefinitions.info("Almandine");
         assertTrue(almandine.relations().forms().contains("ORES"));
-    }
-
-    @Test
-    void isolatedLifecyclesCoverEarlyReadsFailuresAndSharedAddonDeclarations() throws Exception {
-        for (String scenario : List.of(
-                "early",
-                "facade",
-                "normal",
-                "aliasPublication",
-                "merge",
-                "conflict",
-                "definitionFailure",
-                "linkFailure",
-                "metadata",
-                "metadataUnknownFailure",
-                "metadataOwnerFailure",
-                "metadataNamespaceFailure",
-                "metadataTypeFailure",
-                "info",
-                "infoLegacy",
-                "infoLegacyToolConflictFailure",
-                "infoOwnerFailure",
-                "infoNamespaceFailure",
-                "infoProcessTypeFailure",
-                "infoProcessFormAlias",
-                "infoProcessSingleConflictFailure",
-                "infoProcessMultiple",
-                "infoProcessMissingFormFailure",
-                "infoProcessUnknownFormFailure",
-                "relations",
-                "relationTagCycleFailure",
-                "relationUnknownTagFailure",
-                "relationNamespaceFailure",
-                "relationUnknownGroupFailure",
-                "relationGroupCycleFailure",
-                "processDecomposition",
-                "infoDecomposition",
-                "infoDecompositionBlock",
-                "infoDecompositionLiquid",
-                "infoDecompositionGas",
-                "infoDecompositionConflictFailure",
-                "infoDecompositionOwnerFailure",
-                "processDecompositionOwnerFailure",
-                "processes",
-                "processFormAlias",
-                "processSingleConflictFailure",
-                "processMultiple",
-                "processUnknownFormFailure",
-                "processNamespaceFailure",
-                "processUnknownMaterialFailure",
-                "processGroupMaterialFailure")) {
-            var root = Path.of("").toAbsolutePath();
-            if (!Files.isDirectory(root.resolve("core"))) root = root.getParent();
-            var output = root.resolve("work/material-system-refactor/02/lifecycle-" + scenario + ".log");
-            Files.createDirectories(output.getParent());
-            var classpath = new java.util.ArrayList<String>();
-            for (Class<?> type : List.of(MaterialLifecycleProbe.class, GTMaterialRegistry.class, GTMaterial.class))
-                classpath.add(Path.of(type.getProtectionDomain()
-                                .getCodeSource()
-                                .getLocation()
-                                .toURI())
-                        .toString());
-            var process = new ProcessBuilder(
-                            Path.of(System.getProperty("java.home"), "bin/java").toString(),
-                            "-cp",
-                            String.join(File.pathSeparator, classpath),
-                            MaterialLifecycleProbe.class.getName(),
-                            scenario)
-                    .redirectErrorStream(true)
-                    .redirectOutput(output.toFile())
-                    .start();
-            boolean done = process.waitFor(45, TimeUnit.SECONDS);
-            if (!done) process.destroyForcibly();
-            assertTrue(done, scenario + " timed out");
-            assertEquals(0, process.exitValue(), () -> "Lifecycle failed: " + output);
-        }
     }
 }
