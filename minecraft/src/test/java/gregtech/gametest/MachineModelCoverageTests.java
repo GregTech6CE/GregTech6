@@ -238,7 +238,7 @@ public final class MachineModelCoverageTests {
         for (var entry : GTEngines.all()) {
             if (!entry.isPresent()) continue;
             EngineBlock engine = entry.get();
-            // Steam, electric and flux engines keep their own item art, which this change leaves alone.
+            // Steam, electric and flux engines keep their own static item art.
             if (engine.engineType() == EngineType.ROTATION || engine.engineType() == EngineType.DIESEL) {
                 blocks.add(engine);
             }
