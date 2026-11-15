@@ -3,9 +3,11 @@ package gregtech.mixin;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
+import gregtech.client.MaterialProcessScreen;
 import gregtech.compat.emi.MaterialProcessEmiRecipe;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,8 +27,7 @@ public abstract class EmiMaterialProcessFocusMixin {
             Map<EmiRecipeCategory, List<EmiRecipe>> recipes, EmiIngredient ingredient, CallbackInfo callback) {
         // EMI opens lookups only from its recipe/tree screens or a container screen.
         if (recipes.values().stream().anyMatch(rows -> !rows.isEmpty())
-                && net.minecraft.client.Minecraft.getInstance().screen
-                        instanceof gregtech.client.MaterialProcessScreen screen) screen.onClose();
+                && Minecraft.getInstance().screen instanceof MaterialProcessScreen screen) screen.onClose();
         for (var recipe : recipes.getOrDefault(MaterialProcessEmiRecipe.category(), List.of()))
             if (recipe instanceof MaterialProcessEmiRecipe process) process.focus(ingredient);
     }

@@ -227,7 +227,11 @@ public final class MaterialProcessOverview {
 
     public record Band(Section section, int left, int right) {}
 
+    public record InformationCard(
+            MaterialProcessDisplay.Information information, int left, int top, int right, int bottom) {}
+
     private final List<Band> bands = new ArrayList<>();
+    private final List<InformationCard> information = new ArrayList<>();
     private final List<Connection> connections;
     private final Map<Node, Node> next = new HashMap<>(), previous = new HashMap<>();
     private final Set<Arc> feedback = new HashSet<>();
@@ -245,7 +249,7 @@ public final class MaterialProcessOverview {
                 .sorted(Comparator.comparing(
                         connection -> connection.source() + ":" + connection.target() + ":" + connection.resource()))
                 .toList();
-        if (partition && !page.steps().isEmpty()) {
+        if (partition && (!page.steps().isEmpty() || !page.information().isEmpty())) {
             partition(page);
             return;
         }
@@ -333,6 +337,10 @@ public final class MaterialProcessOverview {
 
     public List<Band> bands() {
         return List.copyOf(bands);
+    }
+
+    public List<InformationCard> information() {
+        return List.copyOf(information);
     }
 
     public List<Grid> grids() {
@@ -436,7 +444,9 @@ public final class MaterialProcessOverview {
                                     .orElse(Section.INTERNAL)
                             == section)
                     .toList();
-            if (steps.isEmpty()) continue;
+            boolean hasInformation =
+                    section == Section.SOURCES && !page.information().isEmpty();
+            if (steps.isEmpty() && !hasInformation) continue;
             Set<DataKey> references = new HashSet<>();
             steps.forEach(step -> references.add(step.reference()));
             var local = new Page(
@@ -479,7 +489,18 @@ public final class MaterialProcessOverview {
             graph.next.forEach((from, to) -> next.put(copies.get(from), copies.get(to)));
             if (graph.anchor != null && (anchor == null || section == Section.INTERNAL))
                 anchor = copies.get(graph.anchor);
-            int bandWidth = Math.max(72, graph.width);
+            int bandWidth = Math.max(hasInformation ? 176 : 72, graph.width);
+            if (hasInformation) {
+                int top = Math.max(
+                        48,
+                        graph.nodes.stream().mapToInt(node -> node.y + 64).max().orElse(48));
+                int columns = Math.max(1, Math.min(3, (bandWidth - 16) / 160));
+                for (int index = 0; index < page.information().size(); index++) {
+                    int left = offset + 8 + index % columns * 160;
+                    int y = top + index / columns * 28;
+                    information.add(new InformationCard(page.information().get(index), left, y, left + 152, y + 24));
+                }
+            }
             bands.add(new Band(section, offset, offset + bandWidth));
             offset += bandWidth;
         }
@@ -489,6 +510,9 @@ public final class MaterialProcessOverview {
             if (!node.machine()) node.copy |= instances.get(node.port().identity()) > 1;
         applyConfirmation();
         route();
+        height = Math.max(
+                height,
+                information.stream().mapToInt(card -> card.bottom() + 12).max().orElse(0));
         width = offset;
     }
 

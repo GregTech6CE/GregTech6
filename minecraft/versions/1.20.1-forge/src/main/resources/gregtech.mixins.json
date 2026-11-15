@@ -57,6 +57,7 @@
     "ColoredBookLecternScreenMixin",
     "ColoredBookOpenPacketMixin",
     "EmiMaterialProcessFocusMixin",
+    "EmiMaterialProcessRecipesMixin",
     "EmiMaterialUsesMixin",
     "EmiStructureFocusMixin",
     "FluidAlphaConfigMixin",

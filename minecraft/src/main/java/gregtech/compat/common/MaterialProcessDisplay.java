@@ -259,6 +259,23 @@ public final class MaterialProcessDisplay {
         }
     }
 
+    /** Related viewer pages are navigation targets, with no processing ports or graph edges. */
+    public record Information(
+            DataKey reference, Component name, ItemStack icon, List<Component> details, List<Port> index) {
+        public Information {
+            Objects.requireNonNull(reference);
+            name = name.copy();
+            icon = icon.copy();
+            details = copyText(details);
+            index = List.copyOf(index);
+        }
+
+        @Override
+        public ItemStack icon() {
+            return icon.copy();
+        }
+    }
+
     /**
      * Bind callbacks to the same query session/generation as the page. Revalidate before resolving native references;
      * return false for expired or unsupported targets. Implementations run on the client thread.
@@ -283,6 +300,10 @@ public final class MaterialProcessDisplay {
             return false;
         }
 
+        default boolean openInformation(DataKey reference) {
+            return false;
+        }
+
         boolean openForm(DataKey resource, boolean uses);
     }
 
@@ -295,13 +316,15 @@ public final class MaterialProcessDisplay {
             List<Component> notices,
             int number,
             int total,
-            Navigation navigation) {
+            Navigation navigation,
+            List<Information> information) {
         public Page {
             title = title.copy();
             if (material == null) throw new IllegalArgumentException("Missing process page material");
             steps = List.copyOf(steps);
             connections = List.copyOf(connections);
             notices = copyText(notices);
+            information = List.copyOf(information);
             Objects.requireNonNull(navigation);
             if (steps.size() > MAX_STEPS
                     || connections.size() > MAX_CONNECTIONS
@@ -310,10 +333,29 @@ public final class MaterialProcessDisplay {
                     || notices.isEmpty()) throw new IllegalArgumentException("Invalid process display page");
         }
 
+        public Page(
+                Component title,
+                String material,
+                List<Step> steps,
+                List<Connection> connections,
+                List<Component> notices,
+                int number,
+                int total,
+                Navigation navigation) {
+            this(title, material, steps, connections, notices, number, total, navigation, List.of());
+        }
+
+        public Page withInformation(List<Information> information) {
+            return new Page(title, material, steps, connections, notices, number, total, navigation, information);
+        }
+
         /** Foreign reagents and byproducts belong to the recipe, not to this material's viewer index. */
         public List<Port> indexedPorts() {
-            return steps.stream()
-                    .flatMap(step -> java.util.stream.Stream.concat(step.inputs().stream(), step.outputs().stream()))
+            return java.util.stream.Stream.concat(
+                            steps.stream()
+                                    .flatMap(step -> java.util.stream.Stream.concat(
+                                            step.inputs().stream(), step.outputs().stream())),
+                            information.stream().flatMap(entry -> entry.index().stream()))
                     .filter(port -> port.material().equals(material) && port.hasIcons())
                     .toList();
         }

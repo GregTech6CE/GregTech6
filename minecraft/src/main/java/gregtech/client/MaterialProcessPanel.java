@@ -144,6 +144,30 @@ public final class MaterialProcessPanel {
                     outline(graphics, frame.left(), frame.top(), frame.right(), frame.bottom(), 0xffe4e4e4);
                 }
                 drawEdges(graphics);
+                if (!overview.information().isEmpty()) {
+                    var first = overview.information().get(0);
+                    var hoveredInformation = informationHit(mouseX, mouseY);
+                    text(
+                            graphics,
+                            Component.translatable("gt6ce.jei.material_process.information"),
+                            first.left(),
+                            first.top() - 12,
+                            152,
+                            MUTED);
+                    for (var card : overview.information()) {
+                        if (card.right() < worldX(0)
+                                || card.left() > worldX(width)
+                                || card.bottom() < worldY(BODY_TOP)
+                                || card.top() > worldY(footer())) continue;
+                        boolean hover = card == hoveredInformation;
+                        graphics.fill(
+                                card.left(), card.top(), card.right(), card.bottom(), hover ? 0xffe0d6b5 : 0xffcfcbc0);
+                        outline(graphics, card.left(), card.top(), card.right(), card.bottom(), 0xff9c9274);
+                        if (!card.information().icon().isEmpty())
+                            graphics.renderItem(card.information().icon(), card.left() + 4, card.top() + 4);
+                        text(graphics, card.information().name(), card.left() + 24, card.top() + 7, 122, TEXT);
+                    }
+                }
                 for (var grid : overview.grids()) {
                     graphics.fill(grid.left(), grid.top(), grid.right(), grid.bottom(), 0xff777777);
                     for (int y = grid.top(); y < grid.bottom(); y += 24)
@@ -178,7 +202,7 @@ public final class MaterialProcessPanel {
             graphics.flush();
             graphics.disableScissor();
         }
-        if (overview.nodes().isEmpty())
+        if (overview.nodes().isEmpty() && overview.information().isEmpty())
             graphics.drawWordWrap(
                     Minecraft.getInstance().font,
                     Component.translatable("gt6ce.jei.material_process.empty"),
@@ -205,6 +229,14 @@ public final class MaterialProcessPanel {
         double x = worldX(mouseX), y = worldY(mouseY);
         for (Node node : overview.nodes())
             if (x >= node.x - 11 && x < node.x + 12 && y >= node.y - 12 && y < node.y + 12) return node;
+        return null;
+    }
+
+    private MaterialProcessOverview.InformationCard informationHit(double mouseX, double mouseY) {
+        if (mouseX < 0 || mouseX >= width || mouseY < BODY_TOP || mouseY >= footer()) return null;
+        double x = worldX(mouseX), y = worldY(mouseY);
+        for (var card : overview.information())
+            if (x >= card.left() && x < card.right() && y >= card.top() && y < card.bottom()) return card;
         return null;
     }
 
@@ -247,6 +279,14 @@ public final class MaterialProcessPanel {
         if (mouseY >= footer()) {
             var lines = new ArrayList<>(page.notices());
             lines.add(Component.translatable("gt6ce.jei.material_process.pan"));
+            return List.copyOf(lines);
+        }
+        var information = informationHit(mouseX, mouseY);
+        if (information != null) {
+            var lines = new ArrayList<Component>();
+            lines.add(information.information().name());
+            lines.addAll(information.information().details());
+            lines.add(Component.translatable("gt6ce.jei.material_process.open_information"));
             return List.copyOf(lines);
         }
         Node node = hit(mouseX, mouseY);
@@ -299,6 +339,11 @@ public final class MaterialProcessPanel {
 
     public boolean clickControls(double mouseX, double mouseY, int button) {
         if (button != 0 && button != 1) return false;
+        var information = informationHit(mouseX, mouseY);
+        if (information != null)
+            return page.navigation().valid()
+                    && page.navigation()
+                            .openInformation(information.information().reference());
         if (button == 0 && mouseY >= 0 && mouseY < 14) {
             if (mouseX >= width - 20 && mouseX < width) {
                 MaterialProcessScreen.toggle(this);
@@ -326,6 +371,7 @@ public final class MaterialProcessPanel {
                 && mouseX < width
                 && mouseY >= BODY_TOP
                 && mouseY < footer()
+                && informationHit(mouseX, mouseY) == null
                 && hit(mouseX, mouseY) == null;
     }
 
@@ -360,6 +406,12 @@ public final class MaterialProcessPanel {
     private void resetView() {
         zoom = 1;
         Node anchor = focused == null ? overview.anchor() : focused;
+        if (anchor == null && !overview.information().isEmpty()) {
+            var first = overview.information().get(0);
+            panX = width / 2.0 - (first.left() + first.right()) / 2.0;
+            panY = (footer() - BODY_TOP) / 2.0 - (first.top() + first.bottom()) / 2.0;
+            return;
+        }
         panX = width / 2.0 - (anchor == null ? overview.width() / 2.0 : anchor.x);
         panY = (footer() - BODY_TOP) / 2.0 - (anchor == null ? overview.height() / 2.0 : anchor.y);
     }

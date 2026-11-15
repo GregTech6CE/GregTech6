@@ -55,6 +55,14 @@ public final class MaterialProcessProjection {
         return pages(snapshot, root, MATERIAL_PAGE_BUDGET, navigation, RecipeViewerIcons.categories());
     }
 
+    public static MaterialProcessDisplay.Page informationPage(String material,
+            List<MaterialProcessDisplay.Information> information, MaterialProcessDisplay.Navigation navigation) {
+        return new MaterialProcessDisplay.Page(
+                Component.translatable("gt6ce.jei.material_process.material_title", materialName(material)), material,
+                List.of(), List.of(), List.of(Component.translatable("gt6ce.jei.material_process.information_hint")),
+                1, 1, navigation, information);
+    }
+
     private static List<MaterialProcessDisplay.Page> pages(
             MaterialProcessSnapshot snapshot,
             DataKey root,
@@ -86,9 +94,9 @@ public final class MaterialProcessProjection {
                 snapshot.recipe(step.reference())
                         .map(recipe -> workstations.getOrDefault(recipe.map(), new ItemStack(net.minecraft.world.item.Items.ANVIL)))
                         .orElseGet(() -> snapshot.worldgen(step.reference()).isPresent()
-                                ? new ItemStack(net.minecraft.world.item.Items.IRON_PICKAXE) : ItemStack.EMPTY),
-                step.inputs().stream().map(port -> port(port, snapshot.recipe(step.reference()).orElse(null))).toList(),
-                step.outputs().stream().map(port -> port(port, snapshot.recipe(step.reference()).orElse(null))).toList(),
+                                ? new ItemStack(net.minecraft.world.item.Items.IRON_PICKAXE) : snapshot.viewerMachine(step.reference())),
+                step.inputs().stream().map(port -> port(snapshot, port, snapshot.recipe(step.reference()).orElse(null))).toList(),
+                step.outputs().stream().map(port -> port(snapshot, port, snapshot.recipe(step.reference()).orElse(null))).toList(),
                 step.details().stream().map(MaterialProcessProjection::literal).toList(),
                 specialProcess,
                 step.resolved(),
@@ -109,8 +117,9 @@ public final class MaterialProcessProjection {
         return catalog.specialProcesses().find(id);
     }
 
-    private static MaterialProcessDisplay.Port port(Port port, MaterialProcessSnapshot.NativeRecipe nativeRecipe) {
-        List<ItemStack> icons = nativeIcons(port.resource(), nativeRecipe);
+    private static MaterialProcessDisplay.Port port(MaterialProcessSnapshot snapshot, Port port, MaterialProcessSnapshot.NativeRecipe nativeRecipe) {
+        List<ItemStack> icons = snapshot.viewerIcons(port.resource().key());
+        if (icons.isEmpty()) icons = nativeIcons(port.resource(), nativeRecipe);
         String identity = port.resource().state();
         if (!icons.isEmpty()) {
             ItemStack representative = icons.get(0);
@@ -343,6 +352,10 @@ public final class MaterialProcessProjection {
                 Component.translatable("gt6ce.jei.material_process.coverage.final_recipes");
             case "coverage_active_worldgen" ->
                 Component.translatable("gt6ce.jei.material_process.coverage.active_worldgen");
+            case "coverage_viewer_recipes" ->
+                Component.translatable("gt6ce.jei.material_process.coverage.viewer_recipes");
+            case "partial_viewer_recipes" ->
+                Component.translatable("gt6ce.jei.material_process.coverage.viewer_exclusions", notice.omitted());
             case "partial_dynamic_selectors" ->
                 Component.translatable("gt6ce.jei.material_process.coverage.dynamic_selectors");
             case "partial_unknown_roles" ->

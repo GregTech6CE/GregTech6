@@ -103,24 +103,43 @@ public final class MaterialProcessSnapshot {
     private record Bucket(List<Step> steps, Map<String, Resource> roots) {}
 
     private final MaterialProcessGraph.Snapshot snapshot;
+    private final long resourceGeneration;
+    private final Map<DataKey, Step> steps;
     private final Map<DataKey, Resource> resources;
     private final MaterialProcessGraph graph;
     private final List<Root> roots;
     private final Map<DataKey, NativeRecipe> nativeRecipes;
     private final Map<DataKey, NativeWorldgen> worldgen;
+    private final Map<DataKey, List<ItemStack>> viewerIcons;
+    private final Map<DataKey, ItemStack> viewerMachines;
 
     private MaterialProcessSnapshot(
             MaterialProcessGraph.Snapshot snapshot,
+            long resourceGeneration,
             Map<String, Bucket> buckets,
             List<Root> roots,
             Map<DataKey, NativeRecipe> nativeRecipes,
             Map<DataKey, NativeWorldgen> worldgen) {
+        this(snapshot, resourceGeneration, buckets, roots, nativeRecipes, worldgen, Map.of(), Map.of(), COVERAGE);
+    }
+
+    private MaterialProcessSnapshot(
+            MaterialProcessGraph.Snapshot snapshot,
+            long resourceGeneration,
+            Map<String, Bucket> buckets,
+            List<Root> roots,
+            Map<DataKey, NativeRecipe> nativeRecipes,
+            Map<DataKey, NativeWorldgen> worldgen,
+            Map<DataKey, List<ItemStack>> viewerIcons,
+            Map<DataKey, ItemStack> viewerMachines,
+            List<Notice> coverage) {
         this.snapshot = snapshot;
+        this.resourceGeneration = resourceGeneration;
         var resources = new LinkedHashMap<DataKey, Resource>();
         var steps = new LinkedHashMap<DataKey, Step>();
         buckets.values().forEach(bucket -> bucket.steps.forEach(step -> steps.putIfAbsent(step.reference(), step)));
         var builder = MaterialProcessGraph.builder(snapshot);
-        COVERAGE.forEach(notice -> builder.notice(notice.code(), notice.omitted()));
+        coverage.forEach(notice -> builder.notice(notice.code(), notice.omitted()));
         for (Step step : steps.values()) {
             NativeRecipe nativeRecipe = nativeRecipes.get(step.reference());
             builder.add(step, nativeRecipe != null && nativeRecipe.genericRecovery());
@@ -128,10 +147,34 @@ public final class MaterialProcessSnapshot {
             step.outputs().forEach(port -> resources.putIfAbsent(port.resource().key(), port.resource()));
         }
         this.resources = Map.copyOf(resources);
+        this.steps = Map.copyOf(steps);
         this.graph = builder.build();
         this.roots = List.copyOf(roots);
         this.nativeRecipes = Map.copyOf(nativeRecipes);
         this.worldgen = Map.copyOf(worldgen);
+        var retainedIcons = new LinkedHashMap<DataKey, List<ItemStack>>();
+        viewerIcons.forEach((key, value) -> {
+            if (resources.containsKey(key)) retainedIcons.put(key, value);
+        });
+        this.viewerIcons = Map.copyOf(retainedIcons);
+        var retainedMachines = new LinkedHashMap<DataKey, ItemStack>();
+        viewerMachines.forEach((key, value) -> {
+            if (steps.containsKey(key)) retainedMachines.put(key, value);
+        });
+        this.viewerMachines = Map.copyOf(retainedMachines);
+    }
+
+    public List<ItemStack> viewerIcons(DataKey resource) {
+        return viewerIcons.getOrDefault(resource, List.of()).stream().map(ItemStack::copy).toList();
+    }
+
+    public ItemStack viewerMachine(DataKey step) {
+        return viewerMachines.getOrDefault(step, ItemStack.EMPTY).copy();
+    }
+
+    /** Starts a client-local view whose processing rows come exclusively from the viewer. */
+    public ViewerBuilder viewerBuilder() {
+        return new ViewerBuilder(this);
     }
 
     public MaterialProcessGraph.Snapshot snapshot() {
@@ -174,6 +217,7 @@ public final class MaterialProcessSnapshot {
         var stamp = MaterialPublication.current();
         return new MaterialProcessSnapshot(
                 new MaterialProcessGraph.Snapshot(stamp, 1, 0, 0, 0),
+                0,
                 Map.of(),
                 List.of(),
                 Map.of(),
@@ -231,7 +275,7 @@ public final class MaterialProcessSnapshot {
                 .sorted(Comparator.comparing(Root::material, String.CASE_INSENSITIVE_ORDER))
                 .toList();
         return new MaterialProcessSnapshot(
-                graphSnapshot, buckets, roots, nativeRecipes, nativeWorldgen);
+                graphSnapshot, resourceGeneration, buckets, roots, nativeRecipes, nativeWorldgen);
     }
 
     private static BuiltStep recipeStep(
@@ -688,6 +732,148 @@ public final class MaterialProcessSnapshot {
 
         private Bucket freeze() {
             return new Bucket(List.copyOf(steps.values()), Map.copyOf(roots));
+        }
+    }
+
+    /** Native stacks and semantic rows for one viewer reload; never published as server recipes. */
+    public static final class ViewerBuilder {
+        private final MaterialProcessSnapshot source;
+        private final Map<String, MutableBucket> buckets = new LinkedHashMap<>();
+        private final Map<DataKey, NativeRecipe> recipes = new LinkedHashMap<>();
+        private final Map<DataKey, List<ItemStack>> icons = new LinkedHashMap<>();
+        private final Map<DataKey, ItemStack> machines = new LinkedHashMap<>();
+        private final Map<RecipeMap, Set<Recipe>> selected = new java.util.IdentityHashMap<>();
+        private final Map<RecipeMap, Map<Recipe, DataKey>> nativeReferences = new java.util.IdentityHashMap<>();
+        private int omitted;
+
+        private ViewerBuilder(MaterialProcessSnapshot source) {
+            this.source = source;
+            source.nativeRecipes.forEach((reference, row) -> nativeReferences
+                    .computeIfAbsent(row.map(), ignored -> new java.util.IdentityHashMap<>()).put(row.recipe(), reference));
+            source.steps.values().stream().filter(step -> source.worldgen.containsKey(step.reference()))
+                    .sorted(Comparator.comparing(step -> step.reference().toString()))
+                    .forEach(this::add);
+        }
+
+        public void omitted() {
+            omitted++;
+        }
+
+        /** Reuses GT matching, unit quantities and recovery ownership, once per visible native row. */
+        public void machine(RecipeMap map, Recipe recipe) {
+            if (!selected.computeIfAbsent(map, ignored -> java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()))
+                    .add(recipe)) return;
+            DataKey reference = nativeReferences.getOrDefault(map, Map.of()).get(recipe);
+            if (reference != null) {
+                add(source.steps.get(reference));
+                recipes.put(reference, source.nativeRecipes.get(reference));
+                return;
+            }
+            int index = map.mRecipeList.size() + recipes.size();
+            BuiltStep built = recipeStep(map, recipe, index,
+                    source.snapshot.publication().revision(), source.snapshot.sessionGeneration());
+            if (built == null) return;
+            built = scoped(built, source.snapshot.publication().revision(), source.resourceGeneration);
+            addStep(buckets, built.step, built.materials);
+            recipes.put(built.step.reference(), new NativeRecipe(map, recipe, index));
+        }
+
+        public Port item(ItemStack stack, Role role, long amount, OptionalInt chance) {
+            String state = itemDisplayState(stack);
+            var form = MaterialEquivalence.form(stack);
+            GTMaterial material = form == null ? material(stack) : form.material().resolve();
+            String prefix = form == null ? "item" : form.prefix().getName();
+            if (stack.getItem() instanceof BlockItem block && block.getBlock() instanceof OreBlock ore) {
+                material = ore.material().resolve();
+                prefix = ore.isSmall() ? "oreSmall" : "oreVanillastone";
+            }
+            Resource resource = material == null
+                    ? new Resource(nativeResourceKey("item", state), "unknown", "item", "solid", state)
+                    : itemResource(material, prefix, state);
+            return port(resource, role, new Amount(amount, AmountUnit.ITEM), chance, stack.copyWithCount(1));
+        }
+
+        public Port fluid(FluidStack stack, Role role, long amount, OptionalInt chance) {
+            var entry = GTFluids.entryForFluid(stack.getFluid());
+            GTMaterial material = entry == null ? null : FluidVisualPolicy.material(entry).resolve();
+            if (material != null && !material.isValid()) material = null;
+            String state = fluidDisplayState(stack);
+            String phase = entry != null && entry.gas() ? "gas" : "liquid";
+            var resource = new Resource(
+                    material == null ? nativeResourceKey("fluid", state) : resourceKey("fluid", material, "fluid", phase, state),
+                    material == null ? "unknown" : material.getName(), "fluid", phase, state);
+//? if >=1.21.1 {
+            /*var lookup = gregtech.engine.fluid.FluidDisplayBinding.currentLookup();
+            var icon = lookup == null ? ItemStack.EMPTY : gregtech.engine.fluid.FluidDisplayBinding.display(lookup, stack);
+*///?} else {
+            var icon = gregtech.engine.fluid.FluidDisplayBinding.display(stack);
+//?}
+            return port(resource, role, new Amount(amount, AmountUnit.MILLIBUCKET), chance, icon);
+        }
+
+        private Port port(Resource resource, Role role, Amount amount, OptionalInt chance, ItemStack icon) {
+            var port = scoped(new Port(resource, role, amount, chance, false, List.of()),
+                    source.snapshot.publication().revision(), source.resourceGeneration);
+            if (!icon.isEmpty()) icons.putIfAbsent(port.resource().key(), List.of(icon.copyWithCount(1)));
+            return port;
+        }
+
+        /** Alternatives remain one selector, never a list of simultaneously consumed inputs. */
+        public Port alternatives(List<Port> candidates) {
+            if (candidates.isEmpty()) throw new IllegalArgumentException("Empty viewer selector");
+            Port first = candidates.get(0);
+            if (candidates.size() == 1) return first;
+            Resource representative = first.resource();
+            boolean sameMaterial = candidates.stream().allMatch(port -> port.resource().material().equals(representative.material()));
+            boolean sameForm = candidates.stream().allMatch(port -> port.resource().form().equals(representative.form()));
+            boolean samePhase = candidates.stream().allMatch(port -> port.resource().phase().equals(representative.phase()));
+            String state = "selector:" + fingerprint(candidates.stream()
+                    .map(port -> port.resource().state()).distinct().sorted().collect(java.util.stream.Collectors.joining("|")));
+            Resource resource = new Resource(nativeResourceKey("selector", state),
+                    sameMaterial ? representative.material() : "unknown",
+                    sameForm ? representative.form() : "selector", samePhase ? representative.phase() : "unknown", state);
+            Amount amount = candidates.stream().allMatch(port -> port.amount().equals(first.amount()))
+                    ? first.amount() : Amount.unknown();
+            OptionalInt chance = !first.output() && candidates.stream().allMatch(port -> port.chance().equals(first.chance()))
+                    ? first.chance() : OptionalInt.empty();
+            var result = scoped(new Port(resource, first.role(), amount, chance, false,
+                    List.of("viewer alternatives: " + candidates.size(), "matching constraints: see original recipe")),
+                    source.snapshot.publication().revision(), source.resourceGeneration);
+            var representatives = new LinkedHashMap<String, ItemStack>();
+            for (Port candidate : candidates)
+                for (ItemStack icon : icons.getOrDefault(candidate.resource().key(), List.of())) {
+                    if (representatives.size() >= 16) break;
+                    representatives.putIfAbsent(itemDisplayState(icon), icon.copyWithCount(1));
+                }
+            icons.put(result.resource().key(), List.copyOf(representatives.values()));
+            return result;
+        }
+
+        public void recipe(DataKey reference, String name, ItemStack machine,
+                List<Port> inputs, List<Port> outputs, List<String> details) {
+            boolean resolved = java.util.stream.Stream.concat(inputs.stream(), outputs.stream())
+                    .noneMatch(port -> port.resource().state().startsWith("selector:"));
+            add(new Step(reference, name, inputs, outputs, details, resolved));
+            if (!machine.isEmpty()) machines.put(reference, machine.copyWithCount(1));
+        }
+
+        private void add(Step step) {
+            var materials = new LinkedHashSet<String>();
+            step.inputs().forEach(port -> addMaterial(materials, port));
+            step.outputs().forEach(port -> addMaterial(materials, port));
+            addStep(buckets, step, materials);
+        }
+
+        public MaterialProcessSnapshot build() {
+            var frozen = new LinkedHashMap<String, Bucket>();
+            buckets.forEach((material, bucket) -> frozen.put(material, bucket.freeze()));
+            var roots = frozen.entrySet().stream().map(entry -> bestRoot(entry.getKey(), entry.getValue().roots))
+                    .sorted(Comparator.comparing(Root::material, String.CASE_INSENSITIVE_ORDER)).toList();
+            var coverage = new ArrayList<>(COVERAGE);
+            coverage.add(new Notice("coverage_viewer_recipes", 0));
+            coverage.add(new Notice("partial_viewer_recipes", omitted));
+            return new MaterialProcessSnapshot(source.snapshot, source.resourceGeneration, frozen, roots, recipes,
+                    source.worldgen, icons, machines, coverage);
         }
     }
 

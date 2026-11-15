@@ -39,6 +39,111 @@ public final class MaterialProcessSnapshotTests {
     private MaterialProcessSnapshotTests() {}
 
     @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void relatedInformationStaysBelowSourcesWithoutProcessingEdges(GameTestHelper helper) {
+        var source = new gregtech.compat.common.MaterialProcessDisplay.Step(
+                new gregtech.api.addon.material.DataKey("test", "information_source"),
+                net.minecraft.network.chat.Component.literal("source"), new ItemStack(Items.FURNACE),
+                List.of(displayPort("source_input", "Other", Items.IRON_INGOT, false)),
+                List.of(displayPort("source_output", "Copper", Items.COPPER_INGOT, true)),
+                List.of(), java.util.Optional.empty(), true);
+        var reference = new gregtech.api.addon.material.DataKey("test", "information");
+        var information = new gregtech.compat.common.MaterialProcessDisplay.Information(reference,
+                net.minecraft.network.chat.Component.literal("Reference"), new ItemStack(Items.BOOK), List.of(),
+                List.of(displayPort("information_copper", "Copper", Items.COPPER_BLOCK, true),
+                        displayPort("information_iron", "Iron", Items.IRON_BLOCK, true)));
+        var page = layoutPage(List.of(source), List.of()).withInformation(List.of(information));
+        var graph = new gregtech.compat.common.MaterialProcessOverview(page);
+        var card = graph.information().get(0);
+        helper.assertTrue(graph.nodes().size() == 3 && graph.edges().size() == 2 && page.connections().isEmpty(),
+                "related information does not add processing nodes or edges");
+        helper.assertTrue(card.top() > graph.nodes().stream().mapToInt(node -> node.y + 12).max().orElseThrow()
+                        && card.bottom() <= graph.height(),
+                "information is below the source routes and included in the canvas bounds");
+        helper.assertTrue(page.indexedPorts().stream().anyMatch(port -> port.icons().get(0).is(Items.COPPER_BLOCK))
+                        && page.indexedPorts().stream().noneMatch(port -> port.material().equals("Iron")),
+                "information references are searchable only within the page material");
+        var onlyInformation = new gregtech.compat.common.MaterialProcessOverview(layoutPage(List.of(), List.of())
+                .withInformation(List.of(information)));
+        helper.assertTrue(onlyInformation.nodes().isEmpty() && onlyInformation.edges().isEmpty()
+                        && onlyInformation.bands().get(0).section() == gregtech.compat.common.MaterialProcessDisplay.Section.SOURCES
+                        && onlyInformation.information().size() == 1,
+                "materials with only reference pages still have an information area in sources");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void viewerRecipesSelectNativeRowsAndIncludeCrafting(GameTestHelper helper) {
+        var visible = row(new ItemStack[] {new ItemStack(Items.IRON_INGOT)}, Items.COPPER_INGOT);
+        var hidden = row(new ItemStack[] {new ItemStack(Items.PAPER)}, Items.GOLD_INGOT);
+        var map = new RecipeMap(new ArrayList<>(List.of(visible, hidden)),
+                "gt.test.process.viewer", "Test", "textures/gui/test", 9, 9, 0, 0, 0, 0, 0,
+                false, false, false, false);
+        RecipeMap.unregister(map);
+        var ores = List.of(new Ore(Materials.Iron, "item:minecraft:iron_nugget", 0, 20, 1, 0, List.of()));
+        var facts = new MaterialWorldgenFacts.Snapshot(List.of(
+                new Fact("viewer_test", "test", Kind.LARGE_VEIN, "minecraft:overworld", 0, 20, 1, 1, ores)));
+        var source = MaterialProcessSnapshot.build(MaterialPublication.current(), 1, facts, List.of(map));
+        var builder = source.viewerBuilder();
+        builder.machine(map, visible);
+        builder.machine(map, visible);
+        var reference = new gregtech.api.addon.material.DataKey("test", "crafting/iron_block");
+        builder.recipe(reference, "Crafting", new ItemStack(Items.CRAFTING_TABLE),
+                List.of(builder.item(new ItemStack(Items.IRON_INGOT), Role.CONSUMED, 9, java.util.OptionalInt.empty())),
+                List.of(builder.item(new ItemStack(Items.IRON_BLOCK), Role.UNKNOWN, 1, java.util.OptionalInt.of(10000))), List.of());
+        var view = builder.build();
+        var root = view.roots().stream().filter(value -> value.material().equals("Iron")).findFirst().orElseThrow();
+        var query = view.queryMaterial(root.resource(), new Budgets(0, 32, 32, 32));
+        helper.assertTrue(query.steps().size() == 3 && query.steps().stream().filter(step -> view.recipe(step.reference()).isPresent()).count() == 1,
+                "the viewer owns machine admission, deduplicates native rows and retains real worldgen");
+        helper.assertTrue(view.roots().stream().noneMatch(value -> value.material().equals("Gold")),
+                "a machine row absent from the viewer does not leak back from the global tables");
+        var page = gregtech.compat.common.MaterialProcessProjection.pages(view, root.resource(),
+                gregtech.compat.common.MaterialProcessDisplay.Navigation.NONE).get(0);
+        var crafting = page.steps().stream().filter(step -> step.reference().equals(reference)).findFirst().orElseThrow();
+        helper.assertTrue(crafting.icon().is(Items.CRAFTING_TABLE) && crafting.inputs().get(0).quantity().getString().equals("9"),
+                "crafting routes retain their workstation and native input batch");
+        helper.assertTrue(source.roots().stream().anyMatch(value -> value.material().equals("Gold")),
+                "a viewer projection never changes the published server snapshot");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void viewerAlternativesRemainOneStatefulSelector(GameTestHelper helper) {
+        var source = MaterialProcessSnapshot.build(MaterialPublication.current(), 1,
+                new MaterialWorldgenFacts.Snapshot(List.of()), List.of());
+        var builder = source.viewerBuilder();
+        var stateful = new ItemStack(Items.IRON_INGOT);
+        var data = gregtech.content.data.UsbDataMedia.tagOrEmpty(stateful);
+        data.putString("viewer_test", "native_state");
+        gregtech.content.data.UsbDataMedia.store(stateful, data);
+        var selector = builder.alternatives(List.of(
+                builder.item(stateful, Role.CONSUMED, 2, java.util.OptionalInt.empty()),
+                builder.item(new ItemStack(Items.IRON_NUGGET), Role.CONSUMED, 2, java.util.OptionalInt.empty())));
+        var mixed = builder.alternatives(List.of(
+                builder.item(new ItemStack(Items.IRON_INGOT), Role.CONSUMED, 1, java.util.OptionalInt.empty()),
+                builder.item(new ItemStack(Items.COPPER_INGOT), Role.CONSUMED, 1, java.util.OptionalInt.empty())));
+        helper.assertTrue(selector.resource().material().equals("Iron") && mixed.resource().material().equals("unknown"),
+                "one material may be attributed only when every alternative agrees");
+        var reference = new gregtech.api.addon.material.DataKey("test", "external/selector");
+        builder.recipe(reference, "External processing", new ItemStack(Items.FURNACE), List.of(selector),
+                List.of(builder.item(new ItemStack(Items.COPPER_INGOT), Role.UNKNOWN, 3, java.util.OptionalInt.of(2500))), List.of());
+        var view = builder.build();
+        var root = view.roots().stream().filter(value -> value.material().equals("Copper")).findFirst().orElseThrow();
+        var page = gregtech.compat.common.MaterialProcessProjection.pages(view, root.resource(),
+                gregtech.compat.common.MaterialProcessDisplay.Navigation.NONE).get(0);
+        var step = page.steps().get(0);
+        helper.assertTrue(step.inputs().size() == 1 && step.inputs().get(0).icons().size() == 2 && !step.resolved(),
+                "alternatives stay a single unresolved selector rather than joint requirements");
+        helper.assertTrue(gregtech.engine.stack.StackCompat.sameItem(step.inputs().get(0).icons().get(0), stateful)
+                        && step.outputs().get(0).chance().orElseThrow() == 2500,
+                "external stacks keep their complete native state and output chance");
+        view.viewerIcons(selector.resource().key()).get(0).setCount(12);
+        helper.assertTrue(view.viewerIcons(selector.resource().key()).get(0).getCount() == 1,
+                "native viewer representatives are copied on access");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
     public static void presentationPreservesNativeItemState(GameTestHelper helper) {
         var input = new ItemStack(Items.IRON_INGOT);
         var data = gregtech.content.data.UsbDataMedia.tagOrEmpty(input);

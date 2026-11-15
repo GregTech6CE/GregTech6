@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 @EmiEntrypoint
 public final class GregTechEMIPlugin implements EmiPlugin {
     private static int overlayGeneration;
+    private static MaterialProcessSnapshot processSnapshot;
 
     @Override
     public void initialize(dev.emi.emi.api.EmiInitRegistry registry) {
@@ -28,6 +29,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
     /** The client overlay calls this before EMI re-registers, so this pass reads the live maps. */
     public static void overlayChanged() {
         overlayGeneration++;
+        processSnapshot = null;
     }
 
     public static int overlayGeneration() {
@@ -36,11 +38,8 @@ public final class GregTechEMIPlugin implements EmiPlugin {
 
     @Override
     public void register(EmiRegistry registry) {
-        var processSnapshot = MaterialProcessSnapshot.Store.current();
-        var processNavigation = new ProcessNavigation(processSnapshot);
-        MaterialProcessEmiRecipe.register(
-                registry,
-                gregtech.compat.common.MaterialProcessProjection.initialPages(processSnapshot, processNavigation));
+        processSnapshot = null;
+        registry.addCategory(MaterialProcessEmiRecipe.category());
         gregtech.client.gui.RecipeViewerNavigation.registerEmi(map -> {
             var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.mNameInternal.toLowerCase(Locale.ROOT));
             var manager = dev.emi.emi.api.EmiApi.getRecipeManager();
@@ -174,16 +173,56 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         return false;
     }
 
+    /** Called after EMI has registered deferred rows and applied every recipe filter. */
+    public static java.util.List<EmiRecipe> addMaterialProcesses(
+            java.util.List<EmiRecipe> recipes,
+            java.util.Map<EmiRecipeCategory, java.util.List<dev.emi.emi.api.stack.EmiIngredient>> workstations) {
+        var source = MaterialProcessSnapshot.Store.current();
+        var captured = MaterialProcessEmiRecipes.capture(source, recipes, workstations);
+        var snapshot = captured.snapshot();
+        processSnapshot = snapshot;
+        var navigation = new ProcessNavigation(snapshot, source, captured.information(), captured.links());
+        var result = new java.util.ArrayList<>(recipes);
+        var materials = new java.util.HashSet<String>();
+        for (var page : gregtech.compat.common.MaterialProcessProjection.initialPages(snapshot, navigation))
+            if (!page.material().isEmpty()) {
+                result.add(new MaterialProcessEmiRecipe(page.withInformation(
+                        captured.information().getOrDefault(page.material(), java.util.List.of()))));
+                materials.add(page.material());
+            }
+        captured.information().forEach((material, entries) -> {
+            if (!materials.contains(material))
+                result.add(
+                        new MaterialProcessEmiRecipe(gregtech.compat.common.MaterialProcessProjection.informationPage(
+                                material, entries, navigation)));
+        });
+        return java.util.List.copyOf(result);
+    }
+
     private static final class ProcessNavigation implements gregtech.compat.common.MaterialProcessDisplay.Navigation {
         private final MaterialProcessSnapshot snapshot;
+        private final MaterialProcessSnapshot source;
+        private final java.util.Map<String, java.util.List<gregtech.compat.common.MaterialProcessDisplay.Information>>
+                information;
+        private final java.util.Map<gregtech.api.addon.material.DataKey, EmiRecipe> informationLinks;
 
-        private ProcessNavigation(MaterialProcessSnapshot snapshot) {
+        private ProcessNavigation(
+                MaterialProcessSnapshot snapshot,
+                MaterialProcessSnapshot source,
+                java.util.Map<String, java.util.List<gregtech.compat.common.MaterialProcessDisplay.Information>>
+                        information,
+                java.util.Map<gregtech.api.addon.material.DataKey, EmiRecipe> informationLinks) {
             this.snapshot = snapshot;
+            this.source = source;
+            this.information = information;
+            this.informationLinks = informationLinks;
         }
 
         @Override
         public boolean valid() {
-            return MaterialProcessSnapshot.Store.current(snapshot);
+            return processSnapshot == snapshot
+                    && MaterialProcessSnapshot.Store.current(source)
+                    && net.minecraft.client.Minecraft.getInstance().level != null;
         }
 
         @Override
@@ -198,10 +237,23 @@ public final class GregTechEMIPlugin implements EmiPlugin {
 
         @Override
         public boolean openForm(gregtech.api.addon.material.DataKey resource, boolean uses) {
-            if (!MaterialProcessSnapshot.Store.current(snapshot)) return false;
+            if (!valid()) return false;
             var pages = gregtech.compat.common.MaterialProcessProjection.pages(snapshot, resource, this);
             if (pages.isEmpty()) return false;
-            dev.emi.emi.api.EmiApi.displayRecipe(new MaterialProcessEmiRecipe(pages.get(0)));
+            var page = pages.get(0);
+            dev.emi.emi.api.EmiApi.displayRecipe(new MaterialProcessEmiRecipe(
+                    page.withInformation(information.getOrDefault(page.material(), java.util.List.of()))));
+            return true;
+        }
+
+        @Override
+        public boolean openInformation(gregtech.api.addon.material.DataKey reference) {
+            if (!valid()) return false;
+            var recipe = informationLinks.get(reference);
+            if (recipe == null) return false;
+            if (net.minecraft.client.Minecraft.getInstance().screen
+                    instanceof gregtech.client.MaterialProcessScreen screen) screen.onClose();
+            dev.emi.emi.api.EmiApi.displayRecipe(recipe);
             return true;
         }
     }

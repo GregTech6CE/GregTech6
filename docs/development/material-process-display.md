@@ -1,6 +1,6 @@
 # 矿物处理图展示接入
 
-本文说明[计划 08-E](material-system-refactor/08-material-data-api.md#e有界矿物处理图与消费者迁移)的前端接入契约。生产路径从同一 `MaterialProcessSnapshot` 取得一种材料全部形态的直接关系，并在 JEI 与 EMI 中共享单页可缩放、自由平移图和 `MaterialProcessPanel`。空状态 `unbound()` 只在没有成功发布快照时使用；具体机器行、世界生成、远程客户端和人工交互仍需按验证范围分别验收。
+本文说明[计划 08-E](material-system-refactor/08-material-data-api.md#e有界矿物处理图与消费者迁移)的前端接入契约。生产路径从 `MaterialProcessSnapshot` 取得一种材料全部形态的直接关系，并在 JEI 与 EMI 中共享单页可缩放、自由平移图和 `MaterialProcessPanel`。EMI 使用最终可见加工配方构造客户端视图，JEI 使用已发布的 GT 机器与世界生成快照。空状态 `unbound()` 只在没有可展示材料时使用；具体机器行、世界生成、远程客户端和人工交互仍需按验证范围分别验收。
 
 这是 Minecraft 实现层的客户端调用接口，随模组编译；方法声明来自 API 1.9.0，但本页面本身不是独立 API JAR 的公共材料服务。分类和面板只在已安装 JEI／EMI 的客户端路径加载；无 viewer 的专用服务端入口不得引用它们。
 
@@ -21,11 +21,27 @@
 | `gregtech.compat.jei.MaterialProcessCategory` | JEI 不可见检索索引、拖拽／滚轮事件和 tooltip；分类类型为 `TYPE`，标识为 `gt6ce:material_process` |
 | `gregtech.compat.emi.MaterialProcessEmiRecipe` | EMI 索引、拖拽／滚轮事件和共享面板适配；不读取材料目录或配方表 |
 | `gregtech.content.recipe.MaterialProcessSnapshot` | 绑定一次完整发布、会话和世界生成 revision；索引最终机器行与符号选择器 |
+| `MaterialProcessSnapshot.ViewerBuilder` | 从查看器选中的原生机器行与物品／流体端口构造独立视图，保留活动世界生成，不修改服务端发布 |
+| `gregtech.compat.emi.MaterialProcessEmiRecipes` | 将 EMI 最终可见加工配方投影为材料关系，其他相关条目保留为独立信息入口 |
 | `gregtech.content.worldgen.MaterialWorldgenFacts` | 只含活动世界生成事实，不构造原生图标 |
 | `gregtech.engine.material.MaterialProcessGraph` | core 有界递归查询、材料页直连查询、循环终止和显式预算截断 |
 | `gregtech.compat.common.MaterialProcessProjection` | 把 core 查询转成快照内 `DataKey`、有限图标和展示 `Page` |
 
 复用现有 `DataKey` 表达展示引用，复用 `RecipeOutputChances.CERTAIN` 的万分比契约、viewer 检索索引、配方索引与运行期注册。没有另建 SPI、全局来源缓存、锁、服务端查询协议或材料事实表。JEI 与 EMI 共用展示模型和面板，任何共用类型都不能引用具体 viewer 类。
+
+## EMI 配方来源与准入
+
+EMI 的机器、工作台、熔炉和其他模组配方统一取自本次 `EmiRecipes.bake` 过滤后的列表，包括延迟注册的配方。公开 `addDeferredRecipes` 回调执行时尚未建立最终管理器，也未应用全部隐藏规则，因此客户端可选的 `EmiMaterialProcessRecipesMixin` 在最终列表赋值时加入材料页。两个节点均注册此 Mixin；未安装 EMI 时由 `@Pseudo` 跳过。该接入依赖当前锁定的 EMI 1.1.24，升级时必须核对局部列表与注入次数。
+
+只有 `supportsRecipeTree()` 为真且输入、输出均非空的条目可以成为加工关系。结构、战利品、世界生成展示、材料标签查询和总览页自身等声明不支持配方树的条目不作为加工关系导入。任一原料、催化剂或产物为空、数量无效或含不支持的 ingredient 类型时，整条配方移入相关信息，不能删掉该槽后将剩余部分当作完整配方。第三方错误声明自身完整性无法由通用接口自动识别；来源约束与容器返还仍通过原配方查询查看。
+
+GT 的 `MachineEmiRecipe` 只决定原生行是否进入视图；端口继续使用原生配方的材料单位、精确状态、概率、特殊工艺与回收归属，不重复遍历全局机器表添加另一份。活动世界生成使用已发布事实单独保留，不从 EMI 信息页的检索槽推断来源。
+
+其他配方保留每槽原生数量、输出边际概率、催化剂及完整物品 NBT／流体数据组件。候选原料作为一个 selector；只有所有候选均属于同一材料时才将它归入该材料，跨材料候选保持 `unknown`。候选集不展开为多个共同输入，也不与某个代表物品建立确认关系；代表图标最多十六个。缺少可靠工作站时保留问号。覆盖说明列出未作为加工关系导入的条目数，不声称支持未注册到 EMI 的加工方式。
+
+信息页、不完整配方及不支持 ingredient 的条目，按现有物品成分和流体材料绑定关联到材料；复合物品可关联其中各个材料，不能据此推断生产或回收关系。相关条目放在来源区最下方的独立卡片，点击直接打开对应原始 EMI 页面；它们不加入 `Step`、`Connection` 或加工预算。没有加工步骤但存在相关信息的材料仍注册一张可检索的信息页。卡片随画布一起缩放、平移和裁剪，完整标题与参考性质放在 tooltip 中。关联索引与加工端口分开，索引仍只收录页面所属材料。
+
+每次 EMI 重建均替换客户端视图及导航代次；旧页、断线后的页和旧发布的回调失效。JEI 未使用此 EMI 数据源，仍受 GT 原生快照的覆盖范围限制。
 
 ## 构造契约
 

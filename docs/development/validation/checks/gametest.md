@@ -40,6 +40,8 @@ GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTe
 
 材料领域的 `MaterialBaselineTests` 验证存储块的成分与两类准入、72U 附魔金苹果的规划和实际回收输出、复合钻头、耐久缩放、容器与有形状铸模、压模机模具、固体／流体分解及 test-source 材料 SPI。`material_baseline_reload` 为仅含一个测试的独立批次，等待两次真实资源重载；拥有规则数和固定样例必须稳定。原始投影写入根目录 `work/material-system-refactor/runtime/<MC>/<运行目录>/`。已知错误行为明确标为观察，不能当作正确性依据；字段、复现与未覆盖范围见[材料基线报告](../../../integration/material-baseline.md)。
 
+`MaterialProcessSnapshotTests` 的 viewer 用例验证选中的原生机器行去重、未选行排除、工作台数量与工作站、活动世界生成保留，以及单槽候选、跨材料候选、完整原生状态和输出概率；还确认信息卡片位于来源下方、信息页单独存在时仍保留来源区、页面检索限于本材料且不生成加工节点或边。它们不启动 EMI，不能代替最终配方列表 Mixin、信息页过滤及第三方集成的客户端验收。
+
 `decompositionRespectsFormsAndExactFluidIdentities` 通过测试 SPI 声明 dust-only、blockDust-only、liquid-only 和 gas-only 分解，检查形态限制、流体输入不会错误抑制允许的固体兜底、本体完整 ID、附属完整 ID／旧裸路径、外部原版流体 ID、未知及非法 ID，以及附属流体输出的身份和数量。
 
 针对性回归用数据表维护，不为每个 issue 新建测试类、namespace 或结构模板。GameTest 表是运行时权威，只保留 R 级运行时行；静态源检查由 core 的 `crafting-issue-static-cases.tsv` 维护。
