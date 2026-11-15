@@ -40,34 +40,28 @@ public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlo
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.UP));
     }
 
-    public gregtech.api.material.GTMaterial material() {
-        return gregtech.engine.material.GTMaterialRegistry.get((fluid ? "Tungsten" : "Platinum"));
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state,
+            net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new LongDistEndpointBlockEntity(pos, state);
+    public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
     }
-
+*///?} else {
     @Override
-    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
-        return gregtech.engine.tool.GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.WRENCH)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING, gregtech.content.block.machine.MachineRotationType.ALL) : null;
-    }
-
-    @Override
-    public void toolStateChanged(net.minecraft.world.level.Level level, BlockPos pos, BlockState state) {
-        LongDistanceTopology.changed(level);
-        if (level.getBlockEntity(pos) instanceof LongDistEndpointBlockEntity endpoint) endpoint.invalidateRoute();
-        if (level.getBlockEntity(pos) instanceof LongDistanceTransformerBlockEntity endpoint) endpoint.invalidateRoute();
-    }
-
-    public net.minecraft.world.InteractionResult interact(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+//?}
+    public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
         var tool = player.getItemInHand(hand);
         if (!player.mayBuild() || !level.mayInteract(player, pos)) return net.minecraft.world.InteractionResult.PASS;
@@ -98,6 +92,33 @@ public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlo
         return net.minecraft.world.InteractionResult.PASS;
     }
 
+    public gregtech.api.material.GTMaterial material() {
+        return gregtech.engine.material.GTMaterialRegistry.get((fluid ? "Tungsten" : "Platinum"));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new LongDistEndpointBlockEntity(pos, state);
+    }
+
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
+        return gregtech.engine.tool.GTToolHelper.matchesTool(tool, gregtech.engine.tool.GTToolType.WRENCH)
+                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING, gregtech.content.block.machine.MachineRotationType.ALL) : null;
+    }
+
+    @Override
+    public void toolStateChanged(net.minecraft.world.level.Level level, BlockPos pos, BlockState state) {
+        LongDistanceTopology.changed(level);
+        if (level.getBlockEntity(pos) instanceof LongDistEndpointBlockEntity endpoint) endpoint.invalidateRoute();
+        if (level.getBlockEntity(pos) instanceof LongDistanceTransformerBlockEntity endpoint) endpoint.invalidateRoute();
+    }
+
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         var player = context.getPlayer();
@@ -105,34 +126,6 @@ public class LongDistEndpointBlock extends DirectionalBlock implements EntityBlo
                 context.getHorizontalDirection().getOpposite().ordinal());
         return defaultBlockState().setValue(FACING, Direction.values()[side]);
     }
-
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state,
-            net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return interact(state, level, pos, player, hand,
-                hit) == net.minecraft.world.InteractionResult.PASS ? net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-                : net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    @Override
-    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return interact(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-
-    @Override
-    public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-*///?} else {
-    @Override
-    public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return interact(state, level, pos, player, hand, hit);
-    }
-//?}
 
     @Override
     public void onPlace(net.minecraft.world.level.block.state.BlockState state, net.minecraft.world.level.Level level,

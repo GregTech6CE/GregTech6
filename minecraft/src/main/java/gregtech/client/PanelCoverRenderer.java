@@ -159,14 +159,22 @@ public final class PanelCoverRenderer {
             if (!textures.isEmpty()) {
                 String file = textures.get(Math.floorMod(CoverUtilityBehaviors.design(stack), textures.size()));
                 var set = MaterialIcons.resolveTextureSet(material.getMaterial());
-                String path = "block/material_icons/" + set.folder() + "/" + file;
+                var base = ArmRenderHelper.findSprite(ResourceLocation.fromNamespaceAndPath(
+                        "gt6ce", "block/material_icons/" + set.folder() + "/" + file));
+                if (base == null) {
+                    base = ArmRenderHelper.findSprite(
+                            ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/" + file));
+                }
+                if (base == null) return false;
+                var detail = ArmRenderHelper.findSprite(ResourceLocation.fromNamespaceAndPath(
+                        "gt6ce", "block/material_icons/" + set.folder() + "/" + file + "_overlay"));
                 var vertices = buffers.getBuffer(RenderType.cutout());
                 CoverSurfaceRenderer.attachment(
                         host.coverOwner(),
                         side,
                         pose,
                         vertices,
-                        ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce", path)),
+                        base,
                         light,
                         material.getMaterial().getColor());
                 CoverSurfaceRenderer.draw(
@@ -174,28 +182,14 @@ public final class PanelCoverRenderer {
                         pose,
                         vertices,
                         side,
-                        ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce", path)),
+                        base,
                         light,
                         0,
                         material.getMaterial().getColor());
-                CoverSurfaceRenderer.draw(
-                        owner,
-                        pose,
-                        vertices,
-                        side,
-                        ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce", path + "_overlay")),
-                        light,
-                        1);
+                if (detail == null) return true;
+                CoverSurfaceRenderer.draw(owner, pose, vertices, side, detail, light, 1);
                 if (CoverSurfaceRenderer.needsAttachment(host.coverOwner(), side))
-                    CoverSurfaceRenderer.drawBack(
-                            pose,
-                            vertices,
-                            side,
-                            ArmRenderHelper.getSprite(
-                                    ResourceLocation.fromNamespaceAndPath("gt6ce", path + "_overlay")),
-                            light,
-                            1,
-                            -1);
+                    CoverSurfaceRenderer.drawBack(pose, vertices, side, detail, light, 1, -1);
                 return true;
             }
         }

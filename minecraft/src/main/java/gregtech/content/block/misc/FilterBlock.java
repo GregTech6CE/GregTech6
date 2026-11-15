@@ -33,48 +33,27 @@ public class FilterBlock extends net.minecraft.world.level.block.DirectionalBloc
     }
 //? if >=1.21.1 {
     /*@Override
-    public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
-            java.util.List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
-*///?} else {
-    @Override
-    public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.level.BlockGetter level,
-            java.util.List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
-//?}
-        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.filter.routing"));
-        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.filter.tools"));
-        if (filterType.equals("oredict")) lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.filter.prefix"));
-    }
-
-//? if >=1.21.1 {
-    /*@Override
     protected com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.block.DirectionalBlock> codec() {
         return com.mojang.serialization.MapCodec.unit(this);
     }
+
+    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack held, BlockState state,
+            net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
 //?}
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, SECONDARY, SECONDARY_SET);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        var front = context.getNearestLookingDirection();
-        return defaultBlockState().setValue(FACING, front).setValue(SECONDARY, front.getOpposite()).setValue(SECONDARY_SET, true);
-    }
-
-    @Override
-    public net.minecraft.world.level.block.entity.BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new FilterBlockEntity(pos, state);
-    }
-//? if >=1.21.1 {
-    /*public net.minecraft.world.InteractionResult interact(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-*///?} else {
-    @Override
     public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-//?}
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand,
                 hit)) return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         var tool = player.getItemInHand(hand);
@@ -97,6 +76,35 @@ public class FilterBlock extends net.minecraft.world.level.block.DirectionalBloc
 //?}
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
     }
+//? if >=1.21.1 {
+    /*@Override
+    public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
+            java.util.List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
+*///?} else {
+    @Override
+    public void appendHoverText(net.minecraft.world.item.ItemStack stack, net.minecraft.world.level.BlockGetter level,
+            java.util.List<net.minecraft.network.chat.Component> lines, net.minecraft.world.item.TooltipFlag flag) {
+//?}
+        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.filter.routing"));
+        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.filter.tools"));
+        if (filterType.equals("oredict")) lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.filter.prefix"));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING, SECONDARY, SECONDARY_SET);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        var front = context.getNearestLookingDirection();
+        return defaultBlockState().setValue(FACING, front).setValue(SECONDARY, front.getOpposite()).setValue(SECONDARY_SET, true);
+    }
+
+    @Override
+    public net.minecraft.world.level.block.entity.BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new FilterBlockEntity(pos, state);
+    }
 
     @Override
     public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
@@ -117,35 +125,14 @@ public class FilterBlock extends net.minecraft.world.level.block.DirectionalBloc
             net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack = new net.minecraft.world.item.ItemStack(this);
         var entity = builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY);
+        if (entity instanceof FilterBlockEntity) {
 //? if >=1.21.1 {
-        /*if (entity instanceof FilterBlockEntity) stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(entity,
-                        entity.saveWithId(builder.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(entity, entity.saveWithId(builder.getLevel().registryAccess()));
 *///?} else {
-        if (entity instanceof FilterBlockEntity) stack.getOrCreateTag().put("BlockEntityTag",
-                gregtech.content.cover.ComponentCoverFallback.forItem(entity, entity.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(entity, entity.saveWithoutMetadata());
 //?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return java.util.List.of(stack);
     }
-//? if >=1.21.1 {
-    /*@Override
-    public net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack held, BlockState state,
-            net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-    @Override
-    public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return interact(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-
-*///?} else {
-//?}
 }

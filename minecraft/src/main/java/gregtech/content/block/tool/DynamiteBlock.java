@@ -3,11 +3,15 @@ package gregtech.content.block.tool;
 import gregtech.content.blockentity.tool.DynamiteBlockEntity;
 import gregtech.content.item.behavior.RemoteActivatable;
 import gregtech.content.tool.DynamiteExplosion;
+import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+//? if >=1.21.1 {
+/*import net.minecraft.world.ItemInteractionResult;
+*///?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -27,6 +31,36 @@ public class DynamiteBlock extends DirectionalBlock implements RemoteActivatable
     /*@Override public com.mojang.serialization.MapCodec<DynamiteBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {
 //?}
+//? if >=1.21.1 {
+    /*@Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        ItemStack held=player.getItemInHand(hand);
+        if (!(held.is(Items.FLINT_AND_STEEL)||held.is(Items.FIRE_CHARGE))) return InteractionResult.PASS;
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof DynamiteBlockEntity charge
+                && charge.onIgnite(level,pos,hit.getDirection(),player,held,player.isShiftKeyDown(),0,0,0)>0
+                && !player.isCreative()) {
+            if(held.is(Items.FIRE_CHARGE)) held.shrink(1);
+//? if >=1.21.1 {
+            /*else held.hurtAndBreak(1,player,hand==InteractionHand.OFF_HAND?net.minecraft.world.entity.EquipmentSlot.OFFHAND:net.minecraft.world.entity.EquipmentSlot.MAINHAND);
+*///?} else {
+            else held.hurtAndBreak(1,player,p->p.broadcastBreakEvent(hand));
+//?}
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
     public static final BooleanProperty ARMED = BooleanProperty.create("armed");
     public static final BooleanProperty SUNK = BooleanProperty.create("sunk");
     private final float maxResistance;
@@ -59,29 +93,6 @@ public class DynamiteBlock extends DirectionalBlock implements RemoteActivatable
             case X -> box(0,5,5,16,11,11); case Y -> box(5,0,5,11,16,11); case Z -> box(5,5,0,11,11,16);
         };
     }
-//? if >=1.21.1 {
-    /*private InteractionResult originalUse(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-*///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-//?}
-        ItemStack held=player.getItemInHand(hand);
-        if (!(held.is(Items.FLINT_AND_STEEL)||held.is(Items.FIRE_CHARGE))) return InteractionResult.PASS;
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof DynamiteBlockEntity charge
-                && charge.onIgnite(level,pos,hit.getDirection(),player,held,player.isShiftKeyDown(),0,0,0)>0
-                && !player.isCreative()) {
-            if(held.is(Items.FIRE_CHARGE)) held.shrink(1);
-//? if >=1.21.1 {
-            /*else held.hurtAndBreak(1,player,hand==InteractionHand.OFF_HAND?net.minecraft.world.entity.EquipmentSlot.OFFHAND:net.minecraft.world.entity.EquipmentSlot.MAINHAND);
-*///?} else {
-            else held.hurtAndBreak(1,player,p->p.broadcastBreakEvent(hand));
-//?}
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-//? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(originalUse(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-*///?} else {
-//?}
     /** Original mSunk is retained only while the back is drillable stone/ore. */
     public void refreshSupport(Level level, BlockPos pos) {
         var state=level.getBlockState(pos);

@@ -1,11 +1,15 @@
 package gregtech.content.block.tool;
 
 import gregtech.content.blockentity.tool.DustFunnelBlockEntity;
+import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+//? if >=1.21.1 {
+/*import net.minecraft.world.ItemInteractionResult;
+*///?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -53,11 +57,47 @@ public class DustFunnelBlock extends Block implements EntityBlock {
     }
 
 //? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.block.Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
+    /*@Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        // both hands fire use(); handling the off hand double-triggers
+        if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        if (!(level.getBlockEntity(pos) instanceof DustFunnelBlockEntity funnel)) return InteractionResult.PASS;
+        ItemStack held = player.getItemInHand(hand);
+        if (!level.isClientSide) {
+            if (gregtech.engine.tool.GTToolHelper.isMonkeyWrench(held)) {
+                funnel.cycleMode(player.isShiftKeyDown());
+                player.displayClientMessage(funnel.modeIcon().getHoverName(), true);
+                gregtech.engine.tool.GTToolHelper.damageForUse(held, 1, player);
+            } else if (gregtech.engine.tool.GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.PINCERS)) {
+                ItemStack out = funnel.retrieveFraction();
+                if (!out.isEmpty() && !player.addItem(out)) player.drop(out, false);
+                gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(held, 10, player);
+            } else if (player.isShiftKeyDown() && held.isEmpty()) {
+                ItemStack out = funnel.retrieve();
+                if (!out.isEmpty() && !player.addItem(out)) player.drop(out, false);
+            } else if (!held.isEmpty() && hit.getDirection() == net.minecraft.core.Direction.UP) {
+                int taken = funnel.insert(held);
+                if (taken > 0 && !player.getAbilities().instabuild) held.shrink(taken);
+                else if (taken == 0) player.displayClientMessage(
+                        Component.translatable("message.gt6ce.dust_funnel.only_dusts"), true);
+            }
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
     public DustFunnelBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any().setValue(MODE, 0));
@@ -91,40 +131,6 @@ public class DustFunnelBlock extends Block implements EntityBlock {
         if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.DUST_FUNNEL.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<DustFunnelBlockEntity>) DustFunnelBlockEntity::serverTick;
     }
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        // both hands fire use(); handling the off hand double-triggers
-        if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
-        if (!(level.getBlockEntity(pos) instanceof DustFunnelBlockEntity funnel)) return InteractionResult.PASS;
-        ItemStack held = player.getItemInHand(hand);
-        if (!level.isClientSide) {
-            if (gregtech.engine.tool.GTToolHelper.isMonkeyWrench(held)) {
-                funnel.cycleMode(player.isShiftKeyDown());
-                player.displayClientMessage(funnel.modeIcon().getHoverName(), true);
-                gregtech.engine.tool.GTToolHelper.damageForUse(held, 1, player);
-            } else if (gregtech.engine.tool.GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.PINCERS)) {
-                ItemStack out = funnel.retrieveFraction();
-                if (!out.isEmpty() && !player.addItem(out)) player.drop(out, false);
-                gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(held, 10, player);
-            } else if (player.isShiftKeyDown() && held.isEmpty()) {
-                ItemStack out = funnel.retrieve();
-                if (!out.isEmpty() && !player.addItem(out)) player.drop(out, false);
-            } else if (!held.isEmpty() && hit.getDirection() == net.minecraft.core.Direction.UP) {
-                int taken = funnel.insert(held);
-                if (taken > 0 && !player.getAbilities().instabuild) held.shrink(taken);
-                else if (taken == 0) player.displayClientMessage(
-                        Component.translatable("message.gt6ce.dust_funnel.only_dusts"), true);
-            }
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())
@@ -162,23 +168,13 @@ public class DustFunnelBlock extends Block implements EntityBlock {
         if (mode == 0) return stack;
         CompoundTag data = new CompoundTag();
         data.putInt(MODE_TAG, Math.floorMod(mode, 5));
-//? if >=1.21.1 {
-        /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                net.minecraft.world.item.component.CustomData.of(data));
-*///?} else {
-        stack.addTagElement("BlockEntityTag", data);
-//?}
+        gregtech.engine.stack.BlockEntityData.write(stack, data);
         return stack;
     }
 
     @Nullable
     private static CompoundTag blockEntityTag(ItemStack stack) {
-//? if >=1.21.1 {
-        /*var data = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        return data == null ? null : data.copyTag();
-*///?} else {
-        return stack.getTagElement("BlockEntityTag");
-//?}
+        return gregtech.engine.stack.BlockEntityData.read(stack);
     }
 
     @Override

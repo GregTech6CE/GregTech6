@@ -40,8 +40,7 @@ public final class TrackBlock {
     /** GT6 {@code BlockBaseRail}: straight run with unloaded neighbours. */
     static final float UNLOADED_SPEED = 1.0F;
 
-    private TrackBlock() {
-    }
+    private TrackBlock() {}
 
     /**
      * Hands the rail's speed to the cart the rail is carrying.
@@ -55,8 +54,8 @@ public final class TrackBlock {
      * ({@code AbstractMinecart}), so the value always belongs to the rail the cart is on right
      * now.</p>
      */
-    static void applySpeedToCart(float speed, BlockState state, Level level, BlockPos pos,
-            @Nullable AbstractMinecart cart) {
+    static void applySpeedToCart(
+            float speed, BlockState state, Level level, BlockPos pos, @Nullable AbstractMinecart cart) {
         if (cart == null) return;
         cart.setCurrentCartSpeedCapOnRail(railSpeed(speed, state, level, pos));
     }
@@ -65,20 +64,20 @@ public final class TrackBlock {
     static float railSpeed(float speed, BlockState state, Level level, BlockPos pos) {
         RailShape shape = state.getValue(((BaseRailBlock) state.getBlock()).getShapeProperty());
         boolean straight = switch (shape) {
-            case NORTH_SOUTH -> sameAxis(level, pos.north(), RailShape.NORTH_SOUTH)
-            && sameAxis(level, pos.south(), RailShape.NORTH_SOUTH);
-            case EAST_WEST -> sameAxis(level, pos.east(), RailShape.EAST_WEST)
-            && sameAxis(level, pos.west(), RailShape.EAST_WEST);
+            case NORTH_SOUTH ->
+                sameAxis(level, pos.north(), RailShape.NORTH_SOUTH)
+                        && sameAxis(level, pos.south(), RailShape.NORTH_SOUTH);
+            case EAST_WEST ->
+                sameAxis(level, pos.east(), RailShape.EAST_WEST) && sameAxis(level, pos.west(), RailShape.EAST_WEST);
             default -> false;
         };
-        return gregtech.content.transport.TrackCatalog.speed(speed, straight,
-                level.hasChunksAt(pos.offset(-16, 0, -16), pos.offset(16, 0, 16)));
+        return gregtech.content.transport.TrackCatalog.speed(
+                speed, straight, level.hasChunksAt(pos.offset(-16, 0, -16), pos.offset(16, 0, 16)));
     }
 
     private static boolean sameAxis(Level level, BlockPos pos, RailShape shape) {
         BlockState state = level.getBlockState(pos);
-        return state.getBlock() instanceof BaseRailBlock rail
-                && state.getValue(rail.getShapeProperty()) == shape;
+        return state.getBlock() instanceof BaseRailBlock rail && state.getValue(rail.getShapeProperty()) == shape;
     }
 
     static void moveCart(AbstractMinecart cart, BlockState state, Level level, BlockPos pos, boolean powered) {
@@ -86,9 +85,12 @@ public final class TrackBlock {
         var shape = state.getValue(((BaseRailBlock) state.getBlock()).getShapeProperty());
         int axis = shape == RailShape.EAST_WEST ? 1 : shape == RailShape.NORTH_SOUTH ? 2 : 0;
         boolean launch = powered && !(Math.sqrt(motion.x * motion.x + motion.z * motion.z) > .01D);
-        boolean negative = launch && (axis == 1 ? solidWall(level, pos.west()) : axis == 2 && solidWall(level, pos.north()));
-        boolean positive = launch && (axis == 1 ? solidWall(level, pos.east()) : axis == 2 && solidWall(level, pos.south()));
-        var next = gregtech.content.transport.TrackMotionRules.apply(motion.x, motion.y, motion.z, powered, axis, negative, positive);
+        boolean negative =
+                launch && (axis == 1 ? solidWall(level, pos.west()) : axis == 2 && solidWall(level, pos.north()));
+        boolean positive =
+                launch && (axis == 1 ? solidWall(level, pos.east()) : axis == 2 && solidWall(level, pos.south()));
+        var next = gregtech.content.transport.TrackMotionRules.apply(
+                motion.x, motion.y, motion.z, powered, axis, negative, positive);
         cart.setDeltaMovement(next.x(), next.y(), next.z());
     }
 
@@ -98,13 +100,6 @@ public final class TrackBlock {
 
     /** GT6's plain track ({@code Loader_Rails}). */
     public static final class Straight extends RailBlock {
-//? if >=1.21.1 {
-        /*@Override
-        public com.mojang.serialization.MapCodec<RailBlock> codec() {
-            return com.mojang.serialization.MapCodec.unit(this);
-        }
-*///?} else {
-//?}
         private final float speed;
 
         public Straight(Properties properties, float speed) {
@@ -113,8 +108,7 @@ public final class TrackBlock {
         }
 
         @Override
-        public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos,
-                @Nullable AbstractMinecart cart) {
+        public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, @Nullable AbstractMinecart cart) {
             return railSpeed(speed, state, level, pos);
         }
 
@@ -130,13 +124,6 @@ public final class TrackBlock {
      * the cart to half speed and stops it below 0.03.
      */
     public static final class Booster extends PoweredRailBlock {
-//? if >=1.21.1 {
-        /*@Override
-        public com.mojang.serialization.MapCodec<PoweredRailBlock> codec() {
-            return com.mojang.serialization.MapCodec.unit(this);
-        }
-*///?} else {
-//?}
         private final float speed;
 
         public Booster(Properties properties, float speed) {
@@ -145,8 +132,7 @@ public final class TrackBlock {
         }
 
         @Override
-        public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos,
-                @Nullable AbstractMinecart cart) {
+        public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, @Nullable AbstractMinecart cart) {
             return railSpeed(speed, state, level, pos);
         }
 
@@ -156,7 +142,6 @@ public final class TrackBlock {
             applySpeedToCart(speed, state, level, pos, cart);
             moveCart(cart, state, level, pos, state.getValue(PoweredRailBlock.POWERED));
         }
-
     }
 
     /**
@@ -165,13 +150,6 @@ public final class TrackBlock {
      * its detection bounds and extension hooks require separate parity checks.
      */
     public static final class Detector extends DetectorRailBlock {
-//? if >=1.21.1 {
-        /*@Override
-        public com.mojang.serialization.MapCodec<DetectorRailBlock> codec() {
-            return com.mojang.serialization.MapCodec.unit(this);
-        }
-*///?} else {
-//?}
         private final float speed;
 
         public Detector(Properties properties, float speed) {
@@ -180,8 +158,7 @@ public final class TrackBlock {
         }
 
         @Override
-        public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos,
-                @Nullable AbstractMinecart cart) {
+        public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, @Nullable AbstractMinecart cart) {
             return railSpeed(speed, state, level, pos);
         }
 

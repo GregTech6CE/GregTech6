@@ -1,6 +1,7 @@
 package gregtech.content.block.wood;
 
 import gregtech.content.blockentity.TreeHoleBlockEntity;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -50,6 +51,43 @@ import java.util.List;
  * the original rubber hole can provide both. Breaking a hole drops its source log.
  */
 public class TreeHoleBlock extends HorizontalDirectionalBlock implements EntityBlock {
+    /** GT6 {@code onBlockActivated3}: hand out the resin, or fill the container the player holds. */
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        if (hand != InteractionHand.MAIN_HAND || hit.getDirection() != state.getValue(FACING)
+                // Modern portable vessels are BlockItems too; retain their container interaction.
+                || player.getItemInHand(hand).getItem() instanceof net.minecraft.world.item.BlockItem
+                && !FluidUtil.getFluidHandler(player.getItemInHand(hand)).isPresent()
+                || !state.getValue(RESIN)) return InteractionResult.PASS;
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (yieldsItem()) {
+            ItemStack resin = resinItem();
+            if (resin.isEmpty()) return InteractionResult.PASS;
+            if (!level.setBlock(pos, state.setValue(RESIN, false), 3)) return InteractionResult.PASS;
+            gregtech.engine.fluid.HandContainerTransfer.give(player, resin);
+        } else {
+            var filled = gregtech.engine.fluid.HandContainerTransfer.prepare(player.getItemInHand(hand), resinFluid(), true);
+            if (filled == null) return InteractionResult.PASS;
+            if (!level.setBlock(pos, state.setValue(RESIN, false), 3)) return InteractionResult.PASS;
+            gregtech.engine.fluid.HandContainerTransfer.replaceOne(player, hand, filled.container());
+        }
+        return InteractionResult.CONSUME;
+    }
+
 //? if >=1.21.1 {
     /*@Override
     public com.mojang.serialization.MapCodec<TreeHoleBlock> codec() {
@@ -119,56 +157,9 @@ public class TreeHoleBlock extends HorizontalDirectionalBlock implements EntityB
         };
     }
 
-    /** GT6 {@code onBlockActivated3}: hand out the resin, or fill the container the player holds. */
-//? if >=1.21.1 {
-    /*private InteractionResult originalUse(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-            InteractionHand hand, BlockHitResult hit) {
-        if (hand != InteractionHand.MAIN_HAND || hit.getDirection() != state.getValue(FACING)
-                // Modern portable vessels are BlockItems too; retain their container interaction.
-                || player.getItemInHand(hand).getItem() instanceof net.minecraft.world.item.BlockItem
-                && !FluidUtil.getFluidHandler(player.getItemInHand(hand)).isPresent()
-                || !state.getValue(RESIN)) return InteractionResult.PASS;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (yieldsItem()) {
-            ItemStack resin = resinItem();
-            if (resin.isEmpty()) return InteractionResult.PASS;
-            if (!level.setBlock(pos, state.setValue(RESIN, false), 3)) return InteractionResult.PASS;
-            gregtech.engine.fluid.HandContainerTransfer.give(player, resin);
-        } else {
-            var filled = gregtech.engine.fluid.HandContainerTransfer.prepare(player.getItemInHand(hand), resinFluid(), true);
-            if (filled == null) return InteractionResult.PASS;
-            if (!level.setBlock(pos, state.setValue(RESIN, false), 3)) return InteractionResult.PASS;
-            gregtech.engine.fluid.HandContainerTransfer.replaceOne(player, hand, filled.container());
-        }
-        return InteractionResult.CONSUME;
-    }
-
     /** GT6 {@code getDrops}: a hole drops the log it was cut into. */
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         return List.of(new ItemStack(gregtech.content.registry.GTWoods.log(species)));
     }
-//? if >=1.21.1 {
-
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        return switch (originalUse(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return originalUse(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-//?}
 }

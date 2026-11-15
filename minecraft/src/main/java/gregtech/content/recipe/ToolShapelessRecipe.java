@@ -10,7 +10,6 @@ import gregtech.content.item.GTToolItem;
 import gregtech.content.recipe.FormConversionSelector;
 //? if >=1.21.1 {
 /*import com.mojang.serialization.MapCodec;
-import net.minecraft.core.HolderLookup;
 *///?} else {
 //?}
 import net.minecraft.core.NonNullList;
@@ -48,10 +47,6 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
     public boolean isAutocraftableByGT() {
         return autocraftable;
     }
-//? if >=1.21.1 {
-    /*private final ShapelessRecipe base;
-*///?} else {
-//?}
     public ToolShapelessRecipe(ShapelessRecipe base) {
         this(base, true);
     }
@@ -78,7 +73,6 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
             String conversionInput, String conversionMaterial, boolean requireEmptyFluidContainers, FormConversionPlacement formPlacement) {
 //? if >=1.21.1 {
         /*super(base.getGroup(), base.category(), base.getResultItem(net.minecraft.core.RegistryAccess.EMPTY), expand(base).getIngredients());
-        this.base = base;
         this.autocraftable = autocraftable;
 *///?} else {
         super(base.getId(), base.getGroup(), base.category(), base.getResultItem(RegistryAccess.EMPTY), expand(base).getIngredients());
@@ -99,7 +93,7 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
 //? if >=1.21.1 {
     /*@Override
     public boolean matches(CraftingInput grid, Level level) {
-        if (!base.matches(grid, level)) return false;
+        if (!super.matches(grid, level)) return false;
         for (var stack : grid.items()) {
 *///?} else {
     @Override
@@ -131,17 +125,17 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
         return formPlacement.matches(formSelector, grid.getContainerSize(), first, occupied);
 //?}
     }
-//? if >=1.21.1 {
-    /*@Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingInput grid) {
-        var remaining = base.getRemainingItems(grid);
-        for (int i = 0; i < grid.size(); i++) {
-*///?} else {
     @Override
     public boolean canCraftInDimensions(int width, int height) {
         return super.canCraftInDimensions(width, height) && width * height >= formSelector.minimumGridSize();
     }
 
+//? if >=1.21.1 {
+    /*@Override
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput grid) {
+        var remaining = super.getRemainingItems(grid);
+        for (int i = 0; i < grid.size(); i++) {
+*///?} else {
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingContainer grid) {
         var remaining = super.getRemainingItems(grid);
@@ -168,44 +162,14 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
         }
         return remaining;
     }
-//? if >=1.21.1 {
-    /*@Override
-    public ItemStack assemble(CraftingInput grid, HolderLookup.Provider lookup) {
-        return base.assemble(grid, lookup);
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider lookup) {
-        return base.getResultItem(lookup);
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return base.canCraftInDimensions(width, height) && width * height >= formSelector.minimumGridSize();
-    }
-
-    @Override
-    public String getGroup() {
-        return base.getGroup();
-    }
-
-    @Override
-    public CraftingBookCategory category() {
-        return base.category();
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return base.getIngredients();
-    }
-
     @Override
     public RecipeSerializer<?> getSerializer() {
         return SERIALIZER;
     }
 
-    public static final MapCodec<ToolShapelessRecipe> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance -> instance.group(
-            new ShapelessRecipe.Serializer().codec().forGetter((ToolShapelessRecipe recipe) -> recipe.base),
+//? if >=1.21.1 {
+    /*public static final MapCodec<ToolShapelessRecipe> CODEC = com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance -> instance.group(
+            new ShapelessRecipe.Serializer().codec().forGetter((ToolShapelessRecipe recipe) -> recipe),
             com.mojang.serialization.Codec.BOOL.optionalFieldOf("gregtech_autocraftable",
                     true).forGetter((ToolShapelessRecipe recipe) -> recipe.autocraftable),
             com.mojang.serialization.Codec.intRange(0, Integer.MAX_VALUE).optionalFieldOf("gregtech_form_variants",
@@ -222,12 +186,7 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
                     .forGetter((ToolShapelessRecipe recipe) -> recipe.formPlacement)
     ).apply(instance, (base, auto, variants, offset, input, material, empty, placement) -> new ToolShapelessRecipe(base, auto,
             new FormConversionSelector(variants, offset), input, material, empty, placement)));
-*///?} else {
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return SERIALIZER;
-    }
-//?}
+*///?}
     public static final RecipeSerializer<ToolShapelessRecipe> SERIALIZER = new RecipeSerializer<>() {
 //? if >=1.21.1 {
         /*@Override

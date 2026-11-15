@@ -59,13 +59,13 @@ public final class LogisticsWireBlockEntity extends BlockEntity implements Logis
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        covers.save(tag);
+        covers.save(tag, null);
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        covers.load(tag);
+        covers.load(tag, null);
     }
 
     @Override

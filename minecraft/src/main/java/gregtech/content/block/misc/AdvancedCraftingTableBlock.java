@@ -17,13 +17,6 @@ import javax.annotation.Nullable;
 /** GT6 Advanced Crafting Table — crafting with inventory cache and recipe memory. */
 public class AdvancedCraftingTableBlock extends HorizontalDirectionalBlock implements EntityBlock,
         gregtech.engine.tool.ToolInteractionTarget {
-//? if >=1.21.1 {
-    /*@Override
-    protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-*///?} else {
-//?}
     private final gregtech.api.material.GTMaterial material;
 
     public gregtech.api.material.GTMaterial material() {
@@ -35,32 +28,28 @@ public class AdvancedCraftingTableBlock extends HorizontalDirectionalBlock imple
         this.material = material;
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) {
-        b.add(FACING);
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
-    }
-
-    @Nullable @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new AdvancedCraftingTableBlockEntity(pos, state);
-    }
-
-    @Override
-    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
-        return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool) ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
-                gregtech.content.block.machine.MachineRotationType.HORIZONTAL) : null;
-    }
 //? if >=1.21.1 {
-    /*public net.minecraft.world.InteractionResult interact(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+    /*@Override
+    protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
+    }
+
+    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack held, BlockState state,
+            net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
+            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
     @Override
-    public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
 //?}
+    public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
         if (hand != net.minecraft.world.InteractionHand.MAIN_HAND
                 || !(level.getBlockEntity(pos) instanceof AdvancedCraftingTableBlockEntity table)) return net.minecraft.world.InteractionResult.PASS;
@@ -87,26 +76,27 @@ public class AdvancedCraftingTableBlock extends HorizontalDirectionalBlock imple
                 net.minecraft.network.chat.Component.translatable(getDescriptionId())));
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
     }
-//? if >=1.21.1 {
-    /*@Override
-    public net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack held, BlockState state,
-            net.minecraft.world.level.Level level, BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) {
+        b.add(FACING);
     }
 
     @Override
-    public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return interact(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
-*///?} else {
-//?}
+
+    @Nullable @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new AdvancedCraftingTableBlockEntity(pos, state);
+    }
+
+    @Override
+    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
+        return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool) ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
+                gregtech.content.block.machine.MachineRotationType.HORIZONTAL) : null;
+    }
+
     @Override
     public void onRemove(BlockState state, net.minecraft.world.level.Level level, BlockPos pos, BlockState next, boolean moving) {
         if (!state.is(next.getBlock()) && level.getBlockEntity(pos) instanceof AdvancedCraftingTableBlockEntity table) table.dropContents();

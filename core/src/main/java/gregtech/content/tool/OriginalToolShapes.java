@@ -86,7 +86,6 @@ public final class OriginalToolShapes {
             case "tap" -> new int[][] {{6, 6, 2, 10, 7, 4}, {7, 4, 0, 9, 6, 4}, {7, 3, 4, 9, 6, 6}};
             case "nozzle" -> new int[][] {{6, 3, 1, 10, 7, 2}, {7, 4, 0, 9, 6, 6}};
             case "cap_nozzle" -> new int[][] {{6, 3, 1, 10, 7, 6}, {7, 4, 0, 9, 6, 2}};
-            case "coin_mold" -> new int[][] {{0, 0, 0, 16, 12, 16}, {4, 12, 4, 12, 14, 12}};
             default -> throw new IllegalArgumentException("Unknown tool mesh: " + id);
         };
     }

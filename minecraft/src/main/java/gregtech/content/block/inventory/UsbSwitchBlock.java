@@ -31,6 +31,35 @@ import java.util.List;
 
 /** Two GT6 data switches: 19000 selects one of 16 sticks; 19001 selects one file on a HDD. */
 public class UsbSwitchBlock extends HorizontalDirectionalBlock implements EntityBlock {
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof UsbSwitchBlockEntity machine))
+            return InteractionResult.PASS;
+        InteractionResult panel = PanelCoverInteraction.use(machine, player, hand, hit, true);
+        if (panel != InteractionResult.PASS) return panel;
+        ItemStack held = player.getItemInHand(hand);
+        if (UsbDataMedia.isStick(held)) {
+            if (!level.isClientSide) machine.writeFromHeldStick(held, hit.getDirection());
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (!level.isClientSide && player instanceof ServerPlayer server) server.openMenu(machine);
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
     public enum Kind { USB, HDD }
     private final Kind kind;
 
@@ -42,9 +71,7 @@ public class UsbSwitchBlock extends HorizontalDirectionalBlock implements Entity
     public Kind kind() { return kind; }
 
 //? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
+    /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec() { return com.mojang.serialization.MapCodec.unit(this); }
 *///?} else {
 //?}
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -60,24 +87,6 @@ public class UsbSwitchBlock extends HorizontalDirectionalBlock implements Entity
                                                                             BlockEntityType<T> type) {
         return !level.isClientSide && type == GTBlockEntities.USB_SWITCH.get()
                 ? (l, p, s, be) -> ((UsbSwitchBlockEntity) be).serverTick() : null;
-    }
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                           InteractionHand hand, BlockHitResult hit) {
-        if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof UsbSwitchBlockEntity machine))
-            return InteractionResult.PASS;
-        InteractionResult panel = PanelCoverInteraction.use(machine, player, hand, hit, true);
-        if (panel != InteractionResult.PASS) return panel;
-        ItemStack held = player.getItemInHand(hand);
-        if (UsbDataMedia.isStick(held)) {
-            if (!level.isClientSide) machine.writeFromHeldStick(held, hit.getDirection());
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        if (!level.isClientSide && player instanceof ServerPlayer server) server.openMenu(machine);
-        return InteractionResult.sidedSuccess(level.isClientSide);
     }
     @Override public void onRemove(BlockState state, Level level, BlockPos pos,
                                    BlockState next, boolean movedByPiston) {

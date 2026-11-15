@@ -26,6 +26,26 @@ public class ShapedToolBlock extends HorizontalDirectionalBlock implements ToolI
     }
 *///?} else {
 //?}
+//? if >=1.21.1 {
+    /*@Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.use(state, level, pos, player, hand, hit)
+                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+    }
+
     public ShapedToolBlock(String id, Properties properties) {
         super(id.equals("advanced_button") ? properties.noOcclusion().noCollission() : properties.noOcclusion());
         toolId = id;
@@ -95,35 +115,9 @@ public class ShapedToolBlock extends HorizontalDirectionalBlock implements ToolI
         return GTToolHelper.isMachineWrench(tool) ? ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL) : null;
     }
 //? if >=1.21.1 {
-    /*protected InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-//?}
-        return ToolInteractions.use(state, level, pos, player, hand, hit)
-                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
-//? if >=1.21.1 {
-    /*}
-
-    @Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        return interact(state, level, pos, player, hand, hit) == InteractionResult.PASS
-                ? net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-                : net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-
-    @Override
+    /*@Override
     protected java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         return java.util.List.of(new ItemStack(this));
     }
-
-*///?} else {
-    }
-//?}
+*///?}
 }

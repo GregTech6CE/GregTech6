@@ -28,7 +28,7 @@ public final class FluidContainerDisplayBinding {
                 .filter(BucketItem.class::isInstance).map(BucketItem.class::cast).toList();
         for (BucketItem bucket : buckets) {
 //? if >=1.21.1 {
-            /*var stored = ((gregtech.mixin.BucketContentAccessor) bucket).gregtech$bucketContent();
+            /*var stored = bucket.content;
 *///?} else {
             var stored = bucket.getFluid();
 //?}

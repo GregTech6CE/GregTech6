@@ -14,17 +14,21 @@ public final class CoverDrops {
 
     public static void saveRuntime(BlockEntity owner, CompoundTag tag) {
         if (!ComponentCoverFallback.ownClass(owner) || !(owner instanceof PanelCoverHost host)) return;
-        if (host.hasAttachedCovers()) tag.putBoolean("gt.cover.stopped", host.panels().stopped());
+        if (host.hasAttachedCovers())
+            tag.putBoolean("gt.cover.stopped", host.panels().stopped());
     }
 
     public static void loadRuntime(BlockEntity owner, CompoundTag tag) {
-        if (ComponentCoverFallback.ownClass(owner) && owner instanceof PanelCoverHost host
+        if (ComponentCoverFallback.ownClass(owner)
+                && owner instanceof PanelCoverHost host
                 && tag.contains("gt.cover.stopped")) host.panels().restoreStopped(tag.getBoolean("gt.cover.stopped"));
     }
 
     private static boolean coverKey(String key) {
-        return key.startsWith("gt_cover_") || key.startsWith("gt.battery_cover_")
-                || key.startsWith("gt.logistics.cover.") || key.equals("gt.component_covers")
+        return key.startsWith("gt_cover_")
+                || key.startsWith("gt.battery_cover_")
+                || key.startsWith("gt.logistics.cover.")
+                || key.equals("gt.component_covers")
                 || key.equals("gt.cover.stopped");
     }
 
@@ -47,45 +51,40 @@ public final class CoverDrops {
     /** Called on block replacement, not chunk unload; clearing slots makes native drop paths idempotent. */
     public static void dropAll(BlockEntity owner) {
         if (owner.getLevel() == null || owner.getLevel().isClientSide) return;
-        if (owner instanceof PanelCoverHost host) for (var side : net.minecraft.core.Direction.values()) {
-            var cover = host.removeCover(side);
-            if (!cover.isEmpty()) net.minecraft.world.level.block.Block.popResource(owner.getLevel(), owner.getBlockPos(), cover);
-        }
-        if (owner instanceof gregtech.content.logistics.LogisticsCoverHost host) host.logisticsCovers().dropAll();
+        if (owner instanceof PanelCoverHost host)
+            for (var side : net.minecraft.core.Direction.values()) {
+                var cover = host.removeCover(side);
+                if (!cover.isEmpty())
+                    net.minecraft.world.level.block.Block.popResource(owner.getLevel(), owner.getBlockPos(), cover);
+            }
+        if (owner instanceof gregtech.content.logistics.LogisticsCoverHost host)
+            host.logisticsCovers().dropAll();
     }
 
-    public static List<ItemStack> capture(BlockState state, ServerLevel level, BlockEntity owner, List<ItemStack> drops) {
-        if (owner == null || !net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return drops;
+    public static List<ItemStack> capture(
+            BlockState state, ServerLevel level, BlockEntity owner, List<ItemStack> drops) {
+        if (owner == null
+                || !net.minecraft.core.registries.BuiltInRegistries.BLOCK
+                        .getKey(state.getBlock())
+                        .getNamespace()
+                        .equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return drops;
         boolean machine = owner instanceof gregtech.content.blockentity.machine.HopperBlockEntity
                 || owner instanceof gregtech.content.blockentity.tool.ProcessingToolBlockEntity
                 || owner instanceof gregtech.content.blockentity.GTEnergyBlockEntity
-                    && !(owner instanceof gregtech.content.blockentity.machine.TankBlockEntity)
-                    && !(owner instanceof gregtech.content.blockentity.machine.LogisticsTankBlockEntity)
-                    && !(owner instanceof gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity);
+                        && !(owner instanceof gregtech.content.blockentity.machine.TankBlockEntity)
+                        && !(owner instanceof gregtech.content.blockentity.machine.LogisticsTankBlockEntity)
+                        && !(owner instanceof gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity);
         for (var stack : drops) {
             if (!stack.is(state.getBlock().asItem())) continue;
-//? if >=1.21.1 {
-            /*var data = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-            if (data == null) continue;
-            var tag = data.copyTag();
-*///?} else {
-            var existing = stack.getTagElement("BlockEntityTag");
-            if (existing == null) continue;
-            var tag = existing.copy();
-//?}
+            var tag = gregtech.engine.stack.BlockEntityData.read(stack);
+            if (tag == null) continue;
             // Preserve intentional contents of portable tanks, but never duplicate their covers.
             withoutCovers(tag);
             // Machines drop empty shells; only their portable configuration survives.
             if (machine) keepMachineItemData(tag);
             boolean empty = tag.isEmpty() || tag.size() == 1 && tag.contains("id");
-//? if >=1.21.1 {
-            /*if (empty) stack.remove(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-            else stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                    net.minecraft.world.item.component.CustomData.of(tag));
-*///?} else {
-            if (empty) stack.removeTagKey("BlockEntityTag");
-            else stack.addTagElement("BlockEntityTag", tag);
-//?}
+            if (empty) gregtech.engine.stack.BlockEntityData.remove(stack);
+            else gregtech.engine.stack.BlockEntityData.write(stack, tag);
             // Engraving is part of the mold item; heat, contents and attached covers are not.
             if (owner instanceof gregtech.content.blockentity.machine.MoldBlockEntity mold)
                 gregtech.content.block.machine.MoldItemData.withShape(stack, mold.getMoldShape());

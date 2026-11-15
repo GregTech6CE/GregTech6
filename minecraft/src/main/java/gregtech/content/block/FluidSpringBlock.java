@@ -72,14 +72,10 @@ public class FluidSpringBlock extends Block implements EntityBlock {
                 data.putInt("amount", be.amount());
 //? if >=1.21.1 {
                 /*data.putString("id", net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(be.getType()).toString());
+*///?}
                 var stack = new ItemStack(this);
-                stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.of(data));
+                gregtech.engine.stack.BlockEntityData.write(stack, data);
                 return stack;
-*///?} else {
-                var stack = new ItemStack(this);
-                stack.addTagElement("BlockEntityTag", data);
-                return stack;
-//?}
             }
         }
         return new ItemStack(this);
@@ -105,12 +101,7 @@ public class FluidSpringBlock extends Block implements EntityBlock {
             @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (spring != null) return;
-//? if >=1.21.1 {
-        /*var packedData = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        CompoundTag data = packedData == null ? null : packedData.copyTag();
-*///?} else {
-        CompoundTag data = stack.getTagElement("BlockEntityTag");
-//?}
+        CompoundTag data = gregtech.engine.stack.BlockEntityData.read(stack);
         if (data == null || !data.contains("spring", Tag.TAG_STRING)
                 || !data.contains("amount", Tag.TAG_INT)) return;
         ResourceLocation fluidId = ResourceLocation.tryParse(data.getString("spring"));

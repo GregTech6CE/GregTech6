@@ -111,22 +111,6 @@ public final class MaterialPrefix {
     public static final MaterialPrefix minecartWheels;
     public static final MaterialPrefix railGt;
 
-    /**
-     * GT6's coin form.
-     *
-     * <p>GT6 has no coin <em>prefix item</em> at all: {@code OP.coin} is declared
-     * {@code unused("coin").setCategoryName("Coins")} ({@code OP}), and a coin is
-     * the placeable multi-tile {@code MultiTileEntityCoin} (id 32700, registered in
-     * {@code Loader_MultiTileEntities}) whose item stack carries the material in
-     * {@code gt.material}, a flag in {@code gt.coin.unique} and the two 16x16 pixel-shape bitsets
-     * {@code gt.coin.shape.0.<i>}/{@code gt.coin.shape.1.<i>} ({@code MultiTileEntityCoin}).
-     * GT6 hands those stacks out through its {@code COIN_MAP} (one coin per metal).
-     * The port has no multi-tile items, so it registers one coin item per material like every other
-     * form - {@code MaterialPrefixes.coin} keeps GT6's {@code OP.coin} entry and now resolves to this
-     * prefix instead of staying delegateless.</p>
-     */
-    public static final MaterialPrefix coin;
-
     // --- tool heads ---
     public static final MaterialPrefix toolHeadSword;
     public static final MaterialPrefix toolHeadRawSword;
@@ -296,35 +280,6 @@ public final class MaterialPrefix {
     private static final Predicate<GTMaterial> GT6_RAILS = m -> MaterialForms.has(m, "RAILS");
     /** GT6 {@code OP.ORES}: raw ore, crushed ore, rock. */
     private static final Predicate<GTMaterial> GT6_ORES = m -> MaterialForms.has(m, "ORES");
-    /**
-     * The four metals GT6 coins unconditionally ({@code MultiTileEntityCoin}):
-     * {@code tMaterial != MT.Cu && tMaterial != MT.Ag && tMaterial != MT.Au && tMaterial != MT.Pt}.
-     * The port's own names for them ({@code ElementMaterials.java}, and Platinum at;
-     * Gold is the element material of the same file).
-     */
-    private static final java.util.Set<String> GT6_COIN_METALS =
-            java.util.Set.of("Copper", "Silver", "Gold", "Platinum");
-    /**
-     * GT6's coin condition ({@code MultiTileEntityCoin}): it walks every material and
-     * keeps the ones whose tiny plate can be generated -
-     * {@code if ((tMaterial.mHidden || !OP.plateTiny.canGenerateItem(tMaterial)) && tMaterial != MT.Cu
-     * && … ) continue;} - so a coin exists for exactly the tiny-plate materials, plus Copper, Silver,
-     * Gold and Platinum.
-     *
-     * <p>The port reads {@code OP.plateTiny} as {@link MaterialPrefix#plateTiny} (GT6's
-     * {@code plateTiny = plate}, {@code OP}, with the port's forced
-     * {@code OP plateTiny.forceItemGeneration(MT.Paper)} case) and its
-     * {@link MaterialPrefix#isValidFor} additionally rejects materials the port hides, which GT6's
-     * coin loop only rejects for the non-precious ones - a hidden material therefore gets no port
-     * coin even where GT6 would force one.</p>
-     *
-     * <p>A method and not a {@code Predicate} field: {@code plateTiny} is a blank final filled by the
-     * static block below, and Java forbids reading such a field from the body of a lambda that itself
-     * sits in a field initializer.</p>
-     */
-    private static boolean gt6Coin(GTMaterial m) {
-        return plateTiny.isValidFor(m) || GT6_COIN_METALS.contains(m.getName());
-    }
 
     static {
         dust = def("dust", "Dust", HAS_DUST);
@@ -510,8 +465,6 @@ public final class MaterialPrefix {
                         || (MaterialForms.of(m).isEmpty()
                                 && m.has(MaterialProperty.GENERATE_RAIL)
                                 && HAS_INGOT.test(m)));
-
-        coin = def("coin", "Coin", MaterialPrefix::gt6Coin);
 
         // The tool-head family follows GT6's typemin conditions: type >= 1 for blades and basic
         // heads, type >= 2 for files, saws, chisels and machine heads. Starved port materials
@@ -719,10 +672,6 @@ public final class MaterialPrefix {
             case "dust_small" -> GTValues.U4;
             case "dust_tiny", "nugget" -> GTValues.U9;
             case "dust_div72" -> GTValues.U72;
-            // GT6's coin is the only form whose amount is written down outside the prefix table: the
-            // coin multi-tile recycles itself as one ninth of a unit
-            // (`OM.stack(mMaterial, U9)`, MultiTileEntityCoin).
-            case "coin" -> GTValues.U9;
             case "unit" -> GTValues.U;
             // ore processing
             case "crushed" -> GTValues.U * 9 / 8;

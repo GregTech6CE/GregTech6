@@ -3,6 +3,7 @@ package gregtech.engine.fluid;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.engine.mod.GregTechIdentity;
 import java.util.function.Predicate;
 import net.minecraft.resources.ResourceLocation;
@@ -40,12 +41,11 @@ public final class FluidVisualPolicy {
         var kind = FluidTexturePolicy.kind(entry);
         var template = kind.standard();
         var material = material(entry);
-        if (material.isValid() && (kind == FluidTexturePolicy.Kind.MOLTEN || kind == FluidTexturePolicy.Kind.PLASMA)) {
+        // Molten metal icons exist per material texture set; the other phases share one template.
+        if (material.isValid() && kind == FluidTexturePolicy.Kind.MOLTEN) {
+            String folder = MaterialIconDefinitions.resolveTextureSet(material).folder();
             template = ResourceLocation.fromNamespaceAndPath(
-                    GregTechIdentity.REGISTRY_NAMESPACE,
-                    ("block/material_icons/" + material.getTextureSet().folder()
-                                    + (kind == FluidTexturePolicy.Kind.PLASMA ? "/plasma" : "/molten"))
-                            .toLowerCase());
+                    GregTechIdentity.REGISTRY_NAMESPACE, "block/material_icons/" + folder + "/molten");
         }
         return new Visual(FluidTexturePolicy.select(template, kind, exists), rawTint(entry));
     }

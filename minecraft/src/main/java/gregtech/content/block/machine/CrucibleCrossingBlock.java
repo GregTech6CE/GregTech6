@@ -10,10 +10,7 @@ import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 
-//? if >=1.21.1 {
-//?} else {
 import gregtech.content.registry.GTSounds;
-//?}
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -42,10 +39,6 @@ import javax.annotation.Nullable;
 
 /** Crucible crossing (GT6 {@code MultiTileEntityCrossing}) — 4-way molten material routing channel. */
 public class CrucibleCrossingBlock extends Block implements EntityBlock, GTMachineBlock, SimpleWaterloggedBlock {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     private static final VoxelShape OUTLINE = Shapes.box(0.0D, 1 / 16.0D, 0.0D, 1.0D, 6 / 16.0D, 1.0D);
     private static final VoxelShape COLLISION = Shapes.box(0.0D, 1 / 16.0D, 0.0D, 1.0D, 7 / 16.0D, 1.0D);
 
@@ -139,11 +132,7 @@ public class CrucibleCrossingBlock extends Block implements EntityBlock, GTMachi
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state,
                               @Nullable BlockEntity blockEntity, ItemStack tool) {
         if (!level.isClientSide && GTToolHelper.isMachineWrench(tool)) {
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-*///?} else {
             level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-//?}
             if (GTToolHelper.canCollectMachineDrop(tool, state)) {
 //? if >=1.21.1 {
                 /*ItemStack machine = getCloneItemStack(state,null,level,pos,player);

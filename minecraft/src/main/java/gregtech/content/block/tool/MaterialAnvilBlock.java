@@ -35,17 +35,11 @@ public final class MaterialAnvilBlock extends ShapedToolBlock implements EntityB
     public long durability() { return durability; }
     @Override public int tintRgb() { return material().getColor(); }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new MaterialAnvilBlockEntity(pos, state); }
-//? if >=1.21.1 {
-    /*@Override public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-*///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-//?}
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
         if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
-//? if >=1.21.1 {
-        /*var rotation = super.interact(state, level, pos, player, hand, hit);
-*///?} else {
         var rotation = super.use(state, level, pos, player, hand, hit);
-//?}
         if (rotation.consumesAction()) return rotation;
         if (hit.getDirection() == net.minecraft.core.Direction.DOWN || hit.getLocation().y - pos.getY() < .25) return InteractionResult.PASS;
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof MaterialAnvilBlockEntity anvil) anvil.interact(player, hand, hit);
@@ -64,11 +58,7 @@ public final class MaterialAnvilBlock extends ShapedToolBlock implements EntityB
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(anvil,anvil.saveWithoutMetadata());
 //?}
             data.remove("gt.work0"); data.remove("gt.work1");
-//? if >=1.21.1 {
-            /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
-*///?} else {
-            stack.getOrCreateTag().put("BlockEntityTag", data);
-//?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return stack;
     }
@@ -87,13 +77,8 @@ public final class MaterialAnvilBlock extends ShapedToolBlock implements EntityB
     @Override public void appendHoverText(ItemStack stack, BlockGetter level, List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
 //?}
         long remaining = durability;
-//? if >=1.21.1 {
-        /*var data=stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
+        var data = gregtech.engine.stack.BlockEntityData.readOrEmpty(stack);
         if(data.contains("gt.durability"))remaining=Math.max(0,data.getLong("gt.durability"));
-*///?} else {
-        if (stack.hasTag() && stack.getTag().getCompound("BlockEntityTag").contains("gt.durability"))
-            remaining = Math.max(0, stack.getTag().getCompound("BlockEntityTag").getLong("gt.durability"));
-//?}
         tooltip.add(gregtech.client.TooltipHelper.stat("gt.tooltip.anvil.durability", net.minecraft.ChatFormatting.AQUA, (remaining + 9999) / 10000));
     }
     @Override public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {

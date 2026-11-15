@@ -45,14 +45,9 @@ public final class ProcessingToolRenderer implements BlockEntityRenderer<Process
                     .orElse(gregtech.api.material.MaterialSentinels.INVALID).resolve();
             var set = material.isValid() ? MaterialIcons.resolveTextureSet(material)
                     : gregtech.api.material.MaterialTextureSet.METALLIC;
-            var texture = CrucibleContentIcons.blockIcon(set, "blockdust", false);
+            var texture = CrucibleContentIcons.blockIcon(set, "blockdust");
             int tint = material.isValid() ? material.getColor() | 0xFF000000 : 0xFF808080;
             SmeltingCrucibleRenderer.drawTop(pose, buffers, texture, tint, topY, .125f, .125f, .875f, .875f, light);
-            var detail = CrucibleContentIcons.blockIcon(set, "blockdust", true);
-            if (CrucibleRenderSprites.hasTexture(detail)) {
-                SmeltingCrucibleRenderer.drawTop(pose, buffers, detail, 0xFFFFFFFF,
-                        topY + .0001f, .125f, .125f, .875f, .875f, light, RenderType.cutout());
-            }
             return;
         }
         pose.pushPose();

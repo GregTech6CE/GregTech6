@@ -1,7 +1,9 @@
 """Verify a compact release against processed resource roots (stdlib only).
 
 Usage: python tools/resources/check_compact_model_json.py MOD.jar --resources CORE_OUTPUT NODE_OUTPUT
-Checks model/blockstate semantics, every PNG path/byte, and template expansion.
+Checks model/blockstate semantics, every PNG path and byte, and template expansion.
+PNG bytes are compared with the processed output directories, which the build filters
+independently of the committed textures; check_png_metadata.py audits that filtering.
 This verifies packaging, not Minecraft's rendered appearance.
 """
 
@@ -65,7 +67,7 @@ def verify(jar, roots):
         index = archive.getinfo(INDEX)
         saved -= index.compress_size + 76 + 2 * len(INDEX)
         print(f"{jar.name}: {len(aliases)} generated JSON paths; {len(expected)} resources verified")
-        print(f"PNG unchanged: {sum(p.endswith('.png') for p in expected)}")
+        print(f"PNG matches processed output: {sum(p.endswith('.png') for p in expected)}")
         print(f"JAR: {jar.stat().st_size:,} bytes; estimated saving: {saved:,} bytes")
 
 

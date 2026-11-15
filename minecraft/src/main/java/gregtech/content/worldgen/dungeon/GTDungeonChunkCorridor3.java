@@ -63,10 +63,10 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     data.corridorChest(10, 1, 8, LOOT);
                     data.smooth(10, 1, 9);
 
-                    data.coins(10, 2, 6);
+                    data.pile(10, 2, 6, GTDungeonData.PileKind.INGOT);
                     GTDungeonCupDrinks.corridor(data, 10, 2, 7);
 
-                    data.coins(10, 2, 9);
+                    data.pile(10, 2, 9, GTDungeonData.PileKind.INGOT);
                     return true;
                 case 1:
                     // Breakable wall, more likely when dungeon key #3 exists.
@@ -81,11 +81,11 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     for (int y = 1; y <= 3; y++) for (int z = 6; z <= 9; z++) data.air(11, y, z);
                     for (int y = 1; y <= 2; y++) for (int z = 7; z <= 8; z++) data.air(12, y, z);
 
-                    data.coins(12, 1, 7);
+                    data.pile(12, 1, 7, GTDungeonData.PileKind.INGOT);
                     // is its Key Locked Safe (3010), opened with key #3 or, when absent, key #1.
                     data.safe(12, 1, 8, LOOT, data.keyIds[data.generatedKeys[2] ? 2 : 0], true);
 
-                    data.coins(12, 2, 8);
+                    data.pile(12, 2, 8, GTDungeonData.PileKind.INGOT);
 
                     return true;
                 default:
@@ -107,10 +107,10 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     data.set(5, 1, 8, Blocks.CRAFTING_TABLE.defaultBlockState());
                     data.smooth(5, 1, 9);
 
-                    data.coins(5, 2, 6);
+                    data.pile(5, 2, 6, GTDungeonData.PileKind.INGOT);
 
                     GTDungeonCupDrinks.corridor(data, 5, 2, 8);
-                    data.coins(5, 2, 9);
+                    data.pile(5, 2, 9, GTDungeonData.PileKind.INGOT);
                     return true;
                 case 1:
                     // Breakable wall, more likely when dungeon key #3 exists.
@@ -127,9 +127,9 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
 
                     // the safe, locked with key #3 or key #2 - a chest in the port.
                     data.safe(3, 1, 7, LOOT, data.keyIds[data.generatedKeys[2] ? 2 : 1], true);
-                    data.coins(3, 1, 8);
+                    data.pile(3, 1, 8, GTDungeonData.PileKind.INGOT);
 
-                    data.coins(3, 2, 7);
+                    data.pile(3, 2, 7, GTDungeonData.PileKind.INGOT);
 
                     return true;
                 default:
@@ -151,10 +151,10 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     data.corridorChest(8, 1, 10, LOOT);
                     data.smooth(9, 1, 10);
 
-                    data.coins(6, 2, 10);
+                    data.pile(6, 2, 10, GTDungeonData.PileKind.INGOT);
                     GTDungeonCupDrinks.corridor(data, 7, 2, 10);
 
-                    data.coins(9, 2, 10);
+                    data.pile(9, 2, 10, GTDungeonData.PileKind.INGOT);
                     return true;
                 case 1:
                     // Breakable wall, more likely when dungeon key #3 exists.
@@ -169,11 +169,11 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     for (int y = 1; y <= 3; y++) for (int x = 6; x <= 9; x++) data.air(x, y, 11);
                     for (int y = 1; y <= 2; y++) for (int x = 7; x <= 8; x++) data.air(x, y, 12);
 
-                    data.coins(7, 1, 12);
+                    data.pile(7, 1, 12, GTDungeonData.PileKind.INGOT);
                     // the safe, locked with key #3 or key #4 - a chest in the port.
                     data.safe(8, 1, 12, LOOT, data.keyIds[data.generatedKeys[2] ? 2 : 3], true);
 
-                    data.coins(8, 2, 12);
+                    data.pile(8, 2, 12, GTDungeonData.PileKind.INGOT);
 
                     return true;
                 default:
@@ -195,10 +195,10 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     data.set(8, 1, 5, Blocks.CRAFTING_TABLE.defaultBlockState());
                     data.smooth(9, 1, 5);
 
-                    data.coins(6, 2, 5);
+                    data.pile(6, 2, 5, GTDungeonData.PileKind.INGOT);
 
                     GTDungeonCupDrinks.corridor(data, 8, 2, 5);
-                    data.coins(9, 2, 5);
+                    data.pile(9, 2, 5, GTDungeonData.PileKind.INGOT);
                     return true;
                 case 1:
                     // Breakable wall, more likely when dungeon key #3 exists.
@@ -215,9 +215,9 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
 
                     // the safe, locked with key #3 or key #5 - a chest in the port.
                     data.safe(7, 1, 3, LOOT, data.keyIds[data.generatedKeys[2] ? 2 : 4], true);
-                    data.coins(8, 1, 3);
+                    data.pile(8, 1, 3, GTDungeonData.PileKind.INGOT);
 
-                    data.coins(7, 2, 3);
+                    data.pile(7, 2, 3, GTDungeonData.PileKind.INGOT);
 
                     return true;
                 default:

@@ -35,6 +35,44 @@ import java.util.List;
 /** GT6 15-slot mechanical or key-controlled safe, with front-only GUI access. */
 public class SafeBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.tool.ToolInteractionTarget {
 //? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        // both hands fire use(); handling the off hand double-triggers
+        // (insert+extract in one click, double withdrawals, armor swap-backs)
+        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        if (!(level.getBlockEntity(pos) instanceof SafeBlockEntity safe)) return InteractionResult.PASS;
+        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
+        if (player.getItemInHand(hand).getItem() instanceof gregtech.content.item.GTDungeonKeyItem && keyLocked) {
+            if (!level.isClientSide) safe.useKey(player.getItemInHand(hand));
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
+        if (!level.isClientSide) {
+            if (!safe.claimAndOpen(player)) {
+                player.displayClientMessage(Component.translatable("message.gt6ce.safe.locked"), true);
+            } else {
+                player.openMenu(new SimpleMenuProvider(
+                        (id, inv, p) -> safe.createMenu(id, inv),
+                        Component.translatable(getDescriptionId())));
+            }
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+//? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() { return com.mojang.serialization.MapCodec.unit(this); }
 *///?} else {
 //?}
@@ -104,40 +142,6 @@ public class SafeBlock extends DirectionalBlock implements EntityBlock, SimpleWa
         return new SafeBlockEntity(pos, state);
     }
 
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        // both hands fire use(); handling the off hand double-triggers
-        // (insert+extract in one click, double withdrawals, armor swap-backs)
-        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
-        if (!(level.getBlockEntity(pos) instanceof SafeBlockEntity safe)) return InteractionResult.PASS;
-        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
-        if (player.getItemInHand(hand).getItem() instanceof gregtech.content.item.GTDungeonKeyItem && keyLocked) {
-            if (!level.isClientSide) safe.useKey(player.getItemInHand(hand));
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
-        if (!level.isClientSide) {
-            if (!safe.claimAndOpen(player)) {
-                player.displayClientMessage(Component.translatable("message.gt6ce.safe.locked"), true);
-            } else {
-                player.openMenu(new SimpleMenuProvider(
-                        (id, inv, p) -> safe.createMenu(id, inv),
-                        Component.translatable(getDescriptionId())));
-            }
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-//? if >=1.21.1 {
-    /*@Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())

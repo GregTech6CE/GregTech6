@@ -2,7 +2,6 @@
   "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "gt6ce:item/material_icons/dull/stick",
-    "layer1": "gt6ce:item/material_icons/dull/toolheadsense",
-    "layer2": "gt6ce:item/material_icons/dull/toolheadsense_overlay"
+    "layer1": "gt6ce:item/material_icons/dull/toolheadsense"
   }
 }

@@ -77,7 +77,6 @@ public final class ContentRegistration {
         gregtech.content.registry.GTBars.initialize(registrar);
         gregtech.content.registry.GTSpikes.initialize(registrar);
         gregtech.content.registry.GTMaterialPiles.initialize(registrar);
-        gregtech.content.registry.GTCoinPiles.initialize(registrar);
         gregtech.content.registry.GTBookShelves.initialize(registrar);
         gregtech.content.registry.GTSandwich.initialize(registrar);
         gregtech.content.registry.GTDungeonBlocks.registerAll(registrar);

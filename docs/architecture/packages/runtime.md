@@ -1,6 +1,6 @@
 # 游戏运行时：装配、展示与接入
 
-返回[包索引](README.md)。这里说明领域代码之外的横向包，以及 Block/BlockEntity 与规则层的连接。入口位于共享 [minecraft/gregtech](../../../minecraft/src/main/java/gregtech)及两个版本节点；core 另有少量纯契约和工具。
+这里说明领域代码之外的横向包，以及 Block/BlockEntity 与规则层的连接。入口位于共享 [minecraft/gregtech](../../../minecraft/src/main/java/gregtech)及两个版本节点；core 另有少量纯契约和工具。
 
 ## 生命周期与横向包
 

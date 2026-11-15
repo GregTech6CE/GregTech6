@@ -47,11 +47,26 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
             gregtech.engine.multiblock.tracking.StructureTracking.invalidate(tank);
     }
 //? if >=1.21.1 {
-    /*private net.minecraft.world.InteractionResult interact(BlockState state, Level level, BlockPos pos,
+    /*@Override
+    protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
+    }
+
+    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
     @Override
-    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
 //?}
+    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
             net.minecraft.world.phys.BlockHitResult hit) {
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
@@ -75,29 +90,6 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
         return valveSpec;
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-
-    @Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-    @Override
-    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return interact(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-//?}
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
@@ -145,14 +137,16 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
             net.minecraft.world.level.storage.loot.LootParams.Builder context) {
         ItemStack result = new ItemStack(this);
         if (context.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
-                instanceof MultiblockTankControllerBlockEntity tank)
+                instanceof MultiblockTankControllerBlockEntity tank) {
 //? if >=1.21.1 {
-        /*result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(tank,
-                tank.saveWithId(tank.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithId(tank.getLevel().registryAccess()));
 *///?} else {
-        result.addTagElement("BlockEntityTag", gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata());
 //?}
+            data.remove("gt.tank");
+            data.remove("gt.size");
+            gregtech.engine.stack.BlockEntityData.write(result, data);
+        }
         return java.util.List.of(result);
     }
 
@@ -165,26 +159,23 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
         ItemStack result = new ItemStack(this);
-        if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank)
+        if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank) {
 //? if >=1.21.1 {
-        /*result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(tank,
-                tank.saveWithId(tank.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithId(tank.getLevel().registryAccess()));
 *///?} else {
-        result.addTagElement("BlockEntityTag", gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata());
 //?}
+            data.remove("gt.tank");
+            data.remove("gt.size");
+            gregtech.engine.stack.BlockEntityData.write(result, data);
+        }
         return result;
     }
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state,
             @Nullable net.minecraft.world.entity.LivingEntity placer, ItemStack stack) {
-//? if >=1.21.1 {
-        /*var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        net.minecraft.nbt.CompoundTag saved = component == null ? null : component.copyTag();
-*///?} else {
-        net.minecraft.nbt.CompoundTag saved = stack.getTagElement("BlockEntityTag");
-//?}
+        net.minecraft.nbt.CompoundTag saved = gregtech.engine.stack.BlockEntityData.read(stack);
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank && saved != null)
 //? if >=1.21.1 {
         /*tank.loadAdditional(saved, level.registryAccess());

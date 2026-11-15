@@ -5,6 +5,7 @@ import gregtech.content.blockentity.RockBlockEntity;
 import gregtech.content.registry.GTBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -27,9 +28,10 @@ public final class GTRockPlacement {
         if (level.isOutsideBuildHeight(y) || y <= level.getMinBuildHeight()) return false;
         BlockPos pos = new BlockPos(x, y, z);
         BlockPos below = pos.below();
+        BlockState atPos = level.getBlockState(pos);
         BlockState ground = level.getBlockState(below);
-        if (!level.getBlockState(pos).isAir()) return false;
-        if (!ground.isFaceSturdy(level, below, Direction.UP)) return false;
+        if (!atPos.getFluidState().isEmpty() || !GTRocksFeature.replaceable(atPos)) return false;
+        if (ground.is(BlockTags.LEAVES) || !ground.isFaceSturdy(level, below, Direction.UP)) return false;
         String itemId = null;
         if (rawOre) {
             if (material == null) return false;

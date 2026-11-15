@@ -23,7 +23,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/** The sixteen GT6 sandwich layer slots. An occupied slot marks the layer's bottom pixel. */
+/**
+ * The sixteen GT6 sandwich layer slots. An occupied slot marks the layer's bottom pixel.
+ *
+ * <p>The version branches in this class are platform serialization signatures only: 1.21 uses the
+ * registry-aware stack codecs and the {@code BLOCK_ENTITY_DATA} component, 1.20.1 uses
+ * {@code ItemStack.of}/{@code save(CompoundTag)} and the {@code BlockEntityTag} element.
+ * The layer logic itself is shared.</p>
+ */
 public final class SandwichBlockEntity extends BlockEntity {
     public static final int SLOTS = gregtech.content.food.SandwichRules.SLOTS;
     private final ItemStack[] ingredients = new ItemStack[SLOTS];
@@ -169,7 +176,7 @@ public final class SandwichBlockEntity extends BlockEntity {
         Arrays.fill(result, ItemStack.EMPTY);
 //? if >=1.21.1 {
         /*CompoundTag be=stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
-        if (be != null && be.contains("Ingredients", Tag.TAG_LIST)) readIngredients(be,result,lookup);
+        if (be.contains("Ingredients", Tag.TAG_LIST)) readIngredients(be,result,lookup);
 *///?} else {
         CompoundTag be = stack.getTagElement("BlockEntityTag");
         if (be != null && be.contains("Ingredients", Tag.TAG_LIST)) readIngredients(be, result);

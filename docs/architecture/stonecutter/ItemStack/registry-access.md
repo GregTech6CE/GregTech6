@@ -2,51 +2,57 @@
 
 ## 子原因
 
-1.21.1 的 `setItemFilter` / `setFluidFilter` 需要 `HolderLookup.Provider`；1.20.1 不需要。调用点因此多一个 `level.registryAccess()` 参数分支。
+1.21.1 的栈 codec 需要 `HolderLookup.Provider`，1.20.1 不需要。共享方法因此常带一个 1.20 便利委托重载（无 lookup 转调带 lookup，或反之），调用点也多出 `level.registryAccess()` 参数分支。这是落点偏差，不是行为差异。codec 本身的签名/返回类型差异见 [provider.md](provider.md)；封面过滤器的完整签名统一见 [cover-filter-provider.md](cover-filter-provider.md)。
 
 ## 例子
 
 ### 修复前
 
+`LogisticsCovers.save` 共享真实现带 lookup，1.20 另挂单参委托，调用点按版本分支：
+
+```java
+    public void save(CompoundTag tag, HolderLookup.Provider lookup) {
+        // 共享真实现：NbtCompat.saveItem(face, lookup)
+    }
+//? if >=1.21.1 {
+//?} else {
+    public void save(CompoundTag tag) { save(tag, null); }
+//?}
+```
+
 ```java
 //? if >=1.21.1 {
-/*if(!host.consumesTool(held)){
-    if(!level.isClientSide){if(item)CoverUtilityBehaviors.setItemFilter(installed,held,level.registryAccess());else CoverUtilityBehaviors.setFluidFilter(installed,sample(held),level.registryAccess());host.panels().changed();}
+    /*covers.save(tag, lookup);
 *///?} else {
-if(!host.consumesTool(held)){
-    if(!level.isClientSide){if(item)CoverUtilityBehaviors.setItemFilter(installed,held);else CoverUtilityBehaviors.setFluidFilter(installed,sample(held));host.panels().changed();}
+    covers.save(tag);
 //?}
 ```
 
 ### 修复后
 
-保留最小的 provider 分支；`!host.consumesTool(held)` 守卫与过滤器行为共享：
+删除单参委托，1.20 调用点直接传 `null`（`NbtCompat` 在 1.20 忽略 lookup）：
+
+```java
+    public void save(CompoundTag tag, HolderLookup.Provider lookup) {
+        // 共享真实现
+    }
+```
 
 ```java
 //? if >=1.21.1 {
-/*if (!host.consumesTool(held)) {
-    if (!level.isClientSide) {
-        if (item) CoverUtilityBehaviors.setItemFilter(installed, held, level.registryAccess());
-        else CoverUtilityBehaviors.setFluidFilter(installed, sample(held), level.registryAccess());
-        host.panels().changed();
-    }
+    /*covers.save(tag, lookup);
 *///?} else {
-if (!host.consumesTool(held)) {
-    if (!level.isClientSide) {
-        if (item) CoverUtilityBehaviors.setItemFilter(installed, held);
-        else CoverUtilityBehaviors.setFluidFilter(installed, sample(held));
-        host.panels().changed();
-    }
+    covers.save(tag, null);
 //?}
 ```
 
 ### 为什么这么修复
 
-provider 参数是 1.21.1 数据组件 API 的要求，不是行为差异；分支只影响 `registryAccess()` 的传递。封面工具守卫本身见[工具交互行为](../../../decisions/parity/tool-interactions.md)。
+委托重载按调用者分两类：纯 1.20 委托（调用者全在 1.20 分支，如此例）直接删、调用点传 `null`；被共享代码调用的方法应统一为带 lookup 的单一签名（不保留适配器），见 [cover-filter-provider.md](cover-filter-provider.md)。判定前用 `rg` 全量核实调用者（含节点源码），遗漏会导致编译失败。调用点保留的最小 provider 参数分支属平台签名例外。
 
 ### 其他可能的修复方式
 
-- 在共享层包一个 `RegistryContext` 门面。需要调用点迁移。
-- 把整个封面交互移到节点。会复制业务逻辑。
+- 保留单参委托：冗余落点，违反「每个家族一条共享路径」方针。
+- 共享层包 `RegistryContext` 门面：需调用点迁移，成本更高。
 
 相关链接：[issue #358](https://github.com/GregTech6CE/GregTech6/issues/358)

@@ -12,7 +12,9 @@ import net.minecraft.world.item.component.CustomData;
  * Free-form item data: the 1.20.1 tag and the 1.21.1 {@code CUSTOM_DATA} component.
  *
  * <p>Callers use the same {@link CompoundTag} API on both nodes; the storage difference stays
- * here. Typed components remain a 1.21.1-only concern and are not exposed through this class.</p>
+ * here. This class covers only {@code CUSTOM_DATA}; the {@code BLOCK_ENTITY_DATA} and
+ * {@code BLOCK_STATE} typed components have sibling facades {@link BlockEntityData} and
+ * {@link BlockStateData}.</p>
  */
 public final class StackData {
     private StackData() {}

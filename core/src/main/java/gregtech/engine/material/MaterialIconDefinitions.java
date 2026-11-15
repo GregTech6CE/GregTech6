@@ -1,6 +1,8 @@
 package gregtech.engine.material;
 
-import gregtech.api.material.*;
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialProperty;
+import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.MaterialPrefix;
 
 /** Shared original material icon selection and resource paths, without client classes. */
@@ -29,8 +31,9 @@ public final class MaterialIconDefinitions {
         return "item/material/" + set.folder() + "/" + prefix.getTextureFileName();
     }
 
-    public static String modelJson(GTMaterial material, MaterialPrefix prefix) {
-        return generatedModelJson(resolveTextureSet(material), prefix);
+    /** Item model for this material and prefix; {@code overlay} follows the icon art of its set. */
+    public static String modelJson(GTMaterial material, MaterialPrefix prefix, boolean overlay) {
+        return generatedModelJson(resolveTextureSet(material), prefix, overlay);
     }
 
     /** One generated item model. The texture lives in the addon namespace and is tinted by material colour. */
@@ -45,9 +48,8 @@ public final class MaterialIconDefinitions {
                 """.formatted(prefix.textureNamespace(), prefix.addonTexturePath());
     }
 
-    public static String sharedModelJson(MaterialTextureSet set, MaterialPrefix prefix) {
-        if (prefix == MaterialPrefix.coin) return "{\"parent\":\"gt6ce:item/coin_minted\"}";
-        return generatedModelJson(set, prefix);
+    public static String sharedModelJson(MaterialTextureSet set, MaterialPrefix prefix, boolean overlay) {
+        return generatedModelJson(set, prefix, overlay);
     }
 
     /** Both platform geometry loaders delegate this reference to the original baked template cache. */
@@ -56,7 +58,17 @@ public final class MaterialIconDefinitions {
                 + parent + "\"}";
     }
 
-    private static String generatedModelJson(MaterialTextureSet set, MaterialPrefix prefix) {
+    private static String generatedModelJson(MaterialTextureSet set, MaterialPrefix prefix, boolean overlay) {
+        if (!overlay) {
+            return """
+                    {
+                      "parent": "minecraft:item/generated",
+                      "textures": {
+                        "layer0": "%s"
+                      }
+                    }
+                    """.formatted("gt6ce:" + texturePath(set, prefix, false));
+        }
         return """
                 {
                   "parent": "minecraft:item/generated",

@@ -2,16 +2,16 @@ package gregtech.content.block.machine;
 
 import gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -25,8 +25,8 @@ import java.util.List;
 
 /** Large Crucible multiblock controller. 3x3x3 hollow of crucible wall blocks, HU-powered.
  *  27x capacity of single-block crucible. */
-public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock
-        implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
+public class LargeCrucibleControllerBlock extends Block
+        implements gregtech.engine.multiblock.StructurePreviewSource {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, net.minecraft.world.entity.Entity entity) {
         if (!level.isClientSide && !entity.isSpectator() && entity instanceof net.minecraft.world.entity.LivingEntity
@@ -35,7 +35,7 @@ public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock
         super.stepOn(level, pos, state, entity);
     }
 //? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
+    /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {
 //?}
     private final gregtech.content.multiblock.LargeCrucibleSpecs.Variant variant;
@@ -54,34 +54,20 @@ public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock
             Properties properties) {
         super(properties);
         this.variant = variant;
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(MultiblockPortBlock.CRUCIBLE_FORMED, false));
+        registerDefaultState(stateDefinition.any().setValue(MultiblockPortBlock.CRUCIBLE_FORMED, false));
     }
 
     public gregtech.content.multiblock.LargeCrucibleSpecs.Variant variant() { return variant; }
 
-    /** GT6 {@code TileEntityBase10MultiBlockBase extends TileEntityBase09FacingSingle}. */
-    @Override
-    public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, net.minecraft.world.item.ItemStack tool) {
-        return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
-                ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
-                        gregtech.content.block.machine.MachineRotationType.HORIZONTAL)
-                : null;
-    }
-
+    // GT6 MultiTileEntityCrucible disables every valid side, so no wrench rotation exists.
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, MultiblockPortBlock.CRUCIBLE_FORMED);
+        builder.add(MultiblockPortBlock.CRUCIBLE_FORMED);
     }
 
     @Override public net.minecraft.world.level.block.RenderShape getRenderShape(BlockState state) {
         return state.getValue(MultiblockPortBlock.CRUCIBLE_FORMED)
                 ? net.minecraft.world.level.block.RenderShape.INVISIBLE : net.minecraft.world.level.block.RenderShape.MODEL;
-    }
-
-    @Nullable
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Nullable
@@ -125,17 +111,29 @@ public class LargeCrucibleControllerBlock extends HorizontalDirectionalBlock
         super.onRemove(state, level, pos, next, moving);
     }
 //? if >=1.21.1 {
-    /*private net.minecraft.world.InteractionResult interact(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){if(gregtech.engine.tool.ToolInteractions.use(state,level,pos,player,hand,hit))return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);if(level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity be)return level.isClientSide?(be.canHandleUse(player,hand)?net.minecraft.world.InteractionResult.SUCCESS:net.minecraft.world.InteractionResult.PASS):be.tryUse(player,hand,hit);return net.minecraft.world.InteractionResult.PASS;}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){return interact(state,level,pos,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);}
-    @Override public List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder context){return List.of(new ItemStack(this));}
-*///?} else {
-    @Override public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
-            net.minecraft.world.phys.BlockHitResult hit) {
-        return gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)
-                ? net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide)
-                : net.minecraft.world.InteractionResult.PASS;
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
+        if (level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity be)
+            return level.isClientSide
+                    ? (be.canHandleUse(player, hand) ? InteractionResult.SUCCESS : InteractionResult.PASS)
+                    : be.tryUse(player, hand, hit);
+        return InteractionResult.PASS;
+    }
+//? if >=1.21.1 {
+    /*@Override public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder context) { return List.of(new ItemStack(this)); }
+*///?} else {
 //?}
 }

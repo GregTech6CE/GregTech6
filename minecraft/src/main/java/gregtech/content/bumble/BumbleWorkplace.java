@@ -1,11 +1,7 @@
 package gregtech.content.bumble;
 
 import gregtech.content.block.IconSetPlantBlock;
-
-//? if >=1.21.1 {
-//?} else {
 import gregtech.content.block.misc.DiggableBlock;
-//?}
 import gregtech.content.block.plant.BedrockFlowerBlock;
 import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.StoneVariantFlags;
@@ -22,11 +18,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.state.BlockState;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 import java.util.Set;
 
@@ -84,12 +75,8 @@ public final class BumbleWorkplace {
                     || block == Blocks.BROWN_MUSHROOM || block == Blocks.RED_MUSHROOM_BLOCK
                     || block == Blocks.BROWN_MUSHROOM_BLOCK;
             case 9, 105 -> isCactusOrDesertFlower(block);
-//? if >=1.21.1 {
-            /*case 100 -> block == Blocks.CLAY || isDiggableClay(block);
-*///?} else {
             case 100 -> block == Blocks.CLAY || block instanceof DiggableBlock diggable
                     && diggable.variant().isClay();
-//?}
             case 101 -> block instanceof TreeHoleBlock hole && hole.species() == WoodSpecies.RUBBER;
             case 103 -> block == Blocks.SOUL_SAND;
             default -> isFlower(block);
@@ -152,8 +139,4 @@ public final class BumbleWorkplace {
         return block instanceof IconSetPlantBlock plant && plant.iconName().startsWith("flower_")
                 && !plant.iconName().equals("flower_hexalily");
     }
-//? if >=1.21.1 {
-    /*private static boolean isDiggableClay(Block block){var id=BuiltInRegistries.BLOCK.getKey(block);return id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)&&java.util.Set.of("clay_brown","clay_red","clay_blue","clay_yellow","clay_white").contains(id.getPath());}
-*///?} else {
-//?}
 }

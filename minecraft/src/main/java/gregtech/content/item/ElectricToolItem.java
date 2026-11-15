@@ -17,11 +17,7 @@ import gregtech.platform.Mc;
 
 /** GT6 electric tool base — stores EU and consumes power on use. */
 
-//? if >=1.21.1 {
-/*public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtech.engine.tool.PoweredToolItem {
-*///?} else {
-public class ElectricToolItem extends TieredItem implements IItemEnergy {
-//?}
+public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtech.engine.tool.PoweredToolItem {
 
     private final long capacity;
     private final int tier;
@@ -47,11 +43,13 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
     }
 
 
-//? if >=1.21.1 {
-/*    public boolean canHarvest(ItemStack stack,net.minecraft.world.level.block.state.BlockState state){return isCorrectToolForDrops(stack,state);}
-    public float harvestSpeed(ItemStack stack){return Math.max(Float.MIN_NORMAL,2*headMaterial(stack).getToolSpeed());}
-*///?} else {
-//?}
+    @Override public boolean canHarvest(ItemStack stack, net.minecraft.world.level.block.state.BlockState state) {
+        return gregtech.content.tool.ElectricWrenchHarvest.canHarvest(this, stack, state);
+    }
+
+    @Override public float harvestSpeed(ItemStack stack) {
+        return gregtech.content.tool.ElectricWrenchHarvest.speed(this, stack);
+    }
 
     public gregtech.content.tool.ElectricToolCatalog.Definition definition(){return gregtech.content.tool.ElectricToolCatalog.of(toolName,tier);}
     public String toolName() { return toolName; }
@@ -118,24 +116,30 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
             return usable ? gregtech.content.item.behavior.BehaviorPlaceWoodworkingSupplies.use(context)
                     : net.minecraft.world.InteractionResult.PASS;
         }
+//? if >=1.21.1 {
+/*        if (toolName.equals("Screwdriver") && player != null && player.isShiftKeyDown() && stack.getCount() == 1) {
+            var level = context.getLevel();
+            var pos = context.getClickedPos();
+            var state = level.getBlockState(pos);
+            if (state.getBlock() instanceof gregtech.engine.tool.ScrewdriverUseTarget target) {
+                var hit = new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),
+                        context.getClickedFace(), pos, context.isInside());
+                return target.useScrewdriver(state, level, pos, player, context.getHand(), hit);
+            }
+        }
+*///?} else {
         if (toolName.equals("Screwdriver") && player != null && player.isShiftKeyDown() && stack.getCount() == 1) {
             var level = context.getLevel();
             var pos = context.getClickedPos();
             var state = level.getBlockState(pos);
-//? if >=1.21.1 {
-/*            if (state.getBlock() instanceof gregtech.engine.tool.ScrewdriverUseTarget target) {
-*///?} else {
-            if (state.getBlock() instanceof gregtech.content.block.energy.SignalWireBlock) {
-//?}
+            if (state.getBlock() instanceof gregtech.content.block.machine.HopperBlock
+                    || state.getBlock() instanceof gregtech.content.block.machine.QueueHopperBlock) {
                 var hit = new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),
                         context.getClickedFace(), pos, context.isInside());
-//? if >=1.21.1 {
-/*                return target.useScrewdriver(state, level, pos, player, context.getHand(), hit);
-*///?} else {
                 return state.use(level, player, context.getHand(), hit);
-//?}
             }
         }
+//?}
         if (!toolName.equals("Wrench") || player == null || !player.isShiftKeyDown() || stack.getCount() != 1)
             return net.minecraft.world.InteractionResult.PASS;
         var level = context.getLevel();
@@ -251,6 +255,13 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
         StackData.update(result,tag->tag.putLong("gt.capacity",batteryCapacity));
 //?}
 
+        return result;
+    }
+
+    /** Creative/EMI convenience: a fully charged tool with the given head material. Survival crafting stays uncharged. */
+    public ItemStack assembledCharged(gregtech.api.material.GTMaterial material, long batteryCapacity) {
+        ItemStack result = assembled(material, batteryCapacity);
+        StackData.update(result, tag -> tag.putLong("gt.charge", batteryCapacity));
         return result;
     }
 

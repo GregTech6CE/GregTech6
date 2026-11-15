@@ -2,6 +2,7 @@ package gregtech.content.block.machine;
 
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.engine.machine.GTMachineBlock;
 import gregtech.engine.machine.MachineSpec;
 import gregtech.engine.tool.GTToolHelper;
@@ -22,11 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-//? if >=1.21.1 {
-/*import net.minecraft.world.level.block.state.properties.DirectionProperty;
-*///?} else {
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-//?}
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -39,16 +36,37 @@ import javax.annotation.Nullable;
 /**
  * Horizontal machine shell (GT6 {@code TileEntityBase09FacingSingle} placement).
  */
-//? if >=1.21.1 {
-/*public abstract class GTFacingMachineBlock extends Block implements GTMachineBlock, ToolInteractionTarget {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-*///?} else {
 public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock implements GTMachineBlock, ToolInteractionTarget {
+//? if >=1.21.1 {
+    /*@Override public com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
+*///?} else {
 //?}
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     private static final VoxelShape SHAPE = Shapes.block();
 
     private final MachineSpec spec;
+
+    /** GT6 wrench rotation: click a face to rotate the machine front to that face. */
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state,
+            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return MachineRotationType.handleWrench(state, level, pos, player, hand, hit,
+                FACING, MachineRotationType.HORIZONTAL)
+                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+    }
 
     protected GTFacingMachineBlock(MachineSpec spec, Properties properties) {
         super(properties);
@@ -78,46 +96,6 @@ public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock im
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-    }
-
-    /** GT6 wrench rotation: click a face to rotate the machine front to that face. */
-//? if >=1.21.1 {
-    /*/^* Original rotation contract, also used by Native subclasses' existing interactions. ^/
-    protected InteractionResult handleWrench(BlockState state, Level level, BlockPos pos, Player player,
-                                             InteractionHand hand, BlockHitResult hit) {
-        return MachineRotationType.handleWrench(state, level, pos, player, hand, hit,
-                FACING, MachineRotationType.HORIZONTAL)
-                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
-    }
-
-*///?} else {
-//?}
-    @Override
-//? if >=1.21.1 {
-    /*protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state,
-            Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return handleWrench(state, level, pos, player, hand, hit) == InteractionResult.PASS
-                ? net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-                : net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    @Override
-    protected BlockState rotate(BlockState state, net.minecraft.world.level.block.Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
-    }
-
-    @Override
-    protected BlockState mirror(BlockState state, net.minecraft.world.level.block.Mirror mirror) {
-        return rotate(state, mirror.getRotation(state.getValue(FACING)));
-*///?} else {
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-                                 InteractionHand hand, BlockHitResult hit) {
-        if (MachineRotationType.handleWrench(state, level, pos, player, hand, hit,
-                FACING, MachineRotationType.HORIZONTAL)) {
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        return InteractionResult.PASS;
-//?}
     }
 
     @Override
@@ -156,19 +134,11 @@ public abstract class GTFacingMachineBlock extends HorizontalDirectionalBlock im
                     );
                 }
             }
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-*///?} else {
             level.playSound(null, pos, gregtech.content.registry.GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-//?}
             return;
         }
         if (!level.isClientSide && GTToolHelper.isMachineWrench(tool)) {
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-*///?} else {
             level.playSound(null, pos, gregtech.content.registry.GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-//?}
         }
         super.playerDestroy(level, player, pos, state, blockEntity, tool);
     }

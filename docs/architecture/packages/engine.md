@@ -1,6 +1,6 @@
 # engine：执行、状态与算法
 
-返回[包索引](README.md)。先读 core 中的规则，再查 Minecraft 层如何喂入世界/栈数据；不要从 BlockEntity 的全部细节反推公共契约。
+先读 core 中的规则，再查 Minecraft 层如何喂入世界与物品栈数据，以核心契约为基准而非从 BlockEntity 细节反推。
 
 ## core 中各包的职责
 
@@ -11,9 +11,9 @@
 | `engine` | 执行层总体说明 | `package-info.java`；不继续使用旧 internal 命名扩张实现 |
 | `engine.addon` | 附属声明收集、校验、物化与共享服务绑定 | `AddonCoreServices`、`AddonMaterials`、`AddonMachines`、`AddonPipes` |
 | `engine.definition` | 定义目录的组织与查询机制 | `DefinitionCatalog`；内容行放 content |
-| `engine.material` | 材料安装、链接、附属事实冻结、最终角色、物品成分裁决、不可变视图、有界处理图和化学规则 | `GTMaterialRegistry`、`MaterialInfoRegistry`、`ItemCompositionResolver`、`MaterialViews`、`MaterialProcessGraph` |
+| `engine.material` | 材料原子安装（`MaterialRegistryState`）、引用与组校验（`MaterialLinker`）、附属事实冻结、物品成分与回收纯裁决、多代发布版本号（`MaterialPublication`）及不可变视图 | `GTMaterialRegistry`、`MaterialRegistryState`、`MaterialLinker`、`MaterialInfoRegistry`、`ItemCompositionResolver`、`ItemRecoveryPlanner`、`MaterialPublication`、`MaterialViews` |
 | `engine.prefix` | 材料形态/前缀的注册与解析 | `PrefixRegistry`、`BlockPrefixRegistry` |
-| `engine.recipe` | 配方成本、并行与输出空间拟合、燃料批次、可合成性和界面坐标等共享机制 | `MachineWorkCost`、`ParallelFit`、`FluidFuelChargeMath`；不能夹带游戏栈 |
+| `engine.recipe` | 配方成本、并行与输出空间拟合、燃料批次、精确单位换算与材料分解纯计划、可合成性和界面坐标等共享机制 | `MachineWorkCost`、`ParallelFit`、`FluidFuelChargeMath`、`UnitConversion`、`MaterialDecompositionPlanner`；不能夹带游戏栈 |
 | `engine.recipe.data` | 配方文档模型、组件、解析及校验 | `MachineRecipeDocuments`、`ItemComponent`、`FluidComponent` |
 | `engine.machine` | 通用机器规格、供能、燃烧与执行规则 | `BasicMachineEnergy`、`BoilerSpec`、`MaterialFuelRules` |
 | `engine.machine.crucible` | 坩埚能量、物料、温度与加工过程 | `CrucibleProcess`、`CrucibleMath`、`CrucibleMaterialStack` |
@@ -69,8 +69,6 @@
 `StructureDiagnostic` 按同一编译定义进行按需只读扫描，产出公开的 `StructureProblem`。`AddonStructures` 和行为机 `StructureAccess` 通过宿主桥接提供给附属；放大镜复用同一结果和本地化格式。诊断不得触发 claim、成型回调或加载未知区块。
 
 `MultiblockMenus` 将已成型结构部件的普通右键交给主控现有菜单；库存、流体和菜单同步仍属于主控。`StructureWatchIndex.formedController` 读取成功匹配的非空气单元，包含普通方块和实际匹配的重复层，不重新扫描结构；没有唯一归属的共享普通壁板不自动选主控。`MultiblockMenuAccess` 为每次开窗保存点击位置，距离按该部件计算，并持续检查主控身份、结构成型和部件归属。覆盖板、工具、液体容器和潜行交互优先；没有 GUI 的主控不生成新菜单。
-
-`MaterialProcessGraph.Builder.add(step, genericRecovery)` 接收宿主核对回收归属及配方表后的判定，GENERIC 发布优先级本身不足以区分砧加工和回收：通用回收只作为输入用途进入材料页，不占用来源检索预算，不由机器名或物品形态推断。原始端口仍保留，原生配方注册不受此展示索引影响。默认材料页使用 `queryMaterial(root)` 保留该材料的全部直接关系，`Flow` 按精确资源保存生产者和消费者，空间随端口引用数增长，不展开两侧的连接乘积；`materialSteps(root)` 用于只需步骤的索引接入。显式预算版本仍用于有界查询。重复步骤和资源身份冲突逐条记录日志并拒绝，校验先于索引写入；`step(reference)` 用于宿主核对最终保留的步骤，避免导航和资源引用指向已拒绝数据。
 
 ## 验收
 

@@ -107,10 +107,7 @@ public final class RecipeMachines {
                 result,
                 MachineRecipeMaps.CryoDistillationTower,
                 new ItemStack(gregtech.content.registry.GTMultiblocks.CRYO_DISTILLATION_MAIN.get()));
-        add(
-                result,
-                MachineRecipeMaps.DistillationTower,
-                new ItemStack(gregtech.content.registry.GTMultiblocks.DISTILLATION_TOWER_MAIN.get()));
+        add(result, MachineRecipeMaps.DistillationTower, new ItemStack(machine("distillation_tower_main")));
         for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
             if (item instanceof gregtech.content.item.GTToolItem tool
                     && tool.toolType() == gregtech.engine.tool.GTToolType.HARD_HAMMER)

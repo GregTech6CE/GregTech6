@@ -40,26 +40,24 @@ public class LargeGasTurbineControllerBlock extends DirectionalBlock
 
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack held,BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){return interact(state,level,pos,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(FACING); }
-    @Override public BlockState getStateForPlacement(BlockPlaceContext ctx) { return defaultBlockState().setValue(FACING, ctx.getNearestLookingDirection().getOpposite()); }
-
-    @Nullable @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new LargeGasTurbineControllerBlockEntity(pos, state); }
-
-    @Nullable @Override @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.LARGE_GAS_TURBINE.get()) return null;
-        return (l, p, s, be) -> LargeGasTurbineControllerBlockEntity.serverTick(l, p, s, (LargeGasTurbineControllerBlockEntity) be);
+    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack held, BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
 
-//? if >=1.21.1 {
-    /*private net.minecraft.world.InteractionResult interact(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit) {
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
-    @Override public net.minecraft.world.InteractionResult use(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit) {
+    @Override
 //?}
+    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
         if(MachineRotationType.handleWrench(state,level,pos,player,hand,hit,FACING,MachineRotationType.ALL))return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         if(level.getBlockEntity(pos) instanceof LargeGasTurbineControllerBlockEntity machine){
             if(level.isClientSide)return net.minecraft.world.InteractionResult.SUCCESS;
@@ -72,6 +70,17 @@ public class LargeGasTurbineControllerBlock extends DirectionalBlock
         }
         return net.minecraft.world.InteractionResult.PASS;
     }
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b) { b.add(FACING); }
+    @Override public BlockState getStateForPlacement(BlockPlaceContext ctx) { return defaultBlockState().setValue(FACING, ctx.getNearestLookingDirection().getOpposite()); }
+
+    @Nullable @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new LargeGasTurbineControllerBlockEntity(pos, state); }
+
+    @Nullable @Override @SuppressWarnings("unchecked")
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide || type != gregtech.content.registry.GTBlockEntities.LARGE_GAS_TURBINE.get()) return null;
+        return (l, p, s, be) -> LargeGasTurbineControllerBlockEntity.serverTick(l, p, s, (LargeGasTurbineControllerBlockEntity) be);
+    }
+
 //? if >=1.21.1 {
     /*@Override public void appendHoverText(net.minecraft.world.item.ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,java.util.List<net.minecraft.network.chat.Component> lines,net.minecraft.world.item.TooltipFlag flag) {
 *///?} else {
@@ -81,11 +90,21 @@ public class LargeGasTurbineControllerBlock extends DirectionalBlock
     }
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){
         var stack=new net.minecraft.world.item.ItemStack(this);
+        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LargeGasTurbineControllerBlockEntity machine) {
 //? if >=1.21.1 {
-        /*if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LargeGasTurbineControllerBlockEntity machine)stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithId(machine.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithId(machine.getLevel().registryAccess()));
 *///?} else {
-        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LargeGasTurbineControllerBlockEntity machine)stack.getOrCreateTag().put("BlockEntityTag",gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithoutMetadata());
 //?}
+            data.remove("gt.ru");
+            data.remove("gt.fuel");
+            data.remove("gt.stopped");
+            data.remove("gt.rotor_formed");
+            data.remove("gt.rotor_active");
+            data.remove("gt.tank");
+            for (int i = 0; i < 3; i++) data.remove("gt.exhaust" + i);
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return java.util.List.of(stack);
     }
 }

@@ -38,8 +38,40 @@ public final class LogisticsCoreControllerBlock extends DirectionalBlock impleme
     public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
         return com.mojang.serialization.MapCodec.unit(this);
     }
+
+    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        if (level.getBlockEntity(pos) instanceof LogisticsCoreControllerBlockEntity core) {
+            var coverResult = gregtech.content.logistics.LogisticsCoverInteraction.use(
+                    core, level, player, hand, hit.getDirection());
+            if (coverResult != InteractionResult.PASS) return coverResult;
+            if (player.getItemInHand(hand).isEmpty()) {
+                if (!level.isClientSide) {
+                    var cpu = core.processorCounts();
+                    if (cpu == null) player.displayClientMessage(Component.literal("Structure Incomplete!"), false);
+                    else player.displayClientMessage(Component.literal(
+                            "Logic: "+cpu.logic()+", Control: "+cpu.control()+", Storage: "+cpu.storage()+", Conversion: "+cpu.conversion()+"; "+cpu.fixedEnergyPerTick()+" EU/t"), false);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+        }
+        return ToolInteractions.use(state, level, pos, player, hand, hit)
+        ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+    }
+
     public LogisticsCoreControllerBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
@@ -59,31 +91,6 @@ public final class LogisticsCoreControllerBlock extends DirectionalBlock impleme
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool)
         ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
-    }
-
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-            InteractionHand hand, BlockHitResult hit) {
-        if (level.getBlockEntity(pos) instanceof LogisticsCoreControllerBlockEntity core) {
-            var coverResult = gregtech.content.logistics.LogisticsCoverInteraction.use(
-                    core, level, player, hand, hit.getDirection());
-            if (coverResult != InteractionResult.PASS) return coverResult;
-            if (player.getItemInHand(hand).isEmpty()) {
-                if (!level.isClientSide) {
-                    var cpu = core.processorCounts();
-                    if (cpu == null) player.displayClientMessage(Component.literal("Structure Incomplete!"), false);
-                    else player.displayClientMessage(Component.literal(
-                            "Logic: "+cpu.logic()+", Control: "+cpu.control()+", Storage: "+cpu.storage()+", Conversion: "+cpu.conversion()+"; "+cpu.fixedEnergyPerTick()+" EU/t"), false);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-        }
-        return ToolInteractions.use(state, level, pos, player, hand, hit)
-        ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
     }
 
     @Override
@@ -143,21 +150,4 @@ public final class LogisticsCoreControllerBlock extends DirectionalBlock impleme
         core.dropContents();
         super.onRemove(state, level, pos, next, moving);
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-//?}
 }

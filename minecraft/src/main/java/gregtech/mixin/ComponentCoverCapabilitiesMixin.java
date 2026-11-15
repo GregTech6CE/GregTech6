@@ -83,7 +83,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
     gregtech.content.blockentity.misc.BumbleHiveBlockEntity.class,
     gregtech.content.blockentity.sensor.SensorBlockEntity.class,
     gregtech.content.blockentity.tool.BumbliaryBlockEntity.class,
-    gregtech.content.blockentity.tool.CoinMoldBlockEntity.class,
     gregtech.content.blockentity.tool.DustFunnelBlockEntity.class,
     gregtech.content.blockentity.tool.MaterialAnvilBlockEntity.class,
     gregtech.content.blockentity.tool.PortableContainerBlockEntity.class,

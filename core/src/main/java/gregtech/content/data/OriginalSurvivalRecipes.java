@@ -1658,22 +1658,6 @@ public final class OriginalSurvivalRecipes {
                             'w',
                             "item:gt6ce:tool_wrench")),
             new Row(
-                    "coin_mold",
-                    1,
-                    ImportedMaterialData.Steel,
-                    "yhf|PPP|III",
-                    Map.of(
-                            'I',
-                            "mat:ingot@Iron",
-                            'P',
-                            "tag:gt6ce:technology/any_iron_double_plate",
-                            'f',
-                            "item:gt6ce:tool_file",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'y',
-                            "item:gt6ce:tool_chisel")),
-            new Row(
                     "iron_key",
                     3,
                     gregtech.engine.material.GTMaterialRegistry.get("Iron"),

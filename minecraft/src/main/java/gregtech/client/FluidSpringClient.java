@@ -33,12 +33,7 @@ public final class FluidSpringClient {
         if (stack.getItem() instanceof net.minecraft.world.item.BlockItem item
                 && item.getBlock() instanceof gregtech.content.block.FluidSpringBlock block && block.spring() != null)
         return BuiltInRegistries.FLUID.get(ResourceLocation.parse(block.spring().fluidId()));
-//? if >=1.21.1 {
-        /*var packed = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        var data = packed == null ? null : packed.copyTag();
-*///?} else {
-        var data = stack.getTagElement("BlockEntityTag");
-//?}
+        var data = gregtech.engine.stack.BlockEntityData.read(stack);
         var id = data == null ? null : ResourceLocation.tryParse(data.getString("spring"));
         return id != null && BuiltInRegistries.FLUID.containsKey(id) ? BuiltInRegistries.FLUID.get(id) : Fluids.WATER;
     }

@@ -10,11 +10,6 @@ import gregtech.content.registry.*;
 import gregtech.platform.Mc;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
-//?}
 
 /** MultiItemFood 31001 and Loader_Recipes_Extruder food-grade wax pill routes. */
 public final class RadiationMedicineRecipes {
@@ -42,16 +37,13 @@ public final class RadiationMedicineRecipes {
     private static void add(RecipeMap map, ItemStack[] inputs, ItemStack output, int ticks) {
         if (output.isEmpty() || java.util.Arrays.stream(inputs).anyMatch(ItemStack::isEmpty))
             throw new IllegalStateException("Missing radiation medicine ingredient: " + java.util.Arrays.toString(inputs) + " -> " + output);
-//? if >=1.21.1 {
-        /*// Food processing owns the same Radaway row. Retain one identical executable recipe.
+        // Food processing owns the same Radaway row. Retain one identical executable recipe.
         for(var existing:map.mRecipeList){
             if(!existing.mEnabled||existing.mFakeRecipe||existing.mDuration!=ticks||existing.mEUt!=16||existing.mInputs.length!=inputs.length||existing.mOutputs.length!=1||existing.mFluidInputs.length!=0||existing.mFluidOutputs.length!=0)continue;
-            if(existing.mOutputs[0].getCount()!=output.getCount()||!ItemStack.isSameItemSameComponents(existing.mOutputs[0],output))continue;
-            boolean identical=true;for(int i=0;i<inputs.length;i++)if(existing.mInputs[i].getCount()!=inputs[i].getCount()||!ItemStack.isSameItemSameComponents(existing.mInputs[i],inputs[i])){identical=false;break;}
+            if(existing.mOutputs[0].getCount()!=output.getCount()||!gregtech.engine.stack.StackCompat.sameItem(existing.mOutputs[0],output))continue;
+            boolean identical=true;for(int i=0;i<inputs.length;i++)if(existing.mInputs[i].getCount()!=inputs[i].getCount()||!gregtech.engine.stack.StackCompat.sameItem(existing.mInputs[i],inputs[i])){identical=false;break;}
             if(identical)return;
         }
-*///?} else {
-//?}
         if(map.addRecipe(new Recipe(inputs, new ItemStack[]{output}, null, null, null, null, ticks, 16, 0))==null)
             throw new IllegalStateException("Rejected radiation medicine recipe: " + java.util.Arrays.toString(inputs));
     }

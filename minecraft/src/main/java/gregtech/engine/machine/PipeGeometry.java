@@ -145,15 +145,10 @@ public final class PipeGeometry {
 //?}
 
     /** Half-thickness of an axle-family neighbor. */
-//? if >=1.21.1 {
-    /*public static double axleHalfOf(BlockState state){return state.getBlock() instanceof AxleConnectorGeometry axle?axle.axleHalfThickness():NONE;}
-    public interface AxleConnectorGeometry { double axleHalfThickness(); }
-*///?} else {
     public static double axleHalfOf(BlockState state) {
-        if (state.getBlock() instanceof gregtech.content.block.energy.AxleBlock axle) {
-            return axle.spec().halfThickness();
-        }
-        return NONE;
+        return state.getBlock() instanceof AxleConnectorGeometry axle ? axle.axleHalfThickness() : NONE;
     }
-//?}
+
+    /** An axle-family neighbor exposes its half-thickness to adjoining pipe geometry. */
+    public interface AxleConnectorGeometry { double axleHalfThickness(); }
 }

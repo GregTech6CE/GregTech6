@@ -17,8 +17,6 @@ public final class CrucibleFaucetIcons {
     }
 
     public static String sharedModelJson(MaterialTextureSet set, Direction facing) {
-        String elementsTinted = SmelteryModelHelper.faucetElements(facing, true);
-        String elementsOverlay = SmelteryModelHelper.faucetElements(facing, false);
-        return SmelteryModelHelper.compositeModelJson(set, elementsTinted, elementsOverlay);
+        return SmelteryModelHelper.hullModelJson(set, SmelteryModelHelper.faucetElements(facing, true), null);
     }
 }

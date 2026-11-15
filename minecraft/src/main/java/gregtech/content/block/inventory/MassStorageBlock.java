@@ -87,6 +87,83 @@ public class MassStorageBlock extends HorizontalDirectionalBlock
 //?}
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
     }
+
+//? if >=1.21.1 {
+    /*@Override
+    protected ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        // both hands fire use(); handling the off hand double-triggers
+        // (insert+extract in one click, double withdrawals, armor swap-backs)
+        if (hand == InteractionHand.OFF_HAND || !(level.getBlockEntity(pos) instanceof MassStorageBlockEntity store))
+            return InteractionResult.PASS;
+        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        ItemStack held = player.getItemInHand(hand);
+        if (store.isPacked() && isUnpackingTool(held)) {
+            if (!level.isClientSide && store.unseal())
+                gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(held, 1000, player);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (useStorageModeTool(store, player, held)) return InteractionResult.sidedSuccess(level.isClientSide);
+        if (store.isPacked()) return InteractionResult.PASS;
+        if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
+        double x = gregtech.engine.inventory.MassStorageFace.x(state.getValue(FACING),
+                hit.getLocation().x - pos.getX(), hit.getLocation().z - pos.getZ());
+        double y = 16 * (1 - (hit.getLocation().y - pos.getY()));
+        if (!gregtech.engine.inventory.MassStorageFace.active(x, y)) return InteractionResult.PASS;
+        int requested = gregtech.engine.inventory.MassStorageFace.withdrawal(x, y);
+        // The six buttons take priority even if the player is holding an item.
+        if (requested > 0 && store.stored() > 0) {
+            if (!level.isClientSide) {
+                int left = requested;
+                while (left > 0) {
+                    ItemStack out = store.extractAmount(left);
+                    if (out.isEmpty()) break;
+                    left -= out.getCount();
+                    deliverWithdrawal(player, out);
+                }
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (!held.isEmpty()) {
+            if (!level.isClientSide) {
+                int count = store.insert(held);
+                if (count > 0 && !player.getAbilities().instabuild) held.shrink(count);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (player.isShiftKeyDown()) {
+            if (!level.isClientSide) {
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.mass_storage.status",
+                        store.stored(), store.template().isEmpty()
+                                ? net.minecraft.network.chat.Component.translatable("gui.gt6ce.empty")
+                                : store.template().getHoverName()), true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (!level.isClientSide && !store.template().isEmpty()
+                && gregtech.engine.inventory.MassStorageFace.depositInventory(x, y)) {
+            for (ItemStack stack : player.getInventory().items) {
+                int inserted = store.insert(stack);
+                if (inserted > 0 && !player.getAbilities().instabuild) stack.shrink(inserted);
+            }
+            player.getInventory().setChanged();
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
 //? if >=1.21.1 {
     /*public GTMaterial material() { return material; }
     protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) { builder.add(FACING); }
@@ -109,12 +186,6 @@ public class MassStorageBlock extends HorizontalDirectionalBlock
         BlockEntity entity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (!(entity instanceof MassStorageBlockEntity storage)) return List.of(new ItemStack(this));
         var drops = new ArrayList<ItemStack>(); drops.add(shell(state, storage)); drops.addAll(storage.looseDrops()); return drops;
-    }
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return interact(state, level, pos, player, hand, hit) ? ItemInteractionResult.sidedSuccess(level.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-    }
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit) ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
     }
 
     /^* Source creative pick retains the complete state, including untaped inventory and fractions. ^/
@@ -202,13 +273,6 @@ public class MassStorageBlock extends HorizontalDirectionalBlock
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-                                 InteractionHand hand, BlockHitResult hit) {
-        return interact(state, level, pos, player, hand, hit)
-                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
-    }
-
-    @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         gregtech.client.StorageBlockTooltips.massStorage(stack, tooltip);
 //?}
@@ -223,67 +287,6 @@ public class MassStorageBlock extends HorizontalDirectionalBlock
                 ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,
                         gregtech.content.block.machine.MachineRotationType.HORIZONTAL)
                 : null;
-    }
-
-    private boolean interact(BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        // both hands fire use(); handling the off hand double-triggers
-        // (insert+extract in one click, double withdrawals, armor swap-backs)
-        if (hand == InteractionHand.OFF_HAND || !(level.getBlockEntity(pos) instanceof MassStorageBlockEntity store))
-            return false;
-        if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) return true;
-        ItemStack held = player.getItemInHand(hand);
-        if (store.isPacked() && isUnpackingTool(held)) {
-            if (!level.isClientSide && store.unseal())
-                gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(held, 1000, player);
-            return true;
-        }
-        if (useStorageModeTool(store, player, held)) return true;
-        if (store.isPacked()) return false;
-        if (hit.getDirection() != state.getValue(FACING)) return false;
-        double x = gregtech.engine.inventory.MassStorageFace.x(state.getValue(FACING),
-                hit.getLocation().x - pos.getX(), hit.getLocation().z - pos.getZ());
-        double y = 16 * (1 - (hit.getLocation().y - pos.getY()));
-        if (!gregtech.engine.inventory.MassStorageFace.active(x, y)) return false;
-        int requested = gregtech.engine.inventory.MassStorageFace.withdrawal(x, y);
-        // The six buttons take priority even if the player is holding an item.
-        if (requested > 0 && store.stored() > 0) {
-            if (!level.isClientSide) {
-                int left = requested;
-                while (left > 0) {
-                    ItemStack out = store.extractAmount(left);
-                    if (out.isEmpty()) break;
-                    left -= out.getCount();
-                    deliverWithdrawal(player, out);
-                }
-            }
-            return true;
-        }
-        if (!held.isEmpty()) {
-            if (!level.isClientSide) {
-                int count = store.insert(held);
-                if (count > 0 && !player.getAbilities().instabuild) held.shrink(count);
-            }
-            return true;
-        }
-        if (player.isShiftKeyDown()) {
-            if (!level.isClientSide) {
-                player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.mass_storage.status",
-                        store.stored(), store.template().isEmpty()
-                                ? net.minecraft.network.chat.Component.translatable("gui.gt6ce.empty")
-                                : store.template().getHoverName()), true);
-            }
-            return true;
-        }
-        if (!level.isClientSide && !store.template().isEmpty()
-                && gregtech.engine.inventory.MassStorageFace.depositInventory(x, y)) {
-            for (ItemStack stack : player.getInventory().items) {
-                int inserted = store.insert(stack);
-                if (inserted > 0 && !player.getAbilities().instabuild) stack.shrink(inserted);
-            }
-            player.getInventory().setChanged();
-        }
-        return true;
     }
 
     /** Direct withdrawals enter the player's inventory; only a full-inventory remainder is dropped. */

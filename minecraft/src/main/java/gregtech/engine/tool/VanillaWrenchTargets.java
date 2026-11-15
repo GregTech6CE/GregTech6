@@ -1,6 +1,7 @@
 package gregtech.engine.tool;
 
 import gregtech.content.block.machine.MachineRotationType;
+import javax.annotation.Nullable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.BarrelBlock;
 import net.minecraft.world.level.block.Block;
@@ -14,8 +15,6 @@ import net.minecraft.world.level.block.PumpkinBlock;
 import net.minecraft.world.level.block.piston.PistonBaseBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-
-import javax.annotation.Nullable;
 
 /**
  * The vanilla half of GT6's wrench click: the block list that draws GT6's 3×3 wrench overlay
@@ -37,23 +36,20 @@ public final class VanillaWrenchTargets {
     @Nullable
     public static MachineRotationType policy(BlockState state) {
         Block block = state.getBlock();
-        if (block instanceof PistonBaseBlock || block instanceof DispenserBlock
-                || block instanceof ObserverBlock) {
+        if (block instanceof PistonBaseBlock || block instanceof DispenserBlock || block instanceof ObserverBlock) {
             return MachineRotationType.ALL;
         }
         if (block instanceof HopperBlock) {
             return MachineRotationType.BOTTOM_HORIZONTAL;
         }
         // Blast furnaces and smokers are modern blocks that GT6 never had.
-        if (block instanceof ChestBlock || block instanceof EnderChestBlock || block instanceof BarrelBlock
-                || block instanceof PumpkinBlock || block == Blocks.FURNACE) {
+        if (block instanceof ChestBlock
+                || block instanceof EnderChestBlock
+                || block instanceof BarrelBlock
+                || block instanceof PumpkinBlock
+                || block == Blocks.FURNACE) {
             return MachineRotationType.HORIZONTAL;
         }
-//? if >=1.21.1 {
-/*        if (block == Blocks.CRAFTER) {
-            return MachineRotationType.ALL;
-        }
-*///?}
         return null;
     }
 

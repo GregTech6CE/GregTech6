@@ -7,6 +7,7 @@ import gregtech.api.addon.platform.AddonTools;
 import gregtech.engine.machine.MachineSpec;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.tool.GTToolHelper;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -53,6 +54,48 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements gregte
     public static final BooleanProperty RUNNING = BooleanProperty.create("running");
     private final AddonMachines.AcceptedBehavior accepted;
     private Supplier<BlockEntityType<?>> beType = () -> null;
+
+//? if >=1.21.1 {
+    /*@Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?}
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        InteractionResult tool = toolClick(level, pos, player, hand, hit);
+        if (tool != InteractionResult.PASS) return tool;
+        InteractionResult wrench = super.use(state, level, pos, player, hand, hit);
+        if (wrench != InteractionResult.PASS) return wrench;
+        BlockEntity entity = level.getBlockEntity(pos);
+        if (!(entity instanceof BehaviorMachineBlockEntity machine)) return InteractionResult.PASS;
+        ItemStack held = player.getItemInHand(hand);
+//? if >=1.21.1 {
+/*        IFluidHandlerItem fluidItem = held.getCapability(Capabilities.FluidHandler.ITEM);
+*///?} else {
+        IFluidHandlerItem fluidItem = held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElse(null);
+//?}
+        if (fluidItem != null && machine.tanks() > 0) {
+            if (!level.isClientSide) pour(player, hand, machine, fluidItem, hit.getDirection());
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (!level.isClientSide && machine.onUse(player, hand)) return InteractionResult.sidedSuccess(false);
+        if (!level.isClientSide && player instanceof ServerPlayer server) {
+//? if >=1.21.1 {
+            server.openMenu(machine, buf -> buf.writeBlockPos(pos));
+//?} else {
+            NetworkHooks.openScreen(server, machine, buf -> buf.writeBlockPos(pos));
+//?}
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
 
     public BehaviorMachineBlock(AddonMachines.AcceptedBehavior accepted, Properties properties) {
         super(spec(accepted), properties);
@@ -102,56 +145,6 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements gregte
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != beType.get()) return null;
         return (lvl, pos, blockState, be) -> BehaviorMachineBlockEntity.serverTick(lvl, pos, blockState, (BehaviorMachineBlockEntity) be);
-    }
-
-    @Override
-//? if >=1.21.1 {
-/*    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-                                              Player player, InteractionHand hand, BlockHitResult hit) {
-        InteractionResult result = interact(state, level, pos, player, hand, hit);
-        return result == InteractionResult.PASS
-                ? ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-                : ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
-    }
-
-    private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-                                       InteractionHand hand, BlockHitResult hit) {
-        InteractionResult tool = toolClick(level, pos, player, hand, hit);
-        if (tool != InteractionResult.PASS) return tool;
-        InteractionResult wrench = handleWrench(state, level, pos, player, hand, hit);
-*///?} else {
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        InteractionResult tool = toolClick(level, pos, player, hand, hit);
-        if (tool != InteractionResult.PASS) return tool;
-        InteractionResult wrench = super.use(state, level, pos, player, hand, hit);
-//?}
-        if (wrench != InteractionResult.PASS) return wrench;
-        BlockEntity entity = level.getBlockEntity(pos);
-        if (!(entity instanceof BehaviorMachineBlockEntity machine)) return InteractionResult.PASS;
-        ItemStack held = player.getItemInHand(hand);
-//? if >=1.21.1 {
-/*        IFluidHandlerItem fluidItem = held.getCapability(Capabilities.FluidHandler.ITEM);
-*///?} else {
-        IFluidHandlerItem fluidItem = held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElse(null);
-//?}
-        if (fluidItem != null && machine.tanks() > 0) {
-            if (!level.isClientSide) pour(player, hand, machine, fluidItem, hit.getDirection());
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        if (!level.isClientSide && machine.onUse(player, hand)) return InteractionResult.sidedSuccess(false);
-        if (!level.isClientSide && player instanceof ServerPlayer server) {
-//? if >=1.21.1 {
-            server.openMenu(machine, buf -> buf.writeBlockPos(pos));
-//?} else {
-            NetworkHooks.openScreen(server, machine, buf -> buf.writeBlockPos(pos));
-//?}
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     /** A recognized tool asks the behavior before a wrench can rotate the block. */

@@ -266,7 +266,7 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
 *///?} else {
     @Override protected void saveAdditional(net.minecraft.nbt.CompoundTag tag) {
         super.saveAdditional(tag);
-        covers.save(tag);
+        covers.save(tag, null);
         saveDesign(tag);
 //?}
     }
@@ -278,7 +278,7 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
 *///?} else {
     @Override public void load(net.minecraft.nbt.CompoundTag tag) {
         super.load(tag);
-        covers.load(tag);
+        covers.load(tag, null);
         loadDesign(tag);
 //?}
     }

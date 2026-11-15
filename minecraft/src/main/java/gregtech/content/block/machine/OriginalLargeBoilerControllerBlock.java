@@ -49,30 +49,21 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
 
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
+    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
 //?}
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-    @Nullable @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-    }
-    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        return GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL) : null;
-    }
-    @Override public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
-        if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
-            gregtech.engine.multiblock.tracking.StructureTracking.invalidate(boiler);
-    }
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                           InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);
         if (!(level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler))
@@ -91,6 +82,20 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
         return InteractionResult.PASS;
     }
 
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
+    @Nullable @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    }
+    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        return GTToolHelper.isMachineWrench(tool)
+                ? ToolInteractionSpec.facing(FACING, MachineRotationType.HORIZONTAL) : null;
+    }
+    @Override public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
+        if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
+            gregtech.engine.multiblock.tracking.StructureTracking.invalidate(boiler);
+    }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new OriginalLargeBoilerControllerBlockEntity(pos, state);
     }
@@ -108,12 +113,7 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
     @Override public void appendHoverText(ItemStack stack, @Nullable BlockGetter level,
 //?}
                                           List<Component> tooltip, TooltipFlag flag) {
-//? if >=1.21.1 {
-        /*var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        var data = component == null ? null : component.copyTag();
-*///?} else {
-        var data = stack.getTagElement("BlockEntityTag");
-//?}
+        var data = gregtech.engine.stack.BlockEntityData.read(stack);
         int efficiency = data != null && data.contains("gt.efficiency") ? data.getInt("gt.efficiency") : 10000;
         gregtech.client.FunctionalBlockTooltips.appendLargeBoiler(variant.originalId(), efficiency, getExplosionResistance(), tooltip);
     }
@@ -124,11 +124,7 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
             return List.of();
         ItemStack drop = new ItemStack(this);
         if (entity instanceof OriginalLargeBoilerControllerBlockEntity boiler)
-//? if >=1.21.1 {
-            /*drop.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(boiler,boiler.saveWithId(boiler.getLevel().registryAccess()))));
-*///?} else {
-            drop.addTagElement("BlockEntityTag", gregtech.content.cover.ComponentCoverFallback.forItem(boiler,boiler.saveWithoutMetadata()));
-//?}
+            gregtech.engine.stack.BlockEntityData.write(drop, boiler.saveItemConfig());
         return List.of(drop);
     }
 //? if >=1.21.1 {
@@ -138,27 +134,14 @@ public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectio
 //?}
         ItemStack stack = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
-//? if >=1.21.1 {
-            /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(boiler,boiler.saveWithId(boiler.getLevel().registryAccess()))));
-*///?} else {
-            stack.addTagElement("BlockEntityTag", gregtech.content.cover.ComponentCoverFallback.forItem(boiler,boiler.saveWithoutMetadata()));
-//?}
+            gregtech.engine.stack.BlockEntityData.write(stack, boiler.saveItemConfig());
         return stack;
     }
     @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state,
                                       @Nullable LivingEntity placer, ItemStack stack) {
-//? if >=1.21.1 {
-        /*var component=stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        var saved=component==null?null:component.copyTag();
-*///?} else {
-        var saved = stack.getTagElement("BlockEntityTag");
-//?}
+        var saved = gregtech.engine.stack.BlockEntityData.read(stack);
         if (saved != null && level.getBlockEntity(pos) instanceof OriginalLargeBoilerControllerBlockEntity boiler)
-//? if >=1.21.1 {
-            /*boiler.loadAdditional(saved,level.registryAccess());
-*///?} else {
-            boiler.load(saved);
-//?}
+            boiler.loadItemConfig(saved);
     }
 //? if >=1.21.1 {
     /*@Override public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {

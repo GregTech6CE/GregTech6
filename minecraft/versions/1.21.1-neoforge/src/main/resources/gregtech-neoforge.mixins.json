@@ -9,7 +9,6 @@
     "AutoCollectDropMixin",
     "BaseSpawnerAccessor",
     "BlockEntityPaintMixin",
-    "BucketContentAccessor",
     "ColoredBookLecternMixin",
     "ColoredBookUseMixin",
     "ComponentCoverCapabilitiesMixin",
@@ -55,8 +54,6 @@
   },
   "client": [
     "BlockPaintColorMixin",
-    "EmiMaterialProcessFocusMixin",
-    "EmiMaterialProcessRecipesMixin",
     "EmiMaterialUsesMixin",
     "EmiStructureFocusMixin",
     "FluidAlphaConfigMixin",

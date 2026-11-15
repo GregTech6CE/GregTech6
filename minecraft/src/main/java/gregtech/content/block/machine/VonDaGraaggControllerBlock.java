@@ -28,13 +28,6 @@ public final class VonDaGraaggControllerBlock extends Block implements gregtech.
         super(properties);
     }
 
-//? if >=1.21.1 {
-    /*@Override
-    protected com.mojang.serialization.MapCodec<? extends Block> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
-    }
-*///?} else {
-//?}
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new VonDaGraaggControllerBlockEntity(pos, state);

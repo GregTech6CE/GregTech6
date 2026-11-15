@@ -134,7 +134,12 @@ public class HopperBlockEntity extends BlockEntity
                         if (mExactMode) break;
                     }
                 } else if (level.isEmptyBlock(worldPosition.relative(facing))) {
-                    tMovedItems += dropToWorld(facing);
+                    while (tMovedItems + (mMode <= 0 ? 1 : mMode) <= 64) {
+                        int moved = dropToWorld(facing, mMode <= 0 ? 64 - tMovedItems : mMode, mMode <= 0 ? 1 : mMode);
+                        if (moved <= 0) break;
+                        tMovedItems += moved;
+                        if (mExactMode) break;
+                    }
                 }
                 // GT6: non-air solid block with no inventory → items stay in hopper
             }
@@ -270,31 +275,38 @@ public class HopperBlockEntity extends BlockEntity
 
     // ── Item movement ────────────────────────────────────────────────────
 
-    /** Move items from this hopper to a target handler. */
+    /** Move items from this hopper to a target handler.
+     * <p>
+     * GT6 {@code ST.move} performs one transfer from a single source slot into a single target
+     * slot and returns at the first slot pair that can take at least {@code minAmount}. Exact mode
+     * relies on that: it stops the outer loop after one such transfer, so one pass emits one source
+     * stack into one target stack instead of aggregating across slots.
+     */
     private int moveTo(IItemHandler target, int maxAmount, int minAmount) {
-        int totalMoved = 0;
-        for (int slot = 0; slot < invsize() && totalMoved < maxAmount; slot++) {
+        for (int slot = 0; slot < invsize(); slot++) {
             ItemStack stack = inventory.get(slot);
-            if (stack.isEmpty()) continue;
-            int toMove = Math.min(stack.getCount(), maxAmount - totalMoved);
-            if (toMove < minAmount) continue;
+            if (stack.isEmpty() || stack.getCount() < minAmount) continue;
+            int probe = Math.min(stack.getCount(), Math.min(64, stack.getMaxStackSize()));
+            for (int targetSlot = 0; targetSlot < target.getSlots(); targetSlot++) {
+                ItemStack simulatedRemainder = target.insertItem(targetSlot, stack.copyWithCount(probe), true);
+                int space = probe - simulatedRemainder.getCount();
+                int toMove = Math.min(maxAmount, space);
+                if (toMove < minAmount) continue;
 
-            ItemStack simExtract = extractItemInternal(slot, toMove, true);
-            if (simExtract.isEmpty()) continue;
-
-            int prevCount = simExtract.getCount();
-            // GT6 ST.move requires the destination to accept at least mMode,
-            // not merely the source to contain that many items.
-            ItemStack simulatedRemainder = ItemHandlerHelper.insertItem(target, simExtract.copy(), true);
-            if (prevCount - simulatedRemainder.getCount() < minAmount) continue;
-            ItemStack remainder = ItemHandlerHelper.insertItem(target, simExtract, false);
-            int accepted = prevCount - remainder.getCount();
-            if (accepted > 0) {
-                extractItemInternal(slot, accepted, false);
-                totalMoved += accepted;
+                ItemStack extracted = extractItemInternal(slot, toMove, false);
+                if (extracted.isEmpty()) continue;
+                ItemStack remainder = target.insertItem(targetSlot, extracted, false);
+                int accepted = extracted.getCount() - remainder.getCount();
+                if (accepted < extracted.getCount()) {
+                    ItemStack source = inventory.get(slot);
+                    if (source.isEmpty()) inventory.set(slot, remainder);
+                    else source.grow(remainder.getCount());
+                    setChanged();
+                }
+                if (accepted > 0) return accepted;
             }
         }
-        return totalMoved;
+        return 0;
     }
 
     /** Pull items from a source handler into this hopper. */
@@ -322,13 +334,14 @@ public class HopperBlockEntity extends BlockEntity
         return totalMoved;
     }
 
-    /** Drop one stack through the output face into the world (air only). Spawns ItemEntity with zero velocity. */
-    private int dropToWorld(Direction facing) {
+    /** Drop items through the output face into the world (air only). Spawns ItemEntity with zero velocity.
+     * GT6 {@code ST.put}: one source slot per call, at most {@code maxAmount} items. */
+    private int dropToWorld(Direction facing, int maxAmount, int minAmount) {
         BlockPos targetPos = worldPosition.relative(facing);
         for (int slot = 0; slot < invsize(); slot++) {
             ItemStack stack = inventory.get(slot);
-            if (stack.isEmpty()) continue;
-            int toDrop = mMode <= 0 ? stack.getCount() : Math.min(stack.getCount(), mMode);
+            if (stack.isEmpty() || stack.getCount() < minAmount) continue;
+            int toDrop = Math.min(stack.getCount(), maxAmount);
             ItemStack dropStack = stack.split(toDrop);
             if (stack.isEmpty()) inventory.set(slot, ItemStack.EMPTY);
             spawnItemEntity(dropStack, targetPos);

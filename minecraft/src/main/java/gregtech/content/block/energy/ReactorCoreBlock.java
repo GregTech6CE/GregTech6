@@ -26,10 +26,27 @@ import java.util.List;
 
 /** GT6 single-rod reactor core with shared rod/container interaction. */
 public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.engine.tool.ToolInteractionTarget {
+
 //? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+            BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        if(level.getBlockEntity(pos) instanceof ReactorCoreBlockEntity core) return gregtech.content.nuclear.ReactorInteraction.use(core,player,hand,hit);
+        return InteractionResult.PASS;
+    }
 
     public ReactorCoreBlock(Properties properties) {
         super(properties.noOcclusion());
@@ -61,17 +78,6 @@ public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.eng
                 ReactorCoreBlockEntity::serverTick;
     }
 
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        if(level.getBlockEntity(pos) instanceof ReactorCoreBlockEntity core) return gregtech.content.nuclear.ReactorInteraction.use(core,player,hand,hit);
-        return InteractionResult.PASS;
-    }
-
     @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
@@ -92,22 +98,11 @@ public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.eng
     }
     @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){
         var stack=new ItemStack(this);
-        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof gregtech.content.blockentity.energy.ReactorCoreBlockEntity core){
-//? if >=1.21.1 {
-            /*var tag=gregtech.content.cover.ComponentCoverFallback.forItem(core,core.saveWithId(builder.getLevel().registryAccess()));tag.remove("gt.rods");tag.remove("gt.overflow");tag.remove("gt.neutrons");tag.putBoolean("gt.stopped",true);stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(tag));
-*///?} else {
-            var tag=gregtech.content.cover.ComponentCoverFallback.forItem(core,core.saveWithoutMetadata());tag.remove("gt.rods");tag.remove("gt.overflow");tag.remove("gt.neutrons");tag.putBoolean("gt.stopped",true);stack.getOrCreateTag().put("BlockEntityTag",tag);
-//?}
-        }
+        // GT6 keeps coolant, heat and rods out of the item; rods drop separately via BlockContents.
         ReactorPorts.saveItemState(stack, state);
         return java.util.List.of(stack);
     }
     @Override public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return ReactorPorts.tool(tool);
     }
-//? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
 }

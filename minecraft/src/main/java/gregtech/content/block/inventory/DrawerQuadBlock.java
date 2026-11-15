@@ -32,6 +32,39 @@ import java.util.List;
 
 /** GT6 Quad Drawer block — front-face quadrants address the four compartments. */
 public class DrawerQuadBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.tool.ToolInteractionTarget {
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof DrawerQuadBlockEntity drawer)) return InteractionResult.PASS;
+        ItemStack tool = player.getItemInHand(hand);
+        if (gregtech.engine.tool.GTToolHelper.isMonkeyWrench(tool)) {
+            if (!level.isClientSide) {
+                drawer.toggleSidedAccess();
+                gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(tool,10000,player);
+                player.displayClientMessage(Component.translatable(drawer.sidedAccess() ? "message.gt6ce.drawer.sided" : "message.gt6ce.drawer.anywhere"),true);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (gregtech.engine.tool.ToolInteractions.use(state,level,pos,player,hand,hit)) return InteractionResult.sidedSuccess(level.isClientSide);
+        if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
+        int page = quadrant(state.getValue(FACING), pos, hit.getLocation());
+        if (!level.isClientSide) player.openMenu(new net.minecraft.world.SimpleMenuProvider(
+                (id, inv, p) -> drawer.createMenu(page,id,inv), Component.translatable("gui.gt6ce.drawer.page", Component.translatable(getDescriptionId()), page+1)));
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
 
     private final gregtech.api.material.GTMaterial material;
     public gregtech.api.material.GTMaterial material() { return material; }
@@ -84,32 +117,6 @@ public class DrawerQuadBlock extends DirectionalBlock implements EntityBlock, Si
         return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
                 ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING, gregtech.content.block.machine.MachineRotationType.ALL) : null;
     }
-//? if >=1.21.1 {
-    /*@Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-    public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                           InteractionHand hand, BlockHitResult hit) {
-        if (hand != InteractionHand.MAIN_HAND || !(level.getBlockEntity(pos) instanceof DrawerQuadBlockEntity drawer)) return InteractionResult.PASS;
-        ItemStack tool = player.getItemInHand(hand);
-        if (gregtech.engine.tool.GTToolHelper.isMonkeyWrench(tool)) {
-            if (!level.isClientSide) {
-                drawer.toggleSidedAccess();
-                gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(tool,10000,player);
-                player.displayClientMessage(Component.translatable(drawer.sidedAccess() ? "message.gt6ce.drawer.sided" : "message.gt6ce.drawer.anywhere"),true);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        if (gregtech.engine.tool.ToolInteractions.use(state,level,pos,player,hand,hit)) return InteractionResult.sidedSuccess(level.isClientSide);
-        if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
-        int page = quadrant(state.getValue(FACING), pos, hit.getLocation());
-        if (!level.isClientSide) player.openMenu(new net.minecraft.world.SimpleMenuProvider(
-                (id, inv, p) -> drawer.createMenu(page,id,inv), Component.translatable("gui.gt6ce.drawer.page", Component.translatable(getDescriptionId()), page+1)));
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
     @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {

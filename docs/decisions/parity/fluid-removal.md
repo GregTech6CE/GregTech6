@@ -36,7 +36,7 @@
 | Draconic Evolution、Avaritia 熔融流体 | 停注 `molten.draconium`、`molten.draconiumawakened`、`molten.infinity`。 | 对应材料停注，见[材料移除](material-removal.md)。 |
 | 无来源/无消费端材料熔融流体 | 停注 `molten.bedrockium`、`molten.crystallinepinkslime`、`molten.unstable`。 | 对应材料停注，见[材料移除](material-removal.md)。 |
 | GT 水目录项（奥卡姆剃刀） | 删除 `Water` 目录项、`fluid_item_water` 物品与 `VANILLA_WATER` 贴图模式；配方中的 `Water` 字段改指 `minecraft:water`，材料 `Water` 不再生成 GT 流体。 | 原版已有水，GT 目录项只是原版水的别名；保留目录项会继续产生重复的流体物品与语言键。 |
-| 河水、海水 | 停注 `riverwater`、`seawater`，删除海洋／河流水体替换特性 `gt_water_bodies`；世界生成保留原版水。旧存档的两种水方块映射为 `minecraft:water`，保留 `level`，对应源流体和流动流体也映射到原版水。 | 普通水保持统一，避免删除注册后旧水域变成空气。Forge 使用缺失注册映射，NeoForge 使用注册别名，不恢复水行为 mixin。已经保存为空气的区块无法凭空恢复，需使用损坏前备份。 |
+| 河水、海水 | 停注 `riverwater`、`seawater`，删除海洋／河流水体替换特性 `gt_water_bodies`；世界生成保留原版水。旧存档的两种水方块映射为 `minecraft:water`，保留 `level`，对应源流体和流动流体也映射到原版水。残留的 9 种 `wooden_bucket_*_sea_water` 木桶及其模型、贴图、堆组与语言键一并移除。 | 普通水保持统一，避免删除注册后旧水域变成空气。Forge 使用缺失注册映射，NeoForge 使用注册别名，不恢复水行为 mixin。已经保存为空气的区块无法凭空恢复，需使用损坏前备份。海水流体停注后木桶变体失去流体来源，故补删。 |
 | 地热水 | 保留 `watergeothermal` 及 `overworld.fluid.water` 地热泉，恢复贴图、饮用／浸泡效果、锅炉用水、热交换与化学加工用途。 | 地热水有独立用途，不参与普通水统一，不应随海水／河水删除。 |
 | 淡水 | 停注材料生成流体 `freshwater`；材料 `FreshWater` 保留但不再生成流体。 | 没有世界生成、物品来源或配方消费端。 |
 | 氦离子、氮离子 | 停注 `heliumplasma`、`nitrogenplasma`。 | 端口没有达到等离子相温度的配方；`heliumplasma` 的离心绑定在 293 K 下不可达，`nitrogenplasma` 没有引用。 |

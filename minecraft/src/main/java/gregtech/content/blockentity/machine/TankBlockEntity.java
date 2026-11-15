@@ -40,7 +40,6 @@ import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.minecraft.core.HolderLookup;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import gregtech.content.transport.fluid.FluidTransportRegistries;
 import gregtech.platform.neoforge.transport.FluidTransportEnvironment;
 
 
@@ -460,7 +459,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
-        componentCovers.load(tag);
+        componentCovers.load(tag, null);
 //?}
         temperature = tag.contains(NBT_TEMPERATURE) ? tag.getLong(NBT_TEMPERATURE) : GregTechConstants.DEF_ENV_TEMP;
         autoOutput = tag.contains(NBT_AUTO_OUTPUT) && tag.getBoolean(NBT_AUTO_OUTPUT);
@@ -481,7 +480,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        componentCovers.save(tag);
+        componentCovers.save(tag, null);
 //?}
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putBoolean(NBT_AUTO_OUTPUT, autoOutput);
@@ -516,7 +515,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 //? if >=1.21.1 {
         /*componentCovers.save(tag,lookup);
 *///?} else {
-        componentCovers.save(tag);
+        componentCovers.save(tag, null);
 //?}
         return tag;
     }
@@ -529,7 +528,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 *///?} else {
     public void handleUpdateTag(CompoundTag tag) {
         super.handleUpdateTag(tag);
-        componentCovers.load(tag);
+        componentCovers.load(tag, null);
 //?}
         if (tag.contains(NBT_TEMPERATURE)) temperature = tag.getLong(NBT_TEMPERATURE);
         if (tag.contains(NBT_AUTO_OUTPUT)) autoOutput = tag.getBoolean(NBT_AUTO_OUTPUT);

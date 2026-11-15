@@ -83,12 +83,6 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
     public static final Supplier<BlockEntityType<gregtech.content.block.misc.ChargingCraftingTableBlockEntity>> CHARGING_CRAFTING_TABLE =
             BLOCK_ENTITIES.register("charging_crafting_table",()->BlockEntityType.Builder.of(gregtech.content.block.misc.ChargingCraftingTableBlockEntity::new,GTCraftingTables.CHARGING.stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
 
-    public static final Supplier<BlockEntityType<gregtech.content.blockentity.tool.CoinMoldBlockEntity>> COIN_MOLD =
-            BLOCK_ENTITIES.register("coin_mold",()->BlockEntityType.Builder.of(gregtech.content.blockentity.tool.CoinMoldBlockEntity::new,GTManualStations.COIN_MOLD.get()).build(null));
-
-    public static final Supplier<BlockEntityType<gregtech.content.blockentity.misc.CoinPileBlockEntity>> COIN_PILE =
-            BLOCK_ENTITIES.register("coin_pile",()->BlockEntityType.Builder.of(gregtech.content.blockentity.misc.CoinPileBlockEntity::new,GTCoinPiles.COIN_PILE.get()).build(null));
-
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity>> COKE_OVEN =
             BLOCK_ENTITIES.register("coke_oven",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.CokeOvenControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "coke_oven"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "coke_oven")).build(null));
 
@@ -306,12 +300,15 @@ public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
     public static final Supplier<BlockEntityType<gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity>> VON_DA_GRAAGG =
             BLOCK_ENTITIES.register("von_da_graagg",()->BlockEntityType.Builder.of(MultiblockRegistration.<gregtech.content.blockentity.machine.VonDaGraaggControllerBlockEntity>entityFactory(REGISTRY_NAMESPACE, "von_da_graagg"), MultiblockRegistration.blocksForEntityType(REGISTRY_NAMESPACE, "von_da_graagg")).build(null));
 
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.energy.ZpmModuleBlockEntity>> ZPM_MODULE =
+            BLOCK_ENTITIES.register("zpm_module", () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmModuleBlockEntity::new,GTLasers.ZPM.get()).build(null));
+    public static final Supplier<BlockEntityType<gregtech.content.blockentity.energy.ZpmDischargerBlockEntity>> ZPM_DISCHARGER =
+            BLOCK_ENTITIES.register("zpm_discharger", () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmDischargerBlockEntity::new,GTLasers.ZPM_DISCHARGER_BASIC.get(),GTLasers.ZPM_DISCHARGER_ADVANCED.get(),GTLasers.ZPM_DISCHARGER_ELITE.get()).build(null));
+
 //? if >=1.21.1 {
-    /*
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ZpmModuleBlockEntity>> ZPM_MODULE=BLOCK_ENTITIES.register("zpm_module",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmModuleBlockEntity::new,GTZpmArtifacts.ZPM.get()).build(null));
-public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<gregtech.content.blockentity.energy.ZpmDischargerBlockEntity>> ZPM_DISCHARGER=BLOCK_ENTITIES.register("zpm_discharger",()->BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmDischargerBlockEntity::new,GTZpmArtifacts.BASIC.get(),GTZpmArtifacts.ADVANCED.get(),GTZpmArtifacts.ELITE.get()).build(null));
-*///?} else {
-public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.OreBlockEntity>> ORE =
+//?} else {
+    // 1.20.1-only legacy save migration: writes the old host stone back into OreBlock.STONE, then removes itself.
+    public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.OreBlockEntity>> ORE =
             BLOCK_ENTITIES.register("ore", () -> {
                 Block[] blocks = GTBlocks.allEntries().stream()
                         .filter(RegisteredBlock::isPresent)
@@ -320,10 +317,6 @@ public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.
                         .toArray(Block[]::new);
                 return BlockEntityType.Builder.of(gregtech.content.blockentity.OreBlockEntity::new, blocks).build(null);
             });
-public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.energy.ZpmModuleBlockEntity>> ZPM_MODULE =
-            BLOCK_ENTITIES.register("zpm_module", () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmModuleBlockEntity::new,GTLasers.ZPM.get()).build(null));
-public static final RegistryObject<BlockEntityType<gregtech.content.blockentity.energy.ZpmDischargerBlockEntity>> ZPM_DISCHARGER =
-            BLOCK_ENTITIES.register("zpm_discharger", () -> BlockEntityType.Builder.of(gregtech.content.blockentity.energy.ZpmDischargerBlockEntity::new,GTLasers.ZPM_DISCHARGER_BASIC.get(),GTLasers.ZPM_DISCHARGER_ADVANCED.get(),GTLasers.ZPM_DISCHARGER_ELITE.get()).build(null));
 //?}
 
     private static final Map<String, DeferredRegister<BlockEntityType<?>>> ADDON_ENTITIES = new LinkedHashMap<>();

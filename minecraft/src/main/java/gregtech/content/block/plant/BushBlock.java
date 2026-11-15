@@ -5,6 +5,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import gregtech.engine.GTWaterloggable;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.blockentity.BushBlockEntity;
 import gregtech.content.plant.GTBerryBushes;
 import net.minecraft.core.BlockPos;
@@ -49,6 +50,43 @@ import java.util.List;
  * handler.
  */
 public class BushBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
+    /** GT6 {@code onBlockActivated3}: harvest when ripe, otherwise take a berry as the bush's type. */
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (!(level.getBlockEntity(pos) instanceof BushBlockEntity bush)) return InteractionResult.PASS;
+        if (!bush.berryId().isEmpty()) {
+            if (state.getValue(STAGE) < 3) return InteractionResult.PASS;
+            int count = 1 + level.random.nextInt(2); // GT6: ST.amount(1+rng(2), mBerry)
+            ItemStack berries = bush.berryStack(count);
+            if (!berries.isEmpty()) {
+                if (!player.addItem(berries)) player.drop(berries, false);
+                level.setBlock(pos, state.setValue(STAGE, 0), 3);
+                return InteractionResult.CONSUME;
+            }
+            return InteractionResult.PASS;
+        }
+        // A berryless bush adopts the berry the player is holding.
+        BerryLookup lookup = BerryLookup.current(player.getItemInHand(hand));
+        if (lookup == null || gregtech.content.registry.GTBushes.byBerry(lookup.id())==null) return InteractionResult.PASS;
+        bush.setBerry(lookup.id());
+        return InteractionResult.CONSUME;
+    }
+
     /** GT6's {@code mStage}: 0 = bare bush, 1 = bloom, 2 = immature berries, 3 = ripe. */
     public static final IntegerProperty STAGE = IntegerProperty.create("stage", 0, 3);
 
@@ -139,13 +177,7 @@ public class BushBlock extends Block implements EntityBlock, SimpleWaterloggedBl
     }
 
     private static String packedBerry(ItemStack stack) {
-//? if >=1.21.1 {
-        /*var data = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        return data == null ? "" : data.copyTag().getString("berry");
-*///?} else {
-        CompoundTag data = stack.getTagElement("BlockEntityTag");
-        return data == null ? "" : data.getString("berry");
-//?}
+        return gregtech.engine.stack.BlockEntityData.readOrEmpty(stack).getString("berry");
     }
 
     @Override
@@ -163,10 +195,8 @@ public class BushBlock extends Block implements EntityBlock, SimpleWaterloggedBl
                 var data=new CompoundTag();data.putString("berry",bush.berryId());
 //? if >=1.21.1 {
                 /*data.putString("id",net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(bush.getType()).toString());
-                var stack=new ItemStack(this);stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));return stack;
-*///?} else {
-                var stack=new ItemStack(this);stack.addTagElement("BlockEntityTag",data);return stack;
-//?}
+*///?}
+                var stack=new ItemStack(this);gregtech.engine.stack.BlockEntityData.write(stack,data);return stack;
             }
         }
         return new ItemStack(this);
@@ -194,12 +224,7 @@ public class BushBlock extends Block implements EntityBlock, SimpleWaterloggedBl
             if (level.getBlockEntity(pos) instanceof BushBlockEntity bush) bush.refreshSupport();
             return;
         }
-//? if >=1.21.1 {
-        /*var packedData=stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        CompoundTag data=packedData==null?null:packedData.copyTag();
-*///?} else {
-        CompoundTag data = stack.getTagElement("BlockEntityTag");
-//?}
+        CompoundTag data = gregtech.engine.stack.BlockEntityData.read(stack);
         if (data == null || !data.contains("berry", Tag.TAG_STRING)) return;
         String berryId = data.getString("berry");
         if (gregtech.content.registry.GTBushes.byBerry(berryId) == null) return;
@@ -211,34 +236,6 @@ public class BushBlock extends Block implements EntityBlock, SimpleWaterloggedBl
         return level.isClientSide ? null : (l, p, s, be) -> {
             if (be instanceof BushBlockEntity bush) bush.tick();
         };
-    }
-
-    /** GT6 {@code onBlockActivated3}: harvest when ripe, otherwise take a berry as the bush's type. */
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (!(level.getBlockEntity(pos) instanceof BushBlockEntity bush)) return InteractionResult.PASS;
-        if (!bush.berryId().isEmpty()) {
-            if (state.getValue(STAGE) < 3) return InteractionResult.PASS;
-            int count = 1 + level.random.nextInt(2); // GT6: ST.amount(1+rng(2), mBerry)
-            ItemStack berries = bush.berryStack(count);
-            if (!berries.isEmpty()) {
-                if (!player.addItem(berries)) player.drop(berries, false);
-                level.setBlock(pos, state.setValue(STAGE, 0), 3);
-                return InteractionResult.CONSUME;
-            }
-            return InteractionResult.PASS;
-        }
-        // A berryless bush adopts the berry the player is holding.
-        BerryLookup lookup = BerryLookup.current(player.getItemInHand(hand));
-        if (lookup == null || gregtech.content.registry.GTBushes.byBerry(lookup.id())==null) return InteractionResult.PASS;
-        bush.setBerry(lookup.id());
-        return InteractionResult.CONSUME;
     }
 
     /** Small holder so the interaction can report the berry id without exposing the table type. */
@@ -263,11 +260,6 @@ public class BushBlock extends Block implements EntityBlock, SimpleWaterloggedBl
     public static Direction groundSide() {
         return Direction.UP;
     }
-//? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit)==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
 
     @Override
     public BlockState updateShape(BlockState state, Direction side, BlockState neighbor,

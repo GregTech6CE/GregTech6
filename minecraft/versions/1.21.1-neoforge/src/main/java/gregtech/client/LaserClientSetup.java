@@ -1,7 +1,9 @@
 package gregtech.client;
 
-import gregtech.content.block.energy.*;
-import gregtech.content.registry.*;
+import gregtech.content.block.energy.LaserConverterBlock;
+import gregtech.content.block.energy.ZpmDischargerBlock;
+import gregtech.content.block.energy.ZpmModuleBlock;
+import gregtech.content.registry.GTLasers;
 
 @net.neoforged.fml.common.EventBusSubscriber(
         modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,
@@ -18,8 +20,9 @@ public final class LaserClientSetup {
                         (state, world, pos, index) -> index == 0 ? laser.spec().tint() : 0xFFFFFF, laser);
         event.register(
                 (state, world, pos, index) -> state.getValue(ZpmModuleBlock.CHARGE) > 0 ? 0xFFDD00 : 0x806E00,
-                GTZpmArtifacts.ZPM.get());
-        for (var h : java.util.List.of(GTZpmArtifacts.BASIC, GTZpmArtifacts.ADVANCED, GTZpmArtifacts.ELITE))
+                GTLasers.ZPM.get());
+        for (var h : java.util.List.of(
+                GTLasers.ZPM_DISCHARGER_BASIC, GTLasers.ZPM_DISCHARGER_ADVANCED, GTLasers.ZPM_DISCHARGER_ELITE))
             event.register(
                     (state, world, pos, index) -> index == 0
                             ? gregtech.engine.material.GTMaterialRegistry.get("Osmiridium")
@@ -39,8 +42,9 @@ public final class LaserClientSetup {
         event.register(
                 ItemColorARGB.opaque(
                         (stack, index) -> gregtech.content.energy.ZpmEnergy.stored(stack) > 0 ? 0xFFDD00 : 0x806E00),
-                GTZpmArtifacts.ZPM.get());
-        for (var h : java.util.List.of(GTZpmArtifacts.BASIC, GTZpmArtifacts.ADVANCED, GTZpmArtifacts.ELITE))
+                GTLasers.ZPM.get());
+        for (var h : java.util.List.of(
+                GTLasers.ZPM_DISCHARGER_BASIC, GTLasers.ZPM_DISCHARGER_ADVANCED, GTLasers.ZPM_DISCHARGER_ELITE))
             event.register(
                     ItemColorARGB.opaque((stack, index) -> index == 0
                             ? gregtech.engine.material.GTMaterialRegistry.get("Osmiridium")

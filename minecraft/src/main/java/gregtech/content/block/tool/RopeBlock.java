@@ -4,11 +4,15 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import gregtech.engine.GTWaterloggable;
+import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+//? if >=1.21.1 {
+/*import net.minecraft.world.ItemInteractionResult;
+*///?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -56,22 +60,46 @@ public class RopeBlock extends HorizontalDirectionalBlock implements SimpleWater
     }
 
     @Override
-    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
 
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
     }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        // both hands fire use(); handling the off hand double-triggers
+        if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        ItemStack held = player.getItemInHand(hand);
+        if (!held.is(asItem())) return InteractionResult.PASS;
+        // extend the rope at the lowest air block below
+        BlockPos cursor = pos.below();
+        while (cursor.getY() > level.getMinBuildHeight() && level.getBlockState(cursor).is(this)) {
+            cursor = cursor.below();
+        }
+        if (!level.getBlockState(cursor).canBeReplaced()) return InteractionResult.PASS;
+        BlockState placed = state.setValue(GTWaterloggable.WATERLOGGED,
+                GTWaterloggable.isWaterForLogging(level.getFluidState(cursor)));
+        if (!placed.canSurvive(level, cursor)) return InteractionResult.PASS;
+        if (!level.isClientSide) {
+            level.setBlockAndUpdate(cursor, placed);
+//? if >=1.21.1 {
+            /*level.playSound(null, cursor, getSoundType(placed, level, cursor, player).getPlaceSound(),
+*///?} else {
+            level.playSound(null, cursor, soundType.getPlaceSound(),
+//?}
+                    net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (!player.getAbilities().instabuild) held.shrink(1);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
     public RopeBlock(Properties properties, int tintRgb) {
         super(properties);
         this.tintRgb = tintRgb;
@@ -125,40 +153,6 @@ public class RopeBlock extends HorizontalDirectionalBlock implements SimpleWater
         if (!state.canSurvive(level, pos)) return net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();
         return super.updateShape(state, dir, neighbor, level, pos, neighborPos);
     }
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-            InteractionHand hand, BlockHitResult hit) {
-        // both hands fire use(); handling the off hand double-triggers
-        if (hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
-        ItemStack held = player.getItemInHand(hand);
-        if (!held.is(asItem())) return InteractionResult.PASS;
-        // extend the rope at the lowest air block below
-        BlockPos cursor = pos.below();
-        while (cursor.getY() > level.getMinBuildHeight() && level.getBlockState(cursor).is(this)) {
-            cursor = cursor.below();
-        }
-        if (!level.getBlockState(cursor).canBeReplaced()) return InteractionResult.PASS;
-        BlockState placed = state.setValue(GTWaterloggable.WATERLOGGED,
-                GTWaterloggable.isWaterForLogging(level.getFluidState(cursor)));
-        if (!placed.canSurvive(level, cursor)) return InteractionResult.PASS;
-        if (!level.isClientSide) {
-            level.setBlockAndUpdate(cursor, placed);
-//? if >=1.21.1 {
-            /*level.playSound(null, cursor, getSoundType(placed, level, cursor, player).getPlaceSound(),
-*///?} else {
-            level.playSound(null, cursor, soundType.getPlaceSound(),
-//?}
-                    net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
-            if (!player.getAbilities().instabuild) held.shrink(1);
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
     @Override
     public boolean isLadder(BlockState state, LevelReader level, BlockPos pos, net.minecraft.world.entity.LivingEntity entity) {
         return true;

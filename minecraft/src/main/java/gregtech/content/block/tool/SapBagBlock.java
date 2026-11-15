@@ -57,21 +57,12 @@ public class SapBagBlock extends ShapedToolBlock implements EntityBlock {
             if (be instanceof SapBagBlockEntity bag) bag.collect();
         };
     }
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-            InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
         // Wrench rotation and the other shared tool interactions keep working.
-//? if >=1.21.1 {
-        /*InteractionResult shared = super.interact(state, level, pos, player, hand, hit);
-*///?} else {
         InteractionResult shared = super.use(state, level, pos, player, hand, hit);
-//?}
         if (shared != InteractionResult.PASS) return shared;
         if (level.isClientSide) return InteractionResult.SUCCESS;
         if (!(level.getBlockEntity(pos) instanceof SapBagBlockEntity bag)) return InteractionResult.PASS;

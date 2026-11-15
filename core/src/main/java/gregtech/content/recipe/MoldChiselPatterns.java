@@ -8,7 +8,8 @@ import java.util.List;
 public final class MoldChiselPatterns {
     public record Pattern(String id, int shape, MoldShapes.Recipe recipe) {
         public boolean carved(int column, int row) {
-            return column >= 0 && column < 5 && row >= 0 && row < 5 && (shape & (1 << (row * 5 + column))) != 0;
+            // GT6 indexes mold cells x-major (bit = x * 5 + z), matching {@code MoldShapes.recipes()}.
+            return column >= 0 && column < 5 && row >= 0 && row < 5 && (shape & (1 << (column * 5 + row))) != 0;
         }
     }
 

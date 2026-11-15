@@ -1,6 +1,9 @@
 package gregtech.client;
 
-import gregtech.content.registry.*;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTManualStations;
+import gregtech.content.registry.GTMenuTypes;
+import gregtech.content.registry.GTStorageContainers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -20,7 +23,6 @@ public final class StorageContainerClientSetup {
 
     @SubscribeEvent
     public static void renderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers e) {
-        e.registerBlockEntityRenderer(GTBlockEntities.COIN_MOLD.get(), CoinMoldRenderer::new);
         e.registerBlockEntityRenderer(GTBlockEntities.PROCESSING_TOOL.get(), ProcessingToolRenderer::new);
         e.registerBlockEntityRenderer(GTBlockEntities.MATERIAL_ANVIL.get(), MaterialAnvilRenderer::new);
         e.registerBlockEntityRenderer(GTBlockEntities.EXTENDER.get(), ExtenderCoverRenderer::new);

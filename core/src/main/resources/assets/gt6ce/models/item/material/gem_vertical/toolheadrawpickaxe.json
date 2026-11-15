@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "gt6ce:item/material_icons/gem_vertical/toolheadrawpickaxe",
-    "layer1": "gt6ce:item/material_icons/gem_vertical/toolheadrawpickaxe_overlay"
+    "layer0": "gt6ce:item/material_icons/gem_vertical/toolheadrawpickaxe"
   }
 }

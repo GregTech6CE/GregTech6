@@ -1686,11 +1686,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                     boolean acted = gregtech.content.cover.CoverUtilityBehaviors.tickRetriever(
                             level, pos, side, inventory.items(),
 
-//? if >=1.21.1 {
-/*                            gregtech.content.cover.CoverUtilityBehaviors.itemFilter(stack, level.registryAccess()),
-*///?} else {
-                            gregtech.content.cover.CoverUtilityBehaviors.itemFilter(stack),
-//?}
+                            gregtech.content.cover.CoverUtilityBehaviors.itemFilter(stack, level.registryAccess()),
 
                             gregtech.content.cover.MachineCoverSpec.inverted(stack),
                             coverTicks, coverPending[index] || resumed);
@@ -1723,25 +1719,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
      */
     public boolean coverFilterPermits(Direction side, ItemStack candidate) {
         return gregtech.content.cover.CoverUtilityBehaviors.itemFilterPermits(
-
-//? if >=1.21.1 {
-/*                getCover(side), panels().stopped(), candidate, level.registryAccess());
-*///?} else {
-                getCover(side), panels().stopped(), candidate);
-//?}
-
+                getCover(side), panels().stopped(), candidate, level.registryAccess());
     }
 
     /** GT6 {@code CoverFilterFluid} asked about a live face. See {@link #coverFilterPermits}. */
     public boolean coverFluidFilterPermits(Direction side, FluidStack candidate) {
         return gregtech.content.cover.CoverUtilityBehaviors.fluidFilterPermits(
-
-//? if >=1.21.1 {
-/*                getCover(side), panels().stopped(), candidate, level.registryAccess());
-*///?} else {
-                getCover(side), panels().stopped(), candidate);
-//?}
-
+                getCover(side), panels().stopped(), candidate, level.registryAccess());
     }
 
     /**
@@ -1759,22 +1743,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** The item filter stored on a face's cover, empty when there is none or it is not a filter. */
     public ItemStack coverItemFilter(Direction side) {
 
-//? if >=1.21.1 {
-/*        return gregtech.content.cover.CoverUtilityBehaviors.itemFilter(getCover(side), level.registryAccess());
-*///?} else {
-        return gregtech.content.cover.CoverUtilityBehaviors.itemFilter(getCover(side));
-//?}
+        return gregtech.content.cover.CoverUtilityBehaviors.itemFilter(getCover(side), level.registryAccess());
 
     }
 
     /** The fluid filter stored on a face's cover, empty when there is none or it is not a filter. */
     public FluidStack coverFluidFilter(Direction side) {
 
-//? if >=1.21.1 {
-/*        return gregtech.content.cover.CoverUtilityBehaviors.fluidFilter(getCover(side), level.registryAccess());
-*///?} else {
-        return gregtech.content.cover.CoverUtilityBehaviors.fluidFilter(getCover(side));
-//?}
+        return gregtech.content.cover.CoverUtilityBehaviors.fluidFilter(getCover(side), level.registryAccess());
 
     }
 
@@ -1798,11 +1774,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (gregtech.content.cover.CoverUtilityBehaviors.FILTER_ITEM.equals(id)
                 || gregtech.content.cover.CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id)) {
 
-//? if >=1.21.1 {
-/*            return gregtech.content.cover.CoverUtilityBehaviors.setItemFilter(stack, held, level.registryAccess());
-*///?} else {
-            return gregtech.content.cover.CoverUtilityBehaviors.setItemFilter(stack, held);
-//?}
+            return gregtech.content.cover.CoverUtilityBehaviors.setItemFilter(stack, held, level.registryAccess());
 
         }
         if (gregtech.content.cover.CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
@@ -1816,11 +1788,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (container == null) return false;
             FluidStack fluid = container.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
 
-//? if >=1.21.1 {
-/*            return gregtech.content.cover.CoverUtilityBehaviors.setFluidFilter(stack, fluid, level.registryAccess());
-*///?} else {
-            return gregtech.content.cover.CoverUtilityBehaviors.setFluidFilter(stack, fluid);
-//?}
+            return gregtech.content.cover.CoverUtilityBehaviors.setFluidFilter(stack, fluid, level.registryAccess());
 
         }
         return false;

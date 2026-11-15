@@ -57,8 +57,7 @@ public final class ComponentCoverAccess {
             public int getSlotLimit(int slot) {
                 return inner.getSlotLimit(slot);
             }
-//? if >=1.21.1 {
-            /*public boolean isItemValid(int slot, ItemStack stack) {
+            public boolean isItemValid(int slot, ItemStack stack) {
                 return allowed(true)
                         && CoverUtilityBehaviors.itemFilterPermits(host.getCover(side), host.panels().stopped(), stack, host.coverOwner().getLevel().registryAccess())
                         && inner.isItemValid(slot, stack);
@@ -75,25 +74,6 @@ public final class ComponentCoverAccess {
                         && CoverUtilityBehaviors.itemFilterPermits(host.getCover(side), host.panels().stopped(), inner.getStackInSlot(slot), host.coverOwner().getLevel().registryAccess())
                         ? inner.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
             }
-*///?} else {
-            public boolean isItemValid(int slot, ItemStack stack) {
-                return allowed(true)
-                        && CoverUtilityBehaviors.itemFilterPermits(host.getCover(side), host.panels().stopped(), stack)
-                        && inner.isItemValid(slot, stack);
-            }
-
-            public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                return allowed(true)
-                        && CoverUtilityBehaviors.itemFilterPermits(host.getCover(side), host.panels().stopped(), stack)
-                        ? inner.insertItem(slot, stack, simulate) : stack;
-            }
-
-            public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                return allowed(false)
-                        && CoverUtilityBehaviors.itemFilterPermits(host.getCover(side), host.panels().stopped(), inner.getStackInSlot(slot))
-                        ? inner.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
-            }
-//?}
         };
     }
 
@@ -116,8 +96,7 @@ public final class ComponentCoverAccess {
             public int getTankCapacity(int tank) {
                 return inner.getTankCapacity(tank);
             }
-//? if >=1.21.1 {
-            /*public boolean isFluidValid(int tank, FluidStack stack) {
+            public boolean isFluidValid(int tank, FluidStack stack) {
                 return allowed(true)
                         && CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), stack, host.coverOwner().getLevel().registryAccess())
                         && inner.isFluidValid(tank, stack);
@@ -141,32 +120,6 @@ public final class ComponentCoverAccess {
                 return CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), sample, host.coverOwner().getLevel().registryAccess())
                         ? inner.drain(amount, action) : FluidStack.EMPTY;
             }
-*///?} else {
-            public boolean isFluidValid(int tank, FluidStack stack) {
-                return allowed(true)
-                        && CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), stack)
-                        && inner.isFluidValid(tank, stack);
-            }
-
-            public int fill(FluidStack stack, FluidAction action) {
-                return allowed(true)
-                        && CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), stack)
-                        ? inner.fill(stack, action) : 0;
-            }
-
-            public FluidStack drain(FluidStack stack, FluidAction action) {
-                return allowed(false)
-                        && CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), stack)
-                        ? inner.drain(stack, action) : FluidStack.EMPTY;
-            }
-
-            public FluidStack drain(int amount, FluidAction action) {
-                if (!allowed(false)) return FluidStack.EMPTY;
-                var sample = inner.drain(amount, FluidAction.SIMULATE);
-                return CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), sample)
-                        ? inner.drain(amount, action) : FluidStack.EMPTY;
-            }
-//?}
         };
     }
 }

@@ -41,10 +41,6 @@ public class BumbleHiveBlock extends Block implements EntityBlock {
     public static final EnumProperty<DyeColor> COLOR =
             EnumProperty.create("color", DyeColor.class);
 
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     public BumbleHiveBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any().hasProperty(COLOR)

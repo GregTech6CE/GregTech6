@@ -3,13 +3,10 @@ package gregtech.content.block.machine;
 import gregtech.engine.machine.TankSpec;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
+import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.blockentity.machine.TankBlockEntity;
 import gregtech.client.TankTooltips;
-//? if >=1.21.1 {
-/*import gregtech.content.transport.fluid.FluidTransportRegistries;
-*///?} else {
 import gregtech.content.registry.GTSounds;
-//?}
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
@@ -31,6 +28,56 @@ import javax.annotation.Nullable;
 /** GT6 fluid container block — wood barrel, plastic canister, or metal drum. */
 public class TankBlock extends Block implements EntityBlock {
     private final TankSpec spec;
+
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        if (level.isClientSide) return InteractionResult.sidedSuccess(true);
+        BlockEntity be = level.getBlockEntity(pos);
+        if (!(be instanceof TankBlockEntity tank)) return InteractionResult.PASS;
+
+        ItemStack held = player.getItemInHand(hand);
+
+        // Wrench / Monkey Wrench: toggle automatic output
+        if (!player.isShiftKeyDown() && GTToolHelper.isMachineWrench(held)) {
+            tank.toggleAutoOutput();
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable(tank.isAutoOutput()
+                    ? "tooltip.gt6ce.tank.info.auto_output"
+                    : "tooltip.gt6ce.tank.info.no_auto_output"), true);
+            level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            GTToolHelper.damageForUse(held, 1, player);
+            return InteractionResult.CONSUME;
+        }
+
+        // Soft Hammer: toggle states
+        if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)) {
+            tank.toggleSoftHammerState();
+            level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
+            GTToolHelper.damageForUse(held, 1, player);
+            return InteractionResult.CONSUME;
+        }
+
+        // Magnifying Glass: show details
+        if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
+            TankTooltips.sendTankInfo(tank, player);
+            return InteractionResult.CONSUME;
+        }
+
+        return tank.handleUse(player, hand);
+    }
 
     public TankBlock(TankSpec spec, Properties properties) {
         super(properties);
@@ -54,69 +101,16 @@ public class TankBlock extends Block implements EntityBlock {
         return (BlockEntityTicker<T>) (BlockEntityTicker<TankBlockEntity>) TankBlockEntity::serverTick;
     }
 
-//? if >=1.21.1 {
-    /*private InteractionResult useOriginal(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        if (level.isClientSide) return InteractionResult.sidedSuccess(true);
-        BlockEntity be = level.getBlockEntity(pos);
-        if (!(be instanceof TankBlockEntity tank)) return InteractionResult.PASS;
-
-        ItemStack held = player.getItemInHand(hand);
-
-        // Wrench / Monkey Wrench: toggle automatic output
-        if (!player.isShiftKeyDown() && GTToolHelper.isMachineWrench(held)) {
-            tank.toggleAutoOutput();
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable(tank.isAutoOutput()
-                    ? "tooltip.gt6ce.tank.info.auto_output"
-                    : "tooltip.gt6ce.tank.info.no_auto_output"), true);
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            GTToolHelper.damageForUse(held, 1, player);
-*///?} else {
-            level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            GTToolHelper.damageForUse(held, 1, player);
-//?}
-            return InteractionResult.CONSUME;
-        }
-
-        // Soft Hammer: toggle states
-        if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)) {
-            tank.toggleSoftHammerState();
-//? if >=1.21.1 {
-            /*level.playSound(null, pos, FluidTransportRegistries.WRENCH.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
-            GTToolHelper.damageForUse(held, 1, player);
-*///?} else {
-            level.playSound(null, pos, GTSounds.WRENCH.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
-            GTToolHelper.damageForUse(held, 1, player);
-//?}
-            return InteractionResult.CONSUME;
-        }
-
-        // Magnifying Glass: show details
-        if (!player.isShiftKeyDown() && GTToolHelper.matchesTool(held, GTToolType.MAGNIFYING_GLASS)) {
-            TankTooltips.sendTankInfo(tank, player);
-            return InteractionResult.CONSUME;
-        }
-
-        return tank.handleUse(player, hand);
-    }
-
     @Override
     public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack=new ItemStack(this);
         if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof TankBlockEntity tank) {
 //? if >=1.21.1 {
             /*var data = tank.saveItemData(builder.getLevel().registryAccess());
-            if (!data.isEmpty()) stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                    net.minecraft.world.item.component.CustomData.of(data));
 *///?} else {
             var data = tank.saveItemData();
-            if (!data.isEmpty()) stack.addTagElement("BlockEntityTag", data);
 //?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return java.util.List.of(stack);
     }
@@ -135,14 +129,4 @@ public class TankBlock extends Block implements EntityBlock {
         return Properties.of()
                 .strength(3.0F, 5.0F);
     }
-//? if >=1.21.1 {
-
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){
-        var result=useOriginal(state,level,pos,player,hand,hit);
-        return result==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:
-                result==InteractionResult.FAIL?net.minecraft.world.ItemInteractionResult.FAIL:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-    }
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return useOriginal(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
-*///?} else {
-//?}
 }

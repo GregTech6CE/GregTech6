@@ -82,14 +82,14 @@ public final class ComponentCoverFallback {
 //? if >=1.21.1 {
         /*if(owner instanceof gregtech.content.logistics.LogisticsCoverHost logistics)logistics.logisticsCovers().save(tag,lookup);
 *///?} else {
-        if(owner instanceof gregtech.content.logistics.LogisticsCoverHost logistics)logistics.logisticsCovers().save(tag);
+        if(owner instanceof gregtech.content.logistics.LogisticsCoverHost logistics)logistics.logisticsCovers().save(tag, null);
 //?}
         if(!uses(owner))return;
         var storage=((FallbackCoverHost)owner).gregtechComponentStorage(false);
 //? if >=1.21.1 {
         /*if(storage!=null){tag.putBoolean("gt.component_covers",true);storage.save(tag,lookup);}
 *///?} else {
-        if(storage!=null){tag.putBoolean("gt.component_covers",true);storage.save(tag);}
+        if(storage!=null){tag.putBoolean("gt.component_covers",true);storage.save(tag, null);}
 //?}
     }
     /** Covers are dropped separately; portable host contents retain their existing persistence rules. */
@@ -105,7 +105,7 @@ public final class ComponentCoverFallback {
 //? if >=1.21.1 {
         /*if(owner instanceof gregtech.content.logistics.LogisticsCoverHost logistics)logistics.logisticsCovers().load(tag,lookup);
 *///?} else {
-        if(owner instanceof gregtech.content.logistics.LogisticsCoverHost logistics)logistics.logisticsCovers().load(tag);
+        if(owner instanceof gregtech.content.logistics.LogisticsCoverHost logistics)logistics.logisticsCovers().load(tag, null);
 //?}
         if(!uses(owner))return;
         boolean present=false;for(var side:Direction.values())present|=tag.contains("gt_cover_"+side.ordinal());
@@ -116,7 +116,7 @@ public final class ComponentCoverFallback {
 //? if >=1.21.1 {
         /*if(storage==null)return;storage.load(tag,lookup);
 *///?} else {
-        if(storage==null)return;storage.load(tag);
+        if(storage==null)return;storage.load(tag, null);
 //?}
         if(storage.hasCovers()||hasLogistics(owner))track(owner);else ACTIVE.remove(owner);
     }

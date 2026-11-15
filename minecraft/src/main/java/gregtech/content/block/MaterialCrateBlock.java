@@ -3,6 +3,7 @@ package gregtech.content.block;
 import gregtech.content.loot.MaterialCrateLoot;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
+import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -36,18 +37,23 @@ import java.util.List;
  * no block entity, so its content is resolved when it opens, not when the dungeon is generated.</p>
  */
 public class MaterialCrateBlock extends Block {
-    public MaterialCrateBlock(Properties properties) {
-        super(properties);
-    }
-
     /** GT6's crowbar-only opening, minus its loot: the crowbar decides whether anything happens. */
 //? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
         if (!GTToolHelper.matchesTool(held, GTToolType.CROWBAR)) return InteractionResult.PASS;
         if (level.isClientSide) return InteractionResult.SUCCESS;
@@ -62,15 +68,9 @@ public class MaterialCrateBlock extends Block {
         return InteractionResult.CONSUME;
     }
 
-//? if >=1.21.1 {
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return interact(state, level, pos, player, hand, hit) == InteractionResult.PASS
-                ? net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-                : net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
+    public MaterialCrateBlock(Properties properties) {
+        super(properties);
     }
-
-*///?} else {
-//?}
 
     @Override
 //? if >=1.21.1 {

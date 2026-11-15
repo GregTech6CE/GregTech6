@@ -1,6 +1,6 @@
 # Stonecutter 分类总览
 
-本页是 Stonecutter 分类总览，按作用对象划分 11 个分类，设计、用法与模板见[设计](design.md)、[用法](usage.md)、[模板](templates.md)。
+本页是 Stonecutter 分类总览，按作用对象划分 13 个分类，设计、用法与模板见[设计](design.md)、[用法](usage.md)、[模板](templates.md)。
 
 ## 文件清单
 
@@ -15,7 +15,7 @@
 | 分类 | 主要差异 |
 | --- | --- |
 | BlockEntity | `saveAdditional` / `loadAdditional` / `getUpdateTag` / `loadStatic` 的 provider 参数 |
-| ItemStack | `ItemStack#save`、`tag` ↔ `CUSTOM_DATA`、线格式、旧 tag 迁移、身份比较、封面过滤器 provider |
+| ItemStack | `ItemStack#save`、`tag` ↔ `CUSTOM_DATA`、线格式、旧 tag 迁移、身份比较、封面过滤器 provider 参数统一 |
 | FluidStack | `FluidStack#save`、`tag` ↔ components、线格式、身份比较 |
 | Container | `ContainerHelper#saveAllItems` / `loadAllItems` 的 provider 参数 |
 | SavedData | `SavedData.Factory` 的 provider 参数 |
@@ -24,6 +24,8 @@
 | ClientModel | `ModelResourceLocation`、baked model、客户端事件 |
 | Facade | logger、事件总线 |
 | Placement | 注册归属、holder 类型、节点目录、菜单落点、物品类依赖、节点类拆分、创造栏装配、包装类、静态谓词、分支噪声 |
+| BlockCodec（守卫） | 方块类型 codec 的来源、当前作用与 1.21-only stub 规则 |
+| Interaction（守卫） | 方块交互签名 1.20.1 `use` ↔ 1.21.1 `useItemOn`/`useWithoutItem` 适配器 |
 | Parity（守卫） | 行为差异见 decisions/parity；本目录只做折叠前检查 |
 
 ## BlockEntity
@@ -36,9 +38,9 @@
 
 ## ItemStack
 
-摘要：物品栈的 provider 签名、自定义数据存储、线格式、旧数据迁移、身份比较与封面过滤器 provider。
+摘要：物品栈的 provider 签名、自定义数据存储、类型化组件门面、线格式、旧数据迁移、身份比较与封面过滤器 provider 参数统一。
 
-关键词：ItemStack, ItemStack#save, ItemStack#parseOptional, CUSTOM_DATA, CustomData, StackData, ItemStack#getTag, ItemStack#getOrCreateTag, ItemStack#setTag, ItemStack#hasTag, hasAnyData, hasCustomData, isSameItemSameTags, isSameItemSameComponents, StackCompat.sameItem, BLOCK_ENTITY_DATA, registryAccess, setItemFilter, setFluidFilter
+关键词：ItemStack, ItemStack#save, ItemStack#parseOptional, CUSTOM_DATA, CustomData, StackData, BlockEntityData, BlockStateData, BLOCK_ENTITY_DATA, BLOCK_STATE, BlockItemStateProperties, BlockEntityTag, BlockStateTag, ItemStack#getTag, ItemStack#getOrCreateTag, ItemStack#setTag, ItemStack#hasTag, hasAnyData, hasCustomData, isSameItemSameTags, isSameItemSameComponents, StackCompat.sameItem, registryAccess, setItemFilter, setFluidFilter, 委托重载, save(tag), NbtCompat, CoverUtilityBehaviors, itemFilter, fluidFilter, cover-filter-provider
 
 分类 README：[ItemStack/README.md](ItemStack/README.md)
 
@@ -68,17 +70,17 @@
 
 ## Registry
 
-摘要：注册表查找、`ResourceLocation` 构造与标签目录命名。
+摘要：注册表查找、`ResourceLocation` 构造、标签目录命名与配方序列化器 API 形态。
 
-关键词：BuiltInRegistries, ForgeRegistries, Mc.item, GregTech.id, fromNamespaceAndPath, ResourceLocation, tags/items, tags/item, GregTechIdentity
+关键词：BuiltInRegistries, ForgeRegistries, Mc.item, GregTech.id, fromNamespaceAndPath, ResourceLocation, tags/items, tags/item, GregTechIdentity, RecipeSerializer, RecipeHolder, fromJson, streamCodec
 
 分类 README：[Registry/README.md](Registry/README.md)
 
 ## Capability
 
-摘要：能力 API、`LazyOptional` / `Optional` 与共享 BE 的能力暴露的差异。
+摘要：能力 API、`LazyOptional` / `Optional` 与共享 BE 的能力暴露、共享代码消费邻居能力的差异。
 
-关键词：ForgeCapabilities, Capabilities, LazyOptional, Optional, FluidUtil, IFluidHandlerItem, CapabilityItemHandler, IItemHandler, RegisterCapabilitiesEvent, getCapability
+关键词：ForgeCapabilities, Capabilities, LazyOptional, Optional, FluidUtil, IFluidHandlerItem, CapabilityItemHandler, IItemHandler, RegisterCapabilitiesEvent, getCapability, BlockCapabilityCache, AdjacentCapabilityCache
 
 分类 README：[Capability/README.md](Capability/README.md)
 
@@ -105,6 +107,22 @@
 关键词：registerAll, ContentRegistrar, Supplier, GTManualStations, GTMenuTypes, OriginCreativeContents, GTMachineBlockItem, PoweredToolItem, SmeltingCrucibleBlockEntity, OreBlockEntity, NeoToolBindings, GTToolType, shared BE, reference catalog, mixed catalog, registry lookup, node BE merge, legacy save, identical, identical constant, same, empty, one-sided, one-sided reference, call chain, one-sided import, node entry, import, split duplicate, duplicate registration
 
 分类 README：[Placement/README.md](Placement/README.md)
+
+## BlockCodec
+
+摘要：方块类型 codec（`Block.codec()`、`MapCodec`、`BLOCK_TYPE`）仅 1.21 存在且无运行时消费端；守卫继承原版抽象基类被迫覆写 codec 时的 1.21-only stub 规则。
+
+关键词：Block.codec, MapCodec, MapCodec.unit, simpleCodec, BLOCK_TYPE, BlockTypes, BlockListReport, DirectionalBlock, HorizontalDirectionalBlock, FallingBlock, BushBlock, BaseRailBlock, BaseEntityBlock, EntityBlock, stub codec
+
+分类 README：[BlockCodec/README.md](BlockCodec/README.md)
+
+## Interaction
+
+摘要：方块交互签名 1.20.1 `use` ↔ 1.21.1 `useItemOn`/`useWithoutItem` 的平台差异；身体统一到共享 helper，`//?` 只承载签名适配与结果映射。
+
+关键词：use, useItemOn, useWithoutItem, InteractionResult, ItemInteractionResult, interact, ToolInteractions, ToolInteractionSpec, PASS_TO_DEFAULT_BLOCK_INTERACTION, sidedSuccess
+
+分类 README：[Interaction/README.md](Interaction/README.md)
 
 ## Parity
 

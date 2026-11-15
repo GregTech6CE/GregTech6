@@ -1,7 +1,6 @@
 package gregtech.compat.jade;
 
 import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
-import gregtech.content.blockentity.machine.LogisticsWireBlockEntity;
 import gregtech.content.cover.*;
 import gregtech.content.logistics.LogisticsCoverHost;
 import net.minecraft.core.Direction;
@@ -32,14 +31,6 @@ final class OmniTransportInfo {
         if (entity instanceof ItemPipeBlockEntity pipe) {
             info.groupedInventory();
             info.inventory("contents", pipe, 0, pipe.getSlots());
-        } else if (entity instanceof LogisticsWireBlockEntity wire) {
-            int connections = 0;
-            for (Direction face : Direction.values()) if (wire.canLogistics(face)) connections++;
-            info.line("pipe_connections", connections);
-            info.line(
-                    "pipe_face",
-                    side(viewed),
-                    JadeInspection.label(wire.canLogistics(viewed) ? "connected" : "disconnected"));
         }
         // Put the pointed face first; name every installed cover, with settings for the pointed one.
         appendCover(info, entity, viewed, true);

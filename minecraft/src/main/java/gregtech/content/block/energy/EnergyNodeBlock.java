@@ -33,99 +33,23 @@ import java.util.List;
 public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, ToolInteractionTarget,
         gregtech.engine.machine.PipeGeometry.FluidConnectorGeometry {
 
-    private final EnergyNodeSpec spec;
-
-    @Override
-    public double fluidConnectorHalf(BlockState state, Direction face) {
-        if (spec.kind() != EnergyNodeSpec.Kind.TURBINE) return gregtech.engine.machine.PipeGeometry.NONE;
-        Direction front = state.getValue(FACING);
-        if (face == front) return gregtech.engine.machine.PipeGeometry.NONE;
-        return gregtech.engine.machine.PipeGeometry.virtual(face.getAxis() == front.getAxis() ? 4 : 2);
-    }
-
 //? if >=1.21.1 {
-//?} else {
-    public EnergyNodeBlock(EnergyNodeSpec spec, Properties properties) {
-        super(properties);
-        this.spec = spec;
-        BlockState initial = defaultBlockState().setValue(FACING,
-                spec.kind() == EnergyNodeSpec.Kind.SOLAR ? Direction.DOWN : Direction.NORTH);
-        registerDefaultState(initial);
-    }
-
-//?}
-    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
-        boolean fixed = spec.id().startsWith("battery_eu");
-        if ((gregtech.content.energy.OriginalThermalConverter.handles(spec) || gregtech.content.energy.MagnetMachineDefinitions.handles(spec)) && GTToolHelper.isMonkeyWrench(tool)) return null;
-        // GT6's rotational transformer reserves the monkey wrench for mode reversal.
-        // A regular wrench still rotates the block itself.
-        if ((spec.id().startsWith("rotation_transformer_") || spec.id().startsWith("transformer_")) && GTToolHelper.isMonkeyWrench(tool)) return null;
-        return !fixed && GTToolHelper.isMachineWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, spec.kind() == EnergyNodeSpec.Kind.SOLAR
-                    ? gregtech.content.block.machine.MachineRotationType.BOTTOM_HORIZONTAL
-                    : gregtech.content.block.machine.MachineRotationType.ALL) : null;
-//? if >=1.21.1 {
-    /*}
-
-    public EnergyNodeBlock(EnergyNodeSpec spec, Properties properties) {
-        super(properties);
-        this.spec = spec;
-        BlockState initial = defaultBlockState().setValue(FACING,
-                spec.kind() == EnergyNodeSpec.Kind.SOLAR ? Direction.DOWN : Direction.NORTH);
-        registerDefaultState(initial);
-*///?} else {
-//?}
-    }
-
-    public EnergyNodeSpec spec() { return spec; }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+            BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        // Ordinary device fronts face the placer; solar panels and fixed batteries keep their special sides.
-        // GT6 solar panels use inverse clicked-side placement; their top is not an output.
-        Direction facing = spec.kind() == EnergyNodeSpec.Kind.SOLAR
-                ? ctx.getClickedFace().getOpposite()
-                : spec.id().startsWith("battery_eu") ? Direction.DOWN : ctx.getNearestLookingDirection().getOpposite();
-        if (spec.kind() == EnergyNodeSpec.Kind.SOLAR && facing == Direction.UP) facing = Direction.DOWN;
-        BlockState placed = defaultBlockState().setValue(FACING, facing);
-        return placed;
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
     }
-
-    @Override
-    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
-        return spec.id().equals("rotation_transformer_wood") ? 150 : super.getFlammability(state, level, pos, face);
-    }
-
-    @Override
-    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
-        return spec.id().equals("rotation_transformer_wood") ? 150 : super.getFireSpreadSpeed(state, level, pos, face);
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new EnergyNodeBlockEntity(pos, state);
-    }
-
-    @Nullable
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide || type != GTEnergyNodes.ENERGY_NODE.get()) return null;
-        return (BlockEntityTicker<T>) (BlockEntityTicker<EnergyNodeBlockEntity>) EnergyNodeBlockEntity::serverTick;
-    }
-
-//? if >=1.21.1 {
-    /*protected InteractionResult interact(BlockState state, Level level, BlockPos pos,
 *///?} else {
     @Override
+//?}
     public InteractionResult use(BlockState state, Level level, BlockPos pos,
-//?}
             net.minecraft.world.entity.player.Player player,
             net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
         // both hands fire use(); handling the off hand double-triggers
@@ -212,6 +136,79 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
         return InteractionResult.PASS;
     }
 
+    private final EnergyNodeSpec spec;
+
+    public EnergyNodeBlock(EnergyNodeSpec spec, Properties properties) {
+        super(properties);
+        this.spec = spec;
+        BlockState initial = defaultBlockState().setValue(FACING,
+                spec.kind() == EnergyNodeSpec.Kind.SOLAR ? Direction.DOWN : Direction.NORTH);
+        registerDefaultState(initial);
+    }
+
+    @Override
+    public double fluidConnectorHalf(BlockState state, Direction face) {
+        if (spec.kind() != EnergyNodeSpec.Kind.TURBINE) return gregtech.engine.machine.PipeGeometry.NONE;
+        Direction front = state.getValue(FACING);
+        if (face == front) return gregtech.engine.machine.PipeGeometry.NONE;
+        return gregtech.engine.machine.PipeGeometry.virtual(face.getAxis() == front.getAxis() ? 4 : 2);
+    }
+
+    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+        boolean fixed = spec.id().startsWith("battery_eu");
+        if ((gregtech.content.energy.OriginalThermalConverter.handles(spec) || gregtech.content.energy.MagnetMachineDefinitions.handles(spec)) && GTToolHelper.isMonkeyWrench(tool)) return null;
+        // GT6's rotational transformer reserves the monkey wrench for mode reversal.
+        // A regular wrench still rotates the block itself.
+        if ((spec.id().startsWith("rotation_transformer_") || spec.id().startsWith("transformer_")) && GTToolHelper.isMonkeyWrench(tool)) return null;
+        return !fixed && GTToolHelper.isMachineWrench(tool)
+                ? ToolInteractionSpec.facing(FACING, spec.kind() == EnergyNodeSpec.Kind.SOLAR
+                    ? gregtech.content.block.machine.MachineRotationType.BOTTOM_HORIZONTAL
+                    : gregtech.content.block.machine.MachineRotationType.ALL) : null;
+    }
+
+    public EnergyNodeSpec spec() { return spec; }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        // Ordinary device fronts face the placer; solar panels and fixed batteries keep their special sides.
+        // GT6 solar panels use inverse clicked-side placement; their top is not an output.
+        Direction facing = spec.kind() == EnergyNodeSpec.Kind.SOLAR
+                ? ctx.getClickedFace().getOpposite()
+                : spec.id().startsWith("battery_eu") ? Direction.DOWN : ctx.getNearestLookingDirection().getOpposite();
+        if (spec.kind() == EnergyNodeSpec.Kind.SOLAR && facing == Direction.UP) facing = Direction.DOWN;
+        BlockState placed = defaultBlockState().setValue(FACING, facing);
+        return placed;
+    }
+
+    @Override
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        return spec.id().equals("rotation_transformer_wood") ? 150 : super.getFlammability(state, level, pos, face);
+    }
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+        return spec.id().equals("rotation_transformer_wood") ? 150 : super.getFireSpreadSpeed(state, level, pos, face);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new EnergyNodeBlockEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide || type != GTEnergyNodes.ENERGY_NODE.get()) return null;
+        return (BlockEntityTicker<T>) (BlockEntityTicker<EnergyNodeBlockEntity>) EnergyNodeBlockEntity::serverTick;
+    }
+
     @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
@@ -219,18 +216,9 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
 //?}
         if (gregtech.content.energy.OriginalEnergyDeviceTooltipData.handles(spec)) {
-//? if >=1.21.1 {
-            /*var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-            var data = component == null ? new net.minecraft.nbt.CompoundTag() : component.copyTag();
-*///?} else {
-            var data = stack.getTagElement("BlockEntityTag");
-//?}
+            var data = gregtech.engine.stack.BlockEntityData.readOrEmpty(stack);
             gregtech.client.EnergyDeviceTooltips.append(spec,
-//? if >=1.21.1 {
-                    /*data.getBoolean("gt.inverted"), getExplosionResistance(), tooltip);
-*///?} else {
-                    data != null && data.getBoolean("gt.inverted"), getExplosionResistance(), tooltip);
-//?}
+                    data.getBoolean("gt.inverted"), getExplosionResistance(), tooltip);
             return;
         }
         String outUnit = spec.outType().getShortName();
@@ -287,8 +275,6 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
     }
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){return interact(state,level,pos,player,hand,hit).consumesAction()?net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide):net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;}
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){return interact(state,level,pos,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);}
     @Override public void toolStateChanged(Level level,BlockPos pos,BlockState state) {
         level.invalidateCapabilities(pos);
     }

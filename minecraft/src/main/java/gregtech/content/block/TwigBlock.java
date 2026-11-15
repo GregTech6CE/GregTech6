@@ -1,14 +1,20 @@
 package gregtech.content.block;
 
+import gregtech.engine.tool.ToolInteractions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -17,6 +23,33 @@ import java.util.List;
 
 /** Source MultiTileEntityStick: biome/dimension wood, including dead, mossy and rotten wood. */
 public class TwigBlock extends Block {
+    /** Right-click picks the twigs up as sticks. */
+//? if >=1.21.1 {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!level.isClientSide) {
+            ItemStack stack = contents(level, pos, 1);
+            level.removeBlock(pos, false);
+            if (!player.addItem(stack)) {
+                player.drop(stack, false);
+            }
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
     private static final VoxelShape SHAPE = box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0);
     /** Source MultiTileEntityStickPlaced: hand-placed sticks always hand back one ordinary stick. */
     private final boolean placed;
@@ -93,25 +126,4 @@ public class TwigBlock extends Block {
         return super.updateShape(state,side,neighbour,level,pos,neighbourPos);
     }
 
-    /** Right-click picks the twigs up as sticks. */
-    @Override
-//? if >=1.21.1 {
-    /*public net.minecraft.world.InteractionResult useWithoutItem(BlockState state, net.minecraft.world.level.Level level,
-            BlockPos pos, net.minecraft.world.entity.player.Player player,
-            net.minecraft.world.phys.BlockHitResult hit) {
-*///?} else {
-    public net.minecraft.world.InteractionResult use(BlockState state, net.minecraft.world.level.Level level,
-                                                     BlockPos pos, net.minecraft.world.entity.player.Player player,
-                                                     net.minecraft.world.InteractionHand hand,
-                                                     net.minecraft.world.phys.BlockHitResult hit) {
-//?}
-        if (!level.isClientSide) {
-            ItemStack stack = contents(level, pos, 1);
-            level.removeBlock(pos, false);
-            if (!player.addItem(stack)) {
-                player.drop(stack, false);
-            }
-        }
-        return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
-    }
 }

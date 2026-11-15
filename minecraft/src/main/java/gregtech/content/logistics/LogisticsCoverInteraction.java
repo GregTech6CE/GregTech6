@@ -49,10 +49,6 @@ public final class LogisticsCoverInteraction {
                 ? gregtech.engine.stack.NbtCompat.readItem(tag.getCompound(ITEM_FILTER), lookup)
                 : ItemStack.EMPTY;
     }
-//? if >=1.21.1 {
-//?} else {
-    public static ItemStack itemFilter(ItemStack cover) { return itemFilter(cover, null); }
-//?}
 
     /** GT6 fluid logistics covers store a sample fluid under {@code gt.filter.fluid}. */
     public static FluidStack fluidFilter(ItemStack cover, net.minecraft.core.HolderLookup.Provider lookup) {
@@ -62,10 +58,6 @@ public final class LogisticsCoverInteraction {
         FluidStack filter = gregtech.engine.stack.NbtCompat.readFluid(tag.getCompound(FLUID_FILTER), lookup);
         return filter == null ? FluidStack.EMPTY : filter;
     }
-//? if >=1.21.1 {
-//?} else {
-    public static FluidStack fluidFilter(ItemStack cover) { return fluidFilter(cover, null); }
-//?}
 
     /** Matches current item and damage only; legacy metadata variants may now live in stack data. */
     public static boolean matches(ItemStack filter, ItemStack candidate) {

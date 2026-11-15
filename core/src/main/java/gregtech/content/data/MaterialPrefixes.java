@@ -488,7 +488,6 @@ public class MaterialPrefixes {
             sheet = register("sheet"),
             crop = register("crop"),
             plant = register("plant"),
-            coin = register("coin"),
             lumar = register("lumar"),
             ground = register("ground"),
             cable = register("cable"),

@@ -4,7 +4,6 @@ import gregtech.engine.mod.GregTechIdentity;
 import com.mojang.logging.LogUtils;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.item.CoinItem;
 import gregtech.content.item.EnergyCrystalItem;
 import gregtech.content.item.MaterialArrowItem;
 import gregtech.content.recipe.MaterialArrowRules;
@@ -83,11 +82,9 @@ public final class GTItems {
             RegisteredItem<Item> registered = registrar.item(
                     definition.namespace(),
                     definition.itemId(),
-                    () -> prefix == MaterialPrefix.coin
-                            ? new CoinItem(new Item.Properties().stacksTo(64), material)
-                            : MaterialArrowRules.isArrow(prefix, material)
-                                    ? new MaterialArrowItem(new Item.Properties().stacksTo(64), prefix, material)
-                                    : EnergyCrystalItem.createOrMaterial(prefix, material));
+                    () -> MaterialArrowRules.isArrow(prefix, material)
+                            ? new MaterialArrowItem(new Item.Properties().stacksTo(64), prefix, material)
+                            : EnergyCrystalItem.createOrMaterial(prefix, material));
             bind(prefix, material, registered);
             ALL.add(registered);
         }

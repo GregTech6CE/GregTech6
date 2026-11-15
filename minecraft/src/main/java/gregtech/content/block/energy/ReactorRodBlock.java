@@ -20,10 +20,6 @@ import java.util.List;
 
 /** Standalone GT6 rod, 4 x 16 x 4 pixels; only a core performs neutron simulation. */
 public final class ReactorRodBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
-//? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-*///?} else {
-//?}
     private static final VoxelShape SHAPE = box(6, 0, 6, 10, 16, 10);
     public ReactorRodBlock() { super(Properties.of().strength(10,10).noOcclusion().sound(SoundType.METAL));
         registerDefaultState(defaultBlockState().setValue(GTWaterloggable.WATERLOGGED, false)); }

@@ -72,11 +72,30 @@ public class BoilerTankBlock extends Block implements EntityBlock, gregtech.engi
     }
 
 //? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends Block> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit)==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        if (!level.isClientSide && hand == InteractionHand.MAIN_HAND) {
+            BlockEntity be = level.getBlockEntity(pos);
+            if (be instanceof BoilerTankBlockEntity boiler) {
+                return boiler.onBlockActivated(state, player, hand, hit);
+            }
+        }
+        return level.isClientSide ? InteractionResult.SUCCESS : InteractionResult.PASS;
+    }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
@@ -128,31 +147,13 @@ public class BoilerTankBlock extends Block implements EntityBlock, gregtech.engi
         return (BlockEntityTicker<T>) (BlockEntityTicker<BoilerTankBlockEntity>) BoilerTankBlockEntity::serverTick;
     }
 
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        if (!level.isClientSide && hand == InteractionHand.MAIN_HAND) {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof BoilerTankBlockEntity boiler) {
-                return boiler.onBlockActivated(state, player, hand, hit);
-            }
-        }
-        return level.isClientSide ? InteractionResult.SUCCESS : InteractionResult.PASS;
-    }
-
     @Override
 //? if >=1.21.1 {
     /*public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<Component> tooltip, TooltipFlag flag) {
-        var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        var data = component == null ? null : component.copyTag();
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
-        var data = stack.getTagElement("BlockEntityTag");
 //?}
+        var data = gregtech.engine.stack.BlockEntityData.read(stack);
         int efficiency = data != null && data.contains("gt.efficiency") ? data.getShort("gt.efficiency") : 10000;
         gregtech.client.FunctionalBlockTooltips.appendBoiler(spec, efficiency, getExplosionResistance(), tooltip);
     }

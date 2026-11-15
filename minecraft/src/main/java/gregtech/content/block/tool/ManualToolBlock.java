@@ -9,6 +9,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+//? if >=1.21.1 {
+/*import net.minecraft.world.ItemInteractionResult;
+*///?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -56,24 +59,38 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
     }
 
     @Override
-    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        return interact(state, level, pos, player, hand,
-                hit) == InteractionResult.PASS ? net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-                : net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
 
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
+*///?} else {
+    @Override
+//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        // both hands fire use(); handling the off hand double-triggers
+        // (insert+extract in one click, double withdrawals, armor swap-backs)
+        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        if (!(level.getBlockEntity(pos) instanceof ManualToolBlockEntity tool)) return InteractionResult.PASS;
+        if (ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (kind == ManualToolBlockEntity.Kind.GRINDSTONE && hit.getDirection() != net.minecraft.core.Direction.UP
+                && hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
+        if (!level.isClientSide) tool.interact(player, hand, hit.getDirection());
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    @Override
+//? if >=1.21.1 {
+    /*@Override
     public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         return java.util.List.of(new ItemStack(this));
     }
-*///?} else {
-//?}
+*///?}
     @Override
     protected void createBlockStateDefinition(net.minecraft.world.level.block.state.StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, STONE);
@@ -119,25 +136,6 @@ public class ManualToolBlock extends net.minecraft.world.level.block.HorizontalD
         return !level.isClientSide && kind == ManualToolBlockEntity.Kind.SIFTING
                 && type == gregtech.content.registry.GTBlockEntities.MANUAL_TOOL.get()
                 ? (world, pos, blockState, be) -> ManualToolBlockEntity.serverTick(world, pos, blockState, (ManualToolBlockEntity) be) : null;
-    }
-
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-            InteractionHand hand, BlockHitResult hit) {
-        // both hands fire use(); handling the off hand double-triggers
-        // (insert+extract in one click, double withdrawals, armor swap-backs)
-        if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
-        if (!(level.getBlockEntity(pos) instanceof ManualToolBlockEntity tool)) return InteractionResult.PASS;
-        if (ToolInteractions.use(state, level, pos, player, hand, hit))
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        if (kind == ManualToolBlockEntity.Kind.GRINDSTONE && hit.getDirection() != net.minecraft.core.Direction.UP
-                && hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
-        if (!level.isClientSide) tool.interact(player, hand, hit.getDirection());
-        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override

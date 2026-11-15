@@ -33,11 +33,10 @@ public final class PortableContainerBlockEntity extends BlockEntity {
     public void setContents(ItemStack stack) {
         vessel = stack.isEmpty()||stack.getItem()!=getBlockState().getBlock().asItem()
                 ? new ItemStack(getBlockState().getBlock()) : stack.copyWithCount(1);
+        gregtech.engine.stack.BlockEntityData.remove(vessel);
 //? if >=1.21.1 {
-        /*vessel.remove(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        if(level!=null)level.invalidateCapabilities(worldPosition);
+        /*if(level!=null)level.invalidateCapabilities(worldPosition);
 *///?} else {
-        if (vessel.hasTag()) vessel.getTag().remove("BlockEntityTag");
         capability.invalidate();
         capability = capabilitiesActive ? LazyOptional.of(() -> handler) : LazyOptional.empty();
 //?}

@@ -92,13 +92,17 @@ public static boolean hasAnyData(ItemStack stack) {
 
 ### 类型化组件
 
-`BLOCK_ENTITY_DATA`、`ENCHANTMENTS`、`CUSTOM_NAME` 等是强类型组件，不能换成 `CUSTOM_DATA`，也不能进入共享签名：
+类型化组件是独立的组件键，不能换成 `CUSTOM_DATA`（vanilla 按键识别）。但"不能换成 `CUSTOM_DATA`"不等于"不能门面化"，按 backing 类型区分：
+
+- `BLOCK_ENTITY_DATA` 与 `CUSTOM_DATA` 同为 `DataComponentType<CustomData>`（CompoundTag backing），可用与 `StackData` 相同的读改写契约门面化，见 [block-entity-data.md](block-entity-data.md)。
+- `BLOCK_STATE` 是 `BlockItemStateProperties`（结构化 string map），用 map API 门面化，见 [block-state-data.md](block-state-data.md)。
+- `ENCHANTMENTS`、`CUSTOM_NAME` 等不透明强类型组件暂无门面，访问保持分支：
 
 ```java
 //? if >=1.21.1 {
-var data = stack.get(DataComponents.BLOCK_ENTITY_DATA);
+var data = stack.get(DataComponents.ENCHANTMENTS);
 //?} else {
-var data = stack.getTagElement("BlockEntityTag");
+var data = stack.getTagElement("Enchantments");
 //?}
 ```
 

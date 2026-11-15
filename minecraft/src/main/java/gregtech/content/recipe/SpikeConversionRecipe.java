@@ -2,14 +2,12 @@ package gregtech.content.recipe;
 
 import gregtech.content.block.misc.SpikeBlock;
 import gregtech.content.item.SpikeBlockItem;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 //? if >=1.21.1 {
 /*import com.mojang.serialization.MapCodec;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -24,13 +22,9 @@ import net.minecraft.world.inventory.CraftingContainer;
  * A dedicated serializer avoids changing the established tool_shapeless wire contract. */
 public final class SpikeConversionRecipe extends ShapelessRecipe
         implements gregtech.engine.recipe.AutocraftableCraftingRecipe {
-//? if >=1.21.1 {
-    /*private final ShapelessRecipe base;
-*///?}
     public SpikeConversionRecipe(ShapelessRecipe base) {
 //? if >=1.21.1 {
         /*super(base.getGroup(), base.category(), base.getResultItem(RegistryAccess.EMPTY), base.getIngredients());
-        this.base = base;
 *///?} else {
         super(base.getId(), base.getGroup(), base.category(), base.getResultItem(RegistryAccess.EMPTY), base.getIngredients());
 //?}
@@ -52,7 +46,7 @@ public final class SpikeConversionRecipe extends ShapelessRecipe
 
 //? if >=1.21.1 {
     /*@Override public boolean matches(CraftingInput grid, Level level) {
-        if (!base.matches(grid, level)) return false;
+        if (!super.matches(grid, level)) return false;
         int occupied = 0;
         for (var stack : grid.items()) {
 *///?} else {
@@ -70,17 +64,8 @@ public final class SpikeConversionRecipe extends ShapelessRecipe
     }
 
 //? if >=1.21.1 {
-    /*@Override public ItemStack assemble(CraftingInput grid, HolderLookup.Provider lookup) {
-        return base.assemble(grid, lookup);
-    }
-    @Override public ItemStack getResultItem(HolderLookup.Provider lookup) { return base.getResultItem(lookup); }
-    @Override public NonNullList<ItemStack> getRemainingItems(CraftingInput grid) { return base.getRemainingItems(grid); }
-    @Override public boolean canCraftInDimensions(int width, int height) { return base.canCraftInDimensions(width, height); }
-    @Override public String getGroup() { return base.getGroup(); }
-    @Override public CraftingBookCategory category() { return base.category(); }
-    @Override public NonNullList<Ingredient> getIngredients() { return base.getIngredients(); }
-    public static final MapCodec<SpikeConversionRecipe> CODEC = new ShapelessRecipe.Serializer().codec()
-            .xmap(SpikeConversionRecipe::new, recipe -> recipe.base);
+    /*public static final MapCodec<SpikeConversionRecipe> CODEC = new ShapelessRecipe.Serializer().codec()
+            .xmap(SpikeConversionRecipe::new, recipe -> recipe);
 *///?}
 
     @Override public RecipeSerializer<?> getSerializer() { return SERIALIZER; }

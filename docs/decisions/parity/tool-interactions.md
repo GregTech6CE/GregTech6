@@ -11,7 +11,7 @@
 
 ## 与 Stonecutter 分支的关系
 
-- `GTToolHelper.isInteractionTool` 的 `PoweredToolItem` ↔ `ElectricToolItem` 分支是 1.21.1 节点接口与共享类的落点差异，不是行为差异。
+- `PoweredToolItem` 接口已移入共享源码集，`ElectricToolItem` 两节点都实现它；`GTToolHelper` 的类型分支随之消失。机器采集判定（`canHarvest`/`harvestSpeed`）统一走 `ElectricWrenchHarvest` 的扳手目标表与品质/速度语义：电锯等非扳手工具不参与机器拆解，电动扳手速度按目录倍率（LV 2 / MV 3 / HV 4）乘头部材料速度。
 - `IgnitableBlockHandler` 的 import 和 `hurtAndBreak` 分支是事件总线 API 差异。
 - `UtilityCoverInteraction` 的 `level.registryAccess()` 分支是 provider 参数差异。
 

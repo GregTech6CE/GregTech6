@@ -177,11 +177,6 @@ public final class WoodenBucketItem extends TechItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack held = player.getItemInHand(hand);
-        if (content.discardOnly()) {
-            if (!player.isShiftKeyDown()) return InteractionResultHolder.pass(held);
-            return InteractionResultHolder.sidedSuccess(player.isCreative() ? held
-                    : variant(held, WoodenBucketCatalog.empty()), level.isClientSide);
-        }
         var hit = getPlayerPOVHitResult(level, player, content.empty()
                 ? ClipContext.Fluid.SOURCE_ONLY : ClipContext.Fluid.NONE);
         if (hit.getType() != HitResult.Type.BLOCK) return InteractionResultHolder.pass(held);

@@ -1,6 +1,6 @@
 # 跨版本统一方针
 
-返回[跨版本要求与入口](../versions.md)。本文规定共享代码与两个节点（`1.20.1-forge`、`1.21.1-neoforge`）之间差异的裁决顺序、统一目标和例外条件。
+本文规定共享代码与两个节点（`1.20.1-forge`、`1.21.1-neoforge`）之间差异的裁决顺序、统一目标和例外条件。
 
 ## 适用范围
 
@@ -94,5 +94,6 @@
 - 三层结构与归属见[设计](design.md)。
 - `//?` 写法与验证命令见[用法](usage.md)。
 - 具体分类差异见[分类总览](categories.md)。
+- 方块类型 codec 的来源、当前作用与 1.21-only stub 规则见[BlockCodec](BlockCodec/README.md)。
 - 落点偏差案例见[实现落点偏差](Placement/README.md)。
 - CE 与原版 GT6 的行为差异见[parity 目录](../../decisions/parity/README.md)。

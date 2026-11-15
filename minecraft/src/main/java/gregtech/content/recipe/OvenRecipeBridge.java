@@ -57,11 +57,9 @@ public final class OvenRecipeBridge {
         var map=MachineRecipeMaps.Furnace;
         map.removeAll(MIRRORED);
         for(var row:DISPLACED) if(!map.mRecipeList.contains(row)) map.add(row);
-//? if >=1.21.1 {
-        /*MIRRORED.clear(); DISPLACED.clear(); ADDED_TO_VANILLA.clear();
-*///?} else {
-        MIRRORED.clear(); DISPLACED.clear();
-//?}
+        // The mirror runs again on every server start; the diagnostic report must be replaced,
+        // not appended to (one ItemStack per mirrored row would accumulate per world load).
+        MIRRORED.clear(); DISPLACED.clear(); ADDED_TO_VANILLA.clear();
     }
 
 
@@ -166,7 +164,7 @@ public final class OvenRecipeBridge {
         manager.replaceRecipes(unique.values());
         com.mojang.logging.LogUtils.getLogger().info("Converted {} vanilla smelting recipes to GT6 oven recipes; {} un-smelted"
 *///?} else {
-        int fuelled = mirrorIntoFurnace(rewritten);
+        int fuelled = mirrorIntoFurnace(rewritten, access);
         gregtech.content.recipe.RuntimeRecipeLifecycle.replaceGenerated(manager, rewritten);
         GregTech.LOGGER.info("Converted {} vanilla smelting recipes to GT6 oven recipes; {} un-smelted"
 //?}
@@ -186,15 +184,9 @@ public final class OvenRecipeBridge {
 //? if >=1.21.1 {
     /*private static int mirrorIntoFurnace(List<RecipeHolder<?>> recipes, RegistryAccess access) {
 *///?} else {
-    private static int mirrorIntoFurnace(List<Recipe<?>> recipes) {
+    private static int mirrorIntoFurnace(List<Recipe<?>> recipes, RegistryAccess access) {
 //?}
         preferMaterialRows(recipes);
-        // The mirror runs again on every server start, i.e. once per world load, so this report has to
-        // be replaced instead of appended to. Without the clear it kept one ItemStack per mirrored row
-        // of every world this JVM had ever loaded (about 2314 stacks per world load, monotonically),
-        // and addedToVanillaFurnace() handed out all of them. Sibling loaders clear their accumulators
-        // the same way; see Loader_StoneCraftingRecipes/HandTool/Wood/Track.
-        ADDED_TO_VANILLA.clear();
         java.util.Set<Item> covered = new java.util.HashSet<>();
 //? if >=1.21.1 {
         /*for (RecipeHolder<?> holder : recipes) {
@@ -209,13 +201,8 @@ public final class OvenRecipeBridge {
         }
         int added = 0;
         var ordered=new ArrayList<>(MachineRecipeMaps.Furnace.mRecipeList);
-//? if >=1.21.1 {
-        /*ordered.sort(java.util.Comparator.comparing((gregtech.engine.recipe.Recipe row)->sortKey(firstStack(row.mInputs), access))
+        ordered.sort(java.util.Comparator.comparing((gregtech.engine.recipe.Recipe row)->sortKey(firstStack(row.mInputs), access))
                 .thenComparing(row->sortKey(firstStack(row.mOutputs), access)));
-*///?} else {
-        ordered.sort(java.util.Comparator.comparing((gregtech.engine.recipe.Recipe row)->firstStack(row.mInputs).save(new net.minecraft.nbt.CompoundTag()).toString())
-                .thenComparing(row->firstStack(row.mOutputs).save(new net.minecraft.nbt.CompoundTag()).toString()));
-//?}
         for (gregtech.engine.recipe.Recipe gt : ordered) {
             if (!gt.mEnabled || gt.mHidden) continue;
             if (hasFluidInput(gt)) continue;   // the vanilla furnace has no fluid tank
@@ -412,11 +399,9 @@ public final class OvenRecipeBridge {
         return java.util.Collections.unmodifiableList(ADDED_TO_VANILLA);
     }
 
-//? if >=1.21.1 {
-    /*private static String sortKey(ItemStack stack, RegistryAccess access) {
-        return stack.isEmpty() ? "" : stack.save(access).toString();
+    private static String sortKey(ItemStack stack, RegistryAccess access) {
+        return stack.isEmpty() ? "" : gregtech.engine.stack.NbtCompat.saveItem(stack, access).toString();
     }
-*///?}
 
     private static ItemStack firstStack(ItemStack[] stacks) {
         for (ItemStack stack : stacks) {

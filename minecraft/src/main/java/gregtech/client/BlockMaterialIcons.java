@@ -32,8 +32,22 @@ public final class BlockMaterialIcons {
         return Mc.gregtechId("block/material/" + set.folder() + "/" + prefix.getTextureFileName());
     }
 
-    public static String sharedModelJson(MaterialTextureSet set, BlockMaterialPrefix prefix) {
+    /**
+     * Shared block model. Sets without an overlay sprite get a plain {@code cube_all} model; the
+     * remaining ones keep the two-layer composite so the detail art draws over the tinted base.
+     */
+    public static String sharedModelJson(MaterialTextureSet set, BlockMaterialPrefix prefix, boolean overlay) {
         ResourceLocation layer0 = baseTexture(set, prefix);
+        if (!overlay) {
+            return """
+                    {
+                      "parent": "minecraft:block/cube_all",
+                      "textures": {
+                        "all": "%s"
+                      }
+                    }
+                    """.formatted(layer0);
+        }
         ResourceLocation layer1 = overlayTexture(set, prefix);
         String particle = "minecraft:block/stone";
 //? if >=1.21.1 {

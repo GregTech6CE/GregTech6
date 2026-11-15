@@ -1,6 +1,6 @@
 # 平台边界：共享门面与节点实现
 
-返回[包索引](README.md)。平台边界按共享门面、NeoForge 实现和 Forge 实现拆分；三层结构、区分与归属、Stonecutter 用法和已知需要单独检查的边界见[跨版本指南](../versions.md)。
+平台边界按共享门面、NeoForge 实现和 Forge 实现拆分；三层结构、区分与归属、Stonecutter 用法和跨版本边界见[跨版本指南](../versions.md)。
 
 | 层 | 页面 | 角色 |
 | --- | --- | --- |

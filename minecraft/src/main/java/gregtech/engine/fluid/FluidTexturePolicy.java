@@ -6,18 +6,19 @@ import net.minecraft.resources.ResourceLocation;
 /** Shared, testable fallback policy; callers supply the current resource-pack view. */
 public final class FluidTexturePolicy {
     public enum Kind {
-        LIQUID("fluid/molten"),
-        GAS("fluid/gas"),
-        MOLTEN("metallic/molten"),
-        PLASMA("plasma/gas");
+        LIQUID("liquid"),
+        GAS("gas"),
+        MOLTEN("molten"),
+        PLASMA("plasma");
         private final String texture;
 
         Kind(String texture) {
             this.texture = texture;
         }
 
+        /** Neutral greyscale template tinted by the fluid colour; not a per-material icon. */
         public ResourceLocation standard() {
-            return ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/" + texture);
+            return ResourceLocation.fromNamespaceAndPath("gt6ce", "block/fluids/templates/" + texture);
         }
     }
 

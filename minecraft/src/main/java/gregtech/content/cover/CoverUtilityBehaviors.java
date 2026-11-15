@@ -277,19 +277,12 @@ public final class CoverUtilityBehaviors {
      * {@code BasicMachineBlockEntity#coverBlocksItemTraffic}), so a pump or a blank cover must not
      * start refusing pipe traffic by accident.</p>
      */
-//? if >=1.21.1 {
-    /*public static boolean itemFilterPermits(ItemStack cover, boolean stopped, ItemStack candidate,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public static boolean itemFilterPermits(ItemStack cover, boolean stopped, ItemStack candidate) {
-//?}
+    public static boolean itemFilterPermits(ItemStack cover, boolean stopped, ItemStack candidate,
+            net.minecraft.core.HolderLookup.Provider lookup) {
         String id = CoverItems.behavior(cover);
         if (!FILTER_ITEM.equals(id)) return true;
         if (candidate == null || candidate.isEmpty()) return !stopped && !MachineCoverSpec.inverted(cover);
-//? if >=1.21.1 {
-        /*ItemStack filter = itemFilter(cover,lookup);
-*///?} else {
-        ItemStack filter = itemFilter(cover);
-//?}
+        ItemStack filter = itemFilter(cover, lookup);
         return filterPermits(!filter.isEmpty(), MachineCoverSpec.inverted(cover), stopped,
                 !candidate.isEmpty()&&filter.getItem()==candidate.getItem()
                         &&(StackData.getBoolean(cover,"gt.filter.wildcard",false)||filter.getDamageValue()==candidate.getDamageValue()));
@@ -300,20 +293,13 @@ public final class CoverUtilityBehaviors {
      * fluid with NBT ignored. Compare fluid identities here; stack-level equality
      * may also compare tags or components and impose a stricter condition.
      */
-//? if >=1.21.1 {
-    /*public static boolean fluidFilterPermits(ItemStack cover, boolean stopped, FluidStack candidate,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public static boolean fluidFilterPermits(ItemStack cover, boolean stopped, FluidStack candidate) {
-//?}
+    public static boolean fluidFilterPermits(ItemStack cover, boolean stopped, FluidStack candidate,
+            net.minecraft.core.HolderLookup.Provider lookup) {
         // A face without a fluid filter admits everything (see itemFilterPermits): GT6 asks this only
         // from the CoverFilterFluid that is attached to that face.
         if (!FILTER_FLUID.equals(CoverItems.behavior(cover))) return true;
         if (stopped) return false;
-//? if >=1.21.1 {
-        /*FluidStack filter = fluidFilter(cover,lookup);
-*///?} else {
-        FluidStack filter = fluidFilter(cover);
-//?}
+        FluidStack filter = fluidFilter(cover, lookup);
         if (filter.isEmpty()) return MachineCoverSpec.inverted(cover);
         if (candidate == null || candidate.isEmpty()) return false;
         // UT with aIgnoreNBT = T: same fluid, tags ignored — not FluidStack#isFluidEqual,
@@ -321,45 +307,22 @@ public final class CoverUtilityBehaviors {
         return filterPermits(true, MachineCoverSpec.inverted(cover), false,
                 filter.getFluid() == candidate.getFluid());
     }
-//? if >=1.21.1 {
-//?} else {
-    public static boolean fluidFilterPermits(ItemStack cover, boolean stopped, FluidStack candidate,
-            net.minecraft.core.HolderLookup.Provider lookup) {
-        return fluidFilterPermits(cover, stopped, candidate);
-    }
-//?}
 
     /** The item stored under {@link #FILTER_ITEM_KEY}, or empty ({@code CoverFilterItem}). */
-//? if >=1.21.1 {
-    /*public static ItemStack itemFilter(ItemStack cover,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public static ItemStack itemFilter(ItemStack cover) {
-//?}
+    public static ItemStack itemFilter(ItemStack cover, net.minecraft.core.HolderLookup.Provider lookup) {
         CompoundTag tag = cover == null ? null : StackData.read(cover);
         if (tag == null || !tag.contains(FILTER_ITEM_KEY)) return ItemStack.EMPTY;
-//? if >=1.21.1 {
-        /*return CoverStackData.readItem(lookup,tag.getCompound(FILTER_ITEM_KEY));
-*///?} else {
-        return ItemStack.of(tag.getCompound(FILTER_ITEM_KEY));
-//?}
+        return gregtech.engine.stack.NbtCompat.readItem(tag.getCompound(FILTER_ITEM_KEY), lookup);
     }
 
     /**
      * The fluid stored under {@link #FILTER_FLUID_KEY}, or empty
      * ({@code CoverFilterFluid}; GT6 writes it with {@code FL.save(null, ...)}).
      */
-//? if >=1.21.1 {
-    /*public static FluidStack fluidFilter(ItemStack cover,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public static FluidStack fluidFilter(ItemStack cover) {
-//?}
+    public static FluidStack fluidFilter(ItemStack cover, net.minecraft.core.HolderLookup.Provider lookup) {
         CompoundTag tag = cover == null ? null : StackData.read(cover);
         if (tag == null || !tag.contains(FILTER_FLUID_KEY)) return FluidStack.EMPTY;
-//? if >=1.21.1 {
-        /*FluidStack stored = gregtech.engine.fluid.FluidStackNbt.read(lookup,tag.getCompound(FILTER_FLUID_KEY));
-*///?} else {
-        FluidStack stored = FluidStack.loadFluidStackFromNBT(tag.getCompound(FILTER_FLUID_KEY));
-//?}
+        FluidStack stored = gregtech.engine.stack.NbtCompat.readFluid(tag.getCompound(FILTER_FLUID_KEY), lookup);
         return stored == null ? FluidStack.EMPTY : stored;
     }
 
@@ -371,65 +334,29 @@ public final class CoverUtilityBehaviors {
      *
      * @return whether a filter was stored
      */
-//? if >=1.21.1 {
-    /*public static boolean setItemFilter(ItemStack cover, ItemStack held,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public static boolean setItemFilter(ItemStack cover, ItemStack held) {
-//?}
+    public static boolean setItemFilter(ItemStack cover, ItemStack held, net.minecraft.core.HolderLookup.Provider lookup) {
         if (cover == null || cover.isEmpty() || held == null || held.isEmpty()) return false;
         CompoundTag tag = StackData.readOrEmpty(cover);
-//? if >=1.21.1 {
-        /*var previous = itemFilter(cover, lookup);
-*///?} else {
-        var previous = itemFilter(cover);
-//?}
+        var previous = itemFilter(cover, lookup);
         if (!previous.isEmpty() && (previous.getItem() != held.getItem()
                 || !tag.getBoolean("gt.filter.wildcard") && previous.getDamageValue() != held.getDamageValue())) return false;
         if (!previous.isEmpty()) tag.putBoolean("gt.filter.wildcard", !tag.getBoolean("gt.filter.wildcard"));
         else tag.putBoolean("gt.filter.wildcard", false);
         var specimen = new ItemStack(held.getItem());
         specimen.setDamageValue(held.getDamageValue());
-//? if >=1.21.1 {
-        /*tag.put(FILTER_ITEM_KEY, specimen.save(lookup));
-*///?} else {
-        tag.put(FILTER_ITEM_KEY, specimen.save(new CompoundTag()));
-//?}
+        tag.put(FILTER_ITEM_KEY, gregtech.engine.stack.NbtCompat.saveItem(specimen, lookup));
         StackData.write(cover,tag);
         return true;
     }
-//? if >=1.21.1 {
-//?} else {
-    public static boolean setItemFilter(ItemStack cover, ItemStack held,
-            net.minecraft.core.HolderLookup.Provider lookup) {
-        return setItemFilter(cover, held);
-    }
-//?}
     /** GT6 {@code CoverFilterFluid}: the same one-shot right-click rule for a fluid. */
-//? if >=1.21.1 {
-    /*public static boolean setFluidFilter(ItemStack cover, FluidStack held,net.minecraft.core.HolderLookup.Provider lookup) {
-*///?} else {
-    public static boolean setFluidFilter(ItemStack cover, FluidStack held) {
-//?}
+    public static boolean setFluidFilter(ItemStack cover, FluidStack held, net.minecraft.core.HolderLookup.Provider lookup) {
         if (cover == null || cover.isEmpty() || held == null || held.isEmpty()) return false;
         CompoundTag tag = StackData.readOrEmpty(cover);
         if (tag.contains(FILTER_FLUID_KEY)) return false;
-        CompoundTag stored = new CompoundTag();
-//? if >=1.21.1 {
-        /*stored=(CompoundTag)held.copy().save(lookup);
-*///?} else {
-        held.copy().writeToNBT(stored);
-//?}
-        tag.put(FILTER_FLUID_KEY, stored);
+        tag.put(FILTER_FLUID_KEY, gregtech.engine.stack.NbtCompat.saveFluid(held.copy(), lookup));
         StackData.write(cover,tag);
         return true;
     }
-//? if >=1.21.1 {
-//?} else {
-    public static boolean setFluidFilter(ItemStack cover, FluidStack held,
-            net.minecraft.core.HolderLookup.Provider lookup) {
-        return setFluidFilter(cover, held);
-    }
-//?}
 
     /**
      * The screwdriver toggle, GT6 {@code CoverFilterItem} / {@code CoverFilterFluid} /

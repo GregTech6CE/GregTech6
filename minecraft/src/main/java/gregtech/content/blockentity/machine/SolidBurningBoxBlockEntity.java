@@ -258,11 +258,7 @@ private void tickServer() {
             }
             if (target != getFrontFacing()) {
                 level.setBlock(worldPosition, getBlockState().setValue(GTFacingMachineBlock.FACING, target), 3);
-//? if >=1.21.1 {
-                /*level.playSound(null, worldPosition, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(),
-*///?} else {
                 level.playSound(null, worldPosition, gregtech.content.registry.GTSounds.WRENCH.get(),
-//?}
                         net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
                 GTToolHelper.damageForToolClickReturn(held, 10000L, player);
             }

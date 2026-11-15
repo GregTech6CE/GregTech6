@@ -4,6 +4,10 @@ import gregtech.util.GTPlacementCode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+//? if >=1.21.1 {
+/*import net.minecraft.world.ItemInteractionResult;
+*///?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -46,8 +50,8 @@ public final class ToolInteractions {
         if (!level.hasChunkAt(otherPos) || !level.mayInteract(player, otherPos)) return false;
         BlockState other = level.getBlockState(otherPos);
         if(spec.connection()==ToolInteractionSpec.ConnectionKind.LOGISTICS&&!state.getValue(spec.connection().property(side))
-                &&(level.getBlockEntity(pos) instanceof gregtech.content.logistics.LogisticsCoverHost host&&!host.logisticsCovers().get(side).isEmpty()
-                ||level.getBlockEntity(otherPos) instanceof gregtech.content.logistics.LogisticsCoverHost otherHost&&!otherHost.logisticsCovers().get(side.getOpposite()).isEmpty()))return false;
+                &&(gregtech.content.block.machine.LogisticsWireBlock.hasBlockingCover(level,pos,otherPos,side)
+                ||!gregtech.content.block.machine.LogisticsWireBlock.canOpenToward(level,otherPos,side.getOpposite())))return false;
         var otherSpec = describe(other, tool);
         return otherSpec == null || otherSpec.connection() != spec.connection()
                 || spec.connection() != ToolInteractionSpec.ConnectionKind.AXLE
@@ -97,11 +101,7 @@ public final class ToolInteractions {
         }
         if (spec.connection() == null && !level.setBlockAndUpdate(pos, next)) return true;
         if (state.getBlock() instanceof ToolInteractionTarget target) target.toolStateChanged(level, pos, next,spec);
-//? if >=1.21.1 {
-        /*level.playSound(null, pos, gregtech.content.transport.fluid.FluidTransportRegistries.WRENCH.get(),
-*///?} else {
         level.playSound(null, pos, gregtech.content.registry.GTSounds.WRENCH.get(),
-//?}
                 net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
         if (spec.connection() == null) GTToolHelper.damageForToolClickReturn(player.getItemInHand(hand), 10000, player);
         else GTToolHelper.damageForUse(player.getItemInHand(hand), 1, player);
@@ -114,4 +114,19 @@ public final class ToolInteractions {
 *///?} else {
 //?}
     }
+
+//? if >=1.21.1 {
+    /*// Maps the shared 1.20-style InteractionResult to the 1.21 useItemOn result.
+    // PASS skips the default block interaction so the shared use body runs once.
+    public static ItemInteractionResult toItemResult(InteractionResult result) {
+        return switch (result) {
+            case SUCCESS -> ItemInteractionResult.SUCCESS;
+            case SUCCESS_NO_ITEM_USED -> ItemInteractionResult.SUCCESS;
+            case CONSUME -> ItemInteractionResult.CONSUME;
+            case CONSUME_PARTIAL -> ItemInteractionResult.CONSUME_PARTIAL;
+            case FAIL -> ItemInteractionResult.FAIL;
+            case PASS -> ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+*///?}
 }

@@ -531,7 +531,6 @@ public final class SourceCreativeCatalog {
         ITEMS.put("coconut_cream", new Entry("bottles", 301));
         ITEMS.put("coconut_milk", new Entry("bottles", 300));
         ITEMS.put("coconut_smoothie", new Entry("bottles", 302));
-        ITEMS.put("coin", new Entry("coins", 1282));
         ITEMS.put("colonel_bumble_obeeill_dead", new Entry("equipment", 889));
         ITEMS.put("colonel_bumble_obeeill_drone", new Entry("equipment", 886));
         ITEMS.put("colonel_bumble_obeeill_princess", new Entry("equipment", 887));

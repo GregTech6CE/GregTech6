@@ -36,35 +36,21 @@ import java.util.List;
 public final class OriginalBedrockDrillControllerBlock extends Block implements gregtech.engine.multiblock.StructurePreviewSource {
 //? if >=1.21.1 {
     /*@Override
-    public com.mojang.serialization.MapCodec<? extends Block> codec() {
-        return com.mojang.serialization.MapCodec.unit(this);
+    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state, Level level,
+            BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
     }
 *///?} else {
+    @Override
 //?}
-    public OriginalBedrockDrillControllerBlock(Properties properties) {
-        super(properties);
-    }
-
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new BedrockDrillControllerBlockEntity(pos, state);
-    }
-
-    @Nullable
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide || type != GTBlockEntities.BEDROCK_DRILL.get()) return null;
-        return (tickLevel, tickPos, tickState, blockEntity) -> BedrockDrillControllerBlockEntity.serverTick(
-                tickLevel, tickPos, tickState, (BedrockDrillControllerBlockEntity) blockEntity);
-    }
-
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
             InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill))
         return InteractionResult.PASS;
@@ -89,6 +75,24 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
             return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;
+    }
+
+    public OriginalBedrockDrillControllerBlock(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new BedrockDrillControllerBlockEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (level.isClientSide || type != GTBlockEntities.BEDROCK_DRILL.get()) return null;
+        return (tickLevel, tickPos, tickState, blockEntity) -> BedrockDrillControllerBlockEntity.serverTick(
+                tickLevel, tickPos, tickState, (BedrockDrillControllerBlockEntity) blockEntity);
     }
 
     @Override
@@ -122,12 +126,11 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
             var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill, drill.saveWithoutMetadata());
 //?}
             data.remove("gt.output");
+            data.remove("gt.drill_energy");
+            data.remove("gt.stone_type");
+            data.remove("gt.lubricant");
             // The output slot is dropped separately by onRemove.
-//? if >=1.21.1 {
-            /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.of(data));
-*///?} else {
-            stack.addTagElement("BlockEntityTag", data);
-//?}
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
         }
         return List.of(stack);
     }
@@ -141,49 +144,30 @@ public final class OriginalBedrockDrillControllerBlock extends Block implements 
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
         ItemStack stack = new ItemStack(this);
-        if (level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill)
+        if (level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill) {
 //? if >=1.21.1 {
-        /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
-                net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(drill,
-                drill.saveWithId(drill.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill, drill.saveWithId(drill.getLevel().registryAccess()));
 *///?} else {
-        stack.addTagElement("BlockEntityTag", gregtech.content.cover.ComponentCoverFallback.forItem(drill, drill.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(drill, drill.saveWithoutMetadata());
 //?}
+            data.remove("gt.output");
+            data.remove("gt.drill_energy");
+            data.remove("gt.stone_type");
+            data.remove("gt.lubricant");
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return stack;
     }
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state,
             @Nullable LivingEntity placer, ItemStack stack) {
-//? if >=1.21.1 {
-        /*var saved = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-*///?} else {
-        var saved = stack.getTagElement("BlockEntityTag");
-//?}
+        var saved = gregtech.engine.stack.BlockEntityData.read(stack);
         if (saved != null && level.getBlockEntity(pos) instanceof BedrockDrillControllerBlockEntity drill)
 //? if >=1.21.1 {
-        /*drill.restorePersistentState(saved.copyTag(), level.registryAccess());
+        /*drill.restorePersistentState(saved, level.registryAccess());
 *///?} else {
         drill.load(saved);
 //?}
     }
-//? if >=1.21.1 {
-    /*@Override
-    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state, Level level,
-            BlockPos pos, net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
-            net.minecraft.world.phys.BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-    @Override
-    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
-        return interact(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
-    }
-*///?} else {
-//?}
 }

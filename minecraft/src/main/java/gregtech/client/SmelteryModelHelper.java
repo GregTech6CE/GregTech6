@@ -27,16 +27,28 @@ public final class SmelteryModelHelper {
             "down":{"texture":"#wall","tintindex":0},"up":{"texture":"#wall","tintindex":0},"north":{"texture":"#wall","tintindex":0},"south":{"texture":"#wall","tintindex":0},"west":{"texture":"#wall","tintindex":0},"east":{"texture":"#wall","tintindex":0}
             """;
 
-    /** Solid face templates without tint (overlay layer). */
-    public static final String FACE_OVERLAY = """
-            "down":{"texture":"#wall"},"up":{"texture":"#wall"},"north":{"texture":"#wall"},"south":{"texture":"#wall"},"west":{"texture":"#wall"},"east":{"texture":"#wall"}
-            """;
+    // === Hull model template ===
 
-    // === Composite JSON template ===
-
-    /** Build a {@code forge:composite} JSON model with a tinted solid layer and a cutout overlay layer. */
-    public static String compositeModelJson(MaterialTextureSet set, String elementsTinted, String elementsOverlay) {
+    /**
+     * Build the hull model. Without {@code overlay} this is a plain block model holding the tinted
+     * faces directly; with it, the faces sit under a {@code forge:composite} cutout detail pass.
+     */
+    public static String hullModelJson(
+            MaterialTextureSet set, String elementsTinted, @Nullable String elementsOverlay) {
         ResourceLocation base = BlockMaterialIcons.baseTexture(set, BlockMaterialPrefix.blockSolid);
+        if (elementsOverlay == null) {
+            return """
+                    {
+                      "parent": "minecraft:block/block",
+                      "textures": {
+                        "particle": "%s",
+                        "wall": "%s"
+                      },
+                      "elements": %s,
+                      "render_type": "minecraft:solid"
+                    }
+                    """.formatted(base, base, elementsTinted);
+        }
         ResourceLocation overlay = BlockMaterialIcons.overlayTexture(set, BlockMaterialPrefix.blockSolid);
 //? if >=1.21.1 {
         /*return """
@@ -89,11 +101,6 @@ public final class SmelteryModelHelper {
                 }
                 """.formatted(base, elementsTinted, overlay, elementsOverlay);
 //?}
-    }
-
-    /** Build an overlay-only elements string by stripping tintindex from the tinted version. */
-    public static String overlayOnly(String tintedElements) {
-        return tintedElements.replace(",\"tintindex\":0", "");
     }
 
     // === Model path builders ===
@@ -159,22 +166,6 @@ public final class SmelteryModelHelper {
               {"from":[10,2,11],"to":[11,6,16],"faces":{%1$s}}
             ]
             """.formatted(FACE_TINTED);
-
-    public static final String CROSSING_ELEMENTS_OVERLAY = """
-            [
-              {"from":[6,1,0],"to":[10,2,6],"faces":{%1$s}},
-              {"from":[0,1,6],"to":[16,2,10],"faces":{%1$s}},
-              {"from":[6,1,10],"to":[10,2,16],"faces":{%1$s}},
-              {"from":[5,2,0],"to":[6,6,5],"faces":{%1$s}},
-              {"from":[10,2,0],"to":[11,6,5],"faces":{%1$s}},
-              {"from":[0,2,5],"to":[6,6,6],"faces":{%1$s}},
-              {"from":[10,2,5],"to":[16,6,6],"faces":{%1$s}},
-              {"from":[0,2,10],"to":[6,6,11],"faces":{%1$s}},
-              {"from":[10,2,10],"to":[16,6,11],"faces":{%1$s}},
-              {"from":[5,2,11],"to":[6,6,16],"faces":{%1$s}},
-              {"from":[10,2,11],"to":[11,6,16],"faces":{%1$s}}
-            ]
-            """.formatted(FACE_OVERLAY);
 
     // === Geometry constants for the smeltery block types ===
 

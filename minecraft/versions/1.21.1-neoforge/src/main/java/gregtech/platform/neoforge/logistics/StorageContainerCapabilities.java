@@ -26,10 +26,6 @@ public final class StorageContainerCapabilities {
                 (blockEntity, side) -> blockEntity.isRemoved() ? null : blockEntity.inventory());
         event.registerBlockEntity(
                 net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
-                GTBlockEntities.COIN_MOLD.get(),
-                (blockEntity, side) -> blockEntity.itemHandler());
-        event.registerBlockEntity(
-                net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
                 GTBlockEntities.DUST_FUNNEL.get(),
                 (blockEntity, side) -> blockEntity.itemHandler(side));
         event.registerBlockEntity(

@@ -28,17 +28,21 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements gr
     public AxialGeneratorDefinitions.Grade grade() { return grade; }
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack held,BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){return interact(state,level,pos,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);}
+    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
+    @Override
 //?}
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) { builder.add(FACING); }
-    @Override public BlockState getStateForPlacement(BlockPlaceContext context) { return defaultBlockState().setValue(FACING,context.getNearestLookingDirection().getOpposite()); }
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit) {
-*///?} else {
-    @Override public InteractionResult use(BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit) {
-//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
         if(MachineRotationType.handleWrench(state,level,pos,player,hand,hit,FACING,MachineRotationType.ALL))return InteractionResult.sidedSuccess(level.isClientSide);
         if(level.getBlockEntity(pos) instanceof AxialGeneratorBlockEntity machine) {
             if(player.isShiftKeyDown()&&player.getItemInHand(hand).isEmpty()) {
@@ -71,13 +75,23 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements gr
         }
         return InteractionResult.PASS;
     }
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) { builder.add(FACING); }
+    @Override public BlockState getStateForPlacement(BlockPlaceContext context) { return defaultBlockState().setValue(FACING,context.getNearestLookingDirection().getOpposite()); }
     @Override public List<ItemStack> getDrops(BlockState state,LootParams.Builder builder) {
         var stack=new ItemStack(this);
+        if(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AxialGeneratorBlockEntity machine) {
 //? if >=1.21.1 {
-        /*if(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AxialGeneratorBlockEntity machine)stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithId(machine.getLevel().registryAccess()))));
+            /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithId(machine.getLevel().registryAccess()));
 *///?} else {
-        if(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AxialGeneratorBlockEntity machine)stack.getOrCreateTag().put("BlockEntityTag",gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata()));
+            var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithoutMetadata());
 //?}
+            data.remove("gt.axial.energy");
+            data.remove("gt.stopped");
+            data.remove("gt.overloaded");
+            data.remove("gt.rotor_formed");
+            data.remove("gt.rotor_active");
+            gregtech.engine.stack.BlockEntityData.write(stack, data);
+        }
         return List.of(stack);
     }
 //? if >=1.21.1 {

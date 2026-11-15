@@ -39,11 +39,29 @@ import java.util.List;
 import java.util.Map;
 
 /** GT6 rotational axle block — RU conductor with pipe-style 6-way connections. */
+public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.machine.PipeGeometry.AxleConnectorGeometry, ToolInteractionTarget {
 //? if >=1.21.1 {
-/*public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, gregtech.engine.machine.PipeGeometry.AxleConnectorGeometry, ToolInteractionTarget {
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+            BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+            BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
-public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        if (ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.PASS;
+    }
+
     public static final BooleanProperty UP    = BooleanProperty.create("up");
     public static final BooleanProperty DOWN  = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
@@ -182,26 +200,8 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
         gregtech.client.MechanicalBlockTooltips.appendAxle(spec, getExplosionResistance(), tooltip);
     }
 
-//? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-                                  InteractionHand hand, BlockHitResult hit) {
-        ItemStack held = player.getItemInHand(hand);
+    @Override public double axleHalfThickness(){return spec.halfThickness();}
 
-        if (ToolInteractions.use(state, level, pos, player, hand, hit))
-            return InteractionResult.sidedSuccess(level.isClientSide);
-
-        return InteractionResult.PASS;
-    }
-
-//? if >=1.21.1 {
-    /*@Override public double axleHalfThickness(){return spec.halfThickness();}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit).consumesAction()?net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide):net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;}
-*///?} else {
-//?}
     @Override public int getFlammability(BlockState state,BlockGetter level,BlockPos pos,Direction face) {
         return spec.material()==gregtech.content.material.generated.WoodMaterials.WoodTreated?150:0;
     }

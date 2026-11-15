@@ -20,6 +20,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+//? if >=1.21.1 {
+/*import net.minecraft.world.ItemInteractionResult;
+*///?}
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -60,22 +63,47 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
     }
 
     @Override
-    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        return switch (interact(state, level, pos, player, hand, hit)) {
-            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
-            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
-            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
-            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
     }
 
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
     }
 *///?} else {
+    @Override
 //?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        ItemStack held = player.getItemInHand(hand);
+        boolean screwdriver = GTToolHelper.isScrewdriver(held);
+        boolean cutter = GTToolHelper.isWireCutter(held);
+        boolean hammer = GTToolHelper.isSoftHammer(held);
+        boolean monkey = GTToolHelper.isMonkeyWrench(held);
+        boolean magnifier = GTToolHelper.isMagnifyingGlass(held);
+        if (!(level.getBlockEntity(pos) instanceof AdvancedButtonBlockEntity button)) return InteractionResult.PASS;
+        if (screwdriver || cutter || hammer || monkey || magnifier) {
+            if (!level.isClientSide && player.mayBuild() && level.mayInteract(player, pos)) {
+                if (screwdriver) button.adjustLength(player.isShiftKeyDown() ? 20 : 1);
+                else if (cutter) button.adjustStrength(player.isShiftKeyDown() ? -1 : 1);
+                else if (hammer) button.toggleInversion(player.isShiftKeyDown());
+                else if (monkey) button.cycleMode(player.isShiftKeyDown());
+                player.displayClientMessage(button.status(), true);
+                if (!magnifier) GTToolHelper.damageForToolClickReturn(held,
+                        hammer || monkey ? 1000 : 100, player);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (ToolInteractions.use(state, level, pos, player, hand, hit))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (!level.isClientSide && button.press()) {
+            level.playSound(null, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS, 1.0F, 1.5F);
+        }
+        return button.isLampMode() ? InteractionResult.PASS : InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
     public AdvancedButtonBlock(Properties properties) {
         super(properties.noOcclusion().noCollission());
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.SOUTH)
@@ -149,41 +177,6 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
         return GTToolHelper.isMachineWrench(tool) && !GTToolHelper.isMonkeyWrench(tool)
         ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
     }
-//? if >=1.21.1 {
-    /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
-*///?} else {
-
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-//?}
-            InteractionHand hand, BlockHitResult hit) {
-        ItemStack held = player.getItemInHand(hand);
-        boolean screwdriver = GTToolHelper.isScrewdriver(held);
-        boolean cutter = GTToolHelper.isWireCutter(held);
-        boolean hammer = GTToolHelper.isSoftHammer(held);
-        boolean monkey = GTToolHelper.isMonkeyWrench(held);
-        boolean magnifier = GTToolHelper.isMagnifyingGlass(held);
-        if (!(level.getBlockEntity(pos) instanceof AdvancedButtonBlockEntity button)) return InteractionResult.PASS;
-        if (screwdriver || cutter || hammer || monkey || magnifier) {
-            if (!level.isClientSide && player.mayBuild() && level.mayInteract(player, pos)) {
-                if (screwdriver) button.adjustLength(player.isShiftKeyDown() ? 20 : 1);
-                else if (cutter) button.adjustStrength(player.isShiftKeyDown() ? -1 : 1);
-                else if (hammer) button.toggleInversion(player.isShiftKeyDown());
-                else if (monkey) button.cycleMode(player.isShiftKeyDown());
-                player.displayClientMessage(button.status(), true);
-                if (!magnifier) GTToolHelper.damageForToolClickReturn(held,
-                        hammer || monkey ? 1000 : 100, player);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        if (ToolInteractions.use(state, level, pos, player, hand, hit))
-        return InteractionResult.sidedSuccess(level.isClientSide);
-        if (!level.isClientSide && button.press()) {
-            level.playSound(null, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS, 1.0F, 1.5F);
-        }
-        return button.isLampMode() ? InteractionResult.PASS : InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighbor,
             BlockPos fromPos, boolean movedByPiston) {

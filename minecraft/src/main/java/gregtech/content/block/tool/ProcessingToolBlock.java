@@ -52,19 +52,11 @@ public final class ProcessingToolBlock extends ShapedToolBlock implements Entity
             if (gregtech.content.tool.OpenVesselRules.rainDue(world.getGameTime())) ((ProcessingToolBlockEntity) entity).collectRain();
         };
     }
-//? if >=1.21.1 {
-    /*@Override
-    public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-*///?} else {
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-//?}
+    public InteractionResult use(BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
-//? if >=1.21.1 {
-        /*var rotation = super.interact(state, level, pos, player, hand, hit);
-*///?} else {
         var rotation = super.use(state, level, pos, player, hand, hit);
-//?}
         if (rotation.consumesAction()) return rotation;
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof ProcessingToolBlockEntity tool) tool.interact(player, hand,
                 hit.getDirection());

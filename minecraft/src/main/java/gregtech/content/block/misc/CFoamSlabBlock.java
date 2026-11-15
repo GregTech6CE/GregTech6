@@ -56,26 +56,28 @@ public class CFoamSlabBlock extends ColoredConstructionBlock implements gregtech
      * because the occupied cell is not replaceable and placement always lands beside it.
      */
 //? if >=1.21.1 {
-    /*@Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos, Player player,
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hit) {
+        return gregtech.engine.tool.ToolInteractions.toItemResult(use(state, level, pos, player, hand, hit));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return use(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    @Override
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
         Block whole = wholeBlock(state);
         if (whole == null || !player.getItemInHand(hand).is(asItem())
                 || hit.getDirection() != state.getValue(FACING).getOpposite()) {
-//? if >=1.21.1 {
-            /*return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-*///?} else {
             return InteractionResult.PASS;
-//?}
         }
         if (!level.isUnobstructed(whole.defaultBlockState(), pos, CollisionContext.of(player))) {
-//? if >=1.21.1 {
-            /*return net.minecraft.world.ItemInteractionResult.FAIL;
-*///?} else {
             return InteractionResult.FAIL;
-//?}
         }
         if (!level.isClientSide) {
             level.setBlockAndUpdate(pos, whole.defaultBlockState());
@@ -83,11 +85,7 @@ public class CFoamSlabBlock extends ColoredConstructionBlock implements gregtech
                     net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!player.getAbilities().instabuild) player.getItemInHand(hand).shrink(1);
         }
-//? if >=1.21.1 {
-        /*return net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
-*///?} else {
         return InteractionResult.sidedSuccess(level.isClientSide);
-//?}
     }
 
     /** The whole block of this slab's family and colour, or {@code null} when it has none. */
