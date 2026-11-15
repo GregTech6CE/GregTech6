@@ -1,5 +1,7 @@
 package gregtech.engine.material;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,21 +11,29 @@ import gregtech.content.cover.MaterialCoverRules;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.MaterialTestFixture;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+import javax.imageio.ImageIO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
- * Guards the generated material icon tree: every material resolves to a modeled texture set, and
- * every shared item model agrees with the icon sprites shipped next to it.
+ * Guards the material icon tree: every material resolves to a modeled texture set, the set
+ * inheritance tree stays a forest, and every shared model agrees with the sprites its chain ships.
  */
 class MaterialIconIntegrityTest {
-    private static final String ITEM_ICONS = "/assets/gt6ce/textures/item/material_icons/";
-    private static final String BLOCK_ICONS = "/assets/gt6ce/textures/block/material_icons/";
-    private static final String ITEM_MODELS = "/assets/gt6ce/models/item/material/";
     private static final List<String> COVER_PREFIXES = List.of(
             "plate",
             "sheetGt",
@@ -35,6 +45,11 @@ class MaterialIconIntegrityTest {
             "plateCurved",
             "plateGem",
             "foil");
+    /** Sets that keep a constant so addons compile, yet own no materials, models or art. */
+    private static final Set<String> UNMODELED_SETS = Set.of("fluid", "gas", "hex", "netherstar", "plasma", "rad");
+
+    private static final List<String> ICON_KINDS = List.of("item", "block");
+    private static final Predicate<String> EXISTS = MaterialIconDefinitions::classpathResourceExists;
 
     @BeforeAll
     static void init() {
@@ -55,70 +70,125 @@ class MaterialIconIntegrityTest {
     }
 
     @Test
-    void unmodeledSetsShipNoIconResources() {
-        List<String> leaked = new ArrayList<>();
+    void unmodeledSetsShipNoIconResources() throws IOException {
+        assertEquals(41, MaterialTextureSet.values().length);
+        assertEquals(35, MaterialTextureSet.modeled().size());
+        Set<String> unmodeled = new HashSet<>();
         for (MaterialTextureSet set : MaterialTextureSet.values()) {
-            if (MaterialTextureSet.modeled().contains(set)) {
-                continue;
+            if (!MaterialTextureSet.modeled().contains(set)) {
+                unmodeled.add(set.folder());
             }
-            if (exists(BLOCK_ICONS + set.folder() + "/blocksolid.png")
-                    || exists(ITEM_ICONS + set.folder() + "/ingot.png")
-                    || exists(ITEM_MODELS + set.folder() + "/ingot.json")) {
-                leaked.add(set.name());
+        }
+        assertEquals(UNMODELED_SETS, unmodeled);
+        List<String> leaked = new ArrayList<>();
+        for (String folder : unmodeled) {
+            for (String kind : ICON_KINDS) {
+                Path directory = iconRoot(kind).resolve(folder);
+                if (hasFiles(directory)) {
+                    leaked.add(label(directory));
+                }
             }
         }
         assertTrue(leaked.isEmpty(), "Unmodeled texture sets still ship icon resources: " + leaked);
     }
 
     @Test
-    void modeledSetsShipABlockIconFolder() {
-        List<String> missing = new ArrayList<>();
-        for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
-            if (!exists(BLOCK_ICONS + set.folder() + "/blocksolid.png")) {
-                missing.add(set.folder());
+    void parentTreeIsAcyclicAndModeledClosed() {
+        List<String> problems = new ArrayList<>();
+        Set<MaterialTextureSet> roots = EnumSet.noneOf(MaterialTextureSet.class);
+        for (MaterialTextureSet set : MaterialTextureSet.values()) {
+            Set<MaterialTextureSet> seen = EnumSet.noneOf(MaterialTextureSet.class);
+            boolean modeled = MaterialTextureSet.modeled().contains(set);
+            for (MaterialTextureSet current = set; current != null; current = current.parent()) {
+                if (!seen.add(current)) {
+                    problems.add(set + " revisits " + current);
+                    break;
+                }
+                if (modeled && !MaterialTextureSet.modeled().contains(current)) {
+                    problems.add(set + " inherits unmodeled " + current);
+                }
+            }
+            if (set.parent() == null) {
+                roots.add(set);
             }
         }
-        assertTrue(missing.isEmpty(), "Modeled sets without a block icon folder: " + missing);
+        assertTrue(problems.isEmpty(), "Broken icon inheritance tree: " + problems);
+        assertEquals(EnumSet.of(MaterialTextureSet.DULL, MaterialTextureSet.STONE), roots);
+        assertTrue(MaterialTextureSet.DULL.isRoot());
+        assertTrue(MaterialTextureSet.STONE.isRoot());
+        assertFalse(MaterialTextureSet.METALLIC.isRoot());
+        assertEquals(MaterialTextureSet.DULL, MaterialTextureSet.METALLIC.parent());
+        assertEquals(MaterialTextureSet.STONE, MaterialTextureSet.BRICK.parent());
     }
 
     @Test
-    void sharedItemModelsMatchTheirIconSprites() throws IOException {
+    void modeledSetsShipNoStaticMaterialModels() throws IOException {
+        List<String> leftovers = new ArrayList<>();
+        leftovers.addAll(jsonFiles(coreAssets().resolve("models/item/material")));
+        leftovers.addAll(jsonFiles(minecraftAssets().resolve("models/block/material")));
+        assertTrue(leftovers.isEmpty(), "Static shared material models must be generated, not shipped: " + leftovers);
+    }
+
+    @Test
+    void modeledSetsResolveABlockIconFolder() {
+        List<String> missing = new ArrayList<>();
+        for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
+            if (MaterialIconDefinitions.resolveBlockTextureOwner(set, "blocksolid", EXISTS) == null) {
+                missing.add(set.folder());
+            }
+        }
+        assertTrue(missing.isEmpty(), "Modeled sets without a resolvable block icon folder: " + missing);
+    }
+
+    @Test
+    void sharedItemModelsResolveTheirIconSprites() {
         List<String> missing = new ArrayList<>();
         List<String> mismatched = new ArrayList<>();
         for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
             for (MaterialPrefix prefix : MaterialItemDefinitions.candidatePrefixes()) {
-                String file = prefix.getTextureFileName();
-                String modelPath = ITEM_MODELS + set.folder() + "/" + file + ".json";
-                String texturePath = ITEM_ICONS + set.folder() + "/" + file + ".png";
-                String model = exists(modelPath) ? read(modelPath) : null;
-                if (model == null) {
-                    missing.add(modelPath);
+                String label = set.folder() + "/" + prefix.getTextureFileName();
+                MaterialTextureSet baseOwner =
+                        MaterialIconDefinitions.resolveItemTextureOwner(set, prefix, false, EXISTS);
+                if (baseOwner == null) {
+                    missing.add(label);
                     continue;
                 }
-                if (!exists(texturePath)) {
-                    missing.add(texturePath);
+                MaterialTextureSet overlayOwner =
+                        MaterialIconDefinitions.resolveItemTextureOwner(set, prefix, true, EXISTS);
+                String model = MaterialIconDefinitions.sharedModelJson(set, prefix, EXISTS);
+                if (model == null) {
+                    missing.add(label);
                     continue;
+                }
+                String base = "\"gt6ce:" + MaterialIconDefinitions.texturePath(baseOwner, prefix, false) + "\"";
+                if (!model.contains(base)) {
+                    mismatched.add(label + " layer0 does not name " + base);
                 }
                 boolean declaresOverlay = model.contains("\"layer1\"");
-                boolean hasOverlay = exists(ITEM_ICONS + set.folder() + "/" + file + "_overlay.png");
-                if (declaresOverlay != hasOverlay) {
-                    mismatched.add(set.folder() + "/" + file + " layer1=" + declaresOverlay + " overlay=" + hasOverlay);
+                if (declaresOverlay != (overlayOwner != null)) {
+                    mismatched.add(label + " layer1=" + declaresOverlay + " overlay=" + (overlayOwner != null));
+                } else if (overlayOwner != null
+                        && !model.contains(
+                                "\"gt6ce:" + MaterialIconDefinitions.texturePath(overlayOwner, prefix, true) + "\"")) {
+                    mismatched.add(label + " layer1 does not name its overlay sprite");
+                }
+                if (!model.contains("\"parent\": \"minecraft:item/generated\"")) {
+                    mismatched.add(label + " lost the item/generated parent");
                 }
             }
         }
-        assertTrue(missing.isEmpty(), "Missing icon resources: " + missing);
-        assertTrue(mismatched.isEmpty(), "Model and overlay sprite disagree: " + mismatched);
+        assertTrue(missing.isEmpty(), "Material icons nothing in the chain ships: " + missing);
+        assertTrue(mismatched.isEmpty(), "Shared model and inherited sprites disagree: " + mismatched);
     }
 
     @Test
-    void coverDesignsShipTheirIconSprites() {
+    void coverDesignsResolveTheirIconSprites() {
         List<String> missing = new ArrayList<>();
         for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
             for (String prefix : COVER_PREFIXES) {
                 for (String icon : MaterialCoverRules.textures(prefix)) {
-                    String path = BLOCK_ICONS + set.folder() + "/" + icon + ".png";
-                    if (!exists(path)) {
-                        missing.add(path);
+                    if (MaterialIconDefinitions.resolveBlockTextureOwner(set, icon, EXISTS) == null) {
+                        missing.add(set.folder() + "/" + icon);
                     }
                 }
             }
@@ -126,17 +196,112 @@ class MaterialIconIntegrityTest {
         assertTrue(missing.isEmpty(), "Cover designs without a block icon sprite: " + missing);
     }
 
-    private static boolean exists(String path) {
-        try (InputStream stream = MaterialIconIntegrityTest.class.getResourceAsStream(path)) {
-            return stream != null;
-        } catch (IOException closed) {
+    @Test
+    void noOrphanMcmetaOrDuplicateTexturesAlongParentChain() throws IOException {
+        Map<String, String> sprites = new HashMap<>();
+        Map<String, String> metadata = new HashMap<>();
+        List<String> problems = new ArrayList<>();
+        for (String kind : ICON_KINDS) {
+            for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
+                Path directory = iconRoot(kind).resolve(set.folder());
+                if (!Files.isDirectory(directory)) {
+                    continue;
+                }
+                try (Stream<Path> entries = Files.list(directory)) {
+                    for (Path entry : (Iterable<Path>) entries::iterator) {
+                        String fileName = entry.getFileName().toString();
+                        if (fileName.endsWith(".mcmeta")) {
+                            if (!Files.isRegularFile(entry.resolveSibling(fileName.replace(".mcmeta", "")))) {
+                                problems.add("orphan metadata " + label(entry));
+                            }
+                            continue;
+                        }
+                        if (!fileName.endsWith(".png")) {
+                            continue;
+                        }
+                        String key = kind + "/" + set.folder() + "/" + fileName;
+                        sprites.put(key, fingerprint(entry));
+                        Path mcmeta = entry.resolveSibling(fileName + ".mcmeta");
+                        if (Files.isRegularFile(mcmeta)) {
+                            metadata.put(key, fingerprint(mcmeta));
+                        }
+                    }
+                }
+            }
+        }
+        assertTrue(problems.isEmpty(), "Broken icon folders: " + problems);
+
+        List<String> duplicates = new ArrayList<>();
+        for (Map.Entry<String, String> sprite : sprites.entrySet()) {
+            String[] key = sprite.getKey().split("/");
+            MaterialTextureSet set = MaterialTextureSet.valueOf(key[1].toUpperCase(Locale.ROOT));
+            for (MaterialTextureSet ancestor = set.parent(); ancestor != null; ancestor = ancestor.parent()) {
+                String candidate = key[0] + "/" + ancestor.folder() + "/" + key[2];
+                if (!sprites.containsKey(candidate)) {
+                    continue;
+                }
+                if (sprites.get(candidate).equals(sprite.getValue())
+                        && Objects.equals(metadata.get(candidate), metadata.get(sprite.getKey()))) {
+                    duplicates.add(sprite.getKey() + " duplicates " + candidate);
+                }
+                break;
+            }
+        }
+        assertTrue(duplicates.isEmpty(), "Icons repeat what an ancestor already ships: " + duplicates);
+    }
+
+    private static Path iconRoot(String kind) {
+        return coreAssets().resolve("textures/" + kind + "/material_icons");
+    }
+
+    private static boolean hasFiles(Path directory) throws IOException {
+        if (!Files.isDirectory(directory)) {
             return false;
+        }
+        try (Stream<Path> entries = Files.list(directory)) {
+            return entries.findAny().isPresent();
         }
     }
 
-    private static String read(String path) throws IOException {
-        try (InputStream stream = MaterialIconIntegrityTest.class.getResourceAsStream(path)) {
-            return stream == null ? null : new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+    private static List<String> jsonFiles(Path directory) throws IOException {
+        List<String> found = new ArrayList<>();
+        if (!Files.isDirectory(directory)) {
+            return found;
         }
+        try (Stream<Path> entries = Files.walk(directory)) {
+            entries.filter(path -> path.toString().endsWith(".json")).forEach(path -> found.add(label(path)));
+        }
+        return found;
+    }
+
+    private static String fingerprint(Path file) throws IOException {
+        if (file.getFileName().toString().endsWith(".mcmeta")) {
+            return Integer.toHexString(Arrays.hashCode(Files.readAllBytes(file)));
+        }
+        var image = ImageIO.read(file.toFile());
+        if (image == null) {
+            throw new IOException("unreadable image " + file);
+        }
+        int[] argb = image.getRGB(0, 0, image.getWidth(), image.getHeight(), null, 0, image.getWidth());
+        return image.getWidth() + "x" + image.getHeight() + ":" + Arrays.hashCode(argb);
+    }
+
+    private static String label(Path path) {
+        return path.toString().replace('\\', '/');
+    }
+
+    // Resolves the core asset root from Gradle or the module directory.
+    private static Path coreAssets() {
+        String configured = System.getProperty("gt6ce.coreAssets");
+        return Path.of(configured == null || configured.isBlank() ? "src/main/resources/assets/gt6ce" : configured);
+    }
+
+    // Resolves the shared block-model assets, which live in the client module.
+    private static Path minecraftAssets() {
+        String configured = System.getProperty("gt6ce.minecraftAssets");
+        return Path.of(
+                configured == null || configured.isBlank()
+                        ? "../minecraft/src/main/resources/assets/gt6ce"
+                        : configured);
     }
 }

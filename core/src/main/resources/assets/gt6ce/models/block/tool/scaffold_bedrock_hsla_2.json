@@ -3,7 +3,7 @@
   "textures": {
     "particle": "gt6ce:block/iconsets/plate",
     "plate": "gt6ce:block/iconsets/plate",
-    "rod": "gt6ce:block/material_icons/brick/blocksolid"
+    "rod": "gt6ce:block/material_icons/stone/blocksolid"
   },
   "elements": [
     {

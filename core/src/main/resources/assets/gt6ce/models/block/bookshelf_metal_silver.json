@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/block",
   "textures": {
-    "wood": "gt6ce:block/material_icons/shiny/casingmachine",
+    "wood": "gt6ce:block/material_icons/dull/casingmachine",
     "particle": "#wood"
   },
   "elements": [

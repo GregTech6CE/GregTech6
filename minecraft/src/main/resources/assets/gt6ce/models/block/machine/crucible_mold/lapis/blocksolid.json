@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/block",
   "textures": {
-    "particle": "gt6ce:block/material_icons/lapis/blocksolid",
-    "wall": "gt6ce:block/material_icons/lapis/blocksolid"
+    "particle": "gt6ce:block/material_icons/dull/blocksolid",
+    "wall": "gt6ce:block/material_icons/dull/blocksolid"
   },
   "elements": [
     {
