@@ -16,7 +16,7 @@
 
 ## 两类生成内容
 
-- **维护的生成输入**：`core/src/main/java/gregtech/content/{data,material,recipe}/generated/` 等内容表参与生产编译，需要纳入版本控制；文件头可能引用历史转换工具。
+- **维护的生成输入**：`core/src/main/java/gregtech/content/{data,material,recipe}/generated/` 等内容表以及正交机器模型表 `core/src/main/resources/assets/gt6ce/machine_models.tsv`（842 行、15 列，配合 `textures/block/machines/casing/` 与 `shared_overlay/` 归并贴图，机器目录贴图上限 950 张）参与生产编译或客户端模型烘焙，需要纳入版本控制；部分 Java 内容表文件头可能引用历史转换工具。
 - **可再生构建输出**：各节点 `build/generated/stonecutter/`、`build/generated/recipe-resources/`、编译类、资源副本、JAR 与构建报告由 Gradle 生成，Git 忽略，不能手工维护。
 
 `build/generated/recipe-resources/` 只出现在 1.21.1 NeoForge 节点：`tools/buildtools` 把 core 中按 1.20.1 形状维护的配方与物品标签树转换为 `recipe/`、`tags/item/`，开发运行与发行 JAR 消费同一份结果。源数据、排除表与转换器纳入版本控制，生成树不纳入；输入、依赖、输出与运行命令见 [buildtools README](../../tools/buildtools/README.md)，生成树与源数据的对应关系由 `tools/recipes/audit_recipes.py --converted` 检查。

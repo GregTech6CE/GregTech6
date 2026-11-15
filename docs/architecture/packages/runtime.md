@@ -93,8 +93,8 @@ GUI 模板、碎片图标与 JEI/EMI 的布局接入见[GUI 开发指南](../../
   - 网络包编解码 roundtrip；注册 ID 唯一性；GUI 模板与别名 JSON 的结构与引用检查。
   - 语言键完整性（`en_us` 与 `zh_cn` 的新增、缺失、重复键）。
 - GameTest
-  - 注册存在性与基础方块实体交互；Menu/Slot 的服务端侧交互与库存校验。
-  - 渲染、Screen、模型、纹理、JEI/EMI/Jade 显示不纳入自动测试。
+  - 注册存在性与基础方块实体交互；Menu/Slot 的服务端侧交互与库存校验；`MachineModelCoverageTests` 覆盖正交机器表行映射与物品显示策略声明。
+  - 实际客户端渲染、Screen、贴图视觉与 JEI/EMI/Jade 图标表现不纳入自动测试，保留人工验收。
 - 现有测试集
   - `api/common/src/test` 的附属声明测试与 `api/minecraft/src/test` 的平台契约测试；`BehaviorMachineGuiTest` 覆盖 GUI 几何与 UV 常量。
   - 客户端渲染、GUI 外观、真实客户端-服务端同步与 Mixin 保留人工验收。

@@ -117,8 +117,8 @@ public final class OrthogonalMachineModels {
     }
 
     private static Map<String, Entry> load() {
-        // The table ships separately from this class: an ungenerated table leaves the client on its
-        // per-state static models instead of failing the bake.
+        // The table ships separately from this class; an empty map lets missing rows be reported
+        // without aborting startup, rather than leaving deleted static block models in place.
         try (InputStream stream = OrthogonalMachineModels.class.getResourceAsStream(RESOURCE)) {
             if (stream == null) return Map.of();
             Map<String, Entry> models = new LinkedHashMap<>();
