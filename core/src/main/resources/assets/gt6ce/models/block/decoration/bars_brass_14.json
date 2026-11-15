@@ -2,8 +2,8 @@
   "parent": "minecraft:block/block",
   "ambientocclusion": false,
   "textures": {
-    "all": "gt6ce:block/machines/multiblockparts/metalwall/0/colored/side",
-    "particle": "gt6ce:block/machines/multiblockparts/metalwall/0/colored/side"
+    "all": "gt6ce:block/machines/casing/hull_bright",
+    "particle": "gt6ce:block/machines/casing/hull_bright"
   },
   "elements": [
     {

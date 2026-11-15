@@ -2,14 +2,14 @@
   "parent": "minecraft:block/block",
   "loader": "forge:composite",
   "textures": {
-    "particle": "gt6ce:block/machines/tools/dynamite/colored/side"
+    "particle": "gt6ce:block/machines/casing/dynamite_colored_back"
   },
   "children": {
     "colored": {
       "textures": {
-        "front": "gt6ce:block/machines/tools/dynamite/colored_active/front",
-        "back": "gt6ce:block/machines/tools/dynamite/colored_active/back",
-        "side": "gt6ce:block/machines/tools/dynamite/colored_active/side"
+        "front": "gt6ce:block/machines/casing/dynamite_colored_back",
+        "back": "gt6ce:block/machines/casing/dynamite_colored_back",
+        "side": "gt6ce:block/machines/casing/dynamite_colored_back"
       },
       "elements": [
         {
@@ -56,7 +56,6 @@
     "overlay": {
       "textures": {
         "front": "gt6ce:block/machines/tools/dynamite/overlay_active/front",
-        "back": "gt6ce:block/machines/tools/dynamite/overlay_active/back",
         "side": "gt6ce:block/machines/tools/dynamite/overlay_active/side"
       },
       "elements": [
@@ -74,9 +73,6 @@
           "faces": {
             "north": {
               "texture": "#front"
-            },
-            "south": {
-              "texture": "#back"
             },
             "east": {
               "texture": "#side"

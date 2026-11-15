@@ -108,12 +108,12 @@
     "layer0": {
       "parent": "minecraft:block/block",
       "textures": {
-        "up": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/colored/side",
-        "down": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/colored/side",
-        "north": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/colored/front",
-        "south": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/colored/back",
-        "west": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/colored/side",
-        "east": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/colored/side"
+        "up": "gt6ce:block/machines/casing/hull",
+        "down": "gt6ce:block/machines/casing/hull",
+        "north": "gt6ce:block/machines/casing/bucketometer_colored_front",
+        "south": "gt6ce:block/machines/casing/hull",
+        "west": "gt6ce:block/machines/casing/hull",
+        "east": "gt6ce:block/machines/casing/hull"
       },
       "elements": [
         {
@@ -160,12 +160,7 @@
     "layer1": {
       "parent": "minecraft:block/block",
       "textures": {
-        "up": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/overlay/side",
-        "down": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/overlay/side",
-        "north": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/overlay/front",
-        "south": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/overlay/back",
-        "west": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/overlay/side",
-        "east": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/overlay/side"
+        "north": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/overlay/front"
       },
       "elements": [
         {
@@ -180,23 +175,8 @@
             16
           ],
           "faces": {
-            "up": {
-              "texture": "#up"
-            },
-            "down": {
-              "texture": "#down"
-            },
             "north": {
               "texture": "#north"
-            },
-            "south": {
-              "texture": "#south"
-            },
-            "west": {
-              "texture": "#west"
-            },
-            "east": {
-              "texture": "#east"
             }
           }
         }
@@ -206,6 +186,6 @@
   },
   "parent": "minecraft:block/block",
   "textures": {
-    "particle": "gt6ce:block/machines/redstone/sensors/superheavyweightometer/colored/side"
+    "particle": "gt6ce:block/machines/casing/hull"
   }
 }

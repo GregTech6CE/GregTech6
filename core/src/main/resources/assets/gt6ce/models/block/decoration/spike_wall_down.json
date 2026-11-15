@@ -1,6 +1,6 @@
 {
   "textures": {
-    "all": "gt6ce:block/machines/multiblockparts/metalwall/0/colored/side",
+    "all": "gt6ce:block/machines/casing/hull_bright",
     "particle": "#all"
   },
   "elements": [

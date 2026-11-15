@@ -3,12 +3,12 @@
   "loader": "forge:composite",
   "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "gt6ce:block/machines/extenders/bridge_universal/colored/side"
+    "particle": "gt6ce:block/machines/casing/hammer_colored_side"
   },
   "children": {
     "colored": {
       "textures": {
-        "side": "gt6ce:block/machines/extenders/bridge_universal/colored/side"
+        "side": "gt6ce:block/machines/casing/hammer_colored_side"
       },
       "elements": [
         {
@@ -60,7 +60,7 @@
     },
     "overlay": {
       "textures": {
-        "side": "gt6ce:block/machines/extenders/bridge_universal/overlay/side"
+        "side": "gt6ce:block/machines/shared_overlay/bridge_inv_overlay_side"
       },
       "elements": [
         {

@@ -3,14 +3,14 @@
   "loader": "forge:composite",
   "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "gt6ce:block/machines/extenders/universal/colored/side"
+    "particle": "gt6ce:block/machines/casing/hull"
   },
   "children": {
     "colored": {
       "textures": {
-        "in": "gt6ce:block/machines/extenders/universal/colored/in",
-        "out": "gt6ce:block/machines/extenders/universal/colored/out",
-        "side": "gt6ce:block/machines/extenders/universal/colored/side"
+        "in": "gt6ce:block/machines/casing/hammer_colored_side",
+        "out": "gt6ce:block/machines/casing/hammer_colored_side",
+        "side": "gt6ce:block/machines/casing/hull"
       },
       "elements": [
         {

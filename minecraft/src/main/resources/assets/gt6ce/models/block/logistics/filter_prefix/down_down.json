@@ -3,13 +3,13 @@
   "loader": "forge:composite",
   "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "gt6ce:block/machines/extenders/filter_prefix/colored/side"
+    "particle": "gt6ce:block/machines/casing/hull"
   },
   "children": {
     "colored": {
       "textures": {
-        "in": "gt6ce:block/machines/extenders/filter_prefix/colored/in",
-        "side": "gt6ce:block/machines/extenders/filter_prefix/colored/side"
+        "in": "gt6ce:block/machines/casing/hammer_colored_side",
+        "side": "gt6ce:block/machines/casing/hull"
       },
       "elements": [
         {
@@ -61,7 +61,7 @@
     },
     "overlay": {
       "textures": {
-        "in": "gt6ce:block/machines/extenders/filter_prefix/overlay/in",
+        "in": "gt6ce:block/machines/shared_overlay/bridge_inv_overlay_side",
         "side": "gt6ce:block/machines/extenders/filter_prefix/overlay/side"
       },
       "elements": [

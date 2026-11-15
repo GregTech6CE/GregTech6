@@ -2,12 +2,12 @@
   "parent": "minecraft:block/cube",
   "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "gt6ce:block/machines/magicenergyabsorber/colored/side",
-    "side": "gt6ce:block/machines/magicenergyabsorber/colored/side",
+    "particle": "gt6ce:block/machines/casing/hull",
+    "side": "gt6ce:block/machines/casing/hull",
     "side_overlay": "gt6ce:block/machines/magicenergyabsorber/overlay/side",
-    "top": "gt6ce:block/machines/magicenergyabsorber/colored/top",
+    "top": "gt6ce:block/machines/casing/hull",
     "top_overlay": "gt6ce:block/machines/magicenergyabsorber/overlay/top",
-    "bottom_facing": "gt6ce:block/machines/magicenergyabsorber/colored/bottom_facing",
+    "bottom_facing": "gt6ce:block/machines/casing/hull",
     "bottom_facing_overlay": "gt6ce:block/machines/magicenergyabsorber/overlay/bottom_facing"
   },
   "elements": [

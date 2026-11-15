@@ -2,13 +2,13 @@
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "gt6ce:block/machines/generators/hot_fluid/colored/left",
-    "0top": "gt6ce:block/machines/generators/hot_fluid/colored/top",
-    "0left": "gt6ce:block/machines/generators/hot_fluid/colored/left",
-    "0front": "gt6ce:block/machines/generators/hot_fluid/colored/front",
-    "1top": "gt6ce:block/machines/generators/hot_fluid/overlay_active/top",
+    "particle": "gt6ce:block/machines/casing/kinetic_steam_colored_pipe",
+    "0top": "gt6ce:block/machines/casing/kinetic_steam_colored_pipe",
+    "0left": "gt6ce:block/machines/casing/kinetic_steam_colored_pipe",
+    "0front": "gt6ce:block/machines/casing/kinetic_steam_colored_pipe",
+    "1top": "gt6ce:block/machines/shared_overlay/crystallisationcrucible_overlay_active_bottom",
     "1left": "gt6ce:block/machines/generators/hot_fluid/overlay_active/left",
-    "1front": "gt6ce:block/machines/generators/hot_fluid/overlay_active/front"
+    "1front": "gt6ce:block/machines/shared_overlay/autoclave_overlay_back"
   },
   "elements": [
     {

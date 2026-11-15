@@ -2,14 +2,14 @@
   "parent": "minecraft:block/block",
   "loader": "forge:composite",
   "textures": {
-    "particle": "gt6ce:block/machines/tools/bumbliary_adv/colored/bottom"
+    "particle": "gt6ce:block/machines/casing/bumbliary_colored_bottom"
   },
   "children": {
     "colored": {
       "textures": {
-        "bottom": "gt6ce:block/machines/tools/bumbliary_adv/colored/bottom",
-        "sides": "gt6ce:block/machines/tools/bumbliary_adv/colored/sides",
-        "top": "gt6ce:block/machines/tools/bumbliary_adv/colored/top"
+        "bottom": "gt6ce:block/machines/casing/bumbliary_colored_bottom",
+        "sides": "gt6ce:block/machines/casing/bumbliary_colored_sides",
+        "top": "gt6ce:block/machines/casing/bumbliary_colored_top"
       },
       "elements": [
         {

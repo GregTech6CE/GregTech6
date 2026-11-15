@@ -73,11 +73,6 @@
     },
     {
       "type": "minecraft:directory",
-      "source": "block/machines/engines/kinetic_steam/colored",
-      "prefix": "block/machines/engines/kinetic_steam/colored/"
-    },
-    {
-      "type": "minecraft:directory",
       "source": "block/machines/covers/blank",
       "prefix": "block/machines/covers/blank/"
     },
@@ -99,6 +94,16 @@
       "type": "minecraft:directory",
       "source": "block/machines/covers/redstonerepeater",
       "prefix": "block/machines/covers/redstonerepeater/"
+    },
+    {
+      "type": "minecraft:directory",
+      "source": "block/machines/casing",
+      "prefix": "block/machines/casing/"
+    },
+    {
+      "type": "minecraft:directory",
+      "source": "block/machines/shared_overlay",
+      "prefix": "block/machines/shared_overlay/"
     }
   ]
 }

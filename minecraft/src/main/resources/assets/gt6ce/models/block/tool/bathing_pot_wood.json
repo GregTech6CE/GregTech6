@@ -3,15 +3,15 @@
   "loader": "forge:composite",
   "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "gt6ce:block/machines/tools/bathing_pot_wood/colored/bottom"
+    "particle": "gt6ce:block/machines/casing/barrel_colored_bottom"
   },
   "children": {
     "colored": {
       "textures": {
-        "bottom": "gt6ce:block/machines/tools/bathing_pot_wood/colored/bottom",
-        "insides": "gt6ce:block/machines/tools/bathing_pot_wood/colored/insides",
-        "sides": "gt6ce:block/machines/tools/bathing_pot_wood/colored/sides",
-        "top": "gt6ce:block/machines/tools/bathing_pot_wood/colored/top"
+        "bottom": "gt6ce:block/machines/casing/barrel_colored_bottom",
+        "insides": "gt6ce:block/machines/casing/barrel_colored_back",
+        "sides": "gt6ce:block/machines/casing/barrel_colored_back",
+        "top": "gt6ce:block/machines/casing/barrel_colored_bottom"
       },
       "elements": [
         {
@@ -209,10 +209,7 @@
     },
     "overlay": {
       "textures": {
-        "bottom": "gt6ce:block/machines/tools/bathing_pot_wood/overlay/bottom",
-        "insides": "gt6ce:block/machines/tools/bathing_pot_wood/overlay/insides",
-        "sides": "gt6ce:block/machines/tools/bathing_pot_wood/overlay/sides",
-        "top": "gt6ce:block/machines/tools/bathing_pot_wood/overlay/top"
+        "sides": "gt6ce:block/machines/tools/bathing_pot_wood/overlay/sides"
       },
       "elements": [
         {
@@ -230,20 +227,11 @@
             "west": {
               "texture": "#sides"
             },
-            "east": {
-              "texture": "#insides"
-            },
             "north": {
               "texture": "#sides"
             },
             "south": {
               "texture": "#sides"
-            },
-            "up": {
-              "texture": "#top"
-            },
-            "down": {
-              "texture": "#bottom"
             }
           }
         },
@@ -267,15 +255,6 @@
             },
             "north": {
               "texture": "#sides"
-            },
-            "south": {
-              "texture": "#insides"
-            },
-            "up": {
-              "texture": "#top"
-            },
-            "down": {
-              "texture": "#bottom"
             }
           }
         },
@@ -291,9 +270,6 @@
             16
           ],
           "faces": {
-            "west": {
-              "texture": "#insides"
-            },
             "east": {
               "texture": "#sides"
             },
@@ -302,12 +278,6 @@
             },
             "south": {
               "texture": "#sides"
-            },
-            "up": {
-              "texture": "#top"
-            },
-            "down": {
-              "texture": "#bottom"
             }
           }
         },
@@ -329,17 +299,8 @@
             "east": {
               "texture": "#sides"
             },
-            "north": {
-              "texture": "#insides"
-            },
             "south": {
               "texture": "#sides"
-            },
-            "up": {
-              "texture": "#top"
-            },
-            "down": {
-              "texture": "#bottom"
             }
           }
         },
@@ -366,12 +327,6 @@
             },
             "south": {
               "texture": "#sides"
-            },
-            "up": {
-              "texture": "#top"
-            },
-            "down": {
-              "texture": "#bottom"
             }
           }
         }

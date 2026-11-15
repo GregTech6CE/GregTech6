@@ -2,17 +2,17 @@
   "loader": "forge:composite",
   "parent": "minecraft:block/block",
   "textures": {
-    "particle": "gt6ce:block/machines/extenders/filter_slots/colored/side"
+    "particle": "gt6ce:block/machines/casing/hull"
   },
   "children": {
     "colored": {
       "textures": {
-        "north": "gt6ce:block/machines/extenders/filter_slots/colored/in",
-        "south": "gt6ce:block/machines/extenders/filter_slots/colored/out",
-        "up": "gt6ce:block/machines/extenders/filter_slots/colored/side",
-        "down": "gt6ce:block/machines/extenders/filter_slots/colored/side",
-        "east": "gt6ce:block/machines/extenders/filter_slots/colored/side",
-        "west": "gt6ce:block/machines/extenders/filter_slots/colored/side"
+        "north": "gt6ce:block/machines/casing/hammer_colored_side",
+        "south": "gt6ce:block/machines/casing/hammer_colored_side",
+        "up": "gt6ce:block/machines/casing/hull",
+        "down": "gt6ce:block/machines/casing/hull",
+        "east": "gt6ce:block/machines/casing/hull",
+        "west": "gt6ce:block/machines/casing/hull"
       },
       "elements": [
         {
@@ -64,8 +64,8 @@
     },
     "overlay": {
       "textures": {
-        "north": "gt6ce:block/machines/extenders/filter_slots/overlay/in",
-        "south": "gt6ce:block/machines/extenders/filter_slots/overlay/out",
+        "north": "gt6ce:block/machines/shared_overlay/bridge_inv_overlay_side",
+        "south": "gt6ce:block/machines/shared_overlay/filter_prefix_overlay_out",
         "up": "gt6ce:block/machines/extenders/filter_slots/overlay/side",
         "down": "gt6ce:block/machines/extenders/filter_slots/overlay/side",
         "east": "gt6ce:block/machines/extenders/filter_slots/overlay/side",

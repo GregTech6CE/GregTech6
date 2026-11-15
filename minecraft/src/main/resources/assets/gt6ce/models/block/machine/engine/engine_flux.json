@@ -108,9 +108,9 @@
     "back_plate_colored": {
       "parent": "minecraft:block/block",
       "textures": {
-        "front": "gt6ce:block/machines/engines/kinetic_flux/colored/front",
-        "back": "gt6ce:block/machines/engines/kinetic_flux/colored/back",
-        "side": "gt6ce:block/machines/engines/kinetic_flux/colored/side"
+        "front": "gt6ce:block/machines/casing/kinetic_electric_colored_front",
+        "back": "gt6ce:block/machines/casing/hull",
+        "side": "gt6ce:block/machines/casing/hull"
       },
       "elements": [
         {
@@ -225,9 +225,7 @@
     "back_plate_overlay": {
       "parent": "minecraft:block/block",
       "textures": {
-        "front": "gt6ce:block/machines/engines/kinetic_flux/overlay/front",
-        "back": "gt6ce:block/machines/engines/kinetic_flux/overlay/back",
-        "side": "gt6ce:block/machines/engines/kinetic_flux/overlay/side"
+        "back": "gt6ce:block/machines/shared_overlay/cryo_flux_overlay_side"
       },
       "elements": [
         {
@@ -244,125 +242,6 @@
           "faces": {
             "south": {
               "texture": "#back"
-            },
-            "east": {
-              "texture": "#side"
-            },
-            "west": {
-              "texture": "#side"
-            },
-            "up": {
-              "texture": "#side"
-            },
-            "down": {
-              "texture": "#side"
-            }
-          }
-        },
-        {
-          "from": [
-            0,
-            12,
-            0
-          ],
-          "to": [
-            16,
-            16,
-            2
-          ],
-          "faces": {
-            "north": {
-              "texture": "#front"
-            }
-          }
-        },
-        {
-          "from": [
-            0,
-            0,
-            0
-          ],
-          "to": [
-            16,
-            4,
-            2
-          ],
-          "faces": {
-            "north": {
-              "texture": "#front"
-            }
-          }
-        },
-        {
-          "from": [
-            0,
-            4,
-            0
-          ],
-          "to": [
-            4,
-            12,
-            2
-          ],
-          "faces": {
-            "north": {
-              "texture": "#front"
-            }
-          }
-        },
-        {
-          "from": [
-            12,
-            4,
-            0
-          ],
-          "to": [
-            16,
-            12,
-            2
-          ],
-          "faces": {
-            "north": {
-              "texture": "#front"
-            }
-          }
-        }
-      ],
-      "render_type": "minecraft:cutout"
-    },
-    "engine_hull_colored": {
-      "parent": "minecraft:block/block",
-      "textures": {
-        "hull": "gt6ce:block/machines/engines/kinetic_flux/colored/engine_hull"
-      },
-      "elements": [
-        {
-          "from": [
-            3,
-            3,
-            0
-          ],
-          "to": [
-            13,
-            13,
-            16
-          ],
-          "faces": {
-            "east": {
-              "texture": "#hull",
-              "tintindex": 0
-            },
-            "west": {
-              "texture": "#hull",
-              "tintindex": 0
-            },
-            "up": {
-              "texture": "#hull",
-              "tintindex": 0
-            },
-            "down": {
-              "texture": "#hull",
-              "tintindex": 0
             }
           }
         }
@@ -407,7 +286,7 @@
     "engine_core_colored": {
       "parent": "minecraft:block/block",
       "textures": {
-        "engine": "gt6ce:block/machines/engines/kinetic_flux/colored/engine"
+        "engine": "gt6ce:block/machines/casing/kinetic_electric_colored_engine"
       },
       "elements": [
         {
@@ -441,44 +320,6 @@
             "down": {
               "texture": "#engine",
               "tintindex": 1
-            }
-          }
-        }
-      ],
-      "render_type": "minecraft:cutout"
-    },
-    "engine_core_overlay": {
-      "parent": "minecraft:block/block",
-      "textures": {
-        "engine": "gt6ce:block/machines/engines/kinetic_flux/overlay/engine"
-      },
-      "elements": [
-        {
-          "from": [
-            4,
-            4,
-            0
-          ],
-          "to": [
-            12,
-            12,
-            16
-          ],
-          "faces": {
-            "north": {
-              "texture": "#engine"
-            },
-            "east": {
-              "texture": "#engine"
-            },
-            "west": {
-              "texture": "#engine"
-            },
-            "up": {
-              "texture": "#engine"
-            },
-            "down": {
-              "texture": "#engine"
             }
           }
         }
@@ -488,9 +329,9 @@
     "front_plate_colored": {
       "parent": "minecraft:block/block",
       "textures": {
-        "front": "gt6ce:block/machines/engines/kinetic_flux/colored/front",
-        "back": "gt6ce:block/machines/engines/kinetic_flux/colored/back",
-        "side": "gt6ce:block/machines/engines/kinetic_flux/colored/side"
+        "front": "gt6ce:block/machines/casing/kinetic_electric_colored_front",
+        "back": "gt6ce:block/machines/casing/hull",
+        "side": "gt6ce:block/machines/casing/hull"
       },
       "elements": [
         {
@@ -537,9 +378,7 @@
     "front_plate_overlay": {
       "parent": "minecraft:block/block",
       "textures": {
-        "front": "gt6ce:block/machines/engines/kinetic_flux/overlay/front",
-        "back": "gt6ce:block/machines/engines/kinetic_flux/overlay/back",
-        "side": "gt6ce:block/machines/engines/kinetic_flux/overlay/side"
+        "back": "gt6ce:block/machines/shared_overlay/cryo_flux_overlay_side"
       },
       "elements": [
         {
@@ -554,23 +393,8 @@
             16
           ],
           "faces": {
-            "north": {
-              "texture": "#front"
-            },
             "south": {
               "texture": "#back"
-            },
-            "east": {
-              "texture": "#side"
-            },
-            "west": {
-              "texture": "#side"
-            },
-            "up": {
-              "texture": "#side"
-            },
-            "down": {
-              "texture": "#side"
             }
           }
         }
@@ -580,7 +404,7 @@
     "cage_colored": {
       "parent": "minecraft:block/block",
       "textures": {
-        "cage": "gt6ce:block/machines/engines/kinetic_flux/colored/cage"
+        "cage": "gt6ce:block/machines/casing/kinetic_electric_colored_cage"
       },
       "elements": [
         {
@@ -619,7 +443,7 @@
     "cage_overlay": {
       "parent": "minecraft:block/block",
       "textures": {
-        "cage": "gt6ce:block/machines/engines/kinetic_flux/overlay/cage"
+        "cage": "gt6ce:block/machines/shared_overlay/kinetic_electric_overlay_cage"
       },
       "elements": [
         {
@@ -654,6 +478,6 @@
   },
   "parent": "minecraft:block/block",
   "textures": {
-    "particle": "gt6ce:block/machines/engines/kinetic_flux/colored/front"
+    "particle": "gt6ce:block/machines/casing/kinetic_electric_colored_front"
   }
 }

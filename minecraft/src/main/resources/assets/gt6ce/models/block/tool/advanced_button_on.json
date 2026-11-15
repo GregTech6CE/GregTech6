@@ -7,7 +7,7 @@
   "children": {
     "colored": {
       "textures": {
-        "face": "gt6ce:block/machines/redstone/buttons/advanced/0/0/colored_on"
+        "face": "gt6ce:block/machines/casing/0_0_colored_on"
       },
       "elements": [
         {
@@ -53,7 +53,7 @@
     },
     "overlay": {
       "textures": {
-        "face": "gt6ce:block/machines/redstone/buttons/advanced/0/0/overlay_on"
+        "face": "gt6ce:block/machines/redstone/buttons/advanced/0/0/overlay_off"
       },
       "elements": [
         {
@@ -93,7 +93,7 @@
     },
     "glowing": {
       "textures": {
-        "face": "gt6ce:block/machines/redstone/buttons/advanced/0/0/glowing_on"
+        "face": "gt6ce:block/machines/casing/0_0_colored_on"
       },
       "elements": [
         {
@@ -131,46 +131,6 @@
             "down": {
               "texture": "#face",
               "tintindex": 0
-            }
-          }
-        }
-      ],
-      "render_type": "minecraft:cutout"
-    },
-    "glowverlay": {
-      "textures": {
-        "face": "gt6ce:block/machines/redstone/buttons/advanced/0/0/glowverlay_on"
-      },
-      "elements": [
-        {
-          "from": [
-            4,
-            4,
-            0
-          ],
-          "to": [
-            12,
-            12,
-            2
-          ],
-          "faces": {
-            "north": {
-              "texture": "#face"
-            },
-            "south": {
-              "texture": "#face"
-            },
-            "east": {
-              "texture": "#face"
-            },
-            "west": {
-              "texture": "#face"
-            },
-            "up": {
-              "texture": "#face"
-            },
-            "down": {
-              "texture": "#face"
             }
           }
         }

@@ -111,13 +111,13 @@
       "render_type": "minecraft:cutout",
       "ambientocclusion": false,
       "textures": {
-        "down": "gt6ce:block/machines/generators/reactor_core_1x1/colored/bottom",
-        "up": "gt6ce:block/machines/generators/reactor_core_1x1/colored/face1",
-        "north": "gt6ce:block/machines/generators/reactor_core_1x1/colored/face2",
-        "south": "gt6ce:block/machines/generators/reactor_core_1x1/colored/side1",
-        "west": "gt6ce:block/machines/generators/reactor_core_1x1/colored/side1",
-        "east": "gt6ce:block/machines/generators/reactor_core_1x1/colored/side1",
-        "particle": "gt6ce:block/machines/generators/reactor_core_1x1/colored/face2"
+        "down": "gt6ce:block/machines/casing/kinetic_steam_colored_pipe",
+        "up": "gt6ce:block/machines/casing/kinetic_steam_colored_pipe",
+        "north": "gt6ce:block/machines/casing/kinetic_steam_colored_pipe",
+        "south": "gt6ce:block/machines/casing/reactor_core_1x1_colored_side1",
+        "west": "gt6ce:block/machines/casing/reactor_core_1x1_colored_side1",
+        "east": "gt6ce:block/machines/casing/reactor_core_1x1_colored_side1",
+        "particle": "gt6ce:block/machines/casing/kinetic_steam_colored_pipe"
       },
       "elements": [
         {
@@ -331,47 +331,14 @@
       "render_type": "minecraft:cutout",
       "ambientocclusion": false,
       "textures": {
-        "down": "gt6ce:block/machines/generators/reactor_core_1x1/overlay/bottom",
-        "up": "gt6ce:block/machines/generators/reactor_core_1x1/overlay/face1",
-        "north": "gt6ce:block/machines/generators/reactor_core_1x1/overlay/face2",
-        "south": "gt6ce:block/machines/generators/reactor_core_1x1/overlay/side1",
-        "west": "gt6ce:block/machines/generators/reactor_core_1x1/overlay/side1",
-        "east": "gt6ce:block/machines/generators/reactor_core_1x1/overlay/side1",
-        "particle": "gt6ce:block/machines/generators/reactor_core_1x1/overlay/face2"
+        "up": "gt6ce:block/machines/shared_overlay/reactor_core_1x1_overlay_face1",
+        "north": "gt6ce:block/machines/shared_overlay/reactor_core_1x1_overlay_face2",
+        "south": "gt6ce:block/machines/shared_overlay/reactor_core_1x1_overlay_side1",
+        "west": "gt6ce:block/machines/shared_overlay/reactor_core_1x1_overlay_side1",
+        "east": "gt6ce:block/machines/shared_overlay/reactor_core_1x1_overlay_side1",
+        "particle": "gt6ce:block/machines/shared_overlay/reactor_core_1x1_overlay_face2"
       },
       "elements": [
-        {
-          "from": [
-            0,
-            0,
-            0
-          ],
-          "to": [
-            16,
-            2,
-            16
-          ],
-          "faces": {
-            "down": {
-              "texture": "#down",
-              "uv": [
-                0,
-                0,
-                16,
-                16
-              ]
-            },
-            "up": {
-              "texture": "#down",
-              "uv": [
-                0,
-                0,
-                16,
-                16
-              ]
-            }
-          }
-        },
         {
           "from": [
             0,
@@ -536,6 +503,6 @@
     }
   },
   "textures": {
-    "particle": "gt6ce:block/machines/generators/reactor_core_1x1/colored/face2"
+    "particle": "gt6ce:block/machines/casing/kinetic_steam_colored_pipe"
   }
 }

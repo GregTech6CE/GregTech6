@@ -2,15 +2,15 @@
   "parent": "minecraft:block/block",
   "loader": "forge:composite",
   "textures": {
-    "particle": "gt6ce:block/machines/tools/sifting_table/colored/border"
+    "particle": "gt6ce:block/machines/casing/keylocked_colored_back"
   },
   "children": {
     "colored": {
       "textures": {
-        "border": "gt6ce:block/machines/tools/sifting_table/colored/border",
+        "border": "gt6ce:block/machines/casing/keylocked_colored_back",
         "grid": "gt6ce:block/machines/tools/sifting_table/colored/grid",
-        "legs": "gt6ce:block/machines/tools/sifting_table/colored/legs",
-        "plate": "gt6ce:block/machines/tools/sifting_table/colored/plate"
+        "legs": "gt6ce:block/machines/casing/keylocked_colored_back",
+        "plate": "gt6ce:block/machines/casing/keylocked_colored_back"
       },
       "elements": [
         {
@@ -246,140 +246,9 @@
     },
     "overlay": {
       "textures": {
-        "border": "gt6ce:block/machines/tools/sifting_table/overlay/border",
-        "grid": "gt6ce:block/machines/tools/sifting_table/overlay/grid",
-        "legs": "gt6ce:block/machines/tools/sifting_table/overlay/legs",
-        "plate": "gt6ce:block/machines/tools/sifting_table/overlay/plate"
+        "grid": "gt6ce:block/machines/tools/sifting_table/overlay/grid"
       },
       "elements": [
-        {
-          "from": [
-            0,
-            0,
-            0
-          ],
-          "to": [
-            2,
-            13,
-            2
-          ],
-          "faces": {
-            "down": {
-              "texture": "#legs"
-            },
-            "up": {
-              "texture": "#legs"
-            },
-            "north": {
-              "texture": "#legs"
-            },
-            "south": {
-              "texture": "#legs"
-            },
-            "west": {
-              "texture": "#legs"
-            },
-            "east": {
-              "texture": "#legs"
-            }
-          }
-        },
-        {
-          "from": [
-            14,
-            0,
-            0
-          ],
-          "to": [
-            16,
-            13,
-            2
-          ],
-          "faces": {
-            "down": {
-              "texture": "#legs"
-            },
-            "up": {
-              "texture": "#legs"
-            },
-            "north": {
-              "texture": "#legs"
-            },
-            "south": {
-              "texture": "#legs"
-            },
-            "west": {
-              "texture": "#legs"
-            },
-            "east": {
-              "texture": "#legs"
-            }
-          }
-        },
-        {
-          "from": [
-            0,
-            0,
-            14
-          ],
-          "to": [
-            2,
-            13,
-            16
-          ],
-          "faces": {
-            "down": {
-              "texture": "#legs"
-            },
-            "up": {
-              "texture": "#legs"
-            },
-            "north": {
-              "texture": "#legs"
-            },
-            "south": {
-              "texture": "#legs"
-            },
-            "west": {
-              "texture": "#legs"
-            },
-            "east": {
-              "texture": "#legs"
-            }
-          }
-        },
-        {
-          "from": [
-            14,
-            0,
-            14
-          ],
-          "to": [
-            16,
-            13,
-            16
-          ],
-          "faces": {
-            "down": {
-              "texture": "#legs"
-            },
-            "up": {
-              "texture": "#legs"
-            },
-            "north": {
-              "texture": "#legs"
-            },
-            "south": {
-              "texture": "#legs"
-            },
-            "west": {
-              "texture": "#legs"
-            },
-            "east": {
-              "texture": "#legs"
-            }
-          }
-        },
         {
           "from": [
             0,
@@ -397,50 +266,6 @@
             },
             "up": {
               "texture": "#grid"
-            },
-            "north": {
-              "texture": "#border"
-            },
-            "south": {
-              "texture": "#border"
-            },
-            "west": {
-              "texture": "#border"
-            },
-            "east": {
-              "texture": "#border"
-            }
-          }
-        },
-        {
-          "from": [
-            0,
-            2,
-            0
-          ],
-          "to": [
-            16,
-            5,
-            16
-          ],
-          "faces": {
-            "down": {
-              "texture": "#plate"
-            },
-            "up": {
-              "texture": "#plate"
-            },
-            "north": {
-              "texture": "#plate"
-            },
-            "south": {
-              "texture": "#plate"
-            },
-            "west": {
-              "texture": "#plate"
-            },
-            "east": {
-              "texture": "#plate"
             }
           }
         }

@@ -3,13 +3,13 @@
   "loader": "forge:composite",
   "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "gt6ce:block/machines/extenders/inv_tank/colored/side"
+    "particle": "gt6ce:block/machines/casing/hull"
   },
   "children": {
     "colored": {
       "textures": {
-        "in": "gt6ce:block/machines/extenders/inv_tank/colored/in",
-        "side": "gt6ce:block/machines/extenders/inv_tank/colored/side"
+        "in": "gt6ce:block/machines/casing/hammer_colored_side",
+        "side": "gt6ce:block/machines/casing/hull"
       },
       "elements": [
         {
@@ -61,8 +61,7 @@
     },
     "overlay": {
       "textures": {
-        "in": "gt6ce:block/machines/extenders/inv_tank/overlay/in",
-        "side": "gt6ce:block/machines/extenders/inv_tank/overlay/side"
+        "in": "gt6ce:block/machines/extenders/inv_tank/overlay/in"
       },
       "elements": [
         {
@@ -77,29 +76,9 @@
             16
           ],
           "faces": {
-            "down": {
-              "texture": "#side",
-              "cullface": "down"
-            },
-            "up": {
-              "texture": "#side",
-              "cullface": "up"
-            },
-            "north": {
-              "texture": "#side",
-              "cullface": "north"
-            },
             "south": {
               "texture": "#in",
               "cullface": "south"
-            },
-            "west": {
-              "texture": "#side",
-              "cullface": "west"
-            },
-            "east": {
-              "texture": "#side",
-              "cullface": "east"
             }
           }
         }
