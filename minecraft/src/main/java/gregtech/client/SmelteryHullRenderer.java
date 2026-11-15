@@ -5,7 +5,6 @@ import gregtech.engine.machine.CrucibleSpec;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.blockentity.machine.MoldBasinBlockEntity;
 import gregtech.content.blockentity.machine.MoldBlockEntity;
-import gregtech.platform.Mc;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -22,8 +21,12 @@ import org.joml.Matrix4f;
 /** Content rendering for mold and mold basin — molten fluid, tinted solid, and mold 5x5 grid. */
 public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEntity> {
 
-    private static final ResourceLocation SOLID_BASE =
-            Mc.gregtechId("block/material_icons/metallic/blocksolid");
+    private static final String SOLID_ICON = gregtech.engine.prefix.BlockMaterialPrefix.blockSolid.getTextureFileName();
+
+    /** Solid fill: the {@code blocksolid} art of the metallic set, following the icon inheritance chain. */
+    private static ResourceLocation solidBase() {
+        return BlockMaterialIcons.resolveTexture(gregtech.api.material.MaterialTextureSet.METALLIC, SOLID_ICON);
+    }
 
     public SmelteryHullRenderer(BlockEntityRendererProvider.Context context) {
     }
@@ -60,7 +63,7 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
         poseStack.pushPose();
         if (mold.isContentSolidified()) {
             int tint = material.getColor() | 0xFF000000;
-            drawTopCentered(poseStack, bufferSource, SOLID_BASE, tint,
+            drawTopCentered(poseStack, bufferSource, solidBase(), tint,
                     topY, geo.x0, geo.z0, geo.x1, geo.z1, packedLight);
         } else {
             renderContent(poseStack, bufferSource, material, mold.getTemperature(), topY,
@@ -77,7 +80,7 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
             int tint = basin.getSolidOutputTint();
             Geometry geo = basinGeometry();
             poseStack.pushPose();
-            drawTop(poseStack, bufferSource, SOLID_BASE, tint,
+            drawTop(poseStack, bufferSource, solidBase(), tint,
                     geo.maxY, geo.x0, geo.z0, geo.x1, geo.z1, packedLight);
             poseStack.popPose();
             return;
@@ -110,8 +113,9 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
 
         CrucibleSpec spec = mold.spec();
         int tint = spec != null ? spec.tintRgb() : 0xFFFFFF;
-        TextureAtlasSprite sprite = CrucibleRenderSprites.resolve(spec == null || spec.material().getTextureSet() == null ? SOLID_BASE
-                : BlockMaterialIcons.baseTexture(spec.material().getTextureSet(), gregtech.engine.prefix.BlockMaterialPrefix.blockSolid));
+        TextureAtlasSprite sprite = CrucibleRenderSprites.resolve(spec == null || spec.material().getTextureSet() == null
+                ? solidBase()
+                : BlockMaterialIcons.resolveTexture(spec.material().getTextureSet(), SOLID_ICON));
         VertexConsumer consumer = bufferSource.getBuffer(RenderType.solid());
         Matrix4f matrix = poseStack.last().pose();
         PoseStack.Pose pose = poseStack.last();
@@ -193,10 +197,10 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
         } else {
             int tint = material.getColor() | 0xFF000000;
             if (useMoldUv) {
-                drawTopCentered(poseStack, bufferSource, SOLID_BASE, tint,
+                drawTopCentered(poseStack, bufferSource, solidBase(), tint,
                         topY, x0, z0, x1, z1, packedLight);
             } else {
-                drawTop(poseStack, bufferSource, SOLID_BASE, tint,
+                drawTop(poseStack, bufferSource, solidBase(), tint,
                         topY, x0, z0, x1, z1, packedLight);
             }
         }

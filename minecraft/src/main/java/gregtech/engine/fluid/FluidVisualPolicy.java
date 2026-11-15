@@ -1,6 +1,7 @@
 package gregtech.engine.fluid;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialIconDefinitions;
@@ -43,9 +44,16 @@ public final class FluidVisualPolicy {
         var material = material(entry);
         // Molten metal icons exist per material texture set; the other phases share one template.
         if (material.isValid() && kind == FluidTexturePolicy.Kind.MOLTEN) {
-            String folder = MaterialIconDefinitions.resolveTextureSet(material).folder();
-            template = ResourceLocation.fromNamespaceAndPath(
-                    GregTechIdentity.REGISTRY_NAMESPACE, "block/material_icons/" + folder + "/molten");
+            MaterialTextureSet set = MaterialIconDefinitions.resolveTextureSet(material);
+            MaterialTextureSet owner = MaterialIconDefinitions.resolveBlockTextureOwner(
+                    set,
+                    "molten",
+                    relativePath -> exists.test(
+                            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, relativePath)));
+            if (owner != null) {
+                template = ResourceLocation.fromNamespaceAndPath(
+                        GregTechIdentity.REGISTRY_NAMESPACE, "block/material_icons/" + owner.folder() + "/molten");
+            }
         }
         return new Visual(FluidTexturePolicy.select(template, kind, exists), rawTint(entry));
     }

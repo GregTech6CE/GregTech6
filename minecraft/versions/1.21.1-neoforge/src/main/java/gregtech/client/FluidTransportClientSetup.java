@@ -1,5 +1,6 @@
 package gregtech.client;
 
+import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTFluidPipes;
 import gregtech.content.registry.GTTanks;
@@ -77,13 +78,13 @@ public final class FluidTransportClientSetup {
         for (var entry : GTFluidPipes.all()) {
             var block = entry.get();
             var spec = block.spec();
-            String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
+            MaterialTextureSet set = MaterialIcons.resolveTextureSet(spec.material());
             var model = new PipeWireBakedModel(
                             Math.max(1, spec.diameter() * 8),
-                            id("block/material_icons/" + set + "/pipeside"),
+                            BlockMaterialIcons.resolveTexture(set, "pipeside"),
                             0,
-                            id("block/material_icons/" + set + "/pipe"
-                                    + spec.size().name().toLowerCase(Locale.ROOT)),
+                            BlockMaterialIcons.resolveTexture(
+                                    set, "pipe" + spec.size().name().toLowerCase(Locale.ROOT)),
                             0,
                             0,
                             null)
@@ -92,13 +93,13 @@ public final class FluidTransportClientSetup {
         }
         for (var block : gregtech.content.registry.AddonPipeRegistration.fluidBlocks()) {
             var spec = block.spec();
-            String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
+            MaterialTextureSet set = MaterialIcons.resolveTextureSet(spec.material());
             var model = new PipeWireBakedModel(
                             Math.max(1, spec.diameter() * 8),
-                            id("block/material_icons/" + set + "/pipeside"),
+                            BlockMaterialIcons.resolveTexture(set, "pipeside"),
                             0,
-                            id("block/material_icons/" + set + "/pipe"
-                                    + spec.size().name().toLowerCase(Locale.ROOT)),
+                            BlockMaterialIcons.resolveTexture(
+                                    set, "pipe" + spec.size().name().toLowerCase(Locale.ROOT)),
                             0,
                             0,
                             null)

@@ -3,8 +3,6 @@ import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.engine.material.MaterialFormItem;
-import gregtech.engine.material.MaterialItemDefinitions;
-import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
@@ -23,7 +21,8 @@ import net.minecraftforge.fml.common.Mod;
 //?}
 import org.slf4j.Logger;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 //? if >=1.21.1 {
 /*/^* Material inventory models and tint; this subscriber is never loaded on a dedicated server. ^/
@@ -42,14 +41,14 @@ public final class MaterialClientModels {
 
     /**
      * Shared models under {@code models/item/material/...} must be registered explicitly or they are never baked.
-     * Only prefixes that generate material form items own such a model; transport pipes bind block items to
-     * pipe prefixes without any shared material model.
+     * Register exactly the combinations a registered item asks for, so this list and the model pack agree.
      */
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
-        List<MaterialPrefix> prefixes = MaterialItemDefinitions.candidatePrefixes();
-        for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
-            for (MaterialPrefix prefix : prefixes) {
-                ClientModelEvents.registerAdditional(event, MaterialIcons.sharedModelLocation(set, prefix));
+        Set<ResourceLocation> registered = new HashSet<>();
+        for (MaterialSharedModelIndex.ItemModel model : MaterialSharedModelIndex.items()) {
+            ResourceLocation location = MaterialIcons.sharedModelLocation(model.set(), model.prefix());
+            if (registered.add(location)) {
+                ClientModelEvents.registerAdditional(event, location);
             }
         }
     }
@@ -85,21 +84,8 @@ public final class MaterialClientModels {
 
     private static BakedModel resolveSharedModel(BakedModelMap models, MaterialFormItem item) {
         MaterialTextureSet primary = MaterialIcons.resolveTextureSet(item.getMaterial());
-        BakedModel model = models.find(MaterialIcons.sharedModelLocation(primary, item.getPrefix()));
-        if (model != null) {
-            return model;
-        }
-        // Preserve the original MODELED enum fallback order.
-        for (MaterialTextureSet fallback : MaterialTextureSet.modeled()) {
-            if (fallback == primary) {
-                continue;
-            }
-            model = models.find(MaterialIcons.sharedModelLocation(fallback, item.getPrefix()));
-            if (model != null) {
-                return model;
-            }
-        }
-        return null;
+        return ClientModelEvents.findInherited(
+                models, primary, set -> MaterialIcons.sharedModelLocation(set, item.getPrefix()));
     }
 
 //? if >=1.21.1 {

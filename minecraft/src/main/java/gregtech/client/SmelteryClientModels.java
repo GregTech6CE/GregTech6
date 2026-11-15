@@ -85,10 +85,7 @@ public final class SmelteryClientModels {
                 aliased++;
                 continue;
             }
-            BakedModel shared = models.find(sharedModel.apply(textureSet));
-            if (shared == null) {
-                shared = fallbackModel(models, sharedModel, textureSet);
-            }
+            BakedModel shared = ClientModelEvents.findInherited(models, textureSet, sharedModel);
             if (shared == null) {
                 continue;
             }
@@ -117,22 +114,6 @@ public final class SmelteryClientModels {
         }
         if (block instanceof CrucibleFaucetBlock faucet) {
             return faucet.spec();
-        }
-        return null;
-    }
-
-    private static BakedModel fallbackModel(
-            BakedModelMap models,
-            Function<MaterialTextureSet, ResourceLocation> sharedModel,
-            MaterialTextureSet textureSet) {
-        for (MaterialTextureSet fallback : MaterialTextureSet.modeled()) {
-            if (fallback == textureSet) {
-                continue;
-            }
-            BakedModel model = models.find(sharedModel.apply(fallback));
-            if (model != null) {
-                return model;
-            }
         }
         return null;
     }
@@ -178,19 +159,7 @@ public final class SmelteryClientModels {
             BakedModelMap models,
             MaterialTextureSet textureSet,
             Direction facing) {
-        BakedModel model = models.find(CrucibleFaucetIcons.sharedModelLocation(textureSet, facing));
-        if (model != null) {
-            return model;
-        }
-        for (MaterialTextureSet fallback : MaterialTextureSet.modeled()) {
-            if (fallback == textureSet) {
-                continue;
-            }
-            model = models.find(CrucibleFaucetIcons.sharedModelLocation(fallback, facing));
-            if (model != null) {
-                return model;
-            }
-        }
-        return null;
+        return ClientModelEvents.findInherited(
+                models, textureSet, set -> CrucibleFaucetIcons.sharedModelLocation(set, facing));
     }
 }

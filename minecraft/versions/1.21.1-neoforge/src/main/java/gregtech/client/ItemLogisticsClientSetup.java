@@ -1,5 +1,6 @@
 package gregtech.client;
 
+import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTHoppers;
 import gregtech.content.registry.GTItemPipes;
@@ -96,14 +97,14 @@ public final class ItemLogisticsClientSetup {
         for (var entry : GTItemPipes.all()) {
             var block = entry.get();
             var spec = block.spec();
-            String set = spec.material().getTextureSet().name().toLowerCase(java.util.Locale.ROOT);
+            MaterialTextureSet set = MaterialIcons.resolveTextureSet(spec.material());
             String size = spec.size().name().toLowerCase(java.util.Locale.ROOT).replace("restrictive_", "");
             var overlay = spec.size().name().startsWith("RESTRICTIVE_") ? id("block/iconsets/pipe_restrictor") : null;
             var model = new PipeWireBakedModel(
                             Math.max(1, spec.diameter() * 8),
-                            id("block/material_icons/" + set + "/pipeside"),
+                            BlockMaterialIcons.resolveTexture(set, "pipeside"),
                             0,
-                            id("block/material_icons/" + set + "/pipe" + size),
+                            BlockMaterialIcons.resolveTexture(set, "pipe" + size),
                             0,
                             0,
                             overlay)
@@ -112,14 +113,14 @@ public final class ItemLogisticsClientSetup {
         }
         for (var block : gregtech.content.registry.AddonPipeRegistration.itemBlocks()) {
             var spec = block.spec();
-            String set = spec.material().getTextureSet().name().toLowerCase(java.util.Locale.ROOT);
+            MaterialTextureSet set = MaterialIcons.resolveTextureSet(spec.material());
             String size = spec.size().name().toLowerCase(java.util.Locale.ROOT).replace("restrictive_", "");
             var overlay = spec.size().name().startsWith("RESTRICTIVE_") ? id("block/iconsets/pipe_restrictor") : null;
             var model = new PipeWireBakedModel(
                             Math.max(1, spec.diameter() * 8),
-                            id("block/material_icons/" + set + "/pipeside"),
+                            BlockMaterialIcons.resolveTexture(set, "pipeside"),
                             0,
-                            id("block/material_icons/" + set + "/pipe" + size),
+                            BlockMaterialIcons.resolveTexture(set, "pipe" + size),
                             0,
                             0,
                             overlay)

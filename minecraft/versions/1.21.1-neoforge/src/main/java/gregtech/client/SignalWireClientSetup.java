@@ -1,5 +1,6 @@
 package gregtech.client;
 
+import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.registry.GTSignalWires;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.resources.ResourceLocation;
@@ -40,8 +41,7 @@ public final class SignalWireClientSetup {
     public static void models(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
         ItemTransforms fallbackTransforms = BlockItemModelHelper.blockItemTransforms();
-        var wireTexture = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/wire");
-        var rubberTexture = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/rubber/pipeside");
+        var wireTexture = BlockMaterialIcons.resolveTexture(MaterialTextureSet.METALLIC, "wire");
         for (var wireEntry : GTSignalWires.all()) {
             var block = wireEntry.get();
             var model = (block.insulated()

@@ -47,18 +47,8 @@ public final class CrucibleClientModels {
             }
 
             MaterialTextureSet textureSet = MaterialIcons.resolveTextureSet(spec.material());
-            BakedModel shared = models.find(CrucibleBowlIcons.sharedModelLocation(textureSet));
-            if (shared == null) {
-                for (MaterialTextureSet fallback : MaterialTextureSet.modeled()) {
-                    if (fallback == textureSet) {
-                        continue;
-                    }
-                    shared = models.find(CrucibleBowlIcons.sharedModelLocation(fallback));
-                    if (shared != null) {
-                        break;
-                    }
-                }
-            }
+            BakedModel shared =
+                    ClientModelEvents.findInherited(models, textureSet, CrucibleBowlIcons::sharedModelLocation);
             if (shared == null) {
                 missing++;
                 continue;

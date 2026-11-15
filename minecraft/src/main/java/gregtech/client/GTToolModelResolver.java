@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.engine.prefix.PrefixRegistry;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -30,11 +29,8 @@ public final class GTToolModelResolver {
             cacheIconset(iconsets, models, GTToolModel.iconsetOverlayModelId(icon));
         }
 
-        PrefixRegistry.ensurePrefixesLoaded();
-        for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
-            for (MaterialPrefix prefix : PrefixRegistry.all()) {
-                cacheIconset(materials, models, MaterialIcons.sharedModelLocation(set, prefix));
-            }
+        for (MaterialSharedModelIndex.ItemModel model : MaterialSharedModelIndex.items()) {
+            cacheIconset(materials, models, MaterialIcons.sharedModelLocation(model.set(), model.prefix()));
         }
 
         iconsetModels = Map.copyOf(iconsets);
@@ -60,19 +56,7 @@ public final class GTToolModelResolver {
     @Nullable
     public static BakedModel materialModel(GTMaterial material, MaterialPrefix prefix) {
         MaterialTextureSet primary = MaterialIcons.resolveTextureSet(material);
-        BakedModel model = materialModels.get(MaterialIcons.sharedModelLocation(primary, prefix));
-        if (model != null) {
-            return model;
-        }
-        for (MaterialTextureSet fallback : MaterialTextureSet.modeled()) {
-            if (fallback == primary) {
-                continue;
-            }
-            model = materialModels.get(MaterialIcons.sharedModelLocation(fallback, prefix));
-            if (model != null) {
-                return model;
-            }
-        }
-        return null;
+        return ClientModelEvents.findInherited(
+                primary, set -> MaterialIcons.sharedModelLocation(set, prefix), id -> materialModels.get(id));
     }
 }

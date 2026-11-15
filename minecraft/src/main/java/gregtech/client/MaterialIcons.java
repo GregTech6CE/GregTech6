@@ -5,7 +5,9 @@ import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.platform.Mc;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Resolves GregTech material icon paths under {@code textures/item/material_icons/{set}/{prefix}.png}.
@@ -19,20 +21,39 @@ public final class MaterialIcons {
         return MaterialIconDefinitions.resolveTextureSet(material);
     }
 
-    public static ResourceLocation baseTexture(GTMaterial material, MaterialPrefix prefix) {
-        return texture(resolveTextureSet(material), prefix, false);
+    /**
+     * Whether the client can load a pack-relative resource. The resource manager sees resource-pack
+     * overrides once a reload has run; before the first reload, and while the shared model pack is
+     * being built, the built-in classpath copy is the only safe source.
+     */
+    public static boolean resourceExists(String relativePath) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (!SharedInventoryModelPack.isBuilding()
+                && minecraft != null
+                && minecraft.getResourceManager() != null
+                && minecraft
+                        .getResourceManager()
+                        .getResource(Mc.gregtechId(relativePath))
+                        .isPresent()) {
+            return true;
+        }
+        return MaterialIconDefinitions.classpathResourceExists(relativePath);
     }
 
-    public static ResourceLocation overlayTexture(GTMaterial material, MaterialPrefix prefix) {
-        return texture(resolveTextureSet(material), prefix, true);
+    /** Sprite location for this set, following the inheritance chain to the set that ships it. */
+    public static ResourceLocation resolveTexture(MaterialTextureSet set, MaterialPrefix prefix, boolean overlay) {
+        MaterialTextureSet owner = resolveItemTextureOwner(set, prefix, overlay);
+        return texture(owner == null ? set : owner, prefix, overlay);
+    }
+
+    @Nullable
+    public static MaterialTextureSet resolveItemTextureOwner(
+            MaterialTextureSet set, MaterialPrefix prefix, boolean overlay) {
+        return MaterialIconDefinitions.resolveItemTextureOwner(set, prefix, overlay, MaterialIcons::resourceExists);
     }
 
     public static ResourceLocation texture(MaterialTextureSet set, MaterialPrefix prefix, boolean overlay) {
         return Mc.gregtechId(MaterialIconDefinitions.texturePath(set, prefix, overlay));
-    }
-
-    public static String modelJson(GTMaterial material, MaterialPrefix prefix, boolean overlay) {
-        return MaterialIconDefinitions.modelJson(material, prefix, overlay);
     }
 
     /**
@@ -45,9 +66,5 @@ public final class MaterialIcons {
 
     public static String sharedModelId(GTMaterial material, MaterialPrefix prefix) {
         return MaterialIconDefinitions.modelPath(resolveTextureSet(material), prefix);
-    }
-
-    public static String sharedModelJson(MaterialTextureSet set, MaterialPrefix prefix, boolean overlay) {
-        return MaterialIconDefinitions.sharedModelJson(set, prefix, overlay);
     }
 }

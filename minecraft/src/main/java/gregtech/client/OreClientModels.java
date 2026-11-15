@@ -6,7 +6,6 @@ import gregtech.content.block.OreBlock;
 import gregtech.content.registry.GTBlocks;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
@@ -78,22 +77,17 @@ public final class OreClientModels {
     }
 
     /**
-     * {@code material_icons/<set>/ore[small].png} for the material's texture set, falling back
-     * to DULL then METALLIC when the set has no ore overlay texture.
+     * {@code material_icons/<set>/ore[small].png} for the material's texture set, walking the icon
+     * inheritance chain and retrying METALLIC, which ships every ore overlay.
      */
     private static ResourceLocation resolveOverlayTexture(OreBlock ore, Map<String, ResourceLocation> cache) {
         String file = ore.isSmall() ? "oresmall" : "ore";
         MaterialTextureSet primary = MaterialIcons.resolveTextureSet(ore.material());
         String cacheKey = primary.folder() + "/" + file;
         return cache.computeIfAbsent(cacheKey, key -> {
-            for (MaterialTextureSet set : new MaterialTextureSet[]{primary, MaterialTextureSet.DULL, MaterialTextureSet.METALLIC}) {
-                ResourceLocation texture = Mc.gregtechId("block/material_icons/" + set.folder() + "/" + file);
-                ResourceLocation filePng = Mc.gregtechId("textures/block/material_icons/" + set.folder() + "/" + file + ".png");
-                if (Minecraft.getInstance().getResourceManager().getResource(filePng).isPresent()) {
-                    return texture;
-                }
-            }
-            return Mc.gregtechId("block/material_icons/metallic/" + file);
+            MaterialTextureSet owner = BlockMaterialIcons.resolveTextureOwner(primary, file);
+            return BlockMaterialIcons.resolveTexture(
+                    owner == null ? MaterialTextureSet.METALLIC : owner, file);
         });
     }
 }

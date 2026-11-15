@@ -2,6 +2,7 @@ package gregtech.client;
 
 import com.mojang.logging.LogUtils;
 import gregtech.GregTech;
+import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.block.energy.AxleBlock;
 import gregtech.content.block.energy.ElectricWireBlock;
 import gregtech.content.block.machine.FluidPipeBlock;
@@ -30,8 +31,14 @@ import org.slf4j.Logger;
 public final class PipeWireClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private static final ResourceLocation WIRE_TEX = GregTech.id("block/material_icons/metallic/wire");
-    private static final ResourceLocation RUBBER_TEX = GregTech.id("block/material_icons/rubber/pipeside");
+    private static ResourceLocation wireTexture() {
+        return BlockMaterialIcons.resolveTexture(MaterialTextureSet.METALLIC, "wire");
+    }
+
+    private static ResourceLocation rubberTexture() {
+        return BlockMaterialIcons.resolveTexture(MaterialTextureSet.RUBBER, "pipeside");
+    }
+
     private static final ResourceLocation RESTRICTOR_TEX = GregTech.id("block/iconsets/pipe_restrictor");
 
     private PipeWireClientModels() {}
@@ -44,20 +51,20 @@ public final class PipeWireClientModels {
             if (!entry.isPresent()) continue;
             FluidPipeBlock block = entry.get();
             PipeSpec spec = block.spec();
-            String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
+            MaterialTextureSet set = MaterialIcons.resolveTextureSet(spec.material());
             double half = Math.max(1.0, spec.diameter() * 8.0);
-            ResourceLocation side = GregTech.id("block/material_icons/" + set + "/pipeside");
-            ResourceLocation end = GregTech.id(
-                    "block/material_icons/" + set + "/pipe" + spec.size().name().toLowerCase(Locale.ROOT));
+            ResourceLocation side = BlockMaterialIcons.resolveTexture(set, "pipeside");
+            ResourceLocation end = BlockMaterialIcons.resolveTexture(
+                    set, "pipe" + spec.size().name().toLowerCase(Locale.ROOT));
             replaced += replace(models, block, new PipeWireBakedModel(half, side, 0, end, 0, 0, null));
         }
         for (var block : gregtech.content.registry.AddonPipeRegistration.fluidBlocks()) {
             PipeSpec spec = block.spec();
-            String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
+            MaterialTextureSet set = MaterialIcons.resolveTextureSet(spec.material());
             double half = Math.max(1.0, spec.diameter() * 8.0);
-            ResourceLocation side = GregTech.id("block/material_icons/" + set + "/pipeside");
-            ResourceLocation end = GregTech.id(
-                    "block/material_icons/" + set + "/pipe" + spec.size().name().toLowerCase(Locale.ROOT));
+            ResourceLocation side = BlockMaterialIcons.resolveTexture(set, "pipeside");
+            ResourceLocation end = BlockMaterialIcons.resolveTexture(
+                    set, "pipe" + spec.size().name().toLowerCase(Locale.ROOT));
             replaced += replace(models, block, new PipeWireBakedModel(half, side, 0, end, 0, 0, null));
         }
 
@@ -65,21 +72,21 @@ public final class PipeWireClientModels {
             if (!entry.isPresent()) continue;
             ItemPipeBlock block = entry.get();
             ItemPipeSpec spec = block.spec();
-            String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
+            MaterialTextureSet set = MaterialIcons.resolveTextureSet(spec.material());
             double half = Math.max(1.0, spec.diameter() * 8.0);
             String sizeName = spec.size().name().toLowerCase(Locale.ROOT).replace("restrictive_", "");
-            ResourceLocation side = GregTech.id("block/material_icons/" + set + "/pipeside");
-            ResourceLocation end = GregTech.id("block/material_icons/" + set + "/pipe" + sizeName);
+            ResourceLocation side = BlockMaterialIcons.resolveTexture(set, "pipeside");
+            ResourceLocation end = BlockMaterialIcons.resolveTexture(set, "pipe" + sizeName);
             ResourceLocation overlay = spec.restrictive() ? RESTRICTOR_TEX : null;
             replaced += replace(models, block, new PipeWireBakedModel(half, side, 0, end, 0, 0, overlay));
         }
         for (var block : gregtech.content.registry.AddonPipeRegistration.itemBlocks()) {
             ItemPipeSpec spec = block.spec();
-            String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
+            MaterialTextureSet set = MaterialIcons.resolveTextureSet(spec.material());
             double half = Math.max(1.0, spec.diameter() * 8.0);
             String sizeName = spec.size().name().toLowerCase(Locale.ROOT).replace("restrictive_", "");
-            ResourceLocation side = GregTech.id("block/material_icons/" + set + "/pipeside");
-            ResourceLocation end = GregTech.id("block/material_icons/" + set + "/pipe" + sizeName);
+            ResourceLocation side = BlockMaterialIcons.resolveTexture(set, "pipeside");
+            ResourceLocation end = BlockMaterialIcons.resolveTexture(set, "pipe" + sizeName);
             ResourceLocation overlay = spec.restrictive() ? RESTRICTOR_TEX : null;
             replaced += replace(models, block, new PipeWireBakedModel(half, side, 0, end, 0, 0, overlay));
         }
@@ -93,8 +100,8 @@ public final class PipeWireClientModels {
             double ring = Math.max(1.0, Math.min(2.0, half / 4.0));
             PipeWireBakedModel model = spec.insulated()
                     // rubber sheath body (tint 1), wire core on connection faces (tint 0)
-                    ? new PipeWireBakedModel(half, RUBBER_TEX, 1, WIRE_TEX, 0, ring, null)
-                    : new PipeWireBakedModel(half, WIRE_TEX, 0, WIRE_TEX, 0, 0, null);
+                    ? new PipeWireBakedModel(half, rubberTexture(), 1, wireTexture(), 0, ring, null)
+                    : new PipeWireBakedModel(half, wireTexture(), 0, wireTexture(), 0, 0, null);
             replaced += replace(models, block, model);
         }
 
@@ -105,8 +112,8 @@ public final class PipeWireClientModels {
                     block,
                     block.insulated()
                             ? new PipeWireBakedModel(
-                                    2, GregTech.id("block/iconsets/insulation_full"), 1, WIRE_TEX, 0, 1, null)
-                            : new PipeWireBakedModel(1, WIRE_TEX, 0, WIRE_TEX, 0, 0, null));
+                                    2, GregTech.id("block/iconsets/insulation_full"), 1, wireTexture(), 0, 1, null)
+                            : new PipeWireBakedModel(1, wireTexture(), 0, wireTexture(), 0, 0, null));
         }
 
         for (var entry : GTAxles.all()) {

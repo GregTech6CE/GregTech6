@@ -81,8 +81,28 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                 (json, context) -> new Reference(ResourceLocation.parse(json.get("parent").getAsString())));
     }
 
+    /**
+     * True while {@link #data()} builds the index. Resource-manager probes must not run then: they
+     * walk every pack in the namespace, which includes this one.
+     */
+    private static volatile boolean building;
+
+    static boolean isBuilding() {
+        return building;
+    }
+
     private synchronized Map<ResourceLocation, byte[]> data() {
         if (resources != null) return resources;
+        building = true;
+        try {
+            resources = buildResources();
+        } finally {
+            building = false;
+        }
+        return resources;
+    }
+
+    private static Map<ResourceLocation, byte[]> buildResources() {
         Map<ResourceLocation, byte[]> result = new HashMap<>();
         Map<ResourceLocation, byte[]> references = new HashMap<>();
         // Many material items refer to the same template. Check the classpath once per parent.
@@ -90,6 +110,9 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         emitStructureParts(result);
         emitCompressedTanks(result);
         emitAddonBlockPrefixes(result);
+        // Shared material models live only in this pack now; blockstates and item references below
+        // resolve their templates from the same map.
+        int sharedModels = emitSharedMaterialModels(result);
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (item instanceof gregtech.engine.material.MaterialFormItem material && material.getPrefix().isAddon()) {
@@ -147,9 +170,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             // Do not invent a missing template or hide it behind a dummy model. Unsupported
             // references remain visible in the usual bakery warning and final model checks.
             if (parent == null) continue;
-            boolean templateExists = parent.equals(STONE_TEMPLATE) || templates.computeIfAbsent(parent, key -> JsonResourceAliases.contains(
-                    "/assets/" + key.getNamespace() + "/models/" + key.getPath() + ".json"));
-            if (!templateExists) continue;
+            if (!hasTemplate(result, templates, parent)) continue;
             byte[] json = references.computeIfAbsent(parent, key ->
                     MaterialIconDefinitions.sharedInventoryJson(key.toString()).getBytes(StandardCharsets.UTF_8));
             result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), json);
@@ -167,9 +188,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             ResourceLocation parent = block instanceof OreBlock
                     ? STONE_TEMPLATE
                     : BlockMaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.material()), material.prefix());
-            boolean templateExists = parent.equals(STONE_TEMPLATE) || templates.computeIfAbsent(parent, key -> JsonResourceAliases.contains(
-                    "/assets/" + key.getNamespace() + "/models/" + key.getPath() + ".json"));
-            if (!templateExists) continue;
+            if (!hasTemplate(result, templates, parent)) continue;
             byte[] json = ("{\"variants\":{\"\":{\"model\":\"" + parent + "\"}}}").getBytes(StandardCharsets.UTF_8);
             result.put(location(statePath), json);
             states++;
@@ -182,12 +201,52 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         int beforePlaceholders = result.size();
         emitTransportPlaceholders(result);
         int placeholders = result.size() - beforePlaceholders;
-        resources = Collections.unmodifiableMap(result);
         com.mojang.logging.LogUtils.getLogger()
-                .info("[gregtech] Shared inventory resources: {} item references, {} templates,"
+                .info("[gregtech] Shared inventory resources: {} item references, {} templates, {} shared material models,"
                         + " {} missing static blockstates, {} transport placeholders",
-                        result.size() - states - placeholders, references.size(), states, placeholders);
-        return resources;
+                        result.size() - states - placeholders - sharedModels, references.size(), sharedModels,
+                        states, placeholders);
+        return Collections.unmodifiableMap(result);
+    }
+
+    /**
+     * Shared {@code models/{item,block}/material/...} JSON, generated from the icon inheritance
+     * chain instead of shipped as one file per texture set and prefix.
+     */
+    private static int emitSharedMaterialModels(Map<ResourceLocation, byte[]> result) {
+        int emitted = 0;
+        Map<String, byte[]> encoded = new HashMap<>();
+        for (MaterialSharedModelIndex.ItemModel model : MaterialSharedModelIndex.items()) {
+            String json = MaterialIconDefinitions.sharedModelJson(
+                    model.set(), model.prefix(), MaterialIcons::resourceExists);
+            if (json == null) continue;
+            result.put(
+                    location("models/" + MaterialIconDefinitions.modelPath(model.set(), model.prefix()) + ".json"),
+                    encoded.computeIfAbsent(json, value -> value.getBytes(StandardCharsets.UTF_8)));
+            emitted++;
+        }
+        for (MaterialSharedModelIndex.BlockModel model : MaterialSharedModelIndex.blocks()) {
+            String json = BlockMaterialIcons.sharedModelJson(
+                    model.set(), model.prefix(), MaterialIcons::resourceExists);
+            if (json == null) continue;
+            ResourceLocation id = BlockMaterialIcons.sharedModelLocation(model.set(), model.prefix());
+            result.put(
+                    location("models/" + id.getPath() + ".json"),
+                    encoded.computeIfAbsent(json, value -> value.getBytes(StandardCharsets.UTF_8)));
+            emitted++;
+        }
+        return emitted;
+    }
+
+    /** A model reference resolves when this pack serves it, as an alias, or as vanilla stone. */
+    private static boolean hasTemplate(
+            Map<ResourceLocation, byte[]> result, Map<ResourceLocation, Boolean> aliases, ResourceLocation parent) {
+        if (parent.equals(STONE_TEMPLATE)) return true;
+        if (result.containsKey(named(parent.getNamespace(), "models/" + parent.getPath() + ".json"))) return true;
+        return aliases.computeIfAbsent(
+                parent,
+                key -> JsonResourceAliases.contains(
+                        "/assets/" + key.getNamespace() + "/models/" + key.getPath() + ".json"));
     }
 
     private static void emitStructureParts(Map<ResourceLocation, byte[]> result) {

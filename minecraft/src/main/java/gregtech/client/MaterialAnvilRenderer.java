@@ -49,12 +49,8 @@ public final class MaterialAnvilRenderer implements BlockEntityRenderer<Material
             if (form != null) {
                 var material = form.material();
                 String icon = shape == 6 ? "blockgem" : shape == 7 ? "blockraw" : "blocksolid";
-                var texture = ResourceLocation.fromNamespaceAndPath(
-                        "gt6ce",
-                        "block/material_icons/"
-                                + MaterialIcons.resolveTextureSet(material).folder() + "/" + icon);
                 int rgb = material.getColor();
-                drawMaterialCuboid(pose, buffers, bounds, texture, rgb, light);
+                drawMaterialCuboid(pose, buffers, bounds, MaterialIcons.resolveTextureSet(material), icon, rgb, light);
             } else if (stack.getItem() instanceof BlockItem blockItem
                     && blockItem.getBlock().defaultBlockState().getRenderShape() == RenderShape.MODEL) {
                 // A FIXED item transform may flatten, shrink or hide an ore item.
@@ -100,18 +96,22 @@ public final class MaterialAnvilRenderer implements BlockEntityRenderer<Material
             int light,
             net.minecraft.world.phys.AABB bounds,
             gregtech.api.material.GTMaterial material) {
-        var texture = ResourceLocation.fromNamespaceAndPath(
-                "gt6ce",
-                "block/material_icons/"
-                        + MaterialIcons.resolveTextureSet(material).folder() + "/blocksolid");
-        drawMaterialCuboid(pose, buffers, bounds, texture, material.getColor(), light);
+        drawMaterialCuboid(
+                pose,
+                buffers,
+                bounds,
+                MaterialIcons.resolveTextureSet(material),
+                "blocksolid",
+                material.getColor(),
+                light);
     }
 
     private static void drawMaterialCuboid(
             PoseStack pose,
             MultiBufferSource buffers,
             net.minecraft.world.phys.AABB bounds,
-            ResourceLocation texture,
+            MaterialTextureSet set,
+            String icon,
             int rgb,
             int light) {
         AnvilCuboidRenderer.draw(
@@ -119,11 +119,11 @@ public final class MaterialAnvilRenderer implements BlockEntityRenderer<Material
                 buffers.getBuffer(RenderType.entityCutoutNoCull(
                         net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS)),
                 bounds,
-                CrucibleRenderSprites.resolve(texture),
+                CrucibleRenderSprites.resolve(BlockMaterialIcons.resolveTexture(set, icon)),
                 rgb,
                 light);
-        var detail = ResourceLocation.fromNamespaceAndPath(texture.getNamespace(), texture.getPath() + "_overlay");
-        if (CrucibleRenderSprites.hasTexture(detail)) {
+        ResourceLocation detail = BlockMaterialIcons.resolveOverlayTexture(set, icon);
+        if (detail != null && CrucibleRenderSprites.hasTexture(detail)) {
             AnvilCuboidRenderer.draw(
                     pose.last(),
                     buffers.getBuffer(RenderType.entityCutoutNoCull(

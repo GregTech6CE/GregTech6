@@ -1,6 +1,6 @@
 package gregtech.client;
 
-import gregtech.platform.Mc;
+import gregtech.api.material.MaterialTextureSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -9,15 +9,18 @@ import net.minecraft.resources.ResourceLocation;
 
 /** Block-atlas sprites for crucible interior fill (atlas-safe, with fallbacks). */
 public final class CrucibleRenderSprites {
-    private static final ResourceLocation FALLBACK = Mc.gregtechId("block/material_icons/metallic/blockraw");
-
     private CrucibleRenderSprites() {}
+
+    /** Last-resort solid fill: the {@code blockraw} art of the metallic set. */
+    private static ResourceLocation fallback() {
+        return BlockMaterialIcons.resolveTexture(MaterialTextureSet.METALLIC, "blockraw");
+    }
 
     public static TextureAtlasSprite resolve(ResourceLocation texture) {
         TextureAtlas atlas = atlas();
         TextureAtlasSprite sprite = atlas.getSprite(texture);
         if (sprite == atlas.getSprite(MissingTextureAtlasSprite.getLocation())) {
-            return atlas.getSprite(FALLBACK);
+            return atlas.getSprite(fallback());
         }
         return sprite;
     }

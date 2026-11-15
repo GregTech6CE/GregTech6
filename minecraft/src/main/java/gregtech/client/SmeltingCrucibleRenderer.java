@@ -54,7 +54,7 @@ float topY = be.getContentFillMaxY();
                     be.getTemperature(), packedLight);
             drawFluidTop(poseStack, bufferSource, appearance.baseTexture(), tint, topY, x0, z0, x1, z1, light);
         } else {
-            drawTop(poseStack, bufferSource, CrucibleContentIcons.SOLID_GRAY_BASE, CrucibleContentIcons.solidGrayTint(),
+            drawTop(poseStack, bufferSource, CrucibleContentIcons.solidGrayBase(), CrucibleContentIcons.solidGrayTint(),
                     topY, x0, z0, x1, z1, packedLight);
         }
         poseStack.popPose();

@@ -95,10 +95,13 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
     public boolean metal() { return material != null; }
     public int tintRgb() { return metal() ? material.getColor() : 0xFFFFFF; }
     public String frameTexture() {
-        return metal() ? "gt6ce:block/material_icons/"
-                + gregtech.engine.material.MaterialIconDefinitions.resolveTextureSet(material).folder()
-                + "/" + gregtech.engine.prefix.BlockMaterialPrefix.casingMachine.getTextureFileName()
-                : woodTexture;
+        if (!metal()) return woodTexture;
+        var set = gregtech.engine.material.MaterialIconDefinitions.resolveTextureSet(material);
+        String file = gregtech.engine.prefix.BlockMaterialPrefix.casingMachine.getTextureFileName();
+        // Classpath probe: the frame JSON is generated before the first client resource reload.
+        var owner = gregtech.engine.material.MaterialIconDefinitions.resolveBlockTextureOwner(
+                set, file, gregtech.engine.material.MaterialIconDefinitions::classpathResourceExists);
+        return "gt6ce:block/material_icons/" + (owner == null ? set : owner).folder() + "/" + file;
     }
 
     @Override public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {

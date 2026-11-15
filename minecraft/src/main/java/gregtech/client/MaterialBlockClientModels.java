@@ -33,14 +33,8 @@ public final class MaterialBlockClientModels {
             if (!prefix.isAddon()) continue;
             register(event, registered, BlockMaterialIcons.addonModel(prefix));
         }
-        for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
-            for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
-                if (prefix.isAddon()) continue;
-                // World ores render through OreBakedModel; only NONE keeps the tab-icon templates.
-                if ((prefix == BlockMaterialPrefix.ore || prefix == BlockMaterialPrefix.oreSmall)
-                        && set != MaterialTextureSet.NONE) continue;
-                register(event, registered, BlockMaterialIcons.sharedModelLocation(set, prefix));
-            }
+        for (MaterialSharedModelIndex.BlockModel model : MaterialSharedModelIndex.blocks()) {
+            register(event, registered, BlockMaterialIcons.sharedModelLocation(model.set(), model.prefix()));
         }
     }
 
@@ -85,19 +79,7 @@ public final class MaterialBlockClientModels {
             return models.find(BlockMaterialIcons.addonModel(materialBlock.prefix()));
         }
         MaterialTextureSet primary = MaterialIcons.resolveTextureSet(materialBlock.material());
-        BakedModel model = models.find(BlockMaterialIcons.sharedModelLocation(primary, materialBlock.prefix()));
-        if (model != null) {
-            return model;
-        }
-        for (MaterialTextureSet fallback : MaterialTextureSet.modeled()) {
-            if (fallback == primary) {
-                continue;
-            }
-            model = models.find(BlockMaterialIcons.sharedModelLocation(fallback, materialBlock.prefix()));
-            if (model != null) {
-                return model;
-            }
-        }
-        return null;
+        return ClientModelEvents.findInherited(
+                models, primary, set -> BlockMaterialIcons.sharedModelLocation(set, materialBlock.prefix()));
     }
 }

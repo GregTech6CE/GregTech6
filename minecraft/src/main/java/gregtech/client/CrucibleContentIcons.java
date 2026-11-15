@@ -3,19 +3,20 @@ package gregtech.client;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.material.Materials;
-import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
 
 /**
  * Crucible fill textures (GT6 {@code MultiTileEntitySmeltery} pass 5).
  * <p>
- * Solid content: fixed {@code OP.blockRaw} gray — {@code block/material_icons/metallic/blockraw.png}
- * (GT6 {@code BlockTextureDefault.get(Materials.Invalid, OP.blockRaw, CA_GRAY_64)}), tinted like vanadium raw ore.
+ * Solid content: fixed {@code OP.blockRaw} gray — the {@code blockraw} icon of the metallic set,
+ * following the icon inheritance chain (GT6 {@code BlockTextureDefault.get(Materials.Invalid, OP.blockRaw, CA_GRAY_64)}), tinted like vanadium raw ore.
  * Molten content: {@link MaterialFluidVisuals} → dedicated {@code block/fluids/*} or generic {@code molten} icon.
  */
 public final class CrucibleContentIcons {
-    /** Fixed gray solid fill — always metallic {@code blockraw}. */
-    public static final ResourceLocation SOLID_GRAY_BASE = Mc.gregtechId("block/material_icons/metallic/blockraw");
+    /** Fixed gray solid fill: the {@code blockraw} art of the metallic set. */
+    public static ResourceLocation solidGrayBase() {
+        return blockIcon(MaterialTextureSet.METALLIC, "blockraw");
+    }
 
     private CrucibleContentIcons() {}
 
@@ -54,6 +55,6 @@ public final class CrucibleContentIcons {
 
     /** One shared block icon for a material texture set, e.g. {@code metallic/blockdust}. */
     public static ResourceLocation blockIcon(MaterialTextureSet set, String prefix) {
-        return Mc.gregtechId("block/material_icons/" + set.folder() + "/" + prefix);
+        return BlockMaterialIcons.resolveTexture(set, prefix);
     }
 }

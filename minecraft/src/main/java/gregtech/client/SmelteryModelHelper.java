@@ -35,8 +35,10 @@ public final class SmelteryModelHelper {
      */
     public static String hullModelJson(
             MaterialTextureSet set, String elementsTinted, @Nullable String elementsOverlay) {
-        ResourceLocation base = BlockMaterialIcons.baseTexture(set, BlockMaterialPrefix.blockSolid);
-        if (elementsOverlay == null) {
+        String icon = BlockMaterialPrefix.blockSolid.getTextureFileName();
+        ResourceLocation base = BlockMaterialIcons.resolveTexture(set, icon);
+        ResourceLocation overlay = BlockMaterialIcons.resolveOverlayTexture(set, icon);
+        if (elementsOverlay == null || overlay == null) {
             return """
                     {
                       "parent": "minecraft:block/block",
@@ -49,8 +51,7 @@ public final class SmelteryModelHelper {
                     }
                     """.formatted(base, base, elementsTinted);
         }
-        ResourceLocation overlay = BlockMaterialIcons.overlayTexture(set, BlockMaterialPrefix.blockSolid);
-//? if >=1.21.1 {
+        //? if >=1.21.1 {
         /*return """
                 {
                   "loader": "neoforge:composite",

@@ -159,15 +159,10 @@ public final class PanelCoverRenderer {
             if (!textures.isEmpty()) {
                 String file = textures.get(Math.floorMod(CoverUtilityBehaviors.design(stack), textures.size()));
                 var set = MaterialIcons.resolveTextureSet(material.getMaterial());
-                var base = ArmRenderHelper.findSprite(ResourceLocation.fromNamespaceAndPath(
-                        "gt6ce", "block/material_icons/" + set.folder() + "/" + file));
-                if (base == null) {
-                    base = ArmRenderHelper.findSprite(
-                            ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/" + file));
-                }
+                var base = ArmRenderHelper.findSprite(BlockMaterialIcons.resolveTexture(set, file));
                 if (base == null) return false;
-                var detail = ArmRenderHelper.findSprite(ResourceLocation.fromNamespaceAndPath(
-                        "gt6ce", "block/material_icons/" + set.folder() + "/" + file + "_overlay"));
+                ResourceLocation detailTexture = BlockMaterialIcons.resolveOverlayTexture(set, file);
+                var detail = detailTexture == null ? null : ArmRenderHelper.findSprite(detailTexture);
                 var vertices = buffers.getBuffer(RenderType.cutout());
                 CoverSurfaceRenderer.attachment(
                         host.coverOwner(),

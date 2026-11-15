@@ -2,7 +2,6 @@ package gregtech.client;
 
 import gregtech.content.registry.GTAxles;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -39,8 +38,6 @@ public final class AxleClientSetup {
     public static void models(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
         ItemTransforms transforms = BlockItemModelHelper.blockItemTransforms();
-        var wire = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/wire");
-        var rubber = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/rubber/pipeside");
         for (var entry : GTAxles.all()) {
             var block = entry.get();
             var model = new AxleBakedModel(block.spec().halfThickness(), transforms);

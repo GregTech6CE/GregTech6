@@ -1,8 +1,8 @@
 package gregtech.client;
 
+import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.registry.GTWires;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -41,8 +41,8 @@ public final class ElectricWireClientSetup {
     public static void models(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
         ItemTransforms transforms = BlockItemModelHelper.blockItemTransforms();
-        var wire = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/wire");
-        var rubber = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/rubber/pipeside");
+        var wire = BlockMaterialIcons.resolveTexture(MaterialTextureSet.METALLIC, "wire");
+        var rubber = BlockMaterialIcons.resolveTexture(MaterialTextureSet.RUBBER, "pipeside");
         for (var entry : GTWires.all()) {
             var block = entry.get();
             var spec = block.spec();
