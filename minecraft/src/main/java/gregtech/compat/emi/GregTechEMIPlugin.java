@@ -53,6 +53,8 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             return false;
         });
         registry.addGenericExclusionArea((screen, areas) -> {
+            if (screen instanceof gregtech.client.MaterialProcessScreen)
+                areas.accept(new dev.emi.emi.api.widget.Bounds(0, 0, screen.width, screen.height));
             if (screen instanceof gregtech.client.gui.MachineContainerScreen<?> machine) {
                 var tab = machine.titleBounds();
                 if (tab.getWidth() > 0)
@@ -63,6 +65,12 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         gregtech.engine.fluid.FluidContainerDisplayBinding.invalidate();
         FluidScreenStackProvider.register(registry);
         registry.addGenericStackProvider(EmiWidgetInput::stackAt);
+        registry.addStackProvider(gregtech.client.MaterialProcessScreen.class, (screen, x, y) -> {
+            var stack = MaterialProcessEmiStacks.of(screen.stackAt(x, y));
+            return stack.isEmpty()
+                    ? dev.emi.emi.api.stack.EmiStackInteraction.EMPTY
+                    : new dev.emi.emi.api.stack.EmiStackInteraction(stack);
+        });
         WoodenBucketLookupRecipe.register(registry);
         FormConversionEmiRecipe.register(registry);
         registry.addRecipeHandler(
@@ -176,6 +184,16 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         @Override
         public boolean valid() {
             return MaterialProcessSnapshot.Store.current(snapshot);
+        }
+
+        @Override
+        public boolean openStack(ItemStack stack, boolean uses) {
+            if (!valid() || stack.isEmpty()) return false;
+            var ingredient = MaterialProcessEmiStacks.of(stack);
+            if (ingredient.isEmpty()) return false;
+            if (uses) dev.emi.emi.api.EmiApi.displayUses(ingredient);
+            else dev.emi.emi.api.EmiApi.displayRecipes(ingredient);
+            return true;
         }
 
         @Override

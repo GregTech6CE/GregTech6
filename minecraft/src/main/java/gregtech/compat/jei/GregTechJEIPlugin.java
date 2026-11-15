@@ -52,6 +52,53 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     @Override
     public void registerGuiHandlers(mezz.jei.api.registration.IGuiHandlerRegistration registration) {
+        registration.addGuiScreenHandler(gregtech.client.MaterialProcessScreen.class, screen ->
+                new mezz.jei.api.gui.handlers.IGuiProperties() {
+                    // JEI 19 renamed GUI property accessors; the occupied full-window rectangle is identical.
+//? if >=1.21.1 {
+                    /*@Override public Class<? extends net.minecraft.client.gui.screens.Screen> screenClass() {
+                        return gregtech.client.MaterialProcessScreen.class;
+                    }
+                    @Override public int guiLeft() { return 0; }
+                    @Override public int guiTop() { return 0; }
+                    @Override public int guiXSize() { return screen.width; }
+                    @Override public int guiYSize() { return screen.height; }
+                    @Override public int screenWidth() { return screen.width; }
+                    @Override public int screenHeight() { return screen.height; }
+*///?} else {
+                    @Override public Class<? extends net.minecraft.client.gui.screens.Screen> getScreenClass() {
+                        return gregtech.client.MaterialProcessScreen.class;
+                    }
+                    @Override public int getGuiLeft() { return 0; }
+                    @Override public int getGuiTop() { return 0; }
+                    @Override public int getGuiXSize() { return screen.width; }
+                    @Override public int getGuiYSize() { return screen.height; }
+                    @Override public int getScreenWidth() { return screen.width; }
+                    @Override public int getScreenHeight() { return screen.height; }
+//?}
+                });
+        registration.addGlobalGuiHandler(new mezz.jei.api.gui.handlers.IGlobalGuiHandler() {
+            @Override
+            public java.util.Optional<mezz.jei.api.runtime.IClickableIngredient<?>> getClickableIngredientUnderMouse(
+                    double x, double y) {
+                if (runtime == null || !(net.minecraft.client.Minecraft.getInstance().screen
+                        instanceof gregtech.client.MaterialProcessScreen screen)) return java.util.Optional.empty();
+                var stack = screen.stackAt(x, y);
+                if (stack.isEmpty()) return java.util.Optional.empty();
+                Object ingredient = stack;
+                if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
+//? if >=1.21.1 {
+                    /*var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(stack);
+*///?} else {
+                    var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(stack);
+//?}
+                    if (fluid.isEmpty()) return java.util.Optional.empty();
+                    ingredient = fluid;
+                }
+                return runtime.getIngredientManager().createClickableIngredient(ingredient, screen.stackArea(x, y), false)
+                        .map(value -> (mezz.jei.api.runtime.IClickableIngredient<?>) value);
+            }
+        });
         registration.addGenericGuiContainerHandler(gregtech.client.gui.MachineContainerScreen.class,
                 new mezz.jei.api.gui.handlers.IGuiContainerHandler<gregtech.client.gui.MachineContainerScreen<?>>() {
                     @Override public java.util.List<net.minecraft.client.renderer.Rect2i> getGuiExtraAreas(

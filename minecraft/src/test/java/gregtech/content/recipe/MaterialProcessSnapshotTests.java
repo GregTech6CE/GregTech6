@@ -147,6 +147,88 @@ public final class MaterialProcessSnapshotTests {
     }
 
     @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void overviewIndexesOnlyItsOwnMaterialAndFindsNativeFocus(GameTestHelper helper) {
+        var input = displayPort("copper_input", "Copper", Items.COPPER_INGOT, false);
+        var output = displayPort("copper_output", "Copper", Items.COPPER_BLOCK, true);
+        var auxiliary = displayPort("water", "Other", Items.WATER_BUCKET, false);
+        var byproduct = displayPort("gold", "Gold", Items.GOLD_INGOT, true);
+        var catalyst = new gregtech.compat.common.MaterialProcessDisplay.Port(
+                auxiliary.resource(), auxiliary.material(), auxiliary.name(), auxiliary.icons(),
+                gregtech.compat.common.MaterialProcessDisplay.Role.CATALYST, false, auxiliary.amount(),
+                auxiliary.quantity(), auxiliary.chance(), auxiliary.details(), auxiliary.identity());
+        var step = new gregtech.compat.common.MaterialProcessDisplay.Step(
+                new gregtech.api.addon.material.DataKey("test", "indexed"),
+                net.minecraft.network.chat.Component.literal("indexed"), new ItemStack(Items.STONECUTTER),
+                List.of(input, auxiliary, catalyst), List.of(output, byproduct), List.of(), java.util.Optional.empty(), true);
+        var page = layoutPage(List.of(step), List.of());
+        helper.assertTrue(page.indexedPorts().equals(List.of(input, output)),
+                "foreign reagents, catalysts and byproducts cannot make this material page appear in their lookups");
+
+        var stateful = new ItemStack(Items.COPPER_BLOCK);
+        var data = gregtech.content.data.UsbDataMedia.tagOrEmpty(stateful);
+        data.putString("process_test", "focused_state");
+        gregtech.content.data.UsbDataMedia.store(stateful, data);
+        var nativeOutput = new gregtech.compat.common.MaterialProcessDisplay.Port(
+                new gregtech.api.addon.material.DataKey("test", "stateful_output"), output.material(), output.name(),
+                List.of(stateful), output.role(), false, output.amount(), output.quantity(), output.chance(),
+                output.details(), MaterialProcessSnapshot.itemDisplayState(stateful));
+        var statefulStep = new gregtech.compat.common.MaterialProcessDisplay.Step(
+                new gregtech.api.addon.material.DataKey("test", "native_focus"), step.name(), step.icon(),
+                List.of(input), List.of(nativeOutput), List.of(), java.util.Optional.empty(), true);
+        var graph = new gregtech.compat.common.MaterialProcessOverview(layoutPage(List.of(step, statefulStep), List.of()));
+        var focus = graph.find(port -> port.identity().equals(nativeOutput.identity()));
+        helper.assertTrue(focus != null && gregtech.engine.stack.StackCompat.sameItem(focus.port().icons().get(0), stateful),
+                "lookup focus selects the requested form and full native state rather than its untagged icon");
+        helper.assertTrue(graph.matchingNodes(focus).size() == 1,
+                "equal item icons with different native state remain separate hover targets");
+        helper.assertTrue(graph.find(port -> port.identity().equals("absent")) == null,
+                "unmatched lookups can fall back to the material anchor");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void overviewMatchesItemsAcrossCopiesAndKeepsRecipesSeparate(GameTestHelper helper) {
+        var source = new gregtech.compat.common.MaterialProcessDisplay.Step(
+                new gregtech.api.addon.material.DataKey("test", "source"),
+                net.minecraft.network.chat.Component.literal("source"), new ItemStack(Items.FURNACE),
+                List.of(displayPort("external_ore", "Other", Items.RAW_COPPER, false)), List.of(layoutPort("raw", true)),
+                List.of(), java.util.Optional.empty(), true);
+        var graph = new gregtech.compat.common.MaterialProcessOverview(layoutPage(
+                List.of(source, layoutStep("convert", "raw", "ingot"), layoutStep("branch", "raw", "plate")),
+                List.of(layoutConnection("source", "convert", "raw"), layoutConnection("source", "branch", "raw"))));
+        var raw = graph.find(port -> port.identity().equals("raw"));
+        var matching = graph.matchingNodes(raw);
+        helper.assertTrue(matching.size() > 1 && matching.stream().allMatch(node -> !node.machine()
+                        && node.port().identity().equals("raw")),
+                "hover matches the same resource across section copies without highlighting machines or production lines");
+        var machine = graph.nodes().stream().filter(node -> node.machine() && node.steps.get(0).reference().path().equals("convert"))
+                .findFirst().orElseThrow();
+        helper.assertTrue(graph.matchingNodes(machine).size() == 2
+                        && graph.matchingNodes(machine).stream().allMatch(node -> node.machine()),
+                "matching machine items synchronize without lighting their inputs or outputs");
+        helper.assertTrue(graph.matchingNodes(null).isEmpty(), "empty space clears item hover");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
+    public static void overviewFramesRecipesWithoutEnclosingTheirNeighbors(GameTestHelper helper) {
+        var steps = new ArrayList<gregtech.compat.common.MaterialProcessDisplay.Step>();
+        for (int index = 0; index < 16; index++) steps.add(layoutStep("local_" + index, "raw_" + index, "product_" + index));
+        var graph = new gregtech.compat.common.MaterialProcessOverview(layoutPage(steps, List.of()));
+        helper.assertTrue(graph.frames().size() == 16, "each compact recipe gets its own light frame");
+        for (var frame : graph.frames()) {
+            helper.assertTrue(frame.left() < frame.machine().x && frame.right() > frame.machine().x
+                            && frame.top() < frame.machine().y && frame.bottom() > frame.machine().y,
+                    "the frame encloses its recipe machine");
+            for (var node : graph.nodes()) if (node.machine() && node != frame.machine())
+                helper.assertFalse(node.x >= frame.left() && node.x < frame.right()
+                                && node.y >= frame.top() && node.y < frame.bottom(),
+                        "a recipe frame never encloses a neighboring machine");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_process", timeoutTicks = 200)
     public static void overviewAlignsChainsAndPreservesFeedback(GameTestHelper helper) {
         var steps = new ArrayList<gregtech.compat.common.MaterialProcessDisplay.Step>();
         var links = new ArrayList<gregtech.compat.common.MaterialProcessDisplay.Connection>();

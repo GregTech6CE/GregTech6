@@ -3,6 +3,9 @@ package gregtech.compat.jei;
 import gregtech.client.MaterialProcessPanel;
 import gregtech.compat.common.MaterialProcessDisplay.Page;
 import gregtech.compat.common.MaterialProcessDisplay.Port;
+import gregtech.content.recipe.MaterialProcessSnapshot;
+import gregtech.engine.fluid.FluidDisplayBinding;
+import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -27,6 +30,7 @@ public final class MaterialProcessCategory implements IRecipeCategory<Page> {
     public static final RecipeType<Page> TYPE = RecipeType.create("gt6ce", "material_process", Page.class);
     private final IDrawable icon;
     private final Map<Page, MaterialProcessPanel> views = new IdentityHashMap<>();
+    private final Map<Page, IFocusGroup> viewFocuses = new IdentityHashMap<>();
 
     public MaterialProcessCategory(IGuiHelper helper) {
         icon = helper.createDrawableItemStack(new ItemStack(Items.MAP));
@@ -49,23 +53,30 @@ public final class MaterialProcessCategory implements IRecipeCategory<Page> {
 
     @Override
     public int getWidth() {
-        return MaterialProcessPanel.WIDTH;
+        return MaterialProcessPanel.preferredWidth();
     }
 
     @Override
     public int getHeight() {
-        return MaterialProcessPanel.HEIGHT;
+        return MaterialProcessPanel.preferredHeight();
     }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, Page page, IFocusGroup focuses) {
-        for (var step : page.steps()) {
-            for (var port : step.inputs())
-                if (port.hasIcons())
-                    builder.addInvisibleIngredients(role(port)).addItemStacks(port.icons());
-            for (var port : step.outputs())
-                if (port.hasIcons())
-                    builder.addInvisibleIngredients(role(port)).addItemStacks(port.icons());
+        for (var port : page.indexedPorts()) {
+            var ingredients = builder.addInvisibleIngredients(role(port));
+            for (var icon : port.icons()) {
+                if (!FluidDisplayBinding.hasPayload(icon)) ingredients.addItemStack(icon);
+                else {
+//? if >=1.21.1 {
+                    /*var fluid = FluidDisplayBinding.resolveCurrent(icon);
+                    if (!fluid.isEmpty()) ingredients.addIngredient(mezz.jei.api.neoforge.NeoForgeTypes.FLUID_STACK, fluid);
+*///?} else {
+                    var fluid = FluidDisplayBinding.resolve(icon);
+                    if (!fluid.isEmpty()) ingredients.addIngredient(mezz.jei.api.forge.ForgeTypes.FLUID_STACK, fluid);
+//?}
+                }
+            }
         }
     }
 
@@ -80,10 +91,21 @@ public final class MaterialProcessCategory implements IRecipeCategory<Page> {
     @Override
     public void createRecipeExtras(IRecipeExtrasBuilder builder, Page page, IFocusGroup focuses) {
         var panel = view(page);
+        var identities = new HashSet<String>();
+        focuses.getItemStackFocuses().forEach(focus -> identities.add(
+                MaterialProcessSnapshot.itemDisplayState(focus.getTypedValue().getIngredient())));
+//? if >=1.21.1 {
+        /*focuses.getFocuses(mezz.jei.api.neoforge.NeoForgeTypes.FLUID_STACK).forEach(focus -> identities.add(
+                MaterialProcessSnapshot.fluidDisplayState(focus.getTypedValue().getIngredient())));
+*///?} else {
+        focuses.getFocuses(mezz.jei.api.forge.ForgeTypes.FLUID_STACK).forEach(focus -> identities.add(
+                MaterialProcessSnapshot.fluidDisplayState(focus.getTypedValue().getIngredient())));
+//?}
+        if (viewFocuses.put(page, focuses) != focuses) panel.focus(port -> identities.contains(port.identity()));
         builder.addGuiEventListener(new IJeiGuiEventListener() {
             @Override
             public ScreenRectangle getArea() {
-                return new ScreenRectangle(0, 0, MaterialProcessPanel.WIDTH, MaterialProcessPanel.HEIGHT);
+                return new ScreenRectangle(0, 0, panel.width(), panel.height());
             }
 
             @Override
@@ -121,6 +143,8 @@ public final class MaterialProcessCategory implements IRecipeCategory<Page> {
     }
 
     private MaterialProcessPanel view(Page page) {
-        return views.computeIfAbsent(page, MaterialProcessPanel::new);
+        var panel = views.computeIfAbsent(page, MaterialProcessPanel::new);
+        panel.resize(getWidth(), getHeight());
+        return panel;
     }
 }

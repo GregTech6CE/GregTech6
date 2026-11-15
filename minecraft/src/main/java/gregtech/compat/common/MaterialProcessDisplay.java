@@ -309,6 +309,14 @@ public final class MaterialProcessDisplay {
                     || total < number
                     || notices.isEmpty()) throw new IllegalArgumentException("Invalid process display page");
         }
+
+        /** Foreign reagents and byproducts belong to the recipe, not to this material's viewer index. */
+        public List<Port> indexedPorts() {
+            return steps.stream()
+                    .flatMap(step -> java.util.stream.Stream.concat(step.inputs().stream(), step.outputs().stream()))
+                    .filter(port -> port.material().equals(material) && port.hasIcons())
+                    .toList();
+        }
     }
 
     private MaterialProcessDisplay() {}

@@ -18,6 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 import net.minecraft.world.item.ItemStack;
 
 /** A bounded layout of native steps; resource copies never introduce recipe facts. */
@@ -202,6 +203,8 @@ public final class MaterialProcessOverview {
 
     private record EdgeKey(Node from, Node to) {}
 
+    public record RecipeFrame(Node machine, int left, int top, int right, int bottom) {}
+
     private record Arc(Node from, Node to, Edge edge) {}
 
     private record Occupancy(BitSet positive, BitSet negative) {
@@ -228,11 +231,13 @@ public final class MaterialProcessOverview {
     private final List<Connection> connections;
     private final Map<Node, Node> next = new HashMap<>(), previous = new HashMap<>();
     private final Set<Arc> feedback = new HashSet<>();
+    private final List<RecipeFrame> frames = new ArrayList<>();
     private int width, height;
     private Node anchor;
 
     public MaterialProcessOverview(Page page) {
         this(page, true);
+        frameRecipes();
     }
 
     private MaterialProcessOverview(Page page, boolean partition) {
@@ -497,6 +502,93 @@ public final class MaterialProcessOverview {
 
     public Node anchor() {
         return anchor;
+    }
+
+    /** Find a visible native port without treating equal item icons as equal native states. */
+    public Node find(Predicate<Port> matches) {
+        return nodes.stream()
+                .filter(node ->
+                        !node.machine() && node.endpoints.stream().anyMatch(endpoint -> matches.test(endpoint.port())))
+                .min(Comparator.<Node, Boolean>comparing(node -> node.returning)
+                        .thenComparingInt(node -> -chainLength(node))
+                        .thenComparing(node -> node.key))
+                .orElse(null);
+    }
+
+    public List<RecipeFrame> frames() {
+        return List.copyOf(frames);
+    }
+
+    /** Hover synchronizes equal displayed resources and machine items, including their full native state. */
+    public Set<Node> matchingNodes(Node hovered) {
+        if (hovered == null) return Set.of();
+        ItemStack icon = icon(hovered);
+        var matches = new HashSet<Node>();
+        for (Node node : nodes) {
+            if (node == hovered
+                    || !node.machine()
+                            && !hovered.machine()
+                            && node.port().identity().equals(hovered.port().identity())
+                    || !icon.isEmpty() && StackCompat.sameItem(icon, icon(node))) matches.add(node);
+        }
+        return Set.copyOf(matches);
+    }
+
+    private static ItemStack icon(Node node) {
+        return node.machine()
+                ? node.steps.get(0).icon()
+                : node.port().icons().stream().findFirst().orElse(ItemStack.EMPTY);
+    }
+
+    private void frameRecipes() {
+        var owners = new HashMap<Node, Node>();
+        for (Edge edge : edges) {
+            Node resource = representative(resource(edge)), machine = edge.from.machine() ? edge.from : edge.to;
+            Node previous = owners.get(resource);
+            if (previous == null
+                    || distance(resource, machine) < distance(resource, previous)
+                    || distance(resource, machine) == distance(resource, previous)
+                            && machine.key.compareTo(previous.key) < 0) owners.put(resource, machine);
+        }
+        var local = new HashMap<Node, List<Node>>();
+        owners.forEach((resource, machine) ->
+                local.computeIfAbsent(machine, ignored -> new ArrayList<>()).add(resource));
+        var columns = new java.util.TreeMap<Integer, List<Node>>();
+        for (Node node : nodes)
+            columns.computeIfAbsent(node.x, ignored -> new ArrayList<>()).add(node);
+        for (Node machine : nodes) {
+            if (!machine.machine()) continue;
+            int left = machine.x - 12, right = machine.x + 12, top = machine.y - 14, bottom = machine.y + 14;
+            for (Node resource : local.getOrDefault(machine, List.of()).stream()
+                    .sorted(Comparator.comparingLong((Node node) -> distance(node, machine))
+                            .thenComparing(node -> node.key))
+                    .toList()) {
+                int l = Math.min(left, resource.grid == null ? resource.x - 12 : resource.grid.left());
+                int r = Math.max(right, resource.grid == null ? resource.x + 12 : resource.grid.right());
+                int t = Math.min(top, resource.grid == null ? resource.y - 14 : resource.grid.top() - 2);
+                int b = Math.max(bottom, resource.grid == null ? resource.y + 14 : resource.grid.bottom() + 2);
+                boolean clear = columns.subMap(l - 12, true, r + 12, true).values().stream()
+                        .flatMap(List::stream)
+                        .noneMatch(node -> node != machine
+                                && owners.get(representative(node)) != machine
+                                && node.x + 12 > l
+                                && node.x - 12 < r
+                                && node.y + 14 > t
+                                && node.y - 14 < b);
+                if (clear) {
+                    left = l;
+                    right = r;
+                    top = t;
+                    bottom = b;
+                }
+            }
+            frames.add(new RecipeFrame(machine, left - 1, top - 1, right + 1, bottom + 1));
+        }
+    }
+
+    private static long distance(Node resource, Node machine) {
+        long dx = resource.x - machine.x, dy = resource.y - machine.y;
+        return dx * dx + dy * dy;
     }
 
     public int width() {

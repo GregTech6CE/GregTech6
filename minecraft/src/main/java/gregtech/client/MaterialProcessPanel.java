@@ -2,11 +2,14 @@ package gregtech.client;
 
 import com.mojang.math.Axis;
 import gregtech.compat.common.MaterialProcessDisplay.Page;
+import gregtech.compat.common.MaterialProcessDisplay.Port;
 import gregtech.compat.common.MaterialProcessOverview;
 import gregtech.compat.common.MaterialProcessOverview.Node;
 import gregtech.compat.jei.PreviewViewport;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -15,23 +18,95 @@ import net.minecraft.world.item.ItemStack;
 /** A readable viewport onto the cached topology layout and its native port instances. */
 public final class MaterialProcessPanel {
     public static final int WIDTH = 280, HEIGHT = 216;
-    private static final int BODY_TOP = 17, FOOTER = 203;
+    private static final int BODY_TOP = 17;
     private static final int TEXT = 0xff383838, MUTED = 0xff777777, GOLD = 0xffffcc44;
     private static final double MIN_ZOOM = 0.0001, MAX_ZOOM = 3;
     private final Page page;
     private final MaterialProcessOverview overview;
+    private Node focused, hovered;
+    private Set<Node> highlight = Set.of();
+    private int width = WIDTH, height = HEIGHT;
+    private boolean fullscreen;
     private double zoom, panX, panY;
 
     public MaterialProcessPanel(Page page) {
         this.page = page;
         overview = new MaterialProcessOverview(page);
-        fit();
+        resetView();
+    }
+
+    public void focus(Predicate<Port> matches) {
+        focused = overview.find(matches);
+        resetView();
+    }
+
+    public static int preferredWidth() {
+        return Math.max(200, Minecraft.getInstance().getWindow().getGuiScaledWidth() - 160);
+    }
+
+    public static int preferredHeight() {
+        return Math.max(80, Minecraft.getInstance().getWindow().getGuiScaledHeight() - 110);
+    }
+
+    public int width() {
+        return width;
+    }
+
+    public int height() {
+        return height;
+    }
+
+    private int footer() {
+        return height - 13;
+    }
+
+    /** Resizing keeps the same world point at the center, including when entering or leaving fullscreen. */
+    public void resize(int width, int height) {
+        int nextWidth = Math.max(160, width), nextHeight = Math.max(64, height);
+        panX += (nextWidth - this.width) / 2.0;
+        panY += (nextHeight - this.height) / 2.0;
+        this.width = nextWidth;
+        this.height = nextHeight;
+    }
+
+    void fullscreen(boolean fullscreen) {
+        this.fullscreen = fullscreen;
+    }
+
+    Component title() {
+        return page.title();
+    }
+
+    public PreviewViewport.Bounds boundsAt(double x, double y) {
+        Node node = hit(x, y);
+        return node == null ? new PreviewViewport.Bounds(0, 0, 0, 0) : bounds(node);
+    }
+
+    private void drawFullscreenButton(GuiGraphics graphics) {
+        int x = width - 16, y = 3;
+        for (int dx : new int[] {0, 8})
+            for (int dy : new int[] {0, 8}) {
+                graphics.fill(x + dx, y + dy, x + dx + 4, y + dy + 1, TEXT);
+                graphics.fill(
+                        x + dx + (dx == 0 ? 0 : 3),
+                        y + (dy == 0 ? 0 : dy - 3),
+                        x + dx + (dx == 0 ? 1 : 4),
+                        y + (dy == 0 ? 4 : dy + 1),
+                        TEXT);
+            }
+    }
+
+    private static void outline(GuiGraphics graphics, int left, int top, int right, int bottom, int color) {
+        graphics.fill(left, top, right, top + 1, color);
+        graphics.fill(left, bottom - 1, right, bottom, color);
+        graphics.fill(left, top, left + 1, bottom, color);
+        graphics.fill(right - 1, top, right, bottom, color);
     }
 
     public void draw(GuiGraphics graphics, double mouseX, double mouseY) {
-        graphics.fill(0, 0, WIDTH, HEIGHT, 0xffc6c6c6);
-        text(graphics, page.title(), 4, 2, WIDTH - 122, TEXT);
-        text(graphics, Component.literal("−"), WIDTH - 114, 2, 12, TEXT);
+        graphics.fill(0, 0, width, height, 0xffc6c6c6);
+        text(graphics, page.title(), 4, 2, width - 148, TEXT);
+        text(graphics, Component.literal("−"), width - 138, 2, 12, TEXT);
         text(
                 graphics,
                 Component.literal(java.math.BigDecimal.valueOf(zoom * 100)
@@ -39,16 +114,21 @@ public final class MaterialProcessPanel {
                                 .stripTrailingZeros()
                                 .toPlainString()
                         + "%"),
-                WIDTH - 98,
+                width - 120,
                 2,
                 33,
                 MUTED);
-        text(graphics, Component.literal("+"), WIDTH - 61, 2, 12, TEXT);
-        text(graphics, Component.translatable("gt6ce.jei.material_process.reset"), WIDTH - 28, 2, 26, MUTED);
+        text(graphics, Component.literal("+"), width - 82, 2, 12, TEXT);
+        text(graphics, Component.translatable("gt6ce.jei.material_process.reset"), width - 58, 2, 35, MUTED);
+        drawFullscreenButton(graphics);
         graphics.flush();
-        var viewport = PreviewViewport.screenBounds(graphics.pose().last().pose(), 0, BODY_TOP, WIDTH, FOOTER);
+        var viewport = PreviewViewport.screenBounds(graphics.pose().last().pose(), 0, BODY_TOP, width, footer());
         graphics.enableScissor(viewport.left(), viewport.top(), viewport.right(), viewport.bottom());
-        Node hovered = hit(mouseX, mouseY);
+        Node hit = hit(mouseX, mouseY);
+        if (hit != hovered) {
+            hovered = hit;
+            highlight = overview.matchingNodes(hovered);
+        }
         try {
             graphics.pose().pushPose();
             try {
@@ -59,7 +139,11 @@ public final class MaterialProcessPanel {
                     text(graphics, band.section().label(), band.left() + 6, 8, band.right() - band.left() - 12, TEXT);
                     if (band.left() > 0) graphics.fill(band.left(), 2, band.left() + 1, overview.height(), 0xff999999);
                 }
-                drawEdges(graphics, hovered);
+                for (var frame : overview.frames()) {
+                    graphics.fill(frame.left(), frame.top(), frame.right(), frame.bottom(), 0xffcacaca);
+                    outline(graphics, frame.left(), frame.top(), frame.right(), frame.bottom(), 0xffe4e4e4);
+                }
+                drawEdges(graphics);
                 for (var grid : overview.grids()) {
                     graphics.fill(grid.left(), grid.top(), grid.right(), grid.bottom(), 0xff777777);
                     for (int y = grid.top(); y < grid.bottom(); y += 24)
@@ -68,8 +152,12 @@ public final class MaterialProcessPanel {
                 }
                 for (Node node : overview.nodes()) {
                     if (!visible(node)) continue;
-                    if (related(node, hovered))
-                        graphics.fill(node.x - 10, node.y - 10, node.x + 11, node.y + 11, 0xffe5e5e5);
+                    if (highlight.contains(node))
+                        graphics.fill(node.x - 11, node.y - 11, node.x + 12, node.y + 12, 0xffe4e4e4);
+                    if (node == focused) {
+                        outline(graphics, node.x - 13, node.y - 13, node.x + 14, node.y + 14, 0xffa7dba0);
+                        outline(graphics, node.x - 12, node.y - 12, node.x + 13, node.y + 13, 0xffbce7b6);
+                    }
                     ItemStack icon = node.machine()
                             ? selected(node).icon()
                             : node.port().icons().stream().findFirst().orElse(ItemStack.EMPTY);
@@ -96,32 +184,24 @@ public final class MaterialProcessPanel {
                     Component.translatable("gt6ce.jei.material_process.empty"),
                     12,
                     BODY_TOP + 28,
-                    WIDTH - 24,
+                    width - 24,
                     MUTED);
-        text(graphics, Component.literal("i"), 4, FOOTER + 3, 12, MUTED);
+        text(graphics, Component.literal("i"), 4, footer() + 3, 12, MUTED);
     }
 
     private gregtech.compat.common.MaterialProcessDisplay.Step selected(Node node) {
         return node.steps.get(0);
     }
 
-    private static boolean related(Node node, Node hovered) {
-        return node == hovered
-                || hovered != null
-                        && !node.machine()
-                        && !hovered.machine()
-                        && node.port().identity().equals(hovered.port().identity());
-    }
-
     private boolean visible(Node node) {
         return node.x + 12 >= worldX(0)
-                && node.x - 12 <= worldX(WIDTH)
+                && node.x - 12 <= worldX(width)
                 && node.y + 12 >= worldY(BODY_TOP)
-                && node.y - 14 <= worldY(FOOTER);
+                && node.y - 14 <= worldY(footer());
     }
 
     private Node hit(double mouseX, double mouseY) {
-        if (mouseX < 0 || mouseX >= WIDTH || mouseY < BODY_TOP || mouseY >= FOOTER) return null;
+        if (mouseX < 0 || mouseX >= width || mouseY < BODY_TOP || mouseY >= footer()) return null;
         double x = worldX(mouseX), y = worldY(mouseY);
         for (Node node : overview.nodes())
             if (x >= node.x - 11 && x < node.x + 12 && y >= node.y - 12 && y < node.y + 12) return node;
@@ -141,8 +221,8 @@ public final class MaterialProcessPanel {
         return new PreviewViewport.Bounds(
                 (int) Math.max(0, Math.floor(panX + (node.x - 11) * zoom)),
                 (int) Math.max(BODY_TOP, Math.floor(BODY_TOP + panY + (node.y - 12) * zoom)),
-                (int) Math.min(WIDTH, Math.ceil(panX + (node.x + 12) * zoom)),
-                (int) Math.min(FOOTER, Math.ceil(BODY_TOP + panY + (node.y + 12) * zoom)));
+                (int) Math.min(width, Math.ceil(panX + (node.x + 12) * zoom)),
+                (int) Math.min(footer(), Math.ceil(BODY_TOP + panY + (node.y + 12) * zoom)));
     }
 
     public List<ItemStack> stacks(Node node) {
@@ -155,12 +235,16 @@ public final class MaterialProcessPanel {
     }
 
     public List<Component> tooltip(double mouseX, double mouseY) {
-        if (mouseY < BODY_TOP && mouseX >= WIDTH - 118)
+        if (mouseY >= 0 && mouseY < BODY_TOP && mouseX >= width - 144)
             return List.of(Component.translatable(
-                    mouseX >= WIDTH - 29
-                            ? "gt6ce.jei.material_process.reset_hint"
-                            : "gt6ce.jei.material_process.zoom_hint"));
-        if (mouseY >= FOOTER) {
+                    mouseX >= width - 20
+                            ? fullscreen
+                                    ? "gt6ce.jei.material_process.exit_fullscreen"
+                                    : "gt6ce.jei.material_process.fullscreen"
+                            : mouseX >= width - 63
+                                    ? "gt6ce.jei.material_process.reset_hint"
+                                    : "gt6ce.jei.material_process.zoom_hint"));
+        if (mouseY >= footer()) {
             var lines = new ArrayList<>(page.notices());
             lines.add(Component.translatable("gt6ce.jei.material_process.pan"));
             return List.copyOf(lines);
@@ -216,16 +300,20 @@ public final class MaterialProcessPanel {
     public boolean clickControls(double mouseX, double mouseY, int button) {
         if (button != 0 && button != 1) return false;
         if (button == 0 && mouseY >= 0 && mouseY < 14) {
-            if (mouseX >= WIDTH - 29 && mouseX < WIDTH) {
-                fit();
+            if (mouseX >= width - 20 && mouseX < width) {
+                MaterialProcessScreen.toggle(this);
                 return true;
             }
-            if (mouseX >= WIDTH - 118 && mouseX < WIDTH - 101) {
-                zoomAt(WIDTH / 2.0, (BODY_TOP + FOOTER) / 2.0, zoom / 1.25);
+            if (mouseX >= width - 63 && mouseX < width - 22) {
+                resetView();
                 return true;
             }
-            if (mouseX >= WIDTH - 65 && mouseX < WIDTH - 46) {
-                zoomAt(WIDTH / 2.0, (BODY_TOP + FOOTER) / 2.0, zoom * 1.25);
+            if (mouseX >= width - 144 && mouseX < width - 123) {
+                zoomAt(width / 2.0, (BODY_TOP + footer()) / 2.0, zoom / 1.25);
+                return true;
+            }
+            if (mouseX >= width - 87 && mouseX < width - 65) {
+                zoomAt(width / 2.0, (BODY_TOP + footer()) / 2.0, zoom * 1.25);
                 return true;
             }
         }
@@ -235,9 +323,9 @@ public final class MaterialProcessPanel {
     public boolean press(double mouseX, double mouseY, int button) {
         return (button == 0 || button == 1)
                 && mouseX >= 0
-                && mouseX < WIDTH
+                && mouseX < width
                 && mouseY >= BODY_TOP
-                && mouseY < FOOTER
+                && mouseY < footer()
                 && hit(mouseX, mouseY) == null;
     }
 
@@ -249,7 +337,7 @@ public final class MaterialProcessPanel {
     }
 
     public boolean scroll(double mouseX, double mouseY, double delta) {
-        if (mouseX < 0 || mouseX >= WIDTH || mouseY < BODY_TOP || mouseY >= FOOTER || delta == 0) return false;
+        if (mouseX < 0 || mouseX >= width || mouseY < BODY_TOP || mouseY >= footer() || delta == 0) return false;
         zoomAt(mouseX, mouseY, zoom * Math.pow(1.15, Math.max(-8, Math.min(8, delta))));
         return true;
     }
@@ -269,35 +357,22 @@ public final class MaterialProcessPanel {
         panY = y - BODY_TOP - wy * zoom;
     }
 
-    private void fit() {
-        zoom = Math.max(
-                0.75,
-                Math.min(
-                        1,
-                        Math.min(
-                                (WIDTH - 12.0) / Math.max(1, overview.width()),
-                                (FOOTER - BODY_TOP - 12.0) / Math.max(1, overview.height()))));
-        if (overview.width() * zoom <= WIDTH && overview.height() * zoom <= FOOTER - BODY_TOP) {
-            panX = (WIDTH - overview.width() * zoom) / 2;
-            panY = (FOOTER - BODY_TOP - overview.height() * zoom) / 2;
-        } else {
-            Node anchor = overview.anchor();
-            panX = WIDTH / 3.0 - (anchor == null ? 0 : anchor.x) * zoom;
-            panY = (FOOTER - BODY_TOP) / 2.0 - (anchor == null ? 0 : anchor.y) * zoom;
-        }
+    private void resetView() {
+        zoom = 1;
+        Node anchor = focused == null ? overview.anchor() : focused;
+        panX = width / 2.0 - (anchor == null ? overview.width() / 2.0 : anchor.x);
+        panY = (footer() - BODY_TOP) / 2.0 - (anchor == null ? overview.height() / 2.0 : anchor.y);
     }
 
-    private void drawEdges(GuiGraphics graphics, Node hovered) {
+    private void drawEdges(GuiGraphics graphics) {
         record Wire(List<MaterialProcessOverview.Point> path, boolean output) {}
         var wires = new java.util.LinkedHashMap<Wire, List<MaterialProcessOverview.Edge>>();
         for (var edge : overview.edges())
             wires.computeIfAbsent(new Wire(edge.path(), edge.endpoint().output()), ignored -> new ArrayList<>())
                     .add(edge);
         for (var entry : wires.entrySet()) {
-            boolean highlighted = entry.getValue().stream()
-                    .anyMatch(edge -> related(edge.from(), hovered) || related(edge.to(), hovered));
             boolean confirmed = entry.getValue().stream().allMatch(MaterialProcessOverview.Edge::confirmed);
-            int color = highlighted ? 0xff986c26 : TEXT;
+            int color = TEXT;
             var path = entry.getKey().path();
             for (int index = 1; index < path.size(); index++) {
                 var from = path.get(index - 1);
@@ -325,7 +400,7 @@ public final class MaterialProcessPanel {
             boolean arrow,
             int color) {
         stroke(graphics, sx, sy, tx, ty, color, dashed);
-        if (!arrow || tx < worldX(0) || tx >= worldX(WIDTH) || ty < worldY(BODY_TOP) || ty >= worldY(FOOTER)) return;
+        if (!arrow || tx < worldX(0) || tx >= worldX(width) || ty < worldY(BODY_TOP) || ty >= worldY(footer())) return;
         double angle = Math.atan2(ty - sy, tx - sx);
         graphics.pose().pushPose();
         try {
@@ -349,6 +424,7 @@ public final class MaterialProcessPanel {
     }
 
     private static void text(GuiGraphics graphics, Component value, int x, int y, int width, int color) {
+        if (width <= 0) return;
         var font = Minecraft.getInstance().font;
         graphics.drawString(
                 font,
@@ -362,7 +438,7 @@ public final class MaterialProcessPanel {
     private void stroke(GuiGraphics graphics, double x1, double y1, double x2, double y2, int color, boolean dashed) {
         double dx = x2 - x1, dy = y2 - y1, from = 0, to = 1;
         double[] p = {-dx, dx, -dy, dy},
-                q = {x1 - worldX(-1), worldX(WIDTH + 1) - x1, y1 - worldY(BODY_TOP - 1), worldY(FOOTER + 1) - y1};
+                q = {x1 - worldX(-1), worldX(width + 1) - x1, y1 - worldY(BODY_TOP - 1), worldY(footer() + 1) - y1};
         for (int side = 0; side < 4; side++) {
             if (p[side] == 0) {
                 if (q[side] < 0) return;

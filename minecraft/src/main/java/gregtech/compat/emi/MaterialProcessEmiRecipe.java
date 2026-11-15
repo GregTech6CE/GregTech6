@@ -3,6 +3,7 @@ package gregtech.compat.emi;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
+import dev.emi.emi.api.stack.Comparison;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.Bounds;
@@ -32,6 +33,7 @@ public final class MaterialProcessEmiRecipe implements EmiRecipe {
 
     private final MaterialProcessDisplay.Page page;
     private MaterialProcessPanel panel;
+    private List<EmiStack> focus = List.of();
     private final ResourceLocation id;
     private final List<EmiIngredient> inputs;
     private final List<EmiIngredient> catalysts;
@@ -43,10 +45,7 @@ public final class MaterialProcessEmiRecipe implements EmiRecipe {
         var inputs = new ArrayList<EmiIngredient>();
         var catalysts = new ArrayList<EmiIngredient>();
         var outputs = new ArrayList<EmiStack>();
-        for (var step : page.steps()) {
-            for (var port : step.inputs()) add(port, inputs, catalysts, outputs);
-            for (var port : step.outputs()) add(port, inputs, catalysts, outputs);
-        }
+        for (var port : page.indexedPorts()) add(port, inputs, catalysts, outputs);
         this.inputs = List.copyOf(inputs);
         this.catalysts = List.copyOf(catalysts);
         this.outputs = List.copyOf(outputs);
@@ -91,6 +90,24 @@ public final class MaterialProcessEmiRecipe implements EmiRecipe {
         return CATEGORY;
     }
 
+    public void focus(EmiIngredient ingredient) {
+        focus = ingredient.getEmiStacks().stream().map(EmiStack::copy).toList();
+        if (panel != null) focusPanel();
+    }
+
+    private void focusPanel() {
+        // Strict focus matching follows EMI's native state model: components on 1.21, NBT on 1.20.
+//? if >=1.21.1 {
+        /*var comparison = Comparison.compareComponents();
+*///?} else {
+        var comparison = Comparison.compareNbt();
+//?}
+        panel.focus(port -> port.icons().stream().anyMatch(icon -> {
+            var stack = MaterialProcessEmiStacks.of(icon);
+            return !stack.isEmpty() && focus.stream().anyMatch(target -> stack.isEqual(target, comparison));
+        }));
+    }
+
     @Override
     public EmiRecipeCategory getCategory() {
         return CATEGORY;
@@ -128,21 +145,25 @@ public final class MaterialProcessEmiRecipe implements EmiRecipe {
 
     @Override
     public int getDisplayWidth() {
-        return MaterialProcessPanel.WIDTH;
+        return MaterialProcessPanel.preferredWidth();
     }
 
     @Override
     public int getDisplayHeight() {
-        return MaterialProcessPanel.HEIGHT;
+        return MaterialProcessPanel.preferredHeight();
     }
 
     @Override
     public void addWidgets(WidgetHolder widgets) {
-        if (panel == null) panel = new MaterialProcessPanel(page);
+        if (panel == null) {
+            panel = new MaterialProcessPanel(page);
+            focusPanel();
+        }
+        panel.resize(Math.min(getDisplayWidth(), widgets.getWidth()), Math.min(getDisplayHeight(), widgets.getHeight()));
         widgets.add(new EmiInteractiveWidget() {
             @Override
             public Bounds getBounds() {
-                return new Bounds(0, 0, MaterialProcessPanel.WIDTH, MaterialProcessPanel.HEIGHT);
+                return new Bounds(0, 0, panel.width(), panel.height());
             }
 
             @Override
