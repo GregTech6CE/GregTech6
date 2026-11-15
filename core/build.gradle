@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
     api project(':api')
+    compileOnly 'org.jspecify:jspecify:1.0.0'
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -17,6 +18,11 @@ tasks.named('test').configure {
     useJUnitPlatform()
     systemProperty 'gt6ce.recipeRoot',
             layout.projectDirectory.dir('src/main/resources/data/gt6ce/recipes').asFile.absolutePath
+    // Asset roots for the material icon integrity checks.
+    systemProperty 'gt6ce.coreAssets',
+            layout.projectDirectory.dir('src/main/resources/assets/gt6ce').asFile.absolutePath
+    systemProperty 'gt6ce.minecraftAssets',
+            layout.projectDirectory.dir('../minecraft/src/main/resources/assets/gt6ce').asFile.absolutePath
 }
 
 java {

@@ -4,6 +4,7 @@ package gregtech.api.material;
 
 import java.util.List;
 import java.util.Locale;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Item icon set folder under {@code textures/item/material_icons/}, matching GregTech 6 texture sets.
@@ -99,6 +100,33 @@ public enum MaterialTextureSet {
      * {@link #values()}: the remaining constants have no generated model or texture resources.
      */
     public static List<MaterialTextureSet> modeled() { return MODELED_SETS; }
+
+    /**
+     * Set whose icon folder this one borrows the missing art from, or {@code null} for the two
+     * roots. Child sets only override the icons whose art actually differs.
+     */
+    @Nullable
+    public MaterialTextureSet parent() {
+        return switch (this) {
+            case DULL, STONE -> null;
+            case NONE, FINE, METALLIC -> DULL;
+            case SAND, FOOD, FIERY, PAPER, LEAF, ROUGH -> FINE;
+            case POWDER -> FOOD;
+            case LIGNITE, LAPIS -> ROUGH;
+            case FLINT -> LIGNITE;
+            case REDSTONE, CUBE -> LAPIS;
+            case COPPER, MAGNETIC, SHINY -> METALLIC;
+            case RUBBER, GLASS, RUBY -> SHINY;
+            case OPAL, DIAMOND -> RUBY;
+            case EMERALD, GEM_HORIZONTAL, GEM_VERTICAL, SHARDS, CUBE_SHINY -> DIAMOND;
+            case BRICK, QUARTZ -> STONE;
+            case SPACE -> BRICK;
+            case WOOD, PRISMARINE -> QUARTZ;
+            case FLUID, GAS, HEX, NETHERSTAR, PLASMA, RAD -> DULL;
+        };
+    }
+
+    public boolean isRoot() { return parent() == null; }
 
     /** Lowercase folder name used in resource locations (MC normalizes paths to lowercase). */
     public String folder() {

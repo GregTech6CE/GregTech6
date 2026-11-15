@@ -4,6 +4,8 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.MaterialPrefix;
+import java.util.function.Predicate;
+import org.jspecify.annotations.Nullable;
 
 /** Shared original material icon selection and resource paths, without client classes. */
 public final class MaterialIconDefinitions {
@@ -31,11 +33,6 @@ public final class MaterialIconDefinitions {
         return "item/material/" + set.folder() + "/" + prefix.getTextureFileName();
     }
 
-    /** Item model for this material and prefix; {@code overlay} follows the icon art of its set. */
-    public static String modelJson(GTMaterial material, MaterialPrefix prefix, boolean overlay) {
-        return generatedModelJson(resolveTextureSet(material), prefix, overlay);
-    }
-
     /** One generated item model. The texture lives in the addon namespace and is tinted by material colour. */
     public static String addonItemModel(MaterialPrefix prefix) {
         return """
@@ -48,18 +45,67 @@ public final class MaterialIconDefinitions {
                 """.formatted(prefix.textureNamespace(), prefix.addonTexturePath());
     }
 
-    public static String sharedModelJson(MaterialTextureSet set, MaterialPrefix prefix, boolean overlay) {
-        return generatedModelJson(set, prefix, overlay);
-    }
-
     /** Both platform geometry loaders delegate this reference to the original baked template cache. */
     public static String sharedInventoryJson(String parent) {
         return "{\"loader\":\"" + gregtech.engine.mod.GregTechIdentity.MOD_ID + ":shared_inventory\",\"parent\":\""
                 + parent + "\"}";
     }
 
-    private static String generatedModelJson(MaterialTextureSet set, MaterialPrefix prefix, boolean overlay) {
-        if (!overlay) {
+    /**
+     * Nearest set in the inheritance chain that actually ships {@code fileName}, or {@code null}
+     * when no set in the chain does. {@code resourceDirectory} is relative to {@code textures/}.
+     */
+    @Nullable
+    public static MaterialTextureSet resolveTextureOwner(
+            MaterialTextureSet set, String resourceDirectory, String fileName, Predicate<String> resourceExists) {
+        for (MaterialTextureSet current = set; current != null; current = current.parent()) {
+            if (resourceExists.test(
+                    "textures/" + resourceDirectory + "/" + current.folder() + "/" + fileName + ".png")) {
+                return current;
+            }
+        }
+        return null;
+    }
+
+    /** Icon set owning the item sprite for this prefix, following {@link MaterialTextureSet#parent()}. */
+    @Nullable
+    public static MaterialTextureSet resolveItemTextureOwner(
+            MaterialTextureSet set, MaterialPrefix prefix, boolean overlay, Predicate<String> resourceExists) {
+        return resolveTextureOwner(
+                set, "item/material_icons", prefix.getTextureFileName() + (overlay ? "_overlay" : ""), resourceExists);
+    }
+
+    /** Icon set owning a block sprite, following {@link MaterialTextureSet#parent()}. */
+    @Nullable
+    public static MaterialTextureSet resolveBlockTextureOwner(
+            MaterialTextureSet set, String fileName, Predicate<String> resourceExists) {
+        return resolveTextureOwner(set, "block/material_icons", fileName, resourceExists);
+    }
+
+    /** Classpath probe for probes taken before the first client resource reload finishes. */
+    public static boolean classpathResourceExists(String relativePath) {
+        return MaterialIconDefinitions.class.getResource(
+                        "/assets/" + gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE + "/" + relativePath)
+                != null;
+    }
+
+    /**
+     * Shared item model JSON for one set and prefix, or {@code null} when no set in the chain ships
+     * the base sprite. The overlay layer is emitted only when the chain ships a detail sprite.
+     */
+    @Nullable
+    public static String sharedModelJson(
+            MaterialTextureSet set, MaterialPrefix prefix, Predicate<String> resourceExists) {
+        MaterialTextureSet baseOwner = resolveItemTextureOwner(set, prefix, false, resourceExists);
+        if (baseOwner == null) return null;
+        MaterialTextureSet overlayOwner = resolveItemTextureOwner(set, prefix, true, resourceExists);
+        return generatedModelJson(
+                "gt6ce:" + texturePath(baseOwner, prefix, false),
+                overlayOwner == null ? null : "gt6ce:" + texturePath(overlayOwner, prefix, true));
+    }
+
+    private static String generatedModelJson(String layer0, @Nullable String layer1) {
+        if (layer1 == null) {
             return """
                     {
                       "parent": "minecraft:item/generated",
@@ -67,7 +113,7 @@ public final class MaterialIconDefinitions {
                         "layer0": "%s"
                       }
                     }
-                    """.formatted("gt6ce:" + texturePath(set, prefix, false));
+                    """.formatted(layer0);
         }
         return """
                 {
@@ -77,6 +123,6 @@ public final class MaterialIconDefinitions {
                     "layer1": "%s"
                   }
                 }
-                """.formatted("gt6ce:" + texturePath(set, prefix, false), "gt6ce:" + texturePath(set, prefix, true));
+                """.formatted(layer0, layer1);
     }
 }
