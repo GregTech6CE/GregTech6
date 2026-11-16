@@ -24,14 +24,5 @@
 由于材料目录定义在进程内一次定稿，而 Tag 成分、形态绑定与机器配方随世界或数据包重载多代替换，`MaterialPublication` 维护原子发布的版本戳 `Stamp(revision, materialRevision, compositionRevision, recipeRevision)`：
 
 1. **进程定义提交**：`GTMaterialRegistry.init()` 到达 `READY` 时调用 `materialDefinitionsPublished(materialRevision)` 唯一一次写定基础材料版本，不允许二次改写。
-2. **平台代次提交**：每次启动装配或热重载在全部 Tag 候选裁决、有效成分构建、`MaterialFormContent` 绑定刷新以及回收/分解配方重建均成功后，先生成 `candidatePlatformGeneration(compositionRevision, recipeRevision)` 候选，再在展示快照构建成功后调用 `commit(candidate)`。
+2. **平台代次提交**：每次启动装配或热重载在全部 Tag 候选裁决、有效成分构建、`MaterialFormContent` 绑定刷新以及回收/分解配方重建均成功后，先生成 `candidatePlatformGeneration(compositionRevision, recipeRevision)` 候选，再在服务端运行时配方发布完成（客户端为炉配方桥应用完成）后调用 `commit(candidate)`。
 3. **失败回滚不动旧印记**：重载任一环节报错触发回滚时，`MaterialPublication.current()` 维持上一成功 `Stamp` 不变，保证下游观测不到“成分切至新代但配方仍留旧代”的跨代撕裂。
-
-## 来源用途索引与有界处理图
-
-来源用途索引与有界处理图当前作为内部运行时与 viewer 数据层实现，尚未提升为公共 `api` 契约。`MaterialProcessSnapshot` 负责服务器会话与 viewer 行代次，`MaterialProcessGraph` 负责有界查询；JEI／EMI 仅消费同一展示投影。
-
-- **会话化版本快照**：`MaterialProcessSnapshot` 绑定发布戳、配方 revision、会话代次、形态 revision、tag 代次与世界生成 revision；旧页面的 `DataKey` 在服务端停止、客户端断线或重载后失效。
-- **最终 viewer 行与权威快照合成**：JEI 在 runtime 枚举最终可见分类和配方，EMI 在最终 bake 后枚举可见配方；两者都追加工作台、机器和第三方加工行。GT machine row 复用原生单位、概率与回收归属，`viewer(false)` 配方和真实生效矿脉配置由权威快照补充。
-- **有界材料处理图**：核心层 `MaterialProcessGraph` 支持显式深度、步骤、端口与关联预算，保留共同输入、概率分支、状态条件和确认关系，并在达到预算时输出独立截断原因。
-- **共用展示投影**：服务器只构建 viewer 中立的 `MaterialProcessSnapshot` 与图；JEI／EMI 适配器分别提供最终可见配方和原生槽位，颜色、布局、图标与坐标映射留在客户端接入层。

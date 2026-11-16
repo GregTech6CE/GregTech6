@@ -11,7 +11,6 @@ import gregtech.api.addon.material.SpecialProcessValue;
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.material.catalog.MaterialFluidUnitFacts;
 import gregtech.content.registry.GTFluids;
-import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialViews;
 import gregtech.engine.prefix.PrefixRegistry;
@@ -50,7 +49,6 @@ public final class SharedSpecialProcessRows {
             map.unlink(recipe);
         }));
         OWNED.clear();
-        RecipeMap.RECIPE_MAP_LIST.forEach(map -> map.mRecipeList.forEach(recipe -> recipe.withSpecialProcess(null)));
     }
 
     public static Set<Recipe> owned() {
@@ -93,7 +91,6 @@ public final class SharedSpecialProcessRows {
                         }
                         Recipe accepted = map.addRecipe(built.recipe());
                         if (accepted != null) {
-                            accepted.withSpecialProcess(method.process().id());
                             OWNED.add(accepted);
                         }
                     }
@@ -104,76 +101,6 @@ public final class SharedSpecialProcessRows {
             com.mojang.logging.LogUtils.getLogger()
                     .warn("[gregtech] Omitted {} special-process rows whose material forms or reagent did not resolve",
                             omitted);
-        annotateExistingRows(methods);
-    }
-
-    /** Marks rows installed after static/addon producers, including datapack recipe documents. */
-    public static void annotateCurrent() {
-        if (!initialized) return;
-        annotateExistingRows(methodRules(MaterialViews.catalog()));
-    }
-
-    private static void annotateExistingRows(List<MethodRules> methods) {
-        var byMap = methods.stream()
-                .collect(java.util.stream.Collectors.groupingBy(
-                        rules -> rules.method().recipeMap(), LinkedHashMap::new, java.util.stream.Collectors.toList()));
-        for (var map : RecipeMap.RECIPE_MAP_LIST) {
-            var candidates = byMap.getOrDefault(map.mNameInternal, List.of());
-            if (candidates.isEmpty()) continue;
-            for (var recipe : map.mRecipeList) {
-                if (recipe.specialProcess() != null) continue;
-                var matches = candidates.stream().filter(rules -> matches(recipe, rules)).toList();
-                if (matches.size() > 1)
-                    com.mojang.logging.LogUtils.getLogger().warn(
-                            "[gregtech] Skipping ambiguous special-process annotation in {}", map.mNameInternal);
-                if (matches.size() == 1)
-                    recipe.withSpecialProcess(matches.get(0).method().process().id());
-            }
-        }
-    }
-
-    private static boolean matches(Recipe recipe, MethodRules rules) {
-        for (var target : rules.targets()) {
-            boolean hasTarget = target.inputCounts().entrySet().stream()
-                    .anyMatch(input -> containsItem(recipe, target.material(), input.getKey(), input.getValue()));
-            if (!hasTarget) continue;
-            for (var reagent : rules.reagents())
-                for (var form : reagent.forms())
-                    if (containsInput(recipe, reagent.material(), form, target.plan().reagentAmount())) return true;
-        }
-        return false;
-    }
-
-    private static boolean containsInput(Recipe recipe, MaterialKey material, FormKey form, long amount) {
-        return isFluid(form)
-                ? java.util.Arrays.stream(recipe.mFluidInputs)
-                        .anyMatch(stack -> sameFluidMaterial(stack, material, form) && stack.getAmount() == amount)
-                : java.util.Arrays.stream(recipe.mInputs)
-                        .anyMatch(stack -> sameItemForm(stack, material, form) && stack.getCount() == amount);
-    }
-
-    private static boolean containsItem(Recipe recipe, MaterialKey material, FormKey form, int count) {
-        return java.util.Arrays.stream(recipe.mInputs)
-                .anyMatch(stack -> stack != null
-                        && !stack.isEmpty()
-                        && stack.getCount() == count
-                        && sameItemForm(stack, material, form));
-    }
-
-    private static boolean sameItemForm(ItemStack stack, MaterialKey material, FormKey form) {
-        if (stack == null || stack.isEmpty()) return false;
-        var equivalent = MaterialEquivalence.form(stack);
-        return equivalent != null
-                && equivalent.material().resolve().getName().equals(material.name())
-                && equivalent.prefix().getName().equals(form.name());
-    }
-
-    private static boolean sameFluidMaterial(FluidStack stack, MaterialKey material, FormKey form) {
-        if (stack == null || stack.isEmpty() || !isFluid(form)) return false;
-        var entry = GTFluids.entryForFluid(stack.getFluid());
-        if (entry == null) return false;
-        var value = gregtech.engine.fluid.FluidVisualPolicy.material(entry).resolve();
-        return value.isValid() && value.getName().equals(material.name()) && entry.gas() == form.name().equals("gas");
     }
 
     private record BuildResult(Recipe recipe) {}

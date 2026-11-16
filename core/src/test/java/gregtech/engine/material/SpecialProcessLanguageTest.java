@@ -11,12 +11,11 @@ import java.util.regex.Pattern;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class MaterialProcessLanguageTest {
-    private static final Pattern PROCESS_KEYS =
-            Pattern.compile("\"(gt6ce\\.(?:jei\\.material_process|special_process)\\.[^\"]+)\"\\s*:");
+class SpecialProcessLanguageTest {
+    private static final Pattern PROCESS_KEYS = Pattern.compile("\"(gt6ce\\.special_process\\.[^\"]+)\"\\s*:");
 
     @Test
-    void materialProcessLanguagesHaveTheSameKeys() throws Exception {
+    void specialProcessLanguagesHaveTheSameKeys() throws Exception {
         var english = keys("en_us.json");
         var chinese = keys("zh_cn.json");
         assertEquals(english, chinese);

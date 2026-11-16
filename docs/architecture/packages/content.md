@@ -99,7 +99,7 @@ core 的 content 描述“有什么”，Minecraft 的 content 将其变为游�
   - 线缆、管道、轴、电池、覆盖板与储罐的实际传输、断开与方向变化。
   - 材料物品/方块注册与统一化；矿脉或结构的注册存在性。
 - 现有测试集
-  - `MaterialRegistrationTest`、`MaterialCatalogTest` 与 `MaterialProcessGraphTest` 提供材料目录、附属合并、处理图预算与查询回归；契约与不变量见[材料系统设计](../../decisions/material-system/README.md)。
+  - `MaterialRegistrationTest` 与 `MaterialCatalogTest` 提供材料目录与附属合并回归；契约与不变量见[材料系统设计](../../decisions/material-system/README.md)。
   - core 静态 TSV 与 GameTest TSV 由对应 JUnit/GameTest 维护；用例覆盖物品管道路由与调度回归。
   - `core/src/test` 的材料目录、标签名翻译、熔融浇筑与配方引擎测试；`api/common` 的材料、机器、能源模型测试。
   - 机器 tick、多方块、能源网络、物流、世界生成完整流程等仍是待补范围。

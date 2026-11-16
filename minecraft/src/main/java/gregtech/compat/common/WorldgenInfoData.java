@@ -16,7 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-/** Legacy icon-bearing worldgen viewer projection; process facts come from {@code MaterialWorldgenFacts}. */
+/** Icon-bearing worldgen data shared by the recipe viewers. */
 public class WorldgenInfoData {
     protected WorldgenInfoData() {}
 

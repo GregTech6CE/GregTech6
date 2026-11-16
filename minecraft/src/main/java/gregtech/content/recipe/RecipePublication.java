@@ -45,8 +45,8 @@ public final class RecipePublication {
         Collection<?> current = manager.getRecipes();
         var applied = APPLIED.get(manager);
         if (applied != null && applied.size() == current.size() && applied.containsAll(current)) {
-            MaterialProcessSnapshot.Store.publish(
-                    MachineRecipeOverlay.lastPublication(), MachineRecipeOverlay.generation());
+            if (MachineRecipeOverlay.generation() > 0 && !MachineRecipeOverlay.lastResult().failed())
+                gregtech.engine.material.MaterialPublication.commit(MachineRecipeOverlay.lastPublication());
             return;
         }
         RegistryAccess access = server.registryAccess();
@@ -61,9 +61,8 @@ public final class RecipePublication {
         OvenRecipeBridge.apply(working, access);
         dedup(working, access);
         manager.replaceRecipes(working.getRecipes());
-        if (!MachineRecipeOverlay.lastResult().failed())
-            MaterialProcessSnapshot.Store.publish(
-                    MachineRecipeOverlay.lastPublication(), MachineRecipeOverlay.generation());
+        if (MachineRecipeOverlay.generation() > 0 && !MachineRecipeOverlay.lastResult().failed())
+            gregtech.engine.material.MaterialPublication.commit(MachineRecipeOverlay.lastPublication());
 //? if >=1.21.1 {
         /*ShapelessRecipeTooltipIndex.rebuild(manager, access);
 *///?} else {
@@ -105,7 +104,6 @@ public final class RecipePublication {
 
     /** Drops the generation snapshot after the server stops; the next world starts fresh. */
     public static void clear() {
-        MaterialProcessSnapshot.Store.clear(MaterialProcessSnapshot.Store.current());
         APPLIED.clear();
     }
 }

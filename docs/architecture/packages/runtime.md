@@ -70,11 +70,7 @@ Block 处理放置、形状和交互分发；BlockEntity 保存实例状态、�
 
 GUI 模板、碎片图标与 JEI/EMI 的布局接入见[GUI 开发指南](../../development/gui-templates.md)，平台差异见[平台包](platforms.md)。
 
-矿物处理由 `content.recipe.MaterialProcessSnapshot` 保存权威 GT 原生事实与活动世界生成；JEI 在 runtime 枚举最终可见分类与配方，EMI 在最终 bake 后枚举可见配方，两者都通过 `ViewerBuilder` 追加工作台、机器与第三方行。可见的 GT machine row 优先复用原生单位、概率和回收归属；`viewer(false)` 的 GT 配方与世界生成由快照补充。`engine.material.MaterialProcessGraph` 提供有界查询，`compat.common.MaterialProcessProjection` 构造两 viewer 共用的展示页。`client.MaterialProcessOverview` 负责布局与路线折叠，`client.MaterialProcessPanel`／`MaterialProcessScreen` 负责视口和原生交互；`MaterialProcessEmiStacks` 把显示流体代理还原为原生索引与查询句柄。`compat.jei.MaterialProcessCategory` 与 `compat.emi.MaterialProcessEmiRecipe` 只做原生槽位、仅限页面材料的索引和事件适配。
-
 第三方集成沿配置与现有入口条件加载，`compileOnly` 只说明编译依赖形态，不能保证类加载安全。
-
-EMI 材料页的数据准入由 `compat.emi.MaterialProcessEmiRecipes` 处理，JEI 由 `compat.jei.MaterialProcessJeiRecipes` 处理。两者都读取所属 viewer 的最终可见分类、配方与工作台；JEI 在 `onRuntimeAvailable` 注册材料页，避免过早读取尚未完成筛选的配方。GT 行优先复用原生单位、概率及回收归属，材料单位模板不受自动配方树开关影响；`viewer(false)` 配方由快照补充。可读取的非树加工以未确认关系接入；说明、结构和动态模式页保留为信息。`MaterialProcessSnapshot.ViewerBuilder` 只构造本次客户端视图，不更改服务端配方。具体覆盖、候选原料和生命周期边界按[游戏内人工验收](../../development/validation/checks/manual-ingame.md#矿物处理展示页)核对。
 
 ## 验收
 
@@ -83,8 +79,6 @@ EMI 材料页的数据准入由 `compat.emi.MaterialProcessEmiRecipes` 处理，
 - 客户端只负责展示与交互入口；真实槽位、库存、权限与配方由服务端 Menu 和服务端状态决定。修改 GUI 模板后先做静态预览，再在客户端与专用服务端分别确认。
 - 网络包检查方向、解码上限、执行线程、目标实体有效性与请求者权限；Mixin 检查两个节点的配置、目标签名、注入点与未命中行为。
 - 可选集成沿配置与现有入口条件加载；分别验证未安装目标模组与安装匹配版本。
-- 矿物处理页按[专用场景](../../development/validation/checks/manual-ingame.md#矿物处理展示页)确认联合输入、角色、概率、端口副本、显式关联与跳转；前端未接线时不记作真实来源或远程快照验收通过。
-- EMI 数据源改动还需确认工作台与第三方加工可见、原生机器不重复、信息页位于来源区底部且点击打开原页面、信息页不生成加工边、延迟注册和配方隐藏生效，以及重载与断线后的旧导航失效。
 - 运输网络快照只在布局变化时失效，空闲电线/管道不执行 tick；外部 fill/drain、覆盖板、扳手、邻居变化和区块加载都必须接到失效或唤醒钩子。
 - 共享 Minecraft 输入遵循 Stonecutter 条件与版本资源路径；渲染、GUI、网络与 Mixin 的结论不能用单平台结果推出另一平台。
 

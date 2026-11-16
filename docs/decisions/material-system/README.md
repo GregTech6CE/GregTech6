@@ -51,4 +51,4 @@
 3. [物品成分解析与运行时准入](item-composition.md)：结构化来源优先级、同级冲突与显式替换链、显式层封闭与 Tag 代次原子重载、耐久缩放及容器/模具形状区分。
 4. [统一回收计划与配方发布仲裁](recovery.md)：基于有效成分的纯粉碎/热回收计划、大份量拆栈与精度表达、生产端输入证明、所有权与冲突发布仲裁。
 5. [统一材料分解规则与计划](decomposition.md)：`MaterialDecompositionRule` 唯一权威、规范组成与精确单位计算、液/气替代相态与固体兜底、原生适配器与重载隔离。
-6. [公共数据 API 与多代发布契约](data-api-and-publication.md)：已实现的只读视图（目录、元数据、分类/组、形态规则与实际绑定）、`MaterialPublication.Stamp` 一致性保证，以及当前作为内部 viewer 数据层实现、尚未进入公共 API 的来源用途图。
+6. [公共数据 API 与多代发布契约](data-api-and-publication.md)：已实现的只读视图（目录、元数据、分类/组、形态规则与实际绑定）、`MaterialPublication.Stamp` 一致性保证。

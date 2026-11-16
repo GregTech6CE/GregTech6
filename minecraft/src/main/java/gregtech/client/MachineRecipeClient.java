@@ -2,7 +2,6 @@ package gregtech.client;
 import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.content.recipe.MachineRecipeOverlay;
-import gregtech.content.recipe.MaterialProcessSnapshot;
 import gregtech.content.recipe.OvenRecipeBridge;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -12,13 +11,11 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.RecipesUpdatedEvent;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 *///?} else {
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -42,12 +39,6 @@ public final class MachineRecipeClient {
         apply(event.getRecipeManager());
     }
 
-    /** A viewer callback must not survive a disconnect even if the next recipe sync is delayed. */
-    @SubscribeEvent
-    public static void logout(ClientPlayerNetworkEvent.LoggingOut event) {
-        MaterialProcessSnapshot.Store.clear(MaterialProcessSnapshot.Store.current());
-    }
-
     /** On login the server sends recipes before tags, so tag inputs only expand once the tags arrive. */
 
 /** Tag inputs only expand against the tags the server sent, which can arrive after the recipes. */
@@ -66,8 +57,7 @@ public final class MachineRecipeClient {
         // exist after it runs, and the synced recipe list alone does not recreate them locally.
         var connection = Minecraft.getInstance().getConnection();
         if (connection != null) OvenRecipeBridge.apply(recipes, connection.registryAccess());
-        MaterialProcessSnapshot.Store.publish(
-                MachineRecipeOverlay.lastPublication(), MachineRecipeOverlay.generation());
+        gregtech.engine.material.MaterialPublication.commit(MachineRecipeOverlay.lastPublication());
         // The row set is final now; build on the task queue so the sync thread is not blocked.
         // A newer tag update supersedes this pass and its queued build.
         long generation = MachineRecipeOverlay.generation();

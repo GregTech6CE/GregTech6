@@ -112,7 +112,6 @@ public final class MachineRecipeOverlay {
             // previous world's rows. Restore every map and drop the tag-owned producers instead of
             // publishing a partial generation.
             LOGGER.error("[gregtech] Machine recipe overlay generation {} failed; restoring the baseline", current, failure);
-            MaterialProcessSnapshot.Store.clear(MaterialProcessSnapshot.Store.current());
             recover(checkpoint);
             lastResult = new Result(0, 0, 0, 0, baselineRows(), false, true);
             return lastResult;
@@ -162,7 +161,6 @@ public final class MachineRecipeOverlay {
         long removeMillis = (System.nanoTime() - removeStarted) / 1_000_000L;
         var installStarted = System.nanoTime();
         for (var marker : markers) if (marker.addition() != null) install(marker.id(), marker.addition(), tally);
-        SharedSpecialProcessRows.annotateCurrent();
         long installMillis = (System.nanoTime() - installStarted) / 1_000_000L;
         rememberFurnaceChanges(furnaceBefore);
         LOGGER.info("[gregtech] Machine recipe overlay baseline {} rows, restore {} ms, producers {} ms, moved {}, "

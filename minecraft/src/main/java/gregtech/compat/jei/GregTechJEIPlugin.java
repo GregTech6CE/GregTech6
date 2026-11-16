@@ -1,6 +1,5 @@
 package gregtech.compat.jei;
 
-import gregtech.content.recipe.MaterialProcessSnapshot;
 import gregtech.compat.common.RecipeMachines;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -28,21 +27,7 @@ import java.util.Map;
  */
 @JeiPlugin
 public final class GregTechJEIPlugin implements IModPlugin {
-    private mezz.jei.api.runtime.IJeiRuntime runtime;
-    private MaterialProcessSnapshot processSnapshot;
-    private MaterialProcessCategory processCategory;
-
     @Override public void onRuntimeAvailable(mezz.jei.api.runtime.IJeiRuntime runtime) {
-        this.runtime = runtime;
-        if (!emiLoaded() && processCategory != null) {
-            var source = MaterialProcessSnapshot.Store.current();
-            var snapshot = MaterialProcessJeiRecipes.capture(source, runtime);
-            processSnapshot = snapshot;
-            var navigation = new ProcessNavigation(source, snapshot);
-            runtime.getRecipeManager().addRecipes(
-                    MaterialProcessCategory.TYPE,
-                    gregtech.compat.common.MaterialProcessProjection.initialPages(snapshot, navigation));
-        }
         gregtech.client.gui.RecipeViewerNavigation.registerJei(map -> {
             if (!categories.containsKey(map)) return false;
             runtime.getRecipesGui().showTypes(java.util.List.of(RecipeMapCategory.recipeType(map)));
@@ -55,60 +40,11 @@ public final class GregTechJEIPlugin implements IModPlugin {
     }
 
     @Override public void onRuntimeUnavailable() {
-        runtime = null;
-        processSnapshot = null;
         gregtech.client.gui.RecipeViewerNavigation.clearJei();
     }
 
     @Override
     public void registerGuiHandlers(mezz.jei.api.registration.IGuiHandlerRegistration registration) {
-        registration.addGuiScreenHandler(gregtech.client.MaterialProcessScreen.class, screen ->
-                new mezz.jei.api.gui.handlers.IGuiProperties() {
-                    // JEI 19 renamed GUI property accessors; the occupied full-window rectangle is identical.
-//? if >=1.21.1 {
-                    /*@Override public Class<? extends net.minecraft.client.gui.screens.Screen> screenClass() {
-                        return gregtech.client.MaterialProcessScreen.class;
-                    }
-                    @Override public int guiLeft() { return 0; }
-                    @Override public int guiTop() { return 0; }
-                    @Override public int guiXSize() { return screen.width; }
-                    @Override public int guiYSize() { return screen.height; }
-                    @Override public int screenWidth() { return screen.width; }
-                    @Override public int screenHeight() { return screen.height; }
-*///?} else {
-                    @Override public Class<? extends net.minecraft.client.gui.screens.Screen> getScreenClass() {
-                        return gregtech.client.MaterialProcessScreen.class;
-                    }
-                    @Override public int getGuiLeft() { return 0; }
-                    @Override public int getGuiTop() { return 0; }
-                    @Override public int getGuiXSize() { return screen.width; }
-                    @Override public int getGuiYSize() { return screen.height; }
-                    @Override public int getScreenWidth() { return screen.width; }
-                    @Override public int getScreenHeight() { return screen.height; }
-//?}
-                });
-        registration.addGlobalGuiHandler(new mezz.jei.api.gui.handlers.IGlobalGuiHandler() {
-            @Override
-            public java.util.Optional<mezz.jei.api.runtime.IClickableIngredient<?>> getClickableIngredientUnderMouse(
-                    double x, double y) {
-                if (runtime == null || !(net.minecraft.client.Minecraft.getInstance().screen
-                        instanceof gregtech.client.MaterialProcessScreen screen)) return java.util.Optional.empty();
-                var stack = screen.stackAt(x, y);
-                if (stack.isEmpty()) return java.util.Optional.empty();
-                Object ingredient = stack;
-                if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
-//? if >=1.21.1 {
-                    /*var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(stack);
-*///?} else {
-                    var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(stack);
-//?}
-                    if (fluid.isEmpty()) return java.util.Optional.empty();
-                    ingredient = fluid;
-                }
-                return runtime.getIngredientManager().createClickableIngredient(ingredient, screen.stackArea(x, y), false)
-                        .map(value -> (mezz.jei.api.runtime.IClickableIngredient<?>) value);
-            }
-        });
         registration.addGenericGuiContainerHandler(gregtech.client.gui.MachineContainerScreen.class,
                 new mezz.jei.api.gui.handlers.IGuiContainerHandler<gregtech.client.gui.MachineContainerScreen<?>>() {
                     @Override public java.util.List<net.minecraft.client.renderer.Rect2i> getGuiExtraAreas(
@@ -159,8 +95,6 @@ public final class GregTechJEIPlugin implements IModPlugin {
         registration.addRecipeCategories(new MultiblockInfoCategory(guiHelper));
         registration.addRecipeCategories(new ToolAssemblyCategory.Category(guiHelper));
         registration.addRecipeCategories(new MoldChiselCategory(guiHelper));
-        processCategory = new MaterialProcessCategory(guiHelper);
-        registration.addRecipeCategories(processCategory);
         registration.addRecipeCategories(
                 new WorldgenInfoCategories.VeinCategory(guiHelper),
                 new WorldgenInfoCategories.SmallOreCategory(guiHelper),
@@ -288,54 +222,4 @@ public final class GregTechJEIPlugin implements IModPlugin {
         return new ItemStack(Items.ANVIL);
     }
 
-    private final class ProcessNavigation implements gregtech.compat.common.MaterialProcessDisplay.Navigation {
-        private final MaterialProcessSnapshot source;
-        private final MaterialProcessSnapshot snapshot;
-
-        private ProcessNavigation(MaterialProcessSnapshot source, MaterialProcessSnapshot snapshot) {
-            this.source = source;
-            this.snapshot = snapshot;
-        }
-
-        @Override
-        public boolean valid() {
-            return processSnapshot == snapshot && MaterialProcessSnapshot.Store.current(source);
-        }
-
-        @Override
-        public boolean openStack(ItemStack stack, boolean uses) {
-            if (runtime == null || !valid() || stack.isEmpty()) return false;
-            var role = uses ? mezz.jei.api.recipe.RecipeIngredientRole.INPUT : mezz.jei.api.recipe.RecipeIngredientRole.OUTPUT;
-            var factory = runtime.getJeiHelpers().getFocusFactory();
-            var focuses = new ArrayList<mezz.jei.api.recipe.IFocus<?>>();
-            if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
-//? if >=1.21.1 {
-                /*var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(stack);
-                if (!fluid.isEmpty()) focuses.add(factory.createFocus(role, mezz.jei.api.neoforge.NeoForgeTypes.FLUID_STACK, fluid));
-*///?} else {
-                var fluid = gregtech.engine.fluid.FluidDisplayBinding.resolve(stack);
-                if (!fluid.isEmpty()) focuses.add(factory.createFocus(role, mezz.jei.api.forge.ForgeTypes.FLUID_STACK, fluid));
-//?}
-            } else focuses.add(factory.createFocus(role, mezz.jei.api.constants.VanillaTypes.ITEM_STACK, stack));
-            if (focuses.isEmpty()) return false;
-            runtime.getRecipesGui().show(focuses);
-            return true;
-        }
-
-        @Override
-        public boolean openForm(gregtech.api.addon.material.DataKey resource, boolean uses) {
-            if (runtime == null || !valid()) return false;
-            var pages = gregtech.compat.common.MaterialProcessProjection.pages(snapshot, resource, this);
-            runtime.getRecipesGui().showRecipes(processCategory, pages, List.of());
-            return true;
-        }
-    }
-
-    private static boolean emiLoaded() {
-//? if >=1.21.1 {
-        /*return net.neoforged.fml.ModList.get().isLoaded("emi");
-*///?} else {
-        return net.minecraftforge.fml.ModList.get().isLoaded("emi");
-//?}
-    }
 }

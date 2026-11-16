@@ -87,8 +87,6 @@ public final class MachineEmiRecipe implements EmiRecipe {
     @Override public List<EmiIngredient> getInputs() { return inputs; }
     @Override public List<EmiIngredient> getCatalysts() { return catalysts; }
     @Override public List<EmiStack> getOutputs() { return outputs; }
-    RecipeMap recipeMap() { return map; }
-    Recipe nativeRecipe() { return recipe; }
     @Override public boolean supportsRecipeTree() { return !recipe.mFakeRecipe; }
     @Override public int getDisplayWidth() { return new RecipeGuiLayout(map,recipe).width(); }
     @Override public int getDisplayHeight() { return new RecipeGuiLayout(map,recipe).height(); }

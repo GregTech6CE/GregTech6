@@ -15,8 +15,6 @@ import net.minecraft.world.item.ItemStack;
 
 /** Category identities shared by the two viewers, independent of workstation ordering. */
 public final class RecipeViewerIcons {
-    private static volatile java.util.Map<RecipeMap, ItemStack> cachedCategories;
-
     private RecipeViewerIcons() {}
 
     public static ItemStack item(String path) {
@@ -38,7 +36,7 @@ public final class RecipeViewerIcons {
         return stack;
     }
 
-    /** Use the same category identity for the process graph and the native viewer. */
+    /** Resolves the preferred category icon, falling back to a workstation. */
     public static ItemStack category(RecipeMap map, java.util.Map<RecipeMap, java.util.List<ItemStack>> machines) {
         ItemStack preferred = map(map);
         if (!preferred.isEmpty()) return preferred;
@@ -46,20 +44,6 @@ public final class RecipeViewerIcons {
         return workstations.isEmpty()
                 ? new ItemStack(net.minecraft.world.item.Items.ANVIL)
                 : workstations.get(0).copy();
-    }
-
-    public static java.util.Map<RecipeMap, ItemStack> categories() {
-        var cached = cachedCategories;
-        if (cached != null) return cached;
-        synchronized (RecipeViewerIcons.class) {
-            if (cachedCategories == null) {
-                var machines = RecipeMachines.collect();
-                var icons = new java.util.HashMap<RecipeMap, ItemStack>();
-                for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) icons.put(map, category(map, machines));
-                cachedCategories = java.util.Map.copyOf(icons);
-            }
-            return cachedCategories;
-        }
     }
 
     public static ItemStack map(RecipeMap map) {

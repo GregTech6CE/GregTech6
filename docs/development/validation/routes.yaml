@@ -118,8 +118,3 @@ routes:
       - "minecraft/versions/*/src/main/java/gregtech/network/**"
     packages: [runtime]
     checks: [manual-ingame]
-  - paths:
-      - "minecraft/src/main/java/gregtech/content/recipe/MaterialProcessSnapshot.java"
-      - "minecraft/src/main/java/gregtech/content/worldgen/MaterialWorldgenFacts.java"
-    packages: [runtime]
-    checks: [manual-ingame, gametest]
