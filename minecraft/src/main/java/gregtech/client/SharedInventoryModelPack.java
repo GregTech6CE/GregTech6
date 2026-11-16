@@ -12,6 +12,7 @@ import gregtech.content.registry.GTItemPipes;
 import gregtech.content.registry.GTSignalWires;
 import gregtech.content.registry.GTWires;
 import gregtech.engine.machine.OrthogonalMachineModels;
+import gregtech.engine.mod.GregTechIdentity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -43,6 +44,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Predicate;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Virtual client pack: the item references, shared material models, machine blockstates and machine
@@ -102,13 +104,25 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     }
 
     /**
-     * Nesting depth of {@link #data()} on the current thread. Resource-manager probes must not run
-     * while the index builds: they walk every pack in the namespace, which includes this one.
+     * Nesting depth of {@link #data()} on the current thread so pack reads during resource building
+     * short-circuit instead of re-entering {@link #buildResources()}.
      */
     private static final ThreadLocal<Integer> BUILD_DEPTH = ThreadLocal.withInitial(() -> 0);
 
     static boolean isBuilding() {
         return BUILD_DEPTH.get() > 0;
+    }
+
+    static boolean isServedAssetPath(String path) {
+        return path.startsWith("models/") || path.startsWith("blockstates/");
+    }
+
+    static boolean servesAssetDirectory(String directory) {
+        return directory.isEmpty()
+                || "models".equals(directory)
+                || directory.startsWith("models/")
+                || "blockstates".equals(directory)
+                || directory.startsWith("blockstates/");
     }
 
     private synchronized Map<ResourceLocation, byte[]> data() {
@@ -128,17 +142,20 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     private Map<ResourceLocation, byte[]> buildResources() {
         Map<ResourceLocation, byte[]> result = new HashMap<>();
         Map<ResourceLocation, byte[]> references = new HashMap<>();
-        // Many material items refer to the same template. Check the classpath once per parent.
+        // Many material items refer to the same template. Cache each alias/classpath lookup per parent.
         Map<ResourceLocation, Boolean> templates = new HashMap<>();
         emitStructureParts(result);
         emitCompressedTanks(result);
         emitAddonBlockPrefixes(result);
-        // Shared material models live only in this pack now; blockstates and item references below
-        // resolve their templates from the same map. An icon that only an installed resource pack
-        // ships counts here too, so the pack serves the model that pack's art needs.
-        Set<String> externalIcons = collectExternalMaterialIcons();
+        // Shared material models live only in this pack; blockstates and item references below
+        // resolve their templates from the same map. Material sprites come from the mounted
+        // resource manager once the registry namespace is mounted, or from the classpath before the
+        // first client reload.
+        Minecraft minecraft = Minecraft.getInstance();
+        ResourceManager manager = minecraft == null ? null : minecraft.getResourceManager();
+        Set<String> mountedIcons = collectMountedMaterialIcons(manager);
         Predicate<String> materialExists =
-                path -> externalIcons.contains(path) || MaterialIconDefinitions.classpathResourceExists(path);
+                mountedIcons != null ? mountedIcons::contains : MaterialIconDefinitions::classpathResourceExists;
         int sharedModels = emitSharedMaterialModels(result, materialExists);
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
@@ -146,11 +163,12 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                 result.put(itemModel(id), MaterialIconDefinitions.addonItemModel(material.getPrefix()).getBytes(StandardCharsets.UTF_8));
                 continue;
             }
-            if (id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && !id.getPath().equals("bottle_crate")
+            if (id.getNamespace().equals(GregTechIdentity.REGISTRY_NAMESPACE) && !id.getPath().equals("bottle_crate")
                     && item instanceof BlockItem crateItem
                     && crateItem.getBlock() instanceof gregtech.content.block.inventory.BottleCrateBlock crate) {
                 String model = "block/inventory/" + id.getPath();
-                String blockJson = "{\"parent\":\"gt6ce:block/inventory/bottle_crate_tinted\",\"textures\":{\"wood\":\"" + crate.frameTexture() + "\"}}";
+                String blockJson = "{\"parent\":\"gt6ce:block/inventory/bottle_crate_tinted\",\"textures\":{\"wood\":\""
+                        + crate.frameTexture(materialExists) + "\"}}";
                 result.put(location("models/" + model + ".json"), blockJson.getBytes(StandardCharsets.UTF_8));
                 result.put(location("blockstates/" + id.getPath() + ".json"),
                         ("{\"variants\":{\"\":{\"model\":\"gt6ce:" + model + "\"}}}").getBytes(StandardCharsets.UTF_8));
@@ -338,26 +356,23 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     }
 
     /**
-     * Material sprites the other mounted packs ship for the registry namespace, as paths relative to
-     * {@code assets/<namespace>/}. Only the paths are recorded: no stream is opened while this pack
-     * is still building, which is also why this pack is skipped.
+     * Material sprites visible through {@code manager} for the registry namespace, as paths relative
+     * to {@code assets/<namespace>/}, or {@code null} before that namespace is mounted. Only the
+     * resource keys are collected so no stream is opened while this pack builds.
      */
-    private Set<String> collectExternalMaterialIcons() {
-        Minecraft minecraft = Minecraft.getInstance();
-        ResourceManager manager = minecraft == null ? null : minecraft.getResourceManager();
-        if (manager == null) return Set.of();
-        List<PackResources> packs = manager.listPacks().toList();
-        // The manager swaps in the new pack list before any listener reads it, so a list without
-        // this pack is a stale one; the classpath stays the only source that early.
-        if (packs.stream().noneMatch(pack -> pack == this)) return Set.of();
+    @Nullable
+    static Set<String> collectMountedMaterialIcons(@Nullable ResourceManager manager) {
+        if (manager == null || !MaterialIconDefinitions.isMaterialNamespaceMounted(manager.getNamespaces())) {
+            return null;
+        }
         Set<String> icons = new HashSet<>();
-        for (PackResources pack : packs) {
-            if (pack == this) continue;
-            for (String directory : MATERIAL_ICON_DIRECTORIES) {
-                pack.listResources(PackType.CLIENT_RESOURCES,
-                        gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE, directory,
-                        (id, stream) -> icons.add(id.getPath()));
-            }
+        for (String directory : MATERIAL_ICON_DIRECTORIES) {
+            manager.listResources(
+                            directory,
+                            id -> GregTechIdentity.REGISTRY_NAMESPACE.equals(id.getNamespace())
+                                    && id.getPath().endsWith(".png"))
+                    .keySet()
+                    .forEach(id -> icons.add(id.getPath()));
         }
         return icons;
     }
@@ -522,15 +537,15 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
 
     @Override
     public IoSupplier<InputStream> getResource(PackType type, ResourceLocation id) {
-        if (type != PackType.CLIENT_RESOURCES) return null;
+        if (type != PackType.CLIENT_RESOURCES || !isServedAssetPath(id.getPath()) || isBuilding()) return null;
         byte[] json = data().get(id);
         return json == null ? null : () -> new ByteArrayInputStream(json);
     }
 
     @Override
     public void listResources(PackType type, String namespace, String path, ResourceOutput output) {
-        if (type != PackType.CLIENT_RESOURCES) return;
-        String prefix = path + "/";
+        if (type != PackType.CLIENT_RESOURCES || !servesAssetDirectory(path) || isBuilding()) return;
+        String prefix = path.isEmpty() ? "" : path + "/";
         data().forEach((id, json) -> {
             if (id.getNamespace().equals(namespace) && id.getPath().startsWith(prefix))
                 output.accept(id, () -> new ByteArrayInputStream(json));

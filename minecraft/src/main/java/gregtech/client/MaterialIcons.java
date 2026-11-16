@@ -5,8 +5,10 @@ import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.platform.Mc;
+import java.util.function.Predicate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -22,22 +24,24 @@ public final class MaterialIcons {
     }
 
     /**
-     * Whether the client can load a pack-relative resource. The resource manager sees resource-pack
-     * overrides once a reload has run; before the first reload, and while the shared model pack is
-     * being built, the built-in classpath copy is the only safe source.
+     * Selects the material sprite probe for {@code manager}: once the {@code gt6ce} namespace is
+     * mounted, queries only the resource manager so pack {@code filter} rules are honoured; before
+     * the first reload (or when {@code manager} is absent), falls back to the built-in classpath.
      */
+    static Predicate<String> selectResourceProbe(@Nullable ResourceManager manager) {
+        if (manager != null) {
+            return MaterialIconDefinitions.selectMaterialProbe(
+                    manager.getNamespaces(),
+                    rel -> manager.getResource(Mc.gregtechId(rel)).isPresent());
+        }
+        return MaterialIconDefinitions::classpathResourceExists;
+    }
+
+    /** Whether the client can load a pack-relative material resource. */
     public static boolean resourceExists(String relativePath) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (!SharedInventoryModelPack.isBuilding()
-                && minecraft != null
-                && minecraft.getResourceManager() != null
-                && minecraft
-                        .getResourceManager()
-                        .getResource(Mc.gregtechId(relativePath))
-                        .isPresent()) {
-            return true;
-        }
-        return MaterialIconDefinitions.classpathResourceExists(relativePath);
+        ResourceManager manager = minecraft == null ? null : minecraft.getResourceManager();
+        return selectResourceProbe(manager).test(relativePath);
     }
 
     /** Sprite location for this set, following the inheritance chain to the set that ships it. */

@@ -4,6 +4,8 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.engine.mod.GregTechIdentity;
+import java.util.Set;
 import java.util.function.Predicate;
 import org.jspecify.annotations.Nullable;
 
@@ -111,8 +113,30 @@ public final class MaterialIconDefinitions {
     /** Classpath probe for probes taken before the first client resource reload finishes. */
     public static boolean classpathResourceExists(String relativePath) {
         return MaterialIconDefinitions.class.getResource(
-                        "/assets/" + gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE + "/" + relativePath)
+                        "/assets/" + GregTechIdentity.REGISTRY_NAMESPACE + "/" + relativePath)
                 != null;
+    }
+
+    /** True once the resource manager mounts the material-icon namespace. */
+    public static boolean isMaterialNamespaceMounted(Set<String> namespaces) {
+        return namespaces.contains(GregTechIdentity.REGISTRY_NAMESPACE);
+    }
+
+    /** Chooses between the mounted resource-manager probe and the pre-reload classpath probe. */
+    public static Predicate<String> selectMaterialProbe(
+            boolean mounted, Predicate<String> managerProbe, Predicate<String> classpathProbe) {
+        return mounted ? managerProbe : classpathProbe;
+    }
+
+    /**
+     * Uses {@code managerProbe} exclusively once {@link GregTechIdentity#REGISTRY_NAMESPACE} is
+     * mounted so pack {@code filter} rules are not bypassed by classpath fallback.
+     */
+    public static Predicate<String> selectMaterialProbe(Set<String> mountedNamespaces, Predicate<String> managerProbe) {
+        return selectMaterialProbe(
+                isMaterialNamespaceMounted(mountedNamespaces),
+                managerProbe,
+                MaterialIconDefinitions::classpathResourceExists);
     }
 
     /**

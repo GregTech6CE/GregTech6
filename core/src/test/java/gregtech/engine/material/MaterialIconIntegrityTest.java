@@ -11,6 +11,8 @@ import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.cover.MaterialCoverRules;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.MaterialTestFixture;
+import gregtech.content.material.Materials;
+import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
 import java.io.IOException;
@@ -301,6 +303,74 @@ class MaterialIconIntegrityTest {
             }
         }
         assertTrue(duplicates.isEmpty(), "Icons repeat what an ancestor already ships: " + duplicates);
+    }
+
+    @Test
+    void materialProbeStopsFallingBackToClasspathOnceMounted() {
+        String metallicIngot = "textures/"
+                + MaterialIconDefinitions.texturePath(MaterialTextureSet.METALLIC, MaterialPrefix.ingot, false)
+                + ".png";
+        String dullIngot = "textures/"
+                + MaterialIconDefinitions.texturePath(MaterialTextureSet.DULL, MaterialPrefix.ingot, false)
+                + ".png";
+        assertTrue(MaterialIconDefinitions.classpathResourceExists(dullIngot));
+
+        Predicate<String> mountedProbe = MaterialIconDefinitions.selectMaterialProbe(
+                Set.of(GregTechIdentity.REGISTRY_NAMESPACE), path -> path.equals(metallicIngot));
+        assertEquals(
+                MaterialTextureSet.METALLIC,
+                MaterialIconDefinitions.resolveItemTextureOwner(
+                        MaterialTextureSet.SHINY, MaterialPrefix.ingot, false, mountedProbe));
+
+        Predicate<String> filteredAllProbe =
+                MaterialIconDefinitions.selectMaterialProbe(Set.of(GregTechIdentity.REGISTRY_NAMESPACE), path -> false);
+        assertFalse(filteredAllProbe.test(dullIngot));
+        assertNull(MaterialIconDefinitions.resolveItemTextureOwner(
+                MaterialTextureSet.SHINY, MaterialPrefix.ingot, false, filteredAllProbe));
+
+        Predicate<String> unmountedProbe = MaterialIconDefinitions.selectMaterialProbe(Set.of(), path -> false);
+        assertTrue(unmountedProbe.test(dullIngot));
+        assertNotNull(MaterialIconDefinitions.resolveItemTextureOwner(
+                MaterialTextureSet.SHINY, MaterialPrefix.ingot, false, unmountedProbe));
+    }
+
+    @Test
+    void bottleCrateCasingResolutionHonorsResourcePackOverrideAndFilter() {
+        MaterialTextureSet steelSet = MaterialIconDefinitions.resolveTextureSet(Materials.Steel);
+        MaterialTextureSet leadSet = MaterialIconDefinitions.resolveTextureSet(Materials.Lead);
+        assertEquals(MaterialTextureSet.METALLIC, steelSet);
+        assertEquals(MaterialTextureSet.DULL, leadSet);
+
+        String casingFile = BlockMaterialPrefix.casingMachine.getTextureFileName();
+        String dullCasing =
+                "textures/" + MaterialIconDefinitions.blockIconPath(MaterialTextureSet.DULL, casingFile) + ".png";
+        String metallicCasing =
+                "textures/" + MaterialIconDefinitions.blockIconPath(MaterialTextureSet.METALLIC, casingFile) + ".png";
+
+        Set<String> dullOnly = Set.of(dullCasing);
+        Predicate<String> dullOnlyProbe = MaterialIconDefinitions.selectMaterialProbe(
+                Set.of(GregTechIdentity.REGISTRY_NAMESPACE), dullOnly::contains);
+        assertEquals(
+                MaterialTextureSet.DULL,
+                MaterialIconDefinitions.resolveBlockTextureOwner(steelSet, casingFile, dullOnlyProbe));
+        assertEquals(
+                MaterialTextureSet.DULL,
+                MaterialIconDefinitions.resolveBlockTextureOwner(leadSet, casingFile, dullOnlyProbe));
+
+        Set<String> overridden = Set.of(dullCasing, metallicCasing);
+        Predicate<String> overrideProbe = MaterialIconDefinitions.selectMaterialProbe(
+                Set.of(GregTechIdentity.REGISTRY_NAMESPACE), overridden::contains);
+        assertEquals(
+                MaterialTextureSet.METALLIC,
+                MaterialIconDefinitions.resolveBlockTextureOwner(steelSet, casingFile, overrideProbe));
+        assertEquals(
+                MaterialTextureSet.DULL,
+                MaterialIconDefinitions.resolveBlockTextureOwner(leadSet, casingFile, overrideProbe));
+
+        Predicate<String> filteredAllProbe =
+                MaterialIconDefinitions.selectMaterialProbe(Set.of(GregTechIdentity.REGISTRY_NAMESPACE), path -> false);
+        assertNull(MaterialIconDefinitions.resolveBlockTextureOwner(steelSet, casingFile, filteredAllProbe));
+        assertNull(MaterialIconDefinitions.resolveBlockTextureOwner(leadSet, casingFile, filteredAllProbe));
     }
 
     private static Path iconRoot(String kind) {

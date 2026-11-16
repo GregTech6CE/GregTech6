@@ -23,10 +23,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
  * inheritance chain ships the base sprite.
  *
  * <p>Both the model registration and the in-memory model pack read this list, so registration can
- * never name a model the pack does not serve. Which sprites count as present is the caller's
- * choice: the bake keeps the plain {@link MaterialIcons#resourceExists} probe, while the pack
- * passes a predicate that also sees installed resource packs, so both stages agree on the icon set
- * a player can actually load.
+ * never name a model the pack does not serve. Both paths follow the mounted resource manager (and
+ * its {@code filter} rules) once {@code gt6ce} is mounted: registration uses
+ * {@link MaterialIcons#resourceExists}, while the pack passes its pre-collected icon set.
  */
 public final class MaterialSharedModelIndex {
     public record ItemModel(MaterialTextureSet set, MaterialPrefix prefix) {}

@@ -95,12 +95,15 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
     public boolean metal() { return material != null; }
     public int tintRgb() { return metal() ? material.getColor() : 0xFFFFFF; }
     public String frameTexture() {
+        return frameTexture(gregtech.engine.material.MaterialIconDefinitions::classpathResourceExists);
+    }
+
+    public String frameTexture(java.util.function.Predicate<String> resourceExists) {
         if (!metal()) return woodTexture;
         var set = gregtech.engine.material.MaterialIconDefinitions.resolveTextureSet(material);
         String file = gregtech.engine.prefix.BlockMaterialPrefix.casingMachine.getTextureFileName();
-        // Classpath probe: the frame JSON is generated before the first client resource reload.
         var owner = gregtech.engine.material.MaterialIconDefinitions.resolveBlockTextureOwner(
-                set, file, gregtech.engine.material.MaterialIconDefinitions::classpathResourceExists);
+                set, file, resourceExists);
         return "gt6ce:"
                 + gregtech.engine.material.MaterialIconDefinitions.blockIconPath(owner == null ? set : owner, file);
     }
