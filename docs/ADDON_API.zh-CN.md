@@ -59,6 +59,8 @@
 
 API 1.9 新增 `SpecialProcessMethod`、`SpecialProcessValue` 与 `SpecialProcessesView`。附属通过 `MaterialInfoTool.Registrar.registerSpecialProcess(...)` 声明 typed target／reagent 规则，再通过 `MaterialCatalogView.specialProcesses()` 当前发布快照读取；target 和 reagent 必须绑定同一个 `MaterialProcessKey`。
 
+特殊工艺试剂与产物按 `MaterialCatalogView.formBindings()` 已发布的实际形态解析。流体试剂的 `reagentAmount` 和流体产物的 `millibuckets` 直接使用 mB；水和岩浆的原版流体身份也发布为材料形态，不要求内部 `MATERIAL_FLUID_UNIT` 换算条目；`anyForm(new SpecialProcessValue.Reagent())` 从该材料已发布的形态中选择可解析的试剂。任一必需产物无法解析时整行拒绝，日志按输入、试剂、物品产物、流体产物分类汇总，避免发布缺少产物的配方。
+
 宿主专用的 `StructureGrid` 与 `RecipeMapSpec` 不属于附属契约：它们分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`，编码内置多方块几何和配方表，附属不应依赖。
 
 公共 API 的契约检查、SDK 与平台检查见[验证与验收](development/validation/README.md)。移动到 API 包的可变模型或内部辅助类不自动获得长期兼容保证。

@@ -4,13 +4,12 @@ import static gregtech.content.recipe.SharedOreWashingRows.NativeForm;
 import static gregtech.content.recipe.SourceOreWashingRules.Availability;
 
 import gregtech.api.addon.material.FormKey;
+import gregtech.api.addon.material.MaterialFormKind;
+import gregtech.api.addon.material.MaterialFormsView;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKey;
 import gregtech.api.addon.material.SpecialProcessMethod;
 import gregtech.api.addon.material.SpecialProcessValue;
-import gregtech.content.data.FluidCatalog;
-import gregtech.content.material.catalog.MaterialFluidUnitFacts;
-import gregtech.content.registry.GTFluids;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialViews;
 import gregtech.engine.prefix.PrefixRegistry;
@@ -25,6 +24,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
@@ -63,7 +64,7 @@ public final class SharedSpecialProcessRows {
         var catalog = MaterialViews.catalog();
         var methods = methodRules(catalog);
         var resolver = new Resolver();
-        int omitted = 0;
+        var omitted = new LinkedHashMap<String, Integer>();
         for (var methodRules : methods) {
             var method = methodRules.method();
             RecipeMap map = RecipeMap.RECIPE_MAP_LIST.stream()
@@ -86,7 +87,11 @@ public final class SharedSpecialProcessRows {
                                 target.material(), inputEntry.getKey(), inputEntry.getValue(), target.plan(),
                                 reagent, resolver);
                         if (built.recipe() == null) {
-                            omitted++;
+                            omitted.merge(built.reason(), 1, Integer::sum);
+                            com.mojang.logging.LogUtils.getLogger().debug(
+                                    "[gregtech] Omitted special process {} for {}/{} with {}: {}",
+                                    method.process().id(), target.material().name(), inputEntry.getKey().name(),
+                                    reagent.material().name(), built.reason());
                             continue;
                         }
                         Recipe accepted = map.addRecipe(built.recipe());
@@ -97,15 +102,15 @@ public final class SharedSpecialProcessRows {
                 }
             }
         }
-        if (omitted > 0)
+        if (!omitted.isEmpty())
             com.mojang.logging.LogUtils.getLogger()
-                    .warn("[gregtech] Omitted {} special-process rows whose material forms or reagent did not resolve",
+                    .warn("[gregtech] Omitted special-process rows by unresolved requirement: {}",
                             omitted);
     }
 
-    private record BuildResult(Recipe recipe) {}
+    record BuildResult(Recipe recipe, String reason) {}
 
-    private static BuildResult build(
+    static BuildResult build(
             MaterialKey target,
             FormKey inputForm,
             int inputCount,
@@ -113,28 +118,28 @@ public final class SharedSpecialProcessRows {
             ReagentSelector reagent,
             Resolver resolver) {
         ItemStack input = resolver.item(target, inputForm, inputCount);
-        if (input.isEmpty()) return new BuildResult(null);
+        if (input.isEmpty()) return new BuildResult(null, "input-form");
         var itemInputs = new ArrayList<ItemStack>();
         itemInputs.add(input);
         var fluidInputs = new ArrayList<FluidStack>();
         if (!addReagent(reagent, plan.reagentAmount(), itemInputs, fluidInputs, resolver))
-            return new BuildResult(null);
+            return new BuildResult(null, "reagent");
 
         var itemOutputs = new ArrayList<ItemStack>();
         var chances = new ArrayList<Long>();
         for (var output : plan.itemOutputs()) {
             ItemStack stack = firstItem(output, resolver);
-            if (stack.isEmpty()) return new BuildResult(null);
+            if (stack.isEmpty()) return new BuildResult(null, "item-output");
             itemOutputs.add(stack);
             chances.add((long) output.chance());
         }
         var fluidOutputs = new ArrayList<FluidStack>();
         for (var output : plan.fluidOutputs()) {
             FluidStack stack = firstFluid(output, resolver);
-            if (stack.isEmpty()) return new BuildResult(null);
+            if (stack.isEmpty()) return new BuildResult(null, "fluid-output");
             fluidOutputs.add(stack);
         }
-        if (itemOutputs.isEmpty() && fluidOutputs.isEmpty()) return new BuildResult(null);
+        if (itemOutputs.isEmpty() && fluidOutputs.isEmpty()) return new BuildResult(null, "empty-outputs");
         return new BuildResult(new Recipe(
                 itemInputs.toArray(ItemStack[]::new),
                 itemOutputs.toArray(ItemStack[]::new),
@@ -144,7 +149,7 @@ public final class SharedSpecialProcessRows {
                 fluidOutputs.toArray(FluidStack[]::new),
                 plan.duration(),
                 plan.euPerTick(),
-                0));
+                0), null);
     }
 
     private static boolean addReagent(
@@ -153,7 +158,11 @@ public final class SharedSpecialProcessRows {
             List<ItemStack> itemInputs,
             List<FluidStack> fluidInputs,
             Resolver resolver) {
-        for (var form : reagent.forms().stream()
+        var forms = reagent.forms().isEmpty()
+                ? resolver.bindings.find(reagent.material()).stream()
+                        .map(binding -> binding.form()).collect(java.util.stream.Collectors.toSet())
+                : reagent.forms();
+        for (var form : forms.stream()
                 .sorted(Comparator.comparing(FormKey::name))
                 .toList()) {
             if (isFluid(form)) {
@@ -197,7 +206,7 @@ public final class SharedSpecialProcessRows {
 
     private record TargetSelector(MaterialKey material, Map<FormKey, Integer> inputCounts, SpecialProcessValue.Target plan) {}
 
-    private record ReagentSelector(MaterialKey material, Set<FormKey> forms) {}
+    record ReagentSelector(MaterialKey material, Set<FormKey> forms) {}
 
     private record MethodRules(
             SpecialProcessMethod method, List<TargetSelector> targets, List<ReagentSelector> reagents) {}
@@ -230,7 +239,17 @@ public final class SharedSpecialProcessRows {
 
     private record FluidKey(MaterialKey material, FormKey form, long amount) {}
 
-    private static final class Resolver {
+    static final class Resolver {
+        private final MaterialFormsView bindings;
+
+        Resolver() {
+            this(MaterialViews.catalog().formBindings());
+        }
+
+        Resolver(MaterialFormsView bindings) {
+            this.bindings = bindings;
+        }
+
         private final SharedOreWashingRows.Snapshot forms = new SharedOreWashingRows.Snapshot();
         private final Map<ItemKey, ItemStack> items = new HashMap<>();
         private final Map<FluidKey, FluidStack> fluids = new HashMap<>();
@@ -257,16 +276,17 @@ public final class SharedSpecialProcessRows {
 
         private FluidStack resolveFluid(MaterialKey materialKey, FormKey form, long amount) {
             if (!isFluid(form) || amount < 1 || amount > Integer.MAX_VALUE) return FluidStack.EMPTY;
-            if (materialKey.name().equals("Water")) return new FluidStack(Fluids.WATER, (int) amount);
-            var material = GTMaterialRegistry.get(materialKey.name()).resolve();
-            if (material == null || !material.isValid()) return FluidStack.EMPTY;
-            var binding = MaterialFluidUnitFacts.binding(material, form.name());
-            if (binding == null) return FluidStack.EMPTY;
-            var entry = FluidCatalog.get(binding.fluidField());
-            if (entry == null || entry.gas() != form.name().equals("gas")) return FluidStack.EMPTY;
-            FluidStack stack = GTFluids.stack(binding.fluidField(), (int) amount);
-            if (stack == null || stack.isEmpty() || stack.getAmount() != amount) return FluidStack.EMPTY;
-            return stack;
+            // Special-process quantities are already mB; material-unit conversion is unrelated.
+            for (var binding : bindings.find(materialKey, form).stream()
+                    .filter(value -> value.kind() == MaterialFormKind.FLUID)
+                    .sorted(Comparator.comparing(value -> value.id()))
+                    .toList()) {
+                var id = ResourceLocation.tryParse(binding.id());
+                if (id == null) continue;
+                var fluid = BuiltInRegistries.FLUID.get(id);
+                if (fluid != Fluids.EMPTY) return new FluidStack(fluid, (int) amount);
+            }
+            return FluidStack.EMPTY;
         }
     }
 }

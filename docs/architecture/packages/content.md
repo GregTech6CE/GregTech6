@@ -76,6 +76,14 @@ core 的 content 描述“有什么”，Minecraft 的 content 将其变为游�
 
 涉及跨模组联动时的来源、单位转换与冲突处理提炼到 [integration](../../integration/README.md)；材料目录、形态、成分、回收与分解的系统设计见[材料系统设计](../../decisions/material-system/README.md)，偏离原 GT6 的有意差异登记到 [parity](../../decisions/parity/README.md)。不要因 `Original*` 名字而声称完整还原。生成表来源缺失时先记录局限，参见[生成物说明](../resources.md)。验收与自动化测试范围见下。
 
+### 浸泡槽的特殊处理
+
+`SharedSpecialProcessRows` 统一生成声明式酸浸配方，包括金、铜、锡、锡石的八条王水配方；`generated/GTOreRecipes` 不再重复注册这八条静态行。该表的原始转换工具未随仓库保存，本次按固定 GT6 提交的 `Loader_Recipes_Ores` 与现存 typed target 局部收口，未重新生成整表。王水仍接收 1 份洁净矿或 9 份小份洁净矿，保留原有用量、流体产物和五个独立的 50% 副产物槽。
+
+过硫酸钠／钾、汞和火石浸洗仍由 `SharedOreWashingRows` 根据洗矿事实生成；它们处理碎矿并产出洁净矿，酸浸处理洁净矿并产出离心矿，属于不同阶段。过硫酸盐保留四种投料组合、900/100 mB 水和 144/16 tick 比例，不产生蒸汽。浸泡槽造纸继续接收所有具有 `WOOD` 属性的已注册材料粉末，以及树皮和纸粉，不以 `AnyWood` 固定成员缩小输入范围。
+
+`SpecialProcessRecipeTests` 覆盖平台发布的附属流体绑定、不限形态的物品／流体试剂、缺失流体产物整行拒绝、王水完整产物与单一归属、过硫酸盐投料比例，以及竹／橡胶木／处理木粉末的造纸输入。
+
 ## 验收
 
 - 新内容按[源码分层](../README.md#第一层源码与依赖)检查依赖，跨版本输入按[跨版本指南](../versions.md)处理。

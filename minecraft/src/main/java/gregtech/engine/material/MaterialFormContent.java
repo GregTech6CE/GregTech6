@@ -75,6 +75,18 @@ public final class MaterialFormContent {
                     entry.getKey().toString(),
                     0));
         }
+        // These material phases reuse vanilla fluids and have no GT fluid registration entry.
+        for (String name : List.of("Water", "Lava")) {
+            var fluid = name.equals("Water")
+                    ? net.minecraft.world.level.material.Fluids.WATER
+                    : net.minecraft.world.level.material.Fluids.LAVA;
+            bindings.add(new MaterialFormBinding(
+                    new MaterialKey(name),
+                    new FormKey("liquid"),
+                    MaterialFormKind.FLUID,
+                    BuiltInRegistries.FLUID.getKey(fluid).toString(),
+                    0));
+        }
         MaterialViews.publishContent(List.copyOf(bindings));
     }
 }

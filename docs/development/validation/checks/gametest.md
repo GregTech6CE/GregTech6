@@ -40,6 +40,8 @@ GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTe
 
 `decompositionRespectsFormsAndExactFluidIdentities` 通过测试 SPI 声明 dust-only、blockDust-only、liquid-only 和 gas-only 分解，检查形态限制、流体输入不会错误抑制允许的固体兜底、本体完整 ID、附属完整 ID／旧裸路径、外部原版流体 ID、未知及非法 ID，以及附属流体输出的身份和数量。
 
+`SpecialProcessRecipeTests` 检查特殊工艺的已发布流体绑定与不限形态试剂、缺失产物拒绝、王水配方完整发布和唯一归属、过硫酸盐四种投料组合，以及竹／橡胶木／处理木粉的造纸标签。
+
 针对性回归用数据表维护，不为每个 issue 新建测试类、namespace 或结构模板。GameTest 表是运行时权威，只保留 R 级运行时行；静态源检查由 core 的 `crafting-issue-static-cases.tsv` 维护。
 
 引擎契约不属于某个配方 issue，例如 `RecipeMap` 的注册、删除与碰撞判定，直接放在 `minecraft/src/test` 的独立测试类里，参考 `RecipeMapRegistrationTests`。
