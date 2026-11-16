@@ -3,6 +3,7 @@ package gregtech.engine.material;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gregtech.api.material.GTMaterial;
@@ -10,6 +11,8 @@ import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.cover.MaterialCoverRules;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.MaterialTestFixture;
+import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.prefix.BlockPrefixRegistry;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,6 +21,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -50,6 +54,11 @@ class MaterialIconIntegrityTest {
 
     private static final List<String> ICON_KINDS = List.of("item", "block");
     private static final Predicate<String> EXISTS = MaterialIconDefinitions::classpathResourceExists;
+    /** Ore templates the creative-tab entries point at directly, without a material of their own. */
+    private static final List<String> ORE_ICONS = List.of("ore", "oresmall");
+    /** Sprite ids carry no suffixes, so the classpath probe rebuilds the resource path around them. */
+    private static final Predicate<String> SPRITE_EXISTS =
+            spritePath -> MaterialIconDefinitions.classpathResourceExists("textures/" + spritePath + ".png");
 
     @BeforeAll
     static void init() {
@@ -138,6 +147,50 @@ class MaterialIconIntegrityTest {
             }
         }
         assertTrue(missing.isEmpty(), "Modeled sets without a resolvable block icon folder: " + missing);
+    }
+
+    @Test
+    void blockIconOwnersFollowTheParentChain() {
+        assertEquals(
+                MaterialTextureSet.FINE, blockIconOwner(MaterialTextureSet.FINE, "molten", MaterialTextureSet.FINE));
+        assertEquals(
+                MaterialTextureSet.DULL,
+                blockIconOwner(MaterialTextureSet.METALLIC, "molten", MaterialTextureSet.DULL));
+        assertNull(blockIconOwner(MaterialTextureSet.METALLIC, "molten", null));
+    }
+
+    @Test
+    void blockIconOwnersAreProbedWithSpriteIdsOnly() {
+        List<String> probed = new ArrayList<>();
+        String dullMolten = MaterialIconDefinitions.blockIconPath(MaterialTextureSet.DULL, "molten");
+        MaterialTextureSet owner =
+                MaterialIconDefinitions.resolveBlockIconOwner(MaterialTextureSet.METALLIC, "molten", spritePath -> {
+                    probed.add(spritePath);
+                    return spritePath.equals(dullMolten);
+                });
+        assertEquals(MaterialTextureSet.DULL, owner);
+        // The chain is walked from the requested set towards its root, and the probe sees sprite ids.
+        assertEquals(
+                List.of(MaterialIconDefinitions.blockIconPath(MaterialTextureSet.METALLIC, "molten"), dullMolten),
+                probed);
+        for (String spritePath : probed) {
+            assertFalse(spritePath.startsWith("textures/"), spritePath);
+            assertFalse(spritePath.endsWith(".png"), spritePath);
+        }
+    }
+
+    @Test
+    void everyModeledSetResolvesEveryBlockIcon() {
+        List<String> missing = new ArrayList<>();
+        List<String> spriteNames = builtInBlockIconFiles();
+        for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
+            for (String spriteName : spriteNames) {
+                if (MaterialIconDefinitions.resolveBlockIconOwner(set, spriteName, SPRITE_EXISTS) == null) {
+                    missing.add(set.folder() + "/" + spriteName);
+                }
+            }
+        }
+        assertTrue(missing.isEmpty(), "Modeled sets without a resolvable block icon sprite: " + missing);
     }
 
     @Test
@@ -252,6 +305,28 @@ class MaterialIconIntegrityTest {
 
     private static Path iconRoot(String kind) {
         return coreAssets().resolve("textures/" + kind + "/material_icons");
+    }
+
+    /**
+     * Every block sprite name a modeled set has to ship or inherit: the built-in prefixes,
+     * plus the ore templates the creative-tab entries name directly.
+     */
+    private static List<String> builtInBlockIconFiles() {
+        Set<String> spriteNames = new LinkedHashSet<>();
+        for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
+            if (!prefix.isAddon()) {
+                spriteNames.add(prefix.getTextureFileName());
+            }
+        }
+        spriteNames.addAll(ORE_ICONS);
+        return List.copyOf(spriteNames);
+    }
+
+    /** Owner when only {@code shipping} ships {@code fileName}; a {@code null} shipping allows no sprite. */
+    private static MaterialTextureSet blockIconOwner(
+            MaterialTextureSet set, String fileName, MaterialTextureSet shipping) {
+        String only = shipping == null ? null : MaterialIconDefinitions.blockIconPath(shipping, fileName);
+        return MaterialIconDefinitions.resolveBlockIconOwner(set, fileName, spritePath -> spritePath.equals(only));
     }
 
     private static boolean hasFiles(Path directory) throws IOException {

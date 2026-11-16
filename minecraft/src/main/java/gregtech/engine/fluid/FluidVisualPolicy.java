@@ -45,14 +45,14 @@ public final class FluidVisualPolicy {
         // Molten metal icons exist per material texture set; the other phases share one template.
         if (material.isValid() && kind == FluidTexturePolicy.Kind.MOLTEN) {
             MaterialTextureSet set = MaterialIconDefinitions.resolveTextureSet(material);
-            MaterialTextureSet owner = MaterialIconDefinitions.resolveBlockTextureOwner(
+            MaterialTextureSet owner = MaterialIconDefinitions.resolveBlockIconOwner(
                     set,
                     "molten",
-                    relativePath -> exists.test(
-                            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, relativePath)));
+                    spritePath -> exists.test(
+                            ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, spritePath)));
             if (owner != null) {
                 template = ResourceLocation.fromNamespaceAndPath(
-                        GregTechIdentity.REGISTRY_NAMESPACE, "block/material_icons/" + owner.folder() + "/molten");
+                        GregTechIdentity.REGISTRY_NAMESPACE, MaterialIconDefinitions.blockIconPath(owner, "molten"));
             }
         }
         return new Visual(FluidTexturePolicy.select(template, kind, exists), rawTint(entry));

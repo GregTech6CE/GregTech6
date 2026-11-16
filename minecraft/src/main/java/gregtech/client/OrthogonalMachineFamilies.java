@@ -29,7 +29,8 @@ import org.jetbrains.annotations.Nullable;
  *
  * <p>The cache-stabilised blockstate JSON files spelled this out per block: one model file per
  * lit/running/activity combination and one variant per facing. The rules below are those files
- * written once, so the pack's placeholders and the bake-time aliasing share a single source.
+ * written once, so the shared pack's blockstates and the item display aliasing share a single
+ * source.
  */
 public final class OrthogonalMachineFamilies {
     /** The namespace that owns {@code machine_models.tsv}; other packs keep their own static models. */

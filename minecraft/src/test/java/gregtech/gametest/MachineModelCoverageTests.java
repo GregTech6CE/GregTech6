@@ -59,7 +59,16 @@ public final class MachineModelCoverageTests {
         List<String> problems = new ArrayList<>();
         int states = 0;
         for (Block block : OrthogonalMachineFamilies.blocks()) {
-            String id = BuiltInRegistries.BLOCK.getKey(block).toString();
+            var key = BuiltInRegistries.BLOCK.getKey(block);
+            String id = key.toString();
+            String staticBlockstate = "/assets/" + key.getNamespace() + "/blockstates/" + key.getPath() + ".json";
+            if (MachineModelCoverageTests.class.getResource(staticBlockstate) != null) {
+                problems.add(id + " still ships static blockstate " + staticBlockstate);
+            }
+            String staticItem = "/assets/" + key.getNamespace() + "/models/item/" + key.getPath() + ".json";
+            if (MachineModelCoverageTests.class.getResource(staticItem) != null) {
+                problems.add(id + " still ships static item model " + staticItem);
+            }
             List<OrthogonalMachineFamilies.Variant> variants = OrthogonalMachineFamilies.itemVariants(block);
             boolean inventoryRow =
                     variants.stream().anyMatch(variant -> OrthogonalMachineFamilies.usesTable(variant.modelId()));
@@ -77,6 +86,14 @@ public final class MachineModelCoverageTests {
             }
         }
         helper.assertTrue(states > 0, "No table block states were checked");
+        var brickEntry = GTBurningBoxes.findSolid("burning_box_solid_brick");
+        helper.assertTrue(brickEntry != null && brickEntry.isPresent(), "burning_box_solid_brick is missing");
+        var brickVariant = OrthogonalMachineFamilies.world(brickEntry.get().defaultBlockState());
+        helper.assertTrue(brickVariant != null, "burning_box_solid_brick has no table variant");
+        String brickWorld = brickVariant.modelId().getPath();
+        helper.assertTrue(
+                brickWorld.startsWith("block/machine/burning_box_brick/"),
+                "burning_box_solid_brick world model pointed at " + brickWorld);
         helper.assertTrue(problems.isEmpty(), "Blocks the table cannot draw: " + problems);
         System.out.println("MACHINE_MODEL_COVERAGE states=" + states);
         helper.succeed();

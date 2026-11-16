@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -79,13 +78,11 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
     private static final List<RenderType> ITEM_RENDER_TYPES = List.of(Sheets.cutoutBlockSheet());
 
     private final OrthogonalMachineModels.Entry spec;
-    private final Map<ResourceLocation, TextureAtlasSprite> sprites;
     private final TextureAtlasSprite particle;
     private final RenderType baseRenderType;
     private final Map<Direction, List<BakedQuad>> baseFaces;
     private final Map<Direction, List<BakedQuad>> overlayFaces;
-    private final List<BakedQuad> baseQuads;
-    private final List<BakedQuad> overlayQuads;
+    private final boolean hasOverlay;
     private final List<BakedModel> passes;
 
     private OrthogonalMachineBakedModel(
@@ -94,20 +91,18 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
             TextureAtlasSprite particle,
             ModelState modelState) {
         this.spec = spec;
-        this.sprites = sprites;
         this.particle = particle;
         // The shell is the opaque-or-cutout cube; the detail pass is always cutout.
         baseRenderType = spec.solidBase() ? RenderType.solid() : RenderType.cutout();
         FaceBakery bakery = new FaceBakery();
-        baseFaces = bakeFaces(bakery, spec::baseFace, 0, modelState);
-        overlayFaces = spec.hasOverlay() ? bakeFaces(bakery, spec::overlayFace, -1, modelState) : Map.of();
-        baseQuads = flatten(baseFaces.values());
-        overlayQuads = flatten(overlayFaces.values());
-        LayerPass base = new LayerPass(this, baseRenderType, baseFaces, baseQuads);
-        if (overlayQuads.isEmpty()) {
-            passes = List.of(base);
+        baseFaces = bakeFaces(bakery, sprites, spec::baseFace, 0, modelState);
+        overlayFaces = spec.hasOverlay() ? bakeFaces(bakery, sprites, spec::overlayFace, -1, modelState) : Map.of();
+        hasOverlay = !overlayFaces.isEmpty();
+        LayerPass base = new LayerPass(this, baseRenderType, baseFaces);
+        if (hasOverlay) {
+            passes = List.of(base, new LayerPass(this, RenderType.cutout(), overlayFaces));
         } else {
-            passes = List.of(base, new LayerPass(this, RenderType.cutout(), overlayFaces, overlayQuads));
+            passes = List.of(base);
         }
     }
 
@@ -122,22 +117,6 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
                 spec, resolveSprites(spec, blockAtlasLookup), particle(spec, blockAtlasLookup), modelState);
     }
 
-    /** A rotation-only variant of the same row, reusing this bake's sprites instead of the atlas. */
-    public BakedModel rebake(ModelState modelState) {
-        return new OrthogonalMachineBakedModel(spec, sprites, particle, modelState);
-    }
-
-    /** Sprite source of this bake, for callers that need another rotation of the same row. */
-    public Function<ResourceLocation, TextureAtlasSprite> spriteLookup() {
-        return id -> sprites.getOrDefault(id, particle);
-    }
-
-    /** Rotates the row; {@code uvLock} keeps the texture upright, like the blockstate's own flag. */
-    public static ModelState modelState(int xRot, int yRot, boolean uvLock) {
-        BlockModelRotation rotation = BlockModelRotation.by(xRot, yRot);
-        return uvLock ? new LockedModelState(rotation) : rotation;
-    }
-
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource random) {
         return getQuads(state, side, random, ModelData.EMPTY, null);
@@ -146,9 +125,13 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side,
                                     RandomSource random, ModelData data, @Nullable RenderType renderType) {
-        List<BakedQuad> base = side == null ? baseQuads : baseFaces.getOrDefault(side, List.of());
-        List<BakedQuad> overlay = side == null ? overlayQuads : overlayFaces.getOrDefault(side, List.of());
-        // The unbuffered query (box/entity pass) takes every layer at once.
+        // Every quad this model bakes carries a cullface direction, so no unculled quads exist and
+        // the side-less query stays empty; item rendering walks all six sides and would otherwise
+        // draw each face twice.
+        if (side == null) return List.of();
+        List<BakedQuad> base = baseFaces.getOrDefault(side, List.of());
+        List<BakedQuad> overlay = overlayFaces.getOrDefault(side, List.of());
+        // An unfiltered query takes every layer that covers this side.
         if (renderType == null) return overlay.isEmpty() ? base : concat(base, overlay);
         if (overlay.isEmpty()) return renderType == baseRenderType ? base : List.of();
         // A cutout shell shares its layer with the detail pass, so that layer carries both.
@@ -159,7 +142,7 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
 
     @Override
     public ChunkRenderTypeSet getRenderTypes(BlockState state, RandomSource rand, ModelData data) {
-        if (overlayQuads.isEmpty()) return ChunkRenderTypeSet.of(baseRenderType);
+        if (!hasOverlay) return ChunkRenderTypeSet.of(baseRenderType);
         return spec.solidBase()
                 ? ChunkRenderTypeSet.of(RenderType.solid(), RenderType.cutout())
                 : ChunkRenderTypeSet.of(RenderType.cutout());
@@ -211,7 +194,11 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
     }
 
     private Map<Direction, List<BakedQuad>> bakeFaces(
-            FaceBakery bakery, java.util.function.IntFunction<String> textures, int tintIndex, ModelState modelState) {
+            FaceBakery bakery,
+            Map<ResourceLocation, TextureAtlasSprite> sprites,
+            java.util.function.IntFunction<String> textures,
+            int tintIndex,
+            ModelState modelState) {
         Map<Direction, List<BakedQuad>> faces = new EnumMap<>(Direction.class);
         for (int index = 0; index < DIRECTION_ORDER.length; index++) {
             String texture = textures.apply(index);
@@ -247,7 +234,7 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
 //?}
     }
 
-    /** Every texture the row names, so a rebake of the same row needs no atlas access. */
+    /** Every texture the row names, captured from this bake's atlas sprites. */
     private static Map<ResourceLocation, TextureAtlasSprite> resolveSprites(
             OrthogonalMachineModels.Entry spec, Function<ResourceLocation, TextureAtlasSprite> lookup) {
         Map<ResourceLocation, TextureAtlasSprite> resolved = new HashMap<>();
@@ -276,12 +263,6 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
         return ResourceLocation.parse(OrthogonalMachineModels.fullTexturePath(texture));
     }
 
-    private static List<BakedQuad> flatten(java.util.Collection<List<BakedQuad>> faces) {
-        List<BakedQuad> quads = new ArrayList<>();
-        faces.forEach(quads::addAll);
-        return Collections.unmodifiableList(quads);
-    }
-
     private static List<BakedQuad> concat(List<BakedQuad> first, List<BakedQuad> second) {
         List<BakedQuad> quads = new ArrayList<>(first.size() + second.size());
         quads.addAll(first);
@@ -289,46 +270,25 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
         return Collections.unmodifiableList(quads);
     }
 
-    /** {@link BlockModelRotation} reports an unlocked UV, so uvlock needs its own wrapper. */
-    private record LockedModelState(BlockModelRotation rotation) implements ModelState {
-        @Override
-        public com.mojang.math.Transformation getRotation() {
-            return rotation.getRotation();
-        }
-
-        @Override
-        public boolean isUvLocked() {
-            return true;
-        }
-
-//? if >=1.21.1 {
-        /*@Override
-        public boolean mayApplyArbitraryRotation() {
-            // 1.21.1 skips the winding recalculation for arbitrary rotations; 1.20.1 always runs it,
-            // and these quads are baked from axis-aligned elements, so keep the 1.20.1 winding.
-            return false;
-        }
-*///?}
-    }
-
     /** One render layer as its own item pass; the item renderer asks each pass for its own quads. */
     private static final class LayerPass implements BakedModel {
         private final OrthogonalMachineBakedModel owner;
         private final RenderType layer;
         private final Map<Direction, List<BakedQuad>> faces;
-        private final List<BakedQuad> quads;
 
-        private LayerPass(OrthogonalMachineBakedModel owner, RenderType layer,
-                          Map<Direction, List<BakedQuad>> faces, List<BakedQuad> quads) {
+        private LayerPass(
+                OrthogonalMachineBakedModel owner, RenderType layer, Map<Direction, List<BakedQuad>> faces) {
             this.owner = owner;
             this.layer = layer;
             this.faces = faces;
-            this.quads = quads;
         }
 
         @Override
         public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource random) {
-            return side == null ? quads : faces.getOrDefault(side, List.of());
+            // As in the parent model, every baked face is culled, so the six-sided item loop already
+            // covers the whole pass and the side-less query must stay empty.
+            if (side == null) return List.of();
+            return faces.getOrDefault(side, List.of());
         }
 
         @Override

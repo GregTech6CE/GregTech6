@@ -12,13 +12,17 @@ import gregtech.content.registry.GTItemPipes;
 import gregtech.content.registry.GTSignalWires;
 import gregtech.content.registry.GTWires;
 import gregtech.engine.machine.OrthogonalMachineModels;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.*;
 import net.minecraft.server.packs.repository.*;
 import net.minecraft.server.packs.resources.IoSupplier;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.client.event.ModelEvent;
@@ -38,10 +42,19 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.function.Predicate;
 
-/** Registry item references available before baking; geometry still comes from the original templates.
- * The low-priority built-in pack permits ordinary resource packs to override its JSON.
- * The geometry loader delegates to ModelBaker's existing cache instead of baking 56,000 copies.
+/**
+ * Virtual client pack: the item references, shared material models, machine blockstates and machine
+ * item models are generated at runtime instead of shipped as static JSON.
+ *
+ * <p>The pack is hidden and sits at the bottom position, so an installed resource pack overrides any
+ * file it serves, blockstates, table row models and item models included. Machine geometry comes
+ * from {@code machine_models.tsv} through {@link OrthogonalMachineModelLoader}, whose loader
+ * delegates to ModelBaker's existing cache instead of baking 56,000 copies.
+ *
+ * <p>Material icons are resolved against the packs the resource manager currently mounts, so an
+ * external icon set is honoured by the first bake rather than after the next reload.
  */
 //? if >=1.21.1 {
 /*@net.neoforged.fml.common.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = net.neoforged.fml.common.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -49,8 +62,15 @@ import java.util.*;
 @net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class SharedInventoryModelPack extends AbstractPackResources {
+    /** Pack id shared with the loader wiring and the item-override probe. */
+    public static final String PACK_ID = "gt6ce:shared_inventory";
+
     /** Ores are replaced by OreBakedModel; their blockstate only needs a valid stone placeholder. */
     private static final ResourceLocation STONE_TEMPLATE = ResourceLocation.withDefaultNamespace("block/stone");
+
+    /** Material sprites, relative to {@code assets/<namespace>/}. */
+    private static final String[] MATERIAL_ICON_DIRECTORIES = {
+            "textures/item/material_icons", "textures/block/material_icons"};
     private Map<ResourceLocation, byte[]> resources;
     private Set<String> namespaces;
 
@@ -82,27 +102,30 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     }
 
     /**
-     * True while {@link #data()} builds the index. Resource-manager probes must not run then: they
-     * walk every pack in the namespace, which includes this one.
+     * Nesting depth of {@link #data()} on the current thread. Resource-manager probes must not run
+     * while the index builds: they walk every pack in the namespace, which includes this one.
      */
-    private static volatile boolean building;
+    private static final ThreadLocal<Integer> BUILD_DEPTH = ThreadLocal.withInitial(() -> 0);
 
     static boolean isBuilding() {
-        return building;
+        return BUILD_DEPTH.get() > 0;
     }
 
     private synchronized Map<ResourceLocation, byte[]> data() {
         if (resources != null) return resources;
-        building = true;
+        BUILD_DEPTH.set(BUILD_DEPTH.get() + 1);
         try {
             resources = buildResources();
         } finally {
-            building = false;
+            int depth = BUILD_DEPTH.get() - 1;
+            // Drop the entry rather than store a zero, so a finished build leaves nothing behind.
+            if (depth == 0) BUILD_DEPTH.remove();
+            else BUILD_DEPTH.set(depth);
         }
         return resources;
     }
 
-    private static Map<ResourceLocation, byte[]> buildResources() {
+    private Map<ResourceLocation, byte[]> buildResources() {
         Map<ResourceLocation, byte[]> result = new HashMap<>();
         Map<ResourceLocation, byte[]> references = new HashMap<>();
         // Many material items refer to the same template. Check the classpath once per parent.
@@ -111,8 +134,12 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         emitCompressedTanks(result);
         emitAddonBlockPrefixes(result);
         // Shared material models live only in this pack now; blockstates and item references below
-        // resolve their templates from the same map.
-        int sharedModels = emitSharedMaterialModels(result);
+        // resolve their templates from the same map. An icon that only an installed resource pack
+        // ships counts here too, so the pack serves the model that pack's art needs.
+        Set<String> externalIcons = collectExternalMaterialIcons();
+        Predicate<String> materialExists =
+                path -> externalIcons.contains(path) || MaterialIconDefinitions.classpathResourceExists(path);
+        int sharedModels = emitSharedMaterialModels(result, materialExists);
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (item instanceof gregtech.engine.material.MaterialFormItem material && material.getPrefix().isAddon()) {
@@ -158,8 +185,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                 }
             } else if (item instanceof BlockItem blockItem) {
                 if (OrthogonalMachineFamilies.usesTable(blockItem.getBlock())) {
-                    // The inventory model is baked from the table; the item JSON only has to load.
-                    parent = STONE_TEMPLATE;
+                    // The machine pass writes the real item model for these blocks.
+                    continue;
                 } else if (blockItem.getBlock() instanceof OreBlock) {
                     parent = STONE_TEMPLATE;
                 } else if (blockItem.getBlock() instanceof MaterialBlockLike material) {
@@ -204,13 +231,13 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         // Emitted after the aliases so a generated template can never shadow a transport placeholder.
         int beforePlaceholders = result.size();
         emitTransportPlaceholders(result);
-        int machinePlaceholders = emitMachinePlaceholders(result);
         int placeholders = result.size() - beforePlaceholders;
+        int machines = emitMachineBlockstatesAndItems(result);
         com.mojang.logging.LogUtils.getLogger()
-                .info("[gregtech] Shared inventory resources: {} item references, {} templates, {} shared material models,"
-                        + " {} missing static blockstates, {} machine model specs, {} placeholders ({} machines)",
-                        result.size() - states - placeholders - sharedModels - specs, references.size(), sharedModels,
-                        states, specs, placeholders, machinePlaceholders);
+                .info("[gregtech] Shared inventory resources: {} files, {} templates, {} shared material models,"
+                        + " {} missing static blockstates, {} machine model specs, {} machines,"
+                        + " {} transport placeholders",
+                        result.size(), references.size(), sharedModels, states, specs, machines, placeholders);
         return Collections.unmodifiableMap(result);
     }
 
@@ -228,44 +255,78 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     }
 
     /**
-     * Machines are baked from the table, so their blockstate and inventory JSON only has to hand the
-     * bakery a loaded model. Written unconditionally at the bottom position, exactly like
-     * {@link #emitTransportPlaceholders}: an installed resource pack still wins, and the bake
-     * replaces both entries before anything renders.
+     * Real blockstate and item model for every block the table draws. The blockstate carries the
+     * rotation each state needs, so the vanilla bakery renders the world from the row itself; the
+     * item model references the row the inventory shows. Both are written with {@code putIfAbsent}:
+     * a resource pack that ships its own file keeps it, and this pack only fills the gaps.
      */
-    private static int emitMachinePlaceholders(Map<ResourceLocation, byte[]> result) {
-        byte[] blockstate = ("{\"variants\":{\"\":{\"model\":\"" + STONE_TEMPLATE + "\"}}}")
-                .getBytes(StandardCharsets.UTF_8);
-        byte[] item = ("{\"parent\":\"" + STONE_TEMPLATE + "\"}").getBytes(StandardCharsets.UTF_8);
-        int emitted = 0;
+    private static int emitMachineBlockstatesAndItems(Map<ResourceLocation, byte[]> result) {
+        int machines = 0;
+        StringBuilder variants = new StringBuilder();
         for (Block block : OrthogonalMachineFamilies.blocks()) {
             ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
-            if (result.putIfAbsent(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"),
-                    blockstate) == null) emitted++;
-            result.putIfAbsent(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), item);
+            if (id == null) continue;
+            variants.setLength(0);
+            for (BlockState state : block.getStateDefinition().getPossibleStates()) {
+                OrthogonalMachineFamilies.Variant variant = OrthogonalMachineFamilies.world(state);
+                if (variant == null || !OrthogonalMachineFamilies.usesTable(variant.modelId())) continue;
+                if (variants.length() > 0) variants.append(',');
+                variants.append('"')
+                        .append(BlockModelShaper.statePropertiesToString(state.getValues()))
+                        .append("\":");
+                appendVariant(variants, variant);
+            }
+            if (variants.length() == 0) continue;
+            result.putIfAbsent(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"),
+                    ("{\"variants\":{" + variants + "}}").getBytes(StandardCharsets.UTF_8));
+            ResourceLocation itemRow = itemRow(block);
+            if (itemRow != null) {
+                result.putIfAbsent(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"),
+                        MaterialIconDefinitions.sharedInventoryJson(itemRow.toString())
+                                .getBytes(StandardCharsets.UTF_8));
+            }
+            machines++;
         }
-        return emitted;
+        return machines;
+    }
+
+    /** One blockstate variant: the table row plus the rotation the static blockstate used to carry. */
+    private static void appendVariant(StringBuilder json, OrthogonalMachineFamilies.Variant variant) {
+        json.append("{\"model\":\"").append(variant.modelId()).append('"');
+        if (variant.xRot() != 0) json.append(",\"x\":").append(variant.xRot());
+        if (variant.yRot() != 0) json.append(",\"y\":").append(variant.yRot());
+        if (variant.uvLock()) json.append(",\"uvlock\":true");
+        json.append('}');
+    }
+
+    /** The first inventory row of the block that the table serves; null when it has none. */
+    private static ResourceLocation itemRow(Block block) {
+        for (OrthogonalMachineFamilies.Variant variant : OrthogonalMachineFamilies.itemVariants(block)) {
+            if (OrthogonalMachineFamilies.usesTable(variant.modelId())) return variant.modelId();
+        }
+        return null;
     }
 
     /**
      * Shared {@code models/{item,block}/material/...} JSON, generated from the icon inheritance
      * chain instead of shipped as one file per texture set and prefix.
      */
-    private static int emitSharedMaterialModels(Map<ResourceLocation, byte[]> result) {
+    private static int emitSharedMaterialModels(Map<ResourceLocation, byte[]> result,
+                                                Predicate<String> materialExists) {
         int emitted = 0;
         Map<String, byte[]> encoded = new HashMap<>();
-        for (MaterialSharedModelIndex.ItemModel model : MaterialSharedModelIndex.items()) {
+        for (MaterialSharedModelIndex.ItemModel model : MaterialSharedModelIndex.items(materialExists)) {
             String json = MaterialIconDefinitions.sharedModelJson(
-                    model.set(), model.prefix(), MaterialIcons::resourceExists);
+                    model.set(), model.prefix(), materialExists);
             if (json == null) continue;
             result.put(
                     location("models/" + MaterialIconDefinitions.modelPath(model.set(), model.prefix()) + ".json"),
                     encoded.computeIfAbsent(json, value -> value.getBytes(StandardCharsets.UTF_8)));
             emitted++;
         }
-        for (MaterialSharedModelIndex.BlockModel model : MaterialSharedModelIndex.blocks()) {
+        for (MaterialSharedModelIndex.BlockModel model : MaterialSharedModelIndex.blocks(materialExists)) {
             String json = BlockMaterialIcons.sharedModelJson(
-                    model.set(), model.prefix(), MaterialIcons::resourceExists);
+                    model.set(), model.prefix(), materialExists);
             if (json == null) continue;
             ResourceLocation id = BlockMaterialIcons.sharedModelLocation(model.set(), model.prefix());
             result.put(
@@ -274,6 +335,31 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             emitted++;
         }
         return emitted;
+    }
+
+    /**
+     * Material sprites the other mounted packs ship for the registry namespace, as paths relative to
+     * {@code assets/<namespace>/}. Only the paths are recorded: no stream is opened while this pack
+     * is still building, which is also why this pack is skipped.
+     */
+    private Set<String> collectExternalMaterialIcons() {
+        Minecraft minecraft = Minecraft.getInstance();
+        ResourceManager manager = minecraft == null ? null : minecraft.getResourceManager();
+        if (manager == null) return Set.of();
+        List<PackResources> packs = manager.listPacks().toList();
+        // The manager swaps in the new pack list before any listener reads it, so a list without
+        // this pack is a stale one; the classpath stays the only source that early.
+        if (packs.stream().noneMatch(pack -> pack == this)) return Set.of();
+        Set<String> icons = new HashSet<>();
+        for (PackResources pack : packs) {
+            if (pack == this) continue;
+            for (String directory : MATERIAL_ICON_DIRECTORIES) {
+                pack.listResources(PackType.CLIENT_RESOURCES,
+                        gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE, directory,
+                        (id, stream) -> icons.add(id.getPath()));
+            }
+        }
+        return icons;
     }
 
     /** A model reference resolves when this pack serves it, as an alias, or as vanilla stone. */

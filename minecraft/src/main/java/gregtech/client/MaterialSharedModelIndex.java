@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import net.minecraft.core.registries.BuiltInRegistries;
 
 /**
@@ -22,7 +23,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
  * inheritance chain ships the base sprite.
  *
  * <p>Both the model registration and the in-memory model pack read this list, so registration can
- * never name a model the pack does not serve.</p>
+ * never name a model the pack does not serve. Which sprites count as present is the caller's
+ * choice: the bake keeps the plain {@link MaterialIcons#resourceExists} probe, while the pack
+ * passes a predicate that also sees installed resource packs, so both stages agree on the icon set
+ * a player can actually load.
  */
 public final class MaterialSharedModelIndex {
     public record ItemModel(MaterialTextureSet set, MaterialPrefix prefix) {}
@@ -32,6 +36,11 @@ public final class MaterialSharedModelIndex {
     private MaterialSharedModelIndex() {}
 
     public static List<ItemModel> items() {
+        return items(MaterialIcons::resourceExists);
+    }
+
+    /** Same list, resolved against the caller's own sprite probe. */
+    public static List<ItemModel> items(Predicate<String> resourceExists) {
         Set<ItemModel> models = new LinkedHashSet<>();
         for (var item : BuiltInRegistries.ITEM) {
             if (item instanceof MaterialFormItem form && !form.getPrefix().isAddon()) {
@@ -51,8 +60,7 @@ public final class MaterialSharedModelIndex {
         }
         List<ItemModel> resolved = new ArrayList<>(models.size());
         for (ItemModel model : models) {
-            if (MaterialIconDefinitions.resolveItemTextureOwner(
-                            model.set(), model.prefix(), false, MaterialIcons::resourceExists)
+            if (MaterialIconDefinitions.resolveItemTextureOwner(model.set(), model.prefix(), false, resourceExists)
                     != null) {
                 resolved.add(model);
             }
@@ -61,6 +69,11 @@ public final class MaterialSharedModelIndex {
     }
 
     public static List<BlockModel> blocks() {
+        return blocks(MaterialIcons::resourceExists);
+    }
+
+    /** Same list, resolved against the caller's own sprite probe. */
+    public static List<BlockModel> blocks(Predicate<String> resourceExists) {
         BlockPrefixRegistry.ensurePrefixesLoaded();
         Set<BlockModel> models = new LinkedHashSet<>();
         for (var block : BuiltInRegistries.BLOCK) {
@@ -81,7 +94,7 @@ public final class MaterialSharedModelIndex {
         List<BlockModel> resolved = new ArrayList<>(models.size());
         for (BlockModel model : models) {
             if (MaterialIconDefinitions.resolveBlockTextureOwner(
-                            model.set(), model.prefix().getTextureFileName(), MaterialIcons::resourceExists)
+                            model.set(), model.prefix().getTextureFileName(), resourceExists)
                     != null) {
                 resolved.add(model);
             }

@@ -24,7 +24,7 @@ public final class ClientPackFacade {
 
     public static Pack createSharedInventoryPack() {
 //? if >=1.21.1 {
-        /*var location = new PackLocationInfo("gt6ce:shared_inventory",
+        /*var location = new PackLocationInfo(SharedInventoryModelPack.PACK_ID,
                 Component.literal("GregTech shared inventory models"), PackSource.BUILT_IN, Optional.empty());
         return Pack.readMetaAndCreate(location, new Pack.ResourcesSupplier() {
             @Override
@@ -38,7 +38,7 @@ public final class ClientPackFacade {
             }
         }, PackType.CLIENT_RESOURCES, new PackSelectionConfig(true, Pack.Position.BOTTOM, true));
 *///?} else {
-        return Pack.readMetaAndCreate("gt6ce:shared_inventory",
+        return Pack.readMetaAndCreate(SharedInventoryModelPack.PACK_ID,
                 Component.literal("GregTech shared inventory models"), true,
                 SharedInventoryModelPack::new, PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, PackSource.BUILT_IN);
 //?}

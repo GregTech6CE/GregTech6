@@ -22,16 +22,15 @@ public final class BlockMaterialIcons {
     /** Sprite location for this set, following the inheritance chain to the set that ships it. */
     public static ResourceLocation resolveTexture(MaterialTextureSet set, String fileName) {
         MaterialTextureSet owner = resolveTextureOwner(set, fileName);
-        return Mc.gregtechId("block/material_icons/" + (owner == null ? set : owner).folder() + "/" + fileName);
+        return Mc.gregtechId(MaterialIconDefinitions.blockIconPath(owner == null ? set : owner, fileName));
     }
 
     /** Detail sprite for this set, or {@code null} when no set in the chain ships one. */
     @Nullable
     public static ResourceLocation resolveOverlayTexture(MaterialTextureSet set, String fileName) {
-        MaterialTextureSet owner = resolveTextureOwner(set, fileName + "_overlay");
-        return owner == null
-                ? null
-                : Mc.gregtechId("block/material_icons/" + owner.folder() + "/" + fileName + "_overlay");
+        String overlayFile = fileName + "_overlay";
+        MaterialTextureSet owner = resolveTextureOwner(set, overlayFile);
+        return owner == null ? null : Mc.gregtechId(MaterialIconDefinitions.blockIconPath(owner, overlayFile));
     }
 
     public static ResourceLocation addonModel(BlockMaterialPrefix prefix) {
@@ -53,7 +52,7 @@ public final class BlockMaterialIcons {
         String file = prefix.getTextureFileName();
         MaterialTextureSet baseOwner = MaterialIconDefinitions.resolveBlockTextureOwner(set, file, resourceExists);
         if (baseOwner == null) return null;
-        String base = "gt6ce:block/material_icons/" + baseOwner.folder() + "/" + file;
+        String base = "gt6ce:" + MaterialIconDefinitions.blockIconPath(baseOwner, file);
         MaterialTextureSet overlayOwner =
                 MaterialIconDefinitions.resolveBlockTextureOwner(set, file + "_overlay", resourceExists);
         if (overlayOwner == null) {
@@ -66,7 +65,7 @@ public final class BlockMaterialIcons {
                     }
                     """.formatted(base);
         }
-        String overlay = "gt6ce:block/material_icons/" + overlayOwner.folder() + "/" + file + "_overlay";
+        String overlay = "gt6ce:" + MaterialIconDefinitions.blockIconPath(overlayOwner, file + "_overlay");
         return compositeCubeJson(base, overlay);
     }
 

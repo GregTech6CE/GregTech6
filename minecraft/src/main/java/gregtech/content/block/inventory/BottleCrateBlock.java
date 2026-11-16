@@ -101,7 +101,8 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
         // Classpath probe: the frame JSON is generated before the first client resource reload.
         var owner = gregtech.engine.material.MaterialIconDefinitions.resolveBlockTextureOwner(
                 set, file, gregtech.engine.material.MaterialIconDefinitions::classpathResourceExists);
-        return "gt6ce:block/material_icons/" + (owner == null ? set : owner).folder() + "/" + file;
+        return "gt6ce:"
+                + gregtech.engine.material.MaterialIconDefinitions.blockIconPath(owner == null ? set : owner, file);
     }
 
     @Override public gregtech.engine.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {

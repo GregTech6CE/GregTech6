@@ -39,7 +39,7 @@ public static Pack createSharedInventoryPack() {
 //? if >=1.21.1 {
     /*return Pack.readMetaAndCreate(new PackLocationInfo(...), ...);
 *///?} else {
-    return Pack.readMetaAndCreate("gt6ce:shared_inventory", ...);
+    return Pack.readMetaAndCreate(SharedInventoryModelPack.PACK_ID, ...);
 //?}
 }
 

@@ -51,6 +51,16 @@ public final class MaterialIconDefinitions {
                 + parent + "\"}";
     }
 
+    /** Nearest set in the parent chain whose {@code hasOwnResource} probe passes, or {@code null}. */
+    @Nullable
+    private static MaterialTextureSet resolveChainOwner(
+            MaterialTextureSet set, Predicate<MaterialTextureSet> hasOwnResource) {
+        for (MaterialTextureSet current = set; current != null; current = current.parent()) {
+            if (hasOwnResource.test(current)) return current;
+        }
+        return null;
+    }
+
     /**
      * Nearest set in the inheritance chain that actually ships {@code fileName}, or {@code null}
      * when no set in the chain does. {@code resourceDirectory} is relative to {@code textures/}.
@@ -58,13 +68,10 @@ public final class MaterialIconDefinitions {
     @Nullable
     public static MaterialTextureSet resolveTextureOwner(
             MaterialTextureSet set, String resourceDirectory, String fileName, Predicate<String> resourceExists) {
-        for (MaterialTextureSet current = set; current != null; current = current.parent()) {
-            if (resourceExists.test(
-                    "textures/" + resourceDirectory + "/" + current.folder() + "/" + fileName + ".png")) {
-                return current;
-            }
-        }
-        return null;
+        return resolveChainOwner(
+                set,
+                current -> resourceExists.test(
+                        "textures/" + resourceDirectory + "/" + current.folder() + "/" + fileName + ".png"));
     }
 
     /** Icon set owning the item sprite for this prefix, following {@link MaterialTextureSet#parent()}. */
@@ -75,11 +82,30 @@ public final class MaterialIconDefinitions {
                 set, "item/material_icons", prefix.getTextureFileName() + (overlay ? "_overlay" : ""), resourceExists);
     }
 
-    /** Icon set owning a block sprite, following {@link MaterialTextureSet#parent()}. */
+    /**
+     * Sprite id of one block icon, relative to the {@code gt6ce} namespace: the atlas key and the
+     * {@code textures/} resource path differ only by that prefix and the {@code .png} suffix.
+     */
+    public static String blockIconPath(MaterialTextureSet set, String fileName) {
+        return "block/material_icons/" + set.folder() + "/" + fileName;
+    }
+
+    /**
+     * Icon set owning a block sprite, resolved from sprite ids alone, following
+     * {@link MaterialTextureSet#parent()}.
+     */
+    @Nullable
+    public static MaterialTextureSet resolveBlockIconOwner(
+            MaterialTextureSet set, String fileName, Predicate<String> spritePathExists) {
+        return resolveChainOwner(set, current -> spritePathExists.test(blockIconPath(current, fileName)));
+    }
+
+    /** Icon set owning a block sprite file, following {@link MaterialTextureSet#parent()}. */
     @Nullable
     public static MaterialTextureSet resolveBlockTextureOwner(
             MaterialTextureSet set, String fileName, Predicate<String> resourceExists) {
-        return resolveTextureOwner(set, "block/material_icons", fileName, resourceExists);
+        return resolveChainOwner(
+                set, current -> resourceExists.test("textures/" + blockIconPath(current, fileName) + ".png"));
     }
 
     /** Classpath probe for probes taken before the first client resource reload finishes. */
