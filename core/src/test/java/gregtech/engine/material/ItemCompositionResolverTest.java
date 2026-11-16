@@ -1,17 +1,16 @@
 package gregtech.engine.material;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import gregtech.api.material.MaterialComponent;
 import gregtech.content.material.MaterialTestFixture;
 import gregtech.content.material.Materials;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 class ItemCompositionResolverTest {
     @BeforeAll

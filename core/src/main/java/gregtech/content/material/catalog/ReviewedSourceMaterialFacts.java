@@ -1,15 +1,14 @@
 package gregtech.content.material.catalog;
 
+import static gregtech.content.material.MaterialFactKeys.Decision;
+
 import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.material.MaterialFactKeys;
 import gregtech.engine.material.MaterialDefinition;
 import gregtech.engine.material.MaterialInfoDefinition;
-
 import java.util.*;
-
-import static gregtech.content.material.MaterialFactKeys.Decision;
 
 /** Bounded source facts whose scope is an exact built-in material identity. */
 public final class ReviewedSourceMaterialFacts {

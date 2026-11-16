@@ -1,10 +1,10 @@
 package gregtech.engine.recipe.chem;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import gregtech.api.material.GTValues;
 import gregtech.content.material.catalog.MaterialFluidUnitFacts;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /** Material units are exact and only material fluids cross a reviewed millibucket boundary. */
 final class MaterialAmountTest {

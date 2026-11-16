@@ -1,15 +1,14 @@
 package gregtech.content.material.catalog;
 
+import static gregtech.api.material.GTValues.U;
+import static gregtech.content.material.MaterialFactKeys.Decision;
+import static gregtech.content.material.MaterialFactKeys.Identity;
+
 import gregtech.api.addon.material.MaterialProcessRule;
 import gregtech.content.material.MaterialFactKeys;
 import gregtech.engine.material.MaterialDefinition;
 import gregtech.engine.material.MaterialInfoDefinition;
-
 import java.util.*;
-
-import static gregtech.api.material.GTValues.U;
-import static gregtech.content.material.MaterialFactKeys.Decision;
-import static gregtech.content.material.MaterialFactKeys.Identity;
 
 /**
  * Finite facts for the existing dust-or-ingot 1U thermal recycling producer, not global material metadata.

@@ -1,17 +1,16 @@
 package gregtech.content.recipe;
 
-import gregtech.content.block.stone.OreHostFacts;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
 import static gregtech.api.material.GTValues.U;
 import static gregtech.content.material.MaterialFactKeys.Decision;
 import static gregtech.content.material.MaterialFactKeys.Identity;
 import static gregtech.content.recipe.SourceOreCrushingRules.*;
 import static gregtech.content.recipe.SourceOreWashingRules.Availability;
+
+import gregtech.content.block.stone.OreHostFacts;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * The OilSand ore-registration Centrifuge event, not generic material decomposition.

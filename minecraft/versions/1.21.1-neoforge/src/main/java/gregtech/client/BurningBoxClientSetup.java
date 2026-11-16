@@ -1,12 +1,11 @@
 package gregtech.client;
 
 import gregtech.content.registry.GTBurningBoxes;
+import java.util.List;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-
-import java.util.List;
 
 /** Original facing/lit shell selection and material tint adapted to native baking. */
 @EventBusSubscriber(

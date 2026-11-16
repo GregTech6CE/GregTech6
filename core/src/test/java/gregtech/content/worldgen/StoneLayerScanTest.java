@@ -1,8 +1,8 @@
 package gregtech.content.worldgen;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
 
 /** Locks GT6 {@code WorldgenStoneLayers}' 7-entry window and section-based scan bounds. */
 class StoneLayerScanTest {

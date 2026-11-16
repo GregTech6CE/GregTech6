@@ -1,13 +1,13 @@
 package gregtech.content.block.stone;
 
+import static gregtech.api.material.GTValues.U;
+import static gregtech.content.material.MaterialFactKeys.Decision;
+import static gregtech.content.material.MaterialFactKeys.Identity;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import static gregtech.api.material.GTValues.U;
-import static gregtech.content.material.MaterialFactKeys.Decision;
-import static gregtech.content.material.MaterialFactKeys.Identity;
 
 /** Source ore-host prefixes, gangue composition and broken-ore pairing. */
 public final class OreHostFacts {

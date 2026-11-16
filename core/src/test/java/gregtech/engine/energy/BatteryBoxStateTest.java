@@ -1,11 +1,10 @@
 package gregtech.engine.energy;
 
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+import org.junit.jupiter.api.Test;
 
 /** Guards battery-box item charging: a sink cell charges at matched voltage and refuses overvoltage. */
 class BatteryBoxStateTest {

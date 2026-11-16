@@ -1,5 +1,7 @@
 package gregtech.content.material;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.content.fluid.FluidDefinitions;
@@ -7,8 +9,6 @@ import gregtech.content.storage.ItemBarrelCatalog;
 import gregtech.content.tool.AnvilVariantCatalog;
 import gregtech.engine.material.GTMaterialRegistry;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MaterialCatalogTest {
     @Test

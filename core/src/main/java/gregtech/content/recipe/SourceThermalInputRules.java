@@ -1,11 +1,10 @@
 package gregtech.content.recipe;
 
-import gregtech.content.data.MaterialPrefix;
+import static gregtech.content.recipe.SourceThermalRecyclingRules.*;
 
+import gregtech.content.data.MaterialPrefix;
 import java.util.List;
 import java.util.stream.Stream;
-
-import static gregtech.content.recipe.SourceThermalRecyclingRules.*;
 
 /**
  * Eighty-five single-component item-input contracts for source RecyclingProcessing, not the complete

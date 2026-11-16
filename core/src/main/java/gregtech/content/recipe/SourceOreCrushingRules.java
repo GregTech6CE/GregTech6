@@ -1,16 +1,15 @@
 package gregtech.content.recipe;
 
-import gregtech.content.material.MaterialFactKeys.HexoriumKind;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
 import static gregtech.api.material.GTValues.U;
 import static gregtech.content.material.MaterialFactKeys.Decision;
 import static gregtech.content.material.MaterialFactKeys.Identity;
 import static gregtech.content.recipe.SourceOreWashingRules.Availability;
+
+import gregtech.content.material.MaterialFactKeys.HexoriumKind;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 /** Pinned GT6 3703e40308c8c030763fd6297dea8b210d2a77b1,
  * RecipeMapHandlerCrushing 50-140 / RecipeMapHammer 88-118 / OM 460-467.

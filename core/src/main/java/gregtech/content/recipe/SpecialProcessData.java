@@ -1,8 +1,8 @@
 package gregtech.content.recipe;
 
-import java.util.List;
-
 import static gregtech.content.material.MaterialFactKeys.Identity;
+
+import java.util.List;
 
 /**
  * Finite purified-acid families from GT6 3703e40308c8c030763fd6297dea8b210d2a77b1,

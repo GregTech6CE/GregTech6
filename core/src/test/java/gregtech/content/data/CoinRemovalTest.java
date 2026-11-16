@@ -1,13 +1,13 @@
 package gregtech.content.data;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import gregtech.api.material.GTValues;
 import gregtech.content.material.MaterialTestFixture;
 import gregtech.engine.material.GTMaterialRegistry;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /** Guards that plateTiny keeps its U9 weight and its predicate for tiny-plate materials such as Iron. */
 class CoinRemovalTest {

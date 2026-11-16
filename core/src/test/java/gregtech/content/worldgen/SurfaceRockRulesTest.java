@@ -1,10 +1,9 @@
 package gregtech.content.worldgen;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.function.UnaryOperator;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /** Locks GT6 {@code WorldgenStoneLayers}' {@code tLastRock}/{@code tLastOre} state. */
 class SurfaceRockRulesTest {

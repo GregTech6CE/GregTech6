@@ -1,21 +1,20 @@
 package gregtech.engine.material;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.cover.MaterialCoverRules;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.MaterialTestFixture;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Guards the generated material icon tree: every material resolves to a modeled texture set, and
