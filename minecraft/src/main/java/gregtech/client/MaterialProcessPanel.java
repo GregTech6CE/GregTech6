@@ -327,7 +327,12 @@ public final class MaterialProcessPanel {
         return List.copyOf(lines);
     }
 
+    public boolean valid() {
+        return page.navigation().valid();
+    }
+
     public boolean click(double mouseX, double mouseY, int button) {
+        if (!valid()) return false;
         if (clickControls(mouseX, mouseY, button)) return true;
         if (button != 0 && button != 1) return false;
         Node node = hit(mouseX, mouseY);

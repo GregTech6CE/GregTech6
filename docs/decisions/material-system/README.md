@@ -40,7 +40,7 @@
   原生资源 Tag 导入 / 数据包变更
         │  beginTagGeneration() → 构建新代 Tag 候选 → ItemCompositionResolver
         ▼  刷新 MaterialFormContent 绑定 → 回收/分解 RecipeMap overlay 重建
-  成功：提交 MaterialPublication.platformGenerationPublished(compRev, recipeRev)
+  成功：candidatePlatformGeneration(compRev, recipeRev) → 快照构建成功后 commit(candidate)
   失败：按检查点回滚成分快照与机器配方，保持上一完整 Stamp 不变
 ```
 

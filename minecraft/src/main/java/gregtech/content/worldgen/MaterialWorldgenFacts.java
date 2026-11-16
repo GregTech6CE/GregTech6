@@ -228,10 +228,13 @@ public final class MaterialWorldgenFacts {
                             1,
                             Math.max(1, definition.chanceDiv()),
                             oreDetails));
-                } else {
+                }
+                if (explicit == Items.AIR || explicit == oreItem(material)) {
                     // Layer interiors use normal ore in the core and small ore at the edges; contacts
                     // choose between both. Keep both real resources rather than collapsing to ore_.
-                    for (Item item : List.of(oreItem(material), smallOreItem(material))) {
+                    for (Item item : explicit == Items.AIR
+                            ? List.of(oreItem(material), smallOreItem(material))
+                            : List.of(smallOreItem(material))) {
                         if (item == Items.AIR) continue;
                         ores.add(new Ore(
                                 material,

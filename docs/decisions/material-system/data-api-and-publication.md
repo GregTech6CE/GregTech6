@@ -24,7 +24,7 @@
 由于材料目录定义在进程内一次定稿，而 Tag 成分、形态绑定与机器配方随世界或数据包重载多代替换，`MaterialPublication` 维护原子发布的版本戳 `Stamp(revision, materialRevision, compositionRevision, recipeRevision)`：
 
 1. **进程定义提交**：`GTMaterialRegistry.init()` 到达 `READY` 时调用 `materialDefinitionsPublished(materialRevision)` 唯一一次写定基础材料版本，不允许二次改写。
-2. **平台代次提交**：每次启动装配或热重载在全部 Tag 候选裁决、有效成分构建、`MaterialFormContent` 绑定刷新以及回收/分解配方重建均成功后，才由平台层推进 `platformGenerationPublished(compositionRevision, recipeRevision)`。
+2. **平台代次提交**：每次启动装配或热重载在全部 Tag 候选裁决、有效成分构建、`MaterialFormContent` 绑定刷新以及回收/分解配方重建均成功后，先生成 `candidatePlatformGeneration(compositionRevision, recipeRevision)` 候选，再在展示快照构建成功后调用 `commit(candidate)`。
 3. **失败回滚不动旧印记**：重载任一环节报错触发回滚时，`MaterialPublication.current()` 维持上一成功 `Stamp` 不变，保证下游观测不到“成分切至新代但配方仍留旧代”的跨代撕裂。
 
 ## 来源用途索引与有界处理图

@@ -387,7 +387,26 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
 
     static MaterialProcessRule<?> normalizeProcessRule(
             String source, MaterialProcessKey<?> process, MaterialProcessRule<?> rule) {
-        return new MaterialProcessRule<>(normalizeProcessForms(source, process, rule.forms()), rule.value());
+        var forms = normalizeProcessForms(source, process, rule.forms());
+        if (rule.value() instanceof SpecialProcessValue.Target target) {
+            var counts = new LinkedHashMap<FormKey, Integer>();
+            target.inputCounts().forEach((form, count) -> {
+                var normalized = normalizeProcessForms(source, process, Set.of(form))
+                        .iterator()
+                        .next();
+                if (counts.putIfAbsent(normalized, count) != null)
+                    throw new IllegalArgumentException("Duplicate normalized special process input form " + normalized);
+            });
+            var normalized = new SpecialProcessValue.Target(
+                    counts,
+                    target.itemOutputs(),
+                    target.fluidOutputs(),
+                    target.reagentAmount(),
+                    target.duration(),
+                    target.euPerTick());
+            return new MaterialProcessRule<>(forms, normalized);
+        }
+        return new MaterialProcessRule<>(forms, rule.value());
     }
 
     @Override

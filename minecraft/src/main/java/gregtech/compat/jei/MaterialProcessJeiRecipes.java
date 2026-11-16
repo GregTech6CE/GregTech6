@@ -10,12 +10,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
-import java.util.stream.Stream;
 import mezz.jei.api.gui.IRecipeLayoutDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotView;
-import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.ingredients.ITypedIngredient;
-import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.IRecipeManager;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -34,33 +31,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 /** Captures JEI's final visible recipe rows into the same material-page view model used by EMI. */
 final class MaterialProcessJeiRecipes {
-    private static final IFocusGroup NO_FOCUS = new IFocusGroup() {
-        @Override
-        public boolean isEmpty() {
-            return true;
-        }
-
-        @Override
-        public List<IFocus<?>> getAllFocuses() {
-            return List.of();
-        }
-
-        @Override
-        public Stream<IFocus<?>> getFocuses(RecipeIngredientRole role) {
-            return Stream.empty();
-        }
-
-        @Override
-        public <T> Stream<IFocus<T>> getFocuses(IIngredientType<T> type) {
-            return Stream.empty();
-        }
-
-        @Override
-        public <T> Stream<IFocus<T>> getFocuses(IIngredientType<T> type, RecipeIngredientRole role) {
-            return Stream.empty();
-        }
-    };
-
     private MaterialProcessJeiRecipes() {}
 
     static MaterialProcessSnapshot capture(
@@ -72,7 +42,8 @@ final class MaterialProcessJeiRecipes {
                 .toList();
         var ids = new HashSet<String>();
         var counters = new Counters();
-        for (var category : categories) captureCategory(manager, category, builder, ids, counters);
+        for (var category : categories) captureCategory(manager, category, builder, ids, counters,
+                runtime.getJeiHelpers().getFocusFactory().getEmptyFocusGroup());
         gregtech.platform.Mc.logger()
                 .info("[gregtech] JEI material process index: {} visible categories, {} recipes, {} rows, {} omitted",
                         categories.size(), counters.recipes, counters.rows, counters.omitted);
@@ -99,7 +70,8 @@ final class MaterialProcessJeiRecipes {
             IRecipeCategory<T> category,
             MaterialProcessSnapshot.ViewerBuilder builder,
             Set<String> ids,
-            Counters counters) {
+            Counters counters,
+            IFocusGroup focus) {
         var recipes = manager.createRecipeLookup(category.getRecipeType()).get().toList();
         counters.recipes += recipes.size();
         for (int index = 0; index < recipes.size(); index++) {
@@ -112,7 +84,7 @@ final class MaterialProcessJeiRecipes {
                 counters.rows++;
                 continue;
             }
-            captureRecipe(manager, category, recipe, index, builder, counters);
+            captureRecipe(manager, category, recipe, index, builder, counters, focus);
         }
     }
 
@@ -122,9 +94,10 @@ final class MaterialProcessJeiRecipes {
             T recipe,
             int index,
             MaterialProcessSnapshot.ViewerBuilder builder,
-            Counters counters) {
+            Counters counters,
+            IFocusGroup focus) {
         Optional<IRecipeLayoutDrawable<T>> drawable =
-                manager.createRecipeLayoutDrawable(category, recipe, NO_FOCUS);
+                manager.createRecipeLayoutDrawable(category, recipe, focus);
         if (drawable.isEmpty()) {
             builder.omitted();
             counters.omitted++;

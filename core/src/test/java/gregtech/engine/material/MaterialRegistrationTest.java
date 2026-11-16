@@ -17,6 +17,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MaterialRegistrationTest {
     @Test
+    void specialProcessInputCountsFollowFormAliases() {
+        var alias = new FormKey("casingSmall");
+        var canonical = new FormKey("itemCasing");
+        var process = new MaterialProcessKey<>(
+                new DataKey("test_addon", "special"), SpecialProcessValue.class, MaterialProcessCardinality.MULTIPLE);
+        var output = new SpecialProcessValue.ItemOutput(
+                new MaterialKey("Iron"), List.of(new SpecialProcessValue.FormCount(new FormKey("dust"), 1)), 10000);
+        var target = new SpecialProcessValue.Target(Map.of(alias, 2), List.of(output), List.of(), 100, 20, 2);
+        var normalized = MaterialInfoRegistry.normalizeProcessRule(
+                "test", process, new MaterialProcessRule<>(Set.of(alias), target));
+        assertEquals(Set.of(canonical), normalized.forms());
+        assertEquals(Map.of(canonical, 2), ((SpecialProcessValue.Target) normalized.value()).inputCounts());
+        var duplicate =
+                new SpecialProcessValue.Target(Map.of(alias, 2, canonical, 3), List.of(output), List.of(), 100, 20, 2);
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> MaterialInfoRegistry.normalizeProcessRule(
+                        "test", process, new MaterialProcessRule<>(Set.of(alias, canonical), duplicate)));
+    }
+
+    @Test
     void singleValuedProcessesRejectMultipleRulesDuringConstruction() {
         var process = new MaterialProcessKey<>(
                 new DataKey("test_addon", "single"), String.class, MaterialProcessCardinality.SINGLE);

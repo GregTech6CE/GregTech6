@@ -6,7 +6,6 @@ import gregtech.content.material.catalog.SourceExtrusionMaterialFacts;
 import gregtech.content.material.catalog.SourceLensMaterialFacts;
 import gregtech.content.material.catalog.SourceRecyclingMaterialFacts;
 import gregtech.content.material.catalog.SourceWashingMaterialFacts;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

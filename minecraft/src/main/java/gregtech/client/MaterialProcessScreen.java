@@ -56,6 +56,10 @@ public final class MaterialProcessScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        if (!panel.valid()) {
+            onClose();
+            return;
+        }
         graphics.fill(0, 0, width, height, 0xff303030);
         graphics.pose().pushPose();
         try {
@@ -74,6 +78,10 @@ public final class MaterialProcessScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double x, double y, int button) {
+        if (!panel.valid()) {
+            onClose();
+            return true;
+        }
         if (panel.clickControls(x - MARGIN, y - MARGIN, button)) return true;
         if (panel.press(x - MARGIN, y - MARGIN, button)) {
             dragButton = button;

@@ -8,7 +8,6 @@ import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKey;
 import gregtech.api.addon.material.SpecialProcessMethod;
 import gregtech.api.addon.material.SpecialProcessValue;
-import gregtech.api.material.GTValues;
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.material.catalog.MaterialFluidUnitFacts;
 import gregtech.content.registry.GTFluids;
@@ -73,9 +72,12 @@ public final class SharedSpecialProcessRows {
                     .filter(candidate -> candidate.mNameInternal.equals(method.recipeMap()))
                     .findFirst()
                     .orElse(null);
-            if (map == null)
-                throw new IllegalArgumentException(
-                        "Special process " + method.process().id() + " names unknown recipe map " + method.recipeMap());
+            if (map == null) {
+                com.mojang.logging.LogUtils.getLogger().warn(
+                        "[gregtech] Skipping special process {} with unknown recipe map {}",
+                        method.process().id(), method.recipeMap());
+                continue;
+            }
             if (methodRules.reagents().isEmpty()) continue;
             for (var target : methodRules.targets()) {
                 for (var inputEntry : target.inputCounts().entrySet().stream()
@@ -119,10 +121,11 @@ public final class SharedSpecialProcessRows {
             var candidates = byMap.getOrDefault(map.mNameInternal, List.of());
             if (candidates.isEmpty()) continue;
             for (var recipe : map.mRecipeList) {
+                if (recipe.specialProcess() != null) continue;
                 var matches = candidates.stream().filter(rules -> matches(recipe, rules)).toList();
                 if (matches.size() > 1)
-                    throw new IllegalArgumentException("Recipe belongs to multiple special process methods in "
-                            + map.mNameInternal);
+                    com.mojang.logging.LogUtils.getLogger().warn(
+                            "[gregtech] Skipping ambiguous special-process annotation in {}", map.mNameInternal);
                 if (matches.size() == 1)
                     recipe.withSpecialProcess(matches.get(0).method().process().id());
             }
@@ -130,31 +133,23 @@ public final class SharedSpecialProcessRows {
     }
 
     private static boolean matches(Recipe recipe, MethodRules rules) {
-        boolean target = false;
-        boolean reagent = false;
-        for (var selector : rules.targets()) {
-            for (var input : selector.inputCounts().entrySet()) {
-                if (containsItem(recipe, selector.material(), input.getKey(), input.getValue())) {
-                    target = true;
-                    break;
-                }
-            }
+        for (var target : rules.targets()) {
+            boolean hasTarget = target.inputCounts().entrySet().stream()
+                    .anyMatch(input -> containsItem(recipe, target.material(), input.getKey(), input.getValue()));
+            if (!hasTarget) continue;
+            for (var reagent : rules.reagents())
+                for (var form : reagent.forms())
+                    if (containsInput(recipe, reagent.material(), form, target.plan().reagentAmount())) return true;
         }
-        for (var selector : rules.reagents()) {
-            for (var form : selector.forms())
-                if (containsInput(recipe, selector.material(), form)) {
-                    reagent = true;
-                    break;
-                }
-        }
-        return target && reagent;
+        return false;
     }
 
-    private static boolean containsInput(Recipe recipe, MaterialKey material, FormKey form) {
+    private static boolean containsInput(Recipe recipe, MaterialKey material, FormKey form, long amount) {
         return isFluid(form)
                 ? java.util.Arrays.stream(recipe.mFluidInputs)
-                        .anyMatch(stack -> sameFluidMaterial(stack, material, form))
-                : java.util.Arrays.stream(recipe.mInputs).anyMatch(stack -> sameItemForm(stack, material, form));
+                        .anyMatch(stack -> sameFluidMaterial(stack, material, form) && stack.getAmount() == amount)
+                : java.util.Arrays.stream(recipe.mInputs)
+                        .anyMatch(stack -> sameItemForm(stack, material, form) && stack.getCount() == amount);
     }
 
     private static boolean containsItem(Recipe recipe, MaterialKey material, FormKey form, int count) {
@@ -202,14 +197,15 @@ public final class SharedSpecialProcessRows {
         var chances = new ArrayList<Long>();
         for (var output : plan.itemOutputs()) {
             ItemStack stack = firstItem(output, resolver);
-            if (stack.isEmpty()) continue;
+            if (stack.isEmpty()) return new BuildResult(null);
             itemOutputs.add(stack);
             chances.add((long) output.chance());
         }
         var fluidOutputs = new ArrayList<FluidStack>();
         for (var output : plan.fluidOutputs()) {
             FluidStack stack = firstFluid(output, resolver);
-            if (!stack.isEmpty()) fluidOutputs.add(stack);
+            if (stack.isEmpty()) return new BuildResult(null);
+            fluidOutputs.add(stack);
         }
         if (itemOutputs.isEmpty() && fluidOutputs.isEmpty()) return new BuildResult(null);
         return new BuildResult(new Recipe(
@@ -338,9 +334,7 @@ public final class SharedSpecialProcessRows {
             var material = GTMaterialRegistry.get(materialKey.name()).resolve();
             if (material == null || !material.isValid()) return FluidStack.EMPTY;
             var binding = MaterialFluidUnitFacts.binding(material, form.name());
-            if (binding == null
-                    || binding.referenceSourceUnits() != GTValues.U
-                    || binding.referenceMillibuckets() != 1000) return FluidStack.EMPTY;
+            if (binding == null) return FluidStack.EMPTY;
             var entry = FluidCatalog.get(binding.fluidField());
             if (entry == null || entry.gas() != form.name().equals("gas")) return FluidStack.EMPTY;
             FluidStack stack = GTFluids.stack(binding.fluidField(), (int) amount);

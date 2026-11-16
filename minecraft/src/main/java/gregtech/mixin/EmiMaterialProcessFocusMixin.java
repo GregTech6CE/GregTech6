@@ -28,6 +28,7 @@ public abstract class EmiMaterialProcessFocusMixin {
         // EMI opens lookups only from its recipe/tree screens or a container screen.
         if (recipes.values().stream().anyMatch(rows -> !rows.isEmpty())
                 && Minecraft.getInstance().screen instanceof MaterialProcessScreen screen) screen.onClose();
+        if (ingredient.isEmpty()) return;
         for (var recipe : recipes.getOrDefault(MaterialProcessEmiRecipe.category(), List.of()))
             if (recipe instanceof MaterialProcessEmiRecipe process) process.focus(ingredient);
     }

@@ -112,6 +112,7 @@ public final class MachineRecipeOverlay {
             // previous world's rows. Restore every map and drop the tag-owned producers instead of
             // publishing a partial generation.
             LOGGER.error("[gregtech] Machine recipe overlay generation {} failed; restoring the baseline", current, failure);
+            MaterialProcessSnapshot.Store.clear(MaterialProcessSnapshot.Store.current());
             recover(checkpoint);
             lastResult = new Result(0, 0, 0, 0, baselineRows(), false, true);
             return lastResult;
