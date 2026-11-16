@@ -90,7 +90,7 @@ public final class MaterialProcessProjection {
             DataKey root,
             MaterialProcessDisplay.Navigation navigation,
             java.util.Map<gregtech.engine.recipe.RecipeMap, ItemStack> workstations) {
-        var query = snapshot.queryMaterial(root);
+        var query = snapshot.queryMaterial(root, MaterialProcessGraph.Budgets.MATERIAL_PAGE);
         var steps = new ArrayList<MaterialProcessDisplay.Step>();
         for (Step step : query.steps()) {
             try {
@@ -99,8 +99,10 @@ public final class MaterialProcessProjection {
                 LOGGER.warn("Discarded invalid material process display step {}", step.reference(), failure);
             }
         }
-        var flows = query.flows().stream()
-                .map(flow -> new MaterialProcessDisplay.Flow(flow.resource(), flow.sources(), flow.targets()))
+        List<MaterialProcessDisplay.Flow> flows = List.of();
+        var connections = query.edges().stream()
+                .map(edge -> new MaterialProcessDisplay.Connection(
+                        edge.source(), edge.target(), edge.resource(), edge.confirmed()))
                 .toList();
         List<Component> notices = new ArrayList<>(query.notices().stream().map(MaterialProcessProjection::notice).toList());
         if (steps.size() != query.steps().size())
@@ -109,7 +111,8 @@ public final class MaterialProcessProjection {
         Resource resource = snapshot.resource(query.root()).orElse(null);
         Component title = title(query.root(), resource);
         String material = resource == null ? "" : resource.material();
-        return List.of(new MaterialProcessDisplay.Page(title, material, steps, List.of(), notices, 1, 1, navigation, List.of(), flows));
+        return List.of(new MaterialProcessDisplay.Page(
+                title, material, steps, connections, notices, 1, 1, navigation, List.of(), flows));
     }
 
     private static MaterialProcessDisplay.Step step(MaterialProcessSnapshot snapshot, Step step,
@@ -399,7 +402,7 @@ public final class MaterialProcessProjection {
             case "edge_limit" ->
                 Component.translatable("gt6ce.jei.material_process.coverage.edge_limit", notice.omitted());
             case "depth_limit" ->
-                Component.translatable("gt6ce.jei.material_process.coverage.node_limit", notice.omitted());
+                Component.translatable("gt6ce.jei.material_process.coverage.depth_limit", notice.omitted());
             case "no_sources" -> Component.translatable("gt6ce.jei.material_process.no_sources");
             case "no_uses" -> Component.translatable("gt6ce.jei.material_process.no_uses");
             case "no_both" -> Component.translatable("gt6ce.jei.material_process.no_both");

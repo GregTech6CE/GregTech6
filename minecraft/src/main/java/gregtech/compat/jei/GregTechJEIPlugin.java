@@ -1,6 +1,7 @@
 package gregtech.compat.jei;
 
 import gregtech.content.recipe.MaterialProcessSnapshot;
+import gregtech.compat.common.RecipeMachines;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.platform.Mc;
@@ -33,6 +34,15 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     @Override public void onRuntimeAvailable(mezz.jei.api.runtime.IJeiRuntime runtime) {
         this.runtime = runtime;
+        if (!emiLoaded() && processCategory != null) {
+            var source = MaterialProcessSnapshot.Store.current();
+            var snapshot = MaterialProcessJeiRecipes.capture(source, runtime);
+            processSnapshot = snapshot;
+            var navigation = new ProcessNavigation(source, snapshot);
+            runtime.getRecipeManager().addRecipes(
+                    MaterialProcessCategory.TYPE,
+                    gregtech.compat.common.MaterialProcessProjection.initialPages(snapshot, navigation));
+        }
         gregtech.client.gui.RecipeViewerNavigation.registerJei(map -> {
             if (!categories.containsKey(map)) return false;
             runtime.getRecipesGui().showTypes(java.util.List.of(RecipeMapCategory.recipeType(map)));
@@ -239,10 +249,6 @@ public final class GregTechJEIPlugin implements IModPlugin {
 //?}
 
         registration.addRecipes(MoldChiselCategory.TYPE, gregtech.compat.common.MoldChiselDisplay.recipes());
-        processSnapshot = MaterialProcessSnapshot.Store.current();
-        var processNavigation = new ProcessNavigation(processSnapshot);
-        registration.addRecipes(MaterialProcessCategory.TYPE,
-                gregtech.compat.common.MaterialProcessProjection.initialPages(processSnapshot, processNavigation));
         var unitTags = gregtech.compat.common.MaterialUnitTagDisplay.entries();
         for (var family : MaterialUnitTagCategory.FAMILIES)
             registration.addRecipes(MaterialUnitTagCategory.type(family), MaterialUnitTagCategory.pages(family, unitTags));
@@ -283,20 +289,22 @@ public final class GregTechJEIPlugin implements IModPlugin {
     }
 
     private final class ProcessNavigation implements gregtech.compat.common.MaterialProcessDisplay.Navigation {
+        private final MaterialProcessSnapshot source;
         private final MaterialProcessSnapshot snapshot;
 
-        private ProcessNavigation(MaterialProcessSnapshot snapshot) {
+        private ProcessNavigation(MaterialProcessSnapshot source, MaterialProcessSnapshot snapshot) {
+            this.source = source;
             this.snapshot = snapshot;
         }
 
         @Override
         public boolean valid() {
-            return MaterialProcessSnapshot.Store.current(snapshot);
+            return processSnapshot == snapshot && MaterialProcessSnapshot.Store.current(source);
         }
 
         @Override
         public boolean openStack(ItemStack stack, boolean uses) {
-            if (runtime == null || !MaterialProcessSnapshot.Store.current(snapshot) || stack.isEmpty()) return false;
+            if (runtime == null || !valid() || stack.isEmpty()) return false;
             var role = uses ? mezz.jei.api.recipe.RecipeIngredientRole.INPUT : mezz.jei.api.recipe.RecipeIngredientRole.OUTPUT;
             var factory = runtime.getJeiHelpers().getFocusFactory();
             var focuses = new ArrayList<mezz.jei.api.recipe.IFocus<?>>();
@@ -316,10 +324,18 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
         @Override
         public boolean openForm(gregtech.api.addon.material.DataKey resource, boolean uses) {
-            if (runtime == null || !MaterialProcessSnapshot.Store.current(snapshot)) return false;
+            if (runtime == null || !valid()) return false;
             var pages = gregtech.compat.common.MaterialProcessProjection.pages(snapshot, resource, this);
             runtime.getRecipesGui().showRecipes(processCategory, pages, List.of());
             return true;
         }
+    }
+
+    private static boolean emiLoaded() {
+//? if >=1.21.1 {
+        /*return net.neoforged.fml.ModList.get().isLoaded("emi");
+*///?} else {
+        return net.minecraftforge.fml.ModList.get().isLoaded("emi");
+//?}
     }
 }

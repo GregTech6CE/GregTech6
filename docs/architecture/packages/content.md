@@ -10,7 +10,7 @@ core 的 content 描述“有什么”，Minecraft 的 content 将其变为游�
 | --- | --- | --- |
 | `content` | 内容层总体职责说明 | `package-info.java` |
 | `content.material` | 材料目录入口、物性规则和稳定符号门面 | `MaterialDefinitions`、`Materials`；读取符号不触发注册 |
-| `content.material.catalog` | 元素、化合物、矿石、石材、木材、特殊材料和组的规范声明 | `ElementMaterials`、`CompoundMaterials`、`GroupMaterials`；每项材料事实只在这里维护 |
+| `content.material.catalog` | 元素、化合物、矿石、石材、木材、特殊材料和组的规范声明 | `ElementMaterials`、`CompoundMaterials`、`GroupMaterials`；材料目录事实在这里维护，游戏侧桥接事实经 typed key 汇入 |
 | `content.material.generated` | 既有 GT6 字段符号门面 | `ElementMaterials`、`CompoundMaterials`；引用规范目录中的已安装对象 |
 | `content.data` | 原版参数、跨领域内容事实与标识表 | `FluidCatalog`、`MaterialGroups`；仅跨领域事实放这里 |
 | `content.data.generated` | 尚留存的兼容查询门面和历史字段映射 | `MaterialForms`、`MaterialProcessingTargets`；权威材料事实位于 `content.material.catalog` |
@@ -99,7 +99,7 @@ core 的 content 描述“有什么”，Minecraft 的 content 将其变为游�
   - 线缆、管道、轴、电池、覆盖板与储罐的实际传输、断开与方向变化。
   - 材料物品/方块注册与统一化；矿脉或结构的注册存在性。
 - 现有测试集
-  - `MaterialBaselineTest` 与共享 `MaterialBaselineTests` 提供材料源表引用审计、独立 JVM 快照、测试材料 SPI、成分与回收／分解及真实重载入口；契约与不变量见[材料系统设计](../../decisions/material-system/README.md)。
+  - `MaterialRegistrationTest`、`MaterialCatalogTest` 与 `MaterialProcessGraphTest` 提供材料目录、附属合并、处理图预算与查询回归；契约与不变量见[材料系统设计](../../decisions/material-system/README.md)。
   - core 静态 TSV 与 GameTest TSV 由对应 JUnit/GameTest 维护；用例覆盖物品管道路由与调度回归。
   - `core/src/test` 的材料目录、标签名翻译、熔融浇筑与配方引擎测试；`api/common` 的材料、机器、能源模型测试。
   - 机器 tick、多方块、能源网络、物流、世界生成完整流程等仍是待补范围。

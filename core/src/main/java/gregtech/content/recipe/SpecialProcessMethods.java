@@ -35,9 +35,7 @@ public final class SpecialProcessMethods {
 
     private static SpecialProcessMethod method(MaterialProcessKey<SpecialProcessValue> process) {
         return new SpecialProcessMethod(
-                process,
-                "gt.recipe.bath",
-                "gt6ce.special_process." + process.id().path().replace('/', '.'));
+                process, "gt.recipe.bath", "gt6ce." + process.id().path().replace('/', '.'));
     }
 
     private static MaterialProcessKey<SpecialProcessValue> process(String path) {

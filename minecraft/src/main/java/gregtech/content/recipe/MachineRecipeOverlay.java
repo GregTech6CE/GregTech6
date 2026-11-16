@@ -169,7 +169,7 @@ public final class MachineRecipeOverlay {
                 baselineRows(), restoreMillis, producersMillis, moved, tally.removed, removeMillis, tally.added,
                 installMillis, tally.priority, tally.rejected);
         if (generation != current) return lastResult;
-        lastPublication = MaterialPublication.platformGenerationPublished(
+        lastPublication = MaterialPublication.candidatePlatformGeneration(
                 ItemMaterialRegistry.compositionRevision(), current);
         lastResult = new Result(tally.removed, tally.added, tally.rejected, restoreMillis, baselineRows(), false, false);
         applications++;

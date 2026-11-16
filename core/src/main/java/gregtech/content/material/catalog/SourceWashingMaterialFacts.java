@@ -194,7 +194,7 @@ public final class SourceWashingMaterialFacts {
         if (binding == null) return declaration;
         var info = declaration.info();
         var rules = new LinkedHashMap<>(info.processes().rules());
-        rules.put(MaterialFactKeys.SOURCE_WASHING, List.of(MaterialProcessRule.anyForm(binding)));
+        MaterialFactKeys.put(rules, MaterialFactKeys.SOURCE_WASHING, List.of(MaterialProcessRule.anyForm(binding)));
         return new MaterialDefinition.Declaration(
                 declaration.material(),
                 new MaterialInfoDefinition(

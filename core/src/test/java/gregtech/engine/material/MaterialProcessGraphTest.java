@@ -184,11 +184,28 @@ final class MaterialProcessGraphTest {
                     List.of(port(resource("local_" + index), Role.UNKNOWN, "local_" + index))));
         var graph = builder.build();
         var query = graph.queryMaterial(common, Budgets.MATERIAL_PAGE);
-        assertEquals(741, query.steps().size());
-        assertEquals(4970, query.edges().size());
-        assertEquals(160, query.steps().get(0).outputs().size());
-        assertFalse(query.truncated());
-        assertTrue(query.notices().isEmpty());
+        assertEquals(512, query.steps().size());
+        assertEquals(4096, query.edges().size());
+        assertEquals(128, query.steps().get(0).outputs().size());
+        assertTrue(query.truncated());
+        assertEquals(
+                874,
+                query.notices().stream()
+                        .filter(notice -> notice.code().equals("edge_limit"))
+                        .mapToInt(Notice::omitted)
+                        .sum());
+        assertEquals(
+                229,
+                query.notices().stream()
+                        .filter(notice -> notice.code().equals("node_limit"))
+                        .mapToInt(Notice::omitted)
+                        .sum());
+        assertEquals(
+                32,
+                query.notices().stream()
+                        .filter(notice -> notice.code().equals("port_limit"))
+                        .mapToInt(Notice::omitted)
+                        .sum());
     }
 
     @Test

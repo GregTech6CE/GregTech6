@@ -149,9 +149,8 @@ public final class MaterialProcessGraph {
 
     public record Budgets(int maxDepth, int maxSteps, int maxPortsPerSide, int maxEdges) {
         public static final Budgets DEFAULT = new Budgets(8, 64, 64, 128);
-        /** Explicit expansion budget; viewer pages use {@link MaterialProcessGraph#queryMaterial(DataKey)} instead. */
-        public static final Budgets MATERIAL_PAGE =
-                new Budgets(0, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+        /** Material pages keep every direct row only until a configured presentation limit is reached. */
+        public static final Budgets MATERIAL_PAGE = new Budgets(0, 512, 128, 4096);
 
         public Budgets {
             if (maxDepth < 0 || maxSteps <= 0 || maxPortsPerSide <= 0 || maxEdges < 0)

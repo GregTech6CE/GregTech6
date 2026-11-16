@@ -1,11 +1,10 @@
 package gregtech.client;
 
 import com.mojang.math.Axis;
+import gregtech.client.MaterialProcessOverview.Node;
 import gregtech.compat.common.MaterialProcessDisplay.Page;
 import gregtech.compat.common.MaterialProcessDisplay.Port;
-import gregtech.compat.common.MaterialProcessOverview;
-import gregtech.compat.common.MaterialProcessOverview.Node;
-import gregtech.compat.jei.PreviewViewport;
+import gregtech.compat.common.PreviewViewport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -322,6 +321,9 @@ public final class MaterialProcessPanel {
         }
         lines.addAll(names.values().stream().limit(12).toList());
         if (names.size() > 12) lines.add(Component.literal("…"));
+        var step = selected(node);
+        step.specialProcess().ifPresent(process -> lines.add(process.name()));
+        lines.addAll(step.details().stream().limit(8).toList());
         return List.copyOf(lines);
     }
 

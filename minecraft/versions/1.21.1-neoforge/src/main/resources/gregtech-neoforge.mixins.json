@@ -54,6 +54,8 @@
   },
   "client": [
     "BlockPaintColorMixin",
+    "EmiMaterialProcessFocusMixin",
+    "EmiMaterialProcessRecipesMixin",
     "EmiMaterialUsesMixin",
     "EmiStructureFocusMixin",
     "FluidAlphaConfigMixin",

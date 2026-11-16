@@ -11,7 +11,7 @@
 | `engine` | 执行层总体说明 | `package-info.java`；不继续使用旧 internal 命名扩张实现 |
 | `engine.addon` | 附属声明收集、校验、物化与共享服务绑定 | `AddonCoreServices`、`AddonMaterials`、`AddonMachines`、`AddonPipes` |
 | `engine.definition` | 定义目录的组织与查询机制 | `DefinitionCatalog`；内容行放 content |
-| `engine.material` | 材料原子安装（`MaterialRegistryState`）、引用与组校验（`MaterialLinker`）、附属事实冻结、物品成分与回收纯裁决、多代发布版本号（`MaterialPublication`）及不可变视图 | `GTMaterialRegistry`、`MaterialRegistryState`、`MaterialLinker`、`MaterialInfoRegistry`、`ItemCompositionResolver`、`ItemRecoveryPlanner`、`MaterialPublication`、`MaterialViews` |
+| `engine.material` | 材料原子安装（`MaterialRegistryState`）、引用与组校验（`MaterialLinker`）、附属事实冻结、物品成分与回收纯裁决、多代发布版本号（`MaterialPublication`）、不可变视图与有界处理图 | `GTMaterialRegistry`、`MaterialRegistryState`、`MaterialLinker`、`MaterialInfoRegistry`、`ItemCompositionResolver`、`ItemRecoveryPlanner`、`MaterialPublication`、`MaterialViews`、`MaterialProcessGraph` |
 | `engine.prefix` | 材料形态/前缀的注册与解析 | `PrefixRegistry`、`BlockPrefixRegistry` |
 | `engine.recipe` | 配方成本、并行与输出空间拟合、燃料批次、精确单位换算与材料分解纯计划、可合成性和界面坐标等共享机制 | `MachineWorkCost`、`ParallelFit`、`FluidFuelChargeMath`、`UnitConversion`、`MaterialDecompositionPlanner`；不能夹带游戏栈 |
 | `engine.recipe.data` | 配方文档模型、组件、解析及校验 | `MachineRecipeDocuments`、`ItemComponent`、`FluidComponent` |

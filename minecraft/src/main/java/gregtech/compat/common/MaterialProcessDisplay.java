@@ -137,6 +137,15 @@ public final class MaterialProcessDisplay {
             lines.addAll(details);
             return List.copyOf(lines);
         }
+
+        /**
+         * Structural identity for topology and folding. Concrete native states compare by display
+         * identity, while selectors retain their producer-assigned resource key even when their
+         * first icon is also the representative of another selector.
+         */
+        public String semanticIdentity() {
+            return resource.path().startsWith("resource/native/selector/") ? resource.toString() : identity;
+        }
     }
 
     /** Explicit edges from the producer, including branches and cycles. Unconfirmed edges are drawn dashed. */

@@ -27,8 +27,7 @@ public sealed interface SpecialProcessValue permits SpecialProcessValue.Target, 
             if (inputCounts.isEmpty()) throw new IllegalArgumentException("Special process target has no input form");
             for (var entry : inputCounts.entrySet()) {
                 Objects.requireNonNull(entry.getKey(), "input form");
-                if (entry.getValue() == null || entry.getValue() < 1)
-                    throw new IllegalArgumentException("Invalid special process input count");
+                if (entry.getValue() < 1) throw new IllegalArgumentException("Invalid special process input count");
             }
             itemOutputs = List.copyOf(itemOutputs);
             fluidOutputs = List.copyOf(fluidOutputs);

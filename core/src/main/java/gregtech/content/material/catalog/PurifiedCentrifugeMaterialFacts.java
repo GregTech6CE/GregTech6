@@ -44,10 +44,15 @@ public final class PurifiedCentrifugeMaterialFacts {
         var info = declaration.info();
         var rules = new LinkedHashMap<>(info.processes().rules());
         if (phase != null)
-            rules.put(MaterialFactKeys.SOURCE_PURIFIED_CENTRIFUGE_PHASE, List.of(MaterialProcessRule.anyForm(phase)));
+            MaterialFactKeys.put(
+                    rules,
+                    MaterialFactKeys.SOURCE_PURIFIED_CENTRIFUGE_PHASE,
+                    List.of(MaterialProcessRule.anyForm(phase)));
         if (none != null)
-            rules.put(
-                    MaterialFactKeys.SOURCE_PURIFIED_CENTRIFUGE_NO_DEFAULT, List.of(MaterialProcessRule.anyForm(none)));
+            MaterialFactKeys.put(
+                    rules,
+                    MaterialFactKeys.SOURCE_PURIFIED_CENTRIFUGE_NO_DEFAULT,
+                    List.of(MaterialProcessRule.anyForm(none)));
         return new MaterialDefinition.Declaration(
                 declaration.material(),
                 new MaterialInfoDefinition(

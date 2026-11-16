@@ -4,6 +4,7 @@ import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.stack.*;
 import dev.emi.emi.api.widget.*;
+import gregtech.compat.common.PreviewViewport;
 import gregtech.compat.jei.*;
 import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;

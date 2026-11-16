@@ -66,6 +66,7 @@ public final class SharedSpecialProcessRows {
         var catalog = MaterialViews.catalog();
         var methods = methodRules(catalog);
         var resolver = new Resolver();
+        int omitted = 0;
         for (var methodRules : methods) {
             var method = methodRules.method();
             RecipeMap map = RecipeMap.RECIPE_MAP_LIST.stream()
@@ -84,8 +85,11 @@ public final class SharedSpecialProcessRows {
                         var built = build(
                                 target.material(), inputEntry.getKey(), inputEntry.getValue(), target.plan(),
                                 reagent, resolver);
-                        if (built == null) continue;
-                        Recipe accepted = map.addRecipe(built);
+                        if (built.recipe() == null) {
+                            omitted++;
+                            continue;
+                        }
+                        Recipe accepted = map.addRecipe(built.recipe());
                         if (accepted != null) {
                             accepted.withSpecialProcess(method.process().id());
                             OWNED.add(accepted);
@@ -94,6 +98,10 @@ public final class SharedSpecialProcessRows {
                 }
             }
         }
+        if (omitted > 0)
+            com.mojang.logging.LogUtils.getLogger()
+                    .warn("[gregtech] Omitted {} special-process rows whose material forms or reagent did not resolve",
+                            omitted);
         annotateExistingRows(methods);
     }
 
@@ -173,7 +181,9 @@ public final class SharedSpecialProcessRows {
         return value.isValid() && value.getName().equals(material.name()) && entry.gas() == form.name().equals("gas");
     }
 
-    private static Recipe build(
+    private record BuildResult(Recipe recipe) {}
+
+    private static BuildResult build(
             MaterialKey target,
             FormKey inputForm,
             int inputCount,
@@ -181,11 +191,12 @@ public final class SharedSpecialProcessRows {
             ReagentSelector reagent,
             Resolver resolver) {
         ItemStack input = resolver.item(target, inputForm, inputCount);
-        if (input.isEmpty()) return null;
+        if (input.isEmpty()) return new BuildResult(null);
         var itemInputs = new ArrayList<ItemStack>();
         itemInputs.add(input);
         var fluidInputs = new ArrayList<FluidStack>();
-        if (!addReagent(reagent, plan.reagentAmount(), itemInputs, fluidInputs, resolver)) return null;
+        if (!addReagent(reagent, plan.reagentAmount(), itemInputs, fluidInputs, resolver))
+            return new BuildResult(null);
 
         var itemOutputs = new ArrayList<ItemStack>();
         var chances = new ArrayList<Long>();
@@ -200,8 +211,8 @@ public final class SharedSpecialProcessRows {
             FluidStack stack = firstFluid(output, resolver);
             if (!stack.isEmpty()) fluidOutputs.add(stack);
         }
-        if (itemOutputs.isEmpty() && fluidOutputs.isEmpty()) return null;
-        return new Recipe(
+        if (itemOutputs.isEmpty() && fluidOutputs.isEmpty()) return new BuildResult(null);
+        return new BuildResult(new Recipe(
                 itemInputs.toArray(ItemStack[]::new),
                 itemOutputs.toArray(ItemStack[]::new),
                 null,
@@ -210,7 +221,7 @@ public final class SharedSpecialProcessRows {
                 fluidOutputs.toArray(FluidStack[]::new),
                 plan.duration(),
                 plan.euPerTick(),
-                0);
+                0));
     }
 
     private static boolean addReagent(

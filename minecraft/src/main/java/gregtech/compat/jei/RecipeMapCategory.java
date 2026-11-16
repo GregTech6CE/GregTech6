@@ -47,6 +47,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
         this.icon=helper.createDrawableItemStack(icon);
 
     }
+    public RecipeMap recipeMap() { return map; }
     /** JEI fixes dimensions per category; choose the smallest bounds containing its actual rows. */
     public void fitRecipes(java.util.List<Recipe> recipes) {
         int width = 140, height = 26;

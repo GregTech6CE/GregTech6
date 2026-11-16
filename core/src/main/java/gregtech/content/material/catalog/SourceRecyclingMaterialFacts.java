@@ -161,9 +161,10 @@ public final class SourceRecyclingMaterialFacts {
         if (facts == null) return declaration;
         var info = declaration.info();
         var rules = new java.util.LinkedHashMap<>(info.processes().rules());
-        rules.put(MaterialFactKeys.SOURCE_RECYCLING, List.of(MaterialProcessRule.anyForm(facts)));
+        MaterialFactKeys.put(rules, MaterialFactKeys.SOURCE_RECYCLING, List.of(MaterialProcessRule.anyForm(facts)));
         if (declaration.name().equals(SOURCE_MOLTEN_FLUIDS.get(declaration.id()))) {
-            rules.put(MaterialFactKeys.SOURCE_MOLTEN_FLUID, List.of(MaterialProcessRule.anyForm(Boolean.TRUE)));
+            MaterialFactKeys.put(
+                    rules, MaterialFactKeys.SOURCE_MOLTEN_FLUID, List.of(MaterialProcessRule.anyForm(Boolean.TRUE)));
         }
         return new MaterialDefinition.Declaration(
                 declaration.material(),

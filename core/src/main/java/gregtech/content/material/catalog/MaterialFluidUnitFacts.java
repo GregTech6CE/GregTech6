@@ -166,7 +166,8 @@ public final class MaterialFluidUnitFacts {
         if (values.isEmpty()) return declaration;
         var info = declaration.info();
         var rules = new LinkedHashMap<>(info.processes().rules());
-        rules.put(
+        MaterialFactKeys.put(
+                rules,
                 MaterialFactKeys.MATERIAL_FLUID_UNIT,
                 List.of(MaterialProcessRule.anyForm(new MaterialFactKeys.MaterialFluidUnits(Set.copyOf(values)))));
         return new MaterialDefinition.Declaration(

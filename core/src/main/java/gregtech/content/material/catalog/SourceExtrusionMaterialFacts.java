@@ -779,7 +779,8 @@ public final class SourceExtrusionMaterialFacts {
         if (row == null || !sameName(row.name(), declaration.name())) return declaration;
         var info = declaration.info();
         var rules = new LinkedHashMap<>(info.processes().rules());
-        rules.put(MaterialFactKeys.SOURCE_EXTRUSION, List.of(MaterialProcessRule.anyForm(row.profile())));
+        MaterialFactKeys.put(
+                rules, MaterialFactKeys.SOURCE_EXTRUSION, List.of(MaterialProcessRule.anyForm(row.profile())));
         return new MaterialDefinition.Declaration(
                 declaration.material(),
                 new MaterialInfoDefinition(

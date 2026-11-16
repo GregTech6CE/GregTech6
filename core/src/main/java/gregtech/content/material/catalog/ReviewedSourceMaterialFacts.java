@@ -290,10 +290,11 @@ public final class ReviewedSourceMaterialFacts {
         for (var entry : ENTRIES) {
             if (entry.id != declaration.id() || !GTMaterial.sanitize(entry.name).equals(declaration.name())) continue;
             var key = entry.rule == Rule.FURNACE ? MaterialFactKeys.SOURCE_FURNACE : MaterialFactKeys.SOURCE_GRADED_GEM;
-            rules.put(key, List.of(MaterialProcessRule.anyForm(entry.decision)));
+            MaterialFactKeys.put(rules, key, List.of(MaterialProcessRule.anyForm(entry.decision)));
         }
         if (declaration.id() == 9802 && declaration.name().equals("Ice")) {
-            rules.put(
+            MaterialFactKeys.put(
+                    rules,
                     MaterialFactKeys.SOURCE_SIFTING_EXCLUSIONS,
                     List.of(MaterialProcessRule.anyForm(new MaterialFactKeys.PrefixExclusions(SIFTING_ABSENT))));
         }

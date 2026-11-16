@@ -5,7 +5,6 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.PrefixRegistry;
-
 import java.util.*;
 
 /**

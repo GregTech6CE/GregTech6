@@ -1,5 +1,10 @@
 package gregtech.content.worldgen;
 
+import gregtech.api.addon.material.FormKey;
+import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.material.MaterialFormBinding;
+import gregtech.api.addon.material.MaterialFormKind;
+import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
 import gregtech.api.addon.worldgen.SmallOreDeclaration;
 import gregtech.api.material.GTMaterial;
@@ -104,10 +109,12 @@ public final class MaterialWorldgenFacts {
 
     public static Snapshot capture() {
         var facts = new ArrayList<Fact>();
-        appendLargeVeins(facts);
-        appendSmallOres(facts);
-        appendStoneLayers(facts);
-        appendBedrock(facts);
+        if (gregtech.GregTechConfig.Worldgen.GEOLOGY.enabled()) {
+            appendLargeVeins(facts);
+            appendSmallOres(facts);
+            appendStoneLayers(facts);
+        }
+        if (gregtech.GregTechConfig.Worldgen.BEDROCK_ORES.enabled()) appendBedrock(facts);
         return new Snapshot(facts);
     }
 
@@ -208,18 +215,34 @@ public final class MaterialWorldgenFacts {
                 if (layer.noDeep()) min = Math.max(min, GTWorldgenScale.remapY(24));
                 int max = Math.min(GTWorldgenScale.BAND_TOP - 1, GTWorldgenScale.remapY(definition.maxY()));
                 if (min > max) continue;
-                Item item = explicitItem(material, rule);
-                if (item == Items.AIR) continue;
-                ores.add(new Ore(
-                        material,
-                        itemState(item),
-                        min,
-                        max,
-                        1,
-                        Math.max(1, definition.chanceDiv()),
-                        rule.biomes().isEmpty()
-                                ? List.of("stone-layer roll")
-                                : List.of("stone-layer roll; biomes: " + rule.biomes())));
+                List<String> oreDetails = rule.biomes().isEmpty()
+                        ? List.of("stone-layer roll")
+                        : List.of("stone-layer roll; biomes: " + rule.biomes());
+                Item explicit = explicitItem(material, rule);
+                if (explicit != Items.AIR) {
+                    ores.add(new Ore(
+                            material,
+                            itemState(explicit),
+                            min,
+                            max,
+                            1,
+                            Math.max(1, definition.chanceDiv()),
+                            oreDetails));
+                } else {
+                    // Layer interiors use normal ore in the core and small ore at the edges; contacts
+                    // choose between both. Keep both real resources rather than collapsing to ore_.
+                    for (Item item : List.of(oreItem(material), smallOreItem(material))) {
+                        if (item == Items.AIR) continue;
+                        ores.add(new Ore(
+                                material,
+                                itemState(item),
+                                min,
+                                max,
+                                1,
+                                Math.max(1, definition.chanceDiv()),
+                                oreDetails));
+                    }
+                }
             }
             if (ores.isEmpty()) continue;
             int minY = ores.stream().mapToInt(Ore::minY).min().orElse(0);
@@ -243,11 +266,15 @@ public final class MaterialWorldgenFacts {
     }
 
     private static void appendBedrock(List<Fact> facts, List<GTBedrockOres.BedrockOre> rows, String dimension) {
+        long totalWeight = rows.stream()
+                .mapToLong(row -> MineralWorldgenRules.bedrockWeight(row.chance()))
+                .sum();
         for (GTBedrockOres.BedrockOre row : rows) {
             GTMaterial material = row.material().resolve();
             if (!material.isValid()) continue;
             Item item = oreItem(material);
             if (item == Items.AIR) continue;
+            int weight = (int) MineralWorldgenRules.bedrockWeight(row.chance());
             facts.add(new Fact(
                     "bedrock/" + dimension + "/" + row.name(),
                     row.name(),
@@ -255,8 +282,8 @@ public final class MaterialWorldgenFacts {
                     dimension,
                     GTWorldgenScale.WORLD_FLOOR,
                     GTWorldgenScale.WORLD_FLOOR + 2,
-                    row.chance(),
-                    0,
+                    weight,
+                    Math.toIntExact(totalWeight),
                     List.of(new Ore(
                             material,
                             itemState(item),
@@ -264,7 +291,7 @@ public final class MaterialWorldgenFacts {
                             GTWorldgenScale.WORLD_FLOOR + 2,
                             1,
                             0,
-                            List.of("bedrock rarity: " + row.chance())))));
+                            List.of("bedrock rarity: 1 in " + row.chance())))));
         }
     }
 
@@ -274,13 +301,35 @@ public final class MaterialWorldgenFacts {
     }
 
     private static Item oreItem(GTMaterial material) {
+        Item bound = boundItem(material, "ore", "oreVanillastone");
+        if (bound != null) return bound;
         String path = material.getName().toLowerCase(Locale.ROOT);
         return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "ore_" + path));
     }
 
     private static Item smallOreItem(GTMaterial material) {
+        Item bound = boundItem(material, "oreSmall");
+        if (bound != null) return bound;
         String path = material.getName().toLowerCase(Locale.ROOT);
         return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "ore_small_" + path));
+    }
+
+    private static Item boundItem(GTMaterial material, String... forms) {
+        try {
+            for (String name : forms)
+                for (MaterialFormBinding binding :
+                        GregTechMaterials.formBindings().find(new MaterialKey(material.getName()), new FormKey(name)))
+                    if (binding.kind() == MaterialFormKind.ITEM) {
+                        ResourceLocation id = ResourceLocation.tryParse(binding.id());
+                        if (id != null) {
+                            Item item = BuiltInRegistries.ITEM.get(id);
+                            if (item != Items.AIR) return item;
+                        }
+                    }
+        } catch (IllegalStateException notReady) {
+            // Naming fallback below remains valid during early publication.
+        }
+        return null;
     }
 
     private static String itemState(Item item) {

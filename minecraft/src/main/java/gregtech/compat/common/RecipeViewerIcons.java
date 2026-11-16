@@ -15,6 +15,8 @@ import net.minecraft.world.item.ItemStack;
 
 /** Category identities shared by the two viewers, independent of workstation ordering. */
 public final class RecipeViewerIcons {
+    private static volatile java.util.Map<RecipeMap, ItemStack> cachedCategories;
+
     private RecipeViewerIcons() {}
 
     public static ItemStack item(String path) {
@@ -47,10 +49,17 @@ public final class RecipeViewerIcons {
     }
 
     public static java.util.Map<RecipeMap, ItemStack> categories() {
-        var machines = gregtech.compat.jei.RecipeMachines.collect();
-        var icons = new java.util.HashMap<RecipeMap, ItemStack>();
-        for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) icons.put(map, category(map, machines));
-        return icons;
+        var cached = cachedCategories;
+        if (cached != null) return cached;
+        synchronized (RecipeViewerIcons.class) {
+            if (cachedCategories == null) {
+                var machines = RecipeMachines.collect();
+                var icons = new java.util.HashMap<RecipeMap, ItemStack>();
+                for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) icons.put(map, category(map, machines));
+                cachedCategories = java.util.Map.copyOf(icons);
+            }
+            return cachedCategories;
+        }
     }
 
     public static ItemStack map(RecipeMap map) {

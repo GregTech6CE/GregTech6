@@ -4,7 +4,7 @@ import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.*;
 import dev.emi.emi.api.stack.*;
 import dev.emi.emi.api.widget.WidgetHolder;
-import gregtech.compat.jei.WorldgenInfoData;
+import gregtech.compat.common.WorldgenInfoData;
 import gregtech.content.worldgen.GTWorldgenScale;
 import java.util.*;
 import net.minecraft.client.Minecraft;

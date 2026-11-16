@@ -19,7 +19,7 @@ public final class SourceOreCrushingMaterialFacts {
                 pulverizing(declaration.id(), declaration.name(), hexorium), hexorium);
         var info = declaration.info();
         var rules = new LinkedHashMap<>(info.processes().rules());
-        rules.put(MaterialFactKeys.SOURCE_ORE_CRUSHING, List.of(MaterialProcessRule.anyForm(fact)));
+        MaterialFactKeys.put(rules, MaterialFactKeys.SOURCE_ORE_CRUSHING, List.of(MaterialProcessRule.anyForm(fact)));
         return new MaterialDefinition.Declaration(
                 declaration.material(),
                 new MaterialInfoDefinition(

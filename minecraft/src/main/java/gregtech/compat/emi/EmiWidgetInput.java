@@ -1,6 +1,6 @@
 package gregtech.compat.emi;
 
-import gregtech.compat.jei.PreviewViewport;
+import gregtech.compat.common.PreviewViewport;
 import java.util.*;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;

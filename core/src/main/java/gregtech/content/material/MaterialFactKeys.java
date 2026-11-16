@@ -1,20 +1,28 @@
 package gregtech.content.material;
 
-import gregtech.api.addon.material.DataKey;
-import gregtech.api.addon.material.MaterialInfoTool;
-import gregtech.api.addon.material.MaterialKey;
-import gregtech.api.addon.material.MaterialProcessKey;
+import gregtech.api.addon.material.*;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.material.catalog.SourceExtrusionMaterialFacts;
 import gregtech.content.material.catalog.SourceLensMaterialFacts;
 import gregtech.content.material.catalog.SourceRecyclingMaterialFacts;
 import gregtech.content.material.catalog.SourceWashingMaterialFacts;
+
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 /** Typed material process keys for facts consumed by recipe families. */
 public final class MaterialFactKeys {
     private MaterialFactKeys() {}
+
+    public static void put(
+            Map<MaterialProcessKey<?>, List<MaterialProcessRule<?>>> rules,
+            MaterialProcessKey<?> key,
+            List<MaterialProcessRule<?>> values) {
+        if (rules.putIfAbsent(key, List.copyOf(values)) != null)
+            throw new IllegalArgumentException("Duplicate material process fact " + key.id());
+    }
 
     public enum Decision {
         YES,

@@ -100,7 +100,7 @@ public final class SourceMacerationMaterialFacts {
         if (decision == MaterialFactKeys.Decision.UNKNOWN) return declaration;
         var info = declaration.info();
         var rules = new LinkedHashMap<>(info.processes().rules());
-        rules.put(MaterialFactKeys.SOURCE_MACERATION, List.of(MaterialProcessRule.anyForm(decision)));
+        MaterialFactKeys.put(rules, MaterialFactKeys.SOURCE_MACERATION, List.of(MaterialProcessRule.anyForm(decision)));
         return new MaterialDefinition.Declaration(
                 declaration.material(),
                 new MaterialInfoDefinition(

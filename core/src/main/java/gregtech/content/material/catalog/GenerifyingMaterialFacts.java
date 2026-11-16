@@ -58,7 +58,8 @@ public final class GenerifyingMaterialFacts {
         if (target == null || target == declaration.id()) return declaration;
         var info = declaration.info();
         var rules = new LinkedHashMap<>(info.processes().rules());
-        rules.put(
+        MaterialFactKeys.put(
+                rules,
                 MaterialFactKeys.GENERIFICATION_TARGET,
                 List.of(MaterialProcessRule.anyForm(new MaterialFactKeys.GenerificationTarget(target))));
         return new MaterialDefinition.Declaration(

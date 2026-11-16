@@ -301,7 +301,8 @@ public final class MaterialProcessSnapshot {
                 if (recipe.mFakeRecipe && !hasMaterialUnitInput(recipe)) continue;
                 BuiltStep built;
                 try {
-                    built = recipeStep(map, recipe, index, publication.revision(), sessionGeneration);
+                    built = recipeStep(
+                            map, recipe, index, publication.revision(), sessionGeneration, resourceGeneration);
                 } catch (RuntimeException failure) {
                     LOGGER.warn("Discarded invalid material process recipe in {} at index {}", map.mNameInternal, index, failure);
                     invalid++;
@@ -333,7 +334,12 @@ public final class MaterialProcessSnapshot {
     }
 
     private static BuiltStep recipeStep(
-            RecipeMap map, Recipe recipe, int index, long publication, long session) {
+            RecipeMap map,
+            Recipe recipe,
+            int index,
+            long publication,
+            long session,
+            long resourceGeneration) {
         var inputs = new ArrayList<Port>();
         var outputs = new ArrayList<Port>();
         var materials = new LinkedHashSet<String>();
@@ -344,7 +350,9 @@ public final class MaterialProcessSnapshot {
             ItemStack stack = recipe.mInputs[input];
             if (stack == null || stack.isEmpty()) continue;
             if (recipe.isCatalystInput(input)) {
-                auxiliaryInputs.add("auxiliary catalyst: " + BuiltInRegistries.ITEM.getKey(stack.getItem())
+                Port port = itemPort(stack, recipe, input, false, false, nativeStep);
+                if (port != null) inputs.add(port);
+                else auxiliaryInputs.add("unresolved catalyst: " + BuiltInRegistries.ITEM.getKey(stack.getItem())
                         + itemStateSuffix(stack) + " x" + stack.getCount());
                 continue;
             }
@@ -360,8 +368,12 @@ public final class MaterialProcessSnapshot {
             Port port = fluidPort(stack, recipe, input, false, !mainInput);
             if (port == null) continue;
             inputs.add(port);
-            addMaterial(materials, port);
+            if (port.role() == Role.CONSUMED) addMaterial(materials, port);
             mainInput |= port.main();
+        }
+        for (ItemStack catalyst : gregtech.engine.recipe.RecipeSpecialItems.display(recipe.mSpecialItems)) {
+            Port port = catalystPort(catalyst, publication, resourceGeneration);
+            if (port != null) inputs.add(port);
         }
         boolean mainOutput = false;
         for (int output = 0; output < recipe.mOutputs.length; output++) {
@@ -393,6 +405,8 @@ public final class MaterialProcessSnapshot {
         details.add("map: " + map.mNameInternal);
         details.add("duration: " + recipe.mDuration + " ticks");
         details.add("energy: " + recipe.mEUt + " EU/t");
+        if (gregtech.engine.addon.ExclusiveOutputMaps.enabled(map))
+            details.add("exclusive output group: the first chance selects one item output");
         if (!recipe.mSource.isBlank()) details.add("source: " + recipe.mSource);
         if (recipe.mFakeRecipe) details.add("symbolic unit template");
         if (recipe.mExactItemInputs) details.add("exact item-state matching");
@@ -417,6 +431,21 @@ public final class MaterialProcessSnapshot {
                         Optional.ofNullable(recipe.specialProcess()),
                         true),
                 materials);
+    }
+
+    private static Port catalystPort(ItemStack stack, long publication, long resourceGeneration) {
+        if (stack == null || stack.isEmpty()) return null;
+        var form = MaterialEquivalence.form(stack);
+        GTMaterial material = form == null ? material(stack) : form.material().resolve();
+        String state = itemDisplayState(stack);
+        String prefix = form == null ? "item" : form.prefix().getName();
+        Resource resource = material == null
+                ? new Resource(nativeResourceKey("item", state), "unknown", "item", "solid", state)
+                : itemResource(material, prefix, state);
+        return scoped(
+                new Port(resource, Role.CATALYST, new Amount(stack.getCount(), AmountUnit.ITEM),
+                        OptionalInt.empty(), false, List.of("native special catalyst")),
+                publication, resourceGeneration);
     }
 
     private static Port itemPort(
@@ -804,13 +833,30 @@ public final class MaterialProcessSnapshot {
             this.source = source;
             source.nativeRecipes.forEach((reference, row) -> nativeReferences
                     .computeIfAbsent(row.map(), ignored -> new java.util.IdentityHashMap<>()).put(row.recipe(), reference));
-            source.steps.values().stream().filter(step -> source.worldgen.containsKey(step.reference()))
+            source.steps.values().stream()
+                    .filter(step -> source.worldgen.containsKey(step.reference())
+                            || Optional.ofNullable(source.nativeRecipes.get(step.reference()))
+                                    .map(NativeRecipe::map)
+                                    .map(map -> !map.mViewerAllowed)
+                                    .orElse(false))
                     .sorted(Comparator.comparing(step -> step.reference().toString()))
-                    .forEach(this::add);
+                    .forEach(step -> {
+                        add(step);
+                        Optional.ofNullable(source.nativeRecipes.get(step.reference()))
+                                .ifPresent(recipe -> recipes.put(step.reference(), recipe));
+                    });
         }
 
         public void omitted() {
             omitted++;
+        }
+
+        public long publicationRevision() {
+            return source.snapshot.publication().revision();
+        }
+
+        public long sessionGeneration() {
+            return source.snapshot.sessionGeneration();
         }
 
         /** Reuses GT matching, unit quantities and recovery ownership, once per visible native row. */
@@ -826,8 +872,13 @@ public final class MaterialProcessSnapshot {
                 return true;
             }
             int index = map.mRecipeList.size() + recipes.size();
-            BuiltStep built = recipeStep(map, recipe, index,
-                    source.snapshot.publication().revision(), source.snapshot.sessionGeneration());
+            BuiltStep built = recipeStep(
+                    map,
+                    recipe,
+                    index,
+                    source.snapshot.publication().revision(),
+                    source.snapshot.sessionGeneration(),
+                    source.resourceGeneration);
             if (built == null) return false;
             built = scoped(built, source.snapshot.publication().revision(), source.resourceGeneration);
             addStep(buckets, built.step, built.materials);
@@ -945,10 +996,9 @@ public final class MaterialProcessSnapshot {
         }
     }
 
-    /** Bounded current/previous publication retained for in-flight viewer callbacks. */
+    /** Current publication retained for lifecycle-bound viewer callbacks. */
     public static final class Store {
         private static volatile MaterialProcessSnapshot current = EMPTY;
-        private static volatile MaterialProcessSnapshot previous;
 
         private Store() {}
 
@@ -970,11 +1020,14 @@ public final class MaterialProcessSnapshot {
                         && current.snapshot.sessionGeneration() == sessionGeneration
                         && current.snapshot.formRevision() == gregtech.engine.material.MaterialViews.contentRevision()
                         && current.snapshot.tagGeneration() == ItemMaterialRegistry.compositionState().tagGeneration()
-                        && current.snapshot.worldgenRevision() == worldgen.revision()) return current;
+                        && current.snapshot.worldgenRevision() == worldgen.revision()) {
+                    gregtech.engine.material.MaterialPublication.commit(publication);
+                    return current;
+                }
                 MaterialProcessSnapshot built =
                         MaterialProcessSnapshot.build(publication, sessionGeneration, worldgen);
-                previous = current;
                 current = built;
+                gregtech.engine.material.MaterialPublication.commit(publication);
                 LOGGER.info(
                         "[gregtech] Material process snapshot {} published with {} material roots, "
                                 + "{} recipe refs in {} ms",
@@ -996,7 +1049,6 @@ public final class MaterialProcessSnapshot {
         public static synchronized void clear(MaterialProcessSnapshot expected) {
             if (current != expected) return;
             current = EMPTY;
-            previous = null;
         }
     }
 }

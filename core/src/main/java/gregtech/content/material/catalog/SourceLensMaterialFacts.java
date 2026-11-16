@@ -93,7 +93,8 @@ public final class SourceLensMaterialFacts {
             if (!materialNameMatches(role.name, declaration.name())) continue;
             var info = declaration.info();
             var rules = new LinkedHashMap<>(info.processes().rules());
-            rules.put(MaterialFactKeys.SOURCE_LENS_ROLE, List.of(MaterialProcessRule.anyForm(role.color)));
+            MaterialFactKeys.put(
+                    rules, MaterialFactKeys.SOURCE_LENS_ROLE, List.of(MaterialProcessRule.anyForm(role.color)));
             return new MaterialDefinition.Declaration(
                     declaration.material(),
                     new MaterialInfoDefinition(

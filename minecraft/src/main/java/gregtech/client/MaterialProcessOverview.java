@@ -1,6 +1,7 @@
-package gregtech.compat.common;
+package gregtech.client;
 
 import gregtech.api.addon.material.DataKey;
+import gregtech.compat.common.MaterialProcessDisplay;
 import gregtech.compat.common.MaterialProcessDisplay.Connection;
 import gregtech.compat.common.MaterialProcessDisplay.Page;
 import gregtech.compat.common.MaterialProcessDisplay.Port;
@@ -293,8 +294,8 @@ public final class MaterialProcessOverview {
                     var endpoint = new Endpoint(step, output, index, port);
                     machine.endpoints.add(endpoint);
                     String instance = output && step.genericRecovery()
-                            ? "recovery:" + machine.key + ":" + port.identity()
-                            : "resource:" + port.identity();
+                            ? "recovery:" + machine.key + ":" + port.semanticIdentity()
+                            : "resource:" + port.semanticIdentity();
                     Node resource = resources.computeIfAbsent(instance, identity -> {
                         var node = new Node(identity, null);
                         node.feedbackCopy = output && step.genericRecovery();
@@ -325,9 +326,9 @@ public final class MaterialProcessOverview {
         // Each pass detaches at least one shared port; copies themselves are never split again.
         while (splitLongEdges()) layout();
         Map<String, Integer> counts = new HashMap<>();
-        for (Node node : nodes) if (!node.machine()) counts.merge(node.port().identity(), 1, Integer::sum);
+        for (Node node : nodes) if (!node.machine()) counts.merge(node.port().semanticIdentity(), 1, Integer::sum);
         for (Node node : nodes)
-            if (!node.machine()) node.copy = counts.get(node.port().identity()) > 1;
+            if (!node.machine()) node.copy = counts.get(node.port().semanticIdentity()) > 1;
         route();
         anchor = nodes.stream()
                 .filter(node -> !node.machine() && node.port().material().equals(page.material()))
@@ -560,9 +561,9 @@ public final class MaterialProcessOverview {
             offset += bandWidth;
         }
         var instances = new HashMap<String, Integer>();
-        for (Node node : nodes) if (!node.machine()) instances.merge(node.port().identity(), 1, Integer::sum);
+        for (Node node : nodes) if (!node.machine()) instances.merge(node.port().semanticIdentity(), 1, Integer::sum);
         for (Node node : nodes)
-            if (!node.machine()) node.copy |= instances.get(node.port().identity()) > 1;
+            if (!node.machine()) node.copy |= instances.get(node.port().semanticIdentity()) > 1;
         applyConfirmation();
         route();
         height = Math.max(
@@ -700,7 +701,7 @@ public final class MaterialProcessOverview {
     }
 
     private static List<String> identities(List<Port> ports) {
-        return ports.stream().map(Port::identity).distinct().sorted().toList();
+        return ports.stream().map(Port::semanticIdentity).distinct().sorted().toList();
     }
 
     private Node resource(Edge edge) {
@@ -1063,10 +1064,10 @@ public final class MaterialProcessOverview {
     }
 
     private static String family(Node start, Map<Node, List<Node>> neighbors) {
-        if (!start.machine()) return start.port().identity();
+        if (!start.machine()) return start.port().semanticIdentity();
         return neighbors.getOrDefault(start, List.of()).stream()
                 .filter(node -> !node.machine())
-                .map(node -> node.port().identity())
+                .map(node -> node.port().semanticIdentity())
                 .sorted()
                 .findFirst()
                 .orElse(start.key);

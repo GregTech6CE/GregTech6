@@ -6,7 +6,7 @@ import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
-import gregtech.compat.jei.RecipeMachines;
+import gregtech.compat.common.RecipeMachines;
 import gregtech.content.item.GTToolItem;
 import gregtech.content.recipe.MaterialProcessSnapshot;
 import gregtech.engine.recipe.RecipeMap;
