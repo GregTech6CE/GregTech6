@@ -3,6 +3,8 @@ package gregtech.engine.machine;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gregtech.engine.mod.GregTechIdentity;
@@ -94,6 +96,38 @@ class MachineModelIntegrityTest {
         }
         assertTrue(problems.isEmpty(), "Malformed machine_models.tsv: " + problems);
         assertEquals(seen, rows.keySet(), "Rows the parser skipped or invented instead of reading the file");
+    }
+
+    @Test
+    void legacyMachineTexturesRespectPackPriority() {
+        var autoclave = OrthogonalMachineModels.get("block/machine/basic/autoclave");
+        assertNotNull(autoclave);
+        assertNull(autoclave.overlayFace(1));
+        assertSame(autoclave, OrthogonalMachineModels.resolveLegacyTextures(autoclave, path -> -1));
+
+        String oldFront = "basicmachines/autoclave/colored/front";
+        String oldTop = "basicmachines/autoclave/overlay/top";
+        Map<String, Integer> packs = Map.of("casing/hull", 1, oldFront, 1, oldTop, 0);
+        var compatible = OrthogonalMachineModels.resolveLegacyTextures(autoclave, path -> packs.getOrDefault(path, -1));
+        assertEquals(oldFront, compatible.baseFace(2));
+        assertEquals("casing/hull", compatible.baseFace(1));
+        assertEquals(oldTop, compatible.overlayFace(1));
+
+        Map<String, Integer> newerPack = Map.of("casing/hull", 2, oldFront, 1);
+        assertSame(
+                autoclave,
+                OrthogonalMachineModels.resolveLegacyTextures(autoclave, path -> newerPack.getOrDefault(path, -1)));
+    }
+
+    @Test
+    void legacyShellKeepsItsCutoutLayer() {
+        var laser = OrthogonalMachineModels.get("block/machine/energy/co2_laser");
+        assertNotNull(laser);
+        assertTrue(laser.solidBase());
+        String oldFront = "lasers/laser_electric/colored/front";
+        var compatible = OrthogonalMachineModels.resolveLegacyTextures(laser, path -> path.equals(oldFront) ? 1 : -1);
+        assertEquals(oldFront, compatible.baseFace(2));
+        assertFalse(compatible.solidBase());
     }
 
     @Test

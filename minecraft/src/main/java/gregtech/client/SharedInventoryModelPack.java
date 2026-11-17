@@ -162,6 +162,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         int sharedModels = emitSharedMaterialModels(result, materialExists);
         int smelteryModels = emitSmelteryModels(result, materialExists);
         int metalBookshelves = emitMetalBookshelfModels(result, materialExists);
+        emitLegacyPartDesignModels(result, manager);
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (item instanceof gregtech.engine.material.MaterialFormItem material && material.getPrefix().isAddon()) {
@@ -470,6 +471,18 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), blockstate.getBytes(StandardCharsets.UTF_8));
             result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"),
                     ("{\"parent\":\"" + model + "\"}").getBytes(StandardCharsets.UTF_8));
+        }
+    }
+
+    /** Provides the original model ID for legacy packs that ship only the optional design art. */
+    private static void emitLegacyPartDesignModels(Map<ResourceLocation, byte[]> result,
+                                                   @Nullable ResourceManager manager) {
+        if (manager == null) return;
+        for (String folder : List.of("metalwall", "metalwalldense")) {
+            String json = LegacyPartDesignModels.createModel(manager, folder);
+            if (json == null) continue;
+            String modelPath = PartDesignBakedModel.modelPath(folder, 4);
+            result.putIfAbsent(location("models/" + modelPath + ".json"), json.getBytes(StandardCharsets.UTF_8));
         }
     }
 

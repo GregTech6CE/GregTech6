@@ -6,6 +6,7 @@ import gregtech.client.CrucibleBowlIcons;
 import gregtech.client.CrucibleCrossingIcons;
 import gregtech.client.CrucibleFaucetIcons;
 import gregtech.client.CrucibleMoldIcons;
+import gregtech.client.LegacyPartDesignModels;
 import gregtech.client.MoldBasinIcons;
 import gregtech.content.block.inventory.BottleCrateBlock;
 import gregtech.content.book.BookShelfVariants;
@@ -219,6 +220,44 @@ public final class ResourceFilterPackTests {
             helper.assertTrue(
                     shelfOwner == MaterialTextureSet.DULL,
                     "filtered bookshelf_metal_steel must fall back to DULL, got: " + shelfOwner);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void legacyPartDesignUsesOnlyMountedFaces(GameTestHelper helper) {
+        String prefix = "block/machines/multiblockparts/metalwall/4/";
+        PackResources art = memoryPack(
+                "test_legacy_design_art",
+                null,
+                Map.of(
+                        "textures/" + prefix + "colored/side.png", DUMMY_PNG,
+                        "textures/" + prefix + "colored/top.png", DUMMY_PNG,
+                        "textures/" + prefix + "overlay/bottom.png", DUMMY_PNG));
+        PackResources filter = memoryPack(
+                "test_legacy_design_filter",
+                filterMcmeta("^textures/" + prefix + "colored/top\\.png$"),
+                Map.of());
+
+        try (var manager = new MultiPackResourceManager(PackType.CLIENT_RESOURCES, List.of(art, filter))) {
+            helper.assertTrue(
+                    LegacyPartDesignModels.createModel(manager, "metalwalldense") == null,
+                    "The dense wall must not borrow the regular wall's design");
+            String json = LegacyPartDesignModels.createModel(manager, "metalwall");
+            helper.assertTrue(json != null, "Legacy PNGs must make design 4 available");
+            var children = JsonParser.parseString(json).getAsJsonObject().getAsJsonObject("children");
+            var colored = children.getAsJsonObject("colored").getAsJsonArray("elements")
+                    .get(0).getAsJsonObject().getAsJsonObject("faces");
+            helper.assertTrue(
+                    colored.size() == 4 && colored.getAsJsonObject("north").get("tintindex").getAsInt() == 0,
+                    "Only the four colored sides should be generated and they must be tinted");
+            var overlay = children.getAsJsonObject("overlay").getAsJsonArray("elements")
+                    .get(0).getAsJsonObject().getAsJsonObject("faces");
+            helper.assertTrue(
+                    overlay.size() == 1 && overlay.has("down") && !overlay.getAsJsonObject("down").has("tintindex"),
+                    "The legacy bottom overlay must remain untinted");
+            helper.assertTrue(
+                    !json.contains("colored/top"), "A filtered sprite must not be referenced");
         }
         helper.succeed();
     }
