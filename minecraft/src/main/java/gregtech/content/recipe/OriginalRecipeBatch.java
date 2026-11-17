@@ -24,7 +24,7 @@ public abstract class OriginalRecipeBatch {
     public final List<Entry> entries() { return Collections.unmodifiableList(entries); }
     protected final void add(String id, RecipeMap map, long ticks, long power,
             ItemStack[] inputs, ItemStack[] outputs, FluidStack[] fluids, FluidStack[] results) {
-        publish(id, map, new Recipe(inputs, outputs, null, null, fluids, results, ticks, power, 0));
+        publish(id, map, new Recipe(inputs, outputs, null, fluids, results, ticks, power, 0));
     }
     protected final void add(String id, RecipeMap map, long ticks, long power,
             ItemStack[] inputs, ItemStack[] outputs) {
@@ -32,20 +32,32 @@ public abstract class OriginalRecipeBatch {
     }
     protected final void addCooled(String id, long ticks, long power, ItemStack[] inputs, ItemStack[] outputs,
             int amount, RecipeInputGroups.Coolant coolant) {
-        publish(id, MachineRecipeMaps.Cutter, coolant.apply(new Recipe(inputs, outputs, null, null,
+        publish(id, MachineRecipeMaps.Cutter, coolant.apply(new Recipe(inputs, outputs, null,
                 fluids(coolant.group().stack(amount * coolant.multiplier())), null, ticks * coolant.multiplier(), power, 0)));
     }
     /** Row with source per-slot chances (GT6's {@code long[] tChances}). */
     protected final void add(String id, RecipeMap map, long ticks, long power, long[] chances,
             ItemStack[] inputs, ItemStack[] outputs, FluidStack[] fluids, FluidStack[] results) {
-        Recipe recipe = RecipeMap.make(false, inputs, outputs, null, chances, fluids, results, ticks, power, 0);
+        Recipe recipe = RecipeBuilder.of(power, ticks)
+                .itemInputs(inputs)
+                .fluidInputs(fluids)
+                .itemOutputs(outputs)
+                .fluidOutputs(results)
+                .chances(chances)
+                .build();
         if (recipe == null) throw new IllegalStateException(id + ": collapsed source chance row");
         publish(id, map, recipe);
     }
     /** Source boolean is opt-in per reviewed row, never a global machine policy. */
     protected final void addSource(boolean optimize, String id, RecipeMap map, long ticks, long power,
             ItemStack[] inputs, ItemStack[] outputs, FluidStack[] fluids, FluidStack[] results) {
-        Recipe recipe = RecipeMap.make(optimize, inputs, outputs, null, null, fluids, results, ticks, power, 0);
+        Recipe recipe = RecipeBuilder.of(power, ticks)
+                .optimize(optimize)
+                .itemInputs(inputs)
+                .fluidInputs(fluids)
+                .itemOutputs(outputs)
+                .fluidOutputs(results)
+                .build();
         if (recipe == null) throw new IllegalStateException("Collapsed source row " + id);
         publish(id, map, recipe);
     }

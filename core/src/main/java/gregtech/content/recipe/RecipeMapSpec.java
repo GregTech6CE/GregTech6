@@ -1,12 +1,8 @@
 package gregtech.content.recipe;
 
-import java.util.Collection;
-
 /**
- * Single original machine-map identity, slot/tank limits and presentation flags.
- *
- * <p>Host-facing model for built-in recipe maps. Addon declarations use
- * {@link gregtech.api.addon.recipe.RecipeTable} instead.</p>
+ * Machine-map identity, slot and tank limits, behavior, and presentation.
+ * Addon declarations use {@link gregtech.api.addon.recipe.RecipeTable}.
  */
 public final class RecipeMapSpec {
     public final String mNameInternal, mNameLocal, mGUIPath;
@@ -18,109 +14,127 @@ public final class RecipeMapSpec {
             mMinimalInputFluids,
             mMinimalInputs;
     public final boolean mNeedsOutputs, mCombinePower, mUseBucketSizeIn, mUseBucketSizeOut;
-    public String mSpecialValuePre = "", mSpecialValuePost = "";
-    public long mSpecialValueMultiplier;
-    public boolean mInstantRecipes;
+    public final String mSpecialValuePre, mSpecialValuePost;
+    public final long mSpecialValueMultiplier;
+    public final boolean mInstantRecipes;
+    public final int mInputPotionCount;
+    public final boolean mViewerAllowed, mShowVoltageAmperage;
 
-    /** Dedicated potion input slots; they hold potion items instead of ordinary ingredients. */
-    public int mInputPotionCount;
-
-    /** Original NEI category eligibility and tier/amperage captions, used by both modern viewers. */
-    public boolean mViewerAllowed = true, mShowVoltageAmperage = true;
-
-    /** Compatibility overload; {@code aRecipeList} is ignored. */
-    public RecipeMapSpec(
-            Collection<?> aRecipeList,
-            String aNameInternal,
-            String aNameLocal,
-            String aGUIPath,
-            int aInputItemsCount,
-            int aOutputItemsCount,
-            int aMinimalInputItems,
-            int aInputFluidCount,
-            int aOutputFluidCount,
-            int aMinimalInputFluids,
-            int aMinimalInputs,
-            boolean aNeedsOutputs,
-            boolean aCombinePower,
-            boolean aUseBucketSizeIn,
-            boolean aUseBucketSizeOut) {
-        this(
-                aNameInternal,
-                aNameLocal,
-                aGUIPath,
-                aInputItemsCount,
-                aOutputItemsCount,
-                aMinimalInputItems,
-                aInputFluidCount,
-                aOutputFluidCount,
-                aMinimalInputFluids,
-                aMinimalInputs,
-                aNeedsOutputs,
-                aCombinePower,
-                aUseBucketSizeIn,
-                aUseBucketSizeOut);
+    private RecipeMapSpec(Builder builder) {
+        mNameInternal = builder.name;
+        mNameLocal = builder.title;
+        mGUIPath = builder.gui.endsWith(".png") ? builder.gui : builder.gui + ".png";
+        mInputItemsCount = Math.max(builder.inputItems, builder.minimumInputItems);
+        mOutputItemsCount = builder.outputItems;
+        mMinimalInputItems = builder.minimumInputItems;
+        mInputFluidCount = Math.max(builder.inputFluids, builder.minimumInputFluids);
+        mOutputFluidCount = builder.outputFluids;
+        mMinimalInputFluids = builder.minimumInputFluids;
+        mMinimalInputs = builder.minimumInputs;
+        mNeedsOutputs = builder.needsOutputs;
+        mCombinePower = builder.combinePower;
+        mUseBucketSizeIn = builder.bucketInput;
+        mUseBucketSizeOut = builder.bucketOutput;
+        mSpecialValuePre = builder.specialValuePrefix;
+        mSpecialValuePost = builder.specialValueSuffix;
+        mSpecialValueMultiplier = builder.specialValueMultiplier;
+        mInstantRecipes = builder.instantRecipes;
+        mInputPotionCount = builder.potionInputs;
+        mViewerAllowed = builder.viewerAllowed;
+        mShowVoltageAmperage = builder.showVoltageAmperage;
     }
 
-    /**
-     * Creates a spec without the ignored recipe-list argument.
-     *
-     * <p>When {@code aMinimalInputItems} exceeds {@code aInputItemsCount}, the stored input slot
-     * count is widened to the minimum instead of being rejected; the same applies to
-     * {@code aMinimalInputFluids} and {@code aInputFluidCount}. This is the original GT6
-     * behaviour and is kept for existing maps.</p>
-     */
-    public RecipeMapSpec(
-            String aNameInternal,
-            String aNameLocal,
-            String aGUIPath,
-            int aInputItemsCount,
-            int aOutputItemsCount,
-            int aMinimalInputItems,
-            int aInputFluidCount,
-            int aOutputFluidCount,
-            int aMinimalInputFluids,
-            int aMinimalInputs,
-            boolean aNeedsOutputs,
-            boolean aCombinePower,
-            boolean aUseBucketSizeIn,
-            boolean aUseBucketSizeOut) {
-        mNameInternal = aNameInternal;
-        mNameLocal = aNameLocal;
-        mGUIPath = aGUIPath.endsWith(".png") ? aGUIPath : aGUIPath + ".png";
-        mInputItemsCount = Math.max(aInputItemsCount, aMinimalInputItems);
-        mOutputItemsCount = aOutputItemsCount;
-        mMinimalInputItems = aMinimalInputItems;
-        mInputFluidCount = Math.max(aInputFluidCount, aMinimalInputFluids);
-        mOutputFluidCount = aOutputFluidCount;
-        mMinimalInputFluids = aMinimalInputFluids;
-        mMinimalInputs = aMinimalInputs;
-        mNeedsOutputs = aNeedsOutputs;
-        mCombinePower = aCombinePower;
-        mUseBucketSizeIn = aUseBucketSizeIn;
-        mUseBucketSizeOut = aUseBucketSizeOut;
+    public static Builder builder(String name, String title, String gui) {
+        return new Builder(name, title, gui);
     }
 
-    public RecipeMapSpec specialValueLabel(String prefix, long multiplier, String suffix) {
-        mSpecialValuePre = prefix == null ? "" : prefix;
-        mSpecialValueMultiplier = multiplier;
-        mSpecialValuePost = suffix == null ? "" : suffix;
-        return this;
-    }
+    public static final class Builder {
+        private final String name, title, gui;
+        private int inputItems, outputItems, minimumInputItems;
+        private int inputFluids, outputFluids, minimumInputFluids, minimumInputs;
+        private boolean needsOutputs, combinePower, bucketInput, bucketOutput;
+        private String specialValuePrefix = "", specialValueSuffix = "";
+        private long specialValueMultiplier;
+        private boolean instantRecipes;
+        private int potionInputs;
+        private boolean viewerAllowed = true, showVoltageAmperage = true;
 
-    public RecipeMapSpec viewer(boolean allowed, boolean showVoltageAmperage) {
-        mViewerAllowed = allowed;
-        mShowVoltageAmperage = showVoltageAmperage;
-        return this;
-    }
+        private Builder(String name, String title, String gui) {
+            this.name = name;
+            this.title = title;
+            this.gui = gui;
+        }
 
-    public RecipeMapSpec instantRecipes() {
-        mInstantRecipes = true;
-        return this;
-    }
+        /** The minimum can widen the input capacity to preserve the original map layout. */
+        public Builder items(int inputs, int outputs, int minimum) {
+            inputItems = inputs;
+            outputItems = outputs;
+            minimumInputItems = minimum;
+            return this;
+        }
 
-    public RecipeMapSpec potionInputs(int count) {
-        mInputPotionCount = Math.max(0, count);
-        return this;
+        /** The minimum can widen the input tank count to preserve the original map layout. */
+        public Builder fluids(int inputs, int outputs, int minimum) {
+            inputFluids = inputs;
+            outputFluids = outputs;
+            minimumInputFluids = minimum;
+            return this;
+        }
+
+        public Builder minimumInputs(int count) {
+            minimumInputs = count;
+            return this;
+        }
+
+        public Builder needsOutputs(boolean required) {
+            needsOutputs = required;
+            return this;
+        }
+
+        public Builder combinePower(boolean combine) {
+            combinePower = combine;
+            return this;
+        }
+
+        public Builder bucketInput(boolean enabled) {
+            bucketInput = enabled;
+            return this;
+        }
+
+        public Builder bucketOutput(boolean enabled) {
+            bucketOutput = enabled;
+            return this;
+        }
+
+        public Builder specialValueLabel(String prefix, long multiplier, String suffix) {
+            specialValuePrefix = prefix == null ? "" : prefix;
+            specialValueMultiplier = multiplier;
+            specialValueSuffix = suffix == null ? "" : suffix;
+            return this;
+        }
+
+        public Builder viewerAllowed(boolean allowed) {
+            viewerAllowed = allowed;
+            return this;
+        }
+
+        public Builder showVoltageAmperage(boolean show) {
+            showVoltageAmperage = show;
+            return this;
+        }
+
+        public Builder instantRecipes() {
+            instantRecipes = true;
+            return this;
+        }
+
+        public Builder potionInputs(int count) {
+            potionInputs = Math.max(0, count);
+            return this;
+        }
+
+        public RecipeMapSpec build() {
+            return new RecipeMapSpec(this);
+        }
     }
 }

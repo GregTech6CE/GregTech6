@@ -3,6 +3,7 @@ package gregtech.content.recipe;
 import com.mojang.logging.LogUtils;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.stack.StackCompat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,12 +48,11 @@ public final class PotionBrewingRecipes {
                     null,
                     null,
                     null,
-                    null,
                     DURATION,
                     EU,
                     0);
             recipe.mExactItemInputs = true;
-            var added = map.addRecipe(recipe, false, false, false);
+            var added = map.addRecipe(recipe, RecipeMap.Registration.DEFAULT.withCollisionCheck(false));
             if (added == null) continue;
             seen.add(row);
             GENERATED.add(added);

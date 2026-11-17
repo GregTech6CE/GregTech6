@@ -7,6 +7,7 @@ import gregtech.content.material.Materials;
 import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,36 +49,57 @@ public final class DiggableRecipes {
         registered = true;
         // BlockDiggable includes vanilla clay alongside the five colored clay blocks.
         add(
-                MachineRecipeMaps.Drying.addRecipe1(
-                        true, 16, 64, new ItemStack(Blocks.CLAY), new ItemStack(Blocks.TERRACOTTA)),
+                MachineRecipeMaps.Drying.register(RecipeBuilder.of(16, 64)
+                        .optimize(true)
+                        .itemInputs(new ItemStack(Blocks.CLAY))
+                        .itemOutputs(new ItemStack(Blocks.TERRACOTTA))),
                 "dry vanilla clay");
         // MultiItemFood also packs and unpacks the ordinary vanilla clay block.
         ItemStack vanillaBalls = new ItemStack(Items.CLAY_BALL, 4);
         ItemStack vanillaClay = new ItemStack(Blocks.CLAY);
         add(
-                MachineRecipeMaps.Boxinator.addRecipe2(
-                        true, 16, 16, vanillaBalls, new ItemStack(GTTechnological.selectorTag(4)), vanillaClay),
+                MachineRecipeMaps.Boxinator.register(RecipeBuilder.of(16, 16)
+                        .optimize(true)
+                        .itemInputs(vanillaBalls, new ItemStack(GTTechnological.selectorTag(4)))
+                        .itemOutputs(vanillaClay)),
                 "box vanilla clay");
-        add(MachineRecipeMaps.Compressor.addRecipe1(true, 16, 16, vanillaBalls, vanillaClay), "compress vanilla clay");
-        add(MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, vanillaClay, vanillaBalls), "unbox vanilla clay");
+        add(MachineRecipeMaps.Compressor.register(RecipeBuilder.of(16, 16)
+                .optimize(true)
+                .itemInputs(vanillaBalls)
+                .itemOutputs(vanillaClay)), "compress vanilla clay");
+        add(MachineRecipeMaps.Unboxinator.register(RecipeBuilder.of(16, 16)
+                .optimize(true)
+                .itemInputs(vanillaClay)
+                .itemOutputs(vanillaBalls)), "unbox vanilla clay");
         for (Variant row : PACKABLE) {
             ItemStack block = stack(row.block(), 1);
             ItemStack balls = stack(row.ball(), 4);
             ItemStack dried =
                     row.material() == null ? new ItemStack(Blocks.COARSE_DIRT) : new ItemStack(Blocks.TERRACOTTA);
 
-            add(MachineRecipeMaps.Drying.addRecipe1(true, 16, 64, block, dried), "dry " + row.block());
+            add(MachineRecipeMaps.Drying.register(RecipeBuilder.of(16, 64)
+                    .optimize(true)
+                    .itemInputs(block)
+                    .itemOutputs(dried)), "dry " + row.block());
             accept(
-                    MachineRecipeMaps.add_smelting(block, dried, 0, false, false, row.material() != null),
+                    MachineRecipeMaps.addSmelting(block, dried),
                     "furnace " + row.block());
 
             // RM.compactunpack: Boxinator with selector 4, Compressor, and Unboxinator.
             add(
-                    MachineRecipeMaps.Boxinator.addRecipe2(
-                            true, 16, 16, balls, new ItemStack(GTTechnological.selectorTag(4)), block),
+                    MachineRecipeMaps.Boxinator.register(RecipeBuilder.of(16, 16)
+                            .optimize(true)
+                            .itemInputs(balls, new ItemStack(GTTechnological.selectorTag(4)))
+                            .itemOutputs(block)),
                     "box " + row.block());
-            add(MachineRecipeMaps.Compressor.addRecipe1(true, 16, 16, balls, block), "compress " + row.block());
-            add(MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, block, balls), "unbox " + row.block());
+            add(MachineRecipeMaps.Compressor.register(RecipeBuilder.of(16, 16)
+                    .optimize(true)
+                    .itemInputs(balls)
+                    .itemOutputs(block)), "compress " + row.block());
+            add(MachineRecipeMaps.Unboxinator.register(RecipeBuilder.of(16, 16)
+                    .optimize(true)
+                    .itemInputs(block)
+                    .itemOutputs(balls)), "unbox " + row.block());
 
             // RM.generify is a directed Generifier conversion, not a global clay-material alias.
             if (row.material() != null) {
@@ -105,13 +127,25 @@ public final class DiggableRecipes {
         ItemStack dust = GTItems.getStack(MaterialPrefix.dust, material);
         if (plate.isEmpty() || dust.isEmpty())
             throw new IllegalStateException("Missing GT6 clay plate/dust form for " + name);
-        add(MachineRecipeMaps.RollingMill.addRecipe1(true, 16, 32, ball, plate), "roll " + name);
-        add(MachineRecipeMaps.Compressor.addRecipe1(true, 16, 16, dust, ball), "compress clay dust " + name);
+        add(MachineRecipeMaps.RollingMill.register(RecipeBuilder.of(16, 32)
+                .optimize(true)
+                .itemInputs(ball)
+                .itemOutputs(plate)), "roll " + name);
+        add(MachineRecipeMaps.Compressor.register(RecipeBuilder.of(16, 16)
+                .optimize(true)
+                .itemInputs(dust)
+                .itemOutputs(ball)), "compress clay dust " + name);
         // Unfired clay is moldable but not SMITHABLE; metal-only shaping rules exclude it.
         var curved = GTItems.getStack(MaterialPrefix.plateCurved, material);
         if (!curved.isEmpty()) {
-            add(MachineRecipeMaps.RollBender.addRecipe1(true, 16, 16, plate, curved), "bend clay " + name);
-            add(MachineRecipeMaps.RollingMill.addRecipe1(true, 16, 16, curved, plate), "flatten clay " + name);
+            add(MachineRecipeMaps.RollBender.register(RecipeBuilder.of(16, 16)
+                    .optimize(true)
+                    .itemInputs(plate)
+                    .itemOutputs(curved)), "bend clay " + name);
+            add(MachineRecipeMaps.RollingMill.register(RecipeBuilder.of(16, 16)
+                    .optimize(true)
+                    .itemInputs(curved)
+                    .itemOutputs(plate)), "flatten clay " + name);
         }
     }
 

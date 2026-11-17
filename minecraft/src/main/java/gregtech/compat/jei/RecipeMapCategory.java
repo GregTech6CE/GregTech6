@@ -67,10 +67,6 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
         var layout = new RecipeGuiLayout(map, recipe);
         addSide(builder,true,recipe.mInputs,recipe.mFluidInputs,recipe,layout);
         addSide(builder,false,recipe.mOutputs,recipe.mFluidOutputs,recipe,layout);
-        var special = RecipeSpecialItems.display(recipe.mSpecialItems);
-        if (!special.isEmpty()) builder.addSlot(RecipeIngredientRole.CATALYST, layout.special().x(), layout.special().y())
-                .setSlotName("special_tool").addItemStacks(special)
-                .addTooltipCallback((view, tooltip) -> tooltip.add(Component.translatable("gt6ce.jei.catalyst")));
     }
     private void addSide(IRecipeLayoutBuilder builder,boolean input,ItemStack[] items,FluidStack[] fluids,Recipe recipe,RecipeGuiLayout layout) {
         var role=input?RecipeIngredientRole.INPUT:RecipeIngredientRole.OUTPUT;

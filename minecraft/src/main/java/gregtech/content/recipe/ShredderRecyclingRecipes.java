@@ -15,7 +15,7 @@ import gregtech.engine.material.MaterialUnification;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.MaterialUnitRecipe;
 import gregtech.engine.recipe.Recipe;
-import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -255,17 +255,11 @@ public final class ShredderRecyclingRecipes {
             skip("no-output");
             return null;
         }
-        var template = RecipeMap.make(
-                true,
-                new ItemStack[] {input},
-                outputs.toArray(ItemStack[]::new),
-                null,
-                null,
-                null,
-                null,
-                plan.duration(),
-                16,
-                0);
+        var template = RecipeBuilder.of(16, plan.duration())
+                .optimize(true)
+                .itemInputs(input)
+                .itemOutputs(outputs.toArray(ItemStack[]::new))
+                .build();
         if (template == null) return null;
         template.withMaterialRecovery()
                 .withSource(GENERIC_SOURCE)
@@ -281,7 +275,6 @@ public final class ShredderRecyclingRecipes {
         var probe = new Recipe(
                         new ItemStack[] {input.copy()},
                         outputs.toArray(ItemStack[]::new),
-                        null,
                         null,
                         null,
                         null,

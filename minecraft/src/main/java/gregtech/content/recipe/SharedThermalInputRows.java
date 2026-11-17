@@ -7,6 +7,7 @@ import gregtech.content.registry.GTItems;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -95,8 +96,11 @@ public final class SharedThermalInputRows {
     record Definition(GTMaterial material, MaterialPrefix prefix, NativeRow row) {
         Recipe recipe() {
             if (row.input().isEmpty() || row.output().isEmpty()) return null;
-            var recipe = RecipeMap.make(true, new ItemStack[]{row.input().copy()}, new ItemStack[0], null, null,
-                    new FluidStack[0], new FluidStack[]{row.output().copy()}, row.ticks(), row.power(), 0);
+            var recipe = RecipeBuilder.of(row.power(), row.ticks())
+                    .optimize(true)
+                    .itemInputs(row.input().copy())
+                    .fluidOutputs(row.output().copy())
+                    .build();
             // Retain the registration proof at lookup and consumption: no damaged or filled input.
             // This existing guard preserves equivalent material aliases, unlike exact-item matching.
             return recipe == null

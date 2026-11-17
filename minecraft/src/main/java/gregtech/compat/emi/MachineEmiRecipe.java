@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Visible native item/fluid inputs, outputs and non-consumable special tools. */
+/** Visible native item and fluid inputs, outputs and catalysts. */
 public final class MachineEmiRecipe implements EmiRecipe {
     private final EmiRecipeCategory category;
     private final RecipeMap map;
@@ -46,7 +46,6 @@ public final class MachineEmiRecipe implements EmiRecipe {
             ((recipe.isCatalystFluidInput(i) || recipe.isPresenceFluidInput(i)) ? catalysts : inputs)
                     .add(ingredients.fluidIngredient(recipe, i));
         }
-        for (var special : RecipeSpecialItems.display(recipe.mSpecialItems)) catalysts.add(EmiStack.of(special));
         for (int i = 0; i < recipe.mOutputs.length; i++) {
             var stack = recipe.mOutputs[i];
             if (stack != null && !stack.isEmpty()) {
@@ -104,9 +103,6 @@ public final class MachineEmiRecipe implements EmiRecipe {
         });
         side(widgets, true, recipe.mInputs, recipe.mFluidInputs,scale,offset,layout);
         side(widgets, false, recipe.mOutputs, recipe.mFluidOutputs,scale,offset,layout);
-        var special = RecipeSpecialItems.display(recipe.mSpecialItems);
-        if (!special.isEmpty()) widgets.add(new FittedSlot(EmiIngredient.of(special.stream().map(EmiStack::of).toList()),layout.special().x()-1,layout.special().y()-1,scale,offset))
-                .catalyst(true).appendTooltip(Component.translatable("gt6ce.jei.catalyst"));
     }
     /** Retain SlotWidget identity, recipe context, shortcuts and tooltips at the fitted coordinates. */
     private static final class FittedSlot extends dev.emi.emi.api.widget.SlotWidget {

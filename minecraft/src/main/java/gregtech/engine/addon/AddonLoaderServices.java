@@ -115,7 +115,7 @@ public final class AddonLoaderServices {
             gregtech.engine.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
             Recipe recipe = gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
                     map, recipe(line), gregtech.engine.recipe.MachineRecipeAdapter.SOURCE_ADDON,
-                    false, true, false, map.mLogErrors);
+                    RecipeMap.Registration.DISPLAY);
             return recipe == null ? null : line(recipe);
         }
 
@@ -179,7 +179,7 @@ public final class AddonLoaderServices {
         int[] outputChances = line.outputChances();
         long[] chances = new long[outputChances.length];
         for (int i = 0; i < chances.length; i++) chances[i] = outputChances[i];
-        var recipe = new Recipe(inputs, line.itemOutputs(), null, chances,
+        var recipe = new Recipe(inputs, line.itemOutputs(), chances,
                 fluidInputs, line.fluidOutputs(), line.duration(), line.energyPerTick(), line.special())
                 .withCatalystInputs(line.keptInputs())
                 .withCatalystFluidInputs(line.keptFluidInputs())

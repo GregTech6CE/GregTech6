@@ -146,7 +146,6 @@ public final class SharedSpecialProcessRows {
         return new BuildResult(new Recipe(
                 itemInputs.toArray(ItemStack[]::new),
                 itemOutputs.toArray(ItemStack[]::new),
-                null,
                 chances.stream().mapToLong(Long::longValue).toArray(),
                 fluidInputs.toArray(FluidStack[]::new),
                 fluidOutputs.toArray(FluidStack[]::new),

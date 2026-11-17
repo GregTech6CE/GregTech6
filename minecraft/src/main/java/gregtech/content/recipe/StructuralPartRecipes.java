@@ -7,6 +7,7 @@ import gregtech.content.registry.*;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.MaterialUnitRecipe;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
@@ -47,8 +48,9 @@ public final class StructuralPartRecipes {
         var plates = GTItems.getStack(MaterialPrefix.plate, adamantium, 9);
         var dense = GTItems.getStack(MaterialPrefix.plateDense, adamantium, 1);
         if (!plates.isEmpty() && !dense.isEmpty())
-            MachineRecipeMaps.Compressor.addRecipe1(
-                    false, 16, 9L * 256 * (adamantium.getToolQuality() + 1), plates, dense);
+            MachineRecipeMaps.Compressor.register(RecipeBuilder.of(16, 9L * 256 * (adamantium.getToolQuality() + 1))
+                    .itemInputs(plates)
+                    .itemOutputs(dense));
         return count;
     }
 
@@ -60,7 +62,6 @@ public final class StructuralPartRecipes {
         var template = new Recipe(
                 new ItemStack[] {plate, new ItemStack(GTTechnological.selectorTag(10))},
                 new ItemStack[] {new ItemStack(result)},
-                null,
                 null,
                 null,
                 null,

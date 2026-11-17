@@ -60,7 +60,7 @@ public final class VanillaStoneMachineRecipes {
             if (result.millibuckets() <= 0) continue;
             var output = GTFluids.stack("GenMolten_Stone", result.millibuckets());
             if (output == null || output.isEmpty()) continue;
-            add(MachineRecipeMaps.Smelter, new Recipe(new ItemStack[]{input}, new ItemStack[0], null, null,
+            add(MachineRecipeMaps.Smelter, new Recipe(new ItemStack[]{input}, new ItemStack[0], null,
                     null, new FluidStack[]{output}, result.ticks(), 16, 0));
         }
     }
@@ -101,11 +101,11 @@ public final class VanillaStoneMachineRecipes {
         var shape = GTTechnological.get(mold);
         if (shape == null || output.isEmpty()) return;
         add(MachineRecipeMaps.Extruder, new Recipe(new ItemStack[]{input.copy(), new ItemStack(shape)},
-                new ItemStack[]{output}, null, null, null, null, 32, 16, 0).withCatalystInputs(1));
+                new ItemStack[]{output}, null, null, null, 32, 16, 0).withCatalystInputs(1));
     }
 
     private static Recipe one(ItemStack input, ItemStack output, long ticks) {
-        return new Recipe(new ItemStack[]{input.copy()}, new ItemStack[]{output}, null, null, null, null, ticks, 16, 0);
+        return new Recipe(new ItemStack[]{input.copy()}, new ItemStack[]{output}, null, null, null, ticks, 16, 0);
     }
 
     private static void add(RecipeMap map, Recipe recipe) {
@@ -116,7 +116,7 @@ public final class VanillaStoneMachineRecipes {
                         map,
                         RecoveryRecipePublisher.explicit(
                                 recipe.withSource("recovery:vanilla-stone"), "vanilla-stone"))
-                : map.addRecipe(recipe, true, false, false, false);
+                : map.addRecipe(recipe, RecipeMap.Registration.DEFAULT.withLogErrors(false));
         if (accepted != null) added++;
     }
 

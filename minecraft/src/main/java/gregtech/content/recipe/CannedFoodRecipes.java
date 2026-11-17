@@ -5,6 +5,7 @@ import gregtech.content.data.*;
 import gregtech.content.registry.*;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
+import gregtech.engine.recipe.RecipeBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
@@ -25,14 +26,22 @@ public final class CannedFoodRecipes {
             if(!entry.getValue().hasFlag(RegisteredFluids.FluidFlags.AIR)) continue;
             String field=entry.getKey(); var input=GTFluids.stack(field,16000); if(input==null || input.isEmpty()) continue;
             String id=field.equals("Air_End") ? "canned_space_air" : field.equals("Air_Nether") ? "canned_hot_air" : "canned_air";
-            if(MachineRecipeMaps.Canner.addRecipe1(false,16,64,can("empty_food_can",1),input,FluidStack.EMPTY,can(id,1))!=null) registered++;
+            if(MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 64)
+                    .itemInputs(can("empty_food_can",1))
+                    .fluidInputs(input)
+                    .itemOutputs(can(id,1)))!=null) registered++;
         }
         for(String[] row:new String[][]{{"Air","canned_air"},{"Air_Nether","canned_hot_air"},{"Air_End","canned_space_air"}}) {
             var output=GTFluids.stack(row[0],16000);
-            if(output!=null&&!output.isEmpty()&&MachineRecipeMaps.Canner.addRecipe1(false,16,16,can(row[1],1),FluidStack.EMPTY,output,can("empty_food_can",1))!=null) registered++;
+            if(output!=null&&!output.isEmpty()&&MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
+                    .itemInputs(can(row[1],1))
+                    .itemOutputs(can("empty_food_can",1))
+                    .fluidOutputs(output))!=null) registered++;
         }
         var plate=GTItems.getStack(PrefixRegistry.byName("plateCurved"),GTMaterialRegistry.get("TinAlloy"),1);
-        if(!plate.isEmpty()&&MachineRecipeMaps.RollBender.addRecipe1(false,16,64,plate,can("empty_food_can",1))!=null) registered++;
+        if(!plate.isEmpty()&&MachineRecipeMaps.RollBender.register(RecipeBuilder.of(16, 64)
+                .itemInputs(plate)
+                .itemOutputs(can("empty_food_can",1)))!=null) registered++;
         registered+=pack(new ItemStack(Items.ROTTEN_FLESH),"small_food_can_rotten","Canned Meat");
         registered+=pack(new ItemStack(Items.SPIDER_EYE),"tiny_food_can_rotten","Canned Meat");
         String[][] families={{"FishCooked","tiny_food_can_fish","Canned Fish"},{"MeatCooked","tiny_food_can_meat","Canned Meat"},{"SoylentGreen","tiny_food_can_vegetables","Canned Emerald Green"}};
@@ -66,6 +75,8 @@ public final class CannedFoodRecipes {
 *///?} else {
         var output=can(id,1); output.setHoverName(Component.translatable("item.gt6ce." + name.toLowerCase(java.util.Locale.ROOT).replace(" ", "_")));
 //?}
-        return MachineRecipeMaps.Canner.addRecipe2(false,16,16,input,can("empty_food_can",1),output)!=null?1:0;
+        return MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
+                .itemInputs(input, can("empty_food_can",1))
+                .itemOutputs(output))!=null?1:0;
     }
 }

@@ -6,7 +6,6 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.engine.recipe.MachineGuiLayout;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
-import gregtech.engine.recipe.RecipeSpecialItems;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
@@ -25,7 +24,6 @@ public final class RecipeGuiLayout {
     private final GuiTemplate.Progress progress;
     private final RecipeMap map;
     private final int width, height, captionY, arrowX, arrowY;
-    private final Point special;
 
     public RecipeGuiLayout(RecipeMap map, Recipe recipe) {
         this.map = map;
@@ -46,13 +44,11 @@ public final class RecipeGuiLayout {
         int centerWidth = Math.max(18, progress.width());
         int contentWidth = leftWidth + rightWidth + centerWidth + 12;
         width = Math.max(140, contentWidth + 8);
-        boolean hasSpecial = !RecipeSpecialItems.display(recipe.mSpecialItems).isEmpty();
-        int centerHeight = progress.height() + (hasSpecial ? 20 : 0);
+        int centerHeight = progress.height();
         int contentHeight = Math.max(centerHeight, Math.max((left.size() + 2) / 3, (right.size() + 2) / 3) * 18);
         int startX = (width - contentWidth) / 2;
         arrowX = startX + leftWidth + 6 + (centerWidth - progress.width()) / 2;
         arrowY = 4 + (contentHeight - centerHeight) / 2;
-        special = new Point(startX + leftWidth + 6 + (centerWidth - 18) / 2 + 1, arrowY + progress.height() + 3);
         var placed = new ArrayList<Slot>();
         place(placed, left, startX, 4 + (contentHeight - (left.size() + 2) / 3 * 18) / 2, leftColumns);
         place(
@@ -61,7 +57,6 @@ public final class RecipeGuiLayout {
                 startX + leftWidth + centerWidth + 12,
                 4 + (contentHeight - (right.size() + 2) / 3 * 18) / 2,
                 rightColumns);
-        if (hasSpecial) placed.add(new Slot(true, false, -1, special.x(), special.y()));
         slots = List.copyOf(placed);
         captions = RecipeDisplayCaptions.lines(map, recipe);
         captionY = 4 + contentHeight + (captions.isEmpty() ? 0 : 4);
@@ -96,10 +91,6 @@ public final class RecipeGuiLayout {
         return height;
     }
 
-    public Point special() {
-        return special;
-    }
-
     public Point point(boolean input, boolean fluid, int index) {
         for (var slot : slots)
             if (slot.input() == input && slot.fluid() == fluid && slot.index() == index)
@@ -127,7 +118,7 @@ public final class RecipeGuiLayout {
         graphics.setColor(1, 1, 1, 1);
         for (var slot : slots) {
             GuiTemplates.sprite(slot.fluid() ? "slot/fluid" : "slot/item").draw(graphics, slot.x() - 1, slot.y() - 1);
-            if (template == null || slot.index() < 0) continue;
+            if (template == null) continue;
             var original = machinePoint(slot);
             for (var element : template.elements())
                 if (element.x() == original.x()

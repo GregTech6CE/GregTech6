@@ -34,7 +34,7 @@ public final class RecipeInputAllocationTests {
         var recipe = new Recipe(
                         new ItemStack[] {new ItemStack(Items.IRON_INGOT), new ItemStack(Items.IRON_INGOT)},
                         new ItemStack[] {new ItemStack(Items.GOLD_INGOT)},
-                        null, null, null, null, 20, 16, 0)
+                        null, null, null, 20, 16, 0)
                 .withItemInputGuard(1, stack -> stack.getCount() == 1);
         var remaining = RecipeInputs.consume(recipe, List.of(single, doubled), List.of(), 1);
         helper.assertTrue(remaining != null, "the guarded input must keep the slot only it accepts");
@@ -51,7 +51,7 @@ public final class RecipeInputAllocationTests {
         var recipe = new Recipe(
                         new ItemStack[] {new ItemStack(Items.IRON_INGOT), new ItemStack(Items.IRON_INGOT)},
                         new ItemStack[] {new ItemStack(Items.GOLD_INGOT)},
-                        null, null, new FluidStack[] {new FluidStack(Fluids.WATER, 1000)}, null, 20, 16, 0)
+                        null, new FluidStack[] {new FluidStack(Fluids.WATER, 1000)}, null, 20, 16, 0)
                 .withItemInputGuard(1, stack -> stack.getCount() == 1);
         helper.assertTrue(
                 RecipeInputs.consume(recipe, List.of(single, doubled), List.of(), 1) == null,

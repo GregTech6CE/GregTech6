@@ -8,6 +8,7 @@ import gregtech.content.registry.GTMultiItems;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.mod.SetupOnce;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -133,9 +134,13 @@ public final class BuiltinEventCentrifugeRecipes {
             fluids.add(fluid.copy());
         }
         long[] chances = plan.chances().stream().mapToLong(Long::longValue).toArray();
-        Recipe candidate = RecipeMap.make(plan.optimize(), new ItemStack[]{input.copy()},
-                items.toArray(RecipeMap.ZL_IS), null, chances, RecipeMap.ZL_FS,
-                fluids.toArray(RecipeMap.ZL_FS), plan.ticks(), plan.power(), 0);
+        Recipe candidate = RecipeBuilder.of(plan.power(), plan.ticks())
+                .optimize(plan.optimize())
+                .itemInputs(input.copy())
+                .itemOutputs(items.toArray(RecipeMap.ZL_IS))
+                .fluidOutputs(fluids.toArray(RecipeMap.ZL_FS))
+                .chances(chances)
+                .build();
         if (candidate == null) {
             OUTCOMES.add(new Outcome(instance, "DEFER", "MAP_CANDIDATE_REJECTED", facts, ingredient, null));
             return null;

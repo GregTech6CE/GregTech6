@@ -100,7 +100,7 @@ public final class GenerifierRecipeFamily {
         ItemStack out = vanillaOutput(prefix.getName(), target.getName());
         if (out == null) out = GTItems.getCreativeStack(prefix, target);
         if (in.isEmpty() || out.isEmpty() || in.getItem() == out.getItem()) return null;
-        return new Recipe(new ItemStack[] {in}, new ItemStack[] {out}, null, null, null, null,
+        return new Recipe(new ItemStack[] {in}, new ItemStack[] {out}, null, null, null,
                 GenerifyingRules.duration(prefix.getMaterialWeight()), 0, 0)
                 .withItemInputGuard(0, candidate -> candidate.getItem() == in.getItem());
     }
@@ -112,7 +112,7 @@ public final class GenerifierRecipeFamily {
         ItemStack out = vanillaOutput(prefix.getName(), target.getName());
         if (out == null) out = GTBlocks.getStack(prefix, target);
         if (in.isEmpty() || out.isEmpty() || in.getItem() == out.getItem()) return null;
-        return new Recipe(new ItemStack[] {in}, new ItemStack[] {out}, null, null, null, null,
+        return new Recipe(new ItemStack[] {in}, new ItemStack[] {out}, null, null, null,
                 GenerifyingRules.duration(prefix.getMaterialWeight()), 0, 0)
                 .withItemInputGuard(0, candidate -> candidate.getItem() == in.getItem());
     }

@@ -15,7 +15,7 @@ import gregtech.engine.material.MaterialStackItemHelper;
 import gregtech.engine.material.MaterialUnification;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.MaterialUnitRecipe;
-import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -56,17 +56,12 @@ final class OriginalFluidBedRecipes {
                 }
                 var calciteInput = calcite.copy();
                 calciteInput.setAmount(form.calcite());
-                var template = RecipeMap.make(
-                        true,
-                        new ItemStack[] {input},
-                        ash.toArray(ItemStack[]::new),
-                        null,
-                        null,
-                        new FluidStack[] {calciteInput},
-                        null,
-                        OriginalFluidBedFuelRows.heatUnits(fuel, form),
-                        -1,
-                        0);
+                var template = RecipeBuilder.of(-1, OriginalFluidBedFuelRows.heatUnits(fuel, form))
+                        .optimize(true)
+                        .itemInputs(input)
+                        .fluidInputs(calciteInput)
+                        .itemOutputs(ash.toArray(ItemStack[]::new))
+                        .build();
                 if (template == null) {
                     rejected++;
                     continue;

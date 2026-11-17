@@ -8,6 +8,7 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.platform.Mc;
+import gregtech.engine.recipe.RecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -31,8 +32,7 @@ import java.util.List;
  * <ol>
  *   <li><b>Smelting</b> — the raw → cooked chain ({@code RM.add_smelting}): hams, bacon, ribs, dogmeat,
  *       mutton, horse, doughs into their baked forms, the four pizzas, all three cookie doughs, buns,
- *       bread, baguette and toast. GT6 passes {@code (removeOthers, smoker, blast)}; the port's
- *       {@code MachineRecipeMaps.add_smelting} has the same five-argument shape.</li>
+ *       bread, baguette and toast. These rows use {@link MachineRecipeMaps#addSmelting}.</li>
  *   <li><b>Slicer</b> — {@code RM.Slicer.addRecipe2(..., IL.Shape_Slicer_*, ...)}: a slicer blade turns
  *       dough into cookie shapes, a loaf into slices, cheese into cheese slices and a boiled egg into
  *       egg slices.</li>
@@ -89,15 +89,19 @@ public final class FoodItemRecipes {
             for (String water : new String[] {"Water", "MnWtr", "DistW"}) {
                 var liquid = water.equals("Water")
                         ? new FluidStack(net.minecraft.world.level.material.Fluids.WATER, 250) : fluid(water, 250);
-                if (!liquid.isEmpty() && MachineRecipeMaps.Mixer.addRecipe1(false, 16, 16,
-                        flour.copy(), liquid, FluidStack.EMPTY, dough.copy()) != null) registered++;
+                if (!liquid.isEmpty() && MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 16)
+                        .itemInputs(flour.copy())
+                        .fluidInputs(liquid)
+                        .itemOutputs(dough.copy())) != null) registered++;
             }
         }
         var flour = GTItems.getStack(MaterialPrefix.dust, GTMaterialRegistry.get("Wheat"));
         var grass = item("gt6ce:grass_2", 1);
         if (!flour.isEmpty() && !grass.isEmpty()) {
             for (var map : new gregtech.engine.recipe.RecipeMap[] {MachineRecipeMaps.Mortar, MachineRecipeMaps.Shredder})
-                if (map.addRecipe1(false, 16, 64, new ItemStack(Items.WHEAT), flour.copy(), grass.copy()) != null) registered++;
+                if (map.register(RecipeBuilder.of(16, 64)
+                        .itemInputs(new ItemStack(Items.WHEAT))
+                        .itemOutputs(flour.copy(), grass.copy())) != null) registered++;
         }
         // Use recorded quantities (e.g. beef has 2U), not one dust for every cut of meat.
         for (var entry : gregtech.engine.material.ItemMaterialRegistry.entries().entrySet()) {
@@ -110,10 +114,12 @@ public final class FoodItemRecipes {
                     .mapToLong(gregtech.api.material.MaterialComponent::amount).sum();
             if (amount <= 0) continue;
             var output = meatDust(amount);
-            if (!output.isEmpty() && MachineRecipeMaps.Mortar.addRecipe1(false, 16, 16,
-                    new ItemStack(entry.getKey()), output) != null) registered++;
-            if (MachineRecipeMaps.Fermenter.addRecipe1(false, 16, 288,
-                    new ItemStack(entry.getKey()), new ItemStack(Items.ROTTEN_FLESH)) != null) registered++;
+            if (!output.isEmpty() && MachineRecipeMaps.Mortar.register(RecipeBuilder.of(16, 16)
+                    .itemInputs(new ItemStack(entry.getKey()))
+                    .itemOutputs(output)) != null) registered++;
+            if (MachineRecipeMaps.Fermenter.register(RecipeBuilder.of(16, 288)
+                    .itemInputs(new ItemStack(entry.getKey()))
+                    .itemOutputs(new ItemStack(Items.ROTTEN_FLESH))) != null) registered++;
         }
     }
 
@@ -172,7 +178,7 @@ public final class FoodItemRecipes {
                 continue;
             }
             // GT6 MultiItemFood.java:<line>; (removeOthers, smoker, blast) = (F, T, F).
-            if (MachineRecipeMaps.add_smelting(input, output, false, true, false)) {
+            if (MachineRecipeMaps.addSmelting(input, output)) {
                 registered++;
             }
         }
@@ -210,7 +216,9 @@ public final class FoodItemRecipes {
                 continue;
             }
             // GT6 RM.Slicer.addRecipe2(T, 16, 16, input, blade, output).
-            if (MachineRecipeMaps.Slicer.addRecipe2(false, 16, 16, input, blade, output) != null) {
+            if (MachineRecipeMaps.Slicer.register(RecipeBuilder.of(16, 16)
+                    .itemInputs(input, blade)
+                    .itemOutputs(output)) != null) {
                 registered++;
             }
         }
@@ -253,7 +261,9 @@ public final class FoodItemRecipes {
             if (input.isEmpty() || ingredient.isEmpty() || output.isEmpty()) {
                 continue;
             }
-            if (MachineRecipeMaps.Mixer.addRecipe2(false, 16, 16, input, ingredient, output) != null) {
+            if (MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 16)
+                    .itemInputs(input, ingredient)
+                    .itemOutputs(output)) != null) {
                 registered++;
             }
         }
@@ -283,7 +293,10 @@ public final class FoodItemRecipes {
             if (input.isEmpty() || output.isEmpty() || fluid.isEmpty()) {
                 continue;
             }
-            if (MachineRecipeMaps.Mixer.addRecipe1(false, 16, 16, input, fluid, FluidStack.EMPTY, output) != null) {
+            if (MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 16)
+                    .itemInputs(input)
+                    .fluidInputs(fluid)
+                    .itemOutputs(output)) != null) {
                 registered++;
             }
         }
@@ -300,23 +313,31 @@ public final class FoodItemRecipes {
             FluidStack cream=fluid("Cream",250*count), liquid=fluid(water.field(),250*count);
             ItemStack output=food("ice_cream",count);
             if(!salt.isEmpty()&&!cream.isEmpty()&&!liquid.isEmpty()&&!output.isEmpty()
-                    &&MachineRecipeMaps.CryoMixer.addRecipeX(false,16,16*count,new ItemStack[]{salt},
-                    new FluidStack[]{liquid,cream},new FluidStack[0],output)!=null)registered++;
+                    &&MachineRecipeMaps.CryoMixer.register(RecipeBuilder.of(16, 16*count)
+                            .itemInputs(salt)
+                            .fluidInputs(liquid, cream)
+                            .itemOutputs(output))!=null)registered++;
         }
         for(var row:gregtech.content.food.IceCreamRecipes.DUSTS)for(int count:new int[]{1,4}) {
             var dust=GTItems.getStack(count==1?MaterialPrefix.dustSmall:MaterialPrefix.dust,GTMaterialRegistry.get(row.material()),1);
             var input=food(row.base(),count);var output=food(row.result(),count);
             if(dust.isEmpty()||input.isEmpty()||output.isEmpty()) {SKIPPED.add("ice cream dust flavor: "+row.material());continue;}
-            if(MachineRecipeMaps.Mixer.addRecipe2(false,16,16*count,input,dust,output)!=null)registered++;
+            if(MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 16*count)
+                    .itemInputs(input, dust)
+                    .itemOutputs(output))!=null)registered++;
         }
         for(var row:gregtech.content.food.IceCreamRecipes.BLENDS){
             var a=food(row.first(),1);var b=food(row.second(),1);var c=food(row.third(),1);var output=food(row.result(),3);
             if(!a.isEmpty()&&!b.isEmpty()&&!c.isEmpty()&&!output.isEmpty()
-                    &&MachineRecipeMaps.Mixer.addRecipeX(false,16,48,new ItemStack[]{a,b,c},output)!=null)registered++;
+                    &&MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 48)
+                            .itemInputs(a, b, c)
+                            .itemOutputs(output))!=null)registered++;
         }
         var chocolate=fluid("Molten_Chocolate",36);
-        if(!chocolate.isEmpty()&&MachineRecipeMaps.Mixer.addRecipe1(false,16,16,food("ice_cream",1),
-                chocolate,FluidStack.EMPTY,food("chocolate_ice_cream",1))!=null)registered++;
+        if(!chocolate.isEmpty()&&MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 16)
+                .itemInputs(food("ice_cream",1))
+                .fluidInputs(chocolate)
+                .itemOutputs(food("chocolate_ice_cream",1)))!=null)registered++;
         for(String raisins:new String[]{"green_raisins","red_raisins"})mixerPair("ice_cream",raisins,"raisin_ice_cream",1,"Loader_Recipes_Food:156");
         mixerPair("ice_cream","grilled_bacon","bacon_ice_cream",1,"Loader_Recipes_Food:231");
     }
@@ -332,7 +353,9 @@ public final class FoodItemRecipes {
                     + (mat == null ? material + " material" : "dust_" + material.toLowerCase() + " item"));
             return;
         }
-        if (MachineRecipeMaps.Mixer.addRecipe2(false, 16, 16, input, ingredient, output) != null) {
+        if (MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 16)
+                .itemInputs(input, ingredient)
+                .itemOutputs(output)) != null) {
             registered++;
         }
     }
@@ -344,7 +367,9 @@ public final class FoodItemRecipes {
         if (input1.isEmpty() || input2.isEmpty() || output.isEmpty()) {
             return;
         }
-        if (MachineRecipeMaps.Mixer.addRecipe2(false, 16, 16, input1, input2, output) != null) {
+        if (MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 16)
+                .itemInputs(input1, input2)
+                .itemOutputs(output)) != null) {
             registered++;
         }
     }
@@ -360,8 +385,11 @@ public final class FoodItemRecipes {
                     + "): a fluid or the circuit-selector item input of this row is not in the port");
             return;
         }
-        if (MachineRecipeMaps.Mixer.addRecipeX(false, 16, 16, new ItemStack[] {tag, yolk},
-                new FluidStack[] {oil, vinegar}, new FluidStack[] {mayo}, ItemStack.EMPTY) != null) {
+        if (MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 16)
+                .itemInputs(tag, yolk)
+                .fluidInputs(oil, vinegar)
+                .itemOutputs(ItemStack.EMPTY)
+                .fluidOutputs(mayo)) != null) {
             registered++;
         }
     }
@@ -383,7 +411,9 @@ public final class FoodItemRecipes {
         ItemStack empty = food("empty_wax_pill", 1);
         ItemStack antidote = food("antidote", 1);
         if (!empty.isEmpty() && !antidote.isEmpty()
-                && MachineRecipeMaps.Boxinator.addRecipe2(false, 16, 16, mushroom, empty, antidote) != null) {
+                && MachineRecipeMaps.Boxinator.register(RecipeBuilder.of(16, 16)
+                        .itemInputs(mushroom, empty)
+                        .itemOutputs(antidote)) != null) {
             registered++;
         }
     }
@@ -397,7 +427,9 @@ public final class FoodItemRecipes {
                     + "): an item of this row is not in the port");
             return;
         }
-        if (MachineRecipeMaps.Boxinator.addRecipe2(false, 16, 16, input, packaging, output) != null) {
+        if (MachineRecipeMaps.Boxinator.register(RecipeBuilder.of(16, 16)
+                .itemInputs(input, packaging)
+                .itemOutputs(output)) != null) {
             registered++;
         }
     }
@@ -411,7 +443,9 @@ public final class FoodItemRecipes {
                     + "): an item of this row is not in the port");
             return;
         }
-        if (MachineRecipeMaps.Unboxinator.addRecipe1(false, 16, 16, input, output, residue) != null) {
+        if (MachineRecipeMaps.Unboxinator.register(RecipeBuilder.of(16, 16)
+                .itemInputs(input)
+                .itemOutputs(output, residue)) != null) {
             registered++;
         }
     }
@@ -427,7 +461,9 @@ public final class FoodItemRecipes {
                     + "): the port has no such dust or pill item");
             return;
         }
-        if (MachineRecipeMaps.Boxinator.addRecipe2(false, 16, 16, ingredient, empty, output) != null) {
+        if (MachineRecipeMaps.Boxinator.register(RecipeBuilder.of(16, 16)
+                .itemInputs(ingredient, empty)
+                .itemOutputs(output)) != null) {
             registered++;
         }
     }

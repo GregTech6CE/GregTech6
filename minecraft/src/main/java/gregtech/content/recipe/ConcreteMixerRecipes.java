@@ -97,7 +97,6 @@ public final class ConcreteMixerRecipes {
                 null,
                 null,
                 null,
-                null,
                 ticks,
                 16,
                 0);

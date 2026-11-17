@@ -75,7 +75,6 @@ public final class SourceExtruderRecipes {
                             null,
                             null,
                             null,
-                            null,
                             ticks,
                             power,
                             0)
@@ -502,7 +501,6 @@ public final class SourceExtruderRecipes {
         Recipe recipe = new Recipe(
                         new ItemStack[] {optimizedInput, mold},
                         new ItemStack[] {optimizedOutput},
-                        null,
                         null,
                         null,
                         null,

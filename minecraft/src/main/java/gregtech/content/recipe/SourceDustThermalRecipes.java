@@ -8,6 +8,7 @@ import gregtech.content.registry.GTItems;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.MaterialFormItem;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
@@ -70,8 +71,11 @@ public final class SourceDustThermalRecipes {
  }
  private static Recipe admit(RecipeMap map,ItemStack input,FluidStack output,long ticks,RecoveryInputProof proof){
   if(proof==null||input.isEmpty()||output.isEmpty())return null;
-  var recipe=RecipeMap.make(true,new ItemStack[]{input.copy()},new ItemStack[0],null,null,
-      new FluidStack[0],new FluidStack[]{output.copy()},ticks,16,0);
+  var recipe=RecipeBuilder.of(16, ticks)
+          .optimize(true)
+          .itemInputs(input.copy())
+          .fluidOutputs(output.copy())
+          .build();
   return recipe==null?null:RecoveryRecipePublisher.publish(
       map,RecoveryRecipePublisher.explicit(
           recipe.withItemInputGuard(0,proof::matches).withSource("recovery:reviewed-thermal"),

@@ -10,6 +10,7 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
 
@@ -79,7 +80,7 @@ public class PartRecipeLoader implements InitializationStep {
             ItemStack output = mat(rule.output(), material, rule.outputCount());
             if (output.isEmpty() || !verifiedSolidBlock(input, material)) continue;
             var recipe = new gregtech.engine.recipe.Recipe(new ItemStack[]{input}, new ItemStack[]{output},
-                    null, null, null, null, decision.ticks(), SourceRollingWireRules.EU_PER_TICK, 0);
+                    null, null, null, decision.ticks(), SourceRollingWireRules.EU_PER_TICK, 0);
             map.addRecipe(recipe.withItemInputGuard(0, offered -> verifiedSolidBlock(offered, material)));
         }
     }
@@ -120,8 +121,11 @@ public class PartRecipeLoader implements InitializationStep {
         ItemStack input = mat(in, m, inCount);
         ItemStack output = mat(out, m, outCount);
         if (input.isEmpty() || output.isEmpty()) return;
-        var template = gregtech.engine.recipe.RecipeMap.make(true, new ItemStack[] {input},
-                machiningOutputs(m, in, inCount, out, outCount, output), null, null, null, null, duration, EU, 0);
+        var template = RecipeBuilder.of(EU, duration)
+                .optimize(true)
+                .itemInputs(input)
+                .itemOutputs(machiningOutputs(m, in, inCount, out, outCount, output))
+                .build();
         if (template == null) return;
         unitRule(MachineRecipeMaps.Lathe, m, in, input, template);
     }
@@ -174,30 +178,21 @@ public class PartRecipeLoader implements InitializationStep {
         long inputUnits = rule.inputUnits();
         if (rule.blockInput() != null) {
             if (!verifiedSolidBlock(input, material)) return;
-//? if >=1.21.1 {
-            /*var recipe = gregtech.engine.recipe.RecipeMap.make(true, new ItemStack[]{input},
-                    machiningOutputs(material, inputUnits, rule.output(), rule.outputCount(), output), null, null,
-                    new net.neoforged.neoforge.fluids.FluidStack[]{fluid},
-                    new net.neoforged.neoforge.fluids.FluidStack[0], decision.ticks(), rule.eut(), 0);
-*///?} else {
-            var recipe = gregtech.engine.recipe.RecipeMap.make(true, new ItemStack[]{input},
-                    machiningOutputs(material, inputUnits, rule.output(), rule.outputCount(), output), null, null,
-                    new net.minecraftforge.fluids.FluidStack[]{fluid},
-                    new net.minecraftforge.fluids.FluidStack[0], decision.ticks(), rule.eut(), 0);
-//?}
+            var recipe = RecipeBuilder.of(rule.eut(), decision.ticks())
+                    .optimize(true)
+                    .itemInputs(input)
+                    .fluidInputs(fluid)
+                    .itemOutputs(machiningOutputs(material, inputUnits, rule.output(), rule.outputCount(), output))
+                    .build();
             if (recipe != null) MachineRecipeMaps.Cutter.addRecipe(
                     recipe.withItemInputGuard(0, offered -> verifiedSolidBlock(offered, material)));
             return;
         }
-//? if >=1.21.1 {
-        /*MachineRecipeMaps.Cutter.addRecipe1(true, rule.eut(), decision.ticks(), input, fluid,
-                (net.neoforged.neoforge.fluids.FluidStack) null,
-                machiningOutputs(material, inputUnits, rule.output(), rule.outputCount(), output));
-*///?} else {
-        MachineRecipeMaps.Cutter.addRecipe1(true, rule.eut(), decision.ticks(), input, fluid,
-                (net.minecraftforge.fluids.FluidStack) null,
-                machiningOutputs(material, inputUnits, rule.output(), rule.outputCount(), output));
-//?}
+        MachineRecipeMaps.Cutter.register(RecipeBuilder.of(rule.eut(), decision.ticks())
+                .optimize(true)
+                .itemInputs(input)
+                .fluidInputs(fluid)
+                .itemOutputs(machiningOutputs(material, inputUnits, rule.output(), rule.outputCount(), output)));
     }
 
     /** The reviewed solid-block routes require physical 9U proof; explicit metadata always wins. */
@@ -266,7 +261,7 @@ public class PartRecipeLoader implements InitializationStep {
         if (input.isEmpty()) return;
         // Native forms use the reviewed source listener; a replaced canonical holder keeps its old policy.
         if (!SourceFurnaceNativeAdapter.earlyFormAllowed(prefix, m, input)) return;
-        MachineRecipeMaps.add_smelting(input, output.copy(), 0.0f, true, false, false);
+        MachineRecipeMaps.replaceSmelting(input, output.copy());
     }
 
     // ── helpers ──────────────────────────────────────────────────────────────
@@ -283,8 +278,11 @@ public class PartRecipeLoader implements InitializationStep {
         if (input.isEmpty()) return;
         ItemStack output = mat(out, m, outCount);
         if (output.isEmpty()) return;
-        var template = gregtech.engine.recipe.RecipeMap.make(
-                true, new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, null, duration, eut, 0);
+        var template = RecipeBuilder.of(eut, duration)
+                .optimize(true)
+                .itemInputs(input)
+                .itemOutputs(output)
+                .build();
         if (template == null) return;
         unitRule(map, m, in, input, template);
     }

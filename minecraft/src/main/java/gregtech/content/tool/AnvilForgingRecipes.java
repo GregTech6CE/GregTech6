@@ -37,7 +37,6 @@ public final class AnvilForgingRecipes {
                 var recipe = new Recipe(
                                 new ItemStack[] {first, second},
                                 scrap.isEmpty() ? new ItemStack[] {out} : new ItemStack[] {out, scrap},
-                                null,
                                 scrap.isEmpty() ? null : new long[] {10000, 9000},
                                 null,
                                 null,

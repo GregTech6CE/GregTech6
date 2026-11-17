@@ -9,6 +9,7 @@ import gregtech.content.data.generated.MaterialWorkability;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.platform.Mc;
 import gregtech.util.OM;
@@ -96,7 +97,10 @@ public final class MortarGrindingRecipes {
                 .entrySet()) {
             var input = new ItemStack(entry.getKey());
             var output = OM.dust(GTMaterialRegistry.get("Clay"), entry.getValue() * GTValues.U);
-            var recipe = MachineRecipeMaps.Mortar.addRecipe1(true, 16, 16L * entry.getValue(), input, output);
+            var recipe = MachineRecipeMaps.Mortar.register(RecipeBuilder.of(16, 16L * entry.getValue())
+                    .optimize(true)
+                    .itemInputs(input)
+                    .itemOutputs(output));
             if (recipe != null) ENTRIES.add(new Entry("vanilla_clay", MachineRecipeMaps.Mortar, recipe));
         }
 
@@ -136,8 +140,7 @@ public final class MortarGrindingRecipes {
         // GT6 RecipeMapHandlerPrefix#getCosts: ceil(units / U * 16 * (1 + toolQuality)), 16 EU/t.
         long duration = Math.max(1, (units * 16L * (material.getToolQuality() + 1) + GTValues.U - 1) / GTValues.U);
         // The row is a material-unit conversion: every equivalent item of the form is admitted.
-        var template = RecipeMap.make(
-                true, new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, null, duration, 16, 0);
+        var template = RecipeBuilder.of(16, duration).optimize(true).itemInputs(input).itemOutputs(output).build();
         if (template == null) return;
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
                 template, 0, material, units, gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);

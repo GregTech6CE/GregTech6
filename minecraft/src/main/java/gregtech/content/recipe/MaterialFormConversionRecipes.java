@@ -14,6 +14,7 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialUnification;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
@@ -271,7 +272,9 @@ public final class MaterialFormConversionRecipes {
 
     private static void addLaminator(String route, ItemStack wax, ItemStack empty, ItemStack fireproof) {
         if (wax.isEmpty()) return;
-        Recipe recipe = MachineRecipeMaps.Laminator.addRecipe2(false, 16, 32, item(empty, 1), wax, fireproof.copy());
+        Recipe recipe = MachineRecipeMaps.Laminator.register(RecipeBuilder.of(16, 32)
+                .itemInputs(item(empty, 1), wax)
+                .itemOutputs(fireproof.copy()));
         if (recipe != null) ENTRIES.add(new Entry("laminator", route, MachineRecipeMaps.Laminator, recipe));
     }
 
@@ -457,7 +460,7 @@ public final class MaterialFormConversionRecipes {
         ItemStack[] inputs = circuit == null
                 ? new ItemStack[] {input}
                 : new ItemStack[] {input, new ItemStack(GTTechnological.selectorTag(circuit))};
-        var template = RecipeMap.make(false, inputs, outputs, null, null, null, null, ticks, 16, 0);
+        var template = RecipeBuilder.of(16, ticks).itemInputs(inputs).itemOutputs(outputs).build();
         if (template == null) return;
         long required = Math.multiplyExact(unitsPerItem, input.getCount());
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(

@@ -2,6 +2,7 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
@@ -33,9 +34,14 @@ public final class DormantOreRows {
             this.fluids=copy(fluids);this.fluidOutputs=copy(fluidOutputs);this.duration=duration;this.eu=eu;
         }
         Recipe admit() {
-            // Same public admission path as addRecipe1: optimize, validate, collision-check.
-            return key.map.addRecipe(optimize,new ItemStack[]{input.copy()},copy(outputs),null,
-                    chances==null?null:chances.clone(),copy(fluids),copy(fluidOutputs),duration,eu,0);
+            // Apply the same normalization, validation and collision checks as regular registration.
+            return key.map.register(RecipeBuilder.of(eu, duration)
+                    .optimize(optimize)
+                    .itemInputs(input.copy())
+                    .fluidInputs(copy(fluids))
+                    .itemOutputs(copy(outputs))
+                    .fluidOutputs(copy(fluidOutputs))
+                    .chances(chances==null?null:chances.clone()));
         }
     }
     private final LinkedHashMap<Key,Definition> definitions=new LinkedHashMap<>();

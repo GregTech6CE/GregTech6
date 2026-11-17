@@ -2,6 +2,8 @@
 package gregtech.content.recipe;
 
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
+import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.cover.*;
 import gregtech.content.data.*;
 import gregtech.content.data.MachineRecipeMaps;
@@ -47,8 +49,15 @@ public final class CanvasRecipes {
             if (variant.dye().equals("blue")) {
                 bath(white, canvas, "Juice_Blueberry", 250);
             }
-            MachineRecipeMaps.ScannerVisuals.addFakeRecipe(false, new ItemStack[]{canvas, usb.copy()}, new ItemStack[]{scannedUsb.copy(), canvas.copy()}, null, null, null, 64, 16, 0);
-            var row = MachineRecipeMaps.Printer.addFakeRecipe(false, new ItemStack[]{canvas, scannedUsb.copy()}, new ItemStack[]{canvas.copy()}, null, dyes(), null, 64, 16, 0);
+            MachineRecipeMaps.ScannerVisuals.register(RecipeBuilder.of(16, 64)
+                    .itemInputs(canvas, usb.copy())
+                    .itemOutputs(scannedUsb.copy(), canvas.copy()),
+                    RecipeMap.Registration.DISPLAY);
+            var row = MachineRecipeMaps.Printer.register(RecipeBuilder.of(16, 64)
+                    .itemInputs(canvas, scannedUsb.copy())
+                    .fluidInputs(dyes())
+                    .itemOutputs(canvas.copy()),
+                    RecipeMap.Registration.DISPLAY);
             if (row != null) row.withCatalystInputs(1);
         }
     }
@@ -56,7 +65,10 @@ public final class CanvasRecipes {
     private static void bath(ItemStack input, ItemStack output, String field, int amount) {
         var dye = GTFluids.stack(field, amount);
         if (dye == null || dye.isEmpty()) return;
-        MachineRecipeMaps.Bath.addRecipe(false, new ItemStack[]{input.copy()}, new ItemStack[]{output.copy()}, null, null, new FluidStack[]{dye}, null, 16, 0, 0);
+        MachineRecipeMaps.Bath.register(RecipeBuilder.of(0, 16)
+                .itemInputs(input.copy())
+                .fluidInputs(dye)
+                .itemOutputs(output.copy()));
     }
 
     private static FluidStack[] dyes() {
@@ -84,7 +96,7 @@ public final class CanvasRecipes {
         return exact(new Recipe(
                 new ItemStack[]{object.copyWithCount(1), usb.copyWithCount(1)},
                 new ItemStack[]{written, object.copyWithCount(1)},
-                null, null, null, null,
+                null, null, null,
                 CanvasData.isCanvas(object) ? CanvasRules.CANVAS_SCAN_TICKS : CanvasRules.BLOCK_SCAN_TICKS, CanvasRules.POWER, 0));
     }
 
@@ -106,7 +118,7 @@ public final class CanvasRecipes {
         return exact(new Recipe(
                 new ItemStack[]{canvas.copyWithCount(1), medium.copyWithCount(1)},
                 new ItemStack[]{printed},
-                null, null, dyes, null,
+                null, dyes, null,
                 CanvasRules.PRINT_TICKS, CanvasRules.POWER, 0).withCatalystInputs(1));
     }
 

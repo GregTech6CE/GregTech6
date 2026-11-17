@@ -1,6 +1,6 @@
 package gregtech.content.recipe;
 
-import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.content.data.FuelRecipeMaps;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.content.registry.GTFluids;
@@ -68,7 +68,10 @@ public class FuelRecipeLoader implements InitializationStep {
                 FluidStack exhaust=co2(1);
                 // Source's declared output is required; never silently turn it into fuel voiding.
                 if(exhaust==null){skipped++;continue;}
-                record(FuelRecipeMaps.Engine.addRecipe0(true,-row.eut(),row.duration(),in,exhaust,RecipeMap.ZL_IS));
+                record(FuelRecipeMaps.Engine.register(RecipeBuilder.of(-row.eut(), row.duration())
+                        .optimize(true)
+                        .fluidInputs(in)
+                        .fluidOutputs(exhaust)));
             }
             if(!resolved)skipped++;
         }
@@ -82,18 +85,27 @@ public class FuelRecipeLoader implements InitializationStep {
             skipped++;
             return;
         }
-        record(FuelRecipeMaps.Turbine.addRecipe0(true, -16, 5, steam, distilledWater, RecipeMap.ZL_IS));
+        record(FuelRecipeMaps.Turbine.register(RecipeBuilder.of(-16, 5)
+                .optimize(true)
+                .fluidInputs(steam)
+                .fluidOutputs(distilledWater)));
     }
 
     private void gas(long eut, long duration, String key, int amount, FluidStack out1, FluidStack out2) {
         FluidStack in = make(key, amount);
         if (in == null) { skipped++; return; }
         if (out1 != null && out2 != null) {
-            record(FuelRecipeMaps.Gas.addRecipe0(true, -eut, duration, in, out1, out2));
+            record(FuelRecipeMaps.Gas.register(RecipeBuilder.of(-eut, duration)
+                    .optimize(true)
+                    .fluidInputs(in)
+                    .fluidOutputs(out1, out2)));
         } else if (out1 != null) {
-            record(FuelRecipeMaps.Gas.addRecipe0(true, -eut, duration, in, out1, RecipeMap.ZL_IS));
+            record(FuelRecipeMaps.Gas.register(RecipeBuilder.of(-eut, duration)
+                    .optimize(true)
+                    .fluidInputs(in)
+                    .fluidOutputs(out1)));
         } else {
-            record(FuelRecipeMaps.Gas.addRecipe0(true, -eut, duration, in, RecipeMap.ZL_FS));
+            record(FuelRecipeMaps.Gas.register(RecipeBuilder.of(-eut, duration).optimize(true).fluidInputs(in)));
         }
     }
 
@@ -102,9 +114,12 @@ public class FuelRecipeLoader implements InitializationStep {
         if (in == null) { skipped++; return; }
         FluidStack exhaust = co2(1);
         if (exhaust != null) {
-            record(FuelRecipeMaps.Burn.addRecipe0(true, -eut, duration, in, exhaust, RecipeMap.ZL_IS));
+            record(FuelRecipeMaps.Burn.register(RecipeBuilder.of(-eut, duration)
+                    .optimize(true)
+                    .fluidInputs(in)
+                    .fluidOutputs(exhaust)));
         } else {
-            record(FuelRecipeMaps.Burn.addRecipe0(true, -eut, duration, in, RecipeMap.ZL_FS));
+            record(FuelRecipeMaps.Burn.register(RecipeBuilder.of(-eut, duration).optimize(true).fluidInputs(in)));
         }
     }
 
@@ -114,9 +129,14 @@ public class FuelRecipeLoader implements InitializationStep {
         // A declared exhaust is part of the recipe: never turn a missing output into voiding fuel.
         if (in == null || row.output() != null && out == null) { skipped++; return; }
         if (out != null) {
-            record(FuelRecipeMaps.Hot.addRecipe0(true, -row.eut(), row.duration(), in, out, RecipeMap.ZL_IS));
+            record(FuelRecipeMaps.Hot.register(RecipeBuilder.of(-row.eut(), row.duration())
+                    .optimize(true)
+                    .fluidInputs(in)
+                    .fluidOutputs(out)));
         } else {
-            record(FuelRecipeMaps.Hot.addRecipe0(true, -row.eut(), row.duration(), in, RecipeMap.ZL_FS));
+            record(FuelRecipeMaps.Hot.register(RecipeBuilder.of(-row.eut(), row.duration())
+                    .optimize(true)
+                    .fluidInputs(in)));
         }
     }
 

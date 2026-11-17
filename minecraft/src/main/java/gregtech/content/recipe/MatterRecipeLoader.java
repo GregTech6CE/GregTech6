@@ -63,7 +63,7 @@ public final class MatterRecipeLoader implements InitializationStep {
         };
         var fluid=GTFluids.still(fluidName);
         if(input.isEmpty()||fluid==null||!GTFluids.isPresent(fluid))return;
-        MachineRecipeMaps.Massfab.addRecipe(new Recipe(new ItemStack[]{new ItemStack(GTTechnological.selectorTag(circuit)),input},null,null,null,null,
+        MachineRecipeMaps.Massfab.addRecipe(new Recipe(new ItemStack[]{new ItemStack(GTTechnological.selectorTag(circuit)),input},null,null,null,
                 new FluidStack[]{new FluidStack(fluid.get(),amount)},duration,16,0));added++;
     }
     private void add(GTMaterial material,ItemStack input,FluidStack fluid,int units) {
@@ -71,7 +71,7 @@ public final class MatterRecipeLoader implements InitializationStep {
         if(material.getProtons()>0)outputs.add(new FluidStack(GTFluids.still("MatterCharged").get(),Math.toIntExact(material.getProtons()*units)));
         if(material.getNeutrons()>0)outputs.add(new FluidStack(GTFluids.still("MatterNeutral").get(),Math.toIntExact(material.getNeutrons()*units)));
         long duration=Math.multiplyExact(Math.multiplyExact(material.getProtons()+material.getNeutrons(),131072L),units);
-        MachineRecipeMaps.Massfab.addRecipe(new Recipe(input.isEmpty()?null:new ItemStack[]{input},null,null,null,
+        MachineRecipeMaps.Massfab.addRecipe(new Recipe(input.isEmpty()?null:new ItemStack[]{input},null,null,
                 fluid.isEmpty()?null:new FluidStack[]{fluid},outputs.toArray(FluidStack[]::new),duration,1,0));added++;
     }
 }

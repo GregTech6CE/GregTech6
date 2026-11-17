@@ -8,7 +8,7 @@ import gregtech.content.recipe.CrusherFamilyRecipeRows.Row;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
-import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -74,8 +74,7 @@ public final class CrusherFamilyRecipes {
                 Math.max(1, (units * row.multiplier() * (material.getToolQuality() + 1) + GTValues.U - 1) / GTValues.U);
         // One rule per (material, input form): every equivalent item of that form is admitted,
         // and the batch is derived from the form's material units instead of a fixed count.
-        var template = RecipeMap.make(
-                true, new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, null, duration, 16, 0);
+        var template = RecipeBuilder.of(16, duration).optimize(true).itemInputs(input).itemOutputs(output).build();
         if (template == null) return;
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
                 template,

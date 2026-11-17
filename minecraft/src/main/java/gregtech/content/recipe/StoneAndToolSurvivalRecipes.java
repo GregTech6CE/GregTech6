@@ -37,7 +37,7 @@ public final class StoneAndToolSurvivalRecipes {
                     &&ItemMaterialRegistry.recoveryRejection(rock)==ItemMaterialRegistry.RecoveryRejection.ELIGIBLE
                     &&composition!=null&&composition.components().size()==1
                     &&composition.material().resolve()==material.resolve()) {
-                var recipe=new Recipe(new ItemStack[]{rock,ItemStack.EMPTY},new ItemStack[]{dust},null,null,null,null,
+                var recipe=new Recipe(new ItemStack[]{rock,ItemStack.EMPTY},new ItemStack[]{dust},null,null,null,
                         Math.max(1,36L*(material.getToolQuality()+1L)),16,0).withMaterialRecovery();
                 if(RecoveryRecipePublisher.publish(
                         MachineRecipeMaps.Anvil,
@@ -143,7 +143,10 @@ public final class StoneAndToolSurvivalRecipes {
      */
     private static void extrude(ItemStack input, ItemStack mold, ItemStack output) {
         if (input.isEmpty() || mold.isEmpty() || output == null || output.isEmpty()) return;
-        var recipe = MachineRecipeMaps.Extruder.addRecipe2(false, false, false, false, true, 16, 32, input, mold, output);
+        var recipe = MachineRecipeMaps.Extruder.register(RecipeBuilder.of(16, 32)
+                .itemInputs(input, mold)
+                .itemOutputs(output),
+                RecipeMap.Registration.DEFAULT.withCollisionCheck(false));
         if (recipe != null) {
             ADDED.add(recipe);
             STONE_EXTRUSIONS.add(recipe);

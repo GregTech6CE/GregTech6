@@ -14,6 +14,7 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.chem.MaterialFluidBinding;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -164,17 +165,11 @@ final class SharedThermalRecyclingRows {
         Recipe admit() {
             if (map == gregtech.content.data.MachineRecipeMaps.Smelter && MoltenMetalUnitRecipes.collect(
                     input, output, ticks, SourceThermalRecyclingRules.POWER, proof::matches)) return null;
-            var recipe = RecipeMap.make(
-                    true,
-                    new ItemStack[] {input.copy()},
-                    new ItemStack[0],
-                    null,
-                    null,
-                    new FluidStack[0],
-                    new FluidStack[] {output.copy()},
-                    ticks,
-                    SourceThermalRecyclingRules.POWER,
-                    0);
+            var recipe = RecipeBuilder.of(SourceThermalRecyclingRules.POWER, ticks)
+                    .optimize(true)
+                    .itemInputs(input.copy())
+                    .fluidOutputs(output.copy())
+                    .build();
             return recipe == null
                     ? null
                     : RecoveryRecipePublisher.publishIsolated(

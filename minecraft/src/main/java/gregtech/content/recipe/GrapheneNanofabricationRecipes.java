@@ -60,7 +60,6 @@ public final class GrapheneNanofabricationRecipes {
                 null,
                 null,
                 null,
-                null,
                 ticks,
                 16,
                 0);

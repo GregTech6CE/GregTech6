@@ -9,6 +9,7 @@ import gregtech.content.recipe.PressAmmunitionRecipeRows.UnboxRow;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
@@ -65,7 +66,10 @@ public final class PressAmmunitionRecipes {
         ItemStack output = GTItems.getStack(row.output(), material, 1);
         ItemStack component = GTItems.getStack(row.component(), Materials.Empty, 1);
         if (input.isEmpty() || output.isEmpty() || component.isEmpty()) return;
-        Recipe recipe = MachineRecipeMaps.Press.addRecipe2(true, 16, row.ticks(), input, component, output);
+        Recipe recipe = MachineRecipeMaps.Press.register(RecipeBuilder.of(16, row.ticks())
+                .optimize(true)
+                .itemInputs(input, component)
+                .itemOutputs(output));
         if (recipe != null) {
             ENTRIES.add(new Entry(
                     row.input().getName() + " x" + row.inCount() + " -> "
@@ -82,7 +86,10 @@ public final class PressAmmunitionRecipes {
         if (input.isEmpty() || dust.isEmpty()) return;
         // GT6 recovers the shaft/charged casing along with the arrow head or bullet metal.
         if (component.isEmpty()) return;
-        Recipe recipe = MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, input, dust, component);
+        Recipe recipe = MachineRecipeMaps.Unboxinator.register(RecipeBuilder.of(16, 16)
+                .optimize(true)
+                .itemInputs(input)
+                .itemOutputs(dust, component));
         if (recipe != null) {
             ENTRIES.add(new Entry(
                     row.input().getName() + " -> " + row.output().getName() + " x" + row.outCount(),

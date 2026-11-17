@@ -1,5 +1,6 @@
 package gregtech.content.recipe;
 
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.data.MachineRecipeMaps;
@@ -53,15 +54,20 @@ public class AlloyRecipeLoader implements InitializationStep {
             if (!complete || inputs.isEmpty()) continue;
             var output = CrucibleDisplayItems.units(reaction.output(), (int)reaction.yield());
             if (output.isEmpty()) continue;
-            MachineRecipeMaps.CrucibleAlloying.addFakeRecipe(false, inputs.toArray(RecipeMap.ZL_IS),
-                    new net.minecraft.world.item.ItemStack[]{output}, null, null, null, null, 0, 0, reaction.output().getMeltingPoint());
+            MachineRecipeMaps.CrucibleAlloying.register(RecipeBuilder.of(0, 0)
+                    .itemInputs(inputs.toArray(RecipeMap.ZL_IS))
+                    .itemOutputs(output)
+                    .specialValue(reaction.output().getMeltingPoint()),
+                    RecipeMap.Registration.DISPLAY);
             shown++;
         }
         for (var item : new net.minecraft.world.item.Item[]{net.minecraft.world.item.Items.COAL, net.minecraft.world.item.Items.CHARCOAL}) {
             var carbon = CrucibleDisplayItems.units(gregtech.content.material.Materials.Carbon, 1);
-            MachineRecipeMaps.CrucibleAlloying.addFakeRecipe(false,
-                    new net.minecraft.world.item.ItemStack[]{new net.minecraft.world.item.ItemStack(item, 2)},
-                    new net.minecraft.world.item.ItemStack[]{carbon}, null, null, null, null, 0, 0, 1700);
+            MachineRecipeMaps.CrucibleAlloying.register(RecipeBuilder.of(0, 0)
+                    .itemInputs(new net.minecraft.world.item.ItemStack(item, 2))
+                    .itemOutputs(carbon)
+                    .specialValue(1700),
+                    RecipeMap.Registration.DISPLAY);
         }
         LOGGER.info("[gregtech] Crucible alloying display recipes: {}", shown);
     }
@@ -82,8 +88,12 @@ public class AlloyRecipeLoader implements InitializationStep {
         }
         // Native count-one selectors retain their identity. Every fixed source row has fluid gcd 1,
         // so this representation does not change the source's optimize=true coefficients or ticks.
-        var recipe = RecipeMap.make(true, itemInputs, RecipeMap.ZL_IS, null, null,
-                inputs, new FluidStack[]{result}, row.ticks(), SourceAlloyRecipes.POWER, 0);
+        var recipe = RecipeBuilder.of(SourceAlloyRecipes.POWER, row.ticks())
+                .optimize(true)
+                .itemInputs(itemInputs)
+                .fluidInputs(inputs)
+                .fluidOutputs(result)
+                .build();
         if (recipe == null) { skipped++; return; }
         if (row.selector() != 0) recipe.withCatalystInputs(0);
         // Keep normal collision rejection; never replace another producer's recipe.

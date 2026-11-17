@@ -39,7 +39,7 @@ final class MoltenMetalUnitRecipes {
         for (Recipe row : List.copyOf(map.mRecipeList)) {
             if (row.mFakeRecipe || !row.mEnabled || row.mHidden || row.mInputs.length != 1
                     || row.mOutputs.length != 0 || row.mFluidInputs.length != 0 || row.mFluidOutputs.length != 1
-                    || row.hasTaggedInputs() || row.isCatalystInput(0) || row.mSpecialItems != null || row.mSpecialValue != 0) continue;
+                    || row.hasTaggedInputs() || row.isCatalystInput(0) || row.mSpecialValue != 0) continue;
             if (collect(row.mInputs[0], row.mFluidOutputs[0], row.mDuration, row.mEUt,
                     stack -> row.mEnabled && row.matchesItemInput(0, stack))) map.unlink(row);
         }
@@ -106,7 +106,7 @@ final class MoltenMetalUnitRecipes {
                     .add(java.math.BigInteger.valueOf(reference.units).multiply(java.math.BigInteger.valueOf(reference.item.getCount())).subtract(java.math.BigInteger.ONE))
                     .divide(java.math.BigInteger.valueOf(reference.units).multiply(java.math.BigInteger.valueOf(reference.item.getCount()))).longValueExact();
             var template = new Recipe(new ItemStack[]{GTItems.getStack(MaterialPrefix.unit, key.material, 1)}, new ItemStack[0],
-                    null, null, null, new FluidStack[]{new FluidStack(key.fluid, referenceMillibuckets(key.material))},
+                    null, null, new FluidStack[]{new FluidStack(key.fluid, referenceMillibuckets(key.material))},
                     Math.max(1, ticks), key.power, 0);
             var rule = new MaterialUnitRecipe(template, 0, key.material, GTValues.U, Rounding.EXACT_RATIO);
             for (Input input : inputs) rule.source(input.item, input.units, input.guard, input.ticks, input.fluidAmount);

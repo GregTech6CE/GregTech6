@@ -79,7 +79,6 @@ public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
                     items(group.stack(1)),
                     items(item("gt6ce:wood_pellet", count)),
                     null,
-                    null,
                     fluids(fluid("Glue", 25 * count)),
                     null,
                     16L * count,

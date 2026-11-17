@@ -11,6 +11,7 @@ import gregtech.content.registry.GTItems;
 import gregtech.content.registry.GTTechnological;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
@@ -108,12 +109,23 @@ public final class WelderFamilyRecipes {
                 row.circuit() <= 0 ? ItemStack.EMPTY : new ItemStack(GTTechnological.selectorTag(row.circuit()));
         Recipe recipe = tag.isEmpty()
                 ? (second.isEmpty()
-                        ? MachineRecipeMaps.Welder.addRecipe1(true, 16, ticks, input, output)
-                        : MachineRecipeMaps.Welder.addRecipe2(true, 16, ticks, input, second, output))
+                        ? MachineRecipeMaps.Welder.register(RecipeBuilder.of(16, ticks)
+                                .optimize(true)
+                                .itemInputs(input)
+                                .itemOutputs(output))
+                        : MachineRecipeMaps.Welder.register(RecipeBuilder.of(16, ticks)
+                                .optimize(true)
+                                .itemInputs(input, second)
+                                .itemOutputs(output)))
                 : (second.isEmpty()
-                        ? MachineRecipeMaps.Welder.addRecipe2(true, 16, ticks, input, tag, output)
-                        : MachineRecipeMaps.Welder.addRecipeX(
-                                true, 16, ticks, new ItemStack[] {input, second, tag}, output));
+                        ? MachineRecipeMaps.Welder.register(RecipeBuilder.of(16, ticks)
+                                .optimize(true)
+                                .itemInputs(input, tag)
+                                .itemOutputs(output))
+                        : MachineRecipeMaps.Welder.register(RecipeBuilder.of(16, ticks)
+                                .optimize(true)
+                                .itemInputs(input, second, tag)
+                                .itemOutputs(output)));
         if (recipe != null) {
             ENTRIES.add(new Entry(
                     row.input().getName() + " x" + row.inCount()

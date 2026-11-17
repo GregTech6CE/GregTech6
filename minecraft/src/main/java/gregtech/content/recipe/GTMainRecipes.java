@@ -1,6 +1,7 @@
 package gregtech.content.recipe;
 
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.recipe.generated.GeneratedRecipeResolver;
@@ -189,10 +190,19 @@ public final class GTMainRecipes {
                 continue;
             }
             Recipe recipe = row.fake()
-                    ? target.addFakeRecipe(true, inputs, outputs, null, fluidsIn, fluidsOut, row.ticks(), row.eu(), 0)
-                    // addRecipe(optimize, in, out, special, outputChances, fluidIn, fluidOut, duration, eu, special)
-                    : target.addRecipe(true, inputs, outputs, null, new long[outputs.length], fluidsIn,
-                            fluidsOut, row.ticks(), row.eu(), 0);
+                    ? target.register(RecipeBuilder.of(row.eu(), row.ticks())
+                            .itemInputs(inputs)
+                            .fluidInputs(fluidsIn)
+                            .itemOutputs(outputs)
+                            .fluidOutputs(fluidsOut),
+                            RecipeMap.Registration.DISPLAY_CHECKED)
+                    : target.register(RecipeBuilder.of(row.eu(), row.ticks())
+                            .optimize(true)
+                            .itemInputs(inputs)
+                            .fluidInputs(fluidsIn)
+                            .itemOutputs(outputs)
+                            .fluidOutputs(fluidsOut)
+                            .chances(new long[outputs.length]));
             if (recipe == null) {
                 SKIPPED.add(row.source() + ": rejected by " + row.map());
                 continue;

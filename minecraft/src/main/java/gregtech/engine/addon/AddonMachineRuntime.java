@@ -6,7 +6,6 @@ import gregtech.content.data.FuelRecipeMaps;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.machine.BasicMachineCatalog;
 import gregtech.content.multiblock.SharedLargeMachineLayouts;
-import gregtech.content.recipe.RecipeMapSpec;
 import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.machine.BasicMachineSpec;
 import gregtech.engine.recipe.RecipeMap;
@@ -30,9 +29,9 @@ public final class AddonMachineRuntime {
         reserved.addAll(SharedLargeMachineLayouts.machines());
         AddonMachines.install(reserved, AddonMachines.builtInRecipeMapNames());
         MachineRecipeMaps.bootstrap();
-        for (AddonMachines.AcceptedRecipeMap accepted : AddonMachines.recipeMaps()) create(accepted.spec());
+        for (AddonMachines.AcceptedRecipeMap accepted : AddonMachines.recipeMaps()) new RecipeMap(accepted.spec());
         for (AddonMachines.AcceptedRecipeMap accepted : AddonMachines.fuelMaps())
-            FuelRecipeMaps.registerFuelMap(create(accepted.spec()));
+            FuelRecipeMaps.registerFuelMap(new RecipeMap(accepted.spec()));
         for (AddonMachines.AcceptedMachine accepted : AddonMachines.machines()) {
             BasicMachineSpec spec = toSpec(accepted);
             SPECS.add(spec);
@@ -42,29 +41,6 @@ public final class AddonMachineRuntime {
 
     public static List<BasicMachineSpec> specs() {
         return List.copyOf(SPECS);
-    }
-
-    public static RecipeMap create(RecipeMapSpec spec) {
-        var map = new RecipeMap(
-                null,
-                spec.mNameInternal,
-                spec.mNameLocal,
-                spec.mGUIPath,
-                spec.mInputItemsCount,
-                spec.mOutputItemsCount,
-                spec.mMinimalInputItems,
-                spec.mInputFluidCount,
-                spec.mOutputFluidCount,
-                spec.mMinimalInputFluids,
-                spec.mMinimalInputs,
-                spec.mNeedsOutputs,
-                spec.mCombinePower,
-                spec.mUseBucketSizeIn,
-                spec.mUseBucketSizeOut);
-        map.specialValueLabel(spec.mSpecialValuePre, spec.mSpecialValueMultiplier, spec.mSpecialValuePost);
-        map.viewer(spec.mViewerAllowed, spec.mShowVoltageAmperage);
-        if (spec.mInstantRecipes) map.instantRecipes();
-        return map;
     }
 
     private static BasicMachineSpec toSpec(AddonMachines.AcceptedMachine accepted) {

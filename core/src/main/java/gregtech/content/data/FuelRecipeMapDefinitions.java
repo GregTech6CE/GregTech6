@@ -8,149 +8,59 @@ public final class FuelRecipeMapDefinitions {
 
     private static final String GUI = "gt6ce:textures/gui/machines/";
 
-    public static final RecipeMapSpec
-            FluidBed =
-                    new RecipeMapSpec(
-                                    null,
-                                    "gt.recipe.fuels.fluidbed",
-                                    "Fluidized Bed Fuels",
-                                    GUI + "Default",
-                                    1,
-                                    1,
-                                    0,
-                                    1,
-                                    1,
-                                    0,
-                                    1,
-                                    false,
-                                    false,
-                                    true,
-                                    true)
-                            .viewer(true, true),
-            Burn =
-                    new RecipeMapSpec(
-                                    null,
-                                    "gt.recipe.fuels.burn",
-                                    "Burnable Fuels",
-                                    GUI + "Default",
-                                    0,
-                                    0,
-                                    0,
-                                    1,
-                                    1,
-                                    1,
-                                    1,
-                                    false,
-                                    false,
-                                    false,
-                                    false)
-                            .viewer(true, true),
-            Gas =
-                    new RecipeMapSpec(
-                                    null,
-                                    "gt.recipe.fuels.gas",
-                                    "Gas Fuels",
-                                    GUI + "Default",
-                                    0,
-                                    0,
-                                    0,
-                                    1,
-                                    2,
-                                    1,
-                                    1,
-                                    false,
-                                    false,
-                                    false,
-                                    false)
-                            .viewer(true, true),
-            Hot =
-                    new RecipeMapSpec(
-                                    null,
-                                    "gt.recipe.fuels.hot",
-                                    "Hot Fuels",
-                                    GUI + "Default",
-                                    0,
-                                    0,
-                                    0,
-                                    1,
-                                    1,
-                                    1,
-                                    1,
-                                    false,
-                                    false,
-                                    false,
-                                    false)
-                            .viewer(true, true),
-            Plasma =
-                    new RecipeMapSpec(
-                                    null,
-                                    "gt.recipe.fuels.plasma",
-                                    "Plasma Fuels",
-                                    GUI + "Default",
-                                    0,
-                                    0,
-                                    0,
-                                    1,
-                                    1,
-                                    1,
-                                    1,
-                                    false,
-                                    false,
-                                    false,
-                                    false)
-                            .viewer(true, true),
-            Engine =
-                    new RecipeMapSpec(
-                                    null,
-                                    "gt.recipe.fuels.engine",
-                                    "Engine Fuels",
-                                    GUI + "Default",
-                                    0,
-                                    0,
-                                    0,
-                                    1,
-                                    1,
-                                    1,
-                                    1,
-                                    false,
-                                    false,
-                                    false,
-                                    false)
-                            .viewer(true, true),
-            Turbine =
-                    new RecipeMapSpec(
-                                    null,
-                                    "gt.recipe.fuels.turbine",
-                                    "Turbine Fuels",
-                                    GUI + "Default",
-                                    0,
-                                    0,
-                                    0,
-                                    1,
-                                    1,
-                                    1,
-                                    1,
-                                    false,
-                                    false,
-                                    false,
-                                    false)
-                            .viewer(true, true),
-            Magic =
-                    new RecipeMapSpec(
-                                    null,
-                                    "gt.recipe.fuels.magic",
-                                    "Magic Fuels",
-                                    GUI + "Default",
-                                    1,
-                                    1,
-                                    0,
-                                    1,
-                                    1,
-                                    0,
-                                    1,
-                                    false,
-                                    false,
-                                    false,
-                                    false)
-                            .viewer(true, true);
+    public static final RecipeMapSpec FluidBed = RecipeMapSpec.builder(
+            "gt.recipe.fuels.fluidbed", "Fluidized Bed Fuels", GUI + "Default")
+            .items(1, 1, 0)
+            .fluids(1, 1, 0)
+            .minimumInputs(1)
+            .bucketInput(true)
+            .bucketOutput(true)
+            .build();
+
+    public static final RecipeMapSpec Burn = RecipeMapSpec.builder(
+            "gt.recipe.fuels.burn", "Burnable Fuels", GUI + "Default")
+            .items(0, 0, 0)
+            .fluids(1, 1, 1)
+            .minimumInputs(1)
+            .build();
+
+    public static final RecipeMapSpec Gas = RecipeMapSpec.builder("gt.recipe.fuels.gas", "Gas Fuels", GUI + "Default")
+            .items(0, 0, 0)
+            .fluids(1, 2, 1)
+            .minimumInputs(1)
+            .build();
+
+    public static final RecipeMapSpec Hot = RecipeMapSpec.builder("gt.recipe.fuels.hot", "Hot Fuels", GUI + "Default")
+            .items(0, 0, 0)
+            .fluids(1, 1, 1)
+            .minimumInputs(1)
+            .build();
+
+    public static final RecipeMapSpec Plasma = RecipeMapSpec.builder(
+            "gt.recipe.fuels.plasma", "Plasma Fuels", GUI + "Default")
+            .items(0, 0, 0)
+            .fluids(1, 1, 1)
+            .minimumInputs(1)
+            .build();
+
+    public static final RecipeMapSpec Engine = RecipeMapSpec.builder(
+            "gt.recipe.fuels.engine", "Engine Fuels", GUI + "Default")
+            .items(0, 0, 0)
+            .fluids(1, 1, 1)
+            .minimumInputs(1)
+            .build();
+
+    public static final RecipeMapSpec Turbine = RecipeMapSpec.builder(
+            "gt.recipe.fuels.turbine", "Turbine Fuels", GUI + "Default")
+            .items(0, 0, 0)
+            .fluids(1, 1, 1)
+            .minimumInputs(1)
+            .build();
+
+    public static final RecipeMapSpec Magic = RecipeMapSpec.builder(
+            "gt.recipe.fuels.magic", "Magic Fuels", GUI + "Default")
+            .items(1, 1, 0)
+            .fluids(1, 1, 0)
+            .minimumInputs(1)
+            .build();
 }

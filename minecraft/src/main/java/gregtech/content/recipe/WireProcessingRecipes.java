@@ -150,7 +150,7 @@ public final class WireProcessingRecipes {
     private static void addPhysicalWire(long ticks, GTMaterial material, ItemStack result, ItemStack input) {
         long units = MaterialPrefix.ingot.getMaterialWeight();
         var template =
-                new Recipe(new ItemStack[] {input}, new ItemStack[] {result}, null, null, null, null, ticks, 16, 0);
+                new Recipe(new ItemStack[] {input}, new ItemStack[] {result}, null, null, null, ticks, 16, 0);
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
                 template, 0, material, units, gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
         rule.source(input, units);
@@ -158,7 +158,7 @@ public final class WireProcessingRecipes {
     }
 
     private static void add(RecipeMap map, long ticks, ItemStack result, ItemStack... input) {
-        var recipe = new Recipe(input, new ItemStack[] {result}, null, null, null, null, ticks, 16, 0);
+        var recipe = new Recipe(input, new ItemStack[] {result}, null, null, null, ticks, 16, 0);
         if (map.addRecipe(recipe) == null)
             throw new IllegalStateException("Wire recipe conflict: " + map.mNameInternal + " / " + result);
         ENTRIES.add(new Entry(map, recipe));

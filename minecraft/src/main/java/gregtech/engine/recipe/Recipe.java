@@ -98,7 +98,6 @@ public class Recipe {
     public final long mDuration;
     public final long mEUt;
     public final long mSpecialValue;
-    public final Object mSpecialItems;
 
     public boolean mEnabled = true;
     public boolean mHidden;
@@ -164,8 +163,8 @@ public class Recipe {
     /** Records the producing entry point; see {@link #mSource}. */
     public Recipe withSource(String source) { mSource = source == null ? "" : source; return this; }
 
-    public Recipe(ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecialItems,
-                  long[] aChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs,
+    public Recipe(ItemStack[] aInputs, ItemStack[] aOutputs, long[] aChances,
+                  FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs,
                   long aDuration, long aEUt, long aSpecialValue) {
         mInputs       = aInputs      != null ? aInputs      : NO_ITEMS;
         mOutputs      = aOutputs     != null ? aOutputs     : NO_ITEMS;
@@ -182,7 +181,6 @@ public class Recipe {
         mDuration     = Math.max(1, aDuration);
         mEUt          = aEUt;
         mSpecialValue = aSpecialValue;
-        mSpecialItems = aSpecialItems;
     }
 
     /** Allocated on the first mark; unmarked recipes keep every group absent. */

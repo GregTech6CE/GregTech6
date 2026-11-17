@@ -130,7 +130,7 @@ public final class OvenRecipeBridge {
                         ItemStack input = candidate.copyWithCount(1);
                         if (!input.isEmpty() && seen.add(input.getItem())
                                 && gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem()).isEmpty()
-                                && MachineRecipeMaps.add_smelting(input, scrap)) mirrored++;
+                                && MachineRecipeMaps.replaceSmelting(input, scrap)) mirrored++;
                     }
                 }
                 continue;
@@ -150,7 +150,7 @@ public final class OvenRecipeBridge {
                     ItemStack input = candidate.copyWithCount(1);
                     if (!input.isEmpty() && seen.add(input.getItem()) && !result.isEmpty()
                             && gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem()).isEmpty()
-                            && MachineRecipeMaps.add_smelting(input, result)) mirrored++;
+                            && MachineRecipeMaps.replaceSmelting(input, result)) mirrored++;
                 }
             }
         }

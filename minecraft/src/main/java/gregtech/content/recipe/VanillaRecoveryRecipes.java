@@ -91,7 +91,6 @@ public final class VanillaRecoveryRecipes {
                             null,
                             null,
                             null,
-                            null,
                             plan.duration(),
                             16,
                             0)

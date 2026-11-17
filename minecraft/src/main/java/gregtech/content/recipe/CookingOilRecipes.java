@@ -115,7 +115,7 @@ public final class CookingOilRecipes {
     private static void addVariant(RecipeInputGroups.Fluids oils, ItemStack input, ItemStack output) {
         if (!COVERED.add(input.getItem())) return;   // the same item form already answers
         var recipe = new Recipe(new ItemStack[] {input.copyWithCount(1)}, new ItemStack[] {output.copyWithCount(2)},
-                null, null, new FluidStack[] {oils.stack(OIL_MB)}, null, 16, 16, 0).withPriority(OIL_PRIORITY);
+                null, new FluidStack[] {oils.stack(OIL_MB)}, null, 16, 16, 0).withPriority(OIL_PRIORITY);
         if (MachineRecipeMaps.Furnace.addRecipe(oils.apply(recipe, 0)) != null) registered++;
     }
 

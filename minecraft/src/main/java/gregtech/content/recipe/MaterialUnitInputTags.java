@@ -55,7 +55,6 @@ public final class MaterialUnitInputTags {
                         || row.mFluidOutputs.length != 1
                         || row.hasTaggedInputs()
                         || row.isCatalystInput(0)
-                        || row.mSpecialItems != null
                         || row.mSpecialValue != 0) continue;
                 var material = MoltenMetalUnitRecipes.inputMaterial(row.mInputs[0], row.mFluidOutputs[0]);
                 if (material != null) add(initial, smeltable(material), row.mInputs[0]);

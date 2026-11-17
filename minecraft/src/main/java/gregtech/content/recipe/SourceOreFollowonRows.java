@@ -50,9 +50,14 @@ public final class SourceOreFollowonRows {
   // No collision replacement: return exact accepted identity or null for caller ownership ledger.
   if(map==MachineRecipeMaps.Shredder||map==MachineRecipeMaps.Anvil)
    return RecoveryRecipePublisher.publish(map,RecoveryRecipePublisher.explicit(
-       new Recipe(new ItemStack[]{in},out,null,chances,fin,fout,ticks,eut,0),
+       new Recipe(new ItemStack[]{in},out,chances,fin,fout,ticks,eut,0),
        "ore-processing/followon"));
-  return map.addRecipe1(false,eut,ticks,chances,in,fin,fout,out);
+  return map.register(RecipeBuilder.of(eut, ticks)
+          .itemInputs(in)
+          .fluidInputs(fin)
+          .itemOutputs(out)
+          .fluidOutputs(fout)
+          .chances(chances));
  }
  /** Source Crushing50-140, bounded RAW input (no host gangue/dense/raw-block extrapolation).
   * Bonus material is always Cinnabar; this is a named source effect, not a generic gem heuristic.

@@ -18,7 +18,7 @@ public final class RadiationMedicineRecipes {
             var fluid=GTFluids.still(gas);
             if(fluid==null)throw new IllegalStateException("Missing Geiger counter gas: "+gas);
             MachineRecipeMaps.Canner.addRecipe(new Recipe(new ItemStack[]{item("geiger_counter_empty")},
-                    new ItemStack[]{item("geiger_counter")},null,null,
+                    new ItemStack[]{item("geiger_counter")},null,
 //? if >=1.21.1 {
                     /*new net.neoforged.neoforge.fluids.FluidStack[]{new net.neoforged.neoforge.fluids.FluidStack(fluid.get(),1000)},null,64,16,0));
 *///?} else {
@@ -43,7 +43,7 @@ public final class RadiationMedicineRecipes {
             boolean identical=true;for(int i=0;i<inputs.length;i++)if(existing.mInputs[i].getCount()!=inputs[i].getCount()||!gregtech.engine.stack.StackCompat.sameItem(existing.mInputs[i],inputs[i])){identical=false;break;}
             if(identical)return;
         }
-        if(map.addRecipe(new Recipe(inputs, new ItemStack[]{output}, null, null, null, null, ticks, 16, 0))==null)
+        if(map.addRecipe(new Recipe(inputs, new ItemStack[]{output}, null, null, null, ticks, 16, 0))==null)
             throw new IllegalStateException("Rejected radiation medicine recipe: " + java.util.Arrays.toString(inputs));
     }
 }

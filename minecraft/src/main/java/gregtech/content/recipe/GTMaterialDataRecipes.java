@@ -5,7 +5,6 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
 import gregtech.engine.recipe.Recipe;
-import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.book.GTMaterialDictionary;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
@@ -362,7 +361,7 @@ public final class GTMaterialDataRecipes {
         Recipe recipe = new Recipe(
                 new ItemStack[]{scanned.copyWithCount(1), usb.copyWithCount(1)},
                 new ItemStack[]{withMaterialData(usb, material)},
-                null, null, null, null,
+                null, null, null,
                 Math.max(1, nucleons * SCANNER_EU), SCANNER_EU, 0);
         recipe.mCanBeBuffered = false;
         recipe.mExactItemInputs = true;
@@ -435,7 +434,7 @@ public final class GTMaterialDataRecipes {
         return new Recipe(
                 new ItemStack[]{paper.copyWithCount(sheets), usb.copyWithCount(1)},
                 new ItemStack[]{gregtech.content.data.VisualDocumentData.printedPages(book, many)},
-                null, null, new FluidStack[]{dye}, null,
+                null, new FluidStack[]{dye}, null,
                 many ? PRINTER_MANY_TICKS : PRINTER_TICKS, PRINTER_EU, 0).withCatalystInputs(1);
     }
 
@@ -496,7 +495,7 @@ public final class GTMaterialDataRecipes {
         Recipe recipe = new Recipe(
                 usb == null ? null : new ItemStack[]{usb.copyWithCount(1)},
                 output.isEmpty() ? null : new ItemStack[]{output},
-                null, null, matter,
+                null, matter,
                 fluid.isEmpty() ? null : new FluidStack[]{fluid},
                 nucleons * REPLICATOR_TICKS_PER_NUCLEON,
                 gregtech.content.data.MaterialDataRules.REPLICATOR_POWER, 0);

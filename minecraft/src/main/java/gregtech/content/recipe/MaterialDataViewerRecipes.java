@@ -7,6 +7,7 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.generated.MaterialDataFacts;
 import gregtech.engine.material.*;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeMap;
 import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
@@ -56,7 +57,7 @@ public final class MaterialDataViewerRecipes {
             if (scan == null)
                 throw new IllegalStateException("Registered scannable form has no scanner recipe: " + material);
             scan.withViewerInputAlternatives(0, choices);
-            MachineRecipeMaps.ScannerMolecular.addFakeRecipe(false, scan);
+            MachineRecipeMaps.ScannerMolecular.addRecipe(scan, RecipeMap.Registration.DISPLAY);
             SCANS.add(scan);
         }
         var materials = new TreeSet<GTMaterial>(
@@ -69,12 +70,12 @@ public final class MaterialDataViewerRecipes {
             var medium = GTMaterialDataRecipes.withMaterialData(usb, material);
             var print = GTMaterialDataRecipes.printer(List.of(new ItemStack(Items.PAPER, 64), medium), List.of());
             if (print != null) {
-                MachineRecipeMaps.Printer.addFakeRecipe(false, print);
+                MachineRecipeMaps.Printer.addRecipe(print, RecipeMap.Registration.DISPLAY);
                 PRINTS.add(print);
             }
             var replication = GTMaterialDataRecipes.replicator(List.of(medium), List.of());
             if (replication != null) {
-                MachineRecipeMaps.Replicator.addFakeRecipe(false, replication);
+                MachineRecipeMaps.Replicator.addRecipe(replication, RecipeMap.Registration.DISPLAY);
                 REPLICATIONS.add(replication);
             }
         }

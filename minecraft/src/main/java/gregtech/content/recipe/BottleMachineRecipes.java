@@ -6,6 +6,7 @@ import gregtech.content.item.BottleItem;
 import gregtech.content.data.generated.GTBottlesGen;
 import gregtech.engine.fluid.PotionBottleHandler;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
@@ -33,11 +34,20 @@ public final class BottleMachineRecipes {
             var liquid=gregtech.engine.fluid.PotionBottleHandler.contents(filled);
             if(liquid.isEmpty()){MISSING.add(id);continue;}
             var empty=item==Items.HONEY_BOTTLE?new ItemStack(Items.GLASS_BOTTLE):BottleItem.emptyBottle();
-            if(MachineRecipeMaps.Canner.addRecipe1(false,16,16,empty,liquid,FluidStack.EMPTY,filled)!=null)count++;
-            if(MachineRecipeMaps.Canner.addRecipe1(false,16,16,filled,FluidStack.EMPTY,liquid,empty)!=null)count++;
+            if(MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
+                    .itemInputs(empty)
+                    .fluidInputs(liquid)
+                    .itemOutputs(filled))!=null)count++;
+            if(MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
+                    .itemInputs(filled)
+                    .itemOutputs(empty)
+                    .fluidOutputs(liquid))!=null)count++;
             var gtEmpty=BottleItem.emptyBottle();
             if(item==Items.HONEY_BOTTLE&&!gtEmpty.is(empty.getItem())
-                    &&MachineRecipeMaps.Canner.addRecipe1(false,16,16,gtEmpty,liquid,FluidStack.EMPTY,filled)!=null)count++;
+                    &&MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
+                            .itemInputs(gtEmpty)
+                            .fluidInputs(liquid)
+                            .itemOutputs(filled))!=null)count++;
         }
         count += registerWaterBottle();
         com.mojang.logging.LogUtils.getLogger().info("GT6 bottle filling/draining: {} rows, unresolved {}",count,MISSING);
@@ -51,12 +61,18 @@ public final class BottleMachineRecipes {
         if (filled.isEmpty()) return 0;
         int count = 0;
         var empty = new ItemStack(Items.GLASS_BOTTLE);
-        if (MachineRecipeMaps.Canner.addRecipe1(false, 16, 16, empty, water, FluidStack.EMPTY, filled) != null) count++;
+        if (MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
+                .itemInputs(empty)
+                .fluidInputs(water)
+                .itemOutputs(filled)) != null) count++;
         var gtEmpty = BottleItem.emptyBottle();
         if (!gtEmpty.is(empty.getItem())
-                && MachineRecipeMaps.Canner.addRecipe1(false, 16, 16, gtEmpty, water, FluidStack.EMPTY, filled) != null) count++;
+                && MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
+                        .itemInputs(gtEmpty)
+                        .fluidInputs(water)
+                        .itemOutputs(filled)) != null) count++;
         var drain = new Recipe(new ItemStack[] {filled}, new ItemStack[] {empty},
-                null, null, null, new FluidStack[] {water}, 16, 16, 0);
+                null, null, new FluidStack[] {water}, 16, 16, 0);
         drain.mExactItemInputs = true;
         if (MachineRecipeMaps.Canner.addRecipe(drain) != null) count++;
         return count;

@@ -81,7 +81,7 @@ public final class MaterialUnitRecipe {
         var shared = pool == null ? SourcePool.freeze(sources) : pool.share(sources);
         sources = shared.sources;
         template.withMaterialInputDisplay(inputIndex, units, shared.stacks, rounding);
-        if (map.addFakeRecipe(false, template) == null) {
+        if (map.addRecipe(template, RecipeMap.Registration.DISPLAY) == null) {
             owner = null;
             return null;
         }
@@ -165,7 +165,7 @@ public final class MaterialUnitRecipe {
                         : Math.toIntExact(batch.scale(fluidOutputs[i].getAmount(), false)));
             }
             long ticks = thermal ? source.ticks : Math.max(1, batch.scale(template.mDuration, true));
-            var result = new Recipe(inputs, outputs.toArray(ItemStack[]::new), template.mSpecialItems,
+            var result = new Recipe(inputs, outputs.toArray(ItemStack[]::new),
                     chances.stream().mapToLong(Long::longValue).toArray(), fluidInputs, fluidOutputs,
                     ticks, template.mEUt, template.mSpecialValue)
                     .withCatalystInputs(template.explicitCatalystInputs())

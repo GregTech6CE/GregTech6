@@ -81,7 +81,8 @@ public final class RecoveryRecipePublisher {
                 throw new IllegalStateException(
                         "Could not replace generic recovery row " + resolution.existing().mSource);
         }
-        return map.addRecipe(candidate, false, false, hidden);
+        return map.addRecipe(candidate,
+                RecipeMap.Registration.DEFAULT.withCollisionCheck(false).withHidden(hidden));
     }
 
     public static Resolution inspect(RecipeMap map, Recipe candidate) {

@@ -7,6 +7,8 @@ import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.*;
 import java.util.*;
+import gregtech.engine.recipe.RecipeBuilder;
+import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
 
@@ -45,8 +47,11 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
             var target = material.getTargetSmeltingMaterial();
             var output = gregtech.util.OM.ingotOrDust(target, material.getTargetSmeltingAmount() / 9);
             if (!output.isEmpty())
-                MachineRecipeMaps.CrucibleSmelting.addFakeRecipe(
-                        false, items(input), items(output), null, null, null, null, 0, 0, material.getMeltingPoint());
+                MachineRecipeMaps.CrucibleSmelting.register(RecipeBuilder.of(0, 0)
+                        .itemInputs(items(input))
+                        .itemOutputs(items(output))
+                        .specialValue(material.getMeltingPoint()),
+                        RecipeMap.Registration.DISPLAY);
         }
     }
 
@@ -131,7 +136,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
             var output = GTItems.getStack(prefix, GTMaterialRegistry.get("MeatCooked"), 1);
             if (!input.isEmpty()
                     && !output.isEmpty()
-                    && MachineRecipeMaps.add_smelting(input, output, false, true, false)) {
+                    && MachineRecipeMaps.addSmelting(input, output)) {
                 SMELTING.add(prefix.getName() + "/MeatRaw");
                 COOKING.put(input.getItem(), new FurnaceSmeltingRecipes.CookingData(0, true));
             }
@@ -188,7 +193,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
     }
 
     private static void smelt(String id, ItemStack output, boolean food) {
-        if (!MachineRecipeMaps.add_smelting(own(id, 1), output, false, food, !food))
+        if (!MachineRecipeMaps.addSmelting(own(id, 1), output))
             throw new IllegalStateException("Rejected single-item smelting: " + id);
         SMELTING.add(id);
         COOKING.put(own(id, 1).getItem(), new FurnaceSmeltingRecipes.CookingData(0, food));

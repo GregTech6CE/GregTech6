@@ -3,6 +3,8 @@ package gregtech.content.registry;
 import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 import gregtech.content.book.ColoredBookRules;
+import gregtech.engine.recipe.RecipeBuilder;
+import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.world.item.*;
 import java.util.*;
 
@@ -30,7 +32,9 @@ public final class GTColoredBooks {
 *///?} else {
             scanned.setHoverName(net.minecraft.network.chat.Component.literal("Containing scanned Book"));
 //?}
-            gregtech.content.data.MachineRecipeMaps.ScannerVisuals.addFakeRecipe(false,new ItemStack[]{book,usb},new ItemStack[]{scanned,book.copy()},null,null,null,512,16,0);
+            gregtech.content.data.MachineRecipeMaps.ScannerVisuals.register(
+                    RecipeBuilder.of(16, 512).itemInputs(book, usb).itemOutputs(scanned, book.copy()),
+                    RecipeMap.Registration.DISPLAY);
         }
     }
 }

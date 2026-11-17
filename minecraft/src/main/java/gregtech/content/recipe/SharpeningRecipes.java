@@ -8,6 +8,7 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
@@ -126,7 +127,12 @@ public final class SharpeningRecipes {
         ItemStack[] outputs = remains.isEmpty() ? new ItemStack[] {output} : new ItemStack[] {output, remains};
         long[] chances = remains.isEmpty() ? null : new long[] {10000, 7500};
         var template =
-                RecipeMap.make(true, new ItemStack[] {input}, outputs, null, chances, null, null, duration, 16, 0);
+                RecipeBuilder.of(16, duration)
+                        .optimize(true)
+                        .itemInputs(input)
+                        .itemOutputs(outputs)
+                        .chances(chances)
+                        .build();
         if (template == null) return;
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
                 template,

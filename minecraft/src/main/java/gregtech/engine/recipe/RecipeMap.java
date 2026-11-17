@@ -1,5 +1,6 @@
 package gregtech.engine.recipe;
 
+import gregtech.content.recipe.RecipeMapSpec;
 import gregtech.engine.stack.StackCompat;
 
 import com.mojang.logging.LogUtils;
@@ -181,11 +182,7 @@ public class RecipeMap {
     /** Read-only view of every registered map, in registration order. */
     public static final List<RecipeMap> RECIPE_MAP_LIST = Collections.unmodifiableList(RECIPE_MAP_LIST_INTERNAL);
 
-    /**
-     * Rows {@link #make} dropped because optimizing cancelled them down to nothing (GT6 keeps such a
-     * row; see the note in {@code make}). Counted so a degenerate row reaching a recipe map can be
-     * detected.
-     */
+    /** Rows {@link RecipeBuilder} dropped after optimization left no usable inputs or results. */
     private static int collapsedRecipesDropped;
 
     private static final List<String> COLLAPSED_SAMPLES = new ArrayList<>();
@@ -202,15 +199,14 @@ public class RecipeMap {
         return Map.copyOf(COLLAPSED_BY_MAP);
     }
 
-    /** Zero-length convenience constants (GT6 {@code CS.ZL_IS} / {@code CS.ZL_FS} / {@code CS.ZL_LONG}). */
+    /** Zero-length stack arrays (GT6 {@code CS.ZL_IS} and {@code CS.ZL_FS}). */
     public static final ItemStack[] ZL_IS = new ItemStack[0];
     public static final FluidStack[] ZL_FS = new FluidStack[0];
-    public static final long[] ZL_LONG = new long[0];
 
     // ── Slot / tank counts (set by constructor, immutable) ──────────────
     public final int mInputItemsCount, mOutputItemsCount;
     /** Dedicated potion input slots; {@link MachineInventory} keeps them beside the item slots. */
-    public int mInputPotionCount;
+    public final int mInputPotionCount;
     public final int mInputFluidCount, mOutputFluidCount;
     public final int mMinimalInputItems, mMinimalInputFluids, mMinimalInputs;
 
@@ -247,15 +243,7 @@ public class RecipeMap {
     /** GT6 recipe power divisor; all current non-crafting maps use one. */
     public long mPower = 1;
     /** Original NEI eligibility and caption flags; recipe lookup/storage remain independent. */
-    public boolean mViewerAllowed=true, mShowVoltageAmperage=true;
-    public RecipeMap viewer(boolean allowed,boolean showVoltageAmperage) {
-        mViewerAllowed=allowed;mShowVoltageAmperage=showVoltageAmperage;return this;
-    }
-
-    public RecipeMap potions(int count) {
-        mInputPotionCount = Math.max(0, count);
-        return this;
-    }
+    public final boolean mViewerAllowed, mShowVoltageAmperage;
     public final boolean mNeedsOutputs;
     public final boolean mCombinePower;
     public final boolean mUseBucketSizeIn;
@@ -268,19 +256,11 @@ public class RecipeMap {
      * ({@code RM.CrucibleAlloying} / {@code RM.CrucibleSmelting} in the original). An empty
      * prefix means the map has no special value line.
      */
-    public String mSpecialValuePre = "";
+    public final String mSpecialValuePre;
     /** Multiplier applied to {@link Recipe#mSpecialValue} before display (GT6 uses 1). */
-    public long mSpecialValueMultiplier = 0;
+    public final long mSpecialValueMultiplier;
     /** Suffix of the special value line, e.g. {@code " K"}. */
-    public String mSpecialValuePost = "";
-
-    /** Declares the recipe viewer's special value line; see {@link #mSpecialValuePre}. */
-    public RecipeMap specialValueLabel(String aPre, long aMultiplier, String aPost) {
-        mSpecialValuePre = aPre == null ? "" : aPre;
-        mSpecialValueMultiplier = aMultiplier;
-        mSpecialValuePost = aPost == null ? "" : aPost;
-        return this;
-    }
+    public final String mSpecialValuePost;
 
     /** Whether this map shows a special value line for its recipes. */
     public boolean hasSpecialValueLabel() {
@@ -295,62 +275,39 @@ public class RecipeMap {
      * process), which is why "Time: 1 tick" on the crucible recipe pages is meaningless.
      * </p>
      */
-    public boolean mInstantRecipes = false;
+    public final boolean mInstantRecipes;
 
-    /** Marks the map as instant; see {@link #mInstantRecipes}. */
-    public RecipeMap instantRecipes() {
-        mInstantRecipes = true;
-        return this;
-    }
-
-    /**
-     * Full constructor matching the original GT6 parameter list.
-     *
-     * @param aRecipeList         backing recipe collection (null = use HashSet)
-     * @param aNameInternal       unique registry key, e.g. {@code "gt.recipe.crusher"}
-     * @param aNameLocal          human-readable display name
-     * @param aGUIPath            GUI texture path (auto-appends {@code .png} if missing)
-     * @param aInputItemsCount    max input item slots
-     * @param aOutputItemsCount   max output item slots
-     * @param aMinimalInputItems  minimum non-empty input slots required
-     * @param aInputFluidCount    max input fluid tanks
-     * @param aOutputFluidCount   max output fluid tanks
-     * @param aMinimalInputFluids minimum non-empty fluid inputs required
-     * @param aMinimalInputs      minimum total inputs (items + fluids) required
-     * @param aNeedsOutputs       recipes require output slots to be available
-     * @param aCombinePower       combine EU/t from parallel recipes
-     * @param aUseBucketSizeIn    input fluids use bucket-based scaling (144 * n)
-     * @param aUseBucketSizeOut   output fluids use bucket-based scaling
-     */
-    public RecipeMap(Collection<Recipe> aRecipeList,
-                     String aNameInternal, String aNameLocal, String aGUIPath,
-                     int aInputItemsCount, int aOutputItemsCount, int aMinimalInputItems,
-                     int aInputFluidCount, int aOutputFluidCount, int aMinimalInputFluids,
-                     int aMinimalInputs,
-                     boolean aNeedsOutputs, boolean aCombinePower,
-                     boolean aUseBucketSizeIn, boolean aUseBucketSizeOut) {
-        lookupTable = new RecipeLookupTable((aRecipeList != null) ? aRecipeList : new HashSet<>(), aNameInternal);
+    /** Creates an empty recipe map and registers it under the specified internal name. */
+    public RecipeMap(RecipeMapSpec spec) {
+        mNameInternal = spec.mNameInternal;
+        lookupTable = new RecipeLookupTable(new HashSet<>(), mNameInternal);
         mRecipeList = lookupTable;
-        mNameInternal = aNameInternal;
-        mDirectFuelConverter = switch (aNameInternal) {
+        mDirectFuelConverter = switch (mNameInternal) {
             case "gt.recipe.fuels.burn", "gt.recipe.fuels.gas", "gt.recipe.fuels.fluidbed",
                     "gt.recipe.fuels.engine", "gt.recipe.fuels.hot" -> true;
             default -> false;
         };
-        mAnvilRowMap = aNameInternal.startsWith("gt.recipe.anvil");
-        mNameLocal = aNameLocal;
-        mGUIPath = aGUIPath.endsWith(".png") ? aGUIPath : aGUIPath + ".png";
-        mInputItemsCount   = Math.max(aInputItemsCount, aMinimalInputItems);
-        mOutputItemsCount  = aOutputItemsCount;
-        mMinimalInputItems = aMinimalInputItems;
-        mInputFluidCount   = Math.max(aInputFluidCount, aMinimalInputFluids);
-        mOutputFluidCount  = aOutputFluidCount;
-        mMinimalInputFluids = aMinimalInputFluids;
-        mMinimalInputs     = aMinimalInputs;
-        mNeedsOutputs      = aNeedsOutputs;
-        mCombinePower      = aCombinePower;
-        mUseBucketSizeIn   = aUseBucketSizeIn;
-        mUseBucketSizeOut  = aUseBucketSizeOut;
+        mAnvilRowMap = mNameInternal.startsWith("gt.recipe.anvil");
+        mNameLocal = spec.mNameLocal;
+        mGUIPath = spec.mGUIPath;
+        mInputItemsCount = spec.mInputItemsCount;
+        mOutputItemsCount = spec.mOutputItemsCount;
+        mMinimalInputItems = spec.mMinimalInputItems;
+        mInputFluidCount = spec.mInputFluidCount;
+        mOutputFluidCount = spec.mOutputFluidCount;
+        mMinimalInputFluids = spec.mMinimalInputFluids;
+        mMinimalInputs = spec.mMinimalInputs;
+        mNeedsOutputs = spec.mNeedsOutputs;
+        mCombinePower = spec.mCombinePower;
+        mUseBucketSizeIn = spec.mUseBucketSizeIn;
+        mUseBucketSizeOut = spec.mUseBucketSizeOut;
+        mViewerAllowed = spec.mViewerAllowed;
+        mShowVoltageAmperage = spec.mShowVoltageAmperage;
+        mInputPotionCount = spec.mInputPotionCount;
+        mSpecialValuePre = spec.mSpecialValuePre;
+        mSpecialValueMultiplier = spec.mSpecialValueMultiplier;
+        mSpecialValuePost = spec.mSpecialValuePost;
+        mInstantRecipes = spec.mInstantRecipes;
 
         if (RECIPE_MAPS_INTERNAL.containsKey(mNameInternal))
             throw new IllegalArgumentException("Duplicate RecipeMap key: " + mNameInternal);
@@ -358,7 +315,7 @@ public class RecipeMap {
         RECIPE_MAP_LIST_INTERNAL.add(this);
     }
 
-    /** Number of rows {@link #make} dropped as empty after optimization. */
+    /** Number of rows {@link RecipeBuilder} dropped as empty after optimization. */
     public static int collapsedRecipesDropped() {
         return collapsedRecipesDropped;
     }
@@ -389,34 +346,74 @@ public class RecipeMap {
 
     // ── Recipe registration ──────────────────────────────────────────────
 
-    /**
-     * Add a single recipe to this map (default: collision check on, not fake, not hidden).
-     * Returns the recipe on success or {@code null} if it was rejected/skipped.
-     */
-    public Recipe addRecipe(Recipe aRecipe) {
-        return addRecipe(aRecipe, true, false, false, mLogErrors);
+    /** Controls how a built row is published to a map. Display rows are never executable. */
+    public static final class Registration {
+        public static final Registration DEFAULT = new Registration(true, false, false, true);
+        public static final Registration DISPLAY = new Registration(false, true, false, true);
+        public static final Registration DISPLAY_CHECKED = new Registration(true, true, false, true);
+
+        private final boolean checkForCollisions;
+        private final boolean fakeRecipe;
+        private final boolean hidden;
+        private final boolean logErrors;
+
+        private Registration(boolean checkForCollisions, boolean fakeRecipe, boolean hidden, boolean logErrors) {
+            this.checkForCollisions = checkForCollisions;
+            this.fakeRecipe = fakeRecipe;
+            this.hidden = hidden;
+            this.logErrors = logErrors;
+        }
+
+        public Registration withCollisionCheck(boolean checkForCollisions) {
+            return new Registration(checkForCollisions, fakeRecipe, hidden, logErrors);
+        }
+
+        public Registration withFakeRecipe(boolean fakeRecipe) {
+            return new Registration(checkForCollisions, fakeRecipe, hidden, logErrors);
+        }
+
+        public Registration withHidden(boolean hidden) {
+            return new Registration(checkForCollisions, fakeRecipe, hidden, logErrors);
+        }
+
+        public Registration withLogErrors(boolean logErrors) {
+            return new Registration(checkForCollisions, fakeRecipe, hidden, logErrors);
+        }
     }
 
-    public Recipe addRecipe(Recipe aRecipe, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden) {
-        return addRecipe(aRecipe, aCheckForCollisions, aFakeRecipe, aHidden, mLogErrors);
+    /** Normalizes and registers a recipe under the map's default registration rules. */
+    public Recipe register(RecipeBuilder builder) {
+        return register(builder, Registration.DEFAULT);
     }
 
-    public Recipe addRecipe(Recipe aRecipe, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden, boolean aLogErrors) {
-        if (aRecipe == null) return null;
-        canonicalInputs(aRecipe);
-        for(int i=0;i<aRecipe.mOutputs.length;i++)
-            aRecipe.mOutputs[i]=gregtech.engine.material.MaterialUnification.canonical(aRecipe.mOutputs[i]);
-        aRecipe.mHidden = aHidden;
-        aRecipe.mFakeRecipe = aFakeRecipe;
-        if (!aFakeRecipe && !validate(aRecipe, aLogErrors && mLogErrors)) return null;
-        if (aCheckForCollisions) {
-            Recipe collision = findCollision(aRecipe);
+    public Recipe register(RecipeBuilder builder, Registration registration) {
+        RecipeBuilder.BuildResult result = builder.buildResult();
+        if (result.collapsed()) COLLAPSED_BY_MAP.merge(mNameInternal, 1, Integer::sum);
+        return addRecipe(result.recipe(), registration);
+    }
+
+    /** Registers a prepared row. Returns null when it is missing, invalid or rejected. */
+    public Recipe addRecipe(Recipe recipe) {
+        return addRecipe(recipe, Registration.DEFAULT);
+    }
+
+    public Recipe addRecipe(Recipe recipe, Registration registration) {
+        if (recipe == null) return null;
+        canonicalInputs(recipe);
+        for (int i = 0; i < recipe.mOutputs.length; i++) {
+            recipe.mOutputs[i] = gregtech.engine.material.MaterialUnification.canonical(recipe.mOutputs[i]);
+        }
+        recipe.mHidden = registration.hidden;
+        recipe.mFakeRecipe = registration.fakeRecipe;
+        if (!registration.fakeRecipe && !validate(recipe, registration.logErrors && mLogErrors)) return null;
+        if (registration.checkForCollisions) {
+            Recipe collision = findCollision(recipe);
             if (collision != null) {
-                RecipeDiagnostics.rejected(this, collision, aRecipe);
+                RecipeDiagnostics.rejected(this, collision, recipe);
                 return null;
             }
         }
-        return add(aRecipe);
+        return add(recipe);
     }
 
     /**
@@ -514,261 +511,15 @@ public class RecipeMap {
         return false;
     }
 
-    /** Raw GT6-style addRecipe taking all arrays at once. */
-    public Recipe addRecipe(boolean aOptimize, ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecial, long[] aOutputChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, long aDuration, long aEUt, long aSpecialValue) {
-        return addMade(made(aOptimize, aInputs, aOutputs, aSpecial, aOutputChances, aFluidInputs, aFluidOutputs, aDuration, aEUt, aSpecialValue));
+    private static boolean empty(ItemStack stack) {
+        return stack == null || stack.isEmpty();
     }
 
-    /** Fake recipes are only shown in recipe viewers; machines never match them. */
-    public Recipe addFakeRecipe(boolean aCheckForCollisions, ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecial, long[] aOutputChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, long aDuration, long aEUt, long aSpecialValue) {
-        return addMade(made(false, aInputs, aOutputs, aSpecial, aOutputChances, aFluidInputs, aFluidOutputs, aDuration, aEUt, aSpecialValue), aCheckForCollisions, true, false);
-    }
-
-    public Recipe addFakeRecipe(boolean aCheckForCollisions, ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecial, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, long aDuration, long aEUt, long aSpecialValue) {
-        return addMade(made(false, aInputs, aOutputs, aSpecial, null, aFluidInputs, aFluidOutputs, aDuration, aEUt, aSpecialValue), aCheckForCollisions, true, false);
-    }
-
-    public Recipe addFakeRecipe(boolean aCheckForCollisions, Recipe aRecipe) {
-        return addRecipe(aRecipe, aCheckForCollisions, true, false, mLogErrors);
-    }
-
-    // ── GT6 convenience overloads ────────────────────────────────────────
-    // Argument order: (optimize, EU/t, duration in ticks, [chance(s)], inputs..., [fluids...], outputs...)
-    // Chances are in 1/100 percent: 10000 = 100%. A chance <= 0 means 100%.
-
-    // Items only
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration, long   aChance , ItemStack aInput                                                                            , ItemStack    aOutput ) {return addMade(made(aOptimize, ar(aInput)         , ar(aOutput), null, new long[] {aChance}, ZL_FS         , ZL_FS          , aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration, long   aChance , ItemStack aInput1, ItemStack aInput2                                                        , ItemStack    aOutput ) {return addMade(made(aOptimize, ar(aInput1, aInput2), ar(aOutput), null, new long[] {aChance}, ZL_FS         , ZL_FS          , aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration, long   aChance , ItemStack[] aInputs                                                                         , ItemStack    aOutput ) {return addMade(made(aOptimize, aInputs            , ar(aOutput), null, new long[] {aChance}, ZL_FS         , ZL_FS          , aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration                 , ItemStack aInput                                                                            , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput)         , aOutputs   , null, ZL_LONG             , ZL_FS         , ZL_FS          , aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration                 , ItemStack aInput1, ItemStack aInput2                                                        , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput1, aInput2), aOutputs   , null, ZL_LONG             , ZL_FS         , ZL_FS          , aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration                 , ItemStack[] aInputs                                                                         , ItemStack... aOutputs) {return addMade(made(aOptimize, aInputs            , aOutputs   , null, ZL_LONG             , ZL_FS         , ZL_FS          , aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration, long[] aChances, ItemStack aInput                                                                            , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput)         , aOutputs   , null, aChances            , ZL_FS         , ZL_FS          , aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration, long[] aChances, ItemStack aInput1, ItemStack aInput2                                                        , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput1, aInput2), aOutputs   , null, aChances            , ZL_FS         , ZL_FS          , aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration, long[] aChances, ItemStack[] aInputs                                                                         , ItemStack... aOutputs) {return addMade(made(aOptimize, aInputs            , aOutputs   , null, aChances            , ZL_FS         , ZL_FS          , aDuration, aEUt, 0));}
-    // Single fluid input + single fluid output
-    public Recipe addRecipe0(boolean aOptimize, long aEUt, long aDuration, long   aChance                                       , FluidStack   aFluidInput , FluidStack    aFluidOutput , ItemStack    aOutput ) {return addMade(made(aOptimize, ZL_IS              , ar(aOutput), null, new long[] {aChance}, fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration, long   aChance , ItemStack aInput                    , FluidStack   aFluidInput , FluidStack    aFluidOutput , ItemStack    aOutput ) {return addMade(made(aOptimize, ar(aInput)         , ar(aOutput), null, new long[] {aChance}, fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration, long   aChance , ItemStack aInput1, ItemStack aInput2, FluidStack   aFluidInput , FluidStack    aFluidOutput , ItemStack    aOutput ) {return addMade(made(aOptimize, ar(aInput1, aInput2), ar(aOutput), null, new long[] {aChance}, fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration, long   aChance , ItemStack[] aInputs                 , FluidStack   aFluidInput , FluidStack    aFluidOutput , ItemStack    aOutput ) {return addMade(made(aOptimize, aInputs            , ar(aOutput), null, new long[] {aChance}, fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe0(boolean aOptimize, long aEUt, long aDuration                                                       , FluidStack   aFluidInput , FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, ZL_IS              , aOutputs   , null, ZL_LONG             , fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration                 , ItemStack aInput                    , FluidStack   aFluidInput , FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput)         , aOutputs   , null, ZL_LONG             , fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration                 , ItemStack aInput1, ItemStack aInput2, FluidStack   aFluidInput , FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput1, aInput2), aOutputs   , null, ZL_LONG             , fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration                 , ItemStack[] aInputs                 , FluidStack   aFluidInput , FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, aInputs            , aOutputs   , null, ZL_LONG             , fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe0(boolean aOptimize, long aEUt, long aDuration, long[] aChances                                      , FluidStack   aFluidInput , FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, ZL_IS              , aOutputs   , null, aChances            , fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration, long[] aChances, ItemStack aInput                    , FluidStack   aFluidInput , FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput)         , aOutputs   , null, aChances            , fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration, long[] aChances, ItemStack aInput1, ItemStack aInput2, FluidStack   aFluidInput , FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput1, aInput2), aOutputs   , null, aChances            , fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration, long[] aChances, ItemStack[] aInputs                 , FluidStack   aFluidInput , FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, aInputs            , aOutputs   , null, aChances            , fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0));}
-    // Single fluid input + multiple fluid outputs
-    public Recipe addRecipe0(boolean aOptimize, long aEUt, long aDuration                                                       , FluidStack   aFluidInput , FluidStack... aFluidOutputs                       ) {return addMade(made(aOptimize, ZL_IS              , ZL_IS      , null, ZL_LONG             , fl(aFluidInput), aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration                 , ItemStack aInput                    , FluidStack   aFluidInput , FluidStack... aFluidOutputs                       ) {return addMade(made(aOptimize, ar(aInput)         , ZL_IS      , null, ZL_LONG             , fl(aFluidInput), aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration                 , ItemStack aInput1, ItemStack aInput2, FluidStack   aFluidInput , FluidStack... aFluidOutputs                       ) {return addMade(made(aOptimize, ar(aInput1, aInput2), ZL_IS      , null, ZL_LONG             , fl(aFluidInput), aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration                 , ItemStack[] aInputs                 , FluidStack   aFluidInput , FluidStack... aFluidOutputs                       ) {return addMade(made(aOptimize, aInputs            , ZL_IS      , null, ZL_LONG             , fl(aFluidInput), aFluidOutputs  , aDuration, aEUt, 0));}
-    // Multiple fluid inputs + single fluid output
-    public Recipe addRecipe0(boolean aOptimize, long aEUt, long aDuration, long   aChance                                       , FluidStack[] aFluidInputs, FluidStack    aFluidOutput , ItemStack    aOutput ) {return addMade(made(aOptimize, ZL_IS              , ar(aOutput), null, new long[] {aChance}, aFluidInputs   , fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration, long   aChance , ItemStack aInput                    , FluidStack[] aFluidInputs, FluidStack    aFluidOutput , ItemStack    aOutput ) {return addMade(made(aOptimize, ar(aInput)         , ar(aOutput), null, new long[] {aChance}, aFluidInputs   , fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration, long   aChance , ItemStack aInput1, ItemStack aInput2, FluidStack[] aFluidInputs, FluidStack    aFluidOutput , ItemStack    aOutput ) {return addMade(made(aOptimize, ar(aInput1, aInput2), ar(aOutput), null, new long[] {aChance}, aFluidInputs   , fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration, long   aChance , ItemStack[] aInputs                 , FluidStack[] aFluidInputs, FluidStack    aFluidOutput , ItemStack    aOutput ) {return addMade(made(aOptimize, aInputs            , ar(aOutput), null, new long[] {aChance}, aFluidInputs   , fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe0(boolean aOptimize, long aEUt, long aDuration                                                       , FluidStack[] aFluidInputs, FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, ZL_IS              , aOutputs   , null, ZL_LONG             , aFluidInputs   , fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration                 , ItemStack aInput                    , FluidStack[] aFluidInputs, FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput)         , aOutputs   , null, ZL_LONG             , aFluidInputs   , fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration                 , ItemStack aInput1, ItemStack aInput2, FluidStack[] aFluidInputs, FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput1, aInput2), aOutputs   , null, ZL_LONG             , aFluidInputs   , fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration                 , ItemStack[] aInputs                 , FluidStack[] aFluidInputs, FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, aInputs            , aOutputs   , null, ZL_LONG             , aFluidInputs   , fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe0(boolean aOptimize, long aEUt, long aDuration, long[] aChances                                      , FluidStack[] aFluidInputs, FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, ZL_IS              , aOutputs   , null, aChances            , aFluidInputs   , fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration, long[] aChances, ItemStack aInput                    , FluidStack[] aFluidInputs, FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput)         , aOutputs   , null, aChances            , aFluidInputs   , fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration, long[] aChances, ItemStack aInput1, ItemStack aInput2, FluidStack[] aFluidInputs, FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput1, aInput2), aOutputs   , null, aChances            , aFluidInputs   , fl(aFluidOutput), aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration, long[] aChances, ItemStack[] aInputs                 , FluidStack[] aFluidInputs, FluidStack    aFluidOutput , ItemStack... aOutputs) {return addMade(made(aOptimize, aInputs            , aOutputs   , null, aChances            , aFluidInputs   , fl(aFluidOutput), aDuration, aEUt, 0));}
-    // Multiple fluid inputs + multiple fluid outputs
-    public Recipe addRecipe0(boolean aOptimize, long aEUt, long aDuration                                                       , FluidStack[] aFluidInputs, FluidStack... aFluidOutputs                       ) {return addMade(made(aOptimize, ZL_IS              , ZL_IS      , null, ZL_LONG             , aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration                 , ItemStack aInput                    , FluidStack[] aFluidInputs, FluidStack... aFluidOutputs                       ) {return addMade(made(aOptimize, ar(aInput)         , ZL_IS      , null, ZL_LONG             , aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration                 , ItemStack aInput1, ItemStack aInput2, FluidStack[] aFluidInputs, FluidStack... aFluidOutputs                       ) {return addMade(made(aOptimize, ar(aInput1, aInput2), ZL_IS      , null, ZL_LONG             , aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration                 , ItemStack[] aInputs                 , FluidStack[] aFluidInputs, FluidStack... aFluidOutputs                       ) {return addMade(made(aOptimize, aInputs            , ZL_IS      , null, ZL_LONG             , aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe0(boolean aOptimize, long aEUt, long aDuration, long   aChance                                       , FluidStack[] aFluidInputs, FluidStack[]  aFluidOutputs, ItemStack    aOutput ) {return addMade(made(aOptimize, ZL_IS              , ar(aOutput), null, new long[] {aChance}, aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration, long   aChance , ItemStack aInput                    , FluidStack[] aFluidInputs, FluidStack[]  aFluidOutputs, ItemStack    aOutput ) {return addMade(made(aOptimize, ar(aInput)         , ar(aOutput), null, new long[] {aChance}, aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration, long   aChance , ItemStack aInput1, ItemStack aInput2, FluidStack[] aFluidInputs, FluidStack[]  aFluidOutputs, ItemStack    aOutput ) {return addMade(made(aOptimize, ar(aInput1, aInput2), ar(aOutput), null, new long[] {aChance}, aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration, long   aChance , ItemStack[] aInputs                 , FluidStack[] aFluidInputs, FluidStack[]  aFluidOutputs, ItemStack    aOutput ) {return addMade(made(aOptimize, aInputs            , ar(aOutput), null, new long[] {aChance}, aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe0(boolean aOptimize, long aEUt, long aDuration                                                       , FluidStack[] aFluidInputs, FluidStack[]  aFluidOutputs, ItemStack... aOutputs) {return addMade(made(aOptimize, ZL_IS              , aOutputs   , null, ZL_LONG             , aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration                 , ItemStack aInput                    , FluidStack[] aFluidInputs, FluidStack[]  aFluidOutputs, ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput)         , aOutputs   , null, ZL_LONG             , aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration                 , ItemStack aInput1, ItemStack aInput2, FluidStack[] aFluidInputs, FluidStack[]  aFluidOutputs, ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput1, aInput2), aOutputs   , null, ZL_LONG             , aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration                 , ItemStack[] aInputs                 , FluidStack[] aFluidInputs, FluidStack[]  aFluidOutputs, ItemStack... aOutputs) {return addMade(made(aOptimize, aInputs            , aOutputs   , null, ZL_LONG             , aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe0(boolean aOptimize, long aEUt, long aDuration, long[] aChances                                      , FluidStack[] aFluidInputs, FluidStack[]  aFluidOutputs, ItemStack... aOutputs) {return addMade(made(aOptimize, ZL_IS              , aOutputs   , null, aChances            , aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe1(boolean aOptimize, long aEUt, long aDuration, long[] aChances, ItemStack aInput                    , FluidStack[] aFluidInputs, FluidStack[]  aFluidOutputs, ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput)         , aOutputs   , null, aChances            , aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipe2(boolean aOptimize, long aEUt, long aDuration, long[] aChances, ItemStack aInput1, ItemStack aInput2, FluidStack[] aFluidInputs, FluidStack[]  aFluidOutputs, ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput1, aInput2), aOutputs   , null, aChances            , aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    public Recipe addRecipeX(boolean aOptimize, long aEUt, long aDuration, long[] aChances, ItemStack[] aInputs                 , FluidStack[] aFluidInputs, FluidStack[]  aFluidOutputs, ItemStack... aOutputs) {return addMade(made(aOptimize, aInputs            , aOutputs   , null, aChances            , aFluidInputs   , aFluidOutputs  , aDuration, aEUt, 0));}
-    // Variants with explicit collision/fake/hidden/log flags
-    public Recipe addRecipe1(boolean aOptimize, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden, boolean aLogErrors, long aEUt, long aDuration, ItemStack aInput                                                       , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput)         , aOutputs, null, ZL_LONG, ZL_FS          , ZL_FS           , aDuration, aEUt, 0), aCheckForCollisions, aFakeRecipe, aHidden, aLogErrors);}
-    public Recipe addRecipe2(boolean aOptimize, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden, boolean aLogErrors, long aEUt, long aDuration, ItemStack aInput1, ItemStack aInput2                                   , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput1, aInput2), aOutputs, null, ZL_LONG, ZL_FS          , ZL_FS           , aDuration, aEUt, 0), aCheckForCollisions, aFakeRecipe, aHidden, aLogErrors);}
-    public Recipe addRecipeX(boolean aOptimize, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden, boolean aLogErrors, long aEUt, long aDuration, ItemStack[] aInputs                                                    , ItemStack... aOutputs) {return addMade(made(aOptimize, aInputs            , aOutputs, null, ZL_LONG, ZL_FS          , ZL_FS           , aDuration, aEUt, 0), aCheckForCollisions, aFakeRecipe, aHidden, aLogErrors);}
-    public Recipe addRecipe0(boolean aOptimize, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden, boolean aLogErrors, long aEUt, long aDuration                  , FluidStack aFluidInput, FluidStack aFluidOutput      , ItemStack... aOutputs) {return addMade(made(aOptimize, ZL_IS              , aOutputs, null, ZL_LONG, fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0), aCheckForCollisions, aFakeRecipe, aHidden, aLogErrors);}
-    public Recipe addRecipe1(boolean aOptimize, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden, boolean aLogErrors, long aEUt, long aDuration, ItemStack aInput, FluidStack aFluidInput, FluidStack aFluidOutput      , ItemStack... aOutputs) {return addMade(made(aOptimize, ar(aInput)         , aOutputs, null, ZL_LONG, fl(aFluidInput), fl(aFluidOutput), aDuration, aEUt, 0), aCheckForCollisions, aFakeRecipe, aHidden, aLogErrors);}
-
-    // ── Recipe construction (normalisation + GT6 "optimize") ─────────────
-
-    private static ItemStack[] ar(ItemStack a) {return new ItemStack[] {a};}
-    private static ItemStack[] ar(ItemStack a, ItemStack b) {return new ItemStack[] {a, b};}
-    private static FluidStack[] fl(FluidStack a) {return a == null || a.isEmpty() ? ZL_FS : new FluidStack[] {a};}
-
-    private static boolean empty(ItemStack s) {return s == null || s.isEmpty();}
-
-    /** One built row. {@code collapsed} is true only when the row was dropped for having nothing left. */
-    private record MakeResult(Recipe recipe, boolean collapsed) {}
-
-    private Recipe addMade(MakeResult made) {
-        return addMade(made, true, false, false, mLogErrors);
-    }
-
-    /** Counts a dropped row on this map, then registers whatever {@code made} still holds. */
-    private Recipe addMade(MakeResult made, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden) {
-        return addMade(made, aCheckForCollisions, aFakeRecipe, aHidden, mLogErrors);
-    }
-
-    private Recipe addMade(MakeResult made, boolean aCheckForCollisions, boolean aFakeRecipe, boolean aHidden,
-                           boolean aLogErrors) {
-        if (made.collapsed()) COLLAPSED_BY_MAP.merge(mNameInternal, 1, Integer::sum);
-        return addRecipe(made.recipe(), aCheckForCollisions, aFakeRecipe, aHidden, aLogErrors);
-    }
-
-    /**
-     * Builds a Recipe from the given (possibly sparse) arrays.
-     * Mirrors the original GT6 Recipe constructor, with ItemStack.EMPTY treated like null:
-     * <ul>
-     * <li>Returns null if any declared item input is empty ("ONLY_IF_HAS_RESULT" semantics)</li>
-     * <li>Returns null if there is no remaining input or no remaining output at all</li>
-     * <li>Trims trailing empty outputs, drops empty fluids, copies all stacks</li>
-     * <li>If aOptimize, cancels equal input/output items and divides the recipe by common factors</li>
-     * <li>After optimizing, drops input slots cancelled down to nothing and returns null if the recipe
-     * no longer has any real input or any real output</li>
-     * </ul>
-     * A dropped row is reported on the {@link MakeResult} passed to {@link #addMade}. Callers of
-     * {@code make} still see null and do not leave a flag for a later {@code addRecipe}.
-     */
-    public static Recipe make(boolean aOptimize, ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecial,
-                              long[] aChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs,
-                              long aDuration, long aEUt, long aSpecialValue) {
-        return made(aOptimize, aInputs, aOutputs, aSpecial, aChances, aFluidInputs, aFluidOutputs, aDuration, aEUt, aSpecialValue).recipe();
-    }
-
-    private static MakeResult made(boolean aOptimize, ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecial,
-                                   long[] aChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs,
-                                   long aDuration, long aEUt, long aSpecialValue) {
-        if (aInputs == null) aInputs = ZL_IS;
-        if (aOutputs == null) aOutputs = ZL_IS;
-        if (aFluidInputs == null) aFluidInputs = ZL_FS;
-        if (aFluidOutputs == null) aFluidOutputs = ZL_FS;
-        // Skip recipe if any declared item input failed to resolve (empty stack).
-        for (ItemStack s : aInputs) if (empty(s)) return new MakeResult(null, false);
-        // Copy inputs.
-        ItemStack[] tInputs = new ItemStack[aInputs.length];
-        for (int i = 0; i < aInputs.length; i++) tInputs[i] = aInputs[i].copy();
-        // Copy outputs, trimming trailing empties but keeping interior empties (chance alignment).
-        int outLen = aOutputs.length;
-        while (outLen > 0 && empty(aOutputs[outLen - 1])) outLen--;
-        ItemStack[] tOutputs = new ItemStack[outLen];
-        for (int i = 0; i < outLen; i++) tOutputs[i] = empty(aOutputs[i]) ? ItemStack.EMPTY : aOutputs[i].copy();
-        // Native zero-sized stacks have no usable identity. Presence gates use Recipe.withPresenceFluidInputs.
-        FluidStack[] tFluidInputs = copyFluidInputs(aFluidInputs);
-        FluidStack[] tFluidOutputs = copyFluids(aFluidOutputs);
-        // Fuel may produce energy alone (original Blaze hot fuel). Ordinary work still needs a product.
-        if (tInputs.length + tFluidInputs.length <= 0) return new MakeResult(null, false);
-        int tRealOutputs = tFluidOutputs.length;
-        for (ItemStack s : tOutputs) if (!empty(s)) tRealOutputs++;
-        if (tRealOutputs <= 0 && aEUt >= 0) return new MakeResult(null, false);
-        // Align chance array with output array.
-        long[] tChances = (aChances == null || aChances.length == 0) ? null : Arrays.copyOf(aChances, tOutputs.length);
-
-        if (aOptimize && (tChances == null || allDefault(tChances))) {
-            long l = Math.max(1, aDuration / 16);
-            // Cancel identical items appearing on both sides.
-            for (ItemStack in : tInputs) {
-                if (in.isEmpty()) continue;
-                for (int j = 0; j < tOutputs.length; j++) {
-                    ItemStack out = tOutputs[j];
-
-                    if (!out.isEmpty() && StackCompat.sameItem(in, out)) {
-
-                        if (in.getCount() >= out.getCount()) {
-                            in.shrink(out.getCount());
-                            tOutputs[j] = ItemStack.EMPTY;
-                        } else {
-                            out.shrink(in.getCount());
-                            in.setCount(0);
-                        }
-                    }
-                }
-            }
-            for (ItemStack s : tInputs) if (s.getCount() != 0) l = Math.min(l, s.getCount());
-            for (ItemStack s : tOutputs) if (s.getCount() != 0) l = Math.min(l, s.getCount());
-            for (FluidStack f : tFluidInputs) if (f.getAmount() != 0) l = Math.min(l, f.getAmount());
-            for (FluidStack f : tFluidOutputs) if (f.getAmount() != 0) l = Math.min(l, f.getAmount());
-            // Divide the whole recipe by the largest evenly-dividing factor.
-            for (; l > 1; l--) {
-                boolean ok = true;
-                for (ItemStack s : tInputs) if (s.getCount() % l != 0) {ok = false; break;}
-                if (ok) for (ItemStack s : tOutputs) if (!s.isEmpty() && s.getCount() % l != 0) {ok = false; break;}
-                if (ok) for (FluidStack f : tFluidInputs) if (f.getAmount() % l != 0) {ok = false; break;}
-                if (ok) for (FluidStack f : tFluidOutputs) if (f.getAmount() % l != 0) {ok = false; break;}
-                if (ok) {
-                    for (ItemStack s : tInputs) s.setCount(s.getCount() / (int) l);
-                    for (ItemStack s : tOutputs) if (!s.isEmpty()) s.setCount(s.getCount() / (int) l);
-                    for (FluidStack f : tFluidInputs) f.setAmount(f.getAmount() / (int) l);
-                    for (FluidStack f : tFluidOutputs) f.setAmount(f.getAmount() / (int) l);
-                    aDuration /= l;
-                    break;
-                }
-            }
+    static void recordCollapsedRecipe(ItemStack[] inputs, ItemStack[] outputs) {
+        collapsedRecipesDropped++;
+        if (COLLAPSED_SAMPLES.size() < 64) {
+            COLLAPSED_SAMPLES.add(Arrays.toString(inputs) + " -> " + Arrays.toString(outputs));
         }
-        // The optimization above can cancel an input against an output of the same item and leave the
-        // input slot at size 0 ("1 X + mould -> 1 X"). GT6 keeps such a collapsed recipe; the port drops
-        // it and compacts emptied input slots away instead, because a recipe whose only input slot is
-        // empty matches every later candidate sharing its mould and makes findCollision reject unrelated
-        // recipes — the failure that broke the extruder table when the stone rows were first added.
-        int tKeptInputs = 0;
-        for (ItemStack s : tInputs) if (!empty(s)) tKeptInputs++;
-        if (tKeptInputs != tInputs.length) {
-            ItemStack[] tCompacted = new ItemStack[tKeptInputs];
-            int tNext = 0;
-            for (ItemStack s : tInputs) if (!empty(s)) tCompacted[tNext++] = s;
-            tInputs = tCompacted;
-        }
-        int tRealOutputsAfterOptimize = tFluidOutputs.length;
-        for (ItemStack s : tOutputs) if (!empty(s)) tRealOutputsAfterOptimize++;
-        if (tInputs.length + tFluidInputs.length <= 0 || tRealOutputsAfterOptimize <= 0 && aEUt >= 0) {
-            collapsedRecipesDropped++;
-            if (COLLAPSED_SAMPLES.size() < 64) {
-                COLLAPSED_SAMPLES.add(Arrays.toString(aInputs) + " -> " + Arrays.toString(aOutputs));
-            }
-            return new MakeResult(null, true);
-        }
-
-        for (ItemStack s : tInputs) if (s.getCount() > 64) s.setCount(64);
-        for (ItemStack s : tOutputs) if (!s.isEmpty() && s.getCount() > 64) s.setCount(64);
-
-        return new MakeResult(new Recipe(tInputs, tOutputs, aSpecial, tChances, tFluidInputs, tFluidOutputs, aDuration, aEUt, aSpecialValue), false);
-    }
-
-    private static boolean allDefault(long[] aChances) {
-        for (long c : aChances) if (c > 0 && c < 10000) return false;
-        return true;
-    }
-
-    private static FluidStack[] copyFluids(FluidStack[] aFluids) {
-        int n = 0;
-        for (FluidStack f : aFluids) if (f != null && !f.isEmpty()) n++;
-        if (n == 0) return ZL_FS;
-        FluidStack[] r = new FluidStack[n];
-        int i = 0;
-        for (FluidStack f : aFluids) if (f != null && !f.isEmpty()) r[i++] = f.copy();
-        return r;
-    }
-
-    /** Copy positive native representatives; legacy empty placeholders are dropped. */
-    private static FluidStack[] copyFluidInputs(FluidStack[] aFluids) {
-        int n = 0;
-        for (FluidStack f : aFluids) if (f != null && f.getFluid() != Fluids.EMPTY) n++;
-        if (n == 0) return ZL_FS;
-        FluidStack[] r = new FluidStack[n];
-        int i = 0;
-        for (FluidStack f : aFluids) if (f != null && f.getFluid() != Fluids.EMPTY) r[i++] = f.copy();
-        return r;
     }
 
     // ── Validation / collision / storage ─────────────────────────────────
@@ -889,7 +640,6 @@ public class RecipeMap {
                 && a.mExplicitCatalystsOnly == b.mExplicitCatalystsOnly
                 && a.mRequiresEmptyContainerInputs == b.mRequiresEmptyContainerInputs
                 && a.mMaterialRecovery == b.mMaterialRecovery
-                && java.util.Objects.equals(a.mSpecialItems, b.mSpecialItems)
                 && Arrays.equals(a.mChances, b.mChances)
                 && Arrays.equals(a.explicitCatalystInputs(), b.explicitCatalystInputs())
                 && Arrays.equals(a.explicitCatalystFluidInputs(), b.explicitCatalystFluidInputs())

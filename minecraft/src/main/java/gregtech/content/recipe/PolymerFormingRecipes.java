@@ -26,7 +26,7 @@ public final class PolymerFormingRecipes {
         if(!RECIPES.isEmpty())throw new IllegalStateException("Polymer recipes registered twice");
         var latex=GTFluids.still("Latex");
         if(latex==null||!GTFluids.isPresent(latex))throw new IllegalStateException("Missing Latex fluid");
-        add(MachineRecipeMaps.Coagulator,new Recipe(null,new ItemStack[]{mat(MaterialPrefix.nugget,"Rubber",1)},null,null,
+        add(MachineRecipeMaps.Coagulator,new Recipe(null,new ItemStack[]{mat(MaterialPrefix.nugget,"Rubber",1)},null,
                 new FluidStack[]{new FluidStack(latex.get(),16)},null,256,0,0));
         // The shared source extrusion matrix now owns all polymer input forms and both mold families.
         return RECIPES.size();

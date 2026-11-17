@@ -64,7 +64,9 @@ public final class FusionRecipeLoader implements InitializationStep {
             var stack=material==null?ItemStack.EMPTY:MaterialStackItemHelper.mat(MaterialPrefix.dust,material,1);
             if(stack.isEmpty()){missing.add(dust);return;}items=new ItemStack[]{stack};
         }
-        MachineRecipeMaps.Fusion.addRecipe(new Recipe(new ItemStack[]{new ItemStack(GTTechnological.selectorTag(circuit))},items,null,null,in,out,ticks,eut,startup));
+        MachineRecipeMaps.Fusion.addRecipe(new Recipe(
+                new ItemStack[]{new ItemStack(GTTechnological.selectorTag(circuit))},
+                items, null, in, out, ticks, eut, startup));
         added++;
     }
 }

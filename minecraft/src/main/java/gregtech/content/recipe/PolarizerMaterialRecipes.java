@@ -251,7 +251,7 @@ public final class PolarizerMaterialRecipes {
         if (amount <= 0 || input.isEmpty() || output.isEmpty()) return;
         long ticks = Math.max(1, (amount * 144L + GTValues.U - 1) / GTValues.U);
         Recipe recipe =
-                new Recipe(new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, null, ticks, power, 0);
+                new Recipe(new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, ticks, power, 0);
         if (MachineRecipeMaps.Polarizer.addRecipe(recipe) == recipe)
             ENTRIES.add(new Entry(prefix, inputMaterial, outputMaterial, recipe));
     }

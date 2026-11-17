@@ -13,7 +13,7 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
-import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.stack.StackData;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -176,8 +176,12 @@ final class SourceOreCrushingAdapter {
             Slot slot = result.slots().get(i); chances[i] = slot.chance();
             outputs[i] = slot.stack() == null ? ItemStack.EMPTY : s.stack(slot.stack());
         }
-        Recipe row = RecipeMap.make(result.optimize(), new ItemStack[]{input}, outputs, null, chances,
-                new FluidStack[0], new FluidStack[0], result.ticks(), result.power(), 0);
+        Recipe row = RecipeBuilder.of(result.power(), result.ticks())
+                .optimize(result.optimize())
+                .itemInputs(input)
+                .itemOutputs(outputs)
+                .chances(chances)
+                .build();
         if (row == null) return null;
         // The source Hammer does not bindStack its one primary count. Native make otherwise clips
         // it to64; restore only that verified single-output normalization, not general recipe math.
@@ -187,7 +191,7 @@ final class SourceOreCrushingAdapter {
                     || row.mFluidInputs.length != 0 || row.mFluidOutputs.length != 0) return null;
             ItemStack expected = outputs[0].copy(); expected.setCount(64);
             if (!ItemStack.matches(expected, row.mOutputs[0])) return null;
-            row = new Recipe(row.mInputs, copies(outputs), row.mSpecialItems, row.mChances,
+            row = new Recipe(row.mInputs, copies(outputs), row.mChances,
                     row.mFluidInputs, row.mFluidOutputs, row.mDuration, row.mEUt, row.mSpecialValue);
         }
         return row.withSameItemInputPredicate(0, predicate);
@@ -200,7 +204,7 @@ final class SourceOreCrushingAdapter {
         OreBlock block = (OreBlock)((BlockItem)candidate.input().getItem()).getBlock();
         ItemStack representative = OreBlock.withStone(candidate.input(), block.stateFor(OreHostStone.TUFF));
         if (classifyHost(representative).domain() != Domain.UNKNOWN_HOST) return null;
-        var row = new Recipe(new ItemStack[]{representative}, copies(legacy.mOutputs), legacy.mSpecialItems,
+        var row = new Recipe(new ItemStack[]{representative}, copies(legacy.mOutputs),
                 legacy.mChances.clone(), Arrays.stream(legacy.mFluidInputs).map(FluidStack::copy).toArray(FluidStack[]::new),
                 Arrays.stream(legacy.mFluidOutputs).map(FluidStack::copy).toArray(FluidStack[]::new),
                 legacy.mDuration, legacy.mEUt, legacy.mSpecialValue);

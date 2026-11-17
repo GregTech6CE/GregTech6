@@ -85,8 +85,7 @@ public class GregTech {
                     "GT addon API {} ready: {}",
                     gregtech.api.addon.GregTechAddons.API_VERSION,
                     gregtech.api.addon.GregTechAddons.registeredIds());
-            // Rows that RecipeMap.make cancelled down to nothing and dropped; a non-zero value is
-            // expected whenever an optimized table contains an input that cancels against its own output.
+            // Optimization can drop a row when its inputs and outputs cancel each other out.
             var collapsed = gregtech.engine.recipe.RecipeMap.collapsedSamples();
             LOGGER.info(
                     "Recipe tables: {} rows dropped as collapsed by optimization, per map {}, e.g. {}",

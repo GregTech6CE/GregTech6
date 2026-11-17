@@ -2,6 +2,7 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.*;
 import gregtech.content.material.MaterialFactKeys;
@@ -138,8 +139,11 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         SharedOreCrushingRows.capture(candidate, MachineRecipeMaps.Hammer, null);
         // Capture only the exact old Centrifuge admission; source host rows replace it after tags bind.
         ItemStack sand=OM.dust(lookup("Sand"),4*U);
-        SharedOilSandRows.capture(candidate, MachineRecipeMaps.Centrifuge.addRecipe1(true,EU_TIER,128,input,(FluidStack)null,
-                new FluidStack(oil.get(),500),sand));
+        SharedOilSandRows.capture(candidate, MachineRecipeMaps.Centrifuge.register(RecipeBuilder.of(EU_TIER, 128)
+                .optimize(true)
+                .itemInputs(input)
+                .itemOutputs(sand)
+                .fluidOutputs(new FluidStack(oil.get(),500))));
     }
 
     /** Keep raw-form ownership separate from the ordinary block's crushing-target permission. */
@@ -172,7 +176,7 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         }
         if (smeltOutput.isEmpty()) return;
 
-        MachineRecipeMaps.add_smelting(input, smeltOutput.copy(), 0.0f, true, false, false);
+        MachineRecipeMaps.replaceSmelting(input, smeltOutput.copy());
     }
 
     // ========================================================================
@@ -313,9 +317,15 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                     && oreInput.getItem()==mat(MaterialPrefix.oreRaw,material,1).getItem()) {
                 SourceOreFollowonRows.rawCrusher(material,SourceCinnabarFollowonAdapter.INSTANCE);
             } else SharedOreCrushingRows.capture(crushing, MachineRecipeMaps.Crusher,
-                    MachineRecipeMaps.Crusher.addRecipe1(true, EU_TIER, 128L * count * quality, oreInput, out, out.copy()));
+                    MachineRecipeMaps.Crusher.register(RecipeBuilder.of(EU_TIER, 128L * count * quality)
+                            .optimize(true)
+                            .itemInputs(oreInput)
+                            .itemOutputs(out, out.copy())));
             SharedOreCrushingRows.capture(crushing, MachineRecipeMaps.Hammer,
-                    MachineRecipeMaps.Hammer.addRecipe1(true, EU_TIER, 32L * count * quality, oreInput, out.copy()));
+                    MachineRecipeMaps.Hammer.register(RecipeBuilder.of(EU_TIER, 32L * count * quality)
+                            .optimize(true)
+                            .itemInputs(oreInput)
+                            .itemOutputs(out.copy())));
         }
         // Furnace ownership/eligibility is separate, even when the two machine rows are dormant.
         // Sifting is for DUST_ORE prefixes, not ordinary raw/stone ores.
@@ -377,7 +387,11 @@ public class OreProcessingRecipeLoader implements InitializationStep {
         if (output.isEmpty()) return false;
         if (SourceCinnabarFollowonAdapter.supports(material) || SourceOreFollowonAdapter.supports(material)) {
             // Unsupported contexts preserve the former reviewed Crusher/follow-on split.
-            MachineRecipeMaps.Crusher.addRecipe1(true,16,64,new long[]{CHANCE_100,CHANCE_10,CHANCE_10},input,output,ItemStack.EMPTY,ItemStack.EMPTY);
+            MachineRecipeMaps.Crusher.register(RecipeBuilder.of(16, 64)
+                    .optimize(true)
+                    .itemInputs(input)
+                    .itemOutputs(output, ItemStack.EMPTY, ItemStack.EMPTY)
+                    .chances(CHANCE_100, CHANCE_10, CHANCE_10));
         } else if (NonOreMacerationRows.reviewed(material)) {
             for (var map : new gregtech.engine.recipe.RecipeMap[]{MachineRecipeMaps.Crusher,MachineRecipeMaps.Shredder})
                 NonOreMacerationRows.register(material,inputPref,"maceration/"+inputPref.getName(),map,true,input,
@@ -403,19 +417,16 @@ public class OreProcessingRecipeLoader implements InitializationStep {
                         new ItemStack[]{multiOut},null,null,32,EU_TIER);
             return false;
         }
-        MachineRecipeMaps.Crusher .addRecipe1(true, EU_TIER, 32, input, multiOut);
+        MachineRecipeMaps.Crusher .register(RecipeBuilder.of(EU_TIER, 32)
+                .optimize(true)
+                .itemInputs(input)
+                .itemOutputs(multiOut));
         if (!SourceCinnabarFollowonAdapter.supports(material) && !SourceOreFollowonAdapter.supports(material)) {
-            var recipe = RecipeMap.make(
-                    true,
-                    new ItemStack[] {input},
-                    new ItemStack[] {multiOut},
-                    null,
-                    null,
-                    null,
-                    null,
-                    32,
-                    EU_TIER,
-                    0);
+            var recipe = RecipeBuilder.of(EU_TIER, 32)
+                    .optimize(true)
+                    .itemInputs(input)
+                    .itemOutputs(multiOut)
+                    .build();
             if (recipe != null)
                 RecoveryRecipePublisher.publish(
                         MachineRecipeMaps.Shredder,
@@ -467,10 +478,10 @@ public class OreProcessingRecipeLoader implements InitializationStep {
             }
             if (outputs.isEmpty()) continue;
 
-            MachineRecipeMaps.ByProductList.addFakeRecipe(false,
-                    inputs.toArray(RecipeMap.ZL_IS),
-                    outputs.toArray(RecipeMap.ZL_IS),
-                    null, null, null, null, 0, 0, 0);
+            MachineRecipeMaps.ByProductList.register(RecipeBuilder.of(0, 0)
+                    .itemInputs(inputs.toArray(RecipeMap.ZL_IS))
+                    .itemOutputs(outputs.toArray(RecipeMap.ZL_IS)),
+                    RecipeMap.Registration.DISPLAY);
         }
     }
 
@@ -527,17 +538,11 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
     private static void publishLegacyThermal(
             RecipeMap map, ItemStack input, FluidStack output, long duration) {
-        var recipe = RecipeMap.make(
-                true,
-                new ItemStack[] {input.copy()},
-                new ItemStack[0],
-                null,
-                null,
-                new FluidStack[0],
-                new FluidStack[] {output.copy()},
-                duration,
-                EU_TIER,
-                0);
+        var recipe = RecipeBuilder.of(EU_TIER, duration)
+                .optimize(true)
+                .itemInputs(input.copy())
+                .fluidOutputs(output.copy())
+                .build();
         if (recipe == null) return;
         RecoveryRecipePublisher.publish(
                 map,

@@ -1,6 +1,8 @@
 package gregtech.gametest;
 
+import gregtech.content.recipe.RecipeMapSpec;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,49 @@ public final class RecipeMapRegistrationTests {
     private static final FluidStack[] NO_FLUIDS = new FluidStack[0];
 
     private RecipeMapRegistrationTests() {}
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void builderKeepsNormalizationAndRegistrationOptions(GameTestHelper helper) {
+        String name = "gt.test.recipe.builder";
+        var map = map(helper, name);
+        try {
+            var input = stack(Items.IRON_INGOT, 4);
+            var optimized = map.register(RecipeBuilder.of(16, 64)
+                    .itemInputs(input)
+                    .itemOutputs(stack(Items.GOLD_INGOT, 4), ItemStack.EMPTY)
+                    .optimize(true));
+            helper.assertTrue(optimized != null && optimized.mDuration == 16 && optimized.mEUt == 16,
+                    "optimization divides time and counts and keeps power");
+            helper.assertTrue(optimized.mInputs[0].getCount() == 1 && input.getCount() == 4
+                    && optimized.mOutputs.length == 1 && optimized.mOutputs[0].getCount() == 1,
+                    "normalization copies stacks and trims trailing empty outputs");
+
+            var display = map.register(RecipeBuilder.of(16, 64)
+                    .itemInputs(stack(Items.COPPER_INGOT, 4))
+                    .itemOutputs(stack(Items.GOLD_INGOT, 4), ItemStack.EMPTY,
+                            stack(Items.DIAMOND, 4), ItemStack.EMPTY)
+                    .chances(10000, 0, 2500, 10000)
+                    .optimize(true), RecipeMap.Registration.DISPLAY.withHidden(true));
+            helper.assertTrue(display != null && display.mHidden && display.mFakeRecipe && display.mDuration == 64,
+                    "display and hidden flags survive registration, and a chance output prevents optimization");
+            helper.assertTrue(display.mOutputs.length == 3 && display.mOutputs[1].isEmpty()
+                    && display.getOutputChance(2) == 2500, "interior empty slots preserve chance alignment");
+            helper.assertTrue(map.findRecipe(List.of(stack(Items.COPPER_INGOT, 4)), List.of(), false, 9, 9) == null,
+                    "a display row cannot run in a machine");
+
+            int collapsedBefore = RecipeMap.collapsedByMap().getOrDefault(name, 0);
+            var collapsed = map.register(RecipeBuilder.of(16, 16)
+                    .itemInputs(stack(Items.BRICK, 1))
+                    .itemOutputs(stack(Items.BRICK, 1))
+                    .optimize(true));
+            helper.assertTrue(collapsed == null
+                    && RecipeMap.collapsedByMap().getOrDefault(name, 0) == collapsedBefore + 1,
+                    "register records a row collapsed by optimization on the map");
+        } finally {
+            RecipeMap.unregister(name);
+        }
+        helper.succeed();
+    }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
     public static void removalEntryClearsEveryIndex(GameTestHelper helper) {
@@ -267,17 +312,17 @@ public final class RecipeMapRegistrationTests {
             helper.assertTrue(map.addRecipe(base) == base, "base row registered");
 
             var differentPower = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 32, 0);
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 32, 0);
             helper.assertTrue(map.addRecipe(differentPower) == differentPower,
                     "a different energy is a legitimate condition variant");
 
             var differentSpecial = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 300);
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 300);
             helper.assertTrue(map.addRecipe(differentSpecial) == differentSpecial,
                     "a different special value is a legitimate condition variant");
 
             var duplicate = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
             helper.assertTrue(map.addRecipe(duplicate) == null,
                     "the same inputs and conditions are still rejected as a duplicate");
         } finally {
@@ -291,10 +336,10 @@ public final class RecipeMapRegistrationTests {
         var map = map(helper, "gt.test.recipe.priority");
         try {
             var high = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                    new ItemStack[] {stack(Items.DIAMOND, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
+                    new ItemStack[] {stack(Items.DIAMOND, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
                     .withPriority(10);
             var low = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
             // Register the winner first, then the loser: the answer must not depend on either order.
             helper.assertTrue(map.addRecipe(high) == high, "high-priority row registered");
             helper.assertTrue(map.addRecipe(low) == low, "low-priority row is a distinct variant");
@@ -306,10 +351,10 @@ public final class RecipeMapRegistrationTests {
             var second = map(helper, "gt.test.recipe.priority.reverse");
             try {
                 var laterHigh = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                        new ItemStack[] {stack(Items.DIAMOND, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
+                        new ItemStack[] {stack(Items.DIAMOND, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
                         .withPriority(10);
                 var reverseLow = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                        new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                        new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
                 helper.assertTrue(second.addRecipe(reverseLow) == reverseLow, "low-priority row registered first");
                 helper.assertTrue(second.addRecipe(laterHigh) == laterHigh, "high-priority row registered later");
                 var reverse = second.findRecipe(java.util.List.of(stack(Items.IRON_INGOT, 1)), java.util.List.of(),
@@ -329,9 +374,9 @@ public final class RecipeMapRegistrationTests {
         var map = map(helper, "gt.test.recipe.dynamic.priority");
         try {
             var lowRow = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
             var highRow = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                    new ItemStack[] {stack(Items.DIAMOND, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                    new ItemStack[] {stack(Items.DIAMOND, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
             map.addDynamicRecipes(0, (items, fluids) -> lowRow);
             map.addDynamicRecipes(10, (items, fluids) -> highRow);
             helper.assertTrue(java.util.Arrays.equals(new long[] {10, 0}, map.dynamicProviderPriorities()),
@@ -345,9 +390,9 @@ public final class RecipeMapRegistrationTests {
             var other = map(helper, "gt.test.recipe.dynamic.fallthrough");
             try {
                 var mismatched = new Recipe(new ItemStack[] {stack(Items.GOLD_INGOT, 1)},
-                        new ItemStack[] {stack(Items.DIAMOND, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                        new ItemStack[] {stack(Items.DIAMOND, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
                 var fallback = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                        new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                        new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
                 other.addDynamicRecipes(10, (items, fluids) -> mismatched);
                 other.addDynamicRecipes(0, (items, fluids) -> fallback);
                 var resolved = other.findRecipe(java.util.List.of(stack(Items.IRON_INGOT, 1)), java.util.List.of(),
@@ -367,7 +412,7 @@ public final class RecipeMapRegistrationTests {
         var map = map(helper, "gt.test.recipe.adapter");
         try {
             var datapack = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
                     .withPriority(5);
             helper.assertTrue(gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
                             map, datapack, "datapack:test") == datapack, "datapack row published");
@@ -376,7 +421,7 @@ public final class RecipeMapRegistrationTests {
             helper.assertTrue(datapack.mPriority == 5, "datapack priority recorded");
 
             var addon = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                    new ItemStack[] {stack(Items.COPPER_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                    new ItemStack[] {stack(Items.COPPER_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
             helper.assertTrue(gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
                             map, addon, gregtech.engine.recipe.MachineRecipeAdapter.SOURCE_ADDON) == addon,
                     "an addon row with another priority is a distinct variant");
@@ -387,7 +432,7 @@ public final class RecipeMapRegistrationTests {
             helper.assertTrue(found == datapack, "the datapack priority outranks the neutral addon row: " + found);
 
             var duplicate = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
+                    new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
                     .withPriority(5);
             helper.assertTrue(gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
                             map, duplicate, gregtech.engine.recipe.MachineRecipeAdapter.SOURCE_ADDON) == null,
@@ -396,9 +441,9 @@ public final class RecipeMapRegistrationTests {
             var dynamicMap = map(helper, "gt.test.recipe.adapter.dynamic");
             try {
                 var low = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                        new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                        new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
                 var high = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                        new ItemStack[] {stack(Items.DIAMOND, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
+                        new ItemStack[] {stack(Items.DIAMOND, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
                 gregtech.engine.recipe.MachineRecipeAdapter.addDynamic(dynamicMap, 1, (items, fluids) -> low);
                 gregtech.engine.recipe.MachineRecipeAdapter.addDynamic(dynamicMap, 9, (items, fluids) -> high);
                 helper.assertTrue(java.util.Arrays.equals(
@@ -420,7 +465,7 @@ public final class RecipeMapRegistrationTests {
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
     public static void removalMatchesRowsRegardlessOfPriorityAndSource(GameTestHelper helper) {
         var recipe = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
-                new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
+                new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0)
                 .withPriority(7).withSource("datapack:test");
         var match = removal("""
                 {"map":"gt.test.recipe.removal.priority",
@@ -516,12 +561,14 @@ public final class RecipeMapRegistrationTests {
 
     private static RecipeMap map(GameTestHelper helper, String name, int inputSlots) {
         helper.assertTrue(RecipeMap.RECIPE_MAPS.get(name) == null, "scratch map name is free: " + name);
-        return new RecipeMap(null, name, "Test", "textures/gui/test", inputSlots, 9, 0, 9, 9, 0, 0,
-                false, false, false, false);
+        return new RecipeMap(RecipeMapSpec.builder(name, "Test", "textures/gui/test")
+                .items(inputSlots, 9, 0)
+                .fluids(9, 9, 0)
+                .build());
     }
 
     private static Recipe row(ItemStack[] inputs, FluidStack[] fluidInputs) {
-        return new Recipe(inputs, new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null, null,
+        return new Recipe(inputs, new ItemStack[] {stack(Items.GOLD_INGOT, 1)}, null,
                 fluidInputs, NO_FLUIDS, 20, 16, 0);
     }
 

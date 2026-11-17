@@ -35,11 +35,10 @@ public final class ImplosionRecipes {
                             null,
                             null,
                             null,
-                            null,
                             256,
                             0,
                             0);
-                    if (MachineRecipeMaps.ImplosionCompressor.addRecipe(recipe, true, false, false) != null) count++;
+                    if (MachineRecipeMaps.ImplosionCompressor.addRecipe(recipe) != null) count++;
                 }
         }
         return count;

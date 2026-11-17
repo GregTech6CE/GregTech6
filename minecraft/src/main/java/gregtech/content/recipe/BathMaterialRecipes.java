@@ -92,7 +92,7 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
                 var fluid = distilled ? GeneratedRecipeResolver.byRegistryName("ic2distilledwater", 100) : waters.stack(125);
                 if (fluid == null || fluid.isEmpty()) continue;
                 var recipe = new Recipe(items(group.stack(DUST_COUNTS[form])), items(new ItemStack(Items.PAPER)),
-                        null, null, fluids(fluid), null, PAPER_TICKS, 0, 0);
+                        null, fluids(fluid), null, PAPER_TICKS, 0, 0);
                 group.apply(recipe, 0);
                 if (!distilled) waters.apply(recipe, 0);
                 publish("paper/" + DUST_FORMS[form] + "/" + distilled, MachineRecipeMaps.Bath, recipe);
@@ -211,7 +211,6 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
                 items(MaterialUnification.canonical(source.copy())),
                 items(target.copy()),
                 null,
-                null,
                 fluids(fluid),
                 null,
                 ticks,
@@ -236,7 +235,7 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
     private void flushConversions() {
         for (var entry : conversions.entrySet()) {
             var batch = entry.getValue();
-            var recipe = new Recipe(items(batch.inputs().get(0)), items(batch.output()), null, null,
+            var recipe = new Recipe(items(batch.inputs().get(0)), items(batch.output()), null,
                     fluids(batch.fluid()), null, batch.ticks(), 0, 0);
             if (batch.inputs().size() > 1) {
                 var group = RecipeInputGroups.items("bath_materials/" + entry.getKey(), batch.inputs());

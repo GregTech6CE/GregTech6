@@ -73,7 +73,7 @@ public final class BlueprintRecipes {
         return exact(new Recipe(
                 new ItemStack[]{blueprint.copyWithCount(1), usb.copyWithCount(1)},
                 new ItemStack[]{written, blueprint.copyWithCount(1)},
-                null, null, null, null,
+                null, null, null,
                 64, 16, 0));
     }
 
@@ -107,7 +107,7 @@ public final class BlueprintRecipes {
         return exact(new Recipe(
                 new ItemStack[]{paper.copyWithCount(1), medium.copyWithCount(1)},
                 new ItemStack[]{output},
-                null, null, new FluidStack[]{dye}, null,
+                null, new FluidStack[]{dye}, null,
                 blank ? 32 : 128, 16, 0)
                 .withCatalystInputs(1));
     }

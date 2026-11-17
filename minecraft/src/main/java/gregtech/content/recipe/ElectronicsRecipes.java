@@ -58,12 +58,12 @@ public final class ElectronicsRecipes {
         int[][] results={{0,0,0,1,2,3},{0,1,1,2,3,4},{0,1,2,3,4,5}};
         for(int solder=0;solder<3;solder++) for(int tier=0;tier<6;tier++)
             add(MachineRecipeMaps.Bath,new Recipe(new ItemStack[]{tech("circuit_board_"+TIERS[tier],1)},new ItemStack[]{tech("circuit_"+TIERS[results[solder][tier]],1)},
-                    null,null,new FluidStack[]{fluid("GenMolten_",solders[solder],72)},null,64,0,0));
+                    null,new FluidStack[]{fluid("GenMolten_",solders[solder],72)},null,64,0,0));
         for (String crystal : new String[]{"Silicon","Germanium","RedstoneAlloy","NikolineAlloy"})
             for (String gas : new String[]{"Helium","Neon","Argon","Krypton","Xenon","Radon"})
                 for (int batch : new int[]{1,9})
                     add(MachineRecipeMaps.CrystallisationCrucible,new Recipe(new ItemStack[]{mat(batch==1?MaterialPrefix.dustTiny:MaterialPrefix.dust,crystal,1)},
-                            new ItemStack[]{mat(MaterialPrefix.bouleGt,crystal,batch)},null,null,
+                            new ItemStack[]{mat(MaterialPrefix.bouleGt,crystal,batch)},null,
                             new FluidStack[]{fluid("GenGas_",gas,1000*batch),fluid("GenMolten_",crystal,560*batch)},null,72000L*batch,16,0));
         sapphireBoules();
         REGISTERED.addAll(PolarizerMaterialRecipes.register());
@@ -145,7 +145,7 @@ public final class ElectronicsRecipes {
                 || alumina == null || alumina.isEmpty()
                 || !gregtech.engine.fluid.MoltenFluidHandler.ratio(Materials.Alumina, alumina)
                         .equals(gregtech.engine.fluid.MoltenMaterialUnits.ALUMINA)) return;
-        Recipe recipe = new Recipe(new ItemStack[]{input}, new ItemStack[]{output}, null, null,
+        Recipe recipe = new Recipe(new ItemStack[]{input}, new ItemStack[]{output}, null,
                 new FluidStack[]{atmosphere, alumina}, null, ticks, 256, 0);
         if (MachineRecipeMaps.CrystallisationCrucible.addRecipe(recipe) == recipe) REGISTERED.add(recipe);
     }
@@ -180,7 +180,7 @@ public final class ElectronicsRecipes {
             for (var lens : SourceLensRecipeItems.lenses(Color.GREEN))
                 add(MachineRecipeMaps.LaserEngraver, new Recipe(
                         new ItemStack[]{plate.copy(), lens},
-                        new ItemStack[]{tech(circuit, 1)}, null, null, null, null, 64, 256, 0)
+                        new ItemStack[]{tech(circuit, 1)}, null, null, null, 64, 256, 0)
                         .withCatalystInputs(1));
         }
     }
@@ -192,17 +192,17 @@ public final class ElectronicsRecipes {
         for (var lens : SourceLensRecipeItems.lenses(Color.RED))
             add(MachineRecipeMaps.LaserEngraver,new Recipe(
                     new ItemStack[]{foil.copy(),lens},
-                    new ItemStack[]{tech(wire,1)},null,null,null,null,64,16,0).withCatalystInputs(1));
+                    new ItemStack[]{tech(wire,1)},null,null,null,64,16,0).withCatalystInputs(1));
     }
 
     /** GT6 {@code MultiItemTechnological}: soldering a circuit board into a finished circuit. */
     private static void bath(String board,String circuit,String solder) {
         add(MachineRecipeMaps.Bath,new Recipe(new ItemStack[]{tech(board,1)},
-                new ItemStack[]{tech(circuit,1)},null,null,
+                new ItemStack[]{tech(circuit,1)},null,
                 new FluidStack[]{fluid("GenMolten_",solder,72)},null,64,0,0));
     }
     private static void press(long ticks,ItemStack output,ItemStack... inputs) {
-        add(MachineRecipeMaps.Press,new Recipe(inputs,new ItemStack[]{output},null,null,null,null,ticks,16,0));
+        add(MachineRecipeMaps.Press,new Recipe(inputs,new ItemStack[]{output},null,null,null,ticks,16,0));
     }
     private static void add(RecipeMap map,Recipe recipe) {
         if(map.addRecipe(recipe)==null) throw new IllegalStateException("Rejected electronics recipe in "+map);

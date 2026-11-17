@@ -1,5 +1,6 @@
 package gregtech.content.recipe;
 
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.registry.GTFluids;
@@ -36,6 +37,10 @@ public final class CropProcessingRecipes {
         add(MachineRecipeMaps.Mortar,new ItemStack(input),new ItemStack(residue),FluidStack.EMPTY,chance/2);
     }
     private void add(RecipeMap map,ItemStack input,ItemStack output,FluidStack fluid,long chance) {
-        if(map.addRecipe1(false,16,16,chance,input,FluidStack.EMPTY,fluid,output)!=null) registered++;
+        if(map.register(RecipeBuilder.of(16, 16)
+                .itemInputs(input)
+                .itemOutputs(output)
+                .fluidOutputs(fluid)
+                .chances(chance))!=null) registered++;
     }
 }

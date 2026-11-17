@@ -5,9 +5,11 @@ import gregtech.content.blockentity.machine.*;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.content.multiblock.LargeMachineParts;
+import gregtech.content.recipe.RecipeMapSpec;
 import gregtech.content.registry.MultiblockRegistration;
 import gregtech.engine.multiblock.MultiblockLayout.Role;
 import gregtech.engine.multiblock.StructurePortHandlers;
+import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -40,11 +42,13 @@ import net.minecraftforge.items.IItemHandler;
 public final class MultiblockPortApiTests {
     @GameTest(template = "test_empty", timeoutTicks = 40)
     public static void fluidBackpressureChecksEveryMatchingOutputTank(GameTestHelper helper) {
-        var map = new gregtech.engine.recipe.RecipeMap(null, "gt6ce_test_backpressure", "Test", "textures/gui/test",
-                1, 0, 1, 0, 2, 0, 0, false, false, false, false);
+        var map = new RecipeMap(RecipeMapSpec.builder("gt6ce_test_backpressure", "Test", "textures/gui/test")
+                .items(1, 0, 1)
+                .fluids(0, 2, 0)
+                .build());
         try {
             var recipe = new gregtech.engine.recipe.Recipe(new ItemStack[] {new ItemStack(Items.IRON_INGOT)},
-                    new ItemStack[0], null, null, new FluidStack[0], new FluidStack[] {new FluidStack(Fluids.WATER, 100)}, 20, 16, 0);
+                    new ItemStack[0], null, new FluidStack[0], new FluidStack[] {new FluidStack(Fluids.WATER, 100)}, 20, 16, 0);
             helper.assertTrue(map.addRecipe(recipe) != null, "Backpressure fixture recipe was rejected");
             var inventory = new gregtech.engine.machine.MachineInventory(map, 1, () -> {});
             inventory.items().setStackInSlot(0, new ItemStack(Items.IRON_INGOT, 2));

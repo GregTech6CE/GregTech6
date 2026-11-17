@@ -4,6 +4,7 @@ import gregtech.api.material.*;
 import gregtech.engine.material.*;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.*;
 import gregtech.content.material.MaterialFactKeys;
@@ -34,8 +35,12 @@ public final class SharedPurifiedCentrifugeRows {
  private static boolean initialized;
  private record Definition(boolean optimize,ItemStack input,ItemStack[] outputs,long[] chances,
                            FluidStack[] fluids,long duration,long power) {
-  Recipe admit(RecipeMap map) {return map.addRecipe(optimize,new ItemStack[]{input.copy()},outputs,null,chances,
-      new FluidStack[0],fluids,duration,power,0);}
+  Recipe admit(RecipeMap map) {return map.register(RecipeBuilder.of(power, duration)
+          .optimize(optimize)
+          .itemInputs(input.copy())
+          .itemOutputs(outputs)
+          .fluidOutputs(fluids)
+          .chances(chances));}
  }
  public static Set<Recipe> owned(){var out=Collections.newSetFromMap(new IdentityHashMap<Recipe,Boolean>());out.addAll(OWNED);return Collections.unmodifiableSet(out);}
  public static Map<GTMaterial,String> statuses(){return Collections.unmodifiableMap(new IdentityHashMap<>(STATUS));}

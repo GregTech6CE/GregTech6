@@ -120,13 +120,12 @@ public final class AnvilShreddingRecipes {
                         + (row.byproduct() == null ? 0 : row.byproduct().getMaterialWeight() * row.byproductCount()));
         // GT6 Row 16 EU/t with multiplier 16 on the shredding handler.
         long duration = Math.max(1, (units * 16L * (material.getToolQuality() + 1) + GTValues.U - 1) / GTValues.U);
-        // GT6's ST.emptySlot() second input (the second anvil slot has to stay empty). RecipeMap#make
+        // GT6's ST.emptySlot() second input (the second anvil slot has to stay empty). RecipeBuilder
         // rejects an empty stack ("declared input failed to resolve"), so the recipe is built directly
         // the way AnvilRecipeDefinitions does it — the anvil's 2-item minimum counts slots, not entries.
         Recipe recipe = new Recipe(
                         new ItemStack[] {input, ItemStack.EMPTY},
                         byproduct.isEmpty() ? new ItemStack[] {output} : new ItemStack[] {output, byproduct},
-                        null,
                         null,
                         null,
                         null,

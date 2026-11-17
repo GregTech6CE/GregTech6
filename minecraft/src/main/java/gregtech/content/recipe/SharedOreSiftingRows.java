@@ -14,7 +14,7 @@ import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
-import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.util.OM;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -73,8 +73,12 @@ public final class SharedOreSiftingRows {
   Recipe admit(){
    // Source descriptors retain their literal chance arrays. The native map normalizes them to the
    // effective output slots; unused long quartz tails are not a second runtime metadata contract.
-   Recipe row=RecipeMap.make(optimize,new ItemStack[]{input},outputs,null,chances,
-       new FluidStack[0],new FluidStack[0],duration,power,0);
+   Recipe row=RecipeBuilder.of(power, duration)
+           .optimize(optimize)
+           .itemInputs(input)
+           .itemOutputs(outputs)
+           .chances(chances)
+           .build();
    if(row==null)return null;
    // The host-tagged representative distinguishes the row; the predicate lets a stack with the
    // same host but different stored data (or an older tag format) match at runtime.

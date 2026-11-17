@@ -69,7 +69,7 @@ public final class MachineCasingRecipes {
         // The source handler scales the plate batch by the form's material units; the rod input
         // stays a template slot (equivalent rods are admitted by the ordinary matcher).
         var template = new Recipe(
-                new ItemStack[] {plates, rod}, new ItemStack[] {output}, null, null, null, null, ticks, 16, 0);
+                new ItemStack[] {plates, rod}, new ItemStack[] {output}, null, null, null, ticks, 16, 0);
         long required = Math.multiplyExact(grade.plates().getMaterialWeight(), 6);
         var rule = new MaterialUnitRecipe(template, 0, material, required, Rounding.WHOLE_OUTPUTS);
         rule.source(plates, grade.plates().getMaterialWeight());

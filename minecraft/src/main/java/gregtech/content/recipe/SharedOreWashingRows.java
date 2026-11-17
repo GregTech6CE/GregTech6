@@ -18,6 +18,7 @@ import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.stack.StackCompat;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -94,7 +95,14 @@ public final class SharedOreWashingRows {
         ||!ItemStack.matches(inputs[1],outputs[0]))return null;
     for(int i=0;i<inputs.length;i++)for(int j=0;j<outputs.length;j++)
      if(sameItem(inputs[i],outputs[j])&&(i!=1||j!=0))return null;
-    var normalized=RecipeMap.make(true,inputs,outputs,null,chances,fluidInputs,fluidOutputs,duration,power,0);
+    var normalized=RecipeBuilder.of(power, duration)
+            .optimize(true)
+            .itemInputs(inputs)
+            .fluidInputs(fluidInputs)
+            .itemOutputs(outputs)
+            .fluidOutputs(fluidOutputs)
+            .chances(chances)
+            .build();
     if(normalized==null||normalized.mInputs.length!=1||!ItemStack.matches(normalized.mInputs[0],inputs[0])
         ||normalized.mOutputs.length!=outputs.length||!normalized.mOutputs[0].isEmpty())return null;
     for(int j=1;j<outputs.length;j++)if(!ItemStack.matches(normalized.mOutputs[j],outputs[j]))return null;
@@ -102,11 +110,18 @@ public final class SharedOreWashingRows {
         ||!sameFluids(normalized.mFluidOutputs,fluidOutputs))return null;
     ItemStack reagent=inputs[1].copy();reagent.setCount(1);
     var retained=new Recipe(new ItemStack[]{normalized.mInputs[0].copy(),reagent},normalized.mOutputs,
-        normalized.mSpecialItems,normalized.mChances,normalized.mFluidInputs,normalized.mFluidOutputs,
+        normalized.mChances,normalized.mFluidInputs,normalized.mFluidOutputs,
         normalized.mDuration,normalized.mEUt,normalized.mSpecialValue).withCatalystInputs(1);
     return map.addRecipe(retained);
    }
-   var row=RecipeMap.make(optimize,inputs,outputs,null,chances,fluidInputs,fluidOutputs,duration,power,0);
+   var row=RecipeBuilder.of(power, duration)
+           .optimize(optimize)
+           .itemInputs(inputs)
+           .fluidInputs(fluidInputs)
+           .itemOutputs(outputs)
+           .fluidOutputs(fluidOutputs)
+           .chances(chances)
+           .build();
    return row==null?null:map.addRecipe(row);
   }
  }

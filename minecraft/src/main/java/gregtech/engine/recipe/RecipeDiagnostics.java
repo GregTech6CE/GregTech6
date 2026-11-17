@@ -39,7 +39,7 @@ public final class RecipeDiagnostics {
             int duplicates = 0;
             int variantsRetained = 0;
             for (Recipe recipe : map.mRecipeList) {
-                if (!recipe.mEnabled || recipe.mFakeRecipe || recipe.mSpecialItems != null
+                if (!recipe.mEnabled || recipe.mFakeRecipe
                         || recipe.hasItemInputGuards() || recipe.hasSameItemInputPredicates()) continue;
                 Conditions conditions = conditions(recipe);
                 if (conditions.inputs().items().isEmpty() && conditions.inputs().fluids().isEmpty()) continue;

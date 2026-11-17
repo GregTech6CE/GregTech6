@@ -228,7 +228,6 @@ public final class TreatedWoodRecipes extends OriginalRecipeBatch {
                     items(woods.stack(1)),
                     items(batch.output()),
                     null,
-                    null,
                     fluids(treated ? oils.stack(batch.mb()) : fluid(batch.oil(), batch.mb())),
                     null,
                     batch.ticks(),

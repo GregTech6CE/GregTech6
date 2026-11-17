@@ -1,8 +1,7 @@
 package gregtech.content.data;
 
+import gregtech.content.recipe.RecipeMapSpec;
 import gregtech.engine.recipe.RecipeMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * Fuel recipe maps, ported from GT6 {@code gregapi.data.FM}.
@@ -49,53 +48,14 @@ public class FuelRecipeMaps {
     public static final java.util.List<RecipeMap> FUEL_MAP_LIST =
             java.util.List.of(FluidBed, Burn, Gas, Hot, Plasma, Engine, Turbine, Magic);
 
-    private static gregtech.engine.recipe.RecipeMap fromDefinition(gregtech.content.recipe.RecipeMapSpec spec) {
-        var map = new gregtech.engine.recipe.RecipeMap(
-                null,
-                spec.mNameInternal,
-                spec.mNameLocal,
-                spec.mGUIPath,
-                spec.mInputItemsCount,
-                spec.mOutputItemsCount,
-                spec.mMinimalInputItems,
-                spec.mInputFluidCount,
-                spec.mOutputFluidCount,
-                spec.mMinimalInputFluids,
-                spec.mMinimalInputs,
-                spec.mNeedsOutputs,
-                spec.mCombinePower,
-                spec.mUseBucketSizeIn,
-                spec.mUseBucketSizeOut);
-        map.viewer(spec.mViewerAllowed, spec.mShowVoltageAmperage);
-        map.specialValueLabel(spec.mSpecialValuePre, spec.mSpecialValueMultiplier, spec.mSpecialValuePost);
-        if (spec.mInstantRecipes) map.instantRecipes();
+    private static RecipeMap fromDefinition(RecipeMapSpec spec) {
+        var map = new RecipeMap(spec);
         registerFuelMap(map);
         return map;
     }
 
-    // ── Legacy stub API (kept for the transpiled data references) ──────────
-
-    public record MapEntry(String unlocalizedName, String displayName) {}
-
-    private static final Map<String, MapEntry> REGISTRY = new LinkedHashMap<>();
-
-    private static MapEntry map(String field, String key, String display) {
-        MapEntry entry = new MapEntry(key, display);
-        REGISTRY.put(field, entry);
-        return entry;
-    }
-
-    public static final MapEntry Diesel = map("Diesel", "gt.recipe.diesel", "Diesel Generator"),
-            GasEntry = map("Gas", "gt.recipe.gas", "Gas Turbine"),
-            HotFluid = map("HotFluid", "gt.recipe.hotfluid", "Hot Fluid Generator");
-
-    public static Map<String, MapEntry> all() {
-        return Map.copyOf(REGISTRY);
-    }
-
+    /** Initializes built-in fuel maps before dependent registries are populated. */
     public static void bootstrap() {
-        if (REGISTRY.isEmpty() || Burn == null) {
-            throw new IllegalStateException("FM failed to initialize");
-        }
+        if (Burn == null) throw new IllegalStateException("Fuel maps failed to initialize");
     }
 }

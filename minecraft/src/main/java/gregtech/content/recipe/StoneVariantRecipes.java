@@ -1,6 +1,7 @@
 package gregtech.content.recipe;
 
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.block.stone.StoneVariant;
 import gregtech.content.data.MachineRecipeMaps;
@@ -231,8 +232,15 @@ public final class StoneVariantRecipes {
     private static void hammer(ItemStack in, ItemStack out, int chance) {
         if (in.isEmpty() || out.isEmpty() || out.getCount() <= 0) return;
         Recipe recipe = chance <= 0
-                ? MachineRecipeMaps.Hammer.addRecipe1(true, 16, 16, in, out)
-                : MachineRecipeMaps.Hammer.addRecipe1(true, 16, 16, new long[]{chance}, in, out);
+                ? MachineRecipeMaps.Hammer.register(RecipeBuilder.of(16, 16)
+                        .optimize(true)
+                        .itemInputs(in)
+                        .itemOutputs(out))
+                : MachineRecipeMaps.Hammer.register(RecipeBuilder.of(16, 16)
+                        .optimize(true)
+                        .itemInputs(in)
+                        .itemOutputs(out)
+                        .chances(chance));
         count("hammer", recipe);
     }
 
@@ -240,8 +248,14 @@ public final class StoneVariantRecipes {
     private static void crusher(ItemStack in, ItemStack out, long ticks, ItemStack extra) {
         if (in.isEmpty() || out.isEmpty()) return;
         Recipe recipe = extra == null || extra.isEmpty()
-                ? MachineRecipeMaps.Crusher.addRecipe1(true, 16, ticks, in, out)
-                : MachineRecipeMaps.Crusher.addRecipe1(true, 16, ticks, in, out, extra);
+                ? MachineRecipeMaps.Crusher.register(RecipeBuilder.of(16, ticks)
+                        .optimize(true)
+                        .itemInputs(in)
+                        .itemOutputs(out))
+                : MachineRecipeMaps.Crusher.register(RecipeBuilder.of(16, ticks)
+                        .optimize(true)
+                        .itemInputs(in)
+                        .itemOutputs(out, extra));
         count("crusher", recipe);
     }
 
@@ -259,7 +273,6 @@ public final class StoneVariantRecipes {
                 null,
                 null,
                 null,
-                null,
                 ticks,
                 16,
                 0).withMaterialRecovery().withSource("recovery:stone-variant");
@@ -272,7 +285,7 @@ public final class StoneVariantRecipes {
     /** GT6 {@code RM.add_smelting(aInput, aOutput, F, F, F)} — the Oven's table, mirrored to vanilla. */
     private static boolean smelt(String family, ItemStack in, ItemStack out) {
         if (in.isEmpty() || out.isEmpty()) return false;
-        if (!MachineRecipeMaps.add_smelting(in, out, 0, false, false, true)) return false;
+        if (!MachineRecipeMaps.addSmelting(in, out)) return false;
         COUNTS.merge(family, 1, Integer::sum);
         return true;
     }

@@ -7,6 +7,7 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.*;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -115,7 +116,6 @@ public final class ExternalOreProcessing {
                                     null,
                                     null,
                                     null,
-                                    null,
                                     route.duration(material.getToolQuality()),
                                     16,
                                     0));
@@ -156,7 +156,6 @@ public final class ExternalOreProcessing {
                                     null,
                                     null,
                                     null,
-                                    null,
                                     route.duration(material),
                                     16,
                                     0));
@@ -181,8 +180,10 @@ public final class ExternalOreProcessing {
                 if (output.isEmpty()) continue;
                 for (var item : entry.getValue()) {
                     var map = MachineRecipeMaps.Furnace;
-                    var recipe = map.addRecipe1(
-                            true, 16, 16, new ItemStack(item), MachineRecipeMaps.neverFurnaceOutput(output.copy()));
+                    var recipe = map.register(RecipeBuilder.of(16, 16)
+                            .optimize(true)
+                            .itemInputs(new ItemStack(item))
+                            .itemOutputs(MachineRecipeMaps.neverFurnaceOutput(output.copy())));
                     if (recipe == null) continue;
                     OWNED.computeIfAbsent(map, unused -> Collections.newSetFromMap(new IdentityHashMap<>()))
                             .add(recipe);
@@ -207,17 +208,11 @@ public final class ExternalOreProcessing {
                 if (output.isEmpty()) continue;
                 for (var item : entry.getValue()) {
                     var map = MachineRecipeMaps.CrucibleSmelting;
-                    var recipe = map.addFakeRecipe(
-                            false,
-                            new ItemStack[] {new ItemStack(item)},
-                            new ItemStack[] {output.copy()},
-                            null,
-                            null,
-                            null,
-                            null,
-                            0,
-                            0,
-                            preview.temperatureK());
+                    var recipe = map.register(RecipeBuilder.of(0, 0)
+                            .itemInputs(new ItemStack(item))
+                            .itemOutputs(output.copy())
+                            .specialValue(preview.temperatureK()),
+                            RecipeMap.Registration.DISPLAY);
                     if (recipe == null) continue;
                     OWNED.computeIfAbsent(map, unused -> Collections.newSetFromMap(new IdentityHashMap<>()))
                             .add(recipe);

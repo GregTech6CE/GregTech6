@@ -39,7 +39,7 @@ public final class VisualDocumentRecipes {
         return exact(new Recipe(
                 new ItemStack[]{object.copyWithCount(1), usb.copyWithCount(1)},
                 new ItemStack[]{written, object.copyWithCount(1)},
-                null, null, null, null,
+                null, null, null,
                 ticks, VisualDocumentRules.POWER, 0));
     }
 
@@ -66,7 +66,7 @@ public final class VisualDocumentRecipes {
             return exact(new Recipe(
                     new ItemStack[]{paper.copyWithCount(1), medium.copyWithCount(1)},
                     new ItemStack[]{output},
-                    null, null, dyes.toArray(FluidStack[]::new), null,
+                    null, dyes.toArray(FluidStack[]::new), null,
                     VisualDocumentRules.MAP_TICKS, VisualDocumentRules.POWER, 0).withCatalystInputs(1));
         }
         if (VisualDocumentData.title(data).isBlank() || data.getString("author").isBlank()) return null;
@@ -81,7 +81,7 @@ public final class VisualDocumentRecipes {
         return exact(new Recipe(
                 new ItemStack[]{paper.copyWithCount(plan.sheets()), medium.copyWithCount(1)},
                 new ItemStack[]{output},
-                null, null, new FluidStack[]{dye}, null,
+                null, new FluidStack[]{dye}, null,
                 plan.ticks(), VisualDocumentRules.POWER, 0).withCatalystInputs(1));
     }
 

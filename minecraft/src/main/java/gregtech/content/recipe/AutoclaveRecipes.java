@@ -7,7 +7,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
 import gregtech.engine.recipe.Recipe;
-import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.data.generated.MaterialWorkability;
@@ -81,17 +81,12 @@ public final class AutoclaveRecipes {
         if (input.isEmpty() || output.isEmpty() || steam == null || distilledWater == null) return;
         ItemStack tag = new ItemStack(GTTechnological.selectorTag(row.circuit()));
         // GT6 runs these on steam (aEUt = 0); the circuit selector is a required input.
-        var template = RecipeMap.make(
-                false,
-                new ItemStack[] {input, tag},
-                new ItemStack[] {output},
-                null,
-                null,
-                new FluidStack[] {steam},
-                new FluidStack[] {distilledWater},
-                row.ticks(),
-                0,
-                0);
+        var template = RecipeBuilder.of(0, row.ticks())
+                .itemInputs(input, tag)
+                .fluidInputs(steam)
+                .itemOutputs(output)
+                .fluidOutputs(distilledWater)
+                .build();
         if (template == null) return;
         // The row consumes {@code inCount} items of the form; the rule keeps that total in
         // material units while admitting every equivalent item of the same form.

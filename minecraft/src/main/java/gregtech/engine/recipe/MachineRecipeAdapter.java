@@ -28,22 +28,15 @@ public final class MachineRecipeAdapter {
 
     /** Publishes a static row with the map's ordinary collision and validation rules. */
     public static Recipe addStatic(RecipeMap map, Recipe recipe, String source) {
-        return addStatic(map, recipe, source, true, false, false, map.mLogErrors);
+        return addStatic(map, recipe, source, RecipeMap.Registration.DEFAULT);
     }
 
-    /** Publishes a static or display row with explicit registration flags. */
-    public static Recipe addStatic(
-            RecipeMap map,
-            Recipe recipe,
-            String source,
-            boolean checkForCollisions,
-            boolean fake,
-            boolean hidden,
-            boolean logErrors) {
+    /** Publishes a static or display row with explicit registration options. */
+    public static Recipe addStatic(RecipeMap map, Recipe recipe, String source,
+                                   RecipeMap.Registration registration) {
         if (map == null || recipe == null) return null;
         recipe.withSource(source);
-        if (fake) return map.addFakeRecipe(checkForCollisions, recipe);
-        return map.addRecipe(recipe, checkForCollisions, false, hidden, logErrors);
+        return map.addRecipe(recipe, registration);
     }
 
     /** Publishes the material-unit rule a row declares; the map stores the generated batches. */

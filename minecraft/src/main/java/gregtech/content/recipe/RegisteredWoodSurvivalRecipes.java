@@ -70,7 +70,6 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
                 items(group.stack(9)),
                 items(mat(MaterialPrefix.rockGt, "PetrifiedWood", 2)),
                 null,
-                null,
                 fluids(fluid("MnWtr", 500)),
                 null,
                 64,

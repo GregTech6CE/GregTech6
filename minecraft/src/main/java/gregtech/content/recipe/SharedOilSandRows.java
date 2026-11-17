@@ -11,6 +11,7 @@ import gregtech.content.registry.GTFluids;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
@@ -96,7 +97,7 @@ public final class SharedOilSandRows {
     private static boolean ordinary(Recipe row) {
         return row.mInputs.length == 1 && !row.mInputs[0].isEmpty() && row.mInputs[0].getCount() == 1
                 && row.mFluidInputs.length == 0 && row.mFluidOutputs.length == 1
-                && !row.mFluidOutputs[0].isEmpty() && row.mSpecialItems == null && row.mSpecialValue == 0
+                && !row.mFluidOutputs[0].isEmpty() && row.mSpecialValue == 0
                 && row.mEUt == 16 && row.mEnabled && row.mCanBeBuffered && !row.mNeedsEmptyOutput
                 && !row.mHidden && !row.mFakeRecipe && !row.mMaterialRecovery && !row.mRequiresEmptyContainerInputs
                 && !row.mExactItemInputs && !row.mExplicitCatalystsOnly
@@ -153,7 +154,8 @@ public final class SharedOilSandRows {
     private static void defer(Group group, String reason) { DEFERRED.add(new Deferred(group.candidate.kind().name(), reason)); }
     private static void restore(Group group) {
         if (group.original == null) return;
-        Recipe accepted = MAP.addRecipe(group.original, true, group.original.mFakeRecipe, group.original.mHidden);
+        Recipe accepted = MAP.addRecipe(group.original,
+                RecipeMap.Registration.DEFAULT.withFakeRecipe(group.original.mFakeRecipe).withHidden(group.original.mHidden));
         if (accepted != null) OWNED.add(accepted); else defer(group, "legacy-readmission-rejected");
     }
     private static boolean admitGroup(List<Recipe> planned, Recipe legacy) {
@@ -163,7 +165,8 @@ public final class SharedOilSandRows {
                 Recipe result = MAP.addRecipe(row);
                 if (result == null) {
                     accepted.forEach(MAP::unlink);
-                    Recipe restored = legacy == null ? null : MAP.addRecipe(legacy, true, legacy.mFakeRecipe, legacy.mHidden);
+                    Recipe restored = legacy == null ? null : MAP.addRecipe(legacy,
+                            RecipeMap.Registration.DEFAULT.withFakeRecipe(legacy.mFakeRecipe).withHidden(legacy.mHidden));
                     if (restored != null) OWNED.add(restored);
                     return false;
                 }
@@ -173,7 +176,9 @@ public final class SharedOilSandRows {
         } catch (RuntimeException | Error failure) {
             accepted.forEach(MAP::unlink);
             if (legacy != null) try {
-                Recipe restored = MAP.addRecipe(legacy, true, legacy.mFakeRecipe, legacy.mHidden); if (restored != null) OWNED.add(restored);
+                Recipe restored = MAP.addRecipe(legacy,
+                        RecipeMap.Registration.DEFAULT.withFakeRecipe(legacy.mFakeRecipe).withHidden(legacy.mHidden));
+                if (restored != null) OWNED.add(restored);
             } catch (RuntimeException | Error restoration) { failure.addSuppressed(restoration); }
             throw failure;
         }
@@ -225,8 +230,13 @@ public final class SharedOilSandRows {
             var slot = result.slots().get(index); chances[index] = slot.chance();
             outputs[index] = slot.stack() == null ? ItemStack.EMPTY : snapshot.stack(slot.stack());
         }
-        Recipe row = RecipeMap.make(result.optimize(), new ItemStack[]{input}, outputs, null, chances,
-                new FluidStack[0], new FluidStack[]{oil}, result.ticks(), result.power(), 0);
+        Recipe row = RecipeBuilder.of(result.power(), result.ticks())
+                .optimize(result.optimize())
+                .itemInputs(input)
+                .itemOutputs(outputs)
+                .fluidOutputs(oil)
+                .chances(chances)
+                .build();
         return row == null ? null : row.withSameItemInputPredicate(0, predicate);
     }
     static HostSelection classifyHost(ItemStack stack) {
@@ -247,7 +257,7 @@ public final class SharedOilSandRows {
     }
     private static Recipe copy(Recipe recipe, ItemStack input) {
         Recipe copy = new Recipe(new ItemStack[]{input.copy()}, Arrays.stream(recipe.mOutputs).map(ItemStack::copy).toArray(ItemStack[]::new),
-                recipe.mSpecialItems, recipe.mChances.clone(), Arrays.stream(recipe.mFluidInputs).map(FluidStack::copy).toArray(FluidStack[]::new),
+                recipe.mChances.clone(), Arrays.stream(recipe.mFluidInputs).map(FluidStack::copy).toArray(FluidStack[]::new),
                 Arrays.stream(recipe.mFluidOutputs).map(FluidStack::copy).toArray(FluidStack[]::new),
                 recipe.mDuration, recipe.mEUt, recipe.mSpecialValue);
         System.arraycopy(recipe.mMaxChances, 0, copy.mMaxChances, 0, recipe.mMaxChances.length);

@@ -1,234 +1,126 @@
 package gregtech.content.data;
 
-import gregtech.engine.recipe.RecipeMap;
-//? if >=1.21.1 {
-//?} else {
 import gregtech.api.material.MaterialProperty;
-//?}
+import gregtech.engine.recipe.RecipeBuilder;
+import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
+
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
-import gregtech.api.material.MaterialProperty;
-/^* Same shared original maps with Neo ItemStack/FluidStack rows. ^/
-public final class MachineRecipeMaps {
-    private MachineRecipeMaps() {}
-    public static final RecipeMap Furnace=fromDefinition(MachineRecipeMapDefinitions.Furnace);
-    public static final RecipeMap Microwave=fromDefinition(MachineRecipeMapDefinitions.Microwave);
-    public static final RecipeMap Roasting=fromDefinition(MachineRecipeMapDefinitions.Roasting);
-    public static final RecipeMap Distillery=fromDefinition(MachineRecipeMapDefinitions.Distillery);
-    public static final RecipeMap Extruder=fromDefinition(MachineRecipeMapDefinitions.Extruder);
-    public static final RecipeMap Smelter=fromDefinition(MachineRecipeMapDefinitions.Smelter);
-    public static final RecipeMap CrystallisationCrucible=fromDefinition(MachineRecipeMapDefinitions.CrystallisationCrucible);
-    public static final RecipeMap Drying=fromDefinition(MachineRecipeMapDefinitions.Drying);
-    public static final RecipeMap Laminator=fromDefinition(MachineRecipeMapDefinitions.Laminator);
-    public static final RecipeMap CatalyticCracking=fromDefinition(MachineRecipeMapDefinitions.CatalyticCracking);
-    public static final RecipeMap SteamCracking=fromDefinition(MachineRecipeMapDefinitions.SteamCracking);
-    public static final RecipeMap DistillationTower=fromDefinition(MachineRecipeMapDefinitions.DistillationTower);
-    public static final RecipeMap CryoDistillationTower=fromDefinition(MachineRecipeMapDefinitions.CryoDistillationTower);
-    public static final RecipeMap Shredder=fromDefinition(MachineRecipeMapDefinitions.Shredder);
-    public static final RecipeMap Lathe=fromDefinition(MachineRecipeMapDefinitions.Lathe);
-    public static final RecipeMap Cutter=fromDefinition(MachineRecipeMapDefinitions.Cutter);
-    public static final RecipeMap Centrifuge=fromDefinition(MachineRecipeMapDefinitions.Centrifuge);
-    public static final RecipeMap RollingMill=fromDefinition(MachineRecipeMapDefinitions.RollingMill);
-    public static final RecipeMap RollBender=fromDefinition(MachineRecipeMapDefinitions.RollBender);
-    public static final RecipeMap RollFormer=fromDefinition(MachineRecipeMapDefinitions.RollFormer);
-    public static final RecipeMap ClusterMill=fromDefinition(MachineRecipeMapDefinitions.ClusterMill);
-    public static final RecipeMap Wiremill=fromDefinition(MachineRecipeMapDefinitions.Wiremill);
-    public static final RecipeMap Mixer=fromDefinition(MachineRecipeMapDefinitions.Mixer);
-    public static final RecipeMap Loom=fromDefinition(MachineRecipeMapDefinitions.Loom);
-    public static final RecipeMap Sluice=fromDefinition(MachineRecipeMapDefinitions.Sluice);
-    public static final RecipeMap Sharpening=fromDefinition(MachineRecipeMapDefinitions.Sharpening);
-    public static final RecipeMap BurnMixer=fromDefinition(MachineRecipeMapDefinitions.BurnMixer);
-    public static final RecipeMap PressureWasher=fromDefinition(MachineRecipeMapDefinitions.PressureWasher);
-    public static final RecipeMap Crusher=fromDefinition(MachineRecipeMapDefinitions.Crusher);
-    public static final RecipeMap Sifting=fromDefinition(MachineRecipeMapDefinitions.Sifting);
-    public static final RecipeMap Squeezer=fromDefinition(MachineRecipeMapDefinitions.Squeezer);
-    public static final RecipeMap Compressor=fromDefinition(MachineRecipeMapDefinitions.Compressor);
-    public static final RecipeMap Press=fromDefinition(MachineRecipeMapDefinitions.Press);
-    public static final RecipeMap Electrolyzer=fromDefinition(MachineRecipeMapDefinitions.Electrolyzer);
-    public static final RecipeMap Canner=fromDefinition(MachineRecipeMapDefinitions.Canner);
-    public static final RecipeMap Injector=fromDefinition(MachineRecipeMapDefinitions.Injector);
-    public static final RecipeMap Printer=fromDefinition(MachineRecipeMapDefinitions.Printer);
-    public static final RecipeMap ScannerVisuals=fromDefinition(MachineRecipeMapDefinitions.ScannerVisuals);
-    public static final RecipeMap Autocrafter=fromDefinition(MachineRecipeMapDefinitions.Autocrafter).contextualRecipes(gregtech.content.recipe.AutocraftingRecipes::find);
-    public static final RecipeMap Slicer=fromDefinition(MachineRecipeMapDefinitions.Slicer);
-    public static final RecipeMap Nanofab=fromDefinition(MachineRecipeMapDefinitions.Nanofab);
-    public static final RecipeMap Plantalyzer=fromDefinition(MachineRecipeMapDefinitions.Plantalyzer);
-    public static final RecipeMap Bumblelyzer=fromDefinition(MachineRecipeMapDefinitions.Bumblelyzer);
-    public static final RecipeMap Boxinator=fromDefinition(MachineRecipeMapDefinitions.Boxinator);
-    public static final RecipeMap Unboxinator=fromDefinition(MachineRecipeMapDefinitions.Unboxinator);
-    public static final RecipeMap Polarizer=fromDefinition(MachineRecipeMapDefinitions.Polarizer);
-    public static final RecipeMap MagneticSeparator=fromDefinition(MachineRecipeMapDefinitions.MagneticSeparator);
-    public static final RecipeMap LaserEngraver=fromDefinition(MachineRecipeMapDefinitions.LaserEngraver);
-    public static final RecipeMap Welder=fromDefinition(MachineRecipeMapDefinitions.Welder);
-    public static final RecipeMap Freezer=fromDefinition(MachineRecipeMapDefinitions.Freezer);
-    public static final RecipeMap CryoMixer=fromDefinition(MachineRecipeMapDefinitions.CryoMixer);
-    public static final RecipeMap Massfab=fromDefinition(MachineRecipeMapDefinitions.Massfab);
-    public static final RecipeMap ScannerMolecular=fromDefinition(MachineRecipeMapDefinitions.ScannerMolecular);
-    public static final RecipeMap Replicator=fromDefinition(MachineRecipeMapDefinitions.Replicator);
-    public static final RecipeMap Autoclave=fromDefinition(MachineRecipeMapDefinitions.Autoclave);
-    public static final RecipeMap Bath=fromDefinition(MachineRecipeMapDefinitions.Bath);
-    public static final RecipeMap Generifier=fromDefinition(MachineRecipeMapDefinitions.Generifier);
-    public static final RecipeMap Coagulator=fromDefinition(MachineRecipeMapDefinitions.Coagulator);
-    public static final RecipeMap Fermenter=fromDefinition(MachineRecipeMapDefinitions.Fermenter);
-    public static final RecipeMap Melter=fromDefinition(MachineRecipeMapDefinitions.Melter);
-    public static final RecipeMap CokeOven=fromDefinition(MachineRecipeMapDefinitions.CokeOven);
-    public static final RecipeMap Lightning=fromDefinition(MachineRecipeMapDefinitions.Lightning);
-    public static final RecipeMap ImplosionCompressor=fromDefinition(MachineRecipeMapDefinitions.ImplosionCompressor);
-    public static final RecipeMap Fusion=fromDefinition(MachineRecipeMapDefinitions.Fusion);
-    public static final RecipeMap Mortar=fromDefinition(MachineRecipeMapDefinitions.Mortar);
-    public static final RecipeMap DidYouKnow=fromDefinition(MachineRecipeMapDefinitions.DidYouKnow);
-    public static final RecipeMap ToolHeads=fromDefinition(MachineRecipeMapDefinitions.ToolHeads);
-    public static final RecipeMap Cooking=fromDefinition(MachineRecipeMapDefinitions.Cooking);
-    public static final RecipeMap BlastFurnace=fromDefinition(MachineRecipeMapDefinitions.BlastFurnace);
-    public static final RecipeMap VacuumFreezer=fromDefinition(MachineRecipeMapDefinitions.VacuumFreezer);
-    public static final RecipeMap Assembler=fromDefinition(MachineRecipeMapDefinitions.Assembler);
-    public static final RecipeMap CNC=fromDefinition(MachineRecipeMapDefinitions.CNC);
-    public static final RecipeMap CrucibleAlloying=fromDefinition(MachineRecipeMapDefinitions.CrucibleAlloying);
-    public static final RecipeMap CrucibleSmelting=fromDefinition(MachineRecipeMapDefinitions.CrucibleSmelting);
-    public static final RecipeMap BedrockOreList=fromDefinition(MachineRecipeMapDefinitions.BedrockOreList);
-    public static final RecipeMap ByProductList=fromDefinition(MachineRecipeMapDefinitions.ByProductList);
-    public static final RecipeMap Hammer=fromDefinition(MachineRecipeMapDefinitions.Hammer);
-    public static final RecipeMap Chisel=fromDefinition(MachineRecipeMapDefinitions.Chisel);
-    public static final RecipeMap Calciner=fromDefinition(MachineRecipeMapDefinitions.Calciner);
-    public static final RecipeMap Juicer=fromDefinition(MachineRecipeMapDefinitions.Juicer);
-    public static final RecipeMap Anvil=fromDefinition(MachineRecipeMapDefinitions.Anvil);
-    public static final RecipeMap AnvilBendSmall=fromDefinition(MachineRecipeMapDefinitions.AnvilBendSmall);
-    public static final RecipeMap AnvilBendBig=fromDefinition(MachineRecipeMapDefinitions.AnvilBendBig);
-    public static final RecipeMap BumbleQueens=fromDefinition(MachineRecipeMapDefinitions.BumbleQueens);
-    public static final RecipeMap Trees=fromDefinition(MachineRecipeMapDefinitions.Trees);
-    private static gregtech.engine.recipe.RecipeMap fromDefinition(gregtech.content.recipe.RecipeMapSpec spec) {
-        var map=new gregtech.engine.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
-                spec.mInputItemsCount,spec.mOutputItemsCount,spec.mMinimalInputItems,
-                spec.mInputFluidCount,spec.mOutputFluidCount,spec.mMinimalInputFluids,spec.mMinimalInputs,
-                spec.mNeedsOutputs,spec.mCombinePower,spec.mUseBucketSizeIn,spec.mUseBucketSizeOut);
-        map.viewer(spec.mViewerAllowed,spec.mShowVoltageAmperage);
-        map.specialValueLabel(spec.mSpecialValuePre,spec.mSpecialValueMultiplier,spec.mSpecialValuePost);
-        map.potions(spec.mInputPotionCount);
-        if(spec.mInstantRecipes)map.instantRecipes();return map;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
+//?}
 
-/**
- * GT6 Recipe Maps — one per machine type.
- * <p>
- * Each instance defines the slot/tank layout used by {@code BasicMachineContainerMenu}
- * and {@code BasicMachineBlockEntity}. Recipe data is not populated yet.
- * </p>
- */
-@SuppressWarnings("unused")
-public class MachineRecipeMaps {
-    protected MachineRecipeMaps() {}
+/** Built-in machine recipe maps in registration order. */
+public final class MachineRecipeMaps {
+    private MachineRecipeMaps() {}
 
     // ── RecipeMap instances ──────────────────────────────────────────────
-    // Constructor order: (collection, internalName, localName, guiPath,
-    //   inItems, outItems, minItems, inFluids, outFluids, minFluids, minInputs,
-    //   needsOutputs, combinePower, useBucketIn, useBucketOut)
 
     public static final RecipeMap
-    Furnace                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Furnace)
-    , Microwave                = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Microwave)
-    , Roasting                 = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Roasting)
-    , Distillery               = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Distillery)
-    , Extruder                 = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Extruder)
-    , Smelter                  = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Smelter)
-    , CrystallisationCrucible  = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.CrystallisationCrucible)
-    , Drying                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Drying)
-    , Laminator                = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Laminator)
-    , CatalyticCracking        = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.CatalyticCracking)
-    , SteamCracking            = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.SteamCracking)
-    , DistillationTower        = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.DistillationTower)
-    , CryoDistillationTower    = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.CryoDistillationTower)
+    Furnace                   = new RecipeMap(MachineRecipeMapDefinitions.Furnace)
+    , Microwave                = new RecipeMap(MachineRecipeMapDefinitions.Microwave)
+    , Roasting                 = new RecipeMap(MachineRecipeMapDefinitions.Roasting)
+    , Distillery               = new RecipeMap(MachineRecipeMapDefinitions.Distillery)
+    , Extruder                 = new RecipeMap(MachineRecipeMapDefinitions.Extruder)
+    , Smelter                  = new RecipeMap(MachineRecipeMapDefinitions.Smelter)
+    , CrystallisationCrucible  = new RecipeMap(MachineRecipeMapDefinitions.CrystallisationCrucible)
+    , Drying                   = new RecipeMap(MachineRecipeMapDefinitions.Drying)
+    , Laminator                = new RecipeMap(MachineRecipeMapDefinitions.Laminator)
+    , CatalyticCracking        = new RecipeMap(MachineRecipeMapDefinitions.CatalyticCracking)
+    , SteamCracking            = new RecipeMap(MachineRecipeMapDefinitions.SteamCracking)
+    , DistillationTower        = new RecipeMap(MachineRecipeMapDefinitions.DistillationTower)
+    , CryoDistillationTower    = new RecipeMap(MachineRecipeMapDefinitions.CryoDistillationTower)
     // RU / KU machines
-    , Shredder                 = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Shredder)
-    , Lathe                    = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Lathe)
-    , Cutter                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Cutter)
-    , Centrifuge               = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Centrifuge)
-    , RollingMill              = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.RollingMill)
-    , RollBender               = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.RollBender)
-    , RollFormer               = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.RollFormer)
-    , ClusterMill              = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.ClusterMill)
-    , Wiremill                 = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Wiremill)
-    , Mixer                    = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Mixer)
-    , Loom                     = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Loom)
-    , Sluice                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Sluice)
-    , Sharpening               = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Sharpening)
-    , BurnMixer                = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.BurnMixer)
-    , PressureWasher           = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.PressureWasher)
-    , Crusher                  = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Crusher)
-    , Sifting                  = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Sifting)
-    , Squeezer                 = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Squeezer)
-    , Compressor               = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Compressor)
-    , Press                    = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Press)
+    , Shredder                 = new RecipeMap(MachineRecipeMapDefinitions.Shredder)
+    , Lathe                    = new RecipeMap(MachineRecipeMapDefinitions.Lathe)
+    , Cutter                   = new RecipeMap(MachineRecipeMapDefinitions.Cutter)
+    , Centrifuge               = new RecipeMap(MachineRecipeMapDefinitions.Centrifuge)
+    , RollingMill              = new RecipeMap(MachineRecipeMapDefinitions.RollingMill)
+    , RollBender               = new RecipeMap(MachineRecipeMapDefinitions.RollBender)
+    , RollFormer               = new RecipeMap(MachineRecipeMapDefinitions.RollFormer)
+    , ClusterMill              = new RecipeMap(MachineRecipeMapDefinitions.ClusterMill)
+    , Wiremill                 = new RecipeMap(MachineRecipeMapDefinitions.Wiremill)
+    , Mixer                    = new RecipeMap(MachineRecipeMapDefinitions.Mixer)
+    , Loom                     = new RecipeMap(MachineRecipeMapDefinitions.Loom)
+    , Sluice                   = new RecipeMap(MachineRecipeMapDefinitions.Sluice)
+    , Sharpening               = new RecipeMap(MachineRecipeMapDefinitions.Sharpening)
+    , BurnMixer                = new RecipeMap(MachineRecipeMapDefinitions.BurnMixer)
+    , PressureWasher           = new RecipeMap(MachineRecipeMapDefinitions.PressureWasher)
+    , Crusher                  = new RecipeMap(MachineRecipeMapDefinitions.Crusher)
+    , Sifting                  = new RecipeMap(MachineRecipeMapDefinitions.Sifting)
+    , Squeezer                 = new RecipeMap(MachineRecipeMapDefinitions.Squeezer)
+    , Compressor               = new RecipeMap(MachineRecipeMapDefinitions.Compressor)
+    , Press                    = new RecipeMap(MachineRecipeMapDefinitions.Press)
     // Minimal-input validation relaxed vs GT6 (was: 1 item / 2 total): GT6 met those minimums
     // with ST.tag selector pseudo-items, which this port does not have; fluid-only electrolysis
     // (water) and single-dust decomposition are legitimate recipes here.
-    , Electrolyzer             = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Electrolyzer)
-    , Canner                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Canner)
-    , Injector                 = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Injector)
-    , Printer                  = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Printer)
-    , ScannerVisuals           = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.ScannerVisuals)
-    , Autocrafter              = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Autocrafter).contextualRecipes(gregtech.content.recipe.AutocraftingRecipes::find)
-    , Slicer                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Slicer)
-    , Nanofab                  = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Nanofab)
-    , Plantalyzer              = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Plantalyzer)
-    , Bumblelyzer              = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Bumblelyzer)
-    , Boxinator                = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Boxinator)
-    , Unboxinator              = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Unboxinator)
-    , Polarizer                = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Polarizer)
-    , MagneticSeparator        = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.MagneticSeparator)
-    , LaserEngraver            = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.LaserEngraver)
-    , Welder                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Welder)
-    , Freezer                  = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Freezer)
-    , CryoMixer                = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.CryoMixer)
-    , Massfab                  = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Massfab)
-    , ScannerMolecular         = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.ScannerMolecular)
-    , Replicator               = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Replicator)
-    , Autoclave                = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Autoclave)
-    , Bath                     = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Bath)
-    , Generifier               = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Generifier)
-    , Coagulator               = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Coagulator)
-    , Fermenter                = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Fermenter)
-    , Melter                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Melter)
-    , CokeOven                 = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.CokeOven)
-    , Lightning                = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Lightning)
-    , ImplosionCompressor      = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.ImplosionCompressor)
-    , Fusion                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Fusion)
+    , Electrolyzer             = new RecipeMap(MachineRecipeMapDefinitions.Electrolyzer)
+    , Canner                   = new RecipeMap(MachineRecipeMapDefinitions.Canner)
+    , Injector                 = new RecipeMap(MachineRecipeMapDefinitions.Injector)
+    , Printer                  = new RecipeMap(MachineRecipeMapDefinitions.Printer)
+    , ScannerVisuals           = new RecipeMap(MachineRecipeMapDefinitions.ScannerVisuals)
+    , Autocrafter              = new RecipeMap(MachineRecipeMapDefinitions.Autocrafter).contextualRecipes(gregtech.content.recipe.AutocraftingRecipes::find)
+    , Slicer                   = new RecipeMap(MachineRecipeMapDefinitions.Slicer)
+    , Nanofab                  = new RecipeMap(MachineRecipeMapDefinitions.Nanofab)
+    , Plantalyzer              = new RecipeMap(MachineRecipeMapDefinitions.Plantalyzer)
+    , Bumblelyzer              = new RecipeMap(MachineRecipeMapDefinitions.Bumblelyzer)
+    , Boxinator                = new RecipeMap(MachineRecipeMapDefinitions.Boxinator)
+    , Unboxinator              = new RecipeMap(MachineRecipeMapDefinitions.Unboxinator)
+    , Polarizer                = new RecipeMap(MachineRecipeMapDefinitions.Polarizer)
+    , MagneticSeparator        = new RecipeMap(MachineRecipeMapDefinitions.MagneticSeparator)
+    , LaserEngraver            = new RecipeMap(MachineRecipeMapDefinitions.LaserEngraver)
+    , Welder                   = new RecipeMap(MachineRecipeMapDefinitions.Welder)
+    , Freezer                  = new RecipeMap(MachineRecipeMapDefinitions.Freezer)
+    , CryoMixer                = new RecipeMap(MachineRecipeMapDefinitions.CryoMixer)
+    , Massfab                  = new RecipeMap(MachineRecipeMapDefinitions.Massfab)
+    , ScannerMolecular         = new RecipeMap(MachineRecipeMapDefinitions.ScannerMolecular)
+    , Replicator               = new RecipeMap(MachineRecipeMapDefinitions.Replicator)
+    , Autoclave                = new RecipeMap(MachineRecipeMapDefinitions.Autoclave)
+    , Bath                     = new RecipeMap(MachineRecipeMapDefinitions.Bath)
+    , Generifier               = new RecipeMap(MachineRecipeMapDefinitions.Generifier)
+    , Coagulator               = new RecipeMap(MachineRecipeMapDefinitions.Coagulator)
+    , Fermenter                = new RecipeMap(MachineRecipeMapDefinitions.Fermenter)
+    , Melter                   = new RecipeMap(MachineRecipeMapDefinitions.Melter)
+    , CokeOven                 = new RecipeMap(MachineRecipeMapDefinitions.CokeOven)
+    , Lightning                = new RecipeMap(MachineRecipeMapDefinitions.Lightning)
+    , ImplosionCompressor      = new RecipeMap(MachineRecipeMapDefinitions.ImplosionCompressor)
+    , Fusion                   = new RecipeMap(MachineRecipeMapDefinitions.Fusion)
 
-    , Mortar = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Mortar)
+    , Mortar = new RecipeMap(MachineRecipeMapDefinitions.Mortar)
 
     // ── Misc / special ────────────────────────────────────────────────────
-    , DidYouKnow               = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.DidYouKnow)
-    , ToolHeads                = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.ToolHeads)
-    , Cooking                  = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Cooking)
+    , DidYouKnow               = new RecipeMap(MachineRecipeMapDefinitions.DidYouKnow)
+    , ToolHeads                = new RecipeMap(MachineRecipeMapDefinitions.ToolHeads)
+    , Cooking                  = new RecipeMap(MachineRecipeMapDefinitions.Cooking)
 
     // ── Deprecated / reserved ──────────────────────────────────────────────
-    , BlastFurnace             = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.BlastFurnace)
-    , VacuumFreezer            = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.VacuumFreezer)
-    , Assembler                = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Assembler)
-    , CNC                      = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.CNC)
+    , BlastFurnace             = new RecipeMap(MachineRecipeMapDefinitions.BlastFurnace)
+    , VacuumFreezer            = new RecipeMap(MachineRecipeMapDefinitions.VacuumFreezer)
+    , Assembler                = new RecipeMap(MachineRecipeMapDefinitions.Assembler)
+    , CNC                      = new RecipeMap(MachineRecipeMapDefinitions.CNC)
 
     // ── GT6 smeltery / alloying maps ──────────────────────────────────────
     // Both crucible maps carry GT6's NBT/NEI special value: the temperature in Kelvin
     // (RM.java declares "Temperature: " / 1 / " K" for CrucibleAlloying and CrucibleSmelting).
     // Both are instant: the crucible converts the moment the input reaches its melting point, so the
-    // recipe viewer must not print a duration for them (RecipeMap#instantRecipes).
-    , CrucibleAlloying         = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.CrucibleAlloying)
-    , CrucibleSmelting         = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.CrucibleSmelting)
+    // recipe viewer omits duration for them.
+    , CrucibleAlloying         = new RecipeMap(MachineRecipeMapDefinitions.CrucibleAlloying)
+    , CrucibleSmelting         = new RecipeMap(MachineRecipeMapDefinitions.CrucibleSmelting)
 
     // ── Extra / utility ───────────────────────────────────────────────────
-    , BedrockOreList           = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.BedrockOreList)
-    , ByProductList            = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.ByProductList)
-    , Hammer                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Hammer)
-    , Chisel                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Chisel)
-    , Calciner                 = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Calciner)
-    , Juicer                   = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Juicer)
-    , Anvil                    = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Anvil)
-    , AnvilBendSmall           = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.AnvilBendSmall)
-    , AnvilBendBig             = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.AnvilBendBig)
-    , BumbleQueens             = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.BumbleQueens)
-    , Trees                    = fromDefinition(gregtech.content.data.MachineRecipeMapDefinitions.Trees)
+    , BedrockOreList           = new RecipeMap(MachineRecipeMapDefinitions.BedrockOreList)
+    , ByProductList            = new RecipeMap(MachineRecipeMapDefinitions.ByProductList)
+    , Hammer                   = new RecipeMap(MachineRecipeMapDefinitions.Hammer)
+    , Chisel                   = new RecipeMap(MachineRecipeMapDefinitions.Chisel)
+    , Calciner                 = new RecipeMap(MachineRecipeMapDefinitions.Calciner)
+    , Juicer                   = new RecipeMap(MachineRecipeMapDefinitions.Juicer)
+    , Anvil                    = new RecipeMap(MachineRecipeMapDefinitions.Anvil)
+    , AnvilBendSmall           = new RecipeMap(MachineRecipeMapDefinitions.AnvilBendSmall)
+    , AnvilBendBig             = new RecipeMap(MachineRecipeMapDefinitions.AnvilBendBig)
+    , BumbleQueens             = new RecipeMap(MachineRecipeMapDefinitions.BumbleQueens)
+    , Trees                    = new RecipeMap(MachineRecipeMapDefinitions.Trees)
     ;
 
     // -- Dynamic (input-computed) providers -------------------------------
@@ -238,10 +130,12 @@ public class MachineRecipeMaps {
     // scans whichever living bee sits in its input slots (RecipeMapBumblelyzer). The
     // Bumblelyzer's provider is installed here, in the map's own initializer, so it is in place for
     // every entry point - the loader list, the recipe-viewer index and the game tests alike.
+//? if >=1.21.1 {
+//?} else {
     static {
         gregtech.content.recipe.GTBumbleBeeRecipes.register();
-//?}
     }
+//?}
 
     // ── Machine name → RecipeMap lookup ───────────────────────────────────
 
@@ -251,7 +145,7 @@ public class MachineRecipeMaps {
             debarker_alias = PressureWasher, electricmixer = Mixer, electricloom = Loom,
             electricsifter = Sifting, Other = DidYouKnow;
 
-    /** No-op compatibility stub — maps are created in the static initializer. */
+    /** Initializes built-in maps before dependent registries are populated. */
     public static void bootstrap() {}
 
     /**
@@ -426,74 +320,45 @@ public class MachineRecipeMaps {
         return aStack == null || aStack.isEmpty();
     }
 
-    private static ItemStack nn(ItemStack aStack) {
-        return aStack == null ? ItemStack.EMPTY : aStack;
-    }
-
-    private static FluidStack water(long aAmount) {
-        return new FluidStack(Fluids.WATER, (int) Math.max(1, Math.min(Integer.MAX_VALUE, aAmount)));
-    }
-
     // ── Pulverizing (Crusher + Shredder) ──────────────────────────────────
 
-    public static boolean pulverizing(ItemStack aInput, ItemStack aOutput1)                                          {return pulverizing(aInput, aOutput1, null, 0, false);}
-    public static boolean pulverizing(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2)                      {return pulverizing(aInput, aOutput1, aOutput2, 100, false);}
-    public static boolean pulverizing(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance)         {return pulverizing(aInput, aOutput1, aOutput2, aChance, false);}
-    public static boolean pulverizing(ItemStack aInput, ItemStack aOutput1, boolean aOverwrite)                      {return pulverizing(aInput, aOutput1, null, 0, aOverwrite);}
-    public static boolean pulverizing(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, boolean aOverwrite)  {return pulverizing(aInput, aOutput1, aOutput2, 100, aOverwrite);}
-    public static boolean pulverizing(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance, boolean aOverwrite) {return pulverizing(aInput, aOutput1, aOutput2, aChance, null, 0, aOverwrite);}
-
-    /**
-     * Registers a pulverization recipe (Crusher + Shredder).
-     * Chances are in percent (like the original: {@code 100} = 100%); {@code <= 0} defaults to 10%.
-     */
-    public static boolean pulverizing(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance2, ItemStack aOutput3, int aChance3, boolean aOverwrite) {
-        if (invalid(aInput) || invalid(aOutput1)) return false;
-        if (aOverwrite) {
-            Crusher.removeRecipesByInput(aInput);
-            Shredder.removeRecipesByInput(aInput);
-        }
-        long[] tChances = {10000, (aChance2 <= 0 ? 10 : aChance2) * 100L, (aChance3 <= 0 ? 10 : aChance3) * 100L};
-        Crusher .addRecipe1(true, 16, 64, tChances, aInput, aOutput1, nn(aOutput2), nn(aOutput3));
-        Shredder.addRecipe1(true, 16, 64, tChances, aInput, aOutput1, nn(aOutput2), nn(aOutput3));
-        return true;
+    public static boolean pulverizing(ItemStack input, ItemStack output) {
+        return pulverizing(input, output, ItemStack.EMPTY, 0);
     }
 
-    // ── Mortar (Mortar + Shredder) ────────────────────────────────────────
-
-    public static boolean mortarize(ItemStack aInput, ItemStack aOutput)                                   {return mortarize(1, aInput, aOutput, ItemStack.EMPTY);}
-    public static boolean mortarize(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2)              {return mortarize(1, aInput, aOutput1, aOutput2);}
-    public static boolean mortarize(long aPower, ItemStack aInput, ItemStack aOutput)                      {return mortarize(aPower, aInput, aOutput, ItemStack.EMPTY);}
-    public static boolean mortarize(long aPower, ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2) {
-        if (invalid(aInput) || invalid(aOutput1)) return false;
-        Mortar  .addRecipe1(true, 16, 16 * aPower, aInput, aOutput1, nn(aOutput2));
-        Shredder.addRecipe1(true, 16, 16 * aPower, aInput, aOutput1, nn(aOutput2));
+    /** Registers a Crusher and Shredder row with a by-product chance in percent. */
+    public static boolean pulverizing(ItemStack input, ItemStack output, ItemStack byProduct, int chancePercent) {
+        if (invalid(input) || invalid(output)) return false;
+        long chance = (chancePercent <= 0 ? 10 : chancePercent) * 100L;
+        var recipe = RecipeBuilder.of(16, 64)
+                .itemInputs(input)
+                .itemOutputs(output, byProduct)
+                .chances(10000, chance)
+                .optimize(true);
+        Crusher.register(recipe);
+        Shredder.register(recipe);
         return true;
     }
 
     // ── Smelting (vanilla-style furnace results -> RM.Furnace) ────────────
 
-    public static boolean add_smelting(ItemStack aInput, ItemStack aOutput)                                            {return add_smelting(aInput, aOutput, 0, true);}
-    public static boolean add_smelting(ItemStack aInput, ItemStack aOutput, boolean aRemoveOthers)                     {return add_smelting(aInput, aOutput, 0, aRemoveOthers);}
-    public static boolean add_smelting(ItemStack aInput, ItemStack aOutput, boolean aRemoveOthers, boolean aSmoker, boolean aBlast) {return add_smelting(aInput, aOutput, 0, aRemoveOthers, aSmoker, aBlast);}
-    public static boolean add_smelting(ItemStack aInput, ItemStack aOutput, float aEXP)                                {return add_smelting(aInput, aOutput, aEXP, true);}
-    public static boolean add_smelting(ItemStack aInput, ItemStack aOutput, float aEXP, boolean aRemoveOthers)         {return add_smelting(aInput, aOutput, aEXP, aRemoveOthers, false, false);}
+    /** Adds a furnace row using the map's ordinary collision rules. */
+    public static boolean addSmelting(ItemStack input, ItemStack output) {
+        return registerSmelting(input, output, false);
+    }
 
-    /**
-     * Registers a furnace smelting recipe directly into {@link #Furnace}.
-     * The smoker/blast furnace and EXP parameters are accepted for source compatibility
-     * but currently ignored (vanilla recipe conversion happens in Loader_OvenRecipes).
-     * <p>
-     * GT6 {@code Loader_Recipes_Furnace}: an output material flagged
-     * {@code TD.Processing.NEVER_FURNACE} (Iron, Wrought Iron, Steel, Titanium, Tungsten — the
-     * metals that must be melted in a crucible) is <em>un-smelted</em>: the recipe yields
-     * {@code scrapGt} of that material instead of the metal itself.
-     * </p>
-     */
-    public static boolean add_smelting(ItemStack aInput, ItemStack aOutput, float aEXP, boolean aRemoveOthers, boolean aSmoker, boolean aBlast) {
-        if (invalid(aInput) || invalid(aOutput)) return false;
-        if (aRemoveOthers) removePlainSmelting(aInput);
-        return Furnace.addRecipe1(true, 16, 16, aInput, neverFurnaceOutput(aOutput)) != null;
+    /** Replaces plain furnace rows for this input and keeps its fluid-consuming variants. */
+    public static boolean replaceSmelting(ItemStack input, ItemStack output) {
+        return registerSmelting(input, output, true);
+    }
+
+    private static boolean registerSmelting(ItemStack input, ItemStack output, boolean replacePlain) {
+        if (invalid(input) || invalid(output)) return false;
+        if (replacePlain) removePlainSmelting(input);
+        return Furnace.register(RecipeBuilder.of(16, 16)
+                .itemInputs(input)
+                .itemOutputs(neverFurnaceOutput(output))
+                .optimize(true)) != null;
     }
 
     /**
@@ -540,53 +405,27 @@ public class MachineRecipeMaps {
                 && materialItem.getMaterial().resolve().has(MaterialProperty.NEVER_FURNACE);
     }
 
-    /** Removes all {@link #Furnace} recipes using the given input. */
-    public static boolean rem_smelting(ItemStack aInput) {
-        if (invalid(aInput)) return false;
-        return Furnace.removeRecipesByInput(aInput);
-    }
-
     // ── Generifier ────────────────────────────────────────────────────────
+
+    private static final RecipeMap.Registration GENERIFICATION = RecipeMap.Registration.DEFAULT.withLogErrors(false);
 
     public static boolean generify(ItemStack aStack1, ItemStack aStack2) {
         if (invalid(aStack1) || invalid(aStack2)) return false;
-        return Generifier.addRecipe1(false, true, false, false, false, 0, 1, aStack1, aStack2) != null;
+        return Generifier.register(RecipeBuilder.of(0, 1).itemInputs(aStack1).itemOutputs(aStack2),
+                GENERIFICATION) != null;
     }
 
-    public static boolean genericycle(ItemStack... aStacks) {
-        java.util.List<ItemStack> tList = new java.util.ArrayList<>();
-        if (aStacks != null) for (ItemStack tStack : aStacks) if (!invalid(tStack)) tList.add(tStack);
-        if (tList.size() < 2) return false;
-        for (int i = 0; i < tList.size(); i++) generify(tList.get(i), tList.get((i + 1) % tList.size()));
+    // ── Pressure washing ──────────────────────────────────────────────────
+
+    public static boolean pressurewash(ItemStack input, ItemStack output) {
+        if (invalid(input) || invalid(output)) return false;
+        PressureWasher.register(RecipeBuilder.of(16, 64)
+                .itemInputs(input)
+                .itemOutputs(output)
+                .fluidInputs(new FluidStack(Fluids.WATER, 200))
+                .optimize(true));
         return true;
     }
-
-    public static boolean generify(FluidStack aFluid1, FluidStack aFluid2) {
-        if (aFluid1 == null || aFluid1.isEmpty() || aFluid2 == null || aFluid2.isEmpty()) return false;
-        return Generifier.addRecipe0(false, true, false, false, false, 0, 1, aFluid1, aFluid2, RecipeMap.ZL_IS) != null;
-    }
-
-    public static boolean genericycle(FluidStack... aFluids) {
-        java.util.List<FluidStack> tList = new java.util.ArrayList<>();
-        if (aFluids != null) for (FluidStack tFluid : aFluids) if (tFluid != null && !tFluid.isEmpty()) tList.add(tFluid);
-        if (tList.size() < 2) return false;
-        for (int i = 0; i < tList.size(); i++) generify(tList.get(i), tList.get((i + 1) % tList.size()));
-        return true;
-    }
-
-    // ── Pressure washing / debarking ──────────────────────────────────────
-
-    public static boolean pressurewash(ItemStack aInput, ItemStack... aOutputs)                            {return pressurewash(16, 64, 200, aInput, aOutputs);}
-    public static boolean pressurewash(long aEUt, long aDuration, ItemStack aInput, ItemStack... aOutputs) {return pressurewash(aEUt, aDuration, 1000, aInput, aOutputs);}
-    public static boolean pressurewash(long aEUt, long aDuration, long aWater, ItemStack aInput, ItemStack... aOutputs) {
-        if (invalid(aInput) || aOutputs == null || aOutputs.length <= 0 || invalid(aOutputs[0])) return false;
-        PressureWasher.addRecipe1(true, aEUt, aDuration, aInput, water(aWater < 1 ? 1 : aWater), (FluidStack) null, aOutputs);
-        return true;
-    }
-
-    @Deprecated public static boolean debarking(ItemStack aInput, ItemStack... aOutputs)                            {return pressurewash(16, 64, 1000, aInput, aOutputs);}
-    @Deprecated public static boolean debarking(long aEUt, long aDuration, ItemStack aInput, ItemStack... aOutputs) {return pressurewash(aEUt, aDuration, 1000, aInput, aOutputs);}
-    @Deprecated public static boolean debarking(long aEUt, long aDuration, long aWater, ItemStack aInput, ItemStack... aOutputs) {return pressurewash(aEUt, aDuration, aWater, aInput, aOutputs);}
 
     // ── Sawing (Cutter) ───────────────────────────────────────────────────
 
@@ -598,30 +437,9 @@ public class MachineRecipeMaps {
         for (var variant : gregtech.content.recipe.RecipeInputGroups.coolants(aIsFoodItem)) {
             var coolant = gregtech.content.recipe.DyeProcessingRecipes.fluid(variant.field(), Math.toIntExact(amount * variant.multiplier()));
             var recipe = new gregtech.engine.recipe.Recipe(new ItemStack[]{aInput}, aOutputs,
-                    null, null, new FluidStack[]{coolant}, null, aDuration * variant.multiplier(), aEUt, 0).withEmptyContainerInputs();
+                    null, new FluidStack[]{coolant}, null, aDuration * variant.multiplier(), aEUt, 0).withEmptyContainerInputs();
             registered |= Cutter.addRecipe(variant.apply(recipe)) != null;
         }
         return registered;
     }
-
-    // ── Lathing ───────────────────────────────────────────────────────────
-
-    public static boolean lathing(long aEUt, long aDuration, ItemStack aInput, ItemStack... aOutputs) {
-        if (invalid(aInput) || aOutputs == null || aOutputs.length <= 0 || invalid(aOutputs[0])) return false;
-        Lathe.addRecipe1(true, aEUt, aDuration, aInput, aOutputs);
-        return true;
-    }
-//? if >=1.21.1 {
-//?} else {
-    private static gregtech.engine.recipe.RecipeMap fromDefinition(gregtech.content.recipe.RecipeMapSpec spec) {
-        var map=new gregtech.engine.recipe.RecipeMap(null,spec.mNameInternal,spec.mNameLocal,spec.mGUIPath,
-                spec.mInputItemsCount,spec.mOutputItemsCount,spec.mMinimalInputItems,
-                spec.mInputFluidCount,spec.mOutputFluidCount,spec.mMinimalInputFluids,spec.mMinimalInputs,
-                spec.mNeedsOutputs,spec.mCombinePower,spec.mUseBucketSizeIn,spec.mUseBucketSizeOut);
-        map.viewer(spec.mViewerAllowed,spec.mShowVoltageAmperage);
-        map.specialValueLabel(spec.mSpecialValuePre,spec.mSpecialValueMultiplier,spec.mSpecialValuePost);
-        map.potions(spec.mInputPotionCount);
-        if(spec.mInstantRecipes)map.instantRecipes();return map;
-    }
-//?}
 }

@@ -59,7 +59,7 @@ public final class CapsuleCellRecipes {
                 outputs.add(output);
             }
             if(outputs.isEmpty())continue;
-            var recipe=new Recipe(new ItemStack[]{input},outputs.toArray(ItemStack[]::new),null,null,null,null,
+            var recipe=new Recipe(new ItemStack[]{input},outputs.toArray(ItemStack[]::new),null,null,null,
                     plan.duration(),16,0)
                     .withMaterialRecovery()
                     .withSource("recovery:capsule");

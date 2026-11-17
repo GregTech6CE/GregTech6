@@ -215,7 +215,7 @@ public final class AutocraftingRecipes {
             inputs.add(input.sample().copyWithCount(Math.max(1, input.count())));
         }
         ItemStack[] products = plan.outputs().stream().map(v -> v.sample().copyWithCount(v.count())).toArray(ItemStack[]::new);
-        Recipe result = new Recipe(inputs.toArray(ItemStack[]::new), products, null, null, null, null,
+        Recipe result = new Recipe(inputs.toArray(ItemStack[]::new), products, null, null, null,
                 plan.duration(), AutocraftingRules.POWER, 0);
         result.mExactItemInputs = true;
         result.mExplicitCatalystsOnly = true;

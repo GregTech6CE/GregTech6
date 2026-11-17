@@ -6,6 +6,7 @@ import gregtech.content.blockentity.inventory.EnderGarbageDumpBlockEntity;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.blockentity.machine.FuelGeneratorBlockEntity;
 import gregtech.content.blockentity.machine.TankBlockEntity;
+import gregtech.content.recipe.RecipeMapSpec;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.world.GarbageData;
 import gregtech.engine.machine.MachineInventory;
@@ -40,8 +41,10 @@ public final class FluidToolAccessTests {
 
     @GameTest(template = "test_empty", timeoutTicks = 40)
     public static void toolAccessDrainsOutputTanksBeforeInputs(GameTestHelper helper) {
-        var map = new RecipeMap(null, "gt6ce_test_fluid_tool", "Tool Access", "textures/gui/test",
-                1, 0, 0, 1, 1, 0, 0, false, false, false, false);
+        var map = new RecipeMap(RecipeMapSpec.builder("gt6ce_test_fluid_tool", "Tool Access", "textures/gui/test")
+                .items(1, 0, 0)
+                .fluids(1, 1, 0)
+                .build());
         try {
             var inventory = new MachineInventory(map, 1, () -> {});
             inventory.tanksOutput()[0].setFluid(new FluidStack(Fluids.LAVA, 500));

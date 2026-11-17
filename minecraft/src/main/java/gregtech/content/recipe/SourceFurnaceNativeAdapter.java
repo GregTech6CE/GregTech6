@@ -13,6 +13,7 @@ import gregtech.content.registry.GTBlocks;
 import gregtech.engine.material.MaterialFormItem;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.util.OM;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
@@ -74,10 +75,12 @@ final class SourceFurnaceNativeAdapter {
 
         private boolean admitOutput(ItemStack output) {
             if (input.isEmpty() || output.isEmpty()) return false;
-            // Same ordinary adapter as add_smelting(removeOthers=false), retaining the returned object.
+            // Same ordinary adapter as addSmelting, retaining the returned object.
             // Its pre-existing NEVER_FURNACE output conversion is deliberately outside this correction.
-            Recipe accepted = MachineRecipeMaps.Furnace.addRecipe1(true, 16, 16, input,
-                    MachineRecipeMaps.neverFurnaceOutput(output));
+            Recipe accepted = MachineRecipeMaps.Furnace.register(RecipeBuilder.of(16, 16)
+                    .optimize(true)
+                    .itemInputs(input)
+                    .itemOutputs(MachineRecipeMaps.neverFurnaceOutput(output)));
             if (accepted == null) return false;
             PASSIVE_COOKING.put(accepted, new FurnaceSmeltingRecipes.CookingData(0, food));
             return true;

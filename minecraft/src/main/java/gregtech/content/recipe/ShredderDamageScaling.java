@@ -38,7 +38,6 @@ final class ShredderDamageScaling {
             var resolved = new Recipe(
                             new ItemStack[] {input.copyWithCount(1)},
                             outputs.toArray(ItemStack[]::new),
-                            template.mSpecialItems,
                             null,
                             null,
                             null,
@@ -92,7 +91,6 @@ final class ShredderDamageScaling {
             return new Recipe(
                             new ItemStack[] {input.copyWithCount(1)},
                             outputs.toArray(ItemStack[]::new),
-                            null,
                             null,
                             null,
                             null,

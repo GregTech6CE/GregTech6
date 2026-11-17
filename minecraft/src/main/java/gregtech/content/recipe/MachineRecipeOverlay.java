@@ -390,7 +390,7 @@ public final class MachineRecipeOverlay {
         for (int i = 0; i < fluidInputs.length; i++) copiedFluidInputs[i] = fluidInputs[i].copy();
         var copiedFluidOutputs = new FluidStack[fluidOutputs.length];
         for (int i = 0; i < fluidOutputs.length; i++) copiedFluidOutputs[i] = fluidOutputs[i].copy();
-        var recipe = new Recipe(items, copiedOutputs, null, chances, copiedFluidInputs, copiedFluidOutputs,
+        var recipe = new Recipe(items, copiedOutputs, chances, copiedFluidInputs, copiedFluidOutputs,
                 spec.duration(), gregtech.content.data.FuelRecipeMaps.storedEu(map, spec.euPerTick()), spec.special())
                 .withPriority(spec.priority());
         for (int i = 0; i < spec.itemInputs().size(); i++)
@@ -416,8 +416,8 @@ public final class MachineRecipeOverlay {
             }
             return;
         }
-        if (gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
-                map, recipe, source, true, false, false, false) == null) tally.rejected++;
+        if (gregtech.engine.recipe.MachineRecipeAdapter.addStatic(map, recipe, source,
+                RecipeMap.Registration.DEFAULT.withLogErrors(false)) == null) tally.rejected++;
         else {
             tally.added++;
             if (spec.priority() != 0) tally.priority++;

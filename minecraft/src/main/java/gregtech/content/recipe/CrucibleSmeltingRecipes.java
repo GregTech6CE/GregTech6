@@ -13,6 +13,8 @@ import gregtech.util.OM;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import gregtech.engine.recipe.RecipeBuilder;
+import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -131,17 +133,11 @@ public final class CrucibleSmeltingRecipes {
             MISSING.add(form + " of " + preview.material().getName());
             return 0;
         }
-        return MachineRecipeMaps.CrucibleSmelting.addFakeRecipe(
-                                false,
-                                new ItemStack[] {input},
-                                new ItemStack[] {output},
-                                null,
-                                null,
-                                null,
-                                null,
-                                0,
-                                0,
-                                preview.temperatureK())
+        return MachineRecipeMaps.CrucibleSmelting.register(RecipeBuilder.of(0, 0)
+                .itemInputs(input)
+                .itemOutputs(output)
+                .specialValue(preview.temperatureK()),
+                RecipeMap.Registration.DISPLAY)
                         == null
                 ? 0
                 : 1;

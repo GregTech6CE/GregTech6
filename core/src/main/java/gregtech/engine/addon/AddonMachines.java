@@ -240,22 +240,15 @@ public final class AddonMachines {
     /** The one path from a recipe or fuel table to the installed spec. */
     public static RecipeMapSpec spec(RecipeTable table) {
         Objects.requireNonNull(table, "table");
-        return new RecipeMapSpec(
-                null,
-                table.name(),
-                table.title(),
-                table.gui(),
-                table.inputItems(),
-                table.outputItems(),
-                table.minimalInputItems(),
-                table.inputFluids(),
-                table.outputFluids(),
-                table.minimalInputFluids(),
-                table.minimalInputs(),
-                table.needsOutputs(),
-                table.combinePower(),
-                table.bucketIn(),
-                table.bucketOut());
+        return RecipeMapSpec.builder(table.name(), table.title(), table.gui())
+                .items(table.inputItems(), table.outputItems(), table.minimalInputItems())
+                .fluids(table.inputFluids(), table.outputFluids(), table.minimalInputFluids())
+                .minimumInputs(table.minimalInputs())
+                .needsOutputs(table.needsOutputs())
+                .combinePower(table.combinePower())
+                .bucketInput(table.bucketIn())
+                .bucketOutput(table.bucketOut())
+                .build();
     }
 
     private static MachineFaceMasks faces(RecipeMachine machine) {

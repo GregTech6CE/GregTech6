@@ -14,7 +14,7 @@ import gregtech.engine.machine.PipeSpec;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.MaterialUnitRecipe;
 import gregtech.engine.recipe.Recipe;
-import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.platform.Mc;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -137,7 +137,10 @@ public final class PipeRecipes {
             ItemStack four = medium.copy();
             four.setCount(4);
             ItemStack tag = new ItemStack(GTTechnological.selectorTag(4));
-            Recipe pack = MachineRecipeMaps.Boxinator.addRecipe2(true, 16, 16, four, tag, quadruple.copy());
+            Recipe pack = MachineRecipeMaps.Boxinator.register(RecipeBuilder.of(16, 16)
+                    .optimize(true)
+                    .itemInputs(four, tag)
+                    .itemOutputs(quadruple.copy()));
             if (pack != null)
                 ENTRIES.add(new Entry(
                         material.getName(),
@@ -145,7 +148,10 @@ public final class PipeRecipes {
                         quadruple.getItem().toString(),
                         false,
                         pack));
-            Recipe unpack = MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, quadruple.copy(), four.copy());
+            Recipe unpack = MachineRecipeMaps.Unboxinator.register(RecipeBuilder.of(16, 16)
+                    .optimize(true)
+                    .itemInputs(quadruple.copy())
+                    .itemOutputs(four.copy()));
             if (unpack != null)
                 ENTRIES.add(new Entry(
                         material.getName(),
@@ -158,7 +164,10 @@ public final class PipeRecipes {
             ItemStack nine = small.copy();
             nine.setCount(9);
             ItemStack tag = new ItemStack(GTTechnological.selectorTag(9));
-            Recipe pack = MachineRecipeMaps.Boxinator.addRecipe2(true, 16, 16, nine.copy(), tag, nonuple.copy());
+            Recipe pack = MachineRecipeMaps.Boxinator.register(RecipeBuilder.of(16, 16)
+                    .optimize(true)
+                    .itemInputs(nine.copy(), tag)
+                    .itemOutputs(nonuple.copy()));
             if (pack != null)
                 ENTRIES.add(new Entry(
                         material.getName(),
@@ -166,7 +175,10 @@ public final class PipeRecipes {
                         nonuple.getItem().toString(),
                         false,
                         pack));
-            Recipe unpack = MachineRecipeMaps.Unboxinator.addRecipe1(true, 16, 16, nonuple.copy(), nine.copy());
+            Recipe unpack = MachineRecipeMaps.Unboxinator.register(RecipeBuilder.of(16, 16)
+                    .optimize(true)
+                    .itemInputs(nonuple.copy())
+                    .itemOutputs(nine.copy()));
             if (unpack != null)
                 ENTRIES.add(new Entry(
                         material.getName(),
@@ -211,8 +223,11 @@ public final class PipeRecipes {
         long ticks = PipeWeldingRules.ticks(material, row);
 
         ItemStack tag = new ItemStack(GTTechnological.selectorTag(row.circuit()));
-        var template = RecipeMap.make(
-                true, new ItemStack[] {input, tag}, new ItemStack[] {output}, null, null, null, null, ticks, 16, 0);
+        var template = RecipeBuilder.of(16, ticks)
+                .optimize(true)
+                .itemInputs(input, tag)
+                .itemOutputs(output)
+                .build();
         if (template == null) return;
         int batchCount = template.mInputs[0].getCount();
         long required = Math.multiplyExact(MaterialPrefix.plateCurved.getMaterialWeight(), batchCount);

@@ -21,6 +21,7 @@ import gregtech.engine.material.MaterialStackItemHelper;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.recipe.chem.ChemFluid;
 import gregtech.engine.recipe.chem.ChemIngredient;
@@ -200,9 +201,15 @@ public final class ChemRecipeResolver {
         for (int i = 0; i < chances.length; i++) chances[i] = outputChances.get(i);
 
         Recipe recipe = optimize
-                ? RecipeMap.make(true, inputs.toArray(RecipeMap.ZL_IS), outputs, null, chances,
-                fluidInputs.toArray(RecipeMap.ZL_FS), fluidOutputs.toArray(RecipeMap.ZL_FS), row.ticks(), row.eut(), 0)
-                : new Recipe(inputs.toArray(RecipeMap.ZL_IS), outputs, null, chances,
+                ? RecipeBuilder.of(row.eut(), row.ticks())
+                        .optimize(true)
+                        .itemInputs(inputs.toArray(RecipeMap.ZL_IS))
+                        .fluidInputs(fluidInputs.toArray(RecipeMap.ZL_FS))
+                        .itemOutputs(outputs)
+                        .fluidOutputs(fluidOutputs.toArray(RecipeMap.ZL_FS))
+                        .chances(chances)
+                        .build()
+                : new Recipe(inputs.toArray(RecipeMap.ZL_IS), outputs, chances,
                 fluidInputs.toArray(RecipeMap.ZL_FS), fluidOutputs.toArray(RecipeMap.ZL_FS), row.ticks(), row.eut(), 0);
         if (recipe == null) throw new IllegalStateException("optimized chemistry row collapsed");
         recipe.withSource(row.source());

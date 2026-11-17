@@ -78,7 +78,7 @@ public final class BatteryCellRecipes {
             }
             // RM - canning runs at 16 EU/t for 16 ticks
             Recipe recipe = MachineRecipeMaps.Canner.addRecipe(new Recipe(
-                    new ItemStack[]{empty.copy()}, new ItemStack[]{filled}, null, null,
+                    new ItemStack[]{empty.copy()}, new ItemStack[]{filled}, null,
                     new FluidStack[]{fluid}, null, 16, 16, 0));
             if (recipe != null) ENTRIES.add(fill.empty() + " + " + fluid.getAmount() + " mB "
                     + fluid.getFluid().getFluidType().getDescriptionId() + " -> " + fill.filled());

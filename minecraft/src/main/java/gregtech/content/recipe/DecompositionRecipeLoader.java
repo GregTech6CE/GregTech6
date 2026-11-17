@@ -20,6 +20,7 @@ import gregtech.engine.material.MaterialStackItemHelper;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.MaterialDecompositionPlanner;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.util.OM;
 import java.util.ArrayList;
@@ -263,17 +264,13 @@ public final class DecompositionRecipeLoader implements InitializationStep {
             MaterialDecompositionPlanner.Plan plan) {
         ItemStack[] items = itemInput == null ? RecipeMap.ZL_IS : new ItemStack[] {itemInput};
         FluidStack[] fluids = fluidInput == null ? RecipeMap.ZL_FS : new FluidStack[] {fluidInput};
-        Recipe recipe = RecipeMap.make(
-                true,
-                items,
-                itemOutputs.toArray(RecipeMap.ZL_IS),
-                null,
-                RecipeMap.ZL_LONG,
-                fluids,
-                fluidOutputs.toArray(RecipeMap.ZL_FS),
-                plan.duration(),
-                plan.eut(),
-                0);
+        Recipe recipe = RecipeBuilder.of(plan.eut(), plan.duration())
+                .optimize(true)
+                .itemInputs(items)
+                .fluidInputs(fluids)
+                .itemOutputs(itemOutputs.toArray(RecipeMap.ZL_IS))
+                .fluidOutputs(fluidOutputs.toArray(RecipeMap.ZL_FS))
+                .build();
         if (recipe == null) return false;
 
         if (plan.electrolyserCatalyst()) {
@@ -285,7 +282,6 @@ public final class DecompositionRecipeLoader implements InitializationStep {
             recipe = new Recipe(
                     gated,
                     recipe.mOutputs,
-                    recipe.mSpecialItems,
                     recipe.mChances,
                     recipe.mFluidInputs,
                     recipe.mFluidOutputs,

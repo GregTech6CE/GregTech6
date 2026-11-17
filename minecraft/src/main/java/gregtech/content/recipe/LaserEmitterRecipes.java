@@ -65,7 +65,7 @@ public final class LaserEmitterRecipes {
             }
             // MultiItemTechnological - T, 16 EU/t, 128 ticks
             Recipe recipe = MachineRecipeMaps.Canner.addRecipe(new Recipe(
-                    new ItemStack[]{empty.copy()}, new ItemStack[]{filled}, null, null,
+                    new ItemStack[]{empty.copy()}, new ItemStack[]{filled}, null,
                     new FluidStack[]{fluid}, null, 128, 16, 0));
             if (recipe != null) ENTRIES.add(gas[0] + " -> " + gas[1]);
         }

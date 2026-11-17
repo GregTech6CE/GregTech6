@@ -177,7 +177,7 @@ public final class FurnaceSmeltingRecipes {
         long experience = row.exp() ? FurnaceSmeltingRules.experience(target, material.getToolQuality()) : 0;
         boolean food = MaterialWorkability.isFood(material);
         // GT6 passes aRemoveOthers = !RUNNING, and RUNNING is true while the loader registers.
-        if (MachineRecipeMaps.add_smelting(input, output, experience, false, food, !food)) {
+        if (MachineRecipeMaps.addSmelting(input, output)) {
             ENTRIES.add(new Entry(prefix.getName(), material, input, output));
             COOKING.put(input.getItem(), new CookingData(experience, food));
         }
@@ -206,7 +206,7 @@ public final class FurnaceSmeltingRecipes {
 
     private static void glassRow(String prefix, GTMaterial material, ItemStack input, ItemStack output) {
         if (input.isEmpty()) return;
-        if (MachineRecipeMaps.add_smelting(input, output, 0, false, false, false)) {
+        if (MachineRecipeMaps.addSmelting(input, output)) {
             ENTRIES.add(new Entry(prefix, material, input, output));
             // No cooking metadata: these explicit rows are furnace-only, not blast-furnace rows.
         }
@@ -228,7 +228,7 @@ public final class FurnaceSmeltingRecipes {
                 ItemStack input = GTItems.getStack(from, material, 1);
                 ItemStack output = GTItems.getStack(to, ceramic, 1);
                 if (input.isEmpty() || output.isEmpty()) continue;
-                if (MachineRecipeMaps.add_smelting(input, output, 0, false, false, true)) {
+                if (MachineRecipeMaps.addSmelting(input, output)) {
                     ENTRIES.add(new Entry(from.getName(), material, input, output));
                 }
             }
@@ -236,7 +236,7 @@ public final class FurnaceSmeltingRecipes {
             ItemStack clayIngot = ingot == null ? ItemStack.EMPTY : GTItems.getStack(ingot, material, 1);
             if (!clayIngot.isEmpty()) {
                 ItemStack brick = new ItemStack(Items.BRICK);
-                if (MachineRecipeMaps.add_smelting(clayIngot, brick, 0, false, false, true)) {
+                if (MachineRecipeMaps.addSmelting(clayIngot, brick)) {
                     ENTRIES.add(new Entry("ingot", material, clayIngot, brick));
                 }
             }

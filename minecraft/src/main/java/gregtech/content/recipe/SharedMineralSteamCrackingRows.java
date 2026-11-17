@@ -133,7 +133,7 @@ public final class SharedMineralSteamCrackingRows {
                 // Preserve source output slots and aligned 100/40/40 chances, including absent
                 // dust slots and repeated byproducts. Fluid outputs are not chance-rolled.
                 definitions.add(new Recipe(new ItemStack[]{scale == 9 ? whole.copy() : tiny.copy()},
-                        outputs, null, new long[]{10000, 4000, 4000},
+                        outputs, new long[]{10000, 4000, 4000},
                         new FluidStack[]{steam, waxFluid}, fluids.toArray(FluidStack[]::new), 16L * scale, 16, 0));
                 count++;
             }

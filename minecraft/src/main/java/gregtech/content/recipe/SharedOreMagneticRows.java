@@ -7,6 +7,7 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -50,8 +51,11 @@ public final class SharedOreMagneticRows {
   catch(RuntimeException|Error failure){clear();throw failure;}
  }
  record Definition(boolean optimize,ItemStack input,ItemStack[] outputs,long[] chances,long duration,long power){
-  Recipe admit(){return MachineRecipeMaps.MagneticSeparator.addRecipe(optimize,new ItemStack[]{input},outputs,null,
-      chances,new FluidStack[0],new FluidStack[0],duration,power,0);}
+  Recipe admit(){return MachineRecipeMaps.MagneticSeparator.register(RecipeBuilder.of(power, duration)
+          .optimize(optimize)
+          .itemInputs(input)
+          .itemOutputs(outputs)
+          .chances(chances));}
  }
  static List<Definition> definitions(Collection<GTMaterial> selected,Snapshot snapshot){
   var out=new ArrayList<Definition>();

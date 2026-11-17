@@ -60,7 +60,6 @@ public final class DynamiteMixerRecipes {
                 new ItemStack[] {input},
                 new ItemStack[] {output},
                 null,
-                null,
                 new FluidStack[] {fluid},
                 null,
                 ticks,

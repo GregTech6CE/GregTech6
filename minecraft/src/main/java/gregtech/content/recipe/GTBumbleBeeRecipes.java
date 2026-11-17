@@ -1,6 +1,8 @@
 package gregtech.content.recipe;
 
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
+import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.bumble.BumbleBeeType;
 import gregtech.content.bumble.GTBumbleSpecies;
 import gregtech.content.material.Materials;
@@ -155,9 +157,11 @@ public final class GTBumbleBeeRecipes {
                     ItemStack scanned = BumbleBeeType.stack(species, type.scannedVariant(), null, 1);
                     if (bee.isEmpty() || scanned.isEmpty()) continue;
                     // GT6 passes F as the collision flag; the row is display only.
-                    Recipe row = MachineRecipeMaps.Bumblelyzer.addFakeRecipe(false,
-                            new ItemStack[]{bee, plate.copy()}, new ItemStack[]{scanned}, null,
-                            new FluidStack[]{fluid.copy()}, null, SCAN_TICKS, SCAN_EU, 0);
+                    Recipe row = MachineRecipeMaps.Bumblelyzer.register(RecipeBuilder.of(SCAN_EU, SCAN_TICKS)
+                            .itemInputs(bee, plate.copy())
+                            .fluidInputs(fluid.copy())
+                            .itemOutputs(scanned),
+                            RecipeMap.Registration.DISPLAY);
                     if (row != null) DISPLAY_ROWS.add(row);
                 }
             }
@@ -234,7 +238,7 @@ public final class GTBumbleBeeRecipes {
         return new Recipe(
                 new ItemStack[]{bee.copyWithCount(1), plate},
                 new ItemStack[]{output},
-                null, null,
+                null,
                 new FluidStack[]{consumed},
                 null,
                 SCAN_TICKS, SCAN_EU, 0);
@@ -250,7 +254,7 @@ public final class GTBumbleBeeRecipes {
         return new Recipe(
                 new ItemStack[]{bee.copyWithCount(1)},
                 new ItemStack[]{bee.copyWithCount(1)},
-                null, null, null, null,
+                null, null, null,
                 PASS_TICKS, PASS_EU, 0);
     }
 

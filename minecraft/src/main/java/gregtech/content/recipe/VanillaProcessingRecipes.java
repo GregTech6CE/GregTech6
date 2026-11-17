@@ -109,7 +109,7 @@ public final class VanillaProcessingRecipes {
 
     private void compress(ItemStack input, ItemStack output, long duration, long usage) {
         if (input.isEmpty() || output.isEmpty()) throw new IllegalStateException("Missing compression material form");
-        Recipe recipe = new Recipe(new ItemStack[]{input}, new ItemStack[]{output}, null, null, null, null, duration, usage, 0);
+        Recipe recipe = new Recipe(new ItemStack[]{input}, new ItemStack[]{output}, null, null, null, duration, usage, 0);
         if (MachineRecipeMaps.Compressor.addRecipe(recipe) != null) registered++;
     }
 
@@ -126,7 +126,7 @@ public final class VanillaProcessingRecipes {
 
     private void add(RecipeMap map, ItemStack input, ItemStack[] outputs, long[] chances, FluidStack[] fluids, long duration) {
         if (input.isEmpty()) return; // Unregistered material forms remain explicit port gaps.
-        Recipe recipe = new Recipe(new ItemStack[]{input}, outputs, null, chances, null, fluids, duration, 16, 0);
+        Recipe recipe = new Recipe(new ItemStack[]{input}, outputs, chances, null, fluids, duration, 16, 0);
         if (map.addRecipe(recipe) != null) registered++;
     }
 

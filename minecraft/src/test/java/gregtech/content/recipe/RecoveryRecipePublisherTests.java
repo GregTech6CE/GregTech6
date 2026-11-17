@@ -191,7 +191,6 @@ public final class RecoveryRecipePublisherTests {
                         null,
                         null,
                         null,
-                        null,
                         16,
                         16,
                         0)

@@ -85,15 +85,14 @@ public final class AnvilRecipeDefinitions {
                 var recipe = new Recipe(
                         new ItemStack[] {in, second},
                         by.isEmpty() ? new ItemStack[] {out} : new ItemStack[] {out, by},
-                        null,
                         by.isEmpty() ? new long[] {10000} : new long[] {10000, 9000},
                         null,
                         null,
                         duration(Math.max(inputUnits, outputUnits), material.getToolQuality()),
                         64,
                         0);
-                recipe.mHidden = material.has(MaterialProperty.HIDDEN);
-                if (rule.map().addRecipe(recipe, true, false, recipe.mHidden) != null) count++;
+                var registration = RecipeMap.Registration.DEFAULT.withHidden(material.has(MaterialProperty.HIDDEN));
+                if (rule.map().addRecipe(recipe, registration) != null) count++;
             }
         }
         return count + AnvilForgingRecipes.register();

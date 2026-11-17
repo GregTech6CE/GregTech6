@@ -2,6 +2,7 @@
 /* Copyright (c) 2026 GregTech-6 Team */
 package gregtech.content.recipe;
 
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.FuelRecipeMaps;
 import gregtech.content.data.RegisteredFluids;
@@ -61,8 +62,14 @@ final class OriginalSupplementalFuelRecipes {
                 resolved = true;
                 if (seen.get(map).contains(input.getFluid())) continue;
                 var recipe = output2.isEmpty()
-                        ? map.addRecipe0(true, -row.eut(), row.duration(), input, output, RecipeMap.ZL_IS)
-                        : map.addRecipe0(true, -row.eut(), row.duration(), input, output, output2);
+                        ? map.register(RecipeBuilder.of(-row.eut(), row.duration())
+                                .optimize(true)
+                                .fluidInputs(input)
+                                .fluidOutputs(output))
+                        : map.register(RecipeBuilder.of(-row.eut(), row.duration())
+                                .optimize(true)
+                                .fluidInputs(input)
+                                .fluidOutputs(output, output2));
                 if (recipe == null) rejected++;
                 else {
                     seen.get(map).add(input.getFluid());

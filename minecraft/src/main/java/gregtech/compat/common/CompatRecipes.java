@@ -3,6 +3,7 @@ package gregtech.compat.common;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.engine.compat.CompatSpecs;
 import gregtech.content.recipe.DyeProcessingRecipes;
@@ -100,10 +101,12 @@ public final class CompatRecipes {
                 FluidStack fluid = fluid(row);
                 if (row.op() == CompatSpecs.Op.BATH && fluid == null) return;
                 for (var input : resolve(row.inputs().get(0), row.source())) {
-                    var recipe = row.op() == CompatSpecs.Op.BATH
-                            ? map.addRecipe1(row.optimize(), row.eut(), row.duration(), input.copy(), fluid.copy(), (FluidStack) null, copy(outputs))
-                            : map.addRecipe1(row.optimize(), row.eut(), row.duration(), input.copy(), copy(outputs));
-                    keep(map, row, recipe);
+                    var recipe = RecipeBuilder.of(row.eut(), row.duration())
+                            .itemInputs(input.copy())
+                            .itemOutputs(copy(outputs))
+                            .optimize(row.optimize());
+                    if (row.op() == CompatSpecs.Op.BATH) recipe.fluidInputs(fluid.copy());
+                    keep(map, row, map.register(recipe));
                 }
             }
             case TWO -> {
@@ -114,7 +117,10 @@ public final class CompatRecipes {
                     return;
                 }
                 for (var first : left) for (var second : right)
-                    keep(map, row, map.addRecipe2(row.optimize(), row.eut(), row.duration(), first.copy(), second.copy(), copy(outputs)));
+                    keep(map, row, map.register(RecipeBuilder.of(row.eut(), row.duration())
+                            .itemInputs(first.copy(), second.copy())
+                            .itemOutputs(copy(outputs))
+                            .optimize(row.optimize())));
             }
             case THREE -> {
                 if (row.inputs().size() != 3) {
@@ -130,8 +136,10 @@ public final class CompatRecipes {
                     return;
                 }
                 for (var a : first) for (var b : second) for (var c : third)
-                    keep(map, row, map.addRecipeX(row.optimize(), row.eut(), row.duration(),
-                            new ItemStack[] {a.copy(), b.copy(), c.copy()}, copy(outputs)));
+                    keep(map, row, map.register(RecipeBuilder.of(row.eut(), row.duration())
+                            .itemInputs(a.copy(), b.copy(), c.copy())
+                            .itemOutputs(copy(outputs))
+                            .optimize(row.optimize())));
             }
             case GENERIFY -> {
                 var from = resolve(row.inputs().get(0), row.source());

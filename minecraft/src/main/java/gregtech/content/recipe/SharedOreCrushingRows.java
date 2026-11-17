@@ -69,7 +69,6 @@ public final class SharedOreCrushingRows {
             group.template = new Recipe(
                     copies(accepted.mInputs),
                     copies(accepted.mOutputs),
-                    accepted.mSpecialItems,
                     accepted.mChances.clone(),
                     accepted.mFluidInputs.clone(),
                     accepted.mFluidOutputs.clone(),
@@ -94,7 +93,6 @@ public final class SharedOreCrushingRows {
                 && Arrays.stream(row.mOutputs).noneMatch(ItemStack::isEmpty)
                 && row.mFluidInputs.length == 0
                 && row.mFluidOutputs.length == 0
-                && row.mSpecialItems == null
                 && row.mSpecialValue == 0
                 && row.mEUt == 16
                 && row.mChances.length == outputs
@@ -261,7 +259,8 @@ public final class SharedOreCrushingRows {
 
     private static void restore(Group group) {
         if (group.original == null) return;
-        Recipe accepted = group.map.addRecipe(group.original, true, group.original.mFakeRecipe, group.original.mHidden);
+        Recipe accepted = group.map.addRecipe(group.original,
+                RecipeMap.Registration.DEFAULT.withFakeRecipe(group.original.mFakeRecipe).withHidden(group.original.mHidden));
         if (accepted != null) remember(group.map, accepted);
         else defer(group, "legacy-readmission-rejected");
     }
@@ -281,7 +280,8 @@ public final class SharedOreCrushingRows {
                     accepted.forEach(map::unlink);
                     accepted.clear();
                     Recipe restored =
-                            legacy == null ? null : map.addRecipe(legacy, true, legacy.mFakeRecipe, legacy.mHidden);
+                            legacy == null ? null : map.addRecipe(legacy,
+                                    RecipeMap.Registration.DEFAULT.withFakeRecipe(legacy.mFakeRecipe).withHidden(legacy.mHidden));
                     if (restored != null) accepted.add(restored);
                     return new Admission(false, accepted);
                 }
@@ -294,7 +294,8 @@ public final class SharedOreCrushingRows {
             // Keep any restored accepted identity owned, then propagate the real failure.
             if (legacy != null)
                 try {
-                    Recipe restored = map.addRecipe(legacy, true, legacy.mFakeRecipe, legacy.mHidden);
+                    Recipe restored = map.addRecipe(legacy,
+                            RecipeMap.Registration.DEFAULT.withFakeRecipe(legacy.mFakeRecipe).withHidden(legacy.mHidden));
                     if (restored != null) remember(map, restored);
                 } catch (RuntimeException | Error restoration) {
                     failure.addSuppressed(restoration);
