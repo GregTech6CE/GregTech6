@@ -37,9 +37,9 @@ public final class GlowtusProcessingRecipes extends OriginalRecipeBatch {
         // GT6 RM.mortarize sends the same 16/t × 16 tick row to both machines.
         ItemStack smallDust = mat(MaterialPrefix.dustSmall, "Glowstone", 1);
         add(colour + "/mortar", MachineRecipeMaps.Mortar, 16, 16,
-                items(glowtus.copy()), items(smallDust.copy()), null, null);
+                items(glowtus.copy()), items(smallDust.copy()));
         add(colour + "/shredder", MachineRecipeMaps.Shredder, 16, 16,
-                items(glowtus.copy()), items(smallDust.copy()), null, null);
+                items(glowtus.copy()), items(smallDust.copy()));
 
         // The 4 passed to RM.biomass scales its per-plant fluid amounts and duration.
         // It consumes one Glowtus in each recipe; the original stack size is a divisor.

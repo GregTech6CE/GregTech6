@@ -26,6 +26,10 @@ public abstract class OriginalRecipeBatch {
             ItemStack[] inputs, ItemStack[] outputs, FluidStack[] fluids, FluidStack[] results) {
         publish(id, map, new Recipe(inputs, outputs, null, null, fluids, results, ticks, power, 0));
     }
+    protected final void add(String id, RecipeMap map, long ticks, long power,
+            ItemStack[] inputs, ItemStack[] outputs) {
+        add(id, map, ticks, power, inputs, outputs, null, null);
+    }
     protected final void addCooled(String id, long ticks, long power, ItemStack[] inputs, ItemStack[] outputs,
             int amount, RecipeInputGroups.Coolant coolant) {
         publish(id, MachineRecipeMaps.Cutter, coolant.apply(new Recipe(inputs, outputs, null, null,

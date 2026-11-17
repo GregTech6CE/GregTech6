@@ -32,8 +32,16 @@ public final class GTStoneLayersGen {
         return new OreDef(material, indicators, chanceDiv, minY, maxY);
     }
 
-    private static void layer(String stoneType, String blockId, String material, boolean noDeep, OreDef... ores) {
-        LAYERS.add(new LayerDef(stoneType, blockId, material, noDeep, List.of(ores)));
+    private static void layer(String material, boolean noDeep, OreDef... ores) {
+        LAYERS.add(new LayerDef(null, null, material, noDeep, List.of(ores)));
+    }
+
+    private static void stoneLayer(String stoneType, String material, boolean noDeep, OreDef... ores) {
+        LAYERS.add(new LayerDef(stoneType, null, material, noDeep, List.of(ores)));
+    }
+
+    private static void blockLayer(String blockId, String material, boolean noDeep, OreDef... ores) {
+        LAYERS.add(new LayerDef(null, blockId, material, noDeep, List.of(ores)));
     }
 
     private static void contact(boolean bothSides, String a, String b, OreDef... ores) {
@@ -41,37 +49,35 @@ public final class GTStoneLayersGen {
     }
 
     static {
-        layer(null, "block_ore_anthracite", "Coal", true);
-        layer(null, "block_ore_lignite", "Lignite", true);
-        layer(null, "block_ore_salt", "NaCl", true);
-        layer(null, "block_ore_rocksalt", "KCl", true);
-        layer(null, "block_ore_bauxite", "Bauxite", true);
-        layer(null, "block_ore_oil", "Oilshale", true);
-        layer(null, "block_ore_gypsum", "Gypsum", true);
-        layer(null, "block_ore_milkyquartz", "MilkyQuartz", true);
-        layer(null, null, "Stone", false);
-        layer(null, null, "Stone", false);
-        layer(null, null, "Stone", false);
-        layer(null, null, "Stone", false);
-        layer(null, null, "Stone", false);
-        layer(null, null, "Stone", false);
-        layer(null, null, "Stone", false);
-        layer(null, null, "Stone", false);
-        layer(null, null, "Stone", false);
-        layer(null, null, "Stone", false);
-        layer(null, null, "Chert", false);
-        layer(null, null, "Chert", false);
-        layer(null, null, "Chert", false);
-        layer(null, null, "Pumice", false);
+        blockLayer("block_ore_anthracite", "Coal", true);
+        blockLayer("block_ore_lignite", "Lignite", true);
+        blockLayer("block_ore_salt", "NaCl", true);
+        blockLayer("block_ore_rocksalt", "KCl", true);
+        blockLayer("block_ore_bauxite", "Bauxite", true);
+        blockLayer("block_ore_oil", "Oilshale", true);
+        blockLayer("block_ore_gypsum", "Gypsum", true);
+        blockLayer("block_ore_milkyquartz", "MilkyQuartz", true);
+        layer("Stone", false);
+        layer("Stone", false);
+        layer("Stone", false);
+        layer("Stone", false);
+        layer("Stone", false);
+        layer("Stone", false);
+        layer("Stone", false);
+        layer("Stone", false);
+        layer("Stone", false);
+        layer("Stone", false);
+        layer("Chert", false);
+        layer("Chert", false);
+        layer("Chert", false);
+        layer("Pumice", false);
 
-        layer(null, null, "Stone", false, ore("Peridot", true, 64, 32, 64));
-        layer(null, null, "Dacite", false);
-        layer(null, null, "Dacite", false, ore("Nikolite", true, 32, 0, 20));
-        layer(null, null, "Stone", false);
-        layer(null, null, "Stone", false);
+        layer("Stone", false, ore("Peridot", true, 64, 32, 64));
+        layer("Dacite", false);
+        layer("Dacite", false, ore("Nikolite", true, 32, 0, 20));
+        layer("Stone", false);
+        layer("Stone", false);
         layer(
-                null,
-                null,
                 "Stone",
                 false,
                 ore("Emerald", false, 48, 16, 60),
@@ -87,8 +93,6 @@ public final class GTStoneLayersGen {
                 ore("Stone", false, 48, 0, 255),
                 ore("NaCl", false, 32, 50, 80));
         layer(
-                null,
-                null,
                 "Stone",
                 false,
                 ore("Fe2O3", true, 6, 30, 70),
@@ -104,71 +108,65 @@ public final class GTStoneLayersGen {
                 ore("TigerEyeBlue", true, 64, 32, 64),
                 ore("TigerEyeBlack", true, 64, 32, 64),
                 ore("TigerIron", true, 64, 32, 64));
-        layer(null, null, "Stone", false);
-        layer("KOMATIITE", null, "Komatiite", false);
-        layer(
+        layer("Stone", false);
+        stoneLayer("KOMATIITE", "Komatiite", false);
+        stoneLayer(
                 "KOMATIITE",
-                null,
                 "Komatiite",
                 false,
                 ore("MgCO3", true, 16, 20, 50),
                 ore("Cinnabar", true, 12, 0, 32),
                 ore("Redstone", true, 8, 0, 30),
                 ore("Pyrite", true, 12, 0, 30));
-        layer("KIMBERLITE", null, "Kimberlite", false);
-        layer(
+        stoneLayer("KIMBERLITE", "Kimberlite", false);
+        stoneLayer(
                 "KIMBERLITE",
-                null,
                 "Kimberlite",
                 false,
                 ore("Diamond", true, 48, 0, 12),
                 ore("Spinel", true, 48, 24, 48),
                 ore("BalasRuby", true, 48, 24, 48));
-        layer("BASALT", null, "Basalt", false);
-        layer("BASALT", null, "Basalt", false);
-        layer("BASALT", null, "Basalt", false);
-        layer("BASALT", null, "Basalt", false);
-        layer("BASALT", null, "Basalt", false);
-        layer("BASALT", null, "Basalt", false);
-        layer(
+        stoneLayer("BASALT", "Basalt", false);
+        stoneLayer("BASALT", "Basalt", false);
+        stoneLayer("BASALT", "Basalt", false);
+        stoneLayer("BASALT", "Basalt", false);
+        stoneLayer("BASALT", "Basalt", false);
+        stoneLayer("BASALT", "Basalt", false);
+        stoneLayer(
                 "BASALT",
-                null,
                 "Basalt",
                 false,
                 ore("Asbestos", true, 16, 16, 48),
                 ore("FluoriteWhite", true, 16, 0, 48),
                 ore("S", true, 8, 0, 32));
-        layer(
+        stoneLayer(
                 "BASALT",
-                null,
                 "Basalt",
                 false,
                 ore("Bastnasite", true, 24, 24, 32),
                 ore("Monazite", true, 32, 24, 32),
                 ore("MnO2", true, 8, 16, 48));
-        layer(
+        stoneLayer(
                 "BASALT",
-                null,
                 "Basalt",
                 false,
                 ore("Peridot", true, 32, 0, 32),
                 ore("Uvarovite", true, 32, 8, 40),
                 ore("Grossular", true, 32, 16, 48),
                 ore("Chromite", true, 8, 32, 64));
-        layer("ANDESITE", null, "Andesite", false);
-        layer("ANDESITE", null, "Andesite", false);
-        layer("ANDESITE", null, "Andesite", false, ore("Bromargyrite", true, 8, 0, 32));
-        layer("ANDESITE", null, "Andesite", false, ore("Au", true, 12, 0, 32), ore("Au", true, 8, 33, 64));
-        layer("MARBLE", null, "Marble", false);
-        layer("MARBLE", null, "Marble", false);
-        layer("MARBLE", null, "Marble", false);
-        layer("MARBLE", null, "Marble", false);
-        layer("MARBLE", null, "Marble", false);
-        layer("MARBLE", null, "Marble", false);
-        layer("MARBLE", null, "Marble", false, ore("Cassiterite", true, 16, 20, 80), ore("Dioptase", true, 64, 24, 48));
-        layer(
+        stoneLayer("ANDESITE", "Andesite", false);
+        stoneLayer("ANDESITE", "Andesite", false);
+        stoneLayer("ANDESITE", "Andesite", false, ore("Bromargyrite", true, 8, 0, 32));
+        stoneLayer("ANDESITE", "Andesite", false, ore("Au", true, 12, 0, 32), ore("Au", true, 8, 33, 64));
+        stoneLayer("MARBLE", "Marble", false);
+        stoneLayer("MARBLE", "Marble", false);
+        stoneLayer("MARBLE", "Marble", false);
+        stoneLayer("MARBLE", "Marble", false);
+        stoneLayer("MARBLE", "Marble", false);
+        stoneLayer("MARBLE", "Marble", false);
+        stoneLayer("MARBLE", "Marble", false, ore("Cassiterite", true, 16, 20, 80), ore("Dioptase", true, 64, 24, 48));
+        stoneLayer(
                 "MARBLE",
-                null,
                 "Marble",
                 false,
                 ore("Cassiterite", true, 16, 20, 80),
@@ -177,22 +175,20 @@ public final class GTStoneLayersGen {
                 ore("Sphalerite", true, 8, 10, 30),
                 ore("Chalcopyrite", true, 8, 0, 20),
                 ore("Pyrite", true, 12, 0, 30));
-        layer("LIMESTONE", null, "Limestone", false);
-        layer("LIMESTONE", null, "Limestone", false);
-        layer("LIMESTONE", null, "Limestone", false);
-        layer("LIMESTONE", null, "Limestone", false);
-        layer("LIMESTONE", null, "Limestone", false, ore("NaCl", true, 8, 40, 80));
-        layer(
+        stoneLayer("LIMESTONE", "Limestone", false);
+        stoneLayer("LIMESTONE", "Limestone", false);
+        stoneLayer("LIMESTONE", "Limestone", false);
+        stoneLayer("LIMESTONE", "Limestone", false);
+        stoneLayer("LIMESTONE", "Limestone", false, ore("NaCl", true, 8, 40, 80));
+        stoneLayer(
                 "LIMESTONE",
-                null,
                 "Limestone",
                 false,
                 ore("Stibnite", true, 24, 10, 30),
                 ore("Galena", true, 8, 30, 120),
                 ore("Pb", true, 16, 50, 70));
-        layer(
+        stoneLayer(
                 "LIMESTONE",
-                null,
                 "Limestone",
                 false,
                 ore("Pyrite", true, 16, 0, 30),
@@ -204,9 +200,8 @@ public final class GTStoneLayersGen {
                 ore("Molybdenite", true, 128, 30, 50),
                 ore("Tetrahedrite", true, 8, 40, 80),
                 ore("Cu", true, 16, 40, 80));
-        layer(
+        stoneLayer(
                 "LIMESTONE",
-                null,
                 "Limestone",
                 false,
                 ore("Scheelite", true, 64, 0, 16),
@@ -218,11 +213,10 @@ public final class GTStoneLayersGen {
                 ore("BrownLimonite", true, 8, 32, 64),
                 ore("Malachite", true, 12, 16, 64),
                 ore("Azurite", true, 24, 16, 64));
-        layer("GRANITE_BLACK", null, "GraniteBlack", false);
-        layer("GRANITE_BLACK", null, "GraniteBlack", false);
-        layer(
+        stoneLayer("GRANITE_BLACK", "GraniteBlack", false);
+        stoneLayer("GRANITE_BLACK", "GraniteBlack", false);
+        stoneLayer(
                 "GRANITE_BLACK",
-                null,
                 "GraniteBlack",
                 false,
                 ore("Cooperite", true, 32, 0, 16),
@@ -235,11 +229,10 @@ public final class GTStoneLayersGen {
                 ore("Goshenite", true, 64, 24, 48),
                 ore("Bixbite", true, 64, 24, 48),
                 ore("Maxixe", true, 64, 24, 48));
-        layer("GRANITE_RED", null, "GraniteRed", false);
-        layer("GRANITE_RED", null, "GraniteRed", false);
-        layer(
+        stoneLayer("GRANITE_RED", "GraniteRed", false);
+        stoneLayer("GRANITE_RED", "GraniteRed", false);
+        stoneLayer(
                 "GRANITE_RED",
-                null,
                 "GraniteRed",
                 false,
                 ore("Pitchblende", true, 32, 0, 18),
@@ -247,25 +240,23 @@ public final class GTStoneLayersGen {
                 ore("Tantalite", true, 64, 30, 40),
                 ore("Columbite", true, 64, 30, 40),
                 ore("Coltan", true, 16, 20, 50));
-        layer("GRANITE", null, "S", true);
-        layer("GRANITE", null, "KNO3", true);
-        layer("GRANITE", null, "Lignite", true);
-        layer("GRANITE", null, "Granite", false, ore("BlueTopaz", true, 64, 8, 32), ore("Topaz", true, 64, 24, 48));
-        layer(
+        stoneLayer("GRANITE", "S", true);
+        stoneLayer("GRANITE", "KNO3", true);
+        stoneLayer("GRANITE", "Lignite", true);
+        stoneLayer("GRANITE", "Granite", false, ore("BlueTopaz", true, 64, 8, 32), ore("Topaz", true, 64, 24, 48));
+        stoneLayer(
                 "GRANITE",
-                null,
                 "Granite",
                 false,
                 ore("Apatite", true, 8, 32, 64),
                 ore("PO4", true, 24, 36, 60),
                 ore("Phosphorite", true, 24, 40, 56),
                 ore("PhosphorusRed", true, 24, 44, 52));
-        layer("DIORITE", null, "Diorite", false);
-        layer("DIORITE", null, "Diorite", false);
-        layer("DIORITE", null, "Diorite", false);
-        layer(
+        stoneLayer("DIORITE", "Diorite", false);
+        stoneLayer("DIORITE", "Diorite", false);
+        stoneLayer("DIORITE", "Diorite", false);
+        stoneLayer(
                 "DIORITE",
-                null,
                 "Diorite",
                 false,
                 ore("Sapphire", true, 64, 24, 48),
@@ -275,9 +266,8 @@ public final class GTStoneLayersGen {
                 ore("BlueSapphire", true, 64, 8, 32),
                 ore("PurpleSapphire", true, 64, 24, 48),
                 ore("Ruby", true, 64, 24, 48));
-        layer(
+        stoneLayer(
                 "DIORITE",
-                null,
                 "Diorite",
                 false,
                 ore("Garnierite", true, 8, 16, 48),
@@ -286,40 +276,35 @@ public final class GTStoneLayersGen {
                 ore("Craponite", true, 64, 24, 48),
                 ore("Amethyst", true, 64, 24, 48));
 
-        layer("GREENSCHIST", null, "Greenschist", false);
-        layer("GREENSCHIST", null, "Greenschist", false);
-        layer(null, null, "Stone", false, ore("Andradite", true, 32, 8, 40), ore("Almandine", true, 32, 16, 48));
-        layer("BLUESCHIST", null, "Blueschist", false);
-        layer("BLUESCHIST", null, "Blueschist", false);
-        layer(null, null, "Stone", false, ore("Spessartine", true, 32, 8, 40), ore("Pyrope", true, 32, 16, 48));
-        layer("SHALE", null, "Shale", false);
-        layer("SHALE", null, "Shale", false);
-        layer("SHALE", null, "Shale", false);
-        layer("SHALE", null, "Shale", false);
-        layer("SHALE", null, "Shale", false);
-        layer("SHALE", null, "Shale", false);
-        layer("SLATE", null, "Slate", false);
-        layer("SLATE", null, "Slate", false);
-        layer("SLATE", null, "Slate", false);
-        layer("SLATE", null, "Slate", false);
-        layer("SLATE", null, "Slate", false);
-        layer("SLATE", null, "Slate", false);
-        layer("SLATE", null, "Slate", false);
-        layer("SLATE", null, "Slate", false);
-        layer("SLATE", null, "Slate", false);
-        layer("SLATE", null, "Slate", false);
-        layer("QUARTZITE", null, "RedSand", false, ore("Niter", true, 6, 40, 70));
-        layer("QUARTZITE", null, "Sand", false, ore("Niter", true, 6, 40, 70));
-        layer("QUARTZITE", null, "Sand", false, ore("Niter", true, 6, 40, 70));
-        layer("QUARTZITE", null, "Quartzite", false);
-        layer("QUARTZITE", null, "Quartzite", false);
-        layer(
-                "QUARTZITE",
-                null,
-                "Quartzite",
-                false,
-                ore("CertusQuartz", true, 16, 16, 48),
-                ore("Barite", true, 32, 0, 32));
+        stoneLayer("GREENSCHIST", "Greenschist", false);
+        stoneLayer("GREENSCHIST", "Greenschist", false);
+        layer("Stone", false, ore("Andradite", true, 32, 8, 40), ore("Almandine", true, 32, 16, 48));
+        stoneLayer("BLUESCHIST", "Blueschist", false);
+        stoneLayer("BLUESCHIST", "Blueschist", false);
+        layer("Stone", false, ore("Spessartine", true, 32, 8, 40), ore("Pyrope", true, 32, 16, 48));
+        stoneLayer("SHALE", "Shale", false);
+        stoneLayer("SHALE", "Shale", false);
+        stoneLayer("SHALE", "Shale", false);
+        stoneLayer("SHALE", "Shale", false);
+        stoneLayer("SHALE", "Shale", false);
+        stoneLayer("SHALE", "Shale", false);
+        stoneLayer("SLATE", "Slate", false);
+        stoneLayer("SLATE", "Slate", false);
+        stoneLayer("SLATE", "Slate", false);
+        stoneLayer("SLATE", "Slate", false);
+        stoneLayer("SLATE", "Slate", false);
+        stoneLayer("SLATE", "Slate", false);
+        stoneLayer("SLATE", "Slate", false);
+        stoneLayer("SLATE", "Slate", false);
+        stoneLayer("SLATE", "Slate", false);
+        stoneLayer("SLATE", "Slate", false);
+        stoneLayer("QUARTZITE", "RedSand", false, ore("Niter", true, 6, 40, 70));
+        stoneLayer("QUARTZITE", "Sand", false, ore("Niter", true, 6, 40, 70));
+        stoneLayer("QUARTZITE", "Sand", false, ore("Niter", true, 6, 40, 70));
+        stoneLayer("QUARTZITE", "Quartzite", false);
+        stoneLayer("QUARTZITE", "Quartzite", false);
+        stoneLayer(
+                "QUARTZITE", "Quartzite", false, ore("CertusQuartz", true, 16, 16, 48), ore("Barite", true, 32, 0, 32));
 
         contact(true, "Coal", "Stone", ore("Amber", true, 4, 30, 70), ore("Amber", true, 8, 30, 70));
         contact(true, "Lignite", "Stone", ore("Amber", true, 4, 30, 70), ore("Amber", true, 8, 30, 70));

@@ -93,9 +93,7 @@ public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
                 16,
                 16,
                 items(item("gt6ce:wood_pellet", 2)),
-                items(item("gt6ce:planks_compressed", 1)),
-                null,
-                null);
+                items(item("gt6ce:planks_compressed", 1)));
         add(
                 "pellet_coke",
                 MachineRecipeMaps.CokeOven,
@@ -121,8 +119,6 @@ public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
                 256,
                 16,
                 items(item("minecraft:sand", 7), item("gt6ce:empty_spray_can", 1)),
-                items(item("gt6ce:hardening_spray", 1)),
-                null,
-                null);
+                items(item("gt6ce:hardening_spray", 1)));
     }
 }

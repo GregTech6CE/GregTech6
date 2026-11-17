@@ -1187,20 +1187,20 @@ public final class GTChemRecipes {
                     .add();
         }
 
-        tiCl4(244, "TiO2", U(1), "C", U(1), U(4), U(1), U(5), "CO2", U(3), null, null);
-        tiCl4(245, "TiO2", U(2), "C", U(2), U(8), U(2), U(10), "CO2", U(6), null, null);
+        tiCl4(244, "TiO2", U(1), "C", U(1), U(4), U(1), U(5), "CO2", U(3));
+        tiCl4(245, "TiO2", U(2), "C", U(2), U(8), U(2), U(10), "CO2", U(6));
         tiCl4(246, "Ilmenite", U(5), "C", U(3), U(7), U(1), U(5), "CO", U(6), "FeCl3", U(4));
         tiCl4(247, "Ilmenite", U(10), "C", U(6), U(14), U(2), U(10), "CO", U(12), "FeCl3", U(8));
-        tiCl4(248, "TiO2", U(1), "Graphite", U(1), U(4), U(1), U(5), "CO2", U(3), null, null);
-        tiCl4(249, "TiO2", U(2), "Graphite", U(2), U(8), U(2), U(10), "CO2", U(6), null, null);
+        tiCl4(248, "TiO2", U(1), "Graphite", U(1), U(4), U(1), U(5), "CO2", U(3));
+        tiCl4(249, "TiO2", U(2), "Graphite", U(2), U(8), U(2), U(10), "CO2", U(6));
         tiCl4(250, "Ilmenite", U(5), "Graphite", U(3), U(7), U(1), U(5), "CO", U(6), "FeCl3", U(4));
         tiCl4(251, "Ilmenite", U(10), "Graphite", U(6), U(14), U(2), U(10), "CO", U(12), "FeCl3", U(8));
-        tiCl4(252, "TiO2", U(1), "CoalCoke", U(1, 2), U(4), U(1), U(5), "CO2", U(3), null, null);
-        tiCl4(253, "TiO2", U(2), "CoalCoke", U(1), U(8), U(2), U(10), "CO2", U(6), null, null);
+        tiCl4(252, "TiO2", U(1), "CoalCoke", U(1, 2), U(4), U(1), U(5), "CO2", U(3));
+        tiCl4(253, "TiO2", U(2), "CoalCoke", U(1), U(8), U(2), U(10), "CO2", U(6));
         tiCl4(254, "Ilmenite", U(5), "CoalCoke", U(3, 2), U(7), U(1), U(5), "CO", U(6), "FeCl3", U(4));
         tiCl4(255, "Ilmenite", U(10), "CoalCoke", U(3), U(14), U(2), U(10), "CO", U(12), "FeCl3", U(8));
-        tiCl4(256, "TiO2", U(1), "PetCoke", U(1, 2), U(4), U(1), U(5), "CO2", U(3), null, null);
-        tiCl4(257, "TiO2", U(2), "PetCoke", U(1), U(8), U(2), U(10), "CO2", U(6), null, null);
+        tiCl4(256, "TiO2", U(1), "PetCoke", U(1, 2), U(4), U(1), U(5), "CO2", U(3));
+        tiCl4(257, "TiO2", U(2), "PetCoke", U(1), U(8), U(2), U(10), "CO2", U(6));
         tiCl4(258, "Ilmenite", U(5), "PetCoke", U(3, 2), U(7), U(1), U(5), "CO", U(6), "FeCl3", U(4));
         tiCl4(259, "Ilmenite", U(10), "PetCoke", U(3), U(14), U(2), U(10), "CO", U(12), "FeCl3", U(8));
 
@@ -1260,6 +1260,32 @@ public final class GTChemRecipes {
                 .out(gas("O", U(4)))
                 .out(dust("Ad", U(3)))
                 .add();
+    }
+
+    private void tiCl4(
+            int line,
+            String titanium,
+            MaterialAmount titaniumAmount,
+            String carbon,
+            MaterialAmount carbonAmount,
+            MaterialAmount chlorine,
+            MaterialAmount calciumCarbonate,
+            MaterialAmount product,
+            String gas,
+            MaterialAmount gasAmount) {
+        tiCl4(
+                line,
+                titanium,
+                titaniumAmount,
+                carbon,
+                carbonAmount,
+                chlorine,
+                calciumCarbonate,
+                product,
+                gas,
+                gasAmount,
+                null,
+                null);
     }
 
     private void tiCl4(
@@ -1772,21 +1798,20 @@ public final class GTChemRecipes {
                     .add();
         }
 
-        roastSulfide(408, false, "Pyrite", "Oxygen", 1834, U(2), "Fe2O3", U(5, 6), null, null, null, null);
-        roastSulfide(409, false, "Realgar", "Oxygen", 1000, U(3, 2), "As", U(1, 2), null, null, null, null);
-        roastSulfide(410, false, "Sphalerite", "Oxygen", 1000, U(3, 2), "Zn", U(1, 2), null, null, null, null);
-        roastSulfide(411, false, "Molybdenite", "Oxygen", 1334, U(2), "Mo", U(1, 3), null, null, null, null);
-        roastSulfide(412, false, "Stibnite", "Oxygen", 1200, U(9, 5), "Sb", U(2, 5), null, null, null, null);
-        roastSulfide(413, false, "Pentlandite", "Oxygen", 942, src(24, 17), "Ni", src(9, 17), null, null, null, null);
-        roastSulfide(414, false, "Chalcopyrite", "Oxygen", 1375, U(3, 2), "Fe2O3", U(5, 8), "Cu", U(1, 4), null, null);
-        roastSulfide(415, false, "Arsenopyrite", "Oxygen", 1167, U(1), "Fe2O3", U(5, 6), "As", U(1, 3), null, null);
-        roastSulfide(416, false, "Cobaltite", "Oxygen", 667, U(1), "Co", U(1, 3), "As", U(1, 3), null, null);
-        roastSulfide(417, false, "Galena", "Oxygen", 500, U(3, 4), "Ag", U(3, 8), "Pb", U(3, 8), null, null);
-        roastSulfide(418, false, "Cooperite", "Oxygen", 334, U(1, 2), "Pt", U(1, 2), "Ni", U(1, 6), "Pd", U(1, 6));
-        roastSulfide(
-                419, false, "Tetrahedrite", "Oxygen", 938, U(9, 8), "Cu", U(3, 8), "Sb", U(1, 8), "Fe2O3", U(5, 16));
-        roastSulfide(420, false, "Stannite", "Oxygen", 1188, U(3, 2), "Cu", U(1, 4), "Sn", U(1, 8), "Fe2O3", U(5, 16));
-        roastSulfide(421, false, "Kesterite", "Oxygen", 1000, U(3, 2), "Cu", U(1, 4), "Zn", U(1, 8), "Sn", U(1, 8));
+        roastSulfide(408, false, "Pyrite", "Oxygen", 1834, U(2), byproduct("Fe2O3", U(5, 6)));
+        roastSulfide(409, false, "Realgar", "Oxygen", 1000, U(3, 2), byproduct("As", U(1, 2)));
+        roastSulfide(410, false, "Sphalerite", "Oxygen", 1000, U(3, 2), byproduct("Zn", U(1, 2)));
+        roastSulfide(411, false, "Molybdenite", "Oxygen", 1334, U(2), byproduct("Mo", U(1, 3)));
+        roastSulfide(412, false, "Stibnite", "Oxygen", 1200, U(9, 5), byproduct("Sb", U(2, 5)));
+        roastSulfide(413, false, "Pentlandite", "Oxygen", 942, src(24, 17), byproduct("Ni", src(9, 17)));
+        roastSulfide(414, false, "Chalcopyrite", "Oxygen", 1375, U(3, 2), byproduct("Fe2O3", U(5, 8)), byproduct("Cu", U(1, 4)));
+        roastSulfide(415, false, "Arsenopyrite", "Oxygen", 1167, U(1), byproduct("Fe2O3", U(5, 6)), byproduct("As", U(1, 3)));
+        roastSulfide(416, false, "Cobaltite", "Oxygen", 667, U(1), byproduct("Co", U(1, 3)), byproduct("As", U(1, 3)));
+        roastSulfide(417, false, "Galena", "Oxygen", 500, U(3, 4), byproduct("Ag", U(3, 8)), byproduct("Pb", U(3, 8)));
+        roastSulfide(418, false, "Cooperite", "Oxygen", 334, U(1, 2), byproduct("Pt", U(1, 2)), byproduct("Ni", U(1, 6)), byproduct("Pd", U(1, 6)));
+        roastSulfide(419, false, "Tetrahedrite", "Oxygen", 938, U(9, 8), byproduct("Cu", U(3, 8)), byproduct("Sb", U(1, 8)), byproduct("Fe2O3", U(5, 16)));
+        roastSulfide(420, false, "Stannite", "Oxygen", 1188, U(3, 2), byproduct("Cu", U(1, 4)), byproduct("Sn", U(1, 8)), byproduct("Fe2O3", U(5, 16)));
+        roastSulfide(421, false, "Kesterite", "Oxygen", 1000, U(3, 2), byproduct("Cu", U(1, 4)), byproduct("Zn", U(1, 8)), byproduct("Sn", U(1, 8)));
 
         row("Roasting", 16, 128, 423)
                 .item(dust("Li", U(1)))
@@ -1872,21 +1897,20 @@ public final class GTChemRecipes {
         }
 
         for (String air : new String[] {"Air", "Air_End", "Air_Nether"}) {
-            roastSulfide(446, true, "Pyrite", air, 8000, U(2), "Fe2O3", U(5, 6), null, null, null, null);
-            roastSulfide(447, true, "Realgar", air, 4000, U(3, 2), "As", U(1, 2), null, null, null, null);
-            roastSulfide(448, true, "Sphalerite", air, 4000, U(3, 2), "Zn", U(1, 2), null, null, null, null);
-            roastSulfide(449, true, "Molybdenite", air, 6000, U(2), "Mo", U(1, 3), null, null, null, null);
-            roastSulfide(450, true, "Stibnite", air, 5000, U(9, 5), "Sb", U(2, 5), null, null, null, null);
-            roastSulfide(451, true, "Pentlandite", air, 4000, src(24, 17), "Ni", src(9, 17), null, null, null, null);
-            roastSulfide(452, true, "Chalcopyrite", air, 6000, U(3, 2), "Fe2O3", U(5, 8), "Cu", U(1, 4), null, null);
-            roastSulfide(453, true, "Arsenopyrite", air, 5000, U(1), "Fe2O3", U(5, 6), "As", U(1, 3), null, null);
-            roastSulfide(454, true, "Cobaltite", air, 3000, U(1), "Co", U(1, 3), "As", U(1, 3), null, null);
-            roastSulfide(455, true, "Galena", air, 2000, U(3, 4), "Ag", U(3, 8), "Pb", U(3, 8), null, null);
-            roastSulfide(456, true, "Cooperite", air, 2000, U(1, 2), "Pt", U(1, 2), "Ni", U(1, 6), "Pd", U(1, 6));
-            roastSulfide(
-                    457, true, "Tetrahedrite", air, 4000, U(9, 8), "Cu", U(3, 8), "Sb", U(1, 8), "Fe2O3", U(5, 16));
-            roastSulfide(458, true, "Stannite", air, 5000, U(3, 2), "Cu", U(1, 4), "Sn", U(1, 8), "Fe2O3", U(5, 16));
-            roastSulfide(459, true, "Kesterite", air, 4000, U(3, 2), "Cu", U(1, 4), "Zn", U(1, 8), "Sn", U(1, 8));
+            roastSulfide(446, true, "Pyrite", air, 8000, U(2), byproduct("Fe2O3", U(5, 6)));
+            roastSulfide(447, true, "Realgar", air, 4000, U(3, 2), byproduct("As", U(1, 2)));
+            roastSulfide(448, true, "Sphalerite", air, 4000, U(3, 2), byproduct("Zn", U(1, 2)));
+            roastSulfide(449, true, "Molybdenite", air, 6000, U(2), byproduct("Mo", U(1, 3)));
+            roastSulfide(450, true, "Stibnite", air, 5000, U(9, 5), byproduct("Sb", U(2, 5)));
+            roastSulfide(451, true, "Pentlandite", air, 4000, src(24, 17), byproduct("Ni", src(9, 17)));
+            roastSulfide(452, true, "Chalcopyrite", air, 6000, U(3, 2), byproduct("Fe2O3", U(5, 8)), byproduct("Cu", U(1, 4)));
+            roastSulfide(453, true, "Arsenopyrite", air, 5000, U(1), byproduct("Fe2O3", U(5, 6)), byproduct("As", U(1, 3)));
+            roastSulfide(454, true, "Cobaltite", air, 3000, U(1), byproduct("Co", U(1, 3)), byproduct("As", U(1, 3)));
+            roastSulfide(455, true, "Galena", air, 2000, U(3, 4), byproduct("Ag", U(3, 8)), byproduct("Pb", U(3, 8)));
+            roastSulfide(456, true, "Cooperite", air, 2000, U(1, 2), byproduct("Pt", U(1, 2)), byproduct("Ni", U(1, 6)), byproduct("Pd", U(1, 6)));
+            roastSulfide(457, true, "Tetrahedrite", air, 4000, U(9, 8), byproduct("Cu", U(3, 8)), byproduct("Sb", U(1, 8)), byproduct("Fe2O3", U(5, 16)));
+            roastSulfide(458, true, "Stannite", air, 5000, U(3, 2), byproduct("Cu", U(1, 4)), byproduct("Sn", U(1, 8)), byproduct("Fe2O3", U(5, 16)));
+            roastSulfide(459, true, "Kesterite", air, 4000, U(3, 2), byproduct("Cu", U(1, 4)), byproduct("Zn", U(1, 8)), byproduct("Sn", U(1, 8)));
 
             row("Roasting", false, 16, 16, SOURCE + "460/" + air)
                     .item(form("dust", "S", 1))
@@ -1916,6 +1940,12 @@ public final class GTChemRecipes {
         }
     }
 
+    private record Byproduct(String material, MaterialAmount amount) {}
+
+    private static Byproduct byproduct(String material, MaterialAmount amount) {
+        return new Byproduct(material, amount);
+    }
+
     private void roastSulfide(
             int line,
             boolean air,
@@ -1923,20 +1953,15 @@ public final class GTChemRecipes {
             String oxidizer,
             int mb,
             MaterialAmount so2,
-            String solid1,
-            MaterialAmount amount1,
-            String solid2,
-            MaterialAmount amount2,
-            String solid3,
-            MaterialAmount amount3) {
+            Byproduct... byproducts) {
         Row row = row("Roasting", false, 16, 512, SOURCE + line + "/" + oxidizer)
                 .item(dust(ore, U(1)))
                 .fluid(nativeFluid(oxidizer, mb))
                 .out(gas("SO2", so2));
         int chance = air ? 8000 : CERTAIN;
-        if (solid1 != null) row.out(dust(solid1, amount1), chance);
-        if (solid2 != null) row.out(dust(solid2, amount2), chance);
-        if (solid3 != null) row.out(dust(solid3, amount3), chance);
+        for (Byproduct byproduct : byproducts) {
+            row.out(dust(byproduct.material(), byproduct.amount()), chance);
+        }
         row.add();
     }
 
@@ -1989,50 +2014,41 @@ public final class GTChemRecipes {
     private void meltingRows() {
         for (String map : new String[] {"Melter", "Smelter"}) {
             int line = map.equals("Melter") ? 480 : 495;
-            iceRow(map, line, "dust", "Ice", 1, U(1, 9), 111, 222);
-            iceRow(map, line + 1, "dust", "Ice", 1, U(1, 4), 250, 500);
-            iceRow(map, line + 2, "dust", "Ice", 1, U(1), 1000, 2000);
-            iceRow(map, line + 3, "gemChipped", "Ice", 1, null, 250, 500);
-            iceRow(map, line + 4, "gemFlawed", "Ice", 1, null, 500, 1000);
-            iceRow(map, line + 5, "gem", "Ice", 1, null, 1000, 2000);
-            iceRow(map, line + 6, "vanilla", "ice", 1, null, 1000, 2000);
-            iceRow(map, line + 7, "vanilla", "packed_ice", 1, null, 2000, 4000);
-            iceRow(map, line + 8, "dust", "Snow", 1, U(1, 9), 111, 222);
-            iceRow(map, line + 9, "dust", "Snow", 1, U(1, 4), 250, 500);
-            iceRow(map, line + 10, "dust", "Snow", 1, U(1), 1000, 2000);
-            iceRow(map, line + 11, "vanilla", "snowball", 1, null, 250, 500);
-            iceRow(map, line + 12, "vanilla", "snow", 1, null, 1000, 2000);
+            iceRow(map, line, dust("Ice", U(1, 9)), 111, 222);
+            iceRow(map, line + 1, dust("Ice", U(1, 4)), 250, 500);
+            iceRow(map, line + 2, dust("Ice", U(1)), 1000, 2000);
+            iceRow(map, line + 3, form("gemChipped", "Ice", 1), 250, 500);
+            iceRow(map, line + 4, form("gemFlawed", "Ice", 1), 500, 1000);
+            iceRow(map, line + 5, form("gem", "Ice", 1), 1000, 2000);
+            iceRow(map, line + 6, vanilla("ice", 1), 1000, 2000);
+            iceRow(map, line + 7, vanilla("packed_ice", 1), 2000, 4000);
+            iceRow(map, line + 8, dust("Snow", U(1, 9)), 111, 222);
+            iceRow(map, line + 9, dust("Snow", U(1, 4)), 250, 500);
+            iceRow(map, line + 10, dust("Snow", U(1)), 1000, 2000);
+            iceRow(map, line + 11, vanilla("snowball", 1), 250, 500);
+            iceRow(map, line + 12, vanilla("snow", 1), 1000, 2000);
         }
-        dryingIce(510, "dust", "Ice", U(1, 9), 111, 444);
-        dryingIce(511, "dust", "Ice", U(1, 4), 250, 1000);
-        dryingIce(512, "dust", "Ice", U(1), 1000, 4000);
-        dryingIce(513, "gemChipped", "Ice", null, 250, 1000);
-        dryingIce(514, "gemFlawed", "Ice", null, 500, 2000);
-        dryingIce(515, "gem", "Ice", null, 1000, 4000);
-        dryingIce(516, "vanilla", "ice", null, 1000, 4000);
-        dryingIce(517, "vanilla", "packed_ice", null, 2000, 8000);
-        dryingIce(518, "dust", "Snow", U(1, 9), 111, 444);
-        dryingIce(519, "dust", "Snow", U(1, 4), 250, 1000);
-        dryingIce(520, "dust", "Snow", U(1), 1000, 4000);
-        dryingIce(521, "vanilla", "snowball", null, 250, 1000);
-        dryingIce(522, "vanilla", "snow", null, 1000, 4000);
+        dryingIce(510, dust("Ice", U(1, 9)), 111, 444);
+        dryingIce(511, dust("Ice", U(1, 4)), 250, 1000);
+        dryingIce(512, dust("Ice", U(1)), 1000, 4000);
+        dryingIce(513, form("gemChipped", "Ice", 1), 250, 1000);
+        dryingIce(514, form("gemFlawed", "Ice", 1), 500, 2000);
+        dryingIce(515, form("gem", "Ice", 1), 1000, 4000);
+        dryingIce(516, vanilla("ice", 1), 1000, 4000);
+        dryingIce(517, vanilla("packed_ice", 1), 2000, 8000);
+        dryingIce(518, dust("Snow", U(1, 9)), 111, 444);
+        dryingIce(519, dust("Snow", U(1, 4)), 250, 1000);
+        dryingIce(520, dust("Snow", U(1)), 1000, 4000);
+        dryingIce(521, vanilla("snowball", 1), 250, 1000);
+        dryingIce(522, vanilla("snow", 1), 1000, 4000);
     }
 
-    private void iceRow(
-            String map, int line, String prefix, String material, int count, MaterialAmount units, int mb, long ticks) {
-        Row row = row(map, false, 16, ticks, SOURCE + line);
-        if (prefix.equals("vanilla")) row.item(vanilla(material, count));
-        else if (units != null) row.item(dust(material, units));
-        else row.item(form(prefix, material, count));
-        row.out(nativeFluid("Water", mb)).add();
+    private void iceRow(String map, int line, ChemIngredient input, int mb, long ticks) {
+        row(map, false, 16, ticks, SOURCE + line).item(input).out(nativeFluid("Water", mb)).add();
     }
 
-    private void dryingIce(int line, String prefix, String material, MaterialAmount units, int mb, long ticks) {
-        Row row = row("Drying", false, 16, ticks, SOURCE + line);
-        if (prefix.equals("vanilla")) row.item(vanilla(material, 1));
-        else if (units != null) row.item(dust(material, units));
-        else row.item(form(prefix, material, 1));
-        row.out(nativeFluid("DistW", mb)).add();
+    private void dryingIce(int line, ChemIngredient input, int mb, long ticks) {
+        row("Drying", false, 16, ticks, SOURCE + line).item(input).out(nativeFluid("DistW", mb)).add();
     }
     /** Port-reviewed chains that the original loader expressed through another map or helper. */
     private void portExtras() {

@@ -22,10 +22,10 @@ public final class SurvivalUtilityRecipes extends OriginalRecipeBatch {
     }
     private void loom() {
         add("item_frame", MachineRecipeMaps.Loom, 16, 16, items(new ItemStack(Items.LEATHER), new ItemStack(Items.STICK, 8)),
-                items(new ItemStack(Items.ITEM_FRAME)), null, null);
+                items(new ItemStack(Items.ITEM_FRAME)));
         for (DyeColor color : DyeColor.values())
             add("painting/" + color.getName(), MachineRecipeMaps.Loom, 16, 16,
-                    items(item("minecraft:" + color.getName() + "_wool", 1), new ItemStack(Items.STICK, 8)), items(new ItemStack(Items.PAINTING)), null, null);
+                    items(item("minecraft:" + color.getName() + "_wool", 1), new ItemStack(Items.STICK, 8)), items(new ItemStack(Items.PAINTING)));
     }
     private void supplies() {
         for (String water : new String[]{"Water", "MnWtr", "DistW"})
@@ -44,20 +44,20 @@ public final class SurvivalUtilityRecipes extends OriginalRecipeBatch {
         mix("fermented_eye_crystals", 16, new ItemStack(Items.FERMENTED_SPIDER_EYE), mat(MaterialPrefix.gemChipped, "Sugar", 4), new ItemStack(Items.SPIDER_EYE), new ItemStack(Items.BROWN_MUSHROOM));
         for (String carbon : new String[]{"Coal", "Charcoal", "CoalCoke", "LigniteCoke"})
             mix("fire_charge/" + carbon, 16, new ItemStack(Items.FIRE_CHARGE, 3), mat(MaterialPrefix.dust, carbon, 1), mat(MaterialPrefix.dustTiny, "Blaze", 1), mat(MaterialPrefix.dust, "Gunpowder", 1));
-        add("silica/sand_block", MachineRecipeMaps.Electrolyzer, 576, 64, items(selector(0), new ItemStack(Items.SAND)), items(mat(MaterialPrefix.dust, "SiO2", 9)), null, null);
-        add("silica/sand_dust", MachineRecipeMaps.Electrolyzer, 64, 64, items(selector(0), mat(MaterialPrefix.dust, "Sand", 1)), items(mat(MaterialPrefix.dust, "SiO2", 1)), null, null);
-        add("bucket", MachineRecipeMaps.RollBender, 256, 16, items(mat(MaterialPrefix.plateCurved, "Iron", 3)), items(new ItemStack(Items.BUCKET)), null, null);
-        add("chisel/stone", MachineRecipeMaps.Chisel, 16, 16, items(new ItemStack(Items.STONE)), items(new ItemStack(Items.CHISELED_STONE_BRICKS)), null, null);
-        add("chisel/bricks", MachineRecipeMaps.Chisel, 16, 16, items(new ItemStack(Items.STONE_BRICKS)), items(new ItemStack(Items.CRACKED_STONE_BRICKS)), null, null);
+        add("silica/sand_block", MachineRecipeMaps.Electrolyzer, 576, 64, items(selector(0), new ItemStack(Items.SAND)), items(mat(MaterialPrefix.dust, "SiO2", 9)));
+        add("silica/sand_dust", MachineRecipeMaps.Electrolyzer, 64, 64, items(selector(0), mat(MaterialPrefix.dust, "Sand", 1)), items(mat(MaterialPrefix.dust, "SiO2", 1)));
+        add("bucket", MachineRecipeMaps.RollBender, 256, 16, items(mat(MaterialPrefix.plateCurved, "Iron", 3)), items(new ItemStack(Items.BUCKET)));
+        add("chisel/stone", MachineRecipeMaps.Chisel, 16, 16, items(new ItemStack(Items.STONE)), items(new ItemStack(Items.CHISELED_STONE_BRICKS)));
+        add("chisel/bricks", MachineRecipeMaps.Chisel, 16, 16, items(new ItemStack(Items.STONE_BRICKS)), items(new ItemStack(Items.CRACKED_STONE_BRICKS)));
     }
     private void recovery() {
         Item[] armor = {Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS};
         int[] counts = {1, 2, 2, 1};
         for (int i = 0; i < armor.length; i++)
             add("leather_recovery/" + i, MachineRecipeMaps.Slicer, 16, 16,
-                    items(new ItemStack(armor[i]), item("gt6ce:slicer_shape_split", 1)), items(new ItemStack(Items.LEATHER, counts[i])), null, null);
+                    items(new ItemStack(armor[i]), item("gt6ce:slicer_shape_split", 1)), items(new ItemStack(Items.LEATHER, counts[i])));
     }
     private void mix(String id, int ticks, ItemStack output, ItemStack... inputs) {
-        add("mix/" + id, MachineRecipeMaps.Mixer, ticks, 16, inputs, items(output), null, null);
+        add("mix/" + id, MachineRecipeMaps.Mixer, ticks, 16, inputs, items(output));
     }
 }

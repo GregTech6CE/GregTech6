@@ -121,8 +121,6 @@ public final class BiologicalMaterialRecipes extends OriginalRecipeBatch {
                 16,
                 16,
                 items(item("gt6ce:rubber_resin", 1), new ItemStack(Items.PISTON)),
-                items(new ItemStack(Items.STICKY_PISTON)),
-                null,
-                null);
+                items(new ItemStack(Items.STICKY_PISTON)));
     }
 }

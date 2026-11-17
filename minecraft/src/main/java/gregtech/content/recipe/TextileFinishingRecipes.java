@@ -67,6 +67,6 @@ public final class TextileFinishingRecipes extends OriginalRecipeBatch {
         loom("saddle", 128, 64, new ItemStack(Items.SADDLE), new ItemStack(Items.LEATHER, 6), mat(MaterialPrefix.ring, "Steel", 2), mat(MaterialPrefix.stick, "Steel", 3));
     }
     private void loom(String id, int ticks, int power, ItemStack output, ItemStack... inputs) {
-        add("loom/" + id, MachineRecipeMaps.Loom, ticks, power, inputs, items(output), null, null);
+        add("loom/" + id, MachineRecipeMaps.Loom, ticks, power, inputs, items(output));
     }
 }

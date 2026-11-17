@@ -27,8 +27,8 @@ public final class VanillaBlockProcessingRecipes extends OriginalRecipeBatch {
 
     private void smashItem(ItemStack input, ItemStack output) {
         String id = input.getItem().toString();
-        add("hammer/" + id, MachineRecipeMaps.Hammer, 16, 16, items(input.copy()), items(output), null, null);
-        add("crusher/" + id, MachineRecipeMaps.Crusher, 32, 16, items(input.copy()), items(output), null, null);
+        add("hammer/" + id, MachineRecipeMaps.Hammer, 16, 16, items(input.copy()), items(output));
+        add("crusher/" + id, MachineRecipeMaps.Crusher, 32, 16, items(input.copy()), items(output));
     }
 
     private void smashing() {
@@ -52,18 +52,14 @@ public final class VanillaBlockProcessingRecipes extends OriginalRecipeBatch {
                 16,
                 16,
                 items(mc("netherrack", 1)),
-                items(mat(MaterialPrefix.rockGt, "Netherrack", 4)),
-                null,
-                null);
+                items(mat(MaterialPrefix.rockGt, "Netherrack", 4)));
         add(
                 "crusher/end_stone",
                 MachineRecipeMaps.Crusher,
                 16,
                 16,
                 items(mc("end_stone", 1)),
-                items(mat(MaterialPrefix.rockGt, "Endstone", 4)),
-                null,
-                null);
+                items(mat(MaterialPrefix.rockGt, "Endstone", 4)));
         add(
                 "crusher/obsidian",
                 MachineRecipeMaps.Crusher,

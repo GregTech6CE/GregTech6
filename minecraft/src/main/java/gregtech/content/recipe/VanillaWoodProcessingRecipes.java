@@ -58,9 +58,7 @@ public final class VanillaWoodProcessingRecipes extends OriginalRecipeBatch {
                         items(mc(input, 1)),
                         items(
                                 mat(MaterialPrefix.stickLong, name, input.equals(raw) ? 4 : 5),
-                                mat(MaterialPrefix.dust, name, 1)),
-                        null,
-                        null);
+                                mat(MaterialPrefix.dust, name, 1)));
                 add(
                         "coke/" + input,
                         MachineRecipeMaps.CokeOven,
@@ -80,9 +78,7 @@ public final class VanillaWoodProcessingRecipes extends OriginalRecipeBatch {
                 16,
                 16,
                 items(mc(wood + "_planks", 1)),
-                items(mat(MaterialPrefix.stick, name, 2)),
-                null,
-                null);
+                items(mat(MaterialPrefix.stick, name, 2)));
         RegisteredWoodSurvivalRecipes.pulverize(mc(wood + "_planks", 1), wood, GTValues.U);
         RegisteredWoodSurvivalRecipes.pulverize(mc(wood + "_stairs", 1), wood, 3 * GTValues.U / 4);
         RegisteredWoodSurvivalRecipes.pulverize(mc(wood + "_slab", 1), wood, GTValues.U / 2);

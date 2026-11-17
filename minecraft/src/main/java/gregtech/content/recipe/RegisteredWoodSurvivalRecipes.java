@@ -123,27 +123,21 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
                 80,
                 16,
                 items(log),
-                items(mat(MaterialPrefix.stickLong, name, 4), mat(MaterialPrefix.dust, name, 1)),
-                null,
-                null);
+                items(mat(MaterialPrefix.stickLong, name, 4), mat(MaterialPrefix.dust, name, 1)));
         add(
                 "lathe/stripped/" + s.id(),
                 MachineRecipeMaps.Lathe,
                 80,
                 16,
                 items(stripped),
-                items(mat(MaterialPrefix.stickLong, name, 5), mat(MaterialPrefix.dust, name, 1)),
-                null,
-                null);
+                items(mat(MaterialPrefix.stickLong, name, 5), mat(MaterialPrefix.dust, name, 1)));
         add(
                 "lathe/planks/" + s.id(),
                 MachineRecipeMaps.Lathe,
                 16,
                 16,
                 items(new ItemStack(GTWoods.planks(s))),
-                items(mat(MaterialPrefix.stick, name, 2)),
-                null,
-                null);
+                items(mat(MaterialPrefix.stick, name, 2)));
     }
 
     private void naturalWood(NaturalWoodCraftingRows.Spec wood) {
@@ -161,18 +155,14 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
                 80,
                 16,
                 items(log),
-                items(mat(MaterialPrefix.dust, wood.material(), 1)),
-                null,
-                null);
+                items(mat(MaterialPrefix.dust, wood.material(), 1)));
         add(
                 "lathe/natural_plank/" + wood.kind(),
                 MachineRecipeMaps.Lathe,
                 16,
                 16,
                 items(plank),
-                items(mat(MaterialPrefix.stick, wood.material(), 2)),
-                null,
-                null);
+                items(mat(MaterialPrefix.stick, wood.material(), 2)));
         add(
                 "coke/natural/" + wood.kind(),
                 MachineRecipeMaps.CokeOven,

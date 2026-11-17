@@ -60,31 +60,19 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
                     16,
                     16,
                     items(own(id, 1)),
-                    items(new ItemStack(Items.BONE_MEAL)),
-                    null,
-                    null);
+                    items(new ItemStack(Items.BONE_MEAL)));
             add(
                     id + "/shred",
                     MachineRecipeMaps.Shredder,
                     16,
                     16,
                     items(own(id, 1)),
-                    items(new ItemStack(Items.BONE_MEAL)),
-                    null,
-                    null);
+                    items(new ItemStack(Items.BONE_MEAL)));
             var output = id.contains("hoof")
                     ? "hoof"
                     : id.contains("tusk") ? "tusk" : id.contains("antler") ? "deer_antler" : "horn";
             if (!id.equals(output))
-                add(
-                        id + "/generify",
-                        MachineRecipeMaps.Generifier,
-                        1,
-                        0,
-                        items(own(id, 1)),
-                        items(own(output, 1)),
-                        null,
-                        null);
+                add(id + "/generify", MachineRecipeMaps.Generifier, 1, 0, items(own(id, 1)), items(own(output, 1)));
         }
     }
 
@@ -95,18 +83,14 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
                 16,
                 16,
                 items(own("scrap_meat", 1)),
-                items(mat(MaterialPrefix.dust, "MeatRaw", 2)),
-                null,
-                null);
+                items(mat(MaterialPrefix.dust, "MeatRaw", 2)));
         add(
                 "scrap_meat/rot",
                 MachineRecipeMaps.Fermenter,
                 288,
                 16,
                 items(own("scrap_meat", 1)),
-                items(new ItemStack(Items.ROTTEN_FLESH)),
-                null,
-                null);
+                items(new ItemStack(Items.ROTTEN_FLESH)));
         // MultiItemFood are the original ingot forms, not decorative food copies.
         for (String state : List.of("raw", "cooked")) {
             String material = state.equals("raw") ? "MeatRaw" : "MeatCooked";
@@ -117,27 +101,21 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
                     16,
                     16,
                     items(mat(MaterialPrefix.dust, material, 1)),
-                    items(own(id, 1)),
-                    null,
-                    null);
+                    items(own(id, 1)));
             add(
                     id + "/grind",
                     MachineRecipeMaps.Mortar,
                     16,
                     16,
                     items(own(id, 1)),
-                    items(mat(MaterialPrefix.dust, material, 1)),
-                    null,
-                    null);
+                    items(mat(MaterialPrefix.dust, material, 1)));
             add(
                     id + "/rot",
                     MachineRecipeMaps.Fermenter,
                     144,
                     16,
                     items(own(id, 1)),
-                    items(mat(MaterialPrefix.ingot, "MeatRotten", 1)),
-                    null,
-                    null);
+                    items(mat(MaterialPrefix.ingot, "MeatRotten", 1)));
         }
         smelt("raw_meat_bar", own("cooked_meat_bar", 1), true);
         // Loader_Recipes_Food: all seven raw meat forms can be cooked.
@@ -183,9 +161,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
                         1,
                         0,
                         items(own(id, 1)),
-                        items(own("plant_remains", 1)),
-                        null,
-                        null);
+                        items(own("plant_remains", 1)));
         }
     }
 

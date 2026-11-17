@@ -41,9 +41,9 @@ public final class BedrockFlowerProcessingRecipes extends OriginalRecipeBatch {
         if (grind != null) {
             ItemStack dust = mat(MaterialPrefix.dust, grind, 1);
             add(id + "/mortar", MachineRecipeMaps.Mortar, 16, 16,
-                    items(input.copy()), items(dust.copy()), null, null);
+                    items(input.copy()), items(dust.copy()));
             add(id + "/shredder", MachineRecipeMaps.Shredder, 16, 16,
-                    items(input.copy()), items(dust.copy()), null, null);
+                    items(input.copy()), items(dust.copy()));
         }
 
         if (flower.family() == 'A' && flower.meta() < 8) {
