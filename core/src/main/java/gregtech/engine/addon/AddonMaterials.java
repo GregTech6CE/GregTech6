@@ -24,7 +24,6 @@ import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
-
 import java.util.*;
 
 /** Queued addon materials and extra forms. GregTech drains this once, from {@link GTMaterialRegistry#init()}. */
