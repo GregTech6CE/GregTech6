@@ -36,6 +36,7 @@ public final class OriginalHandCraftingRows {
         rods(data);
         finishRawToolHeads(data);
         circularSawBlades(data);
+        int electricHeads = electricToolHeads(data);
         machineCasings(data);
         woodenBuckets(data);
         woodenClubs(data);
@@ -45,8 +46,8 @@ public final class OriginalHandCraftingRows {
         int wire = wires(data), pipe = pipes(data), anvil = anvils(data), bar = bars(data);
         int circuit = circuits(data), cell = cells(data), store = storage(data);
         int wall = metalWalls(data);
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original native hand crafting: gearboxes={} transformers={} rotation-engines={} pumps={} wire={} pipes={} anvils={} bars={} circuits={} cells={} storage={} walls={}",
-                gearboxes, transformers, engines, pumps, wire, pipe, anvil, bar, circuit, cell, store, wall);
+        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original native hand crafting: gearboxes={} transformers={} rotation-engines={} pumps={} wire={} pipes={} anvils={} bars={} circuits={} cells={} storage={} walls={} electric-heads={}",
+                gearboxes, transformers, engines, pumps, wire, pipe, anvil, bar, circuit, cell, store, wall, electricHeads);
     }
 
     private record Wall(int originalId, String path, String material) {}
@@ -149,7 +150,7 @@ public final class OriginalHandCraftingRows {
         }
     }
 
-    /** Four plates or curved plates, worked with wrench, hammer, file and wire cutters. */
+    /** Four plates or gem plates, worked with wrench, hammer, file and wire cutters. */
     private static void circularSawBlades(Map<ResourceLocation, byte[]> recipes) {
         var coated = Set.of("WoodTreated", "WoodPolished", "SteelGalvanized", "NetherizedDiamond");
         for (var material : gregtech.engine.material.GTMaterialRegistry.allMaterials()) {
@@ -158,7 +159,9 @@ public final class OriginalHandCraftingRows {
                     || coated.contains(material.getName().replace(" ", ""))) continue;
             var output = GTItems.getStack(MaterialPrefix.toolHeadBuzzSaw, material, 1);
             if (output.isEmpty()) continue;
-            for (var prefix : List.of(MaterialPrefix.plate, MaterialPrefix.plateCurved)) {
+            // Loader_OreProcessing: "wPh" / "P P" / "fPx" with P = plate and the "wCh" / "C C" / "fCx"
+            // gem row, where C is GT6's plateGem form.
+            for (var prefix : List.of(MaterialPrefix.plate, MaterialPrefix.plateGem)) {
                 var plate = GTItems.getStack(prefix, material, 1);
                 if (plate.isEmpty()) continue;
                 register(recipes, "buzzsaw/" + prefix.getRegistryName() + "/" + MaterialEquivalence.materialName(material),
@@ -168,6 +171,62 @@ public final class OriginalHandCraftingRows {
                                 'f', requiredTool(GTToolType.FILE), 'x', requiredTool(GTToolType.WIRE_CUTTER)), output);
             }
         }
+    }
+
+    /**
+     * Loader_Tools' chainsaw and mining-drill head rows. GT6 registers both on the electric tools
+     * themselves ({@code CHAINSAW_LV} / {@code MININGDRILL_LV}), not on the manual tool rows, so
+     * they are absent from {@code ManualToolRecipeCatalog.HEADS}.
+     */
+    private static int electricToolHeads(Map<ResourceLocation, byte[]> recipes) {
+        var hammer = requiredTool(GTToolType.HARD_HAMMER);
+        Ingredient steelPlates = steelForm(MaterialPrefix.plate);
+        Ingredient steelRings = steelForm(MaterialPrefix.ring);
+        Ingredient steelCurvedPlates = steelForm(MaterialPrefix.plateCurved);
+        if (steelPlates.isEmpty() || steelRings.isEmpty() || steelCurvedPlates.isEmpty()) return 0;
+        int added = 0;
+        for (var material : gregtech.engine.material.GTMaterialRegistry.allMaterials()) {
+            if (!material.isValid() || material.resolve() != material
+                    || material.has(gregtech.api.material.MaterialProperty.ANTIMATTER)
+                    || material.has(gregtech.api.material.MaterialProperty.WOOD)
+                    || !gregtech.GregTechConfig.toolRecipeEnabled(material.getName(), true)) continue;
+            String name = MaterialEquivalence.materialName(material);
+            // CHAINSAW_LV: "WVW" / "XhX" / "WVW", steel plates and rings around the material's chain.
+            var chainsawHead = GTItems.getStack(MaterialPrefix.toolHeadChainsaw, material, 1);
+            var chain = GTItems.getStack(MaterialPrefix.chain, material, 1);
+            if (!chainsawHead.isEmpty() && !chain.isEmpty()) {
+                added += register(recipes, "tool_head/chainsaw/" + name,
+                        new String[] {"WVW", "XhX", "WVW"},
+                        Map.of('W', steelPlates, 'V', steelRings,
+                                'X', gregtech.content.recipe.CraftingMaterialForms.ingredient(chain),
+                                'h', hammer),
+                        chainsawHead);
+            }
+            // MININGDRILL_LV: "PVP" / "PVP" / "VhV" (and the plateGem variant), steel curved plates at V.
+            var drillHead = GTItems.getStack(MaterialPrefix.toolHeadDrill, material, 1);
+            if (drillHead.isEmpty()) continue;
+            for (var platePrefix : List.of(MaterialPrefix.plate, MaterialPrefix.plateGem)) {
+                var plate = GTItems.getStack(platePrefix, material, 1);
+                if (plate.isEmpty()) continue;
+                added += register(recipes, "tool_head/drill/" + platePrefix.getRegistryName() + "/" + name,
+                        new String[] {"PVP", "PVP", "VhV"},
+                        Map.of('P', gregtech.content.recipe.CraftingMaterialForms.ingredient(plate),
+                                'V', steelCurvedPlates, 'h', hammer),
+                        drillHead);
+            }
+        }
+        return added;
+    }
+
+    /** One form of GT6's {@code ANY.Steel} group, matching the wrench head row's steel parts. */
+    private static Ingredient steelForm(MaterialPrefix prefix) {
+        var stacks = new ArrayList<ItemStack>();
+        for (var material : gregtech.engine.material.GTMaterialRegistry.allMaterials())
+            if (material.isValid() && gregtech.content.tool.OriginalToolMaterials.inFamily(material, "Steel")) {
+                var stack = GTItems.getStack(prefix, material, 1);
+                if (!stack.isEmpty()) stacks.add(stack);
+            }
+        return stacks.isEmpty() ? Ingredient.EMPTY : Ingredient.of(stacks.stream());
     }
 
     /** Original crystal chargers and the wooden variants of MultiTileEntityMassStorage. */
