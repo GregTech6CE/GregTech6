@@ -4,6 +4,7 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.api.addon.material.*;
+import gregtech.api.material.MaterialProperty;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
@@ -26,9 +27,16 @@ public final class RecoveryRecipePublisherTests {
     private RecoveryRecipePublisherTests() {}
 
     public static final class ExistingFormAddon implements AddonMaterialContributor {
+        private static final String WOOD = "BathProbeWood";
         static final MaterialProcessKey<SpecialProcessValue> PROCESS = MaterialProcessKey.multiple(
                 new DataKey("gt6ce_form_test", "alias_probe"), SpecialProcessValue.class);
         @Override public String addonId() { return "gt6ce_form_test"; }
+        @Override public List<MaterialDeclaration> materials() {
+            return List.of(MaterialDeclaration.builder(WOOD).build());
+        }
+        @Override public void link() {
+            GTMaterialRegistry.get(WOOD).put(MaterialProperty.WOOD);
+        }
         @Override public void materialInfo(MaterialInfoTool.Registrar registrar) {
             registrar.registerForm("Cinnabar", "dust");
             registrar.registerSpecialProcess(new SpecialProcessMethod(PROCESS, "gt.recipe.bath", "probe.alias"));
@@ -42,6 +50,20 @@ public final class RecoveryRecipePublisherTests {
             registrar.registerProcess(new MaterialKey("Lava"), PROCESS,
                     new MaterialProcessRule<>(java.util.Set.of(new FormKey("liquid")), new SpecialProcessValue.Reagent()));
         }
+    }
+
+    @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
+    public static void addonWoodCanBeTreatedAndPolished(GameTestHelper helper) {
+        var input = GTItems.getStack(MaterialPrefix.stick, GTMaterialRegistry.get(ExistingFormAddon.WOOD), 1);
+        helper.assertTrue(!input.isEmpty(), "addon wood stick is registered");
+        for (String name : List.of("WoodTreated", "WoodPolished")) {
+            var output = GTItems.getStack(MaterialPrefix.stick, GTMaterialRegistry.get(name), 1);
+            helper.assertTrue(!output.isEmpty() && MachineRecipeMaps.Bath.mRecipeList.stream().anyMatch(
+                    row -> row.mInputs.length == 1 && row.matchesItemInput(0, input)
+                            && row.mOutputs.length == 1 && ItemStack.matches(row.mOutputs[0], output)),
+                    "addon wood stick has a Bath recipe for " + name);
+        }
+        helper.succeed();
     }
 
     @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)

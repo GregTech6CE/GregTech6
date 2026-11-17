@@ -2,6 +2,7 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
+import gregtech.api.material.MaterialProperty;
 import gregtech.content.block.wood.WoodSpecies;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialGroups;
@@ -133,7 +134,16 @@ public final class TreatedWoodRecipes extends OriginalRecipeBatch {
         // reached through several wood identities and must not repeat.
         Set<String> used = new HashSet<>();
         GTMaterial polished = GTMaterialRegistry.get("WoodPolished").resolve();
-        for (GTMaterial material : MaterialGroups.members(MaterialGroups.WoodUntreated)) {
+        var untreated = new LinkedHashSet<>(MaterialGroups.members(MaterialGroups.WoodUntreated));
+        for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
+            if (material.isValid()
+                    && material.resolve() == material
+                    && !GTMaterialRegistry.isCoreMaterial(material)
+                    && material.has(MaterialProperty.WOOD)) {
+                untreated.add(material);
+            }
+        }
+        for (GTMaterial material : untreated) {
             for (String form : WOOD_FORM_PREFIXES) {
                 MaterialPrefix prefix = PrefixRegistry.byName(form);
                 if (prefix != null)
