@@ -1,10 +1,14 @@
 package gregtech.content.data;
 
+import gregtech.api.addon.material.MaterialFormKind;
+import gregtech.api.addon.material.SpecialProcessValue;
 import gregtech.api.material.GTValues;
-import gregtech.engine.material.MaterialEquivalence;
-import gregtech.engine.material.VanillaUnificationDefinitions;
 import gregtech.content.block.MaterialBlockLike;
+import gregtech.content.recipe.SpecialProcessForms;
 import gregtech.content.registry.GTFluids;
+import gregtech.engine.material.MaterialEquivalence;
+import gregtech.engine.material.MaterialViews;
+import gregtech.engine.material.VanillaUnificationDefinitions;
 import gregtech.platform.Mc;
 //? if >=1.21.1 {
 /*import gregtech.platform.neoforge.fluid.FluidDisplayItem;import net.minecraft.network.chat.Component;
@@ -17,6 +21,7 @@ import net.minecraft.server.packs.*;
 import net.minecraft.server.packs.repository.*;
 import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -530,34 +535,33 @@ public final class MaterialTagPack extends AbstractPackResources {
     }
 
     private static void addSpecialProcessTags(Map<String, Set<String>> tags) {
-        var catalog = gregtech.engine.material.MaterialViews.catalog();
+        var catalog = MaterialViews.catalog();
+        var published = catalog.formBindings();
         for (var method : catalog.specialProcesses().methods()) {
             for (var material : catalog.materials()) {
-                for (var rule : catalog.processes().find(material.key(), method.process())) {
-                    String tagPath = rule.value() instanceof gregtech.api.addon.material.SpecialProcessValue.Target
-                            ? method.targetTag().path()
-                            : rule.value() instanceof gregtech.api.addon.material.SpecialProcessValue.Reagent
-                                    ? method.reagentTag().path()
-                                    : null;
-                    if (tagPath == null) continue;
-                    String materialName = gregtech.engine.material.MaterialEquivalence.materialName(
-                            gregtech.engine.material.GTMaterialRegistry.get(material.key().name()).resolve());
-                    if (rule.forms().isEmpty()) {
-                        add(tags, method.process().id().namespace(), "items", tagPath,
-                                "#gt6ce:material/" + materialName);
-                        add(tags, method.process().id().namespace(), "fluids", tagPath,
-                                "#gt6ce:fluid/" + materialName);
-                        continue;
-                    }
-                    for (var form : rule.forms()) {
-                        if (Set.of("liquid", "gas", "molten").contains(form.name())) {
-                            add(tags, method.process().id().namespace(), "fluids", tagPath,
-                                    "#gt6ce:fluid/" + materialName);
-                        } else {
-                            var prefix = gregtech.engine.prefix.PrefixRegistry.byName(form.name());
-                            if (prefix != null)
-                                add(tags, method.process().id().namespace(), "items", tagPath,
-                                        "#gt6ce:" + prefix.getRegistryName() + "/" + materialName);
+                var rules = catalog.processes().find(material.key(), method.process());
+                if (rules.isEmpty()) continue;
+                // This pack can be rebuilt before the new tags load. Never use item forms from the old tag generation.
+                var bindings = new HashSet<>(published.find(material.key()));
+                bindings.removeIf(binding -> {
+                    if (binding.kind() != MaterialFormKind.ITEM) return false;
+                    var form = registeredForm(SpecialProcessForms.item(binding));
+                    return form == null || !form.material().getName().equals(material.key().name())
+                            || !form.prefix().getName().equals(binding.form().name());
+                });
+                for (var rule : rules) {
+                    boolean reagent = rule.value() instanceof SpecialProcessValue.Reagent;
+                    var tag = reagent ? method.reagentTag() : method.targetTag();
+                    var forms = reagent ? SpecialProcessForms.reagentForms(bindings, rule.forms()) : rule.forms();
+                    for (var binding : bindings) {
+                        if (!forms.contains(binding.form())) continue;
+                        var item = SpecialProcessForms.item(binding);
+                        if (item != Items.AIR)
+                            add(tags, tag.namespace(), "items", tag.path(), BuiltInRegistries.ITEM.getKey(item).toString());
+                        if (reagent) {
+                            var fluid = SpecialProcessForms.fluid(binding);
+                            if (fluid != Fluids.EMPTY)
+                                add(tags, tag.namespace(), "fluids", tag.path(), BuiltInRegistries.FLUID.getKey(fluid).toString());
                         }
                     }
                 }
@@ -620,10 +624,17 @@ public final class MaterialTagPack extends AbstractPackResources {
             if (bytes != null) out.accept(id, () -> new ByteArrayInputStream(bytes));
         }
     }
+    @Override
+    public Set<String> getNamespaces(PackType type) {
+        if (type != PackType.SERVER_DATA) return Set.of();
+        var namespaces = new HashSet<>(Set.of("forge", "gt6ce", "minecraft"));
 //? if >=1.21.1 {
-    /*public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("forge","c","gt6ce","minecraft"):Set.of(); }
-*///?} else {
-    public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("forge","gt6ce","minecraft"):Set.of(); }
-//?}
+        /*namespaces.add("c");
+*///?}
+        for (var method : MaterialViews.catalog().specialProcesses().methods())
+            namespaces.add(method.process().id().namespace());
+        return Set.copyOf(namespaces);
+    }
+
     public void close() { resources=null; index=null; }
 }

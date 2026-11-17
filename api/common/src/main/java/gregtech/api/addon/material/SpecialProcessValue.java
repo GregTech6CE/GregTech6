@@ -51,7 +51,11 @@ public sealed interface SpecialProcessValue permits SpecialProcessValue.Target, 
         }
     }
 
-    /** One certain fluid output and ordered phase/form alternatives. */
+    /**
+     * One certain fluid output. The first available phase wins and always emits {@link #millibuckets()}.
+     * The legacy {@code forms} component retains its counts for compatibility. Fluid output uses only
+     * the phase names in that list. Use {@link #FluidOutput(MaterialKey, int, List)} for new declarations.
+     */
     record FluidOutput(MaterialKey material, List<FormCount> forms, int millibuckets) {
         public FluidOutput {
             Objects.requireNonNull(material, "output material");
@@ -59,9 +63,17 @@ public sealed interface SpecialProcessValue permits SpecialProcessValue.Target, 
             if (forms.isEmpty() || millibuckets < 1)
                 throw new IllegalArgumentException("Invalid fluid output");
         }
+
+        public FluidOutput(MaterialKey material, int millibuckets, List<FormKey> phases) {
+            this(material, phases.stream().map(phase -> new FormCount(phase, 1)).toList(), millibuckets);
+        }
+
+        public List<FormKey> phases() {
+            return forms.stream().map(FormCount::form).toList();
+        }
     }
 
-    /** A form and the concrete item count or millibucket amount emitted in that form. */
+    /** A form and the item count emitted in that form. */
     record FormCount(FormKey form, int count) {
         public FormCount {
             Objects.requireNonNull(form, "form");

@@ -2,7 +2,7 @@ package gregtech.content.recipe;
 
 
 import gregtech.api.addon.material.FormKey;
-import gregtech.api.addon.material.MaterialFormKind;
+import gregtech.api.addon.material.MaterialFormBinding;
 import gregtech.api.addon.material.MaterialFormsView;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKey;
@@ -20,9 +20,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -162,20 +161,9 @@ public final class SharedSpecialProcessRows {
             List<ItemStack> itemInputs,
             List<FluidStack> fluidInputs,
             Resolver resolver) {
-        var forms = reagent.forms().isEmpty()
-                ? resolver.bindings.find(reagent.material()).stream()
-                        .map(binding -> binding.form()).collect(java.util.stream.Collectors.toSet())
-                : reagent.forms();
-        if (reagent.forms().isEmpty()) {
-            var kinds = resolver.bindings.find(reagent.material()).stream()
-                    .map(binding -> binding.kind()).filter(kind -> kind == MaterialFormKind.ITEM || kind == MaterialFormKind.FLUID)
-                    .collect(java.util.stream.Collectors.toSet());
-            if (kinds.size() > 1) return false;
-        }
-        for (var form : forms.stream()
-                .sorted(Comparator.comparing(FormKey::name))
-                .toList()) {
-            if (isFluid(form)) {
+        var forms = SpecialProcessForms.reagentForms(resolver.bindings.find(reagent.material()), reagent.forms());
+        for (var form : forms) {
+            if (SpecialProcessForms.isFluid(form)) {
                 FluidStack fluid = resolver.fluid(reagent.material(), form, amount);
                 if (!fluid.isEmpty()) {
                     fluidInputs.add(fluid);
@@ -202,16 +190,11 @@ public final class SharedSpecialProcessRows {
     }
 
     private static FluidStack firstFluid(SpecialProcessValue.FluidOutput output, Resolver resolver) {
-        for (var candidate : output.forms()) {
-            if (!isFluid(candidate.form())) continue;
-            FluidStack stack = resolver.fluid(output.material(), candidate.form(), output.millibuckets());
+        for (var phase : output.phases()) {
+            FluidStack stack = resolver.fluid(output.material(), phase, output.millibuckets());
             if (!stack.isEmpty()) return stack;
         }
         return FluidStack.EMPTY;
-    }
-
-    private static boolean isFluid(FormKey form) {
-        return form.name().equals("liquid") || form.name().equals("gas") || form.name().equals("molten");
     }
 
     private record TargetSelector(MaterialKey material, Map<FormKey, Integer> inputCounts, SpecialProcessValue.Target plan) {}
@@ -275,29 +258,23 @@ public final class SharedSpecialProcessRows {
         }
 
         private ItemStack resolveItem(MaterialKey materialKey, FormKey form, int count) {
-            if (isFluid(form) || count < 1) return ItemStack.EMPTY;
+            if (SpecialProcessForms.isFluid(form) || count < 1) return ItemStack.EMPTY;
             for (var binding : bindings.find(materialKey, form).stream()
-                    .filter(value -> value.kind() == MaterialFormKind.ITEM)
-                    .sorted(Comparator.comparing(value -> value.id()))
+                    .sorted(Comparator.comparing(MaterialFormBinding::kind).thenComparing(MaterialFormBinding::id))
                     .toList()) {
-                var id = ResourceLocation.tryParse(binding.id());
-                if (id == null || !BuiltInRegistries.ITEM.containsKey(id)) continue;
-                var item = BuiltInRegistries.ITEM.get(id);
-                if (item != net.minecraft.world.item.Items.AIR) return new ItemStack(item, count);
+                var item = SpecialProcessForms.item(binding);
+                if (item != Items.AIR) return new ItemStack(item, count);
             }
             return ItemStack.EMPTY;
         }
 
         private FluidStack resolveFluid(MaterialKey materialKey, FormKey form, long amount) {
-            if (!isFluid(form) || amount < 1 || amount > Integer.MAX_VALUE) return FluidStack.EMPTY;
+            if (!SpecialProcessForms.isFluid(form) || amount < 1 || amount > Integer.MAX_VALUE) return FluidStack.EMPTY;
             // Special-process quantities are already mB; material-unit conversion is unrelated.
             for (var binding : bindings.find(materialKey, form).stream()
-                    .filter(value -> value.kind() == MaterialFormKind.FLUID)
-                    .sorted(Comparator.comparing(value -> value.id()))
+                    .sorted(Comparator.comparing(MaterialFormBinding::id))
                     .toList()) {
-                var id = ResourceLocation.tryParse(binding.id());
-                if (id == null) continue;
-                var fluid = BuiltInRegistries.FLUID.get(id);
+                var fluid = SpecialProcessForms.fluid(binding);
                 if (fluid != Fluids.EMPTY) return new FluidStack(fluid, (int) amount);
             }
             return FluidStack.EMPTY;

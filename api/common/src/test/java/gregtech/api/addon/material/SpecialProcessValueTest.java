@@ -40,6 +40,22 @@ final class SpecialProcessValueTest {
     }
 
     @Test
+    void fluidOutputUsesOneAmountAndPreservesLegacyForms() {
+        var water = new MaterialKey("Water");
+        var liquid = new FormKey("liquid");
+        var gas = new FormKey("gas");
+        var legacyForms = List.of(
+                new SpecialProcessValue.FormCount(liquid, 5), new SpecialProcessValue.FormCount(gas, 2));
+        var legacy = new SpecialProcessValue.FluidOutput(water, legacyForms, 250);
+        var phaseOnly = new SpecialProcessValue.FluidOutput(water, 250, List.of(liquid, gas));
+
+        assertEquals(legacyForms, legacy.forms());
+        assertEquals(legacy, new SpecialProcessValue.FluidOutput(water, legacyForms, 250));
+        assertEquals(legacy.phases(), phaseOnly.phases());
+        assertEquals(legacy.millibuckets(), phaseOnly.millibuckets());
+    }
+
+    @Test
     void unsupportedCatalogFailsExplicitly() {
         MaterialCatalogView catalog = new MaterialCatalogView() {
             @Override

@@ -9,9 +9,11 @@ import gregtech.api.addon.material.SpecialProcessValue;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.material.SpecialProcessMethods;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialViews;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
 import java.util.Arrays;
 import java.util.List;
@@ -71,8 +73,7 @@ public final class SpecialProcessRecipeTests {
         var input = new FormKey("crushedPurified");
         var itemOutput = new SpecialProcessValue.ItemOutput(target,
                 List.of(new SpecialProcessValue.FormCount(new FormKey("crushedCentrifuged"), 1)), 5000);
-        var fluidOutput = new SpecialProcessValue.FluidOutput(custom,
-                List.of(new SpecialProcessValue.FormCount(liquid, 1)), 123);
+        var fluidOutput = new SpecialProcessValue.FluidOutput(custom, 123, List.of(new FormKey("gas"), liquid));
         var plan = new SpecialProcessValue.Target(Map.of(input, 1), List.of(itemOutput), List.of(fluidOutput), 37, 256, 0);
         var result = SharedSpecialProcessRows.build(target, input, 1, plan,
                 new SharedSpecialProcessRows.ReagentSelector(custom, Set.of()), new SharedSpecialProcessRows.Resolver(forms));
@@ -124,6 +125,49 @@ public final class SpecialProcessRecipeTests {
                             && result.recipe().mFluidInputs[0].getAmount() == 2,
                     name + " resolves exact mB through its published native form");
         }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
+    public static void publishedBlockFormsUseTheirBlockItems(GameTestHelper helper) {
+        var gold = new MaterialKey("Gold");
+        var copper = new MaterialKey("Copper");
+        var iron = new MaterialKey("Iron");
+        var ore = new FormKey(BlockMaterialPrefix.ore.getName());
+        var bindings = MaterialViews.catalog().formBindings();
+        var copperOre = bindings.find(copper, ore).stream()
+                .filter(binding -> binding.kind() == MaterialFormKind.BLOCK).findFirst().orElseThrow();
+        MaterialFormsView onlyBlockReagent = material -> material.equals(copper) ? Set.of(copperOre) : bindings.find(material);
+        var output = new SpecialProcessValue.ItemOutput(
+                iron, List.of(new SpecialProcessValue.FormCount(ore, 3)), 10000);
+        var plan = new SpecialProcessValue.Target(Map.of(ore, 1), List.of(output), List.of(), 2, 20, 0);
+        var result = SharedSpecialProcessRows.build(gold, ore, 1, plan,
+                new SharedSpecialProcessRows.ReagentSelector(copper, Set.of()),
+                new SharedSpecialProcessRows.Resolver(onlyBlockReagent));
+        helper.assertTrue(result.recipe() != null, "native block forms resolve as items: " + result.reason());
+        var row = result.recipe();
+        helper.assertTrue(row.mInputs[0].is(GTBlocks.getStack(BlockMaterialPrefix.ore, GTMaterialRegistry.get("Gold")).getItem()),
+                "target uses the registered gold ore block item");
+        helper.assertTrue(row.mInputs[1].is(GTBlocks.getStack(BlockMaterialPrefix.ore, GTMaterialRegistry.get("Copper")).getItem())
+                && row.mInputs[1].getCount() == 2, "unrestricted block reagent consumes its item count");
+        helper.assertTrue(row.mOutputs[0].is(GTBlocks.getStack(BlockMaterialPrefix.ore, GTMaterialRegistry.get("Iron")).getItem())
+                && row.mOutputs[0].getCount() == 3, "output uses the registered iron ore block item");
+
+        MaterialFormsView blockAndItem = material -> material.equals(copper)
+                ? Set.of(copperOre, new MaterialFormBinding(copper, new FormKey("plate"), MaterialFormKind.ITEM, "minecraft:diamond", 0))
+                : bindings.find(material);
+        result = SharedSpecialProcessRows.build(gold, ore, 1, plan,
+                new SharedSpecialProcessRows.ReagentSelector(copper, Set.of()), new SharedSpecialProcessRows.Resolver(blockAndItem));
+        helper.assertTrue(result.recipe() != null && result.recipe().mInputs[1].is(Items.DIAMOND),
+                "the existing item reagent takes priority over a new block alternative");
+
+        MaterialFormsView mixed = material -> material.equals(copper)
+                ? Set.of(copperOre, new MaterialFormBinding(copper, new FormKey("liquid"), MaterialFormKind.FLUID, "minecraft:water", 0))
+                : bindings.find(material);
+        result = SharedSpecialProcessRows.build(gold, ore, 1, plan,
+                new SharedSpecialProcessRows.ReagentSelector(copper, Set.of()), new SharedSpecialProcessRows.Resolver(mixed));
+        helper.assertTrue(result.recipe() == null && "reagent".equals(result.reason()),
+                "unrestricted block and fluid reagent has ambiguous units");
         helper.succeed();
     }
 

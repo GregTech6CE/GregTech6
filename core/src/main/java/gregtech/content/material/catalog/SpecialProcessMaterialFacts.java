@@ -113,14 +113,8 @@ public final class SpecialProcessMaterialFacts {
                                         new SpecialProcessValue.FormCount(form("dustDiv72"), 64)),
                                 10_000)),
                 List.of(
-                        new SpecialProcessValue.FluidOutput(
-                                new MaterialKey("Water"),
-                                List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
-                                3_000),
-                        new SpecialProcessValue.FluidOutput(
-                                new MaterialKey("Chlorine"),
-                                List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
-                                1_000)),
+                        new SpecialProcessValue.FluidOutput(new MaterialKey("Water"), 3_000, List.of(form("liquid"))),
+                        new SpecialProcessValue.FluidOutput(new MaterialKey("Chlorine"), 1_000, List.of(form("gas")))),
                 4_000,
                 256,
                 0);
@@ -138,51 +132,31 @@ public final class SpecialProcessMaterialFacts {
                         "Gold",
                         "Copper",
                         new SpecialProcessValue.FluidOutput(
-                                new MaterialKey("ChloroauricAcid"),
-                                List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
-                                3_000),
+                                new MaterialKey("ChloroauricAcid"), 3_000, List.of(form("liquid"))),
                         new SpecialProcessValue.FluidOutput(
-                                new MaterialKey("NitrogenMonoxide"),
-                                List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
-                                1_000),
-                        new SpecialProcessValue.FluidOutput(
-                                new MaterialKey("Water"),
-                                List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
-                                3_000),
+                                new MaterialKey("NitrogenMonoxide"), 1_000, List.of(form("gas"))),
+                        new SpecialProcessValue.FluidOutput(new MaterialKey("Water"), 3_000, List.of(form("liquid"))),
                         6_500);
             case "Copper" ->
                 aquaRegiaTarget(
                         "Copper",
                         "Cobalt",
                         new SpecialProcessValue.FluidOutput(
-                                new MaterialKey("ChloroauricAcid"),
-                                List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
-                                3_000),
+                                new MaterialKey("ChloroauricAcid"), 3_000, List.of(form("liquid"))),
                         new SpecialProcessValue.FluidOutput(
-                                new MaterialKey("NitrogenMonoxide"),
-                                List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
-                                1_000),
-                        new SpecialProcessValue.FluidOutput(
-                                new MaterialKey("Water"),
-                                List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
-                                3_000),
+                                new MaterialKey("NitrogenMonoxide"), 1_000, List.of(form("gas"))),
+                        new SpecialProcessValue.FluidOutput(new MaterialKey("Water"), 3_000, List.of(form("liquid"))),
                         6_500);
             case "Tin", "Cassiterite" ->
                 aquaRegiaTarget(
                         name,
                         "Zinc",
                         new SpecialProcessValue.FluidOutput(
-                                new MaterialKey("StannicChloride"),
-                                List.of(new SpecialProcessValue.FormCount(form("liquid"), 1)),
-                                2_500),
+                                new MaterialKey("StannicChloride"), 2_500, List.of(form("liquid"))),
                         new SpecialProcessValue.FluidOutput(
-                                new MaterialKey("HydrochloricAcid"),
-                                List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
-                                4_000),
+                                new MaterialKey("HydrochloricAcid"), 4_000, List.of(form("gas"))),
                         new SpecialProcessValue.FluidOutput(
-                                new MaterialKey("NitrogenDioxide"),
-                                List.of(new SpecialProcessValue.FormCount(form("gas"), 1)),
-                                3_000),
+                                new MaterialKey("NitrogenDioxide"), 3_000, List.of(form("gas"))),
                         13_000);
             default -> null;
         };
@@ -214,8 +188,8 @@ public final class SpecialProcessMaterialFacts {
         FormKey outputForm = form(fluid.phase().state() == SpecialProcessData.State.GAS ? "gas" : "liquid");
         return new SpecialProcessValue.FluidOutput(
                 new MaterialKey(fluid.phase().material().name()),
-                List.of(new SpecialProcessValue.FormCount(outputForm, 1)),
-                Math.toIntExact(fluid.millibuckets()));
+                Math.toIntExact(fluid.millibuckets()),
+                List.of(outputForm));
     }
 
     private static MaterialProcessKey<SpecialProcessValue> method(Phase phase) {
