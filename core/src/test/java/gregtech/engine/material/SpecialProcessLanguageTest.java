@@ -1,15 +1,14 @@
 package gregtech.engine.material;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 class SpecialProcessLanguageTest {
     private static final Pattern PROCESS_KEYS = Pattern.compile("\"(gt6ce\\.special_process\\.[^\"]+)\"\\s*:");

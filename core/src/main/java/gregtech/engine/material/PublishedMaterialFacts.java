@@ -3,7 +3,6 @@ package gregtech.engine.material;
 import gregtech.api.addon.material.*;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
-
 import java.util.List;
 
 /** Runtime reads from the frozen material catalog and process registry. */

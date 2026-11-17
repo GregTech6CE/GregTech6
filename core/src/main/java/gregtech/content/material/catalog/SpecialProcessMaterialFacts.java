@@ -1,14 +1,13 @@
 package gregtech.content.material.catalog;
 
+import static gregtech.content.material.catalog.SpecialProcessData.Phase;
+import static gregtech.content.material.catalog.SpecialProcessData.Tail;
+
 import gregtech.api.addon.material.*;
 import gregtech.content.material.SpecialProcessMethods;
 import gregtech.engine.material.MaterialDefinition;
 import gregtech.engine.material.MaterialInfoDefinition;
-
 import java.util.*;
-
-import static gregtech.content.material.catalog.SpecialProcessData.Phase;
-import static gregtech.content.material.catalog.SpecialProcessData.Tail;
 
 /** Attaches built-in purified-acid methods as ordinary typed material process rules. */
 public final class SpecialProcessMaterialFacts {
