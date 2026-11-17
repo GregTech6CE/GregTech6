@@ -1,10 +1,18 @@
 package gregtech.gametest;
 
+import com.google.gson.JsonParser;
 import gregtech.api.material.MaterialTextureSet;
+import gregtech.client.CrucibleBowlIcons;
+import gregtech.client.CrucibleCrossingIcons;
+import gregtech.client.CrucibleFaucetIcons;
+import gregtech.client.CrucibleMoldIcons;
+import gregtech.client.MoldBasinIcons;
 import gregtech.content.block.inventory.BottleCrateBlock;
+import gregtech.content.book.BookShelfVariants;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.engine.mod.GregTechIdentity;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -133,6 +142,83 @@ public final class ResourceFilterPackTests {
             helper.assertTrue(
                     "gt6ce:block/material_icons/dull/casingmachine".equals(frame),
                     "filtered steel bottle crate must fall back to dull/casingmachine, got: " + frame);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void smelteryAndMetalBookshelfHonorMountedPackOverrideAndFilter(GameTestHelper helper) {
+        BookShelfVariants.Variant steelShelf = BookShelfVariants.byPath("bookshelf_metal_steel");
+        helper.assertTrue(steelShelf != null && steelShelf.metal(), "bookshelf_metal_steel variant missing");
+        MaterialTextureSet steelSet = MaterialIconDefinitions.resolveTextureSet(steelShelf.material());
+        String casing = BlockMaterialPrefix.casingMachine.getTextureFileName();
+
+        PackResources basePack = memoryPack(
+                "test_smeltery_base",
+                null,
+                Map.of(
+                        "textures/block/material_icons/dull/blocksolid.png", DUMMY_PNG,
+                        "textures/block/material_icons/dull/casingmachine.png", DUMMY_PNG));
+        PackResources overridePack = memoryPack(
+                "test_smeltery_override",
+                null,
+                Map.of(
+                        "textures/block/material_icons/rough/blocksolid.png", DUMMY_PNG,
+                        "textures/block/material_icons/metallic/blocksolid.png", DUMMY_PNG,
+                        "textures/block/material_icons/metallic/casingmachine.png", DUMMY_PNG));
+        PackResources filterPack = memoryPack(
+                "test_smeltery_filter",
+                filterMcmeta(
+                        "^textures/block/material_icons/rough/blocksolid\\.png$",
+                        "^textures/block/material_icons/metallic/casingmachine\\.png$"),
+                Map.of());
+
+        try (var overriddenManager = new MultiPackResourceManager(
+                PackType.CLIENT_RESOURCES, List.of(basePack, overridePack))) {
+            Set<String> icons = collectPngPaths(overriddenManager, "textures/block/material_icons");
+            Predicate<String> probe = MaterialIconDefinitions.selectMaterialProbe(
+                    overriddenManager.getNamespaces(), icons::contains);
+            String bowl = CrucibleBowlIcons.sharedModelJson(MaterialTextureSet.ROUGH, probe);
+            String basin = MoldBasinIcons.sharedModelJson(MaterialTextureSet.ROUGH, probe);
+            String mold = CrucibleMoldIcons.sharedModelJson(MaterialTextureSet.ROUGH, probe);
+            String crossing = CrucibleCrossingIcons.sharedModelJson(MaterialTextureSet.ROUGH, probe);
+            helper.assertTrue(JsonParser.parseString(bowl).isJsonObject(), "invalid bowl json");
+            helper.assertTrue(JsonParser.parseString(basin).isJsonObject(), "invalid basin json");
+            helper.assertTrue(JsonParser.parseString(mold).isJsonObject(), "invalid mold json");
+            helper.assertTrue(JsonParser.parseString(crossing).isJsonObject(), "invalid crossing json");
+            for (Direction facing : Direction.Plane.HORIZONTAL) {
+                String faucet = CrucibleFaucetIcons.sharedModelJson(MaterialTextureSet.METALLIC, facing, probe);
+                helper.assertTrue(
+                        JsonParser.parseString(faucet).isJsonObject(), "invalid faucet json for " + facing);
+                helper.assertTrue(
+                        faucet.contains("\"gt6ce:block/material_icons/metallic/blocksolid\""),
+                        "overridden metallic faucet must resolve metallic/blocksolid, got: " + faucet);
+            }
+            MaterialTextureSet shelfOwner = MaterialIconDefinitions.resolveBlockTextureOwner(steelSet, casing, probe);
+            helper.assertTrue(
+                    bowl.contains("\"gt6ce:block/material_icons/rough/blocksolid\""),
+                    "overridden rough crucible bowl must resolve rough/blocksolid, got: " + bowl);
+            helper.assertTrue(
+                    basin.contains("\"gt6ce:block/material_icons/rough/blocksolid\""),
+                    "overridden rough mold basin must resolve rough/blocksolid, got: " + basin);
+            helper.assertTrue(
+                    shelfOwner == MaterialTextureSet.METALLIC,
+                    "overridden bookshelf_metal_steel must resolve METALLIC, got: " + shelfOwner);
+        }
+
+        try (var filteredManager = new MultiPackResourceManager(
+                PackType.CLIENT_RESOURCES, List.of(basePack, overridePack, filterPack))) {
+            Set<String> icons = collectPngPaths(filteredManager, "textures/block/material_icons");
+            Predicate<String> probe = MaterialIconDefinitions.selectMaterialProbe(
+                    filteredManager.getNamespaces(), icons::contains);
+            String bowl = CrucibleBowlIcons.sharedModelJson(MaterialTextureSet.ROUGH, probe);
+            MaterialTextureSet shelfOwner = MaterialIconDefinitions.resolveBlockTextureOwner(steelSet, casing, probe);
+            helper.assertTrue(
+                    bowl.contains("\"gt6ce:block/material_icons/dull/blocksolid\""),
+                    "filtered rough crucible bowl must fall back to dull/blocksolid, got: " + bowl);
+            helper.assertTrue(
+                    shelfOwner == MaterialTextureSet.DULL,
+                    "filtered bookshelf_metal_steel must fall back to DULL, got: " + shelfOwner);
         }
         helper.succeed();
     }

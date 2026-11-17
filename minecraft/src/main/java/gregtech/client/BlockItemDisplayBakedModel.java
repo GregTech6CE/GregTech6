@@ -22,7 +22,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- * Block-item inventory / hand display: applies vanilla block-item transforms only.
+ * Block-item inventory / hand display: the wrapped model keeps the display its own JSON declares,
+ * and the vanilla block-item display fills the contexts it leaves out.
  * Quads (and {@code tintindex}) pass through unchanged — for machines using color handlers.
  */
 public final class BlockItemDisplayBakedModel implements BakedModel {
@@ -87,8 +88,9 @@ public final class BlockItemDisplayBakedModel implements BakedModel {
 
     @Override
     public ItemTransforms getTransforms() {
-        ItemTransforms block = BlockItemModelHelper.blockItemTransforms();
-        return block != ItemTransforms.NO_TRANSFORMS ? block : inner.getTransforms();
+        // The wrapped model keeps whatever display its own JSON declared (engines, row overrides);
+        // the vanilla block-item display only fills the contexts it leaves out.
+        return BlockItemModelHelper.resolveWithFallback(inner.getTransforms());
     }
 
     @Override

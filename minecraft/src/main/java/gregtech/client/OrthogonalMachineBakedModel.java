@@ -84,19 +84,35 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
     private final Map<Direction, List<BakedQuad>> overlayFaces;
     private final boolean hasOverlay;
     private final List<BakedModel> passes;
+    /** Display declared by the model JSON that named this row, which the generated ones leave empty. */
+    private final ItemTransforms transforms;
+    private final ItemOverrides overrides;
+    private final boolean ambientOcclusion;
+    private final boolean blockLight;
 
     private OrthogonalMachineBakedModel(
             OrthogonalMachineModels.Entry spec,
             Map<ResourceLocation, TextureAtlasSprite> sprites,
             TextureAtlasSprite particle,
-            ModelState modelState) {
+            ModelState modelState,
+            @Nullable ResourceLocation modelLocation,
+            @Nullable ItemTransforms transforms,
+            @Nullable ItemOverrides overrides,
+            boolean ambientOcclusion,
+            boolean blockLight) {
         this.spec = spec;
         this.particle = particle;
+        this.transforms = transforms == null ? ItemTransforms.NO_TRANSFORMS : transforms;
+        this.overrides = overrides == null ? ItemOverrides.EMPTY : overrides;
+        this.ambientOcclusion = ambientOcclusion;
+        this.blockLight = blockLight;
         // The shell is the opaque-or-cutout cube; the detail pass is always cutout.
         baseRenderType = spec.solidBase() ? RenderType.solid() : RenderType.cutout();
         FaceBakery bakery = new FaceBakery();
-        baseFaces = bakeFaces(bakery, sprites, spec::baseFace, 0, modelState);
-        overlayFaces = spec.hasOverlay() ? bakeFaces(bakery, sprites, spec::overlayFace, -1, modelState) : Map.of();
+        baseFaces = bakeFaces(bakery, sprites, spec::baseFace, 0, modelState, modelLocation);
+        overlayFaces = spec.hasOverlay()
+                ? bakeFaces(bakery, sprites, spec::overlayFace, -1, modelState, modelLocation)
+                : Map.of();
         hasOverlay = !overlayFaces.isEmpty();
         LayerPass base = new LayerPass(this, baseRenderType, baseFaces);
         if (hasOverlay) {
@@ -109,12 +125,23 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
     /**
      * Bakes one table row. The lookup is the geometry loader's sprite function, so every sprite this
      * model keeps belongs to the bake that created it.
+     *
+     * <p>The display, the overrides and the lighting flags come from the geometry context, i.e. from
+     * the item JSON that names the row. {@code modelLocation} is only the name Forge's
+     * {@link FaceBakery} reports in its errors, so the 1.21.1 bake, which has no such parameter,
+     * passes {@code null}.
      */
     public static BakedModel bake(OrthogonalMachineModels.Entry spec,
                                   Function<ResourceLocation, TextureAtlasSprite> blockAtlasLookup,
-                                  ModelState modelState) {
+                                  ModelState modelState,
+                                  @Nullable ResourceLocation modelLocation,
+                                  @Nullable ItemTransforms transforms,
+                                  @Nullable ItemOverrides overrides,
+                                  boolean ambientOcclusion,
+                                  boolean blockLight) {
         return new OrthogonalMachineBakedModel(
-                spec, resolveSprites(spec, blockAtlasLookup), particle(spec, blockAtlasLookup), modelState);
+                spec, resolveSprites(spec, blockAtlasLookup), particle(spec, blockAtlasLookup), modelState,
+                modelLocation, transforms, overrides, ambientOcclusion, blockLight);
     }
 
     @Override
@@ -160,7 +187,7 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
 
     @Override
     public boolean useAmbientOcclusion() {
-        return true;
+        return ambientOcclusion;
     }
 
     @Override
@@ -170,7 +197,7 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
 
     @Override
     public boolean usesBlockLight() {
-        return true;
+        return blockLight;
     }
 
     @Override
@@ -185,12 +212,14 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
 
     @Override
     public ItemTransforms getTransforms() {
-        return BlockItemModelHelper.blockItemTransforms();
+        // A generated row model declares no display, so the vanilla block-item display applies; a
+        // resource pack that writes a display into the row keeps it.
+        return BlockItemModelHelper.resolveWithFallback(transforms);
     }
 
     @Override
     public ItemOverrides getOverrides() {
-        return ItemOverrides.EMPTY;
+        return overrides;
     }
 
     private Map<Direction, List<BakedQuad>> bakeFaces(
@@ -198,7 +227,8 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
             Map<ResourceLocation, TextureAtlasSprite> sprites,
             java.util.function.IntFunction<String> textures,
             int tintIndex,
-            ModelState modelState) {
+            ModelState modelState,
+            @Nullable ResourceLocation modelLocation) {
         Map<Direction, List<BakedQuad>> faces = new EnumMap<>(Direction.class);
         for (int index = 0; index < DIRECTION_ORDER.length; index++) {
             String texture = textures.apply(index);
@@ -207,7 +237,8 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
             // The cullface is the same local direction: FaceBakery rotates it, and the resulting
             // quad keeps the rotated direction, exactly like the JSON cullface it replaces.
             BlockElementFace face = new BlockElementFace(direction, tintIndex, "", fullUv());
-            var quad = bakeQuad(bakery, face, sprites.getOrDefault(textureId(texture), particle), direction, modelState);
+            var quad = bakeQuad(bakery, face, sprites.getOrDefault(textureId(texture), particle), direction,
+                    modelState, modelLocation);
             faces.computeIfAbsent(quad.getDirection(), key -> new ArrayList<>()).add(quad);
         }
         Map<Direction, List<BakedQuad>> copy = new EnumMap<>(Direction.class);
@@ -225,12 +256,12 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
     }
 
     private static BakedQuad bakeQuad(FaceBakery bakery, BlockElementFace face,
-                                      TextureAtlasSprite sprite, Direction direction, ModelState modelState) {
+                                      TextureAtlasSprite sprite, Direction direction, ModelState modelState,
+                                      @Nullable ResourceLocation modelLocation) {
 //? if >=1.21.1 {
         /*return bakery.bakeQuad(FROM, TO, face, sprite, direction, modelState, null, true);
 *///?} else {
-        return bakery.bakeQuad(FROM, TO, face, sprite, direction, modelState, null, true,
-                ResourceLocation.fromNamespaceAndPath("gt6ce", "orthogonal_machine"));
+        return bakery.bakeQuad(FROM, TO, face, sprite, direction, modelState, null, true, modelLocation);
 //?}
     }
 
@@ -314,7 +345,7 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
 
         @Override
         public boolean useAmbientOcclusion() {
-            return true;
+            return owner.useAmbientOcclusion();
         }
 
         @Override
@@ -324,7 +355,7 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
 
         @Override
         public boolean usesBlockLight() {
-            return true;
+            return owner.usesBlockLight();
         }
 
         @Override
@@ -339,12 +370,12 @@ public final class OrthogonalMachineBakedModel implements IDynamicBakedModel {
 
         @Override
         public ItemTransforms getTransforms() {
-            return BlockItemModelHelper.blockItemTransforms();
+            return owner.getTransforms();
         }
 
         @Override
         public ItemOverrides getOverrides() {
-            return ItemOverrides.EMPTY;
+            return owner.getOverrides();
         }
     }
 }

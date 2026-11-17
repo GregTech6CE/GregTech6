@@ -4,6 +4,7 @@ import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.block.OreBlock;
+import gregtech.content.book.BookShelfVariants;
 import gregtech.content.item.CreativeTabIconItem;
 import gregtech.content.registry.AddonPipeRegistration;
 import gregtech.content.registry.GTAxles;
@@ -13,8 +14,10 @@ import gregtech.content.registry.GTSignalWires;
 import gregtech.content.registry.GTWires;
 import gregtech.engine.machine.OrthogonalMachineModels;
 import gregtech.engine.mod.GregTechIdentity;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.BlockModelShaper;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.*;
@@ -157,6 +160,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         Predicate<String> materialExists =
                 mountedIcons != null ? mountedIcons::contains : MaterialIconDefinitions::classpathResourceExists;
         int sharedModels = emitSharedMaterialModels(result, materialExists);
+        int smelteryModels = emitSmelteryModels(result, materialExists);
+        int metalBookshelves = emitMetalBookshelfModels(result, materialExists);
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (item instanceof gregtech.engine.material.MaterialFormItem material && material.getPrefix().isAddon()) {
@@ -253,9 +258,11 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         int machines = emitMachineBlockstatesAndItems(result);
         com.mojang.logging.LogUtils.getLogger()
                 .info("[gregtech] Shared inventory resources: {} files, {} templates, {} shared material models,"
+                        + " {} smeltery hull models, {} metal bookshelf models,"
                         + " {} missing static blockstates, {} machine model specs, {} machines,"
                         + " {} transport placeholders",
-                        result.size(), references.size(), sharedModels, states, specs, machines, placeholders);
+                        result.size(), references.size(), sharedModels, smelteryModels, metalBookshelves,
+                        states, specs, machines, placeholders);
         return Collections.unmodifiableMap(result);
     }
 
@@ -337,9 +344,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             String json = MaterialIconDefinitions.sharedModelJson(
                     model.set(), model.prefix(), materialExists);
             if (json == null) continue;
-            result.put(
-                    location("models/" + MaterialIconDefinitions.modelPath(model.set(), model.prefix()) + ".json"),
-                    encoded.computeIfAbsent(json, value -> value.getBytes(StandardCharsets.UTF_8)));
+            putModel(result, encoded, MaterialIconDefinitions.modelPath(model.set(), model.prefix()), json);
             emitted++;
         }
         for (MaterialSharedModelIndex.BlockModel model : MaterialSharedModelIndex.blocks(materialExists)) {
@@ -347,12 +352,68 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                     model.set(), model.prefix(), materialExists);
             if (json == null) continue;
             ResourceLocation id = BlockMaterialIcons.sharedModelLocation(model.set(), model.prefix());
-            result.put(
-                    location("models/" + id.getPath() + ".json"),
-                    encoded.computeIfAbsent(json, value -> value.getBytes(StandardCharsets.UTF_8)));
+            putModel(result, encoded, id.getPath(), json);
             emitted++;
         }
         return emitted;
+    }
+
+    /**
+     * One model under {@code models/<path>.json}. Sets that resolve to the same sprite ship
+     * byte-identical JSON, so the payloads are shared rather than copied per set.
+     */
+    private static void putModel(Map<ResourceLocation, byte[]> result, Map<String, byte[]> encoded,
+                                 String path, String json) {
+        result.put(location("models/" + path + ".json"),
+                encoded.computeIfAbsent(json, value -> value.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    /**
+     * The five smeltery hull families, generated per modeled texture set: bowl, basin, mold,
+     * crossing and the four faucet facings. Their static JSON tree is gone, so these models are the
+     * only place the hull geometry lives.
+     */
+    private static int emitSmelteryModels(Map<ResourceLocation, byte[]> result,
+                                          Predicate<String> materialExists) {
+        int before = result.size();
+        Map<String, byte[]> encoded = new HashMap<>();
+        for (MaterialTextureSet set : MaterialTextureSet.modeled()) {
+            putModel(result, encoded, CrucibleBowlIcons.sharedModelLocation(set).getPath(),
+                    CrucibleBowlIcons.sharedModelJson(set, materialExists));
+            putModel(result, encoded, MoldBasinIcons.sharedModelLocation(set).getPath(),
+                    MoldBasinIcons.sharedModelJson(set, materialExists));
+            putModel(result, encoded, CrucibleMoldIcons.sharedModelLocation(set).getPath(),
+                    CrucibleMoldIcons.sharedModelJson(set, materialExists));
+            putModel(result, encoded, CrucibleCrossingIcons.sharedModelLocation(set).getPath(),
+                    CrucibleCrossingIcons.sharedModelJson(set, materialExists));
+            for (Direction facing : Direction.Plane.HORIZONTAL) {
+                putModel(result, encoded, CrucibleFaucetIcons.sharedModelLocation(set, facing).getPath(),
+                        CrucibleFaucetIcons.sharedModelJson(set, facing, materialExists));
+            }
+        }
+        return result.size() - before;
+    }
+
+    /**
+     * Metal shelves point the shared shelf geometry at the casing sprite their own material
+     * resolves to, which replaces the per-material model files with one static template.
+     */
+    private static int emitMetalBookshelfModels(Map<ResourceLocation, byte[]> result,
+                                                Predicate<String> materialExists) {
+        int before = result.size();
+        String casing = BlockMaterialPrefix.casingMachine.getTextureFileName();
+        for (BookShelfVariants.Variant variant : BookShelfVariants.all()) {
+            if (!variant.metal()) continue;
+            MaterialTextureSet owner = MaterialIconDefinitions.resolveBlockTextureOwner(
+                    MaterialIcons.resolveTextureSet(variant.material()), casing, materialExists);
+            String sprite = "gt6ce:"
+                    + MaterialIconDefinitions.blockIconPath(owner == null ? MaterialTextureSet.DULL : owner, casing);
+            String json = "{\"parent\":\"gt6ce:block/bookshelf_metal_tinted\",\"textures\":{\"wood\":\""
+                    + sprite + "\"}}";
+            result.put(location("models/block/" + variant.path() + ".json"),
+                    json.getBytes(StandardCharsets.UTF_8));
+        }
+        return result.size() - before;
     }
 
     /**
@@ -587,7 +648,12 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
 *///?} else {
                 net.minecraft.client.renderer.block.model.ItemOverrides overrides, ResourceLocation modelLocation) {
 //?}
-            return baker.bake(parent, state);
+            return BlockItemModelHelper.applyContext(
+                    baker.bake(parent, state),
+                    context.getTransforms(),
+                    overrides,
+                    context.useAmbientOcclusion(),
+                    context.useBlockLight());
         }
     }
 }

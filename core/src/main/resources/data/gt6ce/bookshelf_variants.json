@@ -171,7 +171,7 @@
       "kind": "metal",
       "material": "Bismuth",
       "display": "Bismuth",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/copper/casingmachine",
       "hardness": 4.0,
       "resistance": 4.0,
       "flammability": 0
@@ -182,7 +182,7 @@
       "kind": "metal",
       "material": "Antimony",
       "display": "Antimony",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/copper/casingmachine",
       "hardness": 4.0,
       "resistance": 4.0,
       "flammability": 0
@@ -193,7 +193,7 @@
       "kind": "metal",
       "material": "Nickel",
       "display": "Nickel",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 4.0,
       "resistance": 4.0,
       "flammability": 0
@@ -204,7 +204,7 @@
       "kind": "metal",
       "material": "Constantan",
       "display": "Constantan",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 4.0,
       "resistance": 4.0,
       "flammability": 0
@@ -215,7 +215,7 @@
       "kind": "metal",
       "material": "Bronze",
       "display": "Bronze",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 7.0,
       "resistance": 7.0,
       "flammability": 0
@@ -226,7 +226,7 @@
       "kind": "metal",
       "material": "ArsenicCopper",
       "display": "ArsenicCopper",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 7.5,
       "resistance": 7.5,
       "flammability": 0
@@ -237,7 +237,7 @@
       "kind": "metal",
       "material": "Aluminium",
       "display": "Aluminium",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/copper/casingmachine",
       "hardness": 2.0,
       "resistance": 2.0,
       "flammability": 0
@@ -248,7 +248,7 @@
       "kind": "metal",
       "material": "Brass",
       "display": "Brass",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 2.5,
       "resistance": 2.5,
       "flammability": 0
@@ -259,7 +259,7 @@
       "kind": "metal",
       "material": "TinAlloy",
       "display": "TinAlloy",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 3.0,
       "resistance": 3.0,
       "flammability": 0
@@ -270,7 +270,7 @@
       "kind": "metal",
       "material": "Cobalt",
       "display": "Cobalt",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 4.0,
       "resistance": 4.0,
       "flammability": 0
@@ -281,7 +281,7 @@
       "kind": "metal",
       "material": "ArsenicBronze",
       "display": "ArsenicBronze",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 8.0,
       "resistance": 8.0,
       "flammability": 0
@@ -292,7 +292,7 @@
       "kind": "metal",
       "material": "BismuthBronze",
       "display": "BismuthBronze",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 8.0,
       "resistance": 8.0,
       "flammability": 0
@@ -303,7 +303,7 @@
       "kind": "metal",
       "material": "Germanium",
       "display": "Germanium",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/copper/casingmachine",
       "hardness": 4.0,
       "resistance": 4.0,
       "flammability": 0
@@ -314,7 +314,7 @@
       "kind": "metal",
       "material": "Invar",
       "display": "Invar",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 4.0,
       "resistance": 4.0,
       "flammability": 0
@@ -325,7 +325,7 @@
       "kind": "metal",
       "material": "Steel",
       "display": "Steel",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 6.0,
       "resistance": 6.0,
       "flammability": 0
@@ -336,7 +336,7 @@
       "kind": "metal",
       "material": "Gold",
       "display": "Gold",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/shiny/casingmachine",
       "hardness": 3.0,
       "resistance": 3.0,
       "flammability": 0
@@ -347,7 +347,7 @@
       "kind": "metal",
       "material": "Silver",
       "display": "Silver",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/shiny/casingmachine",
       "hardness": 3.0,
       "resistance": 3.0,
       "flammability": 0
@@ -369,7 +369,7 @@
       "kind": "metal",
       "material": "Lumium",
       "display": "Lumium",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 2.0,
       "resistance": 2.0,
       "flammability": 0
@@ -380,7 +380,7 @@
       "kind": "metal",
       "material": "Knightmetal",
       "display": "Knightmetal",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 7.0,
       "resistance": 7.0,
       "flammability": 0
@@ -391,7 +391,7 @@
       "kind": "metal",
       "material": "SteelGalvanized",
       "display": "SteelGalvanized",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 6.0,
       "resistance": 6.0,
       "flammability": 0
@@ -402,7 +402,7 @@
       "kind": "metal",
       "material": "Molybdenum",
       "display": "Molybdenum",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/copper/casingmachine",
       "hardness": 6.0,
       "resistance": 6.0,
       "flammability": 0
@@ -413,7 +413,7 @@
       "kind": "metal",
       "material": "Electrum",
       "display": "Electrum",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 3.0,
       "resistance": 3.0,
       "flammability": 0
@@ -424,7 +424,7 @@
       "kind": "metal",
       "material": "StainlessSteel",
       "display": "StainlessSteel",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 5.0,
       "resistance": 5.0,
       "flammability": 0
@@ -435,7 +435,7 @@
       "kind": "metal",
       "material": "Thaumium",
       "display": "Thaumium",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 9.0,
       "resistance": 9.0,
       "flammability": 0
@@ -446,7 +446,7 @@
       "kind": "metal",
       "material": "Manasteel",
       "display": "Manasteel",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 9.0,
       "resistance": 9.0,
       "flammability": 0
@@ -457,7 +457,7 @@
       "kind": "metal",
       "material": "Titanium",
       "display": "Titanium",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 9.0,
       "resistance": 9.0,
       "flammability": 0
@@ -468,7 +468,7 @@
       "kind": "metal",
       "material": "Netherite",
       "display": "Netherite",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 10.0,
       "resistance": 10.0,
       "flammability": 0
@@ -479,7 +479,7 @@
       "kind": "metal",
       "material": "Efrine",
       "display": "Efrine",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 8.0,
       "resistance": 8.0,
       "flammability": 0
@@ -490,7 +490,7 @@
       "kind": "metal",
       "material": "Chromium",
       "display": "Chromium",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/shiny/casingmachine",
       "hardness": 4.0,
       "resistance": 4.0,
       "flammability": 0
@@ -501,7 +501,7 @@
       "kind": "metal",
       "material": "Platinum",
       "display": "Platinum",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/shiny/casingmachine",
       "hardness": 2.0,
       "resistance": 2.0,
       "flammability": 0
@@ -512,7 +512,7 @@
       "kind": "metal",
       "material": "Terrasteel",
       "display": "Terrasteel",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 15.0,
       "resistance": 15.0,
       "flammability": 0
@@ -523,7 +523,7 @@
       "kind": "metal",
       "material": "Tungstensteel",
       "display": "Tungstensteel",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 12.5,
       "resistance": 12.5,
       "flammability": 0
@@ -534,7 +534,7 @@
       "kind": "metal",
       "material": "TungstenCarbide",
       "display": "TungstenCarbide",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 12.5,
       "resistance": 12.5,
       "flammability": 0
@@ -545,7 +545,7 @@
       "kind": "metal",
       "material": "Duranium",
       "display": "Duranium",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 20.0,
       "resistance": 20.0,
       "flammability": 0
@@ -556,7 +556,7 @@
       "kind": "metal",
       "material": "Ultimet",
       "display": "Ultimet",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 12.5,
       "resistance": 12.5,
       "flammability": 0
@@ -567,7 +567,7 @@
       "kind": "metal",
       "material": "Tungsten",
       "display": "Tungsten",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 10.0,
       "resistance": 10.0,
       "flammability": 0
@@ -578,7 +578,7 @@
       "kind": "metal",
       "material": "Palladium",
       "display": "Palladium",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/shiny/casingmachine",
       "hardness": 15.0,
       "resistance": 15.0,
       "flammability": 0
@@ -600,7 +600,7 @@
       "kind": "metal",
       "material": "OsmiumElemental",
       "display": "OsmiumElemental",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 9.0,
       "resistance": 9.0,
       "flammability": 0
@@ -611,7 +611,7 @@
       "kind": "metal",
       "material": "ElvenElementium",
       "display": "ElvenElementium",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 30.0,
       "resistance": 30.0,
       "flammability": 0
@@ -622,7 +622,7 @@
       "kind": "metal",
       "material": "Tritanium",
       "display": "Tritanium",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/metallic/casingmachine",
       "hardness": 30.0,
       "resistance": 30.0,
       "flammability": 0
@@ -633,7 +633,7 @@
       "kind": "metal",
       "material": "Adamantium",
       "display": "Adamantium",
-      "texture": "gt6ce:block/material_icons/dull/casingmachine",
+      "texture": "gt6ce:block/material_icons/shiny/casingmachine",
       "hardness": 100.0,
       "resistance": 100.0,
       "flammability": 0

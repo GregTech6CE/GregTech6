@@ -33,7 +33,8 @@ import java.util.Set;
  * <p>Their world geometry needs no pass here. The shared pack serves a real blockstate per state, so
  * the vanilla bakery bakes every one of them from {@code machine_models.tsv} through
  * {@link OrthogonalMachineModelLoader}, at the rotation the blockstate names. Only the item display
- * is decided below, and only for the blocks no resource pack models itself.
+ * is decided below, and only for the items whose {@code models/item/<id>.json} the shared pack still
+ * serves.
  */
 public final class MachineBlockClientModels {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -80,20 +81,20 @@ public final class MachineBlockClientModels {
         int engines = engineItems(models);
 
         LOGGER.info("[{}] Machine item display: {} burning boxes, {} basic machines, {} energy nodes, {} engines"
-                        + " ({} kept from a resource pack, {} burning missing, {} basic missing, {} node missing)",
+                        + " ({} not served by the shared pack, {} burning missing, {} basic missing, {} node missing)",
                 GregTechIdentity.REGISTRY_NAMESPACE, boxes.aliased, basic.aliased, nodes.aliased, engines,
                 boxes.kept + basic.kept + nodes.kept, boxes.missing, basic.missing, nodes.missing);
     }
 
     /**
      * Idle-only machine items (burning boxes and shared-cube energy nodes): wraps the block row in
-     * item transforms unless an external resource pack provides its own item model.
+     * item transforms while the shared pack still serves this item's virtual row model.
      */
     private static void aliasIdleBlockItem(BakedModelMap models, @Nullable ResourceManager resources,
                                            Block block, Tally tally) {
         ResourceLocation itemId = itemId(block);
         if (itemId == null) return;
-        if (isExternalItemOverride(resources, itemId)) {
+        if (!isVirtualItemModel(resources, itemId)) {
             tally.kept++;
             return;
         }
@@ -111,7 +112,7 @@ public final class MachineBlockClientModels {
         for (BasicMachineBlock block : OrthogonalMachineFamilies.basicMachineBlocks()) {
             ResourceLocation itemId = itemId(block);
             if (itemId == null) continue;
-            if (isExternalItemOverride(resources, itemId)) {
+            if (!isVirtualItemModel(resources, itemId)) {
                 tally.kept++;
                 continue;
             }
@@ -186,16 +187,17 @@ public final class MachineBlockClientModels {
     }
 
     /**
-     * True when a resource pack ships {@code models/item/<id>.json} itself, so the item keeps that
-     * model. The shared pack serves one entry for these items too; finding that entry means nobody
-     * overrode it.
+     * True while the shared pack itself serves {@code models/item/<id>.json}, i.e. while this item
+     * still uses the virtual row model this callback fills in. A pack that {@code filter}s that
+     * entry away, or replaces it with its own item model, decides the item's model itself and must
+     * not have one put back here.
      */
-    private static boolean isExternalItemOverride(@Nullable ResourceManager resources, ResourceLocation itemId) {
+    private static boolean isVirtualItemModel(@Nullable ResourceManager resources, ResourceLocation itemId) {
         if (resources == null) return false;
         ResourceLocation path = ResourceLocation.fromNamespaceAndPath(
                 itemId.getNamespace(), "models/item/" + itemId.getPath() + ".json");
         return resources.getResource(path)
-                .map(resource -> !SharedInventoryModelPack.PACK_ID.equals(resource.sourcePackId()))
+                .map(resource -> SharedInventoryModelPack.PACK_ID.equals(resource.sourcePackId()))
                 .orElse(false);
     }
 

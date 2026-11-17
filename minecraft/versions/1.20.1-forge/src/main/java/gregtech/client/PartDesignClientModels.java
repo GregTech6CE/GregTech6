@@ -3,13 +3,16 @@ package gregtech.client;
 import com.mojang.logging.LogUtils;
 import gregtech.GregTech;
 import gregtech.content.multiblock.PartDesigns;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 /** Loads one cube per design index and swaps it onto structural parts from {@code gt.design}. */
@@ -19,18 +22,21 @@ public final class PartDesignClientModels {
     private PartDesignClientModels() {}
 
     public static void register(ModelEvent.RegisterAdditional event) {
+        ResourceManager resources = resourceManager();
         for (var folder : PartDesigns.folders().entrySet()) {
             for (int design = 1; design <= folder.getValue(); design++) {
-                if (blankDesign(folder.getKey(), design)) continue;
-                ClientModelEvents.registerAdditional(
-                        event,
-                        ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, modelPath(folder.getKey(), design)));
+                String modelPath = PartDesignBakedModel.modelPath(folder.getKey(), design);
+                // Only the cubes the packs actually serve may be registered: an addon pack adds a
+                // design model, a missing one would fail this bake instead of falling back.
+                if (!PartDesignBakedModel.isDesignAvailable(resources, modelPath)) continue;
+                ClientModelEvents.registerAdditional(event, PartDesignBakedModel.modelId(folder.getKey(), design));
             }
         }
     }
 
     public static void bake(ModelEvent.ModifyBakingResult event) {
         BakedModelMap models = BakedModelMap.of(event.getModels());
+        ResourceManager resources = resourceManager();
         int wrapped = 0;
         int missing = 0;
         for (String path : PartDesigns.paths()) {
@@ -42,8 +48,10 @@ public final class PartDesignClientModels {
             String folder = PartDesigns.folder(path);
             var designs = new BakedModel[max + 1];
             for (int design = 1; design <= max; design++) {
-                if (blankDesign(folder, design)) continue;
-                designs[design] = lookup(models, folder, design);
+                String modelPath = PartDesignBakedModel.modelPath(folder, design);
+                // An unserved cube keeps the block's own model, so it is skipped rather than missing.
+                if (!PartDesignBakedModel.isDesignAvailable(resources, modelPath)) continue;
+                designs[design] = models.find(PartDesignBakedModel.modelId(folder, design));
                 if (designs[design] == null) missing++;
             }
             for (BlockState state : block.getStateDefinition().getPossibleStates()) {
@@ -62,15 +70,9 @@ public final class PartDesignClientModels {
                 missing);
     }
 
-    private static BakedModel lookup(BakedModelMap models, String folder, int design) {
-        return models.find(ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, modelPath(folder, design)));
-    }
-
-    private static boolean blankDesign(String folder, int design) {
-        return design == 4 && ("metalwall".equals(folder) || "metalwalldense".equals(folder));
-    }
-
-    private static String modelPath(String folder, int design) {
-        return "block/machine/multiblock/design/" + folder + "_" + design;
+    /** The running client's resource manager, or null while the client is still starting. */
+    private static @Nullable ResourceManager resourceManager() {
+        Minecraft minecraft = Minecraft.getInstance();
+        return minecraft == null ? null : minecraft.getResourceManager();
     }
 }

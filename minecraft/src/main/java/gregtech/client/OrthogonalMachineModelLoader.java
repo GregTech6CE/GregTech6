@@ -64,11 +64,16 @@ public final class OrthogonalMachineModelLoader implements IGeometryLoader<Ortho
                                Function<Material, TextureAtlasSprite> sprites, ModelState state,
 //? if >=1.21.1 {
                                /*ItemOverrides overrides) {
+            // 1.21.1's geometry signature carries no model location; only Forge's FaceBakery
+            // names one in its errors.
+            ResourceLocation modelLocation = null;
 *///?} else {
                                ItemOverrides overrides, ResourceLocation modelLocation) {
 //?}
             return OrthogonalMachineBakedModel.bake(
-                    spec, id -> sprites.apply(new Material(TextureAtlas.LOCATION_BLOCKS, id)), state);
+                    spec, id -> sprites.apply(new Material(TextureAtlas.LOCATION_BLOCKS, id)), state,
+                    modelLocation, context.getTransforms(), overrides,
+                    context.useAmbientOcclusion(), context.useBlockLight());
         }
     }
 }

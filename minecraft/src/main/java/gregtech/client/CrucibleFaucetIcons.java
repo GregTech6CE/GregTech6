@@ -1,6 +1,7 @@
 package gregtech.client;
 
 import gregtech.api.material.MaterialTextureSet;
+import java.util.function.Predicate;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 
@@ -17,6 +18,11 @@ public final class CrucibleFaucetIcons {
     }
 
     public static String sharedModelJson(MaterialTextureSet set, Direction facing) {
-        return SmelteryModelHelper.hullModelJson(set, SmelteryModelHelper.faucetElements(facing, true), null);
+        return sharedModelJson(set, facing, MaterialIcons::resourceExists);
+    }
+
+    public static String sharedModelJson(MaterialTextureSet set, Direction facing, Predicate<String> resourceExists) {
+        return SmelteryModelHelper.hullModelJson(
+                set, SmelteryModelHelper.faucetElements(facing, true), null, resourceExists);
     }
 }

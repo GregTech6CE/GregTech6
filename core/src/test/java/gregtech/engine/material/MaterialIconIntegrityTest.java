@@ -30,6 +30,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import javax.imageio.ImageIO;
 import org.junit.jupiter.api.BeforeAll;
@@ -55,6 +57,14 @@ class MaterialIconIntegrityTest {
     private static final Set<String> UNMODELED_SETS = Set.of("fluid", "gas", "hex", "netherstar", "plasma", "rad");
 
     private static final List<String> ICON_KINDS = List.of("item", "block");
+    private static final String PNG_SUFFIX = ".png";
+    /** Sprite ids a static model names directly: {@code gt6ce:(block|item)/material_icons/<set>/<name>}. */
+    private static final Pattern STATIC_ICON_REFERENCE =
+            Pattern.compile("\"gt6ce:(block|item)/material_icons/([a-z0-9_]+)/([a-z0-9_]+)\"");
+    /** Static hull trees the shared pack now generates; only their live models may stay on disk. */
+    private static final List<String> GENERATED_MODEL_DIRECTORIES =
+            List.of("crucible_bowl", "mold_basin", "crucible_mold", "crucible_crossing", "crucible_faucet");
+
     private static final Predicate<String> EXISTS = MaterialIconDefinitions::classpathResourceExists;
     /** Ore templates the creative-tab entries point at directly, without a material of their own. */
     private static final List<String> ORE_ICONS = List.of("ore", "oresmall");
@@ -286,9 +296,15 @@ class MaterialIconIntegrityTest {
         }
         assertTrue(problems.isEmpty(), "Broken icon folders: " + problems);
 
+        // A static model may keep its own copy of a sprite an ancestor also ships: it names that
+        // file directly and every such file is checked by staticModelsOnlyNameShippedSprites.
+        Set<String> overridden = staticMaterialIconReferences();
         List<String> duplicates = new ArrayList<>();
         for (Map.Entry<String, String> sprite : sprites.entrySet()) {
             String[] key = sprite.getKey().split("/");
+            if (overridden.contains(spriteId(key))) {
+                continue;
+            }
             MaterialTextureSet set = MaterialTextureSet.valueOf(key[1].toUpperCase(Locale.ROOT));
             for (MaterialTextureSet ancestor = set.parent(); ancestor != null; ancestor = ancestor.parent()) {
                 String candidate = key[0] + "/" + ancestor.folder() + "/" + key[2];
@@ -303,6 +319,40 @@ class MaterialIconIntegrityTest {
             }
         }
         assertTrue(duplicates.isEmpty(), "Icons repeat what an ancestor already ships: " + duplicates);
+    }
+
+    @Test
+    void staticModelsOnlyNameShippedSprites() throws IOException {
+        List<String> missing = new ArrayList<>();
+        for (String sprite : staticMaterialIconReferences()) {
+            if (!Files.isRegularFile(spriteFile(sprite))) {
+                missing.add(sprite);
+            }
+        }
+        assertTrue(missing.isEmpty(), "Static models name sprites nothing ships: " + missing);
+    }
+
+    @Test
+    void smelteryHullsAndMetalShelvesAreGeneratedNotShipped() throws IOException {
+        Path template = coreAssets().resolve("models/block/bookshelf_metal_tinted.json");
+        assertTrue(Files.isRegularFile(template), "Missing shared metal shelf template " + label(template));
+        List<String> shelves = new ArrayList<>();
+        try (Stream<Path> entries = Files.list(template.getParent())) {
+            entries.forEach(path -> {
+                String name = path.getFileName().toString();
+                if (name.startsWith("bookshelf_metal_")
+                        && !name.equals(template.getFileName().toString())) {
+                    shelves.add(label(path));
+                }
+            });
+        }
+        assertTrue(shelves.isEmpty(), "Metal shelf models are generated at runtime: " + shelves);
+        List<String> hulls = new ArrayList<>();
+        for (String family : GENERATED_MODEL_DIRECTORIES) {
+            hulls.addAll(
+                    jsonFiles(minecraftAssets().resolve("models/block/machine").resolve(family)));
+        }
+        assertTrue(hulls.isEmpty(), "Smeltery hull models are generated at runtime: " + hulls);
     }
 
     @Test
@@ -375,6 +425,41 @@ class MaterialIconIntegrityTest {
 
     private static Path iconRoot(String kind) {
         return coreAssets().resolve("textures/" + kind + "/material_icons");
+    }
+
+    /** File a {@code kind/set/name} sprite id resolves to in the core module. */
+    private static Path spriteFile(String sprite) {
+        String[] parts = sprite.split("/");
+        return iconRoot(parts[0]).resolve(parts[1]).resolve(parts[2] + PNG_SUFFIX);
+    }
+
+    /** Sprite id of a {@code kind/set/name.png} texture key. */
+    private static String spriteId(String[] key) {
+        return key[0] + "/" + key[1] + "/" + key[2].substring(0, key[2].length() - PNG_SUFFIX.length());
+    }
+
+    /**
+     * Sprite ids the static models name directly, so a file an ancestor also ships cannot simply be
+     * dropped: the model would point at art nothing mounts.
+     */
+    private static Set<String> staticMaterialIconReferences() throws IOException {
+        Set<String> references = new LinkedHashSet<>();
+        for (Path root :
+                List.of(coreAssets().resolve("models"), minecraftAssets().resolve("models"))) {
+            if (!Files.isDirectory(root)) {
+                continue;
+            }
+            try (Stream<Path> entries = Files.walk(root)) {
+                for (Path path :
+                        (Iterable<Path>) entries.filter(file -> file.toString().endsWith(".json"))::iterator) {
+                    Matcher matcher = STATIC_ICON_REFERENCE.matcher(Files.readString(path));
+                    while (matcher.find()) {
+                        references.add(matcher.group(1) + "/" + matcher.group(2) + "/" + matcher.group(3));
+                    }
+                }
+            }
+        }
+        return references;
     }
 
     /**

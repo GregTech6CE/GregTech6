@@ -2,8 +2,10 @@ package gregtech.client;
 
 
 import gregtech.api.material.MaterialTextureSet;
+import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.platform.Mc;
+import java.util.function.Predicate;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -35,22 +37,28 @@ public final class SmelteryModelHelper {
      */
     public static String hullModelJson(
             MaterialTextureSet set, String elementsTinted, @Nullable String elementsOverlay) {
+        return hullModelJson(set, elementsTinted, elementsOverlay, MaterialIcons::resourceExists);
+    }
+
+    /**
+     * Same template, resolved against {@code resourceExists} so the sprite names a file the mounted
+     * packs actually ship instead of the set the caller asked for.
+     */
+    public static String hullModelJson(
+            MaterialTextureSet set,
+            String elementsTinted,
+            @Nullable String elementsOverlay,
+            Predicate<String> resourceExists) {
         String icon = BlockMaterialPrefix.blockSolid.getTextureFileName();
-        ResourceLocation base = BlockMaterialIcons.resolveTexture(set, icon);
-        ResourceLocation overlay = BlockMaterialIcons.resolveOverlayTexture(set, icon);
-        if (elementsOverlay == null || overlay == null) {
-            return """
-                    {
-                      "parent": "minecraft:block/block",
-                      "textures": {
-                        "particle": "%s",
-                        "wall": "%s"
-                      },
-                      "elements": %s,
-                      "render_type": "minecraft:solid"
-                    }
-                    """.formatted(base, base, elementsTinted);
+        MaterialTextureSet baseOwner = MaterialIconDefinitions.resolveBlockTextureOwner(set, icon, resourceExists);
+        String base = "gt6ce:" + MaterialIconDefinitions.blockIconPath(baseOwner == null ? set : baseOwner, icon);
+        MaterialTextureSet overlayOwner = elementsOverlay == null
+                ? null
+                : MaterialIconDefinitions.resolveBlockTextureOwner(set, icon + "_overlay", resourceExists);
+        if (overlayOwner == null) {
+            return plainHullModelJson(base, elementsTinted);
         }
+        String overlay = "gt6ce:" + MaterialIconDefinitions.blockIconPath(overlayOwner, icon + "_overlay");
         //? if >=1.21.1 {
         /*return """
                 {
@@ -104,6 +112,21 @@ public final class SmelteryModelHelper {
 //?}
     }
 
+    /** Hull without a detail pass: the tinted faces sit directly under the block parent. */
+    private static String plainHullModelJson(String base, String elementsTinted) {
+        return """
+                {
+                  "parent": "minecraft:block/block",
+                  "textures": {
+                    "particle": "%s",
+                    "wall": "%s"
+                  },
+                  "elements": %s,
+                  "render_type": "minecraft:solid"
+                }
+                """.formatted(base, base, elementsTinted);
+    }
+
     // === Model path builders ===
 
     public static ResourceLocation modelPath(String subfolder, MaterialTextureSet set) {
@@ -118,36 +141,37 @@ public final class SmelteryModelHelper {
 
     public static String faucetElements(Direction facing, boolean tinted) {
         String tint = tinted ? ",\"tintindex\":0" : "";
-        return switch (facing) {
+        String template = switch (facing) {
             case NORTH -> """
                     [
                       {"from":[6,1,0],"to":[10,2,4],"faces":{"down":{"texture":"#wall"%s},"up":{"texture":"#wall"%s},"north":{"texture":"#wall","cullface":"north"%s},"south":{"texture":"#wall"%s},"west":{"texture":"#wall"%s},"east":{"texture":"#wall"%s}}},
                       {"from":[5,2,0],"to":[6,6,4],"faces":{"down":{"texture":"#wall"%s},"up":{"texture":"#wall"%s},"north":{"texture":"#wall","cullface":"north"%s},"south":{"texture":"#wall"%s},"west":{"texture":"#wall"%s},"east":{"texture":"#wall"%s}}},
                       {"from":[10,2,0],"to":[11,6,4],"faces":{"down":{"texture":"#wall"%s},"up":{"texture":"#wall"%s},"north":{"texture":"#wall","cullface":"north"%s},"south":{"texture":"#wall"%s},"west":{"texture":"#wall"%s},"east":{"texture":"#wall"%s}}}
                     ]
-                    """.formatted(repeat(tint, 18));
+                    """;
             case WEST -> """
                     [
                       {"from":[0,1,6],"to":[4,2,10],"faces":{"down":{"texture":"#wall"%s},"up":{"texture":"#wall"%s},"north":{"texture":"#wall"%s},"south":{"texture":"#wall"%s},"west":{"texture":"#wall","cullface":"west"%s},"east":{"texture":"#wall"%s}}},
                       {"from":[0,2,5],"to":[4,6,6],"faces":{"down":{"texture":"#wall"%s},"up":{"texture":"#wall"%s},"north":{"texture":"#wall"%s},"south":{"texture":"#wall"%s},"west":{"texture":"#wall","cullface":"west"%s},"east":{"texture":"#wall"%s}}},
                       {"from":[0,2,10],"to":[4,6,11],"faces":{"down":{"texture":"#wall"%s},"up":{"texture":"#wall"%s},"north":{"texture":"#wall"%s},"south":{"texture":"#wall"%s},"west":{"texture":"#wall","cullface":"west"%s},"east":{"texture":"#wall"%s}}}
                     ]
-                    """.formatted(repeat(tint, 18));
+                    """;
             case EAST -> """
                     [
                       {"from":[12,1,6],"to":[16,2,10],"faces":{"down":{"texture":"#wall"%s},"up":{"texture":"#wall"%s},"north":{"texture":"#wall"%s},"south":{"texture":"#wall"%s},"west":{"texture":"#wall"%s},"east":{"texture":"#wall","cullface":"east"%s}}},
                       {"from":[12,2,5],"to":[16,6,6],"faces":{"down":{"texture":"#wall"%s},"up":{"texture":"#wall"%s},"north":{"texture":"#wall"%s},"south":{"texture":"#wall"%s},"west":{"texture":"#wall"%s},"east":{"texture":"#wall","cullface":"east"%s}}},
                       {"from":[12,2,10],"to":[16,6,11],"faces":{"down":{"texture":"#wall"%s},"up":{"texture":"#wall"%s},"north":{"texture":"#wall"%s},"south":{"texture":"#wall"%s},"west":{"texture":"#wall"%s},"east":{"texture":"#wall","cullface":"east"%s}}}
                     ]
-                    """.formatted(repeat(tint, 18));
+                    """;
             default -> """
                     [
                       {"from":[6,1,12],"to":[10,2,16],"faces":{"down":{"texture":"#wall"%s},"up":{"texture":"#wall"%s},"north":{"texture":"#wall"%s},"south":{"texture":"#wall","cullface":"south"%s},"west":{"texture":"#wall"%s},"east":{"texture":"#wall"%s}}},
                       {"from":[5,2,12],"to":[6,6,16],"faces":{"down":{"texture":"#wall"%s},"up":{"texture":"#wall"%s},"north":{"texture":"#wall"%s},"south":{"texture":"#wall","cullface":"south"%s},"west":{"texture":"#wall"%s},"east":{"texture":"#wall"%s}}},
                       {"from":[10,2,12],"to":[11,6,16],"faces":{"down":{"texture":"#wall"%s},"up":{"texture":"#wall"%s},"north":{"texture":"#wall"%s},"south":{"texture":"#wall","cullface":"south"%s},"west":{"texture":"#wall"%s},"east":{"texture":"#wall"%s}}}
                     ]
-                    """.formatted(repeat(tint, 18));
+                    """;
         };
+        return template.replace("%s", tint);
     }
 
     // === Crossing geometry ===
@@ -214,8 +238,4 @@ public final class SmelteryModelHelper {
               {"from":[14,6,6],"to":[16,7,10],"faces":{"down":{"texture":"#wall","tintindex":0},"up":{"texture":"#wall","tintindex":0},"north":{"texture":"#wall","tintindex":0},"south":{"texture":"#wall","tintindex":0},"west":{"texture":"#wall","tintindex":0},"east":{"texture":"#wall","cullface":"east","tintindex":0}}}
             ]
             """;
-
-    private static String repeat(String value, int count) {
-        return value.repeat(count);
-    }
 }
