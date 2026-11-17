@@ -18,7 +18,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.util.Set;

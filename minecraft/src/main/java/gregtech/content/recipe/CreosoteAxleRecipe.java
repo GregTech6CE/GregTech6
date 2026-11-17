@@ -29,10 +29,8 @@ import net.minecraft.resources.ResourceLocation;
 //? if >=1.21.1 {
 //?} else {
 import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.item.Item;
 //?}
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 //? if >=1.21.1 {
 /*import net.minecraft.world.item.crafting.*;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
@@ -50,7 +48,6 @@ import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 //?}
 

@@ -6,7 +6,6 @@ import gregtech.content.registry.GTBlockEntities;
 import gregtech.engine.tool.ToolInteractions;
 import gregtech.util.GTEntityHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;

@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.Block;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.util.ArrayList;

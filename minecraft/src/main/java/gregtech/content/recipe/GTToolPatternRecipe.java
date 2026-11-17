@@ -11,7 +11,6 @@ import gregtech.content.tool.OriginalToolMaterials;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.GTToolItem;
 import gregtech.content.registry.GTItems;
-import gregtech.content.registry.GTToolItems;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 //? if >=1.21.1 {

@@ -1,8 +1,5 @@
 package gregtech.content.data;
 
-import gregtech.engine.material.MaterialEquivalence;
-import gregtech.content.block.MaterialBlockLike;
-import gregtech.content.item.MaterialItem;
 import gregtech.platform.Mc;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +16,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import java.io.*;
 import java.nio.charset.StandardCharsets;

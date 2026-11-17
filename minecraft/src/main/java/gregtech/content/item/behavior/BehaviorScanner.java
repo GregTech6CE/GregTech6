@@ -23,7 +23,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import javax.annotation.Nullable;

@@ -21,9 +21,6 @@ package gregtech.content.block.misc;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import gregtech.engine.energy.IEnergyBlock;
-import gregtech.content.data.GregTechTags;
 import java.util.*;
 /** Resolves a cached remote item/fluid endpoint; the base class forwards its sided capabilities. */
 public class LongDistEndpointBlockEntity extends gregtech.content.blockentity.CapabilityRelayBlockEntity implements gregtech.api.platform.machine.MachineControl.Provider {

@@ -4,7 +4,6 @@ import gregtech.content.nuclear.PlayerRadiation;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.data.generated.GTDrinksGen;
 import gregtech.content.registry.GTFluids;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +13,6 @@ import net.minecraft.world.level.material.Fluid;
 
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.util.IdentityHashMap;

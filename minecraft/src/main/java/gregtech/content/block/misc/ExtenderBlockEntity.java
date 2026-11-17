@@ -1,6 +1,5 @@
 package gregtech.content.block.misc;
 
-import gregtech.content.blockentity.CapabilityRelayBlockEntity;
 import net.minecraft.core.*;
 import net.minecraft.world.level.block.state.BlockState;
 

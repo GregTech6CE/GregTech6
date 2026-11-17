@@ -8,7 +8,6 @@ import gregtech.api.addon.recipe.ItemComponent;
 import gregtech.api.addon.recipe.ItemResult;
 import gregtech.api.addon.recipe.MachineRecipeDocument;
 import gregtech.api.addon.recipe.MachineRecipeDocumentTypes;
-import gregtech.api.addon.recipe.MachineRecipeFields;
 import gregtech.api.addon.recipe.MachineRecipeRemovalDocument;
 import gregtech.api.addon.platform.MachineRecipeDocumentProvider;
 import gregtech.engine.recipe.data.MachineRecipeMatch;

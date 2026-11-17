@@ -3,8 +3,6 @@ import gregtech.engine.material.MaterialPresentation;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
-import gregtech.api.material.GTValues;
-import gregtech.api.material.MaterialProperty;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
@@ -14,11 +12,9 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * GT6's <b>Material Dictionary</b> ({@code MultiItemBooks}, metas 32002/32003; loot variant

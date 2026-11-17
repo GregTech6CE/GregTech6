@@ -5,8 +5,6 @@ import gregtech.api.material.*;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
 import gregtech.engine.fluid.PortableFluidContainerSpec;
-import gregtech.engine.material.ItemComposition;
-import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
 import gregtech.platform.Mc;
@@ -16,7 +14,6 @@ import java.util.ArrayList;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 /** capcellcon is a 1/9 U placeable vessel, not a second flat material item.

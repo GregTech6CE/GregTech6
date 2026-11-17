@@ -1,8 +1,6 @@
 package gregtech.content.worldgen;
 
-import gregtech.content.block.FluidSpringBlock;
 import gregtech.content.block.OreBlock;
-import gregtech.content.blockentity.FluidSpringBlockEntity;
 import gregtech.platform.Mc;
 //? if >=1.21.1 {
 /*import gregtech.content.registry.GTFluidSprings;
@@ -27,7 +25,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.util.List;

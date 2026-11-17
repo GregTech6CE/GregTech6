@@ -29,8 +29,6 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /** Resolves the correct fluid-texture {@link BakedModel} per {@link ItemStack} at render time. */
 public final class FluidItemOverrideList extends ItemOverrides {

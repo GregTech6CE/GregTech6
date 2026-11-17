@@ -2,7 +2,6 @@
  * Source LargeHeatExchanger settings, fluid storage and eight-outlet cycle. */
 package gregtech.content.blockentity.machine;
 
-import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.fluid.HeatExchangerData;
 import gregtech.engine.multiblock.HeatExchangerRules;
@@ -11,7 +10,6 @@ import gregtech.engine.multiblock.*;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
-import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
 import net.minecraft.core.*;

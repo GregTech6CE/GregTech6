@@ -7,11 +7,8 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.engine.fluid.MoltenFluidHandler;
 import gregtech.engine.fluid.MoltenFluidPlans;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.blockentity.tool.ProcessingToolBlockEntity;
 import gregtech.content.block.machine.CrucibleFaucetBlock;
-import gregtech.content.data.GregTechConstants;
-import gregtech.content.data.GregTechTags;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,19 +20,12 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Crucible faucet block entity (GT6 {@code MultiTileEntityFaucet}).

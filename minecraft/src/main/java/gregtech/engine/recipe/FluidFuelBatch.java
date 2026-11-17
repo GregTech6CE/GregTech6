@@ -6,7 +6,6 @@ import gregtech.engine.stack.StackCompat;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
-import java.math.BigInteger;
 import java.util.List;
 
 /** Pure, bounded planning of fluid fuel charges before the input or any exhaust tank changes. */

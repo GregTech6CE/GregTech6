@@ -17,7 +17,6 @@ import net.minecraft.sounds.SoundSource;
 
 import gregtech.engine.energy.EnergyBlockViews;
 import gregtech.engine.energy.FaceConfig;
-import gregtech.engine.machine.BasicMachineEnergy;
 import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.BasicMachineSpec;
@@ -40,7 +39,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -72,7 +70,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Collections;
 
 //? if >=1.21.1 {
 /*public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements MenuProvider, IFluidHandler, gregtech.engine.fluid.FluidToolTarget, gregtech.engine.inventory.BlockContents, gregtech.api.platform.machine.MachineControl.Provider, gregtech.content.cover.PanelCoverHost, gregtech.content.cover.CoverStore.Hooks, gregtech.content.item.behavior.ManualToolBehaviorAccess.Ignitable, gregtech.api.sensor.CompressionSensorSource, MachineEnergyPort.Host, MachineAutoIO.Host {

@@ -10,7 +10,6 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.bootstrap.InitializationStep;
 import gregtech.engine.recipe.Recipe;
-import gregtech.content.registry.GTTechnological;
 import gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
 

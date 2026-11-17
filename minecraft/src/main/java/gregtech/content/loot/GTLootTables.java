@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 
 //? if >=1.21.1 {
 //?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.util.ArrayList;

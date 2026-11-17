@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.nio.charset.StandardCharsets;

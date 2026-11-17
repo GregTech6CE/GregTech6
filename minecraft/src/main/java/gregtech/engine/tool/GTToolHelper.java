@@ -4,7 +4,6 @@ import gregtech.content.material.Materials;
 
 //? if >=1.21.1 {
 /**///?} else {
-import gregtech.content.block.machine.SolidBurningBoxBlock;
 //?}
 
 import gregtech.api.material.GTMaterial;
@@ -12,7 +11,6 @@ import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
 import gregtech.engine.stack.StackData;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.item.GTToolItem;
 import gregtech.platform.Mc;
 import net.minecraft.nbt.CompoundTag;

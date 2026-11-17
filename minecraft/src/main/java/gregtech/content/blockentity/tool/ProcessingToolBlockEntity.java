@@ -3,7 +3,6 @@ package gregtech.content.blockentity.tool;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.inventory.BlockContents;
 import gregtech.engine.recipe.*;
-import gregtech.engine.recipe.*;
 import gregtech.content.block.tool.ProcessingToolBlock;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.registry.GTBlockEntities;

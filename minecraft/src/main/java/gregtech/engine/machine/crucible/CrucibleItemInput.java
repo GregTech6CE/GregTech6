@@ -4,28 +4,23 @@ import gregtech.api.material.MaterialComponent;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.engine.machine.CrucibleSpec;
 import gregtech.api.material.GTMaterial;
-import gregtech.api.material.GTValues;
 //?}
 import gregtech.engine.material.ItemMaterialRegistry;
 //? if >=1.21.1 {
 /*import gregtech.content.material.Materials;
 *///?} else {
-import gregtech.engine.material.MaterialChemistry;
 //?}
 import gregtech.content.data.MaterialPrefix;
 //? if >=1.21.1 {
 //?} else {
 import gregtech.content.block.BlockMaterialWeights;
 import gregtech.content.block.MaterialBlockLike;
-import gregtech.content.block.machine.SmeltingCrucibleBlock;
 import gregtech.content.block.stone.GTStoneBlock;
 import gregtech.content.block.stone.GTStoneSlabBlock;
 import gregtech.content.block.stone.StoneMaterialWeights;
 import gregtech.content.block.stone.StoneVariant;
 //?}
-import gregtech.content.item.MaterialItem;
 //? if >=1.21.1 {
 //?} else {
 import net.minecraft.world.item.BlockItem;

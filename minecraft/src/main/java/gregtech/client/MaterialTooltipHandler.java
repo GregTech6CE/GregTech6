@@ -3,7 +3,6 @@ import gregtech.engine.mod.GregTechIdentity;
 
 
 import gregtech.engine.material.ItemMaterialRegistry;
-import gregtech.content.item.MaterialItem;
 import gregtech.content.block.MaterialBlockItem;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {

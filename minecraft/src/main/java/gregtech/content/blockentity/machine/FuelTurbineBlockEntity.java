@@ -16,7 +16,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 

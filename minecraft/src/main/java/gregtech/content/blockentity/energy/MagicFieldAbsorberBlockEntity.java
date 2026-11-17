@@ -6,7 +6,6 @@ import gregtech.engine.energy.EnergyTransfer;
 import gregtech.api.machine.*;
 import gregtech.api.platform.machine.MachineControl;
 import gregtech.engine.machine.*;
-import gregtech.engine.machine.*;
 import gregtech.content.block.energy.MagicFieldAbsorberBlock;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.energy.MagicFieldAbsorberRules;

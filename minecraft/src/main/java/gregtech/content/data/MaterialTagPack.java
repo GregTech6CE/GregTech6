@@ -2,7 +2,6 @@ package gregtech.content.data;
 
 import gregtech.api.addon.material.MaterialFormKind;
 import gregtech.api.addon.material.SpecialProcessValue;
-import gregtech.api.material.GTValues;
 import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.recipe.SpecialProcessForms;
 import gregtech.content.registry.GTFluids;
@@ -30,7 +29,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import java.io.*;
 import java.nio.charset.StandardCharsets;

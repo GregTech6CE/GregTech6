@@ -1,9 +1,7 @@
 package gregtech.content.energy;
 
 import gregtech.engine.energy.ZpmWorkRules;
-import gregtech.engine.stack.StackData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
 /** GT6 14999: non-rechargeable 2 trillion QU artifact; absent charge is empty. */
 public final class ZpmEnergy {
     public static final long CAPACITY=ZpmWorkRules.CAPACITY, PACKET=ZpmWorkRules.PACKET;

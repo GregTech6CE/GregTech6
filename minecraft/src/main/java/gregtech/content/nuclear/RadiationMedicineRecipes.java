@@ -3,7 +3,6 @@ package gregtech.content.nuclear;
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
 import gregtech.engine.recipe.*;
-import gregtech.engine.recipe.*;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.*;

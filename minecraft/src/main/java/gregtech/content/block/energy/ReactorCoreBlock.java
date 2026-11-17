@@ -1,6 +1,5 @@
 package gregtech.content.block.energy;
 
-import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.nuclear.ReactorPorts;
 
 import gregtech.content.blockentity.energy.ReactorCoreBlockEntity;

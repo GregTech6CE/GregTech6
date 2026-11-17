@@ -79,7 +79,6 @@ import gregtech.content.item.FluidItem;
 import gregtech.content.registry.GTFluidItems;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.engine.stack.StackData;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;

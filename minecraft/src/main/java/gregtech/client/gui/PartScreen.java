@@ -2,7 +2,6 @@ package gregtech.client.gui;
 
 import gregtech.api.addon.platform.BehaviorMachineGui;
 
-import gregtech.api.addon.machine.BehaviorMachine;
 import gregtech.api.addon.machine.LayoutPart;
 import gregtech.api.addon.platform.BehaviorState;
 import gregtech.api.addon.platform.PartContext;

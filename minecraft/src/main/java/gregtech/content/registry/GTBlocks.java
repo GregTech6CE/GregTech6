@@ -4,13 +4,9 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.prefix.BlockMaterialPrefix;
-import gregtech.content.block.stone.GTStoneBlock;
-import gregtech.content.block.stone.GTStoneSlabBlock;
 import gregtech.content.block.stone.GTStoneSlabBlockItem;
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.block.stone.StoneVariant;
-import gregtech.content.block.MaterialBlock;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;

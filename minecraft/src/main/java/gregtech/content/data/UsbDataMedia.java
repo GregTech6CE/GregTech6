@@ -7,7 +7,6 @@ import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import org.jetbrains.annotations.Nullable;
 

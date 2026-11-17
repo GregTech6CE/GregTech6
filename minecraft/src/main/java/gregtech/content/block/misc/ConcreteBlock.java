@@ -10,7 +10,6 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTDecorBlocks;
 //?}
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;

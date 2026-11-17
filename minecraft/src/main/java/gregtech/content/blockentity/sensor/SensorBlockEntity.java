@@ -4,8 +4,6 @@ import gregtech.api.machine.BlockFace;
 
 import gregtech.api.addon.platform.AddonSensor;
 import gregtech.api.addon.platform.SensorContext;
-import gregtech.engine.energy.IEnergyBlock;
-import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

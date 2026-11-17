@@ -11,7 +11,6 @@ import gregtech.content.block.energy.SignalWireBlock;
 import gregtech.content.block.machine.FluidPipeBlock;
 import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.registry.GTFluids;
-import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.engine.material.MaterialFormItem;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;

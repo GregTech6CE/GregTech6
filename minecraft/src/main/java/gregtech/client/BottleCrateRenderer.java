@@ -3,7 +3,6 @@ package gregtech.client;
 
 import gregtech.content.blockentity.inventory.BottleCrateBlockEntity;
 import gregtech.content.tool.BottleCrateGeometry;
-import gregtech.content.item.BottleItem;
 import gregtech.platform.Mc;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -13,7 +12,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;
 
@@ -21,7 +19,6 @@ import net.minecraft.world.item.PotionItem;
 //?} else {
 import net.minecraft.world.item.alchemy.PotionUtils;
 //?}
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
@@ -29,8 +26,6 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 *///?} else {
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 //?}
 
 /** GT6's fluid inset and bottle shell/cap textures, with full-block UVs for the 3×3 sprite layout. */

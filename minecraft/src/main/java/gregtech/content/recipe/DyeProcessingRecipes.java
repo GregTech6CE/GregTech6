@@ -1,7 +1,6 @@
 package gregtech.content.recipe;
 
 import gregtech.engine.recipe.*;
-import gregtech.engine.recipe.*;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
@@ -18,7 +17,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import java.util.*;
 

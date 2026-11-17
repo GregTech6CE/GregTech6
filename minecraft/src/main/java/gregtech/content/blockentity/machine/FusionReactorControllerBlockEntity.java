@@ -1,6 +1,5 @@
 package gregtech.content.blockentity.machine;
 
-import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.multiblock.*;
 import gregtech.engine.multiblock.tracking.PatternMatch;
 import gregtech.engine.multiblock.tracking.StructureClaims;
@@ -9,7 +8,6 @@ import gregtech.engine.recipe.*;
 import gregtech.content.block.machine.*;
 import gregtech.content.multiblock.*;
 import gregtech.content.data.GregTechTags;
-import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;

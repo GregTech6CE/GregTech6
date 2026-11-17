@@ -7,7 +7,6 @@ import gregtech.platform.Mc;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.content.registry.GTDecorBlocks;
 //?}
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

@@ -1,6 +1,5 @@
 package gregtech.content.logistics;
 
-import gregtech.content.item.MaterialItem;
 import net.minecraft.world.item.*;
 
 /**

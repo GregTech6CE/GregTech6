@@ -33,8 +33,6 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 //?}
 import net.minecraft.resources.ResourceLocation;
 

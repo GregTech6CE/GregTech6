@@ -5,7 +5,6 @@ package gregtech.content.blockentity.machine;
 *///?} else {
 import gregtech.content.block.energy.ElectricWireBlock;
 //?}
-import gregtech.content.logistics.LogisticsHost;
 import gregtech.content.logistics.LogisticsCoverHost;
 import gregtech.content.logistics.LogisticsCovers;
 import gregtech.content.registry.GTBlockEntities;

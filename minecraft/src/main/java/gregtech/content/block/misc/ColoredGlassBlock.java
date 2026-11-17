@@ -4,7 +4,6 @@ import gregtech.content.material.Materials;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;

@@ -2,7 +2,6 @@
 package gregtech.engine.fluid;
 
 import gregtech.engine.recipe.*;
-import gregtech.engine.recipe.*;
 import gregtech.engine.multiblock.HeatExchangerRules;
 import gregtech.engine.stack.StackCompat;
 //? if >=1.21.1 {

@@ -1,12 +1,9 @@
 package gregtech.content.blockentity.machine;
 
-import gregtech.engine.multiblock.MultiblockLayout.Role;
 
-import gregtech.content.multiblock.LargeMachineLayouts;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import java.util.List;
 import gregtech.engine.multiblock.StructureOutputs;
 import gregtech.content.multiblock.OriginalMultiblockOutputRules;
 

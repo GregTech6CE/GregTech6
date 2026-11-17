@@ -9,7 +9,6 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MachineRecipeMaps;
-import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.data.generated.MaterialWorkability;
 import gregtech.content.registry.GTFluids;

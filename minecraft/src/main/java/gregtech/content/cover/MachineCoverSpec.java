@@ -6,7 +6,6 @@ import net.minecraft.world.item.ItemStack;
 
 //? if >=1.21.1 {
 //?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 /** Source controller/detector conditions; independent of a particular machine implementation. */

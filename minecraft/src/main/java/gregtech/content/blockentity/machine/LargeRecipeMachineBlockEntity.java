@@ -7,7 +7,6 @@ import gregtech.engine.multiblock.tracking.PatternMatch;
 import gregtech.engine.multiblock.tracking.StructureClaims;
 import gregtech.engine.multiblock.tracking.StructureDefinition;
 import gregtech.engine.multiblock.tracking.StructureTracking;
-import gregtech.engine.multiblock.tracking.StructureScanProbe;
 import gregtech.engine.multiblock.tracking.TrackedMultiblock;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.content.data.GregTechTags;

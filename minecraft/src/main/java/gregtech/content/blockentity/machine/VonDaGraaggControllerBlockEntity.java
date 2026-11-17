@@ -6,7 +6,6 @@ import gregtech.engine.multiblock.MultiblockLayout;
 import gregtech.engine.multiblock.MultiblockPortOwner;
 import gregtech.engine.multiblock.PartBindings;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
-import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.multiblock.VonDaGraaggSpawnInhibitor;
 import gregtech.content.multiblock.VonDaGraaggRules;
 import gregtech.content.data.GregTechTags;

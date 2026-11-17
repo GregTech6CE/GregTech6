@@ -2,7 +2,6 @@ package gregtech.client;
 //? if >=1.21.1 {
 /*import gregtech.content.registry.GTConstructionBlocks;
 *///?} else {
-import gregtech.content.registry.GTDecorBlocks;
 //?}
 import gregtech.content.block.misc.*;
 //? if >=1.21.1 {

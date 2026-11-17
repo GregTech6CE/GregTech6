@@ -12,7 +12,6 @@ import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.block.energy.ElectricWireBlock;
 //?}
 import gregtech.content.block.machine.FluidPipeBlock;
-import gregtech.content.item.MaterialItem;
 import gregtech.platform.Mc;
 import gregtech.content.registry.GTFluidPipes;
 import gregtech.content.registry.GTWires;

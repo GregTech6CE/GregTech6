@@ -1,6 +1,5 @@
 package gregtech.compat.jade;
 
-import gregtech.content.block.machine.SolidBurningBoxBlock;
 import gregtech.content.blockentity.machine.SolidBurningBoxBlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

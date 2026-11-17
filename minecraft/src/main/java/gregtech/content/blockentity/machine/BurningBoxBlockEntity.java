@@ -3,7 +3,6 @@ package gregtech.content.blockentity.machine;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.api.machine.*;
 import gregtech.engine.machine.*;
-import gregtech.engine.machine.*;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;

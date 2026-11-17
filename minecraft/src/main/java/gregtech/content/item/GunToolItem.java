@@ -27,7 +27,6 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.*;

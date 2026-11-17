@@ -34,7 +34,6 @@ import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 /**

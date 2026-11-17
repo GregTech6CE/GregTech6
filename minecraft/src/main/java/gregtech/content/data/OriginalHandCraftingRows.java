@@ -4,8 +4,6 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
 import gregtech.api.machine.*;
 import gregtech.engine.machine.*;
-import gregtech.engine.machine.*;
-import gregtech.engine.machine.*;
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.prefix.BlockMaterialPrefix;

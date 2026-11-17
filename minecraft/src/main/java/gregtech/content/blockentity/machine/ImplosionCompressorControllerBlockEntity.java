@@ -1,14 +1,10 @@
 package gregtech.content.blockentity.machine;
 
 import gregtech.engine.multiblock.*;
-import gregtech.engine.machine.BasicMachineSpec;
-import gregtech.engine.energy.FaceConfig;
-import gregtech.content.material.Materials;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
 import net.minecraft.core.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.items.IItemHandler;

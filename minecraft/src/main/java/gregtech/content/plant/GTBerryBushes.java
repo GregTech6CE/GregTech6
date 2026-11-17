@@ -7,7 +7,6 @@ import net.minecraft.resources.ResourceLocation;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 /** Platform item lookup over the original berry colors and cotton fallback. */

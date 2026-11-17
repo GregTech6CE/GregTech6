@@ -2,8 +2,6 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
-import gregtech.engine.material.*;
-import gregtech.engine.recipe.*;
 import gregtech.engine.recipe.*;
 import gregtech.content.block.stone.*;
 import gregtech.content.data.*;
@@ -13,7 +11,6 @@ import net.minecraft.world.item.*;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import java.util.*;
 

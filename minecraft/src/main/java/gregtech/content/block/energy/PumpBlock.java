@@ -26,7 +26,6 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /** GT6 rotational pump — drains fluid blocks using RU power. */

@@ -32,7 +32,6 @@ import net.minecraft.world.phys.BlockHitResult;
 
 //? if >=1.21.1 {
 //?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 /** GT6-style tinted log block with fireproof variant support. */

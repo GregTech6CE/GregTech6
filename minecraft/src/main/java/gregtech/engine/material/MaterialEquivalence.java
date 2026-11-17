@@ -3,7 +3,6 @@ package gregtech.engine.material;
 import gregtech.api.material.*;
 
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.item.MaterialItem;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

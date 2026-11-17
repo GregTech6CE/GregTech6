@@ -4,7 +4,6 @@ import gregtech.engine.mod.GregTechIdentity;
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
 import gregtech.engine.tool.*;
-import gregtech.content.material.Materials;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.ElectricToolItem;
 import gregtech.content.recipe.ToolShapedRecipe;

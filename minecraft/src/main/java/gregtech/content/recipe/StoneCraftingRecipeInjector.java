@@ -8,7 +8,6 @@ import gregtech.GregTech;
 import gregtech.engine.tool.GTToolType;
 import gregtech.content.block.stone.StoneType;
 import gregtech.content.block.stone.StoneVariant;
-import gregtech.content.material.Materials;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.recipe.ToolShapedRecipe;
 import gregtech.content.registry.GTBlocks;

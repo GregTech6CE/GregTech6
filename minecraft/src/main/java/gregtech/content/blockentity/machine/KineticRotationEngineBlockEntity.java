@@ -4,7 +4,6 @@ import gregtech.engine.energy.EnergyBlockViews;
 import gregtech.engine.energy.EnergyTransfer;
 import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.energy.IEnergyBlock;
-import gregtech.engine.machine.PistonEngineState;
 import gregtech.engine.machine.RotationEngineSpec;
 import gregtech.content.block.machine.EngineBlock;
 import gregtech.content.data.GregTechTags;

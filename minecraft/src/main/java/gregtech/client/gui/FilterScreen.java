@@ -3,7 +3,6 @@ package gregtech.client.gui;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class FilterScreen extends MachineContainerScreen<FilterMenu> {

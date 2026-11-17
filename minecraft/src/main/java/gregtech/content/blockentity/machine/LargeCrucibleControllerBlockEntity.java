@@ -18,7 +18,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 //? if >=1.21.1 {
@@ -39,7 +38,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /** GT6 MultiTileEntityCrucible: 3x3x3 open vessel, per-material wall, shared smelting engine. */
 public final class LargeCrucibleControllerBlockEntity extends SmeltingCrucibleBlockEntity implements gregtech.engine.multiblock.CrucibleStructureOwner, gregtech.engine.multiblock.tracking.TrackedMultiblock {

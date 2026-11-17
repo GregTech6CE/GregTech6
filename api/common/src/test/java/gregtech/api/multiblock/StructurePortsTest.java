@@ -2,7 +2,6 @@ package gregtech.api.multiblock;
 
 import static org.junit.jupiter.api.Assertions.*;
 import gregtech.api.machine.MachineFace;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class StructurePortsTest {

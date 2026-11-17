@@ -13,14 +13,12 @@ import gregtech.content.data.GregTechConstants;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.content.data.MachineRecipeMaps;
 //?}
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTFluids;
 
 //? if >=1.21.1 {
 //?} else {
-import gregtech.content.registry.GTTechnological;
 //?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

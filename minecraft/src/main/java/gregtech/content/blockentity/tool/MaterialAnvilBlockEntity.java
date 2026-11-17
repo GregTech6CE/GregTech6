@@ -1,7 +1,6 @@
 package gregtech.content.blockentity.tool;
 
 import gregtech.engine.recipe.*;
-import gregtech.engine.recipe.*;
 import gregtech.engine.tool.*;
 import gregtech.content.block.tool.MaterialAnvilBlock;
 import gregtech.content.data.MachineRecipeMaps;

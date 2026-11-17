@@ -3,7 +3,6 @@ package gregtech.content.block.machine;
 import gregtech.engine.machine.BoilerSpec;
 import gregtech.content.blockentity.machine.BoilerTankBlockEntity;
 import gregtech.content.registry.GTBlockEntities;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

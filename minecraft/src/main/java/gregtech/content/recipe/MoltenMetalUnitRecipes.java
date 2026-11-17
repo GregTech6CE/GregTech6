@@ -11,7 +11,6 @@ import gregtech.engine.recipe.MaterialUnitRecipe;
 import gregtech.engine.recipe.Recipe;
 import java.util.*;
 import java.util.function.Predicate;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 //? if >=1.21.1 {

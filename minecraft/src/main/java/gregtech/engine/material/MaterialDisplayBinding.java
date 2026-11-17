@@ -3,13 +3,11 @@ package gregtech.engine.material;
 import gregtech.api.material.*;
 
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.item.MaterialItem;
 import gregtech.platform.Mc;
 import net.minecraft.world.item.*;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 import java.util.*;
 

@@ -1,10 +1,6 @@
 package gregtech.content.blockentity.machine;
 
-import gregtech.engine.energy.EnergyBlockViews;
-import gregtech.engine.energy.IEnergyBlock;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
-import gregtech.content.block.machine.OriginalLightningRodControllerBlock;
-import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.registry.*;
 import net.minecraft.core.*;

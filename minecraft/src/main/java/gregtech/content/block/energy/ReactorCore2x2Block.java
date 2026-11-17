@@ -1,10 +1,8 @@
 package gregtech.content.block.energy;
 
-import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.nuclear.ReactorPorts;
 
 import gregtech.content.blockentity.energy.ReactorCore2x2BlockEntity;
-import gregtech.content.item.FuelRodItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

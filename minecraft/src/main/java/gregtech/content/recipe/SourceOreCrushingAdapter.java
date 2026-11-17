@@ -3,7 +3,6 @@ package gregtech.content.recipe;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.engine.material.PublishedMaterialFacts;
-import gregtech.api.material.MaterialProperty;
 import gregtech.content.block.*;
 import gregtech.content.block.stone.OreHostFacts;
 import gregtech.content.data.MaterialPrefix;

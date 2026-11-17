@@ -1,7 +1,6 @@
 package gregtech.content.recipe.generated;
 
 import static gregtech.content.recipe.generated.GeneratedRows.*;
-import static gregtech.engine.recipe.chem.FluidPhase.LIQUID;
 import static gregtech.engine.recipe.chem.Rounding.CEIL;
 import static gregtech.engine.recipe.chem.Rounding.FLOOR;
 

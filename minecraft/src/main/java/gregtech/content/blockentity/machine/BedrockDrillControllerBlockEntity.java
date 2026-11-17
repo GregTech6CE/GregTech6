@@ -8,7 +8,6 @@ import gregtech.content.block.OreHostStone;
 import gregtech.content.block.machine.OriginalBedrockDrillControllerBlock;
 import gregtech.content.block.stone.*;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
-import gregtech.content.multiblock.LargeMachineParts;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
 import net.minecraft.core.*;

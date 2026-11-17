@@ -2,7 +2,6 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.MaterialEquivalence;
-import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.engine.tool.ToolAssemblyRules;
 import gregtech.content.material.Materials;

@@ -7,7 +7,6 @@ import gregtech.engine.energy.IEnergyConductor;
 import gregtech.engine.energy.WirePacketRules;
 import gregtech.engine.energy.WireSpec;
 import gregtech.content.block.energy.ElectricWireBlock;
-import gregtech.content.data.GregTechConstants;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.transport.energy.ElectricNetwork;
 import gregtech.content.transport.energy.ElectricNetworks;

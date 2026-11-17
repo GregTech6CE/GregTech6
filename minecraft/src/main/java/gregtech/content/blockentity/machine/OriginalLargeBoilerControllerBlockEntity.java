@@ -16,7 +16,6 @@ import gregtech.content.data.GregTechTags;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTFluids;
-import gregtech.content.registry.GTMultiblocks;
 import gregtech.platform.Mc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

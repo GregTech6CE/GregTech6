@@ -11,7 +11,6 @@ import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.block.energy.ElectricWireBlock;
 //?}
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.item.MaterialItem;
 import gregtech.content.registry.GTItems;
 
 //? if >=1.21.1 {

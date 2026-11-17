@@ -4,7 +4,6 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.prefix.PrefixRegistry;
-import gregtech.content.item.MaterialItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;

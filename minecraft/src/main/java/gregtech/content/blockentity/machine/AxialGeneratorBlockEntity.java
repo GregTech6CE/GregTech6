@@ -1,7 +1,5 @@
 package gregtech.content.blockentity.machine;
 
-import gregtech.engine.energy.EnergyBlockViews;
-import gregtech.engine.energy.IEnergyBlock;
 import gregtech.engine.multiblock.*;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.multiblock.AxialGeneratorDefinitions;

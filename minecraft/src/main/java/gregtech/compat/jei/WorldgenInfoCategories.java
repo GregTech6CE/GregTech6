@@ -5,8 +5,6 @@ import gregtech.engine.mod.GregTechIdentity;
 
 
 import gregtech.api.material.GTMaterial;
-import gregtech.content.worldgen.GTOreVeins;
-import gregtech.content.worldgen.GTStoneLayersGen;
 import gregtech.content.worldgen.GTWorldgenScale;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -18,18 +16,12 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * JEI categories describing GT worldgen: large ore veins (dimension, height,

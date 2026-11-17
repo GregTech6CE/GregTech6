@@ -4,7 +4,6 @@ import gregtech.api.material.*;
 
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.*;
-import gregtech.engine.recipe.*;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
 import gregtech.content.material.Materials;

@@ -1,10 +1,8 @@
 package gregtech.engine.machine;
 
-import gregtech.content.material.Materials;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.engine.material.ItemMaterialRegistry;
-import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.GregTechConstants;
 import net.minecraft.tags.ItemTags;

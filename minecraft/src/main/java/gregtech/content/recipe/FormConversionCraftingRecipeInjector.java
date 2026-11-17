@@ -12,7 +12,6 @@ import gregtech.content.recipe.FormConversionSelector;
 import gregtech.content.recipe.OriginalFormConversions;
 import gregtech.content.recipe.OriginalFormConversions.Conversion;
 import gregtech.content.recipe.CraftingMaterialForms;
-import gregtech.engine.material.MaterialUnification;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.engine.prefix.PrefixRegistry;

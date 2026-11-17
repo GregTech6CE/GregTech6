@@ -6,7 +6,6 @@ import net.minecraft.world.level.block.Block;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 /** Platform block/key resolution over the shared original surface flora table. */
 public final class GTSurfaceFlora extends SurfaceFloraRules {

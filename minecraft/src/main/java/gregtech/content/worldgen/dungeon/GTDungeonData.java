@@ -4,8 +4,6 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.content.plant.BedrockFlowers;
-import gregtech.content.block.misc.ColoredGlassBlock;
-import gregtech.content.block.misc.ConcreteBlock;
 import gregtech.content.block.misc.PileBlock;
 import gregtech.content.block.stone.GTStoneSlabBlock;
 import gregtech.content.block.stone.StoneType;

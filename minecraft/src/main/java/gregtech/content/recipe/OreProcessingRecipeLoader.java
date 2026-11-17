@@ -2,8 +2,6 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
-import gregtech.engine.material.*;
-import gregtech.engine.material.*;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.*;
 import gregtech.content.material.MaterialFactKeys;

@@ -25,7 +25,6 @@ import net.minecraft.world.phys.BlockHitResult;
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
-import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 import java.util.List;

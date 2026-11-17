@@ -5,7 +5,6 @@ import gregtech.api.addon.platform.BehaviorMachineGui;
 import gregtech.api.addon.machine.BehaviorMachine;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
