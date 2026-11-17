@@ -16,7 +16,7 @@ class StructurePortsTest {
         for (var channel : PortChannel.values()) assertFalse(StructureRole.CASING.allows(channel));
     }
 
-    @Test void rulesSurviveSymbolsDesignAndRepeatsWithoutChangingLegacyDefaults() {
+    @Test void rulesSurviveSymbolsDesignAndRepeatsWithoutChangingDefaults() {
         var ports = StructurePorts.builder().fluidOutput(PortRule.faces(MachineFace.BACK).slots(1).filter("#minecraft:water")).build();
         var layout = StructureLayout.pattern("tower").layer(0, "SA")
                 .where('A', CellMatch.part("wall"), StructureRole.FLUID_IO, 0, ports)
@@ -24,7 +24,7 @@ class StructurePortsTest {
         assertEquals(ports, layout.cells().get(0).ports());
         assertEquals(ports, layout.repeats().get(0).cells().get(0).ports());
         assertEquals(ports, layout.cells().get(0).withDesign(1).ports());
-        assertEquals(StructurePorts.DEFAULT, new LayoutCell(1, 0, 0, CellMatch.part("wall"), StructureRole.FLUID_IO, -1).ports());
+        assertEquals(StructurePorts.DEFAULT, LayoutCell.at(1, 0, 0, CellMatch.part("wall"), StructureRole.FLUID_IO).ports());
         assertTrue(ports.rule(PortChannel.FLUID_INPUT).allowsFace(null));
         assertFalse(ports.rule(PortChannel.FLUID_OUTPUT).allowsFace(null));
         assertFalse(ports.rule(PortChannel.FLUID_OUTPUT).allowsSlot(0));

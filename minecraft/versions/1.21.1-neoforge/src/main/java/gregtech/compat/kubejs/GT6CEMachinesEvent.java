@@ -59,12 +59,6 @@ public final class GT6CEMachinesEvent implements KubeEvent {
         return StructureLayout.builder(name);
     }
 
-    /** @deprecated Use {@code addMachine(controller.withStructure(layout))}; separate layout lists remain supported. */
-    @Deprecated(since = "1.3.0", forRemoval = false)
-    public void addLayout(StructureLayout layout) {
-        declarations.addLayout(layout);
-    }
-
     public LayoutPart.Builder part(String name, String material) {
         return LayoutPart.builder(name, material);
     }

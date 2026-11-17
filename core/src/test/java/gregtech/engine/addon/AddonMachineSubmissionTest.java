@@ -39,7 +39,7 @@ class AddonMachineSubmissionTest {
                 .build();
 
         assertDoesNotThrow(() -> AddonMachines.acceptContributor(
-                ADDON, List.of(), List.of(machine.withStructure(layout)), List.of(), List.of()));
+                ADDON, List.of(), List.of(machine.withStructure(layout)), List.of()));
         assertTrue(AddonMachines.queuedPipes().stream()
                 .anyMatch(row -> row.addonId().equals(ADDON)));
     }
@@ -55,7 +55,7 @@ class AddonMachineSubmissionTest {
 
         var failure = assertThrows(
                 IllegalArgumentException.class,
-                () -> AddonMachines.acceptContributor(ADDON, List.of(), List.of(machine), List.of(), List.of()));
+                () -> AddonMachines.acceptContributor(ADDON, List.of(), List.of(machine), List.of()));
         assertTrue(failure.getMessage().contains("Multiblock has no structure: controller"));
         assertTrue(AddonMachines.queuedPipes().stream()
                 .noneMatch(row -> row.addonId().equals(ADDON)));

@@ -5,7 +5,6 @@ package gregtech.api.addon.machine;
 import gregtech.api.addon.pipe.FluidPipeDeclaration;
 import gregtech.api.addon.pipe.ItemPipeDeclaration;
 import gregtech.api.addon.recipe.RecipeTable;
-import gregtech.api.multiblock.StructureLayout;
 import java.util.List;
 
 /**
@@ -23,19 +22,10 @@ public interface AddonMachineContributor {
 
     /**
      * Recipe machines, behavior machines and fuel generators.
+     * Bind a multiblock controller to its layout with {@link AddonMachine#withStructure}.
      * Pair each behavior machine type with a platform {@code BehaviorMachineContributor}.
      */
     default List<AddonMachine> addonMachines() { return List.of(); }
-
-    /**
-     * Legacy layouts bound by the controller {@code machineType}.
-     * Prefer {@link AddonMachine#withStructure(StructureLayout)} so the association is explicit.
-     * The host normalizes this compatibility input to the same declarations and validation.
-     * This remains an active compatibility entry point for existing contributors.
-     * @deprecated Submit controllers with explicit structures through {@link #addonMachines()}.
-     */
-    @Deprecated(since = "1.3.0", forRemoval = false)
-    default List<StructureLayout> structureLayouts() { return List.of(); }
 
     /**
      * Casings, energy parts and functional parts.

@@ -28,25 +28,25 @@ class AddonMachineDeclarationsTest {
     }
 
     @Test
-    void explicitAndLegacyDeclarationsResolveToTheSameStructure() {
+    void explicitBindingRegistersTheShapeUnderTheControllerType() {
         var controller = machine("controller");
-        var explicit = AddonMachineDeclarations.resolve(
-                List.of(controller.withStructure(layout("reusable", "minecraft:stone"))), List.of());
-        var legacy =
-                AddonMachineDeclarations.resolve(List.of(controller), List.of(layout("controller", "minecraft:stone")));
-        assertEquals(legacy, explicit);
+        var shape = layout("reusable", "minecraft:stone");
+        var resolved = AddonMachineDeclarations.resolve(List.of(controller.withStructure(shape)));
+        assertEquals(List.of(controller), resolved.machines());
+        assertEquals(List.of(layout("controller", "minecraft:stone")), resolved.layouts());
+        assertEquals("reusable", shape.name());
     }
 
     @Test
     void rejectsMissingOrConflictingBindings() {
         var controller = machine("controller");
         assertThrows(
-                IllegalArgumentException.class, () -> AddonMachineDeclarations.resolve(List.of(controller), List.of()));
+                IllegalArgumentException.class, () -> AddonMachineDeclarations.resolve(List.of(controller)));
         assertThrows(
                 IllegalArgumentException.class,
-                () -> AddonMachineDeclarations.resolve(
-                        List.of(controller.withStructure(layout("reusable", "minecraft:stone"))),
-                        List.of(layout("controller", "minecraft:dirt"))));
+                () -> AddonMachineDeclarations.resolve(List.of(
+                        controller.withStructure(layout("stone_shape", "minecraft:stone")),
+                        controller.withStructure(layout("dirt_shape", "minecraft:dirt")))));
     }
 
     @Test
@@ -54,8 +54,7 @@ class AddonMachineDeclarationsTest {
         var shape = layout("shared", "minecraft:stone");
         var resolved = AddonMachineDeclarations.resolve(
                 List.<AddonMachine>of(
-                        machine("first").withStructure(shape), machine("second").withStructure(shape)),
-                List.of());
+                        machine("first").withStructure(shape), machine("second").withStructure(shape)));
         assertEquals(
                 List.of("first", "second"),
                 resolved.layouts().stream().map(StructureLayout::name).toList());

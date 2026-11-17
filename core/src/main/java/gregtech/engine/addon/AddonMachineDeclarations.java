@@ -5,7 +5,7 @@ import gregtech.api.addon.recipe.RecipeMachine;
 import gregtech.api.multiblock.StructureLayout;
 import java.util.*;
 
-/** Normalizes explicit and legacy addon declarations before any registries or material lookup are touched. */
+/** Normalizes addon declarations before registry or material lookup. */
 public final class AddonMachineDeclarations {
     private AddonMachineDeclarations() {}
 
@@ -17,14 +17,11 @@ public final class AddonMachineDeclarations {
     }
 
     /**
-     * Registry keys remain controller machine types. Explicit layout names identify reusable shapes;
-     * normalizing a bound copy does not mutate the caller's template or create another registry alias.
+     * Registry keys are controller machine types. A reusable template keeps its name when the host
+     * registers a bound copy under the controller's machine type.
      */
-    public static Resolved resolve(List<AddonMachine> declarations, List<StructureLayout> legacyLayouts) {
+    public static Resolved resolve(List<AddonMachine> declarations) {
         var layouts = new LinkedHashMap<String, StructureLayout>();
-        for (var layout : legacyLayouts)
-            if (layouts.putIfAbsent(layout.name(), layout) != null)
-                throw new IllegalArgumentException("Duplicate structure: " + layout.name());
         var machines = new ArrayList<AddonMachine>();
         for (var declaration : declarations) {
             AddonMachine machine = declaration;

@@ -37,7 +37,7 @@ class StructureConstraintIntegrationTest {
                 .energy(EnergyInput.builder(EnergyType.EU, 32).build())
                 .gui("minecraft:textures/gui/container/furnace.png")
                 .build();
-        var resolved = AddonMachineDeclarations.resolve(List.of(machine.withStructure(source)), List.of())
+        var resolved = AddonMachineDeclarations.resolve(List.of(machine.withStructure(source)))
                 .layouts()
                 .get(0);
         assertEquals(source.constraints(), resolved.constraints());
@@ -54,11 +54,11 @@ class StructureConstraintIntegrationTest {
         assertEquals(ports, host.repeats().get(0).cells().get(0).ports());
         assertEquals(1, host.cells().get(0).alternatives().size());
         assertEquals(1, host.repeats().get(0).cells().get(0).alternatives().size());
+        var unconstrained = new StructureLayout(resolved.name(), resolved.cells(), resolved.repeats(), List.of());
         assertThrows(
                 IllegalArgumentException.class,
-                () -> AddonMachineDeclarations.resolve(
-                        List.of(machine.withStructure(source)),
-                        List.of(new StructureLayout(resolved.name(), resolved.cells(), resolved.repeats()))));
+                () -> AddonMachineDeclarations.resolve(List.of(
+                        machine.withStructure(source), machine.withStructure(unconstrained))));
     }
 
     @Test

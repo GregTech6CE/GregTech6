@@ -38,8 +38,9 @@ final class StructurePatternContracts {
                 .require(StructureConstraint.sameBlock(selection)).build();
         if (constrained.constraints().size() != 2)
             throw new AssertionError("Packaged API lost matched-cell constraints");
-        if (!new StructureLayout(constrained.name(), constrained.cells(), constrained.repeats()).constraints().isEmpty())
-            throw new AssertionError("Legacy constructor must remain unconstrained");
+        if (!new StructureLayout(constrained.name(), constrained.cells(), constrained.repeats(), java.util.List.of())
+                .constraints().isEmpty())
+            throw new AssertionError("An empty constraint list must remain unconstrained");
         var open = StructureLayout.pattern("open").layer(0, "S.B")
                 .ignore('.').where('B', CellMatch.part("wall"), StructureRole.CASING)
                 .repeat("optional", 1, 0, 3, "..B").build();

@@ -4,7 +4,6 @@ import gregtech.api.addon.machine.AddonMachine;
 import gregtech.api.addon.machine.AddonMachineContributor;
 import gregtech.api.addon.machine.LayoutPart;
 import gregtech.api.addon.recipe.RecipeTable;
-import gregtech.api.multiblock.StructureLayout;
 import gregtech.engine.kubejs.KubeJsMachineDeclarations;
 import java.util.List;
 
@@ -28,13 +27,6 @@ public final class KubeJsMachineContributor implements AddonMachineContributor {
     @Override
     public List<AddonMachine> addonMachines() {
         return loaded().machines();
-    }
-
-    /** @deprecated Retains separate layouts from old scripts; new bindings belong in {@link #addonMachines()}. */
-    @Deprecated(since = "1.3.0", forRemoval = false)
-    @Override
-    public List<StructureLayout> structureLayouts() {
-        return loaded().layouts();
     }
 
     @Override

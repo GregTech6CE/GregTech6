@@ -166,7 +166,6 @@ public final class AddonMachines {
                         contributor.addonId(),
                         contributor.recipeTables(),
                         contributor.addonMachines(),
-                        legacyStructureLayouts(contributor),
                         contributor.layoutParts(),
                         contributor.fluidPipes(),
                         contributor.itemPipes(),
@@ -178,12 +177,6 @@ public final class AddonMachines {
                         failure);
             }
         }
-    }
-
-    /** Existing addons still supply this list; it enters the same normalization as explicit bindings. */
-    @SuppressWarnings("deprecation")
-    private static List<StructureLayout> legacyStructureLayouts(AddonMachineContributor contributor) {
-        return contributor.structureLayouts();
     }
 
     private static boolean hasIoTarget(BasicMachineParameters parameters) {
@@ -298,114 +291,13 @@ public final class AddonMachines {
         }
     }
 
-    /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
-    public static synchronized void accept(
-            String addonId,
-            List<RecipeMapSpec> recipeMaps,
-            List<AddonMachineDefinition> machines,
-            List<StructureLayout> layouts) {
-        accept(addonId, recipeMaps, machines, layouts, List.of());
-    }
-
-    /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
-    public static synchronized void accept(
-            String addonId,
-            List<RecipeMapSpec> recipeMaps,
-            List<AddonMachineDefinition> machines,
-            List<StructureLayout> layouts,
-            List<BehaviorMachine> behavior) {
-        accept(addonId, recipeMaps, machines, layouts, behavior, List.of(), List.of());
-    }
-
-    /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
-    public static synchronized void accept(
-            String addonId,
-            List<RecipeMapSpec> recipeMaps,
-            List<AddonMachineDefinition> machines,
-            List<StructureLayout> layouts,
-            List<BehaviorMachine> behavior,
-            List<RecipeMapSpec> fuelMaps,
-            List<FuelGenerator> generators) {
-        accept(addonId, recipeMaps, machines, layouts, behavior, fuelMaps, generators, List.of());
-    }
-
-    /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
-    public static synchronized void accept(
-            String addonId,
-            List<RecipeMapSpec> recipeMaps,
-            List<AddonMachineDefinition> machines,
-            List<StructureLayout> layouts,
-            List<BehaviorMachine> behavior,
-            List<RecipeMapSpec> fuelMaps,
-            List<FuelGenerator> generators,
-            List<LayoutPart> parts) {
-        accept(addonId, recipeMaps, machines, layouts, behavior, fuelMaps, generators, parts, List.of(), List.of());
-    }
-
-    /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
-    public static synchronized void accept(
-            String addonId,
-            List<RecipeMapSpec> recipeMaps,
-            List<AddonMachineDefinition> machines,
-            List<StructureLayout> layouts,
-            List<BehaviorMachine> behavior,
-            List<RecipeMapSpec> fuelMaps,
-            List<FuelGenerator> generators,
-            List<LayoutPart> parts,
-            List<FluidPipeDeclaration> fluidPipes,
-            List<ItemPipeDeclaration> itemPipes) {
-        accept(
-                addonId,
-                recipeMaps,
-                machines,
-                layouts,
-                behavior,
-                fuelMaps,
-                generators,
-                parts,
-                fluidPipes,
-                itemPipes,
-                List.of());
-    }
-
-    /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
-    public static synchronized void accept(
-            String addonId,
-            List<RecipeMapSpec> recipeMaps,
-            List<AddonMachineDefinition> machines,
-            List<StructureLayout> layouts,
-            List<BehaviorMachine> behavior,
-            List<RecipeMapSpec> fuelMaps,
-            List<FuelGenerator> generators,
-            List<LayoutPart> parts,
-            List<FluidPipeDeclaration> fluidPipes,
-            List<ItemPipeDeclaration> itemPipes,
-            List<CompressedGasTankDeclaration> tanks) {
-        enqueue(
-                addonId,
-                recipeMaps,
-                machines,
-                Objects.requireNonNull(layouts, "layouts"),
-                behavior,
-                fuelMaps,
-                generators,
-                parts,
-                fluidPipes,
-                itemPipes,
-                tanks);
-    }
-
-    /**
-     * Queues the same lists an {@link AddonMachineContributor} returns.
-     * KubeJS and the machine contracts use this path.
-     */
+    /** Queues explicit declarations through the same validation as a discovered contributor. */
     public static synchronized void acceptContributor(
             String addonId,
             List<RecipeTable> tables,
             List<AddonMachine> machines,
-            List<StructureLayout> layouts,
             List<LayoutPart> parts) {
-        enqueueContributor(addonId, tables, machines, layouts, parts, List.of(), List.of(), List.of());
+        enqueueContributor(addonId, tables, machines, parts, List.of(), List.of(), List.of());
     }
 
     /** Service loading and direct/script submissions must share structure normalization and validation. */
@@ -413,13 +305,11 @@ public final class AddonMachines {
             String addonId,
             List<RecipeTable> tables,
             List<AddonMachine> machines,
-            List<StructureLayout> layouts,
             List<LayoutPart> parts,
             List<FluidPipeDeclaration> fluidPipes,
             List<ItemPipeDeclaration> itemPipes,
             List<CompressedGasTankDeclaration> tanks) {
-        var declarations = AddonMachineDeclarations.resolve(
-                Objects.requireNonNull(machines, "machines"), Objects.requireNonNull(layouts, "layouts"));
+        var declarations = AddonMachineDeclarations.resolve(Objects.requireNonNull(machines, "machines"));
         var recipes = new ArrayList<RecipeMapSpec>();
         var fuels = new ArrayList<RecipeMapSpec>();
         for (RecipeTable table : Objects.requireNonNull(tables, "tables"))

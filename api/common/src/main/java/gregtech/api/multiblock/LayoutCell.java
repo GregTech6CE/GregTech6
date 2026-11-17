@@ -12,21 +12,11 @@ package gregtech.api.multiblock;
  * @param match what the cell matches
  * @param role the structure role
  * @param design the design index, or -1 when this cell does not write one
- * @param ports additional controller-backed transport restrictions; defaults preserve legacy role permissions
+ * @param ports additional controller-backed transport restrictions on top of role permissions
  */
 public record LayoutCell(int right, int up, int back, CellMatch match, StructureRole role, int design,
                          StructurePorts ports) {
     public static final int MAX_DESIGN = 255;
-
-    /**
-     * Retained for existing callers; uses the default role permissions.
-     * @deprecated Use {@link #at} / {@link #relative} with {@link #withDesign} and {@link #withPorts},
-     * or the constructor accepting ports explicitly.
-     */
-    @Deprecated(since = "1.3.0", forRemoval = false)
-    public LayoutCell(int right, int up, int back, CellMatch match, StructureRole role, int design) {
-        this(right, up, back, match, role, design, StructurePorts.DEFAULT);
-    }
 
     public LayoutCell {
         if (match == null) throw new IllegalArgumentException("Missing structure part");

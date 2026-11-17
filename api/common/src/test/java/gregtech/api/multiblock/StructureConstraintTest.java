@@ -22,7 +22,7 @@ class StructureConstraintTest {
         assertTrue(rule.selection().selects(IRON, StructureRole.CASING));
         assertFalse(rule.selection().selects(COPPER, StructureRole.CASING));
         assertThrows(UnsupportedOperationException.class, () -> layout.constraints().clear());
-        assertTrue(new StructureLayout(layout.name(), layout.cells(), layout.repeats()).constraints().isEmpty());
+        assertTrue(new StructureLayout(layout.name(), layout.cells(), layout.repeats(), List.of()).constraints().isEmpty());
     }
 
     @Test
