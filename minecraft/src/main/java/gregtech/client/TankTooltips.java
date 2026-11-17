@@ -5,6 +5,7 @@ import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.engine.machine.TankSpec;
+import gregtech.engine.fluid.FluidHazard;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialTextureSet;
 import net.minecraft.ChatFormatting;
@@ -12,6 +13,7 @@ import net.minecraft.network.chat.Component;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /** GT6-style tooltips for fluid containers and pipes. */
 public final class TankTooltips {
@@ -60,14 +62,7 @@ public final class TankTooltips {
         tooltip.add(Component.translatable("gt.lang.no.powerconducting.fluids").withStyle(ChatFormatting.GOLD));
 
         // Proof flags
-        if (spec.gasProof())
-            tooltip.add(Component.translatable("gt.lang.proof.gas").withStyle(ChatFormatting.GOLD));
-        if (spec.acidProof())
-            tooltip.add(Component.translatable("gt.lang.proof.acid").withStyle(ChatFormatting.GOLD));
-        if (spec.plasmaProof())
-            tooltip.add(Component.translatable("gt.lang.proof.plasma").withStyle(ChatFormatting.GOLD));
-        if (spec.magicProof())
-            tooltip.add(Component.translatable("gt.lang.proof.magic").withStyle(ChatFormatting.GOLD));
+        appendProtections(spec.protections(), tooltip);
         if (spec.simpleOnly())
             tooltip.add(Component.translatable("gt.lang.only.simple").withStyle(ChatFormatting.GOLD));
 
@@ -120,14 +115,7 @@ public final class TankTooltips {
                 .append(Component.literal(Integer.toString(spec.tankCount()))).withStyle(ChatFormatting.AQUA));
 
         // Proof flags
-        if (spec.gasProof())
-            tooltip.add(Component.translatable("gt.lang.proof.gas").withStyle(ChatFormatting.GOLD));
-        if (spec.acidProof())
-            tooltip.add(Component.translatable("gt.lang.proof.acid").withStyle(ChatFormatting.GOLD));
-        if (spec.plasmaProof())
-            tooltip.add(Component.translatable("gt.lang.proof.plasma").withStyle(ChatFormatting.GOLD));
-        if (spec.magicProof())
-            tooltip.add(Component.translatable("gt.lang.proof.magic").withStyle(ChatFormatting.GOLD));
+        appendProtections(spec.protections(), tooltip);
 
         // Meltdown warning
         long maxTempK = spec.maxTemperature();
@@ -194,6 +182,15 @@ public final class TankTooltips {
 
     private static void appendBlastResistance(float resistance, List<Component> tooltip) {
         TooltipHelper.appendBlastResistance(resistance, tooltip);
+    }
+
+    private static void appendProtections(Set<FluidHazard> protections, List<Component> tooltip) {
+        for (FluidHazard hazard : FluidHazard.values()) {
+            if (protections.contains(hazard)) {
+                String key = "gt.lang.proof." + hazard.name().toLowerCase(Locale.ROOT);
+                tooltip.add(Component.translatable(key).withStyle(ChatFormatting.GOLD));
+            }
+        }
     }
 
     private static void appendHarvestInfo(GTMaterial mat, List<Component> tooltip) {

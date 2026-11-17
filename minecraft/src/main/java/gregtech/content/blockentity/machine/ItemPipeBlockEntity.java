@@ -6,6 +6,7 @@ import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverStore;
 import gregtech.content.cover.CoverUtilityBehaviors;
+import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
 import gregtech.content.cover.MachineCoverSpec;
 import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.cover.PanelCoverRuntime;
@@ -373,16 +374,14 @@ public class ItemPipeBlockEntity extends BlockEntity
      * ({@code CoverFilterItem}, {@code CoverRetrieverItem}) and the soft hammer clears the
      * filter ({@code CoverFilterItem}, {@code CoverRetrieverItem}).
      */
-    public boolean configureFilterCover(Direction side, boolean screwdriver, boolean softHammer) {
+    public boolean configureFilterCover(Direction side, FilterAction action) {
         String id = coverIdOf(side);
         if (id == null) return false;
         boolean filterish = CoverUtilityBehaviors.FILTER_ITEM.equals(id)
                 || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id);
-        if (!filterish || (!screwdriver && !softHammer)) return false;
+        if (!filterish) return false;
         if (level != null && level.isClientSide) return true;
-        ItemStack stack = getCover(side);
-        if (softHammer) CoverUtilityBehaviors.clearFilter(stack);
-        else CoverUtilityBehaviors.toggleFilterMode(stack);
+        action.apply(getCover(side));
         syncCovers();
         return true;
     }

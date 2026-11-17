@@ -109,9 +109,6 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 *///?} else {
                 .setOnChanged(this::setChanged)
 //?}
-                .setGasProof(spec.gasProof())
-                .setAcidProof(spec.acidProof())
-                .setPlasmaProof(spec.plasmaProof())
                 .setMaxTemperature(spec.maxTemperature());
     }
 
@@ -158,7 +155,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 
             // GT6 TileEntityBase08Barrel — the hazard checks sit between the meltdown check
             // and the barrel's own modes, and they eat the contents before anything else runs.
-            if (FluidHazards.proofRejects(fluid.getFluid(), spec.gasProof(), spec.acidProof(), spec.plasmaProof())) {
+            if (FluidHazards.hasUnprotectedPhysicalHazard(fluid.getFluid(), spec.protections())) {
                 corrode(fluid);
                 return;
             }
@@ -310,7 +307,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
         }
         // Current block-capability gate. GT6's portable-item fill checked protection here,
         // whereas its placed barrel accepted into the tank and handled hazards on tick.
-        if (FluidHazards.proofRejects(stack.getFluid(), spec.gasProof(), spec.acidProof(), spec.plasmaProof())) {
+        if (FluidHazards.hasUnprotectedPhysicalHazard(stack.getFluid(), spec.protections())) {
             return false;
         }
         return tank.isFluidValid(stack);

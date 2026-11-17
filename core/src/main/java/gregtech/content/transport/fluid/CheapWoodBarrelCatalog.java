@@ -7,6 +7,7 @@ import gregtech.content.data.generated.GT6Materials;
 import gregtech.engine.machine.TankSpec;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /** Four source identities; the existing generic ID retains the lead-rod barrel. */
 public final class CheapWoodBarrelCatalog {
@@ -19,10 +20,7 @@ public final class CheapWoodBarrelCatalog {
                             GT6Materials.Woods.Wood,
                             TankSpec.TankType.WOOD_BARREL,
                             8000,
-                            false,
-                            false,
-                            false,
-                            false,
+                            Set.of(),
                             true,
                             1F,
                             5F)

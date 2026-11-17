@@ -65,8 +65,18 @@ public final class UtilityCoverInteraction {
         }
         boolean item=CoverUtilityBehaviors.FILTER_ITEM.equals(id)||CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id),fluid=CoverUtilityBehaviors.FILTER_FLUID.equals(id);
         if(item||fluid){
-            if(GTToolHelper.isScrewdriver(held)||GTToolHelper.matchesTool(held,GTToolType.SOFT_HAMMER)){
-                if(!level.isClientSide){if(GTToolHelper.matchesTool(held,GTToolType.SOFT_HAMMER))CoverUtilityBehaviors.clearFilter(installed);else CoverUtilityBehaviors.toggleFilterMode(installed);host.panels().changed();GTToolHelper.damageForUse(held,1,player);}
+            CoverUtilityBehaviors.FilterAction action = null;
+            if (GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)) {
+                action = CoverUtilityBehaviors.FilterAction.CLEAR;
+            } else if (GTToolHelper.isScrewdriver(held)) {
+                action = CoverUtilityBehaviors.FilterAction.TOGGLE_MODE;
+            }
+            if (action != null) {
+                if (!level.isClientSide) {
+                    action.apply(installed);
+                    host.panels().changed();
+                    GTToolHelper.damageForUse(held, 1, player);
+                }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
             // 两节点统一调 3 参：1.20 经 CoverUtilityBehaviors 的 provider 适配器忽略 lookup。

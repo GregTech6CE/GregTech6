@@ -25,8 +25,7 @@ public final class PortableTankHandler implements IFluidHandlerItem {
     public PortableTankHandler(ItemStack stack) {
         container = stack;
         var spec = ((TankBlock) ((BlockItem) stack.getItem()).getBlock()).spec();
-        tank = new FluidTankGT(spec.capacity()).setGasProof(spec.gasProof()).setAcidProof(spec.acidProof())
-                .setPlasmaProof(spec.plasmaProof()).setMaxTemperature(spec.maxTemperature());
+        tank = new FluidTankGT(spec.capacity()).setMaxTemperature(spec.maxTemperature());
         var data = data();
         if (data.contains("gt.tank")) {
 //? if >=1.21.1 {

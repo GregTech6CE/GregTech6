@@ -25,6 +25,7 @@ import gregtech.engine.machine.MachineDirections;
 import gregtech.engine.machine.MachineEnergyPort;
 import gregtech.engine.machine.MachineInventory;
 import gregtech.engine.machine.MachineItemHandler;
+import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
 import gregtech.content.cover.MachineCoverSpec;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -1801,17 +1802,15 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
      * <p>Shaped exactly like {@link #configureControlCover} next to it, including the client-side
      * early return, so the same caller can drive both.</p>
      */
-    public boolean configureFilterCover(Direction side, boolean screwdriver, boolean softHammer) {
+    public boolean configureFilterCover(Direction side, FilterAction action) {
         String id = getCoverId(side);
         if (id == null) return false;
         boolean filterish = gregtech.content.cover.CoverUtilityBehaviors.FILTER_ITEM.equals(id)
                 || gregtech.content.cover.CoverUtilityBehaviors.FILTER_FLUID.equals(id)
                 || gregtech.content.cover.CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id);
-        if (!filterish || (!screwdriver && !softHammer)) return false;
+        if (!filterish) return false;
         if (level != null && level.isClientSide) return true;
-        ItemStack stack = getCover(side);
-        if (softHammer) gregtech.content.cover.CoverUtilityBehaviors.clearFilter(stack);
-        else gregtech.content.cover.CoverUtilityBehaviors.toggleFilterMode(stack);
+        action.apply(getCover(side));
         setChanged();
         if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         return true;

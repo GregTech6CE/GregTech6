@@ -1,6 +1,8 @@
 package gregtech.engine.machine;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.engine.fluid.FluidHazard;
+import java.util.Set;
 
 /** GT6 fluid container specification. */
 public record TankSpec(
@@ -8,14 +10,15 @@ public record TankSpec(
         GTMaterial material,
         TankType type,
         long capacity,
-        boolean gasProof,
-        boolean acidProof,
-        boolean plasmaProof,
-        boolean magicProof,
+        Set<FluidHazard> protections,
         boolean simpleOnly,
         float hardness,
         float blastResistance,
         long maxTemperature) {
+    public TankSpec {
+        protections = Set.copyOf(protections);
+    }
+
     public enum TankType {
         WOOD_BARREL,
         PLASTIC_CANISTER,
@@ -47,10 +50,7 @@ public record TankSpec(
                 material,
                 type,
                 capacity,
-                gasProof,
-                acidProof,
-                plasmaProof,
-                magicProof,
+                protections,
                 simpleOnly,
                 hardness,
                 blastResistance,
@@ -62,10 +62,7 @@ public record TankSpec(
             GTMaterial material,
             TankType type,
             long capacity,
-            boolean gasProof,
-            boolean acidProof,
-            boolean plasmaProof,
-            boolean magicProof,
+            Set<FluidHazard> protections,
             boolean simpleOnly,
             float hardness,
             float blastResistance) {
@@ -74,10 +71,7 @@ public record TankSpec(
                 material,
                 type,
                 capacity,
-                gasProof,
-                acidProof,
-                plasmaProof,
-                magicProof,
+                protections,
                 simpleOnly,
                 hardness,
                 blastResistance,

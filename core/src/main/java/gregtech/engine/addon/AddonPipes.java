@@ -3,10 +3,12 @@ package gregtech.engine.addon;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.transport.ItemPipeCatalog;
 import gregtech.content.transport.fluid.FluidTransportDefinitions;
+import gregtech.engine.fluid.FluidHazard;
 import gregtech.engine.machine.ItemPipeSpec;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.engine.material.GTMaterialRegistry;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -67,6 +69,11 @@ public final class AddonPipes {
                 long temperature = declaration.maxTemperature() > 0
                         ? declaration.maxTemperature()
                         : (long) (material.getMeltingPoint() * 1.25D);
+                var protections = EnumSet.noneOf(FluidHazard.class);
+                if (declaration.gasProof()) protections.add(FluidHazard.GAS);
+                if (declaration.acidProof()) protections.add(FluidHazard.ACID);
+                if (declaration.plasmaProof()) protections.add(FluidHazard.PLASMA);
+                if (declaration.magicProof()) protections.add(FluidHazard.MAGIC);
                 for (var size : PipeSpec.PipeSize.values()) {
                     String id = "pipe_" + size.name().toLowerCase(Locale.ROOT) + "_" + declaration.idSuffix();
                     fluid.add(PipeSpec.of(
@@ -74,10 +81,7 @@ public final class AddonPipes {
                             material,
                             size,
                             declaration.baseCapacity(),
-                            declaration.gasProof(),
-                            declaration.acidProof(),
-                            declaration.plasmaProof(),
-                            declaration.magicProof(),
+                            protections,
                             temperature,
                             declaration.flammability()));
                     owners.put(id, queued.addonId());

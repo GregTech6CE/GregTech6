@@ -1,5 +1,6 @@
 package gregtech.content.blockentity.machine;
 
+import gregtech.engine.fluid.FluidHazard;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.content.block.machine.CompressedGasTankBlock;
@@ -25,6 +26,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 
 import javax.annotation.Nullable;
+import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * Stores one gas. Pipes, buckets and funnels cannot fill it.
@@ -33,6 +36,7 @@ import javax.annotation.Nullable;
 public class CompressedGasTankBlockEntity extends BlockEntity implements IFluidHandler,
         gregtech.engine.fluid.CompressedGasReceiver {
     private final FluidTankGT tank;
+    private final Set<FluidHazard> protections;
 
 //? if >=1.21.1 {
 //?} else {
@@ -41,7 +45,13 @@ public class CompressedGasTankBlockEntity extends BlockEntity implements IFluidH
 
     public CompressedGasTankBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        tank = new FluidTankGT(declaration().capacity()).setOnChanged(this::setChanged);
+        var declaration = declaration();
+        tank = new FluidTankGT(declaration.capacity()).setOnChanged(this::setChanged);
+        var permitted = EnumSet.of(FluidHazard.GAS);
+        if (declaration.acidProof()) permitted.add(FluidHazard.ACID);
+        if (declaration.plasmaProof()) permitted.add(FluidHazard.PLASMA);
+        if (declaration.magicProof()) permitted.add(FluidHazard.MAGIC);
+        protections = Set.copyOf(permitted);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, CompressedGasTankBlockEntity tank) {
@@ -79,11 +89,10 @@ public class CompressedGasTankBlockEntity extends BlockEntity implements IFluidH
     public boolean accepts(FluidStack stack) {
         if (stack == null || stack.isEmpty()) return false;
         Fluid fluid = stack.getFluid();
-        var declaration = declaration();
         if (!FluidHazards.isGas(fluid)) return false;
         if (fluidTemperature(stack) >= block().meltingPoint()) return false;
-        if (FluidHazards.proofRejects(fluid, true, declaration.acidProof(), declaration.plasmaProof())) return false;
-        return !FluidHazards.isMagic(fluid) || declaration.magicProof();
+        if (FluidHazards.hasUnprotectedPhysicalHazard(fluid, protections)) return false;
+        return protections.contains(FluidHazard.MAGIC) || !FluidHazards.isMagic(fluid);
     }
 
     private static long fluidTemperature(FluidStack stack) {

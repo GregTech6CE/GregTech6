@@ -9,6 +9,7 @@ import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
 import gregtech.content.cover.CoverItems;
+import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
 import gregtech.content.cover.PanelCoverInteraction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -120,11 +121,11 @@ public class ItemPipeBlock extends Block implements EntityBlock, SimpleWaterlogg
             }
             if (!held.isEmpty()) {
                 if (GTToolHelper.matchesTool(held, GTToolType.SCREWDRIVER)
-                        && coverHost.configureFilterCover(hit.getDirection(), true, false)) {
+                        && coverHost.configureFilterCover(hit.getDirection(), FilterAction.TOGGLE_MODE)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
                 if (GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)
-                        && coverHost.configureFilterCover(hit.getDirection(), false, true)) {
+                        && coverHost.configureFilterCover(hit.getDirection(), FilterAction.CLEAR)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
                 if (!CoverItems.isCover(held)

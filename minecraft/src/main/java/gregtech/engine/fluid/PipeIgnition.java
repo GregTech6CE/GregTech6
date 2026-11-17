@@ -45,7 +45,7 @@ public final class PipeIgnition {
                     .getKey(block)
                     .getNamespace()
                     .equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE);
-            if (FluidPipeSafety.canIgnite(false, true, gtBlock, flammable)) {
+            if (!gtBlock || flammable) {
                 level.setBlock(target, Blocks.FIRE.defaultBlockState(), 3);
             }
         }

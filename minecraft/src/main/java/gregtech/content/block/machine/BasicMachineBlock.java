@@ -15,6 +15,7 @@ import gregtech.engine.tool.ToolInteractions;
 
 
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
+import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
 
 import net.minecraft.core.BlockPos;
 
@@ -170,12 +171,12 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
             }
             if (!held.isEmpty()) {
                 if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SCREWDRIVER)
-                        && utilityBe.configureFilterCover(side, true, false)) {
+                        && utilityBe.configureFilterCover(side, FilterAction.TOGGLE_MODE)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
 
                 if (GTToolHelper.matchesTool(held, gregtech.engine.tool.GTToolType.SOFT_HAMMER)
-                        && utilityBe.configureFilterCover(side, false, true)) {
+                        && utilityBe.configureFilterCover(side, FilterAction.CLEAR)) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
                 if (!utilityBe.consumesTool(held) && !isCoverItem(held) && utilityBe.clickFilterCover(side, held)) {

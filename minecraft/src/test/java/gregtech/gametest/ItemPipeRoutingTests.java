@@ -2,6 +2,7 @@ package gregtech.gametest;
 
 import gregtech.content.block.machine.ItemPipeBlock;
 import gregtech.content.blockentity.machine.ItemPipeBlockEntity;
+import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
 import gregtech.content.transport.ItemPipeNetwork;
 import gregtech.content.transport.ItemPipeNetworks;
 import net.minecraft.core.BlockPos;
@@ -123,6 +124,13 @@ public final class ItemPipeRoutingTests {
             source.insertItem(0, new ItemStack(Items.IRON_INGOT, 17), false);
             helper.assertTrue(source.deliverThrough(network) == 0 && count(target, Items.IRON_INGOT) == 0,
                     "empty whitelist rejects items on a cached exit");
+            ItemStack gold = new ItemStack(Items.GOLD_INGOT);
+            helper.assertTrue(source.clickFilterCover(Direction.UP, gold), "set the cover filter");
+            helper.assertTrue(source.coverFilterPermits(Direction.UP, gold), "whitelist admits gold");
+            helper.assertTrue(source.configureFilterCover(Direction.UP, FilterAction.TOGGLE_MODE)
+                    && !source.coverFilterPermits(Direction.UP, gold), "the mode toggle blacklists gold");
+            helper.assertTrue(source.configureFilterCover(Direction.UP, FilterAction.CLEAR)
+                    && source.coverFilterPermits(Direction.UP, gold), "clearing the template retains blacklist mode");
             source.removeCover(Direction.UP);
             helper.assertTrue(ItemPipeNetworks.networkOf(source) == network, "filter removal preserves topology");
             helper.assertTrue(source.deliverThrough(network) == 1 && count(target, Items.IRON_INGOT) == 17,

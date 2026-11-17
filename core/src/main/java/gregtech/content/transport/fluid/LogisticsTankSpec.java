@@ -1,7 +1,9 @@
 package gregtech.content.transport.fluid;
 
 import gregtech.content.material.Materials;
+import gregtech.engine.fluid.FluidHazard;
 import gregtech.engine.machine.TankSpec;
+import java.util.EnumSet;
 
 /** Fixed specification of the original logistics barrel (multi-tile 32072). */
 public final class LogisticsTankSpec {
@@ -13,10 +15,7 @@ public final class LogisticsTankSpec {
                         Materials.Tungsten,
                         TankSpec.TankType.LOGISTICS_BARREL,
                         1_000_000,
-                        true,
-                        true,
-                        true,
-                        true,
+                        EnumSet.allOf(FluidHazard.class),
                         false,
                         1f,
                         10f)

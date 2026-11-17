@@ -198,10 +198,12 @@ public final class CoverUtilityBehaviors {
             if (stack.isEmpty()) continue;
             // CoverRetrieverItem passes a null filter set when no template is installed.
             // ST.move/ItemStackSet match item and metadata, never the logistics NBT policy.
-            if (present && !filterPermits(true, blacklist, false,
-                    filter.getItem() == stack.getItem()
-                            && (filter.getDamageValue() == Short.MAX_VALUE
-                            || filter.getDamageValue() == stack.getDamageValue()))) continue;
+            if (present) {
+                boolean matches = filter.getItem() == stack.getItem()
+                        && (filter.getDamageValue() == Short.MAX_VALUE
+                        || filter.getDamageValue() == stack.getDamageValue());
+                if (matches == blacklist) continue;
+            }
             ItemStack simulated = source.extractItem(slot, Math.min(budget, stack.getCount()), true);
             if (simulated.isEmpty()) continue;
             int accepted = simulated.getCount() - insert(target, simulated.copy(), true).getCount();
@@ -235,39 +237,6 @@ public final class CoverUtilityBehaviors {
     // ── CoverFilterItem / CoverFilterFluid ─────────────────────────────────────────
 
     /**
-     * The whitelist/blacklist core of both filter covers, read straight off the original.
-     *
-     * <p>GT6 spells it twice, once for items ({@code CoverFilterItem}) and once for fluids
-     * ({@code CoverFilterFluid}), with identical bodies:</p>
-     *
-     * <pre>
-     *   if (aCoverSide != aSide) return F;                                    // other faces: not ours
-     *   if (aData.mStopped) return T;                                         // suspended: block all
-     *   if (no filter stored) return aData.mVisuals[aCoverSide] == 0;         // empty whitelist blocks
-     *   return (aData.mVisuals[aCoverSide] == 0) != ST.equal(filter, stack, T);
-     * </pre>
-     *
-     * <p>{@code true} means "intercept", i.e. <em>refuse</em>, which is why the two middle lines
-     * look inverted: an empty whitelist admits nothing and an empty blacklist admits everything,
-     * while a suspended cover admits nothing at all. This method returns the inverse — whether the
-     * candidate may pass — because every caller in the port asks that question.</p>
-     *
-     * <p>The face test on the first line is the caller's business, not this predicate's: it decides
-     * <em>which</em> face the rule is asked about, and the caller already knows that.</p>
-     *
-     * @param filterPresent whether a filter stack is stored at all
-     * @param blacklist     GT6's {@code mVisuals != 0} — the "Inverted Filter" half
-     * @param stopped       GT6's {@code aData.mStopped}
-     * @param matches       the raw match result, {@code ST.equal(filter, candidate, T)}
-     */
-    public static boolean filterPermits(boolean filterPresent, boolean blacklist, boolean stopped,
-                                        boolean matches) {
-        if (stopped) return false;                       // "suspended blocks all"
-        if (!filterPresent) return blacklist;            // "empty whitelist blocks"
-        return blacklist != matches;
-    }
-
-    /**
      * GT6 {@code CoverFilterItem} for a live machine face: the stored item filter, the
      * screwdriver-selected mode and the candidate stack.
      *
@@ -281,11 +250,15 @@ public final class CoverUtilityBehaviors {
             net.minecraft.core.HolderLookup.Provider lookup) {
         String id = CoverItems.behavior(cover);
         if (!FILTER_ITEM.equals(id)) return true;
-        if (candidate == null || candidate.isEmpty()) return !stopped && !MachineCoverSpec.inverted(cover);
+        if (stopped) return false;
+        boolean blacklist = MachineCoverSpec.inverted(cover);
+        if (candidate == null || candidate.isEmpty()) return !blacklist;
         ItemStack filter = itemFilter(cover, lookup);
-        return filterPermits(!filter.isEmpty(), MachineCoverSpec.inverted(cover), stopped,
-                !candidate.isEmpty()&&filter.getItem()==candidate.getItem()
-                        &&(StackData.getBoolean(cover,"gt.filter.wildcard",false)||filter.getDamageValue()==candidate.getDamageValue()));
+        if (filter.isEmpty()) return blacklist;
+        boolean matches = filter.getItem() == candidate.getItem()
+                && (StackData.getBoolean(cover, "gt.filter.wildcard", false)
+                        || filter.getDamageValue() == candidate.getDamageValue());
+        return matches != blacklist;
     }
 
     /**
@@ -304,8 +277,8 @@ public final class CoverUtilityBehaviors {
         if (candidate == null || candidate.isEmpty()) return false;
         // UT with aIgnoreNBT = T: same fluid, tags ignored — not FluidStack#isFluidEqual,
         // which would also compare the tag and therefore be stricter than the original.
-        return filterPermits(true, MachineCoverSpec.inverted(cover), false,
-                filter.getFluid() == candidate.getFluid());
+        boolean matches = filter.getFluid() == candidate.getFluid();
+        return matches != MachineCoverSpec.inverted(cover);
     }
 
     /** The item stored under {@link #FILTER_ITEM_KEY}, or empty ({@code CoverFilterItem}). */
@@ -361,35 +334,42 @@ public final class CoverUtilityBehaviors {
     /**
      * The screwdriver toggle, GT6 {@code CoverFilterItem} / {@code CoverFilterFluid} /
      * {@code CoverRetrieverItem}: {@code aData.visual(side, visuals == 0 ? 1 : 0)}. In the port
-     * that is the existing {@code gt.cover.inverted} flag, so this returns the new blacklist state.
+     * that is the existing {@code gt.cover.inverted} flag.
      *
      * <p>The caller owns {@code setChanged()} and the block update, exactly as
      * {@code BasicMachineBlockEntity.configureControlCover} does for the same flag
      * ({@code BasicMachineBlockEntity}).</p>
      */
-    public static boolean toggleFilterMode(ItemStack cover) {
+    private static void toggleFilterMode(ItemStack cover) {
         CompoundTag tag = StackData.readOrEmpty(cover);
         boolean blacklist = !MachineCoverSpec.inverted(cover);
         tag.putBoolean("gt.cover.inverted", blacklist);
         StackData.write(cover,tag);
-        return blacklist;
+    }
+
+    public enum FilterAction {
+        TOGGLE_MODE,
+        CLEAR;
+
+        public void apply(ItemStack cover) {
+            switch (this) {
+                case TOGGLE_MODE -> toggleFilterMode(cover);
+                case CLEAR -> clearFilter(cover);
+            }
+        }
     }
 
     /**
      * GT6 {@code CoverFilterItem} / {@code CoverFilterFluid}: the soft hammer removes the
      * filter, and only the filter — the mode survives.
-     *
-     * @return whether there was one
      */
-    public static boolean clearFilter(ItemStack cover) {
+    private static void clearFilter(ItemStack cover) {
         CompoundTag tag = cover == null ? null : StackData.read(cover);
-        if (tag == null) return false;
-        boolean had = tag.contains(FILTER_ITEM_KEY) || tag.contains(FILTER_FLUID_KEY);
+        if (tag == null) return;
         tag.remove("gt.filter.wildcard");
         tag.remove(FILTER_ITEM_KEY);
         tag.remove(FILTER_FLUID_KEY);
         StackData.write(cover,tag);
-        return had;
     }
 
     // ── CoverPressureValve ─────────────────────────────────────────────────────────
@@ -405,16 +385,6 @@ public final class CoverUtilityBehaviors {
      */
     public static final double VALVE_VENT_INFLATE = 2.0D;
 
-    /** What one valve tick does. GT6 {@code CoverPressureValve}. */
-    public enum ValveAction {
-        /** Tank not full, or full with nowhere to go. */
-        IDLE,
-        /** {@code FL.move(tTank, tDelegator)} — a tank is in front. */
-        INTO_TANK,
-        /** The gas escapes into the air and hurts what is standing there. */
-        VENT
-    }
-
     /**
      * GT6 {@code CoverPressureValve}: the valve only goes on a fluid pipe with exactly one tank,
      * and only when the block it faces is <em>not</em> another fluid pipe.
@@ -425,25 +395,6 @@ public final class CoverUtilityBehaviors {
      */
     public static boolean valveCanAttachTo(int hostTankCount, boolean neighbourIsFluidPipe) {
         return hostTankCount == 1 && !neighbourIsFluidPipe;
-    }
-
-    /** GT6 interceptConnect: true means block a connection to the adjacent pipe.
-     * Currently a standalone predicate; the live connector gate does not call it. */
-    public static boolean valveBlocksPipeConnection(boolean neighbourIsFluidPipe) {
-        return neighbourIsFluidPipe;
-    }
-
-    /**
-     * GT6 {@code CoverPressureValve}: a full tank empties into the tank in front, and if there
-     * is none, a gas escapes into the open air — a liquid does not, which is the tooltip's "Liquids
-     * require Tank in front!" ({@code CoverPressureValve}).
-     */
-    public static ValveAction valveAction(boolean tankFull, boolean gas, boolean tankInFront,
-                                          boolean collisionInFront) {
-        if (!tankFull) return ValveAction.IDLE;
-        if (tankInFront) return ValveAction.INTO_TANK;
-        if (gas && !collisionInFront) return ValveAction.VENT;
-        return ValveAction.IDLE;
     }
 
     /**
@@ -465,6 +416,7 @@ public final class CoverUtilityBehaviors {
                                             FluidTankGT tank, long tickCounter) {
         if (level == null || tank == null || tank.isEmpty()) return false;
         if (tickCounter <= VALVE_MIN_TICKS) return false;                 // `aTimer > 2`
+        if (tank.getAmount() < tank.capacity()) return false;
         FluidStack content = tank.getFluid();
         if (content.isEmpty()) return false;
         BlockPos front = machinePos.relative(side);
@@ -480,14 +432,11 @@ public final class CoverUtilityBehaviors {
                     .resolve().orElse(null);
 //?}
         }
-        boolean collision = !level.getBlockState(front).getCollisionShape(level, front).isEmpty();
-        boolean full = tank.getAmount() >= tank.capacity();
-
-        return switch (valveAction(full, FluidHazards.isGas(content.getFluid()), frontTank != null, collision)) {
-            case INTO_TANK -> moveInto(frontTank, tank);
-            case VENT -> vent(level, machinePos, tank, content);
-            case IDLE -> false;
-        };
+        if (frontTank != null) return moveInto(frontTank, tank);
+        // A full pipe can vent gas into open air. Liquid requires a receiving tank.
+        return FluidHazards.isGas(content.getFluid())
+                && level.getBlockState(front).getCollisionShape(level, front).isEmpty()
+                && vent(level, machinePos, tank, content);
     }
 
     /** GT6 {@code CoverPressureValve} {@code FL.move(tTank, tDelegator)}: as much as fits. */

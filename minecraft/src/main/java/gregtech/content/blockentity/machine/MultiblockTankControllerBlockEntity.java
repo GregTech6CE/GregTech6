@@ -61,9 +61,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         if (valveSpec.size() != size) throw new IllegalArgumentException("Tank valve size: " + size);
         this.size = size;
         gregtech.engine.fluid.MultiblockTankData.setCapacity(tank, valveSpec.capacity());
-        tank.setGasProof(valveSpec.gasProof()).setAcidProof(valveSpec.acidProof())
-                .setPlasmaProof(valveSpec.plasmaProof()).setMagicProof(valveSpec.magicProof())
-                .setMaxTemperature(valveSpec.meltingPoint());
+        tank.setMaxTemperature(valveSpec.meltingPoint());
     }
 
     public TankValveSpec valveSpec() {

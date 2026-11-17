@@ -11,8 +11,12 @@ import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.energy.ChemicalBatterySpec;
 import gregtech.content.registry.GTChemicalBatteries;
+import gregtech.content.registry.GTFluids;
 import gregtech.content.transport.energy.ElectricNetwork;
 import gregtech.content.transport.energy.ElectricNetworks;
+import gregtech.engine.fluid.FluidHazard;
+import gregtech.engine.fluid.FluidHazards;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -47,6 +51,26 @@ public final class TransportSchedulingTests {
     private static final String BATCH = "transport_scheduling";
 
     private TransportSchedulingTests() {}
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void acidGasNeedsBothProtections(GameTestHelper helper) {
+        FluidStack acid = GTFluids.stack("GenGas_HydrochloricAcid", 1000);
+        helper.assertTrue(acid != null && !acid.isEmpty(), "the hydrochloric acid fixture is registered");
+        var fluid = acid.getFluid();
+        helper.assertTrue(FluidHazards.pipeLosses(fluid, Set.of()).equals(new FluidHazards.PipeLosses(8, 0, 16)),
+                "acid and gas leakage stack independently");
+        var gasAndPlasmaProof = Set.of(FluidHazard.GAS, FluidHazard.PLASMA);
+        helper.assertTrue(
+                FluidHazards.pipeLosses(fluid, gasAndPlasmaProof).equals(new FluidHazards.PipeLosses(0, 0, 16))
+                        && FluidHazards.hasUnprotectedPhysicalHazard(fluid, gasAndPlasmaProof),
+                "plasma protection leaves the acid hazard active");
+        var gasAndAcidProof = Set.of(FluidHazard.GAS, FluidHazard.ACID);
+        helper.assertTrue(
+                FluidHazards.pipeLosses(fluid, gasAndAcidProof).equals(new FluidHazards.PipeLosses(0, 0, 0))
+                        && !FluidHazards.hasUnprotectedPhysicalHazard(fluid, gasAndAcidProof),
+                "the two relevant protections stop both losses and allow admission");
+        helper.succeed();
+    }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 100)
     public static void wireSnapshotTracksConnectionChanges(GameTestHelper helper) {

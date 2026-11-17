@@ -14,7 +14,6 @@ import java.util.Map;
 public class FluidTankGT implements IFluidHandler {
     private FluidStack fluid = FluidStack.EMPTY;
     private final LongFluidStorage storage;
-    private boolean gasProof, acidProof, plasmaProof, magicProof;
     private long maxTemperature = Long.MAX_VALUE;
     private Runnable onChanged = () -> {};
 
@@ -51,45 +50,9 @@ public class FluidTankGT implements IFluidHandler {
         return this;
     }
 
-    public FluidTankGT setGasProof(boolean v) {
-        gasProof = v;
-        return this;
-    }
-
-    public FluidTankGT setAcidProof(boolean v) {
-        acidProof = v;
-        return this;
-    }
-
-    public FluidTankGT setPlasmaProof(boolean v) {
-        plasmaProof = v;
-        return this;
-    }
-
-    public FluidTankGT setMagicProof(boolean v) {
-        magicProof = v;
-        return this;
-    }
-
     public FluidTankGT setMaxTemperature(long v) {
         maxTemperature = v;
         return this;
-    }
-
-    public boolean isGasProof() {
-        return gasProof;
-    }
-
-    public boolean isAcidProof() {
-        return acidProof;
-    }
-
-    public boolean isPlasmaProof() {
-        return plasmaProof;
-    }
-
-    public boolean isMagicProof() {
-        return magicProof;
     }
 
     public long maxTemperature() {

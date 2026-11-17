@@ -16,6 +16,7 @@ import gregtech.content.cover.CoverAttachmentBehaviors;
 import gregtech.content.cover.CoverItems;
 import gregtech.content.cover.CoverStore;
 import gregtech.content.cover.CoverUtilityBehaviors;
+import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
 import gregtech.content.cover.PanelCoverHost;
 import gregtech.content.cover.PanelCoverRuntime;
 import gregtech.content.data.GregTechConstants;
@@ -172,10 +173,6 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         for (int i = 0; i < count; i++) {
             this.tanks[i] = new FluidTankGT(spec.capacity())
                     .setOnChanged(this::onTankChanged)
-                    .setGasProof(spec.gasProof())
-                    .setAcidProof(spec.acidProof())
-                    .setPlasmaProof(spec.plasmaProof())
-                    .setMagicProof(spec.magicProof())
                     .setMaxTemperature(spec.maxTemperature());
         }
         this.lastReceivedFrom = new byte[count];
@@ -442,17 +439,15 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
      * {@link BasicMachineBlockEntity}: the screwdriver flips whitelist/blacklist
      * ({@code CoverFilterFluid}) and the soft hammer clears the filter ({@code CoverFilterFluid}).
      */
-    public boolean configureFilterCover(Direction side, boolean screwdriver, boolean softHammer) {
+    public boolean configureFilterCover(Direction side, FilterAction action) {
         String id = coverIdOf(side);
         if (id == null) return false;
         boolean filterish = CoverUtilityBehaviors.FILTER_ITEM.equals(id)
                 || CoverUtilityBehaviors.FILTER_FLUID.equals(id)
                 || CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id);
-        if (!filterish || (!screwdriver && !softHammer)) return false;
+        if (!filterish) return false;
         if (level != null && level.isClientSide) return true;
-        ItemStack stack = getCover(side);
-        if (softHammer) CoverUtilityBehaviors.clearFilter(stack);
-        else CoverUtilityBehaviors.toggleFilterMode(stack);
+        action.apply(getCover(side));
         syncCovers();
         gregtech.content.transport.fluid.FluidPipeTickPhases.wakeAround(this);
         return true;
@@ -463,8 +458,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         if (fluid.isEmpty() || level == null) return true;
         FluidTankGT tank = tanks[tankIndex];
         Fluid fluidType = fluid.getFluid();
-        int magicLoss = FluidPipeSafety.magicLoss(FluidHazards.isMagic(fluidType),
-                FluidHazards.isGas(fluidType), tank.isMagicProof());
+        int magicLoss = FluidHazards.magicLoss(fluidType, spec.protections());
         if (magicLoss > 0) {
             leak(tank, magicLoss);
             // Original direct applyPotion has no thermal/chemical armor or creative immunity gate.
@@ -481,8 +475,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
                 return false;
             }
         }
-        var losses = FluidPipeSafety.losses(FluidHazards.isGas(fluidType), FluidHazards.isPlasma(fluidType),
-                FluidHazards.isAcid(fluidType), tank.isGasProof(), tank.isPlasmaProof(), tank.isAcidProof());
+        var losses = FluidHazards.pipeLosses(fluidType, spec.protections());
         if (losses.gas() > 0) leakHeat(tank, losses.gas());
         if (losses.plasma() > 0) leakHeat(tank, losses.plasma());
         if (losses.acid() > 0) {

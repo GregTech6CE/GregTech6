@@ -1,6 +1,8 @@
 package gregtech.engine.machine;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.engine.fluid.FluidHazard;
+import java.util.Set;
 
 /** GT6 fluid pipe specification — one per material+size combination. */
 public record PipeSpec(
@@ -10,38 +12,11 @@ public record PipeSpec(
         long capacity,
         int tankCount,
         float diameter,
-        boolean gasProof,
-        boolean acidProof,
-        boolean plasmaProof,
-        boolean magicProof,
+        Set<FluidHazard> protections,
         long maxTemperature,
         int flammability) {
-    /** Compatibility constructor for existing callers; old definitions had no fire behavior. */
-    public PipeSpec(
-            String id,
-            GTMaterial material,
-            PipeSize size,
-            long capacity,
-            int tankCount,
-            float diameter,
-            boolean gasProof,
-            boolean acidProof,
-            boolean plasmaProof,
-            boolean magicProof,
-            long maxTemperature) {
-        this(
-                id,
-                material,
-                size,
-                capacity,
-                tankCount,
-                diameter,
-                gasProof,
-                acidProof,
-                plasmaProof,
-                magicProof,
-                maxTemperature,
-                0);
+    public PipeSpec {
+        protections = Set.copyOf(protections);
     }
 
     /** Original MultiTileEntityPipeFluid.addToolTips: per-channel transfer limit in litres/tick. */
@@ -109,42 +84,13 @@ public record PipeSpec(
         return 6.0F;
     }
 
-    public static PipeSpec of(
-            String id,
-            GTMaterial material,
-            PipeSize size,
-            long baseCapacity,
-            boolean gasProof,
-            boolean acidProof,
-            boolean plasmaProof,
-            boolean magicProof) {
-        return of(id, material, size, baseCapacity, gasProof, acidProof, plasmaProof, magicProof, (long)
-                (material.getMeltingPoint() * 1.25D));
-    }
-
     /** Explicit GT6 wood/plastic/rubber limits must survive registration and serialization. */
     public static PipeSpec of(
             String id,
             GTMaterial material,
             PipeSize size,
             long baseCapacity,
-            boolean gasProof,
-            boolean acidProof,
-            boolean plasmaProof,
-            boolean magicProof,
-            long maxTemperature) {
-        return of(id, material, size, baseCapacity, gasProof, acidProof, plasmaProof, magicProof, maxTemperature, 0);
-    }
-
-    public static PipeSpec of(
-            String id,
-            GTMaterial material,
-            PipeSize size,
-            long baseCapacity,
-            boolean gasProof,
-            boolean acidProof,
-            boolean plasmaProof,
-            boolean magicProof,
+            Set<FluidHazard> protections,
             long maxTemperature,
             int flammability) {
         return new PipeSpec(
@@ -154,10 +100,7 @@ public record PipeSpec(
                 baseCapacity * size.capacityMultiplier(),
                 size.tankCount(),
                 size.diameter(),
-                gasProof,
-                acidProof,
-                plasmaProof,
-                magicProof,
+                protections,
                 maxTemperature,
                 flammability);
     }

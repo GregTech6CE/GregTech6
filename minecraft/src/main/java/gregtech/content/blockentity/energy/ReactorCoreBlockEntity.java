@@ -28,7 +28,7 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
     public final ItemStack[] rods;
     public final int[] neutrons;
     private final List<ItemStack> legacyOverflow = new ArrayList<>();
-    public final FluidTankGT input = new FluidTankGT(64000).setGasProof(true).setAcidProof(true).setOnChanged(this::coolantChanged);
+    public final FluidTankGT input = new FluidTankGT(64000).setOnChanged(this::coolantChanged);
     public final FluidTankGT output = new FluidTankGT(64000) {
 
         @Override
@@ -41,7 +41,7 @@ public class ReactorCoreBlockEntity extends BlockEntity implements BlockContents
             var steam = gregtech.content.registry.GTFluids.still("Steam");
             return !stack.isEmpty() && steam != null && stack.getFluid() == steam.get() ? Math.max(getAmount(), 10240000L) : super.capacity(stack);
         }
-    }.setGasProof(true).setAcidProof(true).setOnChanged(this::setChanged);
+    }.setOnChanged(this::setChanged);
     public long storedHeat, lastHeat;
     public boolean stopped = true, failed;
     private FluidStack displayedCoolant = FluidStack.EMPTY;
