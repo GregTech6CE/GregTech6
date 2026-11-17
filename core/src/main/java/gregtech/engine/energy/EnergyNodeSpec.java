@@ -40,42 +40,6 @@ public record EnergyNodeSpec(
             throw new IllegalArgumentException("Negative energy device rate/capacity: " + id);
     }
 
-    /** Compatibility for addons compiled against the old bilingual metadata constructor.
-     * Translations are now exclusively supplied by language resources. */
-    @Deprecated
-    public EnergyNodeSpec(
-            String id,
-            GTMaterial material,
-            Kind kind,
-            String textureFolder,
-            GregTechTags.Tag inType,
-            GregTechTags.Tag outType,
-            long inputRate,
-            long outputRate,
-            long capacity,
-            String displayEn,
-            String ignoredTranslation,
-            int batterySlots) {
-        this(
-                id,
-                material,
-                kind,
-                textureFolder,
-                inType,
-                outType,
-                inputRate,
-                outputRate,
-                capacity,
-                displayEn,
-                batterySlots);
-    }
-
-    /** Legacy metadata accessor; a language-neutral core cannot resolve the player's locale. */
-    @Deprecated
-    public String displayZh() {
-        return displayEn;
-    }
-
     public static Builder builder(String id, GTMaterial casing) {
         return new Builder(id, casing);
     }
@@ -133,12 +97,6 @@ public record EnergyNodeSpec(
         public Builder name(String english) {
             this.english = english;
             return this;
-        }
-
-        /** Compatibility only; translated names must use the shared language resources. */
-        @Deprecated
-        public Builder names(String english, String ignoredTranslation) {
-            return name(english);
         }
 
         public EnergyNodeSpec build() {

@@ -16,7 +16,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import net.minecraft.world.entity.Entity;
 
 /** GT6 miniature cross-dimension relay (MultiTileEntityMiniPortal).
  * Items, fluids, FE and GT packets address the loaded opposite neighbour of the linked
@@ -67,12 +66,6 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
 
     public boolean isActive() {
         return active;
-    }
-
-    /** Legacy key activation was a port invention; the source uses igniters/Ender Eyes. */
-    @Deprecated
-    public boolean useKey(long keyId) {
-        return false;
     }
 
     /** MultiTileEntityMiniPortalNether: all GT igniters toggle; extinguishers close. */
@@ -358,11 +351,5 @@ gregtech.content.item.behavior.BehaviorSprayExtinguisher.Extinguishable {
         removeFromPortalList();
         setChanged();
         super.onChunkUnloaded();
-    }
-
-    /** Kept only for source compatibility with the superseded port API. Mini portals do not move entities. */
-    @Deprecated @Nullable
-    public static Entity teleport(ServerLevel level, BlockPos pos, Entity entity) {
-        return null;
     }
 }
