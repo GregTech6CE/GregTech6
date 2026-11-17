@@ -18,7 +18,6 @@ import org.jetbrains.annotations.Nullable;
 public final class ItemMaterialRegistry {
     private static final Object LOCK = new Object();
     private static final Map<Item, List<ItemCompositionCandidate>> EXPLICIT_SUBMISSIONS = new IdentityHashMap<>();
-    private static final Map<Item, ItemCompositionCandidate> LEGACY_SUBMISSIONS = new IdentityHashMap<>();
     private static final Map<Item, List<ItemCompositionCandidate>> TAG_SUBMISSIONS = new IdentityHashMap<>();
     private static final AtomicLong COMPOSITION_REVISION = new AtomicLong();
     private static boolean tagInputReady;
@@ -87,7 +86,7 @@ public final class ItemMaterialRegistry {
                         producer,
                         producer,
                         "");
-                submit(item, new ItemComposition(prefix, parts, material, List.of(source), true), null);
+                submit(item, new ItemComposition(prefix, parts, material, List.of(source)), null);
             }
             return;
         }
@@ -106,23 +105,18 @@ public final class ItemMaterialRegistry {
             submit(
                     item,
                     new ItemComposition(
-                            prefix, List.of(MaterialComponent.of(material, amount)), material, List.of(source), true),
+                            prefix, List.of(MaterialComponent.of(material, amount)), material, List.of(source)),
                     null);
         }
     }
 
-    /**
-     * Compatibility entry point for old addons. Repeated calls for one item retain the historical
-     * last-write behavior; use {@link #registerDeclared(Item, ItemComposition)} for structured sources.
-     */
-    @Deprecated(forRemoval = false)
-    public static void register(Item item, ItemComposition data) {
-        submitLegacy(item, data);
-    }
-
     /** Registers a composition whose single structured source already identifies its producer. */
     public static void registerDeclared(Item item, ItemComposition data) {
-        submit(item, data, null);
+        registerDeclared(item, data, null);
+    }
+
+    public static void registerDeclared(Item item, ItemComposition data, @Nullable String replacesSourceId) {
+        submit(item, data, replacesSourceId);
     }
 
     public static void register(
@@ -157,15 +151,7 @@ public final class ItemMaterialRegistry {
             ItemCompositionSource.MaterialProcessingAuthority materialProcessingAuthority) {
         ItemCompositionSource source = new ItemCompositionSource(
                 kind, declarationId, producer, sourceReference(data), "", List.of(), materialProcessingAuthority);
-        submit(
-                item,
-                new ItemComposition(
-                        data.prefix(),
-                        data.components(),
-                        data.primaryMaterial(),
-                        List.of(source),
-                        data.bulkRecoveryAllowed()),
-                replacesSourceId);
+        submit(item, data.withSources(List.of(source)), replacesSourceId);
     }
 
     /**
@@ -183,12 +169,7 @@ public final class ItemMaterialRegistry {
                         "loaded resource tags",
                         "",
                         composition.source());
-                var tagged = new ItemComposition(
-                        composition.prefix(),
-                        composition.components(),
-                        composition.primaryMaterial(),
-                        List.of(source),
-                        composition.bulkRecoveryAllowed());
+                var tagged = composition.withSources(List.of(source));
                 staged.computeIfAbsent(entry.getKey(), ignored -> new ArrayList<>())
                         .add(new ItemCompositionCandidate(tagged, null));
             }
@@ -205,8 +186,6 @@ public final class ItemMaterialRegistry {
                 var itemCandidates = new ArrayList<ItemCompositionCandidate>();
                 var explicit = EXPLICIT_SUBMISSIONS.get(item);
                 if (explicit != null) itemCandidates.addAll(explicit);
-                var legacy = LEGACY_SUBMISSIONS.get(item);
-                if (legacy != null) itemCandidates.add(legacy);
                 var tags = staged.get(item);
                 if (tags != null) itemCandidates.addAll(tags);
                 if (itemCandidates.isEmpty()) continue;
@@ -406,12 +385,6 @@ public final class ItemMaterialRegistry {
         ELIGIBLE,
         NO_COMPOSITION,
         NO_COMPONENTS,
-        /** @deprecated No longer emitted; retained for binary and source compatibility. */
-        @Deprecated(forRemoval = false)
-        NOT_BULK_RECOVERABLE,
-        /** @deprecated Damaged compositions are eligible and scaled by their process. */
-        @Deprecated(forRemoval = false)
-        DAMAGED,
         STORED_CONTENTS,
         UNSUPPORTED_CONTAINER
     }
@@ -472,56 +445,20 @@ public final class ItemMaterialRegistry {
         }
     }
 
-    private static void submitLegacy(Item item, ItemComposition data) {
-        if (item == null || data == null) return;
-        var previousSource = data.sources().isEmpty() ? null : data.sources().get(0);
-        var source = new ItemCompositionSource(
-                ItemCompositionSource.Kind.LEGACY,
-                "gt6ce:legacy-item-composition/" + implementationId(item),
-                "deprecated ItemMaterialRegistry.register(Item, ItemComposition)",
-                sourceReference(data),
-                previousSource == null
-                        ? ""
-                        : "original category=" + previousSource.kind().name().toLowerCase(Locale.ROOT));
-        var compatibility = new ItemComposition(
-                data.prefix(), data.components(), data.primaryMaterial(), List.of(source), data.bulkRecoveryAllowed());
-        var candidate = new ItemCompositionCandidate(compatibility, null);
-        synchronized (LOCK) {
-            if (explicitClosed) throw new IllegalStateException("Explicit item composition registration is closed");
-            var previous = LEGACY_SUBMISSIONS.put(item, candidate);
-            try {
-                updateItemLocked(item, false);
-            } catch (RuntimeException failure) {
-                if (previous == null) LEGACY_SUBMISSIONS.remove(item);
-                else LEGACY_SUBMISSIONS.put(item, previous);
-                updateItemLocked(item, false);
-                throw failure;
-            }
-        }
-    }
-
     private static void updateItemLocked(Item item, boolean requireReplacementTargets) {
         var explicitCandidates = EXPLICIT_SUBMISSIONS.get(item);
-        var legacy = LEGACY_SUBMISSIONS.get(item);
-        if ((explicitCandidates == null || explicitCandidates.isEmpty()) && legacy == null) {
+        if (explicitCandidates == null || explicitCandidates.isEmpty()) {
             EXPLICIT.remove(item);
         } else {
-            var submitted = new ArrayList<ItemCompositionCandidate>();
-            if (explicitCandidates != null) submitted.addAll(explicitCandidates);
-            if (legacy != null) submitted.add(legacy);
             var explicit = (requireReplacementTargets
-                            ? ItemCompositionResolver.resolve(Map.of(item, submitted))
-                            : ItemCompositionResolver.resolveLenient(Map.of(item, submitted)))
+                            ? ItemCompositionResolver.resolve(Map.of(item, explicitCandidates))
+                            : ItemCompositionResolver.resolveLenient(Map.of(item, explicitCandidates)))
                     .get(item);
             if (explicit == null) EXPLICIT.remove(item);
             else EXPLICIT.put(item, explicit);
         }
         var combined = new IdentityHashMap<Item, List<ItemCompositionCandidate>>();
-        var explicit = EXPLICIT_SUBMISSIONS.get(item);
-        if (explicit != null) combined.put(item, explicit);
-        legacy = LEGACY_SUBMISSIONS.get(item);
-        if (legacy != null)
-            combined.computeIfAbsent(item, ignored -> new ArrayList<>()).add(legacy);
+        if (explicitCandidates != null) combined.put(item, new ArrayList<>(explicitCandidates));
         var tags = TAG_SUBMISSIONS.get(item);
         if (tags != null)
             combined.computeIfAbsent(item, ignored -> new ArrayList<>()).addAll(tags);
@@ -574,8 +511,7 @@ public final class ItemMaterialRegistry {
         return Integer.toHexString(Objects.hash(
                 composition.prefix(),
                 composition.components(),
-                composition.sources(),
-                composition.bulkRecoveryAllowed()));
+                composition.sources()));
     }
 
     private static String sourceReference(ItemComposition composition) {

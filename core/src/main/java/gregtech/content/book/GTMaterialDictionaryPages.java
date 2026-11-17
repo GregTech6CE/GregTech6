@@ -1,5 +1,7 @@
 package gregtech.content.book;
 
+import gregtech.api.addon.material.FuelRule;
+import gregtech.api.addon.material.MaterialInfoTool;
 import gregtech.api.material.*;
 import gregtech.engine.material.*;
 import java.util.*;
@@ -86,8 +88,12 @@ public final class GTMaterialDictionaryPages {
             case "Smelting" ->
                 processingValue(
                         out, material.getTargetSmeltingMaterial(), material.getTargetSmeltingAmount(), material);
-            case "Burning" ->
-                processingValue(out, material.getTargetBurningMaterial(), material.getTargetBurningAmount(), material);
+            case "Burning" -> {
+                var residue = FuelMaterialHelper.rule(material).flatMap(FuelRule::residue).orElse(null);
+                var target = residue == null ? null : MaterialInfoTool.findMaterial(residue.material())
+                        .map(GTMaterial::resolve).orElse(null);
+                processingValue(out, target, residue == null ? 0L : residue.amount(), material);
+            }
             case "Pulverising" ->
                 processingValue(out, material.getTargetPulverMaterial(), material.getTargetPulverAmount(), material);
             case "Crushing" ->

@@ -92,11 +92,6 @@ class FuelParityTest {
                 rule.residue().map(target -> target.amount()).orElse(0L));
         if (ash != null)
             assertEquals(ash.getName(), rule.residue().orElseThrow().material().name());
-        assertEquals(burnTime, material.getFurnaceBurnTime(), material.getName() + " burn time");
-        assertEquals(ashAmount, material.getTargetBurningAmount(), material.getName() + " ash amount");
-        if (ash != null) {
-            assertSame(ash, material.getTargetBurningMaterial(), material.getName() + " ash");
-        }
         assertEquals(flammable, material.has(MaterialProperty.FLAMMABLE), material.getName() + " FLAMMABLE");
         assertEquals(melting, material.has(MaterialProperty.MELTING), material.getName() + " MELTING");
     }

@@ -33,6 +33,6 @@ public final class ItemCompositionScaling {
                 components.stream().anyMatch(component -> component.material().resolve() == originalPrimary);
         GTMaterial primary = primaryRemains ? originalPrimary : MaterialSentinels.INVALID;
         return new ItemComposition(
-                composition.prefix(), components, primary, composition.sources(), composition.bulkRecoveryAllowed());
+                composition.prefix(), components, primary, composition.sources());
     }
 }

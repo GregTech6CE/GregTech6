@@ -134,14 +134,6 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
     }
 
     private static void mergeAddonProcesses() {
-        for (var submission : AddonMaterials.processDeclarations()) {
-            var declaration = submission.declaration();
-            mergeAddonProcess(
-                    submission.addonId(),
-                    new MaterialKey(declaration.materialName()),
-                    declaration.process(),
-                    new MaterialProcessRule<>(declaration.forms(), declaration.value()));
-        }
         for (var submission : ADDON_PROCESSES)
             mergeAddonProcess(submission.addonId(), submission.material(), submission.process(), submission.rule());
     }

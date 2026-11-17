@@ -62,8 +62,7 @@ public final class WoodenBucketItem extends TechItem {
                         "gt6ce:item-form/" + itemId,
                         "GT6 MultiItemRandomTools wooden bucket",
                         itemId,
-                        "")),
-                content.empty()));
+                        ""))));
     }
 
     public Band band() {

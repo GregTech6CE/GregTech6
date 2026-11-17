@@ -38,24 +38,20 @@ public final class VanillaCompositionLoader {
             }
             var prefix = prefix(entry.getKey(), row, errors);
             String source = row.has("source") ? row.get("source").getAsString() : "GT6CE vanilla item data";
-            ItemMaterialRegistry.register(
-                    item,
-                    new ItemComposition(
-                            prefix,
-                            components,
-                            components.get(0).material(),
-                            source,
-                            row.has("bulkRecovery")
-                                    ? row.get("bulkRecovery").getAsBoolean()
-                                    : row.has("recoverable")
-                                            && row.get("recoverable").getAsBoolean()),
+            var authority = inheritsVanillaUnification(item)
+                    ? ItemCompositionSource.MaterialProcessingAuthority.ALLOW
+                    : ItemCompositionSource.MaterialProcessingAuthority.DENY;
+            var provenance = new ItemCompositionSource(
                     ItemCompositionSource.Kind.VANILLA_JSON,
                     declarationId(entry.getKey()),
                     "vanilla_compositions.json",
-                    null,
-                    inheritsVanillaUnification(item)
-                            ? ItemCompositionSource.MaterialProcessingAuthority.ALLOW
-                            : ItemCompositionSource.MaterialProcessingAuthority.DENY);
+                    source.isBlank() ? "unspecified" : source,
+                    "",
+                    List.of(),
+                    authority);
+            ItemMaterialRegistry.registerDeclared(
+                    item,
+                    new ItemComposition(prefix, components, components.get(0).material(), List.of(provenance)));
         }
         if (!errors.isEmpty()) throw new IllegalStateException("Unresolved vanilla materials: " + errors);
     }
@@ -97,12 +93,6 @@ public final class VanillaCompositionLoader {
                 errors.add(itemPath + ": component amount is not an integer");
             }
         }
-        boolean legacyRecovery =
-                row.has("recoverable") && row.get("recoverable").getAsBoolean();
-        boolean bulkRecovery =
-                row.has("bulkRecovery") && row.get("bulkRecovery").getAsBoolean();
-        if (row.has("recoverable") && row.has("bulkRecovery") && legacyRecovery != bulkRecovery)
-            errors.add(itemPath + ": recoverable and bulkRecovery disagree");
         prefix(itemPath, row, errors);
         return errors;
     }

@@ -166,30 +166,6 @@ public final class GTMaterial {
         return MaterialToolHelper.legacyDurability(this);
     }
 
-    /** GT6 {@code mFurnaceBurnTime}. */
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public long getFurnaceBurnTime() {
-        return currentTarget(MaterialProcessKeys.FUEL).map(FuelRule::burnTime).orElse(0L);
-    }
-
-    /** Resolved on read; null when no burning target was set. */
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public @Nullable GTMaterial getTargetBurningMaterial() {
-        return currentTarget(MaterialProcessKeys.FUEL)
-                .flatMap(FuelRule::residue)
-                .flatMap(target -> MaterialInfoTool.findMaterial(target.material()))
-                .map(GTMaterial::resolve)
-                .orElse(null);
-    }
-
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public long getTargetBurningAmount() {
-        return currentTarget(MaterialProcessKeys.FUEL)
-                .flatMap(FuelRule::residue)
-                .map(MaterialTarget::amount)
-                .orElse(0L);
-    }
-
     /** GT6 {@code mByProducts}; ordered ore-processing byproducts, resolved on read. */
     @Deprecated(since = "1.5.0", forRemoval = false)
     public List<GTMaterial> getByProducts() {
@@ -212,17 +188,7 @@ public final class GTMaterial {
     public long getTargetPulverAmount() {
         return targetAmount(MaterialProcessKeys.PULVERIZING);
     }
-    /**
-     * Null material means this; a negative amount is stored as zero. The material is stored as
-     * declared and resolved by the getter, so a later registration of it stays visible.
-     */
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public GTMaterial setPulver(@Nullable GTMaterial material, long amount) {
-        checkMutable();
-        return updateTarget(MaterialProcessKeys.PULVERIZING, material, amount);
-    }
-
-    /** Resolved on read; a registration applied after {@link #setCrushing} is still visible. */
+    /** Resolves the crushing target through the current material registration. */
     @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial getTargetCrushingMaterial() {
         return targetOrSelf(MaterialProcessKeys.CRUSHING);
@@ -233,7 +199,7 @@ public final class GTMaterial {
         return targetAmount(MaterialProcessKeys.CRUSHING);
     }
 
-    /** Resolved on read; a registration applied after {@link #setSmelting} is still visible. */
+    /** Resolves the smelting target through the current material registration. */
     @Deprecated(since = "1.5.0", forRemoval = false)
     public GTMaterial getTargetSmeltingMaterial() {
         return targetOrSelf(MaterialProcessKeys.SMELTING);
@@ -453,53 +419,6 @@ public final class GTMaterial {
         return resolve().tooltipChemical;
     }
 
-    /** {@code qual(toolTypes, speed, durability, quality)} in GT6. */
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public GTMaterial setToolStats(int toolTypes, float toolSpeed, long toolDurability, int toolQuality) {
-        checkMutable();
-        MaterialInfoTool.updateTool(
-                materialKey(), new MaterialToolProfile(toolTypes, toolSpeed, toolDurability, toolQuality));
-        return this;
-    }
-
-    /**
-     * GT6 {@code qual(long)}: change harvest quality without inventing tool types or speed.
-     * Like the source delegating qual overload, existing durability is clamped to at least one,
-     * and tool types are clamped to 0..3; the quality is clamped to 0..15. Source tool-generation
-     * flags are handled by the separate material form policy.
-     */
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public GTMaterial setToolQuality(int toolQuality) {
-        checkMutable();
-        MaterialToolProfile profile = tool();
-        return setToolStats(
-                Math.max(0, Math.min(3, profile.types())),
-                profile.speed(),
-                Math.max(1L, profile.durability()),
-                Math.max(0, Math.min(15, toolQuality)));
-    }
-
-    /** GT6 {@code setFurnaceBurnTime}; a negative value is stored as zero. */
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public GTMaterial setFurnaceBurnTime(long burnTime) {
-        checkMutable();
-        FuelRule current = currentTarget(MaterialProcessKeys.FUEL).orElse(new FuelRule(0L, java.util.Optional.empty()));
-        return updateFuel(new FuelRule(Math.max(0L, burnTime), current.residue()));
-    }
-
-    /** GT6 {@code setBurning}; ash left after burning one item-worth of this material. A negative amount is zero. */
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public GTMaterial setBurning(@Nullable GTMaterial material, long amount) {
-        checkMutable();
-        FuelRule current = currentTarget(MaterialProcessKeys.FUEL).orElse(new FuelRule(0L, java.util.Optional.empty()));
-        long residueAmount = Math.max(0L, amount);
-        var residue = material != null && residueAmount > 0
-                ? java.util.Optional.of(new MaterialTarget(
-                        new MaterialKey(material.resolve().getName()), residueAmount))
-                : java.util.Optional.<MaterialTarget>empty();
-        return updateFuel(new FuelRule(current.burnTime(), residue));
-    }
-
     /** GT6 {@code ores}; appends ordered ore-processing byproducts. */
     public GTMaterial ores(GTMaterial... materials) {
         checkMutable();
@@ -521,66 +440,6 @@ public final class GTMaterial {
         updateProcess(
                 MaterialProcessKeys.ORE_PROCESSING,
                 new OreProcessingRule(byproducts, current.oreMultiplier(), current.processingMultiplier()));
-    }
-
-    /**
-     * GT6 {@code setCrushing}; result of crushing this. Amount 0 disables; null material means this.
-     * A negative amount is stored as zero.
-     */
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public GTMaterial setCrushing(@Nullable GTMaterial material, long amount) {
-        checkMutable();
-        return updateTarget(MaterialProcessKeys.CRUSHING, material, amount);
-    }
-
-    /**
-     * GT6 {@code setSmelting}; result of smelting this. Amount 0 disables; null material means this.
-     * A negative amount is stored as zero.
-     */
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public GTMaterial setSmelting(@Nullable GTMaterial material, long amount) {
-        checkMutable();
-        long targetAmount = Math.max(0L, amount);
-        updateTarget(MaterialProcessKeys.SMELTING, material, targetAmount);
-        if (targetAmount > 0) put(MaterialProperty.MELTING);
-        return this;
-    }
-
-    /** Drops the smelting target and its {@link MaterialProperty#MELTING} flag. */
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public GTMaterial clearSmeltingTarget() {
-        checkMutable();
-        updateProcess(MaterialProcessKeys.SMELTING, null);
-        this.properties.remove(MaterialProperty.MELTING);
-        return this;
-    }
-
-    /** GT6 {@code setOreMultiplier}; crushed-ore output multiplier, clamped to 1..127. */
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public GTMaterial setOreMultiplier(int multiplier) {
-        checkMutable();
-        OreProcessingRule current = currentTarget(MaterialProcessKeys.ORE_PROCESSING)
-                .orElse(new OreProcessingRule(List.of(), 1, 1));
-        return updateProcess(
-                MaterialProcessKeys.ORE_PROCESSING,
-                new OreProcessingRule(
-                        current.byproducts(),
-                        Math.min(Byte.MAX_VALUE, Math.max(1, multiplier)),
-                        current.processingMultiplier()));
-    }
-
-    /** GT6 {@code setOreProcessingMultiplier}; ore-processing output multiplier, clamped to 1..127. */
-    @Deprecated(since = "1.5.0", forRemoval = false)
-    public GTMaterial setOreProcessingMultiplier(int multiplier) {
-        checkMutable();
-        OreProcessingRule current = currentTarget(MaterialProcessKeys.ORE_PROCESSING)
-                .orElse(new OreProcessingRule(List.of(), 1, 1));
-        return updateProcess(
-                MaterialProcessKeys.ORE_PROCESSING,
-                new OreProcessingRule(
-                        current.byproducts(),
-                        current.oreMultiplier(),
-                        Math.min(Byte.MAX_VALUE, Math.max(1, multiplier))));
     }
 
     public GTMaterial put(MaterialProperty... flags) {
@@ -668,17 +527,6 @@ public final class GTMaterial {
         return currentTarget(process).map(MaterialTarget::amount).orElse(fallback);
     }
 
-    private GTMaterial updateTarget(
-            gregtech.api.addon.material.MaterialProcessKey<MaterialTarget> process,
-            @Nullable GTMaterial target,
-            long amount) {
-        GTMaterial resolved = target == null ? this : target.resolve();
-        updateProcess(
-                process,
-                new MaterialTarget(new MaterialKey(resolved.getName()), Math.max(0L, amount)));
-        return this;
-    }
-
     private <T> GTMaterial updateProcess(
             gregtech.api.addon.material.MaterialProcessKey<T> process, @Nullable T value) {
         MaterialInfoTool.updateProcess(
@@ -688,13 +536,6 @@ public final class GTMaterial {
                         ? java.util.Optional.empty()
                         : java.util.Optional.of(MaterialProcessRule.anyForm(value)));
         return this;
-    }
-
-    private GTMaterial updateFuel(FuelRule rule) {
-        if (rule.burnTime() <= 0 && rule.residue().isEmpty()) {
-            return updateProcess(MaterialProcessKeys.FUEL, null);
-        }
-        return updateProcess(MaterialProcessKeys.FUEL, rule);
     }
 
     public String getTranslationKey() {

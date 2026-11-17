@@ -46,8 +46,7 @@ public final class VanillaUnificationLoader {
                                     "gt6ce:vanilla-unification/" + definition.itemPath(),
                                     "vanilla identity table",
                                     definition.itemPath(),
-                                    "")),
-                            true),
+                                    ""))),
                     ItemCompositionSource.Kind.UNIFICATION,
                     "gt6ce:vanilla-unification/" + definition.itemPath(),
                     "vanilla identity table");

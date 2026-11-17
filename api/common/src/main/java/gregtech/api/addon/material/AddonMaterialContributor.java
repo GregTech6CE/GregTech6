@@ -23,26 +23,11 @@ public interface AddonMaterialContributor {
         return List.of();
     }
 
-    /** @deprecated Use {@link #materialInfo(MaterialInfoTool.Registrar)}. */
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    default List<MaterialFormRequest> forms() {
-        return List.of();
-    }
-
     /**
      * Item prefixes this addon adds. GregTech registers them after the built-in prefixes.
      * A name that already exists fails startup. Return pure data.
      */
     default List<PrefixDeclaration> prefixes() {
-        return List.of();
-    }
-
-    /**
-     * Compositions of this addon's own materials. Resolved after the built-in directory has linked.
-     * A {@code crucible} composition also becomes one crucible reaction.
-     */
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    default List<MaterialComposition> compositions() {
         return List.of();
     }
 
@@ -85,30 +70,6 @@ public interface AddonMaterialContributor {
      * A name that already exists in that dimension fails startup. Return pure data.
      */
     default List<SmallOreDeclaration> smallOres() {
-        return List.of();
-    }
-
-    /** Immutable descriptive metadata; default empty preserves existing contributors. */
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    default List<MaterialMetadataDeclaration> metadata() {
-        return List.of();
-    }
-
-    /** @deprecated Use {@link MaterialInfoTool.Registrar#registerTagDeclaration(MaterialTagDeclaration)}. */
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    default List<MaterialTagDeclaration> materialTags() {
-        return List.of();
-    }
-
-    /** @deprecated Use {@link MaterialInfoTool.Registrar#registerGroup(MaterialGroupDeclaration)}. */
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    default List<MaterialGroupDeclaration> materialGroups() {
-        return List.of();
-    }
-
-    /** @deprecated Use {@link MaterialInfoTool.Registrar#registerProcess(MaterialProcessDeclaration)}. */
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    default List<MaterialProcessDeclaration<?>> processes() {
         return List.of();
     }
 

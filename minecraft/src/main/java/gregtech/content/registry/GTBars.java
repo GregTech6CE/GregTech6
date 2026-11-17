@@ -8,6 +8,7 @@ import gregtech.content.block.BarsRules;
 import gregtech.content.block.misc.*;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
+import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.ItemMaterialRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
@@ -63,13 +64,19 @@ public final class GTBars {
             };
             var material = GTMaterialRegistry.get(materialName);
             if (!material.isValid()) throw new IllegalStateException("Missing railing material: " + materialName);
+            var source = new ItemCompositionSource(
+                    ItemCompositionSource.Kind.EXPLICIT,
+                    "gt6ce:metal-railing/" + materialName,
+                    "GT6CE metal railing",
+                    "",
+                    "");
             ItemMaterialRegistry.registerDeclared(
                     block.asItem(),
                     new ItemComposition(
                             null,
                             java.util.List.of(MaterialComponent.of(material, GTValues.U)),
-                            "GT6CE metal railing",
-                            true));
+                            material,
+                            java.util.List.of(source)));
         }
     }
 }

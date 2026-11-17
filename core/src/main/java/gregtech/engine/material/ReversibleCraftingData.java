@@ -42,8 +42,7 @@ public final class ReversibleCraftingData {
                         sourceId,
                         "reversible crafting inputs",
                         sourceId,
-                        "")),
-                true);
+                        "")));
     }
 
     /** Original ANY reversing groups have concrete output targets; reuse the existing identities. */

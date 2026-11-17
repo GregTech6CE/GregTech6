@@ -18,30 +18,22 @@ final class MaterialViewContracts {
         AddonMaterialContributor contributor = new AddonMaterialContributor() {
             public String addonId() { return "consumer"; }
             public List<MaterialDeclaration> materials() { return List.of(); }
-            public List<MaterialMetadataDeclaration> metadata() { return List.of(new MaterialMetadataDeclaration("Iron", metadata)); }
-            public List<MaterialTagDeclaration> materialTags() {
-                return List.of(new MaterialTagDeclaration(new DataKey("consumer", "metal"), java.util.Set.of()));
-            }
-            public List<MaterialGroupDeclaration> materialGroups() {
-                return List.of(new MaterialGroupDeclaration(
+            public void materialInfo(MaterialInfoTool.Registrar registrar) {
+                registrar.registerMetadata(new MaterialMetadataDeclaration("Iron", metadata));
+                registrar.registerTagDeclaration(new MaterialTagDeclaration(new DataKey("consumer", "metal"), java.util.Set.of()));
+                registrar.registerGroup(new MaterialGroupDeclaration(
                         new MaterialGroupKey(new DataKey("consumer", "iron_group")),
                         "Iron group",
                         java.util.Set.of(key),
                         java.util.Set.of()));
-            }
-            public List<MaterialProcessDeclaration<?>> processes() {
-                return List.of(new MaterialProcessDeclaration<>(
+                registrar.registerProcess(new MaterialProcessDeclaration<>(
                         "Iron",
                         MaterialProcessKey.multiple(new DataKey("consumer", "inspection"), Boolean.class),
                         java.util.Set.of(new FormKey("dust")),
                         Boolean.TRUE));
             }
         };
-        if (contributor.metadata().size() != 1) throw new AssertionError("metadata SPI");
-        if (contributor.materialTags().size() != 1
-                || contributor.materialGroups().size() != 1
-                || contributor.processes().size() != 1)
-            throw new AssertionError("tag, group and process SPI");
+        if (!contributor.addonId().equals("consumer")) throw new AssertionError("material contributor id");
         var specialKey = MaterialProcessKey.multiple(
                 new DataKey("consumer", "special_process/wash"), SpecialProcessValue.class);
         var method = new SpecialProcessMethod(specialKey, "gt.recipe.bath", "consumer.special.wash");

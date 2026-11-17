@@ -2,7 +2,15 @@
 
 package gregtech.api.material;
 
+import gregtech.api.addon.material.FuelRule;
+import gregtech.api.addon.material.MaterialInfoTool;
+import gregtech.api.addon.material.MaterialKey;
+import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialTarget;
+import gregtech.api.addon.material.OreProcessingRule;
+import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,21 +35,13 @@ class GTMaterialTest {
     }
 
     @Test
-    void oreMultiplierClampsInsteadOfOverflowingAByte() {
-        GTMaterial material = new GTMaterial(1, "Test", "Test", 0xFFFFFF);
-        MaterialInfoTestHost.reset(material);
-        assertEquals(1, material.setOreMultiplier(0).getOreMultiplier());
-        assertEquals(Byte.MAX_VALUE, material.setOreMultiplier(200).getOreMultiplier());
-        assertEquals(Byte.MAX_VALUE, material.setOreMultiplier(256).getOreMultiplier());
-        assertEquals(Byte.MAX_VALUE, material.setOreMultiplier(Integer.MAX_VALUE).getOreMultiplier());
-    }
-
-    @Test
-    void oreProcessingMultiplierHasTheSameClamp() {
-        GTMaterial material = new GTMaterial(1, "Test", "Test", 0xFFFFFF);
-        MaterialInfoTestHost.reset(material);
-        assertEquals(1, material.setOreProcessingMultiplier(0).getOreProcessingMultiplier());
-        assertEquals(Byte.MAX_VALUE, material.setOreProcessingMultiplier(300).getOreProcessingMultiplier());
+    void oreProcessingRuleEnforcesBothMultiplierBounds() {
+        assertEquals(1, new OreProcessingRule(List.of(), 1, 127).oreMultiplier());
+        assertEquals(127, new OreProcessingRule(List.of(), 1, 127).processingMultiplier());
+        for (int invalid : new int[] {0, 200, 256, Integer.MAX_VALUE}) {
+            assertThrows(IllegalArgumentException.class, () -> new OreProcessingRule(List.of(), invalid, 1));
+            assertThrows(IllegalArgumentException.class, () -> new OreProcessingRule(List.of(), 1, invalid));
+        }
     }
 
     @Test
@@ -84,11 +84,12 @@ class GTMaterialTest {
         alias.setTooltipChemical("Alias");
         target.setTooltipChemical("Target");
 
-        material.setPulver(alias, GTValues.U)
-                .setCrushing(alias, GTValues.U)
-                .setSmelting(alias, GTValues.U)
-                .setBurning(alias, GTValues.U)
-                .ores(alias);
+        var aliasedTarget = new MaterialTarget(new MaterialKey("Alias"), GTValues.U);
+        MaterialInfoTestHost.setProcess(material, MaterialProcessKeys.PULVERIZING, aliasedTarget);
+        MaterialInfoTestHost.setProcess(material, MaterialProcessKeys.CRUSHING, aliasedTarget);
+        MaterialInfoTestHost.setProcess(material, MaterialProcessKeys.SMELTING, aliasedTarget);
+        MaterialInfoTestHost.setProcess(material, MaterialProcessKeys.FUEL, new FuelRule(0, Optional.of(aliasedTarget)));
+        material.ores(alias);
         material.setComposition(1, new MaterialComponent(alias, GTValues.U));
 
         alias.setRegistration(target);
@@ -96,7 +97,8 @@ class GTMaterialTest {
         assertSame(target, material.getTargetPulverMaterial());
         assertSame(target, material.getTargetCrushingMaterial());
         assertSame(target, material.getTargetSmeltingMaterial());
-        assertSame(target, material.getTargetBurningMaterial());
+        var residue = FuelMaterialHelper.rule(material).orElseThrow().residue().orElseThrow();
+        assertSame(target, MaterialInfoTool.findMaterial(residue.material()).orElseThrow().resolve());
         assertSame(target, material.getByProducts().get(0));
         assertSame(target, material.getCompositionComponents().get(0).material());
         assertEquals("Target", alias.getResolvedTooltipChemical());

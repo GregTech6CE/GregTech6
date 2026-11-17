@@ -6,6 +6,7 @@ import gregtech.engine.addon.AddonCoreServices;
 import gregtech.engine.addon.AddonMaterials;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Set;
 
 /** Isolated JVM fixture exercising actual addon discovery and publication. */
 public final class MaterialAddonLifecycleProbe {
@@ -14,6 +15,8 @@ public final class MaterialAddonLifecycleProbe {
     private static final MaterialProcessKey<SpecialProcessValue> SPECIAL =
             MaterialProcessKey.multiple(new DataKey("alpha_addon", "special"), SpecialProcessValue.class);
     private static final DataKey FLAG = new DataKey("alpha_addon", "probe_flag");
+    private static final DataKey TAG = new DataKey("alpha_addon", "probe_tag");
+    private static final MaterialGroupKey GROUP = new MaterialGroupKey(new DataKey("alpha_addon", "probe_group"));
     private static final PropertyKey<String> PROPERTY =
             new PropertyKey<>(new DataKey("alpha_addon", "probe_value"), String.class);
 
@@ -33,6 +36,10 @@ public final class MaterialAddonLifecycleProbe {
             registrar.registerProcess(
                     new MaterialKey("SharedMaterial"), PROCESS, MaterialProcessRule.anyForm("published"));
             if ("foreign_host".equals(System.getProperty("probe.scenario"))) {
+                var iron = new MaterialKey("Iron");
+                registrar.registerTagDeclaration(new MaterialTagDeclaration(TAG, Set.of()));
+                registrar.registerTag(iron, TAG);
+                registrar.registerGroup(new MaterialGroupDeclaration(GROUP, "Probe group", Set.of(iron), Set.of()));
                 registrar.registerMetadata(new MaterialMetadataDeclaration(
                         "Iron",
                         MaterialMetadata.builder()
@@ -138,6 +145,10 @@ public final class MaterialAddonLifecycleProbe {
             if (!iron.flags().contains(FLAG)
                     || !iron.property(PROPERTY).orElseThrow().equals("published"))
                 throw new AssertionError("metadata on existing material was not published");
+            var tags = MaterialViews.catalog().tags();
+            if (!tags.contains(iron.key(), TAG)
+                    || !tags.group(GROUP).orElseThrow().members().equals(Set.of(iron.key())))
+                throw new AssertionError("typed tag and group were not published");
             if (MaterialViews.catalog()
                             .processes()
                             .find(new MaterialKey("Iron"), MaterialProcessKeys.DECOMPOSITION)

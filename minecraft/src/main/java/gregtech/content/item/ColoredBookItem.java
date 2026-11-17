@@ -43,8 +43,7 @@ public final class ColoredBookItem extends WrittenBookItem {
                         "gt6ce:item-form/" + variant.path(),
                         "GT6 MultiItemBooks",
                         variant.path(),
-                        "")),
-                true));
+                        ""))));
     }
     public ColoredBookRules.Variant variant(){return variant;}
 //? if >=1.21.1 {

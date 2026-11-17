@@ -81,6 +81,12 @@ public final class ExternalOreProcessing {
                 if (!entry.getKey().prefix().equals(prefix.getName())) continue;
                 var material = GTMaterialRegistry.get(entry.getKey().material()).resolve();
                 if (!material.isValid()) continue;
+                var source = new ItemCompositionSource(
+                        ItemCompositionSource.Kind.FORM_TAG,
+                        "gt6ce:external-ore-prefix/" + prefix.getName() + "/" + material.getName(),
+                        "GT6 OP external ore-prefix tags",
+                        "",
+                        "");
                 for (var item : entry.getValue())
                     materialData
                             .computeIfAbsent(item, ignored -> new ArrayList<>())
@@ -88,8 +94,7 @@ public final class ExternalOreProcessing {
                                     prefix,
                                     List.of(MaterialComponent.of(material, prefix.getMaterialWeight())),
                                     material,
-                                    "GT6 OP external ore-prefix tags",
-                                    true));
+                                    List.of(source)));
             }
         int oreCompositions = materialData.size();
         taggedCompositions = bindTaggedForms(materialData);
@@ -261,8 +266,7 @@ public final class ExternalOreProcessing {
                                     List.of(MaterialComponent.of(
                                             material, BlockMaterialPrefix.ore.getMaterialWeight())),
                                     material,
-                                    List.of(source),
-                                    false),
+                                    List.of(source)),
                             null));
                     continue;
                 }
@@ -273,8 +277,7 @@ public final class ExternalOreProcessing {
                                 prefix,
                                 List.of(MaterialComponent.of(material, prefix.getMaterialWeight())),
                                 material,
-                                List.of(source),
-                                true),
+                                List.of(source)),
                         null));
             }
             var seenSpecialTags = new HashSet<String>();
@@ -303,8 +306,7 @@ public final class ExternalOreProcessing {
                                         sourceId,
                                         TAGGED_COMPOSITION_SOURCE,
                                         "",
-                                        "")),
-                                true),
+                                        ""))),
                         null));
             }
             if (candidates.isEmpty()) continue;

@@ -35,11 +35,6 @@ public final class VanillaCompositionSchemaTests {
                 "contradictory_keys",
                 "{\"components\":{\"Iron\":1},\"prefix\":\"ingot\",\"inherit\":\"vanilla-unification\"}",
                 "mutually exclusive");
-        assertRejected(
-                helper,
-                "contradictory_recovery",
-                "{\"components\":{\"Iron\":1},\"recoverable\":true,\"bulkRecovery\":false}",
-                "disagree");
         helper.succeed();
     }
 

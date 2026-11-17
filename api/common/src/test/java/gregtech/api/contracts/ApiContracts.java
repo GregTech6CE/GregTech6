@@ -15,6 +15,9 @@ import gregtech.api.addon.material.MaterialDeclaration;
 import gregtech.api.addon.material.MaterialFormRequest;
 import gregtech.api.addon.material.MaterialInfoTool;
 import gregtech.api.addon.material.MaterialKey;
+import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialTarget;
+import gregtech.api.addon.material.OreProcessingRule;
 import gregtech.api.addon.material.PrefixDeclaration;
 import gregtech.api.addon.material.SmeltingTargetDeclaration;
 import gregtech.api.addon.pipe.FluidPipeDeclaration;
@@ -383,24 +386,19 @@ public final class ApiContracts {
         } catch (IllegalStateException expected) {
             check(expected.getMessage().contains("not installed"), "Missing material info host diagnostic");
         }
-        gregtech.api.material.MaterialInfoTestHost.reset(material);
-        check(material.setOreMultiplier(0).getOreMultiplier() == 1, "Ore multiplier must stay at least 1");
-        for (int multiplier : new int[] {200, 256, Integer.MAX_VALUE}) {
-            check(
-                    material.setOreMultiplier(multiplier).getOreMultiplier() == Byte.MAX_VALUE,
-                    "Ore multiplier must not overflow a byte: " + multiplier);
+        var ore = new OreProcessingRule(List.of(), 1, Byte.MAX_VALUE);
+        check(ore.oreMultiplier() == 1 && ore.processingMultiplier() == Byte.MAX_VALUE,
+                "Ore processing supports both bounds");
+        for (int multiplier : new int[] {0, 200, 256, Integer.MAX_VALUE}) {
+            reject(() -> new OreProcessingRule(List.of(), multiplier, 1));
+            reject(() -> new OreProcessingRule(List.of(), 1, multiplier));
         }
-        check(
-                material.setOreProcessingMultiplier(0).getOreProcessingMultiplier() == 1,
-                "Ore processing multiplier must stay at least 1");
-        check(
-                material.setOreProcessingMultiplier(300).getOreProcessingMultiplier() == Byte.MAX_VALUE,
-                "Ore processing multiplier must not overflow a byte");
 
         GTMaterial alias = new GTMaterial(2, "Alias", "Alias", 0xFFFFFF);
         GTMaterial canonical = new GTMaterial(3, "Canonical", "Canonical", 0xFFFFFF);
         gregtech.api.material.MaterialInfoTestHost.reset(material, alias, canonical);
-        material.setCrushing(alias, GTValues.U);
+        gregtech.api.material.MaterialInfoTestHost.setProcess(
+                material, MaterialProcessKeys.CRUSHING, new MaterialTarget(new MaterialKey("Alias"), GTValues.U));
         alias.setRegistration(canonical);
         check(
                 material.getTargetCrushingMaterial() == canonical,

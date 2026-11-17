@@ -12,15 +12,8 @@ public record ItemComposition(
         MaterialPrefix prefix,
         List<MaterialComponent> components,
         GTMaterial primaryMaterial,
-        List<ItemCompositionSource> sources,
-        /**
-         * Legacy declaration input retained for source compatibility. GT6 has no item-level bulk
-         * recovery permission; every composition is normalized to this value and recovery admission
-         * is decided by the concrete process and stack state.
-         */
-        @Deprecated(forRemoval = false) boolean bulkRecoveryAllowed) {
+        List<ItemCompositionSource> sources) {
     public ItemComposition {
-        bulkRecoveryAllowed = true;
         var merged = new LinkedHashMap<GTMaterial, Long>();
         for (var c : components) {
             if (!c.material().isValid() || c.amount() <= 0)
@@ -60,42 +53,7 @@ public record ItemComposition(
                                 + (prefix == null ? "unprefixed" : prefix.getName()),
                         "explicit item form",
                         "",
-                        "")),
-                true);
-    }
-
-    /** Compatibility accessor; item-level authorization is no longer a GT6 recovery condition. */
-    @Deprecated(forRemoval = false)
-    public boolean recoverable() {
-        return true;
-    }
-
-    /** @deprecated Submit structured provenance through {@link ItemCompositionSource}. */
-    @Deprecated(forRemoval = false)
-    public ItemComposition(
-            MaterialPrefix prefix, List<MaterialComponent> components, String source, boolean bulkRecoveryAllowed) {
-        this(
-                prefix,
-                components,
-                inferredPrimary(components),
-                List.of(ItemCompositionSource.fromLegacy(source)),
-                bulkRecoveryAllowed);
-    }
-
-    /** @deprecated Submit structured provenance through {@link ItemCompositionSource}. */
-    @Deprecated(forRemoval = false)
-    public ItemComposition(
-            MaterialPrefix prefix,
-            List<MaterialComponent> components,
-            GTMaterial primaryMaterial,
-            String source,
-            boolean bulkRecoveryAllowed) {
-        this(
-                prefix,
-                components,
-                primaryMaterial,
-                List.of(ItemCompositionSource.fromLegacy(source)),
-                bulkRecoveryAllowed);
+                        "")));
     }
 
     /** Explicit primary identity; it is never inferred from an arbitrary component after construction. */
@@ -117,15 +75,6 @@ public record ItemComposition(
     }
 
     public ItemComposition withSources(List<ItemCompositionSource> replacementSources) {
-        return new ItemComposition(prefix, components, primaryMaterial, replacementSources, bulkRecoveryAllowed);
-    }
-
-    /**
-     * Legacy declarations often omitted an explicit primary. Preserve their historical first-component
-     * result here while keeping inference out of the canonical constructor.
-     */
-    private static GTMaterial inferredPrimary(List<MaterialComponent> components) {
-        if (components == null || components.isEmpty()) return MaterialSentinels.INVALID;
-        return components.get(0).material().resolve();
+        return new ItemComposition(prefix, components, primaryMaterial, replacementSources);
     }
 }

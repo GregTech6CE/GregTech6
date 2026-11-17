@@ -20,8 +20,8 @@ class ItemCompositionResolverTest {
 
     @Test
     void candidateOrderDoesNotChangeTheEffectiveComposition() {
-        var explicit = candidate("explicit", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true);
-        var tag = candidate("tag", ItemCompositionSource.Kind.FORM_TAG, Materials.Copper, 1, true);
+        var explicit = candidate("explicit", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4);
+        var tag = candidate("tag", ItemCompositionSource.Kind.FORM_TAG, Materials.Copper, 1);
         var expected = ItemCompositionResolver.resolve(Map.of("test:item", List.of(tag, explicit)));
         var reversed = new ArrayList<>(List.of(explicit, tag));
         Collections.reverse(reversed);
@@ -31,8 +31,8 @@ class ItemCompositionResolverTest {
 
     @Test
     void equivalentExplicitDeclarationsMergeTheirSources() {
-        var first = candidate("first", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true);
-        var second = candidate("second", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4, true);
+        var first = candidate("first", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4);
+        var second = candidate("second", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4);
         var data = ItemCompositionResolver.resolve(Map.of("test:item", List.of(second, first)))
                 .get("test:item");
         assertEquals(
@@ -44,8 +44,8 @@ class ItemCompositionResolverTest {
 
     @Test
     void conflictingSamePriorityCandidatesFailWithBothDeclarations() {
-        var iron = candidate("iron", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true);
-        var copper = candidate("copper", ItemCompositionSource.Kind.EXPLICIT, Materials.Copper, 4, true);
+        var iron = candidate("iron", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4);
+        var copper = candidate("copper", ItemCompositionSource.Kind.EXPLICIT, Materials.Copper, 4);
         var error = assertThrows(
                 IllegalStateException.class,
                 () -> ItemCompositionResolver.resolve(Map.of("test:item", List.of(iron, copper))));
@@ -55,10 +55,10 @@ class ItemCompositionResolverTest {
 
     @Test
     void resolutionDiagnosticsRetainReplacedAndLowerPriorityCandidates() {
-        var explicit = candidate("explicit", ItemCompositionSource.Kind.EXPLICIT, Materials.Copper, 4, false);
+        var explicit = candidate("explicit", ItemCompositionSource.Kind.EXPLICIT, Materials.Copper, 4);
         var correction = new ItemCompositionCandidate(
-                composition("correction", ItemCompositionSource.Kind.CORRECTION, Materials.Iron, 4, true), "explicit");
-        var tag = candidate("tag", ItemCompositionSource.Kind.FORM_TAG, Materials.Gold, 1, true);
+                composition("correction", ItemCompositionSource.Kind.CORRECTION, Materials.Iron, 4), "explicit");
+        var tag = candidate("tag", ItemCompositionSource.Kind.FORM_TAG, Materials.Gold, 1);
 
         var resolution = ItemCompositionResolver.resolveDetailed(
                         Map.of("test:item", List.of(tag, explicit, correction)))
@@ -78,16 +78,8 @@ class ItemCompositionResolverTest {
     }
 
     @Test
-    void legacySourceTextDoesNotChooseASourceCategory() {
-        var source = ItemCompositionSource.fromLegacy("GT6 common form tags");
-
-        assertEquals(ItemCompositionSource.Kind.LEGACY, source.kind());
-        assertTrue(source.note().contains("not inferred"));
-    }
-
-    @Test
     void tagCandidateIsEffectiveWhenNoExplicitLayerExists() {
-        var tag = candidate("tag", ItemCompositionSource.Kind.FORM_TAG, Materials.Copper, 1, true);
+        var tag = candidate("tag", ItemCompositionSource.Kind.FORM_TAG, Materials.Copper, 1);
         var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(tag)))
                 .get("test:item");
         assertEquals(Materials.Copper.resolve(), resolved.material());
@@ -97,9 +89,9 @@ class ItemCompositionResolverTest {
 
     @Test
     void explicitOverrideIsValidatedAndTracked() {
-        var json = candidate("json", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4, false);
+        var json = candidate("json", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4);
         var correction = new ItemCompositionCandidate(
-                composition("correction", ItemCompositionSource.Kind.CORRECTION, Materials.Copper, 4, true), "json");
+                composition("correction", ItemCompositionSource.Kind.CORRECTION, Materials.Copper, 4), "json");
         var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(json, correction)));
         assertEquals(Materials.Copper.resolve(), resolved.get("test:item").material());
         assertEquals(List.of("json"), resolved.get("test:item").sources().get(0).replacedSourceIds());
@@ -108,9 +100,9 @@ class ItemCompositionResolverTest {
                 () -> ItemCompositionResolver.resolve(Map.of("test:item", List.of(correction))));
 
         var cycleA = new ItemCompositionCandidate(
-                composition("a", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true), "b");
+                composition("a", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4), "b");
         var cycleB = new ItemCompositionCandidate(
-                composition("b", ItemCompositionSource.Kind.EXPLICIT, Materials.Copper, 4, true), "a");
+                composition("b", ItemCompositionSource.Kind.EXPLICIT, Materials.Copper, 4), "a");
         assertThrows(
                 IllegalStateException.class,
                 () -> ItemCompositionResolver.resolve(Map.of("test:item", List.of(cycleA, cycleB))));
@@ -118,11 +110,11 @@ class ItemCompositionResolverTest {
 
     @Test
     void oneDeclarationCannotBeReplacedByMultipleCandidates() {
-        var json = candidate("json", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4, true);
+        var json = candidate("json", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4);
         var first = new ItemCompositionCandidate(
-                composition("first", ItemCompositionSource.Kind.CORRECTION, Materials.Iron, 4, true), "json");
+                composition("first", ItemCompositionSource.Kind.CORRECTION, Materials.Iron, 4), "json");
         var second = new ItemCompositionCandidate(
-                composition("second", ItemCompositionSource.Kind.CORRECTION, Materials.Iron, 4, true), "json");
+                composition("second", ItemCompositionSource.Kind.CORRECTION, Materials.Iron, 4), "json");
 
         var error = assertThrows(
                 IllegalStateException.class,
@@ -132,11 +124,11 @@ class ItemCompositionResolverTest {
 
     @Test
     void replacementTraceRetainsTheCompleteOverrideChain() {
-        var base = candidate("base", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4, true);
+        var base = candidate("base", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4);
         var middle = new ItemCompositionCandidate(
-                composition("middle", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4, true), "base");
+                composition("middle", ItemCompositionSource.Kind.EXPLICIT, Materials.Iron, 4), "base");
         var winner = new ItemCompositionCandidate(
-                composition("winner", ItemCompositionSource.Kind.CORRECTION, Materials.Iron, 4, true), "middle");
+                composition("winner", ItemCompositionSource.Kind.CORRECTION, Materials.Iron, 4), "middle");
 
         var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(base, middle, winner)))
                 .get("test:item");
@@ -147,11 +139,11 @@ class ItemCompositionResolverTest {
     @Test
     void replacementTargetMayBeRegisteredAfterTheOverride() {
         var correction = new ItemCompositionCandidate(
-                composition("correction", ItemCompositionSource.Kind.CORRECTION, Materials.Copper, 4, true), "json");
+                composition("correction", ItemCompositionSource.Kind.CORRECTION, Materials.Copper, 4), "json");
         var pending = ItemCompositionResolver.resolveLenient(Map.of("test:item", List.of(correction)));
         assertEquals(Materials.Copper.resolve(), pending.get("test:item").material());
 
-        var json = candidate("json", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4, false);
+        var json = candidate("json", ItemCompositionSource.Kind.VANILLA_JSON, Materials.Iron, 4);
         var resolved = ItemCompositionResolver.resolve(Map.of("test:item", List.of(json, correction)));
         assertEquals(Materials.Copper.resolve(), resolved.get("test:item").material());
         assertEquals(
@@ -175,47 +167,12 @@ class ItemCompositionResolverTest {
                 null,
                 List.of(MaterialComponent.of(Materials.Iron, 1), MaterialComponent.of(Materials.Copper, 100)),
                 Materials.Iron,
-                List.of(new ItemCompositionSource(ItemCompositionSource.Kind.EXPLICIT, "probe", "test", "", "")),
-                true);
+                List.of(new ItemCompositionSource(ItemCompositionSource.Kind.EXPLICIT, "probe", "test", "", "")));
 
         var scaled = ItemCompositionScaling.scale(composition, 1, 100);
 
         assertEquals(List.of(MaterialComponent.of(Materials.Copper, 1)), scaled.components());
         assertFalse(scaled.material().isValid());
-    }
-
-    @Test
-    void legacySingleComponentDeclarationsStillInferTheirPrimary() {
-        var composition =
-                new ItemComposition(null, List.of(MaterialComponent.of(Materials.Iron, 4)), "legacy probe", true);
-
-        assertEquals(Materials.Iron.resolve(), composition.material());
-    }
-
-    @Test
-    void legacyMultiComponentDeclarationsKeepTheirHistoricalFirstPrimary() {
-        var composition = new ItemComposition(
-                null,
-                List.of(MaterialComponent.of(Materials.Copper, 8), MaterialComponent.of(Materials.Iron, 2)),
-                "legacy multi-component probe",
-                true);
-
-        assertEquals(Materials.Copper.resolve(), composition.material());
-        assertEquals(8, composition.amount());
-        assertTrue(composition.recoverable());
-    }
-
-    @Test
-    void legacyRecoveryFlagIsCompatibilityInputWithoutProcessAuthority() {
-        var composition = new ItemComposition(
-                null,
-                List.of(MaterialComponent.of(Materials.Iron, 4)),
-                Materials.Iron,
-                List.of(new ItemCompositionSource(ItemCompositionSource.Kind.LEGACY, "legacy", "test", "", "")),
-                false);
-
-        assertTrue(composition.bulkRecoveryAllowed());
-        assertTrue(composition.recoverable());
     }
 
     @Test
@@ -236,22 +193,19 @@ class ItemCompositionResolverTest {
             String id,
             ItemCompositionSource.Kind kind,
             gregtech.api.material.GTMaterial material,
-            long amount,
-            boolean bulkRecovery) {
-        return new ItemCompositionCandidate(composition(id, kind, material, amount, bulkRecovery), null);
+            long amount) {
+        return new ItemCompositionCandidate(composition(id, kind, material, amount), null);
     }
 
     private static ItemComposition composition(
             String id,
             ItemCompositionSource.Kind kind,
             gregtech.api.material.GTMaterial material,
-            long amount,
-            boolean bulkRecovery) {
+            long amount) {
         return new ItemComposition(
                 null,
                 List.of(MaterialComponent.of(material, amount)),
                 material,
-                List.of(new ItemCompositionSource(kind, id, "test", "", "")),
-                bulkRecovery);
+                List.of(new ItemCompositionSource(kind, id, "test", "", "")));
     }
 }

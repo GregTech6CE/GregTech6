@@ -60,8 +60,7 @@ public final class PanelMaterialCompositions {
                         "gt6ce:panel-base/concrete_reinforced",
                         "GT6 BlockConcreteReinforced",
                         "concrete_reinforced",
-                        "")),
-                true);
+                        "")));
         fallbackData.put("gt6ce:concrete_reinforced", reinforced);
         fallback(item("gt6ce:concrete_reinforced"), reinforced, "gt6ce:panel-base/concrete_reinforced");
         for (var variant : gregtech.content.registry.GTConstructionVariants.all()) {

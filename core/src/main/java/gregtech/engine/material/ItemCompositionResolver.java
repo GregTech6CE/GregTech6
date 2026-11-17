@@ -125,9 +125,8 @@ public final class ItemCompositionResolver {
             if (!sameContent(first, candidate)) {
                 throw new IllegalStateException("Conflicting item compositions for " + item + ": "
                         + first.sources().get(0).description() + " provides " + first.components()
-                        + " bulkRecovery=" + first.bulkRecoveryAllowed() + ", while "
-                        + candidate.sources().get(0).description() + " provides " + candidate.components()
-                        + " bulkRecovery=" + candidate.bulkRecoveryAllowed());
+                        + ", while " + candidate.sources().get(0).description()
+                        + " provides " + candidate.components());
             }
         }
         var sources = winners.stream()
@@ -204,8 +203,7 @@ public final class ItemCompositionResolver {
     private static boolean sameContent(ItemComposition left, ItemComposition right) {
         return Objects.equals(left.prefix(), right.prefix())
                 && left.components().equals(right.components())
-                && left.primaryMaterial().resolve() == right.primaryMaterial().resolve()
-                && left.bulkRecoveryAllowed() == right.bulkRecoveryAllowed();
+                && left.primaryMaterial().resolve() == right.primaryMaterial().resolve();
     }
 
     private record LevelResolution(ItemComposition composition, List<ItemCompositionDecision> decisions) {}

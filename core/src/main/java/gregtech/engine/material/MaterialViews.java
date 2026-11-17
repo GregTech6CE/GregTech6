@@ -16,12 +16,6 @@ public final class MaterialViews {
     private record GroupFacts(
             String owner, String displayName, Set<MaterialKey> materials, Set<MaterialGroupKey> includedGroups) {}
 
-    private record MetadataSubmission(String addonId, MaterialMetadataDeclaration declaration) {}
-
-    private record TagDeclarationSubmission(String addonId, MaterialTagDeclaration declaration) {}
-
-    private record GroupSubmission(String addonId, MaterialGroupDeclaration declaration) {}
-
     private static MaterialCatalogView published;
     private static long contentRevision;
     private static volatile MaterialFormsView formBindings = new MaterialFormsView() {
@@ -79,12 +73,7 @@ public final class MaterialViews {
             properties.put(key, new LinkedHashMap<>());
             for (var property : builder.build().keys()) types.put(property.id(), property.type());
         }
-        var metadataSubmissions = new java.util.ArrayList<MetadataSubmission>();
-        for (var submission : AddonMaterials.metadataDeclarations())
-            metadataSubmissions.add(new MetadataSubmission(submission.addonId(), submission.declaration()));
-        for (var submission : MaterialInfoRegistry.metadataSubmissions())
-            metadataSubmissions.add(new MetadataSubmission(submission.addonId(), submission.declaration()));
-        for (var submission : metadataSubmissions) {
+        for (var submission : MaterialInfoRegistry.metadataSubmissions()) {
             var declaration = submission.declaration();
             GTMaterial material = GTMaterialRegistry.get(declaration.materialName());
             var key = material.isValid() ? new MaterialKey(material.getName()) : null;
@@ -152,12 +141,7 @@ public final class MaterialViews {
                         .add(entry.getKey());
             }
         }
-        var tagDeclarationSubmissions = new java.util.ArrayList<TagDeclarationSubmission>();
-        for (var submission : AddonMaterials.tagDeclarations())
-            tagDeclarationSubmissions.add(new TagDeclarationSubmission(submission.addonId(), submission.declaration()));
-        for (var submission : MaterialInfoRegistry.tagDeclarationSubmissions())
-            tagDeclarationSubmissions.add(new TagDeclarationSubmission(submission.addonId(), submission.declaration()));
-        for (var submission : tagDeclarationSubmissions) {
+        for (var submission : MaterialInfoRegistry.tagDeclarationSubmissions()) {
             var tag = submission.declaration().tag();
             requireNamespace(submission.addonId(), tag);
             var facts =
@@ -214,12 +198,7 @@ public final class MaterialViews {
                             "gt6ce", definition.displayName(), Set.copyOf(groupMaterials), Set.copyOf(includedGroups)),
                     "built-in catalog");
         }
-        var groupSubmissions = new java.util.ArrayList<GroupSubmission>();
-        for (var submission : AddonMaterials.groupDeclarations())
-            groupSubmissions.add(new GroupSubmission(submission.addonId(), submission.declaration()));
-        for (var submission : MaterialInfoRegistry.groupSubmissions())
-            groupSubmissions.add(new GroupSubmission(submission.addonId(), submission.declaration()));
-        for (var submission : groupSubmissions) {
+        for (var submission : MaterialInfoRegistry.groupSubmissions()) {
             var declaration = submission.declaration();
             requireNamespace(submission.addonId(), declaration.key().id());
             putGroup(

@@ -92,7 +92,7 @@ public final class MaterialItemCompositions {
                     .toList();
             if (!components.isEmpty()) {
                 String itemId = BuiltInRegistries.ITEM.getKey(block.asItem()).toString();
-                ItemMaterialRegistry.register(
+                ItemMaterialRegistry.registerDeclared(
                         block.asItem(),
                         new ItemComposition(
                                 null,
@@ -103,8 +103,9 @@ public final class MaterialItemCompositions {
                                         "gt6ce:block-weight/" + itemId,
                                         "GT6 block material weights",
                                         itemId,
-                                        "")),
-                                true));
+                                        "",
+                                        List.of(),
+                                        ItemCompositionSource.MaterialProcessingAuthority.ALLOW))));
             }
         }
     }
@@ -207,8 +208,7 @@ public final class MaterialItemCompositions {
                                     "gt6ce:capsule-cell/" + spec.id(),
                                     "capsule-cell material",
                                     spec.id(),
-                                    "")),
-                            true));
+                                    ""))));
         }
     }
 

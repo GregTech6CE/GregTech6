@@ -2,6 +2,7 @@
 
 package gregtech.api.material;
 
+import gregtech.api.addon.AddonNames;
 import gregtech.api.addon.material.*;
 
 import java.util.Optional;
@@ -13,8 +14,10 @@ public final class FuelMaterialHelper {
     @Deprecated(since = "1.7.0", forRemoval = false)
     public static Optional<FuelRule> rule(GTMaterial material) {
         if (material == null || !material.isValid()) return Optional.empty();
+        String name = material.resolve().getName();
+        if (!AddonNames.matches(AddonNames.MATERIAL, name)) return Optional.empty();
         return MaterialInfoTool.currentProcess(
-                new MaterialKey(material.resolve().getName()), MaterialProcessKeys.FUEL)
+                new MaterialKey(name), MaterialProcessKeys.FUEL)
                 .map(MaterialProcessRule::value);
     }
 

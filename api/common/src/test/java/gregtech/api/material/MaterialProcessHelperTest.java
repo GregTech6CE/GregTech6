@@ -3,7 +3,9 @@
 package gregtech.api.material;
 
 import gregtech.api.addon.material.FuelRule;
+import gregtech.api.addon.material.MaterialInfoTool;
 import gregtech.api.addon.material.MaterialKey;
+import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.addon.material.MaterialTarget;
 import gregtech.api.addon.material.OreProcessingRule;
 import org.junit.jupiter.api.Test;
@@ -15,19 +17,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SuppressWarnings("deprecation")
 class MaterialProcessHelperTest {
     @Test
-    void helpersMirrorLegacyMaterialFieldsDuringMigration() {
+    void helpersReadTheRegisteredAuxiliaryData() {
         var iron = new GTMaterial(1, "Iron", "Fe", 0xFFFFFF);
         var ash = new GTMaterial(2, "Ashes", "Ashes", 0xFFFFFF);
         MaterialInfoTestHost.reset(iron, ash);
-        iron.setSmelting(null, GTValues.U)
-                .setCrushing(iron, GTValues.U2)
-                .setPulver(iron, GTValues.U)
-                .setFurnaceBurnTime(100)
-                .setBurning(ash, GTValues.U9)
-                .ores(ash)
-                .setOreMultiplier(2)
-                .setOreProcessingMultiplier(3)
-                .setToolStats(3, 8F, 128, 2);
+        var ironKey = new MaterialKey("Iron");
+        var ashKey = new MaterialKey("Ashes");
+        var ironUnit = new MaterialTarget(ironKey, GTValues.U);
+        MaterialInfoTestHost.setProcess(iron, MaterialProcessKeys.SMELTING, ironUnit);
+        MaterialInfoTestHost.setProcess(iron, MaterialProcessKeys.CRUSHING, new MaterialTarget(ironKey, GTValues.U2));
+        MaterialInfoTestHost.setProcess(iron, MaterialProcessKeys.PULVERIZING, ironUnit);
+        MaterialInfoTestHost.setProcess(iron, MaterialProcessKeys.FUEL,
+                new FuelRule(100, java.util.Optional.of(new MaterialTarget(ashKey, GTValues.U9))));
+        MaterialInfoTestHost.setProcess(iron, MaterialProcessKeys.ORE_PROCESSING,
+                new OreProcessingRule(java.util.List.of(ashKey), 2, 3));
+        MaterialInfoTool.updateTool(ironKey, new MaterialToolProfile(3, 8F, 128, 2));
 
         assertEquals(
                 new MaterialTarget(new MaterialKey("Iron"), GTValues.U),
@@ -49,7 +53,6 @@ class MaterialProcessHelperTest {
         assertEquals(GTValues.U, iron.getTargetSmeltingAmount());
         assertEquals(GTValues.U2, iron.getTargetCrushingAmount());
         assertEquals(GTValues.U, iron.getTargetPulverAmount());
-        assertEquals(100, iron.getFurnaceBurnTime());
         assertEquals(3, iron.getToolTypes());
         assertEquals(8F, iron.getToolSpeed());
         assertEquals(128, iron.getToolDurability());
@@ -61,7 +64,14 @@ class MaterialProcessHelperTest {
         var iron = new GTMaterial(1, "Iron", "Fe", 0xFFFFFF);
         MaterialInfoTestHost.reset(iron);
 
-        iron.setSmelting(iron, GTValues.U).clearSmeltingTarget();
+        var ironKey = new MaterialKey("Iron");
+        var first = new MaterialTarget(ironKey, GTValues.U);
+        var replacement = new MaterialTarget(ironKey, GTValues.U2);
+        MaterialInfoTestHost.setProcess(iron, MaterialProcessKeys.SMELTING, first);
+        assertEquals(first, SmeltingMaterialHelper.target(iron).orElseThrow());
+        MaterialInfoTestHost.setProcess(iron, MaterialProcessKeys.SMELTING, replacement);
+        assertEquals(replacement, SmeltingMaterialHelper.target(iron).orElseThrow());
+        MaterialInfoTool.updateProcess(ironKey, MaterialProcessKeys.SMELTING, java.util.Optional.empty());
 
         assertTrue(SmeltingMaterialHelper.target(iron).isEmpty());
         assertEquals(0L, iron.getTargetSmeltingAmount());

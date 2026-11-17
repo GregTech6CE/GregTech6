@@ -1,6 +1,5 @@
 package gregtech.platform.neoforge.machine;
 
-import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import gregtech.content.blockentity.machine.CompressedGasTankBlockEntity;
@@ -146,14 +145,5 @@ public final class BasicMachineRegistries {
                 Capabilities.ItemHandler.BLOCK,
                 gregtech.content.registry.GTBlockEntities.QUEUE_HOPPER.get(),
                 (be, side) -> be.capabilityHandler(side));
-    }
-
-    public static void registerCompositions() {
-        for (var block : net.minecraft.core.registries.BuiltInRegistries.BLOCK) {
-            if (!(block instanceof BasicMachineBlock machine)) continue;
-            var spec = machine.basicSpec();
-            gregtech.content.machine.OriginalMachineMaterialData.find(spec.machineName(), spec.tier())
-                    .ifPresent(data -> gregtech.engine.material.ItemMaterialRegistry.register(block.asItem(), data));
-        }
     }
 }

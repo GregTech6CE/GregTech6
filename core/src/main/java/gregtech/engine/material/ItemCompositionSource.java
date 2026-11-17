@@ -17,7 +17,6 @@ public record ItemCompositionSource(
         VANILLA_JSON(1),
         CORRECTION(1),
         BLOCK_WEIGHT(1),
-        LEGACY(1),
         UNIFICATION(2),
         FORM_TAG(3),
         RECIPE_REVERSE(4);
@@ -88,25 +87,6 @@ public record ItemCompositionSource(
         if (!reference.isBlank() && !reference.equals(declarationId)) value += " @" + reference;
         if (!replacedSourceIds.isEmpty()) value += " replaces " + String.join(" -> ", replacedSourceIds);
         return note.isBlank() ? value : value + ": " + note;
-    }
-
-    /**
-     * Preserves legacy free-form source text without guessing its category from wording.
-     *
-     * <p>The compatibility registration path replaces repeated legacy submissions. New producers
-     * must submit a controlled {@link Kind} instead.</p>
-     */
-    @Deprecated(forRemoval = false)
-    public static ItemCompositionSource fromLegacy(String source) {
-        String value = source == null || source.isBlank() ? "unspecified" : source;
-        return new ItemCompositionSource(
-                Kind.LEGACY,
-                value,
-                "legacy item-data producer",
-                value,
-                "category not inferred from source text",
-                List.of(),
-                MaterialProcessingAuthority.DEFAULT);
     }
 
     private static void requireText(String value, String name) {

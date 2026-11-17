@@ -36,9 +36,14 @@ public final class MaterialInfoTestHost implements MaterialInfoTool.Host {
         }
     }
 
+    public static <T> void setProcess(GTMaterial material, MaterialProcessKey<T> process, T value) {
+        MaterialInfoTool.updateProcess(
+                new MaterialKey(material.resolve().getName()), process, Optional.of(MaterialProcessRule.anyForm(value)));
+    }
+
     @Override
     public MaterialInfoTool.Registrar registrar(String addonId) {
-        throw new UnsupportedOperationException("The API test host is read/write only through GTMaterial");
+        throw new UnsupportedOperationException("The API test host has no addon registrar");
     }
 
     @Override

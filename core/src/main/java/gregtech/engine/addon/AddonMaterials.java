@@ -28,18 +28,6 @@ import java.util.*;
 
 /** Queued addon materials and extra forms. GregTech drains this once, from {@link GTMaterialRegistry#init()}. */
 public final class AddonMaterials {
-    /**
-     * @deprecated Addon materials no longer pick a numeric id. Use {@code MaterialDeclaration.builder(String)}. Removal is 0.9.
-     */
-    @Deprecated(since = "0.0", forRemoval = true)
-    public static final int ADDON_ID_MIN = 4291;
-
-    /**
-     * @deprecated Addon materials no longer pick a numeric id. Use {@code MaterialDeclaration.builder(String)}. Removal is 0.9.
-     */
-    @Deprecated(since = "0.0", forRemoval = true)
-    public static final int ADDON_ID_MAX = 7899;
-
     private static final MaterialProperty[] METAL_FLAGS = {
         MaterialProperty.METAL,
         MaterialProperty.INGOT,
@@ -60,35 +48,6 @@ public final class AddonMaterials {
 
     private static final TreeMap<String, Submission> QUEUE = new TreeMap<>();
     private static final Map<GTMaterial, List<String>> OWNERS = new IdentityHashMap<>();
-
-    public record MetadataSubmission(String addonId, MaterialMetadataDeclaration declaration) {}
-
-    public record TagSubmission(String addonId, MaterialTagDeclaration declaration) {}
-
-    public record GroupSubmission(String addonId, MaterialGroupDeclaration declaration) {}
-
-    public record ProcessSubmission(String addonId, MaterialProcessDeclaration<?> declaration) {}
-
-    private static final List<MetadataSubmission> METADATA = new ArrayList<>();
-    private static final List<TagSubmission> TAGS = new ArrayList<>();
-    private static final List<GroupSubmission> GROUPS = new ArrayList<>();
-    private static final List<ProcessSubmission> PROCESSES = new ArrayList<>();
-
-    public static List<MetadataSubmission> metadataDeclarations() {
-        return List.copyOf(METADATA);
-    }
-
-    public static List<TagSubmission> tagDeclarations() {
-        return List.copyOf(TAGS);
-    }
-
-    public static List<GroupSubmission> groupDeclarations() {
-        return List.copyOf(GROUPS);
-    }
-
-    public static List<ProcessSubmission> processDeclarations() {
-        return List.copyOf(PROCESSES);
-    }
 
     private static boolean collected;
     private static boolean closed;
@@ -125,9 +84,7 @@ public final class AddonMaterials {
     private record Submission(
             String addonId,
             List<MaterialDefinition.Declaration> materials,
-            List<MaterialFormRequest> forms,
             Runnable link,
-            List<MaterialComposition> compositions,
             List<SmeltingTargetDeclaration> smeltingTargets,
             List<SmeltingTargetRemoval> smeltingTargetRemovals,
             List<CrucibleReactionDeclaration> crucibleReactions,
@@ -171,9 +128,7 @@ public final class AddonMaterials {
                 enqueue(
                         contributor.addonId(),
                         definitions(declarations),
-                        contributor.forms(),
                         contributor::link,
-                        contributor.compositions(),
                         contributor.smeltingTargets(),
                         contributor.smeltingTargetRemovals(),
                         contributor.crucibleReactions(),
@@ -183,14 +138,6 @@ public final class AddonMaterials {
                         contributor.oreVeins(),
                         contributor.smallOres(),
                         formTags(declarations));
-                for (var metadata : List.copyOf(contributor.metadata()))
-                    METADATA.add(new MetadataSubmission(contributor.addonId(), metadata));
-                for (var tag : List.copyOf(contributor.materialTags()))
-                    TAGS.add(new TagSubmission(contributor.addonId(), tag));
-                for (var group : List.copyOf(contributor.materialGroups()))
-                    GROUPS.add(new GroupSubmission(contributor.addonId(), group));
-                for (var process : List.copyOf(contributor.processes()))
-                    PROCESSES.add(new ProcessSubmission(contributor.addonId(), process));
             } catch (RuntimeException | Error failure) {
                 throw AddonFailures.of(
                         "Addon material contributor failed: "
@@ -235,166 +182,10 @@ public final class AddonMaterials {
         return List.copyOf(definitions);
     }
 
-    /**
-     * Direct queue used by tests.
-     * The numeric id on each definition is ignored. Duplicate addon ids and calls after the queue closes fail immediately.
-     */
-    public static synchronized void submit(
-            String addonId,
-            List<MaterialDefinition.Declaration> materials,
-            List<MaterialFormRequest> forms,
-            Runnable link) {
-        submit(addonId, materials, forms, link, List.of(), List.of(), List.of(), List.of(), List.of());
-    }
-
-    /** Test entry for a declaration that carries {@link MaterialDeclaration#ores()}. */
-    public static synchronized void submitDeclared(
-            String addonId, List<MaterialDeclaration> materials, List<MaterialFormRequest> forms) {
-        submitDeclared(addonId, materials, forms, List.of());
-    }
-
-    /** Test entry. Production addons return prefixes from {@link AddonMaterialContributor#prefixes()}. */
-    public static synchronized void submitDeclared(
-            String addonId,
-            List<MaterialDeclaration> materials,
-            List<MaterialFormRequest> forms,
-            List<PrefixDeclaration> prefixes) {
-        List<MaterialDeclaration> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
-        warnDeclarationIssues(addonId, copied);
-        enqueue(
-                addonId,
-                definitions(copied),
-                forms,
-                () -> {},
-                List.of(),
-                List.of(),
-                List.of(),
-                List.of(),
-                List.of(),
-                List.copyOf(Objects.requireNonNull(prefixes, "prefixes")),
-                oreDeclarations(copied),
-                List.of(),
-                List.of(),
-                formTags(copied));
-    }
-
-    /** Test entry. Production addons return these lists from {@link AddonMaterialContributor}. */
-    public static synchronized void submit(
-            String addonId,
-            List<MaterialDefinition.Declaration> materials,
-            List<MaterialFormRequest> forms,
-            Runnable link,
-            List<MaterialComposition> compositions,
-            List<SmeltingTargetDeclaration> smeltingTargets,
-            List<CrucibleReactionDeclaration> crucibleReactions,
-            List<CrucibleReactionRemoval> crucibleRemovals) {
-        submit(
-                addonId,
-                materials,
-                forms,
-                link,
-                compositions,
-                smeltingTargets,
-                crucibleReactions,
-                crucibleRemovals,
-                List.of(),
-                List.of(),
-                List.of(),
-                List.of());
-    }
-
-    /** Test entry. Production addons return prefixes from {@link AddonMaterialContributor#prefixes()}. */
-    public static synchronized void submit(
-            String addonId,
-            List<MaterialDefinition.Declaration> materials,
-            List<MaterialFormRequest> forms,
-            Runnable link,
-            List<MaterialComposition> compositions,
-            List<SmeltingTargetDeclaration> smeltingTargets,
-            List<CrucibleReactionDeclaration> crucibleReactions,
-            List<CrucibleReactionRemoval> crucibleRemovals,
-            List<PrefixDeclaration> prefixes) {
-        submit(
-                addonId,
-                materials,
-                forms,
-                link,
-                compositions,
-                smeltingTargets,
-                crucibleReactions,
-                crucibleRemovals,
-                prefixes,
-                List.of(),
-                List.of(),
-                List.of());
-    }
-
-    /** Test entry. Production addons return veins from {@link AddonMaterialContributor#oreVeins()}. */
-    public static synchronized void submitWorldgen(
-            String addonId,
-            List<MaterialDeclaration> materials,
-            List<OreVeinDeclaration> veins,
-            List<SmallOreDeclaration> smallOres) {
-        List<MaterialDeclaration> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
-        warnDeclarationIssues(addonId, copied);
-        enqueue(
-                addonId,
-                definitions(copied),
-                List.of(),
-                () -> {},
-                List.of(),
-                List.of(),
-                List.of(),
-                List.of(),
-                List.of(),
-                List.of(),
-                oreDeclarations(copied),
-                veins,
-                smallOres,
-                formTags(copied));
-    }
-
-    private static synchronized void submit(
-            String addonId,
-            List<MaterialDefinition.Declaration> materials,
-            List<MaterialFormRequest> forms,
-            Runnable link,
-            List<MaterialComposition> compositions,
-            List<SmeltingTargetDeclaration> smeltingTargets,
-            List<CrucibleReactionDeclaration> crucibleReactions,
-            List<CrucibleReactionRemoval> crucibleRemovals,
-            List<PrefixDeclaration> prefixes,
-            List<OreDeclaration> ores,
-            List<OreVeinDeclaration> veins,
-            List<SmallOreDeclaration> smallOres) {
-        List<MaterialDefinition.Declaration> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
-        for (MaterialDefinition.Declaration definition : copied) {
-            GTMaterialRegistry.warn("Addon '" + addonId + "' material '" + definition.name() + "' declared numeric id "
-                    + definition.id() + "; the id is ignored");
-        }
-        enqueue(
-                addonId,
-                copied,
-                forms,
-                link,
-                compositions,
-                smeltingTargets,
-                List.of(),
-                crucibleReactions,
-                crucibleRemovals,
-                prefixes,
-                ores,
-                veins,
-                smallOres,
-                List.of());
-    }
-
     private static synchronized void enqueue(
             String addonId,
             List<MaterialDefinition.Declaration> materials,
-            List<MaterialFormRequest> forms,
             Runnable link,
-            List<MaterialComposition> compositions,
             List<SmeltingTargetDeclaration> smeltingTargets,
             List<SmeltingTargetRemoval> smeltingTargetRemovals,
             List<CrucibleReactionDeclaration> crucibleReactions,
@@ -412,15 +203,12 @@ public final class AddonMaterials {
             throw new IllegalStateException("Addon '" + addonId + "' already submitted materials");
         List<MaterialDefinition.Declaration> copiedMaterials =
                 List.copyOf(Objects.requireNonNull(materials, "materials"));
-        List<MaterialFormRequest> copiedForms = List.copyOf(Objects.requireNonNull(forms, "forms"));
         QUEUE.put(
                 addonId,
                 new Submission(
                         addonId,
                         copiedMaterials,
-                        copiedForms,
                         link == null ? () -> {} : link,
-                        List.copyOf(Objects.requireNonNull(compositions, "compositions")),
                         List.copyOf(Objects.requireNonNull(smeltingTargets, "smeltingTargets")),
                         List.copyOf(Objects.requireNonNull(smeltingTargetRemovals, "smeltingTargetRemovals")),
                         List.copyOf(Objects.requireNonNull(crucibleReactions, "crucibleReactions")),
@@ -763,19 +551,9 @@ public final class AddonMaterials {
     }
 
     /** Prefix checks happen after linking so a form can name a material created during link. */
-    public static void publishForms() {
-        publishForms(Map.of());
-    }
-
-    /** Prefix checks happen after linking so a form can name a material created during link. */
     public static void publishForms(Map<String, List<MaterialFormRequest>> typedRequests) {
         List<AcceptedForm> published = new ArrayList<>();
         Set<String> seen = new HashSet<>();
-        for (Submission submission : snapshot()) {
-            for (MaterialFormRequest request : submission.forms) {
-                acceptForm(submission.addonId, request, published, seen);
-            }
-        }
         typedRequests.forEach((addonId, requests) -> {
             for (MaterialFormRequest request : requests) acceptForm(addonId, request, published, seen);
         });
@@ -821,18 +599,6 @@ public final class AddonMaterials {
         var derivedMaterials = new IdentityHashMap<GTMaterial, Boolean>();
         var crucibleFlags = new IdentityHashMap<GTMaterial, Boolean>();
         for (Submission submission : snapshot()) {
-            for (MaterialComposition composition : submission.compositions) {
-                GTMaterial material = applyComposition(submission.addonId, composition, crucibleFlags);
-                if (!composition.crucible() || derivedMaterials.put(material, Boolean.TRUE) != null) continue;
-                var parts = new ArrayList<CrucibleReactions.Part>();
-                for (MaterialComposition.Part part : composition.parts()) {
-                    parts.add(new CrucibleReactions.Part(
-                            material(submission.addonId, part.material(), "composition"), part.amount() / GTValues.U));
-                }
-                derived.add(new CrucibleReactions.AddonRow(
-                        submission.addonId,
-                        new CrucibleReactions.Reaction(material, composition.divider(), List.copyOf(parts))));
-            }
             for (SmeltingTargetDeclaration target : submission.smeltingTargets)
                 applySmelting(submission.addonId, target);
             for (SmeltingTargetRemoval removal : submission.smeltingTargetRemovals) {
@@ -851,7 +617,11 @@ public final class AddonMaterials {
                 addDerivedComposition(addonId, composition, crucibleFlags, derivedMaterials, derived);
             }
         });
-        for (GTMaterial material : smeltingRemovals) material.clearSmeltingTarget();
+        for (GTMaterial material : smeltingRemovals) {
+            MaterialInfoTool.updateProcess(
+                    new MaterialKey(material.getName()), MaterialProcessKeys.SMELTING, Optional.empty());
+            material.remove(MaterialProperty.MELTING);
+        }
         CrucibleReactions.seal(explicit, derived, removals);
     }
 
@@ -914,19 +684,24 @@ public final class AddonMaterials {
     private static void applySmelting(String addonId, SmeltingTargetDeclaration declaration) {
         GTMaterial material = material(addonId, declaration.material(), "smelting target");
         GTMaterial target = material(addonId, declaration.target(), "smelting target");
-        boolean same = material.getTargetSmeltingMaterial().resolve() == target
-                && material.getTargetSmeltingAmount() == declaration.amount();
-        boolean untouched = material.getTargetSmeltingMaterial().resolve() == material
-                && material.getTargetSmeltingAmount() == GTValues.U
+        var key = new MaterialKey(material.getName());
+        var current = MaterialInfoTool.currentProcess(key, MaterialProcessKeys.SMELTING)
+                .map(MaterialProcessRule::value);
+        GTMaterial currentTarget = current.flatMap(value -> MaterialInfoTool.findMaterial(value.material()))
+                .orElse(material).resolve();
+        long currentAmount = current.map(MaterialTarget::amount).orElse(0L);
+        boolean same = currentTarget == target && currentAmount == declaration.amount();
+        boolean untouched = currentTarget == material && currentAmount == GTValues.U
                 && !material.has(MaterialProperty.MELTING);
-        if (same) {
-            if (untouched) material.setSmelting(target, declaration.amount());
-            return;
-        }
-        if (!untouched)
+        if (!untouched && !same)
             throw new IllegalStateException("Addon '" + addonId + "' smelting target for '" + material.getName()
                     + "' does not match the existing target");
-        material.setSmelting(target, declaration.amount());
+        if (untouched) {
+            var replacement = new MaterialTarget(new MaterialKey(target.getName()), declaration.amount());
+            MaterialInfoTool.updateProcess(
+                    key, MaterialProcessKeys.SMELTING, Optional.of(MaterialProcessRule.anyForm(replacement)));
+            material.put(MaterialProperty.MELTING);
+        }
     }
 
     private static CrucibleReactions.Reaction resolveReaction(String addonId, CrucibleReactionDeclaration declaration) {

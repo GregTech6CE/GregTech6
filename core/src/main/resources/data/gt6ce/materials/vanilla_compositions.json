@@ -3,14 +3,12 @@
     "components": {
       "Acacia": 3243240000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "acacia_button": {
     "components": {
       "Acacia": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "acacia_chest_boat": {
@@ -18,14 +16,12 @@
       "Acacia": 3243240000,
       "Wood": 5189184000
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "acacia_door": {
     "components": {
       "Acacia": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "acacia_fence": {
@@ -33,7 +29,6 @@
       "Acacia": 648648000,
       "Wood": 162162000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "acacia_fence_gate": {
@@ -41,7 +36,6 @@
       "Acacia": 1297296000,
       "Wood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "acacia_hanging_sign": {
@@ -49,7 +43,6 @@
       "Iron": 432432000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
   "acacia_log": {
@@ -57,49 +50,42 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "acacia_planks": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "acacia_pressure_plate": {
     "components": {
       "Acacia": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "acacia_sign": {
     "components": {
       "Wood": 1405404000
     },
-    "recoverable": true,
     "source": "1.20.1 sign: six planks and one half-unit stick divided by three"
   },
   "acacia_slab": {
     "components": {
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "acacia_stairs": {
     "components": {
       "Wood": 486486000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "acacia_trapdoor": {
     "components": {
       "Acacia": 1945944000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "acacia_wood": {
@@ -107,7 +93,6 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "activator_rail": {
@@ -116,7 +101,6 @@
       "Redstone": 108108000,
       "Wood": 162162000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/activator_rail.json"
   },
   "amethyst_block": {
@@ -124,21 +108,18 @@
     "components": {
       "Amethyst": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "amethyst_bud": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "amethyst_cluster": {
     "components": {
       "Amethyst": 2594592000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "amethyst_shard": {
@@ -146,7 +127,6 @@
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "ancient_debris": {
@@ -154,7 +134,6 @@
     "components": {
       "AncientDebris": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "andesite": {
@@ -162,49 +141,42 @@
     "components": {
       "Andesite": 5837832000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "andesite_slab": {
     "components": {
       "Andesite": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/andesite_slab.json"
   },
   "andesite_stairs": {
     "components": {
       "Andesite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/andesite_stairs_from_andesite_stonecutting.json"
   },
   "andesite_wall": {
     "components": {
       "Andesite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/andesite_wall.json"
   },
   "angler_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "anvil": {
     "components": {
       "Iron": 19459440000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2513"
   },
   "archer_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "armor_stand": {
@@ -212,49 +184,42 @@
       "Stone": 2918916000,
       "Wood": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/armor_stand.json"
   },
   "arms_up_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "axolotl_bucket": {
     "components": {
       "Iron": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
   "baked_potato": {
     "components": {
       "Potato": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "bamboo": {
     "components": {
       "Bamboo": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE bamboo material content"
   },
   "bamboo_block": {
     "components": {
       "Bamboo": 5837832000
     },
-    "recoverable": false,
     "source": "GT6CE bamboo material content"
   },
   "bamboo_button": {
     "components": {
       "Bamboo": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "bamboo_chest_raft": {
@@ -262,14 +227,12 @@
       "Bamboo": 3243240000,
       "Wood": 5189184000
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "bamboo_door": {
     "components": {
       "Bamboo": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "bamboo_fence": {
@@ -277,7 +240,6 @@
       "Bamboo": 648648000,
       "Wood": 162162000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "bamboo_fence_gate": {
@@ -285,7 +247,6 @@
       "Bamboo": 1297296000,
       "Wood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "bamboo_hanging_sign": {
@@ -293,84 +254,72 @@
       "Iron": 432432000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
   "bamboo_mosaic": {
     "components": {
       "Bamboo": 648648000
     },
-    "recoverable": false,
     "source": "GT6CE bamboo material content"
   },
   "bamboo_mosaic_slab": {
     "components": {
       "Bamboo": 324324000
     },
-    "recoverable": false,
     "source": "GT6CE bamboo material content"
   },
   "bamboo_mosaic_stairs": {
     "components": {
       "Bamboo": 486486000
     },
-    "recoverable": false,
     "source": "GT6CE bamboo material content"
   },
   "bamboo_planks": {
     "components": {
       "Bamboo": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE bamboo material content"
   },
   "bamboo_pressure_plate": {
     "components": {
       "Bamboo": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "bamboo_raft": {
     "components": {
       "Bamboo": 3243240000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "bamboo_sign": {
     "components": {
       "Wood": 1405404000
     },
-    "recoverable": true,
     "source": "1.20.1 sign: six planks and one half-unit stick divided by three"
   },
   "bamboo_slab": {
     "components": {
       "Bamboo": 324324000
     },
-    "recoverable": true,
     "source": "GT6CE bamboo material content"
   },
   "bamboo_stairs": {
     "components": {
       "Bamboo": 486486000
     },
-    "recoverable": true,
     "source": "GT6CE bamboo material content"
   },
   "bamboo_trapdoor": {
     "components": {
       "Bamboo": 1945944000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "barrel": {
     "components": {
       "Wood": 4540536000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/barrel.json"
   },
   "basalt": {
@@ -378,7 +327,6 @@
     "components": {
       "Basalt": 5837832000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "beacon": {
@@ -387,7 +335,6 @@
       "NetherStar": 648648000,
       "Obsidian": 17513496000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2525"
   },
   "beef": {
@@ -395,7 +342,6 @@
       "Bone": 72072000,
       "MeatRaw": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2590"
   },
   "beehive": {
@@ -403,28 +349,24 @@
       "WaxBee": 1945944000,
       "Wood": 3891888000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/beehive.json"
   },
   "bell": {
     "components": {
       "Gold": 2594592000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "birch_boat": {
     "components": {
       "Birch": 3243240000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "birch_button": {
     "components": {
       "Birch": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "birch_chest_boat": {
@@ -432,14 +374,12 @@
       "Birch": 3243240000,
       "Wood": 5189184000
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "birch_door": {
     "components": {
       "Birch": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "birch_fence": {
@@ -447,7 +387,6 @@
       "Birch": 648648000,
       "Wood": 162162000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "birch_fence_gate": {
@@ -455,7 +394,6 @@
       "Birch": 1297296000,
       "Wood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "birch_hanging_sign": {
@@ -463,7 +401,6 @@
       "Iron": 432432000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
   "birch_log": {
@@ -471,49 +408,42 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "birch_planks": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "birch_pressure_plate": {
     "components": {
       "Birch": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "birch_sign": {
     "components": {
       "Wood": 1405404000
     },
-    "recoverable": true,
     "source": "1.20.1 sign: six planks and one half-unit stick divided by three"
   },
   "birch_slab": {
     "components": {
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "birch_stairs": {
     "components": {
       "Wood": 486486000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "birch_trapdoor": {
     "components": {
       "Birch": 1945944000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "birch_wood": {
@@ -521,56 +451,48 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "black_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "black_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "black_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "black_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "black_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "black_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "black_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "blackstone": {
@@ -578,35 +500,30 @@
     "components": {
       "Blackstone": 5837832000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "blackstone_slab": {
     "components": {
       "Blackstone": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "blackstone_stairs": {
     "components": {
       "Blackstone": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "blackstone_wall": {
     "components": {
       "Blackstone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "blade_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "blast_furnace": {
@@ -614,14 +531,12 @@
       "Iron": 3243240000,
       "Stone": 22702680000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 explicit composition convention"
   },
   "blaze_powder": {
     "components": {
       "Blaze": 72072000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "blaze_rod": {
@@ -629,70 +544,60 @@
     "components": {
       "Blaze": 324324000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "blue_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "blue_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "blue_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "blue_dye": {
     "components": {
       "Lapis": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/blue_dye.json"
   },
   "blue_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "blue_ice": {
     "components": {
       "Ice": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "blue_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "blue_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "blue_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "bone": {
@@ -700,7 +605,6 @@
     "components": {
       "Bone": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2474"
   },
   "bone_block": {
@@ -708,7 +612,6 @@
     "components": {
       "Bone": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/bone_block.json"
   },
   "bone_meal": {
@@ -716,14 +619,12 @@
     "components": {
       "Bone": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "book": {
     "components": {
       "Paper": 1945944000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2496"
   },
   "bookshelf": {
@@ -731,56 +632,48 @@
       "Paper": 5837832000,
       "Wood": 3891888000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2528"
   },
   "bowl": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2572"
   },
   "brain_coral": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "brain_coral_block": {
     "components": {
       "CaCO3": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "brain_coral_fan": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "bread": {
     "components": {
       "Wheat": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "breeze_rod": {
     "components": {
       "Breeze": 324324000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "brewer_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "brewing_stand": {
@@ -788,7 +681,6 @@
       "Blaze": 324324000,
       "Stone": 17513496000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 explicit composition convention"
   },
   "brick": {
@@ -796,133 +688,114 @@
     "components": {
       "Brick": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "brick_slab": {
     "components": {
       "Brick": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2484"
   },
   "brick_stairs": {
     "components": {
       "Brick": 1945944000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2483"
   },
   "brick_wall": {
     "components": {
       "Brick": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/brick_wall.json"
   },
   "bricks": {
     "components": {
       "Brick": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2481"
   },
   "brown_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "brown_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "brown_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "brown_dye": {
     "components": {
       "Cocoa": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/brown_dye.json"
   },
   "brown_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "brown_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "brown_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "brown_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "bubble_coral": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "bubble_coral_block": {
     "components": {
       "CaCO3": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "bubble_coral_fan": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "bucket": {
     "components": {
       "Iron": 1945944000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2506"
   },
   "budding_amethyst": {
     "components": {
       "Amethyst": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "burn_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "calcite": {
@@ -930,7 +803,6 @@
     "components": {
       "Calcite": 5837832000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "calibrated_sculk_sensor": {
@@ -938,7 +810,6 @@
       "Sculk": 1297296000,
       "Amethyst": 1945944000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "campfire": {
@@ -946,14 +817,12 @@
       "Coal": 648648000,
       "Wood": 8756748000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 explicit composition convention"
   },
   "candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "cartography_table": {
@@ -961,77 +830,66 @@
       "Paper": 1297296000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cartography_table.json"
   },
   "cauldron": {
     "components": {
       "Iron": 4540536000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2509"
   },
   "chain": {
     "components": {
       "Iron": 792792000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/chain.json"
   },
   "chainmail_boots": {
     "components": {
       "Steel": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2446"
   },
   "chainmail_boots_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "chainmail_chestplate": {
     "components": {
       "Steel": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2444"
   },
   "chainmail_chestplate_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "chainmail_helmet": {
     "components": {
       "Steel": 810810000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2443"
   },
   "chainmail_helmet_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "chainmail_leggings": {
     "components": {
       "Steel": 1135134000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2445"
   },
   "chainmail_leggings_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "charcoal": {
@@ -1039,21 +897,18 @@
     "components": {
       "Charcoal": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "cherry_boat": {
     "components": {
       "Cherrywood": 3243240000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "cherry_button": {
     "components": {
       "Cherrywood": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "cherry_chest_boat": {
@@ -1061,14 +916,12 @@
       "Cherrywood": 3243240000,
       "Wood": 5189184000
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "cherry_door": {
     "components": {
       "Cherrywood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "cherry_fence": {
@@ -1076,7 +929,6 @@
       "Cherrywood": 648648000,
       "Wood": 162162000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "cherry_fence_gate": {
@@ -1084,7 +936,6 @@
       "Cherrywood": 1297296000,
       "Wood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "cherry_hanging_sign": {
@@ -1092,7 +943,6 @@
       "Iron": 432432000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
   "cherry_log": {
@@ -1100,49 +950,42 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "cherry_planks": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "cherry_pressure_plate": {
     "components": {
       "Cherrywood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "cherry_sign": {
     "components": {
       "Wood": 1405404000
     },
-    "recoverable": true,
     "source": "1.20.1 sign: six planks and one half-unit stick divided by three"
   },
   "cherry_slab": {
     "components": {
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "cherry_stairs": {
     "components": {
       "Wood": 486486000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "cherry_trapdoor": {
     "components": {
       "Cherrywood": 1945944000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "cherry_wood": {
@@ -1150,14 +993,12 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "chest": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2578"
   },
   "chest_minecart": {
@@ -1165,7 +1006,6 @@
       "Iron": 3243240000,
       "Wood": 5189184000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/chest_minecart.json"
   },
   "chicken": {
@@ -1173,70 +1013,60 @@
       "Bone": 72072000,
       "MeatRaw": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2591"
   },
   "chipped_anvil": {
     "components": {
       "Iron": 16216200000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2514"
   },
   "chiseled_bookshelf": {
     "components": {
       "Wood": 4864860000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/chiseled_bookshelf.json"
   },
   "chiseled_deepslate": {
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "chiseled_nether_bricks": {
     "components": {
       "NetherBrick": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/chiseled_nether_bricks.json"
   },
   "chiseled_polished_blackstone": {
     "components": {
       "Blackstone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "chiseled_quartz_block": {
     "components": {
       "NetherQuartz": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/chiseled_quartz_block.json"
   },
   "chiseled_red_sandstone": {
     "components": {
       "RedSand": 23351328000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/chiseled_red_sandstone_from_red_sandstone_stonecutting.json"
   },
   "chiseled_sandstone": {
     "components": {
       "Sand": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/chiseled_sandstone.json"
   },
   "chiseled_stone_bricks": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/chiseled_stone_bricks.json"
   },
   "clay": {
@@ -1244,7 +1074,6 @@
     "components": {
       "Clay": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2476"
   },
   "clay_ball": {
@@ -1252,7 +1081,6 @@
     "components": {
       "Clay": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2475"
   },
   "clock": {
@@ -1260,7 +1088,6 @@
       "Gold": 2594592000,
       "Redstone": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2522"
   },
   "coal": {
@@ -1268,7 +1095,6 @@
     "components": {
       "Coal": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "coal_block": {
@@ -1276,7 +1102,6 @@
     "components": {
       "Coal": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/coal_block.json"
   },
   "coal_ore": {
@@ -1284,14 +1109,12 @@
     "components": {
       "Coal": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "coast_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cobbled_deepslate": {
@@ -1299,28 +1122,24 @@
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cobbled_deepslate_slab": {
     "components": {
       "Deepslate": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cobbled_deepslate_stairs": {
     "components": {
       "Deepslate": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cobbled_deepslate_wall": {
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cobblestone": {
@@ -1328,35 +1147,30 @@
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2560"
   },
   "cobblestone_slab": {
     "components": {
       "Stone": 2918916000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2549"
   },
   "cobblestone_stairs": {
     "components": {
       "Stone": 4378374000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2533"
   },
   "cobblestone_wall": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2535"
   },
   "cocoa_beans": {
     "components": {
       "Cocoa": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cod": {
@@ -1365,14 +1179,12 @@
       "FishOil": 1297296000,
       "FishRaw": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2597"
   },
   "cod_bucket": {
     "components": {
       "Iron": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
   "comparator": {
@@ -1382,7 +1194,6 @@
       "Stone": 17513496000,
       "Wood": 972972000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/comparator.json"
   },
   "compass": {
@@ -1390,14 +1201,12 @@
       "Iron": 2594592000,
       "Redstone": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2523"
   },
   "composter": {
     "components": {
       "Wood": 2270268000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/composter.json"
   },
   "cooked_beef": {
@@ -1405,7 +1214,6 @@
       "Bone": 72072000,
       "MeatCooked": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2595"
   },
   "cooked_chicken": {
@@ -1413,7 +1221,6 @@
       "Bone": 72072000,
       "MeatCooked": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2596"
   },
   "cooked_cod": {
@@ -1421,7 +1228,6 @@
       "Bone": 72072000,
       "FishCooked": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2593"
   },
   "cooked_mutton": {
@@ -1429,7 +1235,6 @@
       "Bone": 72072000,
       "MeatCooked": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE modern vanilla meat cuts"
   },
   "cooked_porkchop": {
@@ -1437,7 +1242,6 @@
       "Bone": 72072000,
       "MeatCooked": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2594"
   },
   "cooked_rabbit": {
@@ -1445,7 +1249,6 @@
       "Bone": 72072000,
       "MeatCooked": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE modern vanilla meat cuts"
   },
   "cooked_salmon": {
@@ -1453,7 +1256,6 @@
       "Bone": 72072000,
       "FishCooked": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2593"
   },
   "cookie": {
@@ -1461,7 +1263,6 @@
       "Cocoa": 81081000,
       "Wheat": 162162000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cookie.json"
   },
   "copper_block": {
@@ -1469,7 +1270,6 @@
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/copper_block.json"
   },
   "copper_ingot": {
@@ -1477,14 +1277,12 @@
     "components": {
       "Copper": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "copper_nugget": {
     "components": {
       "Copper": 72072000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "copper_ore": {
@@ -1492,77 +1290,66 @@
     "components": {
       "Copper": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "cracked_deepslate_bricks": {
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cracked_deepslate_tiles": {
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cracked_nether_bricks": {
     "components": {
       "NetherBrick": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cracked_polished_blackstone_bricks": {
     "components": {
       "Blackstone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cracked_stone_bricks": {
     "components": {
       "Stone": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "crafting_table": {
     "components": {
       "Wood": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2584"
   },
   "creeper_banner_pattern": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "creeper_head": {
     "components": {
       "Bone": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "crimson_button": {
     "components": {
       "Crimsonwood": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "crimson_door": {
     "components": {
       "Crimsonwood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "crimson_fence": {
@@ -1570,7 +1357,6 @@
       "Crimsonwood": 648648000,
       "Wood": 162162000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "crimson_fence_gate": {
@@ -1578,7 +1364,6 @@
       "Crimsonwood": 1297296000,
       "Wood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "crimson_hanging_sign": {
@@ -1586,203 +1371,174 @@
       "Iron": 432432000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
   "crimson_hyphae": {
     "components": {
       "Wood": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "crimson_nylium": {
     "components": {
       "Netherrack": 5837832000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "crimson_planks": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "crimson_pressure_plate": {
     "components": {
       "Crimsonwood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "crimson_sign": {
     "components": {
       "Wood": 1405404000
     },
-    "recoverable": true,
     "source": "1.20.1 sign: six planks and one half-unit stick divided by three"
   },
   "crimson_slab": {
     "components": {
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "crimson_stairs": {
     "components": {
       "Wood": 486486000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "crimson_stem": {
     "components": {
       "Wood": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "crimson_trapdoor": {
     "components": {
       "Crimsonwood": 1945944000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "crying_obsidian": {
     "components": {
       "Obsidian": 5837832000
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "cut_copper": {
     "components": {
       "Copper": 1459458000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cut_copper_from_copper_block_stonecutting.json"
   },
   "cut_copper_slab": {
     "components": {
       "Copper": 729729000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cut_copper_slab_from_copper_block_stonecutting.json"
   },
   "cut_copper_stairs": {
     "components": {
       "Copper": 1459458000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cut_copper_stairs_from_copper_block_stonecutting.json"
   },
   "cut_red_sandstone": {
     "components": {
       "RedSand": 23351328000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cut_red_sandstone.json"
   },
   "cut_red_sandstone_slab": {
     "components": {
       "RedSand": 11675664000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cut_red_sandstone_slab_from_red_sandstone_stonecutting.json"
   },
   "cut_sandstone": {
     "components": {
       "Sand": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cut_sandstone.json"
   },
   "cut_sandstone_slab": {
     "components": {
       "Sand": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/cut_sandstone_slab_from_sandstone_stonecutting.json"
   },
   "cyan_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "cyan_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cyan_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "cyan_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "cyan_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "cyan_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "cyan_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "damaged_anvil": {
     "components": {
       "Iron": 12972960000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2515"
   },
   "danger_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dark_oak_boat": {
     "components": {
       "DarkOak": 3243240000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "dark_oak_button": {
     "components": {
       "DarkOak": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "dark_oak_chest_boat": {
@@ -1790,14 +1546,12 @@
       "DarkOak": 3243240000,
       "Wood": 5189184000
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "dark_oak_door": {
     "components": {
       "DarkOak": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "dark_oak_fence": {
@@ -1805,7 +1559,6 @@
       "DarkOak": 648648000,
       "Wood": 162162000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "dark_oak_fence_gate": {
@@ -1813,7 +1566,6 @@
       "DarkOak": 1297296000,
       "Wood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "dark_oak_hanging_sign": {
@@ -1821,7 +1573,6 @@
       "Iron": 432432000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
   "dark_oak_log": {
@@ -1829,49 +1580,42 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "dark_oak_planks": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "dark_oak_pressure_plate": {
     "components": {
       "DarkOak": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "dark_oak_sign": {
     "components": {
       "Wood": 1405404000
     },
-    "recoverable": true,
     "source": "1.20.1 sign: six planks and one half-unit stick divided by three"
   },
   "dark_oak_slab": {
     "components": {
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "dark_oak_stairs": {
     "components": {
       "Wood": 486486000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "dark_oak_trapdoor": {
     "components": {
       "DarkOak": 1945944000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "dark_oak_wood": {
@@ -1879,7 +1623,6 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "daylight_detector": {
@@ -1888,126 +1631,108 @@
       "NetherQuartz": 1945944000,
       "Wood": 972972000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/daylight_detector.json"
   },
   "dead_brain_coral": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_brain_coral_block": {
     "components": {
       "CaCO3": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_brain_coral_fan": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_bubble_coral": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_bubble_coral_block": {
     "components": {
       "CaCO3": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_bubble_coral_fan": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_bush": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2565"
   },
   "dead_fire_coral": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_fire_coral_block": {
     "components": {
       "CaCO3": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_fire_coral_fan": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_horn_coral": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_horn_coral_block": {
     "components": {
       "CaCO3": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_horn_coral_fan": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_tube_coral": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_tube_coral_block": {
     "components": {
       "CaCO3": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dead_tube_coral_fan": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "decorated_pot": {
     "components": {
       "Brick": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/decorated_pot_simple.json"
   },
   "deepslate": {
@@ -2015,35 +1740,30 @@
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "deepslate_brick_slab": {
     "components": {
       "Deepslate": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "deepslate_brick_stairs": {
     "components": {
       "Deepslate": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "deepslate_brick_wall": {
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "deepslate_bricks": {
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "deepslate_coal_ore": {
@@ -2051,7 +1771,6 @@
     "components": {
       "Coal": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "deepslate_copper_ore": {
@@ -2059,7 +1778,6 @@
     "components": {
       "Copper": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "deepslate_diamond_ore": {
@@ -2067,7 +1785,6 @@
     "components": {
       "Diamond": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "deepslate_emerald_ore": {
@@ -2075,7 +1792,6 @@
     "components": {
       "Emerald": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "deepslate_gold_ore": {
@@ -2083,7 +1799,6 @@
     "components": {
       "Gold": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "deepslate_iron_ore": {
@@ -2091,7 +1806,6 @@
     "components": {
       "Iron": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "deepslate_lapis_ore": {
@@ -2099,7 +1813,6 @@
     "components": {
       "Lapis": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "deepslate_redstone_ore": {
@@ -2107,35 +1820,30 @@
     "components": {
       "Redstone": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "deepslate_tile_slab": {
     "components": {
       "Deepslate": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "deepslate_tile_stairs": {
     "components": {
       "Deepslate": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "deepslate_tile_wall": {
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "deepslate_tiles": {
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "detector_rail": {
@@ -2144,7 +1852,6 @@
       "Redstone": 108108000,
       "Stone": 216216000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/detector_rail.json"
   },
   "diamond": {
@@ -2152,7 +1859,6 @@
     "components": {
       "Diamond": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "diamond_axe": {
@@ -2160,7 +1866,6 @@
       "Diamond": 1873872000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2437"
   },
   "diamond_block": {
@@ -2168,49 +1873,42 @@
     "components": {
       "Diamond": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/diamond_block.json"
   },
   "diamond_boots": {
     "components": {
       "Diamond": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2458"
   },
   "diamond_boots_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "diamond_chestplate": {
     "components": {
       "Diamond": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2456"
   },
   "diamond_chestplate_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "diamond_helmet": {
     "components": {
       "Diamond": 3243240000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2455"
   },
   "diamond_helmet_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "diamond_hoe": {
@@ -2218,7 +1916,6 @@
       "Diamond": 1225224000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2438"
   },
   "diamond_horse_armor": {
@@ -2226,21 +1923,18 @@
       "Diamond": 5189184000,
       "Leather": 3891888000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2463"
   },
   "diamond_leggings": {
     "components": {
       "Diamond": 4540536000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2457"
   },
   "diamond_leggings_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "diamond_ore": {
@@ -2248,7 +1942,6 @@
     "components": {
       "Diamond": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "diamond_pickaxe": {
@@ -2256,7 +1949,6 @@
       "Diamond": 1873872000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2435"
   },
   "diamond_shovel": {
@@ -2264,7 +1956,6 @@
       "Diamond": 576576000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2436"
   },
   "diamond_sword": {
@@ -2272,7 +1963,6 @@
       "Diamond": 1225224000,
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2434"
   },
   "diorite": {
@@ -2280,35 +1970,30 @@
     "components": {
       "Diorite": 5837832000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "diorite_slab": {
     "components": {
       "Diorite": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/diorite_slab.json"
   },
   "diorite_stairs": {
     "components": {
       "Diorite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/diorite_stairs_from_diorite_stonecutting.json"
   },
   "diorite_wall": {
     "components": {
       "Diorite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/diorite_wall.json"
   },
   "disc_fragment_5": {
     "components": {
       "Plastic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dispenser": {
@@ -2316,21 +2001,18 @@
       "Redstone": 648648000,
       "Stone": 4540536000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2587"
   },
   "dragon_breath": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft bottle shell; contents are stack-dependent and not recycled"
   },
   "dragon_head": {
     "components": {
       "Bone": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "dropper": {
@@ -2338,14 +2020,12 @@
       "Redstone": 648648000,
       "Stone": 4540536000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2588"
   },
   "dune_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "emerald": {
@@ -2353,7 +2033,6 @@
     "components": {
       "Emerald": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "emerald_block": {
@@ -2361,7 +2040,6 @@
     "components": {
       "Emerald": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/emerald_block.json"
   },
   "emerald_ore": {
@@ -2369,21 +2047,18 @@
     "components": {
       "Emerald": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "enchanted_book": {
     "components": {
       "Paper": 1945944000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2499"
   },
   "enchanted_golden_apple": {
     "components": {
       "Gold": 46702656000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2502"
   },
   "enchanting_table": {
@@ -2392,7 +2067,6 @@
       "Obsidian": 23351328000,
       "Paper": 1945944000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2526"
   },
   "end_stone": {
@@ -2400,35 +2074,30 @@
     "components": {
       "Endstone": 5837832000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "end_stone_brick_slab": {
     "components": {
       "Endstone": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/end_stone_brick_slab_from_end_stone_stonecutting.json"
   },
   "end_stone_brick_stairs": {
     "components": {
       "Endstone": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/end_stone_brick_stairs_from_end_stone_stonecutting.json"
   },
   "end_stone_brick_wall": {
     "components": {
       "Endstone": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/end_stone_brick_wall_from_end_stone_stonecutting.json"
   },
   "end_stone_bricks": {
     "components": {
       "Endstone": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/end_stone_bricks.json"
   },
   "ender_chest": {
@@ -2436,7 +2105,6 @@
       "EnderEye": 648648000,
       "Obsidian": 46702656000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2527"
   },
   "ender_eye": {
@@ -2444,7 +2112,6 @@
     "components": {
       "EnderEye": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "ender_pearl": {
@@ -2452,63 +2119,54 @@
     "components": {
       "EnderPearl": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "experience_bottle": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft bottle shell; contents are stack-dependent and not recycled"
   },
   "explorer_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "exposed_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "exposed_cut_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "exposed_cut_copper_slab": {
     "components": {
       "Copper": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "exposed_cut_copper_stairs": {
     "components": {
       "Copper": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "eye_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "filled_map": {
     "components": {
       "Paper": 5189184000
     },
-    "recoverable": false,
     "source": "GT6 LoaderItemData.java:2501"
   },
   "fire_charge": {
@@ -2517,35 +2175,30 @@
       "Coal": 216216000,
       "Gunpowder": 216216000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 explicit composition convention"
   },
   "fire_coral": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "fire_coral_block": {
     "components": {
       "CaCO3": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "fire_coral_fan": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "firework_star": {
     "components": {
       "Gunpowder": 648648000
     },
-    "recoverable": false,
     "source": "GT6 LoaderItemData.java:2494"
   },
   "fletching_table": {
@@ -2553,7 +2206,6 @@
       "Flint": 1297296000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/fletching_table.json"
   },
   "flint": {
@@ -2561,7 +2213,6 @@
     "components": {
       "Flint": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2464"
   },
   "flint_and_steel": {
@@ -2569,35 +2220,30 @@
       "Flint": 648648000,
       "Iron": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/flint_and_steel.json"
   },
   "flower_banner_pattern": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "flower_pot": {
     "components": {
       "Brick": 1945944000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2480"
   },
   "friend_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "furnace": {
     "components": {
       "Stone": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2558"
   },
   "furnace_minecart": {
@@ -2605,14 +2251,12 @@
       "Iron": 3243240000,
       "Stone": 5189184000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/furnace_minecart.json"
   },
   "gilded_blackstone": {
     "components": {
       "Blackstone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "glass": {
@@ -2620,7 +2264,6 @@
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2519"
   },
   "glass_bottle": {
@@ -2628,28 +2271,24 @@
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2521"
   },
   "glistering_melon_slice": {
     "components": {
       "Gold": 576576000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2505"
   },
   "globe_banner_pattern": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "glowstone": {
@@ -2657,7 +2296,6 @@
     "components": {
       "Glowstone": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/glowstone.json"
   },
   "glowstone_dust": {
@@ -2665,7 +2303,6 @@
     "components": {
       "Glowstone": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "gold_block": {
@@ -2673,7 +2310,6 @@
     "components": {
       "Gold": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/gold_block.json"
   },
   "gold_ingot": {
@@ -2681,7 +2317,6 @@
     "components": {
       "Gold": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "gold_nugget": {
@@ -2689,7 +2324,6 @@
     "components": {
       "Gold": 72072000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "gold_ore": {
@@ -2697,14 +2331,12 @@
     "components": {
       "Gold": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "golden_apple": {
     "components": {
       "Gold": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2503"
   },
   "golden_axe": {
@@ -2712,56 +2344,48 @@
       "Gold": 1873872000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2432"
   },
   "golden_boots": {
     "components": {
       "Gold": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2454"
   },
   "golden_boots_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "golden_carrot": {
     "components": {
       "Gold": 576576000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2504"
   },
   "golden_chestplate": {
     "components": {
       "Gold": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2452"
   },
   "golden_chestplate_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "golden_helmet": {
     "components": {
       "Gold": 3243240000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2451"
   },
   "golden_helmet_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "golden_hoe": {
@@ -2769,7 +2393,6 @@
       "Gold": 1225224000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2433"
   },
   "golden_horse_armor": {
@@ -2777,21 +2400,18 @@
       "Gold": 5189184000,
       "Leather": 3891888000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2462"
   },
   "golden_leggings": {
     "components": {
       "Gold": 4540536000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2453"
   },
   "golden_leggings_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "golden_pickaxe": {
@@ -2799,7 +2419,6 @@
       "Gold": 1873872000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2430"
   },
   "golden_shovel": {
@@ -2807,7 +2426,6 @@
       "Gold": 576576000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2431"
   },
   "golden_sword": {
@@ -2815,7 +2433,6 @@
       "Gold": 1225224000,
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2429"
   },
   "granite": {
@@ -2823,28 +2440,24 @@
     "components": {
       "Granite": 5837832000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "granite_slab": {
     "components": {
       "Granite": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/granite_slab.json"
   },
   "granite_stairs": {
     "components": {
       "Granite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/granite_stairs_from_granite_stonecutting.json"
   },
   "granite_wall": {
     "components": {
       "Granite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/granite_wall.json"
   },
   "gravel": {
@@ -2852,105 +2465,90 @@
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "gray_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "gray_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "gray_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "gray_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "gray_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "gray_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "gray_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "green_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "green_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "green_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "green_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "green_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "green_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "green_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "grindstone": {
@@ -2958,7 +2556,6 @@
       "Stone": 2918916000,
       "Wood": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/grindstone.json"
   },
   "gunpowder": {
@@ -2966,63 +2563,54 @@
     "components": {
       "Gunpowder": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "hay_block": {
     "components": {
       "Wheat": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/hay_block.json"
   },
   "heart_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "heartbreak_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "heavy_weighted_pressure_plate": {
     "components": {
       "Iron": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2512"
   },
   "honey_block": {
     "components": {
       "Honey": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "honey_bottle": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft bottle shell; contents are stack-dependent and not recycled"
   },
   "honeycomb": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "honeycomb_block": {
     "components": {
       "WaxBee": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/honeycomb_block.json"
   },
   "hopper": {
@@ -3030,7 +2618,6 @@
       "Iron": 3243240000,
       "Wood": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2516"
   },
   "hopper_minecart": {
@@ -3038,98 +2625,84 @@
       "Iron": 6486480000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/hopper_minecart.json"
   },
   "horn_coral": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "horn_coral_block": {
     "components": {
       "CaCO3": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "horn_coral_fan": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "host_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "howl_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "ice": {
     "components": {
       "Ice": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2465"
   },
   "infested_chiseled_stone_bricks": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "infested_cobblestone": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "infested_cracked_stone_bricks": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "infested_deepslate": {
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "infested_mossy_stone_bricks": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "infested_stone": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "infested_stone_bricks": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "iron_axe": {
@@ -3137,14 +2710,12 @@
       "Iron": 1873872000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2427"
   },
   "iron_bars": {
     "components": {
       "Iron": 243243000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2510"
   },
   "iron_block": {
@@ -3152,56 +2723,48 @@
     "components": {
       "Iron": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/iron_block.json"
   },
   "iron_boots": {
     "components": {
       "Iron": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2450"
   },
   "iron_boots_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "iron_chestplate": {
     "components": {
       "Iron": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2448"
   },
   "iron_chestplate_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "iron_door": {
     "components": {
       "Iron": 1297296000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/iron_door.json"
   },
   "iron_helmet": {
     "components": {
       "Iron": 3243240000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2447"
   },
   "iron_helmet_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "iron_hoe": {
@@ -3209,7 +2772,6 @@
       "Iron": 1225224000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2428"
   },
   "iron_horse_armor": {
@@ -3217,7 +2779,6 @@
       "Iron": 5189184000,
       "Leather": 3891888000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2461"
   },
   "iron_ingot": {
@@ -3225,21 +2786,18 @@
     "components": {
       "Iron": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "iron_leggings": {
     "components": {
       "Iron": 4540536000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2449"
   },
   "iron_leggings_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "iron_nugget": {
@@ -3247,7 +2805,6 @@
     "components": {
       "Iron": 72072000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "iron_ore": {
@@ -3255,7 +2812,6 @@
     "components": {
       "Iron": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "iron_pickaxe": {
@@ -3263,7 +2819,6 @@
       "Iron": 1873872000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2425"
   },
   "iron_shovel": {
@@ -3271,7 +2826,6 @@
       "Iron": 576576000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2426"
   },
   "iron_sword": {
@@ -3279,21 +2833,18 @@
       "Iron": 1225224000,
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2424"
   },
   "iron_trapdoor": {
     "components": {
       "Iron": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/iron_trapdoor.json"
   },
   "item_frame": {
     "components": {
       "Wood": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2575"
   },
   "jukebox": {
@@ -3301,21 +2852,18 @@
       "Diamond": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2583"
   },
   "jungle_boat": {
     "components": {
       "Junglewood": 3243240000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "jungle_button": {
     "components": {
       "Junglewood": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "jungle_chest_boat": {
@@ -3323,14 +2871,12 @@
       "Junglewood": 3243240000,
       "Wood": 5189184000
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "jungle_door": {
     "components": {
       "Junglewood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "jungle_fence": {
@@ -3338,7 +2884,6 @@
       "Junglewood": 648648000,
       "Wood": 162162000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "jungle_fence_gate": {
@@ -3346,7 +2891,6 @@
       "Junglewood": 1297296000,
       "Wood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "jungle_hanging_sign": {
@@ -3354,7 +2898,6 @@
       "Iron": 432432000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
   "jungle_log": {
@@ -3362,49 +2905,42 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "jungle_planks": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "jungle_pressure_plate": {
     "components": {
       "Junglewood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "jungle_sign": {
     "components": {
       "Wood": 1405404000
     },
-    "recoverable": true,
     "source": "1.20.1 sign: six planks and one half-unit stick divided by three"
   },
   "jungle_slab": {
     "components": {
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "jungle_stairs": {
     "components": {
       "Wood": 486486000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "jungle_trapdoor": {
     "components": {
       "Junglewood": 1945944000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "jungle_wood": {
@@ -3412,21 +2948,18 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "ladder": {
     "components": {
       "Wood": 756756000
     },
-    "recoverable": true,
     "source": "1.20.1 ladder: seven half-unit sticks divided by three; matches GT6 sawing"
   },
   "lantern": {
     "components": {
       "Iron": 575999424
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "lapis_block": {
@@ -3434,7 +2967,6 @@
     "components": {
       "Lapis": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/lapis_block.json"
   },
   "lapis_lazuli": {
@@ -3442,7 +2974,6 @@
     "components": {
       "Lapis": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "lapis_ore": {
@@ -3450,91 +2981,78 @@
     "components": {
       "Lapis": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "large_amethyst_bud": {
     "components": {
       "Amethyst": 1297296000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "lava_bucket": {
     "components": {
       "Iron": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
   "leather": {
     "components": {
       "Leather": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2524"
   },
   "leather_boots": {
     "components": {
       "Leather": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2442"
   },
   "leather_boots_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "leather_chestplate": {
     "components": {
       "Leather": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2440"
   },
   "leather_chestplate_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "leather_helmet": {
     "components": {
       "Leather": 3243240000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2439"
   },
   "leather_helmet_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "leather_horse_armor": {
     "components": {
       "Leather": 4540536000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/leather_horse_armor.json"
   },
   "leather_leggings": {
     "components": {
       "Leather": 4540536000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2441"
   },
   "leather_leggings_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "lectern": {
@@ -3542,7 +3060,6 @@
       "Paper": 5837832000,
       "Wood": 5189184000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/lectern.json"
   },
   "lever": {
@@ -3550,28 +3067,24 @@
       "Stone": 648648000,
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2529"
   },
   "light_blue_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "light_blue_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "light_blue_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "light_blue_dye": {
@@ -3579,224 +3092,192 @@
       "Bone": 324324000,
       "Lapis": 324324000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/light_blue_dye_from_blue_white_dye.json"
   },
   "light_blue_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "light_blue_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "light_blue_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "light_blue_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "light_gray_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "light_gray_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "light_gray_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "light_gray_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "light_gray_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "light_gray_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "light_gray_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "light_weighted_pressure_plate": {
     "components": {
       "Gold": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2511"
   },
   "lightning_rod": {
     "components": {
       "Copper": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/lightning_rod.json"
   },
   "lime_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "lime_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "lime_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "lime_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "lime_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "lime_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "lime_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "lingering_potion": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft bottle shell; contents are stack-dependent and not recycled"
   },
   "loom": {
     "components": {
       "Wood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "magenta_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "magenta_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "magenta_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "magenta_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "magenta_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "magenta_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "magenta_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "mangrove_boat": {
     "components": {
       "Mangrove": 3243240000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "mangrove_button": {
     "components": {
       "Mangrove": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "mangrove_chest_boat": {
@@ -3804,14 +3285,12 @@
       "Mangrove": 3243240000,
       "Wood": 5189184000
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "mangrove_door": {
     "components": {
       "Mangrove": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "mangrove_fence": {
@@ -3819,7 +3298,6 @@
       "Mangrove": 648648000,
       "Wood": 162162000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "mangrove_fence_gate": {
@@ -3827,7 +3305,6 @@
       "Mangrove": 1297296000,
       "Wood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "mangrove_hanging_sign": {
@@ -3835,7 +3312,6 @@
       "Iron": 432432000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
   "mangrove_log": {
@@ -3843,56 +3319,48 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "mangrove_planks": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "mangrove_pressure_plate": {
     "components": {
       "Mangrove": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "mangrove_roots": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "mangrove_sign": {
     "components": {
       "Wood": 1405404000
     },
-    "recoverable": true,
     "source": "1.20.1 sign: six planks and one half-unit stick divided by three"
   },
   "mangrove_slab": {
     "components": {
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "mangrove_stairs": {
     "components": {
       "Wood": 486486000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "mangrove_trapdoor": {
     "components": {
       "Mangrove": 1945944000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "mangrove_wood": {
@@ -3900,49 +3368,42 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "map": {
     "components": {
       "Paper": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2500"
   },
   "medium_amethyst_bud": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "milk_bucket": {
     "components": {
       "Iron": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
   "minecart": {
     "components": {
       "Iron": 3243240000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2507"
   },
   "miner_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "mojang_banner_pattern": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "mossy_cobblestone": {
@@ -3950,70 +3411,60 @@
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2561"
   },
   "mossy_cobblestone_slab": {
     "components": {
       "Stone": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/mossy_cobblestone_slab.json"
   },
   "mossy_cobblestone_stairs": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/mossy_cobblestone_stairs_from_mossy_cobblestone_stonecutting.json"
   },
   "mossy_cobblestone_wall": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2535"
   },
   "mossy_stone_brick_slab": {
     "components": {
       "Stone": 324324000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/mossy_stone_brick_slab.json"
   },
   "mossy_stone_brick_stairs": {
     "components": {
       "Stone": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/mossy_stone_brick_stairs_from_mossy_stone_brick_stonecutting.json"
   },
   "mossy_stone_brick_wall": {
     "components": {
       "Stone": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/mossy_stone_brick_wall.json"
   },
   "mossy_stone_bricks": {
     "components": {
       "Stone": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "mourner_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "mushroom_stem": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "mutton": {
@@ -4021,56 +3472,48 @@
       "Bone": 72072000,
       "MeatRaw": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE modern vanilla meat cuts"
   },
   "name_tag": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "nether_brick": {
     "components": {
       "NetherBrick": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "nether_brick_fence": {
     "components": {
       "NetherBrick": 1945944000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2489"
   },
   "nether_brick_slab": {
     "components": {
       "NetherBrick": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2488"
   },
   "nether_brick_stairs": {
     "components": {
       "NetherBrick": 1945944000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2487"
   },
   "nether_brick_wall": {
     "components": {
       "NetherBrick": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/nether_brick_wall.json"
   },
   "nether_bricks": {
     "components": {
       "NetherBrick": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2485"
   },
   "nether_gold_ore": {
@@ -4078,7 +3521,6 @@
     "components": {
       "Gold": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "nether_quartz_ore": {
@@ -4086,7 +3528,6 @@
     "components": {
       "NetherQuartz": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "nether_star": {
@@ -4094,7 +3535,6 @@
     "components": {
       "NetherStar": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "netherite_axe": {
@@ -4103,7 +3543,6 @@
       "Netherite": 648648000,
       "Wood": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft smithing: diamond equipment plus one netherite ingot"
   },
   "netherite_block": {
@@ -4111,7 +3550,6 @@
     "components": {
       "Netherite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/netherite_block.json"
   },
   "netherite_boots": {
@@ -4119,14 +3557,12 @@
       "Diamond": 2594592000,
       "Netherite": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft smithing: diamond equipment plus one netherite ingot"
   },
   "netherite_boots_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "netherite_chestplate": {
@@ -4134,14 +3570,12 @@
       "Diamond": 5189184000,
       "Netherite": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft smithing: diamond equipment plus one netherite ingot"
   },
   "netherite_chestplate_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "netherite_helmet": {
@@ -4149,14 +3583,12 @@
       "Diamond": 3243240000,
       "Netherite": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft smithing: diamond equipment plus one netherite ingot"
   },
   "netherite_helmet_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "netherite_hoe": {
@@ -4165,14 +3597,12 @@
       "Netherite": 648648000,
       "Wood": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft smithing: diamond equipment plus one netherite ingot"
   },
   "netherite_ingot": {
     "components": {
       "Netherite": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "netherite_leggings": {
@@ -4180,14 +3610,12 @@
       "Diamond": 4540536000,
       "Netherite": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft smithing: diamond equipment plus one netherite ingot"
   },
   "netherite_leggings_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "netherite_pickaxe": {
@@ -4196,7 +3624,6 @@
       "Netherite": 648648000,
       "Wood": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft smithing: diamond equipment plus one netherite ingot"
   },
   "netherite_scrap": {
@@ -4204,7 +3631,6 @@
     "components": {
       "AncientDebris": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "netherite_shovel": {
@@ -4213,7 +3639,6 @@
       "Netherite": 648648000,
       "Wood": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft smithing: diamond equipment plus one netherite ingot"
   },
   "netherite_sword": {
@@ -4222,14 +3647,12 @@
       "Netherite": 648648000,
       "Wood": 324324000
     },
-    "recoverable": false,
     "source": "Minecraft smithing: diamond equipment plus one netherite ingot"
   },
   "netherite_upgrade_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "netherrack": {
@@ -4237,7 +3660,6 @@
     "components": {
       "Netherrack": 5837832000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "note_block": {
@@ -4245,21 +3667,18 @@
       "Redstone": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2582"
   },
   "oak_boat": {
     "components": {
       "Oak": 3243240000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "oak_button": {
     "components": {
       "Oak": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "oak_chest_boat": {
@@ -4267,14 +3686,12 @@
       "Oak": 3243240000,
       "Wood": 5189184000
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "oak_door": {
     "components": {
       "Oak": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "oak_fence": {
@@ -4282,7 +3699,6 @@
       "Oak": 648648000,
       "Wood": 162162000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "oak_fence_gate": {
@@ -4290,7 +3706,6 @@
       "Oak": 1297296000,
       "Wood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "oak_hanging_sign": {
@@ -4298,7 +3713,6 @@
       "Iron": 432432000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
   "oak_log": {
@@ -4306,49 +3720,42 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "oak_planks": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "oak_pressure_plate": {
     "components": {
       "Oak": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "oak_sign": {
     "components": {
       "Wood": 1405404000
     },
-    "recoverable": true,
     "source": "1.20.1 sign: six planks and one half-unit stick divided by three"
   },
   "oak_slab": {
     "components": {
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "oak_stairs": {
     "components": {
       "Wood": 486486000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "oak_trapdoor": {
     "components": {
       "Oak": 1945944000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "oak_wood": {
@@ -4356,7 +3763,6 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "observer": {
@@ -4365,7 +3771,6 @@
       "Redstone": 1297296000,
       "Stone": 35026992000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/observer.json"
   },
   "obsidian": {
@@ -4373,98 +3778,84 @@
     "components": {
       "Obsidian": 5837832000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "orange_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "orange_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "orange_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "orange_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "orange_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "orange_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "orange_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "oxidized_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "oxidized_cut_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "oxidized_cut_copper_slab": {
     "components": {
       "Copper": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "oxidized_cut_copper_stairs": {
     "components": {
       "Copper": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "packed_ice": {
     "components": {
       "Ice": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2466"
   },
   "painting": {
     "components": {
       "Wood": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2574"
   },
   "paper": {
@@ -4472,84 +3863,72 @@
     "components": {
       "Paper": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "petrified_oak_slab": {
     "components": {
       "PetrifiedWood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2545"
   },
   "phantom_membrane": {
     "components": {
       "Leather": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "piglin_banner_pattern": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "piglin_head": {
     "components": {
       "Bone": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "pink_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "pink_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "pink_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "pink_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "pink_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "pink_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "pink_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "piston": {
@@ -4557,196 +3936,168 @@
       "Stone": 2594592000,
       "Wood": 1945944000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2585"
   },
   "player_head": {
     "components": {
       "Bone": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "plenty_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "poisonous_potato": {
     "components": {
       "Potato": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_andesite": {
     "components": {
       "Andesite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/polished_andesite.json"
   },
   "polished_andesite_slab": {
     "components": {
       "Andesite": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/polished_andesite_slab_from_andesite_stonecutting.json"
   },
   "polished_andesite_stairs": {
     "components": {
       "Andesite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/polished_andesite_stairs_from_andesite_stonecutting.json"
   },
   "polished_basalt": {
     "components": {
       "Basalt": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/polished_basalt.json"
   },
   "polished_blackstone": {
     "components": {
       "Blackstone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_blackstone_brick_slab": {
     "components": {
       "Blackstone": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_blackstone_brick_stairs": {
     "components": {
       "Blackstone": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_blackstone_brick_wall": {
     "components": {
       "Blackstone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_blackstone_bricks": {
     "components": {
       "Blackstone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_blackstone_button": {
     "components": {
       "Blackstone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_blackstone_pressure_plate": {
     "components": {
       "Blackstone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_blackstone_slab": {
     "components": {
       "Blackstone": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_blackstone_stairs": {
     "components": {
       "Blackstone": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_blackstone_wall": {
     "components": {
       "Blackstone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_deepslate": {
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_deepslate_slab": {
     "components": {
       "Deepslate": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_deepslate_stairs": {
     "components": {
       "Deepslate": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_deepslate_wall": {
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "polished_diorite": {
     "components": {
       "Diorite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/polished_diorite.json"
   },
   "polished_diorite_slab": {
     "components": {
       "Diorite": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/polished_diorite_slab_from_diorite_stonecutting.json"
   },
   "polished_diorite_stairs": {
     "components": {
       "Diorite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/polished_diorite_stairs_from_diorite_stonecutting.json"
   },
   "polished_granite": {
     "components": {
       "Granite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/polished_granite.json"
   },
   "polished_granite_slab": {
     "components": {
       "Granite": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/polished_granite_slab_from_granite_stonecutting.json"
   },
   "polished_granite_stairs": {
     "components": {
       "Granite": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/polished_granite_stairs_from_granite_stonecutting.json"
   },
   "porkchop": {
@@ -4754,28 +4105,24 @@
       "Bone": 72072000,
       "MeatRaw": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2589"
   },
   "potato": {
     "components": {
       "Potato": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "potion": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft bottle shell; contents are stack-dependent and not recycled"
   },
   "powder_snow_bucket": {
     "components": {
       "Iron": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
   "powered_rail": {
@@ -4784,77 +4131,66 @@
       "Redstone": 108108000,
       "Wood": 54054000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/powered_rail.json"
   },
   "prismarine": {
     "components": {
       "Prismarine": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/prismarine.json"
   },
   "prismarine_brick_slab": {
     "components": {
       "Prismarine": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/prismarine_brick_slab.json"
   },
   "prismarine_brick_stairs": {
     "components": {
       "Prismarine": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/prismarine_brick_stairs_from_prismarine_stonecutting.json"
   },
   "prismarine_bricks": {
     "components": {
       "Prismarine": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/prismarine_bricks.json"
   },
   "prismarine_crystals": {
     "components": {
       "Prismarine": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "prismarine_shard": {
     "components": {
       "Prismarine": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "prismarine_slab": {
     "components": {
       "Prismarine": 1297296000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/prismarine_slab.json"
   },
   "prismarine_stairs": {
     "components": {
       "Prismarine": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/prismarine_stairs_from_prismarine_stonecutting.json"
   },
   "prismarine_wall": {
     "components": {
       "Prismarine": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/prismarine_wall.json"
   },
   "prize_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "pufferfish": {
@@ -4863,63 +4199,54 @@
       "FishOil": 648648000,
       "FishRaw": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2600"
   },
   "pufferfish_bucket": {
     "components": {
       "Iron": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
   "purple_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "purple_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "purple_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "purple_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "purple_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "purple_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "purple_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "quartz": {
@@ -4927,7 +4254,6 @@
     "components": {
       "NetherQuartz": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "quartz_block": {
@@ -4935,35 +4261,30 @@
     "components": {
       "NetherQuartz": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2490"
   },
   "quartz_bricks": {
     "components": {
       "NetherQuartz": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/quartz_bricks.json"
   },
   "quartz_pillar": {
     "components": {
       "NetherQuartz": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/quartz_pillar.json"
   },
   "quartz_slab": {
     "components": {
       "NetherQuartz": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2493"
   },
   "quartz_stairs": {
     "components": {
       "NetherQuartz": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 stonecutting adaptation: cap GT6 six-quartz stair at four"
   },
   "rabbit": {
@@ -4971,21 +4292,18 @@
       "Bone": 72072000,
       "MeatRaw": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE modern vanilla meat cuts"
   },
   "rabbit_foot": {
     "components": {
       "MeatRaw": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "rabbit_hide": {
     "components": {
       "Leather": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "rail": {
@@ -4993,14 +4311,12 @@
       "Iron": 243243000,
       "Wood": 20270250
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/rail.json"
   },
   "raiser_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "raw_copper": {
@@ -5008,7 +4324,6 @@
     "components": {
       "Copper": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "raw_copper_block": {
@@ -5016,7 +4331,6 @@
     "components": {
       "Copper": 11675664000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "raw_gold": {
@@ -5024,7 +4338,6 @@
     "components": {
       "Gold": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "raw_gold_block": {
@@ -5032,7 +4345,6 @@
     "components": {
       "Gold": 11675664000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "raw_iron": {
@@ -5040,7 +4352,6 @@
     "components": {
       "Iron": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "raw_iron_block": {
@@ -5048,35 +4359,30 @@
     "components": {
       "Iron": 11675664000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "red_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "red_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "red_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "red_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "red_sand": {
@@ -5084,56 +4390,48 @@
     "components": {
       "RedSand": 5837832000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "red_sandstone": {
     "components": {
       "RedSand": 23351328000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/red_sandstone.json"
   },
   "red_sandstone_slab": {
     "components": {
       "RedSand": 11675664000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/red_sandstone_slab_from_red_sandstone_stonecutting.json"
   },
   "red_sandstone_stairs": {
     "components": {
       "RedSand": 23351328000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/red_sandstone_stairs_from_red_sandstone_stonecutting.json"
   },
   "red_sandstone_wall": {
     "components": {
       "RedSand": 23351328000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/red_sandstone_wall.json"
   },
   "red_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "red_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "red_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "redstone": {
@@ -5141,7 +4439,6 @@
     "components": {
       "Redstone": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "redstone_block": {
@@ -5149,7 +4446,6 @@
     "components": {
       "Redstone": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/redstone_block.json"
   },
   "redstone_lamp": {
@@ -5157,7 +4453,6 @@
       "Glowstone": 2594592000,
       "Redstone": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2471"
   },
   "redstone_ore": {
@@ -5165,7 +4460,6 @@
     "components": {
       "Redstone": 1297296000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "redstone_torch": {
@@ -5173,14 +4467,12 @@
       "Redstone": 648648000,
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2581"
   },
   "reinforced_deepslate": {
     "components": {
       "Deepslate": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "repeater": {
@@ -5189,7 +4481,6 @@
       "Stone": 17513496000,
       "Wood": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/repeater.json"
   },
   "respawn_anchor": {
@@ -5197,14 +4488,12 @@
       "Glowstone": 7783776000,
       "Obsidian": 3891888000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/respawn_anchor.json"
   },
   "rib_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "rotten_flesh": {
@@ -5212,7 +4501,6 @@
       "Bone": 72072000,
       "MeatRotten": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2592"
   },
   "saddle": {
@@ -5220,7 +4508,6 @@
       "Leather": 3891888000,
       "Steel": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2460"
   },
   "salmon": {
@@ -5229,14 +4516,12 @@
       "FishOil": 2594592000,
       "FishRaw": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2598"
   },
   "salmon_bucket": {
     "components": {
       "Iron": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
   "sand": {
@@ -5244,7 +4529,6 @@
     "components": {
       "Sand": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2530"
   },
   "sandstone": {
@@ -5252,98 +4536,84 @@
     "components": {
       "Sand": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2532"
   },
   "sandstone_slab": {
     "components": {
       "Sand": 2918916000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2541"
   },
   "sandstone_stairs": {
     "components": {
       "Sand": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/sandstone_stairs_from_sandstone_stonecutting.json"
   },
   "sandstone_wall": {
     "components": {
       "Sand": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/sandstone_wall.json"
   },
   "sculk": {
     "components": {
       "Sculk": 2594592000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "sculk_catalyst": {
     "components": {
       "Sculk": 2594592000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "sculk_sensor": {
     "components": {
       "Sculk": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "sculk_shrieker": {
     "components": {
       "Sculk": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "sculk_vein": {
     "components": {
       "Sculk": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "sentry_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "shaper_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "sheaf_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "shears": {
     "components": {
       "Iron": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2459"
   },
   "shelter_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "shield": {
@@ -5351,49 +4621,42 @@
       "Iron": 648648000,
       "Wood": 3891888000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/shield.json"
   },
   "silence_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "skeleton_skull": {
     "components": {
       "Bone": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2473"
   },
   "skull_banner_pattern": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "skull_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "slime_ball": {
     "components": {
       "Rubber": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "small_amethyst_bud": {
     "components": {
       "Amethyst": 324324000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "smithing_table": {
@@ -5401,7 +4664,6 @@
       "Iron": 1297296000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/smithing_table.json"
   },
   "smoker": {
@@ -5409,126 +4671,108 @@
       "Stone": 5189184000,
       "Wood": 10378368000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/smoker.json"
   },
   "smooth_basalt": {
     "components": {
       "Basalt": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "smooth_quartz": {
     "components": {
       "NetherQuartz": 2594592000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "smooth_quartz_slab": {
     "components": {
       "NetherQuartz": 1297296000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/smooth_quartz_slab.json"
   },
   "smooth_quartz_stairs": {
     "components": {
       "NetherQuartz": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/smooth_quartz_stairs_from_smooth_quartz_stonecutting.json"
   },
   "smooth_red_sandstone": {
     "components": {
       "RedSand": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "smooth_red_sandstone_slab": {
     "components": {
       "RedSand": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/smooth_red_sandstone_slab.json"
   },
   "smooth_red_sandstone_stairs": {
     "components": {
       "RedSand": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/smooth_red_sandstone_stairs_from_smooth_red_sandstone_stonecutting.json"
   },
   "smooth_sandstone": {
     "components": {
       "Sand": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "smooth_sandstone_slab": {
     "components": {
       "Sand": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/smooth_sandstone_slab.json"
   },
   "smooth_sandstone_stairs": {
     "components": {
       "Sand": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/smooth_sandstone_stairs_from_smooth_sandstone_stonecutting.json"
   },
   "smooth_stone": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "smooth_stone_slab": {
     "components": {
       "Stone": 2918916000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2537"
   },
   "snort_pottery_sherd": {
     "components": {
       "Ceramic": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "snout_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "snow": {
     "components": {
       "Snow": 81081000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "snow_block": {
     "components": {
       "Snow": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2468"
   },
   "snowball": {
     "components": {
       "Snow": 162162000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2467"
   },
   "soul_campfire": {
@@ -5536,14 +4780,12 @@
       "SoulSand": 5837832000,
       "Wood": 8756748000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 explicit composition convention"
   },
   "soul_lantern": {
     "components": {
       "Iron": 575999424
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "soul_sand": {
@@ -5551,49 +4793,42 @@
     "components": {
       "SoulSand": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "soul_soil": {
     "components": {
       "SoulSand": 5837832000
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "spider_eye": {
     "components": {
       "MeatRaw": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "spire_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "splash_potion": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft bottle shell; contents are stack-dependent and not recycled"
   },
   "spruce_boat": {
     "components": {
       "Spruce": 3243240000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "spruce_button": {
     "components": {
       "Spruce": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "spruce_chest_boat": {
@@ -5601,14 +4836,12 @@
       "Spruce": 3243240000,
       "Wood": 5189184000
     },
-    "recoverable": false,
     "source": "GT6CE vanilla material composition"
   },
   "spruce_door": {
     "components": {
       "Spruce": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "spruce_fence": {
@@ -5616,7 +4849,6 @@
       "Spruce": 648648000,
       "Wood": 162162000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "spruce_fence_gate": {
@@ -5624,7 +4856,6 @@
       "Spruce": 1297296000,
       "Wood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "spruce_hanging_sign": {
@@ -5632,7 +4863,6 @@
       "Iron": 432432000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
   "spruce_log": {
@@ -5640,49 +4870,42 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "spruce_planks": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "spruce_pressure_plate": {
     "components": {
       "Spruce": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "spruce_sign": {
     "components": {
       "Wood": 1405404000
     },
-    "recoverable": true,
     "source": "1.20.1 sign: six planks and one half-unit stick divided by three"
   },
   "spruce_slab": {
     "components": {
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "spruce_stairs": {
     "components": {
       "Wood": 486486000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "spruce_trapdoor": {
     "components": {
       "Spruce": 1945944000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "spruce_wood": {
@@ -5690,7 +4913,6 @@
       "Bark": 648648000,
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 WoodEntry: six sawn planks plus two wood units and one bark"
   },
   "spyglass": {
@@ -5698,7 +4920,6 @@
       "Amethyst": 648648000,
       "Copper": 1297296000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/spyglass.json"
   },
   "stick": {
@@ -5706,7 +4927,6 @@
     "components": {
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "sticky_piston": {
@@ -5714,7 +4934,6 @@
       "Stone": 2594592000,
       "Wood": 1945944000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2586"
   },
   "stone": {
@@ -5722,7 +4941,6 @@
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2556"
   },
   "stone_axe": {
@@ -5730,42 +4948,36 @@
       "Stone": 1873872000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2422"
   },
   "stone_brick_slab": {
     "components": {
       "Stone": 2918916000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2553"
   },
   "stone_brick_stairs": {
     "components": {
       "Stone": 4378374000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2534"
   },
   "stone_brick_wall": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/stone_brick_wall.json"
   },
   "stone_bricks": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2559"
   },
   "stone_button": {
     "components": {
       "Stone": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2562"
   },
   "stone_hoe": {
@@ -5773,7 +4985,6 @@
       "Stone": 1225224000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2423"
   },
   "stone_pickaxe": {
@@ -5781,14 +4992,12 @@
       "Stone": 1873872000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2420"
   },
   "stone_pressure_plate": {
     "components": {
       "Stone": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2563"
   },
   "stone_shovel": {
@@ -5796,21 +5005,18 @@
       "Stone": 576576000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2421"
   },
   "stone_slab": {
     "components": {
       "Stone": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/stone_slab.json"
   },
   "stone_stairs": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/stone_stairs_from_stone_stonecutting.json"
   },
   "stone_sword": {
@@ -5818,7 +5024,6 @@
       "Stone": 1225224000,
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2419"
   },
   "stonecutter": {
@@ -5826,154 +5031,132 @@
       "Iron": 648648000,
       "Stone": 17513496000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/stonecutter.json"
   },
   "stripped_acacia_log": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_acacia_wood": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_bamboo_block": {
     "components": {
       "Bamboo": 5189184000
     },
-    "recoverable": false,
     "source": "GT6CE bamboo material content"
   },
   "stripped_birch_log": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_birch_wood": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_cherry_log": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_cherry_wood": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_crimson_hyphae": {
     "components": {
       "Wood": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "stripped_crimson_stem": {
     "components": {
       "Wood": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "stripped_dark_oak_log": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_dark_oak_wood": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_jungle_log": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_jungle_wood": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_mangrove_log": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_mangrove_wood": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_oak_log": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_oak_wood": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_spruce_log": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_spruce_wood": {
     "components": {
       "Wood": 5189184000
     },
-    "recoverable": true,
     "source": "GT6 BeamEntry: seven sawn planks plus one wood unit; modern stripped log"
   },
   "stripped_warped_hyphae": {
     "components": {
       "Wood": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "stripped_warped_stem": {
     "components": {
       "Wood": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "sugar": {
@@ -5981,28 +5164,24 @@
     "components": {
       "Sugar": 648648000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "suspicious_gravel": {
     "components": {
       "Stone": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "suspicious_sand": {
     "components": {
       "Sand": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "tadpole_bucket": {
     "components": {
       "Iron": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
   "target": {
@@ -6010,21 +5189,18 @@
       "Redstone": 2594592000,
       "Wheat": 5837832000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/target.json"
   },
   "terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2477"
   },
   "tide_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "tinted_glass": {
@@ -6032,7 +5208,6 @@
       "Amethyst": 1297296000,
       "Glass": 2918916000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/tinted_glass.json"
   },
   "tnt": {
@@ -6040,7 +5215,6 @@
       "Gunpowder": 2594592000,
       "SiliconDioxide": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 explicit composition convention"
   },
   "tnt_minecart": {
@@ -6049,7 +5223,6 @@
       "Iron": 3243240000,
       "SiliconDioxide": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/tnt_minecart.json"
   },
   "trapped_chest": {
@@ -6057,7 +5230,6 @@
       "Iron": 324324000,
       "Wood": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2579"
   },
   "trident": {
@@ -6065,7 +5237,6 @@
       "Prismarine": 1945944000,
       "Wood": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 explicit composition convention"
   },
   "tripwire_hook": {
@@ -6073,7 +5244,6 @@
       "Iron": 324324000,
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2517"
   },
   "tropical_fish": {
@@ -6082,70 +5252,60 @@
       "FishOil": 648648000,
       "FishRaw": 1297296000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2599"
   },
   "tropical_fish_bucket": {
     "components": {
       "Iron": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
   "tube_coral": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "tube_coral_block": {
     "components": {
       "CaCO3": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "tube_coral_fan": {
     "components": {
       "CaCO3": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "turtle_helmet_amethyst_trim": {
     "components": {
       "Amethyst": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "vex_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "ward_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "warped_button": {
     "components": {
       "Warpedwood": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "warped_door": {
     "components": {
       "Warpedwood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "warped_fence": {
@@ -6153,7 +5313,6 @@
       "Warpedwood": 648648000,
       "Wood": 162162000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "warped_fence_gate": {
@@ -6161,7 +5320,6 @@
       "Warpedwood": 1297296000,
       "Wood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material and generic Wood sticks"
   },
   "warped_hanging_sign": {
@@ -6169,413 +5327,354 @@
       "Iron": 432432000,
       "Wood": 2594592000
     },
-    "recoverable": false,
     "source": "Minecraft hanging sign recipe, generic Wood"
   },
   "warped_hyphae": {
     "components": {
       "Wood": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "warped_nylium": {
     "components": {
       "Netherrack": 5837832000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "warped_planks": {
     "components": {
       "Wood": 648648000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "warped_pressure_plate": {
     "components": {
       "Warpedwood": 1297296000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "warped_sign": {
     "components": {
       "Wood": 1405404000
     },
-    "recoverable": true,
     "source": "1.20.1 sign: six planks and one half-unit stick divided by three"
   },
   "warped_slab": {
     "components": {
       "Wood": 324324000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "warped_stairs": {
     "components": {
       "Wood": 486486000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "warped_stem": {
     "components": {
       "Wood": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 wood family, modern species use generic Wood"
   },
   "warped_trapdoor": {
     "components": {
       "Warpedwood": 1945944000
     },
-    "recoverable": true,
     "source": "GT6CE wood composition: corresponding wood material"
   },
   "water_bucket": {
     "components": {
       "Iron": 1945944000
     },
-    "recoverable": false,
     "source": "Minecraft filled bucket shell; contents excluded from bulk recovery"
   },
   "waxed_copper_block": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_cut_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_cut_copper_slab": {
     "components": {
       "Copper": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_cut_copper_stairs": {
     "components": {
       "Copper": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_exposed_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_exposed_cut_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_exposed_cut_copper_slab": {
     "components": {
       "Copper": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_exposed_cut_copper_stairs": {
     "components": {
       "Copper": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_oxidized_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_oxidized_cut_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_oxidized_cut_copper_slab": {
     "components": {
       "Copper": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_oxidized_cut_copper_stairs": {
     "components": {
       "Copper": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_weathered_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_weathered_cut_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_weathered_cut_copper_slab": {
     "components": {
       "Copper": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "waxed_weathered_cut_copper_stairs": {
     "components": {
       "Copper": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "wayfinder_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "weathered_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "weathered_cut_copper": {
     "components": {
       "Copper": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "weathered_cut_copper_slab": {
     "components": {
       "Copper": 2918916000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "weathered_cut_copper_stairs": {
     "components": {
       "Copper": 4378374000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "wheat": {
     "components": {
       "Wheat": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "white_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "white_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "white_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "white_dye": {
     "components": {
       "Bone": 648648000
     },
-    "recoverable": false,
     "source": "Minecraft 1.20.1 recipe: data/minecraft/recipes/white_dye.json"
   },
   "white_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "white_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "white_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "white_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "wild_armor_trim_smithing_template": {
     "components": {
       "Paper": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "wind_charge": {
     "components": {
       "Breeze": 81081000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "wither_skeleton_skull": {
     "components": {
       "Bone": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2472"
   },
   "wooden_axe": {
     "components": {
       "Wood": 2522520000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2417"
   },
   "wooden_hoe": {
     "components": {
       "Wood": 1873872000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2418"
   },
   "wooden_pickaxe": {
     "components": {
       "Wood": 2522520000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2415"
   },
   "wooden_shovel": {
     "components": {
       "Wood": 1225224000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2416"
   },
   "wooden_sword": {
     "components": {
       "Wood": 1549548000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2414"
   },
   "writable_book": {
     "components": {
       "Paper": 1945944000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2498"
   },
   "written_book": {
     "components": {
       "Paper": 1945944000
     },
-    "recoverable": false,
     "source": "GT6 LoaderItemData.java:2497"
   },
   "yellow_candle": {
     "components": {
       "WaxBee": 648648000
     },
-    "recoverable": true,
     "source": "GT6CE vanilla material composition"
   },
   "yellow_concrete": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "yellow_concrete_powder": {
     "components": {
       "Concrete": 5837832000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   },
   "yellow_glazed_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "1.20.1 material family"
   },
   "yellow_stained_glass": {
     "components": {
       "Glass": 5837832000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2518"
   },
   "yellow_stained_glass_pane": {
     "components": {
       "Glass": 648648000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2520"
   },
   "yellow_terracotta": {
     "components": {
       "Ceramic": 2594592000
     },
-    "recoverable": true,
     "source": "GT6 LoaderItemData.java:2478"
   },
   "zombie_head": {
     "components": {
       "Bone": 648648000
     },
-    "recoverable": false,
     "source": "1.20.1 material family"
   }
 }

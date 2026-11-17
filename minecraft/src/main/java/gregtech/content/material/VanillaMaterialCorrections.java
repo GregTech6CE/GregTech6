@@ -134,13 +134,14 @@ public final class VanillaMaterialCorrections {
         }
         if (waxed) components.add(MaterialComponent.of(GTMaterialRegistry.get("WaxBee"), U));
         String jsonSource = VanillaCompositionLoader.declarationId(item).orElse(null);
-        ItemMaterialRegistry.register(
-                item,
-                new ItemComposition(
-                        null, components, components.get(0).material(), "GT6CE modern vanilla materials", true),
+        var source = new ItemCompositionSource(
                 ItemCompositionSource.Kind.CORRECTION,
                 "gt6ce:vanilla-corrections/" + path,
                 "reviewed correction",
+                "GT6CE modern vanilla materials",
+                "");
+        ItemMaterialRegistry.registerDeclared(
+                item, new ItemComposition(null, components, components.get(0).material(), java.util.List.of(source)),
                 jsonSource);
     }
 }

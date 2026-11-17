@@ -49,8 +49,7 @@ public final class WoodMaterialCompositions {
                                     "gt6ce:wood-log/" + species.id(),
                                     "GT6 WoodEntry",
                                     species.id(),
-                                    "")),
-                            true),
+                                    ""))),
                     ItemCompositionSource.Kind.EXPLICIT,
                     "gt6ce:wood-log/" + species.id(),
                     "GT6 WoodEntry");
@@ -75,8 +74,7 @@ public final class WoodMaterialCompositions {
                                     "gt6ce:wood-log/" + wood.kind(),
                                     "GT6 WoodEntry Log1",
                                     wood.kind(),
-                                    "")),
-                            true),
+                                    ""))),
                     ItemCompositionSource.Kind.EXPLICIT,
                     "gt6ce:wood-log/" + wood.kind(),
                     "GT6 WoodEntry Log1");
@@ -98,6 +96,12 @@ public final class WoodMaterialCompositions {
         var bark = GTMaterialRegistry.get("Bark");
         for (String type : types) {
             String raw = wood + "_" + type;
+            var source = new ItemCompositionSource(
+                    ItemCompositionSource.Kind.EXPLICIT,
+                    "gt6ce:wood-entry/" + raw,
+                    "GT6 wood material binding",
+                    "GT6 WoodEntry (modern wood binding)",
+                    "");
             registerVanilla(
                     raw,
                     new ItemComposition(
@@ -106,8 +110,7 @@ public final class WoodMaterialCompositions {
                                     MaterialComponent.of(material, 8 * GTValues.U),
                                     MaterialComponent.of(bark, GTValues.U)),
                             material,
-                            "GT6 WoodEntry (modern wood binding)",
-                            true));
+                            List.of(source)));
             registerVanilla("stripped_" + raw, new ItemComposition(null, material, 8 * GTValues.U));
         }
         registerVanilla(wood + "_planks", new ItemComposition(MaterialPrefix.plate, material, GTValues.U));
