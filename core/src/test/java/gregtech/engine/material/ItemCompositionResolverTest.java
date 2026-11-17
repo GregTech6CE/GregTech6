@@ -190,18 +190,12 @@ class ItemCompositionResolverTest {
     }
 
     private static ItemCompositionCandidate candidate(
-            String id,
-            ItemCompositionSource.Kind kind,
-            gregtech.api.material.GTMaterial material,
-            long amount) {
+            String id, ItemCompositionSource.Kind kind, gregtech.api.material.GTMaterial material, long amount) {
         return new ItemCompositionCandidate(composition(id, kind, material, amount), null);
     }
 
     private static ItemComposition composition(
-            String id,
-            ItemCompositionSource.Kind kind,
-            gregtech.api.material.GTMaterial material,
-            long amount) {
+            String id, ItemCompositionSource.Kind kind, gregtech.api.material.GTMaterial material, long amount) {
         return new ItemComposition(
                 null,
                 List.of(MaterialComponent.of(material, amount)),

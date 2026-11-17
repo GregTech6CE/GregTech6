@@ -213,10 +213,11 @@ public final class ExternalOreProcessing {
                 if (output.isEmpty()) continue;
                 for (var item : entry.getValue()) {
                     var map = MachineRecipeMaps.CrucibleSmelting;
-                    var recipe = map.register(RecipeBuilder.of(0, 0)
-                            .itemInputs(new ItemStack(item))
-                            .itemOutputs(output.copy())
-                            .specialValue(preview.temperatureK()),
+                    var recipe = map.register(
+                            RecipeBuilder.of(0, 0)
+                                    .itemInputs(new ItemStack(item))
+                                    .itemOutputs(output.copy())
+                                    .specialValue(preview.temperatureK()),
                             RecipeMap.Registration.DISPLAY);
                     if (recipe == null) continue;
                     OWNED.computeIfAbsent(map, unused -> Collections.newSetFromMap(new IdentityHashMap<>()))

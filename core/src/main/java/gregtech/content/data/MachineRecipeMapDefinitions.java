@@ -13,7 +13,7 @@ public final class MachineRecipeMapDefinitions {
             .fluids(1, 1, 0)
             .build();
     public static final RecipeMapSpec Microwave = RecipeMapSpec.builder(
-            "gt.recipe.microwave", "Microwave", GUI + "Oven")
+                    "gt.recipe.microwave", "Microwave", GUI + "Oven")
             .items(1, 1, 1)
             .fluids(1, 1, 0)
             .build();
@@ -25,13 +25,13 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Distillery = RecipeMapSpec.builder(
-            "gt.recipe.distillery", "Distillery", GUI + "Distillery")
+                    "gt.recipe.distillery", "Distillery", GUI + "Distillery")
             .items(1, 2, 1)
             .fluids(1, 2, 1)
             .minimumInputs(2)
             .build();
     public static final RecipeMapSpec Extruder = RecipeMapSpec.builder(
-            "gt.recipe.extruder", "Extruder", GUI + "Extruder")
+                    "gt.recipe.extruder", "Extruder", GUI + "Extruder")
             .items(2, 2, 2)
             .fluids(0, 0, 0)
             .bucketInput(true)
@@ -45,7 +45,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec CrystallisationCrucible = RecipeMapSpec.builder(
-            "gt.recipe.crystallisationcrucible", "Crystallisation Crucible", GUI + "CrystallisationCrucible")
+                    "gt.recipe.crystallisationcrucible", "Crystallisation Crucible", GUI + "CrystallisationCrucible")
             .items(1, 1, 1)
             .fluids(3, 0, 1)
             .minimumInputs(1)
@@ -60,7 +60,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Laminator = RecipeMapSpec.builder(
-            "gt.recipe.laminator", "Laminator", GUI + "Laminator")
+                    "gt.recipe.laminator", "Laminator", GUI + "Laminator")
             .items(2, 1, 2)
             .fluids(0, 0, 0)
             .minimumInputs(2)
@@ -68,7 +68,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec CatalyticCracking = RecipeMapSpec.builder(
-            "gt.recipe.catalyticcracking", "Catalytic Cracking", GUI + "CatalyticCracking")
+                    "gt.recipe.catalyticcracking", "Catalytic Cracking", GUI + "CatalyticCracking")
             .items(1, 3, 0)
             .fluids(2, 9, 1)
             .minimumInputs(2)
@@ -76,7 +76,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec SteamCracking = RecipeMapSpec.builder(
-            "gt.recipe.steamcracking", "Steam Cracking", GUI + "SteamCracking")
+                    "gt.recipe.steamcracking", "Steam Cracking", GUI + "SteamCracking")
             .items(1, 3, 0)
             .fluids(2, 9, 1)
             .minimumInputs(2)
@@ -84,19 +84,19 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec DistillationTower = RecipeMapSpec.builder(
-            "gt.recipe.distillationtower", "Distillation Tower", GUI + "DistillationTower")
+                    "gt.recipe.distillationtower", "Distillation Tower", GUI + "DistillationTower")
             .items(1, 3, 0)
             .fluids(1, 9, 0)
             .minimumInputs(1)
             .build();
     public static final RecipeMapSpec CryoDistillationTower = RecipeMapSpec.builder(
-            "gt.recipe.cryodistillationtower", "Cryo Distillation Tower", GUI + "CryoDistillationTower")
+                    "gt.recipe.cryodistillationtower", "Cryo Distillation Tower", GUI + "CryoDistillationTower")
             .items(1, 3, 0)
             .fluids(1, 9, 0)
             .minimumInputs(1)
             .build();
     public static final RecipeMapSpec Shredder = RecipeMapSpec.builder(
-            "gt.recipe.shredder", "Shredder", GUI + "Shredder")
+                    "gt.recipe.shredder", "Shredder", GUI + "Shredder")
             .items(1, 12, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
@@ -115,42 +115,42 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Centrifuge = RecipeMapSpec.builder(
-            "gt.recipe.centrifuge", "Centrifuge", GUI + "Centrifuge")
+                    "gt.recipe.centrifuge", "Centrifuge", GUI + "Centrifuge")
             .items(1, 6, 0)
             .fluids(1, 6, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec RollingMill = RecipeMapSpec.builder(
-            "gt.recipe.rollingmill", "Rolling Mill", GUI + "RollingMill")
+                    "gt.recipe.rollingmill", "Rolling Mill", GUI + "RollingMill")
             .items(1, 1, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec RollBender = RecipeMapSpec.builder(
-            "gt.recipe.rollbender", "Roll Bender", GUI + "RollBender")
+                    "gt.recipe.rollbender", "Roll Bender", GUI + "RollBender")
             .items(1, 1, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec RollFormer = RecipeMapSpec.builder(
-            "gt.recipe.rollformer", "Roll Former", GUI + "RollFormer")
+                    "gt.recipe.rollformer", "Roll Former", GUI + "RollFormer")
             .items(1, 1, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec ClusterMill = RecipeMapSpec.builder(
-            "gt.recipe.clustermill", "Cluster Mill", GUI + "ClusterMill")
+                    "gt.recipe.clustermill", "Cluster Mill", GUI + "ClusterMill")
             .items(1, 1, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Wiremill = RecipeMapSpec.builder(
-            "gt.recipe.wiremill", "Wiremill", GUI + "Wiremill")
+                    "gt.recipe.wiremill", "Wiremill", GUI + "Wiremill")
             .items(1, 1, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
@@ -177,14 +177,14 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Sharpening = RecipeMapSpec.builder(
-            "gt.recipe.sharpener", "Sharpener", GUI + "Sharpener")
+                    "gt.recipe.sharpener", "Sharpener", GUI + "Sharpener")
             .items(1, 2, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec BurnMixer = RecipeMapSpec.builder(
-            "gt.recipe.burnmixer", "Burner Mixer", GUI + "BurnMixer")
+                    "gt.recipe.burnmixer", "Burner Mixer", GUI + "BurnMixer")
             .items(6, 1, 0)
             .fluids(6, 2, 0)
             .minimumInputs(2)
@@ -192,7 +192,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec PressureWasher = RecipeMapSpec.builder(
-            "gt.recipe.pressurewasher", "Pressure Washer", GUI + "PressureWasher")
+                    "gt.recipe.pressurewasher", "Pressure Washer", GUI + "PressureWasher")
             .items(1, 2, 1)
             .fluids(1, 0, 1)
             .bucketInput(true)
@@ -211,14 +211,14 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Squeezer = RecipeMapSpec.builder(
-            "gt.recipe.squeezer", "Squeezer", GUI + "Squeezer")
+                    "gt.recipe.squeezer", "Squeezer", GUI + "Squeezer")
             .items(1, 2, 1)
             .fluids(0, 1, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Compressor = RecipeMapSpec.builder(
-            "gt.recipe.compressor", "Compressor", GUI + "Compressor")
+                    "gt.recipe.compressor", "Compressor", GUI + "Compressor")
             .items(1, 1, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
@@ -231,7 +231,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Electrolyzer = RecipeMapSpec.builder(
-            "gt.recipe.electrolyzer", "Electrolyzer", GUI + "Electrolyzer")
+                    "gt.recipe.electrolyzer", "Electrolyzer", GUI + "Electrolyzer")
             .items(2, 6, 0)
             .fluids(2, 6, 0)
             .minimumInputs(1)
@@ -239,7 +239,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Canner = RecipeMapSpec.builder(
-            "gt.recipe.canner", "Canning Machine", GUI + "Canner")
+                    "gt.recipe.canner", "Canning Machine", GUI + "Canner")
             .items(2, 2, 1)
             .fluids(1, 1, 0)
             .minimumInputs(1)
@@ -247,7 +247,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Injector = RecipeMapSpec.builder(
-            "gt.recipe.injector", "Injector", GUI + "Injector")
+                    "gt.recipe.injector", "Injector", GUI + "Injector")
             .items(2, 1, 0)
             .fluids(2, 1, 0)
             .minimumInputs(2)
@@ -260,7 +260,7 @@ public final class MachineRecipeMapDefinitions {
             .minimumInputs(2)
             .build();
     public static final RecipeMapSpec ScannerVisuals = RecipeMapSpec.builder(
-            "gt.recipe.scannervisuals", "Scanner (Visuals)", GUI + "ScannerVisuals")
+                    "gt.recipe.scannervisuals", "Scanner (Visuals)", GUI + "ScannerVisuals")
             .items(2, 2, 2)
             .fluids(0, 0, 0)
             .minimumInputs(2)
@@ -268,7 +268,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Autocrafter = RecipeMapSpec.builder(
-            "gt.recipe.autocrafting", "Crafting", GUI + "Crafting")
+                    "gt.recipe.autocrafting", "Crafting", GUI + "Crafting")
             .items(9, 12, 1)
             .fluids(0, 0, 0)
             .minimumInputs(1)
@@ -284,7 +284,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Nanofab = RecipeMapSpec.builder(
-            "gt.recipe.nanofab", "Nanoscale Fabricator", GUI + "Nanofab")
+                    "gt.recipe.nanofab", "Nanoscale Fabricator", GUI + "Nanofab")
             .items(2, 1, 0)
             .fluids(1, 1, 0)
             .minimumInputs(1)
@@ -292,7 +292,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Plantalyzer = RecipeMapSpec.builder(
-            "gt.recipe.plantalyzer", "Plantalyzer", GUI + "Plantalyzer")
+                    "gt.recipe.plantalyzer", "Plantalyzer", GUI + "Plantalyzer")
             .items(2, 2, 0)
             .fluids(1, 0, 0)
             .minimumInputs(1)
@@ -300,7 +300,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Bumblelyzer = RecipeMapSpec.builder(
-            "gt.recipe.bumblelyzer", "Bumblelyzer", GUI + "Bumblelyzer")
+                    "gt.recipe.bumblelyzer", "Bumblelyzer", GUI + "Bumblelyzer")
             .items(2, 2, 0)
             .fluids(1, 0, 0)
             .minimumInputs(2)
@@ -308,28 +308,28 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Boxinator = RecipeMapSpec.builder(
-            "gt.recipe.boxinator", "Boxinator", GUI + "Boxinator")
+                    "gt.recipe.boxinator", "Boxinator", GUI + "Boxinator")
             .items(2, 1, 2)
             .fluids(0, 0, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Unboxinator = RecipeMapSpec.builder(
-            "gt.recipe.unboxinator", "Unboxinator", GUI + "Unboxinator")
+                    "gt.recipe.unboxinator", "Unboxinator", GUI + "Unboxinator")
             .items(1, 12, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Polarizer = RecipeMapSpec.builder(
-            "gt.recipe.polarizer", "Polarizer", GUI + "Polarizer")
+                    "gt.recipe.polarizer", "Polarizer", GUI + "Polarizer")
             .items(1, 1, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec MagneticSeparator = RecipeMapSpec.builder(
-            "gt.recipe.magneticseparator", "Magnetic Separator", GUI + "MagneticSeparator")
+                    "gt.recipe.magneticseparator", "Magnetic Separator", GUI + "MagneticSeparator")
             .items(1, 6, 0)
             .fluids(1, 6, 0)
             .minimumInputs(1)
@@ -337,7 +337,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec LaserEngraver = RecipeMapSpec.builder(
-            "gt.recipe.laserengraver", "Precision Laser Engraver", GUI + "LaserEngraver")
+                    "gt.recipe.laserengraver", "Precision Laser Engraver", GUI + "LaserEngraver")
             .items(2, 1, 2)
             .fluids(0, 0, 0)
             .minimumInputs(2)
@@ -345,7 +345,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Welder = RecipeMapSpec.builder(
-            "gt.recipe.welder", "Welding Machine", GUI + "Welder")
+                    "gt.recipe.welder", "Welding Machine", GUI + "Welder")
             .items(9, 1, 2)
             .fluids(1, 0, 0)
             .minimumInputs(2)
@@ -360,7 +360,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec CryoMixer = RecipeMapSpec.builder(
-            "gt.recipe.cryomixer", "Cryo Mixer", GUI + "CryoMixer")
+                    "gt.recipe.cryomixer", "Cryo Mixer", GUI + "CryoMixer")
             .items(6, 1, 0)
             .fluids(6, 2, 0)
             .minimumInputs(2)
@@ -368,25 +368,25 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Massfab = RecipeMapSpec.builder(
-            "gt.recipe.massfab", "Matter Fabricator", GUI + "Massfab")
+                    "gt.recipe.massfab", "Matter Fabricator", GUI + "Massfab")
             .items(2, 1, 0)
             .fluids(1, 2, 0)
             .minimumInputs(1)
             .build();
     public static final RecipeMapSpec ScannerMolecular = RecipeMapSpec.builder(
-            "gt.recipe.scannermolecular", "Molecular Scanner", GUI + "ScannerMolecular")
+                    "gt.recipe.scannermolecular", "Molecular Scanner", GUI + "ScannerMolecular")
             .items(2, 1, 1)
             .fluids(0, 0, 0)
             .minimumInputs(2)
             .build();
     public static final RecipeMapSpec Replicator = RecipeMapSpec.builder(
-            "gt.recipe.replicator", "Matter Replicator", GUI + "Replicator")
+                    "gt.recipe.replicator", "Matter Replicator", GUI + "Replicator")
             .items(3, 3, 1)
             .fluids(3, 3, 0)
             .minimumInputs(2)
             .build();
     public static final RecipeMapSpec Autoclave = RecipeMapSpec.builder(
-            "gt.recipe.autoclave", "Autoclave", GUI + "Autoclave")
+                    "gt.recipe.autoclave", "Autoclave", GUI + "Autoclave")
             .items(2, 3, 2)
             .fluids(1, 1, 1)
             .bucketInput(true)
@@ -400,20 +400,20 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Generifier = RecipeMapSpec.builder(
-            "gt.recipe.generifier", "Generifier", GUI + "Generifier")
+                    "gt.recipe.generifier", "Generifier", GUI + "Generifier")
             .items(1, 1, 0)
             .fluids(1, 1, 0)
             .minimumInputs(1)
             .build();
     public static final RecipeMapSpec Coagulator = RecipeMapSpec.builder(
-            "gt.recipe.coagulator", "Coagulator", GUI + "Coagulator")
+                    "gt.recipe.coagulator", "Coagulator", GUI + "Coagulator")
             .items(0, 1, 0)
             .fluids(1, 0, 1)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Fermenter = RecipeMapSpec.builder(
-            "gt.recipe.fermenter", "Fermenter", GUI + "Fermenter")
+                    "gt.recipe.fermenter", "Fermenter", GUI + "Fermenter")
             .items(1, 1, 1)
             .fluids(1, 1, 0)
             .minimumInputs(1)
@@ -429,7 +429,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec CokeOven = RecipeMapSpec.builder(
-            "gt.recipe.cokeoven", "Coke Oven", GUI + "CokeOven")
+                    "gt.recipe.cokeoven", "Coke Oven", GUI + "CokeOven")
             .items(1, 9, 1)
             .fluids(0, 1, 0)
             .minimumInputs(1)
@@ -437,7 +437,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Lightning = RecipeMapSpec.builder(
-            "gt.recipe.lightning", "Lightning Processor", GUI + "Lightning")
+                    "gt.recipe.lightning", "Lightning Processor", GUI + "Lightning")
             .items(6, 6, 0)
             .fluids(6, 6, 0)
             .minimumInputs(2)
@@ -445,14 +445,14 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec ImplosionCompressor = RecipeMapSpec.builder(
-            "gt.recipe.implosioncompressor", "Implosion Compressor", GUI + "ImplosionCompressor")
+                    "gt.recipe.implosioncompressor", "Implosion Compressor", GUI + "ImplosionCompressor")
             .items(3, 3, 3)
             .fluids(0, 0, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec Fusion = RecipeMapSpec.builder(
-            "gt.recipe.fusionreactor", "Fusion Reactor", GUI + "Fusion")
+                    "gt.recipe.fusionreactor", "Fusion Reactor", GUI + "Fusion")
             .items(2, 6, 1)
             .fluids(2, 6, 0)
             .minimumInputs(2)
@@ -466,14 +466,14 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec DidYouKnow = RecipeMapSpec.builder(
-            "gt.recipe.other", "Did you know...?", GUI + "Default")
+                    "gt.recipe.other", "Did you know...?", GUI + "Default")
             .items(6, 6, 0)
             .fluids(3, 3, 0)
             .minimumInputs(1)
             .showVoltageAmperage(false)
             .build();
     public static final RecipeMapSpec ToolHeads = RecipeMapSpec.builder(
-            "gt.recipe.toolhead", "Craft Head on Handle", GUI + "Crafting2By2")
+                    "gt.recipe.toolhead", "Craft Head on Handle", GUI + "Crafting2By2")
             .items(4, 1, 0)
             .fluids(0, 0, 0)
             .showVoltageAmperage(false)
@@ -486,7 +486,7 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec BlastFurnace = RecipeMapSpec.builder(
-            "gt.recipe.blastfurnace", "Blast Furnace", GUI + "Default")
+                    "gt.recipe.blastfurnace", "Blast Furnace", GUI + "Default")
             .items(2, 2, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
@@ -495,7 +495,7 @@ public final class MachineRecipeMapDefinitions {
             .showVoltageAmperage(false)
             .build();
     public static final RecipeMapSpec VacuumFreezer = RecipeMapSpec.builder(
-            "gt.recipe.vacuumfreezer", "Vacuum Freezer", GUI + "Default")
+                    "gt.recipe.vacuumfreezer", "Vacuum Freezer", GUI + "Default")
             .items(1, 1, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
@@ -503,7 +503,7 @@ public final class MachineRecipeMapDefinitions {
             .viewerAllowed(false)
             .build();
     public static final RecipeMapSpec Assembler = RecipeMapSpec.builder(
-            "gt.recipe.assembler", "Assembler", GUI + "Assembler")
+                    "gt.recipe.assembler", "Assembler", GUI + "Assembler")
             .items(2, 1, 1)
             .fluids(1, 0, 0)
             .bucketInput(true)
@@ -511,7 +511,7 @@ public final class MachineRecipeMapDefinitions {
             .viewerAllowed(false)
             .build();
     public static final RecipeMapSpec CNC = RecipeMapSpec.builder(
-            "gt.recipe.cncmachine", "CNC Machine", GUI + "Default")
+                    "gt.recipe.cncmachine", "CNC Machine", GUI + "Default")
             .items(2, 1, 2)
             .fluids(1, 0, 1)
             .bucketInput(true)
@@ -519,7 +519,7 @@ public final class MachineRecipeMapDefinitions {
             .viewerAllowed(false)
             .build();
     public static final RecipeMapSpec CrucibleAlloying = RecipeMapSpec.builder(
-            "gt.recipe.cruciblealloying", "Combination Smelting", GUI + "Alloying")
+                    "gt.recipe.cruciblealloying", "Combination Smelting", GUI + "Alloying")
             .items(12, 12, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
@@ -528,7 +528,7 @@ public final class MachineRecipeMapDefinitions {
             .instantRecipes()
             .build();
     public static final RecipeMapSpec CrucibleSmelting = RecipeMapSpec.builder(
-            "gt.recipe.cruciblesmelting", "Crucible Smelting", GUI + "Default")
+                    "gt.recipe.cruciblesmelting", "Crucible Smelting", GUI + "Default")
             .items(6, 6, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
@@ -537,12 +537,12 @@ public final class MachineRecipeMapDefinitions {
             .instantRecipes()
             .build();
     public static final RecipeMapSpec BedrockOreList = RecipeMapSpec.builder(
-            "gt.recipe.bedrockorelist", "Bedrock Drill", GUI + "BedrockOreList")
+                    "gt.recipe.bedrockorelist", "Bedrock Drill", GUI + "BedrockOreList")
             .items(1, 12, 1)
             .fluids(1, 0, 1)
             .build();
     public static final RecipeMapSpec ByProductList = RecipeMapSpec.builder(
-            "gt.recipe.byproductlist", "Ore Byproduct List", GUI + "OreByproducts")
+                    "gt.recipe.byproductlist", "Ore Byproduct List", GUI + "OreByproducts")
             .items(6, 12, 1)
             .fluids(0, 0, 0)
             .bucketInput(true)
@@ -562,7 +562,7 @@ public final class MachineRecipeMapDefinitions {
             .viewerAllowed(false)
             .build();
     public static final RecipeMapSpec Calciner = RecipeMapSpec.builder(
-            "gt.recipe.calciner", "Calciner", GUI + "Calciner")
+                    "gt.recipe.calciner", "Calciner", GUI + "Calciner")
             .items(3, 3, 0)
             .fluids(3, 3, 0)
             .minimumInputs(2)
@@ -582,21 +582,21 @@ public final class MachineRecipeMapDefinitions {
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec AnvilBendSmall = RecipeMapSpec.builder(
-            "gt.recipe.anvil.bend.small", "Anvil Bending (Small)", GUI + "AnvilBendingSmall")
+                    "gt.recipe.anvil.bend.small", "Anvil Bending (Small)", GUI + "AnvilBendingSmall")
             .items(2, 2, 2)
             .fluids(0, 0, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec AnvilBendBig = RecipeMapSpec.builder(
-            "gt.recipe.anvil.bend.big", "Anvil Bending (Big)", GUI + "AnvilBendingBig")
+                    "gt.recipe.anvil.bend.big", "Anvil Bending (Big)", GUI + "AnvilBendingBig")
             .items(2, 2, 2)
             .fluids(0, 0, 0)
             .bucketInput(true)
             .bucketOutput(true)
             .build();
     public static final RecipeMapSpec BumbleQueens = RecipeMapSpec.builder(
-            "gt.recipe.bumblequeen", "Bumblebee Queen", GUI + "Default")
+                    "gt.recipe.bumblequeen", "Bumblebee Queen", GUI + "Default")
             .items(2, 6, 0)
             .fluids(0, 0, 0)
             .minimumInputs(1)
@@ -605,7 +605,7 @@ public final class MachineRecipeMapDefinitions {
             .showVoltageAmperage(false)
             .build();
     public static final RecipeMapSpec Trees = RecipeMapSpec.builder(
-            "gt.recipe.trees", "Family Tree", GUI + "FamilyTree")
+                    "gt.recipe.trees", "Family Tree", GUI + "FamilyTree")
             .items(3, 12, 0)
             .fluids(0, 0, 0)
             .minimumInputs(1)

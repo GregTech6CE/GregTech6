@@ -94,7 +94,8 @@ public final class FluidHazards {
     }
 
     private static boolean isNativeGas(Fluid fluid) {
-        return fluid != null && fluid != net.minecraft.world.level.material.Fluids.EMPTY
+        return fluid != null
+                && fluid != net.minecraft.world.level.material.Fluids.EMPTY
                 && fluid.getFluidType().isLighterThanAir();
     }
 
@@ -121,8 +122,8 @@ public final class FluidHazards {
     public static PipeLosses pipeLosses(Fluid fluid, Set<FluidHazard> protections) {
         RegisteredFluids.FluidEntry entry = GTFluids.entryForFluid(fluid);
         boolean gas = !protections.contains(GAS) && (entry == null ? isNativeGas(fluid) : entry.gas());
-        boolean plasma = !protections.contains(PLASMA) && entry != null
-                && entry.hasFlag(RegisteredFluids.FluidFlags.PLASMA);
+        boolean plasma =
+                !protections.contains(PLASMA) && entry != null && entry.hasFlag(RegisteredFluids.FluidFlags.PLASMA);
         boolean acid = !protections.contains(ACID) && entry != null && isAcid(entry);
         return new PipeLosses(gas ? 8 : 0, plasma ? 64 : 0, acid ? 16 : 0);
     }

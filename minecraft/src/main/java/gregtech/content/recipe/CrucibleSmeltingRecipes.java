@@ -9,12 +9,12 @@ import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialUnification;
 import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.recipe.RecipeBuilder;
+import gregtech.engine.recipe.RecipeMap;
 import gregtech.util.OM;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
-import gregtech.engine.recipe.RecipeBuilder;
-import gregtech.engine.recipe.RecipeMap;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -133,11 +133,12 @@ public final class CrucibleSmeltingRecipes {
             MISSING.add(form + " of " + preview.material().getName());
             return 0;
         }
-        return MachineRecipeMaps.CrucibleSmelting.register(RecipeBuilder.of(0, 0)
-                .itemInputs(input)
-                .itemOutputs(output)
-                .specialValue(preview.temperatureK()),
-                RecipeMap.Registration.DISPLAY)
+        return MachineRecipeMaps.CrucibleSmelting.register(
+                                RecipeBuilder.of(0, 0)
+                                        .itemInputs(input)
+                                        .itemOutputs(output)
+                                        .specialValue(preview.temperatureK()),
+                                RecipeMap.Registration.DISPLAY)
                         == null
                 ? 0
                 : 1;

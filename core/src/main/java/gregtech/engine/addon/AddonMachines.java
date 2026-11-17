@@ -293,10 +293,7 @@ public final class AddonMachines {
 
     /** Queues explicit declarations through the same validation as a discovered contributor. */
     public static synchronized void acceptContributor(
-            String addonId,
-            List<RecipeTable> tables,
-            List<AddonMachine> machines,
-            List<LayoutPart> parts) {
+            String addonId, List<RecipeTable> tables, List<AddonMachine> machines, List<LayoutPart> parts) {
         enqueueContributor(addonId, tables, machines, parts, List.of(), List.of(), List.of());
     }
 

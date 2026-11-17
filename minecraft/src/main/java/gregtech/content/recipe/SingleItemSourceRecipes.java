@@ -6,9 +6,9 @@ import gregtech.content.data.*;
 import gregtech.content.registry.GTFluids;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.*;
-import java.util.*;
 import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
+import java.util.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
 
@@ -47,10 +47,11 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
             var target = material.getTargetSmeltingMaterial();
             var output = gregtech.util.OM.ingotOrDust(target, material.getTargetSmeltingAmount() / 9);
             if (!output.isEmpty())
-                MachineRecipeMaps.CrucibleSmelting.register(RecipeBuilder.of(0, 0)
-                        .itemInputs(items(input))
-                        .itemOutputs(items(output))
-                        .specialValue(material.getMeltingPoint()),
+                MachineRecipeMaps.CrucibleSmelting.register(
+                        RecipeBuilder.of(0, 0)
+                                .itemInputs(items(input))
+                                .itemOutputs(items(output))
+                                .specialValue(material.getMeltingPoint()),
                         RecipeMap.Registration.DISPLAY);
         }
     }
@@ -134,9 +135,7 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
                 MaterialPrefix.dustTiny)) {
             var input = GTItems.getStack(prefix, GTMaterialRegistry.get("MeatRaw"), 1);
             var output = GTItems.getStack(prefix, GTMaterialRegistry.get("MeatCooked"), 1);
-            if (!input.isEmpty()
-                    && !output.isEmpty()
-                    && MachineRecipeMaps.addSmelting(input, output)) {
+            if (!input.isEmpty() && !output.isEmpty() && MachineRecipeMaps.addSmelting(input, output)) {
                 SMELTING.add(prefix.getName() + "/MeatRaw");
                 COOKING.put(input.getItem(), new FurnaceSmeltingRecipes.CookingData(0, true));
             }

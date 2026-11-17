@@ -126,13 +126,12 @@ public final class SharpeningRecipes {
         // GT6's grinding rows call chances(10000, 7500): the pulverized remainder is 75%.
         ItemStack[] outputs = remains.isEmpty() ? new ItemStack[] {output} : new ItemStack[] {output, remains};
         long[] chances = remains.isEmpty() ? null : new long[] {10000, 7500};
-        var template =
-                RecipeBuilder.of(16, duration)
-                        .optimize(true)
-                        .itemInputs(input)
-                        .itemOutputs(outputs)
-                        .chances(chances)
-                        .build();
+        var template = RecipeBuilder.of(16, duration)
+                .optimize(true)
+                .itemInputs(input)
+                .itemOutputs(outputs)
+                .chances(chances)
+                .build();
         if (template == null) return;
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
                 template,

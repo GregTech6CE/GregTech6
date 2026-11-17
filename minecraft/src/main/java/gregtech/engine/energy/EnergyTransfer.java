@@ -44,11 +44,7 @@ public final class EnergyTransfer {
     }
 
     public static long insertEnergyInto(
-            GregTechTags.Tag energyType,
-            @Nullable Direction sideInto,
-            long size,
-            long amount,
-            BlockEntity receiver) {
+            GregTechTags.Tag energyType, @Nullable Direction sideInto, long size, long amount, BlockEntity receiver) {
         if (amount <= 0 || size == 0) return 0;
         IEnergyBlock energyBlock = EnergyBlockViews.view(receiver);
         if (energyBlock != null) {

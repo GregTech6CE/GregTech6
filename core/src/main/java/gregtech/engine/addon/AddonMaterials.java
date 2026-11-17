@@ -688,11 +688,12 @@ public final class AddonMaterials {
         var current = MaterialInfoTool.currentProcess(key, MaterialProcessKeys.SMELTING)
                 .map(MaterialProcessRule::value);
         GTMaterial currentTarget = current.flatMap(value -> MaterialInfoTool.findMaterial(value.material()))
-                .orElse(material).resolve();
+                .orElse(material)
+                .resolve();
         long currentAmount = current.map(MaterialTarget::amount).orElse(0L);
         boolean same = currentTarget == target && currentAmount == declaration.amount();
-        boolean untouched = currentTarget == material && currentAmount == GTValues.U
-                && !material.has(MaterialProperty.MELTING);
+        boolean untouched =
+                currentTarget == material && currentAmount == GTValues.U && !material.has(MaterialProperty.MELTING);
         if (!untouched && !same)
             throw new IllegalStateException("Addon '" + addonId + "' smelting target for '" + material.getName()
                     + "' does not match the existing target");

@@ -32,8 +32,7 @@ public final class MachineRecipeAdapter {
     }
 
     /** Publishes a static or display row with explicit registration options. */
-    public static Recipe addStatic(RecipeMap map, Recipe recipe, String source,
-                                   RecipeMap.Registration registration) {
+    public static Recipe addStatic(RecipeMap map, Recipe recipe, String source, RecipeMap.Registration registration) {
         if (map == null || recipe == null) return null;
         recipe.withSource(source);
         return map.addRecipe(recipe, registration);

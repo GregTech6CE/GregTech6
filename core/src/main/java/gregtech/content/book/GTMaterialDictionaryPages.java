@@ -89,9 +89,14 @@ public final class GTMaterialDictionaryPages {
                 processingValue(
                         out, material.getTargetSmeltingMaterial(), material.getTargetSmeltingAmount(), material);
             case "Burning" -> {
-                var residue = FuelMaterialHelper.rule(material).flatMap(FuelRule::residue).orElse(null);
-                var target = residue == null ? null : MaterialInfoTool.findMaterial(residue.material())
-                        .map(GTMaterial::resolve).orElse(null);
+                var residue = FuelMaterialHelper.rule(material)
+                        .flatMap(FuelRule::residue)
+                        .orElse(null);
+                var target = residue == null
+                        ? null
+                        : MaterialInfoTool.findMaterial(residue.material())
+                                .map(GTMaterial::resolve)
+                                .orElse(null);
                 processingValue(out, target, residue == null ? 0L : residue.amount(), material);
             }
             case "Pulverising" ->

@@ -40,8 +40,7 @@ class AddonMachineDeclarationsTest {
     @Test
     void rejectsMissingOrConflictingBindings() {
         var controller = machine("controller");
-        assertThrows(
-                IllegalArgumentException.class, () -> AddonMachineDeclarations.resolve(List.of(controller)));
+        assertThrows(IllegalArgumentException.class, () -> AddonMachineDeclarations.resolve(List.of(controller)));
         assertThrows(
                 IllegalArgumentException.class,
                 () -> AddonMachineDeclarations.resolve(List.of(
@@ -52,9 +51,8 @@ class AddonMachineDeclarationsTest {
     @Test
     void oneShapeCanBindToSeveralControllerTypes() {
         var shape = layout("shared", "minecraft:stone");
-        var resolved = AddonMachineDeclarations.resolve(
-                List.<AddonMachine>of(
-                        machine("first").withStructure(shape), machine("second").withStructure(shape)));
+        var resolved = AddonMachineDeclarations.resolve(List.<AddonMachine>of(
+                machine("first").withStructure(shape), machine("second").withStructure(shape)));
         assertEquals(
                 List.of("first", "second"),
                 resolved.layouts().stream().map(StructureLayout::name).toList());

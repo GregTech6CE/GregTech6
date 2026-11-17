@@ -92,14 +92,7 @@ public final class LaserStoneRecipes {
             throw new IllegalStateException(
                     "Missing native laser engraving holder: " + family + "/" + stone + "/" + color);
         var recipe = new Recipe(
-                        new ItemStack[] {input, lens.copy()},
-                        new ItemStack[] {output},
-                        null,
-                        null,
-                        null,
-                        ticks,
-                        16,
-                        0)
+                        new ItemStack[] {input, lens.copy()}, new ItemStack[] {output}, null, null, null, ticks, 16, 0)
                 .withCatalystInputs(module ? new int[] {0, 1} : new int[] {1});
         if (MachineRecipeMaps.LaserEngraver.addRecipe(recipe) == null)
             throw new IllegalStateException(

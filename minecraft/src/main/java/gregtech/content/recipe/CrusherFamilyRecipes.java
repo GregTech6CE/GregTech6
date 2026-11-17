@@ -74,7 +74,11 @@ public final class CrusherFamilyRecipes {
                 Math.max(1, (units * row.multiplier() * (material.getToolQuality() + 1) + GTValues.U - 1) / GTValues.U);
         // One rule per (material, input form): every equivalent item of that form is admitted,
         // and the batch is derived from the form's material units instead of a fixed count.
-        var template = RecipeBuilder.of(16, duration).optimize(true).itemInputs(input).itemOutputs(output).build();
+        var template = RecipeBuilder.of(16, duration)
+                .optimize(true)
+                .itemInputs(input)
+                .itemOutputs(output)
+                .build();
         if (template == null) return;
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
                 template,

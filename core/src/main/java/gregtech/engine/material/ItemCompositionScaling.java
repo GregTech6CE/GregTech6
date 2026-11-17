@@ -32,7 +32,6 @@ public final class ItemCompositionScaling {
         boolean primaryRemains =
                 components.stream().anyMatch(component -> component.material().resolve() == originalPrimary);
         GTMaterial primary = primaryRemains ? originalPrimary : MaterialSentinels.INVALID;
-        return new ItemComposition(
-                composition.prefix(), components, primary, composition.sources());
+        return new ItemComposition(composition.prefix(), components, primary, composition.sources());
     }
 }

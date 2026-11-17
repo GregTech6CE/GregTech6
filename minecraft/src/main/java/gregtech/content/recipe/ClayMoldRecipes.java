@@ -24,11 +24,9 @@ public final class ClayMoldRecipes {
 
     public static int register() {
         int count = 0;
-        for (var raw : ClayMoldCatalog.RAW)
-            if (MachineRecipeMaps.addSmelting(input(raw), output(raw))) count++;
+        for (var raw : ClayMoldCatalog.RAW) if (MachineRecipeMaps.addSmelting(input(raw), output(raw))) count++;
         for (var row : ClayUtilityCatalog.ROWS)
-            if (MachineRecipeMaps.addSmelting(registered(row.raw()), registered(row.fired())))
-                count++;
+            if (MachineRecipeMaps.addSmelting(registered(row.raw()), registered(row.fired()))) count++;
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original raw clay mold firing: {} rows", count);
         return count;
     }

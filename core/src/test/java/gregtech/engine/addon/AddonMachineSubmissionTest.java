@@ -38,8 +38,8 @@ class AddonMachineSubmissionTest {
                 .where('A', CellMatch.block("minecraft:stone"), StructureRole.CASING)
                 .build();
 
-        assertDoesNotThrow(() -> AddonMachines.acceptContributor(
-                ADDON, List.of(), List.of(machine.withStructure(layout)), List.of()));
+        assertDoesNotThrow(() ->
+                AddonMachines.acceptContributor(ADDON, List.of(), List.of(machine.withStructure(layout)), List.of()));
         assertTrue(AddonMachines.queuedPipes().stream()
                 .anyMatch(row -> row.addonId().equals(ADDON)));
     }

@@ -45,16 +45,7 @@ public record TankSpec(
 
     /** GT6's explicit {@code NBT_CAPACITY_HU} overrides the barrel's melting point in kelvin. */
     public TankSpec withMaxTemperature(long kelvin) {
-        return new TankSpec(
-                id,
-                material,
-                type,
-                capacity,
-                protections,
-                simpleOnly,
-                hardness,
-                blastResistance,
-                kelvin);
+        return new TankSpec(id, material, type, capacity, protections, simpleOnly, hardness, blastResistance, kelvin);
     }
 
     public static TankSpec of(

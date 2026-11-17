@@ -10,4 +10,5 @@ public record SteamEngineSpec(
         int steamCapacity,
         long outputRate,
         float hardness,
-        float blastResistance) implements SteamEngineData {}
+        float blastResistance)
+        implements SteamEngineData {}

@@ -141,7 +141,8 @@ public final class VanillaMaterialCorrections {
                 "GT6CE modern vanilla materials",
                 "");
         ItemMaterialRegistry.registerDeclared(
-                item, new ItemComposition(null, components, components.get(0).material(), java.util.List.of(source)),
+                item,
+                new ItemComposition(null, components, components.get(0).material(), java.util.List.of(source)),
                 jsonSource);
     }
 }

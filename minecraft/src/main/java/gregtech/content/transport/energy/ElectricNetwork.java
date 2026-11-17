@@ -269,11 +269,7 @@ public final class ElectricNetwork {
                 }
                 long remaining = amperage - used;
                 used += EnergyTransfer.insertEnergyInto(
-                        GregTechTags.Energy.EU,
-                        DIRECTIONS[ordinal].getOpposite(),
-                        voltage,
-                        remaining,
-                        neighbor);
+                        GregTechTags.Energy.EU, DIRECTIONS[ordinal].getOpposite(), voltage, remaining, neighbor);
             }
 
             if (descended) {

@@ -5,7 +5,6 @@ import gregtech.api.addon.material.*;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialToolProfile;
-import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
 import java.util.*;

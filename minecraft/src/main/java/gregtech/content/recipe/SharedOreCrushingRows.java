@@ -259,8 +259,11 @@ public final class SharedOreCrushingRows {
 
     private static void restore(Group group) {
         if (group.original == null) return;
-        Recipe accepted = group.map.addRecipe(group.original,
-                RecipeMap.Registration.DEFAULT.withFakeRecipe(group.original.mFakeRecipe).withHidden(group.original.mHidden));
+        Recipe accepted = group.map.addRecipe(
+                group.original,
+                RecipeMap.Registration.DEFAULT
+                        .withFakeRecipe(group.original.mFakeRecipe)
+                        .withHidden(group.original.mHidden));
         if (accepted != null) remember(group.map, accepted);
         else defer(group, "legacy-readmission-rejected");
     }
@@ -279,9 +282,13 @@ public final class SharedOreCrushingRows {
                 if (admitted == null) {
                     accepted.forEach(map::unlink);
                     accepted.clear();
-                    Recipe restored =
-                            legacy == null ? null : map.addRecipe(legacy,
-                                    RecipeMap.Registration.DEFAULT.withFakeRecipe(legacy.mFakeRecipe).withHidden(legacy.mHidden));
+                    Recipe restored = legacy == null
+                            ? null
+                            : map.addRecipe(
+                                    legacy,
+                                    RecipeMap.Registration.DEFAULT
+                                            .withFakeRecipe(legacy.mFakeRecipe)
+                                            .withHidden(legacy.mHidden));
                     if (restored != null) accepted.add(restored);
                     return new Admission(false, accepted);
                 }
@@ -294,8 +301,11 @@ public final class SharedOreCrushingRows {
             // Keep any restored accepted identity owned, then propagate the real failure.
             if (legacy != null)
                 try {
-                    Recipe restored = map.addRecipe(legacy,
-                            RecipeMap.Registration.DEFAULT.withFakeRecipe(legacy.mFakeRecipe).withHidden(legacy.mHidden));
+                    Recipe restored = map.addRecipe(
+                            legacy,
+                            RecipeMap.Registration.DEFAULT
+                                    .withFakeRecipe(legacy.mFakeRecipe)
+                                    .withHidden(legacy.mHidden));
                     if (restored != null) remember(map, restored);
                 } catch (RuntimeException | Error restoration) {
                     failure.addSuppressed(restoration);

@@ -86,10 +86,8 @@ public final class PressAmmunitionRecipes {
         if (input.isEmpty() || dust.isEmpty()) return;
         // GT6 recovers the shaft/charged casing along with the arrow head or bullet metal.
         if (component.isEmpty()) return;
-        Recipe recipe = MachineRecipeMaps.Unboxinator.register(RecipeBuilder.of(16, 16)
-                .optimize(true)
-                .itemInputs(input)
-                .itemOutputs(dust, component));
+        Recipe recipe = MachineRecipeMaps.Unboxinator.register(
+                RecipeBuilder.of(16, 16).optimize(true).itemInputs(input).itemOutputs(dust, component));
         if (recipe != null) {
             ENTRIES.add(new Entry(
                     row.input().getName() + " -> " + row.output().getName() + " x" + row.outCount(),

@@ -63,27 +63,31 @@ public final class DiggableRecipes {
                         .itemInputs(vanillaBalls, new ItemStack(GTTechnological.selectorTag(4)))
                         .itemOutputs(vanillaClay)),
                 "box vanilla clay");
-        add(MachineRecipeMaps.Compressor.register(RecipeBuilder.of(16, 16)
-                .optimize(true)
-                .itemInputs(vanillaBalls)
-                .itemOutputs(vanillaClay)), "compress vanilla clay");
-        add(MachineRecipeMaps.Unboxinator.register(RecipeBuilder.of(16, 16)
-                .optimize(true)
-                .itemInputs(vanillaClay)
-                .itemOutputs(vanillaBalls)), "unbox vanilla clay");
+        add(
+                MachineRecipeMaps.Compressor.register(RecipeBuilder.of(16, 16)
+                        .optimize(true)
+                        .itemInputs(vanillaBalls)
+                        .itemOutputs(vanillaClay)),
+                "compress vanilla clay");
+        add(
+                MachineRecipeMaps.Unboxinator.register(RecipeBuilder.of(16, 16)
+                        .optimize(true)
+                        .itemInputs(vanillaClay)
+                        .itemOutputs(vanillaBalls)),
+                "unbox vanilla clay");
         for (Variant row : PACKABLE) {
             ItemStack block = stack(row.block(), 1);
             ItemStack balls = stack(row.ball(), 4);
             ItemStack dried =
                     row.material() == null ? new ItemStack(Blocks.COARSE_DIRT) : new ItemStack(Blocks.TERRACOTTA);
 
-            add(MachineRecipeMaps.Drying.register(RecipeBuilder.of(16, 64)
-                    .optimize(true)
-                    .itemInputs(block)
-                    .itemOutputs(dried)), "dry " + row.block());
-            accept(
-                    MachineRecipeMaps.addSmelting(block, dried),
-                    "furnace " + row.block());
+            add(
+                    MachineRecipeMaps.Drying.register(RecipeBuilder.of(16, 64)
+                            .optimize(true)
+                            .itemInputs(block)
+                            .itemOutputs(dried)),
+                    "dry " + row.block());
+            accept(MachineRecipeMaps.addSmelting(block, dried), "furnace " + row.block());
 
             // RM.compactunpack: Boxinator with selector 4, Compressor, and Unboxinator.
             add(
@@ -92,14 +96,18 @@ public final class DiggableRecipes {
                             .itemInputs(balls, new ItemStack(GTTechnological.selectorTag(4)))
                             .itemOutputs(block)),
                     "box " + row.block());
-            add(MachineRecipeMaps.Compressor.register(RecipeBuilder.of(16, 16)
-                    .optimize(true)
-                    .itemInputs(balls)
-                    .itemOutputs(block)), "compress " + row.block());
-            add(MachineRecipeMaps.Unboxinator.register(RecipeBuilder.of(16, 16)
-                    .optimize(true)
-                    .itemInputs(block)
-                    .itemOutputs(balls)), "unbox " + row.block());
+            add(
+                    MachineRecipeMaps.Compressor.register(RecipeBuilder.of(16, 16)
+                            .optimize(true)
+                            .itemInputs(balls)
+                            .itemOutputs(block)),
+                    "compress " + row.block());
+            add(
+                    MachineRecipeMaps.Unboxinator.register(RecipeBuilder.of(16, 16)
+                            .optimize(true)
+                            .itemInputs(block)
+                            .itemOutputs(balls)),
+                    "unbox " + row.block());
 
             // RM.generify is a directed Generifier conversion, not a global clay-material alias.
             if (row.material() != null) {
@@ -127,25 +135,29 @@ public final class DiggableRecipes {
         ItemStack dust = GTItems.getStack(MaterialPrefix.dust, material);
         if (plate.isEmpty() || dust.isEmpty())
             throw new IllegalStateException("Missing GT6 clay plate/dust form for " + name);
-        add(MachineRecipeMaps.RollingMill.register(RecipeBuilder.of(16, 32)
-                .optimize(true)
-                .itemInputs(ball)
-                .itemOutputs(plate)), "roll " + name);
-        add(MachineRecipeMaps.Compressor.register(RecipeBuilder.of(16, 16)
-                .optimize(true)
-                .itemInputs(dust)
-                .itemOutputs(ball)), "compress clay dust " + name);
+        add(
+                MachineRecipeMaps.RollingMill.register(
+                        RecipeBuilder.of(16, 32).optimize(true).itemInputs(ball).itemOutputs(plate)),
+                "roll " + name);
+        add(
+                MachineRecipeMaps.Compressor.register(
+                        RecipeBuilder.of(16, 16).optimize(true).itemInputs(dust).itemOutputs(ball)),
+                "compress clay dust " + name);
         // Unfired clay is moldable but not SMITHABLE; metal-only shaping rules exclude it.
         var curved = GTItems.getStack(MaterialPrefix.plateCurved, material);
         if (!curved.isEmpty()) {
-            add(MachineRecipeMaps.RollBender.register(RecipeBuilder.of(16, 16)
-                    .optimize(true)
-                    .itemInputs(plate)
-                    .itemOutputs(curved)), "bend clay " + name);
-            add(MachineRecipeMaps.RollingMill.register(RecipeBuilder.of(16, 16)
-                    .optimize(true)
-                    .itemInputs(curved)
-                    .itemOutputs(plate)), "flatten clay " + name);
+            add(
+                    MachineRecipeMaps.RollBender.register(RecipeBuilder.of(16, 16)
+                            .optimize(true)
+                            .itemInputs(plate)
+                            .itemOutputs(curved)),
+                    "bend clay " + name);
+            add(
+                    MachineRecipeMaps.RollingMill.register(RecipeBuilder.of(16, 16)
+                            .optimize(true)
+                            .itemInputs(curved)
+                            .itemOutputs(plate)),
+                    "flatten clay " + name);
         }
     }
 

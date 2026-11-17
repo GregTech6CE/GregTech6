@@ -39,8 +39,7 @@ public final class VehiclePackagingRecipes {
                         16,
                         0)
                 .withEmptyContainerInputs();
-        var unbox = new Recipe(
-                        new ItemStack[] {product}, new ItemStack[] {cargo, shell}, null, null, null, 16, 16, 0)
+        var unbox = new Recipe(new ItemStack[] {product}, new ItemStack[] {cargo, shell}, null, null, null, 16, 16, 0)
                 .withEmptyContainerInputs();
         if (MachineRecipeMaps.Boxinator.addRecipe(box) == null
                 || MachineRecipeMaps.Unboxinator.addRecipe(unbox) == null)

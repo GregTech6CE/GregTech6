@@ -508,10 +508,7 @@ public final class ItemMaterialRegistry {
     }
 
     private static String sourceSuffix(ItemComposition composition) {
-        return Integer.toHexString(Objects.hash(
-                composition.prefix(),
-                composition.components(),
-                composition.sources()));
+        return Integer.toHexString(Objects.hash(composition.prefix(), composition.components(), composition.sources()));
     }
 
     private static String sourceReference(ItemComposition composition) {

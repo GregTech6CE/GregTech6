@@ -78,7 +78,13 @@ public final class VanillaMaterialUnificationRecipes {
         if (output.isEmpty() || output.getItem() == input.getItem()) return 0;
         var recipe = new Recipe(new ItemStack[] {input}, new ItemStack[] {output}, null, null, null, 1, 0, 0)
                 .withItemInputGuard(0, candidate -> candidate.getItem() == input.getItem());
-        return MachineRecipeMaps.Generifier.addRecipe(recipe,
-                RecipeMap.Registration.DEFAULT.withCollisionCheck(false).withLogErrors(false)) == null ? 0 : 1;
+        return MachineRecipeMaps.Generifier.addRecipe(
+                                recipe,
+                                RecipeMap.Registration.DEFAULT
+                                        .withCollisionCheck(false)
+                                        .withLogErrors(false))
+                        == null
+                ? 0
+                : 1;
     }
 }

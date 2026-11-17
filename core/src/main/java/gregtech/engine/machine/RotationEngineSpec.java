@@ -10,7 +10,8 @@ public record RotationEngineSpec(
         long inputRate,
         long outputRate,
         float hardness,
-        float blastResistance) implements EngineSpec {
+        float blastResistance)
+        implements EngineSpec {
     @Override
     public EngineType type() {
         return EngineType.ROTATION;

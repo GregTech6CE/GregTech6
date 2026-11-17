@@ -15,15 +15,7 @@ public final class CheapWoodBarrelCatalog {
 
     public record Entry(String id, int sourceId, GTMaterial rod) {
         public TankSpec spec() {
-            return TankSpec.of(
-                            id,
-                            GT6Materials.Woods.Wood,
-                            TankSpec.TankType.WOOD_BARREL,
-                            8000,
-                            Set.of(),
-                            true,
-                            1F,
-                            5F)
+            return TankSpec.of(id, GT6Materials.Woods.Wood, TankSpec.TankType.WOOD_BARREL, 8000, Set.of(), true, 1F, 5F)
                     .withMaxTemperature(340);
         }
     }

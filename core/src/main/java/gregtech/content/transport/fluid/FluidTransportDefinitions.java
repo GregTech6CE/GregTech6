@@ -31,76 +31,22 @@ public final class FluidTransportDefinitions {
             int flammability) {}
 
     private static final FluidPipeMat[] FLUID_PIPE_MATS = {
+        new FluidPipeMat("wood", gregtech.content.material.generated.WoodMaterials.Wood, 50, Set.of(), 340, 150),
         new FluidPipeMat(
-                "wood",
-                gregtech.content.material.generated.WoodMaterials.Wood,
-                50,
-                Set.of(),
-                340,
-                150),
+                "treated_wood", gregtech.content.material.generated.WoodMaterials.WoodTreated, 75, Set.of(), 340, 150),
         new FluidPipeMat(
-                "treated_wood",
-                gregtech.content.material.generated.WoodMaterials.WoodTreated,
-                75,
-                Set.of(),
-                340,
-                150),
+                "plastic", gregtech.content.material.generated.CompoundMaterials.Plastic, 100, Set.of(GAS), 370, 0),
         new FluidPipeMat(
-                "plastic",
-                gregtech.content.material.generated.CompoundMaterials.Plastic,
-                100,
-                Set.of(GAS),
-                370,
-                0),
+                "rubber", gregtech.content.material.generated.CompoundMaterials.Rubber, 100, Set.of(GAS), 350, 0),
+        new FluidPipeMat("copper", gregtech.content.material.generated.ElementMaterials.Copper, 100, Set.of(GAS), 0, 0),
         new FluidPipeMat(
-                "rubber",
-                gregtech.content.material.generated.CompoundMaterials.Rubber,
-                100,
-                Set.of(GAS),
-                350,
-                0),
+                "aluminium", gregtech.content.material.generated.ElementMaterials.Aluminium, 100, Set.of(GAS), 0, 0),
         new FluidPipeMat(
-                "copper",
-                gregtech.content.material.generated.ElementMaterials.Copper,
-                100,
-                Set.of(GAS),
-                0,
-                0),
+                "tin_alloy", gregtech.content.material.generated.CompoundMaterials.TinAlloy, 125, Set.of(GAS), 0, 0),
         new FluidPipeMat(
-                "aluminium",
-                gregtech.content.material.generated.ElementMaterials.Aluminium,
-                100,
-                Set.of(GAS),
-                0,
-                0),
-        new FluidPipeMat(
-                "tin_alloy",
-                gregtech.content.material.generated.CompoundMaterials.TinAlloy,
-                125,
-                Set.of(GAS),
-                0,
-                0),
-        new FluidPipeMat(
-                "bronze",
-                gregtech.content.material.generated.CompoundMaterials.Bronze,
-                150,
-                Set.of(GAS),
-                0,
-                0),
-        new FluidPipeMat(
-                "invar",
-                gregtech.content.material.generated.CompoundMaterials.Invar,
-                200,
-                Set.of(GAS),
-                0,
-                0),
-        new FluidPipeMat(
-                "steel",
-                gregtech.content.material.generated.CompoundMaterials.Steel,
-                200,
-                Set.of(GAS),
-                0,
-                0),
+                "bronze", gregtech.content.material.generated.CompoundMaterials.Bronze, 150, Set.of(GAS), 0, 0),
+        new FluidPipeMat("invar", gregtech.content.material.generated.CompoundMaterials.Invar, 200, Set.of(GAS), 0, 0),
+        new FluidPipeMat("steel", gregtech.content.material.generated.CompoundMaterials.Steel, 200, Set.of(GAS), 0, 0),
         new FluidPipeMat(
                 "galvanized_steel",
                 gregtech.content.material.generated.CompoundMaterials.SteelGalvanized,
@@ -111,12 +57,7 @@ public final class FluidTransportDefinitions {
         new FluidPipeMat(
                 "gold", gregtech.content.material.generated.ElementMaterials.Gold, 100, Set.of(GAS, ACID), 0, 0),
         new FluidPipeMat(
-                "chrome",
-                gregtech.content.material.generated.ElementMaterials.Chromium,
-                200,
-                Set.of(GAS, ACID),
-                0,
-                0),
+                "chrome", gregtech.content.material.generated.ElementMaterials.Chromium, 200, Set.of(GAS, ACID), 0, 0),
         new FluidPipeMat(
                 "stainless_steel",
                 gregtech.content.material.generated.CompoundMaterials.StainlessSteel,
@@ -153,12 +94,7 @@ public final class FluidTransportDefinitions {
                 0,
                 0),
         new FluidPipeMat(
-                "carbon",
-                gregtech.content.material.generated.ElementMaterials.Carbon,
-                1000,
-                Set.of(GAS),
-                0,
-                0),
+                "carbon", gregtech.content.material.generated.ElementMaterials.Carbon, 1000, Set.of(GAS), 0, 0),
         new FluidPipeMat(
                 "tantalum_hafnium_carbide",
                 gregtech.content.material.generated.CompoundMaterials.TantalumHafniumCarbide,
@@ -167,12 +103,7 @@ public final class FluidTransportDefinitions {
                 0,
                 0),
         new FluidPipeMat(
-                "titanium",
-                gregtech.content.material.generated.ElementMaterials.Titanium,
-                300,
-                Set.of(GAS),
-                0,
-                0),
+                "titanium", gregtech.content.material.generated.ElementMaterials.Titanium, 300, Set.of(GAS), 0, 0),
         new FluidPipeMat(
                 "tungsten",
                 gregtech.content.material.generated.ElementMaterials.Tungsten,
@@ -256,18 +187,17 @@ public final class FluidTransportDefinitions {
         new WoodDef("wood_barrel_silverwood", gregtech.content.material.generated.WoodMaterials.Silverwood, 64000),
     };
 
-    private record DrumDef(
-            String id, GTMaterial material, long capacity, Set<FluidHazard> protections) {}
+    private record DrumDef(String id, GTMaterial material, long capacity, Set<FluidHazard> protections) {}
 
     private static final DrumDef[] DRUMS = {
+        new DrumDef("drum_bronze", gregtech.content.material.generated.CompoundMaterials.Bronze, 64000, Set.of(GAS)),
         new DrumDef(
-                "drum_bronze", gregtech.content.material.generated.CompoundMaterials.Bronze, 64000, Set.of(GAS)),
-        new DrumDef(
-                "drum_efrine", gregtech.content.material.generated.CompoundMaterials.Efrine, 64000, Set.of(GAS, ACID, PLASMA)),
-        new DrumDef(
-                "drum_invar", gregtech.content.material.generated.CompoundMaterials.Invar, 64000, Set.of(GAS)),
-        new DrumDef(
-                "drum_steel", gregtech.content.material.generated.CompoundMaterials.Steel, 64000, Set.of(GAS)),
+                "drum_efrine",
+                gregtech.content.material.generated.CompoundMaterials.Efrine,
+                64000,
+                Set.of(GAS, ACID, PLASMA)),
+        new DrumDef("drum_invar", gregtech.content.material.generated.CompoundMaterials.Invar, 64000, Set.of(GAS)),
+        new DrumDef("drum_steel", gregtech.content.material.generated.CompoundMaterials.Steel, 64000, Set.of(GAS)),
         new DrumDef(
                 "drum_stainless_steel",
                 gregtech.content.material.generated.CompoundMaterials.StainlessSteel,

@@ -57,8 +57,8 @@ class StructureConstraintIntegrationTest {
         var unconstrained = new StructureLayout(resolved.name(), resolved.cells(), resolved.repeats(), List.of());
         assertThrows(
                 IllegalArgumentException.class,
-                () -> AddonMachineDeclarations.resolve(List.of(
-                        machine.withStructure(source), machine.withStructure(unconstrained))));
+                () -> AddonMachineDeclarations.resolve(
+                        List.of(machine.withStructure(source), machine.withStructure(unconstrained))));
     }
 
     @Test

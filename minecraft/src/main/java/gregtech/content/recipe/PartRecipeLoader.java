@@ -1,20 +1,19 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
+import gregtech.bootstrap.InitializationStep;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialStackItemHelper;
 import gregtech.engine.prefix.PrefixRegistry;
-import gregtech.content.data.MaterialPrefix;
-import gregtech.content.data.MachineRecipeMaps;
-import gregtech.bootstrap.InitializationStep;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.util.OM;
-import net.minecraft.world.item.ItemStack;
-
 import java.util.List;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Generic material part processing: plates, rods, bolts, screws, gears, rings,
@@ -50,9 +49,13 @@ public class PartRecipeLoader implements InitializationStep {
         }
         int extruderSpecials = SourceExtruderRecipes.registerSpecialRecipes();
         extruderPairCount = SourceExtruderRecipes.finishRegistration();
-        com.mojang.logging.LogUtils.getLogger().info(
-                "[gregtech] Part processing recipes added; extruder: {} recipes ({} special rows, {} GT6 outputs skipped: {})",
-                extruderPairCount, extruderSpecials, EXTRUDER_SKIPPED.size(), EXTRUDER_SKIPPED);
+        com.mojang.logging.LogUtils.getLogger()
+                .info(
+                        "[gregtech] Part processing recipes added; extruder: {} recipes ({} special rows, {} GT6 outputs skipped: {})",
+                        extruderPairCount,
+                        extruderSpecials,
+                        EXTRUDER_SKIPPED.size(),
+                        EXTRUDER_SKIPPED);
     }
 
     // ── RollingMill: ingots → plates ────────────────────────────────────────
@@ -67,7 +70,9 @@ public class PartRecipeLoader implements InitializationStep {
 
     private void rollingWire(GTMaterial entry, SourceRollingWireRules.Machine machine) {
         GTMaterial material = entry.resolve();
-        var map = machine == SourceRollingWireRules.Machine.ROLLING_MILL ? MachineRecipeMaps.RollingMill : MachineRecipeMaps.Wiremill;
+        var map = machine == SourceRollingWireRules.Machine.ROLLING_MILL
+                ? MachineRecipeMaps.RollingMill
+                : MachineRecipeMaps.Wiremill;
         for (var rule : SourceRollingWireRules.rules()) {
             if (rule.machine() != machine) continue;
             var decision = SourceRollingWireRules.evaluate(entry, rule);
@@ -79,8 +84,15 @@ public class PartRecipeLoader implements InitializationStep {
             ItemStack input = gregtech.content.registry.GTBlocks.getStack(rule.blockInput(), material);
             ItemStack output = mat(rule.output(), material, rule.outputCount());
             if (output.isEmpty() || !verifiedSolidBlock(input, material)) continue;
-            var recipe = new gregtech.engine.recipe.Recipe(new ItemStack[]{input}, new ItemStack[]{output},
-                    null, null, null, decision.ticks(), SourceRollingWireRules.EU_PER_TICK, 0);
+            var recipe = new gregtech.engine.recipe.Recipe(
+                    new ItemStack[] {input},
+                    new ItemStack[] {output},
+                    null,
+                    null,
+                    null,
+                    decision.ticks(),
+                    SourceRollingWireRules.EU_PER_TICK,
+                    0);
             map.addRecipe(recipe.withItemInputGuard(0, offered -> verifiedSolidBlock(offered, material)));
         }
     }
@@ -97,8 +109,15 @@ public class PartRecipeLoader implements InitializationStep {
                 case CLUSTER_MILL -> MachineRecipeMaps.ClusterMill;
                 case ROLL_FORMER -> MachineRecipeMaps.RollFormer;
             };
-            roll(map, material, rule.input(), rule.inputCount(), rule.output(), rule.outputCount(),
-                    decision.ticks(), SourceFormingRules.EU_PER_TICK);
+            roll(
+                    map,
+                    material,
+                    rule.input(),
+                    rule.inputCount(),
+                    rule.output(),
+                    rule.outputCount(),
+                    decision.ticks(),
+                    SourceFormingRules.EU_PER_TICK);
         }
     }
 
@@ -116,8 +135,8 @@ public class PartRecipeLoader implements InitializationStep {
     }
 
     /** Original Loader_Recipes_Handlers–393 enables pulverized remains for these lathe rows. */
-    private void lathePart(GTMaterial m, MaterialPrefix in, int inCount,
-                           MaterialPrefix out, int outCount, long duration) {
+    private void lathePart(
+            GTMaterial m, MaterialPrefix in, int inCount, MaterialPrefix out, int outCount, long duration) {
         ItemStack input = mat(in, m, inCount);
         ItemStack output = mat(out, m, outCount);
         if (input.isEmpty() || output.isEmpty()) return;
@@ -131,13 +150,13 @@ public class PartRecipeLoader implements InitializationStep {
     }
 
     /** RecipeMapHandlerPrefix–218 → OM.pulverize, including target identity and ratio. */
-    private static ItemStack[] machiningOutputs(GTMaterial material, MaterialPrefix in, int inCount,
-                                                MaterialPrefix out, int outCount, ItemStack output) {
+    private static ItemStack[] machiningOutputs(
+            GTMaterial material, MaterialPrefix in, int inCount, MaterialPrefix out, int outCount, ItemStack output) {
         return machiningOutputs(material, in.getMaterialWeight() * inCount, out, outCount, output);
     }
 
-    private static ItemStack[] machiningOutputs(GTMaterial material, long inputUnits,
-                                                MaterialPrefix out, int outCount, ItemStack output) {
+    private static ItemStack[] machiningOutputs(
+            GTMaterial material, long inputUnits, MaterialPrefix out, int outCount, ItemStack output) {
         long remains = inputUnits - out.getMaterialWeight() * outCount;
         var dust = pulverizedRemains(material, remains);
         if (dust.isEmpty()) return new ItemStack[] {output};
@@ -148,7 +167,8 @@ public class PartRecipeLoader implements InitializationStep {
     }
 
     private static java.util.List<ItemStack> pulverizedRemains(GTMaterial material, long remains) {
-        return OM.dustAll(material.getTargetPulverMaterial(),
+        return OM.dustAll(
+                material.getTargetPulverMaterial(),
                 PulverizationRules.amount(remains, material.getTargetPulverAmount()));
     }
 
@@ -166,9 +186,13 @@ public class PartRecipeLoader implements InitializationStep {
     }
 
     /** Source Handlers; holders and ordinary collisions remain native admission decisions. */
-    private void cut(GTMaterial material, SourceCutterRules.Rule rule, SourceCutterRules.Coolant coolant,
-                     SourceCutterRules.Decision decision) {
-        ItemStack input = rule.blockInput() == null ? mat(rule.input(), material, 1)
+    private void cut(
+            GTMaterial material,
+            SourceCutterRules.Rule rule,
+            SourceCutterRules.Coolant coolant,
+            SourceCutterRules.Decision decision) {
+        ItemStack input = rule.blockInput() == null
+                ? mat(rule.input(), material, 1)
                 : gregtech.content.registry.GTBlocks.getStack(rule.blockInput(), material);
         ItemStack output = mat(rule.output(), material, rule.outputCount());
         if (input.isEmpty() || output.isEmpty()) return;
@@ -184,8 +208,9 @@ public class PartRecipeLoader implements InitializationStep {
                     .fluidInputs(fluid)
                     .itemOutputs(machiningOutputs(material, inputUnits, rule.output(), rule.outputCount(), output))
                     .build();
-            if (recipe != null) MachineRecipeMaps.Cutter.addRecipe(
-                    recipe.withItemInputGuard(0, offered -> verifiedSolidBlock(offered, material)));
+            if (recipe != null)
+                MachineRecipeMaps.Cutter.addRecipe(
+                        recipe.withItemInputGuard(0, offered -> verifiedSolidBlock(offered, material)));
             return;
         }
         MachineRecipeMaps.Cutter.register(RecipeBuilder.of(rule.eut(), decision.ticks())
@@ -198,25 +223,35 @@ public class PartRecipeLoader implements InitializationStep {
     /** The reviewed solid-block routes require physical 9U proof; explicit metadata always wins. */
     private static boolean verifiedSolidBlock(ItemStack stack, GTMaterial material) {
         try {
-            if (stack == null || stack.isEmpty() || stack.isDamaged() || material == null
-                    || !material.isValid() || material.resolve() != material
+            if (stack == null
+                    || stack.isEmpty()
+                    || stack.isDamaged()
+                    || material == null
+                    || !material.isValid()
+                    || material.resolve() != material
                     || GTMaterialRegistry.get(material.getId()) != material
                     || GTMaterialRegistry.get(material.getName()) != material
                     || gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(stack)) return false;
             var prefix = gregtech.engine.prefix.BlockMaterialPrefix.blockSolid;
             ItemStack canonical = gregtech.content.registry.GTBlocks.getStack(prefix, material);
-            if (canonical.isEmpty() || canonical.getItem() != stack.getItem()
+            if (canonical.isEmpty()
+                    || canonical.getItem() != stack.getItem()
                     || !(stack.getItem() instanceof net.minecraft.world.item.BlockItem item)
                     || !(item.getBlock() instanceof gregtech.content.block.MaterialBlockLike block)
-                    || block.prefix() != prefix || block.material().resolve() != material) return false;
+                    || block.prefix() != prefix
+                    || block.material().resolve() != material) return false;
             long units = 9 * GTValues.U;
-            var data = gregtech.engine.material.ItemMaterialRegistry.base(stack.getItem()).orElse(null);
-            if (data != null) return data.prefix() == null
-                    && data.components().size() == 1 && data.material().resolve() == material
-                    && data.amount() == units;
+            var data = gregtech.engine.material.ItemMaterialRegistry.base(stack.getItem())
+                    .orElse(null);
+            if (data != null)
+                return data.prefix() == null
+                        && data.components().size() == 1
+                        && data.material().resolve() == material
+                        && data.amount() == units;
             // Forge has no general block composition registration; inspect the actual known block.
             var weights = gregtech.content.block.BlockMaterialWeights.contained(block.material(), block.prefix());
-            return weights.size() == 1 && weights.get(0).material().resolve() == material
+            return weights.size() == 1
+                    && weights.get(0).material().resolve() == material
                     && weights.get(0).amount() == units;
         } catch (RuntimeException | LinkageError invalidBinding) {
             return false;
@@ -233,10 +268,14 @@ public class PartRecipeLoader implements InitializationStep {
 
     private int extruderPairCount;
     public static final List<String> EXTRUDER_SKIPPED = List.of();
+
     private void extruder(GTMaterial material) {
         SourceExtruderRecipes.register(material);
     }
-    public int extruderRecipes() { return extruderPairCount; }
+
+    public int extruderRecipes() {
+        return extruderPairCount;
+    }
 
     // ── Furnace: dust / crushed chain → smelting target ─────────────────────
 
@@ -267,13 +306,26 @@ public class PartRecipeLoader implements InitializationStep {
     // ── helpers ──────────────────────────────────────────────────────────────
 
     /** Registers {@code inCount × in → outCount × out} when both stacks resolve. */
-    private void roll(gregtech.engine.recipe.RecipeMap map, GTMaterial m,
-                      MaterialPrefix in, int inCount, MaterialPrefix out, int outCount, long duration) {
+    private void roll(
+            gregtech.engine.recipe.RecipeMap map,
+            GTMaterial m,
+            MaterialPrefix in,
+            int inCount,
+            MaterialPrefix out,
+            int outCount,
+            long duration) {
         roll(map, m, in, inCount, out, outCount, duration, EU);
     }
 
-    private void roll(gregtech.engine.recipe.RecipeMap map, GTMaterial m,
-                      MaterialPrefix in, int inCount, MaterialPrefix out, int outCount, long duration, long eut) {
+    private void roll(
+            gregtech.engine.recipe.RecipeMap map,
+            GTMaterial m,
+            MaterialPrefix in,
+            int inCount,
+            MaterialPrefix out,
+            int outCount,
+            long duration,
+            long eut) {
         ItemStack input = mat(in, m, inCount);
         if (input.isEmpty()) return;
         ItemStack output = mat(out, m, outCount);
@@ -292,17 +344,25 @@ public class PartRecipeLoader implements InitializationStep {
      * batch's material amount; the source weight stays per item, so a count above one is rebuilt
      * from the units rather than from a representative stack.
      */
-    private static void unitRule(gregtech.engine.recipe.RecipeMap map, GTMaterial material, MaterialPrefix in,
-                                 ItemStack input, Recipe template) {
+    private static void unitRule(
+            gregtech.engine.recipe.RecipeMap map,
+            GTMaterial material,
+            MaterialPrefix in,
+            ItemStack input,
+            Recipe template) {
         // The optimizer may have divided the batch; use the template's surviving count so the
         // rule cannot ask for more items than the row actually consumes.
-        if (template.mInputs.length == 0 || template.mInputs[0].isEmpty()
+        if (template.mInputs.length == 0
+                || template.mInputs[0].isEmpty()
                 || template.mInputs[0].getItem() != input.getItem()) return;
         int count = template.mInputs[0].getCount();
         ItemStack source = input.copyWithCount(count);
         long required = in.getMaterialWeight() * count;
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
-                template, 0, material, required,
+                template,
+                0,
+                material,
+                required,
                 gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding.WHOLE_OUTPUTS);
         rule.source(source, in.getMaterialWeight());
         rule.publish(map);
