@@ -84,7 +84,11 @@ public final class SharedLargeMachineLayouts {
         }
 
         public int absoluteUp(Cell cell, int copy) {
-            return up + step * (cell.up() + copy * height);
+            return absoluteUp(up, step, height, cell.up(), copy);
+        }
+
+        static int absoluteUp(int up, int step, int height, int cellUp, int copy) {
+            return up + step * (cellUp + copy * height);
         }
     }
 

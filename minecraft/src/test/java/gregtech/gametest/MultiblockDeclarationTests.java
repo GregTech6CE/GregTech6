@@ -1,17 +1,23 @@
 package gregtech.gametest;
 
+import gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
 import gregtech.content.multiblock.ControllerDeclarations;
 import gregtech.content.multiblock.ControllerStructureLayouts;
+import gregtech.content.multiblock.OriginalMultiblockPortRules;
 import gregtech.content.registry.GTBlockEntities;
 import gregtech.content.registry.GTMultiblocks;
 import gregtech.content.registry.MultiblockRegistration;
+import gregtech.engine.multiblock.MultiblockLayout.Role;
 import gregtech.engine.multiblock.tracking.*;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -56,6 +62,62 @@ public final class MultiblockDeclarationTests {
                 "Lightning materials lost the example rod");
         System.out.println("MULTIBLOCK_DECLARATIONS controllers=" + discovered);
         helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100)
+    public static void largeBoilerKeepsFacingAndPortAssignments(GameTestHelper helper) {
+        var controller = GTMultiblocks.findPart(17202).get();
+        var origin = helper.absolutePos(new BlockPos(3, 1, 2));
+        var level = helper.getLevel();
+        level.setBlockAndUpdate(origin,
+                controller.defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, Direction.EAST));
+        helper.assertTrue(level.getBlockEntity(origin) instanceof OriginalLargeBoilerControllerBlockEntity,
+                "Titanium boiler controller has no block entity");
+        var boiler = (OriginalLargeBoilerControllerBlockEntity) level.getBlockEntity(origin);
+        var definition = boiler.createStructureDefinition();
+        var openings = Set.of(new BlockPos(0, 2, 1), new BlockPos(-1, 1, 1), new BlockPos(1, 1, 1),
+                new BlockPos(0, 1, 0), new BlockPos(0, 1, 2));
+        for (Direction front : Direction.Plane.HORIZONTAL) {
+            var cells = StructurePlan.minimum(definition.compile(front));
+            helper.assertTrue(cells.size() == 35, "Expected 35 checked boiler cells facing " + front);
+            helper.assertTrue(cells.stream().noneMatch(cell -> cell.offset().equals(BlockPos.ZERO)),
+                    "The boiler matcher includes the controller position");
+            for (var cell : cells) {
+                var spec = cell.specification();
+                var local = new BlockPos(spec.right(), spec.up(), spec.back());
+                helper.assertTrue(cell.offset().equals(spec.at(BlockPos.ZERO, front)),
+                        "Wrong boiler offset for " + spec + " facing " + front);
+                helper.assertTrue(spec.design() == (openings.contains(local) ? 1 : -1),
+                        "Wrong opening design at " + local);
+                var role = switch (local.getY()) {
+                    case -1 -> Role.HEAT_INPUT;
+                    case 0 -> Role.FLUID_INPUT;
+                    case 1 -> local.equals(new BlockPos(0, 1, 1)) ? Role.AIR : Role.FLUID_OUTPUT;
+                    case 2 -> Role.FLUID_OUTPUT;
+                    default -> throw new AssertionError("Unexpected boiler cell " + spec);
+                };
+                helper.assertTrue(spec.role() == role, "Wrong boiler port role at " + local);
+                switch (role) {
+                    case HEAT_INPUT -> helper.assertTrue(spec.part() == 18101, "Expected a heat transmitter");
+                    case FLUID_INPUT -> helper.assertTrue(spec.part() == 18026
+                            && spec.ports().equals(OriginalMultiblockPortRules.BOILER_WATER),
+                            "Expected a titanium wall with the boiler water port");
+                    case FLUID_OUTPUT -> helper.assertTrue(spec.part() == 18026
+                            && spec.ports().equals(OriginalMultiblockPortRules.BOILER_STEAM),
+                            "Expected a titanium wall with the boiler steam port");
+                    default -> helper.assertTrue(spec.part() == 0, "Expected an empty boiler cavity");
+                }
+            }
+        }
+        for (var cell : StructurePlan.minimum(definition.compile(Direction.EAST))) {
+            level.setBlockAndUpdate(origin.offset(cell.offset()), cell.specification().block().defaultBlockState());
+        }
+        var cavity = origin.west().above();
+        helper.startSequence()
+                .thenWaitUntil(() -> helper.assertTrue(boiler.isStructureOk(), "Large boiler did not form"))
+                .thenExecute(() -> level.setBlockAndUpdate(cavity, Blocks.DIRT.defaultBlockState()))
+                .thenWaitUntil(() -> helper.assertFalse(boiler.isStructureOk(), "Boiler formed without a hollow center"))
+                .thenSucceed();
     }
 
     @GameTest(template = "test_empty", timeoutTicks = 100)

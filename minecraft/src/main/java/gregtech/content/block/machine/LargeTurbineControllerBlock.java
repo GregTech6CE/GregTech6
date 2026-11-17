@@ -1,7 +1,8 @@
 package gregtech.content.block.machine;
 
 import gregtech.content.blockentity.machine.LargeTurbineControllerBlockEntity;
-import gregtech.content.multiblock.AxialGeneratorDefinitions;
+import gregtech.content.multiblock.OriginalGeneratorParameters;
+import gregtech.content.multiblock.OriginalGeneratorParameters.AxialGrade;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.*;
@@ -9,10 +10,10 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class LargeTurbineControllerBlock extends AxialGeneratorBlock {
     public LargeTurbineControllerBlock(Properties properties) {
-        this(AxialGeneratorDefinitions.STEAM.get(0), properties);
+        this(OriginalGeneratorParameters.STEAM.get(0), properties);
     }
 
-    public LargeTurbineControllerBlock(AxialGeneratorDefinitions.Grade grade, Properties properties) {
+    public LargeTurbineControllerBlock(AxialGrade grade, Properties properties) {
         super(grade, properties);
     }
 

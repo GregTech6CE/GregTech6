@@ -1,6 +1,7 @@
 package gregtech.engine.machine;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.engine.energy.BoilerRules;
 
 /**
  * One GT6 single-block Steam Boiler Tank ({@code MultiTileEntityBoilerTank}).
@@ -13,25 +14,20 @@ import gregtech.api.material.GTMaterial;
  */
 public record BoilerSpec(
         String id, GTMaterial material, boolean strong, long steamOutput, float hardness, String displayEn) {
-    /** HU consumed per litre of water boiled (GT6 fixed value). */
-    public static final long HU_PER_WATER = 80;
-    /** Steam produced per litre of water at full efficiency (GT6 fixed value). */
-    public static final long STEAM_PER_WATER = 160;
-
     /** Internal steam buffer; overflowing it is what makes the boiler explode.
      *  Sized so that at rated heat input the boiler reaches 50% (output threshold)
      *  in 250 seconds with distilled water, or 500 seconds at max calcification. */
     public long steamCapacity() {
-        return steamOutput * 10000L;
+        return BoilerRules.bufferCapacity(steamOutput);
     }
 
     /** Internal HU buffer; exceeding it (running dry) is what overheats the boiler. */
     public long heatCapacity() {
-        return steamOutput * 10000L;
+        return BoilerRules.bufferCapacity(steamOutput);
     }
 
     /** Recommended HU draw per tick from the burning box below. */
     public long heatInputRecommended() {
-        return Math.max(1L, steamOutput / 2L);
+        return Math.max(1L, BoilerRules.ratedHeatInput(steamOutput));
     }
 }

@@ -84,6 +84,7 @@ public final class LogisticsCoreLayout {
 
     private LogisticsCoreLayout() {}
 
+    /** Every cube cell except the controller's own. */
     public static List<Cell> cells() {
         return CELLS;
     }

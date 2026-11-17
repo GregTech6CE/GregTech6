@@ -6,7 +6,7 @@ import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.MultiblockTankData;
 import gregtech.content.multiblock.OriginalTankTooltipData;
-import gregtech.content.multiblock.TankValveSpec;
+import gregtech.content.multiblock.TankValveParameters;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -17,10 +17,10 @@ public final class MultiblockTankTooltips {
     private MultiblockTankTooltips() {
     }
 //? if >=1.21.1 {
-    /*public static void append(int size, TankValveSpec spec, ItemStack stack, net.minecraft.core.HolderLookup.Provider lookup,
+    /*public static void append(int size, TankValveParameters spec, ItemStack stack, net.minecraft.core.HolderLookup.Provider lookup,
             List<Component> lines) {
 *///?} else {
-    public static void append(int size, TankValveSpec spec, ItemStack stack, List<Component> lines) {
+    public static void append(int size, TankValveParameters spec, ItemStack stack, List<Component> lines) {
 //?}
         add(lines, "gt.lang.structure", ChatFormatting.AQUA).append(":");
         for (var key : OriginalTankTooltipData.structureKeys(size)) add(lines, key, ChatFormatting.WHITE);

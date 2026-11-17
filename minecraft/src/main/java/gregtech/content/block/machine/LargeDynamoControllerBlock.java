@@ -1,7 +1,8 @@
 package gregtech.content.block.machine;
 
 import gregtech.content.blockentity.machine.LargeDynamoControllerBlockEntity;
-import gregtech.content.multiblock.AxialGeneratorDefinitions;
+import gregtech.content.multiblock.OriginalGeneratorParameters;
+import gregtech.content.multiblock.OriginalGeneratorParameters.AxialGrade;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.*;
@@ -10,10 +11,10 @@ import net.minecraft.world.level.block.state.BlockState;
 public class LargeDynamoControllerBlock extends AxialGeneratorBlock {
 
     public LargeDynamoControllerBlock(Properties properties) {
-        this(AxialGeneratorDefinitions.DYNAMO.get(0), properties);
+        this(OriginalGeneratorParameters.DYNAMO.get(0), properties);
     }
 
-    public LargeDynamoControllerBlock(AxialGeneratorDefinitions.Grade grade, Properties properties) {
+    public LargeDynamoControllerBlock(AxialGrade grade, Properties properties) {
         super(grade, properties);
     }
 

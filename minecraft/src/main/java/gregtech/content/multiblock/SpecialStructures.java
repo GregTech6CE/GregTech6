@@ -2,6 +2,7 @@ package gregtech.content.multiblock;
 
 import gregtech.content.block.machine.OriginalLightningRodControllerBlock;
 import gregtech.content.blockentity.machine.*;
+import gregtech.content.logistics.LogisticsCoreLayout;
 import gregtech.content.logistics.LogisticsCoreStructure;
 import gregtech.engine.multiblock.MultiblockLayout.Role;
 import gregtech.engine.multiblock.tracking.*;
@@ -55,27 +56,27 @@ public final class SpecialStructures {
     /** Shared by the logistics definition and the JEI/EMI preview. */
     public static List<CompiledPattern.FixedCell> logisticsCells(Direction front) {
         var cells = new ArrayList<CompiledPattern.FixedCell>();
-        for (var cell : LogisticsCoreStructure.cells()) {
+        for (var cell : LogisticsCoreLayout.cells()) {
             var spec = switch (cell.kind()) {
-                case WALL -> part(LogisticsCoreStructure.WALL, Role.ENERGY_INPUT);
-                case VENT -> part(LogisticsCoreStructure.VENT, Role.LOGISTICS);
+                case WALL -> part(LogisticsCoreLayout.WALL, Role.ENERGY_INPUT);
+                case VENT -> part(LogisticsCoreLayout.VENT, Role.LOGISTICS);
                 case CPU ->
                     new LargeMachineLayouts.Cell(
                             0,
                             0,
                             0,
-                            LogisticsCoreStructure.VERSATILE,
+                            LogisticsCoreLayout.VERSATILE,
                             Role.CASING,
                             null,
                             -1,
                             List.of(
-                                    new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.LOGIC, null),
-                                    new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.CONTROL, null),
-                                    new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.STORAGE, null),
-                                    new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.CONVERSION, null),
-                                    new SharedLargeMachineLayouts.Choice(LogisticsCoreStructure.WALL, null)));
+                                    new SharedLargeMachineLayouts.Choice(LogisticsCoreLayout.LOGIC, null),
+                                    new SharedLargeMachineLayouts.Choice(LogisticsCoreLayout.CONTROL, null),
+                                    new SharedLargeMachineLayouts.Choice(LogisticsCoreLayout.STORAGE, null),
+                                    new SharedLargeMachineLayouts.Choice(LogisticsCoreLayout.CONVERSION, null),
+                                    new SharedLargeMachineLayouts.Choice(LogisticsCoreLayout.WALL, null)));
             };
-            add(cells, cell.at(BlockPos.ZERO, front), spec);
+            add(cells, LogisticsCoreStructure.at(cell, BlockPos.ZERO, front), spec);
         }
         return cells;
     }
@@ -89,7 +90,7 @@ public final class SpecialStructures {
 
             @Override
             public List<Aggregate> aggregates() {
-                return StructureConstraints.compile(gregtech.content.logistics.LogisticsCoreLayout.CONSTRAINTS);
+                return StructureConstraints.compile(LogisticsCoreLayout.CONSTRAINTS);
             }
         };
     }

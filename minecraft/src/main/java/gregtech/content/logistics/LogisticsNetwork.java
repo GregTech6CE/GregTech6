@@ -1,13 +1,12 @@
 package gregtech.content.logistics;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.Level;
-
 import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
 
 /** Position-based, chunk-safe GT6 logistics flood fill. Never keeps block entities alive. */
 public final class LogisticsNetwork {
@@ -29,21 +28,19 @@ public final class LogisticsNetwork {
 
     /** Seed loaded physical hosts in the core cube, then cross mutual open sides without delegate lookup. */
     public static Snapshot scan(Level level, BlockPos controller, Direction front, int range) {
-//? if >=1.21.1 {
-        /*BlockPos center = controller.relative(front.getOpposite(), LogisticsCoreLayout.RADIUS);
-*///?} else {
-        BlockPos center = controller.relative(front.getOpposite(), LogisticsCoreStructure.RADIUS);
-//?}
+        int radius = LogisticsCoreLayout.RADIUS;
+        BlockPos center = controller.relative(front.getOpposite(), radius);
         var visited = new LinkedHashSet<BlockPos>();
         var queue = new ArrayDeque<BlockPos>();
-        for (int x = -2; x <= 2; x++)
-            for (int y = -2; y <= 2; y++)
-                for (int z = -2; z <= 2; z++) {
+        for (int x = -radius; x <= radius; x++)
+            for (int y = -radius; y <= radius; y++)
+                for (int z = -radius; z <= radius; z++) {
                     BlockPos pos = center.offset(x, y, z);
                     // GT6 seeds every ITileEntityLogistics inside the core cube, even
                     // a part whose faces are currently closed; the face test is only
                     // applied when crossing to a neighbouring position.
-                    if (level.hasChunkAt(pos) && level.getBlockEntity(pos) instanceof LogisticsHost
+                    if (level.hasChunkAt(pos)
+                            && level.getBlockEntity(pos) instanceof LogisticsHost
                             && visited.add(pos.immutable())) queue.add(pos.immutable());
                 }
 
@@ -67,7 +64,8 @@ public final class LogisticsNetwork {
     }
 
     public static int chebyshev(BlockPos origin, BlockPos target) {
-        return Math.max(Math.abs(origin.getX() - target.getX()),
+        return Math.max(
+                Math.abs(origin.getX() - target.getX()),
                 Math.max(Math.abs(origin.getY() - target.getY()), Math.abs(origin.getZ() - target.getZ())));
     }
 }

@@ -4,6 +4,7 @@ import gregtech.api.machine.BlockFace;
 
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.machine.BoilerSpec;
+import gregtech.engine.energy.BoilerRules;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.content.block.machine.BoilerTankBlock;
@@ -207,21 +208,21 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
     }
 
     private void boil() {
-        if (heat < BoilerSpec.HU_PER_WATER || waterTank.isEmpty()) return;
+        if (heat < BoilerRules.HU_PER_WATER || waterTank.isEmpty()) return;
         var steamFluid = gregtech.content.registry.GTFluids.still("Steam");
         if (steamFluid == null || !GTFluids.isPresent(steamFluid)) return;
 
         long maxByRate = Math.max(1, steamTank.getCapacity() / 2560);
-        long conversions = Math.min(maxByRate, Math.min(heat / BoilerSpec.HU_PER_WATER,
+        long conversions = Math.min(maxByRate, Math.min(heat / BoilerRules.HU_PER_WATER,
                 waterTank.getAmount()));
         if (conversions <= 0) return;
 
         waterTank.remove(conversions);
         if(efficiency>5000&&!waterTank.isEmpty()&&!isDistilledWater()&&level.random.nextInt(10)==0)
             efficiency=(short)Math.max(5000,efficiency-conversions);
-        long steam=conversions*BoilerSpec.STEAM_PER_WATER*efficiency/10000;
+        long steam=conversions*BoilerRules.STEAM_PER_WATER*efficiency/10000;
         steamTank.setFluid(new FluidStack(steamFluid.get(),1),steamTank.getAmount()+steam);
-        heat-=conversions*BoilerSpec.HU_PER_WATER;
+        heat-=conversions*BoilerRules.HU_PER_WATER;
         cooldown=128;
         setChanged();
     }

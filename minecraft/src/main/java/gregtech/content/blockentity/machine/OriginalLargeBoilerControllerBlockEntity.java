@@ -2,16 +2,24 @@
 package gregtech.content.blockentity.machine;
 
 import gregtech.api.machine.BlockFace;
+import gregtech.api.multiblock.StructurePorts;
+import gregtech.content.multiblock.AxialStructureTransform;
+import gregtech.content.multiblock.LargeMachineLayouts;
+import gregtech.content.multiblock.OriginalLargeBoilerParameters;
+import gregtech.content.multiblock.OriginalLargeBoilerParameters.Variant;
+import gregtech.content.multiblock.OriginalMultiblockPortRules;
+import gregtech.content.multiblock.SharedBoilerStructure;
+import gregtech.engine.energy.BoilerRules;
 
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.multiblock.MultiblockLayout;
 import gregtech.engine.multiblock.MultiblockPortOwner;
 import gregtech.engine.multiblock.PartBindings;
+import gregtech.engine.multiblock.tracking.CompiledPattern;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import gregtech.content.block.machine.OriginalLargeBoilerControllerBlock;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
-import gregtech.content.multiblock.OriginalLargeBoilerSpecs;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.RegisteredFluids;
 import gregtech.content.registry.GTBlockEntities;
@@ -41,6 +49,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -52,15 +61,12 @@ import java.util.List;
 public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBlockEntity
         implements MultiblockPortOwner, gregtech.engine.multiblock.MultiblockToolTarget, gregtech.api.sensor.CompressionSensorSource,
         gregtech.api.machine.HeatHandler, gregtech.engine.multiblock.tracking.TrackedMultiblock {
-    private static final int WATER_CAPACITY = gregtech.content.multiblock.OriginalLargeBoilerParameters.WATER_CAPACITY;
-    private static final int HU_PER_WATER = gregtech.content.multiblock.OriginalLargeBoilerParameters.HU_PER_WATER;
-    private static final int STEAM_PER_WATER = gregtech.content.multiblock.OriginalLargeBoilerParameters.STEAM_PER_WATER;
-
-    private final OriginalLargeBoilerSpecs.Variant variant;
+    private final Variant variant;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
     private final gregtech.engine.multiblock.tracking.StructureDefinition.Declarative definition =
             gregtech.engine.multiblock.tracking.FixedStructures.declarative(this, this::structureCells, List.of());
-    private final FluidTankGT water = new FluidTankGT(WATER_CAPACITY).setOnChanged(this::setChanged);
+    private final FluidTankGT water =
+            new FluidTankGT(OriginalLargeBoilerParameters.WATER_CAPACITY).setOnChanged(this::setChanged);
     private final FluidTankGT steam;
     private long heat;
     private int efficiency = 10_000;
@@ -78,7 +84,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         steam = new FluidTankGT(variant.steamCapacity()).setOnChanged(this::setChanged);
     }
 
-    public OriginalLargeBoilerSpecs.Variant variant() { return variant; }
+    public Variant variant() { return variant; }
     public long storedHeat() { return heat; }
 
     // ── HeatHandler: input keeps the structure gate, output is a plain drain ────────────────
@@ -153,25 +159,26 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return definition;
     }
-    private List<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
-        var cells = new java.util.ArrayList<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell>(
-                OriginalLargeBoilerSpecs.LAYOUT.cells().size());
-        for (var cell : OriginalLargeBoilerSpecs.LAYOUT.cells()) {
+    private List<CompiledPattern.FixedCell> structureCells(Direction front) {
+        var layout = SharedBoilerStructure.LAYOUT.cells();
+        var cells = new ArrayList<CompiledPattern.FixedCell>(layout.size());
+        for (var cell : layout) {
             // The controller occupies its own cell in the source layout and is skipped by the full scan.
             if (cell.right() == 0 && cell.up() == 0 && cell.back() == 0) continue;
-            int part = cell.role() == MultiblockLayout.Role.AIR ? 0
-                    : cell.role() == MultiblockLayout.Role.HEAT_INPUT ? 18101 : variant.denseWallId();
-            var spec = new gregtech.content.multiblock.LargeMachineLayouts.Cell(
-                    cell.right(), cell.up(), cell.back(), part, cell.role(), null,
-                    cell.up() == 2 && cell.right() == 0 && cell.back() == 1
-                            || cell.up() == 1 && Math.abs(cell.right()) + Math.abs(cell.back() - 1) == 1 ? 1 : -1,
-                    java.util.List.of(),
-                    cell.role() == MultiblockLayout.Role.FLUID_INPUT ? gregtech.content.multiblock.OriginalMultiblockPortRules.BOILER_WATER
-                    : cell.role() == MultiblockLayout.Role.FLUID_OUTPUT ? gregtech.content.multiblock.OriginalMultiblockPortRules.BOILER_STEAM
-                    : gregtech.api.multiblock.StructurePorts.DEFAULT);
-            var offset = spec.at(BlockPos.ZERO, front);
-            cells.add(new gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell(
-                    offset.getX(), offset.getY(), offset.getZ(), spec));
+            var role = MultiblockLayout.Role.valueOf(cell.role().name());
+            int part = role == MultiblockLayout.Role.AIR ? 0
+                    : role == MultiblockLayout.Role.HEAT_INPUT ? 18101 : variant.denseWallId();
+            boolean opening = (cell.up() == 2 && cell.right() == 0 && cell.back() == 1)
+                    || (cell.up() == 1 && Math.abs(cell.right()) + Math.abs(cell.back() - 1) == 1);
+            var ports = switch (role) {
+                case FLUID_INPUT -> OriginalMultiblockPortRules.BOILER_WATER;
+                case FLUID_OUTPUT -> OriginalMultiblockPortRules.BOILER_STEAM;
+                default -> StructurePorts.DEFAULT;
+            };
+            var spec = new LargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), part, role, null,
+                    opening ? 1 : -1, List.of(), ports);
+            var offset = AxialStructureTransform.at(BlockPos.ZERO, front, cell.right(), cell.up(), cell.back());
+            cells.add(new CompiledPattern.FixedCell(offset.getX(), offset.getY(), offset.getZ(), spec));
         }
         return cells;
     }
@@ -219,7 +226,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     }
     @Override public boolean containsToolPosition(BlockPos pos) {
         var centre=bodyCentre();
-        return gregtech.content.multiblock.OriginalLargeBoilerParameters.contains(
+        return OriginalLargeBoilerParameters.contains(
                 pos.getX()-centre.getX(),pos.getY()-centre.getY(),pos.getZ()-centre.getZ());
     }
     @Override public long useMultiblockTool(net.minecraft.world.item.context.UseOnContext context,List<Component> messages) {
@@ -243,7 +250,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
             return List.copyOf(messages);
         }
         // This source override replaces the generic "formed already" line with boiler details.
-        return List.of(Component.literal(gregtech.content.multiblock.OriginalLargeBoilerParameters.calcificationMessage(efficiency)),
+        return List.of(Component.literal(OriginalLargeBoilerParameters.calcificationMessage(efficiency)),
                 gregtech.engine.multiblock.MultiblockTools.tankContent(water,"WARNING: NO WATER!!!"));
     }
 
@@ -267,8 +274,11 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     }
     private boolean shellLoaded() {
         if (level == null) return false;
-        for (var cell : OriginalLargeBoilerSpecs.LAYOUT.cells())
-            if (!level.hasChunkAt(cell.at(worldPosition, front()))) return false;
+        var front = front();
+        for (var cell : SharedBoilerStructure.LAYOUT.cells()) {
+            var pos = AxialStructureTransform.at(worldPosition, front, cell.right(), cell.up(), cell.back());
+            if (!level.hasChunkAt(pos)) return false;
+        }
         return true;
     }
 
@@ -292,20 +302,20 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     }
 
     private void boil() {
-        if (heat < HU_PER_WATER || water.isEmpty() || level == null) return;
+        if (heat < BoilerRules.HU_PER_WATER || water.isEmpty() || level == null) return;
         var steamFluid = GTFluids.still("Steam");
         if (steamFluid == null || !GTFluids.isPresent(steamFluid)) return;
         // Source GT6 caps conversions by total steam capacity / 2560, not output space.
         long conversions = Math.min(variant.steamCapacity() / 2560,
-                Math.min(heat / HU_PER_WATER, water.getAmount()));
+                Math.min(heat / BoilerRules.HU_PER_WATER, water.getAmount()));
         if (conversions <= 0) return;
         water.remove(conversions);
         if (efficiency > 5000 && !water.isEmpty() && !isDistilledWater()
                 && level.random.nextInt(10) == 0)
             efficiency = (int) Math.max(5000, efficiency - conversions);
-        long produced = conversions * STEAM_PER_WATER * efficiency / 10_000L;
+        long produced = conversions * BoilerRules.STEAM_PER_WATER * efficiency / 10_000L;
         steam.setFluid(new FluidStack(steamFluid.get(), 1), steam.getAmount() + produced);
-        heat -= conversions * HU_PER_WATER;
+        heat -= conversions * BoilerRules.HU_PER_WATER;
         cooldown = 128;
         setChanged();
     }
@@ -591,7 +601,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
         if (tag.contains("gt.water")) water.readFromNBT(tag.getCompound("gt.water"));
         if (tag.contains("gt.steam")) steam.readFromNBT(tag.getCompound("gt.steam"));
 //?}
-        water.setCapacity(WATER_CAPACITY);
+        water.setCapacity(OriginalLargeBoilerParameters.WATER_CAPACITY);
         steam.setCapacity(variant.steamCapacity());
         barometer = gregtech.content.energy.BoilerHazards.pressure(steam.getAmount(), variant.steamCapacity());
     }

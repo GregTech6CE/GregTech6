@@ -2,13 +2,14 @@
 package gregtech.content.multiblock;
 
 import gregtech.api.multiblock.StructureRole;
+import gregtech.engine.energy.BoilerRules;
 import java.util.*;
 
 /** Original five boiler variants, rated capacities and geometry. */
 public final class OriginalLargeBoilerParameters {
     private OriginalLargeBoilerParameters() {}
 
-    public static final int WATER_CAPACITY = 128_000, HU_PER_WATER = 80, STEAM_PER_WATER = 160;
+    public static final int WATER_CAPACITY = 128_000;
 
     /** Source checkStructure2 uses world X/Z around the body centre, irrespective of front. */
     public record CheckCell(int x, int y, int z, StructureRole role) {}
@@ -39,15 +40,15 @@ public final class OriginalLargeBoilerParameters {
 
     public record Variant(int originalId, String path, int denseWallId, long steamOutput, float hardness) {
         public long heatCapacity() {
-            return steamOutput * 10_000L;
+            return BoilerRules.bufferCapacity(steamOutput);
         }
 
         public long steamCapacity() {
-            return steamOutput * 10_000L;
+            return BoilerRules.bufferCapacity(steamOutput);
         }
 
         public long heatInputRecommended() {
-            return steamOutput / 2;
+            return BoilerRules.ratedHeatInput(steamOutput);
         }
     }
 
@@ -58,8 +59,6 @@ public final class OriginalLargeBoilerParameters {
             new Variant(17204, "adamantium_boiler_main_barometer", 18025, 262_144, 100),
             new Variant(17205, "invar_boiler_main_barometer", 18027, 8_192, 6));
 
-    public static final StructureGrid LAYOUT = layout();
-
     public static List<Variant> all() {
         return VARIANTS;
     }
@@ -69,9 +68,5 @@ public final class OriginalLargeBoilerParameters {
                 .filter(v -> v.originalId() == id)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Unknown GT6 large boiler " + id));
-    }
-
-    private static StructureGrid layout() {
-        return SharedBoilerStructure.LAYOUT;
     }
 }

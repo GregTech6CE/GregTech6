@@ -3,6 +3,7 @@
  * MultiBlockConverter / Energy_Stats / LH.addToolTipsEfficiency). */
 package gregtech.content.multiblock;
 
+import gregtech.content.multiblock.OriginalGeneratorParameters.Ratings;
 import java.util.*;
 
 /** Source controller identities and inherited presentation, shared by both native loaders. */
@@ -15,7 +16,7 @@ public final class OriginalGeneratorTooltipData {
         GAS
     }
 
-    public record Converter(int originalId, String sourcePath, Kind kind, long input, long output, int wallId) {
+    public record Converter(int originalId, String sourcePath, Kind kind, Ratings ratings, int wallId) {
         public boolean showsInput() {
             return kind != Kind.GAS;
         }
@@ -27,26 +28,6 @@ public final class OriginalGeneratorTooltipData {
 
         public String outputUnitKey() {
             return "gt.td.short.energy." + (kind == Kind.DYNAMO ? "electricity" : "kinetic_rotation");
-        }
-
-        public long inputMinimum() {
-            return input <= 16 ? 1 : input / 2;
-        }
-
-        public long inputMaximum() {
-            return input * 2;
-        }
-
-        public long outputMinimum() {
-            return output / 2;
-        }
-
-        public long outputMaximum() {
-            return output * 2;
-        }
-
-        public int efficiency() {
-            return (int) (10000L * output * (kind == Kind.STEAM ? 2 : 1) / input);
         }
 
         public List<String> structureKeys() {
@@ -70,12 +51,9 @@ public final class OriginalGeneratorTooltipData {
             var steam = OriginalGeneratorParameters.STEAM.get(i);
             var dynamo = OriginalGeneratorParameters.DYNAMO.get(i);
             var gas = OriginalGeneratorParameters.GRADES.get(i);
-            list.add(new Converter(
-                    17211 + i, sourcePath(17211 + i), Kind.STEAM, steam.input(), steam.output(), gas.wallId()));
-            list.add(new Converter(
-                    17221 + i, sourcePath(17221 + i), Kind.DYNAMO, dynamo.input(), dynamo.output(), gas.wallId()));
-            list.add(
-                    new Converter(17231 + i, sourcePath(17231 + i), Kind.GAS, gas.input(), gas.output(), gas.wallId()));
+            list.add(new Converter(17211 + i, sourcePath(17211 + i), Kind.STEAM, steam, gas.wallId()));
+            list.add(new Converter(17221 + i, sourcePath(17221 + i), Kind.DYNAMO, dynamo, gas.wallId()));
+            list.add(new Converter(17231 + i, sourcePath(17231 + i), Kind.GAS, gas, gas.wallId()));
         }
         return List.copyOf(list);
     }

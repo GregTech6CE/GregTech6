@@ -1,6 +1,8 @@
 package gregtech.content.block.machine;
 
 import gregtech.content.blockentity.machine.LargeGasTurbineControllerBlockEntity;
+import gregtech.content.multiblock.OriginalGeneratorParameters;
+import gregtech.content.multiblock.OriginalGeneratorParameters.GasGrade;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -17,8 +19,8 @@ import javax.annotation.Nullable;
 
 public class LargeGasTurbineControllerBlock extends DirectionalBlock
         implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
-    private final gregtech.content.multiblock.GasTurbineDefinitions.Grade grade;
-    public gregtech.content.multiblock.GasTurbineDefinitions.Grade grade() { return grade; }
+    private final GasGrade grade;
+    public GasGrade grade() { return grade; }
 
     /** GT6 {@code TileEntityBase10MultiBlockBase extends TileEntityBase09FacingSingle}. */
     @Override
@@ -29,9 +31,9 @@ public class LargeGasTurbineControllerBlock extends DirectionalBlock
                 : null;
     }
     public LargeGasTurbineControllerBlock(Properties properties) {
-        this(gregtech.content.multiblock.GasTurbineDefinitions.GRADES.get(0), properties);
+        this(OriginalGeneratorParameters.GRADES.get(0), properties);
     }
-    public LargeGasTurbineControllerBlock(gregtech.content.multiblock.GasTurbineDefinitions.Grade grade, Properties properties) {
+    public LargeGasTurbineControllerBlock(GasGrade grade, Properties properties) {
         super(properties);
         this.grade = grade;
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));

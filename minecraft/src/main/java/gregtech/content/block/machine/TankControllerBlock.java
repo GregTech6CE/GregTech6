@@ -1,7 +1,7 @@
 package gregtech.content.block.machine;
 
 import gregtech.content.blockentity.machine.MultiblockTankControllerBlockEntity;
-import gregtech.content.multiblock.TankValveSpec;
+import gregtech.content.multiblock.TankValveParameters;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -25,9 +25,9 @@ import java.util.List;
 /** Multiblock tank controller (3x3x3 or 5x5x5). Size is determined by the block variant. */
 public class TankControllerBlock extends DirectionalBlock implements gregtech.engine.multiblock.StructurePreviewSource, gregtech.engine.tool.ToolInteractionTarget {
     private final int size;
-    private final TankValveSpec valveSpec;
+    private final TankValveParameters valveSpec;
 
-    public TankControllerBlock(TankValveSpec spec, Properties properties) {
+    public TankControllerBlock(TankValveParameters spec, Properties properties) {
         super(properties);
         this.size = spec.size();
         this.valveSpec = spec;
@@ -85,7 +85,7 @@ public class TankControllerBlock extends DirectionalBlock implements gregtech.en
     public int size() {
         return size;
     }
-    public TankValveSpec valveSpec() {
+    public TankValveParameters valveSpec() {
         return valveSpec;
     }
 

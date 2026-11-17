@@ -74,7 +74,6 @@ public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GT
         return gregtech.engine.machine.crucible.CrucibleMath.units(maxMaterialAmount(), GTValues.U9, 1000, true);
     }
 
-    public static final long MAX_AMOUNT = 16L * GTValues.U;
     private final List<CrucibleMaterialStack> content = new java.util.concurrent.CopyOnWriteArrayList<>();
     /** Client-facing snapshot; renderers run on chunk-build threads and must not read {@code content}. */
     private byte displayedHeight;
@@ -120,7 +119,7 @@ public class SmeltingCrucibleBlockEntity extends gregtech.content.blockentity.GT
     }
 
     protected long maxMaterialAmount() {
-        return MAX_AMOUNT;
+        return hazardProfile().capacity();
     }
 
     protected CrucibleHazards.Profile hazardProfile() {

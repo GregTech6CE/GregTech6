@@ -7,17 +7,39 @@ public final class OriginalGeneratorParameters {
 
     private OriginalGeneratorParameters() {}
 
-    public record GasGrade(
-            String id, String rotor, String casingMaterial, int input, int output, int wallId, float hardness) {
+    public sealed interface Ratings permits GasGrade, AxialGrade {
+        int input();
 
-        public int inputMaximum() {
-            return input * 2;
+        int output();
+
+        default boolean steam() {
+            return false;
         }
 
-        public int outputMaximum() {
-            return output * 2;
+        default int inputMinimum() {
+            return input() <= 16 ? 1 : input() / 2;
+        }
+
+        default int inputMaximum() {
+            return input() * 2;
+        }
+
+        default int outputMinimum() {
+            return output() / 2;
+        }
+
+        default int outputMaximum() {
+            return output() * 2;
+        }
+
+        default int efficiency() {
+            return (int) (10_000L * output() * (steam() ? 2 : 1) / input());
         }
     }
+
+    public record GasGrade(
+            String id, String rotor, String casingMaterial, int input, int output, int wallId, float hardness)
+            implements Ratings {}
 
     public static final List<GasGrade> GRADES = List.of(
             new GasGrade("magnalium_gas_turbine_main_housing", "Magnalium", "StainlessSteel", 6144, 4096, 18022, 6),
@@ -26,14 +48,9 @@ public final class OriginalGeneratorParameters {
             new GasGrade(
                     "vibramantium_gas_turbine_main_housing", "Vibramantium", "Adamantium", 196608, 131072, 18025, 100));
 
-    public record AxialGrade(String id, int materialIndex, boolean steam, int input, int output) {
-
-        public int inputMaximum() {
-            return input * 2;
-        }
-
-        public int outputMaximum() {
-            return output * 2;
+    public record AxialGrade(String id, int materialIndex, boolean steam, int input, int output) implements Ratings {
+        public GasGrade materials() {
+            return GRADES.get(materialIndex);
         }
     }
 

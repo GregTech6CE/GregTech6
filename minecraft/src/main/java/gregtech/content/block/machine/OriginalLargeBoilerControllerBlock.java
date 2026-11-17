@@ -5,7 +5,7 @@ import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.tool.ToolInteractions;
 import gregtech.content.blockentity.machine.OriginalLargeBoilerControllerBlockEntity;
-import gregtech.content.multiblock.OriginalLargeBoilerSpecs;
+import gregtech.content.multiblock.OriginalLargeBoilerParameters.Variant;
 import gregtech.content.registry.GTBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -36,15 +36,15 @@ import java.util.List;
 /** Material-specific GT6 large boiler main barometer, original IDs 17201–17205. */
 public final class OriginalLargeBoilerControllerBlock extends HorizontalDirectionalBlock
         implements gregtech.engine.multiblock.StructurePreviewSource, ToolInteractionTarget {
-    private final OriginalLargeBoilerSpecs.Variant variant;
+    private final Variant variant;
 
-    public OriginalLargeBoilerControllerBlock(OriginalLargeBoilerSpecs.Variant variant, Properties properties) {
+    public OriginalLargeBoilerControllerBlock(Variant variant, Properties properties) {
         super(properties);
         this.variant = variant;
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    public OriginalLargeBoilerSpecs.Variant variant() { return variant; }
+    public Variant variant() { return variant; }
 
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends HorizontalDirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}

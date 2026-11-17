@@ -92,7 +92,7 @@ public final class LargeMachineLayouts {
     /** Repeat cells keep coordinates relative to the anchor. */
     public record Repeat(String key, int up, int min, int max, int step, int height, List<Cell> cells) {
         public int absoluteUp(Cell cell, int copy) {
-            return up + step * (cell.up() + copy * height);
+            return SharedLargeMachineLayouts.Repeat.absoluteUp(up, step, height, cell.up(), copy);
         }
     }
     /** Fixed cells plus repeat groups. */

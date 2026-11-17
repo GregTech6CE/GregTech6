@@ -3,7 +3,7 @@ package gregtech.content.blockentity.machine;
 import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
-import gregtech.content.multiblock.TankValveSpec;
+import gregtech.content.multiblock.TankValveParameters;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.RegisteredFluids;
 import net.minecraft.core.BlockPos;
@@ -41,7 +41,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
 
     int size = 3;
     // Selected from the placed valve block during construction.
-    private final TankValveSpec valveSpec;
+    private final TankValveParameters valveSpec;
     FluidTankGT tank = new FluidTankGT().setOnChanged(this::setChanged);
 
 //? if >=1.21.1 {
@@ -64,7 +64,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         tank.setMaxTemperature(valveSpec.meltingPoint());
     }
 
-    public TankValveSpec valveSpec() {
+    public TankValveParameters valveSpec() {
         return valveSpec;
     }
 

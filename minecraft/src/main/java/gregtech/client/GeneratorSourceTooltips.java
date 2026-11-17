@@ -24,22 +24,23 @@ public final class GeneratorSourceTooltips {
                 line.append(Component.translatable("gt.multitileentity." + data.wallId()));
             lines.add(line);
         }
+        var ratings = data.ratings();
         if (data.showsInput())
             energy(
                     lines,
                     "gt.lang.energy.input",
-                    data.input(),
-                    data.inputMinimum(),
-                    data.inputMaximum(),
+                    ratings.input(),
+                    ratings.inputMinimum(),
+                    ratings.inputMaximum(),
                     data.inputUnitKey(),
                     ChatFormatting.GREEN,
                     data.kind() == Kind.STEAM ? ChatFormatting.GRAY : ChatFormatting.GREEN);
         energy(
                 lines,
                 "gt.lang.energy.output",
-                data.output(),
-                data.outputMinimum(),
-                data.outputMaximum(),
+                ratings.output(),
+                ratings.outputMinimum(),
+                ratings.outputMaximum(),
                 data.outputUnitKey(),
                 ChatFormatting.RED,
                 data.kind() == Kind.DYNAMO ? ChatFormatting.YELLOW : ChatFormatting.GREEN);
@@ -52,7 +53,7 @@ public final class GeneratorSourceTooltips {
         lines.add(Component.translatable("gt.lang.efficiency")
                 .withStyle(ChatFormatting.YELLOW)
                 .append(": ")
-                .append(Component.literal(MachineTooltips.formatEfficiencyPercent(data.efficiency()) + "%")
+                .append(Component.literal(MachineTooltips.formatEfficiencyPercent(ratings.efficiency()) + "%")
                         .withStyle(ChatFormatting.WHITE)));
         lines.add(Component.translatable("gt.lang.use.builder.wand.to.ease.building")
                 .withStyle(ChatFormatting.DARK_GRAY));

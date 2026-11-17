@@ -1,7 +1,18 @@
 package gregtech.content.logistics;
 
+import static gregtech.content.logistics.LogisticsCoreLayout.CONTROL;
+import static gregtech.content.logistics.LogisticsCoreLayout.CONVERSION;
+import static gregtech.content.logistics.LogisticsCoreLayout.LOGIC;
+import static gregtech.content.logistics.LogisticsCoreLayout.MAX_STORAGE_CPU_COUNT;
+import static gregtech.content.logistics.LogisticsCoreLayout.STORAGE;
+import static gregtech.content.logistics.LogisticsCoreLayout.VENT;
+import static gregtech.content.logistics.LogisticsCoreLayout.VERSATILE;
+import static gregtech.content.logistics.LogisticsCoreLayout.WALL;
+
+import gregtech.content.logistics.LogisticsCoreLayout.Cell;
+import gregtech.content.logistics.LogisticsCoreLayout.Counts;
+import gregtech.content.logistics.LogisticsCoreLayout.Kind;
 import gregtech.content.multiblock.LargeMachineParts;
-import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -40,77 +51,21 @@ import net.minecraft.world.level.block.Block;
  * the storage counter is capped at {@code MAX_STORAGE_CPU_COUNT = 108}.</p>
  */
 public final class LogisticsCoreStructure {
-    /** GT6 part ids used by this structure. */
-    public static final int WALL = 18008,
-            VENT = 18299,
-            VERSATILE = 18200,
-            LOGIC = 18201,
-            CONTROL = 18202,
-            STORAGE = 18203,
-            CONVERSION = 18204;
-    /** GT6's: {@code MAX_STORAGE_CPU_COUNT}. */
-    public static final int MAX_STORAGE_CPU_COUNT = 108;
-    /** The original scans {@code tX+i, tY+j, tZ+k} for {@code i,j,k} in {@code [-2,2]}. */
-    public static final int RADIUS = 2;
-
-    /** The three structural classes of. */
-    public enum Kind {
-        CPU,
-        VENT,
-        WALL
-    }
+    private LogisticsCoreStructure() {}
 
     /**
-     * One cell of the cube, in a frame perpendicular to the controller's facing. For horizontal
+     * Projects a core cell in the frame perpendicular to the controller's facing. For horizontal
      * facings, {@code right} is clockwise and {@code up} is world Y; for vertical facings the
      * two tangent axes are world X/Z. {@code back=0} is the controller's own plane.
      */
-    public record Cell(int right, int up, int back, Kind kind) {
-        public BlockPos at(BlockPos controller, Direction front) {
-            Direction rightAxis = front.getAxis().isHorizontal() ? front.getClockWise() : Direction.EAST;
-            Direction upAxis =
-                    front == Direction.UP ? Direction.NORTH : front == Direction.DOWN ? Direction.SOUTH : Direction.UP;
-            return controller.relative(rightAxis, right).relative(upAxis, up).relative(front.getOpposite(), back);
-        }
-    }
-
-    /** The four processor counters of GT6's. */
-    public record Counts(int logic, int control, int storage, int conversion) {
-        /** GT6's: every counter must be positive, and the structure must be complete. */
-        public boolean valid() {
-            return new LogisticsCoreLayout.Counts(logic, control, storage, conversion).valid();
-        }
-        /** GT6's: minimum stored energy before a routing pass can start. */
-        public long routingThreshold() {
-            return new LogisticsCoreLayout.Counts(logic, control, storage, conversion).routingThreshold();
-        }
-        /** GT6's: the nominal buffer ceiling (an incoming packet may exceed it). */
-        public long energyCapacity() {
-            return new LogisticsCoreLayout.Counts(logic, control, storage, conversion).energyCapacity();
-        }
-        /** GT6's: fixed charge on every server tick. */
-        public long fixedEnergyPerTick() {
-            return new LogisticsCoreLayout.Counts(logic, control, storage, conversion).fixedEnergyPerTick();
-        }
-    }
-
-    private static final List<Cell> CELLS = create();
-
-    private LogisticsCoreStructure() {}
-
-    /** Every cube cell except the controller's own - GT6's scan never validates the main block. */
-    public static List<Cell> cells() {
-        return CELLS;
-    }
-
-    private static List<Cell> create() {
-        return LogisticsCoreLayout.cells().stream()
-                .map(cell -> new Cell(
-                        cell.right(),
-                        cell.up(),
-                        cell.back(),
-                        Kind.valueOf(cell.kind().name())))
-                .toList();
+    public static BlockPos at(Cell cell, BlockPos controller, Direction front) {
+        Direction rightAxis = front.getAxis().isHorizontal() ? front.getClockWise() : Direction.EAST;
+        Direction upAxis =
+                front == Direction.UP ? Direction.NORTH : front == Direction.DOWN ? Direction.SOUTH : Direction.UP;
+        return controller
+                .relative(rightAxis, cell.right())
+                .relative(upAxis, cell.up())
+                .relative(front.getOpposite(), cell.back());
     }
 
     /** Block a cell of the given class must hold, for the diagnostic messages and for JEI. */
@@ -126,9 +81,7 @@ public final class LogisticsCoreStructure {
     public static Counts contribution(Block block) {
         for (int id : new int[] {VERSATILE, LOGIC, CONTROL, STORAGE, CONVERSION}) {
             if (block != LargeMachineParts.block(id)) continue;
-            var contribution = LogisticsCoreLayout.contribution(id);
-            return new Counts(
-                    contribution.logic(), contribution.control(), contribution.storage(), contribution.conversion());
+            return LogisticsCoreLayout.contribution(id);
         }
         return null;
     }
@@ -136,8 +89,8 @@ public final class LogisticsCoreStructure {
     /** The four counters of a complete structure, or {@code null} when a cell does not fit. */
     public static Counts counts(Level level, BlockPos controller, Direction front) {
         int logic = 0, control = 0, storage = 0, conversion = 0;
-        for (var cell : CELLS) {
-            var pos = cell.at(controller, front);
+        for (var cell : LogisticsCoreLayout.cells()) {
+            var pos = at(cell, controller, front);
             if (!level.hasChunkAt(pos)) return null;
             var block = level.getBlockState(pos).getBlock();
             switch (cell.kind()) {

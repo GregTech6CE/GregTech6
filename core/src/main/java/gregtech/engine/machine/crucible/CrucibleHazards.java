@@ -3,6 +3,7 @@
 package gregtech.engine.machine.crucible;
 
 import gregtech.api.material.GTValues;
+import gregtech.content.multiblock.OriginalLargeCrucibleParameters;
 import java.math.BigInteger;
 import java.util.function.IntUnaryOperator;
 
@@ -20,7 +21,7 @@ public final class CrucibleHazards {
     public record FireTarget(int x, int y, int z, boolean checkFlammability) {}
 
     public static final Profile SMALL = new Profile(3, 2F, 16L * GTValues.U, 6, false);
-    public static final Profile LARGE = new Profile(5, 4F, 432L * GTValues.U, 8, true);
+    public static final Profile LARGE = new Profile(5, 4F, OriginalLargeCrucibleParameters.CAPACITY_UNITS, 8, true);
 
     /** GT6 {@code MultiTileEntitySmeltery.removedByPlayer}: a hot crucible melts down at lava's melting point. */
     public static final long BREAK_MELTDOWN_TEMPERATURE_K = 1300L;

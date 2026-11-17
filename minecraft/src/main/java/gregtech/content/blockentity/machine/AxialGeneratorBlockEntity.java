@@ -1,9 +1,12 @@
 package gregtech.content.blockentity.machine;
 
 import gregtech.engine.multiblock.*;
+import gregtech.content.block.machine.AxialGeneratorBlock;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
-import gregtech.content.multiblock.AxialGeneratorDefinitions;
 import gregtech.content.multiblock.AxialStructureTransform;
+import gregtech.content.multiblock.OriginalGeneratorParameters;
+import gregtech.content.multiblock.OriginalGeneratorParameters.AxialGrade;
+import gregtech.content.multiblock.SharedTurbineStructure;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
@@ -54,8 +57,8 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
         super(type, pos, state);
     }
 
-    public AxialGeneratorDefinitions.Grade grade() {
-        return AxialGeneratorDefinitions.grade(getBlockState().getBlock());
+    public AxialGrade grade() {
+        return ((AxialGeneratorBlock) getBlockState().getBlock()).grade();
     }
 
     public Direction front() {
@@ -115,25 +118,23 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
         return AxialStructureTransform.role(front, cell.getX(), cell.getY(), cell.getZ(), steam);
     }
 
-    public java.util.Set<BlockPos> trackedCells() { return grade().cells().keySet(); }
-
     public gregtech.engine.multiblock.tracking.StructureDefinition.Declarative createStructureDefinition() {
         return definition;
     }
     private List<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
-        var cells = new java.util.ArrayList<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell>(
-                grade().cells().size());
-        for (var cell : grade().cells().keySet()) {
-            boolean coil = gregtech.content.multiblock.OriginalGeneratorParameters.usesCopperCoil(
-                    grade().steam(), cell.getZ());
-            int part = coil ? 18040 : grade().materials().wallId();
-            var role = AxialStructureTransform.role(front, cell.getX(), cell.getY(), cell.getZ(), grade().steam());
+        AxialGrade grade = grade();
+        var layout = SharedTurbineStructure.LAYOUT.cells();
+        var cells = new ArrayList<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell>(layout.size());
+        for (var cell : layout) {
+            boolean coil = OriginalGeneratorParameters.usesCopperCoil(grade.steam(), cell.back());
+            int part = coil ? 18040 : grade.materials().wallId();
+            var role = AxialStructureTransform.role(front, cell.right(), cell.up(), cell.back(), grade.steam());
             var spec = new gregtech.content.multiblock.LargeMachineLayouts.Cell(
-                    cell.getX(), cell.getY(), cell.getZ(), part, role, null,
-                    role == MultiblockLayout.Role.ENERGY_OUTPUT ? (grade().steam() ? 3 : 2) : -1, java.util.List.of(),
-                    grade().steam() ? gregtech.content.multiblock.OriginalMultiblockPortRules.turbine(
+                    cell.right(), cell.up(), cell.back(), part, role, null,
+                    role == MultiblockLayout.Role.ENERGY_OUTPUT ? (grade.steam() ? 3 : 2) : -1, List.of(),
+                    grade.steam() ? gregtech.content.multiblock.OriginalMultiblockPortRules.turbine(
                             gregtech.api.multiblock.StructureRole.valueOf(role.name()), false) : gregtech.api.multiblock.StructurePorts.DEFAULT);
-            var offset = AxialStructureTransform.at(BlockPos.ZERO, front, cell.getX(), cell.getY(), cell.getZ());
+            var offset = AxialStructureTransform.at(BlockPos.ZERO, front, cell.right(), cell.up(), cell.back());
             cells.add(new gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell(
                     offset.getX(), offset.getY(), offset.getZ(), spec));
         }
@@ -194,12 +195,12 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
         converting = false;
         emitted = false;
         if (energy <= 0) return;
-        long output = gregtech.content.multiblock.OriginalGeneratorParameters.convert(energy, grade().output(), grade().input());
+        long output = OriginalGeneratorParameters.convert(energy, grade().output(), grade().input());
         if (output > grade().outputMaximum()) {
             overload();
             return;
         }
-        if (output >= grade().output() / 2) {
+        if (output >= grade().outputMinimum()) {
             converting = true;
             emitted = gregtech.engine.multiblock.StructureOutputs.energy(this,
                     gregtech.content.multiblock.OriginalMultiblockOutputRules.SHAFT, outputType(), output, 1) > 0;

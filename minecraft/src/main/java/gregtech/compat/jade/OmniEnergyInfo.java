@@ -121,10 +121,10 @@ final class OmniEnergyInfo {
             info.energyRate(
                     "average_output",
                     axial.conversionMeter().averageOutput(tick),
-                    grade.output() / 2,
+                    grade.outputMinimum(),
                     grade.outputMaximum(),
                     grade.steam() ? "RU" : "EU");
-            EnergyRateText.efficiency(info, (int) (10000L * grade.output() * (grade.steam() ? 2 : 1) / grade.input()));
+            EnergyRateText.efficiency(info, grade.efficiency());
         } else if (entity instanceof LargeGasTurbineControllerBlockEntity gas) {
             var control = gas.machineControl(null);
             info.state(control.enabled(), control.running());
@@ -132,10 +132,10 @@ final class OmniEnergyInfo {
             info.energyRate(
                     "average_output",
                     gas.conversionMeter().averageOutput(entity.getLevel().getGameTime()),
-                    grade.output() / 2,
+                    grade.outputMinimum(),
                     grade.outputMaximum(),
                     "RU");
-            EnergyRateText.efficiency(info, (int) (10000L * grade.output() / grade.input()));
+            EnergyRateText.efficiency(info, grade.efficiency());
         } else if (entity instanceof FuelGeneratorBlockEntity fuel) {
             var control = fuel.machineControl(null);
             info.state(control.enabled(), control.running());

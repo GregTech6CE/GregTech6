@@ -4,8 +4,11 @@ import gregtech.engine.fluid.FluidPort;
 import gregtech.engine.multiblock.*;
 import gregtech.engine.recipe.FluidFuelBatch;
 import gregtech.engine.recipe.Recipe;
+import gregtech.content.block.machine.LargeGasTurbineControllerBlock;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
 import gregtech.content.multiblock.AxialStructureTransform;
+import gregtech.content.multiblock.OriginalGeneratorParameters;
+import gregtech.content.multiblock.OriginalGeneratorParameters.GasGrade;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
 import net.minecraft.core.*;
@@ -29,10 +32,8 @@ import java.util.*;
 /** GT6 gas turbines: solid 3x3x4 structure, front fuel and bottom exhaust. */
 public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity implements MultiblockPortOwner, IFluidHandler,
         gregtech.api.platform.machine.MachineControl.Provider, gregtech.engine.multiblock.tracking.TrackedMultiblock {
-    public static final int INPUT_MAX = 12288, OUTPUT_MAX = 8192; // Legacy lowest-grade constants.
-
-    public gregtech.content.multiblock.GasTurbineDefinitions.Grade grade() {
-        return gregtech.content.multiblock.GasTurbineDefinitions.grade(getBlockState().getBlock());
+    public GasGrade grade() {
+        return ((LargeGasTurbineControllerBlock) getBlockState().getBlock()).grade();
     }
 
     private long fuelEnergy, ruStored;
@@ -223,8 +224,8 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
         // Source converters accept any packet in the advertised half-to-double nominal range.
         // Bound HU before multiplying, including when a saved buffer is near Long.MAX_VALUE.
         long convertibleHeat = Math.min(fuelEnergy, (long) grade().inputMaximum());
-        long rotation = convertibleHeat * grade().output() / grade().input();
-        if (rotation >= grade().output() / 2L) {
+        long rotation = OriginalGeneratorParameters.convert(convertibleHeat, grade().output(), grade().input());
+        if (rotation >= grade().outputMinimum()) {
             long heatNumerator = rotation * grade().input();
             long heatUsed = heatNumerator / grade().output()
                     + (heatNumerator % grade().output() == 0 ? 0 : 1);

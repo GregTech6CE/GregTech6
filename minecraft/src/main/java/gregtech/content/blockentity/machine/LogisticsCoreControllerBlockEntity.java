@@ -11,6 +11,8 @@ import gregtech.content.logistics.LogisticsHost;
 import gregtech.content.logistics.LogisticsCoverHost;
 import gregtech.content.logistics.LogisticsCovers;
 import gregtech.content.logistics.LogisticsCoverType;
+import gregtech.content.logistics.LogisticsCoreLayout;
+import gregtech.content.logistics.LogisticsCoreLayout.Counts;
 import gregtech.content.logistics.LogisticsCpuDisplay;
 import gregtech.content.logistics.LogisticsNetwork;
 import gregtech.content.logistics.LogisticsCoreStructure;
@@ -37,7 +39,7 @@ import java.util.List;
 /** GT6 Logistics Core structure, EU input, network discovery and private 108-slot buffers. */
 public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntity
 implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engine.multiblock.tracking.TrackedMultiblock {
-    public static final int BUFFER_SLOTS = LogisticsCoreStructure.MAX_STORAGE_CPU_COUNT;
+    public static final int BUFFER_SLOTS = LogisticsCoreLayout.MAX_STORAGE_CPU_COUNT;
     public static final int TANK_CAPACITY = 16_000;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
     private final ItemStackHandler items = new ItemStackHandler(BUFFER_SLOTS) {
@@ -49,7 +51,7 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
     };
     private final FluidTankGT[] tanks = makeTanks();
     private final LogisticsCovers covers = new LogisticsCovers(this, this);
-    private LogisticsCoreStructure.Counts processors;
+    private Counts processors;
     private LogisticsNetwork.Snapshot network = LogisticsNetwork.Snapshot.empty();
 
     /** Usage at the latest one-second gate; an unpowered pass resets it. */
@@ -76,7 +78,7 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
         for (var cell : match.fixedCells()) {
             candidates.put(cell.pos(), cell.cell().role());
             if (cell.cell().role() != MultiblockLayout.Role.CASING) continue;
-            var contribution = gregtech.content.logistics.LogisticsCoreLayout.contribution(cell.cell().part());
+            var contribution = LogisticsCoreLayout.contribution(cell.cell().part());
             if (contribution == null) continue;
             logic += contribution.logic(); control += contribution.control();
             storage += contribution.storage(); conversion += contribution.conversion();
@@ -87,8 +89,7 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part && part.canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role), this::releasePart);
         if (claimed == gregtech.engine.multiblock.tracking.StructureClaims.Result.FAILED) return unbind();
-        processors = new LogisticsCoreStructure.Counts(logic, control,
-                Math.min(LogisticsCoreStructure.MAX_STORAGE_CPU_COUNT, storage), conversion);
+        processors = new Counts(logic, control, Math.min(LogisticsCoreLayout.MAX_STORAGE_CPU_COUNT, storage), conversion);
         return true;
     }
     /** Matched cells stay bound while the cube is incomplete so a wand click on a part keeps building. */
@@ -161,7 +162,7 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
         }
     }
 
-    public LogisticsCoreStructure.Counts processorCounts() {
+    public Counts processorCounts() {
         return isStructureOk() ? processors : null;
     }
 
@@ -199,7 +200,7 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
     private int controlUsage() {
         BlockPos center = worldPosition.relative(
                 getBlockState().getValue(LogisticsCoreControllerBlock.FACING).getOpposite(),
-                LogisticsCoreStructure.RADIUS);
+                LogisticsCoreLayout.RADIUS);
         int range = LogisticsCoreStructure.range(processors);
         int maximum = 0;
         for (BlockPos pos : network.positions()) {
@@ -207,7 +208,7 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents, gregtech.engi
             for (Direction side : Direction.values()) {
                 if (!host.canLogistics(side)) continue;
                 int distance = LogisticsNetwork.chebyshev(center, pos.relative(side));
-                if (distance <= range) maximum = Math.max(maximum, distance - LogisticsCoreStructure.RADIUS);
+                if (distance <= range) maximum = Math.max(maximum, distance - LogisticsCoreLayout.RADIUS);
             }
         }
         return maximum;

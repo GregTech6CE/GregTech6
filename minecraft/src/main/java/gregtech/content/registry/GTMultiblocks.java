@@ -139,8 +139,8 @@ public final class GTMultiblocks {
     }
     public static int tintOf(Block block) {
         if (block instanceof LargeCrucibleControllerBlock crucible) return crucible.variant().material().getColor();
-        if (block instanceof LargeGasTurbineControllerBlock turbine) return turbine.grade().tint();
-        if (block instanceof AxialGeneratorBlock generator) return generator.grade().tint();
+        if (block instanceof LargeGasTurbineControllerBlock turbine) return GasTurbineDefinitions.tint(turbine.grade());
+        if (block instanceof AxialGeneratorBlock generator) return GasTurbineDefinitions.tint(generator.grade().materials());
         Integer named = LargeMachineParts.tint(block); if (named != null) return named;
         if (block instanceof BasicMachineBlock machine) return machine.basicSpec().material().getColor();
         var id = BuiltInRegistries.BLOCK.getKey(block);

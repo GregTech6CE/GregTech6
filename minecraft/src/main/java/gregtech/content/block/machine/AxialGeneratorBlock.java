@@ -1,6 +1,6 @@
 package gregtech.content.block.machine;
 
-import gregtech.content.multiblock.AxialGeneratorDefinitions;
+import gregtech.content.multiblock.OriginalGeneratorParameters.AxialGrade;
 import gregtech.content.blockentity.machine.AxialGeneratorBlockEntity;
 import net.minecraft.core.*;
 import net.minecraft.world.*;
@@ -21,11 +21,11 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements gr
         return gregtech.engine.tool.GTToolHelper.isMachineWrench(tool)
                 ? gregtech.engine.tool.ToolInteractionSpec.facing(FACING,MachineRotationType.ALL) : null;
     }
-    private final AxialGeneratorDefinitions.Grade grade;
-    protected AxialGeneratorBlock(AxialGeneratorDefinitions.Grade grade,Properties properties) {
+    private final AxialGrade grade;
+    protected AxialGeneratorBlock(AxialGrade grade,Properties properties) {
         super(properties);this.grade=grade;registerDefaultState(stateDefinition.any().setValue(FACING,Direction.NORTH));
     }
-    public AxialGeneratorDefinitions.Grade grade() { return grade; }
+    public AxialGrade grade() { return grade; }
 //? if >=1.21.1 {
     /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
     @Override

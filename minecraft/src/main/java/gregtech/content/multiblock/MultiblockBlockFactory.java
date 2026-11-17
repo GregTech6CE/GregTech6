@@ -12,21 +12,21 @@ public final class MultiblockBlockFactory {
     public static gregtech.engine.multiblock.ControllerDeclaration<Block> declaration(
             SharedLargeMachineParts.Part part) {
         int id = part.originalId();
-        var valve = TankValveSpec.find(id);
+        var valve = TankValveParameters.find(id);
         if (valve != null)
             return controller(
                     part,
                     ControllerDeclarations.TANK,
                     () -> new TankControllerBlock(valve, metal(valve.hardness(), valve.hardness())));
         if (id >= 17201 && id <= 17205) {
-            var boiler = OriginalLargeBoilerSpecs.byOriginalId(id);
+            var boiler = OriginalLargeBoilerParameters.byOriginalId(id);
             return controller(
                     part,
                     ControllerDeclarations.BOILER,
                     () -> new OriginalLargeBoilerControllerBlock(boiler, metal(boiler.hardness(), boiler.hardness())));
         }
         if (id >= 17211 && id <= 17214) {
-            var grade = AxialGeneratorDefinitions.STEAM.get(id - 17211);
+            var grade = OriginalGeneratorParameters.STEAM.get(id - 17211);
             return controller(
                     part,
                     ControllerDeclarations.STEAM_TURBINE,
@@ -37,7 +37,7 @@ public final class MultiblockBlockFactory {
                                     grade.materials().hardness())));
         }
         if (id >= 17221 && id <= 17224) {
-            var grade = AxialGeneratorDefinitions.DYNAMO.get(id - 17221);
+            var grade = OriginalGeneratorParameters.DYNAMO.get(id - 17221);
             return controller(
                     part,
                     ControllerDeclarations.DYNAMO,
@@ -48,7 +48,7 @@ public final class MultiblockBlockFactory {
                                     grade.materials().hardness())));
         }
         if (id >= 17231 && id <= 17234) {
-            var grade = GasTurbineDefinitions.GRADES.get(id - 17231);
+            var grade = OriginalGeneratorParameters.GRADES.get(id - 17231);
             return controller(
                     part,
                     ControllerDeclarations.GAS_TURBINE,
