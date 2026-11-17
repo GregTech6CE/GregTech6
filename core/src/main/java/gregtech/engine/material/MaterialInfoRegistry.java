@@ -153,9 +153,6 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
             throw new IllegalArgumentException(
                     "Addon '" + addonId + "' process uses unknown material '" + materialKey.name() + "'");
         if (!process.equals(MaterialProcessKeys.DECOMPOSITION)) requireNamespace(addonId, process.id());
-        else if (!AddonMaterials.owners(material).contains(addonId))
-            throw new IllegalArgumentException("Addon '" + addonId
-                    + "' cannot declare decomposition for non-owned material '" + material.getName() + "'");
         var target = MATERIALS.get(new MaterialKey(material.getName()));
         if (target == null)
             throw new IllegalArgumentException(
@@ -282,7 +279,7 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
 
     private static void validateLinkedToolRegistrations() {
         for (ToolSubmission submission : ADDON_TOOLS) {
-            GTMaterial material = requireOwned(submission.addonId(), submission.material(), "tool profile");
+            GTMaterial material = requireMaterial(submission.addonId(), submission.material(), "tool profile");
             MaterialInfoDefinition.Tooling linked = MATERIALS.get(new MaterialKey(material.getName())).tooling;
             if (!linked.profile().equals(submission.profile()))
                 throw new IllegalArgumentException("Addon '" + submission.addonId() + "' tool profile for '"
@@ -310,10 +307,10 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         return new Registrar(addonId);
     }
 
-    /** Applies addon-owned unique facts after identities and ownership are known. */
+    /** Applies addon facts after material identities are known. */
     static void resolveAddonRegistrations() {
         for (ToolSubmission submission : ADDON_TOOLS) {
-            GTMaterial material = requireOwned(submission.addonId(), submission.material(), "tool profile");
+            GTMaterial material = requireMaterial(submission.addonId(), submission.material(), "tool profile");
             var info = MATERIALS.get(new MaterialKey(material.getName()));
             MaterialToolProfile existing = info.tooling.profile();
             MaterialToolProfile expected = new MaterialToolProfile(0, 1F, 0, 0);
@@ -620,16 +617,12 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         }
     }
 
-    private static GTMaterial requireOwned(String addonId, MaterialKey key, String what) {
+    private static GTMaterial requireMaterial(String addonId, MaterialKey key, String what) {
         GTMaterial found = GTMaterialRegistry.get(key.name());
         if (!found.isValid())
             throw new IllegalArgumentException(
                     "Addon '" + addonId + "' " + what + " uses unknown material '" + key.name() + "'");
-        GTMaterial material = found.resolve();
-        if (!AddonMaterials.owners(material).contains(addonId))
-            throw new IllegalArgumentException(
-                    "Addon '" + addonId + "' cannot set the " + what + " of '" + material.getName() + "'");
-        return material;
+        return found.resolve();
     }
 
     private static void requireNamespace(String addonId, DataKey key) {

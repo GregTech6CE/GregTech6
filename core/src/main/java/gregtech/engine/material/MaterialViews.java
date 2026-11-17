@@ -101,11 +101,6 @@ public final class MaterialViews {
                     throw new IllegalArgumentException("Addon '" + submission.addonId() + "' material tag '" + tag
                             + "' conflicts with owner '" + previous.owner() + "'");
             }
-            if (!metadata.keys().isEmpty() || !metadata.flags().isEmpty()) {
-                if (!AddonMaterials.owners(material).contains(submission.addonId()))
-                    throw new IllegalArgumentException("Addon '" + submission.addonId()
-                            + "' cannot set metadata properties or flags of '" + key.name() + "'");
-            }
             for (var flag : metadata.flags()) {
                 requireNamespace(submission.addonId(), flag);
                 builder.flag(flag);

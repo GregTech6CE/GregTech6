@@ -1,20 +1,8 @@
 package gregtech.engine.addon;
 
-import gregtech.api.addon.*;
 import gregtech.api.addon.AddonFailures;
 import gregtech.api.addon.AddonNames;
-import gregtech.api.addon.material.AddonMaterialContributor;
-import gregtech.api.addon.material.MaterialComposition;
-import gregtech.api.addon.material.MaterialDeclaration;
-import gregtech.api.addon.material.MaterialFormRequest;
-import gregtech.api.addon.material.MaterialGroupDeclaration;
-import gregtech.api.addon.material.MaterialMetadataDeclaration;
-import gregtech.api.addon.material.MaterialProcessDeclaration;
-import gregtech.api.addon.material.MaterialTagDeclaration;
-import gregtech.api.addon.material.PrefixCondition;
-import gregtech.api.addon.material.PrefixDeclaration;
-import gregtech.api.addon.material.SmeltingTargetDeclaration;
-import gregtech.api.addon.material.SmeltingTargetRemoval;
+import gregtech.api.addon.material.*;
 import gregtech.api.addon.recipe.CrucibleReactionDeclaration;
 import gregtech.api.addon.recipe.CrucibleReactionRemoval;
 import gregtech.api.addon.worldgen.OreVeinDeclaration;
@@ -36,18 +24,8 @@ import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
 import gregtech.engine.prefix.PrefixRegistry;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.IdentityHashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.ServiceLoader;
-import java.util.Set;
-import java.util.TreeMap;
+
+import java.util.*;
 
 /** Queued addon materials and extra forms. GregTech drains this once, from {@link GTMaterialRegistry#init()}. */
 public final class AddonMaterials {
@@ -822,7 +800,6 @@ public final class AddonMaterials {
         if (!material.isValid())
             throw new IllegalStateException("Addon '" + addonId + "' form '" + request.prefixName() + " / "
                     + request.materialName() + "' uses an unknown material");
-        requireOwned(addonId, material, "form");
         if (!MaterialItemDefinitions.candidatePrefixes().contains(prefix))
             throw new IllegalStateException("Addon '" + addonId + "' form '"
                     + prefix.getName() + " / " + material.resolve().getName()
@@ -899,7 +876,6 @@ public final class AddonMaterials {
     private static GTMaterial applyComposition(
             String addonId, MaterialComposition composition, IdentityHashMap<GTMaterial, Boolean> flags) {
         GTMaterial material = material(addonId, composition.material(), "composition");
-        requireOwned(addonId, material, "composition");
         var components = new ArrayList<MaterialComponent>();
         for (MaterialComposition.Part part : composition.parts()) {
             GTMaterial component = material(addonId, part.material(), "composition");
@@ -938,7 +914,6 @@ public final class AddonMaterials {
 
     private static void applySmelting(String addonId, SmeltingTargetDeclaration declaration) {
         GTMaterial material = material(addonId, declaration.material(), "smelting target");
-        requireOwned(addonId, material, "smelting target");
         GTMaterial target = material(addonId, declaration.target(), "smelting target");
         boolean same = material.getTargetSmeltingMaterial().resolve() == target
                 && material.getTargetSmeltingAmount() == declaration.amount();
@@ -981,17 +956,6 @@ public final class AddonMaterials {
             throw new IllegalStateException(
                     "Addon '" + addonId + "' " + where + " uses unknown material '" + name + "'");
         return found.resolve();
-    }
-
-    private static void requireOwned(String addonId, GTMaterial material, String what) {
-        if (!owners(material).contains(addonId))
-            throw new IllegalStateException(
-                    "Addon '" + addonId + "' cannot set the " + what + " of '" + material.getName() + "'");
-    }
-
-    private static void addOwner(GTMaterial material, String addonId) {
-        List<String> owners = OWNERS.computeIfAbsent(material.resolve(), ignored -> new ArrayList<>());
-        if (!owners.contains(addonId)) owners.add(addonId);
     }
 
     /** Every material of one addon shares its entry; only a host declaration registers a mod once. */

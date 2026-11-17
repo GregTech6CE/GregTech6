@@ -186,7 +186,7 @@ public final class CompressorDocument implements MachineRecipeDocumentProvider {
 
 材料和 metadata 仍通过 `AddonMaterialContributor` 提交；系统设计边界详见[材料系统设计](decisions/material-system/README.md)。材料初始化 READY 后，`GregTechMaterials.catalog()` 返回当前会话的不可变 `MaterialCatalogView`：`resolve(name)` 解析规范名和别名，`find(MaterialKey)` 只返回真实材料，材料组不会伪装成可加工材料。旧宿主没有该服务时明确抛出 `UnsupportedOperationException`，未就绪时明确报告阶段，不以空集合掩盖失败。
 
-`metadata()` 可给真实材料添加本附属 namespace 的分类 tag、flag 和类型化值。`materialTags()` 声明 tag 包含关系，`materialGroups()` 声明替代组及其材料／子组。附属只能定义自身 addon id namespace 的 tag、组和 property key；给其他材料添加描述 tag 允许，但修改其他材料的 property、flag、形态或加工能力仍需所有权。未知引用、同 key 异类型、跨所有者冲突、tag 包含环和组环均阻止材料初始化进入 READY。
+`metadata()` 可给任意真实材料添加本附属 namespace 的分类 tag、flag 和类型化值。`materialTags()` 声明 tag 包含关系，`materialGroups()` 声明替代组及其材料／子组。附属可为已有材料提交形态、组成、工具属性和加工规则，也可引用其他材料作为产物；无需声明材料所有权。tag、组、自定义过程和 property key 仍须使用自身 addon id namespace；已有定义的冲突、未知引用、同 key 异类型、tag 包含环和组环均阻止材料初始化进入 READY。已有材料的基础定义不能以同名材料声明覆盖；既有值的冲突检查与形态有效性检查仍然适用。
 
 ```java
 MaterialMetadata metadata = MaterialMetadata.builder()

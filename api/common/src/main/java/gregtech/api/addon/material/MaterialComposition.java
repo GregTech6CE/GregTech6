@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Composition of one addon material, named at link time.
+ * Composition of one real material, named at link time.
  * {@code amount} on each part is GregTech units, the same unit as {@link PrefixDeclaration#amount()}:
  * a positive multiple of {@link GTValues#U72}, so one ingot is {@code GTValues.U} and 3U is {@code 3 * GTValues.U}.
  * {@code divider} is stored as the composition divider. When {@code crucible} is true,
