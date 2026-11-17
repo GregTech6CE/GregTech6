@@ -1,6 +1,9 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialProperties;
+import gregtech.engine.material.PublishedMaterialFacts;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.data.MachineRecipeMaps;
@@ -206,14 +209,14 @@ final class SourceThermalNativeAdapter {
   FluidStack fluid(String field,int amount){return fluids.apply(field,amount);}
   int temperature(FluidStack stack){return stack.getFluid().getFluidType().getTemperature(stack);}
   SourceThermalRecyclingRules.Stats stats(GTMaterial input,GTMaterial target){
-   return new SourceThermalRecyclingRules.Stats(input.getDensity(),target.getMeltingPoint());
+   return new SourceThermalRecyclingRules.Stats(PublishedMaterialFacts.scalar(input, MaterialProperties.DENSITY),PublishedMaterialFacts.scalar(target, MaterialProperties.MELTING_POINT));
   }
   Reason materialOverride(GTMaterial material,Facts source){
    PortDefaults defaults=source.portDefaults();
    if(material.has(MaterialProperty.MELTING)!=defaults.melting())return Reason.MATERIAL_ELIGIBILITY_OVERRIDE;
-   var target=material.getTargetSmeltingMaterial();
+   var target=PublishedMaterialFacts.targetMaterial(material, MaterialProcessKeys.SMELTING);
    if(target==null||!target.isValid())return Reason.MATERIAL_TARGET_OVERRIDE;target=target.resolve();
-   return defaults.matches(material.has(MaterialProperty.MELTING),target.getId(),target.getName(),material.getTargetSmeltingAmount())
+   return defaults.matches(material.has(MaterialProperty.MELTING),target.getId(),target.getName(),PublishedMaterialFacts.target(material, MaterialProcessKeys.SMELTING).amount())
        ?null:Reason.MATERIAL_TARGET_OVERRIDE;
   }
   boolean input(GTMaterial material,ItemStack stack){
@@ -273,8 +276,8 @@ final class SourceThermalNativeAdapter {
    if(binding.declaration()!=null){
     if(!FluidCatalog.isBuiltInDefinition(entry))return false;
     if(!binding.finalized())return entry==binding.declaration();
-    int melting=material.getMeltingPoint();
-    int temperature=melting<=0?1000:melting<300?Math.min(300,material.getBoilingPoint()-1):melting;
+    int melting=PublishedMaterialFacts.scalar(material, MaterialProperties.MELTING_POINT);
+    int temperature=melting<=0?1000:melting<300?Math.min(300,PublishedMaterialFacts.scalar(material, MaterialProperties.BOILING_POINT)-1):melting;
     // Static createMolten declarations are immutable; preparation copies only these two fields.
     return entry.equals(binding.declaration().withTemperature(temperature).withLuminosity(10));
    }

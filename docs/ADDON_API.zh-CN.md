@@ -59,7 +59,9 @@
 
 API 1.9 新增 `SpecialProcessMethod`、`SpecialProcessValue` 与 `SpecialProcessesView`。附属通过 `MaterialInfoTool.Registrar.registerSpecialProcess(...)` 声明 typed target／reagent 规则，再通过 `MaterialCatalogView.specialProcesses()` 当前发布快照读取；target 和 reagent 必须绑定同一个 `MaterialProcessKey`。
 
-特殊工艺试剂与产物按 `MaterialCatalogView.formBindings()` 已发布的实际形态解析。流体试剂的 `reagentAmount` 和流体产物的 `millibuckets` 直接使用 mB；水和岩浆的原版流体身份也发布为材料形态，不要求内部 `MATERIAL_FLUID_UNIT` 换算条目；`anyForm(new SpecialProcessValue.Reagent())` 从该材料已发布的形态中选择可解析的试剂。任一必需产物无法解析时整行拒绝，日志按输入、试剂、物品产物、流体产物分类汇总，避免发布缺少产物的配方。
+特殊工艺试剂与产物按 `MaterialCatalogView.formBindings()` 已发布的实际形态解析。流体试剂的 `reagentAmount` 和流体产物的 `millibuckets` 直接使用 mB；水和岩浆的原版流体身份也发布为材料形态，不要求内部 `MATERIAL_FLUID_UNIT` 换算条目；`anyForm(new SpecialProcessValue.Reagent())` 从该材料已发布的形态中选择可解析的试剂；若同时存在物品与流体形态，数量单位存在歧义，必须显式限定试剂形态。物品试剂数量不得超过单栈上限。`recipeMap` 在平台配方表完成注册后解析，未知表会记录警告并跳过该方法。目标声明中的产物材料必须在定义冻结时存在，可引用其他材料而不会修改该材料的声明；未知名称会使注册失败，原有附属需要修正拼写或先注册对应材料。任一必需产物无法解析时整行拒绝，日志按输入、试剂、物品产物、流体产物、空产物和配方表拒绝分类汇总，避免发布缺少产物的配方。
+
+本轮将宿主内部的 `SpecialProcessMethods` 移至 `gregtech.content.material`，`SpecialProcessData` 与 `SpecialProcessMaterialFacts` 移至 `gregtech.content.material.catalog`。这些类型不属于附属 API；若附属曾直接引用旧的 `gregtech.content.recipe` 类名，需要更新导入并重新编译。宿主内部未使用的 `MaterialPublication.platformGenerationPublished` 也已删除；附属应只读取 `GregTechMaterials` 公共视图。公共 API 签名与材料、配方和存档 ID 未变。
 
 宿主专用的 `StructureGrid` 与 `RecipeMapSpec` 不属于附属契约：它们分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`，编码内置多方块几何和配方表，附属不应依赖。
 

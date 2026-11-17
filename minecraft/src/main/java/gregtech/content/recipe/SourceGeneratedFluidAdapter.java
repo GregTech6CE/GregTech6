@@ -1,11 +1,14 @@
 package gregtech.content.recipe;
 
+import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialProperties;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.material.MaterialFactKeys;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.PublishedMaterialFacts;
 
 /** Native fingerprint checks for generated fluids declared by material facts. */
 public final class SourceGeneratedFluidAdapter {
@@ -37,12 +40,14 @@ public final class SourceGeneratedFluidAdapter {
                 || entry.glint()
                 || entry.gas()) return false;
         if (wholeDust) {
-            var target = material.getTargetSmeltingMaterial();
+            var target = PublishedMaterialFacts.targetMaterial(material, MaterialProcessKeys.SMELTING);
             if (target == null
                     || target.resolve() != material
-                    || material.getTargetSmeltingAmount() != gregtech.api.material.GTValues.U
-                    || material.getMeltingPoint() != rule.temperature()
-                    || material.getDensity() != rule.materialDensity()
+                    || PublishedMaterialFacts.target(material, MaterialProcessKeys.SMELTING)
+                                    .amount()
+                            != gregtech.api.material.GTValues.U
+                    || PublishedMaterialFacts.scalar(material, MaterialProperties.MELTING_POINT) != rule.temperature()
+                    || PublishedMaterialFacts.scalar(material, MaterialProperties.DENSITY) != rule.materialDensity()
                     || !material.has(MaterialProperty.MELTING)
                     || material.has(MaterialProperty.ANTIMATTER)
                     || !FluidCatalog.isGeneratedMoltenDefinition(rule.field(), entry)

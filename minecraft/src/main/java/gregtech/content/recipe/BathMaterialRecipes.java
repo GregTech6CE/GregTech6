@@ -74,7 +74,8 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
     private void paper() {
         Set<GTMaterial> sources = new LinkedHashSet<>();
         for (GTMaterial material : GTMaterialRegistry.allMaterials())
-            if (material.isValid() && material.has(MaterialProperty.WOOD)) sources.add(material.resolve());
+            if (material.isValid() && material.has(MaterialProperty.WOOD)
+                    && !material.resolve().getName().equals("PetrifiedWood")) sources.add(material.resolve());
         for (String name : new String[] {"Bark", "Paper"}) {
             GTMaterial material = GTMaterialRegistry.get(name);
             if (material.isValid()) sources.add(material);

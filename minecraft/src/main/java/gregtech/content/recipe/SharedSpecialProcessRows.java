@@ -1,7 +1,5 @@
 package gregtech.content.recipe;
 
-import static gregtech.content.recipe.SharedOreWashingRows.NativeForm;
-import static gregtech.content.recipe.SourceOreWashingRules.Availability;
 
 import gregtech.api.addon.material.FormKey;
 import gregtech.api.addon.material.MaterialFormKind;
@@ -10,9 +8,7 @@ import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.MaterialProcessKey;
 import gregtech.api.addon.material.SpecialProcessMethod;
 import gregtech.api.addon.material.SpecialProcessValue;
-import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialViews;
-import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import java.util.ArrayList;
@@ -77,7 +73,13 @@ public final class SharedSpecialProcessRows {
                         method.process().id(), method.recipeMap());
                 continue;
             }
-            if (methodRules.reagents().isEmpty()) continue;
+            if (methodRules.reagents().isEmpty()) {
+                if (!methodRules.targets().isEmpty())
+                    com.mojang.logging.LogUtils.getLogger().warn(
+                            "[gregtech] Skipping special process {}: {} targets have no declared reagents",
+                            method.process().id(), methodRules.targets().size());
+                continue;
+            }
             for (var target : methodRules.targets()) {
                 for (var inputEntry : target.inputCounts().entrySet().stream()
                         .sorted(Map.Entry.comparingByKey(Comparator.comparing(FormKey::name)))
@@ -97,6 +99,8 @@ public final class SharedSpecialProcessRows {
                         Recipe accepted = map.addRecipe(built.recipe());
                         if (accepted != null) {
                             OWNED.add(accepted);
+                        } else {
+                            omitted.merge("recipe-rejected", 1, Integer::sum);
                         }
                     }
                 }
@@ -104,7 +108,7 @@ public final class SharedSpecialProcessRows {
         }
         if (!omitted.isEmpty())
             com.mojang.logging.LogUtils.getLogger()
-                    .warn("[gregtech] Omitted special-process rows by unresolved requirement: {}",
+                    .warn("[gregtech] Omitted special-process rows by reason: {}",
                             omitted);
     }
 
@@ -162,6 +166,12 @@ public final class SharedSpecialProcessRows {
                 ? resolver.bindings.find(reagent.material()).stream()
                         .map(binding -> binding.form()).collect(java.util.stream.Collectors.toSet())
                 : reagent.forms();
+        if (reagent.forms().isEmpty()) {
+            var kinds = resolver.bindings.find(reagent.material()).stream()
+                    .map(binding -> binding.kind()).filter(kind -> kind == MaterialFormKind.ITEM || kind == MaterialFormKind.FLUID)
+                    .collect(java.util.stream.Collectors.toSet());
+            if (kinds.size() > 1) return false;
+        }
         for (var form : forms.stream()
                 .sorted(Comparator.comparing(FormKey::name))
                 .toList()) {
@@ -172,9 +182,9 @@ public final class SharedSpecialProcessRows {
                     return true;
                 }
             } else {
-                if (amount > Integer.MAX_VALUE) return false;
+                if (amount > Integer.MAX_VALUE) continue;
                 ItemStack stack = resolver.item(reagent.material(), form, Math.toIntExact(amount));
-                if (!stack.isEmpty()) {
+                if (!stack.isEmpty() && amount <= stack.getMaxStackSize()) {
                     itemInputs.add(stack);
                     return true;
                 }
@@ -250,7 +260,6 @@ public final class SharedSpecialProcessRows {
             this.bindings = bindings;
         }
 
-        private final SharedOreWashingRows.Snapshot forms = new SharedOreWashingRows.Snapshot();
         private final Map<ItemKey, ItemStack> items = new HashMap<>();
         private final Map<FluidKey, FluidStack> fluids = new HashMap<>();
 
@@ -267,11 +276,16 @@ public final class SharedSpecialProcessRows {
 
         private ItemStack resolveItem(MaterialKey materialKey, FormKey form, int count) {
             if (isFluid(form) || count < 1) return ItemStack.EMPTY;
-            var material = GTMaterialRegistry.get(materialKey.name()).resolve();
-            var prefix = PrefixRegistry.byName(form.name());
-            if (material == null || !material.isValid() || prefix == null) return ItemStack.EMPTY;
-            NativeForm nativeForm = forms.direct(prefix, material, count);
-            return nativeForm.availability() == Availability.PRESENT ? nativeForm.stack().copy() : ItemStack.EMPTY;
+            for (var binding : bindings.find(materialKey, form).stream()
+                    .filter(value -> value.kind() == MaterialFormKind.ITEM)
+                    .sorted(Comparator.comparing(value -> value.id()))
+                    .toList()) {
+                var id = ResourceLocation.tryParse(binding.id());
+                if (id == null || !BuiltInRegistries.ITEM.containsKey(id)) continue;
+                var item = BuiltInRegistries.ITEM.get(id);
+                if (item != net.minecraft.world.item.Items.AIR) return new ItemStack(item, count);
+            }
+            return ItemStack.EMPTY;
         }
 
         private FluidStack resolveFluid(MaterialKey materialKey, FormKey form, long amount) {

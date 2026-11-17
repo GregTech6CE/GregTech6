@@ -1,6 +1,8 @@
 package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.engine.material.PublishedMaterialFacts;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.block.*;
 import gregtech.content.block.stone.OreHostFacts;
@@ -320,11 +322,11 @@ final class SourceOreCrushingAdapter {
                     && data.material().resolve() == material && data.amount() == amount;
         }
         @Override GTMaterial target(GTMaterial material) {
-            var target = material.getTargetCrushingMaterial(); return target == null ? null : target.resolve();
+            return PublishedMaterialFacts.targetMaterial(material, MaterialProcessKeys.CRUSHING);
         }
-        long amount(GTMaterial material) { return material.getTargetCrushingAmount(); }
-        int oreMultiplier(GTMaterial material) { return material.getOreMultiplier(); }
-        int processingMultiplier(GTMaterial material) { return material.getOreProcessingMultiplier(); }
+        long amount(GTMaterial material) { return PublishedMaterialFacts.target(material, MaterialProcessKeys.CRUSHING).amount(); }
+        int oreMultiplier(GTMaterial material) { return PublishedMaterialFacts.ore(material).oreMultiplier(); }
+        int processingMultiplier(GTMaterial material) { return PublishedMaterialFacts.ore(material).processingMultiplier(); }
         Input input(GTMaterial material, GTMaterial target) {
             return new Input(id(material), id(target), amount(material), oreMultiplier(material), processingMultiplier(material),
                     quality(material), new Bonus(crushing(material).pulverizing(),
@@ -332,7 +334,8 @@ final class SourceOreCrushingAdapter {
                     crushing(material).hexorium());
         }
         private boolean byproduct(GTMaterial material, int id, String name) {
-            return material.getByProducts().stream().map(GTMaterial::resolve)
+            return PublishedMaterialFacts.ore(material).byproducts().stream()
+                    .map(key -> GTMaterialRegistry.get(key.name())).filter(GTMaterial::isValid).map(GTMaterial::resolve)
                     .anyMatch(m -> identity(m) && m.getId() == id && m.getName().equals(name));
         }
         /** Null is an unresolved gangue identity; an empty list is a source host without gangue. */

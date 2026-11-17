@@ -7,6 +7,7 @@ import gregtech.api.addon.material.MaterialFormsView;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.addon.material.SpecialProcessValue;
 import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.material.SpecialProcessMethods;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -74,6 +75,24 @@ public final class SpecialProcessRecipeTests {
                 new SharedSpecialProcessRows.Resolver());
         helper.assertTrue(result.recipe() != null && result.recipe().mInputs[1].getCount() == 2,
                 "anyForm also resolves a registered item reagent");
+        var itemForm = new FormKey("dust");
+        MaterialFormsView mixed = material -> material.equals(custom)
+                ? Set.of(new MaterialFormBinding(custom, liquid, MaterialFormKind.FLUID, "minecraft:lava", 0),
+                        new MaterialFormBinding(custom, itemForm, MaterialFormKind.ITEM, "minecraft:diamond", 0))
+                : delegate.find(material);
+        result = SharedSpecialProcessRows.build(target, input, 1, itemPlan,
+                new SharedSpecialProcessRows.ReagentSelector(custom, Set.of()), new SharedSpecialProcessRows.Resolver(mixed));
+        helper.assertTrue(result.recipe() == null && "reagent".equals(result.reason()),
+                "mixed item/fluid anyForm rejects ambiguous units");
+        result = SharedSpecialProcessRows.build(target, input, 1, itemPlan,
+                new SharedSpecialProcessRows.ReagentSelector(custom, Set.of(itemForm)), new SharedSpecialProcessRows.Resolver(mixed));
+        helper.assertTrue(result.recipe() != null && result.recipe().mInputs[1].is(Items.DIAMOND),
+                "a declared item binding resolves without an internal material or prefix entry");
+        var oversized = new SpecialProcessValue.Target(Map.of(input, 1), List.of(itemOutput), List.of(), 65, 256, 0);
+        result = SharedSpecialProcessRows.build(target, input, 1, oversized,
+                new SharedSpecialProcessRows.ReagentSelector(custom, Set.of(itemForm)), new SharedSpecialProcessRows.Resolver(mixed));
+        helper.assertTrue(result.recipe() == null && "reagent".equals(result.reason()),
+                "a reagent cannot exceed the item's maximum stack size");
         for (String name : List.of("Water", "Lava", "Mercury")) {
             result = SharedSpecialProcessRows.build(target, input, 1, itemPlan,
                     new SharedSpecialProcessRows.ReagentSelector(new MaterialKey(name), Set.of(liquid)),
@@ -156,6 +175,14 @@ public final class SpecialProcessRecipeTests {
                         && Arrays.stream(row.mOutputs).anyMatch(output -> output.is(Items.PAPER))),
                         name + "/" + prefix.getName() + " remains in the paper input tag");
             }
+        }
+        for (var prefix : List.of(MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny)) {
+            var petrified = GTItems.getStack(prefix, GTMaterialRegistry.get("PetrifiedWood"), 1);
+            if (petrified.isEmpty()) continue;
+            helper.assertFalse(MachineRecipeMaps.Bath.mRecipeList.stream().anyMatch(row -> row.mInputs.length == 1
+                    && row.itemTag(0) != null && petrified.is(row.itemTag(0))
+                    && Arrays.stream(row.mOutputs).anyMatch(output -> output.is(Items.PAPER))),
+                    "petrified wood is excluded from paper pulp");
         }
         helper.succeed();
     }

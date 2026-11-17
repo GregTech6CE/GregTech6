@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Summarize material forms from a fresh runtime baseline."""
+"""Summarize material forms from a historical runtime baseline."""
 
 from __future__ import annotations
 

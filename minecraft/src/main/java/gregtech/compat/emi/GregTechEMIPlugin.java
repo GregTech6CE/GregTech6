@@ -33,6 +33,22 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         return overlayGeneration;
     }
 
+    /** EMI's locked 1.1.24 release exposes reload through its runtime, not its public API. */
+    public static void overlayFailed() {
+        long generation = gregtech.content.recipe.MachineRecipeOverlay.generation();
+        net.minecraft.client.Minecraft.getInstance().execute(() -> {
+            if (generation != gregtech.content.recipe.MachineRecipeOverlay.generation()) return;
+            try {
+                Class.forName("dev.emi.emi.runtime.EmiReloadManager")
+                        .getMethod("reload")
+                        .invoke(null);
+            } catch (ReflectiveOperationException failure) {
+                com.mojang.logging.LogUtils.getLogger()
+                        .error("[gregtech] Could not reload EMI after overlay failure", failure);
+            }
+        });
+    }
+
     @Override
     public void register(EmiRegistry registry) {
         gregtech.client.gui.RecipeViewerNavigation.registerEmi(map -> {
@@ -56,7 +72,6 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         });
         gregtech.engine.fluid.FluidContainerDisplayBinding.invalidate();
         FluidScreenStackProvider.register(registry);
-        registry.addGenericStackProvider(EmiWidgetInput::stackAt);
         WoodenBucketLookupRecipe.register(registry);
         FormConversionEmiRecipe.register(registry);
         registry.addRecipeHandler(

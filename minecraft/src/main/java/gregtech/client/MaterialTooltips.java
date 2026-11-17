@@ -193,13 +193,26 @@ public final class MaterialTooltips {
 
     public static void appendForeign(ItemStack stack, gregtech.engine.material.ItemComposition data,
                                      List<Component> tooltip, TooltipFlag flag) {
+        appendRecoveryState(stack, tooltip, flag);
         var form = gregtech.engine.material.MaterialEquivalence.form(stack);
         if(form!=null) {
-            append(stack,form.material(),form.prefix(),tooltip,flag);
+            var weights = data.components().stream()
+                    .flatMap(component -> MaterialChemistry.materialWeights(component.material(), component.amount()).stream())
+                    .toList();
+            appendWithMaterials(stack, form.material(), weights, form.prefix(), tooltip, flag);
             return;
         }
         GTMaterial mat = data.material();
-        if (mat.getId() <= 0) return;
+        if (mat.getId() <= 0) {
+            if (data.components().isEmpty()) return;
+            if (gregtech.GregTechConfig.materialDetails() && flag.isAdvanced()) {
+                tooltip.add(Component.translatable("tooltip.gt6ce.contained_materials").withStyle(ChatFormatting.DARK_AQUA));
+                for (var component : data.components())
+                    for (var weighted : MaterialChemistry.materialWeights(component.material(), component.amount()))
+                        tooltip.add(containedMaterialLine(weighted.material(), weighted.amount()));
+            }
+            return;
+        }
 
         String chemical = data.components().size() == 1 ? mat.getResolvedTooltipChemical() : "";
         if (gregtech.GregTechConfig.chemicalFormulas() && chemical != null && !chemical.isEmpty()) {
@@ -231,6 +244,20 @@ public final class MaterialTooltips {
         tooltip.add(Component.translatable(Mc.itemId(stack.getItem()).getNamespace().equals("minecraft") ? "tooltip.gt6ce.vanilla_material" : "tooltip.gt6ce.foreign_material")
 
                 .withStyle(ChatFormatting.BLUE));
+    }
+
+    private static void appendRecoveryState(ItemStack stack, List<Component> tooltip, TooltipFlag flag) {
+        if (!flag.isAdvanced()) return;
+        if (stack.isDamaged())
+            tooltip.add(Component.translatable("tooltip.gt6ce.composition_scaled_damage").withStyle(ChatFormatting.GRAY));
+        var rejection = gregtech.engine.material.ItemMaterialRegistry.recoveryRejection(stack);
+        String key = switch (rejection) {
+            case NO_COMPOSITION, NO_COMPONENTS -> "tooltip.gt6ce.composition_nonmaterial";
+            case STORED_CONTENTS -> "tooltip.gt6ce.composition_stored_contents";
+            case UNSUPPORTED_CONTAINER -> "tooltip.gt6ce.composition_container";
+            default -> null;
+        };
+        if (key != null) tooltip.add(Component.translatable(key).withStyle(ChatFormatting.GRAY));
     }
 
     public static Component containedMaterialLine(GTMaterial mat, long amount) {

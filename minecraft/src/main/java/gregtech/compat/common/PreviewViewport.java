@@ -5,15 +5,11 @@ import org.joml.Vector3f;
 
 /** The preview rectangle is local to the recipe; GUI scissors use absolute GUI coordinates. */
 public final class PreviewViewport {
-    public static final int LEFT = 0, TOP = 20, RIGHT = 176, BOTTOM = 128;
+    public static final int LEFT = 0, TOP = 20, RIGHT = 176;
 
     private PreviewViewport() {}
 
     public record Bounds(int left, int top, int right, int bottom) {}
-
-    public static Bounds screenBounds(Matrix4fc recipePose) {
-        return screenBounds(recipePose, LEFT, TOP, RIGHT, BOTTOM);
-    }
 
     public static Bounds screenBounds(Matrix4fc recipePose, int left, int top, int right, int bottom) {
         float minX = Float.POSITIVE_INFINITY, minY = Float.POSITIVE_INFINITY;

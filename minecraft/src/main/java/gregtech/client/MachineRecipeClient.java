@@ -52,7 +52,11 @@ public final class MachineRecipeClient {
     private static void apply(RecipeManager recipes) {
         // Integrated server and client share the static maps. The server pass already applied them.
         if (ServerLifecycleHooks.getCurrentServer() != null) return;
-        if (MachineRecipeOverlay.apply(recipes).failed()) return;
+        if (MachineRecipeOverlay.apply(recipes).failed()) {
+            refresh("jei", "gregtech.compat.jei.GregTechJEIPlugin", "overlayFailed");
+            refresh("emi", "gregtech.compat.emi.GregTechEMIPlugin", "overlayFailed");
+            return;
+        }
         // A dedicated client also needs the furnace bridge: the machine-visible oven rows only
         // exist after it runs, and the synced recipe list alone does not recreate them locally.
         var connection = Minecraft.getInstance().getConnection();
@@ -70,9 +74,13 @@ public final class MachineRecipeClient {
     }
 
     private static void refresh(String modId, String plugin) {
+        refresh(modId, plugin, "overlayChanged");
+    }
+
+    private static void refresh(String modId, String plugin, String method) {
         if (!ModList.get().isLoaded(modId)) return;
         try {
-            Class.forName(plugin).getMethod("overlayChanged").invoke(null);
+            Class.forName(plugin).getMethod(method).invoke(null);
         } catch (ReflectiveOperationException failure) {
             throw new IllegalStateException("Could not refresh " + modId + " machine recipes", failure);
         }

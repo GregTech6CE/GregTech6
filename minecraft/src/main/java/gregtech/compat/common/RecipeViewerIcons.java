@@ -41,9 +41,10 @@ public final class RecipeViewerIcons {
         ItemStack preferred = map(map);
         if (!preferred.isEmpty()) return preferred;
         var workstations = machines.getOrDefault(map, java.util.List.of());
-        return workstations.isEmpty()
-                ? new ItemStack(net.minecraft.world.item.Items.ANVIL)
-                : workstations.get(0).copy();
+        if (!workstations.isEmpty()) return workstations.get(0).copy();
+        for (var recipe : map.mRecipeList)
+            for (var output : recipe.mOutputs) if (output != null && !output.isEmpty()) return output.copy();
+        return new ItemStack(net.minecraft.world.item.Items.ANVIL);
     }
 
     public static ItemStack map(RecipeMap map) {

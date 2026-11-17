@@ -3,6 +3,8 @@ package gregtech.content.recipe;
 import static gregtech.api.material.GTValues.U;
 import static gregtech.content.recipe.SourceOreFollowonRows.Evidence.*;
 
+import gregtech.api.addon.material.MaterialProcessKeys;
+import gregtech.api.addon.material.MaterialProperties;
 import gregtech.api.material.*;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.MaterialFactKeys;
@@ -71,13 +73,21 @@ public final class SourceCinnabarFollowonAdapter implements SourceOreFollowonRow
         m = m.resolve();
         if (m.has(MaterialProperty.ANTIMATTER)
                 || m.getToolQuality() != 0
-                || m.getOreMultiplier() != 1
-                || m.getOreProcessingMultiplier() != 1
-                || !identity(m.getTargetCrushingMaterial(), rule.cinnabar())
-                || m.getTargetCrushingAmount() != U
-                || !identity(m.getTargetPulverMaterial(), rule.cinnabar())
-                || m.getTargetPulverAmount() != U) return UNKNOWN;
-        var by = m.getByProducts();
+                || PublishedMaterialFacts.ore(m).oreMultiplier() != 1
+                || PublishedMaterialFacts.ore(m).processingMultiplier() != 1
+                || !identity(PublishedMaterialFacts.targetMaterial(m, MaterialProcessKeys.CRUSHING), rule.cinnabar())
+                || PublishedMaterialFacts.target(m, MaterialProcessKeys.CRUSHING)
+                                .amount()
+                        != U
+                || !identity(PublishedMaterialFacts.targetMaterial(m, MaterialProcessKeys.PULVERIZING), rule.cinnabar())
+                || PublishedMaterialFacts.target(m, MaterialProcessKeys.PULVERIZING)
+                                .amount()
+                        != U) return UNKNOWN;
+        var by = PublishedMaterialFacts.ore(m).byproducts().stream()
+                .map(key -> GTMaterialRegistry.get(key.name()))
+                .filter(GTMaterial::isValid)
+                .map(GTMaterial::resolve)
+                .toList();
         if (by.size() != rule.byproducts().size()) return UNKNOWN;
         for (int i = 0; i < by.size(); i++)
             if (!identity(by.get(i), rule.byproducts().get(i))) return UNKNOWN;
@@ -104,7 +114,7 @@ public final class SourceCinnabarFollowonAdapter implements SourceOreFollowonRow
                 : identity(m, rule.byproducts().get(1))
                         ? 388
                         : identity(m, rule.byproducts().get(2)) ? 500 : -1;
-        if (melt < 0 || m.resolve().getMeltingPoint() != melt)
+        if (melt < 0 || PublishedMaterialFacts.scalar(m, MaterialProperties.MELTING_POINT) != melt)
             return new SourceOreFollowonRows.Environment(UNKNOWN, null);
         return new SourceOreFollowonRows.Environment(YES, null);
     }
