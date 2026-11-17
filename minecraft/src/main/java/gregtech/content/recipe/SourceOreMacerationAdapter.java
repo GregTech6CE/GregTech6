@@ -120,12 +120,6 @@ final class SourceOreMacerationAdapter {
         private final Map<GTMaterial, Set<MaterialPrefix>> overrides = new IdentityHashMap<>();
 
         Snapshot() {
-            for (var accepted : AddonMaterials.acceptedForms()) {
-                GTMaterial material =
-                        GTMaterialRegistry.get(accepted.materialName()).resolve();
-                var prefix = gregtech.engine.prefix.PrefixRegistry.byName(accepted.prefixName());
-                if (prefix != null) mark(material, prefix);
-            }
             for (var entry : ItemMaterialRegistry.entries().entrySet()) {
                 var data = entry.getValue();
                 if (data.prefix() == null) continue;

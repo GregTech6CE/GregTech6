@@ -36,6 +36,29 @@ public final class SpecialProcessRecipeTests {
     private SpecialProcessRecipeTests() {}
 
     @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
+    public static void addonOutputAliasesResolvePublishedBindings(GameTestHelper helper) {
+        var material = new MaterialKey("Gold");
+        var input = new FormKey("crushedPurified");
+        var plan = (SpecialProcessValue.Target) MaterialViews.catalog().processes()
+                .find(material, RecoveryRecipePublisherTests.ExistingFormAddon.PROCESS).get(0).value();
+        var output = plan.itemOutputs().get(0);
+        helper.assertTrue(output.material().equals(new MaterialKey("Iron")), "Fe is published as Iron");
+        helper.assertTrue(output.forms().equals(List.of(
+                new SpecialProcessValue.FormCount(new FormKey("itemCasing"), 1),
+                new SpecialProcessValue.FormCount(new FormKey("dust"), 2))), "output alternatives retain order");
+        var result = SharedSpecialProcessRows.build(material, input, 1, plan,
+                new SharedSpecialProcessRows.ReagentSelector(new MaterialKey("Lava"), Set.of(new FormKey("liquid"))),
+                new SharedSpecialProcessRows.Resolver());
+        var casing = GTItems.getStack(MaterialPrefix.itemCasing, GTMaterialRegistry.get("Iron"), 1);
+        helper.assertTrue(!casing.isEmpty() && result.recipe() != null, "aliased output resolves to a recipe: " + result.reason());
+        helper.assertTrue(result.recipe().mOutputs[0].getItem() == casing.getItem(), "first available canonical output wins");
+        helper.assertTrue(SharedSpecialProcessRows.owned().stream().anyMatch(row -> sameInputs(row, result.recipe())
+                        && row.mOutputs.length == 1 && row.mOutputs[0].getItem() == casing.getItem()),
+                "the alias-based special process row is published");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
     public static void publishedFluidsAndAnyFormReagentsNeedNoUnitFacts(GameTestHelper helper) {
         var custom = new MaterialKey("AddonProcessFluid");
         var liquid = new FormKey("liquid");

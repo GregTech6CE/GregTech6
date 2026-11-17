@@ -20,6 +20,8 @@
 | **`AddonMaterialContributor` & `MaterialInfoTool.Registrar`** | 初始化窗口与链接期 | 附属声明自有命名空间的元数据、分类/组与过程规则（如 1.8 `MaterialProcessKeys.DECOMPOSITION`）；宿主通过 `MaterialProcessRule<T>` 保留自定义规则对象的扩展能力，约定提交注册后调用方不得再修改该对象 |
 | **特殊工艺（API 1.9）** | 定义期注册，`READY` 后查询 | `SpecialProcessMethod` 关联 target／reagent 规则，`SpecialProcessesView` 提供只读方法查询；具体机器行由宿主按已发布形态生成 |
 
+特殊工艺冻结时将产物材料和形态别名解析为规范键，保留候选形态的原有顺序，以便运行期按已发布绑定依次查找。
+
 ## 跨代一致性印记（`MaterialPublication.Stamp`）
 
 由于材料目录定义在进程内一次定稿，而 Tag 成分、形态绑定与机器配方随世界或数据包重载多代替换，`MaterialPublication` 维护原子发布的版本戳 `Stamp(revision, materialRevision, compositionRevision, recipeRevision)`：

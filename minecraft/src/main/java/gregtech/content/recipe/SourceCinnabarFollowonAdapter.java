@@ -42,7 +42,6 @@ public final class SourceCinnabarFollowonAdapter implements SourceOreFollowonRow
         names.add(rule.cinnabar().name());
         rule.byproducts().forEach(value -> names.add(value.name()));
         names.add(rule.sluiceSand().name());
-        if (AddonMaterials.acceptedForms().stream().anyMatch(f -> names.contains(f.materialName()))) return true;
         for (var item : gregtech.engine.material.ItemMaterialRegistry.entries().keySet()) {
             String ns = BuiltInRegistries.ITEM.getKey(item).getNamespace();
             if (ns.equals("gt6ce") || ns.equals("minecraft")) continue; // source baseline native/vanilla forms

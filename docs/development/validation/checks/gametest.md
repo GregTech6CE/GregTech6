@@ -42,6 +42,8 @@ GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTe
 
 `SpecialProcessRecipeTests` 检查特殊工艺的已发布流体绑定与不限形态试剂、缺失产物拒绝、王水配方完整发布和唯一归属、过硫酸盐四种投料组合，以及竹／橡胶木／处理木粉的造纸标签。
 
+材料测试附属还重复请求已有朱砂粉，验证碎解机仍发布三个源产物槽；特殊工艺用 `Fe` 和 `casingSmall` 检查规范化后的形态绑定与配方发布。
+
 针对性回归用数据表维护，不为每个 issue 新建测试类、namespace 或结构模板。GameTest 表是运行时权威，只保留 R 级运行时行；静态源检查由 core 的 `crafting-issue-static-cases.tsv` 维护。
 
 引擎契约不属于某个配方 issue，例如 `RecipeMap` 的注册、删除与碰撞判定，直接放在 `minecraft/src/test` 的独立测试类里，参考 `RecipeMapRegistrationTests`。

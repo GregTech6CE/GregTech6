@@ -1,18 +1,19 @@
 package gregtech.engine.material;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import gregtech.api.addon.material.*;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.content.material.MaterialDefinitions;
+import org.junit.jupiter.api.Test;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class MaterialRegistrationTest {
     @Test
@@ -45,6 +46,7 @@ class MaterialRegistrationTest {
 
     @Test
     void specialProcessInputCountsFollowFormAliases() {
+        gregtech.content.material.MaterialTestFixture.ensureInitialized();
         var alias = new FormKey("casingSmall");
         var canonical = new FormKey("itemCasing");
         var process = new MaterialProcessKey<>(
@@ -56,6 +58,28 @@ class MaterialRegistrationTest {
                 "test", process, new MaterialProcessRule<>(Set.of(alias), target));
         assertEquals(Set.of(canonical), normalized.forms());
         assertEquals(Map.of(canonical, 2), ((SpecialProcessValue.Target) normalized.value()).inputCounts());
+        var aliasedOutput = new SpecialProcessValue.ItemOutput(
+                new MaterialKey("Fe"),
+                List.of(
+                        new SpecialProcessValue.FormCount(alias, 2),
+                        new SpecialProcessValue.FormCount(new FormKey("dust"), 3)),
+                5000);
+        var aliasedFluid = new SpecialProcessValue.FluidOutput(
+                new MaterialKey("Fe"), List.of(new SpecialProcessValue.FormCount(new FormKey("molten"), 1)), 144);
+        var aliasedTarget = new SpecialProcessValue.Target(
+                Map.of(alias, 2), List.of(aliasedOutput), List.of(aliasedFluid), 100, 20, 2);
+        var result = (SpecialProcessValue.Target) MaterialInfoRegistry.normalizeProcessRule(
+                        "test", process, new MaterialProcessRule<>(Set.of(alias), aliasedTarget))
+                .value();
+        assertEquals(new MaterialKey("Iron"), result.itemOutputs().get(0).material());
+        assertEquals(
+                List.of(
+                        new SpecialProcessValue.FormCount(canonical, 2),
+                        new SpecialProcessValue.FormCount(new FormKey("dust"), 3)),
+                result.itemOutputs().get(0).forms());
+        assertEquals(5000, result.itemOutputs().get(0).chance());
+        assertEquals(new MaterialKey("Iron"), result.fluidOutputs().get(0).material());
+        assertEquals(144, result.fluidOutputs().get(0).millibuckets());
         var duplicate =
                 new SpecialProcessValue.Target(Map.of(alias, 2, canonical, 3), List.of(output), List.of(), 100, 20, 2);
         assertThrows(

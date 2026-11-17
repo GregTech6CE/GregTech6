@@ -2,6 +2,9 @@ package gregtech.content.recipe;
 
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.registry.GTItems;
+import gregtech.api.addon.material.*;
+import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.recipe.Recipe;
 import java.util.List;
@@ -21,6 +24,47 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class RecoveryRecipePublisherTests {
     private RecoveryRecipePublisherTests() {}
+
+    public static final class ExistingFormAddon implements AddonMaterialContributor {
+        static final MaterialProcessKey<SpecialProcessValue> PROCESS = MaterialProcessKey.multiple(
+                new DataKey("gt6ce_form_test", "alias_probe"), SpecialProcessValue.class);
+        @Override public String addonId() { return "gt6ce_form_test"; }
+        @Override public void materialInfo(MaterialInfoTool.Registrar registrar) {
+            registrar.registerForm("Cinnabar", "dust");
+            registrar.registerSpecialProcess(new SpecialProcessMethod(PROCESS, "gt.recipe.bath", "probe.alias"));
+            var input = new FormKey("crushedPurified");
+            var output = new SpecialProcessValue.ItemOutput(new MaterialKey("Fe"), List.of(
+                    new SpecialProcessValue.FormCount(new FormKey("casingSmall"), 1),
+                    new SpecialProcessValue.FormCount(new FormKey("dust"), 2)), 10000);
+            registrar.registerProcess(new MaterialKey("Gold"), PROCESS,
+                    new MaterialProcessRule<>(java.util.Set.of(input), new SpecialProcessValue.Target(
+                            java.util.Map.of(input, 1), List.of(output), List.of(), 1, 20, 0)));
+            registrar.registerProcess(new MaterialKey("Lava"), PROCESS,
+                    new MaterialProcessRule<>(java.util.Set.of(new FormKey("liquid")), new SpecialProcessValue.Reagent()));
+        }
+    }
+
+    @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
+    public static void repeatedCinnabarDustRequestPreservesShredderOutputs(GameTestHelper helper) {
+        var cinnabar = GTMaterialRegistry.get("Cinnabar");
+        helper.assertTrue(AddonMaterials.accepts("Cinnabar", "dust"), "test addon request was accepted");
+        var input = GTItems.getStack(MaterialPrefix.crushed, cinnabar, 1);
+        var dust = GTItems.getStack(MaterialPrefix.dust, cinnabar, 1);
+        var tiny = GTItems.getStack(MaterialPrefix.dustTiny, cinnabar, 1);
+        var fraction = GTItems.getStack(MaterialPrefix.dustDiv72, cinnabar, 1);
+        helper.assertTrue(!input.isEmpty() && !dust.isEmpty() && !tiny.isEmpty() && !fraction.isEmpty(),
+                "the source forms are registered");
+        helper.assertTrue(SourceCinnabarFollowonAdapter.supports(cinnabar), "duplicate request keeps the source profile");
+        var rows = MachineRecipeMaps.Shredder.mRecipeList.stream()
+                .filter(row -> row.mInputs.length == 1 && ItemStack.matches(row.mInputs[0], input))
+                .toList();
+        helper.assertTrue(rows.stream().anyMatch(row -> row.mOutputs.length >= 3
+                && row.mOutputs[0].getItem() == dust.getItem()
+                && row.mOutputs[1].getItem() == tiny.getItem()
+                && row.mOutputs[2].getItem() == fraction.getItem()),
+                "crushed Cinnabar retains dust, tiny dust and 1/72 dust outputs");
+        helper.succeed();
+    }
 
     @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
     public static void genericRecoveryConflictsAreExplicitAndSpecificWins(GameTestHelper helper) {

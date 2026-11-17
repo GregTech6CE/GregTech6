@@ -407,14 +407,42 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
             });
             var normalized = new SpecialProcessValue.Target(
                     counts,
-                    target.itemOutputs(),
-                    target.fluidOutputs(),
+                    target.itemOutputs().stream()
+                            .map(output -> new SpecialProcessValue.ItemOutput(
+                                    normalizeOutputMaterial(source, output.material()),
+                                    normalizeOutputForms(source, process, output.forms()),
+                                    output.chance()))
+                            .toList(),
+                    target.fluidOutputs().stream()
+                            .map(output -> new SpecialProcessValue.FluidOutput(
+                                    normalizeOutputMaterial(source, output.material()),
+                                    normalizeOutputForms(source, process, output.forms()),
+                                    output.millibuckets()))
+                            .toList(),
                     target.reagentAmount(),
                     target.duration(),
                     target.euPerTick());
             return new MaterialProcessRule<>(forms, normalized);
         }
         return new MaterialProcessRule<>(forms, rule.value());
+    }
+
+    private static MaterialKey normalizeOutputMaterial(String source, MaterialKey key) {
+        var material = GTMaterialRegistry.get(key.name());
+        if (!material.isValid())
+            throw new IllegalArgumentException("Unknown special process output '" + key.name() + "' from " + source);
+        return new MaterialKey(material.resolve().getName());
+    }
+
+    private static List<SpecialProcessValue.FormCount> normalizeOutputForms(
+            String source, MaterialProcessKey<?> process, List<SpecialProcessValue.FormCount> forms) {
+        return forms.stream()
+                .map(form -> new SpecialProcessValue.FormCount(
+                        normalizeProcessForms(source, process, Set.of(form.form()))
+                                .iterator()
+                                .next(),
+                        form.count()))
+                .toList();
     }
 
     @Override
