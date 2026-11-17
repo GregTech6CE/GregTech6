@@ -35,7 +35,9 @@ public final class MultiblockCraftingRecipes {
                     "fusion_reactor_main",
                     "Fusion Reactor",
                     "FFF|FMF|FFF",
-                    Map.of('F', "il:FIELD_GENERATORS", 'M', "item:gt6ce:large_iridium_coil")),
+                    Map.of(
+                            'F', "item:gt6ce:compact_force_field_emitter_iv",
+                            'M', "item:gt6ce:tungstensteel_wall")),
             new Entry(
                     "largecentrifuge_tungsten_steel",
                     "Large Centrifuge",
@@ -208,7 +210,9 @@ public final class MultiblockCraftingRecipes {
                     "largemassfab_lead",
                     "Large Matter Fabricator",
                     "FFF|FMF|FFF",
-                    Map.of('F', "il:FIELD_GENERATORS", 'M', "item:gt6ce:dense_lead_wall")),
+                    Map.of(
+                            'F', "item:gt6ce:compact_force_field_emitter_iv",
+                            'M', "item:gt6ce:dense_lead_wall")),
             new Entry(
                     "heat_exchanger_main",
                     "Large Heat Exchanger",
@@ -243,7 +247,7 @@ public final class MultiblockCraftingRecipes {
                     "CPC|PAP|RMR",
                     Map.of(
                             'A',
-                            "il:ROBOT_ARMS",
+                            "item:gt6ce:compact_robot_arm_mv",
                             'C',
                             "circuit:6",
                             'M',
@@ -621,7 +625,7 @@ public final class MultiblockCraftingRecipes {
                             'P',
                             "item:gt6ce:crystal_processor_ruby",
                             'Y',
-                            "il:CONVEYERS")),
+                            "item:gt6ce:compact_electric_conveyor_iv")),
             new Entry(
                     "tungsten_wall",
                     "Tungsten Wall",

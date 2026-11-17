@@ -4027,7 +4027,7 @@ public final class BasicMachineCraftingRecipes {
                     "CPC|PAP|RMR",
                     Map.of(
                             'A',
-                            "il:ROBOT_ARMS",
+                            "item:gt6ce:compact_robot_arm_mv",
                             'C',
                             "circuit:6",
                             'M',
