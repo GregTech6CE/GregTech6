@@ -1,11 +1,6 @@
 package gregtech.content.recipe;
 
-import static gregtech.content.recipe.SourceThermalRecyclingRules.Decision;
-import static gregtech.content.recipe.SourceThermalRecyclingRules.Facts;
-import static gregtech.content.recipe.SourceThermalRecyclingRules.Phase;
-import static gregtech.content.recipe.SourceThermalRecyclingRules.Plan;
-import static gregtech.content.recipe.SourceThermalRecyclingRules.Stats;
-import static gregtech.content.recipe.SourceThermalRecyclingRules.Truth;
+import static gregtech.content.recipe.SourceThermalRecyclingRules.*;
 
 import gregtech.content.data.MaterialPrefix;
 import java.util.List;
@@ -22,7 +17,7 @@ import java.util.stream.Stream;
 public final class SourceThermalInputRules {
     private SourceThermalInputRules() {}
 
-    private static final long U = OriginalMaterialFluidUnits.SOURCE_UNIT;
+    private static final long U = gregtech.content.material.catalog.MaterialFluidUnitFacts.SOURCE_UNIT;
 
     public enum InputProof {
         VERIFIED_SINGLE_COMPONENT,

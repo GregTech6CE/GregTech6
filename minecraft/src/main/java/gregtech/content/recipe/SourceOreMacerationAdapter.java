@@ -1,13 +1,14 @@
 package gregtech.content.recipe;
 
+import static gregtech.content.material.MaterialFactKeys.Decision;
 import static gregtech.content.recipe.SharedOreWashingRows.NativeForm;
 import static gregtech.content.recipe.SourceOreWashingRules.Availability;
-import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -119,12 +120,6 @@ final class SourceOreMacerationAdapter {
         private final Map<GTMaterial, Set<MaterialPrefix>> overrides = new IdentityHashMap<>();
 
         Snapshot() {
-            for (var accepted : AddonMaterials.acceptedForms()) {
-                GTMaterial material =
-                        GTMaterialRegistry.get(accepted.materialName()).resolve();
-                var prefix = gregtech.engine.prefix.PrefixRegistry.byName(accepted.prefixName());
-                if (prefix != null) mark(material, prefix);
-            }
             for (var entry : ItemMaterialRegistry.entries().entrySet()) {
                 var data = entry.getValue();
                 if (data.prefix() == null) continue;
@@ -133,7 +128,6 @@ final class SourceOreMacerationAdapter {
                 for (var part : data.components()) {
                     GTMaterial material = part.material().resolve();
                     if (!namespace.equals("gt6ce")
-                            || !data.bulkRecoveryAllowed()
                             || data.components().size() != 1
                             || data.amount() != data.prefix().getMaterialWeight()
                             || !SourceFurnaceNativeAdapter.nativeForm(
@@ -158,16 +152,19 @@ final class SourceOreMacerationAdapter {
             var resolved = material.resolve();
             return GTMaterialRegistry.isCoreMaterial(resolved)
                     && !AddonMaterials.owns(resolved)
-                    && SourceRecyclingFacts.find(resolved.getId(), resolved.getName()) != null;
+                    && MaterialFactKeys.sourceRecycling(resolved).isPresent();
         }
 
         boolean legacyContinuation(GTMaterial material) {
             // Preserve all existing dormant/startup/late-activation choices, not just today's inactive subset.
-            return ReviewedOreInputProfile.decision(material) == ReviewedOreInputProfile.Evidence.NO;
+            return MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_ORE_INPUT)
+                            .orElse(MaterialFactKeys.Decision.UNKNOWN)
+                    == MaterialFactKeys.Decision.NO;
         }
 
         Decision mortar(GTMaterial material) {
-            return SourceOreMacerationFacts.mortar(material.getId(), material.getName());
+            return MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_MACERATION)
+                    .orElse(MaterialFactKeys.Decision.UNKNOWN);
         }
 
         GTMaterial target(GTMaterial material) {
@@ -190,7 +187,6 @@ final class SourceOreMacerationAdapter {
             if (!SourceFurnaceNativeAdapter.nativeForm(prefix, material, selected)) return NativeForm.unknown();
             var data = ItemMaterialRegistry.base(selected.getItem()).orElse(null);
             if (data == null
-                    || !data.bulkRecoveryAllowed()
                     || data.prefix() != prefix
                     || data.components().size() != 1
                     || data.material().resolve() != material.resolve()

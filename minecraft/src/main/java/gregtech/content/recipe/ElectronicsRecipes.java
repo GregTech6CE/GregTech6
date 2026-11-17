@@ -8,6 +8,7 @@ import gregtech.engine.recipe.*;
 import gregtech.content.data.*;
 import gregtech.content.registry.*;
 import gregtech.content.material.Materials;
+import gregtech.content.material.catalog.SourceLensMaterialFacts.Color;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -177,7 +178,7 @@ public final class ElectronicsRecipes {
             if (gem == null || !gem.isValid() || (group == MaterialGroups.Sapphire && gem.resolve() == Materials.Ruby.resolve())) continue;
             ItemStack plate = GTItems.getStack(MaterialPrefix.plateGem, gem, 1);
             if (plate.isEmpty()) continue;
-            for (var lens : SourceLensRoles.lenses(SourceLensRoles.Color.GREEN))
+            for (var lens : SourceLensRecipeItems.lenses(Color.GREEN))
                 add(MachineRecipeMaps.LaserEngraver, new Recipe(
                         new ItemStack[]{plate.copy(), lens},
                         new ItemStack[]{tech(circuit, 1)}, null, null, null, null, 64, 256, 0)
@@ -189,7 +190,7 @@ public final class ElectronicsRecipes {
     private static void engrave(String wire,String foilMaterial) {
         var foil = GTItems.getStack(MaterialPrefix.foil, GTMaterialRegistry.get(foilMaterial), 4);
         if (foil.isEmpty()) return;
-        for (var lens : SourceLensRoles.lenses(SourceLensRoles.Color.RED))
+        for (var lens : SourceLensRecipeItems.lenses(Color.RED))
             add(MachineRecipeMaps.LaserEngraver,new Recipe(
                     new ItemStack[]{foil.copy(),lens},
                     new ItemStack[]{tech(wire,1)},null,null,null,null,64,16,0).withCatalystInputs(1));

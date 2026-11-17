@@ -4,6 +4,7 @@ import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 import gregtech.content.block.*;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialItemCompositions;
 import gregtech.engine.material.ItemMaterialRegistry;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,11 +80,7 @@ public final class GTSpecialOreBlocks {
 
     public static void registerCompositions() {
         for (var holder : ALL) {
-            Block block = holder.get();
-            if (block instanceof DenseOreBlock ore)
-                ItemMaterialRegistry.register(block.asItem(), MaterialPrefix.oreDense, ore.material());
-            else if (block instanceof VanillaOreBlock ore)
-                ItemMaterialRegistry.register(block.asItem(), MaterialPrefix.oreVanillastone, ore.material());
+            MaterialItemCompositions.registerOreBlockComposition(holder.get());
         }
         ItemMaterialRegistry.register(
                 GTItems.getStack(MaterialPrefix.plate, gregtech.content.material.generated.WoodMaterials.WoodTreated)

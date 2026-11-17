@@ -2,8 +2,8 @@
 
 package gregtech.api.addon.material;
 
-/** Side metadata submitted by a contributor. Own namespaced tags may describe any real material.
- * Properties and flags require material ownership and the contributor's key namespace.
+/** Side metadata submitted by a contributor for any real material.
+ * Tags, properties and flags use the contributor's key namespace.
  * Metadata does not add native forms or grant host processing behaviors. */
 public record MaterialMetadataDeclaration(String materialName, MaterialMetadata metadata) {
     public MaterialMetadataDeclaration {

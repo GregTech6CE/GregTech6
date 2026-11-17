@@ -5,6 +5,7 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.MaterialWorkability;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.material.Materials;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
@@ -107,7 +108,9 @@ public final class MaterialFormConversionRecipes {
                 || has(MaterialPrefix.gemExquisite, material)
                 || has(MaterialPrefix.gemFlawless, material)
                 || has(MaterialPrefix.bouleGt, material);
-        if (!gemLike && !"Ice".equals(material.getName())) {
+        if (!gemLike
+                && MaterialFactKeys.value(material, MaterialFactKeys.COMPRESSOR_DUST_TO_GEM_PLATE)
+                        .orElse(true)) {
             compressing(material, easy ? 16 : 256L * (quality + 1), MaterialPrefix.dust, 1, MaterialPrefix.plateGem, 1);
         }
         // 9 material units of plate -> 1 dense plate. plate 9, plateTriple 3, blockPlate 1 and

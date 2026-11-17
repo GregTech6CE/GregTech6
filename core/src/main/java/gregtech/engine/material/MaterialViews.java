@@ -23,6 +23,7 @@ public final class MaterialViews {
     private record GroupSubmission(String addonId, MaterialGroupDeclaration declaration) {}
 
     private static MaterialCatalogView published;
+    private static long contentRevision;
     private static volatile MaterialFormsView formBindings = new MaterialFormsView() {
         public Set<MaterialFormBinding> find(MaterialKey material) {
             return Set.of();
@@ -36,6 +37,9 @@ public final class MaterialViews {
         var origins = new LinkedHashMap<String, String>();
         var directTagMembers = new LinkedHashMap<DataKey, Set<MaterialKey>>();
         var tagFacts = new LinkedHashMap<DataKey, TagFacts>();
+        var specialProcessMethods = new LinkedHashMap<DataKey, SpecialProcessMethod>();
+        for (var method : MaterialInfoRegistry.specialProcesses())
+            specialProcessMethods.put(method.process().id(), method);
         for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
             if (material.resolve() != material) continue;
             var definition = MaterialDefinitions.find(material.getName());
@@ -55,6 +59,22 @@ public final class MaterialViews {
                     tagFacts.putIfAbsent(key, new TagFacts("gt6ce", Set.of()));
                 }
             var key = new MaterialKey(material.getName());
+            MaterialInfoRegistry.processesForPublication(key).rules().forEach((process, rules) -> {
+                var method = specialProcessMethods.get(process.id());
+                if (method == null || !method.process().equals(process)) return;
+                for (var rule : rules) {
+                    DataKey tag = rule.value() instanceof SpecialProcessValue.Target
+                            ? method.targetTag()
+                            : rule.value() instanceof SpecialProcessValue.Reagent ? method.reagentTag() : null;
+                    if (tag == null) continue;
+                    builder.tag(tag);
+                    var owner = method.process().id().namespace();
+                    var previous = tagFacts.putIfAbsent(tag, new TagFacts(owner, Set.of()));
+                    if (previous != null && !previous.owner().equals(owner))
+                        throw new IllegalArgumentException(
+                                "Special process tag " + tag + " conflicts with owner " + previous.owner());
+                }
+            });
             builders.put(key, builder);
             properties.put(key, new LinkedHashMap<>());
             for (var property : builder.build().keys()) types.put(property.id(), property.type());
@@ -80,11 +100,6 @@ public final class MaterialViews {
                 if (previous != null && !previous.owner().equals(submission.addonId()))
                     throw new IllegalArgumentException("Addon '" + submission.addonId() + "' material tag '" + tag
                             + "' conflicts with owner '" + previous.owner() + "'");
-            }
-            if (!metadata.keys().isEmpty() || !metadata.flags().isEmpty()) {
-                if (!AddonMaterials.owners(material).contains(submission.addonId()))
-                    throw new IllegalArgumentException("Addon '" + submission.addonId()
-                            + "' cannot set metadata properties or flags of '" + key.name() + "'");
             }
             for (var flag : metadata.flags()) {
                 requireNamespace(submission.addonId(), flag);
@@ -384,6 +399,15 @@ public final class MaterialViews {
                 return Optional.ofNullable(groups.get(java.util.Objects.requireNonNull(key)));
             }
         };
+        var specialProcesses = new SpecialProcessesView() {
+            public List<SpecialProcessMethod> methods() {
+                return List.copyOf(specialProcessMethods.values());
+            }
+
+            public Optional<SpecialProcessMethod> find(DataKey id) {
+                return Optional.ofNullable(specialProcessMethods.get(java.util.Objects.requireNonNull(id)));
+            }
+        };
         var indexed = Map.copyOf(materials);
         var ordered = List.copyOf(materials.values());
         var aliases = new LinkedHashMap<String, MaterialKey>();
@@ -424,6 +448,10 @@ public final class MaterialViews {
 
             public MaterialProcessesView processes() {
                 return processView;
+            }
+
+            public SpecialProcessesView specialProcesses() {
+                return specialProcesses;
             }
         };
     }
@@ -549,5 +577,10 @@ public final class MaterialViews {
                 return immutable.getOrDefault(java.util.Objects.requireNonNull(material), Set.of());
             }
         };
+        contentRevision++;
+    }
+
+    public static synchronized long contentRevision() {
+        return contentRevision;
     }
 }

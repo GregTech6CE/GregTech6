@@ -39,9 +39,9 @@
 
 | 产物坐标 | 内容与输出 |
 | --- | --- |
-| `gregtech:gt6ce-api:1.8.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
-| `gregtech:gt6ce-addon-sdk-1.20.1-forge:1.8.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
-| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:1.8.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-api:1.9.0` | Java 17 公共协议、模型、声明和宿主服务接口；`api/common/build/libs/` |
+| `gregtech:gt6ce-addon-sdk-1.20.1-forge:1.9.0` | Java 17、Mojang 名称的 Forge 游戏侧 API；对应节点 `build/addon-sdk/` |
+| `gregtech:gt6ce-addon-sdk-1.21.1-neoforge:1.9.0` | Java 21 的 NeoForge 游戏侧 API；对应节点 `build/addon-sdk/` |
 
 这些是构建配置中的坐标，不表示已发布到公共 Maven 仓库。版本规则见下节[API 版本](#api-版本)。
 
@@ -55,7 +55,13 @@
 
 ## API 版本
 
-当前分支使用 API `1.8.0`，与模组版本独立；以 [api/common/build.gradle](../api/common/build.gradle) 为准。`GregTechAddons.apiVersion()` 返回 `major * 1000 + minor`，1.8 为 `1008`，不能据此推断某个模组构建兼容。修改内联 API 时同步构建配置与 `GregTechAddons` 的版本。
+当前分支使用 API `1.9.0`，与模组版本独立；以 [api/common/build.gradle](../api/common/build.gradle) 为准。`GregTechAddons.apiVersion()` 返回 `major * 1000 + minor`，1.9 为 `1009`，不能据此推断某个模组构建兼容。修改内联 API 时同步构建配置与 `GregTechAddons` 的版本。
+
+API 1.9 新增 `SpecialProcessMethod`、`SpecialProcessValue` 与 `SpecialProcessesView`。附属通过 `MaterialInfoTool.Registrar.registerSpecialProcess(...)` 声明 typed target／reagent 规则，再通过 `MaterialCatalogView.specialProcesses()` 当前发布快照读取；target 和 reagent 必须绑定同一个 `MaterialProcessKey`。
+
+特殊工艺试剂与产物按 `MaterialCatalogView.formBindings()` 已发布的实际形态解析。流体试剂的 `reagentAmount` 和流体产物的 `millibuckets` 直接使用 mB；水和岩浆的原版流体身份也发布为材料形态，不要求内部 `MATERIAL_FLUID_UNIT` 换算条目；`anyForm(new SpecialProcessValue.Reagent())` 从该材料已发布的形态中选择可解析的试剂；若同时存在物品与流体形态，数量单位存在歧义，必须显式限定试剂形态。物品试剂数量不得超过单栈上限。`recipeMap` 在平台配方表完成注册后解析，未知表会记录警告并跳过该方法。目标声明中的产物材料必须在定义冻结时存在，可引用其他材料而不会修改该材料的声明；未知名称会使注册失败，原有附属需要修正拼写或先注册对应材料。任一必需产物无法解析时整行拒绝，日志按输入、试剂、物品产物、流体产物、空产物和配方表拒绝分类汇总，避免发布缺少产物的配方。
+
+本轮将宿主内部的 `SpecialProcessMethods` 移至 `gregtech.content.material`，`SpecialProcessData` 与 `SpecialProcessMaterialFacts` 移至 `gregtech.content.material.catalog`。这些类型不属于附属 API；若附属曾直接引用旧的 `gregtech.content.recipe` 类名，需要更新导入并重新编译。宿主内部未使用的 `MaterialPublication.platformGenerationPublished` 也已删除；附属应只读取 `GregTechMaterials` 公共视图。公共 API 签名与材料、配方和存档 ID 未变。
 
 宿主专用的 `StructureGrid` 与 `RecipeMapSpec` 不属于附属契约：它们分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`，编码内置多方块几何和配方表，附属不应依赖。
 
@@ -176,11 +182,11 @@ public final class CompressorDocument implements MachineRecipeDocumentProvider {
 
 追加走 typed schema；移除用 `GT6CE.removeMachine(event, spec)`，整表清空用 `GT6CE.clearMap(event, map)`。脚本仍须使用目标平台匹配的 KubeJS 版本；两节点的序列化实现不同，不能照搬另一版本的语法。
 
-## 材料目录与分解规则（API 1.6–1.8）
+## 材料目录与分解规则（API 1.6–1.9）
 
 材料和 metadata 仍通过 `AddonMaterialContributor` 提交；系统设计边界详见[材料系统设计](decisions/material-system/README.md)。材料初始化 READY 后，`GregTechMaterials.catalog()` 返回当前会话的不可变 `MaterialCatalogView`：`resolve(name)` 解析规范名和别名，`find(MaterialKey)` 只返回真实材料，材料组不会伪装成可加工材料。旧宿主没有该服务时明确抛出 `UnsupportedOperationException`，未就绪时明确报告阶段，不以空集合掩盖失败。
 
-`metadata()` 可给真实材料添加本附属 namespace 的分类 tag、flag 和类型化值。`materialTags()` 声明 tag 包含关系，`materialGroups()` 声明替代组及其材料／子组。附属只能定义自身 addon id namespace 的 tag、组和 property key；给其他材料添加描述 tag 允许，但修改其他材料的 property、flag、形态或加工能力仍需所有权。未知引用、同 key 异类型、跨所有者冲突、tag 包含环和组环均阻止材料初始化进入 READY。
+`metadata()` 可给任意真实材料添加本附属 namespace 的分类 tag、flag 和类型化值。`materialTags()` 声明 tag 包含关系，`materialGroups()` 声明替代组及其材料／子组。附属可为已有材料提交形态、组成、工具属性和加工规则，也可引用其他材料作为产物；无需声明材料所有权。tag、组、自定义过程和 property key 仍须使用自身 addon id namespace；已有定义的冲突、未知引用、同 key 异类型、tag 包含环和组环均阻止材料初始化进入 READY。已有材料的基础定义不能以同名材料声明覆盖；既有值的冲突检查与形态有效性检查仍然适用。
 
 ```java
 MaterialMetadata metadata = MaterialMetadata.builder()

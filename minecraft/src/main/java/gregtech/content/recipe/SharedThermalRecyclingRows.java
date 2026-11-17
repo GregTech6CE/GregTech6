@@ -6,6 +6,8 @@ import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.SmeltingMaterialHelper;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
+import gregtech.content.material.catalog.SourceRecyclingMaterialFacts;
 import gregtech.content.registry.GTFluids;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -36,7 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static gregtech.content.recipe.SourceRecyclingFacts.*;
+import static gregtech.content.material.MaterialFactKeys.Decision;
+import static gregtech.content.material.catalog.SourceRecyclingMaterialFacts.*;
 
 /**
  * The general source {@code RecyclingProcessing} listener for every admitted recyclable item
@@ -57,7 +60,8 @@ import static gregtech.content.recipe.SourceRecyclingFacts.*;
  */
 final class SharedThermalRecyclingRows {
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final long SOURCE_UNIT = gregtech.content.recipe.OriginalMaterialFluidUnits.SOURCE_UNIT;
+    private static final long SOURCE_UNIT =
+            gregtech.content.material.catalog.MaterialFluidUnitFacts.SOURCE_UNIT;
     private static final Map<RecipeMap, Set<Recipe>> OWNED = new IdentityHashMap<>();
     private static final List<Deferred> DEFERRED = new ArrayList<>();
     private static boolean initialized;
@@ -197,7 +201,7 @@ final class SharedThermalRecyclingRows {
         for (var entry : materialItems) {
             Item item = entry.getKey();
             ItemComposition data = entry.getValue();
-            if (data == null || !data.bulkRecoveryAllowed() || data.components().isEmpty()) continue;
+            if (data == null || data.components().isEmpty()) continue;
             MaterialPrefix prefix = data.prefix();
             if (prefix != null && ownedByAuditedProducer(prefix, data)) continue;
             if (!allows(prefix)) continue;
@@ -231,14 +235,14 @@ final class SharedThermalRecyclingRows {
                 .map(component -> component.material().resolve())
                 .anyMatch(AddonMaterials::owns)) return planDeclared(candidate);
         var targetUnits = new java.util.LinkedHashMap<GTMaterial, Long>();
-        var factsByTarget = new java.util.LinkedHashMap<GTMaterial, SourceRecyclingFacts.Facts>();
+        var factsByTarget = new java.util.LinkedHashMap<GTMaterial, SourceRecyclingMaterialFacts.Facts>();
         double weight = 0;
         try {
             for (MaterialComponent component : candidate.components()) {
                 GTMaterial material = component.material().resolve();
                 if (!valid(material)) return Outcome.deferred(Reason.UNKNOWN_SOURCE_IDENTITY);
-                var facts = find(material.getId(), material.getName());
-                if (facts == null) return Outcome.deferred(Reason.UNKNOWN_SOURCE_FACT);
+                var facts = MaterialFactKeys.sourceRecycling(material).orElse(null);
+                if (facts == null || !facts.inputEligible()) return Outcome.deferred(Reason.UNKNOWN_SOURCE_FACT);
                 if (snapshot.materialOverride(material, facts) != null)
                     return Outcome.deferred(Reason.MATERIAL_OVERRIDE);
                 weight += SourceRecyclingMath.materialWeight(material.getDensity(), component.amount(), SOURCE_UNIT);
@@ -249,7 +253,7 @@ final class SharedThermalRecyclingRows {
                         || facts.blacklistedSmelter() != Decision.NO
                         || facts.targetUnitsPerU() < 0) return Outcome.deferred(Reason.UNKNOWN_SOURCE_FACT);
                 GTMaterial target = GTMaterialRegistry.get(facts.target().name()).resolve();
-                var resolvedTargetFacts = find(facts.target().id(), facts.target().name());
+                var resolvedTargetFacts = MaterialFactKeys.sourceRecycling(target).orElse(null);
                 if (!valid(target) || target.getId() != facts.target().id()
                         || !target.getName().equals(facts.target().name()) || resolvedTargetFacts == null)
                     return Outcome.deferred(Reason.TARGET_IDENTITY_OVERRIDE);
@@ -277,7 +281,7 @@ final class SharedThermalRecyclingRows {
         var chosen = phases.get(0);
         int millibuckets;
         try {
-            millibuckets = gregtech.content.recipe.OriginalMaterialFluidUnits.millibuckets(
+            millibuckets = gregtech.content.material.catalog.MaterialFluidUnitFacts.millibuckets(
                     chosen.targetUnits(), chosen.phase().binding().referenceMaterialUnits(),
                     chosen.phase().binding().millibuckets(), false);
         } catch (ArithmeticException invalid) {
@@ -351,7 +355,7 @@ final class SharedThermalRecyclingRows {
         int millibuckets;
         long ticks;
         try {
-            millibuckets = gregtech.content.recipe.OriginalMaterialFluidUnits.millibuckets(
+            millibuckets = gregtech.content.material.catalog.MaterialFluidUnitFacts.millibuckets(
                     chosen.getValue(),
                     binding.referenceUnits(),
                     binding.referenceMillibuckets(),
@@ -386,8 +390,8 @@ final class SharedThermalRecyclingRows {
      * BLACKLISTED_SMELTER flag.
      */
     private static boolean declaredMeltable(GTMaterial material) {
-        var facts = find(material.getId(), material.getName());
-        if (facts != null)
+        var facts = MaterialFactKeys.sourceRecycling(material).orElse(null);
+        if (facts != null && facts.inputEligible())
             return facts.melting() == Decision.YES && facts.blacklistedSmelter() == Decision.NO;
         return AddonMaterials.owns(material);
     }
@@ -396,14 +400,14 @@ final class SharedThermalRecyclingRows {
             GTMaterial target,
             long targetUnits,
             ResolvedPhase phase,
-            SourceRecyclingFacts.Facts targetFacts) {}
+            SourceRecyclingMaterialFacts.Facts targetFacts) {}
 
     private record ResolvedPhase(
-            SourceRecyclingFacts.Binding binding, FluidStack fluid, int temperature, boolean lava) {}
+            SourceRecyclingMaterialFacts.Binding binding, FluidStack fluid, int temperature, boolean lava) {}
 
     /** Mirrors the audited adapter's phase proof; a target without a phase is skipped by the source. */
     private static ResolvedPhase resolvePhase(
-            GTMaterial target, SourceRecyclingFacts.Facts facts, SourceThermalNativeAdapter.Snapshot snapshot) {
+            GTMaterial target, SourceRecyclingMaterialFacts.Facts facts, SourceThermalNativeAdapter.Snapshot snapshot) {
         Phase phase = facts.phase();
         if (phase.kind() == PhaseKind.UNKNOWN || phase.kind() == PhaseKind.OPTIONAL_EXTERNAL) return null;
         if (phase.kind() == PhaseKind.NO_DEFAULT_PHASE) return null;

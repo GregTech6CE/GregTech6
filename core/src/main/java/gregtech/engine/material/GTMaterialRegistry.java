@@ -228,6 +228,7 @@ public final class GTMaterialRegistry {
                 definitionsOpen = false;
             }
             MaterialInfoRegistry.resolveAddonRegistrations();
+            gregtech.content.material.SpecialProcessMethods.install();
             MaterialInfoRegistry.closeRegistrations();
             phase = RegistrationPhase.LINKS;
             MaterialLinker.validate(MaterialDefinitions.declarations(), BY_NAME::get);

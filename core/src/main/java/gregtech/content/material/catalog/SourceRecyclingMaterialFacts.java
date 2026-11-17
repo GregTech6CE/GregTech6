@@ -1,0 +1,1170 @@
+package gregtech.content.material.catalog;
+
+import static gregtech.api.material.GTValues.U;
+import static gregtech.content.material.MaterialFactKeys.Decision;
+import static gregtech.content.material.MaterialFactKeys.Identity;
+
+import gregtech.api.addon.material.MaterialProcessRule;
+import gregtech.content.material.MaterialFactKeys;
+import gregtech.engine.material.MaterialDefinition;
+import gregtech.engine.material.MaterialInfoDefinition;
+import java.util.*;
+
+/**
+ * Finite facts for the existing dust-or-ingot 1U thermal recycling producer, not global material metadata.
+ * Original GT6: 3703e40308c8c030763fd6297dea8b210d2a77b1, MT declarations and factory closure
+ * (61-93, 164-217, 219-328); OreDictMaterial 749-776/799-806; Loader_Fluids 40-214/364/572-662.
+ * The roster covers retained source input identities plus target-only Water/Lava. Unknown identities,
+ * including port-only Superconductor 9516, are deliberately absent. A source NO is only valid inside
+ * this reviewed roster and the verified default native context; it says nothing about external bindings.
+ *
+ * <p>Positive setSmelting adds MELTING. Element FURNACE uses the factory's original melting argument,
+ * not later heat/native flags. Non-element metal/alloy does not imply MOLTEN. The all-MELTING fluid
+ * loop at Loader_Fluids 216-224 is commented out. Explicit bindings precede the final LIQUID/MOLTEN
+ * loop at 657-662. Source density is not inferred here: the planner consumes valid runtime density,
+ * target melting and actual fluid temperature without claiming imported-stat parity.
+ */
+public final class SourceRecyclingMaterialFacts {
+    private SourceRecyclingMaterialFacts() {}
+
+    public enum PhaseKind {
+        DEFAULT_BINDING,
+        NO_DEFAULT_PHASE,
+        OPTIONAL_EXTERNAL,
+        UNKNOWN
+    }
+
+    public enum Accessor {
+        LIQUID,
+        GAS
+    }
+
+    /** The source path is provenance, not a promise of the same modern native registry spelling. */
+    public record Binding(
+            String sourceRegistryPath,
+            Accessor accessor,
+            long millibuckets,
+            long referenceMaterialUnits,
+            int sourceLine) {
+        public Binding {
+            Objects.requireNonNull(sourceRegistryPath);
+            Objects.requireNonNull(accessor);
+            if (sourceRegistryPath.isEmpty() || millibuckets <= 0 || referenceMaterialUnits <= 0 || sourceLine <= 0)
+                throw new IllegalArgumentException("Invalid reviewed source phase");
+        }
+    }
+
+    public record Phase(PhaseKind kind, Binding binding, boolean hasOptionalExternalBinding) {
+        public Phase {
+            Objects.requireNonNull(kind);
+            if ((kind == PhaseKind.DEFAULT_BINDING) != (binding != null))
+                throw new IllegalArgumentException("Only a proven default phase has a binding");
+        }
+    }
+    /** Shipped recipe-phase port metadata after built-in material postInit, distinct from source facts.
+     * Equal semantic writes are harmless;
+     * callers still prove core/native ownership and explicit item composition separately. */
+    public record PortDefaults(boolean melting, Identity target, long targetUnitsPerU, boolean generatedMolten) {
+        public PortDefaults {
+            Objects.requireNonNull(target);
+        }
+
+        public boolean matches(boolean observedMelting, int targetId, String targetName, long amount) {
+            return melting == observedMelting && target.matches(targetId, targetName) && targetUnitsPerU == amount;
+        }
+    }
+
+    public record Facts(
+            Identity identity,
+            Decision melting,
+            Decision blacklistedSmelter,
+            Decision furnace,
+            Identity target,
+            long targetUnitsPerU,
+            Phase phase,
+            PortDefaults portDefaults,
+            boolean inputEligible,
+            int sourceLine) {
+        public Facts {
+            Objects.requireNonNull(identity);
+            Objects.requireNonNull(melting);
+            Objects.requireNonNull(blacklistedSmelter);
+            Objects.requireNonNull(furnace);
+            Objects.requireNonNull(target);
+            Objects.requireNonNull(phase);
+            Objects.requireNonNull(portDefaults);
+            if (targetUnitsPerU < 0 || sourceLine <= 0) throw new IllegalArgumentException("Invalid source fact");
+        }
+    }
+
+    private static final int M = 1, B = 2, F = 4; // source MELTING, BLACKLISTED_SMELTER, FURNACE
+
+    private record Seed(Identity identity, int flags, int targetId, long amount, int sourceLine) {}
+    // 74 reviewed missing port MELTING flags; do not change global flags.
+    private static final Set<Integer> PORT_NO_MELTING = Set.of(
+            350, 8001, 8008, 8009, 8010, 8013, 8016, 8017, 8018, 8020, 8026, 8028, 8029, 8030, 8031, 8033, 8034, 8211,
+            8213, 8222, 8235, 8236, 8238, 8239, 8246, 8266, 8267, 8318, 8319, 8320, 8333, 8340, 8341, 8500, 8599, 9003,
+            9004, 9007, 9009, 9011, 9103, 9104, 9107, 9120, 9122, 9143, 9192, 9243, 9701, 9703, 9710, 9711, 9713, 9779,
+            9780, 9783, 9883);
+    // 17 port MELTING additions absent in source; Netherrack is NOT one (MT1882).
+    // LigniteCoke/PetroleumCoke are added by ImportedMaterialData.applyPostInitFuelStats,
+    // not their declarations. Profiles describe recipe-phase defaults after GTMaterialRegistry.postInit.
+    private static final Set<Integer> PORT_EXTRA_MELTING =
+            Set.of(150, 340, 1090, 1100, 1110, 1130, 1150, 1160, 1170, 1180, 1190, 1200, 1520, 2390, 3720, 8365, 8390);
+    // Six missed setAllToTheOutputOf imports: MT1245-1246,1280,1732,1796-1797.
+    private static final Set<Integer> PORT_SELF_TARGET = Set.of(8222, 8267, 8652, 9243);
+    // Default 0faae36d generated-factory identities, not source phase evidence; static finalized fluids excluded.
+    private static final Set<Integer> PORT_GENERATED_MOLTEN = Set.of(
+            300, 8620, 9107, 30, 31, 40, 41, 42, 50, 51, 60, 61, 110, 120, 130, 140, 160, 190, 200, 210, 220, 230, 240,
+            250, 260, 270, 278, 280, 290, 310, 320, 330, 370, 380, 390, 400, 410, 420, 430, 440, 450, 460, 470, 480,
+            490, 500, 510, 520, 550, 560, 570, 580, 590, 600, 610, 620, 630, 640, 650, 660, 670, 680, 690, 700, 710,
+            720, 730, 740, 750, 760, 770, 780, 790, 791, 800, 810, 820, 830, 840, 850, 870, 880, 890, 900, 910, 920,
+            921, 922, 930, 940, 942, 943, 945, 946, 947, 950, 951, 952, 960, 970, 980, 990, 1000, 1010, 1020, 1030,
+            1040, 1050, 1060, 1070, 1080, 1120, 1140, 1148, 2220, 8003, 8008, 8013, 8016, 8018, 8028, 8031, 8340, 8341,
+            8600, 8601, 8602, 8605, 8610, 8611, 8612, 8614, 8615, 8621, 8622, 8630, 8631, 8632, 8633, 8634, 8635, 8636,
+            8638, 8640, 8643, 8645, 8646, 8647, 8651, 8652, 8653, 8658, 8659, 8660, 8661, 8662, 8663, 8664, 8665, 8666,
+            8667, 8668, 8669, 8672, 8673, 8674, 8675, 8679, 8682, 8684, 8685, 8686, 8687, 8689, 8697, 8698, 8700, 8702,
+            8704, 8705, 8706, 8708, 8709, 8710, 8717, 8720, 8721, 8722, 8726, 8727, 8729, 8730, 8732, 8733, 8735, 8737,
+            8744, 8745, 8746, 8751, 8752, 8756, 8784, 8790, 8793, 8795, 8796, 8797, 8798, 8799, 8800, 8802, 8803, 8805,
+            8813, 9007, 9009, 9011, 9104, 9143, 9175, 9215);
+    // Loader_Fluids135-189 optional external receivers. Default-positive bindings still require native proof.
+    private static final Set<Integer> OPTIONAL_EXTERNAL = Set.of(
+            120, 130, 220, 260, 270, 280, 290, 300, 320, 470, 500, 780, 790, 820, 8318, 8333, 8341, 8600, 8610, 8630,
+            8661, 8700, 8702, 8708, 8709, 8710, 8752);
+    private static final Map<Integer, String> SOURCE_MOLTEN_FLUIDS = Map.ofEntries(
+            Map.entry(62, "Carbon14"),
+            Map.entry(1250, "TritaniumElemental"),
+            Map.entry(1260, "Trinium"),
+            Map.entry(1450, "DuraniumElemental"),
+            Map.entry(1740, "Naquadah"),
+            Map.entry(1741, "NaquadahEnriched"),
+            Map.entry(1742, "Naquadria"),
+            Map.entry(8020, "PotassiumCarbonate"),
+            Map.entry(8026, "TungstenTrioxide"),
+            Map.entry(8030, "FerrousChloride"),
+            Map.entry(8034, "LithiumPerchlorate"),
+            Map.entry(8266, "Asphalt"),
+            Map.entry(8500, "Stone"),
+            Map.entry(9120, "Ilmenite"),
+            Map.entry(9192, "Rutile"));
+
+    private static final Map<Integer, Facts> BY_ID = createFacts();
+    /** Null means unsupported identity, never an implicit source-negative decision. */
+    static Facts find(int id, String canonicalName) {
+        Facts value = BY_ID.get(id);
+        return value != null && value.identity().matches(id, canonicalName) ? value : null;
+    }
+
+    public static MaterialDefinition.Declaration apply(MaterialDefinition.Declaration declaration) {
+        Facts facts = find(declaration.id(), declaration.name());
+        if (facts == null) return declaration;
+        var info = declaration.info();
+        var rules = new java.util.LinkedHashMap<>(info.processes().rules());
+        MaterialFactKeys.put(rules, MaterialFactKeys.SOURCE_RECYCLING, List.of(MaterialProcessRule.anyForm(facts)));
+        if (declaration.name().equals(SOURCE_MOLTEN_FLUIDS.get(declaration.id()))) {
+            MaterialFactKeys.put(
+                    rules, MaterialFactKeys.SOURCE_MOLTEN_FLUID, List.of(MaterialProcessRule.anyForm(Boolean.TRUE)));
+        }
+        return new MaterialDefinition.Declaration(
+                declaration.material(),
+                new MaterialInfoDefinition(
+                        info.tooling(),
+                        info.composition(),
+                        info.relations(),
+                        new MaterialInfoDefinition.Processes(rules)));
+    }
+
+    private static Decision decision(int flags, int bit) {
+        return (flags & bit) != 0 ? Decision.YES : Decision.NO;
+    }
+
+    private static Map<Integer, Facts> createFacts() {
+        Map<Integer, Seed> seeds = new LinkedHashMap<>();
+        for (Seed seed : seeds()) {
+            if (seeds.put(seed.identity().id(), seed) != null)
+                throw new IllegalStateException("Duplicate source identity");
+        }
+        Map<Integer, Binding> bindings = bindings();
+        Map<Integer, Facts> result = new LinkedHashMap<>();
+        for (Seed seed : seeds.values()) {
+            int id = seed.identity().id();
+            Seed targetSeed = seeds.get(seed.targetId());
+            if (targetSeed == null) throw new IllegalStateException("Unreviewed thermal target " + seed.targetId());
+            Identity target = targetSeed.identity();
+            Binding binding = bindings.get(id);
+            boolean optional = OPTIONAL_EXTERNAL.contains(id);
+            Phase phase = new Phase(
+                    binding != null
+                            ? PhaseKind.DEFAULT_BINDING
+                            : optional ? PhaseKind.OPTIONAL_EXTERNAL : PhaseKind.NO_DEFAULT_PHASE,
+                    binding,
+                    optional);
+            boolean melting = decision(seed.flags(), M) == Decision.YES;
+            boolean inputEligible = id != 9800 && id != 9810;
+            PortDefaults port;
+            if (!inputEligible) {
+                // Output-only identities still carry target metadata for Melter context queries.
+                port = new PortDefaults(false, seed.identity(), U, false);
+            } else {
+                boolean nativeMelting = PORT_EXTRA_MELTING.contains(id) || (melting && !PORT_NO_MELTING.contains(id));
+                boolean self = PORT_SELF_TARGET.contains(id);
+                port = new PortDefaults(
+                        nativeMelting,
+                        self ? seed.identity() : target,
+                        self ? U : seed.amount(),
+                        PORT_GENERATED_MOLTEN.contains(id));
+            }
+            result.put(
+                    id,
+                    new Facts(
+                            seed.identity(),
+                            decision(seed.flags(), M),
+                            decision(seed.flags(), B),
+                            decision(seed.flags(), F),
+                            target,
+                            seed.amount(),
+                            phase,
+                            port,
+                            inputEligible,
+                            seed.sourceLine()));
+        }
+        for (int id : bindings.keySet())
+            if (!seeds.containsKey(id)) throw new IllegalStateException("Unreviewed phase " + id);
+        return java.util.Collections.unmodifiableMap(result);
+    }
+
+    private static void row(List<Seed> rows, int id, String name, int flags, int targetId, long amount, int line) {
+        rows.add(new Seed(new Identity(id, name), flags, targetId, amount, line));
+    }
+
+    private static List<Seed> seeds() {
+        List<Seed> rows = new ArrayList<>(1004);
+        seeds0(rows);
+        seeds1(rows);
+        seeds2(rows);
+        seeds3(rows);
+        seeds4(rows);
+        seeds5(rows);
+        seeds6(rows);
+        seeds7(rows);
+        seeds8(rows);
+        seeds9(rows);
+        seeds10(rows);
+        return rows;
+    }
+
+    private static void seeds0(List<Seed> rows) {
+        row(rows, 10, "Hydrogen", 0, 10, U, 380);
+        row(rows, 11, "Deuterium", 0, 11, U, 381);
+        row(rows, 12, "Tritium", 0, 12, U, 382);
+        row(rows, 20, "Helium", 0, 20, U, 383);
+        row(rows, 21, "Helium3", 0, 21, U, 384);
+        row(rows, 30, "Lithium", M | F, 30, U, 385);
+        row(rows, 31, "Lithium6", M | F, 31, U, 386);
+        row(rows, 40, "Beryllium", M, 40, U, 387);
+        row(rows, 41, "Beryllium7", M, 41, U, 388);
+        row(rows, 42, "Beryllium8", M, 42, U, 389);
+        row(rows, 50, "Boron", M, 50, U, 390);
+        row(rows, 51, "Boron11", M, 51, U, 391);
+        row(rows, 60, "Carbon", M, 60, U, 392);
+        row(rows, 61, "Carbon13", M, 61, U, 393);
+        row(rows, 62, "Carbon14", M, 62, U, 394);
+        row(rows, 70, "Nitrogen", 0, 70, U, 395);
+        row(rows, 80, "Oxygen", 0, 80, U, 396);
+        row(rows, 90, "Fluorine", 0, 90, U, 397);
+        row(rows, 100, "Neon", 0, 100, U, 398);
+        row(rows, 110, "Sodium", M | F, 110, U, 399);
+        row(rows, 120, "Magnesium", M | F, 120, U, 400);
+        row(rows, 130, "Aluminium", M | F, 130, U, 401);
+        row(rows, 140, "Silicon", M, 140, U, 402);
+        row(rows, 150, "Phosphor", 0, 150, U, 403);
+        row(rows, 160, "Sulfur", M, 160, U, 404);
+        row(rows, 170, "Chlorine", 0, 170, U, 405);
+        row(rows, 180, "Argon", 0, 180, U, 406);
+        row(rows, 190, "Potassium", M | F, 190, U, 407);
+        row(rows, 200, "Calcium", M | F, 200, U, 408);
+        row(rows, 210, "Scandium", M, 210, U, 409);
+        row(rows, 220, "Titanium", M, 220, U, 410);
+        row(rows, 230, "Vanadium", M, 230, U, 411);
+        row(rows, 240, "Chromium", M, 240, U, 412);
+        row(rows, 250, "Manganese", M, 250, U, 413);
+        row(rows, 260, "Iron", M, 260, U, 414);
+        row(rows, 270, "Cobalt", M, 270, U, 415);
+        row(rows, 278, "Cobalt60", M, 278, U, 416);
+        row(rows, 280, "Nickel", M, 280, U, 417);
+        row(rows, 290, "Copper", M | F, 290, U, 418);
+        row(rows, 300, "Zinc", M | F, 300, U, 419);
+        row(rows, 310, "Gallium", M | F, 310, U, 420);
+        row(rows, 320, "Germanium", M | F, 320, U, 421);
+        row(rows, 330, "Arsenic", M | F, 330, U, 422);
+        row(rows, 340, "Selenium", 0, 340, U, 423);
+        row(rows, 350, "Bromine", M, 350, U, 424);
+        row(rows, 360, "Krypton", 0, 360, U, 425);
+        row(rows, 370, "Rubidium", M | F, 370, U, 426);
+        row(rows, 380, "Strontium", M | F, 380, U, 427);
+        row(rows, 390, "Yttrium", M, 390, U, 428);
+        row(rows, 400, "Zirconium", M, 400, U, 429);
+        row(rows, 410, "Niobium", M, 410, U, 430);
+        row(rows, 420, "Molybdenum", M, 420, U, 431);
+        row(rows, 430, "Technetium", M, 430, U, 432);
+        row(rows, 440, "Ruthenium", M, 440, U, 433);
+        row(rows, 450, "Rhodium", M, 450, U, 434);
+        row(rows, 460, "Palladium", M, 460, U, 435);
+        row(rows, 470, "Silver", M, 470, U, 436);
+        row(rows, 480, "Cadmium", M | F, 480, U, 437);
+        row(rows, 490, "Indium", M | F, 490, U, 438);
+        row(rows, 500, "Tin", M | F, 500, U, 439);
+        row(rows, 510, "Antimony", M | F, 510, U, 440);
+        row(rows, 520, "Tellurium", M | F, 520, U, 441);
+        row(rows, 530, "Iodine", 0, 530, U, 442);
+        row(rows, 540, "Xenon", 0, 540, U, 443);
+        row(rows, 550, "Caesium", M | F, 550, U, 444);
+        row(rows, 560, "Barium", M | F, 560, U, 445);
+        row(rows, 570, "Lanthanium", M | F, 570, U, 446);
+        row(rows, 580, "Cerium", M | F, 580, U, 447);
+        row(rows, 590, "Praseodymium", M, 590, U, 448);
+        row(rows, 600, "Neodymium", M, 600, U, 449);
+        row(rows, 610, "Promethium", M, 610, U, 450);
+        row(rows, 620, "Samarium", M, 620, U, 451);
+        row(rows, 630, "Europium", M | F, 630, U, 452);
+        row(rows, 640, "Gadolinium", M, 640, U, 453);
+        row(rows, 650, "Terbium", M, 650, U, 454);
+        row(rows, 660, "Dysprosium", M, 660, U, 455);
+        row(rows, 670, "Holmium", M, 670, U, 456);
+        row(rows, 680, "Erbium", M, 680, U, 457);
+        row(rows, 690, "Thulium", M, 690, U, 458);
+        row(rows, 700, "Ytterbium", M | F, 700, U, 459);
+        row(rows, 710, "Lutetium", M, 710, U, 460);
+        row(rows, 720, "Hafnium", M, 720, U, 461);
+        row(rows, 730, "Tantalum", M, 730, U, 462);
+        row(rows, 740, "Tungsten", M, 740, U, 463);
+        row(rows, 750, "Rhenium", M, 750, U, 464);
+        row(rows, 760, "OsmiumElemental", M, 760, U, 465);
+        row(rows, 770, "Iridium", M, 770, U, 466);
+        row(rows, 780, "Platinum", M, 780, U, 467);
+        row(rows, 790, "Gold", M, 790, U, 468);
+        row(rows, 791, "Gold198", M, 791, U, 469);
+        row(rows, 800, "Mercury", M | F, 800, U, 470);
+        row(rows, 810, "Thallium", M | F, 810, U, 471);
+        row(rows, 820, "Lead", M | F, 820, U, 472);
+        row(rows, 830, "Bismuth", M | F, 830, U, 473);
+        row(rows, 840, "Polonium", M | F, 840, U, 474);
+        row(rows, 850, "Astatine", M | F, 850, U, 475);
+        row(rows, 860, "Radon", 0, 860, U, 476);
+        row(rows, 870, "Francium", M | F, 870, U, 477);
+        row(rows, 880, "Radium", M | F, 880, U, 478);
+        row(rows, 890, "Actinium", M, 890, U, 479);
+    }
+
+    private static void seeds1(List<Seed> rows) {
+        row(rows, 900, "Thorium", M, 900, U, 480);
+        row(rows, 910, "Protactinium", M, 910, U, 481);
+        row(rows, 920, "Uranium", M, 920, U, 482);
+        row(rows, 921, "Uranium235", M, 921, U, 483);
+        row(rows, 922, "Uranium233", M, 922, U, 484);
+        row(rows, 930, "Neptunium", M | F, 930, U, 485);
+        row(rows, 940, "Plutonium", M | F, 940, U, 486);
+        row(rows, 942, "Plutonium240", M | F, 942, U, 487);
+        row(rows, 943, "Plutonium241", M | F, 943, U, 488);
+        row(rows, 945, "Plutonium243", M | F, 945, U, 489);
+        row(rows, 946, "Plutonium238", M | F, 946, U, 490);
+        row(rows, 947, "Plutonium239", M | F, 947, U, 491);
+        row(rows, 950, "Americium", M, 950, U, 492);
+        row(rows, 951, "Americium241", M, 951, U, 493);
+        row(rows, 952, "Americium242", M, 952, U, 494);
+        row(rows, 960, "Curium", M, 960, U, 495);
+        row(rows, 970, "Berkelium", M, 970, U, 496);
+        row(rows, 980, "Californium", M | F, 980, U, 497);
+        row(rows, 990, "Einsteinium", M | F, 990, U, 498);
+        row(rows, 1000, "Fermium", M | F, 1000, U, 499);
+        row(rows, 1010, "Mendelevium", M | F, 1010, U, 500);
+        row(rows, 1020, "Nobelium", M | F, 1020, U, 501);
+        row(rows, 1030, "Lawrencium", M, 1030, U, 502);
+        row(rows, 1040, "Rutherfordium", M, 1040, U, 503);
+        row(rows, 1050, "Dubnium", M | F, 1050, U, 504);
+        row(rows, 1060, "Seaborgium", M | F, 1060, U, 505);
+        row(rows, 1070, "Bohrium", M | F, 1070, U, 506);
+        row(rows, 1080, "Hassium", M | F, 1080, U, 507);
+        row(rows, 1090, "Meitnerium", 0, 1090, U, 508);
+        row(rows, 1100, "Darmstadtium", 0, 1100, U, 509);
+        row(rows, 1110, "Roentgenium", 0, 1110, U, 510);
+        row(rows, 1120, "Copernicium", M | F, 1120, U, 511);
+        row(rows, 1130, "Nihonium", 0, 1130, U, 512);
+        row(rows, 1140, "Flerovium", M | F, 1140, U, 513);
+        row(rows, 1148, "Flerovium298", M | F, 1148, U, 514);
+        row(rows, 1150, "Moscovium", 0, 1150, U, 515);
+        row(rows, 1160, "Livermorium", 0, 1160, U, 516);
+        row(rows, 1170, "Farnsium", 0, 1170, U, 517);
+        row(rows, 1180, "Oganesson", 0, 1180, U, 518);
+        row(rows, 1250, "TritaniumElemental", M, 1250, U, 695);
+        row(rows, 1260, "Trinium", M, 1260, U, 696);
+        row(rows, 1450, "DuraniumElemental", M, 1450, U, 715);
+        row(rows, 1520, "Vibranium", 0, 1520, U, 722);
+        row(rows, 1740, "Naquadah", M, 1740, U, 744);
+        row(rows, 1741, "NaquadahEnriched", M, 1741, U, 745);
+        row(rows, 1742, "Naquadria", M, 1742, U, 746);
+        row(rows, 2220, "Adamantium", M, 2220, U, 794);
+        row(rows, 3720, "Gravitonium", 0, 3720, U, 944);
+        row(rows, 8000, "SiliconDioxide", F, 8000, U, 1056);
+        row(rows, 8001, "Glass", M | F, 8001, U, 1057);
+        row(rows, 8002, "Flint", M, 8000, U, 1058);
+        row(rows, 8003, "Carborundum", M, 8003, U, 1055);
+        row(rows, 8006, "Datolite", 0, 8006, U, 1062);
+        row(rows, 8007, "HydrogenBorate", 0, 8007, U, 1061);
+        row(rows, 8008, "Alumina", M, 8008, U, 1081);
+        row(rows, 8009, "Cryolite", M, 8009, U, 1142);
+        row(rows, 8010, "AluminiumFluoride", M, 8010, U, 1082);
+        row(rows, 8011, "HexafluorosilicicAcid", 0, 8011, U, 1054);
+        row(rows, 8012, "SodiumAluminate", 0, 8012, U, 1140);
+        row(rows, 8013, "SodiumCarbonate", M, 8013, U, 1139);
+        row(rows, 8014, "AluminiumHydroxide", M, 8008, 5 * U / 14, 1083);
+        row(rows, 8015, "PotassiumHydroxide", 0, 8015, U, 1149);
+        row(rows, 8016, "MagnesiumCarbonate", M, 8016, U, 1101);
+        row(rows, 8017, "FerricChloride", M, 8017, U, 1096);
+        row(rows, 8018, "MagnesiumChloride", M, 8018, U, 1100);
+        row(rows, 8019, "SodiumNitrate", 0, 8019, U, 1130);
+        row(rows, 8020, "PotassiumCarbonate", M, 8020, U, 1156);
+        row(rows, 8021, "PotassiumSulfite", 0, 8021, U, 1153);
+        row(rows, 8022, "PotassiumPersulfate", 0, 8022, U, 1151);
+        row(rows, 8023, "PotassiumAluminate", 0, 8023, U, 1157);
+        row(rows, 8026, "TungstenTrioxide", M, 8026, U, 1077);
+        row(rows, 8027, "TungsticAcid", M, 8026, 4 * U / 7, 1078);
+        row(rows, 8028, "CalciumChloride", M, 8028, U, 1104);
+        row(rows, 8029, "LithiumChloride", M, 8029, U, 1121);
+        row(rows, 8030, "FerrousChloride", M, 8030, U, 1095);
+        row(rows, 8031, "ManganeseChloride", M, 8031, U, 1091);
+        row(rows, 8032, "LithiumHydroxide", 0, 8032, U, 1126);
+        row(rows, 8033, "LithiumChlorate", M, 8033, U, 1122);
+        row(rows, 8034, "LithiumPerchlorate", M, 8034, U, 1123);
+        row(rows, 8035, "FerricOxyhydroxide", M, 9104, 5 * U / 14, 1097);
+        row(rows, 8036, "PotassiumFluoride", 0, 8036, U, 1158);
+        row(rows, 8037, "SodiumFluoride", 0, 8037, U, 1141);
+        row(rows, 8038, "PotassiumHeptafluorotantalate", 0, 8038, U, 1159);
+        row(rows, 8039, "SodiumHydrogencarbonate", 0, 8039, U, 1132);
+        row(rows, 8100, "Sand", M | F, 8001, U, 1618);
+        row(rows, 8101, "Soulsand", 0, 8101, U, 1622);
+        row(rows, 8102, "SluiceSand", 0, 8102, U, 1623);
+        row(rows, 8103, "PlatinumGroupSludge", 0, 8103, U, 1624);
+        row(rows, 8104, "RedSand", M | F, 8001, U, 1619);
+    }
+
+    private static void seeds2(List<Seed> rows) {
+        row(rows, 8196, "Teflon", M | F, 8196, 2 * U / 3, 1303);
+        row(rows, 8197, "PVC", M | F, 8197, 2 * U / 3, 1304);
+        row(rows, 8200, "Ashes", 0, 8200, U, 1228);
+        row(rows, 8201, "DarkAshes", 0, 8201, U, 1229);
+        row(rows, 8203, "Sylvite", 0, 8203, U, 1147);
+        row(rows, 8204, "Salt", 0, 8204, U, 1129);
+        row(rows, 8205, "PotassiumNitrate", 0, 8205, U, 1148);
+        row(rows, 8206, "Niter", 0, 8206, U, 1293);
+        row(rows, 8207, "Phosphate", 0, 8207, U, 1074);
+        row(rows, 8208, "Phosphorus", 0, 8208, U, 1294);
+        row(rows, 8209, "Apatite", 0, 8209, U, 1298);
+        row(rows, 8210, "Blizz", 0, 8210, U, 1274);
+        row(rows, 8211, "Blaze", M, 8211, U, 1275);
+        row(rows, 8214, "Obsidian", M, 9810, U, 1636);
+        row(rows, 8215, "Clay", M, 8225, U, 1281);
+        row(rows, 8216, "Paper", 0, 8216, U, 1300);
+        row(rows, 8217, "Rubber", M | F, 8217, 2 * U / 3, 1301);
+        row(rows, 8218, "Plastic", M | F, 8218, 2 * U / 3, 1302);
+        row(rows, 8219, "Bone", 0, 8219, U, 1307);
+        row(rows, 8220, "Gunpowder", 0, 8220, U, 1309);
+        row(rows, 8221, "Wood", M, 8200, U / 4, 1244);
+        row(rows, 8222, "WoodTreated", M, 8200, U / 4, 1245);
+        row(rows, 8223, "LiveRoot", 0, 8223, U, 1258);
+        row(rows, 8224, "WoodRubber", M, 8200, U / 2, 1247);
+        row(rows, 8225, "Ceramic", 0, 8225, U, 1279);
+        row(rows, 8226, "Phosphorite", 0, 8226, U, 1299);
+        row(rows, 8229, "CobaltHexahydrate", 0, 8229, U, 1189);
+        row(rows, 8230, "SodiumBisulfate", 0, 8230, U, 1133);
+        row(rows, 8231, "SodiumPyrosulfate", 0, 8231, U, 1138);
+        row(rows, 8232, "PotassiumBisulfate", 0, 8232, U, 1150);
+        row(rows, 8233, "PotassiumPyrosulfate", 0, 8233, U, 1155);
+        row(rows, 8234, "VanadiumPentoxide", M, 230, U / 7, 1065);
+        row(rows, 8235, "Wax", M | F, 8235, U, 1262);
+        row(rows, 8236, "WaxBee", M | F, 8236, U, 1263);
+        row(rows, 8238, "WaxParaffin", M | F, 8238, U, 1265);
+        row(rows, 8239, "WaxPlant", M | F, 8239, U, 1266);
+        row(rows, 8241, "Leather", M, 8200, U / 9, 1313);
+        row(rows, 8242, "IodineSalt", 0, 8242, U, 1146);
+        row(rows, 8247, "Basalz", 0, 8247, U, 1272);
+        row(rows, 8248, "Blitz", 0, 8248, U, 1273);
+        row(rows, 8249, "Dynamite", 0, 8249, U, 1310);
+        row(rows, 8250, "DyeBlack", 0, 8250, U, 989);
+        row(rows, 8251, "DyeRed", 0, 8251, U, 990);
+        row(rows, 8252, "DyeGreen", 0, 8252, U, 991);
+        row(rows, 8253, "DyeBrown", 0, 8253, U, 992);
+        row(rows, 8254, "DyeBlue", 0, 8254, U, 993);
+        row(rows, 8255, "DyePurple", 0, 8255, U, 994);
+        row(rows, 8256, "DyeCyan", 0, 8256, U, 995);
+        row(rows, 8257, "DyeLightGray", 0, 8257, U, 996);
+        row(rows, 8258, "DyeGray", 0, 8258, U, 997);
+        row(rows, 8259, "DyePink", 0, 8259, U, 998);
+        row(rows, 8260, "DyeLime", 0, 8260, U, 999);
+        row(rows, 8261, "DyeYellow", 0, 8261, U, 1000);
+        row(rows, 8262, "DyeLightBlue", 0, 8262, U, 1001);
+        row(rows, 8263, "DyeMagenta", 0, 8263, U, 1002);
+        row(rows, 8264, "DyeOrange", 0, 8264, U, 1003);
+        row(rows, 8265, "DyeWhite", 0, 8265, U, 1004);
+        row(rows, 8266, "Asphalt", M | F, 8266, U, 1311);
+        row(rows, 8267, "WoodPolished", M, 8200, U / 4, 1246);
+        row(rows, 8268, "SodiumHydroxide", 0, 8268, U, 1131);
+        row(rows, 8269, "SodiumSulfite", 0, 8269, U, 1136);
+        row(rows, 8270, "SodiumSulfate", 0, 8270, U, 1137);
+        row(rows, 8271, "PotassiumSulfate", 0, 8271, U, 1154);
+        row(rows, 8272, "PotassiumSulfide", 0, 8272, U, 1152);
+        row(rows, 8273, "Porcelain", 0, 8273, U, 1289);
+        row(rows, 8274, "CalciumSulfate", 0, 8274, U, 1105);
+        row(rows, 8275, "Bark", M, 8200, U / 4, 1243);
+        row(rows, 8276, "ClayBrown", M, 8225, U, 1282);
+        row(rows, 8277, "PetrifiedWood", 0, 8277, U, 1259);
+        row(rows, 8278, "ManaDiamond", M, 60, 2 * U, 1366);
+        row(rows, 8289, "Livingwood", M, 8200, U / 2, 1251);
+        row(rows, 8290, "Dreamwood", M, 8200, U / 2, 1252);
+        row(rows, 8296, "Greatwood", M, 8200, U / 2, 1254);
+    }
+
+    private static void seeds3(List<Seed> rows) {
+        row(rows, 8297, "Silverwood", 0, 8200, 0, 1255);
+        row(rows, 8298, "EnergiumRed", 0, 8298, U, 1581);
+        row(rows, 8299, "EnergiumCyan", 0, 8299, U, 1582);
+        row(rows, 8300, "Diamond", M, 60, 2 * U, 1358);
+        row(rows, 8301, "Emerald", M, 40, U / 36, 1371);
+        row(rows, 8302, "Ruby", M, 8008, 3 * U / 4, 1381);
+        row(rows, 8303, "BalasRuby", 0, 8303, 0, 1390);
+        row(rows, 8304, "Sapphire", M, 8008, 3 * U / 4, 1380);
+        row(rows, 8305, "GreenSapphire", M, 8008, 3 * U / 4, 1383);
+        row(rows, 8306, "Topaz", 0, 8306, 0, 1425);
+        row(rows, 8307, "BlueTopaz", 0, 8307, 0, 1426);
+        row(rows, 8308, "Tanzanite", 0, 8308, 0, 1427);
+        row(rows, 8309, "RedJasper", 0, 8309, 0, 1401);
+        row(rows, 8310, "Amber", 0, 8310, U, 1439);
+        row(rows, 8311, "Peridot", 0, 8311, 0, 1435);
+        row(rows, 8312, "Opal", 0, 8312, 0, 1431);
+        row(rows, 8313, "Amethyst", 0, 8313, 0, 1436);
+        row(rows, 8314, "OrangeSapphire", M, 8008, 3 * U / 4, 1386);
+        row(rows, 8315, "YellowSapphire", M, 8008, 3 * U / 4, 1385);
+        row(rows, 8318, "EnderPearl", M, 8318, U, 1499);
+        row(rows, 8319, "EnderEye", M, 8319, U, 1500);
+        row(rows, 8320, "NetherStar", M, 8320, U, 1501);
+        row(rows, 8321, "Jade", 0, 8321, U, 1443);
+        row(rows, 8322, "Craponite", 0, 8322, U, 1442);
+        row(rows, 8323, "Aquamarine", M, 40, U / 36, 1372);
+        row(rows, 8324, "Morganite", M, 40, U / 36, 1373);
+        row(rows, 8325, "Dioptase", 0, 8325, 0, 1437);
+        row(rows, 8326, "Spinel", 0, 8326, 0, 1389);
+        row(rows, 8328, "BlueSapphire", M, 8008, 3 * U / 4, 1382);
+        row(rows, 8330, "Lazurite", 0, 8330, U, 1516);
+        row(rows, 8331, "Sodalite", 0, 8331, U, 1517);
+        row(rows, 8332, "Lapis", 0, 8332, U, 1518);
+        row(rows, 8333, "Redstone", M, 8333, U, 1540);
+        row(rows, 8334, "Coal", M, 60, U / 2, 1522);
+        row(rows, 8335, "HydratedCoal", F, 8335, U, 1534);
+        row(rows, 8336, "Charcoal", M, 60, U / 2, 1521);
+        row(rows, 8337, "Lignite", 0, 8337, U, 1527);
+        row(rows, 8338, "Monazite", B, 8338, U, 1626);
+        row(rows, 8340, "Nikolite", M, 8340, U, 1541);
+        row(rows, 8341, "Glowstone", M, 8341, U, 1544);
+        row(rows, 8342, "Firestone", 0, 8342, U, 1537);
+        row(rows, 8346, "NetherQuartz", M | B, 8000, U, 1554);
+        row(rows, 8347, "CertusQuartz", M | B, 8000, U, 1564);
+        row(rows, 8348, "ChargedCertusQuartz", M | B, 8000, U, 1565);
+        row(rows, 8349, "CoalCoke", M, 60, U, 1523);
+        row(rows, 8360, "Peat", 0, 8360, U, 1530);
+        row(rows, 8365, "LigniteCoke", 0, 8365, U, 1528);
+        row(rows, 8383, "PurpleSapphire", M, 8008, 3 * U / 4, 1384);
+        row(rows, 8384, "Heliodor", M, 40, U / 36, 1374);
+        row(rows, 8385, "Goshenite", M, 40, U / 36, 1375);
+        row(rows, 8386, "Bixbite", M, 40, U / 36, 1376);
+        row(rows, 8387, "Maxixe", M, 40, U / 36, 1377);
+        row(rows, 8389, "Fluix", M | B, 8000, U, 1566);
+        row(rows, 8390, "PetroleumCoke", 0, 8390, U, 1529);
+        row(rows, 8393, "SunnyQuartz", M | B, 8000, U, 1556);
+        row(rows, 8395, "RedQuartz", M | B, 8000, U, 1558);
+        row(rows, 8396, "BlazeQuartz", M | B, 8000, U, 1559);
+        row(rows, 8397, "SmokeyQuartz", M | B, 8000, U, 1560);
+        row(rows, 8399, "ElvenQuartz", M | B, 8000, U, 1562);
+        row(rows, 8400, "ChloroauricAcid", 0, 8400, U, 1163);
+        row(rows, 8401, "ChloroplatinicAcid", 0, 8401, U, 1164);
+        row(rows, 8402, "StannicChloride", 0, 8402, U, 1165);
+        row(rows, 8403, "BlackVitriol", 0, 8403, U, 1168);
+        row(rows, 8404, "BlueVitriol", 0, 8404, U, 1169);
+        row(rows, 8405, "GreenVitriol", 0, 8405, U, 1170);
+        row(rows, 8406, "RedVitriol", 0, 8406, U, 1171);
+    }
+
+    private static void seeds4(List<Seed> rows) {
+        row(rows, 8407, "PinkVitriol", 0, 8407, U, 1172);
+        row(rows, 8408, "CyanVitriol", 0, 8408, U, 1173);
+        row(rows, 8409, "WhiteVitriol", 0, 8409, U, 1174);
+        row(rows, 8410, "GrayVitriol", 0, 8410, U, 1175);
+        row(rows, 8412, "VitriolOfClay", 0, 8412, U, 1177);
+        row(rows, 8413, "TitaniumTetrachloride", 0, 8413, U, 1087);
+        row(rows, 8415, "OnyxRed", 0, 8415, 0, 1432);
+        row(rows, 8416, "OnyxBlack", 0, 8416, 0, 1433);
+        row(rows, 8417, "Amazonite", 0, 8417, 0, 1429);
+        row(rows, 8418, "Bamboo", M, 8200, U / 2, 1248);
+        row(rows, 8419, "Zircon", M, 400, U / 9, 1511);
+        row(rows, 8420, "Azurite", M | F, 290, U / 9, 1512);
+        row(rows, 8421, "Eudialyte", 0, 8421, U, 1513);
+        row(rows, 8423, "DiamondIndustrial", M, 60, 2 * U, 1365);
+        row(rows, 8424, "PinkDiamond", M, 60, 2 * U, 1364);
+        row(rows, 8425, "OceanJasper", 0, 8425, 0, 1402);
+        row(rows, 8426, "RainforestJasper", 0, 8426, 0, 1403);
+        row(rows, 8427, "BlueJasper", 0, 8427, 0, 1404);
+        row(rows, 8428, "GreenJasper", 0, 8428, 0, 1405);
+        row(rows, 8429, "YellowJasper", 0, 8429, 0, 1406);
+        row(rows, 8430, "TigerEye", 0, 8430, 0, 1409);
+        row(rows, 8431, "CatsEye", 0, 8431, 0, 1410);
+        row(rows, 8432, "DragonEye", 0, 8432, 0, 1411);
+        row(rows, 8433, "HawksEye", 0, 8433, 0, 1412);
+        row(rows, 8434, "BlackEye", 0, 8434, 0, 1413);
+        row(rows, 8435, "TigerIron", 0, 8435, 0, 1414);
+        row(rows, 8436, "RedFluorite", M, 9215, U, 1110);
+        row(rows, 8437, "PinkFluorite", M, 9215, U, 1111);
+        row(rows, 8438, "BlueFluorite", M, 9215, U, 1112);
+        row(rows, 8439, "GreenFluorite", M, 9215, U, 1113);
+        row(rows, 8440, "BlackFluorite", M, 9215, U, 1114);
+        row(rows, 8441, "WhiteFluorite", M, 9215, U, 1115);
+        row(rows, 8442, "YellowFluorite", M, 9215, U, 1116);
+        row(rows, 8443, "OrangeFluorite", M, 9215, U, 1117);
+        row(rows, 8444, "MagentaFluorite", M, 9215, U, 1118);
+        row(rows, 8445, "MilkyQuartz", M | B, 8000, U, 1553);
+        row(rows, 8446, "BrownAventurine", 0, 8446, 0, 1418);
+        row(rows, 8447, "YellowAventurine", 0, 8447, 0, 1419);
+        row(rows, 8448, "GreenAventurine", 0, 8448, 0, 1417);
+        row(rows, 8449, "BlackAventurine", 0, 8449, 0, 1420);
+        row(rows, 8450, "BlueAventurine", 0, 8450, 0, 1421);
+        row(rows, 8451, "RedAventurine", 0, 8451, 0, 1422);
+        row(rows, 8455, "ClayRed", M, 8225, U, 1283);
+        row(rows, 8458, "BluePhosphorus", 0, 8458, U, 1295);
+        row(rows, 8459, "RedPhosphorus", 0, 8459, U, 1296);
+        row(rows, 8460, "WhitePhosphorus", 0, 8460, U, 1297);
+        row(rows, 8461, "NiobiumPentoxide", 0, 8461, U, 1068);
+        row(rows, 8462, "TantalumPentoxide", 0, 8462, U, 1071);
+        row(rows, 8464, "BlueDiamond", M, 60, 2 * U, 1359);
+        row(rows, 8465, "GreenDiamond", M, 60, 2 * U, 1360);
+        row(rows, 8467, "RedDiamond", M, 60, 2 * U, 1362);
+        row(rows, 8468, "YellowDiamond", M, 60, 2 * U, 1363);
+        row(rows, 8470, "Carminite", 0, 8470, U, 1438);
+        row(rows, 8471, "Breeze", 0, 8471, U, 1276);
+        row(rows, 8500, "Stone", M | F, 8500, U, 1631);
+        row(rows, 8501, "Concrete", M | F, 8500, U, 1632);
+        row(
+                rows,
+                8502,
+                "Netherrack",
+                M | B | F,
+                8503,
+                U,
+                1633); // MT1882 late setter adds MELTING and targets NetherBrick.
+        row(rows, 8503, "NetherBrick", F, 8503, U, 1634);
+        row(rows, 8504, "Endstone", F, 8504, U, 1635);
+        row(rows, 8505, "Basalt", F, 8505, U, 3819);
+        row(rows, 8506, "Marble", M | F, 9107, 2 * U / 3, 3820);
+        row(rows, 8507, "GraniteRed", F, 8507, U, 3829);
+        row(rows, 8508, "GraniteBlack", F, 8508, U, 3830);
+        row(rows, 8511, "Diorite", F, 8511, U, 3833);
+        row(rows, 8516, "MarsSand", F, 8516, U, 3802);
+        row(rows, 8518, "Granite", F, 8518, U, 3831);
+        row(rows, 8521, "Livingrock", F, 8521, U, 3805);
+        row(rows, 8528, "SkyStone", F, 8528, U, 3803);
+        row(rows, 8599, "Bedrock", M, 8599, U, 1637);
+        row(rows, 8600, "Electrum", M, 8600, U, 1691);
+        row(rows, 8601, "SterlingSilver", M, 8601, U, 1692);
+        row(rows, 8602, "RoseGold", M, 8602, U, 1693);
+        row(rows, 8605, "CdInAgAlloy", M, 8605, U, 1696);
+        row(rows, 8610, "Bronze", M | F, 8610, U, 1705);
+        row(rows, 8611, "BlackBronze", M, 8611, U, 1706);
+        row(rows, 8612, "BismuthBronze", M | F, 8612, U, 1707);
+    }
+
+    private static void seeds5(List<Seed> rows) {
+        row(rows, 8614, "ArsenicCopper", M | F, 8614, U, 1709);
+        row(rows, 8615, "ArsenicBronze", M | F, 8615, U, 1710);
+        row(rows, 8620, "Brass", M | F, 8620, U, 1700);
+        row(rows, 8621, "CobaltBrass", M | F, 8621, U, 1701);
+        row(rows, 8622, "AluminiumAlloy", M, 8622, U, 1702);
+        row(rows, 8630, "Steel", M, 8630, U, 1713);
+        row(rows, 8631, "BlackSteel", M, 8631, U, 1714);
+        row(rows, 8632, "BlueSteel", M, 8632, U, 1715);
+        row(rows, 8633, "RedSteel", M, 8633, U, 1716);
+        row(rows, 8634, "DamascusSteel", M, 8634, U, 1717);
+        row(rows, 8635, "Tungstensteel", M, 8635, U, 1719);
+        row(rows, 8636, "StainlessSteel", M, 8636, U, 1759);
+        row(rows, 8638, "TungstenCarbide", M, 8638, U, 1720);
+        row(rows, 8640, "AnnealedCopper", M | F, 8640, U, 1656);
+        row(rows, 8643, "WroughtIron", M, 8643, U, 1655);
+        row(rows, 8645, "IronMagnetic", M, 260, U, 1727);
+        row(rows, 8646, "SteelMagnetic", M, 8630, U, 1728);
+        row(rows, 8647, "NeodymiumMagnetic", M, 600, U, 1729);
+        row(rows, 8651, "SteelGalvanized", M, 8630, U, 1731);
+        row(rows, 8652, "TungstenSintered", M, 740, U, 1732);
+        row(rows, 8653, "VanadiumSteel", M, 8653, U, 1718);
+        row(rows, 8658, "ElectrotineAlloy", M | F, 8658, U, 1750);
+        row(rows, 8659, "BlueAlloy", M | F, 8659, U, 1745);
+        row(rows, 8660, "RedAlloy", M | F, 8660, U, 1744);
+        row(rows, 8661, "Invar", M, 8661, U, 1754);
+        row(rows, 8662, "Constantan", M, 8662, U, 1755);
+        row(rows, 8663, "Nichrome", M, 8663, U, 1756);
+        row(rows, 8664, "Kanthal", M, 8664, U, 1757);
+        row(rows, 8665, "Magnalium", M | F, 8665, U, 1758);
+        row(rows, 8666, "Ultimet", M, 8666, U, 1760);
+        row(rows, 8667, "TinAlloy", M | F, 8667, U, 1761);
+        row(rows, 8668, "BatteryAlloy", M | F, 8668, U, 1762);
+        row(rows, 8669, "SolderingAlloy", M | F, 8669, U, 1763);
+        row(rows, 8672, "Ironwood", M | F, 8672, U, 1764);
+        row(rows, 8673, "Steeleaf", M, 8630, U / 4, 1765);
+        row(rows, 8674, "Knightmetal", M, 8674, U, 1766);
+        row(rows, 8675, "FierySteel", M, 8675, U, 1767);
+        row(rows, 8679, "Thaumium", M, 8679, U, 1774);
+        row(rows, 8682, "Osmiridium", M, 8682, U, 1777);
+        row(rows, 8684, "Trinaquadalloy", M, 8684, U, 1871);
+        row(rows, 8685, "ChromiumDioxide", M, 8685, U, 1779);
+        row(rows, 8686, "VanadiumGallium", M, 8686, U, 1780);
+        row(rows, 8687, "YttriumBariumCuprate", M, 8687, U, 1781);
+        row(rows, 8689, "NiobiumTitanium", M, 8689, U, 1783);
+        row(rows, 8697, "FlamascusSteel", M, 8697, U, 1773);
+        row(rows, 8698, "Fireleaf", M, 8675, U / 4, 1768);
+        row(rows, 8700, "AluminiumBrass", M | F, 8700, U, 1784);
+        row(rows, 8702, "Alumite", M, 8702, U, 1786);
+        row(rows, 8704, "VibraniumSteel", M, 8704, U, 1788);
+        row(rows, 8705, "VibraniumSilver", M, 8705, U, 1789);
+        row(rows, 8706, "Vibramantium", M, 8706, U, 1790);
+        row(rows, 8708, "Signalum", M | F, 8708, U, 1791);
+        row(rows, 8709, "Lumium", M | F, 8709, U, 1792);
+        row(rows, 8710, "Enderium", M, 8710, U, 1794);
+        row(rows, 8717, "Cyanite", M, 8717, U, 1800);
+        row(rows, 8720, "Manasteel", M, 8720, U, 1820);
+        row(rows, 8721, "Terrasteel", M, 8721, U, 1821);
+        row(rows, 8722, "ElvenElementium", M, 8722, U, 1822);
+        row(rows, 8726, "VibrantAlloy", M, 8726, U, 1808);
+        row(rows, 8727, "ConductiveIron", M, 8727, U, 1752);
+        row(rows, 8729, "EnderiumBase", M, 8729, U, 1793);
+    }
+
+    private static void seeds6(List<Seed> rows) {
+        row(rows, 8730, "ElectricalSteel", M, 8730, U, 1809);
+        row(rows, 8732, "Soularium", M, 8732, U, 1810);
+        row(rows, 8733, "RedstoneAlloy", M, 8733, U, 1748);
+        row(rows, 8735, "GaiaSpirit", M, 8735, U, 1823);
+        row(rows, 8737, "NikolineAlloy", M, 8737, U, 1749);
+        row(rows, 8744, "AncientDebris", M, 8744, U, 1832);
+        row(rows, 8745, "Netherite", M, 8745, U, 1833);
+        row(rows, 8746, "NetherizedDiamond", M, 8746, U, 1834);
+        row(rows, 8747, "Efrine", M, 8747, U, 1835);
+        row(rows, 8751, "Duranium", M, 8751, U, 1840);
+        row(rows, 8752, "Tritanium", M, 8752, U, 1841);
+        row(rows, 8756, "Duralumin", M, 8756, U, 1845);
+        row(rows, 8784, "Adamantine", M, 8784, U, 1675);
+        row(rows, 8790, "Trinitanium", M, 8790, U, 1872);
+        row(rows, 8793, "TitaniumIridium", M, 8793, U, 1875);
+        row(rows, 8796, "HSSG", M, 8796, U, 1853);
+        row(rows, 8797, "HSSE", M, 8797, U, 1854);
+        row(rows, 8798, "HSSS", M, 8798, U, 1855);
+        row(rows, 8799, "CrystalMatrix", M, 8799, U, 1865);
+        row(rows, 8800, "CosmicNeutronium", M, 8800, U, 1866);
+        row(rows, 8802, "TantalumHafniumCarbide", M, 8802, U, 1734);
+        row(rows, 8803, "CastIron", M, 8803, U, 1726);
+        row(rows, 9000, "Pumice", F, 9000, U, 3817);
+        row(rows, 9001, "Diatomite", B, 9001, U, 3766);
+        row(rows, 9003, "BasalticMineralSand", M, 9003, U, 3705);
+        row(rows, 9004, "GraniticMineralSand", M, 9004, U, 3706);
+        row(rows, 9005, "GarnetSand", B, 9005, U, 3777);
+        row(rows, 9006, "QuartzSand", M | B, 8000, U / 3, 3778);
+        row(rows, 9007, "UraniumTetrafluoride", M, 9007, U, 1180);
+        row(rows, 9009, "Uranium238Tetrafluoride", M, 9009, U, 1182);
+        row(rows, 9011, "Uranium235Tetrafluoride", M, 9011, U, 1184);
+        row(rows, 9100, "RareEarth", 0, 9100, U, 1625);
+        row(rows, 9101, "Almandine", 0, 9101, 0, 1393);
+        row(rows, 9102, "Andradite", 0, 9102, 0, 1397);
+        row(rows, 9103, "Asbestos", M | F, 9103, U, 1235);
+        row(rows, 9104, "Hematite", M, 9104, U, 1094);
+        row(rows, 9105, "Bauxite", B, 9105, U, 3749);
+        row(rows, 9106, "BrownLimonite", M, 9104, U / 2, 3740);
+        row(rows, 9107, "Calcite", M, 9107, U, 1108);
+        row(rows, 9108, "Cassiterite", M | F, 500, 3 * U / 4, 3701);
+        row(rows, 9109, "Realgar", M | F, 330, U / 3, 3708);
+        row(rows, 9110, "Celestine", M | B, 380, U / 9, 3723);
+        row(rows, 9111, "Chalcopyrite", M | F, 290, 2 * U / 9, 3714);
+    }
+
+    private static void seeds7(List<Seed> rows) {
+        row(rows, 9113, "Chromite", M | B, 240, 2 * U / 9, 3750);
+        row(rows, 9114, "Cinnabar", M, 800, U / 3, 3709);
+        row(rows, 9115, "Cobaltite", M | B, 270, U / 4, 3716);
+        row(rows, 9116, "Cooperite", M | B, 780, U / 3, 3718);
+        row(rows, 9117, "Galena", M | F, 820, U / 3, 3717);
+        row(rows, 9118, "Garnierite", M | B, 280, 3 * U / 4, 3702);
+        row(rows, 9119, "Grossular", 0, 9119, 0, 1394);
+        row(rows, 9120, "Ilmenite", M, 9120, U, 3748);
+        row(rows, 9122, "Magnetite", M, 9122, U, 3704);
+        row(rows, 9123, "Molybdenite", M | B, 420, U / 4, 3710);
+        row(rows, 9124, "Powellite", M | B, 420, U / 9, 3751);
+        row(rows, 9125, "Pyrite", B, 9125, U, 1237);
+        row(rows, 9126, "Pyrolusite", M, 250, 3 * U / 4, 1090);
+        row(rows, 9127, "Pyrope", 0, 9127, 0, 1395);
+        row(rows, 9128, "Scheelite", B, 9128, U, 3725);
+        row(rows, 9129, "Spessartine", 0, 9129, 0, 1396);
+        row(rows, 9130, "Sphalerite", M | F, 300, U / 3, 3711);
+        row(rows, 9131, "Stibnite", M | B, 510, U / 4, 3712);
+        row(rows, 9132, "Tetrahedrite", M | F, 290, U / 4, 3719);
+        row(rows, 9133, "Tungstate", B, 9133, U, 3729);
+        row(rows, 9134, "Uraninite", M | B, 920, U / 3, 3703);
+        row(rows, 9135, "Uvarovite", 0, 9135, 0, 1398);
+        row(rows, 9136, "Wulfenite", M | B, 420, U / 9, 3752);
+        row(rows, 9137, "YellowLimonite", M, 9104, U / 2, 3741);
+        row(rows, 9138, "Perlite", B, 9138, U, 3760);
+        row(rows, 9139, "Borax", B, 9139, U, 3765);
+        row(rows, 9140, "PotassiumFeldspar", 0, 9140, U, 1238);
+        row(rows, 9141, "Biotite", 0, 9141, U, 1239);
+        row(rows, 9143, "VanadiumMagnetite", M, 9143, U, 3743);
+        row(rows, 9144, "Bastnasite", M | B, 580, U / 9, 3753);
+        row(rows, 9145, "Pentlandite", M | B, 280, U / 3, 3713);
+        row(rows, 9146, "Spodumene", B, 9146, U, 3768);
+        row(rows, 9147, "Pollucite", B, 9147, U, 3738);
+        row(rows, 9148, "Tantalite", B, 9148, U, 3744);
+        row(rows, 9149, "Lepidolite", B, 9149, U, 3769);
+        row(rows, 9150, "Glauconite", B, 9150, U, 3770);
+        row(rows, 9152, "Vermiculite", B, 9152, U, 3772);
+        row(rows, 9153, "Bentonite", M, 8225, U, 1284);
+        row(rows, 9154, "Palygorskite", M, 8225, U, 1285);
+        row(rows, 9155, "Pitchblende", M | B, 920, U / 5, 3754);
+        row(rows, 9156, "Malachite", M | F, 290, U / 6, 3755);
+        row(rows, 9157, "Mirabilite", B, 9157, U, 3762);
+        row(rows, 9158, "Mica", B, 9158, U, 3773);
+        row(rows, 9159, "Trona", B, 9159, U, 3761);
+        row(rows, 9160, "Barite", M | B, 560, U / 9, 3722);
+        row(rows, 9161, "Gypsum", 0, 9161, U, 1106);
+        row(rows, 9162, "Alunite", B, 9162, U, 3775);
+        row(rows, 9164, "Wollastonite", B, 9164, U, 3735);
+        row(rows, 9165, "Zeolite", B, 9165, U, 3737);
+        row(rows, 9166, "Kyanite", B, 9166, U, 3774);
+        row(rows, 9167, "Kaolinite", M, 8225, U, 1286);
+        row(rows, 9169, "Talc", 0, 9169, U, 1236);
+        row(rows, 9171, "Greenschist", F, 9171, U, 3822);
+        row(rows, 9174, "Graphite", M | B, 60, U, 1292); // GT6CE balance: 1 U carbon per graphite.
+        row(rows, 9175, "Graphene", M | B, 60, U / 2, 1535);
+        row(rows, 9177, "Komatiite", F, 9177, U, 3816);
+        row(rows, 9180, "Quartzite", M | B | F, 8000, U, 3828);
+        row(rows, 9184, "Blueschist", F, 9184, U, 3823);
+        row(rows, 9185, "Bluestone", F, 9185, U, 1643);
+        row(rows, 9186, "Chert", F, 9186, U, 3839);
+        row(rows, 9187, "Dacite", F, 9187, U, 3840);
+        row(rows, 9188, "Andesite", F, 9188, U, 3832);
+        row(rows, 9189, "Limestone", M | F, 9107, U / 2, 3821);
+        row(rows, 9190, "Shale", F, 9190, U, 3814);
+        row(rows, 9192, "Rutile", M, 9192, U, 1086);
+        row(rows, 9193, "Stolzite", M | B, 8026, 2 * U / 3, 3731);
+        row(rows, 9194, "Ferberite", B, 9194, U, 3727);
+        row(rows, 9195, "Huebnerite", B, 9195, U, 3728);
+        row(rows, 9196, "Russellite", M | B, 8026, 4 * U / 9, 3732);
+        row(rows, 9197, "Pinalite", M | B, 8026, 4 * U / 11, 3733);
+        row(rows, 9198, "DiduraniumTrioxide", B, 9198, U, 3780);
+        row(rows, 9199, "DuraniumHexafluoride", B, 9199, U, 3781);
+        row(rows, 9200, "DuraniumHexachloride", B, 9200, U, 3782);
+        row(rows, 9201, "DuraniumHexabromide", B, 9201, U, 3783);
+        row(rows, 9202, "DuraniumHexaiodide", B, 9202, U, 3784);
+        row(rows, 9203, "DuraniumHexaastatide", B, 9203, U, 3785);
+        row(rows, 9204, "TritaniumDioxide", B, 9204, U, 3786);
+        row(rows, 9205, "TritaniumHexafluoride", B, 9205, U, 3787);
+        row(rows, 9206, "TritaniumHexachloride", B, 9206, U, 3788);
+        row(rows, 9207, "TritaniumHexabromide", B, 9207, U, 3789);
+        row(rows, 9208, "TritaniumHexaiodide", B, 9208, U, 3790);
+        row(rows, 9209, "TritaniumHexaastatide", B, 9209, U, 3791);
+        row(rows, 9210, "Bromargyrite", M | B, 470, U / 3, 3756);
+        row(rows, 9211, "Smithsonite", M | B, 300, U / 6, 3757);
+        row(rows, 9212, "Sperrylite", M | B, 780, U / 4, 3758);
+        row(rows, 9213, "Kesterite", M | B, 290, U / 9, 3720);
+        row(rows, 9214, "Stannite", M | B, 290, U / 9, 3721);
+        row(rows, 9215, "Fluorite", M, 9215, U, 1109);
+        row(rows, 9216, "Arsenopyrite", M | B, 330, U / 4, 3715);
+    }
+
+    private static void seeds8(List<Seed> rows) {
+        row(rows, 9217, "Wolframite", B, 9217, U, 3726);
+        row(rows, 9218, "Kimberlite", F, 9218, U, 3827);
+        row(rows, 9219, "Prismarine", F, 9219, U, 1639);
+        row(rows, 9220, "PrismarineDark", F, 9220, U, 1640);
+        row(rows, 9221, "Bischofite", B, 9221, U, 3763);
+        row(rows, 9222, "Slate", F, 9222, U, 3841);
+        row(rows, 9223, "Blackstone", F, 9223, U, 3834);
+        row(rows, 9243, "ClayBrick", M, 8225, U, 1280);
+        row(rows, 9246, "Columbite", B, 9246, U, 3745);
+        row(rows, 9247, "Coltan", B, 9247, U, 3746);
+        row(rows, 9248, "Deepslate", F, 9248, U, 3842);
+        row(rows, 9261, "TitanRock", F, 9261, U, 3856);
+        row(rows, 9271, "Quicklime", 0, 9271, U, 1107);
+        row(rows, 9300, "Oak", M, 8200, U / 4, 3872);
+        row(rows, 9301, "Birch", M, 8200, U / 4, 3873);
+        row(rows, 9302, "Spruce", M, 8200, U / 4, 3874);
+        row(rows, 9303, "Junglewood", M, 8200, U / 4, 3875);
+        row(rows, 9304, "Acacia", M, 8200, U / 4, 3876);
+        row(rows, 9305, "DarkOak", M, 8200, U / 4, 3877);
+        row(rows, 9306, "Crimsonwood", M, 8200, U / 4, 3878);
+        row(rows, 9307, "Warpedwood", M, 8200, U / 4, 3879);
+        row(rows, 9308, "WoodCompressed", M, 8200, U / 4, 3882);
+        row(rows, 9309, "WoodDead", M, 8200, U / 4, 3883);
+        row(rows, 9310, "WoodRotten", M, 8200, U / 4, 3884);
+        row(rows, 9311, "WoodMossy", M, 8200, U / 4, 3885);
+        row(rows, 9312, "WoodFrozen", M, 8200, U / 4, 3886);
+        row(rows, 9313, "Maple", M, 8200, U / 4, 3892);
+        row(rows, 9314, "Willow", M, 8200, U / 4, 3893);
+        row(rows, 9315, "BlueMahoe", M, 8200, U / 4, 3894);
+        row(rows, 9316, "Hazel", M, 8200, U / 4, 3895);
+        row(rows, 9317, "Cinnamonwood", M, 8200, U / 4, 3896);
+        row(rows, 9318, "Coconutwood", M, 8200, U / 4, 3897);
+        row(rows, 9319, "Rainbowood", M, 8200, U / 4, 3898);
+        row(rows, 9344, "Cherrywood", M, 8200, U / 4, 3928);
+    }
+
+    private static void seeds9(List<Seed> rows) {
+        row(rows, 9372, "Mangrove", M, 8200, U / 4, 3956);
+        row(rows, 9409, "BlueSpruce", M, 8200, U / 4, 3899);
+        row(rows, 9700, "MeatRaw", M | F, 9701, U, 1318);
+        row(rows, 9701, "MeatCooked", M, 9701, U, 1317);
+        row(rows, 9702, "Wheat", 0, 9702, U, 1323);
+        row(rows, 9703, "Sugar", M | F, 9703, U, 1038);
+        row(rows, 9705, "Rye", 0, 9705, U, 1325);
+        row(rows, 9709, "Potato", 0, 9709, U, 1330);
+        row(rows, 9710, "MeatRotten", M, 9710, U, 1319);
+        row(rows, 9711, "FishCooked", M, 9711, U, 1320);
+        row(rows, 9712, "FishRaw", M | F, 9711, U, 1321);
+        row(rows, 9713, "FishRotten", M, 9713, U, 1322);
+        row(rows, 9779, "SoylentGreen", M, 9779, U, 1332);
+        row(rows, 9780, "Cheese", M | F, 9780, U, 1333);
+        row(rows, 9781, "Chili", 0, 9781, U, 1334);
+        row(rows, 9782, "Cocoa", 0, 9782, U, 1335);
+        row(rows, 9783, "Chocolate", M | F, 9783, U, 1336);
+        row(rows, 9784, "Coffee", 0, 9784, U, 1337);
+        row(rows, 9785, "Cinnamon", 0, 9785, U, 1338);
+        row(rows, 9790, "Milk", 0, 9790, U, 1349);
+        row(rows, 9791, "Honey", 0, 9791, U, 1352);
+        row(rows, 9792, "Tea", 0, 9792, U, 1354);
+        row(rows, 9793, "Honeydew", 0, 9793, U, 1353);
+        row(rows, 9794, "Mint", 0, 9794, U, 1355);
+        row(rows, 9796, "Hazelnut", 0, 9796, U, 1341);
+        row(rows, 9800, "Water", M, 9800, U, 1007);
+        row(rows, 9801, "Snow", M, 9800, U, 1012);
+        row(rows, 9802, "Ice", M, 9800, U, 1013);
+        row(rows, 9810, "Lava", M, 9810, U, 1194);
+        row(rows, 9820, "NitroCarbon", 0, 9820, U, 1191);
+        row(rows, 9822, "SodiumPersulfate", 0, 9822, U, 1134);
+        row(rows, 9823, "SodiumSulfide", 0, 9823, U, 1135);
+        row(rows, 9824, "SulfuricAcid", 0, 9824, U, 1047);
+        row(rows, 9825, "NitricAcid", 0, 9825, U, 1031);
+        row(rows, 9827, "AquaRegia", 0, 9827, U, 1188);
+        row(rows, 9833, "MethaneIce", 0, 9833, U, 1190);
+        row(rows, 9844, "DisulfuricAcid", 0, 9844, U, 1048);
+    }
+
+    private static void seeds10(List<Seed> rows) {
+        row(rows, 9851, "OilSand", 0, 9851, U, 1199);
+        row(rows, 9852, "CrudeOil", 0, 9852, U, 1200);
+        row(rows, 9853, "OilShale", 0, 9853, U, 1646);
+        row(rows, 9883, "ConstructionFoam", M, 9883, U, 1222);
+    }
+
+    private static Map<Integer, Binding> bindings() {
+        Map<Integer, Binding> result = new LinkedHashMap<>();
+        moltenBindings(result);
+        explicitBindings(result);
+        return result;
+    }
+
+    private static void bind(
+            Map<Integer, Binding> bindings,
+            int id,
+            String path,
+            Accessor accessor,
+            long mb,
+            long referenceUnits,
+            int sourceLine) {
+        if (bindings.put(id, new Binding(path, accessor, mb, referenceUnits, sourceLine)) != null)
+            throw new IllegalStateException("Duplicate source phase " + id);
+    }
+    // Final generic createMolten bindings, Loader_Fluids659; eligibility never follows from this list alone.
+    private static void moltenBindings(Map<Integer, Binding> result) {
+        bind(result, 30, "molten.lithium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 31, "molten.lithium6", Accessor.LIQUID, 144, U, 659);
+        bind(result, 40, "molten.beryllium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 41, "molten.beryllium7", Accessor.LIQUID, 144, U, 659);
+        bind(result, 42, "molten.beryllium8", Accessor.LIQUID, 144, U, 659);
+        bind(result, 50, "molten.boron", Accessor.LIQUID, 144, U, 659);
+        bind(result, 51, "molten.boron11", Accessor.LIQUID, 144, U, 659);
+        bind(result, 60, "molten.carbon", Accessor.LIQUID, 144, U, 659);
+        bind(result, 61, "molten.carbon13", Accessor.LIQUID, 144, U, 659);
+        bind(result, 62, "molten.carbon14", Accessor.LIQUID, 144, U, 659);
+        bind(result, 110, "molten.sodium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 120, "molten.magnesium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 130, "molten.aluminium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 140, "molten.silicon", Accessor.LIQUID, 144, U, 659);
+        bind(result, 160, "molten.sulfur", Accessor.LIQUID, 144, U, 659);
+        bind(result, 190, "molten.potassium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 200, "molten.calcium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 220, "molten.titanium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 230, "molten.vanadium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 240, "molten.chromium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 250, "molten.manganese", Accessor.LIQUID, 144, U, 659);
+        bind(result, 260, "molten.iron", Accessor.LIQUID, 144, U, 659);
+        bind(result, 270, "molten.cobalt", Accessor.LIQUID, 144, U, 659);
+        bind(result, 280, "molten.nickel", Accessor.LIQUID, 144, U, 659);
+        bind(result, 290, "molten.copper", Accessor.LIQUID, 144, U, 659);
+        bind(result, 300, "molten.zinc", Accessor.LIQUID, 144, U, 659);
+        bind(result, 320, "molten.germanium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 330, "molten.arsenic", Accessor.LIQUID, 144, U, 659);
+        bind(result, 370, "molten.rubidium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 380, "molten.strontium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 420, "molten.molybdenum", Accessor.LIQUID, 144, U, 659);
+        bind(result, 470, "molten.silver", Accessor.LIQUID, 144, U, 659);
+        bind(result, 500, "molten.tin", Accessor.LIQUID, 144, U, 659);
+        bind(result, 510, "molten.antimony", Accessor.LIQUID, 144, U, 659);
+        bind(result, 520, "molten.tellurium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 550, "molten.caesium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 560, "molten.barium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 600, "molten.neodymium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 740, "molten.tungsten", Accessor.LIQUID, 144, U, 659);
+        bind(result, 760, "molten.osmiumelemental", Accessor.LIQUID, 144, U, 659);
+        bind(result, 770, "molten.iridium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 780, "molten.platinum", Accessor.LIQUID, 144, U, 659);
+        bind(result, 790, "molten.gold", Accessor.LIQUID, 144, U, 659);
+        bind(result, 791, "molten.gold198", Accessor.LIQUID, 144, U, 659);
+        bind(result, 820, "molten.lead", Accessor.LIQUID, 144, U, 659);
+        bind(result, 830, "molten.bismuth", Accessor.LIQUID, 144, U, 659);
+        bind(result, 850, "molten.astatine", Accessor.LIQUID, 144, U, 659);
+        bind(result, 870, "molten.francium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 880, "molten.radium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 920, "molten.uranium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 921, "molten.uranium235", Accessor.LIQUID, 144, U, 659);
+        bind(result, 1250, "molten.tritaniumelemental", Accessor.LIQUID, 144, U, 659);
+        bind(result, 1260, "molten.trinium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 1450, "molten.duraniumelemental", Accessor.LIQUID, 144, U, 659);
+        bind(result, 1740, "molten.naquadah", Accessor.LIQUID, 144, U, 659);
+        bind(result, 1741, "molten.naquadahenriched", Accessor.LIQUID, 144, U, 659);
+        bind(result, 1742, "molten.naquadria", Accessor.LIQUID, 144, U, 659);
+        bind(result, 2220, "molten.adamantium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8009, "molten.cryolite", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8010, "molten.aluminiumfluoride", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8013, "molten.sodiumcarbonate", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8016, "molten.magnesiumcarbonate", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8018, "molten.magnesiumchloride", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8020, "molten.potassiumcarbonate", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8026, "molten.tungstentrioxide", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8028, "molten.calciumchloride", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8029, "molten.lithiumchloride", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8030, "molten.ferrouschloride", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8031, "molten.manganesechloride", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8033, "molten.lithiumchlorate", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8034, "molten.lithiumperchlorate", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8266, "molten.asphalt", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8340, "molten.nikolite", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8341, "molten.glowstone", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8500, "molten.stone", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8600, "molten.electrum", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8601, "molten.sterlingsilver", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8602, "molten.rosegold", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8610, "molten.bronze", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8611, "molten.blackbronze", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8612, "molten.bismuthbronze", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8614, "molten.arseniccopper", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8615, "molten.arsenicbronze", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8620, "molten.brass", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8621, "molten.cobaltbrass", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8630, "molten.steel", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8631, "molten.blacksteel", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8632, "molten.bluesteel", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8633, "molten.redsteel", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8634, "molten.damascussteel", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8635, "molten.tungstensteel", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8636, "molten.stainlesssteel", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8640, "molten.annealedcopper", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8643, "molten.wroughtiron", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8653, "molten.vanadiumsteel", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8658, "molten.electrotinealloy", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8659, "molten.bluealloy", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8660, "molten.redalloy", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8661, "molten.invar", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8662, "molten.constantan", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8663, "molten.nichrome", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8664, "molten.kanthal", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8665, "molten.magnalium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8666, "molten.ultimet", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8667, "molten.tinalloy", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8668, "molten.batteryalloy", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8669, "molten.solderingalloy", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8672, "molten.ironwood", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8674, "molten.knightmetal", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8675, "molten.fierysteel", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8679, "molten.thaumium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8682, "molten.osmiridium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8697, "molten.flamascussteel", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8700, "molten.aluminiumbrass", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8702, "molten.alumite", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8708, "molten.signalum", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8709, "molten.lumium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8710, "molten.enderium", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8729, "molten.enderiumbase", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8733, "molten.redstonealloy", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8737, "molten.nikolinealloy", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8744, "molten.ancientdebris", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8745, "molten.netherite", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8796, "molten.hssg", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8797, "molten.hsse", Accessor.LIQUID, 144, U, 659);
+        bind(result, 8798, "molten.hsss", Accessor.LIQUID, 144, U, 659);
+        bind(result, 9007, "molten.uraniumtetrafluoride", Accessor.LIQUID, 144, U, 659);
+        bind(result, 9009, "molten.uranium238tetrafluoride", Accessor.LIQUID, 144, U, 659);
+        bind(result, 9011, "molten.uranium235tetrafluoride", Accessor.LIQUID, 144, U, 659);
+        bind(result, 9104, "molten.hematite", Accessor.LIQUID, 144, U, 659);
+        bind(result, 9107, "molten.calcite", Accessor.LIQUID, 144, U, 659);
+        bind(result, 9120, "molten.ilmenite", Accessor.LIQUID, 144, U, 659);
+        bind(result, 9143, "molten.vanadiummagnetite", Accessor.LIQUID, 144, U, 659);
+        bind(result, 9192, "molten.rutile", Accessor.LIQUID, 144, U, 659);
+        bind(result, 9215, "molten.fluorite", Accessor.LIQUID, 144, U, 659);
+    }
+    // Literal bindings or final LIQUID generation. MT1007/1194 are the Water/Lava declaration bindings.
+    private static void explicitBindings(Map<Integer, Binding> result) {
+        bind(result, 80, "liquidoxygen", Accessor.LIQUID, 1000, U, 68);
+        bind(result, 350, "bromine", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 800, "mercury", Accessor.LIQUID, 144, U, 618);
+        bind(result, 8001, "glass", Accessor.LIQUID, 144, U, 192);
+        bind(result, 8008, "molten.alumina", Accessor.LIQUID, 504, U, 214);
+        bind(result, 8011, "hexafluorosilicicacid", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8211, "blaze", Accessor.LIQUID, 1296, U, 195);
+        bind(result, 8217, "molten.rubber", Accessor.LIQUID, 144, U, 204);
+        bind(result, 8218, "plastic", Accessor.LIQUID, 1000, U, 191);
+        bind(result, 8235, "molten.wax", Accessor.LIQUID, 144, U, 205);
+        bind(result, 8236, "molten.waxbee", Accessor.LIQUID, 144, U, 206);
+        bind(result, 8238, "molten.waxparaffin", Accessor.LIQUID, 144, U, 207);
+        bind(result, 8239, "molten.waxplant", Accessor.LIQUID, 144, U, 208);
+        bind(result, 8318, "molten.enderpearl", Accessor.LIQUID, 144, U, 193);
+        bind(result, 8333, "molten.redstone", Accessor.LIQUID, 144, U, 194);
+        bind(result, 8400, "chloroauricacid", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8401, "chloroplatinicacid", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8402, "stannicchloride", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8403, "blackvitriol", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8404, "bluevitriol", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8405, "greenvitriol", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8406, "redvitriol", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8407, "pinkvitriol", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8408, "cyanvitriol", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8409, "whitevitriol", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8410, "grayvitriol", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8412, "vitriolofclay", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8413, "titaniumtetrachloride", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 8501, "concrete", Accessor.LIQUID, 144, U, 196);
+        bind(result, 9703, "molten.sugar", Accessor.LIQUID, 144, U, 203);
+        bind(result, 9780, "molten.cheese", Accessor.LIQUID, 144, U, 202);
+        bind(result, 9783, "molten.chocolate", Accessor.LIQUID, 144, U, 201);
+        bind(result, 9790, "milk", Accessor.LIQUID, 1000, U, 624);
+        bind(result, 9791, "for.honey", Accessor.LIQUID, 1000, U, 574);
+        bind(result, 9793, "honeydew", Accessor.LIQUID, 1000, U, 575);
+        bind(result, 9800, "water", Accessor.LIQUID, 1000, U, 1007);
+        bind(result, 9802, "ice", Accessor.LIQUID, 1000, U, 364);
+        bind(result, 9810, "lava", Accessor.LIQUID, 1000, 9 * U, 1194);
+        bind(result, 9824, "sulfuricacid", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 9825, "nitricacid", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 9827, "aquaregia", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 9844, "disulfuricacid", Accessor.LIQUID, 1000, U, 658);
+        bind(result, 9883, "ic2constructionfoam", Accessor.LIQUID, 100, U, 74);
+    }
+}

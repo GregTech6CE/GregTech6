@@ -4,6 +4,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.GTValues;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.material.SourceLatheMaterialProfiles;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import java.math.BigInteger;
@@ -125,12 +126,8 @@ public final class SourceRollingWireRules {
         if (profile == null) return new Decision(legacyAllowed, legacyTicks, false);
         // Only these two actual native families have proven admission beyond the legacy policy.
         boolean provenAddition = sourceAdditionalFamily
-                && (material == gregtech.content.material.Materials.Netherite
-                                && material.getId() == 8745
-                                && material.getName().equals("Netherite")
-                        || material == gregtech.content.material.Materials.Naquadah
-                                && material.getId() == 1740
-                                && material.getName().equals("Naquadah"));
+                && MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_ADDITIONAL_WIRE_FAMILY)
+                        .orElse(false);
         return new Decision(
                 (legacyAllowed || provenAddition)
                         && profile.smithable()

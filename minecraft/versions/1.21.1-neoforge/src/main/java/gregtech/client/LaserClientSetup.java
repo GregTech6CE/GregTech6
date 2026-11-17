@@ -1,7 +1,9 @@
 package gregtech.client;
 
-import gregtech.content.block.energy.*;
-import gregtech.content.registry.*;
+import gregtech.content.block.energy.LaserConverterBlock;
+import gregtech.content.block.energy.ZpmDischargerBlock;
+import gregtech.content.block.energy.ZpmModuleBlock;
+import gregtech.content.registry.GTLasers;
 
 @net.neoforged.fml.common.EventBusSubscriber(
         modid = gregtech.engine.mod.GregTechIdentity.MOD_ID,

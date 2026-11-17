@@ -1,4 +1,6 @@
 package gregtech.compat.jei;
+
+import gregtech.compat.common.WorldgenInfoData;
 import gregtech.engine.mod.GregTechIdentity;
 
 

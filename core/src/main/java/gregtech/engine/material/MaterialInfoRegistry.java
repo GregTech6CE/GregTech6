@@ -26,6 +26,8 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
     private static final List<TagDeclarationSubmission> ADDON_TAG_DECLARATIONS = new ArrayList<>();
     private static final List<GroupSubmission> ADDON_GROUPS = new ArrayList<>();
     private static final List<ProcessSubmission> ADDON_PROCESSES = new ArrayList<>();
+    private static final List<SpecialProcessSubmission> ADDON_SPECIAL_PROCESSES = new ArrayList<>();
+    private static final Map<DataKey, SpecialProcessMethod> SPECIAL_PROCESSES = new LinkedHashMap<>();
     private static boolean registrationsClosed;
     private static volatile Snapshot snapshot;
 
@@ -49,6 +51,8 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
 
     public record ProcessSubmission(
             String addonId, MaterialKey material, MaterialProcessKey<?> process, MaterialProcessRule<?> rule) {}
+
+    public record SpecialProcessSubmission(String addonId, SpecialProcessMethod method) {}
 
     private record ToolSubmission(String addonId, MaterialKey material, MaterialToolProfile profile) {}
 
@@ -122,6 +126,7 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         mergeAddonProcesses();
         normalizeLinkedFlags();
         validateProcesses();
+        validateSpecialProcesses();
         validateLinkedToolRegistrations();
         var published = new LinkedHashMap<MaterialKey, PublishedMaterialInfo>();
         MATERIALS.forEach((key, info) -> published.put(key, info.freeze()));
@@ -148,9 +153,6 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
             throw new IllegalArgumentException(
                     "Addon '" + addonId + "' process uses unknown material '" + materialKey.name() + "'");
         if (!process.equals(MaterialProcessKeys.DECOMPOSITION)) requireNamespace(addonId, process.id());
-        else if (!AddonMaterials.owners(material).contains(addonId))
-            throw new IllegalArgumentException("Addon '" + addonId
-                    + "' cannot declare decomposition for non-owned material '" + material.getName() + "'");
         var target = MATERIALS.get(new MaterialKey(material.getName()));
         if (target == null)
             throw new IllegalArgumentException(
@@ -178,6 +180,53 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
                             rule -> normalizeProcessRule("material '" + material.name() + "'", key, rule))
                     .toList();
         }));
+    }
+
+    private static void validateSpecialProcesses() {
+        for (var submission : ADDON_SPECIAL_PROCESSES)
+            installSpecialProcess(new SpecialProcessSubmission(submission.addonId(), submission.method()));
+        for (var entry : MATERIALS.entrySet()) {
+            for (var ruleEntry : entry.getValue().processes.entrySet()) {
+                var method = SPECIAL_PROCESSES.get(ruleEntry.getKey().id());
+                boolean special =
+                        ruleEntry.getValue().stream().anyMatch(rule -> rule.value() instanceof SpecialProcessValue);
+                if (!special) continue;
+                if (method == null || !method.process().equals(ruleEntry.getKey()))
+                    throw new IllegalArgumentException("Missing special process method "
+                            + ruleEntry.getKey().id());
+                for (var rule : ruleEntry.getValue()) {
+                    if (rule.value() instanceof SpecialProcessValue.Target target) {
+                        if (!target.inputCounts().keySet().equals(rule.forms()))
+                            throw new IllegalArgumentException(
+                                    "Special process target forms do not match rule forms for "
+                                            + entry.getKey().name() + " in "
+                                            + method.process().id());
+                        for (var output : target.itemOutputs())
+                            validateSpecialOutput(entry.getKey(), method, output.material());
+                        for (var output : target.fluidOutputs())
+                            validateSpecialOutput(entry.getKey(), method, output.material());
+                    } else if (!(rule.value() instanceof SpecialProcessValue.Reagent)) {
+                        throw new IllegalArgumentException("Invalid special process value for "
+                                + entry.getKey().name());
+                    }
+                }
+            }
+        }
+    }
+
+    private static void validateSpecialOutput(MaterialKey source, SpecialProcessMethod method, MaterialKey output) {
+        var material = GTMaterialRegistry.get(output.name());
+        if (material == null || !material.isValid())
+            throw new IllegalArgumentException("Unknown special process output '" + output.name() + "' for "
+                    + source.name() + " in " + method.process().id());
+    }
+
+    private static void installSpecialProcess(SpecialProcessSubmission submission) {
+        var method = submission.method();
+        requireNamespace(submission.addonId(), method.process().id());
+        if (SPECIAL_PROCESSES.putIfAbsent(method.process().id(), method) != null)
+            throw new IllegalArgumentException(
+                    "Duplicate special process method " + method.process().id());
     }
 
     private static void normalizeLinkedFlags() {
@@ -230,7 +279,7 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
 
     private static void validateLinkedToolRegistrations() {
         for (ToolSubmission submission : ADDON_TOOLS) {
-            GTMaterial material = requireOwned(submission.addonId(), submission.material(), "tool profile");
+            GTMaterial material = requireMaterial(submission.addonId(), submission.material(), "tool profile");
             MaterialInfoDefinition.Tooling linked = MATERIALS.get(new MaterialKey(material.getName())).tooling;
             if (!linked.profile().equals(submission.profile()))
                 throw new IllegalArgumentException("Addon '" + submission.addonId() + "' tool profile for '"
@@ -258,10 +307,10 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         return new Registrar(addonId);
     }
 
-    /** Applies addon-owned unique facts after identities and ownership are known. */
+    /** Applies addon facts after material identities are known. */
     static void resolveAddonRegistrations() {
         for (ToolSubmission submission : ADDON_TOOLS) {
-            GTMaterial material = requireOwned(submission.addonId(), submission.material(), "tool profile");
+            GTMaterial material = requireMaterial(submission.addonId(), submission.material(), "tool profile");
             var info = MATERIALS.get(new MaterialKey(material.getName()));
             MaterialToolProfile existing = info.tooling.profile();
             MaterialToolProfile expected = new MaterialToolProfile(0, 1F, 0, 0);
@@ -309,6 +358,18 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         return List.copyOf(ADDON_GROUPS);
     }
 
+    public static List<SpecialProcessMethod> specialProcesses() {
+        return List.copyOf(SPECIAL_PROCESSES.values());
+    }
+
+    /** Installs a built-in method declaration before the special-process registry closes. */
+    public static void installBuiltinSpecialProcess(SpecialProcessMethod method) {
+        if (snapshot != null) throw new IllegalStateException("Material auxiliary registrations are frozen");
+        if (SPECIAL_PROCESSES.putIfAbsent(method.process().id(), method) != null)
+            throw new IllegalArgumentException(
+                    "Duplicate special process method " + method.process().id());
+    }
+
     private static Set<FormKey> normalizeProcessForms(
             String source, MaterialProcessKey<?> process, Set<FormKey> sourceForms) {
         if (sourceForms.isEmpty()) return sourceForms;
@@ -334,7 +395,54 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
 
     static MaterialProcessRule<?> normalizeProcessRule(
             String source, MaterialProcessKey<?> process, MaterialProcessRule<?> rule) {
-        return new MaterialProcessRule<>(normalizeProcessForms(source, process, rule.forms()), rule.value());
+        var forms = normalizeProcessForms(source, process, rule.forms());
+        if (rule.value() instanceof SpecialProcessValue.Target target) {
+            var counts = new LinkedHashMap<FormKey, Integer>();
+            target.inputCounts().forEach((form, count) -> {
+                var normalized = normalizeProcessForms(source, process, Set.of(form))
+                        .iterator()
+                        .next();
+                if (counts.putIfAbsent(normalized, count) != null)
+                    throw new IllegalArgumentException("Duplicate normalized special process input form " + normalized);
+            });
+            var normalized = new SpecialProcessValue.Target(
+                    counts,
+                    target.itemOutputs().stream()
+                            .map(output -> new SpecialProcessValue.ItemOutput(
+                                    normalizeOutputMaterial(source, output.material()),
+                                    normalizeOutputForms(source, process, output.forms()),
+                                    output.chance()))
+                            .toList(),
+                    target.fluidOutputs().stream()
+                            .map(output -> new SpecialProcessValue.FluidOutput(
+                                    normalizeOutputMaterial(source, output.material()),
+                                    normalizeOutputForms(source, process, output.forms()),
+                                    output.millibuckets()))
+                            .toList(),
+                    target.reagentAmount(),
+                    target.duration(),
+                    target.euPerTick());
+            return new MaterialProcessRule<>(forms, normalized);
+        }
+        return new MaterialProcessRule<>(forms, rule.value());
+    }
+
+    private static MaterialKey normalizeOutputMaterial(String source, MaterialKey key) {
+        var material = GTMaterialRegistry.get(key.name());
+        if (!material.isValid())
+            throw new IllegalArgumentException("Unknown special process output '" + key.name() + "' from " + source);
+        return new MaterialKey(material.resolve().getName());
+    }
+
+    private static List<SpecialProcessValue.FormCount> normalizeOutputForms(
+            String source, MaterialProcessKey<?> process, List<SpecialProcessValue.FormCount> forms) {
+        return forms.stream()
+                .map(form -> new SpecialProcessValue.FormCount(
+                        normalizeProcessForms(source, process, Set.of(form.form()))
+                                .iterator()
+                                .next(),
+                        form.count()))
+                .toList();
     }
 
     @Override
@@ -537,16 +645,12 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
         }
     }
 
-    private static GTMaterial requireOwned(String addonId, MaterialKey key, String what) {
+    private static GTMaterial requireMaterial(String addonId, MaterialKey key, String what) {
         GTMaterial found = GTMaterialRegistry.get(key.name());
         if (!found.isValid())
             throw new IllegalArgumentException(
                     "Addon '" + addonId + "' " + what + " uses unknown material '" + key.name() + "'");
-        GTMaterial material = found.resolve();
-        if (!AddonMaterials.owners(material).contains(addonId))
-            throw new IllegalArgumentException(
-                    "Addon '" + addonId + "' cannot set the " + what + " of '" + material.getName() + "'");
-        return material;
+        return found.resolve();
     }
 
     private static void requireNamespace(String addonId, DataKey key) {
@@ -619,6 +723,15 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
             Objects.requireNonNull(declaration);
             requireNamespace(addonId, declaration.key().id());
             ADDON_GROUPS.add(new GroupSubmission(addonId, declaration));
+            return this;
+        }
+
+        @Override
+        public MaterialInfoTool.Registrar registerSpecialProcess(SpecialProcessMethod method) {
+            requireOpen();
+            Objects.requireNonNull(method);
+            requireNamespace(addonId, method.process().id());
+            ADDON_SPECIAL_PROCESSES.add(new SpecialProcessSubmission(addonId, method));
             return this;
         }
 

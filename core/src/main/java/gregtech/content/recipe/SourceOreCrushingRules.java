@@ -1,10 +1,11 @@
 package gregtech.content.recipe;
 
 import static gregtech.api.material.GTValues.U;
+import static gregtech.content.material.MaterialFactKeys.Decision;
+import static gregtech.content.material.MaterialFactKeys.Identity;
 import static gregtech.content.recipe.SourceOreWashingRules.Availability;
-import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
-import static gregtech.content.recipe.SourceRecyclingFacts.Identity;
 
+import gregtech.content.material.MaterialFactKeys.HexoriumKind;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,12 +44,6 @@ public final class SourceOreCrushingRules {
         BLOCK_DUST
     }
 
-    public enum Hexorium {
-        NONE,
-        BLACK_WHITE,
-        RED_GREEN_BLUE
-    }
-
     public enum Status {
         ROW,
         NO_ROW,
@@ -77,7 +72,7 @@ public final class SourceOreCrushingRules {
             int processingMultiplier,
             int quality,
             Bonus bonus,
-            Hexorium hexorium) {}
+            HexoriumKind hexorium) {}
     /** Quality belongs to material, not crushingTarget. amount is the prefix's gangue amount. */
     public record Gangue(
             Identity material, long amount, int quality, Identity crushingTarget, long crushingUnitsPerU) {}
@@ -171,8 +166,9 @@ public final class SourceOreCrushingRules {
         boolean crusher = r.machine() == Machine.CRUSHER;
         long oreMultiplier = in.oreMultiplier();
         if (crusher && r.hexoriumAdjustedHost())
-            oreMultiplier +=
-                    in.hexorium() == Hexorium.BLACK_WHITE ? 1 : in.hexorium() == Hexorium.RED_GREEN_BLUE ? -1 : 0;
+            oreMultiplier += in.hexorium() == HexoriumKind.BLACK_WHITE
+                    ? 1
+                    : in.hexorium() == HexoriumKind.RED_GREEN_BLUE ? -1 : 0;
         if (oreMultiplier < 0) return result(Status.UNSUPPORTED, "negative adjusted multiplier");
         long multiplier = Math.multiplyExact(oreMultiplier, in.processingMultiplier());
         multiplier = Math.multiplyExact(

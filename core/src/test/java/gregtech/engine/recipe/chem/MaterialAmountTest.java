@@ -1,11 +1,9 @@
 package gregtech.engine.recipe.chem;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import gregtech.api.material.GTValues;
-import gregtech.content.recipe.OriginalMaterialFluidUnits;
+import gregtech.content.material.catalog.MaterialFluidUnitFacts;
 import org.junit.jupiter.api.Test;
 
 /** Material units are exact and only material fluids cross a reviewed millibucket boundary. */
@@ -31,14 +29,13 @@ final class MaterialAmountTest {
         assertEquals(GTValues.U / 50, MaterialAmount.fraction(1, 50).units());
         assertEquals(
                 20,
-                OriginalMaterialFluidUnits.millibuckets(
-                        GTValues.U / 50, OriginalMaterialFluidUnits.SOURCE_UNIT, 1000, false));
+                MaterialFluidUnitFacts.millibuckets(GTValues.U / 50, MaterialFluidUnitFacts.SOURCE_UNIT, 1000, false));
     }
 
     @Test
     void cryoliteTwentyUnitsUseTheMoltenBinding() {
-        int millibuckets = OriginalMaterialFluidUnits.millibuckets(
-                20 * GTValues.U, OriginalMaterialFluidUnits.SOURCE_UNIT, 144, false);
+        int millibuckets =
+                MaterialFluidUnitFacts.millibuckets(20 * GTValues.U, MaterialFluidUnitFacts.SOURCE_UNIT, 144, false);
         assertEquals(2880, millibuckets);
     }
 
@@ -46,15 +43,12 @@ final class MaterialAmountTest {
     void aluminiumFluorideProductionAndElectrolysisShareOneRule() {
         assertEquals(
                 576,
-                OriginalMaterialFluidUnits.millibuckets(
-                        4 * GTValues.U, OriginalMaterialFluidUnits.SOURCE_UNIT, 144, false));
+                MaterialFluidUnitFacts.millibuckets(4 * GTValues.U, MaterialFluidUnitFacts.SOURCE_UNIT, 144, false));
         assertEquals(
                 1152,
-                OriginalMaterialFluidUnits.millibuckets(
-                        8 * GTValues.U, OriginalMaterialFluidUnits.SOURCE_UNIT, 144, false));
+                MaterialFluidUnitFacts.millibuckets(8 * GTValues.U, MaterialFluidUnitFacts.SOURCE_UNIT, 144, false));
         assertEquals(
                 1728,
-                OriginalMaterialFluidUnits.millibuckets(
-                        12 * GTValues.U, OriginalMaterialFluidUnits.SOURCE_UNIT, 144, false));
+                MaterialFluidUnitFacts.millibuckets(12 * GTValues.U, MaterialFluidUnitFacts.SOURCE_UNIT, 144, false));
     }
 }

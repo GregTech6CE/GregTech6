@@ -23,7 +23,7 @@ public final class SourceOreOutputRows {
     public static boolean affects(List<GTMaterial> materials) {
         return materials.stream()
                 .anyMatch(material ->
-                        ReviewedCrushedFormGeneration.sourceExcluded(material, MaterialPrefix.crushedPurifiedTiny));
+                        SourceCrushedFormAdapter.sourceExcluded(material, MaterialPrefix.crushedPurifiedTiny));
     }
 
     public static void define(GTMaterial material, String producer, RecipeMap map, Supplier<Recipe> admission) {

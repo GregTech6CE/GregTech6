@@ -79,7 +79,7 @@ public final class SourceOreInputForms {
         material = material.resolve();
         ItemStack canonical = gregtech.content.registry.GTItems.getStack(prefix, material, count);
         boolean excluded = SourceOreOutputRows.resolving()
-                && ReviewedCrushedFormGeneration.excludedBuiltin(material, prefix, canonical);
+                && SourceCrushedFormAdapter.excludedBuiltin(material, prefix, canonical);
         Evidence evidence = (material.getId() == 8500 && material.getName().equals("Stone")) || excluded
                 ? Evidence.NO
                 : Evidence.UNKNOWN;

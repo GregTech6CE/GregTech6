@@ -45,18 +45,6 @@ public final class CapsuleCellRecipes {
         for(var spec:PortableFluidContainerSpec.values())if(spec.shapeId().equals("cell")) {
             var input=new ItemStack(Mc.item(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())));
             var composition=ItemMaterialRegistry.base(input.getItem()).orElse(null);
-            if(composition==null) {
-                var data=new ItemComposition(null,java.util.List.of(MaterialComponent.of(spec.material(),GTValues.U9)),
-                        spec.material(),java.util.List.of(new ItemCompositionSource(
-                                ItemCompositionSource.Kind.EXPLICIT,
-                                "gt6ce:capsule-cell/"+spec.id(),
-                                "capsule-cell material",
-                                spec.id(),
-                                "")),true);
-                ItemMaterialRegistry.register(input.getItem(),data,ItemCompositionSource.Kind.EXPLICIT,
-                        "gt6ce:capsule-cell/"+spec.id(),"PortableFluidContainerSpec");
-                composition=ItemMaterialRegistry.base(input.getItem()).orElse(null);
-            }
             if(composition==null
                     ||ItemMaterialRegistry.recoveryRejection(input)!=ItemMaterialRegistry.RecoveryRejection.ELIGIBLE
                     ||composition.components().size()!=1

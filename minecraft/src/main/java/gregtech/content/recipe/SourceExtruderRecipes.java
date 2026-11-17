@@ -280,7 +280,8 @@ public final class SourceExtruderRecipes {
         // no original eligibility or low-heat permission is fabricated for them.
         if (profile == null) {
             if (!material.has(MaterialProperty.SMITHABLE)) return 0;
-            profile = new SourceExtrusionRules.Profile(true, false, true, "", GTValues.U);
+            profile = new gregtech.content.material.catalog.SourceExtrusionMaterialFacts.Profile(
+                    true, false, true, "", GTValues.U);
         }
         if (!profile.extrudable() || profile.forgingAmount() < GTValues.U) return 0;
         GTMaterial target = SourceExtrusionRules.target(material, profile);

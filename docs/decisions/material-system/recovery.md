@@ -7,6 +7,7 @@
 引擎层 `ItemRecoveryPlanner`（以及面向材料的封装 `MaterialRecoveryRules`）通过抽象接口 `ItemRecoveryPlanner.MaterialFacts` 接收粉化目标与可用粉尘形态权重表，在脱离 `ItemStack` 与 `RecipeMap` 的前提下生成纯计划：
 
 - **成分不越权授权**：存在成分只说明物料组成，物品能否进入粉碎机、热熔或坩埚仍由各自工艺的前缀准入、多组件限制与栈实时状态决定。
+- **重复形态请求**：附属重复请求已有材料形态不构成外部物品覆盖；源粉碎路线根据实际注册物品及有效成分判断外部变更。
 - **大份量拆栈与单槽余量报告**：
   - `MaterialRecoveryRules.dustPlan()` 与 `OM.dustAll()` 按 64 堆叠上限将大份量材料拆分为完整的多组粉尘计划（例如 72U 材料拆为 `64 + 8` 两组合法栈），消除无声截断；
   - `dustSlotPlan()` 与 `OM.dust()` 为兼顾单输出槽旧调用保留单栈选择规则，但显式汇报无法纳入该栈的 `remainderUnits` 供调用方扣量或拒收；多输出场景（分解、零件余料、外部矿石链路等）统一消费完整列表。

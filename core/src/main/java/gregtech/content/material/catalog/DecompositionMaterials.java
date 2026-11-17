@@ -4,7 +4,6 @@ import gregtech.api.addon.material.MaterialDecompositionRule;
 import gregtech.api.addon.material.MaterialDecompositionRule.Route;
 import gregtech.api.addon.material.MaterialProcessKeys;
 import gregtech.api.material.GTValues;
-import gregtech.content.recipe.OriginalMaterialFluidUnits;
 import gregtech.engine.material.MaterialDefinition;
 import java.util.*;
 
@@ -227,7 +226,7 @@ public final class DecompositionMaterials {
     }
 
     private static Binding shared(String material, int id, String phase) {
-        var binding = OriginalMaterialFluidUnits.binding(material, id, phase);
+        var binding = MaterialFluidUnitFacts.binding(material, id, phase);
         if (binding == null)
             throw new IllegalStateException("Missing shared fluid binding for " + material + " / " + phase);
         return new Binding(binding.registryName(), binding.referenceSourceUnits(), binding.referenceMillibuckets());

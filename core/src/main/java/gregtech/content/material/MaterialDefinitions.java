@@ -27,6 +27,21 @@ public final class MaterialDefinitions {
         result.addAll(WoodMaterials.definitions());
         result.addAll(SpecialMaterials.definitions());
         result.addAll(GroupMaterials.definitions());
+        // MaterialDefinition already contains ore-processing and composition facts. Each pass
+        // attaches its own keys; decomposition runs last because it consumes the completed
+        // declaration. MaterialFactKeys.put rejects accidental cross-pass replacement.
+        result.replaceAll(ReviewedSourceMaterialFacts::applyOne);
+        result.replaceAll(ReviewedOreMaterialFacts::apply);
+        result.replaceAll(SourceMacerationMaterialFacts::apply);
+        result.replaceAll(SourceWashingMaterialFacts::apply);
+        result.replaceAll(MaterialFluidUnitFacts::apply);
+        result.replaceAll(GenerifyingMaterialFacts::apply);
+        result.replaceAll(SourceExtrusionMaterialFacts::apply);
+        result.replaceAll(SourceLensMaterialFacts::apply);
+        result.replaceAll(SourceRecyclingMaterialFacts::apply);
+        result.replaceAll(SourceOreCrushingMaterialFacts::apply);
+        result.replaceAll(PurifiedCentrifugeMaterialFacts::apply);
+        result.replaceAll(SpecialProcessMaterialFacts::apply);
         result.replaceAll(MaterialDefinitions::attachDecomposition);
         DecompositionMaterials.validateConsumed(result);
         result.sort(Comparator.comparing(MaterialDefinition.Declaration::name));
@@ -37,7 +52,8 @@ public final class MaterialDefinitions {
         MaterialDecompositionRule decomposition = DecompositionMaterials.rule(declaration);
         if (decomposition == null) return declaration;
         var processes = new LinkedHashMap<>(declaration.info().processes().rules());
-        processes.put(MaterialProcessKeys.DECOMPOSITION, List.of(MaterialProcessRule.anyForm(decomposition)));
+        MaterialFactKeys.put(
+                processes, MaterialProcessKeys.DECOMPOSITION, List.of(MaterialProcessRule.anyForm(decomposition)));
         var info = declaration.info();
         return new MaterialDefinition.Declaration(
                 declaration.material(),

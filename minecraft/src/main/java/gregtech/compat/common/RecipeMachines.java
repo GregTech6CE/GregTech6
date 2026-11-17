@@ -1,0 +1,144 @@
+package gregtech.compat.common;
+
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.registry.BehaviorMachineRegistration;
+import gregtech.content.registry.FuelGeneratorRegistration;
+import gregtech.content.registry.GTBasicMachines;
+import gregtech.content.registry.GTBurningBoxes;
+import gregtech.content.registry.GTSmeltery;
+import gregtech.engine.recipe.RecipeMap;
+import gregtech.engine.stack.StackCompat;
+import java.util.*;
+import net.minecraft.world.item.ItemStack;
+
+/** One machine-to-recipe index feeds both category icons and JEI catalysts. */
+public final class RecipeMachines {
+    public static net.minecraft.world.level.block.Block machine(String id) {
+        return GTBasicMachines.all().stream()
+                .filter(h -> h.get().basicSpec().id().equals(id)
+                        && "gt6ce".equals(h.get().basicSpec().namespace()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Missing native machine: " + id))
+                .get();
+    }
+
+    private RecipeMachines() {}
+
+    public static Map<RecipeMap, List<ItemStack>> collect() {
+        Map<RecipeMap, List<ItemStack>> result = new LinkedHashMap<>();
+
+        for (var entry : GTBasicMachines.all())
+            if (entry.isBound() && !entry.get().basicSpec().machineName().equals("fusionreactor"))
+                add(result, entry.get().basicSpec().recipeMap(), new ItemStack(entry.get()));
+
+        for (var entry : gregtech.content.registry.GTManualStations.MANUAL)
+            if (entry.isBound()) add(result, entry.get().kind().recipeMap(), new ItemStack(entry.get()));
+
+        for (var entry : gregtech.content.registry.GTManualStations.VESSELS)
+            if (entry.isBound()) {
+                var tool = entry.get();
+                var map = tool.toolId().equals("juicer")
+                        ? MachineRecipeMaps.Juicer
+                        : tool.toolId().equals("bathing_pot") ? MachineRecipeMaps.Bath : MachineRecipeMaps.Mixer;
+                add(result, map, new ItemStack(tool));
+            }
+
+        for (var entry : gregtech.content.registry.GTManualStations.ANVILS)
+            if (entry.isBound()) {
+                add(result, MachineRecipeMaps.Anvil, new ItemStack(entry.get()));
+                add(result, MachineRecipeMaps.AnvilBendSmall, new ItemStack(entry.get()));
+                add(result, MachineRecipeMaps.AnvilBendBig, new ItemStack(entry.get()));
+            }
+
+        for (var entry : GTSmeltery.crucibles())
+            if (entry.isBound()) {
+                add(result, MachineRecipeMaps.CrucibleAlloying, new ItemStack(entry.get()));
+                add(result, MachineRecipeMaps.CrucibleSmelting, new ItemStack(entry.get()));
+            }
+
+        add(result, MachineRecipeMaps.ImplosionCompressor, new ItemStack(machine("implosion_compressor_main")));
+
+        for (var entry : FuelGeneratorRegistration.all())
+            if (entry.isPresent())
+                add(result, RecipeMap.RECIPE_MAPS.get(entry.get().declaration().fuelMap()), new ItemStack(entry.get()));
+
+        for (var entry : BehaviorMachineRegistration.all())
+            if (entry.isPresent())
+                gregtech.engine.addon.BehaviorRecipeCatalysts.add(
+                        result,
+                        entry.get().declaration().recipeMaps(),
+                        new ItemStack(entry.get()),
+                        RecipeMap.RECIPE_MAPS::get,
+                        RecipeMachines::sameStack);
+
+        for (var entry : GTBurningBoxes.fuelBoxes()) {
+            var map = switch (entry.get().fuelType()) {
+                case LIQUID -> gregtech.content.data.FuelRecipeMaps.Burn;
+                case GAS -> gregtech.content.data.FuelRecipeMaps.Gas;
+                case FLUIDIZED_BED -> gregtech.content.data.FuelRecipeMaps.FluidBed;
+                default -> null;
+            };
+            add(result, map, new ItemStack(entry.get()));
+        }
+
+        for (var entry : gregtech.content.multiblock.GasTurbineDefinitions.blocks())
+            add(result, gregtech.content.data.FuelRecipeMaps.Gas, new ItemStack(entry.get()));
+
+        for (int originalId = 17231; originalId <= 17234; originalId++)
+            add(
+                    result,
+                    gregtech.content.data.FuelRecipeMaps.Gas,
+                    new ItemStack(gregtech.content.multiblock.LargeMachineParts.block(originalId)));
+
+        add(
+                result,
+                MachineRecipeMaps.CokeOven,
+                new ItemStack(gregtech.content.registry.GTMultiblocks.COKE_OVEN_MAIN.get()));
+        add(
+                result,
+                gregtech.content.data.FuelRecipeMaps.Hot,
+                new ItemStack(gregtech.content.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN.get()));
+        for (var exchanger : gregtech.content.registry.GTHeatExchangers.all())
+            add(result, gregtech.content.data.FuelRecipeMaps.Hot, new ItemStack(exchanger.get()));
+
+        add(result, MachineRecipeMaps.Fusion, new ItemStack(machine("fusion_reactor_main")));
+
+        add(
+                result,
+                MachineRecipeMaps.CryoDistillationTower,
+                new ItemStack(gregtech.content.registry.GTMultiblocks.CRYO_DISTILLATION_MAIN.get()));
+        add(result, MachineRecipeMaps.DistillationTower, new ItemStack(machine("distillation_tower_main")));
+        for (var item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
+            if (item instanceof gregtech.content.item.GTToolItem tool
+                    && tool.toolType() == gregtech.engine.tool.GTToolType.HARD_HAMMER)
+                add(
+                        result,
+                        MachineRecipeMaps.Hammer,
+                        gregtech.content.item.GTToolItem.create(
+                                tool.toolType(),
+                                gregtech.content.material.Materials.Steel,
+                                gregtech.engine.material.GTMaterialRegistry.get("Birch")));
+            if (!(item instanceof net.minecraft.world.item.BlockItem block)) continue;
+            if (block.getBlock() instanceof gregtech.content.block.misc.AutoHammerBlock)
+                add(result, MachineRecipeMaps.Hammer, new ItemStack(item));
+            if (block.getBlock() instanceof gregtech.content.block.machine.LargeCrucibleControllerBlock) {
+                add(result, MachineRecipeMaps.CrucibleAlloying, new ItemStack(item));
+                add(result, MachineRecipeMaps.CrucibleSmelting, new ItemStack(item));
+            }
+            if (block.getBlock() instanceof gregtech.content.block.machine.EngineBlock engine
+                    && engine.engineType() == gregtech.engine.machine.EngineType.DIESEL)
+                add(result, gregtech.content.data.FuelRecipeMaps.Engine, new ItemStack(item));
+        }
+        return result;
+    }
+
+    private static void add(Map<RecipeMap, List<ItemStack>> index, RecipeMap map, ItemStack stack) {
+        if (map == null || stack.isEmpty()) return;
+        var list = index.computeIfAbsent(map, key -> new ArrayList<>());
+        if (list.stream().noneMatch(existing -> sameStack(existing, stack))) list.add(stack);
+    }
+
+    private static boolean sameStack(ItemStack existing, ItemStack stack) {
+        return StackCompat.sameItem(existing, stack);
+    }
+}

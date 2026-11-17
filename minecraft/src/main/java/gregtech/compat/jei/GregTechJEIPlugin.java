@@ -1,5 +1,6 @@
 package gregtech.compat.jei;
 
+import gregtech.compat.common.RecipeMachines;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.platform.Mc;
@@ -10,7 +11,6 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -27,6 +27,8 @@ import java.util.Map;
 @JeiPlugin
 public final class GregTechJEIPlugin implements IModPlugin {
     @Override public void onRuntimeAvailable(mezz.jei.api.runtime.IJeiRuntime runtime) {
+        this.runtime = runtime;
+        active = this;
         gregtech.client.gui.RecipeViewerNavigation.registerJei(map -> {
             if (!categories.containsKey(map)) return false;
             runtime.getRecipesGui().showTypes(java.util.List.of(RecipeMapCategory.recipeType(map)));
@@ -39,6 +41,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
     }
 
     @Override public void onRuntimeUnavailable() {
+        if (active == this) active = null;
+        runtime = null;
         gregtech.client.gui.RecipeViewerNavigation.clearJei();
     }
 
@@ -60,11 +64,40 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     /** Categories created in {@link #registerCategories}, reused in {@link #registerRecipes}. */
     private final Map<RecipeMap, RecipeMapCategory> categories = new LinkedHashMap<>();
-    private static int overlayGeneration;
+    private static volatile GregTechJEIPlugin active;
+    private mezz.jei.api.runtime.IJeiRuntime runtime;
+    private final Map<RecipeMap, List<Recipe>> shownRows = new LinkedHashMap<>();
+    private final Map<RecipeMap, java.util.Set<Recipe>> knownRows = new LinkedHashMap<>();
 
-    /** The client overlay calls this before JEI re-registers, so the next pass reads the live maps. */
-    public static void overlayChanged() { overlayGeneration++; }
-    public static int overlayGeneration() { return overlayGeneration; }
+    /** Normal JEI reload discovers the current maps through registerRecipes. */
+    public static void overlayChanged() {}
+
+    /** Replace old machine rows when an overlay has fallen back to its baseline. */
+    public static void overlayFailed() {
+        var plugin = active;
+        long generation = gregtech.content.recipe.MachineRecipeOverlay.generation();
+        if (plugin == null) return;
+        net.minecraft.client.Minecraft.getInstance().execute(() -> {
+            if (active != plugin || plugin.runtime == null
+                    || generation != gregtech.content.recipe.MachineRecipeOverlay.generation()) return;
+            var manager = plugin.runtime.getRecipeManager();
+            for (var entry : plugin.shownRows.entrySet()) {
+                var map = entry.getKey();
+                var type = RecipeMapCategory.recipeType(map);
+                List<Recipe> now = new ArrayList<>();
+                for (Recipe row : map.allRecipes()) if (row.mEnabled && !row.mHidden) now.add(row);
+                var removed = new ArrayList<>(entry.getValue());
+                removed.removeAll(now);
+                manager.hideRecipes(type, removed);
+                var known = plugin.knownRows.get(map);
+                var added = now.stream().filter(row -> !known.contains(row)).toList();
+                if (!added.isEmpty()) manager.addRecipes(type, added);
+                manager.unhideRecipes(type, now);
+                known.addAll(now);
+                entry.setValue(now);
+            }
+        });
+    }
 
     private Map<RecipeMap,List<ItemStack>> machines = Map.of();
 
@@ -136,6 +169,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        shownRows.clear();
+        knownRows.clear();
         gregtech.engine.fluid.FluidContainerDisplayBinding.invalidate();
         long started = System.nanoTime();
         int shown = 0;
@@ -190,6 +225,10 @@ public final class GregTechJEIPlugin implements IModPlugin {
             for (Recipe recipe : entry.getKey().allRecipes()) {
                 if (recipe.mEnabled && !recipe.mHidden) recipes.add(recipe);
             }
+            shownRows.put(entry.getKey(), List.copyOf(recipes));
+            var known = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<Recipe, Boolean>());
+            known.addAll(recipes);
+            knownRows.put(entry.getKey(), known);
             if (!recipes.isEmpty()) {
                 entry.getValue().fitRecipes(recipes);
                 registration.addRecipes(entry.getValue().getRecipeType(),recipes);
@@ -209,15 +248,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     /** Prefer the machine itself; fall back to a recipe output for maps without a registered machine. */
     private ItemStack iconFor(RecipeMap map) {
-        var preferred = gregtech.compat.common.RecipeViewerIcons.map(map);
-        if (!preferred.isEmpty()) return preferred;
-        var catalysts=machines.get(map);
-        if (catalysts!=null && !catalysts.isEmpty()) return catalysts.get(0).copy();
-        for (Recipe recipe : map.mRecipeList) {
-            for (ItemStack out : recipe.mOutputs) {
-                if (out != null && !out.isEmpty()) return out;
-            }
-        }
-        return new ItemStack(Items.ANVIL);
+        return gregtech.compat.common.RecipeViewerIcons.category(map, machines);
     }
+
 }

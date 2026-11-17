@@ -54,4 +54,4 @@ issue  source  kind  target  expected
 
 JUnit XML 在 `<module>/build/test-results/test/TEST-*.xml`，HTML 报告在 `<module>/build/reports/tests/test/`。
 
-材料基线入口为 `gregtech.content.material.MaterialBaselineTest`。它在三个独立 JVM 中区分无附属重复启动和测试 SPI 附属，原始投影写入调试输出目录；不使用生产 reset。源表引用的逐行历史依据在 `core/src/test/resources/gregtech/material-reference-history.tsv`；悬空引用与 ID/name 矛盾必须为零，不能用快照允许列表认可错误。历史分类必须核对来源，不能自动重录。材料系统设计、周期与权威口径见[材料系统设计](../../../decisions/material-system/README.md)。
+材料纯规则的常驻入口是 `MaterialRegistrationTest`、`ItemCompositionResolverTest`、`MaterialDecompositionPlannerTest` 和 `SpecialProcessLanguageTest`。一次性的基线快照和旧的 45 场景生命周期矩阵已移除；`MaterialAddonLifecycleProbe` 在独立 JVM 通过测试 SPI 覆盖共享材料合并、冲突隔离、未知产物、已有材料上的规则与外部产物。长期行为应落入可直接重复运行的定向测试。

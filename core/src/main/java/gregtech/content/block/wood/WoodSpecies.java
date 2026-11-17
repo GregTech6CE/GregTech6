@@ -46,9 +46,4 @@ public enum WoodSpecies {
     public String enName() {
         return enName;
     }
-    /** Compatibility only; localized names come from language resources. */
-    @Deprecated
-    public String zhName() {
-        return enName;
-    }
 }

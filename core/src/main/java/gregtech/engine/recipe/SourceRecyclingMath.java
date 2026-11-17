@@ -81,7 +81,7 @@ public final class SourceRecyclingMath {
                 || environmentTemperature < 0)
             throw new IllegalArgumentException("Unreviewed thermal arithmetic inputs");
         long target = unitsDown(inputUnits, sourceUnit, targetPerUnit);
-        int mb = gregtech.content.recipe.OriginalMaterialFluidUnits.millibuckets(
+        int mb = gregtech.content.material.catalog.MaterialFluidUnitFacts.millibuckets(
                 target, referenceFluidUnits, referenceMillibuckets, false);
         if (mb < 0) throw new ArithmeticException("Fluid amount exceeds native int capacity");
         // Source uses input mass, not output mass, and keeps this exact double expression/order.

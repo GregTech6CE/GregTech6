@@ -1,6 +1,7 @@
 package gregtech.content.data;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gregtech.api.material.GTValues;
 import gregtech.content.material.MaterialTestFixture;

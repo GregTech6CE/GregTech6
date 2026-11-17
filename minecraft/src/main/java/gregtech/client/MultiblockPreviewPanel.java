@@ -1,5 +1,6 @@
 package gregtech.client;
 
+import gregtech.compat.common.RecipeMachines;
 import gregtech.compat.jei.*;
 import gregtech.util.PreviewCamera;
 import java.util.*;

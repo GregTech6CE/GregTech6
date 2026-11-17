@@ -10,7 +10,7 @@ core 的 content 描述“有什么”，Minecraft 的 content 将其变为游�
 | --- | --- | --- |
 | `content` | 内容层总体职责说明 | `package-info.java` |
 | `content.material` | 材料目录入口、物性规则和稳定符号门面 | `MaterialDefinitions`、`Materials`；读取符号不触发注册 |
-| `content.material.catalog` | 元素、化合物、矿石、石材、木材、特殊材料和组的规范声明 | `ElementMaterials`、`CompoundMaterials`、`GroupMaterials`；每项材料事实只在这里维护 |
+| `content.material.catalog` | 元素、化合物、矿石、石材、木材、特殊材料和组的规范声明 | `ElementMaterials`、`CompoundMaterials`、`GroupMaterials`；材料目录事实在这里维护，游戏侧桥接事实经 typed key 汇入 |
 | `content.material.generated` | 既有 GT6 字段符号门面 | `ElementMaterials`、`CompoundMaterials`；引用规范目录中的已安装对象 |
 | `content.data` | 原版参数、跨领域内容事实与标识表 | `FluidCatalog`、`MaterialGroups`；仅跨领域事实放这里 |
 | `content.data.generated` | 尚留存的兼容查询门面和历史字段映射 | `MaterialForms`、`MaterialProcessingTargets`；权威材料事实位于 `content.material.catalog` |
@@ -76,6 +76,16 @@ core 的 content 描述“有什么”，Minecraft 的 content 将其变为游�
 
 涉及跨模组联动时的来源、单位转换与冲突处理提炼到 [integration](../../integration/README.md)；材料目录、形态、成分、回收与分解的系统设计见[材料系统设计](../../decisions/material-system/README.md)，偏离原 GT6 的有意差异登记到 [parity](../../decisions/parity/README.md)。不要因 `Original*` 名字而声称完整还原。生成表来源缺失时先记录局限，参见[生成物说明](../resources.md)。验收与自动化测试范围见下。
 
+材料提示在高级模式下按实际物品状态说明耐久缩放、存储内容与不支持的容器；多材料物品没有主材料时仍可显示有效成分。旧 `bulkRecoveryAllowed` 字段为兼容镜像，不再作为状态依据。
+
+### 浸泡槽的特殊处理
+
+`SharedSpecialProcessRows` 统一生成声明式酸浸配方，包括金、铜、锡、锡石的八条王水配方；`generated/GTOreRecipes` 不再重复注册这八条静态行。该表的原始转换工具未随仓库保存，本次按固定 GT6 提交 `3703e40308c8c030763fd6297dea8b210d2a77b1` 的 `Loader_Recipes_Ores` 与现存 typed target 局部收口，未重新生成整表。王水仍接收 1 份洁净矿或 9 份小份洁净矿，保留原有用量、流体产物和五个独立的 50% 副产物槽。
+
+过硫酸钠／钾、汞和火石浸洗仍由 `SharedOreWashingRows` 根据洗矿事实生成；它们处理碎矿并产出洁净矿，酸浸处理洁净矿并产出离心矿，属于不同阶段。过硫酸盐保留四种投料组合、900/100 mB 水和 144/16 tick 比例，不产生蒸汽。浸泡槽造纸继续接收具有 `WOOD` 属性的已注册材料粉末（排除石化木），以及树皮和纸粉，不以 `AnyWood` 固定成员缩小输入范围。
+
+`SpecialProcessRecipeTests` 覆盖平台发布的附属流体绑定、不限形态的物品／流体试剂、缺失流体产物整行拒绝、王水完整产物与单一归属、过硫酸盐投料比例，以及竹／橡胶木／处理木粉末的造纸输入。
+
 ## 验收
 
 - 新内容按[源码分层](../README.md#第一层源码与依赖)检查依赖，跨版本输入按[跨版本指南](../versions.md)处理。
@@ -99,7 +109,7 @@ core 的 content 描述“有什么”，Minecraft 的 content 将其变为游�
   - 线缆、管道、轴、电池、覆盖板与储罐的实际传输、断开与方向变化。
   - 材料物品/方块注册与统一化；矿脉或结构的注册存在性。
 - 现有测试集
-  - `MaterialBaselineTest` 与共享 `MaterialBaselineTests` 提供材料源表引用审计、独立 JVM 快照、测试材料 SPI、成分与回收／分解及真实重载入口；契约与不变量见[材料系统设计](../../decisions/material-system/README.md)。
+  - `MaterialRegistrationTest` 与 `MaterialCatalogTest` 提供材料目录、身份与规则校验，以及独立 JVM 内的附属 SPI 合并与冲突隔离回归；契约与不变量见[材料系统设计](../../decisions/material-system/README.md)。
   - core 静态 TSV 与 GameTest TSV 由对应 JUnit/GameTest 维护；用例覆盖物品管道路由与调度回归。
   - `core/src/test` 的材料目录、标签名翻译、熔融浇筑与配方引擎测试；`api/common` 的材料、机器、能源模型测试。
   - 机器 tick、多方块、能源网络、物流、世界生成完整流程等仍是待补范围。

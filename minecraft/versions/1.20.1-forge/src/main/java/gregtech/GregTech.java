@@ -2,8 +2,11 @@ package gregtech;
 
 import com.mojang.logging.LogUtils;
 import gregtech.bootstrap.InitializationStep;
-import gregtech.bootstrap.content.*;
-import gregtech.bootstrap.registration.*;
+import gregtech.bootstrap.content.DataBootstrap;
+import gregtech.bootstrap.content.MaterialBootstrap;
+import gregtech.bootstrap.content.ToolBootstrap;
+import gregtech.bootstrap.registration.MaterialItemRegistration;
+import gregtech.bootstrap.registration.MaterialLinkBootstrap;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.network.GTPackets;
 import net.minecraft.resources.ResourceLocation;

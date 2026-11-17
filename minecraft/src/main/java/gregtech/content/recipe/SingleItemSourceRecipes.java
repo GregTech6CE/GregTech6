@@ -31,8 +31,6 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
         if (!INSTANCE.entries().isEmpty())
             throw new IllegalStateException("Single-item source recipes registered twice");
         INSTANCE.compounds();
-        ItemMaterialRegistry.register(
-                own("dry_bark", 1).getItem(), null, GTMaterialRegistry.get("Bark"), GTValues.U / 2);
         INSTANCE.animalParts();
         INSTANCE.meat();
         INSTANCE.remains();
@@ -43,8 +41,6 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
         for (var row : OriginalSingleItemCatalog.COMPOUNDS) {
             var input = own(row.item(), 1);
             var material = GTMaterialRegistry.get(row.material());
-            // MultiItemRandomTools: each compound contains 1/9 U and fires into one nugget.
-            ItemMaterialRegistry.register(input.getItem(), null, material, GTValues.U / 9);
             smelt(row.item(), mat(MaterialPrefix.nugget, row.material(), 1), false);
             var target = material.getTargetSmeltingMaterial();
             var output = gregtech.util.OM.ingotOrDust(target, material.getTargetSmeltingAmount() / 9);
@@ -93,9 +89,6 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
     }
 
     private void meat() {
-        // MultiItemFood and Loader_Recipes_Food preserve the 2U scrap-meat payload.
-        ItemMaterialRegistry.register(
-                own("scrap_meat", 1).getItem(), null, GTMaterialRegistry.get("MeatRaw"), 2 * GTValues.U);
         add(
                 "scrap_meat/grind",
                 MachineRecipeMaps.Mortar,
@@ -118,8 +111,6 @@ public final class SingleItemSourceRecipes extends OriginalRecipeBatch {
         for (String state : List.of("raw", "cooked")) {
             String material = state.equals("raw") ? "MeatRaw" : "MeatCooked";
             String id = state + "_meat_bar";
-            ItemMaterialRegistry.register(
-                    own(id, 1).getItem(), MaterialPrefix.ingot, GTMaterialRegistry.get(material), GTValues.U);
             add(
                     id + "/compress",
                     MachineRecipeMaps.Compressor,

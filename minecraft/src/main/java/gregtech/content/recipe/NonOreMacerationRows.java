@@ -4,6 +4,7 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -23,7 +24,9 @@ public final class NonOreMacerationRows {
  }
  public static boolean reviewed(GTMaterial material){
   if(startup==null)throw new IllegalStateException("Nonore definitions not initialized");
-  return ReviewedOreInputProfile.decision(material)==ReviewedOreInputProfile.Evidence.NO&&!startup.active(material);
+  return MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_ORE_INPUT)
+      .orElse(MaterialFactKeys.Decision.UNKNOWN)==MaterialFactKeys.Decision.NO
+      &&!startup.active(material);
  }
  public static void register(GTMaterial material,MaterialPrefix prefix,String producer,RecipeMap map,
        boolean optimize,ItemStack input,ItemStack[] outputs,long[] chances,FluidStack[] fluids,long duration,long eu){

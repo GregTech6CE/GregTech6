@@ -1,16 +1,11 @@
 package gregtech.engine.material;
 
-import gregtech.api.material.*;
+import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.PrefixRegistry;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * One authoritative item definition stream for both platforms, extracted from saltnya Loader_Items.

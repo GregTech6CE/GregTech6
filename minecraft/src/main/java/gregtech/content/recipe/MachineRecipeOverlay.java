@@ -144,7 +144,7 @@ public final class MachineRecipeOverlay {
         SharedOreCrushingRows.rebuild();
         SharedOilSandRows.rebuild();
         // New purified-acid calls do not displace the earlier imported/static Bath producers.
-        SharedPurifiedAcidRows.rebuild();
+        SharedSpecialProcessRows.rebuild();
         MoltenMetalUnitRecipes.begin();
         SharedThermalInputRows.rebuild();
         SharedThermalRecyclingRows.rebuild();
@@ -168,7 +168,7 @@ public final class MachineRecipeOverlay {
                 baselineRows(), restoreMillis, producersMillis, moved, tally.removed, removeMillis, tally.added,
                 installMillis, tally.priority, tally.rejected);
         if (generation != current) return lastResult;
-        lastPublication = MaterialPublication.platformGenerationPublished(
+        lastPublication = MaterialPublication.candidatePlatformGeneration(
                 ItemMaterialRegistry.compositionRevision(), current);
         lastResult = new Result(tally.removed, tally.added, tally.rejected, restoreMillis, baselineRows(), false, false);
         applications++;
@@ -195,7 +195,7 @@ public final class MachineRecipeOverlay {
             SharedOreSiftingRows.clear();
             SharedOreCrushingRows.clear();
             SharedOilSandRows.clear();
-            SharedPurifiedAcidRows.clear();
+            SharedSpecialProcessRows.clear();
             SharedThermalInputRows.clear();
             SharedThermalRecyclingRows.clear();
             MoltenMetalUnitRecipes.clear();
@@ -289,7 +289,7 @@ public final class MachineRecipeOverlay {
         exclude.addAll(SharedOreSiftingRows.owned());
         exclude.addAll(SharedOreCrushingRows.baselineExcluded());
         exclude.addAll(SharedOilSandRows.baselineExcluded());
-        exclude.addAll(SharedPurifiedAcidRows.owned());
+        exclude.addAll(SharedSpecialProcessRows.owned());
         exclude.addAll(SharedThermalInputRows.owned());
         exclude.addAll(SharedThermalRecyclingRows.owned());
         // Maps created after the first reload still get one baseline. A captured map keeps its first snapshot.

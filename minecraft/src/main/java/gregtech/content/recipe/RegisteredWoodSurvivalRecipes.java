@@ -14,68 +14,6 @@ import net.minecraft.world.item.ItemStack;
 public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
     public static final RegisteredWoodSurvivalRecipes INSTANCE = new RegisteredWoodSurvivalRecipes();
 
-    public static void registerMaterials() {
-        // PlankEntry binds the actual wood species, not the generic Wood fallback. Keep this
-        // available before recipe generation, including shaped wooden-tool material matching.
-        for (String wood : WoodSlabCatalog.WOODS) {
-            var material = material(wood);
-            ItemMaterialRegistry.register(
-                    item("gt6ce:planks_" + wood, 1).getItem(), MaterialPrefix.plate, material, GTValues.U);
-            ItemMaterialRegistry.register(item("gt6ce:slab_" + wood, 1).getItem(), null, material, GTValues.U / 2);
-        }
-        for (var species : WoodSpecies.values()) {
-            var material = material(species.id());
-            var bark = GTMaterialRegistry.get(species == WoodSpecies.CINNAMON ? "Cinnamon" : "Bark");
-            ItemMaterialRegistry.register(
-                    GTWoods.log(species).asItem(),
-                    new ItemComposition(
-                            null,
-                            java.util.List.of(
-                                    MaterialComponent.of(material, 8 * GTValues.U),
-                                    MaterialComponent.of(bark, GTValues.U)),
-                            material,
-                            java.util.List.of(new ItemCompositionSource(
-                                    ItemCompositionSource.Kind.EXPLICIT,
-                                    "gt6ce:wood-log/" + species.id(),
-                                    "GT6 WoodEntry",
-                                    species.id(),
-                                    "")),
-                            true),
-                    ItemCompositionSource.Kind.EXPLICIT,
-                    "gt6ce:wood-log/" + species.id(),
-                    "GT6 WoodEntry");
-            ItemMaterialRegistry.register(GTWoods.strippedLog(species).asItem(), null, material, 8 * GTValues.U);
-        }
-        for (var wood : NaturalWoodCraftingRows.SPECIES) {
-            var material = gregtech.engine.material.GTMaterialRegistry.get(wood.material());
-            var bark = gregtech.engine.material.GTMaterialRegistry.get(wood.barkMaterial());
-            long unit = gregtech.api.material.GTValues.U;
-            var components = java.util.List.of(
-                    gregtech.api.material.MaterialComponent.of(material, 5 * unit),
-                    gregtech.api.material.MaterialComponent.of(bark, unit));
-            // WoodEntry upgrades the original generic 4U log to 5U wood + 1U bark,
-            // or 6U of the same material for rotten/mossy wood. PlankEntry contributes 1U.
-            gregtech.engine.material.ItemMaterialRegistry.register(
-                    item("gt6ce:log_" + wood.kind(), 1).getItem(),
-                    new gregtech.engine.material.ItemComposition(
-                            null,
-                            components,
-                            material,
-                            java.util.List.of(new gregtech.engine.material.ItemCompositionSource(
-                                    gregtech.engine.material.ItemCompositionSource.Kind.EXPLICIT,
-                                    "gt6ce:wood-log/" + wood.kind(),
-                                    "GT6 WoodEntry Log1",
-                                    wood.kind(),
-                                    "")),
-                            true),
-                    gregtech.engine.material.ItemCompositionSource.Kind.EXPLICIT,
-                    "gt6ce:wood-log/" + wood.kind(),
-                    "GT6 WoodEntry Log1");
-            gregtech.engine.material.ItemMaterialRegistry.register(
-                    item("gt6ce:planks_" + wood.kind(), 1).getItem(), MaterialPrefix.plate, material, unit);
-        }
-    }
-
     public static int register() {
         for (var species : WoodSpecies.values()) INSTANCE.wood(species);
         for (String species : new String[] {"crimson", "warped"}) INSTANCE.netherWood(species);
@@ -113,8 +51,6 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
         var material = gregtech.engine.material.GTMaterialRegistry.get(name);
         var slab = item("gt6ce:slab_" + wood, 1);
         pulverize(item("gt6ce:planks_" + wood, 1), wood, GTValues.U);
-        gregtech.engine.material.ItemMaterialRegistry.register(
-                slab.getItem(), null, material, gregtech.api.material.GTValues.U / 2);
         var dust = MortarGrindingRecipes.pulverize(material, gregtech.api.material.GTValues.U / 2);
         // pulverizing registers both the crusher and the shredder, as in the original helper.
         if (dust.isEmpty()) throw new IllegalStateException("Missing wood slab pulverization material " + name);

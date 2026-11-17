@@ -6,7 +6,7 @@ import gregtech.api.material.GTValues;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.MaterialPrefixes;
-import gregtech.content.recipe.OriginalMaterialFluidUnits;
+import gregtech.content.material.catalog.MaterialFluidUnitFacts;
 import gregtech.content.recipe.SourceCentrifugeBlockDustInputs;
 import gregtech.content.recipe.SourceCentrifugeItemOutputs;
 import gregtech.content.recipe.SourceCentrifugeOptionalBindings;
@@ -426,7 +426,7 @@ public final class ChemRecipeResolver {
             return stack;
         }
         if (fluid instanceof ChemFluid.Water water) {
-            int mb = OriginalMaterialFluidUnits.millibuckets(water.units().units(), GTValues.U, 1000,
+            int mb = MaterialFluidUnitFacts.millibuckets(water.units().units(), GTValues.U, 1000,
                     water.rounding() == gregtech.engine.recipe.chem.Rounding.CEIL);
             if (mb <= 0) throw new MissingContent("water amount " + water.units(), false);
             return new FluidStack(Fluids.WATER, mb);

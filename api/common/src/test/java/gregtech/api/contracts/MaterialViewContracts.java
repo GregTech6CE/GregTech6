@@ -2,6 +2,7 @@
 package gregtech.api.contracts;
 
 import gregtech.api.addon.material.*;
+
 import java.util.List;
 
 /** Only the delivered API JAR participates in this consumer. */
@@ -41,6 +42,20 @@ final class MaterialViewContracts {
                 || contributor.materialGroups().size() != 1
                 || contributor.processes().size() != 1)
             throw new AssertionError("tag, group and process SPI");
+        var specialKey = MaterialProcessKey.multiple(
+                new DataKey("consumer", "special_process/wash"), SpecialProcessValue.class);
+        var method = new SpecialProcessMethod(specialKey, "gt.recipe.bath", "consumer.special.wash");
+        var target = new SpecialProcessValue.Target(
+                java.util.Map.of(new FormKey("dust"), 1),
+                List.of(new SpecialProcessValue.ItemOutput(
+                        key, List.of(new SpecialProcessValue.FormCount(new FormKey("dust"), 1)), 10_000)),
+                List.of(),
+                1,
+                1,
+                0);
+        if (!method.targetTag().equals(new DataKey("consumer", "special_process/wash/target"))
+                || !(target.itemOutputs().get(0).material().equals(key)))
+            throw new AssertionError("special process contract");
         try { GregTechMaterials.catalog(); throw new AssertionError("unbound host must fail"); }
         catch (IllegalStateException expected) { }
     }

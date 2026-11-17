@@ -6,14 +6,13 @@ import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
-import gregtech.compat.jei.RecipeMachines;
+import gregtech.compat.common.RecipeMachines;
 import gregtech.content.item.GTToolItem;
 import gregtech.engine.recipe.RecipeMap;
 import java.util.Locale;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 /** Native EMI integration: machine maps are independent of the vanilla RecipeManager and JEI. */
 @EmiEntrypoint
@@ -32,6 +31,22 @@ public final class GregTechEMIPlugin implements EmiPlugin {
 
     public static int overlayGeneration() {
         return overlayGeneration;
+    }
+
+    /** EMI's locked 1.1.24 release exposes reload through its runtime, not its public API. */
+    public static void overlayFailed() {
+        long generation = gregtech.content.recipe.MachineRecipeOverlay.generation();
+        net.minecraft.client.Minecraft.getInstance().execute(() -> {
+            if (generation != gregtech.content.recipe.MachineRecipeOverlay.generation()) return;
+            try {
+                Class.forName("dev.emi.emi.runtime.EmiReloadManager")
+                        .getMethod("reload")
+                        .invoke(null);
+            } catch (ReflectiveOperationException failure) {
+                com.mojang.logging.LogUtils.getLogger()
+                        .error("[gregtech] Could not reload EMI after overlay failure", failure);
+            }
+        });
     }
 
     @Override
@@ -96,9 +111,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                     || map.mRecipeList.stream().noneMatch(r -> r.mEnabled && !r.mHidden)
                             && !map.hasDynamicEnumeration()) continue;
             var workstations = machines.getOrDefault(map, java.util.List.of());
-            ItemStack icon = workstations.isEmpty() ? new ItemStack(Items.ANVIL) : workstations.get(0);
-            var preferred = gregtech.compat.common.RecipeViewerIcons.map(map);
-            if (!preferred.isEmpty()) icon = preferred;
+            ItemStack icon = gregtech.compat.common.RecipeViewerIcons.category(map, machines);
             var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.mNameInternal.toLowerCase(Locale.ROOT));
             var category = new EmiRecipeCategory(id, EmiStack.of(icon)) {
                 @Override

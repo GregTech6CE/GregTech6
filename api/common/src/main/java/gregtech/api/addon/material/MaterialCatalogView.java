@@ -27,4 +27,8 @@ public interface MaterialCatalogView {
     default MaterialProcessesView processes() {
         throw new UnsupportedOperationException("This material catalog does not expose process views");
     }
+    /** Immutable special-process method declarations captured with this definition view. */
+    default SpecialProcessesView specialProcesses() {
+        throw new UnsupportedOperationException("This material catalog does not expose special processes");
+    }
 }

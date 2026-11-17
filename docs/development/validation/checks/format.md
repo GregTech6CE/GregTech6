@@ -16,6 +16,8 @@ Spotless 使用 Palantir Java Format 检查 Java 源码格式：4 空格缩进�
 
 `:api` 与 `:api-platform` 当前未接入 Spotless。修改这两层时仍要按现有文件风格书写，但不能把 `spotlessCheck` 通过解读为这两层已格式化；补齐接入属于单独的构建改动。
 
+存在 `origin/master` 时默认检查相对它的改动，缺失时检查已接入的源码；`-PspotlessRatchet=HEAD` 使用现有构建参数，仅检查当前工作区相对 HEAD 的改动，适合隔离分支上既有的无关格式问题。`-PspotlessRatchet=` 禁用 ratchet 并检查所有纳入范围的源码；CI 使用空值关闭 ratchet。HEAD 范围通过不能代替默认全分支或 CI 全量检查，失败仍须单独报告。
+
 Spotless 排除 `**/generated/**` 与包含 Stonecutter `//?` 标记的共享文件；后两者由节点级处理。不要直接对生成副本套用格式任务。
 
 ## 注意事项

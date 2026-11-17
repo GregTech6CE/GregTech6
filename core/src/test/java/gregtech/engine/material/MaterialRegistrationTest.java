@@ -7,16 +7,86 @@ import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.content.material.MaterialDefinitions;
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 
 class MaterialRegistrationTest {
+    @Test
+    void discoveredAddonDefinitionsMergeOrFailWithoutPublishing() throws Exception {
+        for (String conflict : List.of("false", "true", "unknown", "foreign_host", "foreign_output")) {
+            var classpath = new java.util.ArrayList<String>();
+            for (Class<?> type : List.of(MaterialAddonLifecycleProbe.class, GTMaterialRegistry.class, GTMaterial.class))
+                classpath.add(Path.of(type.getProtectionDomain()
+                                .getCodeSource()
+                                .getLocation()
+                                .toURI())
+                        .toString());
+            var process = new ProcessBuilder(
+                            Path.of(System.getProperty("java.home"), "bin", "java")
+                                    .toString(),
+                            "-cp",
+                            String.join(java.io.File.pathSeparator, classpath),
+                            MaterialAddonLifecycleProbe.class.getName(),
+                            conflict)
+                    .redirectErrorStream(true)
+                    .start();
+            boolean finished = process.waitFor(60, java.util.concurrent.TimeUnit.SECONDS);
+            if (!finished) process.destroyForcibly();
+            assertTrue(finished, "addon lifecycle probe timed out");
+            String output =
+                    new String(process.getInputStream().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+            assertEquals(0, process.exitValue(), output);
+        }
+    }
+
+    @Test
+    void specialProcessInputCountsFollowFormAliases() {
+        gregtech.content.material.MaterialTestFixture.ensureInitialized();
+        var alias = new FormKey("casingSmall");
+        var canonical = new FormKey("itemCasing");
+        var process = new MaterialProcessKey<>(
+                new DataKey("test_addon", "special"), SpecialProcessValue.class, MaterialProcessCardinality.MULTIPLE);
+        var output = new SpecialProcessValue.ItemOutput(
+                new MaterialKey("Iron"), List.of(new SpecialProcessValue.FormCount(new FormKey("dust"), 1)), 10000);
+        var target = new SpecialProcessValue.Target(Map.of(alias, 2), List.of(output), List.of(), 100, 20, 2);
+        var normalized = MaterialInfoRegistry.normalizeProcessRule(
+                "test", process, new MaterialProcessRule<>(Set.of(alias), target));
+        assertEquals(Set.of(canonical), normalized.forms());
+        assertEquals(Map.of(canonical, 2), ((SpecialProcessValue.Target) normalized.value()).inputCounts());
+        var aliasedOutput = new SpecialProcessValue.ItemOutput(
+                new MaterialKey("Fe"),
+                List.of(
+                        new SpecialProcessValue.FormCount(alias, 2),
+                        new SpecialProcessValue.FormCount(new FormKey("dust"), 3)),
+                5000);
+        var aliasedFluid = new SpecialProcessValue.FluidOutput(
+                new MaterialKey("Fe"), List.of(new SpecialProcessValue.FormCount(new FormKey("molten"), 1)), 144);
+        var aliasedTarget = new SpecialProcessValue.Target(
+                Map.of(alias, 2), List.of(aliasedOutput), List.of(aliasedFluid), 100, 20, 2);
+        var result = (SpecialProcessValue.Target) MaterialInfoRegistry.normalizeProcessRule(
+                        "test", process, new MaterialProcessRule<>(Set.of(alias), aliasedTarget))
+                .value();
+        assertEquals(new MaterialKey("Iron"), result.itemOutputs().get(0).material());
+        assertEquals(
+                List.of(
+                        new SpecialProcessValue.FormCount(canonical, 2),
+                        new SpecialProcessValue.FormCount(new FormKey("dust"), 3)),
+                result.itemOutputs().get(0).forms());
+        assertEquals(5000, result.itemOutputs().get(0).chance());
+        assertEquals(new MaterialKey("Iron"), result.fluidOutputs().get(0).material());
+        assertEquals(144, result.fluidOutputs().get(0).millibuckets());
+        var duplicate =
+                new SpecialProcessValue.Target(Map.of(alias, 2, canonical, 3), List.of(output), List.of(), 100, 20, 2);
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> MaterialInfoRegistry.normalizeProcessRule(
+                        "test", process, new MaterialProcessRule<>(Set.of(alias, canonical), duplicate)));
+    }
+
     @Test
     void singleValuedProcessesRejectMultipleRulesDuringConstruction() {
         var process = new MaterialProcessKey<>(
@@ -295,81 +365,5 @@ class MaterialRegistrationTest {
         }
         var almandine = MaterialDefinitions.info("Almandine");
         assertTrue(almandine.relations().forms().contains("ORES"));
-    }
-
-    @Test
-    void isolatedLifecyclesCoverEarlyReadsFailuresAndSharedAddonDeclarations() throws Exception {
-        for (String scenario : List.of(
-                "early",
-                "facade",
-                "normal",
-                "aliasPublication",
-                "merge",
-                "conflict",
-                "definitionFailure",
-                "linkFailure",
-                "metadata",
-                "metadataUnknownFailure",
-                "metadataOwnerFailure",
-                "metadataNamespaceFailure",
-                "metadataTypeFailure",
-                "info",
-                "infoLegacy",
-                "infoLegacyToolConflictFailure",
-                "infoOwnerFailure",
-                "infoNamespaceFailure",
-                "infoProcessTypeFailure",
-                "infoProcessFormAlias",
-                "infoProcessSingleConflictFailure",
-                "infoProcessMultiple",
-                "infoProcessMissingFormFailure",
-                "infoProcessUnknownFormFailure",
-                "relations",
-                "relationTagCycleFailure",
-                "relationUnknownTagFailure",
-                "relationNamespaceFailure",
-                "relationUnknownGroupFailure",
-                "relationGroupCycleFailure",
-                "processDecomposition",
-                "infoDecomposition",
-                "infoDecompositionBlock",
-                "infoDecompositionLiquid",
-                "infoDecompositionGas",
-                "infoDecompositionConflictFailure",
-                "infoDecompositionOwnerFailure",
-                "processDecompositionOwnerFailure",
-                "processes",
-                "processFormAlias",
-                "processSingleConflictFailure",
-                "processMultiple",
-                "processUnknownFormFailure",
-                "processNamespaceFailure",
-                "processUnknownMaterialFailure",
-                "processGroupMaterialFailure")) {
-            var root = Path.of("").toAbsolutePath();
-            if (!Files.isDirectory(root.resolve("core"))) root = root.getParent();
-            var output = root.resolve("work/material-system-refactor/02/lifecycle-" + scenario + ".log");
-            Files.createDirectories(output.getParent());
-            var classpath = new java.util.ArrayList<String>();
-            for (Class<?> type : List.of(MaterialLifecycleProbe.class, GTMaterialRegistry.class, GTMaterial.class))
-                classpath.add(Path.of(type.getProtectionDomain()
-                                .getCodeSource()
-                                .getLocation()
-                                .toURI())
-                        .toString());
-            var process = new ProcessBuilder(
-                            Path.of(System.getProperty("java.home"), "bin/java").toString(),
-                            "-cp",
-                            String.join(File.pathSeparator, classpath),
-                            MaterialLifecycleProbe.class.getName(),
-                            scenario)
-                    .redirectErrorStream(true)
-                    .redirectOutput(output.toFile())
-                    .start();
-            boolean done = process.waitFor(45, TimeUnit.SECONDS);
-            if (!done) process.destroyForcibly();
-            assertTrue(done, scenario + " timed out");
-            assertEquals(0, process.exitValue(), () -> "Lifecycle failed: " + output);
-        }
     }
 }

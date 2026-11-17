@@ -1,6 +1,7 @@
 package gregtech.content.recipe;
 
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -177,7 +178,7 @@ public final class SourceOreWashingRules {
      * an unknown earlier candidate defers instead of silently changing first-match semantics.
      */
     public static <M> Selection<M> selectByproduct(
-            M self, List<M> ordered, Function<M, SourceOreWashingData.Decision> tag, Function<M, Availability> tiny) {
+            M self, List<M> ordered, Function<M, MaterialFactKeys.Decision> tag, Function<M, Availability> tiny) {
         Objects.requireNonNull(self);
         Objects.requireNonNull(ordered);
         Objects.requireNonNull(tag);
@@ -185,12 +186,12 @@ public final class SourceOreWashingRules {
         var candidates = new ArrayList<M>(ordered);
         candidates.add(self);
         for (M candidate : candidates) {
-            SourceOreWashingData.Decision decision = tag.apply(candidate);
-            if (decision == SourceOreWashingData.Decision.NO) continue;
+            MaterialFactKeys.Decision decision = tag.apply(candidate);
+            if (decision == MaterialFactKeys.Decision.NO) continue;
             Availability available = tiny.apply(candidate);
             if (available == Availability.ABSENT) continue;
             if (decision == null
-                    || decision == SourceOreWashingData.Decision.UNKNOWN
+                    || decision == MaterialFactKeys.Decision.UNKNOWN
                     || available == null
                     || available == Availability.UNKNOWN) return new Selection<>(Availability.UNKNOWN, null);
             return new Selection<>(Availability.PRESENT, candidate);

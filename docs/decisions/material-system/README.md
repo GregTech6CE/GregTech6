@@ -40,7 +40,7 @@
   原生资源 Tag 导入 / 数据包变更
         │  beginTagGeneration() → 构建新代 Tag 候选 → ItemCompositionResolver
         ▼  刷新 MaterialFormContent 绑定 → 回收/分解 RecipeMap overlay 重建
-  成功：提交 MaterialPublication.platformGenerationPublished(compRev, recipeRev)
+  成功：candidatePlatformGeneration(compRev, recipeRev) → 服务端配方发布或客户端炉桥完成后 commit(candidate)
   失败：按检查点回滚成分快照与机器配方，保持上一完整 Stamp 不变
 ```
 
@@ -51,4 +51,4 @@
 3. [物品成分解析与运行时准入](item-composition.md)：结构化来源优先级、同级冲突与显式替换链、显式层封闭与 Tag 代次原子重载、耐久缩放及容器/模具形状区分。
 4. [统一回收计划与配方发布仲裁](recovery.md)：基于有效成分的纯粉碎/热回收计划、大份量拆栈与精度表达、生产端输入证明、所有权与冲突发布仲裁。
 5. [统一材料分解规则与计划](decomposition.md)：`MaterialDecompositionRule` 唯一权威、规范组成与精确单位计算、液/气替代相态与固体兜底、原生适配器与重载隔离。
-6. [公共数据 API 与多代发布契约](data-api-and-publication.md)：已实现的只读视图（目录、元数据、分类/组、形态规则与实际绑定）、`MaterialPublication.Stamp` 一致性保证，以及明确标为`提议`的多快照来源图规划。
+6. [公共数据 API 与多代发布契约](data-api-and-publication.md)：已实现的只读视图（目录、元数据、分类/组、形态规则与实际绑定）、`MaterialPublication.Stamp` 一致性保证。

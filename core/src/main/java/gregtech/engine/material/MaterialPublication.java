@@ -31,20 +31,34 @@ public final class MaterialPublication {
         return published;
     }
 
-    /** Publishes one complete platform generation after compositions and recipe rows are final. */
-    public static synchronized Stamp platformGenerationPublished(long compositionRevision, long recipeRevision) {
-        Stamp previous = current;
-        if (previous.materialRevision() == 0)
-            throw new IllegalStateException("Material definitions must be published first");
-        if (recipeRevision <= 0) throw new IllegalArgumentException("Recipe revision must be positive");
-        Stamp published = new Stamp(
+    /** Allocates a generation stamp for a build that has not reached its final publication boundary. */
+    public static synchronized Stamp candidatePlatformGeneration(long compositionRevision, long recipeRevision) {
+        Stamp previous = requirePlatformGeneration(compositionRevision, recipeRevision);
+        return new Stamp(
                 NEXT_REVISION.incrementAndGet(), previous.materialRevision(), compositionRevision, recipeRevision);
-        current = published;
-        return published;
+    }
+
+    /** Commits a candidate only after every derived publication built from it has succeeded. */
+    public static synchronized Stamp commit(Stamp candidate) {
+        java.util.Objects.requireNonNull(candidate, "candidate");
+        Stamp previous = current;
+        if (candidate.materialRevision() != previous.materialRevision())
+            throw new IllegalStateException("Published generation belongs to another material definition");
+        if (candidate.revision() <= previous.revision()) return previous;
+        current = candidate;
+        return candidate;
     }
 
     /** The last fully successful publication; an in-progress or failed generation leaves it unchanged. */
     public static Stamp current() {
         return current;
+    }
+
+    private static Stamp requirePlatformGeneration(long compositionRevision, long recipeRevision) {
+        Stamp previous = current;
+        if (previous.materialRevision() == 0)
+            throw new IllegalStateException("Material definitions must be published first");
+        if (recipeRevision <= 0) throw new IllegalArgumentException("Recipe revision must be positive");
+        return previous;
     }
 }

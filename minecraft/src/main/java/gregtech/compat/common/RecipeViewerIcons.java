@@ -36,6 +36,17 @@ public final class RecipeViewerIcons {
         return stack;
     }
 
+    /** Resolves the preferred category icon, falling back to a workstation. */
+    public static ItemStack category(RecipeMap map, java.util.Map<RecipeMap, java.util.List<ItemStack>> machines) {
+        ItemStack preferred = map(map);
+        if (!preferred.isEmpty()) return preferred;
+        var workstations = machines.getOrDefault(map, java.util.List.of());
+        if (!workstations.isEmpty()) return workstations.get(0).copy();
+        for (var recipe : map.mRecipeList)
+            for (var output : recipe.mOutputs) if (output != null && !output.isEmpty()) return output.copy();
+        return new ItemStack(net.minecraft.world.item.Items.ANVIL);
+    }
+
     public static ItemStack map(RecipeMap map) {
         if (map == MachineRecipeMaps.ByProductList)
             return GTItems.getStack(MaterialPrefix.dust, GTMaterialRegistry.get("Platinum"));

@@ -14,7 +14,7 @@ public final class SourceThermalRecyclingRules {
 
     public static final int POWER = 16;
     public static final long ENVIRONMENT_TEMPERATURE = 293;
-    private static final long U = OriginalMaterialFluidUnits.SOURCE_UNIT;
+    private static final long U = gregtech.content.material.catalog.MaterialFluidUnitFacts.SOURCE_UNIT;
 
     public enum Truth {
         YES,

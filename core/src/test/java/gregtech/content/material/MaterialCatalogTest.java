@@ -1,14 +1,10 @@
 package gregtech.content.material;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
+import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.material.MaterialKey;
 import gregtech.content.fluid.FluidDefinitions;
-import gregtech.content.recipe.SourceRecyclingFacts;
-import gregtech.content.recipe.SourceWaxMaterials;
 import gregtech.content.storage.ItemBarrelCatalog;
 import gregtech.content.tool.AnvilVariantCatalog;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -16,17 +12,155 @@ import org.junit.jupiter.api.Test;
 
 class MaterialCatalogTest {
     @Test
+    void reviewedRecipeFactsAreFullyProjectedIntoMaterialDeclarations() {
+        var declarations = MaterialDefinitions.declarations();
+        assertEquals(198, processCount(declarations, MaterialFactKeys.SOURCE_FURNACE));
+        assertEquals(2, processCount(declarations, MaterialFactKeys.SOURCE_GRADED_GEM));
+        assertEquals(39, processCount(declarations, MaterialFactKeys.SOURCE_ORE_INPUT));
+        assertEquals(1, processCount(declarations, MaterialFactKeys.SOURCE_SIFTING_EXCLUSIONS));
+        assertEquals(9, processCount(declarations, MaterialFactKeys.SOURCE_CRUSHED_EXCLUSIONS));
+        assertEquals(11, processCount(declarations, MaterialFactKeys.SOURCE_ORE_SHREDDER));
+        assertEquals(670, processCount(declarations, MaterialFactKeys.SOURCE_MACERATION));
+        assertEquals(142, processCount(declarations, MaterialFactKeys.SOURCE_WASHING));
+        assertEquals(51, processCount(declarations, MaterialFactKeys.MATERIAL_FLUID_UNIT));
+        assertEquals(134, processCount(declarations, MaterialFactKeys.GENERIFICATION_TARGET));
+        assertEquals(733, processCount(declarations, MaterialFactKeys.SOURCE_EXTRUSION));
+        // Four additional source lens roles belong to absent optional Hexorium materials.
+        assertEquals(53, processCount(declarations, MaterialFactKeys.SOURCE_LENS_ROLE));
+        assertEquals(1, processCount(declarations, MaterialFactKeys.SOURCE_CINNABAR_FOLLOWON));
+        assertEquals(3, processCount(declarations, MaterialFactKeys.SOURCE_GENERATED_FLUID));
+        assertEquals(672, processCount(declarations, MaterialFactKeys.SOURCE_RECYCLING));
+        assertEquals(15, processCount(declarations, MaterialFactKeys.SOURCE_MOLTEN_FLUID));
+        assertEquals(672, processCount(declarations, MaterialFactKeys.SOURCE_ORE_CRUSHING));
+        assertEquals(6, processCount(declarations, MaterialFactKeys.SOURCE_PURIFIED_CENTRIFUGE_PHASE));
+        assertEquals(7, processCount(declarations, MaterialFactKeys.SOURCE_PURIFIED_CENTRIFUGE_NO_DEFAULT));
+        assertEquals(2, processCount(declarations, MaterialFactKeys.SOURCE_ADDITIONAL_WIRE_FAMILY));
+        assertEquals(1, processCount(declarations, MaterialFactKeys.COMPRESSOR_DUST_TO_GEM_PLATE));
+        assertEquals(
+                14, processCount(declarations, gregtech.content.material.SpecialProcessMethods.AQUA_REGIA_LEACHING));
+        assertTrue(processCount(
+                        declarations,
+                        gregtech.content.material.SpecialProcessMethods.HYDROCHLORIC_ACID_MANGANESE_LEACHING)
+                > 1);
+    }
+
+    @Test
     void standaloneMaterialsAndDeviceCatalogsResolveWithoutLegacyMods() {
         MaterialTestFixture.ensureInitialized();
         FluidDefinitions.prepare();
         verifyCanonicalFluids();
         verifyAlloyMeltingAndMoltenTemperature();
-        // Building the thermal facts also verifies every phase binding and target has an identity.
-        assertTrue(!SourceRecyclingFacts.all().isEmpty());
-        assertNotNull(SourceRecyclingFacts.find(260, "Iron"));
-        assertNotNull(SourceRecyclingFacts.find(790, "Gold"));
-        assertNull(SourceRecyclingFacts.find(1850, "Abyssalnite"));
-        assertNull(SourceRecyclingFacts.find(8703, "Manyullyn"));
+        var processes = GregTechMaterials.processes();
+        // The material process payload verifies every source phase binding and target identity.
+        assertTrue(processes
+                .findSingle(new MaterialKey("Iron"), MaterialFactKeys.SOURCE_RECYCLING)
+                .isPresent());
+        assertTrue(processes
+                .findSingle(new MaterialKey("Gold"), MaterialFactKeys.SOURCE_RECYCLING)
+                .isPresent());
+        assertTrue(processes
+                .findSingle(new MaterialKey("Abyssalnite"), MaterialFactKeys.SOURCE_RECYCLING)
+                .isEmpty());
+        assertTrue(processes
+                .findSingle(new MaterialKey("Manyullyn"), MaterialFactKeys.SOURCE_RECYCLING)
+                .isEmpty());
+        assertFalse(processes
+                .findSingle(new MaterialKey("Water"), MaterialFactKeys.SOURCE_RECYCLING)
+                .orElseThrow()
+                .value()
+                .inputEligible());
+        assertTrue(processes
+                .findSingle(new MaterialKey("Iron"), MaterialFactKeys.SOURCE_EXTRUSION)
+                .isPresent());
+        var aquaRegia = processes
+                .findSingle(new MaterialKey("AquaRegia"), MaterialFactKeys.MATERIAL_FLUID_UNIT)
+                .orElseThrow()
+                .value();
+        assertTrue(GregTechMaterials.catalog()
+                .specialProcesses()
+                .find(new gregtech.api.addon.material.DataKey("gt6ce", "special_process/aqua_regia_leaching"))
+                .isPresent());
+        assertTrue(
+                processes
+                        .find(
+                                new MaterialKey("Gold"),
+                                gregtech.content.material.SpecialProcessMethods.AQUA_REGIA_LEACHING)
+                        .stream()
+                        .anyMatch(rule ->
+                                rule.value() instanceof gregtech.api.addon.material.SpecialProcessValue.Target));
+        assertTrue(processes
+                .find(new MaterialKey("AquaRegia"), gregtech.content.material.SpecialProcessMethods.AQUA_REGIA_LEACHING)
+                .stream()
+                .anyMatch(rule -> rule.value() instanceof gregtech.api.addon.material.SpecialProcessValue.Reagent));
+        assertTrue(aquaRegia.units().stream()
+                .anyMatch(unit -> unit.phase().equals("liquid")
+                        && unit.fluidField().equals("GenLiquid_AquaRegia")
+                        && unit.referenceMillibuckets() == 1000));
+        for (var phase : gregtech.content.material.catalog.SpecialProcessData.Phase.values()) {
+            var units = processes
+                    .findSingle(new MaterialKey(phase.material().name()), MaterialFactKeys.MATERIAL_FLUID_UNIT)
+                    .orElseThrow(() -> new AssertionError("Missing acid fluid units: " + phase))
+                    .value()
+                    .units();
+            assertTrue(
+                    units.stream()
+                            .anyMatch(unit ->
+                                    unit.phase().equals(phase.state().name().toLowerCase(java.util.Locale.ROOT))),
+                    phase.name());
+        }
+        var titaniumFluid = processes
+                .findSingle(new MaterialKey("Titanium"), MaterialFactKeys.SOURCE_GENERATED_FLUID)
+                .orElseThrow()
+                .value()
+                .rules()
+                .stream()
+                .findFirst()
+                .orElseThrow();
+        assertTrue(titaniumFluid.wholeDustMetal());
+        assertEquals(4.54F, titaniumFluid.materialDensity());
+        assertTrue(processes
+                .findSingle(new MaterialKey("Carbon14"), MaterialFactKeys.SOURCE_MOLTEN_FLUID)
+                .orElseThrow()
+                .value());
+        var cinnabarRule = processes
+                .findSingle(new MaterialKey("Cinnabar"), MaterialFactKeys.SOURCE_CINNABAR_FOLLOWON)
+                .orElseThrow()
+                .value();
+        assertEquals(9114, cinnabarRule.cinnabar().id());
+        for (String byproduct : java.util.List.of("Redstone", "Sulfur", "Glowstone", "Selenium", "SluiceSand")) {
+            assertTrue(processes
+                    .findSingle(new MaterialKey(byproduct), MaterialFactKeys.SOURCE_CINNABAR_FOLLOWON)
+                    .isEmpty());
+        }
+        assertTrue(GTMaterialRegistry.get("Iron").has(gregtech.api.material.MaterialProperty.MAGNETIC));
+        assertEquals(
+                MaterialFactKeys.Decision.YES,
+                processes
+                        .findSingle(new MaterialKey("Lithium6"), MaterialFactKeys.SOURCE_FURNACE)
+                        .orElseThrow()
+                        .value());
+        assertEquals(
+                MaterialFactKeys.Decision.YES,
+                processes
+                        .findSingle(new MaterialKey("HydratedCoal"), MaterialFactKeys.SOURCE_FURNACE)
+                        .orElseThrow()
+                        .value());
+        assertTrue(processes
+                .findSingle(new MaterialKey("Netherite"), MaterialFactKeys.SOURCE_ADDITIONAL_WIRE_FAMILY)
+                .orElseThrow()
+                .value());
+        assertTrue(processes
+                .findSingle(new MaterialKey("Naquadah"), MaterialFactKeys.SOURCE_ADDITIONAL_WIRE_FAMILY)
+                .orElseThrow()
+                .value());
+        assertTrue(processes
+                .findSingle(new MaterialKey("Titanium"), MaterialFactKeys.SOURCE_ADDITIONAL_WIRE_FAMILY)
+                .isEmpty());
+        assertTrue(processes
+                .findSingle(new MaterialKey("Ice"), MaterialFactKeys.SOURCE_SIFTING_EXCLUSIONS)
+                .orElseThrow()
+                .value()
+                .excludes("gemLegendary"));
         assertTrue(gregtech.content.energy.WireCatalog.specifications().stream()
                 .anyMatch(wire -> wire.material() == Materials.Gold && wire.insulated() && wire.size() == 4));
         for (int id : new int[] {
@@ -45,7 +179,9 @@ class MaterialCatalogTest {
             assertEquals(8250 + i, dye.getId());
             assertTrue(dye.getName().startsWith("Dye"));
             assertTrue(!GTMaterialRegistry.get(9500 + i).isValid());
-            assertNotNull(SourceRecyclingFacts.find(dye.getId(), dye.getName()));
+            assertTrue(processes
+                    .findSingle(new MaterialKey(dye.getName()), MaterialFactKeys.SOURCE_RECYCLING)
+                    .isPresent());
         }
         for (String retained : java.util.List.of(
                 "Greatwood",
@@ -62,13 +198,6 @@ class MaterialCatalogTest {
         for (int id : new int[] {1250, 8752, 9204, 9205, 9206, 9207, 9208, 9209})
             assertTrue(GTMaterialRegistry.get(id).isValid(), "Restored Tritanium material " + id);
         assertSame(GTMaterialRegistry.get("Tn"), GTMaterialRegistry.get(1250), "Tn alias");
-        var waxes = SourceWaxMaterials.materials();
-        assertEquals(
-                java.util.List.of(8235, 8236, 8238, 8239),
-                waxes.stream().map(material -> material.getId()).toList());
-        assertEquals(
-                java.util.List.of("Wax", "WaxBee", "WaxParaffin", "WaxPlant"),
-                waxes.stream().map(material -> material.getName()).toList());
         for (String name : new String[] {
             "Iron",
             "Amethyst",
@@ -200,5 +329,13 @@ class MaterialCatalogTest {
                 gregtech.content.worldgen.GTBedrockOres.NETHER.get(4).material());
         assertTrue(!GTMaterialRegistry.get(8456).isValid());
         assertTrue(!GTMaterialRegistry.get(8457).isValid());
+    }
+
+    private static long processCount(
+            java.util.List<gregtech.engine.material.MaterialDefinition.Declaration> declarations,
+            gregtech.api.addon.material.MaterialProcessKey<?> key) {
+        return declarations.stream()
+                .filter(declaration -> !declaration.info().processes().find(key).isEmpty())
+                .count();
     }
 }

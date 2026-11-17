@@ -1,5 +1,6 @@
 package gregtech.compat.jei;
 
+import gregtech.compat.common.PreviewViewport;
 import gregtech.engine.multiblock.*;
 import java.util.*;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;

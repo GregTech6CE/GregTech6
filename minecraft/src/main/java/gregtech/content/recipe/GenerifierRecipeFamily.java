@@ -4,6 +4,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.block.MaterialBlockLike;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.MaterialFactKeys;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -152,7 +153,9 @@ public final class GenerifierRecipeFamily {
     }
 
     private static GTMaterial target(GTMaterial material) {
-        int targetId = GenerifyingRules.target(material.getId());
+        int targetId = MaterialFactKeys.value(material, MaterialFactKeys.GENERIFICATION_TARGET)
+                .map(MaterialFactKeys.GenerificationTarget::materialId)
+                .orElse(material.getId());
         if (targetId == material.getId()) return null;
         GTMaterial target = GTMaterialRegistry.get(targetId);
         return target.isValid() ? target : null;

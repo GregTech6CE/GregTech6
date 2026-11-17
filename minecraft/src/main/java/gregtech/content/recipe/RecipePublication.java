@@ -44,7 +44,11 @@ public final class RecipePublication {
         RecipeManager manager = server.getRecipeManager();
         Collection<?> current = manager.getRecipes();
         var applied = APPLIED.get(manager);
-        if (applied != null && applied.size() == current.size() && applied.containsAll(current)) return;
+        if (applied != null && applied.size() == current.size() && applied.containsAll(current)) {
+            if (MachineRecipeOverlay.generation() > 0 && !MachineRecipeOverlay.lastResult().failed())
+                gregtech.engine.material.MaterialPublication.commit(MachineRecipeOverlay.lastPublication());
+            return;
+        }
         RegistryAccess access = server.registryAccess();
 //? if >=1.21.1 {
         /*var working = new RecipeManager(access);
@@ -57,6 +61,8 @@ public final class RecipePublication {
         OvenRecipeBridge.apply(working, access);
         dedup(working, access);
         manager.replaceRecipes(working.getRecipes());
+        if (MachineRecipeOverlay.generation() > 0 && !MachineRecipeOverlay.lastResult().failed())
+            gregtech.engine.material.MaterialPublication.commit(MachineRecipeOverlay.lastPublication());
 //? if >=1.21.1 {
         /*ShapelessRecipeTooltipIndex.rebuild(manager, access);
 *///?} else {

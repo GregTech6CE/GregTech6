@@ -1,6 +1,8 @@
 package gregtech.engine.material;
 
-import gregtech.api.material.*;
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialProperty;
+import gregtech.api.material.MaterialTextureSet;
 import gregtech.content.data.MaterialPrefix;
 
 /** Shared original material icon selection and resource paths, without client classes. */

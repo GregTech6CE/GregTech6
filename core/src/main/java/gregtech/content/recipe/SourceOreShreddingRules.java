@@ -1,7 +1,7 @@
 package gregtech.content.recipe;
 
+import static gregtech.content.material.MaterialFactKeys.Decision;
 import static gregtech.content.recipe.SourceOreWashingRules.Availability;
-import static gregtech.content.recipe.SourceRecyclingFacts.Decision;
 
 import gregtech.api.material.GTValues;
 import gregtech.content.data.MaterialPrefix;

@@ -1,6 +1,9 @@
 package gregtech.client;
 
-import gregtech.content.registry.*;
+import gregtech.content.registry.GTBlockEntities;
+import gregtech.content.registry.GTManualStations;
+import gregtech.content.registry.GTMenuTypes;
+import gregtech.content.registry.GTStorageContainers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
