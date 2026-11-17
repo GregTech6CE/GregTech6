@@ -152,8 +152,7 @@ public final class MachineRecipeMaps {
      * Legacy import mapping. Unknown names fail instead of silently behaving as a furnace.
      */
     public static RecipeMap byMachineName(String machineName) {
-//? if >=1.21.1 {
-        /*return switch (MachineRecipeNames.field(machineName)) {
+        return switch (MachineRecipeNames.field(machineName)) {
             case "Furnace" -> Furnace;
             case "Roasting" -> Roasting;
             case "Distillery" -> Distillery;
@@ -219,95 +218,6 @@ public final class MachineRecipeMaps {
             case "DistillationTower" -> DistillationTower;
             case "DidYouKnow" -> DidYouKnow;
             default -> throw new IllegalArgumentException("Unknown machine recipe mapping: " + machineName);
-*///?} else {
-        return switch (machineName) {
-            case "oven"                  -> Furnace;
-            case "roaster"               -> Roasting;
-            case "distillery"            -> Distillery;
-            case "extruder"              -> Extruder;
-            case "smelter"               -> Smelter;
-            case "crystallisationcrucible" -> CrystallisationCrucible;
-            case "dryer"                 -> Drying;
-            case "laminator"             -> Laminator;
-            case "catalyticcracker"      -> CatalyticCracking;
-            case "steamcracker"          -> SteamCracking;
-            case "shredder"              -> Shredder;
-            case "lathe"                 -> Lathe;
-            case "buzzsaw"              -> Cutter;
-            case "centrifuge"            -> Centrifuge;
-            case "rollingmill"           -> RollingMill;
-            case "rollbender"            -> RollBender;
-            case "rollformer"            -> RollFormer;
-            case "clustermill"           -> ClusterMill;
-            case "wiremill"              -> Wiremill;
-            case "mixer"                 -> Mixer;
-            case "loom"                  -> Loom;
-            case "sluice"                -> Sluice;
-            case "sander"               -> Sharpening;
-            case "burnmixer"             -> BurnMixer;
-            case "debarker"              -> PressureWasher;
-            case "crusher"               -> Crusher;
-            case "sifter"                -> Sifting;
-            case "squeezer"              -> Squeezer;
-            case "compressor"            -> Compressor;
-            case "press"                 -> Press;
-            case "electrolyzer"          -> Electrolyzer;
-            case "canner"                -> Canner;
-            case "injector"              -> Injector;
-            case "printer"               -> Printer;
-            case "scannervisuals"        -> ScannerVisuals;
-            case "autocrafter"           -> Autocrafter;
-            case "electricmixer"         -> Mixer;
-            case "electricloom"          -> Loom;
-            case "electricsifter"        -> Sifting;
-            case "slicer"                -> Slicer;
-            case "nanofab"               -> Nanofab;
-            case "plantalyzer"           -> Plantalyzer;
-            case "bumblelyzer"           -> Bumblelyzer;
-            case "boxinator"             -> Boxinator;
-            case "unboxinator"           -> Unboxinator;
-            case "polarizer"             -> Polarizer;
-            case "magneticseparator"     -> MagneticSeparator;
-            case "laserengraver"         -> LaserEngraver;
-            case "laserwelder"           -> Welder;
-            case "freezer"               -> Freezer;
-            case "cryomixer"             -> CryoMixer;
-            case "massfab"               -> Massfab;
-            case "scannermolecular"      -> ScannerMolecular;
-            case "replicator"            -> Replicator;
-            case "autoclave"             -> Autoclave;
-            case "bath"                  -> Bath;
-            case "generifier"            -> Generifier;
-            case "coagulator"            -> Coagulator;
-            case "fermenter"             -> Fermenter;
-            case "melter"                -> Melter;
-            case "cokeoven"              -> CokeOven;
-            case "lightning"             -> Lightning;
-            case "implosioncompressor"   -> ImplosionCompressor;
-            case "fusionreactor"         -> Fusion;
-            case "cryodistillationtower" -> CryoDistillationTower;
-            case "distillationtower"     -> DistillationTower;
-            // Large batch machines (GT6 "Multiblock Machines" tab, single-block here)
-            case "largecentrifuge"       -> Centrifuge;
-            case "largeelectrolyzer"     -> Electrolyzer;
-            case "largecoagulator"       -> Coagulator;
-            case "largeautoclave"        -> Autoclave;
-            case "largebath"             -> Bath;
-            case "largemixer"            -> Mixer;
-            case "largefermenter"        -> Fermenter;
-            case "largeoven"             -> Furnace;
-            case "largesluice"           -> Sluice;
-            case "largecrusher"          -> Crusher;
-            case "largeshredder"         -> Shredder;
-            case "largesqueezer"         -> Squeezer;
-            case "largemassfab"          -> Massfab;
-            // GT6 legacy/alias names for the same machines. Kept so imported definitions
-            // and client menus never hit the throwing default branch below.
-            case "pressurewasher"        -> PressureWasher;
-            case "heatmixer"             -> Mixer;
-            case "default"               -> DidYouKnow;
-            default                      -> throw new IllegalArgumentException("Unknown machine recipe mapping: " + machineName);
-//?}
         };
     }
 
