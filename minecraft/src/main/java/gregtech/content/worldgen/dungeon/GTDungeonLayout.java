@@ -39,23 +39,27 @@ import java.util.List;
 public final class GTDungeonLayout {
 
     /** GT6's registration values ({@code Loader_Worldgen}). */
-    public static final int PROBABILITY = 100;
-    public static final int MIN_SIZE = 3, MAX_SIZE = 7;
-    public static final int MIN_Y = 20, MAX_Y = 20;
-    public static final int ROOM_CHANCE = 6;
+    public static final int PROBABILITY = DungeonLayoutRules.PROBABILITY;
+    public static final int MIN_SIZE = DungeonLayoutRules.MIN_SIZE, MAX_SIZE = DungeonLayoutRules.MAX_SIZE;
+    public static final int MIN_Y = DungeonLayoutRules.MIN_Y, MAX_Y = DungeonLayoutRules.MAX_Y;
+    public static final int ROOM_CHANCE = DungeonLayoutRules.ROOM_CHANCE;
     /** GT6: {@code ROOM_ID_COUNT = 1}, {@code IMPORTANT_ROOM_COUNT = 2}. */
-    public static final int ROOM_ID_COUNT = 1, IMPORTANT_ROOM_COUNT = 2;
+    public static final int ROOM_ID_COUNT = DungeonLayoutRules.ROOM_ID_COUNT,
+            IMPORTANT_ROOM_COUNT = DungeonLayoutRules.IMPORTANT_ROOM_COUNT;
     /** GT6's grid period: {@code mMaxSize + 4}. */
-    public static final int GRID_PERIOD = MAX_SIZE + 4;
+    public static final int GRID_PERIOD = DungeonLayoutRules.GRID_PERIOD;
     /** GT6's anchor alignment: {@code (mMaxSize + 4) / 2}. */
-    public static final int ANCHOR_OFFSET = GRID_PERIOD / 2;
+    public static final int ANCHOR_OFFSET = DungeonLayoutRules.ANCHOR_OFFSET;
     /** GT6's spawn protection: {@code 256 + mMaxSize * 16}. */
-    public static final int SPAWN_CLEARANCE = 256 + MAX_SIZE * 16;
+    public static final int SPAWN_CLEARANCE = DungeonLayoutRules.SPAWN_CLEARANCE;
     /** The widest layout is {@code 2 + MAX_SIZE} cells, i.e. {@code MAX_LAYOUT_HALF} cells per side. */
-    public static final int MAX_LAYOUT_HALF = (2 + MAX_SIZE) / 2;
+    public static final int MAX_LAYOUT_HALF = DungeonLayoutRules.MAX_LAYOUT_HALF;
 
     /** GT6's layout markers. */
-    public static final byte EMPTY = 0, CORRIDOR = -128, BARRACKS = -1, ENTRANCE = -2;
+    public static final byte EMPTY = DungeonLayoutRules.EMPTY,
+            CORRIDOR = DungeonLayoutRules.CORRIDOR,
+            BARRACKS = DungeonLayoutRules.BARRACKS,
+            ENTRANCE = DungeonLayoutRules.ENTRANCE;
 
     private GTDungeonLayout() {}
 

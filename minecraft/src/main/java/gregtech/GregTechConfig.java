@@ -1,5 +1,6 @@
 package gregtech;
 
+import gregtech.content.worldgen.dungeon.DungeonLayoutRules;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
@@ -212,12 +213,12 @@ public final class GregTechConfig {
         SPRING_PROBABILITY("worldgen.fluid_springs_probability", 100, 1, 1000000),
         OCEAN_HEIGHT("worldgen.water.ocean.Height", 63, -64, 319),
         RIVER_HEIGHT("worldgen.water.river.Height", 63, -64, 319),
-        DUNGEON_PROBABILITY("worldgen.dungeon.Probability", 100, 1, 1000000),
-        DUNGEON_MIN_SIZE("worldgen.dungeon.MinSize", 3, 3, 16),
-        DUNGEON_MAX_SIZE("worldgen.dungeon.MaxSize", 7, 3, 16),
-        DUNGEON_MIN_Y("worldgen.dungeon.MinY", 20, -59, 280),
-        DUNGEON_MAX_Y("worldgen.dungeon.MaxY", 20, -59, 280),
-        DUNGEON_ROOM_CHANCE("worldgen.dungeon.RoomChance", 6, 1, 1000);
+        DUNGEON_PROBABILITY("worldgen.dungeon.Probability", DungeonLayoutRules.PROBABILITY, 1, 1000000),
+        DUNGEON_MIN_SIZE("worldgen.dungeon.MinSize", DungeonLayoutRules.MIN_SIZE, 3, 16),
+        DUNGEON_MAX_SIZE("worldgen.dungeon.MaxSize", DungeonLayoutRules.MAX_SIZE, 3, 16),
+        DUNGEON_MIN_Y("worldgen.dungeon.MinY", DungeonLayoutRules.MIN_Y, -59, 280),
+        DUNGEON_MAX_Y("worldgen.dungeon.MaxY", DungeonLayoutRules.MAX_Y, -59, 280),
+        DUNGEON_ROOM_CHANCE("worldgen.dungeon.RoomChance", DungeonLayoutRules.ROOM_CHANCE, 1, 1000);
 
         private final String key;
         private final int initial, min, max;
