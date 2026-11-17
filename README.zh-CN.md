@@ -86,6 +86,7 @@ GT6CE **仍在持续开发中**。移植工作尚未全部完成，配方、交�
 | [架构与包职责](docs/architecture/README.md) | 源码分层、平台适配与包职责说明 |
 | [Addon API 与 KubeJS](docs/addon/README.md) | 扩展契约、SDK 构建与脚本集成 |
 | [路线图](docs/roadmap/v1.0.md) | 开发方针、架构规划、版本节点与协作约定 |
+| [更新日志](docs/changelog/v1.0.zh-CN.md) | 分版本面向用户的更新记录 |
 
 ## 许可证
 

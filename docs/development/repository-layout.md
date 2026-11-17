@@ -39,6 +39,7 @@
 | 包职责、边界与验收条件 | [architecture/packages](../architecture/packages/README.md) |
 | 跨模组兼容、联动内容与冲突结论 | [integration](../integration/README.md) |
 | 系统设计、跨平台差异与长期取舍 | [decisions](../decisions/README.md) |
+| 分版本更新日志 | [changelog](../changelog/README.md) |
 | 单个开发工具的依赖、参数与输出 | 对应 `tools/<scope>/README.md` |
 
 顶层文档入口以导航为主；正文放在所属专题，其他页面链接引用。工作过程先留在 `work/<任务名>/`，形成可复用结论后再归档。

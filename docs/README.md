@@ -12,6 +12,7 @@
 | 长期设计决策 | [长期决策](decisions/README.md) | 材料系统设计、跨平台边界与原版 GT6 特性差异 |
 | 附属与脚本开发 | [附属 API](addon/README.md) | 公开扩展契约、SDK 构建与 KubeJS 集成 |
 | 项目路线与协作 | [v1.0 路线图](roadmap/v1.0.md) | 开发方针、版本里程碑与问题/PR/RFC 协作方式 |
+| 更新日志 | [更新日志](changelog/README.md) | `v1.0` 系列中英更新记录与版本索引 |
 
 ## 文档维护
 
