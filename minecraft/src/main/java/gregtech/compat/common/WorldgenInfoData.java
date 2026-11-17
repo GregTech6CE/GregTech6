@@ -16,7 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-/** Icon-bearing worldgen data shared by the recipe viewers. */
+/** Worldgen catalog shared by the recipe viewers, independent of local geology and bedrock switches. */
 public class WorldgenInfoData {
     protected WorldgenInfoData() {}
 
@@ -69,7 +69,6 @@ public class WorldgenInfoData {
     }
 
     public static List<VeinInfo> buildVeins() {
-        if (!gregtech.GregTechConfig.Worldgen.GEOLOGY.enabled()) return List.of();
         List<VeinInfo> out = new ArrayList<>();
         var overworld = GTOreVeins.activeOverworldVeins();
         int overworldWeight =
@@ -381,7 +380,6 @@ public class WorldgenInfoData {
     }
 
     public static List<SmallOreInfo> buildSmallOres() {
-        if (!gregtech.GregTechConfig.Worldgen.GEOLOGY.enabled()) return List.of();
         List<SmallOreInfo> out = new ArrayList<>();
         for (GTOreVeins.SmallOre o : GTOreVeins.activeOverworldSmallOres()) {
             out.add(new SmallOreInfo(
@@ -407,7 +405,6 @@ public class WorldgenInfoData {
     }
 
     public static List<LayerInfo> buildLayers() {
-        if (!gregtech.GregTechConfig.Worldgen.GEOLOGY.enabled()) return List.of();
         List<LayerInfo> out = new ArrayList<>();
         java.util.Set<String> seen = new java.util.HashSet<>();
         for (GTStoneLayersGen.LayerDef def : GTStoneLayersGen.LAYERS) {
@@ -445,7 +442,6 @@ public class WorldgenInfoData {
     public record BedrockInfo(String name, GTMaterial material, int chance, ItemStack flower) {}
 
     public static List<BedrockInfo> buildBedrockOres() {
-        if (!gregtech.GregTechConfig.Worldgen.BEDROCK_ORES.enabled()) return List.of();
         List<BedrockInfo> out = new ArrayList<>();
         for (gregtech.content.worldgen.GTBedrockOres.BedrockOre ore :
                 gregtech.content.worldgen.GTBedrockOres.OVERWORLD) {
