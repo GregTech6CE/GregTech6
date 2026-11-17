@@ -1,4 +1,8 @@
 {
+  "tooltip.gt6ce.composition_scaled_damage": "Material amounts account for remaining durability",
+  "tooltip.gt6ce.composition_stored_contents": "Empty the stored contents before material recovery",
+  "tooltip.gt6ce.composition_container": "This filled container is not eligible for material recovery",
+  "tooltip.gt6ce.composition_nonmaterial": "No recoverable bulk material (technical/entity item)",
   "gt6ce.special_process.sulfuric_acid_leaching": "Sulfuric Acid Leaching",
   "gt6ce.special_process.aqua_regia_leaching": "Aqua Regia Leaching",
   "gt6ce.special_process.hydrofluoric_acid_leaching": "Hydrofluoric Acid Leaching",

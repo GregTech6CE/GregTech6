@@ -1,4 +1,4 @@
-package gregtech.content.recipe;
+package gregtech.content.material;
 
 import gregtech.api.addon.material.DataKey;
 import gregtech.api.addon.material.MaterialProcessKey;

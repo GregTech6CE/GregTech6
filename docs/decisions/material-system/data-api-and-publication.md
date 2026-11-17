@@ -1,6 +1,6 @@
 # 公共数据 API 与多代发布契约
 
-本文定义向外部附属与内部展示模块提供材料信息的公共只读契约，以及进程静态定义与平台多代重载之间保持一致的版本发布机制。文档严格区分当前已实现并交付的接口与尚处于`提议`状态的未来扩展规划。
+本文定义向外部附属与内部展示模块提供材料信息的公共只读契约，以及进程静态定义与平台多代重载之间保持一致的版本发布机制。本文描述当前已经实现的契约与发布边界。
 
 ## 契约设计边界
 
@@ -18,6 +18,7 @@
 | **`MaterialFormRulesView`** | 定义期规则（`READY` 后可读） | 按 `FormKey` 与 `MaterialFormKind`（`ITEM`、`BLOCK`、`FLUID`）暴露定义期形态规则 `MaterialFormRule`、默认材料单位与显式请求来源（`MaterialFormRequest`） |
 | **`MaterialFormsView`** | 平台注册及外部 Tag 裁决之后发布，随 Tag 重载同步刷新 | 通过 `MaterialFormBinding` 返回各材料在游戏中实际注册且经认证的物品、方块与流体绑定（包含经显式统一化或有效 `FORM_TAG` 吸纳的等效表示） |
 | **`AddonMaterialContributor` & `MaterialInfoTool.Registrar`** | 初始化窗口与链接期 | 附属声明自有命名空间的元数据、分类/组与过程规则（如 1.8 `MaterialProcessKeys.DECOMPOSITION`）；宿主通过 `MaterialProcessRule<T>` 保留自定义规则对象的扩展能力，约定提交注册后调用方不得再修改该对象 |
+| **特殊工艺（API 1.9）** | 定义期注册，`READY` 后查询 | `SpecialProcessMethod` 关联 target／reagent 规则，`SpecialProcessesView` 提供只读方法查询；具体机器行由宿主按已发布形态生成 |
 
 ## 跨代一致性印记（`MaterialPublication.Stamp`）
 

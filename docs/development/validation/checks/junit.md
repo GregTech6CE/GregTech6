@@ -54,4 +54,4 @@ issue  source  kind  target  expected
 
 JUnit XML 在 `<module>/build/test-results/test/TEST-*.xml`，HTML 报告在 `<module>/build/reports/tests/test/`。
 
-材料纯规则的常驻入口是 `MaterialRegistrationTest`、`ItemCompositionResolverTest`、`MaterialDecompositionPlannerTest` 和 `SpecialProcessLanguageTest`。一次性的基线快照、独立 JVM 生命周期矩阵和测试附属注入已移除；长期行为应落入可直接重复运行、不会向运行时注册测试内容的定向测试。
+材料纯规则的常驻入口是 `MaterialRegistrationTest`、`ItemCompositionResolverTest`、`MaterialDecompositionPlannerTest` 和 `SpecialProcessLanguageTest`。一次性的基线快照和旧的 45 场景生命周期矩阵已移除；`MaterialAddonLifecycleProbe` 在独立 JVM 通过测试 SPI 覆盖共享材料合并、冲突隔离、未知产物与目标所有权。长期行为应落入可直接重复运行的定向测试。

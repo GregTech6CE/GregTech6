@@ -1,4 +1,8 @@
 {
+  "tooltip.gt6ce.composition_scaled_damage": "材料数量已按剩余耐久计算",
+  "tooltip.gt6ce.composition_stored_contents": "回收材料前请清空内部物品或流体",
+  "tooltip.gt6ce.composition_container": "此装满的容器不能进行材料回收",
+  "tooltip.gt6ce.composition_nonmaterial": "没有可回收的批量材料（技术或实体物品）",
   "gt.drink.watergeothermal": "Fresh from the Geothermal Hot Spring!",
   "fluid_type.gt6ce.watergeothermal": "热温泉水",
   "fluid.watergeothermal": "热温泉水",

@@ -13,6 +13,7 @@ public final class SourceMaterialToolStats {
         if (material == null || !material.isValid() || material.resolve() != material || AddonMaterials.owns(material))
             return false;
         var definition = MaterialDefinitions.find(material.getName());
+        // Compare with the immutable built-in provenance baseline, not the effective addon-merged profile.
         var info = MaterialDefinitions.info(material.getName());
         return definition != null
                 && definition.id() == material.getId()

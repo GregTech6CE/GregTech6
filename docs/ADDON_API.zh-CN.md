@@ -180,7 +180,7 @@ public final class CompressorDocument implements MachineRecipeDocumentProvider {
 
 追加走 typed schema；移除用 `GT6CE.removeMachine(event, spec)`，整表清空用 `GT6CE.clearMap(event, map)`。脚本仍须使用目标平台匹配的 KubeJS 版本；两节点的序列化实现不同，不能照搬另一版本的语法。
 
-## 材料目录与分解规则（API 1.6–1.8）
+## 材料目录与分解规则（API 1.6–1.9）
 
 材料和 metadata 仍通过 `AddonMaterialContributor` 提交；系统设计边界详见[材料系统设计](decisions/material-system/README.md)。材料初始化 READY 后，`GregTechMaterials.catalog()` 返回当前会话的不可变 `MaterialCatalogView`：`resolve(name)` 解析规范名和别名，`find(MaterialKey)` 只返回真实材料，材料组不会伪装成可加工材料。旧宿主没有该服务时明确抛出 `UnsupportedOperationException`，未就绪时明确报告阶段，不以空集合掩盖失败。
 

@@ -3,7 +3,6 @@ package gregtech.content.data;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.content.data.generated.MaterialForms;
-import gregtech.content.material.MaterialDefinitions;
 import gregtech.content.material.MaterialFactKeys;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -998,10 +997,7 @@ public class FluidCatalog {
      */
     private static boolean hasSourceMoltenPhase(GTMaterial material) {
         if (!gregtech.engine.material.GTMaterialRegistry.isCoreMaterial(material)) return false;
-        return MaterialDefinitions.info(material.getName())
-                .processes()
-                .findSingle(MaterialFactKeys.SOURCE_MOLTEN_FLUID)
-                .map(rule -> rule.value().booleanValue())
+        return MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_MOLTEN_FLUID)
                 .orElse(false);
     }
 

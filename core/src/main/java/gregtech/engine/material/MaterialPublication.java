@@ -38,11 +38,6 @@ public final class MaterialPublication {
                 NEXT_REVISION.incrementAndGet(), previous.materialRevision(), compositionRevision, recipeRevision);
     }
 
-    /** Publishes one complete platform generation after compositions and recipe rows are final. */
-    public static synchronized Stamp platformGenerationPublished(long compositionRevision, long recipeRevision) {
-        return commit(candidatePlatformGeneration(compositionRevision, recipeRevision));
-    }
-
     /** Commits a candidate only after every derived publication built from it has succeeded. */
     public static synchronized Stamp commit(Stamp candidate) {
         java.util.Objects.requireNonNull(candidate, "candidate");

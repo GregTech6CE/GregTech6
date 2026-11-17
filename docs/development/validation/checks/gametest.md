@@ -38,7 +38,7 @@ GameTest 不接入 `check` 或 CI，只在本地通过两个节点的 `runGameTe
 
 材料领域的运行时回归已不再依赖 `MaterialBaselineTests` 和一次性 TSV 快照。材料成分、回收与分解的纯规则由 JUnit 覆盖；资源重载、JEI／EMI 配方显示与双平台客户端行为仍按[游戏内人工验收](manual-ingame.md)执行。材料契约见[材料系统设计](../../../decisions/material-system/README.md)。
 
-`decompositionRespectsFormsAndExactFluidIdentities` 通过测试 SPI 声明 dust-only、blockDust-only、liquid-only 和 gas-only 分解，检查形态限制、流体输入不会错误抑制允许的固体兜底、本体完整 ID、附属完整 ID／旧裸路径、外部原版流体 ID、未知及非法 ID，以及附属流体输出的身份和数量。
+`MaterialReloadTests` 通过两次真实资源重载检查特殊工艺和浸泡槽配方不累积、印记代次，并注入失败检查基线恢复和旧印记保留。
 
 `SpecialProcessRecipeTests` 检查特殊工艺的已发布流体绑定与不限形态试剂、缺失产物拒绝、王水配方完整发布和唯一归属、过硫酸盐四种投料组合，以及竹／橡胶木／处理木粉的造纸标签。
 

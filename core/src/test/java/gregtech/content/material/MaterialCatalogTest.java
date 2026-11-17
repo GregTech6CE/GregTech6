@@ -1,7 +1,5 @@
 package gregtech.content.material;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialKey;
 import gregtech.content.fluid.FluidDefinitions;
@@ -9,6 +7,8 @@ import gregtech.content.storage.ItemBarrelCatalog;
 import gregtech.content.tool.AnvilVariantCatalog;
 import gregtech.engine.material.GTMaterialRegistry;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class MaterialCatalogTest {
     @Test
@@ -36,10 +36,11 @@ class MaterialCatalogTest {
         assertEquals(7, processCount(declarations, MaterialFactKeys.SOURCE_PURIFIED_CENTRIFUGE_NO_DEFAULT));
         assertEquals(2, processCount(declarations, MaterialFactKeys.SOURCE_ADDITIONAL_WIRE_FAMILY));
         assertEquals(1, processCount(declarations, MaterialFactKeys.COMPRESSOR_DUST_TO_GEM_PLATE));
-        assertEquals(14, processCount(declarations, gregtech.content.recipe.SpecialProcessMethods.AQUA_REGIA_LEACHING));
+        assertEquals(
+                14, processCount(declarations, gregtech.content.material.SpecialProcessMethods.AQUA_REGIA_LEACHING));
         assertTrue(processCount(
                         declarations,
-                        gregtech.content.recipe.SpecialProcessMethods.HYDROCHLORIC_ACID_MANGANESE_LEACHING)
+                        gregtech.content.material.SpecialProcessMethods.HYDROCHLORIC_ACID_MANGANESE_LEACHING)
                 > 1);
     }
 
@@ -83,23 +84,19 @@ class MaterialCatalogTest {
                 processes
                         .find(
                                 new MaterialKey("Gold"),
-                                gregtech.content.recipe.SpecialProcessMethods.AQUA_REGIA_LEACHING)
+                                gregtech.content.material.SpecialProcessMethods.AQUA_REGIA_LEACHING)
                         .stream()
                         .anyMatch(rule ->
                                 rule.value() instanceof gregtech.api.addon.material.SpecialProcessValue.Target));
-        assertTrue(
-                processes
-                        .find(
-                                new MaterialKey("AquaRegia"),
-                                gregtech.content.recipe.SpecialProcessMethods.AQUA_REGIA_LEACHING)
-                        .stream()
-                        .anyMatch(rule ->
-                                rule.value() instanceof gregtech.api.addon.material.SpecialProcessValue.Reagent));
+        assertTrue(processes
+                .find(new MaterialKey("AquaRegia"), gregtech.content.material.SpecialProcessMethods.AQUA_REGIA_LEACHING)
+                .stream()
+                .anyMatch(rule -> rule.value() instanceof gregtech.api.addon.material.SpecialProcessValue.Reagent));
         assertTrue(aquaRegia.units().stream()
                 .anyMatch(unit -> unit.phase().equals("liquid")
                         && unit.fluidField().equals("GenLiquid_AquaRegia")
                         && unit.referenceMillibuckets() == 1000));
-        for (var phase : gregtech.content.recipe.SpecialProcessData.Phase.values()) {
+        for (var phase : gregtech.content.material.catalog.SpecialProcessData.Phase.values()) {
             var units = processes
                     .findSingle(new MaterialKey(phase.material().name()), MaterialFactKeys.MATERIAL_FLUID_UNIT)
                     .orElseThrow(() -> new AssertionError("Missing acid fluid units: " + phase))

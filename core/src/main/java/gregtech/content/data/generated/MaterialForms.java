@@ -2,9 +2,10 @@ package gregtech.content.data.generated;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialSentinels;
-import gregtech.content.material.MaterialDefinitions;
 import gregtech.engine.addon.AddonMaterials;
+import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.MaterialInfoRegistry;
+
 import java.util.List;
 import java.util.Set;
 
@@ -66,11 +67,11 @@ public final class MaterialForms {
         return of(material).contains(flag);
     }
 
-    /** How many materials the original gives this form to. */
+    /** How many published real materials have this form flag. */
     public static int count(String flag) {
         int total = 0;
-        for (var definition : MaterialDefinitions.all())
-            if (MaterialDefinitions.info(definition.name()).relations().forms().contains(flag)) total++;
+        for (var material : GTMaterialRegistry.sortedMaterials())
+            if (material.resolve() == material && material.isValid() && has(material, flag)) total++;
         return total;
     }
 

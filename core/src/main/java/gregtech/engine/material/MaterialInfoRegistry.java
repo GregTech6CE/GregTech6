@@ -204,6 +204,10 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
                                     "Special process target forms do not match rule forms for "
                                             + entry.getKey().name() + " in "
                                             + method.process().id());
+                        for (var output : target.itemOutputs())
+                            validateSpecialOutput(entry.getKey(), method, output.material());
+                        for (var output : target.fluidOutputs())
+                            validateSpecialOutput(entry.getKey(), method, output.material());
                     } else if (!(rule.value() instanceof SpecialProcessValue.Reagent)) {
                         throw new IllegalArgumentException("Invalid special process value for "
                                 + entry.getKey().name());
@@ -211,6 +215,13 @@ public final class MaterialInfoRegistry implements MaterialInfoTool.Host {
                 }
             }
         }
+    }
+
+    private static void validateSpecialOutput(MaterialKey source, SpecialProcessMethod method, MaterialKey output) {
+        var material = GTMaterialRegistry.get(output.name());
+        if (material == null || !material.isValid())
+            throw new IllegalArgumentException("Unknown special process output '" + output.name() + "' for "
+                    + source.name() + " in " + method.process().id());
     }
 
     private static void installSpecialProcess(SpecialProcessSubmission submission) {

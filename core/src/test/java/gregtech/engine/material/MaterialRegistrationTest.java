@@ -1,20 +1,49 @@
 package gregtech.engine.material;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import gregtech.api.addon.material.*;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialProperty;
 import gregtech.api.material.MaterialSentinels;
 import gregtech.content.material.MaterialDefinitions;
+import org.junit.jupiter.api.Test;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class MaterialRegistrationTest {
+    @Test
+    void discoveredAddonDefinitionsMergeOrFailWithoutPublishing() throws Exception {
+        for (String conflict : List.of("false", "true", "unknown", "foreign")) {
+            var classpath = new java.util.ArrayList<String>();
+            for (Class<?> type : List.of(MaterialAddonLifecycleProbe.class, GTMaterialRegistry.class, GTMaterial.class))
+                classpath.add(Path.of(type.getProtectionDomain()
+                                .getCodeSource()
+                                .getLocation()
+                                .toURI())
+                        .toString());
+            var process = new ProcessBuilder(
+                            Path.of(System.getProperty("java.home"), "bin", "java")
+                                    .toString(),
+                            "-cp",
+                            String.join(java.io.File.pathSeparator, classpath),
+                            MaterialAddonLifecycleProbe.class.getName(),
+                            conflict)
+                    .redirectErrorStream(true)
+                    .start();
+            boolean finished = process.waitFor(60, java.util.concurrent.TimeUnit.SECONDS);
+            if (!finished) process.destroyForcibly();
+            assertTrue(finished, "addon lifecycle probe timed out");
+            String output =
+                    new String(process.getInputStream().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+            assertEquals(0, process.exitValue(), output);
+        }
+    }
+
     @Test
     void specialProcessInputCountsFollowFormAliases() {
         var alias = new FormKey("casingSmall");

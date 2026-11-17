@@ -1,7 +1,9 @@
 package gregtech.content.data.generated;
 
+import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.material.GTMaterial;
-import gregtech.content.material.MaterialDefinitions;
+import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.MaterialInfoRegistry;
 
 /** Compatibility query facade over canonical processing targets, migrated from the GT6 MT import. */
 public final class MaterialProcessingTargets {
@@ -13,13 +15,14 @@ public final class MaterialProcessingTargets {
     public static final long DEFAULT_AMOUNT = 648_648_000L;
 
     public static String[] of(String materialName, String kind) {
-        var definition = MaterialDefinitions.find(GTMaterial.sanitize(materialName));
-        if (definition == null) return null;
-        var target = processing(definition.name()).get(kind);
+        var material = GTMaterialRegistry.get(GTMaterial.sanitize(materialName));
+        if (material == null || !material.isValid()) return null;
+        String canonical = material.resolve().getName();
+        var target = processing(canonical).get(kind);
         return target == null
                 ? null
                 : new String[] {
-                    target.material().name().equals(definition.name())
+                    target.material().name().equals(canonical)
                             ? ""
                             : target.material().name(),
                     Long.toString(target.amount())
@@ -27,8 +30,9 @@ public final class MaterialProcessingTargets {
     }
 
     public static int size() {
-        return MaterialDefinitions.all().stream()
-                .mapToInt(d -> processing(d.name()).size())
+        return GTMaterialRegistry.sortedMaterials().stream()
+                .filter(material -> material.isValid() && material.resolve() == material)
+                .mapToInt(material -> processing(material.getName()).size())
                 .sum();
     }
 
@@ -38,7 +42,7 @@ public final class MaterialProcessingTargets {
 
     private static java.util.Map<String, gregtech.api.addon.material.MaterialTarget> processing(String name) {
         var result = new java.util.LinkedHashMap<String, gregtech.api.addon.material.MaterialTarget>();
-        for (var entry : MaterialDefinitions.info(name).processes().rules().entrySet()) {
+        for (var entry : MaterialInfoRegistry.processes(new MaterialKey(name)).rules().entrySet()) {
             var kind = gregtech.api.addon.material.MaterialProcessKeys.legacyTargetName(entry.getKey())
                     .orElse(null);
             if (kind != null
