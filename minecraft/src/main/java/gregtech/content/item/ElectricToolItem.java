@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.level.Level;
+import gregtech.content.tool.ElectricToolCatalog;
 import gregtech.content.tool.ElectricToolWear;
 import gregtech.platform.Mc;
 
@@ -378,7 +379,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtec
     }
 
     @Override public boolean canEnergyInjection(ItemStack stack, GregTechTags.Tag type, long size) {
-        long voltage = 8L << (2 * tier);
+        long voltage = ElectricToolCatalog.ratedVoltage(tier);
         return stack.getCount() == 1 && isEnergyType(stack,type) && size >= voltage / 2 && size <= voltage * 2;
     }
     @Override public boolean canEnergyExtraction(ItemStack stack, GregTechTags.Tag type, long size) { return false; }

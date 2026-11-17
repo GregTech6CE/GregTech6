@@ -24,7 +24,7 @@ public final class ElectricToolCatalog {
         }
 
         public long voltage() {
-            return 8L << (2 * tier);
+            return ratedVoltage(tier);
         }
 
         public long energyPerUse() {
@@ -51,6 +51,10 @@ public final class ElectricToolCatalog {
         public String tierName() {
             return new String[] {"ulv", "lv", "mv", "hv"}[tier];
         }
+    }
+
+    public static long ratedVoltage(int tier) {
+        return 8L << (2 * tier);
     }
 
     private static Definition row(
