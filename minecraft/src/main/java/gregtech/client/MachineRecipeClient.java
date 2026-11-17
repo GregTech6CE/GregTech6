@@ -52,15 +52,15 @@ public final class MachineRecipeClient {
     private static void apply(RecipeManager recipes) {
         // Integrated server and client share the static maps. The server pass already applied them.
         if (ServerLifecycleHooks.getCurrentServer() != null) return;
-        if (MachineRecipeOverlay.apply(recipes).failed()) {
+        var overlay = MachineRecipeOverlay.apply(recipes);
+        // Like the server, mirror vanilla smelting even after reverting the machine overlay to its baseline.
+        var connection = Minecraft.getInstance().getConnection();
+        if (connection != null) OvenRecipeBridge.apply(recipes, connection.registryAccess());
+        if (overlay.failed()) {
             refresh("jei", "gregtech.compat.jei.GregTechJEIPlugin", "overlayFailed");
             refresh("emi", "gregtech.compat.emi.GregTechEMIPlugin", "overlayFailed");
             return;
         }
-        // A dedicated client also needs the furnace bridge: the machine-visible oven rows only
-        // exist after it runs, and the synced recipe list alone does not recreate them locally.
-        var connection = Minecraft.getInstance().getConnection();
-        if (connection != null) OvenRecipeBridge.apply(recipes, connection.registryAccess());
         gregtech.engine.material.MaterialPublication.commit(MachineRecipeOverlay.lastPublication());
         // The row set is final now; build on the task queue so the sync thread is not blocked.
         // A newer tag update supersedes this pass and its queued build.
