@@ -523,7 +523,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (packets <= 0) return 0;
         boolean single = structureDefinition().formsImmediately();
         if (!single && side == null) return 0;
-        long sent = single ? gregtech.engine.energy.EnergyTransfer.insertEnergyInto(energyOutTag, side, size, packets, this, receiver)
+        long sent = single ? gregtech.engine.energy.EnergyTransfer.insertEnergyInto(energyOutTag, side, size, packets, receiver)
                 : gregtech.engine.multiblock.StructureOutputs.energy(this,
                         gregtech.engine.multiblock.StructureOutputs.at(this, gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT,
                                 target, side, false), energyOutTag, size, packets);

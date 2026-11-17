@@ -33,7 +33,7 @@ public final class EnergyCompat {
         return factor == 0 || magnitude > Integer.MAX_VALUE / factor ? 0 : magnitude * factor;
     }
     public static long insertEnergyInto(GregTechTags.Tag type, @Nullable Direction side, long size, long amount,
-                                        @Nullable Object emitter, BlockEntity receiver) {
+                                        BlockEntity receiver) {
         if (amount <= 0 || type == GregTechTags.Energy.EU && !gregtech.GregTechConfig.Rule.EU_AS_RF.enabled()) return 0;
         long packet = fePacketSize(type, size);
         IEnergyStorage storage = packet > 0 ? storage(receiver, side) : null;

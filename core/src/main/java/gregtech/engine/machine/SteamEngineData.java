@@ -1,18 +1,10 @@
 package gregtech.engine.machine;
 
-import gregtech.api.material.GTMaterial;
-
 /** Shared interface for {@link SteamEngineSpec} and {@link StrongSteamEngineSpec}. */
-public interface SteamEngineData {
-    String id();
-
-    GTMaterial material();
-
+public sealed interface SteamEngineData extends EngineSpec permits SteamEngineSpec, StrongSteamEngineSpec {
     int efficiency();
 
     int steamCapacity();
-
-    long outputRate();
 
     default long outputAtPressure(int state) {
         return outputRate() * (Math.max(0, Math.min(31, state)) + 1) / 16;
@@ -24,20 +16,9 @@ public interface SteamEngineData {
         return 1;
     }
 
-    float hardness();
-
-    float blastResistance();
-
-    default int tintRgb() {
-        return material().getColor();
-    }
-
-    default String materialName() {
-        return material().getLocalName();
-    }
-
-    default String textureFolder() {
-        return "kinetic_steam";
+    @Override
+    default EngineType type() {
+        return EngineType.STEAM;
     }
 
     /** Steam consumed per operation (mB). */

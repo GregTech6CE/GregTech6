@@ -40,7 +40,7 @@ public final class EnergyTransfer {
         if (receiver == null) {
             return 0;
         }
-        return insertEnergyInto(energyType, GTEnergySides.receiverSide(sideOutOf), size, amount, emitter, receiver);
+        return insertEnergyInto(energyType, GTEnergySides.receiverSide(sideOutOf), size, amount, receiver);
     }
 
     public static long insertEnergyInto(
@@ -48,7 +48,6 @@ public final class EnergyTransfer {
             @Nullable Direction sideInto,
             long size,
             long amount,
-            @Nullable Object emitter,
             BlockEntity receiver) {
         if (amount <= 0 || size == 0) return 0;
         IEnergyBlock energyBlock = EnergyBlockViews.view(receiver);
@@ -57,7 +56,7 @@ public final class EnergyTransfer {
                     && !MachineEnvironmentalChecks.check(receiver, energyBlock)) return 0;
             return energyBlock.doEnergyInjection(energyType, sideInto, size, amount, true);
         }
-        return EnergyCompat.insertEnergyInto(energyType, sideInto, size, amount, emitter, receiver);
+        return EnergyCompat.insertEnergyInto(energyType, sideInto, size, amount, receiver);
     }
 
     public static long extractEnergyFrom(

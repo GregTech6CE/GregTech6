@@ -10,19 +10,4 @@ public record StrongSteamEngineSpec(
         int steamCapacity,
         long outputRate,
         float hardness,
-        float blastResistance)
-        implements SteamEngineData {
-    @Override
-    public int tintRgb() {
-        return material.getColor();
-    }
-
-    @Override
-    public String materialName() {
-        return material.getLocalName();
-    }
-
-    public EngineType type() {
-        return EngineType.STEAM;
-    }
-}
+        float blastResistance) implements SteamEngineData {}

@@ -202,7 +202,7 @@ public class CrankBlock extends DirectionalBlock implements SimpleWaterloggedBlo
         var target = level.getBlockEntity(mount);
         long accepted = EnergyBlockViews.view(target) == null ? 0 : EnergyTransfer.insertEnergyInto(
                 GregTechTags.Energy.RU, handle, size,
-                1 + effectLevel(player, net.minecraft.world.effect.MobEffects.DIG_SPEED), null, target);
+                1 + effectLevel(player, net.minecraft.world.effect.MobEffects.DIG_SPEED), target);
         if (accepted > 0) player.causeFoodExhaustion(0.025F *
                 (1 + effectLevel(player, net.minecraft.world.effect.MobEffects.DIG_SLOWDOWN)));
     }

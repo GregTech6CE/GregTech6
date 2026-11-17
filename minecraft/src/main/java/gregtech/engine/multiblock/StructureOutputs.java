@@ -209,6 +209,6 @@ public final class StructureOutputs {
         if (output.requiresPort() && !source.equals(entity.getBlockPos()))
             return StructurePortHandlers.emitEnergy(machine, source, outlet.receiver().getOpposite(), type, size, packets);
         return Math.max(0, Math.min(packets, gregtech.engine.energy.EnergyTransfer.insertEnergyInto(
-                type, outlet.receiver(), size, packets, entity, receiver)));
+                type, outlet.receiver(), size, packets, receiver)));
     }
 }

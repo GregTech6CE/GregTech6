@@ -458,7 +458,7 @@ public final class OriginalHandCraftingRows {
     // ── GT6's 13 RU → KU engines and four RU rotational pumps ──────────────
 
     private static int rotationEngines(Map<ResourceLocation, byte[]> recipes) {
-        if (rotationEngines().size() != gregtech.content.energy.EngineCatalog.all().stream().filter(entry -> entry.spec() instanceof RotationEngineSpec).count())
+        if (rotationEngines().size() != gregtech.content.energy.EngineCatalog.all().stream().filter(RotationEngineSpec.class::isInstance).count())
             throw new IllegalStateException("Missing catalog rotation engines; got "
                     + rotationEngines().size());
         int added = 0;

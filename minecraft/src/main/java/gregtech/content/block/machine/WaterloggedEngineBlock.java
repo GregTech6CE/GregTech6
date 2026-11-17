@@ -1,7 +1,7 @@
 package gregtech.content.block.machine;
 
 import gregtech.engine.GTWaterloggable;
-import gregtech.engine.machine.EngineType;
+import gregtech.engine.machine.EngineSpec;
 import gregtech.engine.machine.MachineSpec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,8 +15,8 @@ import net.minecraft.world.level.material.FluidState;
 
 /** Open-frame piston engines retain water around their moving shaft. */
 public final class WaterloggedEngineBlock extends EngineBlock implements SimpleWaterloggedBlock {
-    public WaterloggedEngineBlock(EngineType type, MachineSpec machineSpec, Object engineSpec, Properties properties) {
-        super(type, machineSpec, engineSpec, properties);
+    public WaterloggedEngineBlock(EngineSpec engineSpec, MachineSpec machineSpec, Properties properties) {
+        super(engineSpec, machineSpec, properties);
         registerDefaultState(defaultBlockState().setValue(GTWaterloggable.WATERLOGGED, false));
     }
 

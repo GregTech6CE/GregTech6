@@ -57,7 +57,7 @@ public final class StructurePortHandlers {
                     && other.isBoundTo(entity.getBlockPos())) return 0;
         // A passive casing does not acquire an independent generator's environmental checks.
         return Math.max(0, Math.min(amount, gregtech.engine.energy.EnergyTransfer.insertEnergyInto(
-                type, side.getOpposite(), size, amount, entity, receiver)));
+                type, side.getOpposite(), size, amount, receiver)));
     }
 
     public record View(MultiblockPortOwner owner, MultiblockLayout.Role role, StructurePorts ports, MachineFace face) {

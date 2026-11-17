@@ -273,7 +273,6 @@ public final class ElectricNetwork {
                         DIRECTIONS[ordinal].getOpposite(),
                         voltage,
                         remaining,
-                        wires[wireIndex],
                         neighbor);
             }
 

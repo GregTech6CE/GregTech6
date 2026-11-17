@@ -10,19 +10,8 @@ public record RotationEngineSpec(
         long inputRate,
         long outputRate,
         float hardness,
-        float blastResistance) {
-    public int tintRgb() {
-        return material.getColor();
-    }
-
-    public String materialName() {
-        return material.getLocalName();
-    }
-
-    public static String textureFolder() {
-        return "kinetic_rotation";
-    }
-
+        float blastResistance) implements EngineSpec {
+    @Override
     public EngineType type() {
         return EngineType.ROTATION;
     }

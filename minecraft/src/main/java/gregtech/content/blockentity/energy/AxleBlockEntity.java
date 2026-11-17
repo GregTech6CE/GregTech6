@@ -256,7 +256,7 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
                         used = axle.transferRotation(fromSide, speed, power, visited);
                 } else {
                     visited.add(target);
-                    used = EnergyTransfer.insertEnergyInto(GregTechTags.Energy.RU, fromSide, speed, power, this, neighbor);
+                    used = EnergyTransfer.insertEnergyInto(GregTechTags.Energy.RU, fromSide, speed, power, neighbor);
                 }
             }
         }

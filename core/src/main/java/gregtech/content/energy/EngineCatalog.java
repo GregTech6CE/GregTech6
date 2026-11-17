@@ -5,11 +5,14 @@ import gregtech.content.material.Materials;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.engine.machine.DieselEngineSpec;
 import gregtech.engine.machine.ElectricEngineSpec;
+import gregtech.engine.machine.EngineSpec;
 import gregtech.engine.machine.FluxEngineSpec;
 import gregtech.engine.machine.RotationEngineSpec;
 import gregtech.engine.machine.SteamEngineSpec;
 import gregtech.engine.machine.StrongSteamEngineSpec;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -141,20 +144,18 @@ public final class EngineCatalog {
 
     // ── Registration ───────────────────────────────────────────────────────
 
-    public record Entry(gregtech.engine.machine.EngineType type, Object spec) {}
-
-    public static java.util.List<Entry> all() {
-        java.util.List<Entry> out = new java.util.ArrayList<>();
+    public static List<EngineSpec> all() {
+        List<EngineSpec> out = new ArrayList<>();
         registerElectricEngines(out);
         registerFluxEngines(out);
         registerSteamEngines(out);
         registerStrongSteamEngines(out);
         registerRotationEngines(out);
         registerDieselEngines(out);
-        return java.util.List.copyOf(out);
+        return List.copyOf(out);
     }
 
-    private static void registerElectricEngines(java.util.List<Entry> out) {
+    private static void registerElectricEngines(List<EngineSpec> out) {
         for (int i = 0; i < ELECTRIC_TIERS.length; i++) {
             GTMaterial mat = ELECTRIC_TIERS[i];
             String matName = MAT.getOrDefault(mat, mat.getName().toLowerCase());
@@ -167,22 +168,22 @@ public final class EngineCatalog {
                     ELECTRIC_OUTPUTS[i],
                     HARDNESS[i],
                     BLAST_RESISTANCE[i]);
-            out.add(new Entry(gregtech.engine.machine.EngineType.ELECTRIC, spec));
+            out.add(spec);
         }
     }
 
-    private static void registerFluxEngines(java.util.List<Entry> out) {
+    private static void registerFluxEngines(List<EngineSpec> out) {
         for (int i = 0; i < FLUX_TIERS.length; i++) {
             GTMaterial mat = FLUX_TIERS[i];
             String matName = MAT.getOrDefault(mat, mat.getName().toLowerCase());
             String id = "engine_flux_" + matName;
             FluxEngineSpec spec = new FluxEngineSpec(
                     id, mat, FLUX_TIER_NUM[i], FLUX_INPUTS[i], FLUX_OUTPUTS[i], HARDNESS[i], BLAST_RESISTANCE[i]);
-            out.add(new Entry(gregtech.engine.machine.EngineType.FLUX, spec));
+            out.add(spec);
         }
     }
 
-    private static void registerSteamEngines(java.util.List<Entry> out) {
+    private static void registerSteamEngines(List<EngineSpec> out) {
         for (int i = 0; i < STEAM_MATS.length; i++) {
             GTMaterial mat = STEAM_MATS[i];
             String matName = MAT.getOrDefault(mat, mat.getName().toLowerCase());
@@ -195,11 +196,11 @@ public final class EngineCatalog {
                     STEAM_OUTPUTS[i] / 2,
                     STEAM_HARDNESS[i],
                     STEAM_BLAST_RESISTANCE[i]);
-            out.add(new Entry(gregtech.engine.machine.EngineType.STEAM, spec));
+            out.add(spec);
         }
     }
 
-    private static void registerStrongSteamEngines(java.util.List<Entry> out) {
+    private static void registerStrongSteamEngines(List<EngineSpec> out) {
         for (int i = 0; i < STEAM_MATS.length; i++) {
             GTMaterial mat = STEAM_MATS[i];
             String matName = MAT.getOrDefault(mat, mat.getName().toLowerCase());
@@ -212,27 +213,27 @@ public final class EngineCatalog {
                     STRONG_STEAM_OUTPUTS[i] / 2,
                     STEAM_HARDNESS[i],
                     STEAM_BLAST_RESISTANCE[i]);
-            out.add(new Entry(gregtech.engine.machine.EngineType.STEAM, spec));
+            out.add(spec);
         }
     }
 
-    private static void registerRotationEngines(java.util.List<Entry> out) {
+    private static void registerRotationEngines(List<EngineSpec> out) {
         for (RotationTier tier : ROTATION_TIERS) {
             String id = "engine_rotation_" + tier.id();
             RotationEngineSpec spec = new RotationEngineSpec(
                     id, tier.material(), tier.voltageTier(), tier.input(), tier.input() / 2, 6.0F, 6.0F);
-            out.add(new Entry(gregtech.engine.machine.EngineType.ROTATION, spec));
+            out.add(spec);
         }
     }
 
-    private static void registerDieselEngines(java.util.List<Entry> out) {
+    private static void registerDieselEngines(List<EngineSpec> out) {
         for (int i = 0; i < DIESEL_MATS.length; i++) {
             GTMaterial mat = DIESEL_MATS[i];
             String matName = MAT.getOrDefault(mat, mat.getName().toLowerCase());
             String id = "engine_diesel_" + matName;
             DieselEngineSpec spec =
                     new DieselEngineSpec(id, mat, DIESEL_TIERS[i], DIESEL_OUTPUTS[i], DIESEL_OUTPUTS[i], 6.0F, 6.0F);
-            out.add(new Entry(gregtech.engine.machine.EngineType.DIESEL, spec));
+            out.add(spec);
         }
     }
 }

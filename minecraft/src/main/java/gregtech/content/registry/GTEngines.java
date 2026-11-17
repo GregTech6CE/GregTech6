@@ -23,9 +23,11 @@ public final class GTEngines {
     }
 
     public static void registerAll(ContentRegistrar registrar) {
-        for (var e : EngineCatalog.all()) {
-            MachineSpec itemSpec = machineSpec(e.spec());
-            boolean wood = e.spec() instanceof RotationEngineSpec rotation
+        for (EngineSpec spec : EngineCatalog.all()) {
+            MachineSpec itemSpec = new MachineSpec(
+                    spec.id(), spec.materialName(), spec.tintRgb(), 10000, spec.outputRate(),
+                    "engines/" + spec.type().textureFolder(), spec.hardness(), spec.blastResistance());
+            boolean wood = spec instanceof RotationEngineSpec rotation
                     && rotation.material() == gregtech.content.material.generated.WoodMaterials.WoodTreated;
             var typeRef = new java.util.concurrent.atomic.AtomicReference<BlockEntityType<?>>();
             var block = registrar.block(
@@ -35,9 +37,9 @@ public final class GTEngines {
                         var props = BlockBehaviour.Properties.of().mapColor(wood ? MapColor.WOOD : MapColor.METAL)
                                 .strength(itemSpec.hardness(), itemSpec.blastResistance()).requiresCorrectToolForDrops();
                         if (wood) props.sound(SoundType.WOOD);
-                        var b = e.type() == EngineType.ROTATION || e.type() == EngineType.DIESEL
-                                ? new EngineBlock(e.type(), itemSpec, e.spec(), props)
-                                : new gregtech.content.block.machine.WaterloggedEngineBlock(e.type(), itemSpec, e.spec(), props);
+                        var b = spec.type() == EngineType.ROTATION || spec.type() == EngineType.DIESEL
+                                ? new EngineBlock(spec, itemSpec, props)
+                                : new gregtech.content.block.machine.WaterloggedEngineBlock(spec, itemSpec, props);
                         b.setBeTypeSupplier(typeRef::get);
                         return b;
                     },
@@ -49,25 +51,6 @@ public final class GTEngines {
                 return type;
             });
         }
-    }
-
-    private static MachineSpec machineSpec(Object spec) {
-        if (spec instanceof ElectricEngineSpec v)
-            return new MachineSpec(v.id(), v.materialName(), v.tintRgb(), 10000, v.outputRate(),
-                    "engines/" + v.textureFolder(), v.hardness(), v.blastResistance());
-        if (spec instanceof FluxEngineSpec v)
-            return new MachineSpec(v.id(), v.materialName(), v.tintRgb(), 10000, v.outputRate(),
-                    "engines/" + v.textureFolder(), v.hardness(), v.blastResistance());
-        if (spec instanceof SteamEngineData v)
-            return new MachineSpec(v.id(), v.materialName(), v.tintRgb(), 10000, v.outputRate(),
-                    "engines/" + v.textureFolder(), v.hardness(), v.blastResistance());
-        if (spec instanceof RotationEngineSpec v)
-            return new MachineSpec(v.id(), v.materialName(), v.tintRgb(), 10000, v.outputRate(),
-                    "engines/" + v.textureFolder(), v.hardness(), v.blastResistance());
-        if (spec instanceof DieselEngineSpec v)
-            return new MachineSpec(v.id(), v.materialName(), v.tintRgb(), 10000, v.outputRate(),
-                    "engines/" + v.textureFolder(), v.hardness(), v.blastResistance());
-        throw new IllegalArgumentException("Unknown engine specification");
     }
 
     private static BlockEntityType<?> buildType(EngineBlock block) {

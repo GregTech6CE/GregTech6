@@ -3,13 +3,11 @@ package gregtech.content.block.machine;
 import gregtech.engine.tool.ToolInteractionSpec;
 import gregtech.engine.tool.ToolInteractionTarget;
 import gregtech.engine.energy.FaceConfig;
-import gregtech.engine.machine.ElectricEngineSpec;
+import gregtech.engine.machine.EngineSpec;
 import gregtech.engine.machine.EngineType;
-import gregtech.engine.machine.FluxEngineSpec;
 import gregtech.engine.machine.GTMachineBlock;
 import gregtech.engine.machine.MachineSpec;
 import gregtech.engine.machine.RotationEngineSpec;
-import gregtech.engine.machine.SteamEngineData;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
@@ -101,43 +99,30 @@ public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMach
 
     private final EngineType engineType;
     private final MachineSpec machineSpec;
-    private final Object engineSpec; // ElectricEngineSpec / FluxEngineSpec / SteamEngineSpec / RotationEngineSpec
+    private final EngineSpec engineSpec;
     private Supplier<BlockEntityType<?>> beTypeSupplier;
 
-    public EngineBlock(EngineType engineType, MachineSpec machineSpec, Object engineSpec, Properties properties) {
+    public EngineBlock(EngineSpec engineSpec, MachineSpec machineSpec, Properties properties) {
         super(properties);
-        this.engineType = engineType;
-        this.machineSpec = machineSpec;
         this.engineSpec = engineSpec;
-        registerDefaultState(defaultBlockState().setValue(FACING, Direction.DOWN).setValue(LIT, false)
-                );
+        this.engineType = engineSpec.type();
+        this.machineSpec = machineSpec;
+        registerDefaultState(defaultBlockState().setValue(FACING, Direction.DOWN).setValue(LIT, false));
     }
 
     public EngineType engineType() { return engineType; }
     public MachineSpec machineSpec() { return machineSpec; }
-    @SuppressWarnings("unchecked")
-    public <T> T engineSpec(Class<T> type) { return (T) engineSpec; }
+    public <T extends EngineSpec> T engineSpec(Class<T> type) { return type.cast(engineSpec); }
 
     public void setBeTypeSupplier(Supplier<BlockEntityType<?>> s) { this.beTypeSupplier = s; }
     public BlockEntityType<?> getBeType() { return beTypeSupplier != null ? beTypeSupplier.get() : null; }
 
     public int tintRgb() {
-        return switch (engineType) {
-            case ELECTRIC -> engineSpec(ElectricEngineSpec.class).tintRgb();
-            case FLUX -> engineSpec(FluxEngineSpec.class).tintRgb();
-            case STEAM -> {
-                Object spec = engineSpec;
-                if (spec instanceof SteamEngineData d) yield d.tintRgb();
-                yield 0xFFFFFF;
-            }
-            case ROTATION -> engineSpec(RotationEngineSpec.class).tintRgb();
-            case DIESEL -> engineSpec(gregtech.engine.machine.DieselEngineSpec.class).tintRgb();
-        };
+        return engineSpec.tintRgb();
     }
 
     private boolean isWoodenRotation() {
-        return engineType == EngineType.ROTATION
-                && engineSpec instanceof RotationEngineSpec rotation
+        return engineSpec instanceof RotationEngineSpec rotation
                 && rotation.material() == WoodMaterials.WoodTreated;
     }
 

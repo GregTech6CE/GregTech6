@@ -10,19 +10,8 @@ public record ElectricEngineSpec(
         long inputRate,
         long outputRate,
         float hardness,
-        float blastResistance) {
-    public int tintRgb() {
-        return material.getColor();
-    }
-
-    public String materialName() {
-        return material.getLocalName();
-    }
-
-    public static String textureFolder() {
-        return "kinetic_electric";
-    }
-
+        float blastResistance) implements EngineSpec {
+    @Override
     public EngineType type() {
         return EngineType.ELECTRIC;
     }
