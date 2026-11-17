@@ -365,19 +365,7 @@ public record BasicMachineSpec(
     }
 
     public static int legacyParallelLimit(String machineName) {
-        return switch (machineName) {
-            case "largemixer", "largefermenter" -> 256;
-            case "largecoagulator",
-                    "largebath",
-                    "largeoven",
-                    "largesluice",
-                    "largecrusher",
-                    "largeshredder",
-                    "largesqueezer",
-                    "largemassfab" -> 64;
-            case "largecentrifuge", "largeelectrolyzer", "largeautoclave" -> 16;
-            default -> 1;
-        };
+        return OriginalBasicMachineRules.legacyParallelLimit(machineName);
     }
 
     private static GregTechTags.Tag requireEnergy(String shortName) {

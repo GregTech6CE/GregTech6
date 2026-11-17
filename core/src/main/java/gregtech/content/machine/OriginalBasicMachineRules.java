@@ -93,6 +93,23 @@ public final class OriginalBasicMachineRules {
         };
     }
 
+    /** GT6 parallel limits for the large batch machines; an ordinary basic machine keeps 1. */
+    public static int legacyParallelLimit(String machineName) {
+        return switch (machineName) {
+            case "largemixer", "largefermenter" -> 256;
+            case "largecoagulator",
+                    "largebath",
+                    "largeoven",
+                    "largesluice",
+                    "largecrusher",
+                    "largeshredder",
+                    "largesqueezer",
+                    "largemassfab" -> 64;
+            case "largecentrifuge", "largeelectrolyzer", "largeautoclave" -> 16;
+            default -> 1;
+        };
+    }
+
     public static boolean requiresIgnition(String name, int tier) {
         return handles(name, tier) && name.equals("burnmixer");
     }
