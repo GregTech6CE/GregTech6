@@ -59,9 +59,15 @@ public final class CoverAdmission {
         if (owner == null || side == null) return false;
         // The mixin supplies storage on every block entity; only the mod's own blocks are cover hosts.
         if (!isGregTechEntity(owner)) return false;
-        // A wall implements the crucible relay too; it is not itself a coverless crucible.
+        // A large crucible's controller and its wall parts follow the vessel's own face policy, which a
+        // plain crucible refusal below would otherwise flatten to "no covers at all". The controller is
+        // checked first because it is an ITileEntityCrucible as well.
+        if (owner instanceof gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity crucible)
+            return gregtech.content.block.machine.VesselInnerFaces.isLargeCrucibleAllowedCoverSide(crucible, side);
         if (owner instanceof gregtech.content.blockentity.machine.MultiblockPortBlockEntity part)
-            return part.hasFormedController();
+            return part.crucibleControllerPos() != null
+                    ? gregtech.content.block.machine.VesselInnerFaces.isLargeCrucibleAllowedCoverSide(part, side)
+                    : part.hasFormedController();
         // Original base classes below TileEntityBase06Covers never carry covers.
         if (owner instanceof PileBlockEntity || owner instanceof ProcessingToolBlockEntity) return false;
         // Hosts whose allowCovers(aSide) is a plain F.

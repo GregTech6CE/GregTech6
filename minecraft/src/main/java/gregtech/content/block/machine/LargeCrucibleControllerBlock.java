@@ -2,6 +2,7 @@ package gregtech.content.block.machine;
 
 import gregtech.content.blockentity.machine.LargeCrucibleControllerBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -18,6 +19,8 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,6 +42,10 @@ public class LargeCrucibleControllerBlock extends Block
 *///?} else {
 //?}
     private final gregtech.content.multiblock.LargeCrucibleSpecs.Variant variant;
+
+    /** A formed vessel keeps a solid floor but stops supporting blocks on its open mouth. */
+    private static final VoxelShape FORMED_SUPPORT_SHAPE =
+            Shapes.box(0.0D, 0.0D, 0.0D, 1.0D, 15.0D / 16.0D, 1.0D);
 
     public LargeCrucibleControllerBlock() {
         this(gregtech.content.multiblock.LargeCrucibleSpecs.LEGACY,
@@ -68,6 +75,13 @@ public class LargeCrucibleControllerBlock extends Block
     @Override public net.minecraft.world.level.block.RenderShape getRenderShape(BlockState state) {
         return state.getValue(MultiblockPortBlock.CRUCIBLE_FORMED)
                 ? net.minecraft.world.level.block.RenderShape.INVISIBLE : net.minecraft.world.level.block.RenderShape.MODEL;
+    }
+
+    /** Vanilla fire asks this shape for the top support, so a formed mouth accepts no flame. */
+    @Override
+    public VoxelShape getBlockSupportShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getValue(MultiblockPortBlock.CRUCIBLE_FORMED)
+                ? FORMED_SUPPORT_SHAPE : super.getBlockSupportShape(state, level, pos);
     }
 
     @Nullable
@@ -126,11 +140,16 @@ public class LargeCrucibleControllerBlock extends Block
 //?}
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (gregtech.engine.tool.ToolInteractions.use(state, level, pos, player, hand, hit)) return InteractionResult.sidedSuccess(level.isClientSide);
+        InteractionResult result = InteractionResult.PASS;
         if (level.getBlockEntity(pos) instanceof LargeCrucibleControllerBlockEntity be)
-            return level.isClientSide
+            result = level.isClientSide
                     ? (be.canHandleUse(player, hand) ? InteractionResult.SUCCESS : InteractionResult.PASS)
                     : be.tryUse(player, hand, hit);
-        return InteractionResult.PASS;
+        if (result != InteractionResult.PASS) return result;
+        // GT6's crucible consumes an unclaimed click on the open mouth instead of passing it on to
+        // the held item, which would otherwise put a block or a fire into the hollow.
+        return state.getValue(MultiblockPortBlock.CRUCIBLE_FORMED) && hit.getDirection() == Direction.UP
+                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
     }
 //? if >=1.21.1 {
     /*@Override public List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder context) { return List.of(new ItemStack(this)); }

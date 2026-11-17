@@ -2,6 +2,7 @@ package gregtech.content.cover;
 
 import gregtech.engine.tool.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -29,6 +30,25 @@ public final class CoverPlacement {
         return level.getBlockEntity(pos) instanceof PanelCoverHost host
                 // Existing covers stay reachable for crowbar removal even on hosts which no longer admit them.
                 && (previewing ? CoverAdmission.allowAnyCover(host.coverOwner()) : host.hasAttachedCovers());
+    }
+
+    /**
+     * Whether the cell the player is aiming at would really accept {@code held}. The face overlay
+     * colours the grid with this, so occupied slots, refused host faces and covers the host cannot
+     * support show as invalid before the click.
+     */
+    public static boolean canPlace(BlockGetter level, BlockPos pos, Direction side, ItemStack held) {
+        if (level == null || side == null || held.isEmpty()) return false;
+        if (!(level.getBlockEntity(pos) instanceof PanelCoverHost host)) return false;
+        if (gregtech.content.logistics.LogisticsCoverType.of(held) != null)
+            return host.coverOwner() instanceof gregtech.content.logistics.LogisticsCoverHost logistics
+                    && logistics.canLogistics(side)
+                    && logistics.logisticsCovers().get(side).isEmpty()
+                    && host.getCover(side).isEmpty();
+        return CoverItems.isCover(held)
+                && CoverAdmission.allowCover(host.coverOwner(), side, held)
+                && host.getCover(side).isEmpty()
+                && host.panels().canAttach(side, held);
     }
 
     public static boolean fullSelection(BlockGetter level, BlockPos pos, BlockState state, Player player) {

@@ -26,6 +26,24 @@ final class ToolFaceOverlay {
                 ? mc.player.getMainHandItem()
                 : mc.player.getOffhandItem();
         boolean valid = ToolInteractions.canApply(spec, state, mc.level, hit.getBlockPos(), mc.player, tool, selected);
+        drawCellSelection(poses, out, hit, selected, valid);
+    }
+
+    /** Same cells as the clicked cover grid; green when the aimed slot would take the held cover. */
+    static void drawCoverSelection(
+            PoseStack poses,
+            VertexConsumer out,
+            BlockHitResult hit,
+            net.minecraft.world.level.BlockGetter level,
+            net.minecraft.world.item.ItemStack held) {
+        Direction selected = ToolInteractions.selectedFace(hit);
+        boolean valid = gregtech.content.cover.CoverPlacement.canPlace(level, hit.getBlockPos(), selected, held);
+        drawCellSelection(poses, out, hit, selected, valid);
+    }
+
+    /** Draws the selected cell of the third-of-a-face grid, red when the action is refused there. */
+    private static void drawCellSelection(
+            PoseStack poses, VertexConsumer out, BlockHitResult hit, Direction selected, boolean valid) {
         for (int u = 0; u < 3; u++)
             for (int v = 0; v < 3; v++) {
                 float[] center =

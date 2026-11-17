@@ -111,6 +111,11 @@ public final class SlabPlacementOverlayRenderer {
                     gregtech.content.cover.CoverPlacement.attachedFaces(mc.level, blockPos), shade);
         } else if (holdingSlab || holdingCover) {
             GTRenderHelper.drawWrenchOverlay(poseStack, consumer, target.getDirection(), shade);
+            // A cover grid stays visible on every 3x3 cell, and each cell reports whether it would
+            // really take the held cover, so a mouth ring or a seam reads as refused.
+            if (holdingCover)
+                ToolFaceOverlay.drawCoverSelection(poseStack, consumer, target, mc.level,
+                        gregtech.content.cover.CoverPlacement.held(player));
         } else {
             // Upstream draws the vanilla wrench grid with no connection markers.
             if (state.getBlock() instanceof gregtech.engine.tool.ToolInteractionTarget) {

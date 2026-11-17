@@ -33,19 +33,31 @@ public final class CrucibleInteractionHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        if (event.getEntity().isSpectator()) return;
-        BlockEntity blockEntity = event.getLevel().getBlockEntity(event.getPos());
-        var state = event.getLevel().getBlockState(event.getPos());
+        if (event.isCanceled() || event.getEntity().isSpectator()) return;
+        var level = event.getLevel();
+        BlockEntity blockEntity = level.getBlockEntity(event.getPos());
+        var state = level.getBlockState(event.getPos());
         boolean container = gregtech.engine.machine.crucible.CrucibleContainerInteraction.handles(event.getItemStack());
         // Any face that opens into the vessel accepts containers: the mouth itself, the four inner
         // walls, and the large crucible's wall parts. Outer faces stay free for block placement.
         var hit = event.getHitVec();
-        if (hit.getDirection() != Direction.UP
-                && !gregtech.content.block.machine.VesselInnerFaces.isInnerFace(state, hit)
-                && !gregtech.content.block.machine.VesselInnerFaces.isLargeCrucibleInnerFace(blockEntity, hit)) {
-            return;
-        }
-        if (event.getLevel().isClientSide()) {
+        boolean crucibleFace = hit.getDirection() == Direction.UP
+                || gregtech.content.block.machine.VesselInnerFaces.isInnerFace(state, hit)
+                || gregtech.content.block.machine.VesselInnerFaces.isLargeCrucibleInnerFace(blockEntity, hit);
+        // The face a click opens into can reach the hollow too, e.g. the underside of a block that
+        // rests on the mouth, so such a click must not place or light anything inside the vessel.
+        boolean cavityTarget = crucibleFace
+                        && gregtech.content.block.machine.VesselInnerFaces
+                                .isFormedLargeCrucibleCavityTarget(state, blockEntity, hit)
+                || gregtech.content.block.machine.VesselInnerFaces.isFormedLargeCrucibleAdjacentCavity(level, hit);
+        // A formed mouth rejects every item that could light a fire or put a block into the hollow:
+        // vanilla flint and steel, fire charges, block items and GT's igniters all use the item path
+        // that useItem denies, and a denied useItem also skips onItemUseFirst. GT tools keep item use
+        // so the magnifier, builder's wand, scraper and wrench stay available; the container and
+        // scrape paths below are handled directly and cancel the event themselves when they act.
+        if (cavityTarget && !keepsItemUse(event.getItemStack())) denyItemUse(event);
+        if (!crucibleFace) return;
+        if (level.isClientSide()) {
             var formed = gregtech.content.block.machine.MultiblockPortBlock.CRUCIBLE_FORMED;
             if (container && (blockEntity instanceof gregtech.engine.fluid.MoltenMaterialStorage
                     || state.hasProperty(formed) && state.getValue(formed))) {
@@ -74,4 +86,24 @@ SmeltingCrucibleBlockEntity crucible = blockEntity instanceof SmeltingCrucibleBl
             event.setCancellationResult(result);
         }
     }
+
+    /**
+     * GT tools other than the igniter still need {@code onItemUseFirst} on the cavity faces, which a
+     * denied useItem would skip; ordinary items have nothing to lose there.
+     */
+    private static boolean keepsItemUse(net.minecraft.world.item.ItemStack stack) {
+        return gregtech.engine.tool.GTToolHelper.isTool(stack)
+                && !gregtech.engine.tool.GTToolHelper.matchesTool(
+                        stack, gregtech.engine.tool.GTToolType.FLINT_AND_TINDER);
+    }
+
+//? if >=1.21.1 {
+    /*private static void denyItemUse(PlayerInteractEvent.RightClickBlock event) {
+        event.setUseItem(net.neoforged.neoforge.common.util.TriState.FALSE);
+    }
+*///?} else {
+    private static void denyItemUse(PlayerInteractEvent.RightClickBlock event) {
+        event.setUseItem(net.minecraftforge.eventbus.api.Event.Result.DENY);
+    }
+//?}
 }

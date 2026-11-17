@@ -108,6 +108,8 @@ public final class SmelteryFireHelper {
      * The existing pipe-fire protection tag is the modern integration hook for protected magic nodes. */
     public static boolean igniteAt(Level level, BlockPos pos, boolean checkFlammability) {
         if (level == null || level.isClientSide) return false;
+        // A formed large crucible must not set the hollow it sheds vapor and meltdown fire into.
+        if (gregtech.content.block.machine.VesselInnerFaces.isFormedLargeCrucibleCavity(level, pos)) return false;
         var state = level.getBlockState(pos);
         var block = state.getBlock();
         if (state.getFluidState().is(net.minecraft.tags.FluidTags.LAVA)
