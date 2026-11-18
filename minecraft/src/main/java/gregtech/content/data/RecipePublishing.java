@@ -60,6 +60,14 @@ public final class RecipePublishing {
         contributeGenerated("basic machine manufacturing", BasicMachineRecipePack::contribute);
         contributeGenerated("multiblock manufacturing", MultiblockRecipePack::contribute);
         contributeGenerated("sensor manufacturing", SensorRecipePack::contribute);
+        contributeGenerated("clay molds", ClayMoldRecipePack::contribute);
+        contributeGenerated("books", BookRecipePack::contribute);
+        contributeGenerated("extruder shapes", ExtruderShapeRecipePack::contribute);
+        contributeGenerated("decorative panels", DecorativePanelRecipePack::contribute);
+        contributeGenerated("bookshelves", BookshelfRecipePack::contribute);
+        contributeGenerated("scaffolds", ScaffoldRecipePack::contribute);
+        contributeGenerated("energy equipment", EnergyEquipmentRecipePack::contribute);
+        contributeGenerated("components and smeltery", ComponentAndSmelteryRecipePack::contribute);
     }
 
     private RecipePublishing() {}

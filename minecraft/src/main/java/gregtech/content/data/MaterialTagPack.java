@@ -304,6 +304,8 @@ public final class MaterialTagPack extends AbstractPackResources {
                     add(tags,"gt6ce","items",wireForm+"/"+wireMaterial,id.toString());
                     String sourceForm=(wire.spec().insulated()?"cable_gt":"wire_gt")+String.format(java.util.Locale.ROOT,"%02d",wire.spec().size());
                     add(tags,"gt6ce","items",sourceForm+"/"+wireMaterial,id.toString());
+                    if (!wire.spec().insulated() && wire.spec().size() == 1)
+                        add(tags,"forge","items","wires/"+wireMaterial,id.toString());
                     if (copperMaterials.contains(wire.spec().material().resolve()))
                         add(tags,"gt6ce","items",wireForm+"/any_copper",id.toString());
                     if (ironMaterials.contains(wire.spec().material().resolve()))

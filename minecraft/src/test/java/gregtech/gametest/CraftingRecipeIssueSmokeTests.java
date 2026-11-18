@@ -42,7 +42,7 @@ public final class CraftingRecipeIssueSmokeTests {
     // Runtime rows only. Static source checks for the remaining fixed issues live in the core
     // crafting-issue-static-cases table; this table is the runtime authority for match/assemble.
     private static final Set<String> RUNTIME_ISSUES = Set.of(
-            "2", "148", "151", "155", "176", "209", "312", "326", "345", "346", "352");
+            "2", "148", "151", "155", "157", "176", "209", "312", "326", "345", "346", "352", "398");
 
     // Checks the table covers every runtime issue.
     @GameTest(template = "test_empty", batch = "crafting_issue_smoke", timeoutTicks = 600)

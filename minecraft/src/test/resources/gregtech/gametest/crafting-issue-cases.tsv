@@ -35,3 +35,16 @@
 352	gt6ce:fluid_tools/cap_nozzle_tungsten	R	gt6ce:tool_shaped	-	gt6ce:cap_nozzle_tungsten	1	fill	tungsten capped nozzle uses a tungsten ring
 352	gt6ce:fluid_tools/cap_nozzle_tantalum_hafnium_carbide	R	gt6ce:tool_shaped	-	gt6ce:cap_nozzle_tantalum_hafnium_carbide	1	fill	GT6 2133 builds this capped nozzle from the tungsten nozzle
 352	gt6ce:fluid_tools/cap_nozzle_adamantium	R	gt6ce:tool_shaped	-	gt6ce:cap_nozzle_adamantium	1	fill	adamantium capped nozzle uses an adamantium ring
+157	gt6ce:clay_molds/imprint_221_anywoodplastic	R	gt6ce:tool_shapeless	-	gt6ce:clay_rod_mold	1	fill	wood/plastic stick imprints clay rod mold
+398	gt6ce:clay_molds/form_clay_mold	R	gt6ce:tool_shaped	-	gt6ce:clay_mold	1	fill	RecipePublishing clay_molds/form_clay_mold
+398	gt6ce:books/empty/book_black	R	minecraft:crafting_shapeless	-	gt6ce:book_black	1	fill	RecipePublishing books/empty
+398	gt6ce:books/printed/book_black	R	gt6ce:book_binding	-	gt6ce:book_black	1	fill	RecipePublishing books/printed
+398	gt6ce:extruder_shapes/extruder_shape_plate	R	gt6ce:tool_shaped	-	gt6ce:extruder_shape_plate	1	fill	RecipePublishing extruder_shapes
+398	gt6ce:decorative_panels/panel_asphalt_black	R	gt6ce:tool_shaped	-	gt6ce:panel_asphalt_black	6	fill	RecipePublishing decorative_panels
+398	gt6ce:bookshelves/bookshelf_metal_steel	R	gt6ce:tool_shaped	-	gt6ce:bookshelf_metal_steel	1	fill	RecipePublishing bookshelves
+398	gt6ce:scaffolds/scaffold	R	gt6ce:tool_shaped	-	gt6ce:scaffold	1	fill	RecipePublishing scaffolds
+398	gt6ce:chemical_batteries/battery_alkaline_lv	R	gt6ce:tool_shaped	-	gt6ce:battery_alkaline_lv	1	fill	RecipePublishing chemical_batteries
+398	gt6ce:engines/engine_diesel_bronze	R	gt6ce:tool_shaped	-	gt6ce:engine_diesel_bronze	1	fill	RecipePublishing engines with finite fluid container
+398	gt6ce:energy_nodes/battery_box_lv	R	minecraft:crafting_shaped	-	gt6ce:battery_box_lv	1	fill	RecipePublishing energy_nodes
+398	gt6ce:long_distance/long_dist_endpoint_fluid	R	gt6ce:tool_shaped	-	gt6ce:long_dist_endpoint_fluid	1	fill	RecipePublishing long_distance
+398	gt6ce:components/conveyor_lv	R	minecraft:crafting_shaped	-	gt6ce:compact_electric_conveyor_lv	1	fill	RecipePublishing components

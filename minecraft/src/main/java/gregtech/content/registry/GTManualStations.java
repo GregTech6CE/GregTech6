@@ -87,7 +87,7 @@ public final class GTManualStations {
             item(registrar, v.id(), b, 64);
         }
         for (var v : GTStorageMetals.ALL) {
-            String id = v.suffix().equals("steel") ? "scaffold" : "scaffold_" + v.suffix();
+            String id = v.scaffoldId();
             var b = registrar.blockWithoutItem(
                     REGISTRY_NAMESPACE,
                     id,

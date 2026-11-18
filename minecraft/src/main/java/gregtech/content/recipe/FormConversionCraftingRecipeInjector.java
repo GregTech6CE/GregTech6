@@ -111,11 +111,7 @@ public final class FormConversionCraftingRecipeInjector {
     private static boolean isDedupSource(ResourceLocation id) {
         if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
         String path = id.getPath();
-        return path.startsWith("wire_working/weave_")
-                || path.startsWith("wire_working/unpack_")
-                || path.startsWith("wire_working/insulate_")
-                || path.startsWith("axial/")
-                || path.startsWith("polymer_forming/")
+        return path.startsWith("axial/")
                 || path.startsWith("hand/pipe/")
                 || path.startsWith("hand_material/rocks/")
                 || path.startsWith("machines/basic/massfab_")

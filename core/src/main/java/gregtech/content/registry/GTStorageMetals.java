@@ -12,7 +12,12 @@ import java.util.List;
 public final class GTStorageMetals {
     private GTStorageMetals() {}
 
-    public record Spec(String suffix, GTMaterial material, float hardness, float resistance) {}
+    public record Spec(String suffix, GTMaterial material, float hardness, float resistance) {
+        /** Block id of this metal's scaffold; the steel one keeps the unsuffixed id. */
+        public String scaffoldId() {
+            return suffix.equals("steel") ? "scaffold" : "scaffold_" + suffix;
+        }
+    }
 
     public static final List<Spec> ALL = List.of(
             new Spec("lead", gregtech.content.material.generated.ElementMaterials.Lead, 4.0F, 4.0F),

@@ -70,6 +70,8 @@ public final class FoodItemRecipes {
         staples();
         smelting();
         slicing();
+        pressing();
+        frying();
         mixing();
         packaging();
         registered += CannedFoodRecipes.register();
@@ -201,6 +203,8 @@ public final class FoodItemRecipes {
             {"loaf_of_toast", "slicer_shape_flat", "toast", "8", "MultiItemFood.java:785"},
             {"cheese", "slicer_shape_flat", "cheese_slice", "4", "Loader_Recipes_Food.java:130"},
             {"boiled_egg", "slicer_shape_flat", "sliced_egg", "4", "Loader_Recipes_Food.java:297"},
+            {"minecraft:potato", "slicer_shape_flat", "potato_chips_raw", "1", "Loader_Recipes_Crops.java:807"},
+            {"minecraft:potato", "slicer_shape_grid", "potato_strips", "1", "Loader_Recipes_Crops.java:808"},
     };
 
     private static void slicing() {
@@ -216,11 +220,63 @@ public final class FoodItemRecipes {
                 continue;
             }
             // GT6 RM.Slicer.addRecipe2(T, 16, 16, input, blade, output).
-            if (MachineRecipeMaps.Slicer.register(RecipeBuilder.of(16, 16)
+            var registeredRecipe = MachineRecipeMaps.Slicer.register(RecipeBuilder.of(16, 16)
                     .itemInputs(input, blade)
-                    .itemOutputs(output)) != null) {
+                    .itemOutputs(output));
+            if (registeredRecipe != null) {
+                registeredRecipe.withCatalystInputs(1);
                 registered++;
             }
+        }
+    }
+
+    /** {@code input id, input count, food mold id, output id, ticks, GT6 source}. */
+    private static final String[][] PRESS = {
+            {"dough", "1", "foodmold_shape_bun", "dough_bun", "16", "Loader_Recipes_Food.java:146"},
+            {"dough", "2", "foodmold_shape_bread", "dough_bread", "32", "Loader_Recipes_Food.java:147"},
+            {"dough", "3", "foodmold_shape_baguette", "dough_baguette", "48", "Loader_Recipes_Food.java:148"},
+            {"dough", "4", "foodmold_shape_toast", "dough_toast_loaf", "64", "Loader_Recipes_Food.java:149"},
+            {"sugary_dough", "4", "foodmold_shape_cylinder", "raw_cake_bottom", "64", "Loader_Recipes_Food.java:152"},
+    };
+
+    private static void pressing() {
+        for (String[] row : PRESS) {
+            ItemStack input = food(row[0], Integer.parseInt(row[1]));
+            ItemStack mold = food(row[2], 1);
+            ItemStack output = food(row[3], 1);
+            int ticks = Integer.parseInt(row[4]);
+            if (input.isEmpty() || mold.isEmpty() || output.isEmpty()) {
+                SKIPPED.add(row[0] + " * " + row[1] + " + " + row[2] + " -> " + row[3] + " (" + row[5]
+                        + "): an item of this row is not in the port");
+                continue;
+            }
+            // GT6 RM.Press.addRecipe2(T, 16, ticks, input * count, mold.get(0), output).
+            var registeredRecipe = MachineRecipeMaps.Press.register(RecipeBuilder.of(16, ticks)
+                    .itemInputs(input, mold)
+                    .itemOutputs(output));
+            if (registeredRecipe != null) {
+                registeredRecipe.withCatalystInputs(1);
+                registered++;
+            }
+        }
+    }
+
+    /** GT6 {@code MultiItemFood} fries bath: {@code RM.Bath.addRecipe1(T, 0, 16, Food_Fries_Raw, FryingOilHot(U/100, T), Fries)}. */
+    private static void frying() {
+        ItemStack raw = food("potato_strips", 1);
+        ItemStack fries = food("fries", 1);
+        int oilMb = gregtech.content.material.catalog.MaterialFluidUnitFacts.millibuckets(
+                gregtech.api.material.GTValues.U / 100, gregtech.api.material.GTValues.U, 144, true);
+        FluidStack oil = fluid("Oil_Frying", oilMb);
+        if (raw.isEmpty() || fries.isEmpty() || oil.isEmpty()) {
+            SKIPPED.add("potato_strips + Oil_Frying -> fries (MultiItemFood.java:357): missing item or fluid");
+            return;
+        }
+        if (MachineRecipeMaps.Bath.register(RecipeBuilder.of(0, 16)
+                .itemInputs(raw)
+                .fluidInputs(oil)
+                .itemOutputs(fries)) != null) {
+            registered++;
         }
     }
 

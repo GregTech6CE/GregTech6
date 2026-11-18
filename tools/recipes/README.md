@@ -1,8 +1,8 @@
 # recipes：配方数据审计
 
-`audit_recipes.py` 对随模组分发的数据包配方做静态审计。它只读
+`audit_recipes.py` 对随模组分发的**静态**数据包配方做静态审计。它只读
 `core/src/main/resources/data/gt6ce/recipes`、`tags/items`、`assets/*/models/item`
-和生成配方的 Java 表，不启动游戏。
+和生成配方的 Java 表，不启动游戏；由 `RecipePublishing`（`gt6ce:generated_recipes`）及运行期注入器在内存中生成的配方不在静态 JSON 审计范围内，其结构与等价性由单元测试与 GameTest 验证。
 
 ## 运行
 

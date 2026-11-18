@@ -19,7 +19,7 @@
 - **维护的生成输入**：`core/src/main/java/gregtech/content/{data,material,recipe}/generated/` 等内容表以及正交机器模型表 `core/src/main/resources/assets/gt6ce/machine_models.tsv`（842 行、15 列，配合 `textures/block/machines/casing/` 与 `shared_overlay/` 归并贴图，机器目录贴图上限 950 张）参与生产编译或客户端模型烘焙，需要纳入版本控制；部分 Java 内容表文件头可能引用历史转换工具。
 - **可再生构建输出**：各节点 `build/generated/stonecutter/`、`build/generated/recipe-resources/`、编译类、资源副本、JAR 与构建报告由 Gradle 生成，Git 忽略，不能手工维护。
 
-`build/generated/recipe-resources/` 只出现在 1.21.1 NeoForge 节点：`tools/buildtools` 把 core 中按 1.20.1 形状维护的配方与物品标签树转换为 `recipe/`、`tags/item/`，开发运行与发行 JAR 消费同一份结果。源数据、排除表与转换器纳入版本控制，生成树不纳入；输入、依赖、输出与运行命令见 [buildtools README](../../tools/buildtools/README.md)，生成树与源数据的对应关系由 `tools/recipes/audit_recipes.py --converted` 检查。
+`build/generated/recipe-resources/` 只出现在 1.21.1 NeoForge 节点：`tools/buildtools` 把 core 中按 1.20.1 形状维护的剩余静态配方（当前 566 条）与物品标签树转换为 `recipe/`、`tags/item/`，开发运行与发行 JAR 消费同一份结果。源数据、排除表与转换器纳入版本控制，生成树不纳入；输入、依赖、输出与运行命令见 [buildtools README](../../tools/buildtools/README.md)，生成树与源数据的对应关系由 `tools/recipes/audit_recipes.py --converted` 检查。强规则展开的配方家庭（如 `clay_molds`、`books`、`extruder_shapes`、`decorative_panels`、`bookshelves`、`scaffolds`、`chemical_batteries`、`engines`、`energy_nodes`、`long_distance`、`components`、`smeltery_survival` 等）则直接由 `RecipePublishing`（`gt6ce:generated_recipes`）在运行期按双平台格式发布并由单元测试与 GameTest 校验等价性。
 
 例如部分配方表引用 `tools/transpile_gt6_chem.py`。当前工作树未包含这些工具，不能把这些命令写成可直接运行的流程。需要改表时先确认上游来源与转换方式；一次性导入/再生成脚本放本机被忽略的 `work/local-tools/`，不随仓库提交。生成器不在仓库时，确需修表应说明依据、局部变更及无法重新生成的限制。
 

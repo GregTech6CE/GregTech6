@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gregtech.content.recipe.ClayMoldCatalog;
+import gregtech.content.recipe.ClayMoldRecipeRules;
+import gregtech.content.recipe.ComponentAndSmelteryRecipeRules;
 import gregtech.content.recipe.OriginalFormConversions;
 import gregtech.content.recipe.VanillaCraftingReplacements;
 import gregtech.engine.recipe.data.JsonMaps;
@@ -42,6 +44,7 @@ final class CraftingIssueStaticTests {
     private static void verify(Case testCase) throws IOException {
         switch (testCase.source()) {
             case "json" -> verifyJson(testCase);
+            case "rule" -> verifyRule(testCase);
             case "vanilla" -> verifyVanilla(testCase);
             case "form" -> verifyForm(testCase);
             case "mold" -> verifyMold(testCase);
@@ -94,6 +97,58 @@ final class CraftingIssueStaticTests {
                 }
             }
             default -> throw new AssertionError(testCase.label("unknown json kind " + testCase.kind()));
+        }
+    }
+
+    // Compares one migrated rule row in core with its table expectations.
+    private static void verifyRule(Case testCase) {
+        switch (testCase.kind()) {
+            case "shaped" -> {
+                assertExpectedKeys(testCase, "key:", "type", "pattern", "result", "count");
+                var row = ComponentAndSmelteryRecipeRules.all().stream()
+                        .filter(candidate -> candidate.path().equals(testCase.target()))
+                        .findFirst()
+                        .orElseThrow(() -> new AssertionError(testCase.label("missing shaped rule")));
+                if (!(row instanceof ComponentAndSmelteryRecipeRules.Shaped shaped)) {
+                    throw new AssertionError(testCase.label("not a shaped rule"));
+                }
+                assertEquals(testCase.expected().get("type"), shaped.type(), testCase.label("type"));
+                assertEquals(
+                        testCase.expected().get("pattern"),
+                        String.join("/", shaped.pattern()),
+                        testCase.label("pattern"));
+                for (var entry : testCase.expected().entrySet()) {
+                    if (!entry.getKey().startsWith("key:")) continue;
+                    var symbol = entry.getKey().substring("key:".length());
+                    assertEquals(entry.getValue(), shaped.key().get(symbol), testCase.label("key " + symbol));
+                }
+                assertEquals(testCase.expected().get("result"), shaped.result(), testCase.label("result"));
+                assertEquals(
+                        Integer.parseInt(testCase.expected().getOrDefault("count", "1")),
+                        shaped.count(),
+                        testCase.label("count"));
+            }
+            case "shapeless" -> {
+                assertExpectedKeys(testCase, "ingredient:", "type", "result", "count");
+                var row = ClayMoldRecipeRules.recipes().stream()
+                        .filter(candidate -> candidate.path().equals(testCase.target()))
+                        .findFirst()
+                        .orElseThrow(() -> new AssertionError(testCase.label("missing clay mold rule")));
+                assertEquals(testCase.expected().get("type"), row.type(), testCase.label("type"));
+                for (var entry : testCase.expected().entrySet()) {
+                    if (!entry.getKey().startsWith("ingredient:")) continue;
+                    var index = Integer.parseInt(entry.getKey().substring("ingredient:".length()));
+                    assertTrue(index < row.ingredients().size(), testCase.label("ingredient " + index));
+                    assertEquals(entry.getValue(), row.ingredients().get(index), testCase.label("ingredient " + index));
+                }
+                assertEquals(testCase.expected().get("result"), row.result(), testCase.label("result"));
+                int count = row.count() == null ? 1 : row.count();
+                assertEquals(
+                        Integer.parseInt(testCase.expected().getOrDefault("count", "1")),
+                        count,
+                        testCase.label("count"));
+            }
+            default -> throw new AssertionError(testCase.label("unknown rule kind " + testCase.kind()));
         }
     }
 
