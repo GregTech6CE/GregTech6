@@ -30,7 +30,7 @@ class BehaviorMachineTest {
     }
 
     @Test
-    void originalConstructorMatchesBuilder() {
+    void groupedConstructorMatchesBuilder() {
         var casing = MachineCasing.builder("compat_machine", "iron").build();
         var main = EnergyInput.builder(EnergyType.EU, 32).build();
         var auxiliary = EnergyInput.builder(EnergyType.HU, 16)
@@ -43,9 +43,11 @@ class BehaviorMachineTest {
         var progress = new BehaviorMachine.Progress(75, 32);
         var items = new ArrayList<>(List.of(item));
 
-        var direct = new BehaviorMachine(casing, main, auxiliary, output, "compat_be", 192, 180, GUI,
-                7, 10, items, List.of(fluid), List.of(toggle), progress, 6, List.of("gt.recipe.compat"),
-                io, MachineFace.RIGHT, true, List.of("active"));
+        var ports = new BehaviorMachine.EnergyPorts(main, auxiliary, output);
+        var layout = new BehaviorMachine.GuiLayout(192, 180, GUI, 7, 10, items, List.of(fluid), List.of(toggle), progress);
+        var automation = new BehaviorMachine.Automation(io, MachineFace.RIGHT, true);
+        var options = new BehaviorMachine.RuntimeOptions(6, List.of("gt.recipe.compat"), List.of("active"));
+        var direct = new BehaviorMachine(casing, ports, "compat_be", layout, automation, options);
         var built = BehaviorMachine.builder(casing)
                 .energy(main).auxiliaryEnergy(auxiliary).energyOutput(output)
                 .blockEntityId("compat_be")

@@ -115,19 +115,6 @@ public record BehaviorMachine(
         energyPorts = new EnergyPorts(storedEnergy, storedAuxiliary, energyPorts.output());
     }
 
-    /** Original constructor kept for existing addons. Use {@link #builder(MachineCasing)} for declarations. */
-    public BehaviorMachine(
-            MachineCasing casing, @Nullable EnergyInput energy, @Nullable EnergyInput auxiliary,
-            @Nullable EnergyOutput output, String blockEntityId, int guiWidth, int guiHeight,
-            String gui, int energyX, int energyY, List<ItemSlot> items, List<FluidSlot> fluids,
-            List<Toggle> toggles, Progress progress, int maxRange, List<String> recipeMaps,
-            @Nullable MachineIo io, @Nullable MachineFace gasValve, boolean signalOutput, List<String> clientState
-    ) {
-        this(casing, new EnergyPorts(energy, auxiliary, output), blockEntityId,
-                new GuiLayout(guiWidth, guiHeight, gui, energyX, energyY, items, fluids, toggles, progress),
-                new Automation(io, gasValve, signalOutput), new RuntimeOptions(maxRange, recipeMaps, clientState));
-    }
-
     public @Nullable EnergyInput energy() { return energyPorts.input(); }
     public @Nullable EnergyInput auxiliary() { return energyPorts.auxiliary(); }
     public @Nullable EnergyOutput output() { return energyPorts.output(); }
