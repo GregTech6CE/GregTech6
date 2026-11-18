@@ -5,12 +5,17 @@ import gregtech.api.addon.platform.AddonStructures;
 import gregtech.api.addon.platform.StructureProblem;
 import gregtech.content.blockentity.machine.BehaviorMachineBlockEntity;
 import gregtech.content.multiblock.LargeMachineParts;
+import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 //? if >=1.21.1 {
@@ -24,6 +29,117 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MultiblockBehaviorApiTests {
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void behaviorStateKeepsSaveDataAndFiltersClientUpdates(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var pos = helper.absolutePos(new BlockPos(1, 1, 1));
+        var block = BuiltInRegistries.BLOCK.get(
+                ResourceLocation.fromNamespaceAndPath("gt6ce_api_test", "structure_api_test"));
+        var blockState = block.defaultBlockState();
+        level.setBlockAndUpdate(pos, blockState);
+        var machine = (BehaviorMachineBlockEntity) level.getBlockEntity(pos);
+        var restored = (BehaviorMachineBlockEntity) machine.getType().create(pos, blockState);
+        var client = (BehaviorMachineBlockEntity) machine.getType().create(pos, blockState);
+
+        var state = machine.state();
+        state.setInt("shared", 3);
+        state.setLong("shared", 1L << 40);
+        state.setBoolean("shared", true);
+        state.setString("shared", "running");
+        state.setInt("server_only", 5);
+        state.setItem("shared", new ItemStack(Items.IRON_INGOT, 2));
+
+        var lookup = level.registryAccess();
+        var saved = new CompoundTag();
+        machine.writeMachine(saved, lookup);
+        var savedBehavior = saved.getCompound("gt.behavior");
+        helper.assertTrue(savedBehavior.getCompound("i").getInt("server_only") == 5
+                        && savedBehavior.getCompound("t").contains("shared"),
+                "The saved behavior state changed its NBT layout");
+        restored.readMachine(saved, lookup);
+        var restoredItem = restored.state().item("shared");
+        helper.assertTrue(restored.state().getInt("server_only") == 5
+                        && restoredItem.is(Items.IRON_INGOT) && restoredItem.getCount() == 2,
+                "The saved state lost a server-only value or stored item");
+
+//? if >=1.21.1 {
+        /*var update = restored.getUpdateTag(lookup);
+*///?} else {
+        var update = restored.getUpdateTag();
+//?}
+        helper.assertTrue(!update.getCompound("i").contains("server_only") && !update.contains("t"),
+                "The client update exposed a server-only value or stored item");
+        update.getCompound("i").putInt("server_only", 7);
+        update.put("t", savedBehavior.getCompound("t").copy());
+//? if >=1.21.1 {
+        /*client.handleUpdateTag(update, lookup);
+*///?} else {
+        client.handleUpdateTag(update);
+//?}
+        helper.assertTrue(client.getInt("shared") == 3 && client.getLong("shared") == (1L << 40)
+                        && client.getBoolean("shared") && client.getString("shared").equals("running"),
+                "A declared client value was lost during save, load, or synchronization");
+        helper.assertTrue(client.state().getInt("server_only") == 0 && client.state().item("shared").isEmpty(),
+                "Reading the update accepted a server-only value or stored item");
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void worldAccessLimitsActionsAndKeepsTheirOutputs(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var origin = helper.absolutePos(new BlockPos(2, 1, 2));
+        var block = BuiltInRegistries.BLOCK.get(
+                ResourceLocation.fromNamespaceAndPath("gt6ce_api_test", "ports_api_test"));
+        level.setBlockAndUpdate(origin, block.defaultBlockState());
+        var machine = (BehaviorMachineBlockEntity) level.getBlockEntity(origin);
+        var behavior = (StructureApiTestAddon.PortsBehavior) machine.behavior();
+        var first = origin.east();
+        var second = origin.west();
+        var outside = origin.east(2);
+        var dirt = Blocks.DIRT.defaultBlockState();
+        level.setBlockAndUpdate(first, dirt);
+        level.setBlockAndUpdate(second, dirt);
+        level.setBlockAndUpdate(outside, dirt);
+        for (int index = 0; index < 17; index++) {
+            var item = new ItemEntity(level, origin.getX() + 0.5, origin.getY() + 1.5, origin.getZ() + 0.5,
+                    new ItemStack(Items.CLAY_BALL), 0, 0, 0);
+            item.setNoGravity(true);
+            item.setNeverPickUp();
+            level.addFreshEntity(item);
+        }
+        record Attempts(boolean brokeOutside, boolean brokeFirst, boolean brokeSecond,
+                int collectedOutside, int collected, int retried) {}
+        var attempts = new AtomicReference<Attempts>();
+        var nextTick = new AtomicReference<Boolean>();
+        behavior.worldAction = world -> attempts.set(new Attempts(world.breakBlock(outside), world.breakBlock(first),
+                world.breakBlock(second), world.collectItems(2, false), world.collectItems(1, false),
+                world.collectItems(1, false)));
+        helper.startSequence()
+                .thenWaitUntil(() -> helper.assertTrue(attempts.get() != null, "World access callback did not run"))
+                .thenExecute(() -> {
+                    helper.assertTrue(attempts.get().equals(new Attempts(false, true, false, 0, 16, 0)),
+                            "Unexpected range or per-tick limits: " + attempts.get());
+                    helper.assertTrue(level.isEmptyBlock(first) && level.getBlockState(second).is(Blocks.DIRT),
+                            "The first callback did not break exactly one block");
+                    behavior.worldAction = world -> nextTick.set(
+                            world.breakBlock(second) && world.collectItems(1, false) == 1);
+                })
+                .thenWaitUntil(() -> helper.assertTrue(nextTick.get() != null, "Second world access callback did not run"))
+                .thenExecute(() -> {
+                    helper.assertTrue(nextTick.get() && level.isEmptyBlock(second)
+                                    && level.getBlockState(outside).is(Blocks.DIRT),
+                            "World access budgets did not reset or an out-of-range block changed");
+                    var items = machine.inventory();
+                    var drops = items.getStackInSlot(2);
+                    var pickedUp = items.getStackInSlot(3);
+                    helper.assertTrue(items.getStackInSlot(0).isEmpty() && items.getStackInSlot(1).isEmpty()
+                                    && drops.is(Items.DIRT) && drops.getCount() == 2
+                                    && pickedUp.is(Items.CLAY_BALL) && pickedUp.getCount() == 17,
+                            "World access did not put every drop and collected item in the output slots");
+                })
+                .thenSucceed();
+    }
+
     @GameTest(template = "test_empty", timeoutTicks = 180)
     public static void partsOpenTheControllerMenuAndInvalidateWithTheStructure(GameTestHelper helper) {
         var level = helper.getLevel();

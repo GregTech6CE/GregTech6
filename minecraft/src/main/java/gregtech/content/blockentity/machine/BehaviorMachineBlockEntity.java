@@ -11,25 +11,15 @@ import gregtech.api.addon.recipe.CrucibleMold;
 import gregtech.api.machine.BlockFace;
 import gregtech.api.machine.MachineFace;
 import gregtech.engine.addon.PartEnergyRules;
-import gregtech.api.addon.machine.BehaviorRangeRules;
 import gregtech.engine.addon.BehaviorMachineHosts;
 import gregtech.api.addon.platform.BehaviorMachineClientView;
 import gregtech.api.addon.platform.EnergyAccess;
-import gregtech.api.addon.platform.FluidAccess;
-import gregtech.api.addon.platform.MachineInventoryAccess;
-import gregtech.api.addon.platform.MachinePanel;
-import gregtech.api.addon.platform.StructureAccess;
-import gregtech.api.addon.platform.WorldAccess;
 import gregtech.api.addon.platform.BehaviorState;
 import gregtech.api.addon.platform.EnergyBlock;
-import gregtech.api.addon.platform.BoundPart;
-import gregtech.api.addon.platform.EnergyPart;
 import gregtech.api.addon.platform.PartBehavior;
 import gregtech.api.addon.platform.PartContext;
 import gregtech.api.addon.platform.MachineBehavior;
-import gregtech.api.addon.platform.MachineBehaviorContext;
 import gregtech.engine.multiblock.MultiblockLayout;
-import gregtech.engine.multiblock.PartBindings;
 import gregtech.engine.multiblock.tracking.PatternMatch;
 import gregtech.content.multiblock.LargeMachineLayouts;
 import gregtech.engine.energy.EnergyBlockViews;
@@ -40,6 +30,7 @@ import gregtech.engine.machine.ITileEntityCrucible;
 import gregtech.engine.machine.ITileEntityMold;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.content.block.machine.BehaviorMachineBlock;
+import gregtech.content.blockentity.machine.BehaviorMachineTanks.Tank;
 import gregtech.client.gui.BehaviorMachineMenu;
 import gregtech.content.data.GregTechTags;
 import net.minecraft.core.BlockPos;
@@ -47,32 +38,23 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -95,10 +77,7 @@ import javax.annotation.Nonnull;
 //?}
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 /** Shell block entity. The addon behavior never sees this class. */
 public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlock, MenuProvider,
@@ -110,21 +89,12 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     private final MachineBehavior behavior;
     private final ItemStackHandler items;
     private final Tank[] tanks;
-    private final StoredState state = new StoredState();
-    private final Context context = new Context();
-    private final PipeItems pipeItems = new PipeItems();
-    private final PipeFluids pipeFluids = new PipeFluids();
-    private final IItemHandler[] itemSides = new IItemHandler[6];
-    private final IFluidHandler[] fluidSides = new IFluidHandler[6];
-//? if >=1.21.1 {
-/**///?} else {
-    private final LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> pipeItems);
-    private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> pipeFluids);
-    @SuppressWarnings("unchecked")
-    private final LazyOptional<IItemHandler>[] sidedItemCaps = new LazyOptional[6];
-    @SuppressWarnings("unchecked")
-    private final LazyOptional<IFluidHandler>[] sidedFluidCaps = new LazyOptional[6];
-//?}
+    private final BehaviorMachineState state;
+    private final BehaviorMachineContext context;
+    private final BehaviorMachinePanel panel;
+    private final BehaviorMachineWorld worldAccess;
+    private final BehaviorMachineTanks fluidAccess;
+    private final BehaviorMachineIOPorts ioPorts;
     private final GregTechTags.Tag energyTag;
     private final GregTechTags.Tag energyOutTag;
     private final GregTechTags.Tag auxiliaryTag;
@@ -134,22 +104,8 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     private String dynamicEnergy;
     private long capacity;
     private boolean capacitySet;
-    private int toggles;
-    private int progress;
-    private boolean working;
     private boolean powered;
-    private final PartBindings<BlockPos, MultiblockLayout.Role> structureBindings = new PartBindings<>();
-    private boolean formed;
-    private List<EnergyPart> energyParts = List.of();
-    private List<BoundPart> boundParts = List.of();
-    private List<gregtech.api.addon.platform.StructureCell> structureCells = List.of();
-    private Map<String, Integer> repeatCounts = Map.of();
-    private int breaksLeft;
-    private int itemsLeft;
-    @Nullable private UUID placerId;
-    private String placerName = "";
-    private final java.util.Set<String> clientKeys;
-    private boolean clientStateDirty;
+    private final BehaviorMachineStructure structure = new BehaviorMachineStructure(this);
 
     public BehaviorMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -160,9 +116,9 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         this.items = new ItemStackHandler(declaration.items().size()) {
             @Override protected void onContentsChanged(int slot) { setChanged(); }
         };
-        this.tanks = new Tank[declaration.fluids().size()];
-        for (int i = 0; i < tanks.length; i++) tanks[i] = new Tank(declaration.fluids().get(i));
-        this.toggles = declaration.initialToggles();
+        this.fluidAccess = new BehaviorMachineTanks(declaration.fluids(), this::setChanged);
+        this.tanks = fluidAccess.entries();
+        this.panel = new BehaviorMachinePanel(declaration.toggles().size(), declaration.initialToggles(), this::setChanged);
         this.capacity = declaredCapacity();
         this.energyTag = !hasInput() || declaration.energy().dynamic() ? null : GregTechTags.Energy.ALL.stream()
                 .filter(tag -> tag.getShortName().equalsIgnoreCase(declaration.energy().type().name()))
@@ -173,7 +129,11 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         this.auxiliaryTag = declaration.auxiliary() == null ? null : GregTechTags.Energy.ALL.stream()
                 .filter(tag -> tag.getShortName().equalsIgnoreCase(declaration.auxiliary().type().name()))
                 .findFirst().orElseThrow();
-        this.clientKeys = java.util.Set.copyOf(declaration.clientState());
+        this.state = new BehaviorMachineState(declaration.clientState(), this::setChanged);
+        var itemAccess = new BehaviorMachineItems(declaration, items);
+        this.worldAccess = new BehaviorMachineWorld(this, declaration.maxRange(), itemAccess);
+        this.context = new BehaviorMachineContext(this, itemAccess, fluidAccess, behaviorEnergy(), structure, panel, worldAccess);
+        this.ioPorts = new BehaviorMachineIOPorts(this, declaration, behavior, context, items, fluidAccess);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, BehaviorMachineBlockEntity machine) {
@@ -193,18 +153,14 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     @Override public String addonId() { return accepted.addonId(); }
     @Override public String machineType() { return declaration.casing().machineType(); }
-    @Override public int getInt(String key) { requireClientKey(key); return state.getInt(key); }
-    @Override public long getLong(String key) { requireClientKey(key); return state.getLong(key); }
-    @Override public boolean getBoolean(String key) { requireClientKey(key); return state.getBoolean(key); }
-    @Override public String getString(String key) { requireClientKey(key); return state.getString(key); }
+    @Override public int getInt(String key) { state.requireClientKey(key); return state.getInt(key); }
+    @Override public long getLong(String key) { state.requireClientKey(key); return state.getLong(key); }
+    @Override public boolean getBoolean(String key) { state.requireClientKey(key); return state.getBoolean(key); }
+    @Override public String getString(String key) { state.requireClientKey(key); return state.getString(key); }
 
-    private void requireClientKey(String key) {
-        if (!clientKeys.contains(key))
-            throw new IllegalArgumentException("Behavior machine client state is not declared: " + key);
-    }
     public ItemStackHandler inventory() { return items; }
-    public IItemHandler items() { return pipeItems; }
-    public IFluidHandler fluids() { return pipeFluids; }
+    public IItemHandler items() { return ioPorts.items(); }
+    public IFluidHandler fluids() { return ioPorts.fluids(); }
     public int tanks() { return tanks.length; }
     public long storedEnergy() { return stored; }
     public long energyCapacity() { return capacity; }
@@ -221,7 +177,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return MachineFace.FRONT;
     }
     public MachineBehavior behavior() { return behavior; }
-    public boolean toggle(int index) { return context.toggle(index); }
+    public boolean toggle(int index) { return panel.toggle(index); }
 
     @Override
     public boolean fillMoldAtSide(ITileEntityMold mold, int crucibleSide, int moldSide) {
@@ -262,36 +218,14 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 *///?} else {
 //?}
 
-    /** Unsided when {@code side} is null or the machine declares no {@code MachineIo}. A closed face is null. */
     @Nullable
     public IItemHandler itemHandler(@Nullable Direction side) {
-        if (side == null || declaration.io() == null) return pipeItems;
-        int rel = relative(side);
-        boolean insert = FaceConfig.has(declaration.itemInputFaces(), rel);
-        boolean extract = FaceConfig.has(declaration.itemOutputFaces(), rel);
-        if (!insert && !extract) return null;
-        IItemHandler cached = itemSides[rel];
-        if (cached == null) itemSides[rel] = cached = new PipeItems(faceAt(rel), insert, extract);
-        return cached;
+        return ioPorts.itemHandler(side);
     }
 
-    /** Unsided when {@code side} is null or the machine declares no {@code MachineIo}. A closed face is null. */
     @Nullable
     public IFluidHandler fluidHandler(@Nullable Direction side) {
-        if (tanks.length == 0) return null;
-        if (side == null || declaration.io() == null) return pipeFluids;
-        int rel = relative(side);
-        boolean fill = FaceConfig.has(declaration.fluidInputFaces(), rel);
-        boolean drain = FaceConfig.has(declaration.fluidOutputFaces(), rel);
-        if (!fill && !drain) return null;
-        IFluidHandler cached = fluidSides[rel];
-        if (cached == null) fluidSides[rel] = cached = new PipeFluids(faceAt(rel), fill, drain);
-        return cached;
-    }
-
-    private static MachineFace faceAt(int relative) {
-        for (MachineFace face : MachineFace.values()) if (face.index() == relative) return face;
-        return MachineFace.FRONT;
+        return ioPorts.fluidHandler(side);
     }
 
     public boolean behaviorAllows(int slot, ItemStack stack) {
@@ -300,18 +234,14 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     public boolean flip(int index) {
         if (index < 0 || index >= declaration.toggles().size()) return false;
-        context.setToggle(index, !context.toggle(index));
+        panel.setToggle(index, !panel.toggle(index));
         behavior.onToggle(context, index);
         setChanged();
         return true;
     }
 
     public void rememberPlacer(Player player) {
-        if (player == null) return;
-        placerId = player.getUUID();
-        String name = player.getGameProfile().getName();
-        placerName = name == null ? "" : name;
-        setChanged();
+        worldAccess.rememberPlacer(player);
     }
 
     public void dropContents() {
@@ -319,30 +249,27 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         behavior.beforeBreak(context);
         for (int slot = 0; slot < items.getSlots(); slot++)
             Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), items.getStackInSlot(slot));
-        for (ItemStack stack : state.items.values()) {
-            if (!stack.isEmpty())
-                Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack.copy());
-        }
+        state.forEachStoredItem(stack ->
+                Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), stack));
     }
 
     public boolean structureFormed() {
-        return formed;
+        return structure.formed();
     }
 
     private void tickServer(Level level, BlockPos pos) {
-        breaksLeft = BehaviorRangeRules.BREAKS_PER_TICK;
-        itemsLeft = BehaviorRangeRules.ITEMS_PER_TICK;
+        worldAccess.beginTick();
         pollEnergy(level, pos);
         pollAuxiliary(level, pos);
         powered = stored > 0;
-        working = false;
+        panel.working(false);
         behavior.tick(context);
         stored = BehaviorEnergyRules.finishTick(stored, capacity, accepted.energyInMax());
         BlockState state = getBlockState();
+        boolean working = panel.working();
         if (state.getValue(BehaviorMachineBlock.RUNNING) != powered || state.getValue(BehaviorMachineBlock.LIT) != working)
             level.setBlock(pos, state.setValue(BehaviorMachineBlock.RUNNING, powered).setValue(BehaviorMachineBlock.LIT, working), 3);
-        if (clientStateDirty) {
-            clientStateDirty = false;
+        if (this.state.consumeClientChanges()) {
             level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
         }
     }
@@ -555,19 +482,11 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return sent;
     }
 
-    @Nullable
-    private EnergyPartView boundPart(String name) {
-        if (!formed || name == null) return null;
-        for (EnergyPart part : energyParts)
-            if (part instanceof EnergyPartView view && view.name().equals(name)) return view;
-        return null;
-    }
-
     private long pushToPart(String name, String type, long size, long amount) {
         if (level == null || name == null || type == null || amount < 1) return 0;
-        var view = boundPart(name);
+        var view = structure.boundEnergyPart(name);
         if (view == null || !view.controllerInput() || !type.equalsIgnoreCase(view.outputType())) return 0;
-        var output = view.part.declaration().energy();
+        var output = view.output();
         long magnitude = output.allowNegative() ? Math.abs(size) : size;
         if (magnitude < 1) return 0;
         long request = Math.multiplyExact(magnitude, amount);
@@ -577,9 +496,9 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     private long emitToPart(String name, long size, long amount) {
         if (level == null || name == null) return 0;
-        var view = boundPart(name);
+        var view = structure.boundEnergyPart(name);
         if (view == null) return 0;
-        var output = view.part.declaration().energy();
+        var output = view.output();
         if (output == null) return 0;
         BehaviorEnergyRules.requireEmit(size, amount, output.minSize(), output.maxSize(), output.maxAmount(),
                 output.allowNegative());
@@ -613,7 +532,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         };
     }
 
-    private int relative(Direction side) {
+    final int relative(Direction side) {
         Direction facing = getBlockState().hasProperty(HorizontalDirectionalBlock.FACING)
                 ? getBlockState().getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
         if (side == Direction.DOWN) return FaceConfig.BOTTOM;
@@ -664,8 +583,8 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (index >= energyStart && index < energyStart + 4)
             return (int) (stored >>> ((index - energyStart) * 16)) & 0xFFFF;
         if (index == 0) return (int) Math.min(Integer.MAX_VALUE, stored);
-        if (index == 1) return progress;
-        if (index == 2) return toggles;
+        if (index == 1) return panel.progressUnits();
+        if (index == 2) return panel.toggleMask();
         int tanksStart = 3;
         if (index < tanksStart + tanks.length) return tanks[index - tanksStart].amount;
         int fluid = index - tanksStart - tanks.length;
@@ -678,45 +597,17 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) return itemCapability(side).cast();
+        if (cap == ForgeCapabilities.ITEM_HANDLER) return ioPorts.itemCapability(side).cast();
         if (cap == ForgeCapabilities.FLUID_HANDLER && tanks.length > 0) {
-            LazyOptional<IFluidHandler> fluids = fluidCapability(side);
+            LazyOptional<IFluidHandler> fluids = ioPorts.fluidCapability(side);
             return fluids == null ? LazyOptional.empty() : fluids.cast();
         }
         return super.getCapability(cap, side);
     }
 
-    private LazyOptional<IItemHandler> itemCapability(@Nullable Direction side) {
-        if (side == null || declaration.io() == null) return itemCap;
-        int rel = relative(side);
-        if (itemHandler(side) == null) return LazyOptional.empty();
-        if (sidedItemCaps[rel] == null) {
-            IItemHandler handler = itemSides[rel];
-            sidedItemCaps[rel] = LazyOptional.of(() -> handler);
-        }
-        return sidedItemCaps[rel];
-    }
-
-    @Nullable
-    private LazyOptional<IFluidHandler> fluidCapability(@Nullable Direction side) {
-        if (fluidHandler(side) == null) return null;
-        if (side == null || declaration.io() == null) return fluidCap;
-        int rel = relative(side);
-        if (sidedFluidCaps[rel] == null) {
-            IFluidHandler handler = fluidSides[rel];
-            sidedFluidCaps[rel] = LazyOptional.of(() -> handler);
-        }
-        return sidedFluidCaps[rel];
-    }
-
     @Override public void invalidateCaps() {
         super.invalidateCaps();
-        itemCap.invalidate();
-        fluidCap.invalidate();
-        for (int i = 0; i < sidedItemCaps.length; i++) {
-            if (sidedItemCaps[i] != null) sidedItemCaps[i].invalidate();
-            if (sidedFluidCaps[i] != null) sidedFluidCaps[i].invalidate();
-        }
+        ioPorts.invalidateCaps();
     }
 
 //?}
@@ -922,22 +813,10 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             tag.putString("gt.energy_type", dynamicEnergy);
         if (declaration.auxiliary() != null) tag.putLong("gt.aux_energy", auxiliaryStored);
         if (capacitySet) tag.putLong("gt.capacity", capacity);
-        tag.putInt("gt.progress", progress);
-        tag.putInt("gt.toggles", toggles);
-        if (placerId != null) {
-            tag.putString("gt.placer", placerId.toString());
-            tag.putString("gt.placer_name", placerName);
-        }
+        panel.write(tag);
+        worldAccess.writePlacer(tag);
         tag.put("gt.items", gregtech.engine.stack.HandlerNbt.save(items, lookup));
-        ListTag fluids = new ListTag();
-        for (Tank tank : tanks) {
-            CompoundTag row = new CompoundTag();
-            ResourceLocation name = BuiltInRegistries.FLUID.getKey(tank.fluid);
-            row.putString("Fluid", name == null ? "" : name.toString());
-            row.putInt("Amount", tank.amount);
-            fluids.add(row);
-        }
-        tag.put("gt.fluids", fluids);
+        fluidAccess.write(tag);
         tag.put("gt.behavior", state.save(lookup));
     }
 
@@ -953,33 +832,10 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         auxiliaryStored = 0;
         if (declaration.auxiliary() != null && tag.contains("gt.aux_energy"))
             auxiliaryStored = Math.max(0, Math.min(declaration.auxiliary().capacity(), tag.getLong("gt.aux_energy")));
-        progress = tag.getInt("gt.progress");
-        toggles = tag.getInt("gt.toggles");
-        placerId = null;
-        placerName = "";
-        if (tag.contains("gt.placer")) {
-            try {
-                placerId = UUID.fromString(tag.getString("gt.placer"));
-                placerName = tag.getString("gt.placer_name");
-            } catch (IllegalArgumentException ignored) {
-                placerId = null;
-            }
-        }
+        panel.read(tag);
+        worldAccess.readPlacer(tag);
         if (tag.contains("gt.items")) gregtech.engine.stack.HandlerNbt.load(items, tag.getCompound("gt.items"), lookup);
-        ListTag fluids = tag.getList("gt.fluids", Tag.TAG_COMPOUND);
-        for (int i = 0; i < tanks.length; i++) {
-            tanks[i].amount = 0;
-            tanks[i].fluid = Fluids.EMPTY;
-            if (i >= fluids.size()) continue;
-            CompoundTag row = fluids.getCompound(i);
-            ResourceLocation name = ResourceLocation.tryParse(row.getString("Fluid"));
-            Fluid fluid = name == null ? Fluids.EMPTY : BuiltInRegistries.FLUID.get(name);
-            int amount = row.getInt("Amount");
-            if (fluid != null && fluid != Fluids.EMPTY && amount > 0) {
-                tanks[i].fluid = fluid;
-                tanks[i].amount = Math.min(tanks[i].capacity, amount);
-            }
-        }
+        fluidAccess.read(tag);
         if (tag.contains("gt.behavior")) state.load(tag.getCompound("gt.behavior"), lookup);
     }
 
@@ -1015,381 +871,94 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     private CompoundTag writeClientState(CompoundTag tag) {
-        CompoundTag ints = new CompoundTag();
-        CompoundTag longs = new CompoundTag();
-        CompoundTag bools = new CompoundTag();
-        CompoundTag strings = new CompoundTag();
-        for (String key : clientKeys) {
-            Integer integer = state.ints.get(key);
-            if (integer != null) ints.putInt(key, integer);
-            Long value = state.longs.get(key);
-            if (value != null) longs.putLong(key, value);
-            Boolean flag = state.bools.get(key);
-            if (flag != null) bools.putBoolean(key, flag);
-            String text = state.strings.get(key);
-            if (text != null) strings.putString(key, text);
-        }
-        tag.put("i", ints);
-        tag.put("l", longs);
-        tag.put("b", bools);
-        tag.put("s", strings);
+        state.writeClientState(tag);
         gregtech.engine.multiblock.tracking.ClientFormedSync.write(this, tag);
         return tag;
     }
 
     private void readClientState(CompoundTag tag) {
-        CompoundTag ints = tag.getCompound("i");
-        for (String key : ints.getAllKeys()) if (clientKeys.contains(key)) state.ints.put(key, ints.getInt(key));
-        CompoundTag longs = tag.getCompound("l");
-        for (String key : longs.getAllKeys()) if (clientKeys.contains(key)) state.longs.put(key, longs.getLong(key));
-        CompoundTag bools = tag.getCompound("b");
-        for (String key : bools.getAllKeys()) if (clientKeys.contains(key)) state.bools.put(key, bools.getBoolean(key));
-        CompoundTag strings = tag.getCompound("s");
-        for (String key : strings.getAllKeys()) if (clientKeys.contains(key)) state.strings.put(key, strings.getString(key));
+        state.readClientState(tag);
         gregtech.engine.multiblock.tracking.ClientFormedSync.read(this, tag);
     }
 
-    private boolean breakOne(BlockPos target) {
-        if (level == null || level.isClientSide || !(level instanceof ServerLevel server) || target == null) return false;
-        int dx = target.getX() - worldPosition.getX();
-        int dy = target.getY() - worldPosition.getY();
-        int dz = target.getZ() - worldPosition.getZ();
-        if (!BehaviorRangeRules.inside(declaration.maxRange(), dx, dy, dz)) return false;
-        if (breaksLeft <= 0 || !level.hasChunkAt(target)) return false;
-        BlockState state = level.getBlockState(target);
-        if (state.isAir() || state.getDestroySpeed(level, target) < 0) return false;
-        Player actor = actor(server);
-        List<ItemStack> drops = Block.getDrops(state, server, target, level.getBlockEntity(target), actor, ItemStack.EMPTY);
-        if (!dropsFit(drops) || !breakAllowed(server, target, state, actor)) return false;
-        if (!level.setBlock(target, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL)) return false;
-        for (ItemStack drop : drops) context.insertOutput(drop);
-        breaksLeft--;
-        setChanged();
-        return true;
-    }
+    private EnergyAccess behaviorEnergy() {
+        return new EnergyAccess() {
+            @Override public long mainStored() { return hasInput() ? stored : 0; }
 
-    private int collect(int radius, boolean voidThem) {
-        if (level == null || level.isClientSide || !(level instanceof ServerLevel server)) return 0;
-        if (!BehaviorRangeRules.radiusAllowed(declaration.maxRange(), radius) || itemsLeft <= 0) return 0;
-        var box = new AABB(worldPosition.getX() - radius, worldPosition.getY() - radius, worldPosition.getZ() - radius,
-                worldPosition.getX() + radius + 1.0, worldPosition.getY() + radius + 1.0, worldPosition.getZ() + radius + 1.0);
-        int taken = 0;
-        for (ItemEntity entity : server.getEntitiesOfClass(ItemEntity.class, box)) {
-            if (itemsLeft <= 0) break;
-            if (!entity.isAlive()) continue;
-            ItemStack stack = entity.getItem();
-            if (stack.isEmpty()) continue;
-            if (voidThem) {
-                entity.discard();
-            } else {
-                int before = stack.getCount();
-                ItemStack left = context.insertOutput(stack.copy());
-                if (left.getCount() == before) continue;
-                if (left.isEmpty()) entity.discard();
-                else entity.setItem(left);
+            @Override public boolean consumeMain(long amount) {
+                if (amount < 0) throw new IllegalArgumentException("negative energy");
+                if (!hasInput() || stored < amount) return false;
+                stored -= amount;
+                setChanged();
+                return true;
             }
-            itemsLeft--;
-            taken++;
-        }
-        if (taken > 0) setChanged();
-        return taken;
-    }
 
-    private boolean dropsFit(List<ItemStack> drops) {
-        ItemStack[] before = new ItemStack[items.getSlots()];
-        for (int i = 0; i < before.length; i++) before[i] = items.getStackInSlot(i).copy();
-        boolean ok = true;
-        for (ItemStack drop : drops) {
-            if (drop == null || drop.isEmpty()) continue;
-            if (!context.insertOutput(drop).isEmpty()) { ok = false; break; }
-        }
-        for (int i = 0; i < before.length; i++) items.setStackInSlot(i, before[i]);
-        return ok;
-    }
-
-    private Player actor(ServerLevel server) {
-        if (placerId != null && server.getServer() != null) {
-            ServerPlayer online = server.getServer().getPlayerList().getPlayer(placerId);
-            if (online != null) return online;
-        }
-        UUID id = placerId == null ? new UUID(0, 0) : placerId;
-        String name = placerName == null || placerName.isBlank() ? "gt6ce" : placerName;
-        if (name.length() > 16) name = name.substring(0, 16);
-        var profile = new com.mojang.authlib.GameProfile(id, name);
-//? if >=1.21.1 {
-/*        var fake = net.neoforged.neoforge.common.util.FakePlayerFactory.get(server, profile);
-*///?} else {
-        var fake = net.minecraftforge.common.util.FakePlayerFactory.get(server, profile);
-//?}
-        fake.setPos(worldPosition.getX() + 0.5, worldPosition.getY(), worldPosition.getZ() + 0.5);
-        return fake;
-    }
-
-    private static boolean breakAllowed(ServerLevel server, BlockPos pos, BlockState state, Player player) {
-//? if >=1.21.1 {
-/*        var event = new net.neoforged.neoforge.event.level.BlockEvent.BreakEvent(server, pos, state, player);
-        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(event);
-        return !event.isCanceled();
-*///?} else {
-        var event = new net.minecraftforge.event.level.BlockEvent.BreakEvent(server, pos, state, player);
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event);
-        return !event.isCanceled();
-//?}
-    }
-
-    private boolean insertable(int slot) {
-        var role = declaration.items().get(slot).role();
-        return role == BehaviorMachine.SlotRole.INPUT || role == BehaviorMachine.SlotRole.ANY;
-    }
-
-    private boolean extractable(int slot) {
-        var role = declaration.items().get(slot).role();
-        return role == BehaviorMachine.SlotRole.OUTPUT || role == BehaviorMachine.SlotRole.ANY;
-    }
-
-    private boolean fillable(int tank) {
-        var role = declaration.fluids().get(tank).role();
-        return role == BehaviorMachine.SlotRole.INPUT || role == BehaviorMachine.SlotRole.ANY;
-    }
-
-    private boolean drainable(int tank) {
-        var role = declaration.fluids().get(tank).role();
-        return role == BehaviorMachine.SlotRole.OUTPUT || role == BehaviorMachine.SlotRole.ANY;
-    }
-
-    private final class Context implements MachineBehaviorContext {
-        private final MachineInventoryAccess inventoryView = new MachineInventoryAccess() {
-            @Override public int slots() { return itemSlots(); }
-            @Override public ItemStack snapshot(int slot) { return liveItem(slot).copy(); }
-            @Override public void set(int slot, ItemStack stack) { setItem(slot, stack); }
-            @Override public ItemStack insertOutput(ItemStack stack) { return Context.this.insertOutput(stack); }
-        };
-        private final FluidAccess fluidView = new FluidAccess() {
-            @Override public int tanks() { return Context.this.tanks(); }
-            @Override public FluidStack snapshot(int tank) { return fluid(tank); }
-            @Override public int capacity(int tank) { return tankCapacity(tank); }
-            @Override public int fill(int tank, FluidStack stack, boolean simulate) {
-                return Context.this.fill(tank, stack, simulate);
+            @Override public long generateMain(long amount) {
+                if (amount < 0) throw new IllegalArgumentException("negative energy");
+                long room = bufferCapacity() - Math.min(stored, bufferCapacity());
+                long added = Math.min(amount, Math.max(0, room));
+                if (added <= 0) return 0;
+                stored += added;
+                setChanged();
+                return added;
             }
-            @Override public FluidStack drain(int tank, int amount, boolean simulate) {
-                return Context.this.drain(tank, amount, simulate);
+
+            @Override public long mainCapacity() { return capacity; }
+
+            @Override public void setMainCapacity(long value) {
+                if (value < 0) throw new IllegalArgumentException("gt.capacity " + value);
+                capacity = value;
+                capacitySet = true;
+                setChanged();
             }
-        };
-        private final EnergyAccess energyView = new EnergyAccess() {
-            @Override public long mainStored() { return mainInputStored(); }
-            @Override public boolean consumeMain(long units) { return consume(units); }
-            @Override public long generateMain(long units) { return generate(units); }
-            @Override public long mainCapacity() { return energyCapacity(); }
-            @Override public void setMainCapacity(long units) { setCapacity(units); }
-            @Override public long auxiliaryStored(EnergyType type) { return Context.this.auxiliaryStored(type.name()); }
-            @Override public boolean consumeAuxiliary(EnergyType type, long units) {
-                return Context.this.consume(type.name(), units);
+
+            @Override public long auxiliaryStored(EnergyType type) {
+                String name = type.name();
+                if (declaration.auxiliary() == null || !sameEnergy(name, declaration.auxiliary().type().name())) return 0;
+                return auxiliaryStored;
             }
+
+            @Override public boolean consumeAuxiliary(EnergyType type, long amount) {
+                String name = type.name();
+                if (amount < 0) throw new IllegalArgumentException("negative energy");
+                if (declaration.auxiliary() == null || !sameEnergy(name, declaration.auxiliary().type().name()))
+                    return false;
+                if (auxiliaryStored < amount) return false;
+                auxiliaryStored -= amount;
+                setChanged();
+                return true;
+            }
+
             @Override public EnergyTransfer emitFromFaces(long packetSize, long packetCount) {
-                return EnergyTransfer.fromPackets(
-                        packetSize, packetCount, Context.this.emitPacketsFromFaces(packetSize, packetCount));
+                return EnergyTransfer.fromPackets(packetSize, packetCount, emit(packetSize, packetCount));
             }
+
             @Override public EnergyTransfer emitFromPorts(long packetSize, long packetCount) {
                 return EnergyTransfer.fromPackets(packetSize, packetCount,
                         BehaviorMachineBlockEntity.this.emitFromPorts(packetSize, packetCount));
             }
+
             @Override public EnergyTransfer emitTo(BlockPos target, Direction side, long packetSize, long packetCount) {
-                return EnergyTransfer.fromPackets(
-                        packetSize, packetCount, Context.this.emitTo(target, side, packetSize, packetCount));
+                return EnergyTransfer.fromPackets(packetSize, packetCount,
+                        BehaviorMachineBlockEntity.this.emitTo(target, side, packetSize, packetCount));
             }
+
             @Override public EnergyTransfer transferToPart(String part, long packetSize, long packetCount) {
-                return new EnergyTransfer(packetSize, packetCount,
-                        Context.this.moveUnitsToPart(part, packetSize, packetCount));
+                return new EnergyTransfer(packetSize, packetCount, emitToPart(part, packetSize, packetCount));
             }
+
             @Override public EnergyTransfer supplyPart(String part, EnergyType type, long packetSize, long packetCount) {
-                return new EnergyTransfer(packetSize, packetCount,
-                        Context.this.pushToPart(part, type.name(), packetSize, packetCount));
+                return new EnergyTransfer(packetSize, packetCount, pushToPart(part, type.name(), packetSize, packetCount));
             }
         };
-        private final StructureAccess structureView = new StructureAccess() {
-            @Override public boolean formed() { return structureFormed(); }
-            @Override public List<EnergyPart> energyParts() { return Context.this.energyParts(); }
-            @Override public int repeats(String key) { return structureRepeats(key); }
-            @Override public List<BoundPart> parts() { return Context.this.parts(); }
-            @Override public List<gregtech.api.addon.platform.StructureCell> cells() {
-                return formed ? structureCells : List.of();
-            }
-            @Override public boolean conditionsMet() { return Context.this.conditionsMet(); }
-            @Override public List<gregtech.api.addon.platform.StructureProblem> diagnose() {
-                return gregtech.engine.multiblock.tracking.StructureDiagnostic.inspect(BehaviorMachineBlockEntity.this);
-            }
-        };
-        private final MachinePanel panelView = new MachinePanel() {
-            @Override public boolean toggle(int index) { return Context.this.toggle(index); }
-            @Override public void setToggle(int index, boolean on) { Context.this.setToggle(index, on); }
-            @Override public float progress() { return Context.this.progress(); }
-            @Override public void setProgress(float fraction) { Context.this.setProgress(fraction); }
-            @Override public void working(boolean value) { Context.this.working(value); }
-        };
-        private final WorldAccess worldView = new WorldAccess() {
-            @Override public boolean breakBlock(BlockPos pos) { return Context.this.breakBlock(pos); }
-            @Override public int collectItems(int radius, boolean voidThem) {
-                return Context.this.collectItems(radius, voidThem);
-            }
-            @Override public int pushCompressedGas(Direction face, FluidStack stack) {
-                return Context.this.pushCompressedGas(face, stack);
-            }
-        };
-
-        @Override public Level level() { return BehaviorMachineBlockEntity.this.level; }
-        @Override public BlockPos pos() { return worldPosition; }
-        @Override public Direction facing() {
-            return getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-        }
-        @Override public int tier() { return declaration.casing().tier(); }
-        @Override public MachineInventoryAccess inventory() { return inventoryView; }
-        @Override public FluidAccess fluids() { return fluidView; }
-        @Override public EnergyAccess energy() { return energyView; }
-        @Override public StructureAccess structure() { return structureView; }
-        @Override public MachinePanel panel() { return panelView; }
-        @Override public WorldAccess world() { return worldView; }
-        @Override public BehaviorState state() { return state; }
-
-        int itemSlots() { return items.getSlots(); }
-        ItemStack liveItem(int slot) { return items.getStackInSlot(slot); }
-        void setItem(int slot, ItemStack stack) { items.setStackInSlot(slot, stack == null ? ItemStack.EMPTY : stack.copy()); }
-        ItemStack insertOutput(ItemStack stack) {
-            ItemStack left = stack == null ? ItemStack.EMPTY : stack.copy();
-            for (int slot = 0; slot < items.getSlots() && !left.isEmpty(); slot++) {
-                if (declaration.items().get(slot).role() == BehaviorMachine.SlotRole.OUTPUT)
-                    left = items.insertItem(slot, left, false);
-            }
-            for (int slot = 0; slot < items.getSlots() && !left.isEmpty(); slot++) {
-                if (declaration.items().get(slot).role() == BehaviorMachine.SlotRole.ANY)
-                    left = items.insertItem(slot, left, false);
-            }
-            return left;
-        }
-        int tanks() { return tanks.length; }
-        FluidStack fluid(int tank) { return tanks[tank].copy(); }
-        int tankCapacity(int tank) { return tanks[tank].capacity; }
-        int fill(int tank, FluidStack stack, boolean simulate) {
-            int taken = tanks[tank].fill(stack, simulate);
-            if (!simulate && taken > 0) setChanged();
-            return taken;
-        }
-        FluidStack drain(int tank, int amount, boolean simulate) {
-            FluidStack drained = tanks[tank].drain(amount, simulate);
-            if (!simulate && !drained.isEmpty()) setChanged();
-            return drained;
-        }
-        long mainInputStored() { return hasInput() ? stored : 0; }
-        boolean consume(long amount) {
-            if (amount < 0) throw new IllegalArgumentException("negative energy");
-            if (!hasInput() || stored < amount) return false;
-            stored -= amount;
-            setChanged();
-            return true;
-        }
-        long auxiliaryStored(String type) {
-            if (declaration.auxiliary() == null || !sameEnergy(type, declaration.auxiliary().type().name())) return 0;
-            return auxiliaryStored;
-        }
-        boolean consume(String type, long amount) {
-            if (amount < 0) throw new IllegalArgumentException("negative energy");
-            if (declaration.auxiliary() == null || !sameEnergy(type, declaration.auxiliary().type().name()))
-                return false;
-            if (auxiliaryStored < amount) return false;
-            auxiliaryStored -= amount;
-            setChanged();
-            return true;
-        }
-        long generate(long amount) {
-            if (amount < 0) throw new IllegalArgumentException("negative energy");
-            long room = bufferCapacity() - Math.min(stored, bufferCapacity());
-            long added = Math.min(amount, Math.max(0, room));
-            if (added <= 0) return 0;
-            stored += added;
-            setChanged();
-            return added;
-        }
-        long energyCapacity() { return capacity; }
-        void setCapacity(long value) {
-            if (value < 0) throw new IllegalArgumentException("gt.capacity " + value);
-            capacity = value;
-            capacitySet = true;
-            setChanged();
-        }
-        long emitPacketsFromFaces(long size, long amount) { return BehaviorMachineBlockEntity.this.emit(size, amount); }
-        long emitTo(BlockPos target, Direction side, long size, long amount) {
-            return BehaviorMachineBlockEntity.this.emitTo(target, side, size, amount);
-        }
-        long pushToPart(String part, String type, long size, long amount) {
-            return BehaviorMachineBlockEntity.this.pushToPart(part, type, size, amount);
-        }
-        long moveUnitsToPart(String part, long size, long amount) {
-            return BehaviorMachineBlockEntity.this.emitToPart(part, size, amount);
-        }
-        boolean toggle(int index) { return (toggles & (1 << index)) != 0; }
-        void setToggle(int index, boolean on) {
-            if (index < 0 || index >= declaration.toggles().size())
-                throw new IllegalArgumentException("toggle " + index);
-            toggles = on ? toggles | (1 << index) : toggles & ~(1 << index);
-            setChanged();
-        }
-        float progress() { return progress / 1000.0F; }
-        void setProgress(float fraction) {
-            float clamped = Math.max(0.0F, Math.min(1.0F, fraction));
-            int next = Math.round(clamped * 1000.0F);
-            if (next != progress) {
-                progress = next;
-                setChanged();
-            }
-        }
-        void working(boolean value) { working = value; }
-        boolean structureFormed() { return formed; }
-        List<EnergyPart> energyParts() { return formed ? energyParts : List.of(); }
-        int structureRepeats(String key) { return formed && key != null ? repeatCounts.getOrDefault(key, 0) : 0; }
-        List<BoundPart> parts() { return formed ? boundParts : List.of(); }
-        boolean conditionsMet() {
-            for (EnergyPart part : energyParts()) if (part.condition() && !part.satisfied()) return false;
-            return true;
-        }
-        boolean breakBlock(BlockPos pos) { return breakOne(pos); }
-        int collectItems(int radius, boolean voidThem) { return collect(radius, voidThem); }
-        int pushCompressedGas(Direction face, FluidStack stack) {
-            if (face == null || stack == null || stack.isEmpty() || level == null) return 0;
-            BlockPos target = worldPosition.relative(face);
-            if (!level.hasChunkAt(target)) return 0;
-            if (!(level.getBlockEntity(target) instanceof gregtech.engine.fluid.CompressedGasReceiver receiver))
-                return 0;
-            return receiver.receiveCompressedGas(face.getOpposite(), stack);
-        }
     }
 
     @Override public int receiveCompressedGas(Direction side, FluidStack stack) {
-        if (!valveFace(side) || stack == null || stack.isEmpty()
-                || !gregtech.engine.fluid.FluidHazards.isGas(stack.getFluid())) return 0;
-        FluidStack remaining = stack.copy();
-        int stored = 0;
-        for (Tank tank : tanks) {
-            if (remaining.isEmpty()) break;
-            int taken = tank.fill(remaining, true);
-            if (taken <= 0) continue;
-            tank.fill(remaining, false);
-            stored += taken;
-            remaining.setAmount(remaining.getAmount() - taken);
-        }
-        if (stored > 0) setChanged();
-        return stored;
+        return valveFace(side) ? fluidAccess.receiveCompressedGas(stack) : 0;
     }
 
     @Override public FluidStack extractCompressedGas(Direction side, int amount, boolean execute) {
-        if (!valveFace(side) || amount <= 0) return FluidStack.EMPTY;
-        for (Tank tank : tanks) {
-            FluidStack preview = tank.drain(amount, true);
-            if (preview.isEmpty() || !gregtech.engine.fluid.FluidHazards.isGas(preview.getFluid())) continue;
-            if (!execute) return preview;
-            FluidStack taken = tank.drain(amount, false);
-            if (!taken.isEmpty()) setChanged();
-            return taken;
-        }
-        return FluidStack.EMPTY;
+        return valveFace(side) ? fluidAccess.extractCompressedGas(amount, execute) : FluidStack.EMPTY;
     }
 
     private boolean valveFace(Direction side) {
@@ -1418,8 +987,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     @Override public void structureFormedChanged(boolean now) {
-        formed = now;
-        if (!now) clearStructureCaches();
+        structure.setFormed(now);
     }
 
     @Override public void onStructureFormed() {
@@ -1430,85 +998,16 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (trackedLayout() != null) behavior.onStructureBroken(context);
     }
 
-    private void clearStructureCaches() {
-        energyParts = List.of();
-        boundParts = List.of();
-        structureCells = List.of();
-        repeatCounts = Map.of();
+    @Override public boolean applyStructure(PatternMatch match) {
+        return structure.apply(match);
     }
 
-    /** Claims a match the incremental evaluator already built, without reading the layout again. */
-    @Override public boolean applyStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
-        Direction front = getBlockState().hasProperty(HorizontalDirectionalBlock.FACING)
-                ? getBlockState().getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
-        var counts = new LinkedHashMap<String, Integer>(match.counts());
-        return applyPrepared(front, match.fixedCells(), match.repeatPlaced(), counts);
+    @Override public void applyIncompleteStructure(PatternMatch match) {
+        structure.applyIncomplete(match);
     }
 
-    private boolean applyPrepared(Direction front, List<PatternMatch.FixedCell> matchedCells,
-                                  List<LargeMachineLayouts.Placed> repeatPlaced,
-                                  Map<String, Integer> counts) {
-        if (level == null || isRemoved()) {
-            structureBindings.clear(this::releaseStructure);
-            return false;
-        }
-        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
-        for (var fixed : matchedCells) {
-            var matched = fixed.cell();
-            if (matched.role() != MultiblockLayout.Role.AIR && !matched.plainBlock())
-                parts.put(fixed.pos(), matched.role());
-        }
-        for (var placed : repeatPlaced) {
-            var matched = placed.cell();
-            if (matched.role() != MultiblockLayout.Role.AIR && !matched.plainBlock())
-                parts.put(placed.pos(), matched.role());
-        }
-        var claimed = gregtech.engine.multiblock.tracking.StructureClaims.update(this, structureBindings, parts,
-                pos -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
-                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
-                this::releaseStructure);
-        if (claimed == gregtech.engine.multiblock.tracking.StructureClaims.Result.FAILED) return false;
-        var found = new ArrayList<EnergyPart>();
-        var bound = new ArrayList<BoundPart>();
-        for (BlockPos cellPos : parts.keySet()) {
-            var occupant = level.getBlockEntity(cellPos);
-            if (occupant instanceof AddonEnergyPartBlockEntity energy) {
-                found.add(new EnergyPartView(energy));
-                bound.add(new BoundView(energy));
-            } else if (occupant instanceof AddonFunctionalPartBlockEntity functional) {
-                bound.add(new BoundView(functional));
-            }
-        }
-        energyParts = List.copyOf(found);
-        boundParts = List.copyOf(bound);
-        repeatCounts = Map.copyOf(counts);
-        var snapshot = new ArrayList<gregtech.api.addon.platform.StructureCell>(matchedCells.size() + repeatPlaced.size());
-        for (var fixed : matchedCells) snapshot.add(structureCell(fixed.pos(), fixed.cell()));
-        for (var repeated : repeatPlaced) snapshot.add(structureCell(repeated.pos(), repeated.cell()));
-        structureCells = List.copyOf(snapshot);
-        return true;
-    }
-
-    private gregtech.api.addon.platform.StructureCell structureCell(BlockPos pos, LargeMachineLayouts.Cell cell) {
-        return new gregtech.api.addon.platform.StructureCell(pos,
-                gregtech.api.multiblock.StructureRole.valueOf(cell.role().name()), level.getBlockState(pos));
-    }
-
-    /** Placed parts stay bound while the addon machine is incomplete so a wand click keeps building. */
-    @Override public void applyIncompleteStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
-        if (level == null || isRemoved()) return;
-        gregtech.engine.multiblock.tracking.StructureClaims.bindMatched(
-                this, structureBindings, match, false, this::releaseStructure);
-    }
     @Override public void releaseStructureClaims() {
-        structureBindings.clear(this::releaseStructure);
-        gregtech.engine.multiblock.tracking.StructureClaims.cleared(this);
-        clearStructureCaches();
-    }
-
-    private void releaseStructure(BlockPos pos) {
-        if (level != null && level.hasChunkAt(pos) && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part)
-            part.release(worldPosition);
+        structure.releaseClaims();
     }
 
     @Override public void onLoad() {
@@ -1523,307 +1022,11 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     @Override public void setRemoved() {
-        if (!gregtech.engine.multiblock.tracking.StructureTracking.unloading(this))
-            structureBindings.clear(this::releaseStructure);
-        gregtech.engine.multiblock.tracking.StructureTracking.onRemoved(this);
-        clearStructureCaches();
-        formed = false;
+        structure.onRemoved();
         super.setRemoved();
     }
 
-    private final class EnergyPartView implements EnergyPart {
-        private final AddonEnergyPartBlockEntity part;
-        private EnergyPartView(AddonEnergyPartBlockEntity part) { this.part = part; }
-        @Override public BlockPos pos() { return part.getBlockPos(); }
-        @Override public String name() { return part.path(); }
-        @Override public long stored() { return part.stored(); }
-        @Override public long capacity() { return part.capacity(); }
-        @Override public long charge(long amount) {
-            return part.isBoundTo(worldPosition) ? part.charge(amount) : 0;
-        }
-        @Override public void setOutput(long size, long amount) {
-            if (!part.isBoundTo(worldPosition))
-                throw new IllegalStateException("Energy part is not bound to this machine");
-            part.setOutput(size, amount);
-        }
-        @Override public void stop() {
-            if (part.isBoundTo(worldPosition)) part.stop();
-        }
-        @Override public boolean condition() { return part.condition(); }
-        @Override public boolean satisfied() { return part.satisfied(); }
-        private boolean controllerInput() {
-            var declaration = part.declaration();
-            return declaration.energy() != null && declaration.energyInput() != null;
-        }
-        private String outputType() { return part.outputType(); }
-    }
-
-    private final class BoundView implements BoundPart {
-        private final MultiblockPortBlockEntity port;
-        @Nullable private final AddonEnergyPartBlockEntity energy;
-        @Nullable private final FunctionalPartRuntime function;
-
-        private BoundView(AddonEnergyPartBlockEntity energy) {
-            this.port = energy;
-            this.energy = energy;
-            this.function = energy.function();
-        }
-
-        private BoundView(AddonFunctionalPartBlockEntity functional) {
-            this.port = functional;
-            this.energy = null;
-            this.function = functional.function();
-        }
-
-        private boolean live() { return !port.isRemoved() && port.isBoundTo(worldPosition); }
-
-        @Override public BlockPos pos() { return port.getBlockPos(); }
-
-        @Override public String name() {
-            if (energy != null) return energy.path();
-            return port instanceof AddonFunctionalPartBlockEntity functional ? functional.name() : "";
-        }
-
-        @Override public EnergyPart energy() { return energy != null && live() ? new EnergyPartView(energy) : null; }
-
-        @Override public PartBehavior behavior() { return live() && function != null ? function.behavior() : null; }
-
-        @Override public PartContext context() { return behavior() == null ? null : function.context(); }
-
-        @Override public int slots() { return live() && function != null ? function.slotCount() : 0; }
-
-        @Override public ItemStack item(int slot) {
-            return live() && function != null ? function.item(slot) : ItemStack.EMPTY;
-        }
-    }
-
-    private final class PipeItems implements IItemHandler {
-        @Nullable private final MachineFace face;
-        private final boolean allowInsert;
-        private final boolean allowExtract;
-
-        private PipeItems() { this(null, true, true); }
-
-        private PipeItems(@Nullable MachineFace face, boolean allowInsert, boolean allowExtract) {
-            this.face = face;
-            this.allowInsert = allowInsert;
-            this.allowExtract = allowExtract;
-        }
-
-        @Override public int getSlots() { return items.getSlots(); }
-        @Override public ItemStack getStackInSlot(int slot) { return items.getStackInSlot(slot); }
-        @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if (!allowInsert || !insertable(slot) || stack == null || stack.isEmpty()
-                    || !behavior.canInsert(context, slot, stack, face)) return stack;
-            return items.insertItem(slot, stack, simulate);
-        }
-        @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return allowExtract && extractable(slot) ? items.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
-        }
-        @Override public int getSlotLimit(int slot) { return items.getSlotLimit(slot); }
-        @Override public boolean isItemValid(int slot, ItemStack stack) {
-            return allowInsert && insertable(slot) && behavior.canInsert(context, slot, stack, face);
-        }
-    }
-
-    private final class PipeFluids implements IFluidHandler {
-        @Nullable private final MachineFace face;
-        private final boolean allowFill;
-        private final boolean allowDrain;
-
-        private PipeFluids() { this(null, true, true); }
-
-        private PipeFluids(@Nullable MachineFace face, boolean allowFill, boolean allowDrain) {
-            this.face = face;
-            this.allowFill = allowFill;
-            this.allowDrain = allowDrain;
-        }
-
-        @Override public int getTanks() { return tanks.length; }
-        @Override public FluidStack getFluidInTank(int tank) { return tanks[tank].copy(); }
-        @Override public int getTankCapacity(int tank) { return tanks[tank].capacity; }
-        @Override public boolean isFluidValid(int tank, FluidStack stack) {
-            return allowFill && fillable(tank) && behavior.canFill(context, tank, stack, face);
-        }
-        @Override public int fill(FluidStack resource, FluidAction action) {
-            if (!allowFill || resource == null || resource.isEmpty()) return 0;
-            for (int tank = 0; tank < tanks.length; tank++) {
-                if (!fillable(tank) || !behavior.canFill(context, tank, resource, face)) continue;
-                int taken = behavior.acceptFluid(context, tank, resource, action.simulate());
-                if (taken > 0) return taken;
-            }
-            return 0;
-        }
-        @Override public FluidStack drain(FluidStack resource, FluidAction action) {
-            if (!allowDrain || resource == null || resource.isEmpty()) return FluidStack.EMPTY;
-            for (int tank = 0; tank < tanks.length; tank++) {
-                if (!drainable(tank) || tanks[tank].fluid != resource.getFluid()) continue;
-                FluidStack drained = tanks[tank].drain(resource.getAmount(), action.simulate());
-                if (!action.simulate() && !drained.isEmpty()) setChanged();
-                return drained;
-            }
-            return FluidStack.EMPTY;
-        }
-        @Override public FluidStack drain(int maxDrain, FluidAction action) {
-            if (!allowDrain) return FluidStack.EMPTY;
-            for (int tank = 0; tank < tanks.length; tank++) {
-                if (!drainable(tank)) continue;
-                FluidStack drained = tanks[tank].drain(maxDrain, action.simulate());
-                if (!drained.isEmpty()) {
-                    if (!action.simulate()) setChanged();
-                    return drained;
-                }
-            }
-            return FluidStack.EMPTY;
-        }
-    }
-
-    private static final class Tank {
-        final int capacity;
-        Fluid fluid = Fluids.EMPTY;
-        int amount;
-
-        Tank(BehaviorMachine.FluidSlot slot) { this.capacity = slot.capacity(); }
-
-        FluidStack copy() {
-            return amount <= 0 || fluid == Fluids.EMPTY ? FluidStack.EMPTY : new FluidStack(fluid, amount);
-        }
-
-        int fill(FluidStack stack, boolean simulate) {
-            if (stack == null || stack.isEmpty()) return 0;
-            if (amount > 0 && fluid != stack.getFluid()) return 0;
-            int taken = Math.min(capacity - amount, stack.getAmount());
-            if (taken <= 0) return 0;
-            if (!simulate) {
-                fluid = stack.getFluid();
-                amount += taken;
-            }
-            return taken;
-        }
-
-        FluidStack drain(int requested, boolean simulate) {
-            if (amount <= 0 || requested <= 0 || fluid == Fluids.EMPTY) return FluidStack.EMPTY;
-            int taken = Math.min(amount, requested);
-            Fluid drained = fluid;
-            if (!simulate) {
-                amount -= taken;
-                if (amount == 0) fluid = Fluids.EMPTY;
-            }
-            return new FluidStack(drained, taken);
-        }
-    }
-
-    private final class StoredState implements BehaviorState {
-        final Map<String, Integer> ints = new LinkedHashMap<>();
-        final Map<String, Long> longs = new LinkedHashMap<>();
-        final Map<String, Boolean> bools = new LinkedHashMap<>();
-        final Map<String, String> strings = new LinkedHashMap<>();
-        final Map<String, ItemStack> items = new LinkedHashMap<>();
-
-        @Override public int getInt(String key) { return ints.getOrDefault(check(key), 0); }
-        @Override public void setInt(String key, int value) {
-            String checked = check(key);
-            Integer previous = ints.put(checked, value);
-            if (previous == null || previous != value) clientChanged(checked);
-            setChanged();
-        }
-        @Override public long getLong(String key) { return longs.getOrDefault(check(key), 0L); }
-        @Override public void setLong(String key, long value) {
-            String checked = check(key);
-            Long previous = longs.put(checked, value);
-            if (previous == null || previous != value) clientChanged(checked);
-            setChanged();
-        }
-        @Override public boolean getBoolean(String key) { return bools.getOrDefault(check(key), false); }
-        @Override public void setBoolean(String key, boolean value) {
-            String checked = check(key);
-            Boolean previous = bools.put(checked, value);
-            if (previous == null || previous != value) clientChanged(checked);
-            setChanged();
-        }
-        @Override public String getString(String key) { return strings.getOrDefault(check(key), ""); }
-        @Override public void setString(String key, String value) {
-            if (value == null) throw new IllegalArgumentException("null behavior string");
-            if (value.length() > 256) throw new IllegalArgumentException("behavior string is too long");
-            String checked = check(key);
-            if (!value.equals(strings.put(checked, value))) clientChanged(checked);
-            setChanged();
-        }
-        @Override public ItemStack item(String key) {
-            ItemStack stack = items.get(check(key));
-            return stack == null ? ItemStack.EMPTY : stack.copy();
-        }
-        @Override public void setItem(String key, ItemStack stack) {
-            String checked = check(key);
-            if (stack == null || stack.isEmpty()) items.remove(checked);
-            else items.put(checked, stack.copy());
-            setChanged();
-        }
-        private void clientChanged(String key) {
-            if (clientKeys.contains(key)) clientStateDirty = true;
-        }
-
-        CompoundTag save(HolderLookup.Provider lookup) {
-            CompoundTag tag = new CompoundTag();
-            CompoundTag intTag = new CompoundTag();
-            ints.forEach(intTag::putInt);
-            CompoundTag longTag = new CompoundTag();
-            longs.forEach(longTag::putLong);
-            CompoundTag boolTag = new CompoundTag();
-            bools.forEach(boolTag::putBoolean);
-            CompoundTag stringTag = new CompoundTag();
-            strings.forEach(stringTag::putString);
-            CompoundTag itemTag = new CompoundTag();
-            items.forEach((key, stack) -> { if (!stack.isEmpty()) itemTag.put(key, gregtech.engine.stack.NbtCompat.saveItem(stack, lookup)); });
-            tag.put("i", intTag);
-            tag.put("l", longTag);
-            tag.put("b", boolTag);
-            tag.put("s", stringTag);
-            tag.put("t", itemTag);
-            return tag;
-        }
-
-        void load(CompoundTag tag, HolderLookup.Provider lookup) {
-            ints.clear(); longs.clear(); bools.clear(); strings.clear(); items.clear();
-            CompoundTag intTag = tag.getCompound("i");
-            for (String key : intTag.getAllKeys()) ints.put(key, intTag.getInt(key));
-            CompoundTag longTag = tag.getCompound("l");
-            for (String key : longTag.getAllKeys()) longs.put(key, longTag.getLong(key));
-            CompoundTag boolTag = tag.getCompound("b");
-            for (String key : boolTag.getAllKeys()) bools.put(key, boolTag.getBoolean(key));
-            CompoundTag stringTag = tag.getCompound("s");
-            for (String key : stringTag.getAllKeys()) strings.put(key, stringTag.getString(key));
-            CompoundTag itemTag = tag.getCompound("t");
-            for (String key : itemTag.getAllKeys()) {
-                ItemStack stack = gregtech.engine.stack.NbtCompat.readItem(itemTag.getCompound(key), lookup);
-                if (!stack.isEmpty()) items.put(key, stack);
-            }
-        }
-
-        private static String check(String key) {
-            if (key == null || !key.matches("[a-z0-9_.]{1,64}"))
-                throw new IllegalArgumentException("Invalid behavior state key: " + key);
-            return key;
-        }
-    }
-
     // ── Structure ports ──────────────────────────────────────────────────
-
-    private static boolean itemInput(MultiblockLayout.Role role) {
-        return role != null && role.allows(gregtech.api.multiblock.PortChannel.ITEM_INPUT);
-    }
-
-    private static boolean itemOutput(MultiblockLayout.Role role) {
-        return role != null && role.allows(gregtech.api.multiblock.PortChannel.ITEM_OUTPUT);
-    }
-
-    private static boolean fluidInput(MultiblockLayout.Role role) {
-        return role != null && role.allows(gregtech.api.multiblock.PortChannel.FLUID_INPUT);
-    }
-
-    private static boolean fluidOutput(MultiblockLayout.Role role) {
-        return role != null && role.allows(gregtech.api.multiblock.PortChannel.FLUID_OUTPUT);
-    }
 
     private static boolean energyInput(MultiblockLayout.Role role) {
         return role != null && role.allows(gregtech.api.multiblock.PortChannel.ENERGY_INPUT);
@@ -1833,43 +1036,12 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return role != null && role.allows(gregtech.api.multiblock.PortChannel.ENERGY_OUTPUT);
     }
 
-    private boolean itemSlotAllows(int slot, boolean input) {
-        if (slot < 0 || slot >= declaration.items().size()) return false;
-        var role = declaration.items().get(slot).role();
-        return role == BehaviorMachine.SlotRole.ANY
-                || role == (input ? BehaviorMachine.SlotRole.INPUT : BehaviorMachine.SlotRole.OUTPUT);
-    }
-
-    private boolean tankAllows(int tank, boolean input) {
-        if (tank < 0 || tank >= declaration.fluids().size()) return false;
-        var role = declaration.fluids().get(tank).role();
-        return role == BehaviorMachine.SlotRole.ANY
-                || role == (input ? BehaviorMachine.SlotRole.INPUT : BehaviorMachine.SlotRole.OUTPUT);
-    }
-
     @Override public IItemHandler portItems(MultiblockLayout.Role role) {
         return portItems(role, null);
     }
 
     @Override public IItemHandler portItems(MultiblockLayout.Role role, MachineFace face) {
-        if (!itemInput(role) && !itemOutput(role)) return null;
-        return new IItemHandler() {
-            @Override public int getSlots() { return items.getSlots(); }
-            @Override public ItemStack getStackInSlot(int slot) { return items.getStackInSlot(slot); }
-            @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                return isItemValid(slot, stack) ? items.insertItem(slot, stack, simulate) : stack;
-            }
-            @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                return itemOutput(role) && itemSlotAllows(slot, false)
-                        ? items.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
-            }
-            @Override public int getSlotLimit(int slot) { return items.getSlotLimit(slot); }
-            @Override public boolean isItemValid(int slot, ItemStack stack) {
-                return itemInput(role) && itemSlotAllows(slot, true) && items.isItemValid(slot, stack)
-                        && behavior.canInsert(context, slot, stack)
-                        && behavior.canInsert(context, slot, stack, face);
-            }
-        };
+        return ioPorts.portItems(role, face);
     }
 
     @Override public IFluidHandler portFluids(MultiblockLayout.Role role) {
@@ -1877,54 +1049,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     @Override public IFluidHandler portFluids(MultiblockLayout.Role role, MachineFace face) {
-        if ((!fluidInput(role) && !fluidOutput(role)) || tanks.length == 0) return null;
-        return new IFluidHandler() {
-            @Override public int getTanks() { return tanks.length; }
-            @Override public FluidStack getFluidInTank(int tank) { return tanks[tank].copy(); }
-            @Override public int getTankCapacity(int tank) { return tanks[tank].capacity; }
-            @Override public boolean isFluidValid(int tank, FluidStack stack) {
-                return fluidInput(role) && tankAllows(tank, true) && behavior.canFill(context, tank, stack)
-                        && behavior.canFill(context, tank, stack, face);
-            }
-            @Override public int fill(FluidStack stack, FluidAction action) {
-                if (!fluidInput(role) || stack == null || stack.isEmpty()) return 0;
-                int remaining = stack.getAmount();
-                int filled = 0;
-                for (int tank = 0; tank < tanks.length && remaining > 0; tank++) {
-                    if (!isFluidValid(tank, stack)) continue;
-                    var offer = stack.copy();
-                    offer.setAmount(remaining);
-                    int taken = behavior.acceptFluid(context, tank, offer, action.simulate());
-                    filled += taken;
-                    remaining -= taken;
-                }
-                return filled;
-            }
-            @Override public FluidStack drain(FluidStack stack, FluidAction action) {
-                if (!fluidOutput(role) || stack == null || stack.isEmpty()) return FluidStack.EMPTY;
-                return drainMatching(stack.getFluid(), stack.getAmount(), action.simulate());
-            }
-            @Override public FluidStack drain(int amount, FluidAction action) {
-                if (!fluidOutput(role) || amount <= 0) return FluidStack.EMPTY;
-                return drainMatching(null, amount, action.simulate());
-            }
-            private FluidStack drainMatching(Fluid fluid, int amount, boolean simulate) {
-                FluidStack out = FluidStack.EMPTY;
-                int remaining = amount;
-                for (int tank = 0; tank < tanks.length && remaining > 0; tank++) {
-                    if (!tankAllows(tank, false)) continue;
-                    if (fluid != null && tanks[tank].fluid != fluid) continue;
-                    if (!out.isEmpty() && tanks[tank].fluid != out.getFluid()) continue;
-                    FluidStack got = tanks[tank].drain(remaining, simulate);
-                    if (got.isEmpty()) continue;
-                    if (out.isEmpty()) out = got.copy();
-                    else out.grow(got.getAmount());
-                    remaining -= got.getAmount();
-                }
-                if (!simulate && !out.isEmpty()) setChanged();
-                return out;
-            }
-        };
+        return ioPorts.portFluids(role, face);
     }
 
     @Override public IFluidHandler portFluidTank(MultiblockLayout.Role role, int tank) {
@@ -1932,25 +1057,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     }
 
     @Override public IFluidHandler portFluidTank(MultiblockLayout.Role role, int tank, MachineFace face) {
-        if (tank < 0 || tank >= tanks.length) return null;
-        return new IFluidHandler() {
-            public int getTanks() { return 1; }
-            public FluidStack getFluidInTank(int index) { return index == 0 ? tanks[tank].copy() : FluidStack.EMPTY; }
-            public int getTankCapacity(int index) { return index == 0 ? tanks[tank].capacity : 0; }
-            public boolean isFluidValid(int index, FluidStack stack) {
-                return index == 0 && fluidInput(role) && tankAllows(tank, true) && behavior.canFill(context, tank, stack)
-                        && behavior.canFill(context, tank, stack, face);
-            }
-            public int fill(FluidStack stack, FluidAction action) {
-                return isFluidValid(0, stack) ? behavior.acceptFluid(context, tank, stack, action.simulate()) : 0;
-            }
-            public FluidStack drain(FluidStack stack, FluidAction action) {
-                return !stack.isEmpty() && stack.getFluid() == tanks[tank].fluid ? drain(stack.getAmount(), action) : FluidStack.EMPTY;
-            }
-            public FluidStack drain(int amount, FluidAction action) {
-                return fluidOutput(role) && tankAllows(tank, false) ? context.drain(tank, amount, action.simulate()) : FluidStack.EMPTY;
-            }
-        };
+        return ioPorts.portFluidTank(role, tank, face);
     }
 
     @Override public java.util.Collection<GregTechTags.Tag> portEnergyTypes(MultiblockLayout.Role role) {
@@ -2031,7 +1138,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 
     @Override public long injectPortEnergy(MultiblockLayout.Role role, GregTechTags.Tag type, MachineFace face,
                                            long size, long amount, boolean execute) {
-        if (!formed || !energyInput(role) || type == null || size == 0 || size == Long.MIN_VALUE || amount <= 0) return 0;
+        if (!structure.formed() || !energyInput(role) || type == null || size == 0 || size == Long.MIN_VALUE || amount <= 0) return 0;
         Direction side = face == null ? null : world(face);
         if (auxiliaryTag != null && type == auxiliaryTag)
             return injectAuxiliary(type.getShortName(), side, size, amount, execute);

@@ -40,6 +40,47 @@ public final class FluidToolAccessTests {
     private FluidToolAccessTests() {}
 
     @GameTest(template = "test_empty", timeoutTicks = 40)
+    public static void basicMachineUpdatesRedstoneAndFluidAccessWhenCoversChange(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var pos = helper.absolutePos(new BlockPos(2, 1, 2));
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "mixer_bronze"));
+        level.setBlockAndUpdate(pos, block.defaultBlockState());
+        var machine = (BasicMachineBlockEntity) level.getBlockEntity(pos);
+        var water = new FluidStack(Fluids.WATER, 50);
+        var simulate = IFluidHandler.FluidAction.SIMULATE;
+        for (Direction side : Direction.values()) {
+            var open = fluidCapability(level, pos, side);
+            if (open == null || open.fill(water, simulate) == 0) continue;
+
+            var detector = new ItemStack(BuiltInRegistries.ITEM.get(
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "activity_detector_running")));
+            gregtech.content.cover.CoverStackData.putBoolean(detector, "gt.cover.inverted", true);
+            helper.assertTrue(machine.attachCover(side, detector)
+                            && machine.hasRedstoneCover() && machine.getRedstoneSignal(side) == 15,
+                    "The inverted activity detector did not signal on the idle mixer");
+            helper.assertTrue(machine.configureControlCover(side, true) && machine.getStrongRedstoneSignal(side) == 15,
+                    "The detector did not switch to a strong redstone output");
+            machine.removeCover(side);
+            helper.assertTrue(machine.getRedstoneSignal(side) == 0, "Cover removal left a redstone signal behind");
+
+            var shutter = new ItemStack(BuiltInRegistries.ITEM.get(
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "shutter_cover")));
+            gregtech.content.cover.CoverStackData.putBoolean(shutter, "gt.cover.inverted", true);
+            helper.assertTrue(machine.attachCover(side, shutter), "Could not attach the shutter");
+            var closed = fluidCapability(level, pos, side);
+            helper.assertTrue(closed != null && closed.fill(water, simulate) == 0 && open.fill(water, simulate) == 0,
+                    "The shutter did not block both new and cached fluid handlers");
+            machine.removeCover(side);
+            var reopened = fluidCapability(level, pos, side);
+            helper.assertTrue(reopened != null && reopened.fill(water, simulate) == water.getAmount(),
+                    "Cover removal did not reopen the input face");
+            helper.succeed();
+            return;
+        }
+        helper.assertTrue(false, "The mixer fixture has no fluid input face");
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 40)
     public static void toolAccessDrainsOutputTanksBeforeInputs(GameTestHelper helper) {
         var map = new RecipeMap(RecipeMapSpec.builder("gt6ce_test_fluid_tool", "Tool Access", "textures/gui/test")
                 .items(1, 0, 0)

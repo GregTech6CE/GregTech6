@@ -1,18 +1,10 @@
 package gregtech.content.blockentity.machine;
 
 import gregtech.api.machine.BlockFace;
-import gregtech.engine.machine.MachineToolSettings;
 import gregtech.engine.machine.MachineToolSettings.Transfer;
-import gregtech.engine.multiblock.MultiblockToolTarget;
-import gregtech.engine.tool.GTToolHelper;
-import gregtech.engine.tool.GTToolType;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 
 
 import gregtech.engine.energy.EnergyBlockViews;
@@ -88,7 +80,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private RecipeMap recipeMap;
     private final MachineAutoIO autoIO;
     private MachineInventory inventory;
-    private IItemHandler machineItemView;
+    private final BasicMachineIOPorts ioPorts = new BasicMachineIOPorts(this);
 
 
 //? if >=1.21.1 {
@@ -111,7 +103,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
 
     private FaceConfig faceConfig = FaceConfig.ALL_SIDES;
-    private final MachineToolSettings toolSettings = new MachineToolSettings();
+    private final BasicMachineTools tools = new BasicMachineTools(this, this::markMachineDataChanged);
 
     // ── Processing state ─────────────────────────────────────────────────
     private final MachineEnergyPort energyPort = new MachineEnergyPort();
@@ -120,7 +112,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         public RecipeMap recipeMap() { return BasicMachineBlockEntity.this.recipeMap; }
         public boolean searchOutputTanks() { return usesOutputTankSearch(); }
         public boolean exclusiveOutputs() { return usesExclusiveOutputs(); }
-        public boolean requireEmptyOutputs() { return toolSettings.emptyOutputsOnly(); }
+        public boolean requireEmptyOutputs() { return tools.emptyOutputsOnly(); }
         public int parallelLimit() { return spec == null ? 1 : spec.parallelLimit(); }
         public boolean limitFluidOutputAccumulation() { return usesOriginalFluidBuffers(); }
         public boolean parallelScalesDuration() { return BasicMachineBlockEntity.this.parallelScalesDuration(); }
@@ -164,9 +156,6 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (!level.isClientSide) {sourceIgnitionTicks=gregtech.content.machine.OriginalBasicMachineRules.IGNITION_TICKS;mInventoryChanged=true;setChanged();}
         return 10000;
     }
-    private boolean controlStopped;
-    /** External control input per absolute direction, 0–15; persisted with the machine. */
-    private final byte[] externalSignals = new byte[6];
     private boolean adjacentEnergySourcesChanged = true;
     private Direction adjacentEnergyFacing;
     private int adjacentEnergyInputs = -1;
@@ -176,7 +165,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         for (var side : Direction.values()) if (isEnergyAcceptingFrom(spec.energyTag(), side, true)) {
             var target = worldPosition.relative(side);
             if (level.hasChunkAt(target)) gregtech.engine.machine.AdjacentEnergyControl.update(
-                    level.getBlockEntity(target), spec.energyTag(), side.getOpposite(), !controlStopped);
+                    level.getBlockEntity(target), spec.energyTag(), side.getOpposite(), !covers.stopped());
         }
     }
     private void refreshAdjacentEnergySources() {
@@ -186,24 +175,22 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             updateAdjacentToggleableEnergySources();
         }
     }
-    private final gregtech.content.cover.CoverStore coverStore = new gregtech.content.cover.CoverStore(this);
-    @Override public gregtech.content.cover.PanelCoverRuntime panels(){return coverStore.panels();}
-    @Override public boolean coverSupportsPossible(){return true;}
-    @Override public boolean coverPossible(Direction side){return coverState().possible();}
-    private boolean successful,workPossible;
-    private long coverTicks;
-    private final int[] coverSignals=new int[6];
-    private final boolean[] coverStrong=new boolean[6];
+    private final BasicMachineCovers covers = new BasicMachineCovers(this);
+    @Override public gregtech.content.cover.PanelCoverRuntime panels() { return covers.panels(); }
+    @Override public boolean coverSupportsPossible() { return true; }
+    @Override public boolean coverPossible(Direction side) { return coverState().possible(); }
+
     private final gregtech.api.platform.machine.MachineControl control = new gregtech.api.platform.machine.MachineControl() {
         public boolean available(){return !isRemoved();}
-        public boolean enabled(){return available()&&!controlStopped;}
+        public boolean enabled(){return available() && !covers.stopped();}
         public boolean setEnabled(boolean enabled){
             if (!available())return false;
-            if (level!=null&&level.isClientSide)return !controlStopped;
-            boolean changed=controlStopped==enabled;controlStopped=!enabled;mInventoryChanged=true;
+            if (level != null && level.isClientSide) return !covers.stopped();
+            boolean changed = covers.setStopped(!enabled);
+            mInventoryChanged = true;
             if (changed)updateAdjacentToggleableEnergySources();
             if (!enabled){energyPort.clearStored();mActive=false;mRunning=false;onControlStopped();updateBlockStates(false,false);}
-            setChanged();return !controlStopped;
+            setChanged();return !covers.stopped();
         }
         public boolean running(){return available()&&controlRunning();}
         public boolean active(){return available()&&controlActive();}
@@ -213,49 +200,24 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         public long energyCapacity(){return available()?inputMaximum():0;}
         public long progressPerTick(){return available()?controlProgressPerTick():0;}
         public int externalSignal(Direction side){
-            return available()&&side!=null?externalSignals[side.ordinal()]&15:0;
+            return available() && side != null ? covers.externalSignal(side) : 0;
         }
         public boolean setExternalSignal(Direction side,int level){
             if (!available()||side==null||level<0||level>15)return false;
-            if (externalSignals[side.ordinal()]==(byte)level)return true;
-            externalSignals[side.ordinal()]=(byte)level;
-            setChanged();
+            covers.setExternalSignal(side, level);
             return true;
         }
     };
     /** Dedicated executors override read state without duplicating switch/external-signal ownership. */
     protected boolean controlRunning() { return mRunning; }
     protected boolean controlActive() { return mActive; }
-    protected long controlProgress() { return successful ? 1 : processor.progress(); }
-    protected long controlProgressMax() { return successful ? 1 : processor.totalWork(); }
+    protected long controlProgress() { return covers.successful() ? 1 : processor.progress(); }
+    protected long controlProgressMax() { return covers.successful() ? 1 : processor.totalWork(); }
     protected long controlProgressPerTick() { return mActive ? Math.min(inputMaximum(), energyPort.stored()) : 0; }
     protected void onControlStopped() {}
 
     @Override public gregtech.api.platform.machine.MachineControl machineControl(Direction side){return control;}
-    private int packedExternalSignals(){
-        int packed=0;
-        for (int i=0;i<6;i++)packed|=(externalSignals[i]&15)<<(4*i);
-        return packed;
-    }
-    private void unpackExternalSignals(int packed){
-        for (int i=0;i<6;i++)externalSignals[i]=(byte)((packed>>>(4*i))&15);
-    }
     private boolean mInventoryChanged = true; // inventory changed, re-check recipe
-
-//? if >=1.21.1 {
-/**///?} else {
-
-    // Internal caps (null side / GUI)
-    private final LazyOptional<IItemHandler> itemCap = LazyOptional.of(this::itemHandler);
-    private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> this);
-
-    // Sided caps — created lazily
-    @SuppressWarnings("unchecked")
-    private final LazyOptional<IItemHandler>[] itemCapsBySide = new LazyOptional[6];
-    @SuppressWarnings("unchecked")
-    private final LazyOptional<IFluidHandler>[] fluidCapsBySide = new LazyOptional[6];
-//?}
-
 
     public BasicMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -271,8 +233,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         processor.invalidate();
         this.faceConfig = spec.faceConfig();
         this.inventory = new MachineInventory(recipeMap, spec.parallelLimit(), this::inventoryChanged);
-        this.machineItemView = new MachineItemView();
-        this.inventory.items().setEmptyInputsOnly(toolSettings::emptyInputsOnly);
+        ioPorts.rebuildItemView();
+        this.inventory.items().setEmptyInputsOnly(tools::emptyInputsOnly);
         if (specDirty) sanitizeForSpec();
     }
 
@@ -296,6 +258,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public int parallelCount() { return processor.parallelCount(); }
     @Nullable public gregtech.engine.machine.RecipeProcessor.RecipeDetails recipeDetails() { return processor.recipeDetails(); }
 
+    final MachineInventory inventoryStorage() { return inventory; }
     private MachineItemHandler itemHandler() { return inventory == null ? null : inventory.items(); }
     private FluidTankGT[] tanksInput() { return inventory == null ? null : inventory.tanksInput(); }
     private FluidTankGT[] tanksOutput() { return inventory == null ? null : inventory.tanksOutput(); }
@@ -332,9 +295,18 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (sourceRequiresIgnition()&&sourceIgnitionTicks>0)sourceIgnitionTicks--;
         beforeMachineTick();
         beginCoverTick();
-        if (!structureComplete()) { successful=false;workPossible=false;if (mActive||mRunning) {mActive=false;mRunning=false;updateBlockStates(false,false);}updateCoverSignals();return; }
-        refreshWorkPossible();
-        boolean allowed=switchesAllowRunning();successful=false;
+        if (!structureComplete()) {
+            covers.clearWorkState();
+            if (mActive || mRunning) {
+                mActive = mRunning = false;
+                updateBlockStates(false, false);
+            }
+            updateCoverSignals();
+            return;
+        }
+        covers.refreshWorkPossible(this.level, processor, mInventoryChanged);
+        boolean allowed = switchesAllowRunning();
+        covers.setSuccessful(false);
         if (!allowed) {
             energyPort.clearStored();
             if (mActive||mRunning){mActive=false;mRunning=false;updateBlockStates(false,false);}
@@ -389,7 +361,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         // ── Drain buffer ─────────────────────────────────────────────────
         energyPort.drain(energyInMax);
 
-        if (successful){mInventoryChanged=true;refreshWorkPossible();}
+        if (covers.successful()) {
+            mInventoryChanged = true;
+            covers.refreshWorkPossible(this.level, processor, mInventoryChanged);
+        }
         mInventoryChanged = false;
 
         // ── Cover behaviors ──────────────────────────────────────────────────
@@ -486,7 +461,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                 markMachineDataChanged();
                 return;
             }
-            successful=true;
+            covers.setSuccessful(true);
             onProcessFinished();
             processor.reset();
             energyPort.clearStartup();
@@ -497,257 +472,73 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         markMachineDataChanged();
     }
 
-    // ── Covers (GT6 cover system, first iteration) ──────────────────────────
+    // ── Covers ──────────────────────────────────────────────────────────
 
-    public ItemStack getCover(Direction side) {
-        return coverStore.get(side);
-    }
+    public ItemStack getCover(Direction side) { return covers.get(side); }
 
     /** Attaches a cover (one item from the stack); false if the face is occupied. */
-    public boolean attachCover(Direction side, ItemStack stack) {
-        return coverStore.attach(side, stack);
-    }
+    public boolean attachCover(Direction side, ItemStack stack) { return covers.attach(side, stack); }
 
     /** Removes and returns the cover on a face (EMPTY if none). */
-    public ItemStack removeCover(Direction side) {
-        return coverStore.remove(side);
-    }
+    public ItemStack removeCover(Direction side) { return covers.remove(side); }
 
     @Override
     public void attached(Direction side, ItemStack stack) {
-        mInventoryChanged=true;
-        invalidateSideCaps();
-        setChanged();
-        if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-        updateCoverSignals();
+        coverChanged();
     }
 
     @Override
     public void removed(Direction side, ItemStack cover) {
-        var removedSpec=MachineCoverSpec.of(cover);
-        if (removedSpec!=null&&!removedSpec.detector()||gregtech.content.cover.PanelCover.of(cover)==gregtech.content.cover.PanelCover.STATUS){controlStopped=false;updateAdjacentToggleableEnergySources();}
-        mInventoryChanged=true;
-        invalidateSideCaps();
-        setChanged();
-        if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-        updateCoverSignals();
+        covers.releaseControl(cover);
+        coverChanged();
     }
 
+    private void coverChanged() {
+        mInventoryChanged = true;
+        invalidateSideCaps();
+        covers.syncCover(level, worldPosition);
+        updateCoverSignals();
+    }
 
 //? if >=1.21.1 {
 /*    private void invalidateSideCaps() { invalidateCapabilities(); }
 *///?} else {
     private void invalidateSideCaps() {
-        for (int i = 0; i < 6; i++) {
-            if (itemCapsBySide[i] != null) { itemCapsBySide[i].invalidate(); itemCapsBySide[i] = null; }
-            if (fluidCapsBySide[i] != null) { fluidCapsBySide[i].invalidate(); fluidCapsBySide[i] = null; }
-        }
+        ioPorts.invalidateSideCaps();
     }
 //?}
 
+    /** Cover-only lifecycle; recipe processing and energy polling stay on the machine's tick. */
+    protected final void beginCoverTick() { covers.beginTick(); }
+    protected final void tickCovers(Level level, BlockPos pos) { covers.tick(level, pos); }
+    public void tickUtilityCovers(Level level, BlockPos pos) { covers.tickUtility(level, pos); }
 
-    private boolean coverIs(Direction side, String id) {
-        return id.equals(gregtech.content.cover.CoverItems.behavior(getCover(side)));
-    }
-
-    private boolean hasCover(String id) {
-        for (Direction side : Direction.values()) {
-            if (coverIs(side, id)) return true;
-        }
-        return false;
-    }
-
-    /** Cover behaviour id of a face; {@code null} when no cover is attached. */
-    private String getCoverId(Direction side) {
-        return gregtech.content.cover.CoverItems.behavior(getCover(side));
-    }
-
-    // ── Cover behaviors (ticked each server tick) ───────────────────────
-
-    /** Cover-only lifecycle: no recipe work, energy polling or automatic machine output. */
-    protected final void beginCoverTick() {
-        coverTicks++;
-        panels().beforeTick();
-    }
-
-    protected final void tickCovers(Level level, BlockPos pos) {
-        if (panels().stopped())return;
-        for (Direction side : Direction.values()) {
-            ItemStack stack = getCover(side);
-            String id = getCoverId(side);
-            if (id == null) continue;
-            switch (id) {
-                case gregtech.content.cover.CoverItems.PUMP -> tickPumpCover(level, pos, side, stack);
-                case gregtech.content.cover.CoverItems.CONVEYOR -> tickConveyorCover(level, pos, side, stack);
-                case gregtech.content.cover.CoverItems.ROBOT_ARM -> tickRobotArmCover(level, pos, side, stack);
-                case gregtech.content.cover.CoverAttachmentBehaviors.DRAIN -> tickDrainCover(level, pos, side);
-                case gregtech.content.cover.CoverAttachmentBehaviors.AIR_VENT -> tickAirVentCover(level, pos, side);
-            }
-        }
-        // the remaining cover behaviours (item retriever, pressure valve, filters, ...)
-        // is dispatched by tickUtilityCovers below; it walks the six faces itself and has its own
-        // panels.stopped() gate, so calling it here is enough to make those covers act.
-        tickUtilityCovers(level, pos);
-    }
-
-    /** Original component covers share direction, tier cadence and one-operation transfer rules. */
-    private void tickPumpCover(Level level, BlockPos pos, Direction side, ItemStack cover) {
-        gregtech.content.cover.ComponentCoverRuntime.tick(this, side, level.getGameTime());
-    }
-    private void tickConveyorCover(Level level, BlockPos pos, Direction side, ItemStack cover) {
-        gregtech.content.cover.ComponentCoverRuntime.tick(this, side, level.getGameTime());
-    }
-    private void tickRobotArmCover(Level level, BlockPos pos, Direction side, ItemStack cover) {
-        gregtech.content.cover.ComponentCoverRuntime.tick(this, side, level.getGameTime());
-    }
-
-    /**
-     * Drain cover: pull the neighbouring fluid block and the rain into the input tanks.
-     *
-     * <p>World fluids, rain, XP orbs and animal products are implemented by
-     * CoverAttachmentBehaviors; quantum fluid blocks and optional integrations remain incomplete.
-     * This host passes its persisted local cover counter. GT6 used SERVER_TIME and also reacted
-     * immediately to block updates, so matching periods alone does not preserve its schedule.</p>
-     */
-    private void tickDrainCover(Level level, BlockPos pos, Direction side) {
-        gregtech.content.cover.CoverAttachmentBehaviors
-                .tickDrain(level, pos, side, this, coverTicks);
-    }
-
-    /**
-     * Air vent cover: GT6 {@code CoverVent.onTickPre} ({@code CoverVent}) — every 360 ticks, in
-     * this face's own slot of the cycle, air from in front of the vent is poured into the input
-     * tanks: {@code Air}, {@code Air_Nether} or {@code Air_End} depending on the dimension. The whole
-     * behaviour, including the {@code WD.collectable_air} front-face gate and the partial-fill
-     * semantics of {@code FL.fill_}, lives in {@code CoverAttachmentBehaviors.tickVent}.
-     *
-     * <p>This shares the machine's local cover clock with the drain. It keeps a 360-tick
-     * period but not GT6's global phase; manual test-loop convenience is not parity evidence.</p>
-     */
-    private void tickAirVentCover(Level level, BlockPos pos, Direction side) {
-        gregtech.content.cover.CoverAttachmentBehaviors
-                .tickVent(level, pos, side, this, coverTicks);
-    }
-
-    // ── Redstone from covers ────────────────────────────────────────────
-
-    public boolean hasRedstoneCover() {
-        for (Direction side : Direction.values()) {
-            String id = getCoverId(side);
-            var spec=MachineCoverSpec.of(getCover(side));
-            if (spec!=null&&spec.detector())return true;
-            if (gregtech.content.cover.CoverItems.REDSTONE_TORCH.equals(id)
-                    || gregtech.content.cover.CoverItems.REDSTONE_REPEATER.equals(id)) return true;
-        }
-        return false;
-    }
+    public boolean hasRedstoneCover() { return covers.hasRedstoneCover(); }
 
     public int getRedstoneSignal() {
-        int signal=0;for (var side:Direction.values())signal=Math.max(signal,getRedstoneSignal(side));return signal;
-    }
-    public int getRedstoneSignal(Direction output){return gregtech.content.cover.PanelCover.of(getCover(output))!=null?panels().signal(output):coverSignals[output.ordinal()];}
-    public int getStrongRedstoneSignal(Direction output){return gregtech.content.cover.PanelCover.of(getCover(output))!=null?panels().strongSignal(output):coverStrong[output.ordinal()]?getRedstoneSignal(output):0;}
-    public MachineCoverSpec.State coverState(){return new MachineCoverSpec.State(workPossible||processor.totalWork()>0,mRunning,mActive,successful);}
-    private void refreshWorkPossible(){
-        boolean needed=false;
-        for (var stack:coverStore.faces()){var cover=MachineCoverSpec.of(stack);if (cover==MachineCoverSpec.POSSIBLE||cover==MachineCoverSpec.AUTOMATIC||gregtech.content.cover.PanelCover.of(stack)==gregtech.content.cover.PanelCover.STATUS){needed=true;break;}}
-        if (!needed){workPossible=false;return;}
-        if (processor.totalWork()>0){workPossible=true;return;}
-        if (!mInventoryChanged&&level.getGameTime()%12!=0)return;
-        workPossible=false;
-        var evaluation=processor.evaluation();
-        workPossible=evaluation!=null&&evaluation.parallel()>0&&evaluation.cost()!=null;
-    }
-    protected final void updateCoverSignals(){
-        if (level==null||level.isClientSide||isRemoved())return;
-        panels().afterTick();
-        boolean changed=false;var state=coverState();
-        for (var side:Direction.values()){
-            var stack=getCover(side);var cover=MachineCoverSpec.of(stack);
-            int value=cover!=null?cover.signal(state,MachineCoverSpec.inverted(stack)):redstoneCoverSignal(side);
-            boolean strong=cover!=null&&cover.detector()&&MachineCoverSpec.strong(stack);
-            if (value!=coverSignals[side.ordinal()]||strong!=coverStrong[side.ordinal()]){
-                boolean wasStrong=coverStrong[side.ordinal()];coverSignals[side.ordinal()]=value;coverStrong[side.ordinal()]=strong;changed=true;
-                if ((strong||wasStrong)&&level.hasChunkAt(worldPosition.relative(side)))level.updateNeighborsAt(worldPosition.relative(side),getBlockState().getBlock());
-            }
-        }
-        if (changed)level.updateNeighborsAt(worldPosition,getBlockState().getBlock());
-    }
-    /**
-     * GT6's redstone torch cover is an <em>inverter</em> and its repeater a <em>follower</em>
-     * ({@code CoverRedstoneTorch} / {@code CoverRedstoneRepeater}, both through
-     * {@code AbstractCoverAttachmentTorch}: {@code mVisuals == 0 ? 15 : 0}). The wire they hang
-     * on is this machine's powered state, which is {@code mRunning}. Until both covers were
-     * answered with the same {@code mRunning ? 15 : 0}, so the torch was inverted.
-     */
-    private int redstoneCoverSignal(Direction side){
-        if (coverIs(side,gregtech.content.cover.CoverItems.REDSTONE_TORCH))
-            return gregtech.content.cover.CoverUtilityBehaviors.torchSignal(
-                    gregtech.content.cover.CoverUtilityBehaviors.torchVisual(mRunning));
-        if (coverIs(side,gregtech.content.cover.CoverItems.REDSTONE_REPEATER))
-            return gregtech.content.cover.CoverUtilityBehaviors.torchSignal(
-                    gregtech.content.cover.CoverUtilityBehaviors.repeaterVisual(mRunning));
-        return 0;
+        int signal = 0;
+        for (Direction side : Direction.values()) signal = Math.max(signal, getRedstoneSignal(side));
+        return signal;
     }
 
-    public boolean configureControlCover(Direction side,boolean cutter){
-        var stack=getCover(side);var cover=MachineCoverSpec.of(stack);
-        if (cover==null||(cutter?!cover.detector():!cover.invertible()))return false;
-        if (level!=null&&level.isClientSide)return true;
-        String key=cutter?"gt.cover.strong":"gt.cover.inverted";
+    public int getRedstoneSignal(Direction output) { return covers.signal(output); }
+    public int getStrongRedstoneSignal(Direction output) { return covers.strongSignal(output); }
+    public MachineCoverSpec.State coverState() { return covers.state(mRunning, mActive, processor.totalWork()); }
+    final boolean coverPowered() { return mRunning; }
+    protected final void updateCoverSignals() { covers.updateSignals(level, worldPosition); }
 
-        var tag=gregtech.content.cover.CoverStackData.readOrEmpty(stack);tag.putBoolean(key,!tag.getBoolean(key));gregtech.content.cover.CoverStackData.write(stack,tag);setChanged();
-
-        if (level!=null)level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
-        updateCoverSignals();return true;
+    public boolean configureControlCover(Direction side, boolean cutter) {
+        return covers.configureControl(side, cutter, level, worldPosition);
     }
 
-    /**
-     * The recipe tag selected by an attached selector circuit, or -2 when none is attached.
-     *
-     * <p>GT6 registers the programmed circuit itself as {@code CoverSelectorTag(i)}
-     * ({@code ItemIntegratedCircuit}), so the circuit's variant <em>is</em> the tag; the port's
-     * {@code integrated_circuit_N} items follow the same rule. NBT {@code gt.circuit} is still read
-     * for covers configured by the older port-only selector item.</p>
-     */
-    public int getTagSelectorCircuit() {
-        for (Direction side : Direction.values()) {
-            if (!gregtech.content.cover.CoverItems.TAG_SELECTOR.equals(getCoverId(side))) continue;
-            ItemStack cover = getCover(side);
-            int tag = gregtech.content.cover.CoverItems.selectorTag(cover);
-            if (tag >= 0) return tag;
+    /** The attached selector's recipe tag, or -2 when no selector is attached. */
+    public int getTagSelectorCircuit() { return covers.tagSelectorCircuit(); }
 
-            CompoundTag nbt = gregtech.content.cover.CoverStackData.read(cover);
+    /** Shutter covers seal the face against item and fluid transfer. */
+    public boolean isFaceShuttered(Direction side) { return panels().shuttered(side); }
 
-            if (nbt != null && nbt.contains("gt.circuit")) return nbt.getInt("gt.circuit");
-            return -1; // selector present but not configured
-        }
-        return -2; // no selector circuit cover
-    }
-
-    /** Shutter covers seal the face against item/fluid IO. */
-    public boolean isFaceShuttered(Direction side) {
-        return panels().shuttered(side);
-    }
-
-    /** Controllers own the switch while attached. The last controller in side order owns the switch. */
-    protected boolean switchesAllowRunning() {
-        if (level == null) return !controlStopped;
-        var state=coverState();
-        boolean controlled=false,allowed=true;
-        for (var side:Direction.values()){
-            var stack=getCover(side);var cover=MachineCoverSpec.of(stack);
-            if (cover==null||cover.detector())continue;
-            controlled=true;
-            var neighbor=worldPosition.relative(side);
-            // An external control input feeds the same face gate as the cover's redstone reading.
-            int signal=Math.max(level.hasChunkAt(neighbor)?level.getSignal(neighbor,side):0,
-                    externalSignals[side.ordinal()]&15);
-            allowed=cover.allows(state,signal,MachineCoverSpec.inverted(stack),coverTicks);
-        }
-        if (controlled&&controlStopped==allowed){controlStopped=!allowed;setChanged();updateAdjacentToggleableEnergySources();}
-        return !controlStopped;
-    }
+    /** The last controller in side order owns the switch. */
+    protected boolean switchesAllowRunning() { return covers.switchesAllowRunning(level, worldPosition); }
 
     /** Multiblock controllers override this to require a valid structure. */
     protected boolean usesTimeEnergy() { return spec!=null&&spec.energyTag()==GregTechTags.Energy.TU; }
@@ -821,156 +612,42 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** A declared fluid-input cell. Face auto-input stays on {@link #autoInputFluids}. */
     protected void positionedFluidInput() {}
 
-    private void autoIO(Level level, BlockPos pos) {
-        if (faceConfig == null || inventory == null) return;
-        if (automaticTransferEnabled(Transfer.ITEM_INPUT)) {
-            int side = faceConfig.itemAutoInput();
-            if (FaceConfig.autoValid(side)) autoInputItems(level, pos, side);
-            else positionedItemInput();
-        }
-        if (automaticTransferEnabled(Transfer.ITEM_OUTPUT)) {
-            int side = faceConfig.itemAutoOutput();
-            if (FaceConfig.autoValid(side)) autoOutputItems(level, pos, side);
-            else positionedItemOutput();
-        }
-        if (automaticTransferEnabled(Transfer.FLUID_INPUT)
-                && inventory.tanksInput().length > 0) {
-            int side = faceConfig.fluidAutoInput();
-            if (FaceConfig.autoValid(side)) autoInputFluids(level, pos, side);
-            else positionedFluidInput();
-        }
-        if (automaticTransferEnabled(Transfer.FLUID_OUTPUT)
-                && inventory.tanksOutput().length > 0 && FaceConfig.autoValid(faceConfig.fluidAutoOutput())) {
-            autoOutputFluids(level, pos, faceConfig.fluidAutoOutput());
-        }
-    }
+    private void autoIO(Level level, BlockPos pos) { tools.autoIO(level, pos, faceConfig); }
 
     protected boolean automaticTransferEnabled(Transfer transfer) {
-        return toolSettings.enabled(transfer);
+        return tools.enabled(transfer);
     }
 
     protected boolean toolModeAllowsStart() {
-        return !toolSettings.emptyOutputsOnly() || inventory == null
-                || !inventory.hasItemOutput() && !inventory.hasFluidOutput();
+        return tools.allowsRecipeStart(inventory);
     }
 
     /** A reset cancels consumed work, but never removes items already in the machine's slots. */
     protected void resetProcessingWithTool() {
         processor.cancelJob();
-        successful = workPossible = mActive = mRunning = false;
+        covers.clearWorkState();
+        mActive = mRunning = false;
         updateBlockStates(false, false);
     }
 
     @Override
     public boolean consumesTool(ItemStack tool) {
-        if (gregtech.content.cover.PanelCoverHost.blockConsumesTool(this, tool)) return true;
-        if (GTToolHelper.matchesTool(tool, GTToolType.CROWBAR)
-                || GTToolHelper.isScrewdriver(tool)
-                || GTToolHelper.isMonkeyWrench(tool)
-                || GTToolHelper.isSoftHammer(tool)
-                || GTToolHelper.isMagnifyingGlass(tool)
-                || GTToolHelper.matchesTool(tool, GTToolType.PLUNGER)) return true;
-        return sourceRequiresIgnition() && gregtech.content.item.behavior.ItemBehaviors.isIgniter(tool);
+        return tools.consumes(tool)
+                || (sourceRequiresIgnition() && gregtech.content.item.behavior.ItemBehaviors.isIgniter(tool));
     }
 
-    public InteractionResult useMachineTool(Player player,
-            InteractionHand hand, BlockHitResult hit) {
-        var held = player.getItemInHand(hand);
-        GTToolType tool = null;
-        for (var candidate : new GTToolType[] {
-                GTToolType.SCREWDRIVER, GTToolType.MONKEY_WRENCH,
-                GTToolType.SOFT_HAMMER, GTToolType.MAGNIFYING_GLASS, GTToolType.PLUNGER}) {
-            if (GTToolHelper.matchesTool(held, candidate)) { tool = candidate; break; }
-        }
-        if (tool == null || level == null || spec == null) return InteractionResult.PASS;
-        if (player.isSpectator() || !player.mayBuild() || !level.mayInteract(player, worldPosition))
-            return InteractionResult.FAIL;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        var messages = new java.util.ArrayList<Component>();
-        long cost = 0;
-        switch (tool) {
-            case SCREWDRIVER -> {
-                toolSettings.cycleMode();
-                appendProcessingMode(messages);
-                cost = 10000;
-            }
-            case MONKEY_WRENCH -> {
-                for (var transfer : Transfer.values()) {
-                    int side = transfer.side(faceConfig);
-                    if (FaceConfig.autoValid(side) && relativeToAbsolute(side) == hit.getDirection()) {
-                        toolSettings.toggle(transfer);
-                        messages.add(Component.translatable(transfer.message(toolSettings.enabled(transfer))));
-                        cost += 10000;
-                    }
-                }
-                if (cost == 0) messages.add(Component.translatable("message.gt6ce.machine.no_auto_transfer"));
-            }
-            case SOFT_HAMMER -> {
-                resetProcessingWithTool();
-                messages.add(Component.translatable("message.gt6ce.machine.processing_reset"));
-                cost = 10000;
-            }
-            case MAGNIFYING_GLASS -> {
-                // Preserve multiblock inspection as well as the basic machine settings report.
-                if (this instanceof MultiblockToolTarget target)
-                    target.useMultiblockTool(new UseOnContext(player, hand, hit), messages);
-                else appendMachineInspection(messages);
-                cost = 1;
-            }
-            case PLUNGER -> {
-                long trashed = purgeTank(tanksOutput());
-                if (trashed == 0) trashed = purgeTank(tanksInput());
-                if (trashed == 0) return InteractionResult.PASS;
-                cost = trashed;
-            }
-            default -> { return InteractionResult.PASS; }
-        }
-        for (var message : messages) player.displayClientMessage(message, false);
-        if (cost > 0) {
-            GTToolHelper.damageForToolClickReturn(held, cost, player,
-                    hand == InteractionHand.MAIN_HAND
-                            ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-            if (tool != GTToolType.MAGNIFYING_GLASS) {
-                inventoryChanged();
-                markMachineDataChanged();
-                level.playSound(null, worldPosition, SoundEvents.LEVER_CLICK,
-                        SoundSource.BLOCKS, 0.5F, 1.0F);
-            }
-        }
-        return InteractionResult.CONSUME;
-    }
-
-    /** Original GT6 plunger: trash up to 1000 mB from the first non-empty output, then input tank. */
-    private long purgeTank(FluidTankGT[] tanks) {
-        if (tanks == null) return 0;
-        for (var tank : tanks) {
-            var drained = tank.drain(1000, FluidAction.EXECUTE);
-            if (!drained.isEmpty()) {
-                gregtech.content.world.GarbageData.get(level).trash(drained);
-                return drained.getAmount();
-            }
-        }
-        return 0;
+    public InteractionResult useMachineTool(Player player, InteractionHand hand, BlockHitResult hit) {
+        return tools.use(player, hand, hit, faceConfig, spec != null);
     }
 
     protected void appendMachineInspection(java.util.List<Component> messages) {
-        appendProcessingMode(messages);
-        for (var transfer : Transfer.values())
-            if (FaceConfig.autoValid(transfer.side(faceConfig)))
-                messages.add(Component.translatable(transfer.message(toolSettings.enabled(transfer))));
-    }
-
-    private void appendProcessingMode(java.util.List<Component> messages) {
-        messages.add(Component.translatable(toolSettings.emptyOutputsOnly()
-                ? "message.gt6ce.machine.output_empty" : "message.gt6ce.machine.output_space"));
-        messages.add(Component.translatable(toolSettings.emptyInputsOnly()
-                ? "message.gt6ce.machine.input_empty" : "message.gt6ce.machine.input_all"));
+        tools.appendInspection(messages, faceConfig);
     }
 
     @Override public MachineInventory autoIOInventory() { return inventory; }
     @Override public Direction autoIORelativeToAbsolute(int relDir) { return relativeToAbsolute(relDir); }
     @Override public boolean autoIOShutters(Direction side) { return isFaceShuttered(side); }
-    @Override public boolean autoIOAllowsItemTraffic(Direction side, ItemStack stack, boolean inserting) { return allowsItemTraffic(side, stack, inserting); }
+    @Override public boolean autoIOAllowsItemTraffic(Direction side, ItemStack stack, boolean inserting) { return BasicMachineIOPorts.allowsItemTraffic(this, side, stack, inserting); }
     @Override public boolean autoIOAcceptsInput(int slot, ItemStack stack) { return canInsertAutomatically(slot, stack); }
     @Override public IFluidHandler autoIOFluidOutputTarget(Level level, BlockPos pos, Direction absolute) { return automaticFluidOutputTarget(level, pos, absolute); }
     @Override public BlockEntity autoIOOwner() { return this; }
@@ -1004,7 +681,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                 ? state.getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
     }
 
-    private int relativeDir(Direction absolute) {
+    final int relativeDir(Direction absolute) {
         return MachineDirections.relative(facing(), absolute);
     }
 
@@ -1077,7 +754,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     @Override
     public boolean isEnergyAcceptingFrom(GregTechTags.Tag energyType, @Nullable Direction side, boolean theoretical) {
-        if (!isEnergyType(energyType, side, false) || (!theoretical && controlStopped)) return false;
+        if (!isEnergyType(energyType, side, false) || (!theoretical && covers.stopped())) return false;
         if (side == null) return true;
         return (spec.energyType().equalsIgnoreCase(energyType.getShortName())
                 && FaceConfig.has(faceConfig.energyInputs(), relativeDir(side)))
@@ -1168,81 +845,28 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
 //? if >=1.21.1 {
 /*    public IItemHandler itemCapability(@Nullable Direction side) {
-        if (inventory==null)return null;
-        if (side==null)return machineItemView;
-        int rel=relativeDir(side);
-        boolean in=FaceConfig.has(faceConfig.itemInputs(),rel),out=FaceConfig.has(faceConfig.itemOutputs(),rel);
-        return in||out?new SidedItemHandler(this,rel,machineItemView,in,out):null;
+        return ioPorts.itemCapability(side, faceConfig);
+    }
+
+    public IFluidHandler fluidCapability(@Nullable Direction side) {
+        return ioPorts.fluidCapability(side, faceConfig);
+    }
 *///?} else {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (side == null) {
-            if (cap == ForgeCapabilities.ITEM_HANDLER && inventory != null)
-                return itemCap.cast();
-            if (cap == ForgeCapabilities.FLUID_HANDLER && inventory != null)
-                return fluidCap.cast();
-            return super.getCapability(cap, null);
+        if (inventory != null) {
+            if (cap == ForgeCapabilities.ITEM_HANDLER) return ioPorts.itemCapability(side, faceConfig).cast();
+            if (cap == ForgeCapabilities.FLUID_HANDLER) return ioPorts.fluidCapability(side, faceConfig).cast();
         }
-
-        // Keep a live interface while a shutter is closed. The wrappers gate each operation,
-        // including handles first obtained in the closed state and cached by neighboring pipes.
-
-        int rel = relativeDir(side);
-
-        if (cap == ForgeCapabilities.ITEM_HANDLER && inventory != null) {
-            boolean canIn = FaceConfig.has(faceConfig.itemInputs(), rel);
-            boolean canOut = FaceConfig.has(faceConfig.itemOutputs(), rel);
-            if (!canIn && !canOut) return LazyOptional.empty();
-            return getOrCreateItemCap(rel, canIn, canOut).cast();
-        }
-
-        if (cap == ForgeCapabilities.FLUID_HANDLER && inventory != null) {
-            boolean canIn = FaceConfig.has(faceConfig.fluidInputs(), rel);
-            boolean canOut = FaceConfig.has(faceConfig.fluidOutputs(), rel);
-            if (!canIn && !canOut) return LazyOptional.empty();
-            return getOrCreateFluidCap(rel, canIn, canOut).cast();
-        }
-
         return super.getCapability(cap, side);
-//?}
-
-    }
-
-//? if >=1.21.1 {
-/*    public IFluidHandler fluidCapability(@Nullable Direction side) {
-        if (inventory==null)return null;
-        if (side==null)return this;
-        int rel=relativeDir(side);
-        boolean in=FaceConfig.has(faceConfig.fluidInputs(),rel),out=FaceConfig.has(faceConfig.fluidOutputs(),rel);
-        return in||out?new SidedFluidHandler(this,rel,in,out):null;
-*///?} else {
-
-    private LazyOptional<IItemHandler> getOrCreateItemCap(int rel, boolean canIn, boolean canOut) {
-        if (itemCapsBySide[rel] == null) {
-            itemCapsBySide[rel] = LazyOptional.of(() -> new SidedItemHandler(this, rel, machineItemView, canIn, canOut));
-        }
-        return itemCapsBySide[rel];
-    }
-
-    private LazyOptional<IFluidHandler> getOrCreateFluidCap(int rel, boolean canIn, boolean canOut) {
-        if (fluidCapsBySide[rel] == null) {
-            fluidCapsBySide[rel] = LazyOptional.of(() -> new SidedFluidHandler(this, rel, canIn, canOut));
-        }
-        return fluidCapsBySide[rel];
     }
 
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        itemCap.invalidate();
-        fluidCap.invalidate();
-        for (int i = 0; i < 6; i++) {
-            if (itemCapsBySide[i] != null) itemCapsBySide[i].invalidate();
-            if (fluidCapsBySide[i] != null) fluidCapsBySide[i].invalidate();
-        }
-//?}
-
+        ioPorts.invalidateCaps();
     }
+//?}
 
     // ── MenuProvider ──────────────────────────────────────────────────────
 
@@ -1272,10 +896,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 //?}
 
         if (sourceRequiresIgnition())tag.putByte(gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT,(byte)sourceIgnitionTicks);
-        tag.putBoolean("gt.control_stopped",controlStopped);
-        toolSettings.save(tag);
-        tag.putInt("gt.external_signals",packedExternalSignals());
-        tag.putLong("gt.cover_ticks",coverTicks);
+        tools.save(tag);
+        covers.saveControl(tag);
         if (inventory != null)
             tag.put(NBT_INVENTORY, gregtech.engine.stack.HandlerNbt.save(inventory.items(), codecLookup));
 
@@ -1311,30 +933,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             }
         }
 
-//? if >=1.21.1 {
-/*        saveCovers(tag,lookup);
-*///?} else {
-        saveCovers(tag);
-//?}
-
-    }
-
-
-//? if >=1.21.1 {
-/*    private void saveCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        coverStore.save(tag,lookup);
-    }
-
-    private void loadCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        coverStore.load(tag,lookup);
-*///?} else {
-    private void saveCovers(CompoundTag tag) {
-        coverStore.save(tag, null);
-    }
-
-    private void loadCovers(CompoundTag tag) {
-        coverStore.load(tag, null);
-//?}
+        covers.save(tag, codecLookup);
     }
 
     // ── Client sync (covers only — everything else travels via menus) ───────
@@ -1350,9 +949,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         CompoundTag tag = new CompoundTag();
 
 //? if >=1.21.1 {
-/*        saveCovers(tag,lookup);
+/*        covers.save(tag, lookup);
 *///?} else {
-        saveCovers(tag);
+        covers.save(tag, null);
 //?}
         gregtech.engine.multiblock.tracking.ClientFormedSync.write(this, tag);
         return tag;
@@ -1362,10 +961,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
 //? if >=1.21.1 {
 /*    public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        loadCovers(tag,lookup);
+        covers.load(tag, lookup);
 *///?} else {
     public void handleUpdateTag(CompoundTag tag) {
-        loadCovers(tag);
+        covers.load(tag, null);
 //?}
         gregtech.engine.multiblock.tracking.ClientFormedSync.read(this, tag);
     }
@@ -1408,11 +1007,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
         }
         sourceIgnitionTicks=Math.max(0,tag.getByte(gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT));
-        controlStopped=tag.getBoolean("gt.control_stopped");
-        toolSettings.load(tag);
-        unpackExternalSignals(tag.getInt("gt.external_signals"));
+        tools.load(tag);
+        covers.loadControl(tag);
         adjacentEnergySourcesChanged();
-        coverTicks=Math.max(0,tag.getLong("gt.cover_ticks"));successful=false;workPossible=false;mInventoryChanged=true;
+        mInventoryChanged = true;
         if (tag.contains(NBT_ENERGY)) energyPort.setStored(tag.getLong(NBT_ENERGY));
         processor.load(tag, codecLookup);
         var auxiliary = spec == null ? null : spec.auxiliaryEnergy();
@@ -1443,11 +1041,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
         }
 
-//? if >=1.21.1 {
-/*        loadCovers(tag,lookup);
-*///?} else {
-        loadCovers(tag);
-//?}
+        covers.load(tag, codecLookup);
         sanitizeForSpec();
     }
 
@@ -1463,78 +1057,6 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     private static long clamp(long value, long minimum, long maximum) {
         return Math.max(minimum, Math.min(maximum, value));
-    }
-
-    // ── Sided wrappers ────────────────────────────────────────────────────
-
-    /** Own-face policy applies to active auto-I/O as well as passive capability traffic. */
-    private boolean allowsItemTraffic(Direction side, ItemStack stack, boolean inserting) {
-        return !isRemoved() && !isFaceShuttered(side)
-                && gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side), inserting)
-                && !coverBlocksItemTraffic(side) && coverFilterPermits(side, stack);
-    }
-
-    private record SidedItemHandler(BasicMachineBlockEntity be, int relativeSide, IItemHandler inner, boolean canInsert, boolean canExtract)
-            implements IItemHandler {
-        @Override public int getSlots() { return inner.getSlots(); }
-        @Override public ItemStack getStackInSlot(int slot) { return inner.getStackInSlot(slot); }
-        // the face's cover is the pipe filter. GT6 asks that from its item handler's
-        // interceptItemInsert/interceptItemExtract hooks (CoverFilterItem), and the retriever
-        // cover refuses both outright on its own face (CoverRetrieverItem, "aCoverSide ==
-        // aSide"). A face without such a cover admits everything, which is what keeps every other
-        // machine behaving exactly as before.
-        @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            Direction side = be.relativeToAbsolute(relativeSide);
-            return canInsert && be.canInsertAutomatically(slot, stack) && be.allowsItemTraffic(side, stack, true)
-                    ? inner.insertItem(slot, stack, simulate) : stack;
-        }
-        @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (slot < be.visibleInputSlots()) return ItemStack.EMPTY;
-            Direction side = be.relativeToAbsolute(relativeSide);
-            ItemStack existing = inner.getStackInSlot(slot);
-            return canExtract && be.allowsItemTraffic(side, existing, false)
-                    ? inner.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
-        }
-        @Override public int getSlotLimit(int slot) { return inner.getSlotLimit(slot); }
-        @Override public boolean isItemValid(int slot, ItemStack stack) {
-            Direction side = be.relativeToAbsolute(relativeSide);
-            return canInsert && be.canInsertAutomatically(slot, stack) && be.allowsItemTraffic(side, stack, true)
-                    && inner.isItemValid(slot, stack);
-        }
-    }
-
-    private static class SidedFluidHandler implements IFluidHandler {
-        private final BasicMachineBlockEntity be;
-        private final boolean canFill, canDrain;
-        private final int relativeSide;
-        SidedFluidHandler(BasicMachineBlockEntity be, int relativeSide, boolean canFill, boolean canDrain) {
-            this.be = be; this.relativeSide=relativeSide; this.canFill = canFill; this.canDrain = canDrain;
-        }
-        @Override public int getTanks() { return be.getTanks(); }
-        @Override public @NotNull FluidStack getFluidInTank(int tank) { return be.getFluidInTank(tank); }
-        @Override public int getTankCapacity(int tank) { return be.getTankCapacity(tank); }
-        @Override public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-            Direction side = be.relativeToAbsolute(relativeSide);
-            return gregtech.content.cover.ComponentCoverRuntime.allowsFluid(be.getCover(side),true) && canFill && !be.isRemoved() && !be.isFaceShuttered(side)
-                    && be.coverFluidFilterPermits(side, stack) && be.isFluidValid(tank, stack);
-        }
-        // GT6 CoverFilterFluid interceptFluidFill / interceptFluidDrain.
-        @Override public int fill(FluidStack resource, FluidAction action) {
-            Direction side = be.relativeToAbsolute(relativeSide);
-            return gregtech.content.cover.ComponentCoverRuntime.allowsFluid(be.getCover(side),true) && canFill && !be.isRemoved() && !be.isFaceShuttered(side)
-                    && be.coverFluidFilterPermits(side, resource) ? be.fill(resource, action) : 0;
-        }
-        @Override public @NotNull FluidStack drain(FluidStack resource, FluidAction action) {
-            Direction side = be.relativeToAbsolute(relativeSide);
-            return gregtech.content.cover.ComponentCoverRuntime.allowsFluid(be.getCover(side),false) && canDrain && !be.isRemoved() && !be.isFaceShuttered(side)
-                    && be.coverFluidFilterPermits(side, resource) ? be.drain(resource, action) : FluidStack.EMPTY;
-        }
-        @Override public @NotNull FluidStack drain(int maxDrain, FluidAction action) {
-            Direction side = be.relativeToAbsolute(relativeSide);
-            FluidStack existing = be.drain(maxDrain, FluidAction.SIMULATE);
-            return gregtech.content.cover.ComponentCoverRuntime.allowsFluid(be.getCover(side),false) && canDrain && !be.isRemoved() && !be.isFaceShuttered(side)
-                    && be.coverFluidFilterPermits(side, existing) ? be.drain(maxDrain, action) : FluidStack.EMPTY;
-        }
     }
 
     // ── Machine item handler ──────────────────────────────────────────────
@@ -1558,20 +1080,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return acceptsAutomaticInput(stack) && inventory.items().automationSlotAccepts(viewSlot, stack);
     }
     @Override public IItemHandler componentItems(Direction side) {
-        if (inventory == null) return null;
-        return new IItemHandler() {
-            public int getSlots() { return machineItemView.getSlots(); }
-            public ItemStack getStackInSlot(int slot) { return machineItemView.getStackInSlot(slot); }
-            public int getSlotLimit(int slot) { return machineItemView.getSlotLimit(slot); }
-            public boolean isItemValid(int slot, ItemStack stack) { return canInsertAutomatically(slot, stack) && machineItemView.isItemValid(slot, stack); }
-            public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                return canInsertAutomatically(slot, stack) ? machineItemView.insertItem(slot, stack, simulate) : stack;
-            }
-            public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                return machineItemView.extractItem(slot, amount, simulate);
-            }
-        };
+        return ioPorts.componentItems();
     }
+
     public IItemHandlerModifiable inventory() { return inventory == null ? null : inventory.items(); }
 
     /** Normal handler changes and GUI live-stack merges both invalidate the inventory work state. */
@@ -1586,42 +1097,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     public int visibleInputSlots() { return inputSlots() + potionSlots(); }
     public int outputSlots() { return recipeMap != null ? recipeMap.itemOutputSlots : 0; }
     /** Composite item view; its slot indices follow {@link #visibleInputSlots()}, not the raw handler. */
-    public IItemHandler itemView() { return machineItemView; }
-
-    /** Slot view: ordinary inputs, the dedicated potion inputs, then the ordinary outputs. */
-    private final class MachineItemView implements IItemHandler {
-        private int potionIndex() { return inventory.inputCount(); }
-        private boolean isPotionSlot(int slot) { return inventory.potionInput() != null && slot == potionIndex(); }
-        private int innerSlot(int slot) { return slot < inventory.inputCount() ? slot : slot - inventory.potionCount(); }
-
-        @Override public int getSlots() { return inventory.items().getSlots() + inventory.potionCount(); }
-
-        @Override public ItemStack getStackInSlot(int slot) {
-            return isPotionSlot(slot)
-                    ? inventory.potionInput().getStackInSlot(0)
-                    : inventory.items().getStackInSlot(innerSlot(slot));
-        }
-
-        @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if (isPotionSlot(slot)) return inventory.potionInput().insertItem(0, stack, simulate);
-            return slot < inventory.inputCount() ? inventory.items().insertItem(slot, stack, simulate) : stack;
-        }
-
-        @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return slot < visibleInputSlots() ? ItemStack.EMPTY : inventory.items().extractItem(innerSlot(slot), amount, simulate);
-        }
-
-        @Override public int getSlotLimit(int slot) {
-            return isPotionSlot(slot)
-                    ? inventory.potionInput().getSlotLimit(0)
-                    : inventory.items().getSlotLimit(innerSlot(slot));
-        }
-
-        @Override public boolean isItemValid(int slot, ItemStack stack) {
-            if (isPotionSlot(slot)) return inventory.potionInput().isItemValid(0, stack);
-            return slot < inventory.inputCount() && inventory.items().isItemValid(slot, stack);
-        }
-    }
+    public IItemHandler itemView() { return ioPorts.itemView(); }
 
     @Override public void dropContents() {
         if (level == null || level.isClientSide) return;
@@ -1629,194 +1105,28 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (inventory != null && inventory.potionInput() != null)
             gregtech.engine.inventory.BlockContents.drop(this, inventory.potionInput());
         gregtech.engine.inventory.BlockContents.drop(this, autocraftingProgram);
-        coverStore.drop();
+        covers.drop();
         setChanged();
     }
 
-    // ── Utility covers (round 108): retriever, pressure valve, filters, texture covers ──
-    //
-    // The behaviours live in gregtech.content.cover.CoverUtilityBehaviors; this
-    // section only owns the dispatch and the per-face state that dispatch needs, exactly like the
-    // drain/vent pair above. Nothing above that pair is touched.
-
-    /**
-     * Whether this machine's covers were suspended by a controller cover on the previous utility
-     * tick, i.e. the {@code !aStopped} edge of GT6 {@code CoverRetrieverItem}
-     * ({@code onStoppedUpdate} sets the retriever's pending value to 1 when it resumes).
-     */
-    private boolean utilityWasStopped;
-
-    /**
-     * GT6's {@code aData.mValues[aSide]} for the retriever ({@code CoverRetrieverItem}): a
-     * per-face "run on the next tick even though the 20-tick clock has not come round" flag, set on
-     * resume and currently cleared only after moving items. GT6 cleared it before the
-     * eligible attempt, even when the search found nothing.
-     *
-     * <p>This pending array is not persisted. Its lifetime is currently success-based,
-     * so it may remain set for multiple ticks; reload behavior needs separate validation.</p>
-     */
-    private final boolean[] coverPending = new boolean[6];
-
-    /**
-     * One utility-cover pass over all six faces: the retriever and the pressure valve.
-     *
-     * <p>Called once per server tick from the same place {@code tickCovers} is. The switch mirrors
-     * {@code tickCovers}'s shape on purpose — {@code getCoverId(side)} is the single dispatcher, so
-     * a face that {@code CoverItems.behavior} does not recognise is skipped here too rather than
-     * being ticked behind that method's back.</p>
-     *
-     * <p>{@link #coverTicks} is handed to both behaviours in place of GT6's {@code SERVER_TIME} /
-     * {@code aTimer}, for the reason spelled out on {@link #tickDrainCover}: the counter advances
-     * once per server tick in a running game.</p>
-     */
-    public void tickUtilityCovers(Level level, BlockPos pos) {
-        if (level == null) return;
-        // CoverControllerCovers suspends the other covers; GT6 gates the retriever on !aData.mStopped
-        // (CoverRetrieverItem) and the valve on the same flag (CoverPressureValve).
-        if (panels().stopped()) { utilityWasStopped = true; return; }
-        boolean resumed = utilityWasStopped;
-        utilityWasStopped = false;
-
-        for (Direction side : Direction.values()) {
-            String id = getCoverId(side);
-            if (id == null) continue;
-            ItemStack stack = getCover(side);
-            int index = side.ordinal();
-            switch (id) {
-                case gregtech.content.cover.CoverUtilityBehaviors.RETRIEVER_ITEM -> {
-                    if (inventory == null) continue;
-                    boolean acted = gregtech.content.cover.CoverUtilityBehaviors.tickRetriever(
-                            level, pos, side, inventory.items(),
-
-                            gregtech.content.cover.CoverUtilityBehaviors.itemFilter(stack, level.registryAccess()),
-
-                            gregtech.content.cover.MachineCoverSpec.inverted(stack),
-                            coverTicks, coverPending[index] || resumed);
-                    if (acted) coverPending[index] = false;
-                    else if (resumed) coverPending[index] = true;
-                }
-                case gregtech.content.cover.CoverUtilityBehaviors.PRESSURE_VALVE -> {
-                    if (inventory == null || inventory.tanksOutput().length == 0) continue;
-                    gregtech.content.cover.CoverUtilityBehaviors.tickPressureValve(
-                            level, pos, side, inventory.tanksOutput()[0], coverTicks);
-                }
-                default -> { }
-            }
-        }
-    }
-
-    /**
-     * GT6 {@code CoverFilterItem} asked about a live face: does the filter cover on
-     * {@code side} let {@code candidate} through?
-     *
-     * <p>GT6 asks this from its own item handler's {@code interceptItemInsert}/{@code
-     * interceptItemExtract} hooks, one call per slot and side, with the face test
-     * {@code aCoverSide != aSide} in front of it ({@code CoverFilterItem}). The port's
-     * {@code MachineItemHandler} has no per-side insert hook to hang that on, so the predicate is
-     * exposed here for whatever wiring does own the face, so the rule stays reachable from a real
-     * attached cover.</p>
-     *
-     * <p>{@code panels.stopped()} stands in for GT6's {@code aData.mStopped}, which the port tracks
-     * once per machine rather than once per cover.</p>
-     */
     public boolean coverFilterPermits(Direction side, ItemStack candidate) {
-        return gregtech.content.cover.CoverUtilityBehaviors.itemFilterPermits(
-                getCover(side), panels().stopped(), candidate, level.registryAccess());
+        return covers.itemFilterPermits(side, candidate, level);
     }
 
-    /** GT6 {@code CoverFilterFluid} asked about a live face. See {@link #coverFilterPermits}. */
     public boolean coverFluidFilterPermits(Direction side, FluidStack candidate) {
-        return gregtech.content.cover.CoverUtilityBehaviors.fluidFilterPermits(
-                getCover(side), panels().stopped(), candidate, level.registryAccess());
+        return covers.fluidFilterPermits(side, candidate, level);
     }
 
-    /**
-     * GT6 {@code CoverRetrieverItem} — the retriever refuses <em>every</em> item insert
-     * and extract on its own face ({@code return aCoverSide == aSide;}, both hooks), so a pipe can
-     * neither push into nor pull out of the face the retriever owns; only the retriever itself moves
-     * items there. That is the whole interception rule for that cover — unlike the item filter, whose
-     * rule is a whitelist/blacklist test.
-     */
-    public boolean coverBlocksItemTraffic(Direction side) {
-        return gregtech.content.cover.CoverUtilityBehaviors.RETRIEVER_ITEM.equals(
-                gregtech.content.cover.CoverItems.behavior(getCover(side)));
-    }
+    public boolean coverBlocksItemTraffic(Direction side) { return covers.blocksItemTraffic(side); }
+    public ItemStack coverItemFilter(Direction side) { return covers.itemFilter(side, level); }
+    public FluidStack coverFluidFilter(Direction side) { return covers.fluidFilter(side, level); }
 
-    /** The item filter stored on a face's cover, empty when there is none or it is not a filter. */
-    public ItemStack coverItemFilter(Direction side) {
-
-        return gregtech.content.cover.CoverUtilityBehaviors.itemFilter(getCover(side), level.registryAccess());
-
-    }
-
-    /** The fluid filter stored on a face's cover, empty when there is none or it is not a filter. */
-    public FluidStack coverFluidFilter(Direction side) {
-
-        return gregtech.content.cover.CoverUtilityBehaviors.fluidFilter(getCover(side), level.registryAccess());
-
-    }
-
-    /**
-     * GT6's right-click on a filter cover ({@code CoverFilterItem},
-     * {@code CoverFilterFluid}) and on the retriever ({@code CoverRetrieverItem}):
-     * the held stack becomes the filter, once.
-     *
-     * <p>For the fluid filter the original resolves the fluid out of the held stack, first through
-     * {@code FL.getFluid(tStack, T)} and then through the item's container association
-     * ({@code CoverFilterFluid}); the port keeps the first half — the Forge fluid-container
-     * capability — and has no second half to keep, because the port has no ore-dictionary container
-     * prefix.</p>
-     *
-     * @return whether a filter was stored
-     */
     public boolean clickFilterCover(Direction side, ItemStack held) {
-        String id = getCoverId(side);
-        if (id == null || held == null || held.isEmpty()) return false;
-        ItemStack stack = getCover(side);
-        if (gregtech.content.cover.CoverUtilityBehaviors.FILTER_ITEM.equals(id)
-                || gregtech.content.cover.CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id)) {
-
-            return gregtech.content.cover.CoverUtilityBehaviors.setItemFilter(stack, held, level.registryAccess());
-
-        }
-        if (gregtech.content.cover.CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
-
-//? if >=1.21.1 {
-/*            var container = held.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM);
-*///?} else {
-            var container = held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElse(null);
-//?}
-
-            if (container == null) return false;
-            FluidStack fluid = container.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
-
-            return gregtech.content.cover.CoverUtilityBehaviors.setFluidFilter(stack, fluid, level.registryAccess());
-
-        }
-        return false;
+        return covers.clickFilter(side, held, level);
     }
 
-    /**
-     * The screwdriver and soft-hammer halves of the same three covers: the screwdriver flips
-     * whitelist/blacklist ({@code CoverFilterItem}, {@code CoverFilterFluid},
-     * {@code CoverRetrieverItem}) and the soft hammer clears the filter
-     * ({@code CoverFilterItem}, {@code CoverFilterFluid},
-     * {@code CoverRetrieverItem}).
-     *
-     * <p>Shaped exactly like {@link #configureControlCover} next to it, including the client-side
-     * early return, so the same caller can drive both.</p>
-     */
     public boolean configureFilterCover(Direction side, FilterAction action) {
-        String id = getCoverId(side);
-        if (id == null) return false;
-        boolean filterish = gregtech.content.cover.CoverUtilityBehaviors.FILTER_ITEM.equals(id)
-                || gregtech.content.cover.CoverUtilityBehaviors.FILTER_FLUID.equals(id)
-                || gregtech.content.cover.CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id);
-        if (!filterish) return false;
-        if (level != null && level.isClientSide) return true;
-        action.apply(getCover(side));
-        setChanged();
-        if (level != null) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
-        return true;
+        return covers.configureFilter(side, action, level, worldPosition);
     }
+
 }

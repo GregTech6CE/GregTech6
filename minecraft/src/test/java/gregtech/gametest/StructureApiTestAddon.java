@@ -10,6 +10,7 @@ import gregtech.api.machine.MachineFace;
 import gregtech.api.multiblock.*;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
@@ -37,6 +38,7 @@ public final class StructureApiTestAddon implements AddonMachineContributor, Beh
                 .require(StructureConstraint.exactly(CellMatch.block("minecraft:stone"), 2)).build();
         return List.of(BehaviorMachine.builder(MachineCasing.builder("structure_api_test", "Iron").build())
                 .energy(EnergyInput.builder(EnergyType.EU, 32).build())
+                .clientState("shared")
                 .gui("minecraft:textures/gui/container/furnace.png").build().withStructure(layout), portsMachine(),
                 BehaviorMachine.builder(MachineCasing.builder("ports_api_receiver", "Iron").build())
                         .energy(EnergyInput.builder(EnergyType.EU, 32).capacity(1024).faces(MachineFace.values()).build())
@@ -72,6 +74,7 @@ public final class StructureApiTestAddon implements AddonMachineContributor, Beh
 
     private static AddonMachine portsMachine() {
         return BehaviorMachine.builder(MachineCasing.builder("ports_api_test", "Iron").build())
+                .maxRange(1)
                 .energy(EnergyInput.builder(EnergyType.EU, 32).capacity(512).build())
                 .energyOutput(EnergyOutput.builder(EnergyType.EU, 32, 1).remote().build())
                 .gui("minecraft:textures/gui/container/furnace.png").guiSize(176, 256)
@@ -101,7 +104,13 @@ public final class StructureApiTestAddon implements AddonMachineContributor, Beh
         long emitted = -1;
         net.minecraft.core.BlockPos directTarget;
         MachineFace itemFace, fluidFace, energyFace;
+        Consumer<WorldAccess> worldAction;
         @Override public void tick(MachineBehaviorContext context) {
+            if (worldAction != null) {
+                var action = worldAction;
+                worldAction = null;
+                action.accept(context.world());
+            }
             if (emit) {
                 emit = false;
                 context.energy().generateMain(32);
