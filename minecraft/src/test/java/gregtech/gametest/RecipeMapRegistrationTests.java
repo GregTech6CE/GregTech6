@@ -225,6 +225,33 @@ public final class RecipeMapRegistrationTests {
     }
 
     @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
+    public static void batchCollisionIndexFollowsBaselineReindex(GameTestHelper helper) {
+        String name = "gt.test.recipe.collision.batch_reindex";
+        var map = map(helper, name);
+        try {
+            var baseline = row(new ItemStack[] {stack(Items.IRON_INGOT, 2)}, NO_FLUIDS);
+            var baselineDuplicate = row(new ItemStack[] {stack(Items.IRON_INGOT, 2)}, NO_FLUIDS);
+            var temporary = row(new ItemStack[] {stack(Items.DIAMOND, 1)}, NO_FLUIDS);
+            var temporaryDuplicate = row(new ItemStack[] {stack(Items.DIAMOND, 1)}, NO_FLUIDS);
+            helper.assertTrue(map.addRecipe(baseline) == baseline, "baseline row registered");
+            map.captureBaseline(null);
+
+            helper.assertTrue(
+                    map.addRecipes(List.of(baselineDuplicate, temporary, temporaryDuplicate)).equals(List.of(temporary)),
+                    "batch rejects duplicates of existing rows and rows accepted in that batch");
+            helper.assertTrue(map.reindexBaseline() == 1, "rebuild restores just the baseline");
+            helper.assertTrue(map.findCollision(baselineDuplicate) == baseline
+                            && map.findCollision(temporaryDuplicate) == null,
+                    "collision index only contains the rebuilt baseline");
+            helper.assertTrue(map.addRecipes(List.of(temporaryDuplicate)).equals(List.of(temporaryDuplicate)),
+                    "a later batch can register the removed input");
+        } finally {
+            RecipeMap.unregister(name);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 200)
     public static void collisionKeepsPresenceAndAnvilRules(GameTestHelper helper) {
         var presence = map(helper, "gt.test.recipe.collision.presence");
         try {
