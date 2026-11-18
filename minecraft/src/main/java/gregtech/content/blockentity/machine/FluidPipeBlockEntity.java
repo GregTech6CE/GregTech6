@@ -121,8 +121,6 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     private boolean reconnectPending = true;
     /** Next tick at which the component may run a balanced-distribution pass. */
     private long balanceDue;
-    private static final int BALANCE_PERIOD = 10;
-    private static final long BALANCE_DEADBAND = 1;
     /** Scheduler bookkeeping: generation and order of the block-entity pass that offered this pipe. */
     private long schedulerGeneration = -1;
     private long schedulerRank;
@@ -241,7 +239,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
         if (coverStore.hasCovers()) tickCovers();
         if (gregtech.GregTechConfig.fluidDistribution() == gregtech.GregTechConfig.FluidDistribution.BALANCED
                 && level.getGameTime() >= balanceDue) {
-            balanceComponent();
+            FluidPipeBalancer.balanceComponent(level, this);
         }
         // Every tank mutation already marks the pipe through its change callback. Marking an idle pipe
         // every tick would dirty its chunk and run the comparator neighbour update for nothing, so only
@@ -261,6 +259,10 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     public long schedulerGeneration() { return schedulerGeneration; }
 
     public long schedulerRank() { return schedulerRank; }
+
+    final void deferBalanceUntil(long tick) { balanceDue = tick; }
+
+    final FluidTankGT[] channelTanks() { return tanks; }
 
     public void schedulerOffered(long generation, long rank) {
         schedulerGeneration = generation;
@@ -713,236 +715,13 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     /** Selected channels already match full fluid identity; keep internal pipe amounts as longs. */
-    private long transferToPipe(FluidTankGT source, FluidTankGT target, long requested) {
+    final long transferToPipe(FluidTankGT source, FluidTankGT target, long requested) {
         long amount = Math.min(Math.min(requested, source.getAmount()), target.capacity() - target.getAmount());
         if (amount <= 0) return 0;
         if (target.isEmpty()) target.setFluid(source.getFluidLong(), amount);
         else target.add(amount);
         transferredAmount += source.remove(amount);
         return amount;
-    }
-
-    // ── Balanced distribution: per-component, per-fluid levelling ────────────
-
-    /**
-     * One pass every {@link #BALANCE_PERIOD} ticks. The component is split along every edge a
-     * filter, shutter or pump blocks in either direction, and along pipes whose own covers act on
-     * their tank directly (pressure valve, drain, air vent), so balancing never bypasses them.
-     */
-    private void balanceComponent() {
-        long now = level.getGameTime();
-        java.util.List<FluidPipeBlockEntity> component = new java.util.ArrayList<>();
-        java.util.Map<FluidPipeBlockEntity, Integer> index = new java.util.IdentityHashMap<>();
-        java.util.Set<BlockPos> seen = new HashSet<>();
-        java.util.ArrayDeque<FluidPipeBlockEntity> queue = new java.util.ArrayDeque<>();
-        seen.add(worldPosition);
-        queue.add(this);
-        while (!queue.isEmpty()) {
-            FluidPipeBlockEntity pipe = queue.poll();
-            index.put(pipe, component.size());
-            component.add(pipe);
-            for (Direction side : Direction.values()) {
-                if (!pipe.connected(side)) continue;
-                BlockPos next = pipe.getBlockPos().relative(side);
-                if (!level.hasChunkAt(next) || !seen.add(next)) continue;
-                if (level.getBlockEntity(next) instanceof FluidPipeBlockEntity neighbor
-                        && neighbor.connected(side.getOpposite())) {
-                    queue.add(neighbor);
-                }
-            }
-        }
-        for (FluidPipeBlockEntity pipe : component) pipe.balanceDue = now + BALANCE_PERIOD;
-
-        java.util.Map<Fluid, FluidStack> fluids = new java.util.LinkedHashMap<>();
-        for (FluidPipeBlockEntity pipe : component) {
-            for (FluidTankGT tank : pipe.tanks) {
-                if (!tank.isEmpty()) fluids.putIfAbsent(tank.getFluid().getFluid(), tank.getFluid());
-            }
-        }
-        for (FluidStack fluid : fluids.values()) balanceFluid(component, index, fluid);
-    }
-
-    private void balanceFluid(java.util.List<FluidPipeBlockEntity> component,
-                              java.util.Map<FluidPipeBlockEntity, Integer> index, FluidStack fluid) {
-        int size = component.size();
-        int[] channel = new int[size];
-        long[] amount = new long[size];
-        long[] capacity = new long[size];
-        for (int i = 0; i < size; i++) {
-            FluidPipeBlockEntity pipe = component.get(i);
-            channel[i] = pipe.isBalanceExcluded() ? -1 : pipe.fillableChannel(fluid);
-            if (channel[i] < 0) continue;
-            FluidTankGT tank = pipe.tanks[channel[i]];
-            amount[i] = tank.isEmpty() ? 0 : tank.getAmount();
-            capacity[i] = tank.capacity(fluid);
-        }
-
-        java.util.List<java.util.List<Integer>> adjacency = new java.util.ArrayList<>(size);
-        for (int i = 0; i < size; i++) adjacency.add(new java.util.ArrayList<>());
-        for (int i = 0; i < size; i++) {
-            if (channel[i] < 0) continue;
-            FluidPipeBlockEntity pipe = component.get(i);
-            for (Direction side : Direction.values()) {
-                if (!pipe.connected(side)) continue;
-                BlockPos next = pipe.getBlockPos().relative(side);
-                if (!level.hasChunkAt(next) || !(level.getBlockEntity(next) instanceof FluidPipeBlockEntity neighbor)) continue;
-                Integer other = index.get(neighbor);
-                if (other == null || other <= i || channel[other] < 0 || !neighbor.connected(side.getOpposite())) continue;
-                if (!balanceEdgeOpen(pipe, side, neighbor, fluid)) continue;
-                adjacency.get(i).add(other);
-                adjacency.get(other).add(i);
-            }
-        }
-
-        boolean[] visited = new boolean[size];
-        int[] parent = new int[size];
-        long[] balance = new long[size];
-        java.util.List<Integer> order = new java.util.ArrayList<>();
-        java.util.ArrayDeque<Integer> stack = new java.util.ArrayDeque<>();
-        for (int root = 0; root < size; root++) {
-            if (channel[root] < 0 || visited[root]) continue;
-            order.clear();
-            visited[root] = true;
-            parent[root] = -1;
-            stack.push(root);
-            while (!stack.isEmpty()) {
-                int node = stack.pop();
-                order.add(node);
-                for (int next : adjacency.get(node)) {
-                    if (visited[next]) continue;
-                    visited[next] = true;
-                    parent[next] = node;
-                    stack.push(next);
-                }
-            }
-            if (order.size() > 1) {
-                balanceTree(component, channel, fluid, amount, capacity, order, parent, balance);
-            }
-        }
-    }
-
-    /**
-     * Levels one connected group along a spanning tree. A tree edge carries its subtree's surplus:
-     * leaves first push their excess toward the root, then the root's side pushes fluid back down
-     * into each deficit subtree. A pipe at its target with a deficit branch behind it therefore
-     * forwards fluid instead of stopping it. Each edge moves at most one source tank per pass, so a
-     * pass never empties a pipe into its neighbour; the targets are capacity-aware and sum to the
-     * stored total exactly.
-     */
-    private void balanceTree(java.util.List<FluidPipeBlockEntity> component, int[] channel,
-                             FluidStack fluid, long[] amount, long[] capacity,
-                             java.util.List<Integer> order, int[] parent, long[] balance) {
-        long total = 0;
-        long totalCapacity = 0;
-        for (int node : order) {
-            total += amount[node];
-            totalCapacity += capacity[node];
-        }
-        if (total <= 0 || total >= totalCapacity) return;
-
-        long[] target = new long[capacity.length];
-        levelTargets(order, capacity, total, target);
-
-        // Leaves to root: each subtree sheds its excess into its parent.
-        for (int k = order.size() - 1; k > 0; k--) {
-            int node = order.get(k);
-            long surplus = amountOf(component, channel, node) - target[node];
-            if (surplus <= BALANCE_DEADBAND) continue;
-            moveEdge(component, channel, fluid, node, parent[node], surplus);
-        }
-        // Subtree surplus or deficit after the upward pass is what the downward pass moves.
-        for (int node : order) balance[node] = amountOf(component, channel, node) - target[node];
-        for (int k = order.size() - 1; k > 0; k--) {
-            int node = order.get(k);
-            balance[parent[node]] += balance[node];
-        }
-        // Root to leaves: each deficit subtree pulls fluid down from its parent.
-        for (int k = 1; k < order.size(); k++) {
-            int node = order.get(k);
-            if (balance[node] >= -BALANCE_DEADBAND) continue;
-            moveEdge(component, channel, fluid, parent[node], node, -balance[node]);
-        }
-    }
-
-    private static long amountOf(java.util.List<FluidPipeBlockEntity> component, int[] channel, int node) {
-        FluidTankGT tank = component.get(node).tanks[channel[node]];
-        return tank.isEmpty() ? 0 : tank.getAmount();
-    }
-
-    /** One edge moves no more than the source tank's capacity for this fluid in a single pass. */
-    private static long moveEdge(java.util.List<FluidPipeBlockEntity> component, int[] channel,
-                                 FluidStack fluid, int from, int to, long requested) {
-        FluidPipeBlockEntity source = component.get(from);
-        FluidPipeBlockEntity sink = component.get(to);
-        long limit = Math.min(requested, source.tanks[channel[from]].capacity(fluid));
-        return source.transferToPipe(source.tanks[channel[from]], sink.tanks[channel[to]], limit);
-    }
-
-    /**
-     * Water-fills the group's total into its tanks: the highest level the total can reach, with the
-     * remainder handed out one unit at a time so the targets sum to the stored total exactly.
-     */
-    private static void levelTargets(java.util.List<Integer> order, long[] capacity,
-                                     long total, long[] target) {
-        long high = 0;
-        for (int node : order) high = Math.max(high, capacity[node]);
-        long low = 0;
-        while (low < high) {
-            long middle = low + (high - low) / 2 + ((high - low) & 1);
-            if (fillsAtMost(order, capacity, middle, total)) low = middle;
-            else high = middle - 1;
-        }
-        long remaining = total;
-        for (int node : order) {
-            target[node] = Math.min(low, capacity[node]);
-            remaining -= target[node];
-        }
-        for (int node : order) {
-            if (remaining <= 0) return;
-            if (capacity[node] > low) {
-                target[node]++;
-                remaining--;
-            }
-        }
-    }
-
-    private static boolean fillsAtMost(java.util.List<Integer> order, long[] capacity,
-                                       long level, long total) {
-        long sum = 0;
-        for (int node : order) {
-            long share = Math.min(level, capacity[node]);
-            if (share > total - sum) return false;
-            sum += share;
-        }
-        return true;
-    }
-
-    /**
-     * A balancing edge must pass both ways: a shutter closes it entirely and a pump's direction
-     * would be bypassed by averaging across it. Filters are checked for the fluid being levelled.
-     */
-    private static boolean balanceEdgeOpen(FluidPipeBlockEntity from, Direction side,
-                                           FluidPipeBlockEntity to, FluidStack fluid) {
-        Direction back = side.getOpposite();
-        var fromCover = from.getCover(side);
-        var toCover = to.getCover(back);
-        return gregtech.content.cover.ComponentCoverRuntime.allowsFluid(fromCover, false)
-                && gregtech.content.cover.ComponentCoverRuntime.allowsFluid(fromCover, true)
-                && gregtech.content.cover.ComponentCoverRuntime.allowsFluid(toCover, false)
-                && gregtech.content.cover.ComponentCoverRuntime.allowsFluid(toCover, true)
-                && from.coverFluidFilterPermits(side, fluid)
-                && to.coverFluidFilterPermits(back, fluid);
-    }
-
-    /** Covers that act on this pipe's own tank leave it out of levelling entirely. */
-    private boolean isBalanceExcluded() {
-        for (Direction side : Direction.values()) {
-            String id = coverIdOf(side);
-            if (CoverUtilityBehaviors.PRESSURE_VALVE.equals(id)
-                    || CoverAttachmentBehaviors.DRAIN.equals(id)
-                    || CoverAttachmentBehaviors.AIR_VENT.equals(id)) return true;
-        }
-        return false;
     }
 
     private void fillCauldrons(BlockState state, FluidTankGT tank) {
@@ -1162,7 +941,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
     /** GT6 and the wolfram port both reserve an existing fluid channel before any empty one. */
-    private int fillableChannel(FluidStack resource) {
+    final int fillableChannel(FluidStack resource) {
         if (resource.isEmpty()) return -1;
         return FluidPipeChannels.select(tanks.length, i -> {
             FluidStack existing = tanks[i].getFluid();
@@ -1275,7 +1054,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 //?}
     }
 
-    private boolean connected(Direction side) {
+    final boolean connected(Direction side) {
         return !isRemoved() && getBlockState().getValue(FluidPipeBlock.propFor(side));
     }
 
