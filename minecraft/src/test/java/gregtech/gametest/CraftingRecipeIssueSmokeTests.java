@@ -1,8 +1,13 @@
 package gregtech.gametest;
 
+import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.GT6Materials;
 import gregtech.content.item.GTToolItem;
+import gregtech.content.material.Materials;
 import gregtech.content.recipe.ToolShapedRecipe;
+import gregtech.content.registry.GTBlocks;
+import gregtech.content.registry.GTItems;
+import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.tool.GTToolHelper;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,6 +24,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -64,6 +70,39 @@ public final class CraftingRecipeIssueSmokeTests {
     public static void runtimeCasesMatchAndAssemble(GameTestHelper helper) {
         runLevel(helper, "R", CraftingRecipeIssueSmokeTests::checkRuntime);
         helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", batch = "basic_machine_crafting")
+    public static void crusherAcceptsDiamondVariantsAndKeepsTierCasing(GameTestHelper helper) {
+        var bronzeCasing = GTBlocks.getStack(BlockMaterialPrefix.casingMachineDouble, Materials.Bronze);
+        var steelCasing = GTBlocks.getStack(BlockMaterialPrefix.casingMachineDouble, Materials.Steel);
+        var blueDiamond = GTItems.getCreativeStack(MaterialPrefix.gem, Materials.BlueDiamond);
+        helper.assertTrue(!blueDiamond.isEmpty() && !blueDiamond.is(Items.DIAMOND), "missing blue diamond gem");
+        checkCrusherCrafting(helper, "crusher_bronze", bronzeCasing, steelCasing, blueDiamond);
+        checkCrusherCrafting(helper, "crusher_steel", steelCasing, bronzeCasing, blueDiamond);
+        helper.succeed();
+    }
+
+    private static void checkCrusherCrafting(
+            GameTestHelper helper, String machine, ItemStack casing, ItemStack wrongCasing, ItemStack blueDiamond) {
+        var id = ResourceLocation.fromNamespaceAndPath("gt6ce", "machines/basic/" + machine);
+        var recipe = byKey(helper, id).orElseThrow(() -> new AssertionError("Missing " + id));
+        var grid = fillFromRecipe(recipe);
+        helper.assertTrue(grid.width() == 3 && grid.height() == 2, machine + " must use the 3x2 crusher pattern");
+        grid.items().set(0, new ItemStack(Items.DIAMOND));
+        grid.items().set(1, casing);
+        grid.items().set(2, blueDiamond);
+        helper.assertTrue(matches(helper, recipe, 3, 2, grid.items()), machine + " should accept both diamond colors");
+        var result = assemble(helper, recipe, 3, 2, grid.items());
+        helper.assertTrue(
+                result.is(item("gt6ce:" + machine)) && result.getCount() == 1,
+                machine + " should assemble one matching block");
+
+        grid.items().set(1, wrongCasing);
+        helper.assertFalse(matches(helper, recipe, 3, 2, grid.items()), machine + " accepted the other tier's casing");
+        grid.items().set(1, casing);
+        grid.items().set(2, new ItemStack(Items.EMERALD));
+        helper.assertFalse(matches(helper, recipe, 3, 2, grid.items()), machine + " accepted an unrelated gem");
     }
 
     // Checks the restored file/casing hand rows (lens, sticks, arrow heads, stone gears and

@@ -1,5 +1,7 @@
 package gregtech.content.data;
 
+import gregtech.content.data.BasicMachineCraftingRecipes.*;
+import gregtech.content.material.Materials;
 import gregtech.content.recipe.ElectricalCraftingRules;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.api.material.GTMaterial;
@@ -30,15 +32,16 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Translates the original GT6 crafting-key expressions (see
- * {@link BasicMachineCraftingRecipes}) into 1.20.1 ingredients.
+ * Resolves typed basic-machine ingredients and legacy crafting-key expressions to recipe JSON.
  * <p>
- * Spec grammar:
+ * Legacy spec grammar:
  * <ul>
  *   <li>{@code item:<id>} — a concrete item id.</li>
  *   <li>{@code tag:<id>} — a tag id (used for vanilla/ore-dictionary references).</li>
@@ -119,12 +122,7 @@ public final class MachineRecipeIngredients {
         String argument = spec.substring(colon + 1);
         switch (kind) {
             case "item": {
-                var ingredient = byItemId(argument.trim());
-                if (ingredient == null) {
-                    note("item " + argument, "machine casing block");
-                    return blockIngredient(BlockMaterialPrefix.casingMachine, material);
-                }
-                return ingredient;
+                return itemIngredient(argument.trim(), material);
             }
             case "tag":
                 return Map.of("tag", argument.trim());
@@ -148,36 +146,21 @@ public final class MachineRecipeIngredients {
             case "cable": {
                 String[] parts = splitMaterial(argument);
                 GTMaterial target = parts[1] == null ? material : fixedMaterial(parts[1], material, "cable " + parts[0]);
-                return wireIngredient(parts[0], target, material, true);
+                return wireIngredient(Integer.parseInt(parts[0]), target, material, true);
             }
             case "wire": {
                 String[] parts = splitMaterial(argument);
                 GTMaterial target = parts[1] == null ? material : fixedMaterial(parts[1], material, "wire " + parts[0]);
-                return wireIngredient(parts[0], target, material, false);
+                return wireIngredient(Integer.parseInt(parts[0]), target, material, false);
             }
-            case "cabletier": {
-                GTMaterial target = cableTierMaterial(argument);
-                if (target == null) {
-                    note("cable tier " + argument, "machine casing block");
-                    return blockIngredient(BlockMaterialPrefix.casingMachine, material);
-                }
-                int sourceTier = Integer.parseInt(argument.trim());
-                if (sourceTier == 2) return Map.of("tag", "gt6ce:cable_01/any_copper");
-                return wireIngredient("01", target, material, ElectricalCraftingRules.insulatedCable(sourceTier));
-            }
-            case "wiretier": {
-                GTMaterial target = cableTierMaterial(argument);
-                if (target == null) {
-                    note("wire tier " + argument, "machine casing block");
-                    return blockIngredient(BlockMaterialPrefix.casingMachine, material);
-                }
-                if (Integer.parseInt(argument.trim()) == 2) return Map.of("tag", "gt6ce:wire_04/any_copper");
-                return wireIngredient("04", target, material, false);
-            }
+            case "cabletier":
+                return tierWireIngredient(Integer.parseInt(argument.trim()), true, material);
+            case "wiretier":
+                return tierWireIngredient(Integer.parseInt(argument.trim()), false, material);
             case "il":
-                return componentIngredient(argument.trim(), tier, material);
+                return componentIngredient(componentType(argument.trim()), argument.trim(), tier, material);
             case "part":
-                return partIngredient(argument.trim(), material);
+                return partIngredient(Integer.parseInt(argument.trim()), material);
             case "oredict":
                 return oreDictIngredient(argument.trim(), material);
             case "circuit":
@@ -197,6 +180,34 @@ public final class MachineRecipeIngredients {
         return result;
     }
 
+    /** Resolves a typed GT6 key from the basic machine's source casing and tier. */
+    public static Object resolve(Ingredient key, GTMaterial casing) {
+        if (key instanceof Form form) {
+            GTMaterial material = form.material() == null ? casing : form.material();
+            if (form.group() != null) return groupIngredient(form.prefix(), form.group(), material, casing);
+            return materialIngredient(form.prefix(), material, casing);
+        }
+        if (key instanceof Casing block) return blockIngredient(block.prefix(), casing);
+        if (key instanceof Pipe pipe) {
+            GTMaterial material = pipe.material() == null ? casing : pipe.material();
+            return pipeIngredient(pipe.size().name().toLowerCase(Locale.ROOT), material, casing);
+        }
+        if (key instanceof Wire wire) return wireIngredient(wire.size(), wire.material(), casing, false);
+        if (key instanceof TierWire wire) return tierWireIngredient(wire.tier(), wire.cable(), casing);
+        if (key instanceof Component component)
+            return componentIngredient(component.type(), component.type().name(), component.tier(), casing);
+        if (key instanceof Circuit circuit) return circuitIngredient(circuit.tier());
+        if (key instanceof ItemRef item) return itemIngredient(item.id(), casing);
+        if (key instanceof Tool tool) return itemIngredient("gt6ce:tool_" + tool.type().id(), casing);
+        if (key instanceof Crucible crucible) return itemIngredient("gt6ce:" + crucible.spec().id(), casing);
+        if (key instanceof TagRef tag) return Map.of("tag", tag.id());
+        if (key instanceof FluidContainer fluid)
+            return Map.of("type", "gt6ce:finite_fluid_container_1000", "fluid", fluid.fluidField());
+        if (key instanceof Alternatives alternatives)
+            return alternatives.options().stream().map(option -> resolve(option, casing)).toList();
+        throw new IllegalArgumentException("Unsupported basic machine ingredient: " + key);
+    }
+
     // ── Kinds ─────────────────────────────────────────────────────────────────
 
     private static Object blockIngredient(BlockMaterialPrefix prefix, GTMaterial material) {
@@ -214,32 +225,65 @@ public final class MachineRecipeIngredients {
     }
 
     private static Object materialIngredient(String prefixName, GTMaterial target, GTMaterial machineMaterial) {
-        // Original ore-dictionary aliases for vanilla forms are not generated GT material items.
-        if (prefixName.equals("plate") && target.getName().equals("Glass")) return Map.of("item", "minecraft:glass_pane");
-        if (prefixName.equals("ingot") && target.getName().equals("ClayBrick")) return Map.of("item", "minecraft:brick");
-        MaterialPrefix prefix = prefix(prefixName);
-        if (prefix == null) {
+        MaterialPrefix itemPrefix = prefix(prefixName);
+        if (itemPrefix == null) {
             note("material prefix " + prefixName, "machine casing block");
             return blockIngredient(BlockMaterialPrefix.casingMachine, machineMaterial);
         }
-        List<String> chain = new ArrayList<>();
-        chain.add(prefixName);
-        chain.addAll(FALLBACKS.getOrDefault(prefixName, List.of()));
+        return materialIngredient(itemPrefix, target, machineMaterial);
+    }
 
-        for (int i = 0; i < chain.size(); i++) {
-            MaterialPrefix candidate = prefix(chain.get(i));
-            if (candidate == null || !candidate.isValidFor(target)) continue;
-            if (!hasMaterialItem(candidate, target)) continue;
-            if (i > 0) note(prefixName + " of " + target.getName(), chain.get(i) + " of " + target.getName());
-            String path = MaterialEquivalence.tagPath(new MaterialEquivalence.Form(candidate, target));
-            if (path != null) {
-                return Map.of("tag", "forge:" + path);
-            }
-            return Map.of("tag", "gt6ce:" + candidate.getRegistryName() + "/"
-                    + MaterialEquivalence.materialName(target));
-        }
-        note(prefixName + " of " + target.getName(), "machine casing block");
+    private static Object materialIngredient(MaterialPrefix prefix, GTMaterial target, GTMaterial machineMaterial) {
+        var ingredient = findMaterialIngredient(prefix, target);
+        if (ingredient != null) return ingredient;
+        note(prefix.getName() + " of " + target.getName(), "machine casing block");
         return blockIngredient(BlockMaterialPrefix.casingMachine, machineMaterial);
+    }
+
+    private static Object groupIngredient(MaterialPrefix prefix, GTMaterial group, GTMaterial representative,
+                                          GTMaterial machineMaterial) {
+        var members = new LinkedHashSet<GTMaterial>();
+        members.add(representative);
+        members.addAll(MaterialGroups.members(group));
+
+        var choices = new LinkedHashSet<Object>();
+        for (GTMaterial material : members) {
+            var choice = findMaterialIngredient(prefix, material);
+            if (choice != null) choices.add(choice);
+        }
+        if (choices.isEmpty()) return materialIngredient(prefix, representative, machineMaterial);
+        return choices.size() == 1 ? choices.iterator().next() : List.copyOf(choices);
+    }
+
+    private static Object findMaterialIngredient(MaterialPrefix prefix, GTMaterial target) {
+        // Original ore-dictionary aliases for vanilla forms are not generated GT material items.
+        if (prefix == MaterialPrefix.plate && target.getName().equals("Glass"))
+            return Map.of("item", "minecraft:glass_pane");
+        if (prefix == MaterialPrefix.ingot && target.getName().equals("ClayBrick"))
+            return Map.of("item", "minecraft:brick");
+        var ingredient = registeredFormIngredient(prefix, target);
+        if (ingredient != null) return ingredient;
+
+        String prefixName = prefix.getName();
+        for (String fallback : FALLBACKS.getOrDefault(prefixName, List.of())) {
+            var candidate = prefix(fallback);
+            if (candidate == null) continue;
+            ingredient = registeredFormIngredient(candidate, target);
+            if (ingredient != null) {
+                note(prefixName + " of " + target.getName(), fallback + " of " + target.getName());
+                return ingredient;
+            }
+        }
+        return null;
+    }
+
+    private static Object registeredFormIngredient(MaterialPrefix prefix, GTMaterial material) {
+        String path = MaterialEquivalence.tagPath(new MaterialEquivalence.Form(prefix, material));
+        // Vanilla diamond has no standalone GT item when it is preferred by unification.
+        if (!(prefix == MaterialPrefix.gem && material.resolve() == Materials.Diamond.resolve())
+                && (!prefix.isValidFor(material) || !hasMaterialItem(prefix, material))) return null;
+        if (path != null) return Map.of("tag", "forge:" + path);
+        return Map.of("tag", "gt6ce:" + prefix.getRegistryName() + "/" + MaterialEquivalence.materialName(material));
     }
 
     private static Object pipeIngredient(String sizeName, GTMaterial target, GTMaterial machineMaterial) {
@@ -269,7 +313,7 @@ public final class MachineRecipeIngredients {
      * ingredient accepts every wire of that size instead of a made-up substitute.
      * </p>
      */
-    private static Object wireIngredient(String size, GTMaterial target, GTMaterial machineMaterial, boolean insulated) {
+    private static Object wireIngredient(int size, GTMaterial target, GTMaterial machineMaterial, boolean insulated) {
         Item item = wireItem(size, target, insulated);
         if (item != null) {
             ResourceLocation id = Mc.itemId(item);
@@ -285,24 +329,29 @@ public final class MachineRecipeIngredients {
         return blockIngredient(BlockMaterialPrefix.casingMachine, machineMaterial);
     }
 
-    private static Object componentIngredient(String arrayName, int tier, GTMaterial machineMaterial) {
-        String itemPrefix = switch (arrayName) {
-            case "MOTORS" -> "compact_electric_motor_";
-            case "PUMPS" -> "compact_electric_pump_";
-            case "PISTONS" -> "compact_electric_piston_";
-            case "EMITTERS" -> "compact_signal_emitter_";
-            case "CONVEYERS" -> "compact_electric_conveyor_";
-            case "SENSORS" -> "compact_sensor_";
-            case "ROBOT_ARMS" -> "compact_robot_arm_";
-            case "FIELD_GENERATORS" -> "compact_force_field_emitter_";
-            default -> null;
-        };
-        if (itemPrefix != null) {
-            // GT6 IL.* component arrays are ULV-first: index 0 = ULV, 1 = LV, 2 = MV … Machine
-            // recipes reference indices 1..5 (LV..IV), so a machine tier of t reads IL.*[t] — the
-            // tier must NOT be shifted down, or tier 1 would ask for a ULV component that GT6
-            // never uses in these recipes. See gregtech6-master .../Loaders/Loader_MachineRecipes
-            // and MT/IL definitions (IL.MOTORS[1] = SteelGalvanized motor = LV).
+    private static Object tierWireIngredient(int tier, boolean cable, GTMaterial machineMaterial) {
+        GTMaterial target = material(ElectricalCraftingRules.wireMaterial(tier));
+        if (target == null) {
+            note((cable ? "cable tier " : "wire tier ") + tier, "machine casing block");
+            return blockIngredient(BlockMaterialPrefix.casingMachine, machineMaterial);
+        }
+        if (tier == 2) return Map.of("tag", cable ? "gt6ce:cable_01/any_copper" : "gt6ce:wire_04/any_copper");
+        return wireIngredient(cable ? 1 : 4, target, machineMaterial,
+                cable && ElectricalCraftingRules.insulatedCable(tier));
+    }
+
+    private static ComponentType componentType(String arrayName) {
+        for (ComponentType type : ComponentType.values()) {
+            if (type.name().equals(arrayName)) return type;
+        }
+        return null;
+    }
+
+    private static Object componentIngredient(ComponentType type, String arrayName, int tier,
+                                               GTMaterial machineMaterial) {
+        if (type != null) {
+            String itemPrefix = type.itemPrefix();
+            // GT6 IL.* arrays are ULV-first; recipe tier 1 asks for index 1 (LV).
             int index = Math.min(Math.max(tier, 1), IL_TIER_SUFFIX.length - 1);
             for (int i = index; i >= 1; i--) {
                 var ingredient = byItemId("gt6ce:" + itemPrefix + IL_TIER_SUFFIX[i]);
@@ -338,12 +387,11 @@ public final class MachineRecipeIngredients {
 
     /** GT6 multiblock part referenced by its original numeric registration id. */
 //? if >=1.21.1 {
-    /*private static Object partIngredient(String id,GTMaterial material){
+    /*private static Object partIngredient(int id,GTMaterial material){
         note("GT6 multiblock part "+id+" (Neo factory pending)","machine casing block");
         return blockIngredient(BlockMaterialPrefix.casingMachine,material);
 *///?} else {
-    private static Object partIngredient(String idText, GTMaterial machineMaterial) {
-        int id = Integer.parseInt(idText);
+    private static Object partIngredient(int id, GTMaterial machineMaterial) {
         var block = gregtech.content.multiblock.LargeMachineParts.find(id);
         if (block != null && block.isPresent()) {
             ResourceLocation key = ForgeRegistries.ITEMS.getKey(block.get().asItem());
@@ -356,6 +404,13 @@ public final class MachineRecipeIngredients {
 
     private static Object circuitIngredient(int tier) {
         return Map.of("tag", ElectricalCraftingRules.circuitTag(tier));
+    }
+
+    private static Object itemIngredient(String id, GTMaterial machineMaterial) {
+        var ingredient = byItemId(id);
+        if (ingredient != null) return ingredient;
+        note("item " + id, "machine casing block");
+        return blockIngredient(BlockMaterialPrefix.casingMachine, machineMaterial);
     }
 
     private static Object byItemId(String id) {
@@ -420,17 +475,17 @@ public final class MachineRecipeIngredients {
         pipesBySize = index;
     }
 
-    private static Item wireItem(String size, GTMaterial material, boolean insulated) {
+    private static Item wireItem(int size, GTMaterial material, boolean insulated) {
         if (wiresBySize == null) indexWires();
         // GT6 sizes are 1/2/4/8/16; registry ids are zero padded (wire_02_constantan).
-        String key = (insulated ? "cable_" : "wire_") + String.format("%02d", Integer.parseInt(size));
+        String key = (insulated ? "cable_" : "wire_") + String.format(Locale.ROOT, "%02d", size);
         return wiresBySize.getOrDefault(key, Map.of()).get(material);
     }
 
     /** Every registered wire/cable of one size, in a stable order. */
-    private static List<Object> wiresOfSize(String size, boolean insulated) {
+    private static List<Object> wiresOfSize(int size, boolean insulated) {
         if (wiresBySize == null) indexWires();
-        String key = (insulated ? "cable_" : "wire_") + String.format("%02d", Integer.parseInt(size));
+        String key = (insulated ? "cable_" : "wire_") + String.format(Locale.ROOT, "%02d", size);
         List<Object> result = new java.util.ArrayList<>();
         // GTMaterial is not Comparable, so order by the resolved item id instead.
         for (var entry : wiresBySize.getOrDefault(key, Map.of()).entrySet()) {
@@ -486,10 +541,6 @@ public final class MachineRecipeIngredients {
             return machineMaterial;
         }
         return resolved;
-    }
-
-    private static GTMaterial cableTierMaterial(String tierText) {
-        return material(ElectricalCraftingRules.wireMaterial(Integer.parseInt(tierText.trim())));
     }
 
     private static String[] splitMaterial(String argument) {

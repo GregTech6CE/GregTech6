@@ -4,6 +4,7 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.*;
 import gregtech.content.data.*;
+import gregtech.content.machine.MachineConstructionMaterials;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.*;
 import gregtech.engine.recipe.*;
@@ -117,9 +118,9 @@ public final class VanillaRecoveryRecipes {
         var block = blockItem.getBlock();
         var id = Mc.blockId(block);
         if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
-        var expected = gregtech.content.machine.MachineConstructionMaterials.block(id.getPath());
+        var expected = MachineConstructionMaterials.block(id.getPath());
         if (expected.isEmpty() && block instanceof gregtech.content.block.machine.BasicMachineBlock machine)
-            expected = gregtech.content.machine.OriginalMachineMaterialData.find(
+            expected = MachineConstructionMaterials.machine(
                     machine.basicSpec().machineName(), machine.basicSpec().tier());
         if (expected.isEmpty()) return false;
         var registered = ItemMaterialRegistry.base(item);

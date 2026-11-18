@@ -13,7 +13,6 @@ import gregtech.content.block.stone.GTStoneSlabBlock;
 import gregtech.content.block.stone.StoneMaterialWeights;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.machine.MachineConstructionMaterials;
-import gregtech.content.machine.OriginalMachineMaterialData;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.fluid.PortableFluidContainerSpec;
@@ -145,7 +144,7 @@ public final class MaterialItemCompositions {
             var id = BuiltInRegistries.BLOCK.getKey(block);
             if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) continue;
             if (block instanceof BasicMachineBlock machine) {
-                OriginalMachineMaterialData.find(
+                MachineConstructionMaterials.machine(
                                 machine.basicSpec().machineName(),
                                 machine.basicSpec().tier())
                         .ifPresent(data -> ItemMaterialRegistry.registerDeclared(block.asItem(), data));

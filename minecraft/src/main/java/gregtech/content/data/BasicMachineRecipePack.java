@@ -3,39 +3,17 @@ package gregtech.content.data;
 import com.google.gson.Gson;
 import gregtech.api.material.GTMaterial;
 import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.machine.BasicMachineCatalog;
 import gregtech.content.registry.GTBasicMachines;
 import gregtech.platform.Mc;
 import net.minecraft.resources.ResourceLocation;
-//? if >=1.21.1 {
-/*import net.minecraft.core.registries.BuiltInRegistries;
-*///?} else {
-//?}
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-/**
- * Crafting recipes for the single-block machines, generated from the original GT6
- * "Basic Machines" registrations (see {@link BasicMachineCraftingRecipes}).
- * <p>
- * The previous implementation invented three generic patterns based only on the energy
- * type, so every machine's crafting grid differed from GregTech 6. This contributor emits
- * the original pattern rows and key symbols for every tier, with ingredient translation
- * handled by {@link MachineRecipeIngredients}.
- * </p>
- */
+/** Publishes the catalog crafting recipes for registered single-block machines. */
 public final class BasicMachineRecipePack {
-    /** Machines whose crafting recipe comes from the multiblock table instead. */
-    public static final Set<String> MULTIBLOCK_CONTROLLERS = Set.of(
-            "fusionreactor", "cryodistillationtower", "distillationtower",
-            "cokeoven", "implosioncompressor",
-            "largecentrifuge", "largeelectrolyzer", "largecoagulator", "largeautoclave",
-            "largebath", "largemixer", "largefermenter", "largeoven", "largesluice",
-            "largecrusher", "largeshredder", "largesqueezer", "largemassfab");
     private static final Gson GSON = new Gson();
 
     private BasicMachineRecipePack() {}
@@ -45,16 +23,15 @@ public final class BasicMachineRecipePack {
             if (!entry.isBound()) continue;
             BasicMachineBlock machine = entry.get();
             var spec = machine.basicSpec();
-            if (MULTIBLOCK_CONTROLLERS.contains(spec.machineName())) continue;
 
             ResourceLocation outputId = Mc.itemId(machine.asItem());
             if (outputId == null) continue;
 
-            BasicMachineCraftingRecipes.Entry table = BasicMachineCraftingRecipes.find(spec.machineName(), spec.tier());
-            if (table == null) continue;
+            BasicMachineCraftingRecipes.Recipe crafting = BasicMachineCatalog.crafting(spec.machineName(), spec.tier());
+            if (crafting == null) continue;
 
-            Map<String, Object> recipe = buildRecipe(table, spec.material(), spec.tier(), outputId);
-            if (recipe == null) continue;
+            GTMaterial casing = BasicMachineCatalog.casing(spec.machineName(), spec.tier());
+            Map<String, Object> recipe = buildRecipe(crafting, casing, outputId);
 
             generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce",
 //? if >=1.21.1 {
@@ -67,25 +44,15 @@ public final class BasicMachineRecipePack {
         MachineRecipeIngredients.logSubstitutions();
     }
 
-    private static Map<String, Object> buildRecipe(BasicMachineCraftingRecipes.Entry table, GTMaterial material,
-                                                   int tier, ResourceLocation outputId) {
-        Map<Character, Object> ingredients = MachineRecipeIngredients.resolveAll(table.keys(), material, tier);
+    private static Map<String, Object> buildRecipe(BasicMachineCraftingRecipes.Recipe crafting, GTMaterial casing,
+                                                   ResourceLocation outputId) {
         Map<String, Object> key = new HashMap<>();
-        for (var entry : ingredients.entrySet()) {
-            key.put(String.valueOf(entry.getKey()), entry.getValue());
-        }
-        if (key.isEmpty()) return null;
-
-        List<String> pattern = new ArrayList<>(List.of(table.rows()));
-        // GT6 omits trailing all-space rows from the shaped pattern.
-        while (!pattern.isEmpty() && pattern.get(pattern.size() - 1).isBlank()) {
-            pattern.remove(pattern.size() - 1);
-        }
-        if (pattern.isEmpty()) return null;
+        crafting.keys().forEach((symbol, ingredient) ->
+                key.put(String.valueOf(symbol), MachineRecipeIngredients.resolve(ingredient, casing)));
 
         Map<String, Object> recipe = new HashMap<>();
         recipe.put("type", "gt6ce:tool_shaped");
-        recipe.put("pattern", pattern);
+        recipe.put("pattern", crafting.rows());
         recipe.put("key", key);
         // GT6's machine patterns are aRegistry.add(...) recipes, i.e. CR.DEF_REV without the MIR
         // flag (CR); 1.20.1 mirrors shaped recipes by default.
