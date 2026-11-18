@@ -1,5 +1,14 @@
 package gregtech.content.recipe;
 
+import static gregtech.content.recipe.WoodCraftingRow.Source.woods;
+import static gregtech.content.recipe.WoodCraftingRow.Tool.SAW;
+import static gregtech.content.recipe.WoodCraftingRow.shaped;
+import static gregtech.content.recipe.WoodCraftingRow.shapeless;
+
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.recipe.WoodCraftingRow.Item;
+import gregtech.content.recipe.WoodCraftingRow.Key;
+import gregtech.content.recipe.WoodCraftingRow.MaterialForm;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,21 +24,22 @@ public final class NaturalWoodCraftingRows {
     public static final List<Spec> SPECIES = List.of(
             new Spec("dry", "WoodDead", "Bark"), new Spec("rotten", "WoodRotten", "WoodRotten"),
             new Spec("mossy", "WoodMossy", "WoodMossy"), new Spec("frozen", "WoodFrozen", "Ice"));
-    public static final List<String> ROWS = rows();
+    public static final List<WoodCraftingRow> ROWS = rows();
 
-    private static List<String> rows() {
-        List<String> result = new ArrayList<>();
+    private static List<WoodCraftingRow> rows() {
+        List<WoodCraftingRow> result = new ArrayList<>();
         for (Spec wood : SPECIES) {
-            String path = "natural/" + wood.kind(), log = "item:gt6ce:log_" + wood.kind();
-            String plank = "item:gt6ce:planks_" + wood.kind();
-            result.add(path + "/log_to_planks_hand|shapeless|nomirror||L=" + log + "|" + plank
-                    + "*1|Loader_Recipes_Woods.java:185");
-            result.add(path + "/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=" + log + "|" + plank
-                    + "*2|Loader_Recipes_Woods.java:184");
-            result.add(path + "/planks_to_sticks_hand|shaped|nomirror|P/P|P=" + plank + "|rod:" + wood.material()
-                    + "*2|Loader_Recipes_Woods.java:243");
-            result.add(path + "/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=" + plank + "|rod:"
-                    + wood.material() + "*2|Loader_Recipes_Woods.java:244");
+            String path = "natural/" + wood.kind();
+            var log = new Item("gt6ce:log_" + wood.kind());
+            var plank = new Item("gt6ce:planks_" + wood.kind());
+            var stick = new MaterialForm(MaterialPrefix.stick, wood.material());
+            var saw = new Key('s', SAW);
+            var plankKey = new Key('P', plank);
+            result.add(shapeless(path + "/log_to_planks_hand", woods(185), plank, 1, log));
+            result.add(shaped(
+                    path + "/log_to_planks_saw", woods(184), plank, 2, List.of("s", "L"), saw, new Key('L', log)));
+            result.add(shaped(path + "/planks_to_sticks_hand", woods(243), stick, 2, List.of("P", "P"), plankKey));
+            result.add(shaped(path + "/planks_to_sticks_saw", woods(244), stick, 2, List.of("s", "P"), saw, plankKey));
         }
         return List.copyOf(result);
     }

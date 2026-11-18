@@ -1,5 +1,15 @@
 package gregtech.content.recipe;
 
+import static gregtech.content.recipe.WoodCraftingRow.Source.woods;
+import static gregtech.content.recipe.WoodCraftingRow.Tool.FILE;
+import static gregtech.content.recipe.WoodCraftingRow.Tool.SAW;
+import static gregtech.content.recipe.WoodCraftingRow.shaped;
+import static gregtech.content.recipe.WoodCraftingRow.shapeless;
+
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.recipe.WoodCraftingRow.Item;
+import gregtech.content.recipe.WoodCraftingRow.Key;
+import gregtech.content.recipe.WoodCraftingRow.MaterialForm;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,109 +27,131 @@ import java.util.List;
 public final class VanillaWoodCraftingRows {
     private VanillaWoodCraftingRows() {}
 
-    public static final String[] ROWS = build();
+    private record Wood(
+            String id,
+            String material,
+            String log,
+            String wood,
+            String strippedLog,
+            String strippedWood,
+            String planks) {}
 
-    private static String[] build() {
-        // id, material, raw log/stem, raw wood/hyphae, stripped log/stem, stripped wood/hyphae, planks
-        String[][] woods = {
-            {"oak", "Oak", "oak_log", "oak_wood", "stripped_oak_log", "stripped_oak_wood", "oak_planks"},
-            {
-                "spruce",
-                "Spruce",
-                "spruce_log",
-                "spruce_wood",
-                "stripped_spruce_log",
-                "stripped_spruce_wood",
-                "spruce_planks"
-            },
-            {"birch", "Birch", "birch_log", "birch_wood", "stripped_birch_log", "stripped_birch_wood", "birch_planks"},
-            {
-                "jungle",
-                "Junglewood",
-                "jungle_log",
-                "jungle_wood",
-                "stripped_jungle_log",
-                "stripped_jungle_wood",
-                "jungle_planks"
-            },
-            {
-                "acacia",
-                "Acacia",
-                "acacia_log",
-                "acacia_wood",
-                "stripped_acacia_log",
-                "stripped_acacia_wood",
-                "acacia_planks"
-            },
-            {
-                "dark_oak",
-                "DarkOak",
-                "dark_oak_log",
-                "dark_oak_wood",
-                "stripped_dark_oak_log",
-                "stripped_dark_oak_wood",
-                "dark_oak_planks"
-            },
-            {
-                "mangrove",
-                "Mangrove",
-                "mangrove_log",
-                "mangrove_wood",
-                "stripped_mangrove_log",
-                "stripped_mangrove_wood",
-                "mangrove_planks"
-            },
-            {
-                "cherry",
-                "Cherrywood",
-                "cherry_log",
-                "cherry_wood",
-                "stripped_cherry_log",
-                "stripped_cherry_wood",
-                "cherry_planks"
-            },
-            {
-                "crimson",
-                "Crimsonwood",
-                "crimson_stem",
-                "crimson_hyphae",
-                "stripped_crimson_stem",
-                "stripped_crimson_hyphae",
-                "crimson_planks"
-            },
-            {
-                "warped",
-                "Warpedwood",
-                "warped_stem",
-                "warped_hyphae",
-                "stripped_warped_stem",
-                "stripped_warped_hyphae",
-                "warped_planks"
-            },
-        };
-        List<String> rows = new ArrayList<>();
-        for (String[] wood : woods) {
-            String id = wood[0];
-            String material = wood[1];
-            String planks = "item:minecraft:" + wood[6];
-            String[] names = {"log", "wood", "stripped_log", "stripped_wood"};
-            for (int form = 0; form < names.length; form++) {
-                String item = "item:minecraft:" + wood[2 + form];
-                boolean stripped = form >= 2;
-                int sticks = stripped ? 3 : 2;
-                int saw = stripped ? 5 : 4;
-                int hand = stripped ? 3 : 2;
-                String source = "Loader_Recipes_Woods.java:" + (stripped ? "203" : "183");
-                String sourceSaw = "Loader_Recipes_Woods.java:" + (stripped ? "204" : "184");
-                String sourceHand = "Loader_Recipes_Woods.java:" + (stripped ? "205" : "185");
-                rows.add(id + "/" + names[form] + "_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=" + item
-                        + ";f=tool:file|rodlong:" + material + "*" + sticks + "|" + source);
-                rows.add(id + "/" + names[form] + "_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=" + item + "|"
-                        + planks + "*" + saw + "|" + sourceSaw);
-                rows.add(id + "/" + names[form] + "_to_planks_hand|shapeless|nomirror||L=" + item + "|" + planks + "*"
-                        + hand + "|" + sourceHand);
+    private record Form(String name, String item, boolean stripped) {}
+
+    private static final List<Wood> WOODS = List.of(
+            new Wood("oak", "Oak", "oak_log", "oak_wood", "stripped_oak_log", "stripped_oak_wood", "oak_planks"),
+            new Wood(
+                    "spruce",
+                    "Spruce",
+                    "spruce_log",
+                    "spruce_wood",
+                    "stripped_spruce_log",
+                    "stripped_spruce_wood",
+                    "spruce_planks"),
+            new Wood(
+                    "birch",
+                    "Birch",
+                    "birch_log",
+                    "birch_wood",
+                    "stripped_birch_log",
+                    "stripped_birch_wood",
+                    "birch_planks"),
+            new Wood(
+                    "jungle",
+                    "Junglewood",
+                    "jungle_log",
+                    "jungle_wood",
+                    "stripped_jungle_log",
+                    "stripped_jungle_wood",
+                    "jungle_planks"),
+            new Wood(
+                    "acacia",
+                    "Acacia",
+                    "acacia_log",
+                    "acacia_wood",
+                    "stripped_acacia_log",
+                    "stripped_acacia_wood",
+                    "acacia_planks"),
+            new Wood(
+                    "dark_oak",
+                    "DarkOak",
+                    "dark_oak_log",
+                    "dark_oak_wood",
+                    "stripped_dark_oak_log",
+                    "stripped_dark_oak_wood",
+                    "dark_oak_planks"),
+            new Wood(
+                    "mangrove",
+                    "Mangrove",
+                    "mangrove_log",
+                    "mangrove_wood",
+                    "stripped_mangrove_log",
+                    "stripped_mangrove_wood",
+                    "mangrove_planks"),
+            new Wood(
+                    "cherry",
+                    "Cherrywood",
+                    "cherry_log",
+                    "cherry_wood",
+                    "stripped_cherry_log",
+                    "stripped_cherry_wood",
+                    "cherry_planks"),
+            new Wood(
+                    "crimson",
+                    "Crimsonwood",
+                    "crimson_stem",
+                    "crimson_hyphae",
+                    "stripped_crimson_stem",
+                    "stripped_crimson_hyphae",
+                    "crimson_planks"),
+            new Wood(
+                    "warped",
+                    "Warpedwood",
+                    "warped_stem",
+                    "warped_hyphae",
+                    "stripped_warped_stem",
+                    "stripped_warped_hyphae",
+                    "warped_planks"));
+
+    public static final List<WoodCraftingRow> ROWS = build();
+
+    private static List<WoodCraftingRow> build() {
+        List<WoodCraftingRow> rows = new ArrayList<>();
+        for (Wood wood : WOODS) {
+            var planks = new Item("minecraft:" + wood.planks());
+            var longRod = new MaterialForm(MaterialPrefix.stickLong, wood.material());
+            for (var form : List.of(
+                    new Form("log", wood.log(), false),
+                    new Form("wood", wood.wood(), false),
+                    new Form("stripped_log", wood.strippedLog(), true),
+                    new Form("stripped_wood", wood.strippedWood(), true))) {
+                String path = wood.id() + "/" + form.name();
+                var item = new Item("minecraft:" + form.item());
+                var log = new Key('L', item);
+                var saw = new Key('s', SAW);
+                var file = new Key('f', FILE);
+                boolean stripped = form.stripped();
+                rows.add(shaped(
+                        path + "_to_sticks",
+                        woods(stripped ? 203 : 183),
+                        longRod,
+                        stripped ? 3 : 2,
+                        List.of("sLf"),
+                        saw,
+                        log,
+                        file));
+                rows.add(shaped(
+                        path + "_to_planks_saw",
+                        woods(stripped ? 204 : 184),
+                        planks,
+                        stripped ? 5 : 4,
+                        List.of("s", "L"),
+                        saw,
+                        log));
+                rows.add(shapeless(
+                        path + "_to_planks_hand", woods(stripped ? 205 : 185), planks, stripped ? 3 : 2, item));
             }
         }
-        return rows.toArray(String[]::new);
+        return List.copyOf(rows);
     }
 }

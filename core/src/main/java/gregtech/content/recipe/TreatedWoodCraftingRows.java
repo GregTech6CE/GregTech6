@@ -1,15 +1,47 @@
 package gregtech.content.recipe;
-/** Original treated-wood hand patterns from Loader_OreProcessing / Loader_Recipes_Woods.
- * Same encoded contract as GTWoodRecipes.CRAFT_ROWS; no independent material namespace. */
+
+import static gregtech.content.recipe.WoodCraftingRow.Source.woods;
+import static gregtech.content.recipe.WoodCraftingRow.Tool.SAW;
+import static gregtech.content.recipe.WoodCraftingRow.shaped;
+
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.recipe.WoodCraftingRow.Key;
+import gregtech.content.recipe.WoodCraftingRow.MaterialForm;
+import gregtech.content.recipe.WoodCraftingRow.Source;
+import gregtech.content.recipe.WoodCraftingRow.Tag;
+import java.util.List;
+
+/** Original wood bolt and treated-wood gear patterns. */
 public final class TreatedWoodCraftingRows {
     private TreatedWoodCraftingRows() {}
 
-    public static final String[] BOLT_PATTERN = {"s ", " S"};
-    public static final String[] SMALL_GEAR_PATTERN = {"P ", " s"};
-    public static final String[] GEAR_PATTERN = {"BPB", "PsP", "BPB"};
-    public static final String[] ROWS = {
-        "treated/wood_bolt|shaped|nomirror|s / S|s=tool:saw;S=tag:gt6ce:ammunition/sticks_wood|material:bolt:Wood*2|Loader_OreProcessing.java:194",
-        "treated/small_gear|shaped|nomirror|P / s|P=material:plate:WoodTreated;s=tool:saw|material:gearGtSmall:WoodTreated*1|Loader_Recipes_Woods.java:217",
-        "treated/gear|shaped|nomirror|BPB/PsP/BPB|B=material:bolt:WoodTreated;P=material:plate:WoodTreated;s=tool:saw|material:gearGt:WoodTreated*1|Loader_Recipes_Woods.java:218"
-    };
+    private static final Key SAW_KEY = new Key('s', SAW);
+    private static final Key PLANK = new Key('P', new MaterialForm(MaterialPrefix.plate, "WoodTreated"));
+
+    public static final List<WoodCraftingRow> ROWS = List.of(
+            shaped(
+                    "treated/wood_bolt",
+                    new Source("Loader_OreProcessing.java", 194),
+                    new MaterialForm(MaterialPrefix.bolt, "Wood"),
+                    2,
+                    List.of("s ", " S"),
+                    SAW_KEY,
+                    new Key('S', new Tag("gt6ce:ammunition/sticks_wood"))),
+            shaped(
+                    "treated/small_gear",
+                    woods(217),
+                    new MaterialForm(MaterialPrefix.gearGtSmall, "WoodTreated"),
+                    1,
+                    List.of("P ", " s"),
+                    PLANK,
+                    SAW_KEY),
+            shaped(
+                    "treated/gear",
+                    woods(218),
+                    new MaterialForm(MaterialPrefix.gearGt, "WoodTreated"),
+                    1,
+                    List.of("BPB", "PsP", "BPB"),
+                    new Key('B', new MaterialForm(MaterialPrefix.bolt, "WoodTreated")),
+                    PLANK,
+                    SAW_KEY));
 }

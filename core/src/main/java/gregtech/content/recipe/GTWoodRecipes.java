@@ -1,10 +1,23 @@
 package gregtech.content.recipe;
 
+import static gregtech.content.recipe.WoodCraftingRow.Source.woods;
+import static gregtech.content.recipe.WoodCraftingRow.Tool.FILE;
+import static gregtech.content.recipe.WoodCraftingRow.Tool.SAW;
+import static gregtech.content.recipe.WoodCraftingRow.shaped;
+import static gregtech.content.recipe.WoodCraftingRow.shapeless;
+
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.recipe.WoodCraftingRow.Key;
+import gregtech.content.recipe.WoodCraftingRow.MaterialForm;
+import gregtech.content.recipe.WoodCraftingRow.Source;
+import gregtech.content.recipe.WoodCraftingRow.WoodBlock;
+import gregtech.content.recipe.WoodCraftingRow.WoodForm;
+import java.util.List;
+import java.util.stream.Stream;
+
 /**
- * Maintained by hand since the 2026-10 source rewrite removed {@code tools/generate_wood_recipes.py};
- * keep the encoded rows in sync with {@code gregtech/loaders/c/Loader_Recipes_Woods.java}. The port's
- * "beam" identity is now the modern stripped log, so the {@code beam:*} specs and
- * {@code beam_to_*} rows below use {@code stripped:*} and {@code stripped_to_*}.
+ * The original wood dictionary and recipe loader define the row counts and source order.
+ * The port represents GT6 beams as stripped logs.
  *
  * <p>The crafting-table half of GT6's wood dictionary recipes
  * ({@code gregtech/loaders/c/Loader_Recipes_Woods.java}, driven by
@@ -36,285 +49,952 @@ package gregtech.content.recipe;
  *   <li>{@code MT.WOODS.Cinnamon} is the registered Cinnamonwood material (9317), separate from
  *       Cinnamon spice (9785). All eight dictionary rows are emitted for this species.</li>
  *   <li>The four fallen Log1 entries are registered separately by {@code NaturalWoodCraftingRows};
- *       this generated tree-species table does not duplicate those rows.</li>
+ *       this tree-species table does not duplicate those rows.</li>
  * </ul>
  *
- * <p>{@code CRAFT_ROWS} entries are {@code path|shape|mirror|pattern|keys|result|gt6}: pattern rows are
- * {@code /}-separated, keys are {@code symbol=spec} pairs separated by {@code;}, and the result is
- * {@code spec*count}. Specs are {@code log:<species>}, {@code planks:<species>}, {@code stripped:<species>},
- * {@code stripped:<species>}, {@code rod:<material>} ({@code OP.stick}), {@code rodlong:<material>}
- * ({@code OP.stickLong}) and
- * {@code tool:<id>} (a {@code GTToolType} id). {@code Loader_WoodCraftingRecipes} resolves them and
- * registers the recipes.</p>
+ * <p>Each recipe carries its GT6 loader line. The species table also records the original
+ * dictionary entry and plank metadata.
  */
 public final class GTWoodRecipes {
     private GTWoodRecipes() {}
 
-    /** Rows GT6's dictionary produces for the port's species: {@code id|log|planks|stripped_log|material|gt6}. */
-    public static final String[] SPECIES = {
-        "rubber|log_rubber|planks_rubber|stripped_log_rubber|WoodRubber|LoaderWoodDictionary.java:69|BlocksGT.Planks/0",
-        "maple|log_maple|planks_maple|stripped_log_maple|Maple|LoaderWoodDictionary.java:71|BlocksGT.Planks/1",
-        "willow|log_willow|planks_willow|stripped_log_willow|Willow|LoaderWoodDictionary.java:73|BlocksGT.Planks/2",
-        "blue_mahoe|log_blue_mahoe|planks_blue_mahoe|stripped_log_blue_mahoe|BlueMahoe|LoaderWoodDictionary.java:75|BlocksGT.Planks/3",
-        "hazel|log_hazel|planks_hazel|stripped_log_hazel|Hazel|LoaderWoodDictionary.java:91|BlocksGT.Planks/4",
-        "cinnamon|log_cinnamon|planks_cinnamon|stripped_log_cinnamon|Cinnamonwood|LoaderWoodDictionary.java:93|BlocksGT.Planks/5",
-        "coconut|log_coconut|planks_coconut|stripped_log_coconut|Coconutwood|LoaderWoodDictionary.java:95|BlocksGT.Planks/6",
-        "rainbowood|log_rainbowood|planks_rainbowood|stripped_log_rainbowood|Rainbowood|LoaderWoodDictionary.java:97|BlocksGT.Planks/7",
-        "bluespruce|log_bluespruce|planks_bluespruce|stripped_log_bluespruce|BlueSpruce|LoaderWoodDictionary.java:113|BlocksGT.Planks2/0",
-    };
+    public record OriginalBlock(String name, int metadata) {}
 
-    /** The generated crafting rows, in GT6's own order per species. */
-    public static final String[] CRAFT_ROWS = {
-        "rubber/log_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=log:rubber;f=tool:file|rodlong:WoodRubber*2|Loader_Recipes_Woods.java:183",
-        "rubber/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=log:rubber|planks:rubber*4|Loader_Recipes_Woods.java:184",
-        "rubber/log_to_planks_hand|shapeless|nomirror||L=log:rubber|planks:rubber*2|Loader_Recipes_Woods.java:185",
-        "rubber/stripped_to_sticks|shaped|nomirror|sBf|s=tool:saw;B=stripped:rubber;f=tool:file|rodlong:WoodRubber*3|Loader_Recipes_Woods.java:203",
-        "rubber/stripped_to_planks_saw|shaped|nomirror|s/B|s=tool:saw;B=stripped:rubber|planks:rubber*5|Loader_Recipes_Woods.java:204",
-        "rubber/stripped_to_planks_hand|shapeless|nomirror||B=stripped:rubber|planks:rubber*3|Loader_Recipes_Woods.java:205",
-        "rubber/planks_to_sticks_hand|shaped|nomirror|P/P|P=planks:rubber|rod:WoodRubber*2|Loader_Recipes_Woods.java:243",
-        "rubber/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=planks:rubber|rod:WoodRubber*2|Loader_Recipes_Woods.java:244",
-        "maple/log_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=log:maple;f=tool:file|rodlong:Maple*2|Loader_Recipes_Woods.java:183",
-        "maple/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=log:maple|planks:maple*4|Loader_Recipes_Woods.java:184",
-        "maple/log_to_planks_hand|shapeless|nomirror||L=log:maple|planks:maple*2|Loader_Recipes_Woods.java:185",
-        "maple/stripped_to_sticks|shaped|nomirror|sBf|s=tool:saw;B=stripped:maple;f=tool:file|rodlong:Maple*3|Loader_Recipes_Woods.java:203",
-        "maple/stripped_to_planks_saw|shaped|nomirror|s/B|s=tool:saw;B=stripped:maple|planks:maple*5|Loader_Recipes_Woods.java:204",
-        "maple/stripped_to_planks_hand|shapeless|nomirror||B=stripped:maple|planks:maple*3|Loader_Recipes_Woods.java:205",
-        "maple/planks_to_sticks_hand|shaped|nomirror|P/P|P=planks:maple|rod:Maple*2|Loader_Recipes_Woods.java:243",
-        "maple/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=planks:maple|rod:Maple*2|Loader_Recipes_Woods.java:244",
-        "willow/log_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=log:willow;f=tool:file|rodlong:Willow*2|Loader_Recipes_Woods.java:183",
-        "willow/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=log:willow|planks:willow*4|Loader_Recipes_Woods.java:184",
-        "willow/log_to_planks_hand|shapeless|nomirror||L=log:willow|planks:willow*2|Loader_Recipes_Woods.java:185",
-        "willow/stripped_to_sticks|shaped|nomirror|sBf|s=tool:saw;B=stripped:willow;f=tool:file|rodlong:Willow*3|Loader_Recipes_Woods.java:203",
-        "willow/stripped_to_planks_saw|shaped|nomirror|s/B|s=tool:saw;B=stripped:willow|planks:willow*5|Loader_Recipes_Woods.java:204",
-        "willow/stripped_to_planks_hand|shapeless|nomirror||B=stripped:willow|planks:willow*3|Loader_Recipes_Woods.java:205",
-        "willow/planks_to_sticks_hand|shaped|nomirror|P/P|P=planks:willow|rod:Willow*2|Loader_Recipes_Woods.java:243",
-        "willow/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=planks:willow|rod:Willow*2|Loader_Recipes_Woods.java:244",
-        "blue_mahoe/log_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=log:blue_mahoe;f=tool:file|rodlong:BlueMahoe*2|Loader_Recipes_Woods.java:183",
-        "blue_mahoe/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=log:blue_mahoe|planks:blue_mahoe*4|Loader_Recipes_Woods.java:184",
-        "blue_mahoe/log_to_planks_hand|shapeless|nomirror||L=log:blue_mahoe|planks:blue_mahoe*2|Loader_Recipes_Woods.java:185",
-        "blue_mahoe/stripped_to_sticks|shaped|nomirror|sBf|s=tool:saw;B=stripped:blue_mahoe;f=tool:file|rodlong:BlueMahoe*3|Loader_Recipes_Woods.java:203",
-        "blue_mahoe/stripped_to_planks_saw|shaped|nomirror|s/B|s=tool:saw;B=stripped:blue_mahoe|planks:blue_mahoe*5|Loader_Recipes_Woods.java:204",
-        "blue_mahoe/stripped_to_planks_hand|shapeless|nomirror||B=stripped:blue_mahoe|planks:blue_mahoe*3|Loader_Recipes_Woods.java:205",
-        "blue_mahoe/planks_to_sticks_hand|shaped|nomirror|P/P|P=planks:blue_mahoe|rod:BlueMahoe*2|Loader_Recipes_Woods.java:243",
-        "blue_mahoe/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=planks:blue_mahoe|rod:BlueMahoe*2|Loader_Recipes_Woods.java:244",
-        "hazel/log_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=log:hazel;f=tool:file|rodlong:Hazel*2|Loader_Recipes_Woods.java:183",
-        "hazel/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=log:hazel|planks:hazel*4|Loader_Recipes_Woods.java:184",
-        "hazel/log_to_planks_hand|shapeless|nomirror||L=log:hazel|planks:hazel*2|Loader_Recipes_Woods.java:185",
-        "hazel/stripped_to_sticks|shaped|nomirror|sBf|s=tool:saw;B=stripped:hazel;f=tool:file|rodlong:Hazel*3|Loader_Recipes_Woods.java:203",
-        "hazel/stripped_to_planks_saw|shaped|nomirror|s/B|s=tool:saw;B=stripped:hazel|planks:hazel*5|Loader_Recipes_Woods.java:204",
-        "hazel/stripped_to_planks_hand|shapeless|nomirror||B=stripped:hazel|planks:hazel*3|Loader_Recipes_Woods.java:205",
-        "hazel/planks_to_sticks_hand|shaped|nomirror|P/P|P=planks:hazel|rod:Hazel*2|Loader_Recipes_Woods.java:243",
-        "hazel/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=planks:hazel|rod:Hazel*2|Loader_Recipes_Woods.java:244",
-        "cinnamon/log_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=log:cinnamon;f=tool:file|rodlong:Cinnamonwood*2|Loader_Recipes_Woods.java:183",
-        "cinnamon/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=log:cinnamon|planks:cinnamon*4|Loader_Recipes_Woods.java:184",
-        "cinnamon/log_to_planks_hand|shapeless|nomirror||L=log:cinnamon|planks:cinnamon*2|Loader_Recipes_Woods.java:185",
-        "cinnamon/stripped_to_sticks|shaped|nomirror|sBf|s=tool:saw;B=stripped:cinnamon;f=tool:file|rodlong:Cinnamonwood*3|Loader_Recipes_Woods.java:203",
-        "cinnamon/stripped_to_planks_saw|shaped|nomirror|s/B|s=tool:saw;B=stripped:cinnamon|planks:cinnamon*5|Loader_Recipes_Woods.java:204",
-        "cinnamon/stripped_to_planks_hand|shapeless|nomirror||B=stripped:cinnamon|planks:cinnamon*3|Loader_Recipes_Woods.java:205",
-        "cinnamon/planks_to_sticks_hand|shaped|nomirror|P/P|P=planks:cinnamon|rod:Cinnamonwood*2|Loader_Recipes_Woods.java:243",
-        "cinnamon/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=planks:cinnamon|rod:Cinnamonwood*2|Loader_Recipes_Woods.java:244",
-        "coconut/log_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=log:coconut;f=tool:file|rodlong:Coconutwood*2|Loader_Recipes_Woods.java:183",
-        "coconut/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=log:coconut|planks:coconut*4|Loader_Recipes_Woods.java:184",
-        "coconut/log_to_planks_hand|shapeless|nomirror||L=log:coconut|planks:coconut*2|Loader_Recipes_Woods.java:185",
-        "coconut/stripped_to_sticks|shaped|nomirror|sBf|s=tool:saw;B=stripped:coconut;f=tool:file|rodlong:Coconutwood*3|Loader_Recipes_Woods.java:203",
-        "coconut/stripped_to_planks_saw|shaped|nomirror|s/B|s=tool:saw;B=stripped:coconut|planks:coconut*5|Loader_Recipes_Woods.java:204",
-        "coconut/stripped_to_planks_hand|shapeless|nomirror||B=stripped:coconut|planks:coconut*3|Loader_Recipes_Woods.java:205",
-        "coconut/planks_to_sticks_hand|shaped|nomirror|P/P|P=planks:coconut|rod:Coconutwood*2|Loader_Recipes_Woods.java:243",
-        "coconut/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=planks:coconut|rod:Coconutwood*2|Loader_Recipes_Woods.java:244",
-        "rainbowood/log_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=log:rainbowood;f=tool:file|rodlong:Rainbowood*2|Loader_Recipes_Woods.java:183",
-        "rainbowood/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=log:rainbowood|planks:rainbowood*4|Loader_Recipes_Woods.java:184",
-        "rainbowood/log_to_planks_hand|shapeless|nomirror||L=log:rainbowood|planks:rainbowood*2|Loader_Recipes_Woods.java:185",
-        "rainbowood/stripped_to_sticks|shaped|nomirror|sBf|s=tool:saw;B=stripped:rainbowood;f=tool:file|rodlong:Rainbowood*3|Loader_Recipes_Woods.java:203",
-        "rainbowood/stripped_to_planks_saw|shaped|nomirror|s/B|s=tool:saw;B=stripped:rainbowood|planks:rainbowood*5|Loader_Recipes_Woods.java:204",
-        "rainbowood/stripped_to_planks_hand|shapeless|nomirror||B=stripped:rainbowood|planks:rainbowood*3|Loader_Recipes_Woods.java:205",
-        "rainbowood/planks_to_sticks_hand|shaped|nomirror|P/P|P=planks:rainbowood|rod:Rainbowood*2|Loader_Recipes_Woods.java:243",
-        "rainbowood/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=planks:rainbowood|rod:Rainbowood*2|Loader_Recipes_Woods.java:244",
-        "bluespruce/log_to_sticks|shaped|nomirror|sLf|s=tool:saw;L=log:bluespruce;f=tool:file|rodlong:BlueSpruce*2|Loader_Recipes_Woods.java:183",
-        "bluespruce/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=log:bluespruce|planks:bluespruce*4|Loader_Recipes_Woods.java:184",
-        "bluespruce/log_to_planks_hand|shapeless|nomirror||L=log:bluespruce|planks:bluespruce*2|Loader_Recipes_Woods.java:185",
-        "bluespruce/stripped_to_sticks|shaped|nomirror|sBf|s=tool:saw;B=stripped:bluespruce;f=tool:file|rodlong:BlueSpruce*3|Loader_Recipes_Woods.java:203",
-        "bluespruce/stripped_to_planks_saw|shaped|nomirror|s/B|s=tool:saw;B=stripped:bluespruce|planks:bluespruce*5|Loader_Recipes_Woods.java:204",
-        "bluespruce/stripped_to_planks_hand|shapeless|nomirror||B=stripped:bluespruce|planks:bluespruce*3|Loader_Recipes_Woods.java:205",
-        "bluespruce/planks_to_sticks_hand|shaped|nomirror|P/P|P=planks:bluespruce|rod:BlueSpruce*2|Loader_Recipes_Woods.java:243",
-        "bluespruce/planks_to_sticks_saw|shaped|nomirror|s/P|s=tool:saw;P=planks:bluespruce|rod:BlueSpruce*2|Loader_Recipes_Woods.java:244",
-    };
+    public record Species(
+            String id,
+            String log,
+            String planks,
+            String strippedLog,
+            String material,
+            Source source,
+            OriginalBlock originalPlanks) {}
+
+    public static final List<Species> SPECIES = List.of(
+            new Species(
+                    "rubber",
+                    "log_rubber",
+                    "planks_rubber",
+                    "stripped_log_rubber",
+                    "WoodRubber",
+                    new Source("LoaderWoodDictionary.java", 69),
+                    new OriginalBlock("BlocksGT.Planks", 0)),
+            new Species(
+                    "maple",
+                    "log_maple",
+                    "planks_maple",
+                    "stripped_log_maple",
+                    "Maple",
+                    new Source("LoaderWoodDictionary.java", 71),
+                    new OriginalBlock("BlocksGT.Planks", 1)),
+            new Species(
+                    "willow",
+                    "log_willow",
+                    "planks_willow",
+                    "stripped_log_willow",
+                    "Willow",
+                    new Source("LoaderWoodDictionary.java", 73),
+                    new OriginalBlock("BlocksGT.Planks", 2)),
+            new Species(
+                    "blue_mahoe",
+                    "log_blue_mahoe",
+                    "planks_blue_mahoe",
+                    "stripped_log_blue_mahoe",
+                    "BlueMahoe",
+                    new Source("LoaderWoodDictionary.java", 75),
+                    new OriginalBlock("BlocksGT.Planks", 3)),
+            new Species(
+                    "hazel",
+                    "log_hazel",
+                    "planks_hazel",
+                    "stripped_log_hazel",
+                    "Hazel",
+                    new Source("LoaderWoodDictionary.java", 91),
+                    new OriginalBlock("BlocksGT.Planks", 4)),
+            new Species(
+                    "cinnamon",
+                    "log_cinnamon",
+                    "planks_cinnamon",
+                    "stripped_log_cinnamon",
+                    "Cinnamonwood",
+                    new Source("LoaderWoodDictionary.java", 93),
+                    new OriginalBlock("BlocksGT.Planks", 5)),
+            new Species(
+                    "coconut",
+                    "log_coconut",
+                    "planks_coconut",
+                    "stripped_log_coconut",
+                    "Coconutwood",
+                    new Source("LoaderWoodDictionary.java", 95),
+                    new OriginalBlock("BlocksGT.Planks", 6)),
+            new Species(
+                    "rainbowood",
+                    "log_rainbowood",
+                    "planks_rainbowood",
+                    "stripped_log_rainbowood",
+                    "Rainbowood",
+                    new Source("LoaderWoodDictionary.java", 97),
+                    new OriginalBlock("BlocksGT.Planks", 7)),
+            new Species(
+                    "bluespruce",
+                    "log_bluespruce",
+                    "planks_bluespruce",
+                    "stripped_log_bluespruce",
+                    "BlueSpruce",
+                    new Source("LoaderWoodDictionary.java", 113),
+                    new OriginalBlock("BlocksGT.Planks2", 0)));
+
+    /** Crafting rows in GT6's own order per species. */
+    public static final List<WoodCraftingRow> CRAFT_ROWS =
+            SPECIES.stream().flatMap(species -> recipes(species).stream()).toList();
+
+    /** Registered building-category rows, in publication order. */
+    public static List<WoodCraftingRow> buildingRows() {
+        return Stream.of(CRAFT_ROWS, NaturalWoodCraftingRows.ROWS, VanillaWoodCraftingRows.ROWS)
+                .flatMap(List::stream)
+                .toList();
+    }
+
+    private static List<WoodCraftingRow> recipes(Species species) {
+        String path = species.id() + "/";
+        var log = new WoodBlock(WoodForm.LOG, species.id());
+        var planks = new WoodBlock(WoodForm.PLANKS, species.id());
+        var stripped = new WoodBlock(WoodForm.STRIPPED, species.id());
+        var rod = new MaterialForm(MaterialPrefix.stick, species.material());
+        var longRod = new MaterialForm(MaterialPrefix.stickLong, species.material());
+        var saw = new Key('s', SAW);
+        var file = new Key('f', FILE);
+        var logKey = new Key('L', log);
+        var strippedKey = new Key('B', stripped);
+        var plankKey = new Key('P', planks);
+        return List.of(
+                shaped(path + "log_to_sticks", woods(183), longRod, 2, List.of("sLf"), saw, logKey, file),
+                shaped(path + "log_to_planks_saw", woods(184), planks, 4, List.of("s", "L"), saw, logKey),
+                shapeless(path + "log_to_planks_hand", woods(185), planks, 2, log),
+                shaped(path + "stripped_to_sticks", woods(203), longRod, 3, List.of("sBf"), saw, strippedKey, file),
+                shaped(path + "stripped_to_planks_saw", woods(204), planks, 5, List.of("s", "B"), saw, strippedKey),
+                shapeless(path + "stripped_to_planks_hand", woods(205), planks, 3, stripped),
+                shaped(path + "planks_to_sticks_hand", woods(243), rod, 2, List.of("P", "P"), plankKey),
+                shaped(path + "planks_to_sticks_saw", woods(244), rod, 2, List.of("s", "P"), saw, plankKey));
+    }
+
+    public enum StatementKind {
+        RM,
+        CR
+    }
+
+    public record SkippedStatement(Source source, StatementKind kind, String reason, String statement) {}
 
     /** GT6 statements of {@code Loader_Recipes_Woods} that have no port row. */
-    public static final String[] SKIPPED_ROWS = {
-        "Loader_Recipes_Woods.java:48|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.Log1 , 1, i), ST.make(BlocksGT.Log1FireProof , 1, i));",
-        "Loader_Recipes_Woods.java:49|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.LogA , 1, i), ST.make(BlocksGT.LogAFireProof , 1, i));",
-        "Loader_Recipes_Woods.java:50|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.LogB , 1, i), ST.make(BlocksGT.LogBFireProof , 1, i));",
-        "Loader_Recipes_Woods.java:51|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.LogC , 1, i), ST.make(BlocksGT.LogCFireProof , 1, i));",
-        "Loader_Recipes_Woods.java:53|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.Beam1, 1, i), ST.make(BlocksGT.Beam1FireProof, 1, i));",
-        "Loader_Recipes_Woods.java:54|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.Beam2, 1, i), ST.make(BlocksGT.Beam2FireProof, 1, i));",
-        "Loader_Recipes_Woods.java:55|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.Beam3, 1, i), ST.make(BlocksGT.Beam3FireProof, 1, i));",
-        "Loader_Recipes_Woods.java:56|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.BeamA, 1, i), ST.make(BlocksGT.BeamAFireProof, 1, i));",
-        "Loader_Recipes_Woods.java:57|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.BeamB, 1, i), ST.make(BlocksGT.BeamBFireProof, 1, i));",
-        "Loader_Recipes_Woods.java:58|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.BeamC, 1, i), ST.make(BlocksGT.BeamCFireProof, 1, i));",
-        "Loader_Recipes_Woods.java:61|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.Log1 , 1, i), ST.make(BlocksGT.Log1FireProof , 1, i));",
-        "Loader_Recipes_Woods.java:62|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.LogA , 1, i), ST.make(BlocksGT.LogAFireProof , 1, i));",
-        "Loader_Recipes_Woods.java:63|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.LogB , 1, i), ST.make(BlocksGT.LogBFireProof , 1, i));",
-        "Loader_Recipes_Woods.java:64|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.LogC , 1, i), ST.make(BlocksGT.LogCFireProof , 1, i));",
-        "Loader_Recipes_Woods.java:66|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.Beam1, 1, i), ST.make(BlocksGT.Beam1FireProof, 1, i));",
-        "Loader_Recipes_Woods.java:67|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.Beam2, 1, i), ST.make(BlocksGT.Beam2FireProof, 1, i));",
-        "Loader_Recipes_Woods.java:68|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.Beam3, 1, i), ST.make(BlocksGT.Beam3FireProof, 1, i));",
-        "Loader_Recipes_Woods.java:69|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.BeamA, 1, i), ST.make(BlocksGT.BeamAFireProof, 1, i));",
-        "Loader_Recipes_Woods.java:70|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.BeamB, 1, i), ST.make(BlocksGT.BeamBFireProof, 1, i));",
-        "Loader_Recipes_Woods.java:71|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.BeamC, 1, i), ST.make(BlocksGT.BeamCFireProof, 1, i));",
-        "Loader_Recipes_Woods.java:74|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.Log1 , 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.Log1FireProof , 1, i));",
-        "Loader_Recipes_Woods.java:75|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.LogA , 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.LogAFireProof , 1, i));",
-        "Loader_Recipes_Woods.java:76|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.LogB , 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.LogBFireProof , 1, i));",
-        "Loader_Recipes_Woods.java:77|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.Beam1, 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.Beam1FireProof, 1, i));",
-        "Loader_Recipes_Woods.java:78|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.Beam2, 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.Beam2FireProof, 1, i));",
-        "Loader_Recipes_Woods.java:79|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.Beam3, 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.Beam3FireProof, 1, i));",
-        "Loader_Recipes_Woods.java:80|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.BeamA, 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.BeamAFireProof, 1, i));",
-        "Loader_Recipes_Woods.java:81|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.BeamB, 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.BeamBFireProof, 1, i));",
-        "Loader_Recipes_Woods.java:82|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.BeamC, 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.BeamCFireProof, 1, i));",
-        "Loader_Recipes_Woods.java:86|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(BlocksGT.Planks , 1, i), ST.make(BlocksGT.PlanksFireProof , 1, i));",
-        "Loader_Recipes_Woods.java:87|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(((BlockMetaType)BlocksGT.Planks ).mSlabs[0], 2, i), ST.make(((BlockMetaTyp",
-        "Loader_Recipes_Woods.java:88|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(BlocksGT.Planks2 , 1, i), ST.make(BlocksGT.Planks2FireProof , 1, i));",
-        "Loader_Recipes_Woods.java:89|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(((BlockMetaType)BlocksGT.Planks2).mSlabs[0], 2, i), ST.make(((BlockMetaTyp",
-        "Loader_Recipes_Woods.java:91|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 32, foil .mat(MT.WaxRefractory, 4), ST.make(BlocksGT.Planks , 1, i), ST.make(BlocksGT.PlanksFireProof , 1, i));",
-        "Loader_Recipes_Woods.java:92|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 16, foil .mat(MT.WaxRefractory, 2), ST.make(((BlockMetaType)BlocksGT.Planks ).mSlabs[0], 1, i), ST.make(((BlockMetaTyp",
-        "Loader_Recipes_Woods.java:93|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 32, foil .mat(MT.WaxRefractory, 4), ST.make(BlocksGT.Planks2 , 1, i), ST.make(BlocksGT.Planks2FireProof , 1, i));",
-        "Loader_Recipes_Woods.java:94|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 16, foil .mat(MT.WaxRefractory, 2), ST.make(((BlockMetaType)BlocksGT.Planks2).mSlabs[0], 1, i), ST.make(((BlockMetaTyp",
-        "Loader_Recipes_Woods.java:96|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 32, ST.make(BlocksGT.Planks , 1, i), FL.Potion_FireResistance_1L.make(20), NF, ST.make(BlocksGT.PlanksFireProof , 1, i));",
-        "Loader_Recipes_Woods.java:97|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 16, ST.make(((BlockMetaType)BlocksGT.Planks ).mSlabs[0], 1, i), FL.Potion_FireResistance_1L.make(10), NF, ST.make(((BlockMet",
-        "Loader_Recipes_Woods.java:98|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 32, ST.make(BlocksGT.Planks2 , 1, i), FL.Potion_FireResistance_1L.make(20), NF, ST.make(BlocksGT.Planks2FireProof , 1, i));",
-        "Loader_Recipes_Woods.java:99|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 16, ST.make(((BlockMetaType)BlocksGT.Planks2).mSlabs[0], 1, i), FL.Potion_FireResistance_1L.make(10), NF, ST.make(((BlockMet",
-        "Loader_Recipes_Woods.java:104|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(tLog1 , 1, i), ST.make(tLog2 , 1, i));",
-        "Loader_Recipes_Woods.java:105|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(tPlank1, 1, i), ST.make(tPlank2, 1, i));",
-        "Loader_Recipes_Woods.java:106|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(tStair1, 1, i), ST.make(tStair2, 1, i));",
-        "Loader_Recipes_Woods.java:107|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(tSlab1 , 2, i), ST.make(tSlab2 , 2, i));",
-        "Loader_Recipes_Woods.java:109|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 192, foil .mat(MT.WaxRefractory, 24), ST.make(tLog1 , 1, i), ST.make(tLog2 , 1, i));",
-        "Loader_Recipes_Woods.java:110|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 32, foil .mat(MT.WaxRefractory, 4), ST.make(tPlank1, 1, i), ST.make(tPlank2, 1, i));",
-        "Loader_Recipes_Woods.java:111|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 24, foil .mat(MT.WaxRefractory, 3), ST.make(tStair1, 1, i), ST.make(tStair2, 1, i));",
-        "Loader_Recipes_Woods.java:112|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Laminator .addRecipe2(T, 16, 16, foil .mat(MT.WaxRefractory, 2), ST.make(tSlab1 , 1, i), ST.make(tSlab2 , 1, i));",
-        "Loader_Recipes_Woods.java:114|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 192, ST.make(tLog1 , 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(tLog2 , 1, i));",
-        "Loader_Recipes_Woods.java:115|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 32, ST.make(tPlank1, 1, i), FL.Potion_FireResistance_1L.make( 20), NF, ST.make(tPlank2, 1, i));",
-        "Loader_Recipes_Woods.java:116|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 24, ST.make(tStair1, 1, i), FL.Potion_FireResistance_1L.make( 15), NF, ST.make(tStair2, 1, i));",
-        "Loader_Recipes_Woods.java:117|RM|fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce|RM.Bath .addRecipe1(T, 0, 16, ST.make(tSlab1 , 1, i), FL.Potion_FireResistance_1L.make( 10), NF, ST.make(tSlab2 , 1, i));",
-        "Loader_Recipes_Woods.java:122|RM|Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today|RM.Squeezer .addRecipe1(T, 16, 64, ST.make(BlocksGT.Leaves_AB , 1, 0), NF, FL.Latex.make(L/72), NI);",
-        "Loader_Recipes_Woods.java:123|RM|Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today|RM.Squeezer .addRecipe1(T, 16, 64, ST.make(BlocksGT.Leaves_AB , 1, 8), NF, FL.Latex.make(L/72), NI);",
-        "Loader_Recipes_Woods.java:124|RM|Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today|RM.Squeezer .addRecipe1(T, 16, 64, ST.make(BlocksGT.Saplings_AB, 1, 0), NF, FL.Latex.make(L/ 4), NI);",
-        "Loader_Recipes_Woods.java:125|RM|Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today|RM.Squeezer .addRecipe1(T, 16, 64, ST.make(BlocksGT.Saplings_AB, 1, 8), NF, FL.Latex.make(L/ 4), NI);",
-        "Loader_Recipes_Woods.java:126|RM|Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today|RM.Squeezer .addRecipe1(T, 16, 16, OM.dust(MT.WoodRubber ), NF, FL.Latex .make(L/9) , OM.dust(MT.Wood));",
-        "Loader_Recipes_Woods.java:127|RM|Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today|RM.Squeezer .addRecipe1(T, 16, 16, OM.dust(MT.WOODS.Spruce ), NF, FL.Resin_Spruce.make(5, FL.Resin), OM.dust(MT.Wood));",
-        "Loader_Recipes_Woods.java:128|RM|Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today|RM.Squeezer .addRecipe1(T, 16, 16, OM.dust(MT.WOODS.BlueSpruce ), NF, FL.Resin_Spruce.make(5, FL.Resin), OM.dust(MT.Wood));",
-        "Loader_Recipes_Woods.java:129|RM|Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today|RM.Squeezer .addRecipe1(T, 16, 16, OM.dust(MT.WOODS.Maple ), NF, FL.Sap_Maple .make(5) , OM.dust(MT.Wood));",
-        "Loader_Recipes_Woods.java:130|RM|Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today|RM.Squeezer .addRecipe1(T, 16, 16, OM.dust(MT.WOODS.Rainbowood ), NF, FL.Sap_Rainbow .make(5) , OM.dust(MT.Wood));",
-        "Loader_Recipes_Woods.java:132|CR|OD.plankWood bowl: vanilla ships minecraft:bowl from minecraft:planks, which does not contain the port's plank blocks; GT6's own row targets its ore dictionary name instead|CR.shaped(ST.make(Items.bowl, 1, 0), DEF | DEL_OTHER_SHAPED_RECIPES, \"k\", \"X\", 'X', OD.plankWood);",
-        "Loader_Recipes_Woods.java:134|CR|OD.stickAnyWood: the port publishes per-material rod tags only (data/MaterialTagPack.java), so there is no umbrella wood-rod tag to key this row on|CR.shaped(IL.Stick.get(1), CR.DEF_NCC, \" \", \" S\", 'S', stick.dat(ANY.WoodDefault));",
-        "Loader_Recipes_Woods.java:137|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(gearGt .mat(MT.Wood, 1), CR.DEF_NCC, \"BPB\", \"PsP\", \"BPB\", 'P', OD.plankAnyWood, 'B', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:138|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(gearGtSmall .mat(MT.Wood, 1), CR.DEF_NCC, \"P \", \" s\" , 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:139|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(casingSmall .mat(MT.Wood, 2), CR.DEF_NCC, \" P\", \"s \" , 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:140|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(plateTiny .mat(MT.Wood, 9), CR.DEF_NCC, \"s \", \" P\" , 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:141|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(ring .mat(MT.Wood, 4), CR.DEF_NCC, \"P \", \" k\" , 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:142|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(round .mat(MT.Wood, 9), CR.DEF_NCC, \"P \", \"fk\" , 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:143|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(toolHeadHammer .mat(MT.Wood, 1), CR.DEF_NCC, \"PP \", \"PPg\", \"PPv\", 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:144|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(toolHeadRawArrow .mat(MT.Wood, 4), CR.DEF_NCC, \" P\", \"r v\", 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:145|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(toolHeadRawSword .mat(MT.Wood, 1), CR.DEF_NCC, \" P \", \"rPv\", 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:146|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(toolHeadRawPickaxe .mat(MT.Wood, 1), CR.DEF_NCC, \"PPP\", \"rgv\", 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:147|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(toolHeadRawShovel .mat(MT.Wood, 1), CR.DEF_NCC, \"rPv\", 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:148|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(toolHeadRawSpade .mat(MT.Wood, 1), CR.DEF_NCC, \" P \", \"r v\", 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:149|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(toolHeadRawAxe .mat(MT.Wood, 1), CR.DEF_NCC, \" PP\", \"rPv\", 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:150|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(toolHeadRawHoe .mat(MT.Wood, 1), CR.DEF_NCC, \" PP\", \"r v\", 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:151|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(toolHeadRawSense .mat(MT.Wood, 1), CR.DEF_NCC, \"PPP\", \" \", \"r v\", 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:152|CR|GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself|CR.shaped(toolHeadRawPlow .mat(MT.Wood, 1), CR.DEF_NCC, \"PPP\", \"PPP\", \"r v\", 'P', OD.buttonWood);",
-        "Loader_Recipes_Woods.java:157|RM|Output is a Railcraft wooden tie, so this stays in the Railcraft batch. IE treated slabs exist on both loaders.|RM.Bath.addRecipe1(T, 0, 16, IL.IE_Treated_Slab .get(1), FL.Oil_Creosote.make(250), NF, IL.RC_Tie_Wood.get(1));",
-        "Loader_Recipes_Woods.java:158|RM|Output is a Railcraft wooden tie, so this stays in the Railcraft batch.|RM.Bath.addRecipe1(T, 0, 16, IL.Treated_Planks_Slab.get(1), FL.Oil_Creosote.make(250), NF, IL.RC_Tie_Wood.get(1));",
-        "Loader_Recipes_Woods.java:161|CR|Input is Railcraft creosote-treated wood, so this stays in the Railcraft batch.|CR.shapeless(IL.Plank.get(NERFED_WOOD?4:5), CR.DEF_NCC, new Object[] {IL.RC_Creosote_Wood});",
-        "Loader_Recipes_Woods.java:172|RM|Output is Railcraft creosote-treated wood, so this stays in the Railcraft batch.|RM.Bath.addRecipe1(T, 0,144, aEntry.mLog, FL.Oil_Creosote.make(1000), NF, IL.RC_Creosote_Wood.get(1));",
-        "Loader_Recipes_Woods.java:174|CR|Per-species log clubs are registered by OriginalHandCraftingRows.woodenClubs using the wooden-stick tag, outside this compatibility batch.|CR.shaped(ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CLUB, aEntry.mMaterialWood, MT.Wood), CR.DEF_MIR, \" L\", \"S \", 'L', aEntry.mLog, 'S', OD.stickAnyW",
-        "Loader_Recipes_Woods.java:179|RM|Per-species log coke oven, not an Immersive Engineering or Railcraft recipe. It stays outside this compat batch.|RM.CokeOven.addRecipe1(T, 0, 3600, aEntry.mLog, NF, aEntry.mCreosoteAmount <= 0 ? NF : FL.Oil_Creosote.make(aEntry.mCreosoteAmount), tOutputs);",
-        "Loader_Recipes_Woods.java:182|CR|Removes recipes whose output is the log. Not an Immersive Engineering recipe, and this batch does not delete those rows.|CR.remove(ST.validMeta(1, aEntry.mLog));",
-        "Loader_Recipes_Woods.java:195|CR|Per-species beam clubs are registered by OriginalHandCraftingRows.woodenClubs using the wooden-stick tag, outside this compatibility batch.|CR.shaped(ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CLUB, aEntry.mMaterialBeam, MT.Wood), CR.DEF_MIR, \" B\", \"S \", 'B', aEntry.mBeam, 'S', OD.stickAny",
-        "Loader_Recipes_Woods.java:200|RM|RM-half machine row (pressure washer / pulverizer / sawing / lathing / coke oven): the port registers these for its own species in content/recipe/RegisteredWoodSurvivalRecipes.java|RM.CokeOven.addRecipe1(T, 0, 3600, aEntry.mBeam, NF, aEntry.mCreosoteAmount <= 0 ? NF : FL.Oil_Creosote.make(aEntry.mCreosoteAmount), tOutputs);",
-        "Loader_Recipes_Woods.java:215|RM|RM-half machine row (Injector petrified wood / CNC gear): not part of this crafting batch|RM.Injector.addRecipe1(T, 16, 128, ST.amount(9, aEntry.mPlank), FL.MnWtr.make(1000), NF, OP.rockGt.mat(MT.PetrifiedWood, 4));",
-        "Loader_Recipes_Woods.java:217|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(gearGt .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"BPB\", \"PsP\", \"BPB\", 'P', aEntry.mPlank, 'B', bolt.dat(aEntry.mMa",
-        "Loader_Recipes_Woods.java:218|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(gearGtSmall .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"P \", \" s\" , 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:219|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(casingSmall .mat(aEntry.mMaterialPlank, 2), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \" P\", \"s \" , 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:220|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(plateTiny .mat(aEntry.mMaterialPlank, 9), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"s \", \" P\" , 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:221|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(ring .mat(aEntry.mMaterialPlank, 4), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"P \", \" k\" , 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:222|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(round .mat(aEntry.mMaterialPlank, 9), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"P \", \"fk\" , 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:223|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(toolHeadBuilderwand.mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"ks\", \"fP\" , 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:224|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(toolHeadHammer .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"PP \", \"PPg\", \"PPv\", 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:226|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(toolHeadRawArrow .mat(aEntry.mMaterialPlank, 4), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \" P\", \"r v\", 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:227|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(toolHeadRawSword .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \" P \", \"rPv\", 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:228|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(toolHeadRawPickaxe .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"PPP\", \"rgv\", 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:229|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(toolHeadRawShovel .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"rPv\", 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:230|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(toolHeadRawSpade .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \" P \", \"r v\", 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:231|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(toolHeadRawAxe .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \" PP\", \"rPv\", 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:232|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(toolHeadRawHoe .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \" PP\", \"r v\", 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:233|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(toolHeadRawSense .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"PPP\", \" \", \"r v\", 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:234|CR|per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form|CR.shaped(toolHeadRawPlow .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"PPP\", \"PPP\", \"r v\", 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:237|CR|OD.stickAnyWood: the port publishes per-material rod tags only (data/MaterialTagPack.java), so there is no umbrella wood-rod tag to key this row on|CR.shaped(ToolsGT.sMetaTool.getToolWithStats(ToolsGT.ROLLING_PIN, aEntry.mMaterialPlank, MT.Wood), CR.DEF_MIR, \" S\", \" P \", \"S f\", 'P', aPlank, 'S', O",
-        "Loader_Recipes_Woods.java:238|CR|OD.stickAnyWood: the port publishes per-material rod tags only (data/MaterialTagPack.java), so there is no umbrella wood-rod tag to key this row on|CR.shaped(ToolsGT.sMetaTool.getToolWithStats(ToolsGT.ROLLING_PIN, aEntry.mMaterialPlank, MT.Wood), CR.DEF_MIR, \" S\", \" P \", \"S k\", 'P', aPlank, 'S', O",
-        "Loader_Recipes_Woods.java:242|CR|CR.remove: removes the recipes competing with the rows above; the port has no competing recipe for its log/plank/beam blocks, so there is nothing to remove|CR.remove(aPlank, NI, NI, aPlank);",
-        "Loader_Recipes_Woods.java:262|RM|RM-half machine row (Injector petrified wood / CNC gear): not part of this crafting batch|RM.CNC.addRecipe2(T, 16, 64, ST.amount(4, aEntry.mPlank), ST.tag(0), tFluid, NF, tGear);",
-        "Loader_Recipes_Woods.java:266|CR|stairs: the port registers no stairs block for its own wood species|CR.shaped(ST.validMeta_(4, aEntry.mStair), CR.DEF_NCC_MIR, \"vP\", \"PP\", 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:270|CR|slabs: the port registers no slab block for its own wood species|CR.shaped(ST.validMeta_(2, aEntry.mSlab), CR.DEF_NCC_MIR, \"vP\", 'P', aEntry.mPlank);",
-        "Loader_Recipes_Woods.java:281|CR|CR.remove: removes the recipes competing with the rows above; the port has no competing recipe for its log/plank/beam blocks, so there is nothing to remove|CR.remove(NI, NI, aPlank, NI, aPlank, aPlank, aPlank, aPlank, aPlank);",
-        "Loader_Recipes_Woods.java:282|CR|CR.remove: removes the recipes competing with the rows above; the port has no competing recipe for its log/plank/beam blocks, so there is nothing to remove|CR.remove(aPlank, NI, NI, aPlank, aPlank, NI, aPlank, aPlank, aPlank);",
-        "Loader_Recipes_Woods.java:285|RM|RM-half machine row (Injector petrified wood / CNC gear): not part of this crafting batch|RM.Injector.addRecipe1(T, 16, 96, ST.amount(9, aEntry.mStair), FL.MnWtr.make(750), NF, OP.rockGt.mat(MT.PetrifiedWood, 3));",
-        "Loader_Recipes_Woods.java:288|CR|stairs: the port registers no stairs block for its own wood species|CR.shaped(ST.validMeta_(1, aEntry.mSlab ), CR.DEF_NCC_MIR, \"vP\", 'P', aEntry.mStair);",
-        "Loader_Recipes_Woods.java:299|CR|CR.remove: removes the recipes competing with the rows above; the port has no competing recipe for its log/plank/beam blocks, so there is nothing to remove|CR.remove(aPlank, aPlank, aPlank);",
-        "Loader_Recipes_Woods.java:302|RM|RM-half machine row (Injector petrified wood / CNC gear): not part of this crafting batch|RM.Injector.addRecipe1(T, 16, 64, ST.amount(9, aEntry.mSlab), FL.MnWtr.make(500), NF, OP.rockGt.mat(MT.PetrifiedWood, 2));",
-        "Loader_Recipes_Woods.java:305|CR|stairs: the port registers no stairs block for its own wood species|CR.shaped(ST.validMeta_(2, aEntry.mStair), CR.DEF_NCC_MIR, \"vP\", \"PP\", 'P', aEntry.mSlab);",
-    };
+    public static final List<SkippedStatement> SKIPPED_ROWS = List.of(
+            new SkippedStatement(
+                    woods(48),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.Log1 , 1, i), ST.make(BlocksGT.Log1FireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(49),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.LogA , 1, i), ST.make(BlocksGT.LogAFireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(50),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.LogB , 1, i), ST.make(BlocksGT.LogBFireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(51),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.LogC , 1, i), ST.make(BlocksGT.LogCFireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(53),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.Beam1, 1, i), ST.make(BlocksGT.Beam1FireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(54),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.Beam2, 1, i), ST.make(BlocksGT.Beam2FireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(55),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.Beam3, 1, i), ST.make(BlocksGT.Beam3FireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(56),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.BeamA, 1, i), ST.make(BlocksGT.BeamAFireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(57),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.BeamB, 1, i), ST.make(BlocksGT.BeamBFireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(58),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(BlocksGT.BeamC, 1, i), ST.make(BlocksGT.BeamCFireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(61),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.Log1 , 1, i), ST.make(BlocksGT.Log1FireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(62),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.LogA , 1, i), ST.make(BlocksGT.LogAFireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(63),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.LogB , 1, i), ST.make(BlocksGT.LogBFireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(64),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.LogC , 1, i), ST.make(BlocksGT.LogCFireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(66),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.Beam1, 1, i), ST.make(BlocksGT.Beam1FireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(67),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.Beam2, 1, i), ST.make(BlocksGT.Beam2FireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(68),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.Beam3, 1, i), ST.make(BlocksGT.Beam3FireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(69),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.BeamA, 1, i), ST.make(BlocksGT.BeamAFireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(70),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.BeamB, 1, i), ST.make(BlocksGT.BeamBFireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(71),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, foil.mat(MT.WaxRefractory, 24), ST.make(BlocksGT.BeamC, 1, i), ST.make(BlocksGT.BeamCFireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(74),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.Log1 , 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.Log1FireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(75),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.LogA , 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.LogAFireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(76),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.LogB , 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.LogBFireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(77),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.Beam1, 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.Beam1FireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(78),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.Beam2, 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.Beam2FireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(79),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.Beam3, 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.Beam3FireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(80),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.BeamA, 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.BeamAFireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(81),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.BeamB, 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.BeamBFireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(82),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 192, ST.make(BlocksGT.BeamC, 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(BlocksGT.BeamCFireProof, 1, i));"),
+            new SkippedStatement(
+                    woods(86),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(BlocksGT.Planks , 1, i), ST.make(BlocksGT.PlanksFireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(87),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(((BlockMetaType)BlocksGT.Planks ).mSlabs[0], 2, i), ST.make(((BlockMetaTyp"),
+            new SkippedStatement(
+                    woods(88),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(BlocksGT.Planks2 , 1, i), ST.make(BlocksGT.Planks2FireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(89),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(((BlockMetaType)BlocksGT.Planks2).mSlabs[0], 2, i), ST.make(((BlockMetaTyp"),
+            new SkippedStatement(
+                    woods(91),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 32, foil .mat(MT.WaxRefractory, 4), ST.make(BlocksGT.Planks , 1, i), ST.make(BlocksGT.PlanksFireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(92),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 16, foil .mat(MT.WaxRefractory, 2), ST.make(((BlockMetaType)BlocksGT.Planks ).mSlabs[0], 1, i), ST.make(((BlockMetaTyp"),
+            new SkippedStatement(
+                    woods(93),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 32, foil .mat(MT.WaxRefractory, 4), ST.make(BlocksGT.Planks2 , 1, i), ST.make(BlocksGT.Planks2FireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(94),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 16, foil .mat(MT.WaxRefractory, 2), ST.make(((BlockMetaType)BlocksGT.Planks2).mSlabs[0], 1, i), ST.make(((BlockMetaTyp"),
+            new SkippedStatement(
+                    woods(96),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 32, ST.make(BlocksGT.Planks , 1, i), FL.Potion_FireResistance_1L.make(20), NF, ST.make(BlocksGT.PlanksFireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(97),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 16, ST.make(((BlockMetaType)BlocksGT.Planks ).mSlabs[0], 1, i), FL.Potion_FireResistance_1L.make(10), NF, ST.make(((BlockMet"),
+            new SkippedStatement(
+                    woods(98),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 32, ST.make(BlocksGT.Planks2 , 1, i), FL.Potion_FireResistance_1L.make(20), NF, ST.make(BlocksGT.Planks2FireProof , 1, i));"),
+            new SkippedStatement(
+                    woods(99),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 16, ST.make(((BlockMetaType)BlocksGT.Planks2).mSlabs[0], 1, i), FL.Potion_FireResistance_1L.make(10), NF, ST.make(((BlockMet"),
+            new SkippedStatement(
+                    woods(104),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, plate.mat(MT.WaxRefractory, 6), ST.make(tLog1 , 1, i), ST.make(tLog2 , 1, i));"),
+            new SkippedStatement(
+                    woods(105),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(tPlank1, 1, i), ST.make(tPlank2, 1, i));"),
+            new SkippedStatement(
+                    woods(106),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(tStair1, 1, i), ST.make(tStair2, 1, i));"),
+            new SkippedStatement(
+                    woods(107),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 32, plate.mat(MT.WaxRefractory, 1), ST.make(tSlab1 , 2, i), ST.make(tSlab2 , 2, i));"),
+            new SkippedStatement(
+                    woods(109),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 192, foil .mat(MT.WaxRefractory, 24), ST.make(tLog1 , 1, i), ST.make(tLog2 , 1, i));"),
+            new SkippedStatement(
+                    woods(110),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 32, foil .mat(MT.WaxRefractory, 4), ST.make(tPlank1, 1, i), ST.make(tPlank2, 1, i));"),
+            new SkippedStatement(
+                    woods(111),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 24, foil .mat(MT.WaxRefractory, 3), ST.make(tStair1, 1, i), ST.make(tStair2, 1, i));"),
+            new SkippedStatement(
+                    woods(112),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Laminator .addRecipe2(T, 16, 16, foil .mat(MT.WaxRefractory, 2), ST.make(tSlab1 , 1, i), ST.make(tSlab2 , 1, i));"),
+            new SkippedStatement(
+                    woods(114),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 192, ST.make(tLog1 , 1, i), FL.Potion_FireResistance_1L.make(100), NF, ST.make(tLog2 , 1, i));"),
+            new SkippedStatement(
+                    woods(115),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 32, ST.make(tPlank1, 1, i), FL.Potion_FireResistance_1L.make( 20), NF, ST.make(tPlank2, 1, i));"),
+            new SkippedStatement(
+                    woods(116),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 24, ST.make(tStair1, 1, i), FL.Potion_FireResistance_1L.make( 15), NF, ST.make(tStair2, 1, i));"),
+            new SkippedStatement(
+                    woods(117),
+                    StatementKind.RM,
+                    "fireproofing (Laminator/Bath): GT6's BlocksGT.*FireProof wood family is not registered by the port, so these rows have no output to produce",
+                    "RM.Bath .addRecipe1(T, 0, 16, ST.make(tSlab1 , 1, i), FL.Potion_FireResistance_1L.make( 10), NF, ST.make(tSlab2 , 1, i));"),
+            new SkippedStatement(
+                    woods(122),
+                    StatementKind.RM,
+                    "Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today",
+                    "RM.Squeezer .addRecipe1(T, 16, 64, ST.make(BlocksGT.Leaves_AB , 1, 0), NF, FL.Latex.make(L/72), NI);"),
+            new SkippedStatement(
+                    woods(123),
+                    StatementKind.RM,
+                    "Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today",
+                    "RM.Squeezer .addRecipe1(T, 16, 64, ST.make(BlocksGT.Leaves_AB , 1, 8), NF, FL.Latex.make(L/72), NI);"),
+            new SkippedStatement(
+                    woods(124),
+                    StatementKind.RM,
+                    "Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today",
+                    "RM.Squeezer .addRecipe1(T, 16, 64, ST.make(BlocksGT.Saplings_AB, 1, 0), NF, FL.Latex.make(L/ 4), NI);"),
+            new SkippedStatement(
+                    woods(125),
+                    StatementKind.RM,
+                    "Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today",
+                    "RM.Squeezer .addRecipe1(T, 16, 64, ST.make(BlocksGT.Saplings_AB, 1, 8), NF, FL.Latex.make(L/ 4), NI);"),
+            new SkippedStatement(
+                    woods(126),
+                    StatementKind.RM,
+                    "Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today",
+                    "RM.Squeezer .addRecipe1(T, 16, 16, OM.dust(MT.WoodRubber ), NF, FL.Latex .make(L/9) , OM.dust(MT.Wood));"),
+            new SkippedStatement(
+                    woods(127),
+                    StatementKind.RM,
+                    "Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today",
+                    "RM.Squeezer .addRecipe1(T, 16, 16, OM.dust(MT.WOODS.Spruce ), NF, FL.Resin_Spruce.make(5, FL.Resin), OM.dust(MT.Wood));"),
+            new SkippedStatement(
+                    woods(128),
+                    StatementKind.RM,
+                    "Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today",
+                    "RM.Squeezer .addRecipe1(T, 16, 16, OM.dust(MT.WOODS.BlueSpruce ), NF, FL.Resin_Spruce.make(5, FL.Resin), OM.dust(MT.Wood));"),
+            new SkippedStatement(
+                    woods(129),
+                    StatementKind.RM,
+                    "Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today",
+                    "RM.Squeezer .addRecipe1(T, 16, 16, OM.dust(MT.WOODS.Maple ), NF, FL.Sap_Maple .make(5) , OM.dust(MT.Wood));"),
+            new SkippedStatement(
+                    woods(130),
+                    StatementKind.RM,
+                    "Squeezer row (RM half): the latex/resin/sap chain is a machine row, not part of this crafting batch - the port has no Latex/Resin_Spruce/Sap_Maple/Sap_Rainbow recipe at all today",
+                    "RM.Squeezer .addRecipe1(T, 16, 16, OM.dust(MT.WOODS.Rainbowood ), NF, FL.Sap_Rainbow .make(5) , OM.dust(MT.Wood));"),
+            new SkippedStatement(
+                    woods(132),
+                    StatementKind.CR,
+                    "OD.plankWood bowl: vanilla ships minecraft:bowl from minecraft:planks, which does not contain the port's plank blocks; GT6's own row targets its ore dictionary name instead",
+                    "CR.shaped(ST.make(Items.bowl, 1, 0), DEF | DEL_OTHER_SHAPED_RECIPES, \"k\", \"X\", 'X', OD.plankWood);"),
+            new SkippedStatement(
+                    woods(134),
+                    StatementKind.CR,
+                    "OD.stickAnyWood: the port publishes per-material rod tags only (data/MaterialTagPack.java), so there is no umbrella wood-rod tag to key this row on",
+                    "CR.shaped(IL.Stick.get(1), CR.DEF_NCC, \" \", \" S\", 'S', stick.dat(ANY.WoodDefault));"),
+            new SkippedStatement(
+                    woods(137),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(gearGt .mat(MT.Wood, 1), CR.DEF_NCC, \"BPB\", \"PsP\", \"BPB\", 'P', OD.plankAnyWood, 'B', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(138),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(gearGtSmall .mat(MT.Wood, 1), CR.DEF_NCC, \"P \", \" s\" , 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(139),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(casingSmall .mat(MT.Wood, 2), CR.DEF_NCC, \" P\", \"s \" , 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(140),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(plateTiny .mat(MT.Wood, 9), CR.DEF_NCC, \"s \", \" P\" , 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(141),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(ring .mat(MT.Wood, 4), CR.DEF_NCC, \"P \", \" k\" , 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(142),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(round .mat(MT.Wood, 9), CR.DEF_NCC, \"P \", \"fk\" , 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(143),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(toolHeadHammer .mat(MT.Wood, 1), CR.DEF_NCC, \"PP \", \"PPg\", \"PPv\", 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(144),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(toolHeadRawArrow .mat(MT.Wood, 4), CR.DEF_NCC, \" P\", \"r v\", 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(145),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(toolHeadRawSword .mat(MT.Wood, 1), CR.DEF_NCC, \" P \", \"rPv\", 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(146),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(toolHeadRawPickaxe .mat(MT.Wood, 1), CR.DEF_NCC, \"PPP\", \"rgv\", 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(147),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(toolHeadRawShovel .mat(MT.Wood, 1), CR.DEF_NCC, \"rPv\", 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(148),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(toolHeadRawSpade .mat(MT.Wood, 1), CR.DEF_NCC, \" P \", \"r v\", 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(149),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(toolHeadRawAxe .mat(MT.Wood, 1), CR.DEF_NCC, \" PP\", \"rPv\", 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(150),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(toolHeadRawHoe .mat(MT.Wood, 1), CR.DEF_NCC, \" PP\", \"r v\", 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(151),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(toolHeadRawSense .mat(MT.Wood, 1), CR.DEF_NCC, \"PPP\", \" \", \"r v\", 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(152),
+                    StatementKind.CR,
+                    "GT6's wooden-button rows: the output form (OP.gearGt/casingSmall/toolHead*) is not generated for MT.Wood - MT.java:312 G_WOOD (TD.java:604) carries no PARTS/TOOL_HEAD, so the original's CR.shaped finds no output itself",
+                    "CR.shaped(toolHeadRawPlow .mat(MT.Wood, 1), CR.DEF_NCC, \"PPP\", \"PPP\", \"r v\", 'P', OD.buttonWood);"),
+            new SkippedStatement(
+                    woods(157),
+                    StatementKind.RM,
+                    "Output is a Railcraft wooden tie, so this stays in the Railcraft batch. IE treated slabs exist on both loaders.",
+                    "RM.Bath.addRecipe1(T, 0, 16, IL.IE_Treated_Slab .get(1), FL.Oil_Creosote.make(250), NF, IL.RC_Tie_Wood.get(1));"),
+            new SkippedStatement(
+                    woods(158),
+                    StatementKind.RM,
+                    "Output is a Railcraft wooden tie, so this stays in the Railcraft batch.",
+                    "RM.Bath.addRecipe1(T, 0, 16, IL.Treated_Planks_Slab.get(1), FL.Oil_Creosote.make(250), NF, IL.RC_Tie_Wood.get(1));"),
+            new SkippedStatement(
+                    woods(161),
+                    StatementKind.CR,
+                    "Input is Railcraft creosote-treated wood, so this stays in the Railcraft batch.",
+                    "CR.shapeless(IL.Plank.get(NERFED_WOOD?4:5), CR.DEF_NCC, new Object[] {IL.RC_Creosote_Wood});"),
+            new SkippedStatement(
+                    woods(172),
+                    StatementKind.RM,
+                    "Output is Railcraft creosote-treated wood, so this stays in the Railcraft batch.",
+                    "RM.Bath.addRecipe1(T, 0,144, aEntry.mLog, FL.Oil_Creosote.make(1000), NF, IL.RC_Creosote_Wood.get(1));"),
+            new SkippedStatement(
+                    woods(174),
+                    StatementKind.CR,
+                    "Per-species log clubs are registered by OriginalHandCraftingRows.woodenClubs using the wooden-stick tag, outside this compatibility batch.",
+                    "CR.shaped(ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CLUB, aEntry.mMaterialWood, MT.Wood), CR.DEF_MIR, \" L\", \"S \", 'L', aEntry.mLog, 'S', OD.stickAnyW"),
+            new SkippedStatement(
+                    woods(179),
+                    StatementKind.RM,
+                    "Per-species log coke oven, not an Immersive Engineering or Railcraft recipe. It stays outside this compat batch.",
+                    "RM.CokeOven.addRecipe1(T, 0, 3600, aEntry.mLog, NF, aEntry.mCreosoteAmount <= 0 ? NF : FL.Oil_Creosote.make(aEntry.mCreosoteAmount), tOutputs);"),
+            new SkippedStatement(
+                    woods(182),
+                    StatementKind.CR,
+                    "Removes recipes whose output is the log. Not an Immersive Engineering recipe, and this batch does not delete those rows.",
+                    "CR.remove(ST.validMeta(1, aEntry.mLog));"),
+            new SkippedStatement(
+                    woods(195),
+                    StatementKind.CR,
+                    "Per-species beam clubs are registered by OriginalHandCraftingRows.woodenClubs using the wooden-stick tag, outside this compatibility batch.",
+                    "CR.shaped(ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CLUB, aEntry.mMaterialBeam, MT.Wood), CR.DEF_MIR, \" B\", \"S \", 'B', aEntry.mBeam, 'S', OD.stickAny"),
+            new SkippedStatement(
+                    woods(200),
+                    StatementKind.RM,
+                    "RM-half machine row (pressure washer / pulverizer / sawing / lathing / coke oven): the port registers these for its own species in content/recipe/RegisteredWoodSurvivalRecipes.java",
+                    "RM.CokeOven.addRecipe1(T, 0, 3600, aEntry.mBeam, NF, aEntry.mCreosoteAmount <= 0 ? NF : FL.Oil_Creosote.make(aEntry.mCreosoteAmount), tOutputs);"),
+            new SkippedStatement(
+                    woods(215),
+                    StatementKind.RM,
+                    "RM-half machine row (Injector petrified wood / CNC gear): not part of this crafting batch",
+                    "RM.Injector.addRecipe1(T, 16, 128, ST.amount(9, aEntry.mPlank), FL.MnWtr.make(1000), NF, OP.rockGt.mat(MT.PetrifiedWood, 4));"),
+            new SkippedStatement(
+                    woods(217),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(gearGt .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"BPB\", \"PsP\", \"BPB\", 'P', aEntry.mPlank, 'B', bolt.dat(aEntry.mMa"),
+            new SkippedStatement(
+                    woods(218),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(gearGtSmall .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"P \", \" s\" , 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(219),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(casingSmall .mat(aEntry.mMaterialPlank, 2), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \" P\", \"s \" , 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(220),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(plateTiny .mat(aEntry.mMaterialPlank, 9), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"s \", \" P\" , 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(221),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(ring .mat(aEntry.mMaterialPlank, 4), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"P \", \" k\" , 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(222),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(round .mat(aEntry.mMaterialPlank, 9), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"P \", \"fk\" , 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(223),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(toolHeadBuilderwand.mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"ks\", \"fP\" , 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(224),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(toolHeadHammer .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"PP \", \"PPg\", \"PPv\", 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(226),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(toolHeadRawArrow .mat(aEntry.mMaterialPlank, 4), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \" P\", \"r v\", 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(227),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(toolHeadRawSword .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \" P \", \"rPv\", 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(228),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(toolHeadRawPickaxe .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"PPP\", \"rgv\", 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(229),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(toolHeadRawShovel .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"rPv\", 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(230),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(toolHeadRawSpade .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \" P \", \"r v\", 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(231),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(toolHeadRawAxe .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \" PP\", \"rPv\", 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(232),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(toolHeadRawHoe .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \" PP\", \"r v\", 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(233),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(toolHeadRawSense .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"PPP\", \" \", \"r v\", 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(234),
+                    StatementKind.CR,
+                    "per-plank forms (gear/casing/tiny plate/round/ring/tool heads/rolling pin): both GT6's ONLY_IF_HAS_RESULT flag and the port skip them - MT.Wood carries no PARTS/TOOL_HEAD form",
+                    "CR.shaped(toolHeadRawPlow .mat(aEntry.mMaterialPlank, 1), CR.ONLY_IF_HAS_RESULT | CR.DEF_NCC, \"PPP\", \"PPP\", \"r v\", 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(237),
+                    StatementKind.CR,
+                    "OD.stickAnyWood: the port publishes per-material rod tags only (data/MaterialTagPack.java), so there is no umbrella wood-rod tag to key this row on",
+                    "CR.shaped(ToolsGT.sMetaTool.getToolWithStats(ToolsGT.ROLLING_PIN, aEntry.mMaterialPlank, MT.Wood), CR.DEF_MIR, \" S\", \" P \", \"S f\", 'P', aPlank, 'S', O"),
+            new SkippedStatement(
+                    woods(238),
+                    StatementKind.CR,
+                    "OD.stickAnyWood: the port publishes per-material rod tags only (data/MaterialTagPack.java), so there is no umbrella wood-rod tag to key this row on",
+                    "CR.shaped(ToolsGT.sMetaTool.getToolWithStats(ToolsGT.ROLLING_PIN, aEntry.mMaterialPlank, MT.Wood), CR.DEF_MIR, \" S\", \" P \", \"S k\", 'P', aPlank, 'S', O"),
+            new SkippedStatement(
+                    woods(242),
+                    StatementKind.CR,
+                    "CR.remove: removes the recipes competing with the rows above; the port has no competing recipe for its log/plank/beam blocks, so there is nothing to remove",
+                    "CR.remove(aPlank, NI, NI, aPlank);"),
+            new SkippedStatement(
+                    woods(262),
+                    StatementKind.RM,
+                    "RM-half machine row (Injector petrified wood / CNC gear): not part of this crafting batch",
+                    "RM.CNC.addRecipe2(T, 16, 64, ST.amount(4, aEntry.mPlank), ST.tag(0), tFluid, NF, tGear);"),
+            new SkippedStatement(
+                    woods(266),
+                    StatementKind.CR,
+                    "stairs: the port registers no stairs block for its own wood species",
+                    "CR.shaped(ST.validMeta_(4, aEntry.mStair), CR.DEF_NCC_MIR, \"vP\", \"PP\", 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(270),
+                    StatementKind.CR,
+                    "slabs: the port registers no slab block for its own wood species",
+                    "CR.shaped(ST.validMeta_(2, aEntry.mSlab), CR.DEF_NCC_MIR, \"vP\", 'P', aEntry.mPlank);"),
+            new SkippedStatement(
+                    woods(281),
+                    StatementKind.CR,
+                    "CR.remove: removes the recipes competing with the rows above; the port has no competing recipe for its log/plank/beam blocks, so there is nothing to remove",
+                    "CR.remove(NI, NI, aPlank, NI, aPlank, aPlank, aPlank, aPlank, aPlank);"),
+            new SkippedStatement(
+                    woods(282),
+                    StatementKind.CR,
+                    "CR.remove: removes the recipes competing with the rows above; the port has no competing recipe for its log/plank/beam blocks, so there is nothing to remove",
+                    "CR.remove(aPlank, NI, NI, aPlank, aPlank, NI, aPlank, aPlank, aPlank);"),
+            new SkippedStatement(
+                    woods(285),
+                    StatementKind.RM,
+                    "RM-half machine row (Injector petrified wood / CNC gear): not part of this crafting batch",
+                    "RM.Injector.addRecipe1(T, 16, 96, ST.amount(9, aEntry.mStair), FL.MnWtr.make(750), NF, OP.rockGt.mat(MT.PetrifiedWood, 3));"),
+            new SkippedStatement(
+                    woods(288),
+                    StatementKind.CR,
+                    "stairs: the port registers no stairs block for its own wood species",
+                    "CR.shaped(ST.validMeta_(1, aEntry.mSlab ), CR.DEF_NCC_MIR, \"vP\", 'P', aEntry.mStair);"),
+            new SkippedStatement(
+                    woods(299),
+                    StatementKind.CR,
+                    "CR.remove: removes the recipes competing with the rows above; the port has no competing recipe for its log/plank/beam blocks, so there is nothing to remove",
+                    "CR.remove(aPlank, aPlank, aPlank);"),
+            new SkippedStatement(
+                    woods(302),
+                    StatementKind.RM,
+                    "RM-half machine row (Injector petrified wood / CNC gear): not part of this crafting batch",
+                    "RM.Injector.addRecipe1(T, 16, 64, ST.amount(9, aEntry.mSlab), FL.MnWtr.make(500), NF, OP.rockGt.mat(MT.PetrifiedWood, 2));"),
+            new SkippedStatement(
+                    woods(305),
+                    StatementKind.CR,
+                    "stairs: the port registers no stairs block for its own wood species",
+                    "CR.shaped(ST.validMeta_(2, aEntry.mStair), CR.DEF_NCC_MIR, \"vP\", \"PP\", 'P', aEntry.mSlab);"));
 
     /**
      * Rows the eight dictionary statements would produce but this port cannot express, with the GT6
-     * line and the reason: {@code <species>/<row>|<GT6 reference>|<reason>}. The row count plus the
-     * length of this array is the full {@code 9 x 8} the dictionary has for the mapped species.
+     * line and the reason. The registered and skipped row counts together cover all nine species.
      */
-    public static final String[] SKIPPED_CRAFT_ROWS = {};
+    public static final List<SkippedCraftRow> SKIPPED_CRAFT_ROWS = List.of();
+
+    public record SkippedCraftRow(String path, Source source, String reason) {}
+
+    public record DictionaryEntry(String entry, String source, List<String> notes) {
+        public DictionaryEntry {
+            notes = List.copyOf(notes);
+        }
+    }
 
     /** GT6 wood-dictionary entries with no port species, with the GT6 line and the reason. */
-    public static final String[] UNMAPPED_ENTRIES = {
-        "BlocksGT.Beam1FireProof|LoaderWoodDictionary.java:57-60|4 entries|GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)",
-        "BlocksGT.Beam2FireProof|LoaderWoodDictionary.java:61-176|4 entries|GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)",
-        "BlocksGT.Beam3FireProof|LoaderWoodDictionary.java:229-273|4 entries|GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)",
-        "BlocksGT.Log1FireProof|LoaderWoodDictionary.java:166-172|4 entries|GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)",
-        "BlocksGT.Log1|LoaderWoodDictionary.java:165-171|4 entries|GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)",
-        "BlocksGT.LogAFireProof|LoaderWoodDictionary.java:70-84|8 entries|GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)",
-        "BlocksGT.LogBFireProof|LoaderWoodDictionary.java:92-106|8 entries|GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)",
-        "BlocksGT.LogCFireProof|LoaderWoodDictionary.java:114-122|2 entries|GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)",
-        "BlocksGT.PlanksFireProof|LoaderWoodDictionary.java:158-162|3 entries|the extra plank blocks of this family: metas 0-7 are the mapped species' planks, the rest are GT6's compressed/treated/dead/rotten/fireproof planks, which the port does not register",
-        "BlocksGT.Planks|LoaderWoodDictionary.java:157-161|3 entries|the extra plank blocks of this family: metas 0-7 are the mapped species' planks, the rest are GT6's compressed/treated/dead/rotten/fireproof planks, which the port does not register",
-        "LogA meta 0|LoaderWoodDictionary.java:69|mapped to the port's rubber blocks",
-        "LogA meta 1|LoaderWoodDictionary.java:71|mapped to the port's maple blocks",
-        "LogA meta 2|LoaderWoodDictionary.java:73|mapped to the port's willow blocks",
-        "LogA meta 3|LoaderWoodDictionary.java:75|mapped to the port's blue_mahoe blocks",
-        "LogB meta 0|LoaderWoodDictionary.java:91|mapped to the port's hazel blocks",
-        "LogB meta 1|LoaderWoodDictionary.java:93|mapped to the port's cinnamon blocks",
-        "LogB meta 2|LoaderWoodDictionary.java:95|mapped to the port's coconut blocks",
-        "LogB meta 3|LoaderWoodDictionary.java:97|mapped to the port's rainbowood blocks",
-        "LogC meta 0|LoaderWoodDictionary.java:113|mapped to the port's bluespruce blocks",
-        "MD.BOTA|LoaderWoodDictionary.java:294-297|2 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.BTL|LoaderWoodDictionary.java:263-263|1 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.CHSL|LoaderWoodDictionary.java:928-933|6 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.EBXL|LoaderWoodDictionary.java:359-373|15 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.EB|LoaderWoodDictionary.java:451-451|1 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.ERE|LoaderWoodDictionary.java:786-792|5 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.EtFu|LoaderWoodDictionary.java:893-916|19 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.IE|LoaderWoodDictionary.java:953-954|2 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.MF2|LoaderWoodDictionary.java:752-752|1 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.MoCr|LoaderWoodDictionary.java:939-939|1 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.NePl|LoaderWoodDictionary.java:873-880|5 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.RH|LoaderWoodDictionary.java:653-685|32 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.SC2|LoaderWoodDictionary.java:335-338|4 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "MD.TF|LoaderWoodDictionary.java:256-258|3 entries|another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1",
-        "ebony (Ebony)|LoaderWoodDictionary.java:541|mapped 1:0 - the only Ebony dictionary row is another mod's block|the port's own ebony log/planks/beam have no GT6 source row",
-        "pine (Pine)|LoaderWoodDictionary.java:402|mapped 1:0 - the only Pine dictionary row is another mod's block|the port's own pine log/planks/beam have no GT6 source row",
-        "tLog|LoaderWoodDictionary.java:532-643|96 entries|a local variable of a mod-specific row of the table (other mod)",
-        "tPlank|LoaderWoodDictionary.java:343-790|16 entries|a local variable of a mod-specific row of the table (other mod)",
-        "white_mahoe (Mahoe)|LoaderWoodDictionary.java (no row)|mapped 1:0 - GT6 never registered a dictionary row for Mahoe|the port's own white_mahoe log/planks/beam have no GT6 source row",
-    };
+    public static final List<DictionaryEntry> UNMAPPED_ENTRIES = List.of(
+            new DictionaryEntry(
+                    "BlocksGT.Beam1FireProof",
+                    "LoaderWoodDictionary.java:57-60",
+                    List.of(
+                            "4 entries",
+                            "GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)")),
+            new DictionaryEntry(
+                    "BlocksGT.Beam2FireProof",
+                    "LoaderWoodDictionary.java:61-176",
+                    List.of(
+                            "4 entries",
+                            "GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)")),
+            new DictionaryEntry(
+                    "BlocksGT.Beam3FireProof",
+                    "LoaderWoodDictionary.java:229-273",
+                    List.of(
+                            "4 entries",
+                            "GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)")),
+            new DictionaryEntry(
+                    "BlocksGT.Log1FireProof",
+                    "LoaderWoodDictionary.java:166-172",
+                    List.of(
+                            "4 entries",
+                            "GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)")),
+            new DictionaryEntry(
+                    "BlocksGT.Log1",
+                    "LoaderWoodDictionary.java:165-171",
+                    List.of(
+                            "4 entries",
+                            "GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)")),
+            new DictionaryEntry(
+                    "BlocksGT.LogAFireProof",
+                    "LoaderWoodDictionary.java:70-84",
+                    List.of(
+                            "8 entries",
+                            "GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)")),
+            new DictionaryEntry(
+                    "BlocksGT.LogBFireProof",
+                    "LoaderWoodDictionary.java:92-106",
+                    List.of(
+                            "8 entries",
+                            "GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)")),
+            new DictionaryEntry(
+                    "BlocksGT.LogCFireProof",
+                    "LoaderWoodDictionary.java:114-122",
+                    List.of(
+                            "2 entries",
+                            "GT6-only wood block family: the port registers none of these (dead/rotten/mossy/frozen planks, the fireproof twins and GT6's own beam blocks)")),
+            new DictionaryEntry(
+                    "BlocksGT.PlanksFireProof",
+                    "LoaderWoodDictionary.java:158-162",
+                    List.of(
+                            "3 entries",
+                            "the extra plank blocks of this family: metas 0-7 are the mapped species' planks, the rest are GT6's compressed/treated/dead/rotten/fireproof planks, which the port does not register")),
+            new DictionaryEntry(
+                    "BlocksGT.Planks",
+                    "LoaderWoodDictionary.java:157-161",
+                    List.of(
+                            "3 entries",
+                            "the extra plank blocks of this family: metas 0-7 are the mapped species' planks, the rest are GT6's compressed/treated/dead/rotten/fireproof planks, which the port does not register")),
+            new DictionaryEntry(
+                    "LogA meta 0", "LoaderWoodDictionary.java:69", List.of("mapped to the port's rubber blocks")),
+            new DictionaryEntry(
+                    "LogA meta 1", "LoaderWoodDictionary.java:71", List.of("mapped to the port's maple blocks")),
+            new DictionaryEntry(
+                    "LogA meta 2", "LoaderWoodDictionary.java:73", List.of("mapped to the port's willow blocks")),
+            new DictionaryEntry(
+                    "LogA meta 3", "LoaderWoodDictionary.java:75", List.of("mapped to the port's blue_mahoe blocks")),
+            new DictionaryEntry(
+                    "LogB meta 0", "LoaderWoodDictionary.java:91", List.of("mapped to the port's hazel blocks")),
+            new DictionaryEntry(
+                    "LogB meta 1", "LoaderWoodDictionary.java:93", List.of("mapped to the port's cinnamon blocks")),
+            new DictionaryEntry(
+                    "LogB meta 2", "LoaderWoodDictionary.java:95", List.of("mapped to the port's coconut blocks")),
+            new DictionaryEntry(
+                    "LogB meta 3", "LoaderWoodDictionary.java:97", List.of("mapped to the port's rainbowood blocks")),
+            new DictionaryEntry(
+                    "LogC meta 0", "LoaderWoodDictionary.java:113", List.of("mapped to the port's bluespruce blocks")),
+            new DictionaryEntry(
+                    "MD.BOTA",
+                    "LoaderWoodDictionary.java:294-297",
+                    List.of(
+                            "2 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.BTL",
+                    "LoaderWoodDictionary.java:263-263",
+                    List.of(
+                            "1 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.CHSL",
+                    "LoaderWoodDictionary.java:928-933",
+                    List.of(
+                            "6 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.EBXL",
+                    "LoaderWoodDictionary.java:359-373",
+                    List.of(
+                            "15 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.EB",
+                    "LoaderWoodDictionary.java:451-451",
+                    List.of(
+                            "1 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.ERE",
+                    "LoaderWoodDictionary.java:786-792",
+                    List.of(
+                            "5 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.EtFu",
+                    "LoaderWoodDictionary.java:893-916",
+                    List.of(
+                            "19 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.IE",
+                    "LoaderWoodDictionary.java:953-954",
+                    List.of(
+                            "2 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.MF2",
+                    "LoaderWoodDictionary.java:752-752",
+                    List.of(
+                            "1 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.MoCr",
+                    "LoaderWoodDictionary.java:939-939",
+                    List.of(
+                            "1 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.NePl",
+                    "LoaderWoodDictionary.java:873-880",
+                    List.of(
+                            "5 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.RH",
+                    "LoaderWoodDictionary.java:653-685",
+                    List.of(
+                            "32 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.SC2",
+                    "LoaderWoodDictionary.java:335-338",
+                    List.of(
+                            "4 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "MD.TF",
+                    "LoaderWoodDictionary.java:256-258",
+                    List.of(
+                            "3 entries",
+                            "another mod's block (IC2/MFR/BoP/TC/TF/EBXL/RH/EtFu/...), not present in 1.20.1")),
+            new DictionaryEntry(
+                    "ebony (Ebony)",
+                    "LoaderWoodDictionary.java:541",
+                    List.of(
+                            "mapped 1:0 - the only Ebony dictionary row is another mod's block",
+                            "the port's own ebony log/planks/beam have no GT6 source row")),
+            new DictionaryEntry(
+                    "pine (Pine)",
+                    "LoaderWoodDictionary.java:402",
+                    List.of(
+                            "mapped 1:0 - the only Pine dictionary row is another mod's block",
+                            "the port's own pine log/planks/beam have no GT6 source row")),
+            new DictionaryEntry(
+                    "tLog",
+                    "LoaderWoodDictionary.java:532-643",
+                    List.of("96 entries", "a local variable of a mod-specific row of the table (other mod)")),
+            new DictionaryEntry(
+                    "tPlank",
+                    "LoaderWoodDictionary.java:343-790",
+                    List.of("16 entries", "a local variable of a mod-specific row of the table (other mod)")),
+            new DictionaryEntry(
+                    "white_mahoe (Mahoe)",
+                    "LoaderWoodDictionary.java (no row)",
+                    List.of(
+                            "mapped 1:0 - GT6 never registered a dictionary row for Mahoe",
+                            "the port's own white_mahoe log/planks/beam have no GT6 source row")));
 
     /** Number of crafting rows this table carries. */
     public static int craftRowCount() {
-        return CRAFT_ROWS.length;
+        return CRAFT_ROWS.size();
     }
 
     /** Number of GT6 recipe statements the source file holds, for reports. */

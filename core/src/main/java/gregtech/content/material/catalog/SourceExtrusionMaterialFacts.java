@@ -1,777 +1,773 @@
 package gregtech.content.material.catalog;
 
 import gregtech.api.addon.material.MaterialProcessRule;
+import gregtech.api.material.GTValues;
 import gregtech.content.material.MaterialFactKeys;
 import gregtech.engine.material.MaterialDefinition;
 import gregtech.engine.material.MaterialInfoDefinition;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/** Native GT6 MT factory/direct extrusion flags and forging targets, pinned to 3703e403.
- * Generated from GT6 {@code MT.java} at 3703e403; absence is not inferred from the port's broad METAL flag.
+/**
+ * Native factory/direct extrusion flags and forging targets generated from GT6 {@code MT.java} at 3703e403.
+ * A missing profile is not inferred from the port's broad METAL flag.
  * Profiles are bound to exact native identities; addons are not assigned original identities by name.
  */
 public final class SourceExtrusionMaterialFacts {
     private SourceExtrusionMaterialFacts() {}
 
-    public record Profile(boolean extrudable, boolean simple, boolean smithable, String target, long forgingAmount) {}
+    public record Profile(boolean extrudable, boolean simple, boolean smithable, String target, long forgingAmount) {
+        private Profile withTarget(String target) {
+            return new Profile(extrudable, simple, smithable, target, forgingAmount);
+        }
+    }
 
     private record Row(String name, Profile profile) {}
 
-    private static final Map<Integer, Row> ROWS = new HashMap<>();
-    private static final String DATA = """
-            0|Empty|000||648648000
-            1|Photon|000||648648000
-            2|Neutrino|000||648648000
-            3|Neutron|000||648648000
-            4|Proton|000||648648000
-            5|Electron|000||648648000
-            10|Hydrogen|000||648648000
-            11|Deuterium|000||648648000
-            12|Tritium|000||648648000
-            20|Helium|000||648648000
-            21|Helium3|000||648648000
-            30|Lithium|111||648648000
-            31|Lithium6|111||648648000
-            40|Beryllium|101||648648000
-            41|Beryllium7|101||648648000
-            42|Beryllium8|101||648648000
-            50|Boron|101||648648000
-            51|Boron11|101||648648000
-            60|Carbon|000||648648000
-            61|Carbon13|000||648648000
-            62|Carbon14|000||648648000
-            70|Nitrogen|000||648648000
-            80|Oxygen|000||648648000
-            90|Fluorine|000||648648000
-            100|Neon|000||648648000
-            110|Sodium|111||648648000
-            120|Magnesium|111||648648000
-            130|Aluminium|111||648648000
-            140|Silicon|101||648648000
-            150|Phosphor|000||648648000
-            160|Sulfur|000||648648000
-            170|Chlorine|000||648648000
-            180|Argon|000||648648000
-            190|Potassium|111||648648000
-            200|Calcium|111||648648000
-            210|Scandium|101||648648000
-            220|Titanium|101||648648000
-            230|Vanadium|101||648648000
-            240|Chromium|101||648648000
-            250|Manganese|101||648648000
-            260|Iron|101||648648000
-            270|Cobalt|101||648648000
-            278|Cobalt60|101||648648000
-            280|Nickel|101||648648000
-            290|Copper|111||648648000
-            300|Zinc|111||648648000
-            310|Gallium|111||648648000
-            320|Germanium|111||648648000
-            330|Arsenic|111||648648000
-            340|Selenium|000||648648000
-            350|Bromine|000||648648000
-            360|Krypton|000||648648000
-            370|Rubidium|111||648648000
-            380|Strontium|111||648648000
-            390|Yttrium|101||648648000
-            400|Zirconium|101||648648000
-            410|Niobium|101||648648000
-            420|Molybdenum|101||648648000
-            430|Technetium|101||648648000
-            440|Ruthenium|101||648648000
-            450|Rhodium|101||648648000
-            460|Palladium|101||648648000
-            470|Silver|101||648648000
-            480|Cadmium|111||648648000
-            490|Indium|111||648648000
-            500|Tin|111||648648000
-            510|Antimony|111||648648000
-            520|Tellurium|111||648648000
-            530|Iodine|000||648648000
-            540|Xenon|000||648648000
-            550|Caesium|111||648648000
-            560|Barium|111||648648000
-            570|Lanthanium|111||648648000
-            580|Cerium|111||648648000
-            590|Praseodymium|101||648648000
-            600|Neodymium|101||648648000
-            610|Promethium|101||648648000
-            620|Samarium|101||648648000
-            630|Europium|111||648648000
-            640|Gadolinium|101||648648000
-            650|Terbium|101||648648000
-            660|Dysprosium|101||648648000
-            670|Holmium|101||648648000
-            680|Erbium|101||648648000
-            690|Thulium|101||648648000
-            700|Ytterbium|111||648648000
-            710|Lutetium|101||648648000
-            720|Hafnium|101||648648000
-            730|Tantalum|101||648648000
-            740|Tungsten|101||648648000
-            750|Rhenium|101||648648000
-            760|OsmiumElemental|101||648648000
-            770|Iridium|101||648648000
-            780|Platinum|101||648648000
-            790|Gold|101||648648000
-            791|Gold198|101||648648000
-            800|Mercury|111||648648000
-            810|Thallium|111||648648000
-            820|Lead|111||648648000
-            830|Bismuth|111||648648000
-            840|Polonium|111||648648000
-            850|Astatine|111||648648000
-            860|Radon|000||648648000
-            870|Francium|111||648648000
-            880|Radium|111||648648000
-            890|Actinium|101||648648000
-            900|Thorium|101||648648000
-            910|Protactinium|101||648648000
-            920|Uranium|101||648648000
-            921|Uranium235|101||648648000
-            922|Uranium233|101||648648000
-            930|Neptunium|111||648648000
-            940|Plutonium|111||648648000
-            942|Plutonium240|111||648648000
-            943|Plutonium241|111||648648000
-            945|Plutonium243|111||648648000
-            946|Plutonium238|111||648648000
-            947|Plutonium239|111||648648000
-            950|Americium|101||648648000
-            951|Americium241|101||648648000
-            952|Americium242|101||648648000
-            960|Curium|101||648648000
-            970|Berkelium|101||648648000
-            980|Californium|111||648648000
-            990|Einsteinium|111||648648000
-            1000|Fermium|111||648648000
-            1010|Mendelevium|111||648648000
-            1020|Nobelium|111||648648000
-            1030|Lawrencium|101||648648000
-            1040|Rutherfordium|101||648648000
-            1050|Dubnium|111||648648000
-            1060|Seaborgium|111||648648000
-            1070|Bohrium|111||648648000
-            1080|Hassium|111||648648000
-            1090|Meitnerium|000||648648000
-            1100|Darmstadtium|000||648648000
-            1110|Roentgenium|000||648648000
-            1120|Copernicium|111||648648000
-            1130|Nihonium|000||648648000
-            1140|Flerovium|111||648648000
-            1148|Flerovium298|111||648648000
-            1150|Moscovium|000||648648000
-            1160|Livermorium|000||648648000
-            1170|Farnsium|000||648648000
-            1180|Oganesson|000||648648000
-            1250|TritaniumElemental|101||648648000
-            1260|Trinium|101||648648000
-            1450|DuraniumElemental|111||648648000
-            1520|Vibranium|000||648648000
-            1740|Naquadah|101||648648000
-            1741|NaquadahEnriched|101||648648000
-            1742|Naquadria|101||648648000
-            2220|Adamantium|101||648648000
-            3720|Gravitonium|000||648648000
-            4000|Magic|000||648648000
-            8000|SiliconDioxide|000||648648000
-            8001|Glass|110||648648000
-            8002|Flint|000||648648000
-            8003|Carborundum|101||648648000
-            8006|Datolite|000||648648000
-            8007|HydrogenBorate|000||648648000
-            8008|Alumina|000||648648000
-            8009|Cryolite|000||648648000
-            8010|AluminiumFluoride|000||648648000
-            8011|HexafluorosilicicAcid|000||648648000
-            8012|SodiumAluminate|000||648648000
-            8013|SodiumCarbonate|000||648648000
-            8014|AluminiumHydroxide|000||648648000
-            8015|PotassiumHydroxide|000||648648000
-            8016|MagnesiumCarbonate|000||648648000
-            8017|FerricChloride|000||648648000
-            8018|MagnesiumChloride|000||648648000
-            8019|SodiumNitrate|000||648648000
-            8020|PotassiumCarbonate|000||648648000
-            8021|PotassiumSulfite|000||648648000
-            8022|PotassiumPersulfate|000||648648000
-            8023|PotassiumAluminate|000||648648000
-            8024|HydrosulfuricAcid|000||648648000
-            8025|Ammonia|000||648648000
-            8026|TungstenTrioxide|000||648648000
-            8027|TungsticAcid|000||648648000
-            8028|CalciumChloride|000||648648000
-            8029|LithiumChloride|000||648648000
-            8030|FerrousChloride|000||648648000
-            8031|ManganeseChloride|000||648648000
-            8032|LithiumHydroxide|000||648648000
-            8033|LithiumChlorate|000||648648000
-            8034|LithiumPerchlorate|000||648648000
-            8035|FerricOxyhydroxide|000||648648000
-            8036|PotassiumFluoride|000||648648000
-            8037|SodiumFluoride|000||648648000
-            8038|PotassiumHeptafluorotantalate|000||648648000
-            8039|SodiumHydrogencarbonate|000||648648000
-            8100|Sand|000||648648000
-            8101|Soulsand|000||648648000
-            8102|SluiceSand|000||648648000
-            8103|PlatinumGroupSludge|000||648648000
-            8104|RedSand|000||648648000
-            8196|Teflon|110||648648000
-            8197|PVC|110||648648000
-            8200|Ashes|000||648648000
-            8201|DarkAshes|000||648648000
-            8203|Sylvite|000||648648000
-            8204|Salt|000||648648000
-            8205|PotassiumNitrate|000||648648000
-            8206|Niter|000||648648000
-            8207|Phosphate|000||648648000
-            8208|Phosphorus|000||648648000
-            8209|Apatite|000||648648000
-            8210|Blizz|000||648648000
-            8211|Blaze|000||648648000
-            8214|Obsidian|000||648648000
-            8215|Clay|000||648648000
-            8216|Paper|000||648648000
-            8217|Rubber|110||648648000
-            8218|Plastic|110||648648000
-            8219|Bone|000||648648000
-            8220|Gunpowder|000||648648000
-            8221|Wood|000||648648000
-            8222|WoodTreated|000||648648000
-            8223|LiveRoot|000||648648000
-            8224|WoodRubber|000||648648000
-            8225|Ceramic|000||648648000
-            8226|Phosphorite|000||648648000
-            8229|CobaltHexahydrate|000||648648000
-            8230|SodiumBisulfate|000||648648000
-            8231|SodiumPyrosulfate|000||648648000
-            8232|PotassiumBisulfate|000||648648000
-            8233|PotassiumPyrosulfate|000||648648000
-            8234|VanadiumPentoxide|000||648648000
-            8235|Wax|110||648648000
-            8236|WaxBee|110||648648000
-            8238|WaxParaffin|110||648648000
-            8239|WaxPlant|110||648648000
-            8241|Leather|000||648648000
-            8242|IodineSalt|000||648648000
-            8247|Basalz|000||648648000
-            8248|Blitz|000||648648000
-            8249|Dynamite|000||648648000
-            8250|DyeBlack|000||648648000
-            8251|DyeRed|000||648648000
-            8252|DyeGreen|000||648648000
-            8253|DyeBrown|000||648648000
-            8254|DyeBlue|000||648648000
-            8255|DyePurple|000||648648000
-            8256|DyeCyan|000||648648000
-            8257|DyeLightGray|000||648648000
-            8258|DyeGray|000||648648000
-            8259|DyePink|000||648648000
-            8260|DyeLime|000||648648000
-            8261|DyeYellow|000||648648000
-            8262|DyeLightBlue|000||648648000
-            8263|DyeMagenta|000||648648000
-            8264|DyeOrange|000||648648000
-            8265|DyeWhite|000||648648000
-            8266|Asphalt|110||648648000
-            8267|WoodPolished|000||648648000
-            8268|SodiumHydroxide|000||648648000
-            8269|SodiumSulfite|000||648648000
-            8270|SodiumSulfate|000||648648000
-            8271|PotassiumSulfate|000||648648000
-            8272|PotassiumSulfide|000||648648000
-            8273|Porcelain|000||648648000
-            8274|CalciumSulfate|000||648648000
-            8275|Bark|000||648648000
-            8276|ClayBrown|000||648648000
-            8277|PetrifiedWood|000||648648000
-            8278|ManaDiamond|000||648648000
-            8289|Livingwood|000||648648000
-            8290|Dreamwood|000||648648000
-            8296|Greatwood|000||648648000
-            8297|Silverwood|000||648648000
-            8298|EnergiumRed|000||648648000
-            8299|EnergiumCyan|000||648648000
-            8300|Diamond|000||648648000
-            8301|Emerald|000||648648000
-            8302|Ruby|000||648648000
-            8303|BalasRuby|000||648648000
-            8304|Sapphire|000||648648000
-            8305|GreenSapphire|000||648648000
-            8306|Topaz|000||648648000
-            8307|BlueTopaz|000||648648000
-            8308|Tanzanite|000||648648000
-            8309|RedJasper|000||648648000
-            8310|Amber|000||648648000
-            8311|Peridot|000||648648000
-            8312|Opal|000||648648000
-            8313|Amethyst|000||648648000
-            8314|OrangeSapphire|000||648648000
-            8315|YellowSapphire|000||648648000
-            8318|EnderPearl|000||648648000
-            8319|EnderEye|000||648648000
-            8320|NetherStar|000||648648000
-            8321|Jade|000||648648000
-            8322|Craponite|000||648648000
-            8323|Aquamarine|000||648648000
-            8324|Morganite|000||648648000
-            8325|Dioptase|000||648648000
-            8326|Spinel|000||648648000
-            8328|BlueSapphire|000||648648000
-            8330|Lazurite|000||648648000
-            8331|Sodalite|000||648648000
-            8332|Lapis|000||648648000
-            8333|Redstone|000||648648000
-            8334|Coal|000||648648000
-            8335|HydratedCoal|000||648648000
-            8336|Charcoal|000||648648000
-            8337|Lignite|000||648648000
-            8338|Monazite|000||648648000
-            8340|Nikolite|000||648648000
-            8341|Glowstone|000||648648000
-            8342|Firestone|000||648648000
-            8346|NetherQuartz|000||648648000
-            8347|CertusQuartz|000||648648000
-            8348|ChargedCertusQuartz|000||648648000
-            8349|CoalCoke|000||648648000
-            8360|Peat|000||648648000
-            8365|LigniteCoke|000||648648000
-            8383|PurpleSapphire|000||648648000
-            8384|Heliodor|000||648648000
-            8385|Goshenite|000||648648000
-            8386|Bixbite|000||648648000
-            8387|Maxixe|000||648648000
-            8389|Fluix|000||648648000
-            8390|PetroleumCoke|000||648648000
-            8393|SunnyQuartz|000||648648000
-            8395|RedQuartz|000||648648000
-            8396|BlazeQuartz|000||648648000
-            8397|SmokeyQuartz|000||648648000
-            8399|ElvenQuartz|000||648648000
-            8400|ChloroauricAcid|000||648648000
-            8401|ChloroplatinicAcid|000||648648000
-            8402|StannicChloride|000||648648000
-            8403|BlackVitriol|000||648648000
-            8404|BlueVitriol|000||648648000
-            8405|GreenVitriol|000||648648000
-            8406|RedVitriol|000||648648000
-            8407|PinkVitriol|000||648648000
-            8408|CyanVitriol|000||648648000
-            8409|WhiteVitriol|000||648648000
-            8410|GrayVitriol|000||648648000
-            8412|VitriolOfClay|000||648648000
-            8413|TitaniumTetrachloride|000||648648000
-            8415|OnyxRed|000||648648000
-            8416|OnyxBlack|000||648648000
-            8417|Amazonite|000||648648000
-            8418|Bamboo|000||648648000
-            8419|Zircon|000||648648000
-            8420|Azurite|000||648648000
-            8421|Eudialyte|000||648648000
-            8423|DiamondIndustrial|000||648648000
-            8424|PinkDiamond|000||648648000
-            8425|OceanJasper|000||648648000
-            8426|RainforestJasper|000||648648000
-            8427|BlueJasper|000||648648000
-            8428|GreenJasper|000||648648000
-            8429|YellowJasper|000||648648000
-            8430|TigerEye|000||648648000
-            8431|CatsEye|000||648648000
-            8432|DragonEye|000||648648000
-            8433|HawksEye|000||648648000
-            8434|BlackEye|000||648648000
-            8435|TigerIron|000||648648000
-            8436|RedFluorite|000||648648000
-            8437|PinkFluorite|000||648648000
-            8438|BlueFluorite|000||648648000
-            8439|GreenFluorite|000||648648000
-            8440|BlackFluorite|000||648648000
-            8441|WhiteFluorite|000||648648000
-            8442|YellowFluorite|000||648648000
-            8443|OrangeFluorite|000||648648000
-            8444|MagentaFluorite|000||648648000
-            8445|MilkyQuartz|000||648648000
-            8446|BrownAventurine|000||648648000
-            8447|YellowAventurine|000||648648000
-            8448|GreenAventurine|000||648648000
-            8449|BlackAventurine|000||648648000
-            8450|BlueAventurine|000||648648000
-            8451|RedAventurine|000||648648000
-            8455|ClayRed|000||648648000
-            8458|BluePhosphorus|000||648648000
-            8459|RedPhosphorus|000||648648000
-            8460|WhitePhosphorus|000||648648000
-            8461|NiobiumPentoxide|000||648648000
-            8462|TantalumPentoxide|000||648648000
-            8464|BlueDiamond|000||648648000
-            8465|GreenDiamond|000||648648000
-            8467|RedDiamond|000||648648000
-            8468|YellowDiamond|000||648648000
-            8470|Carminite|000||648648000
-            8471|Breeze|000||648648000
-            8500|Stone|110||648648000
-            8501|Concrete|110||648648000
-            8502|Netherrack|110||648648000
-            8503|NetherBrick|110||648648000
-            8504|Endstone|110||648648000
-            8505|Basalt|110||648648000
-            8506|Marble|110||648648000
-            8507|GraniteRed|110||648648000
-            8508|GraniteBlack|110||648648000
-            8511|Diorite|110||648648000
-            8516|MarsSand|110||648648000
-            8518|Granite|110||648648000
-            8521|Livingrock|110||648648000
-            8528|SkyStone|110||648648000
-            8599|Bedrock|000||648648000
-            8600|Electrum|101||648648000
-            8601|SterlingSilver|101||648648000
-            8602|RoseGold|101||648648000
-            8605|CdInAgAlloy|101||648648000
-            8610|Bronze|111||648648000
-            8611|BlackBronze|101||648648000
-            8612|BismuthBronze|111||648648000
-            8614|ArsenicCopper|111||648648000
-            8615|ArsenicBronze|111||648648000
-            8620|Brass|111||648648000
-            8621|CobaltBrass|111||648648000
-            8622|AluminiumAlloy|101||648648000
-            8630|Steel|101||648648000
-            8631|BlackSteel|101||648648000
-            8632|BlueSteel|101||648648000
-            8633|RedSteel|101||648648000
-            8634|DamascusSteel|101||648648000
-            8635|Tungstensteel|101||648648000
-            8636|StainlessSteel|101||648648000
-            8638|TungstenCarbide|101||648648000
-            8640|AnnealedCopper|111||648648000
-            8643|WroughtIron|101||648648000
-            8645|IronMagnetic|101|Fe|648648000
-            8646|SteelMagnetic|101|Steel|648648000
-            8647|NeodymiumMagnetic|101|Nd|648648000
-            8651|SteelGalvanized|101|Steel|648648000
-            8652|TungstenSintered|101||648648000
-            8653|VanadiumSteel|101||648648000
-            8658|ElectrotineAlloy|111||648648000
-            8659|BlueAlloy|111||648648000
-            8660|RedAlloy|111||648648000
-            8661|Invar|101||648648000
-            8662|Constantan|101||648648000
-            8663|Nichrome|101||648648000
-            8664|Kanthal|101||648648000
-            8665|Magnalium|111||648648000
-            8666|Ultimet|101||648648000
-            8667|TinAlloy|111||648648000
-            8668|BatteryAlloy|111||648648000
-            8669|SolderingAlloy|111||648648000
-            8672|Ironwood|111||648648000
-            8673|Steeleaf|101||648648000
-            8674|Knightmetal|101||648648000
-            8675|FierySteel|101||648648000
-            8679|Thaumium|101||648648000
-            8682|Osmiridium|101||648648000
-            8684|Trinaquadalloy|101||648648000
-            8685|ChromiumDioxide|101||648648000
-            8686|VanadiumGallium|101||648648000
-            8687|YttriumBariumCuprate|101||648648000
-            8689|NiobiumTitanium|101||648648000
-            8697|FlamascusSteel|101||648648000
-            8698|Fireleaf|101||648648000
-            8700|AluminiumBrass|111||648648000
-            8702|Alumite|101||648648000
-            8704|VibraniumSteel|101||648648000
-            8705|VibraniumSilver|101||648648000
-            8706|Vibramantium|101||648648000
-            8708|Signalum|111||648648000
-            8709|Lumium|111||648648000
-            8710|Enderium|101||648648000
-            8717|Cyanite|101||648648000
-            8720|Manasteel|101||648648000
-            8721|Terrasteel|101||648648000
-            8722|ElvenElementium|101||648648000
-            8726|VibrantAlloy|101||648648000
-            8727|ConductiveIron|101||648648000
-            8729|EnderiumBase|101||648648000
-            8730|ElectricalSteel|101||648648000
-            8732|Soularium|101||648648000
-            8733|RedstoneAlloy|101||648648000
-            8735|GaiaSpirit|101||648648000
-            8737|NikolineAlloy|101||648648000
-            8744|AncientDebris|101||648648000
-            8745|Netherite|101||648648000
-            8746|NetherizedDiamond|101||648648000
-            8747|Efrine|101||648648000
-            8751|Duranium|101||648648000
-            8752|Tritanium|101||648648000
-            8756|Duralumin|101||648648000
-            8784|Adamantine|101||648648000
-            8790|Trinitanium|101||648648000
-            8793|TitaniumIridium|101||648648000
-            8796|HSSG|101||648648000
-            8797|HSSE|101||648648000
-            8798|HSSS|101||648648000
-            8799|CrystalMatrix|101||648648000
-            8800|CosmicNeutronium|101||648648000
-            8802|TantalumHafniumCarbide|101||648648000
-            8803|CastIron|101||648648000
-            9000|Pumice|110||648648000
-            9001|Diatomite|000||648648000
-            9003|BasalticMineralSand|000||648648000
-            9004|GraniticMineralSand|000||648648000
-            9005|GarnetSand|000||648648000
-            9006|QuartzSand|000||648648000
-            9007|UraniumTetrafluoride|000||648648000
-            9008|UraniumHexafluoride|000||648648000
-            9009|Uranium238Tetrafluoride|000||648648000
-            9010|Uranium238Hexafluoride|000||648648000
-            9011|Uranium235Tetrafluoride|000||648648000
-            9012|Uranium235Hexafluoride|000||648648000
-            9100|RareEarth|000||648648000
-            9101|Almandine|000||648648000
-            9102|Andradite|000||648648000
-            9103|Asbestos|110||648648000
-            9104|Hematite|000||648648000
-            9105|Bauxite|000||648648000
-            9106|BrownLimonite|000||648648000
-            9107|Calcite|000||648648000
-            9108|Cassiterite|000||648648000
-            9109|Realgar|000||648648000
-            9110|Celestine|000||648648000
-            9111|Chalcopyrite|000||648648000
-            9113|Chromite|000||648648000
-            9114|Cinnabar|000||648648000
-            9115|Cobaltite|000||648648000
-            9116|Cooperite|000||648648000
-            9117|Galena|000||648648000
-            9118|Garnierite|000||648648000
-            9119|Grossular|000||648648000
-            9120|Ilmenite|000||648648000
-            9122|Magnetite|000||648648000
-            9123|Molybdenite|000||648648000
-            9124|Powellite|000||648648000
-            9125|Pyrite|000||648648000
-            9126|Pyrolusite|000||648648000
-            9127|Pyrope|000||648648000
-            9128|Scheelite|000||648648000
-            9129|Spessartine|000||648648000
-            9130|Sphalerite|000||648648000
-            9131|Stibnite|000||648648000
-            9132|Tetrahedrite|000||648648000
-            9133|Tungstate|000||648648000
-            9134|Uraninite|000||648648000
-            9135|Uvarovite|000||648648000
-            9136|Wulfenite|000||648648000
-            9137|YellowLimonite|000||648648000
-            9138|Perlite|000||648648000
-            9139|Borax|000||648648000
-            9140|PotassiumFeldspar|000||648648000
-            9141|Biotite|000||648648000
-            9143|VanadiumMagnetite|000||648648000
-            9144|Bastnasite|000||648648000
-            9145|Pentlandite|000||648648000
-            9146|Spodumene|000||648648000
-            9147|Pollucite|000||648648000
-            9148|Tantalite|000||648648000
-            9149|Lepidolite|000||648648000
-            9150|Glauconite|000||648648000
-            9152|Vermiculite|000||648648000
-            9153|Bentonite|000||648648000
-            9154|Palygorskite|000||648648000
-            9155|Pitchblende|000||648648000
-            9156|Malachite|000||648648000
-            9157|Mirabilite|000||648648000
-            9158|Mica|000||648648000
-            9159|Trona|000||648648000
-            9160|Barite|000||648648000
-            9161|Gypsum|000||648648000
-            9162|Alunite|000||648648000
-            9164|Wollastonite|000||648648000
-            9165|Zeolite|000||648648000
-            9166|Kyanite|000||648648000
-            9167|Kaolinite|000||648648000
-            9169|Talc|000||648648000
-            9171|Greenschist|110||648648000
-            9174|Graphite|000||648648000
-            9175|Graphene|000||648648000
-            9177|Komatiite|110||648648000
-            9180|Quartzite|110||648648000
-            9184|Blueschist|110||648648000
-            9185|Bluestone|110||648648000
-            9186|Chert|110||648648000
-            9187|Dacite|110||648648000
-            9188|Andesite|110||648648000
-            9189|Limestone|110||648648000
-            9190|Shale|110||648648000
-            9192|Rutile|000||648648000
-            9193|Stolzite|000||648648000
-            9194|Ferberite|000||648648000
-            9195|Huebnerite|000||648648000
-            9196|Russellite|000||648648000
-            9197|Pinalite|000||648648000
-            9198|DiduraniumTrioxide|000||648648000
-            9199|DuraniumHexafluoride|000||648648000
-            9200|DuraniumHexachloride|000||648648000
-            9201|DuraniumHexabromide|000||648648000
-            9202|DuraniumHexaiodide|000||648648000
-            9203|DuraniumHexaastatide|000||648648000
-            9204|TritaniumDioxide|000||648648000
-            9205|TritaniumHexafluoride|000||648648000
-            9206|TritaniumHexachloride|000||648648000
-            9207|TritaniumHexabromide|000||648648000
-            9208|TritaniumHexaiodide|000||648648000
-            9209|TritaniumHexaastatide|000||648648000
-            9210|Bromargyrite|000||648648000
-            9211|Smithsonite|000||648648000
-            9212|Sperrylite|000||648648000
-            9213|Kesterite|000||648648000
-            9214|Stannite|000||648648000
-            9215|Fluorite|000||648648000
-            9216|Arsenopyrite|000||648648000
-            9217|Wolframite|000||648648000
-            9218|Kimberlite|110||648648000
-            9219|Prismarine|110||648648000
-            9220|PrismarineDark|110||648648000
-            9221|Bischofite|000||648648000
-            9222|Slate|110||648648000
-            9223|Blackstone|110||648648000
-            9243|ClayBrick|000||648648000
-            9246|Columbite|000||648648000
-            9247|Coltan|000||648648000
-            9248|Deepslate|110||648648000
-            9261|TitanRock|110||648648000
-            9271|Quicklime|000||648648000
-            9300|Oak|000||648648000
-            9301|Birch|000||648648000
-            9302|Spruce|000||648648000
-            9303|Junglewood|000||648648000
-            9304|Acacia|000||648648000
-            9305|DarkOak|000||648648000
-            9306|Crimsonwood|000||648648000
-            9307|Warpedwood|000||648648000
-            9308|WoodCompressed|000||648648000
-            9309|WoodDead|000||648648000
-            9310|WoodRotten|000||648648000
-            9311|WoodMossy|000||648648000
-            9312|WoodFrozen|000||648648000
-            9313|Maple|000||648648000
-            9314|Willow|000||648648000
-            9315|BlueMahoe|000||648648000
-            9316|Hazel|000||648648000
-            9317|Cinnamonwood|000||648648000
-            9318|Coconutwood|000||648648000
-            9319|Rainbowood|000||648648000
-            9344|Cherrywood|000||648648000
-            9372|Mangrove|000||648648000
-            9409|BlueSpruce|000||648648000
-            9700|MeatRaw|110|MeatCooked|648648000
-            9701|MeatCooked|110||648648000
-            9702|Wheat|000||648648000
-            9703|Sugar|000||648648000
-            9705|Rye|000||648648000
-            9709|Potato|000||648648000
-            9710|MeatRotten|110||648648000
-            9711|FishCooked|110||648648000
-            9712|FishRaw|110|FishCooked|648648000
-            9713|FishRotten|110||648648000
-            9779|SoylentGreen|110||648648000
-            9780|Cheese|110||648648000
-            9781|Chili|000||648648000
-            9782|Cocoa|000||648648000
-            9783|Chocolate|110||648648000
-            9784|Coffee|000||648648000
-            9785|Cinnamon|000||648648000
-            9790|Milk|000||648648000
-            9791|Honey|000||648648000
-            9792|Tea|000||648648000
-            9793|Honeydew|000||648648000
-            9794|Mint|000||648648000
-            9796|Hazelnut|000||648648000
-            9800|Water|000||648648000
-            9801|Snow|000||648648000
-            9802|Ice|000||648648000
-            9803|FreshWater|000||648648000
-            9804|Saltwater|000||648648000
-            9805|HolyWater|000||648648000
-            9806|SeaWater|000||648648000
-            9808|WaterDistilled|000||648648000
-            9809|HydrogenPeroxide|000||648648000
-            9810|Lava|000||648648000
-            9811|SemiheavyWater|000||648648000
-            9812|HeavyWater|000||648648000
-            9813|TritiatedWater|000||648648000
-            9814|Steam|000||648648000
-            9815|SaltedWater|000||648648000
-            9820|NitroCarbon|000||648648000
-            9821|Glyceryl|000||648648000
-            9822|SodiumPersulfate|000||648648000
-            9823|SodiumSulfide|000||648648000
-            9824|SulfuricAcid|000||648648000
-            9825|NitricAcid|000||648648000
-            9826|HydrochloricAcid|000||648648000
-            9827|AquaRegia|000||648648000
-            9828|Glycerol|000||648648000
-            9829|HydrogenFluoride|000||648648000
-            9830|Air|000||648648000
-            9831|NitrogenDioxide|000||648648000
-            9832|Methane|000||648648000
-            9833|MethaneIce|000||648648000
-            9834|SulfurDioxide|000||648648000
-            9835|SulfurTrioxide|000||648648000
-            9836|CarbonDioxide|000||648648000
-            9837|NitrogenMonoxide|000||648648000
-            9838|CarbonMonoxide|000||648648000
-            9839|HeliumNeon|000||648648000
-            9840|Biomass|000||648648000
-            9841|BioFuel|000||648648000
-            9842|Ethanol|000||648648000
-            9843|CarbonTrioxide|000||648648000
-            9844|DisulfuricAcid|000||648648000
-            9850|Oil|000||648648000
-            9851|OilSand|000||648648000
-            9852|CrudeOil|000||648648000
-            9853|OilShale|000||648648000
-            9860|Fuel|000||648648000
-            9861|NitroFuel|000||648648000
-            9862|Kerosine|000||648648000
-            9863|Diesel|000||648648000
-            9864|Petrol|000||648648000
-            9865|Propane|000||648648000
-            9866|Butane|000||648648000
-            9867|Propylene|000||648648000
-            9868|Ethylene|000||648648000
-            9870|Creosote|000||648648000
-            9871|FishOil|000||648648000
-            9872|SeedOil|000||648648000
-            9873|HempOil|000||648648000
-            9874|LinOil|000||648648000
-            9875|SunflowerOil|000||648648000
-            9876|NutOil|000||648648000
-            9877|OliveOil|000||648648000
-            9880|FryingOilHot|000||648648000
-            9881|Glue|000||648648000
-            9882|Lubricant|000||648648000
-            9883|ConstructionFoam|000||648648000
-            9886|Latex|000||648648000
-            """;
+    private static final Profile NOT_EXTRUDABLE = new Profile(false, false, false, "", GTValues.U);
+    private static final Profile SMITHABLE = new Profile(true, false, true, "", GTValues.U);
+    private static final Profile SIMPLE = new Profile(true, true, false, "", GTValues.U);
+    private static final Profile SIMPLE_SMITHABLE = new Profile(true, true, true, "", GTValues.U);
 
-    static {
-        for (String line : DATA.strip().split("\n")) {
-            String[] f = line.strip().split("\\|", -1);
-            ROWS.put(
-                    Integer.parseInt(f[0]),
-                    new Row(
-                            f[1],
-                            new Profile(
-                                    f[2].charAt(0) == '1',
-                                    f[2].charAt(1) == '1',
-                                    f[2].charAt(2) == '1',
-                                    f[3],
-                                    Long.parseLong(f[4]))));
-        }
+    private static final Map<Integer, Row> ROWS = Map.ofEntries(
+            row(0, "Empty", NOT_EXTRUDABLE),
+            row(1, "Photon", NOT_EXTRUDABLE),
+            row(2, "Neutrino", NOT_EXTRUDABLE),
+            row(3, "Neutron", NOT_EXTRUDABLE),
+            row(4, "Proton", NOT_EXTRUDABLE),
+            row(5, "Electron", NOT_EXTRUDABLE),
+            row(10, "Hydrogen", NOT_EXTRUDABLE),
+            row(11, "Deuterium", NOT_EXTRUDABLE),
+            row(12, "Tritium", NOT_EXTRUDABLE),
+            row(20, "Helium", NOT_EXTRUDABLE),
+            row(21, "Helium3", NOT_EXTRUDABLE),
+            row(30, "Lithium", SIMPLE_SMITHABLE),
+            row(31, "Lithium6", SIMPLE_SMITHABLE),
+            row(40, "Beryllium", SMITHABLE),
+            row(41, "Beryllium7", SMITHABLE),
+            row(42, "Beryllium8", SMITHABLE),
+            row(50, "Boron", SMITHABLE),
+            row(51, "Boron11", SMITHABLE),
+            row(60, "Carbon", NOT_EXTRUDABLE),
+            row(61, "Carbon13", NOT_EXTRUDABLE),
+            row(62, "Carbon14", NOT_EXTRUDABLE),
+            row(70, "Nitrogen", NOT_EXTRUDABLE),
+            row(80, "Oxygen", NOT_EXTRUDABLE),
+            row(90, "Fluorine", NOT_EXTRUDABLE),
+            row(100, "Neon", NOT_EXTRUDABLE),
+            row(110, "Sodium", SIMPLE_SMITHABLE),
+            row(120, "Magnesium", SIMPLE_SMITHABLE),
+            row(130, "Aluminium", SIMPLE_SMITHABLE),
+            row(140, "Silicon", SMITHABLE),
+            row(150, "Phosphor", NOT_EXTRUDABLE),
+            row(160, "Sulfur", NOT_EXTRUDABLE),
+            row(170, "Chlorine", NOT_EXTRUDABLE),
+            row(180, "Argon", NOT_EXTRUDABLE),
+            row(190, "Potassium", SIMPLE_SMITHABLE),
+            row(200, "Calcium", SIMPLE_SMITHABLE),
+            row(210, "Scandium", SMITHABLE),
+            row(220, "Titanium", SMITHABLE),
+            row(230, "Vanadium", SMITHABLE),
+            row(240, "Chromium", SMITHABLE),
+            row(250, "Manganese", SMITHABLE),
+            row(260, "Iron", SMITHABLE),
+            row(270, "Cobalt", SMITHABLE),
+            row(278, "Cobalt60", SMITHABLE),
+            row(280, "Nickel", SMITHABLE),
+            row(290, "Copper", SIMPLE_SMITHABLE),
+            row(300, "Zinc", SIMPLE_SMITHABLE),
+            row(310, "Gallium", SIMPLE_SMITHABLE),
+            row(320, "Germanium", SIMPLE_SMITHABLE),
+            row(330, "Arsenic", SIMPLE_SMITHABLE),
+            row(340, "Selenium", NOT_EXTRUDABLE),
+            row(350, "Bromine", NOT_EXTRUDABLE),
+            row(360, "Krypton", NOT_EXTRUDABLE),
+            row(370, "Rubidium", SIMPLE_SMITHABLE),
+            row(380, "Strontium", SIMPLE_SMITHABLE),
+            row(390, "Yttrium", SMITHABLE),
+            row(400, "Zirconium", SMITHABLE),
+            row(410, "Niobium", SMITHABLE),
+            row(420, "Molybdenum", SMITHABLE),
+            row(430, "Technetium", SMITHABLE),
+            row(440, "Ruthenium", SMITHABLE),
+            row(450, "Rhodium", SMITHABLE),
+            row(460, "Palladium", SMITHABLE),
+            row(470, "Silver", SMITHABLE),
+            row(480, "Cadmium", SIMPLE_SMITHABLE),
+            row(490, "Indium", SIMPLE_SMITHABLE),
+            row(500, "Tin", SIMPLE_SMITHABLE),
+            row(510, "Antimony", SIMPLE_SMITHABLE),
+            row(520, "Tellurium", SIMPLE_SMITHABLE),
+            row(530, "Iodine", NOT_EXTRUDABLE),
+            row(540, "Xenon", NOT_EXTRUDABLE),
+            row(550, "Caesium", SIMPLE_SMITHABLE),
+            row(560, "Barium", SIMPLE_SMITHABLE),
+            row(570, "Lanthanium", SIMPLE_SMITHABLE),
+            row(580, "Cerium", SIMPLE_SMITHABLE),
+            row(590, "Praseodymium", SMITHABLE),
+            row(600, "Neodymium", SMITHABLE),
+            row(610, "Promethium", SMITHABLE),
+            row(620, "Samarium", SMITHABLE),
+            row(630, "Europium", SIMPLE_SMITHABLE),
+            row(640, "Gadolinium", SMITHABLE),
+            row(650, "Terbium", SMITHABLE),
+            row(660, "Dysprosium", SMITHABLE),
+            row(670, "Holmium", SMITHABLE),
+            row(680, "Erbium", SMITHABLE),
+            row(690, "Thulium", SMITHABLE),
+            row(700, "Ytterbium", SIMPLE_SMITHABLE),
+            row(710, "Lutetium", SMITHABLE),
+            row(720, "Hafnium", SMITHABLE),
+            row(730, "Tantalum", SMITHABLE),
+            row(740, "Tungsten", SMITHABLE),
+            row(750, "Rhenium", SMITHABLE),
+            row(760, "OsmiumElemental", SMITHABLE),
+            row(770, "Iridium", SMITHABLE),
+            row(780, "Platinum", SMITHABLE),
+            row(790, "Gold", SMITHABLE),
+            row(791, "Gold198", SMITHABLE),
+            row(800, "Mercury", SIMPLE_SMITHABLE),
+            row(810, "Thallium", SIMPLE_SMITHABLE),
+            row(820, "Lead", SIMPLE_SMITHABLE),
+            row(830, "Bismuth", SIMPLE_SMITHABLE),
+            row(840, "Polonium", SIMPLE_SMITHABLE),
+            row(850, "Astatine", SIMPLE_SMITHABLE),
+            row(860, "Radon", NOT_EXTRUDABLE),
+            row(870, "Francium", SIMPLE_SMITHABLE),
+            row(880, "Radium", SIMPLE_SMITHABLE),
+            row(890, "Actinium", SMITHABLE),
+            row(900, "Thorium", SMITHABLE),
+            row(910, "Protactinium", SMITHABLE),
+            row(920, "Uranium", SMITHABLE),
+            row(921, "Uranium235", SMITHABLE),
+            row(922, "Uranium233", SMITHABLE),
+            row(930, "Neptunium", SIMPLE_SMITHABLE),
+            row(940, "Plutonium", SIMPLE_SMITHABLE),
+            row(942, "Plutonium240", SIMPLE_SMITHABLE),
+            row(943, "Plutonium241", SIMPLE_SMITHABLE),
+            row(945, "Plutonium243", SIMPLE_SMITHABLE),
+            row(946, "Plutonium238", SIMPLE_SMITHABLE),
+            row(947, "Plutonium239", SIMPLE_SMITHABLE),
+            row(950, "Americium", SMITHABLE),
+            row(951, "Americium241", SMITHABLE),
+            row(952, "Americium242", SMITHABLE),
+            row(960, "Curium", SMITHABLE),
+            row(970, "Berkelium", SMITHABLE),
+            row(980, "Californium", SIMPLE_SMITHABLE),
+            row(990, "Einsteinium", SIMPLE_SMITHABLE),
+            row(1000, "Fermium", SIMPLE_SMITHABLE),
+            row(1010, "Mendelevium", SIMPLE_SMITHABLE),
+            row(1020, "Nobelium", SIMPLE_SMITHABLE),
+            row(1030, "Lawrencium", SMITHABLE),
+            row(1040, "Rutherfordium", SMITHABLE),
+            row(1050, "Dubnium", SIMPLE_SMITHABLE),
+            row(1060, "Seaborgium", SIMPLE_SMITHABLE),
+            row(1070, "Bohrium", SIMPLE_SMITHABLE),
+            row(1080, "Hassium", SIMPLE_SMITHABLE),
+            row(1090, "Meitnerium", NOT_EXTRUDABLE),
+            row(1100, "Darmstadtium", NOT_EXTRUDABLE),
+            row(1110, "Roentgenium", NOT_EXTRUDABLE),
+            row(1120, "Copernicium", SIMPLE_SMITHABLE),
+            row(1130, "Nihonium", NOT_EXTRUDABLE),
+            row(1140, "Flerovium", SIMPLE_SMITHABLE),
+            row(1148, "Flerovium298", SIMPLE_SMITHABLE),
+            row(1150, "Moscovium", NOT_EXTRUDABLE),
+            row(1160, "Livermorium", NOT_EXTRUDABLE),
+            row(1170, "Farnsium", NOT_EXTRUDABLE),
+            row(1180, "Oganesson", NOT_EXTRUDABLE),
+            row(1250, "TritaniumElemental", SMITHABLE),
+            row(1260, "Trinium", SMITHABLE),
+            row(1450, "DuraniumElemental", SIMPLE_SMITHABLE),
+            row(1520, "Vibranium", NOT_EXTRUDABLE),
+            row(1740, "Naquadah", SMITHABLE),
+            row(1741, "NaquadahEnriched", SMITHABLE),
+            row(1742, "Naquadria", SMITHABLE),
+            row(2220, "Adamantium", SMITHABLE),
+            row(3720, "Gravitonium", NOT_EXTRUDABLE),
+            row(4000, "Magic", NOT_EXTRUDABLE),
+            row(8000, "SiliconDioxide", NOT_EXTRUDABLE),
+            row(8001, "Glass", SIMPLE),
+            row(8002, "Flint", NOT_EXTRUDABLE),
+            row(8003, "Carborundum", SMITHABLE),
+            row(8006, "Datolite", NOT_EXTRUDABLE),
+            row(8007, "HydrogenBorate", NOT_EXTRUDABLE),
+            row(8008, "Alumina", NOT_EXTRUDABLE),
+            row(8009, "Cryolite", NOT_EXTRUDABLE),
+            row(8010, "AluminiumFluoride", NOT_EXTRUDABLE),
+            row(8011, "HexafluorosilicicAcid", NOT_EXTRUDABLE),
+            row(8012, "SodiumAluminate", NOT_EXTRUDABLE),
+            row(8013, "SodiumCarbonate", NOT_EXTRUDABLE),
+            row(8014, "AluminiumHydroxide", NOT_EXTRUDABLE),
+            row(8015, "PotassiumHydroxide", NOT_EXTRUDABLE),
+            row(8016, "MagnesiumCarbonate", NOT_EXTRUDABLE),
+            row(8017, "FerricChloride", NOT_EXTRUDABLE),
+            row(8018, "MagnesiumChloride", NOT_EXTRUDABLE),
+            row(8019, "SodiumNitrate", NOT_EXTRUDABLE),
+            row(8020, "PotassiumCarbonate", NOT_EXTRUDABLE),
+            row(8021, "PotassiumSulfite", NOT_EXTRUDABLE),
+            row(8022, "PotassiumPersulfate", NOT_EXTRUDABLE),
+            row(8023, "PotassiumAluminate", NOT_EXTRUDABLE),
+            row(8024, "HydrosulfuricAcid", NOT_EXTRUDABLE),
+            row(8025, "Ammonia", NOT_EXTRUDABLE),
+            row(8026, "TungstenTrioxide", NOT_EXTRUDABLE),
+            row(8027, "TungsticAcid", NOT_EXTRUDABLE),
+            row(8028, "CalciumChloride", NOT_EXTRUDABLE),
+            row(8029, "LithiumChloride", NOT_EXTRUDABLE),
+            row(8030, "FerrousChloride", NOT_EXTRUDABLE),
+            row(8031, "ManganeseChloride", NOT_EXTRUDABLE),
+            row(8032, "LithiumHydroxide", NOT_EXTRUDABLE),
+            row(8033, "LithiumChlorate", NOT_EXTRUDABLE),
+            row(8034, "LithiumPerchlorate", NOT_EXTRUDABLE),
+            row(8035, "FerricOxyhydroxide", NOT_EXTRUDABLE),
+            row(8036, "PotassiumFluoride", NOT_EXTRUDABLE),
+            row(8037, "SodiumFluoride", NOT_EXTRUDABLE),
+            row(8038, "PotassiumHeptafluorotantalate", NOT_EXTRUDABLE),
+            row(8039, "SodiumHydrogencarbonate", NOT_EXTRUDABLE),
+            row(8100, "Sand", NOT_EXTRUDABLE),
+            row(8101, "Soulsand", NOT_EXTRUDABLE),
+            row(8102, "SluiceSand", NOT_EXTRUDABLE),
+            row(8103, "PlatinumGroupSludge", NOT_EXTRUDABLE),
+            row(8104, "RedSand", NOT_EXTRUDABLE),
+            row(8196, "Teflon", SIMPLE),
+            row(8197, "PVC", SIMPLE),
+            row(8200, "Ashes", NOT_EXTRUDABLE),
+            row(8201, "DarkAshes", NOT_EXTRUDABLE),
+            row(8203, "Sylvite", NOT_EXTRUDABLE),
+            row(8204, "Salt", NOT_EXTRUDABLE),
+            row(8205, "PotassiumNitrate", NOT_EXTRUDABLE),
+            row(8206, "Niter", NOT_EXTRUDABLE),
+            row(8207, "Phosphate", NOT_EXTRUDABLE),
+            row(8208, "Phosphorus", NOT_EXTRUDABLE),
+            row(8209, "Apatite", NOT_EXTRUDABLE),
+            row(8210, "Blizz", NOT_EXTRUDABLE),
+            row(8211, "Blaze", NOT_EXTRUDABLE),
+            row(8214, "Obsidian", NOT_EXTRUDABLE),
+            row(8215, "Clay", NOT_EXTRUDABLE),
+            row(8216, "Paper", NOT_EXTRUDABLE),
+            row(8217, "Rubber", SIMPLE),
+            row(8218, "Plastic", SIMPLE),
+            row(8219, "Bone", NOT_EXTRUDABLE),
+            row(8220, "Gunpowder", NOT_EXTRUDABLE),
+            row(8221, "Wood", NOT_EXTRUDABLE),
+            row(8222, "WoodTreated", NOT_EXTRUDABLE),
+            row(8223, "LiveRoot", NOT_EXTRUDABLE),
+            row(8224, "WoodRubber", NOT_EXTRUDABLE),
+            row(8225, "Ceramic", NOT_EXTRUDABLE),
+            row(8226, "Phosphorite", NOT_EXTRUDABLE),
+            row(8229, "CobaltHexahydrate", NOT_EXTRUDABLE),
+            row(8230, "SodiumBisulfate", NOT_EXTRUDABLE),
+            row(8231, "SodiumPyrosulfate", NOT_EXTRUDABLE),
+            row(8232, "PotassiumBisulfate", NOT_EXTRUDABLE),
+            row(8233, "PotassiumPyrosulfate", NOT_EXTRUDABLE),
+            row(8234, "VanadiumPentoxide", NOT_EXTRUDABLE),
+            row(8235, "Wax", SIMPLE),
+            row(8236, "WaxBee", SIMPLE),
+            row(8238, "WaxParaffin", SIMPLE),
+            row(8239, "WaxPlant", SIMPLE),
+            row(8241, "Leather", NOT_EXTRUDABLE),
+            row(8242, "IodineSalt", NOT_EXTRUDABLE),
+            row(8247, "Basalz", NOT_EXTRUDABLE),
+            row(8248, "Blitz", NOT_EXTRUDABLE),
+            row(8249, "Dynamite", NOT_EXTRUDABLE),
+            row(8250, "DyeBlack", NOT_EXTRUDABLE),
+            row(8251, "DyeRed", NOT_EXTRUDABLE),
+            row(8252, "DyeGreen", NOT_EXTRUDABLE),
+            row(8253, "DyeBrown", NOT_EXTRUDABLE),
+            row(8254, "DyeBlue", NOT_EXTRUDABLE),
+            row(8255, "DyePurple", NOT_EXTRUDABLE),
+            row(8256, "DyeCyan", NOT_EXTRUDABLE),
+            row(8257, "DyeLightGray", NOT_EXTRUDABLE),
+            row(8258, "DyeGray", NOT_EXTRUDABLE),
+            row(8259, "DyePink", NOT_EXTRUDABLE),
+            row(8260, "DyeLime", NOT_EXTRUDABLE),
+            row(8261, "DyeYellow", NOT_EXTRUDABLE),
+            row(8262, "DyeLightBlue", NOT_EXTRUDABLE),
+            row(8263, "DyeMagenta", NOT_EXTRUDABLE),
+            row(8264, "DyeOrange", NOT_EXTRUDABLE),
+            row(8265, "DyeWhite", NOT_EXTRUDABLE),
+            row(8266, "Asphalt", SIMPLE),
+            row(8267, "WoodPolished", NOT_EXTRUDABLE),
+            row(8268, "SodiumHydroxide", NOT_EXTRUDABLE),
+            row(8269, "SodiumSulfite", NOT_EXTRUDABLE),
+            row(8270, "SodiumSulfate", NOT_EXTRUDABLE),
+            row(8271, "PotassiumSulfate", NOT_EXTRUDABLE),
+            row(8272, "PotassiumSulfide", NOT_EXTRUDABLE),
+            row(8273, "Porcelain", NOT_EXTRUDABLE),
+            row(8274, "CalciumSulfate", NOT_EXTRUDABLE),
+            row(8275, "Bark", NOT_EXTRUDABLE),
+            row(8276, "ClayBrown", NOT_EXTRUDABLE),
+            row(8277, "PetrifiedWood", NOT_EXTRUDABLE),
+            row(8278, "ManaDiamond", NOT_EXTRUDABLE),
+            row(8289, "Livingwood", NOT_EXTRUDABLE),
+            row(8290, "Dreamwood", NOT_EXTRUDABLE),
+            row(8296, "Greatwood", NOT_EXTRUDABLE),
+            row(8297, "Silverwood", NOT_EXTRUDABLE),
+            row(8298, "EnergiumRed", NOT_EXTRUDABLE),
+            row(8299, "EnergiumCyan", NOT_EXTRUDABLE),
+            row(8300, "Diamond", NOT_EXTRUDABLE),
+            row(8301, "Emerald", NOT_EXTRUDABLE),
+            row(8302, "Ruby", NOT_EXTRUDABLE),
+            row(8303, "BalasRuby", NOT_EXTRUDABLE),
+            row(8304, "Sapphire", NOT_EXTRUDABLE),
+            row(8305, "GreenSapphire", NOT_EXTRUDABLE),
+            row(8306, "Topaz", NOT_EXTRUDABLE),
+            row(8307, "BlueTopaz", NOT_EXTRUDABLE),
+            row(8308, "Tanzanite", NOT_EXTRUDABLE),
+            row(8309, "RedJasper", NOT_EXTRUDABLE),
+            row(8310, "Amber", NOT_EXTRUDABLE),
+            row(8311, "Peridot", NOT_EXTRUDABLE),
+            row(8312, "Opal", NOT_EXTRUDABLE),
+            row(8313, "Amethyst", NOT_EXTRUDABLE),
+            row(8314, "OrangeSapphire", NOT_EXTRUDABLE),
+            row(8315, "YellowSapphire", NOT_EXTRUDABLE),
+            row(8318, "EnderPearl", NOT_EXTRUDABLE),
+            row(8319, "EnderEye", NOT_EXTRUDABLE),
+            row(8320, "NetherStar", NOT_EXTRUDABLE),
+            row(8321, "Jade", NOT_EXTRUDABLE),
+            row(8322, "Craponite", NOT_EXTRUDABLE),
+            row(8323, "Aquamarine", NOT_EXTRUDABLE),
+            row(8324, "Morganite", NOT_EXTRUDABLE),
+            row(8325, "Dioptase", NOT_EXTRUDABLE),
+            row(8326, "Spinel", NOT_EXTRUDABLE),
+            row(8328, "BlueSapphire", NOT_EXTRUDABLE),
+            row(8330, "Lazurite", NOT_EXTRUDABLE),
+            row(8331, "Sodalite", NOT_EXTRUDABLE),
+            row(8332, "Lapis", NOT_EXTRUDABLE),
+            row(8333, "Redstone", NOT_EXTRUDABLE),
+            row(8334, "Coal", NOT_EXTRUDABLE),
+            row(8335, "HydratedCoal", NOT_EXTRUDABLE),
+            row(8336, "Charcoal", NOT_EXTRUDABLE),
+            row(8337, "Lignite", NOT_EXTRUDABLE),
+            row(8338, "Monazite", NOT_EXTRUDABLE),
+            row(8340, "Nikolite", NOT_EXTRUDABLE),
+            row(8341, "Glowstone", NOT_EXTRUDABLE),
+            row(8342, "Firestone", NOT_EXTRUDABLE),
+            row(8346, "NetherQuartz", NOT_EXTRUDABLE),
+            row(8347, "CertusQuartz", NOT_EXTRUDABLE),
+            row(8348, "ChargedCertusQuartz", NOT_EXTRUDABLE),
+            row(8349, "CoalCoke", NOT_EXTRUDABLE),
+            row(8360, "Peat", NOT_EXTRUDABLE),
+            row(8365, "LigniteCoke", NOT_EXTRUDABLE),
+            row(8383, "PurpleSapphire", NOT_EXTRUDABLE),
+            row(8384, "Heliodor", NOT_EXTRUDABLE),
+            row(8385, "Goshenite", NOT_EXTRUDABLE),
+            row(8386, "Bixbite", NOT_EXTRUDABLE),
+            row(8387, "Maxixe", NOT_EXTRUDABLE),
+            row(8389, "Fluix", NOT_EXTRUDABLE),
+            row(8390, "PetroleumCoke", NOT_EXTRUDABLE),
+            row(8393, "SunnyQuartz", NOT_EXTRUDABLE),
+            row(8395, "RedQuartz", NOT_EXTRUDABLE),
+            row(8396, "BlazeQuartz", NOT_EXTRUDABLE),
+            row(8397, "SmokeyQuartz", NOT_EXTRUDABLE),
+            row(8399, "ElvenQuartz", NOT_EXTRUDABLE),
+            row(8400, "ChloroauricAcid", NOT_EXTRUDABLE),
+            row(8401, "ChloroplatinicAcid", NOT_EXTRUDABLE),
+            row(8402, "StannicChloride", NOT_EXTRUDABLE),
+            row(8403, "BlackVitriol", NOT_EXTRUDABLE),
+            row(8404, "BlueVitriol", NOT_EXTRUDABLE),
+            row(8405, "GreenVitriol", NOT_EXTRUDABLE),
+            row(8406, "RedVitriol", NOT_EXTRUDABLE),
+            row(8407, "PinkVitriol", NOT_EXTRUDABLE),
+            row(8408, "CyanVitriol", NOT_EXTRUDABLE),
+            row(8409, "WhiteVitriol", NOT_EXTRUDABLE),
+            row(8410, "GrayVitriol", NOT_EXTRUDABLE),
+            row(8412, "VitriolOfClay", NOT_EXTRUDABLE),
+            row(8413, "TitaniumTetrachloride", NOT_EXTRUDABLE),
+            row(8415, "OnyxRed", NOT_EXTRUDABLE),
+            row(8416, "OnyxBlack", NOT_EXTRUDABLE),
+            row(8417, "Amazonite", NOT_EXTRUDABLE),
+            row(8418, "Bamboo", NOT_EXTRUDABLE),
+            row(8419, "Zircon", NOT_EXTRUDABLE),
+            row(8420, "Azurite", NOT_EXTRUDABLE),
+            row(8421, "Eudialyte", NOT_EXTRUDABLE),
+            row(8423, "DiamondIndustrial", NOT_EXTRUDABLE),
+            row(8424, "PinkDiamond", NOT_EXTRUDABLE),
+            row(8425, "OceanJasper", NOT_EXTRUDABLE),
+            row(8426, "RainforestJasper", NOT_EXTRUDABLE),
+            row(8427, "BlueJasper", NOT_EXTRUDABLE),
+            row(8428, "GreenJasper", NOT_EXTRUDABLE),
+            row(8429, "YellowJasper", NOT_EXTRUDABLE),
+            row(8430, "TigerEye", NOT_EXTRUDABLE),
+            row(8431, "CatsEye", NOT_EXTRUDABLE),
+            row(8432, "DragonEye", NOT_EXTRUDABLE),
+            row(8433, "HawksEye", NOT_EXTRUDABLE),
+            row(8434, "BlackEye", NOT_EXTRUDABLE),
+            row(8435, "TigerIron", NOT_EXTRUDABLE),
+            row(8436, "RedFluorite", NOT_EXTRUDABLE),
+            row(8437, "PinkFluorite", NOT_EXTRUDABLE),
+            row(8438, "BlueFluorite", NOT_EXTRUDABLE),
+            row(8439, "GreenFluorite", NOT_EXTRUDABLE),
+            row(8440, "BlackFluorite", NOT_EXTRUDABLE),
+            row(8441, "WhiteFluorite", NOT_EXTRUDABLE),
+            row(8442, "YellowFluorite", NOT_EXTRUDABLE),
+            row(8443, "OrangeFluorite", NOT_EXTRUDABLE),
+            row(8444, "MagentaFluorite", NOT_EXTRUDABLE),
+            row(8445, "MilkyQuartz", NOT_EXTRUDABLE),
+            row(8446, "BrownAventurine", NOT_EXTRUDABLE),
+            row(8447, "YellowAventurine", NOT_EXTRUDABLE),
+            row(8448, "GreenAventurine", NOT_EXTRUDABLE),
+            row(8449, "BlackAventurine", NOT_EXTRUDABLE),
+            row(8450, "BlueAventurine", NOT_EXTRUDABLE),
+            row(8451, "RedAventurine", NOT_EXTRUDABLE),
+            row(8455, "ClayRed", NOT_EXTRUDABLE),
+            row(8458, "BluePhosphorus", NOT_EXTRUDABLE),
+            row(8459, "RedPhosphorus", NOT_EXTRUDABLE),
+            row(8460, "WhitePhosphorus", NOT_EXTRUDABLE),
+            row(8461, "NiobiumPentoxide", NOT_EXTRUDABLE),
+            row(8462, "TantalumPentoxide", NOT_EXTRUDABLE),
+            row(8464, "BlueDiamond", NOT_EXTRUDABLE),
+            row(8465, "GreenDiamond", NOT_EXTRUDABLE),
+            row(8467, "RedDiamond", NOT_EXTRUDABLE),
+            row(8468, "YellowDiamond", NOT_EXTRUDABLE),
+            row(8470, "Carminite", NOT_EXTRUDABLE),
+            row(8471, "Breeze", NOT_EXTRUDABLE),
+            row(8500, "Stone", SIMPLE),
+            row(8501, "Concrete", SIMPLE),
+            row(8502, "Netherrack", SIMPLE),
+            row(8503, "NetherBrick", SIMPLE),
+            row(8504, "Endstone", SIMPLE),
+            row(8505, "Basalt", SIMPLE),
+            row(8506, "Marble", SIMPLE),
+            row(8507, "GraniteRed", SIMPLE),
+            row(8508, "GraniteBlack", SIMPLE),
+            row(8511, "Diorite", SIMPLE),
+            row(8516, "MarsSand", SIMPLE),
+            row(8518, "Granite", SIMPLE),
+            row(8521, "Livingrock", SIMPLE),
+            row(8528, "SkyStone", SIMPLE),
+            row(8599, "Bedrock", NOT_EXTRUDABLE),
+            row(8600, "Electrum", SMITHABLE),
+            row(8601, "SterlingSilver", SMITHABLE),
+            row(8602, "RoseGold", SMITHABLE),
+            row(8605, "CdInAgAlloy", SMITHABLE),
+            row(8610, "Bronze", SIMPLE_SMITHABLE),
+            row(8611, "BlackBronze", SMITHABLE),
+            row(8612, "BismuthBronze", SIMPLE_SMITHABLE),
+            row(8614, "ArsenicCopper", SIMPLE_SMITHABLE),
+            row(8615, "ArsenicBronze", SIMPLE_SMITHABLE),
+            row(8620, "Brass", SIMPLE_SMITHABLE),
+            row(8621, "CobaltBrass", SIMPLE_SMITHABLE),
+            row(8622, "AluminiumAlloy", SMITHABLE),
+            row(8630, "Steel", SMITHABLE),
+            row(8631, "BlackSteel", SMITHABLE),
+            row(8632, "BlueSteel", SMITHABLE),
+            row(8633, "RedSteel", SMITHABLE),
+            row(8634, "DamascusSteel", SMITHABLE),
+            row(8635, "Tungstensteel", SMITHABLE),
+            row(8636, "StainlessSteel", SMITHABLE),
+            row(8638, "TungstenCarbide", SMITHABLE),
+            row(8640, "AnnealedCopper", SIMPLE_SMITHABLE),
+            row(8643, "WroughtIron", SMITHABLE),
+            row(8645, "IronMagnetic", SMITHABLE.withTarget("Fe")),
+            row(8646, "SteelMagnetic", SMITHABLE.withTarget("Steel")),
+            row(8647, "NeodymiumMagnetic", SMITHABLE.withTarget("Nd")),
+            row(8651, "SteelGalvanized", SMITHABLE.withTarget("Steel")),
+            row(8652, "TungstenSintered", SMITHABLE),
+            row(8653, "VanadiumSteel", SMITHABLE),
+            row(8658, "ElectrotineAlloy", SIMPLE_SMITHABLE),
+            row(8659, "BlueAlloy", SIMPLE_SMITHABLE),
+            row(8660, "RedAlloy", SIMPLE_SMITHABLE),
+            row(8661, "Invar", SMITHABLE),
+            row(8662, "Constantan", SMITHABLE),
+            row(8663, "Nichrome", SMITHABLE),
+            row(8664, "Kanthal", SMITHABLE),
+            row(8665, "Magnalium", SIMPLE_SMITHABLE),
+            row(8666, "Ultimet", SMITHABLE),
+            row(8667, "TinAlloy", SIMPLE_SMITHABLE),
+            row(8668, "BatteryAlloy", SIMPLE_SMITHABLE),
+            row(8669, "SolderingAlloy", SIMPLE_SMITHABLE),
+            row(8672, "Ironwood", SIMPLE_SMITHABLE),
+            row(8673, "Steeleaf", SMITHABLE),
+            row(8674, "Knightmetal", SMITHABLE),
+            row(8675, "FierySteel", SMITHABLE),
+            row(8679, "Thaumium", SMITHABLE),
+            row(8682, "Osmiridium", SMITHABLE),
+            row(8684, "Trinaquadalloy", SMITHABLE),
+            row(8685, "ChromiumDioxide", SMITHABLE),
+            row(8686, "VanadiumGallium", SMITHABLE),
+            row(8687, "YttriumBariumCuprate", SMITHABLE),
+            row(8689, "NiobiumTitanium", SMITHABLE),
+            row(8697, "FlamascusSteel", SMITHABLE),
+            row(8698, "Fireleaf", SMITHABLE),
+            row(8700, "AluminiumBrass", SIMPLE_SMITHABLE),
+            row(8702, "Alumite", SMITHABLE),
+            row(8704, "VibraniumSteel", SMITHABLE),
+            row(8705, "VibraniumSilver", SMITHABLE),
+            row(8706, "Vibramantium", SMITHABLE),
+            row(8708, "Signalum", SIMPLE_SMITHABLE),
+            row(8709, "Lumium", SIMPLE_SMITHABLE),
+            row(8710, "Enderium", SMITHABLE),
+            row(8717, "Cyanite", SMITHABLE),
+            row(8720, "Manasteel", SMITHABLE),
+            row(8721, "Terrasteel", SMITHABLE),
+            row(8722, "ElvenElementium", SMITHABLE),
+            row(8726, "VibrantAlloy", SMITHABLE),
+            row(8727, "ConductiveIron", SMITHABLE),
+            row(8729, "EnderiumBase", SMITHABLE),
+            row(8730, "ElectricalSteel", SMITHABLE),
+            row(8732, "Soularium", SMITHABLE),
+            row(8733, "RedstoneAlloy", SMITHABLE),
+            row(8735, "GaiaSpirit", SMITHABLE),
+            row(8737, "NikolineAlloy", SMITHABLE),
+            row(8744, "AncientDebris", SMITHABLE),
+            row(8745, "Netherite", SMITHABLE),
+            row(8746, "NetherizedDiamond", SMITHABLE),
+            row(8747, "Efrine", SMITHABLE),
+            row(8751, "Duranium", SMITHABLE),
+            row(8752, "Tritanium", SMITHABLE),
+            row(8756, "Duralumin", SMITHABLE),
+            row(8784, "Adamantine", SMITHABLE),
+            row(8790, "Trinitanium", SMITHABLE),
+            row(8793, "TitaniumIridium", SMITHABLE),
+            row(8796, "HSSG", SMITHABLE),
+            row(8797, "HSSE", SMITHABLE),
+            row(8798, "HSSS", SMITHABLE),
+            row(8799, "CrystalMatrix", SMITHABLE),
+            row(8800, "CosmicNeutronium", SMITHABLE),
+            row(8802, "TantalumHafniumCarbide", SMITHABLE),
+            row(8803, "CastIron", SMITHABLE),
+            row(9000, "Pumice", SIMPLE),
+            row(9001, "Diatomite", NOT_EXTRUDABLE),
+            row(9003, "BasalticMineralSand", NOT_EXTRUDABLE),
+            row(9004, "GraniticMineralSand", NOT_EXTRUDABLE),
+            row(9005, "GarnetSand", NOT_EXTRUDABLE),
+            row(9006, "QuartzSand", NOT_EXTRUDABLE),
+            row(9007, "UraniumTetrafluoride", NOT_EXTRUDABLE),
+            row(9008, "UraniumHexafluoride", NOT_EXTRUDABLE),
+            row(9009, "Uranium238Tetrafluoride", NOT_EXTRUDABLE),
+            row(9010, "Uranium238Hexafluoride", NOT_EXTRUDABLE),
+            row(9011, "Uranium235Tetrafluoride", NOT_EXTRUDABLE),
+            row(9012, "Uranium235Hexafluoride", NOT_EXTRUDABLE),
+            row(9100, "RareEarth", NOT_EXTRUDABLE),
+            row(9101, "Almandine", NOT_EXTRUDABLE),
+            row(9102, "Andradite", NOT_EXTRUDABLE),
+            row(9103, "Asbestos", SIMPLE),
+            row(9104, "Hematite", NOT_EXTRUDABLE),
+            row(9105, "Bauxite", NOT_EXTRUDABLE),
+            row(9106, "BrownLimonite", NOT_EXTRUDABLE),
+            row(9107, "Calcite", NOT_EXTRUDABLE),
+            row(9108, "Cassiterite", NOT_EXTRUDABLE),
+            row(9109, "Realgar", NOT_EXTRUDABLE),
+            row(9110, "Celestine", NOT_EXTRUDABLE),
+            row(9111, "Chalcopyrite", NOT_EXTRUDABLE),
+            row(9113, "Chromite", NOT_EXTRUDABLE),
+            row(9114, "Cinnabar", NOT_EXTRUDABLE),
+            row(9115, "Cobaltite", NOT_EXTRUDABLE),
+            row(9116, "Cooperite", NOT_EXTRUDABLE),
+            row(9117, "Galena", NOT_EXTRUDABLE),
+            row(9118, "Garnierite", NOT_EXTRUDABLE),
+            row(9119, "Grossular", NOT_EXTRUDABLE),
+            row(9120, "Ilmenite", NOT_EXTRUDABLE),
+            row(9122, "Magnetite", NOT_EXTRUDABLE),
+            row(9123, "Molybdenite", NOT_EXTRUDABLE),
+            row(9124, "Powellite", NOT_EXTRUDABLE),
+            row(9125, "Pyrite", NOT_EXTRUDABLE),
+            row(9126, "Pyrolusite", NOT_EXTRUDABLE),
+            row(9127, "Pyrope", NOT_EXTRUDABLE),
+            row(9128, "Scheelite", NOT_EXTRUDABLE),
+            row(9129, "Spessartine", NOT_EXTRUDABLE),
+            row(9130, "Sphalerite", NOT_EXTRUDABLE),
+            row(9131, "Stibnite", NOT_EXTRUDABLE),
+            row(9132, "Tetrahedrite", NOT_EXTRUDABLE),
+            row(9133, "Tungstate", NOT_EXTRUDABLE),
+            row(9134, "Uraninite", NOT_EXTRUDABLE),
+            row(9135, "Uvarovite", NOT_EXTRUDABLE),
+            row(9136, "Wulfenite", NOT_EXTRUDABLE),
+            row(9137, "YellowLimonite", NOT_EXTRUDABLE),
+            row(9138, "Perlite", NOT_EXTRUDABLE),
+            row(9139, "Borax", NOT_EXTRUDABLE),
+            row(9140, "PotassiumFeldspar", NOT_EXTRUDABLE),
+            row(9141, "Biotite", NOT_EXTRUDABLE),
+            row(9143, "VanadiumMagnetite", NOT_EXTRUDABLE),
+            row(9144, "Bastnasite", NOT_EXTRUDABLE),
+            row(9145, "Pentlandite", NOT_EXTRUDABLE),
+            row(9146, "Spodumene", NOT_EXTRUDABLE),
+            row(9147, "Pollucite", NOT_EXTRUDABLE),
+            row(9148, "Tantalite", NOT_EXTRUDABLE),
+            row(9149, "Lepidolite", NOT_EXTRUDABLE),
+            row(9150, "Glauconite", NOT_EXTRUDABLE),
+            row(9152, "Vermiculite", NOT_EXTRUDABLE),
+            row(9153, "Bentonite", NOT_EXTRUDABLE),
+            row(9154, "Palygorskite", NOT_EXTRUDABLE),
+            row(9155, "Pitchblende", NOT_EXTRUDABLE),
+            row(9156, "Malachite", NOT_EXTRUDABLE),
+            row(9157, "Mirabilite", NOT_EXTRUDABLE),
+            row(9158, "Mica", NOT_EXTRUDABLE),
+            row(9159, "Trona", NOT_EXTRUDABLE),
+            row(9160, "Barite", NOT_EXTRUDABLE),
+            row(9161, "Gypsum", NOT_EXTRUDABLE),
+            row(9162, "Alunite", NOT_EXTRUDABLE),
+            row(9164, "Wollastonite", NOT_EXTRUDABLE),
+            row(9165, "Zeolite", NOT_EXTRUDABLE),
+            row(9166, "Kyanite", NOT_EXTRUDABLE),
+            row(9167, "Kaolinite", NOT_EXTRUDABLE),
+            row(9169, "Talc", NOT_EXTRUDABLE),
+            row(9171, "Greenschist", SIMPLE),
+            row(9174, "Graphite", NOT_EXTRUDABLE),
+            row(9175, "Graphene", NOT_EXTRUDABLE),
+            row(9177, "Komatiite", SIMPLE),
+            row(9180, "Quartzite", SIMPLE),
+            row(9184, "Blueschist", SIMPLE),
+            row(9185, "Bluestone", SIMPLE),
+            row(9186, "Chert", SIMPLE),
+            row(9187, "Dacite", SIMPLE),
+            row(9188, "Andesite", SIMPLE),
+            row(9189, "Limestone", SIMPLE),
+            row(9190, "Shale", SIMPLE),
+            row(9192, "Rutile", NOT_EXTRUDABLE),
+            row(9193, "Stolzite", NOT_EXTRUDABLE),
+            row(9194, "Ferberite", NOT_EXTRUDABLE),
+            row(9195, "Huebnerite", NOT_EXTRUDABLE),
+            row(9196, "Russellite", NOT_EXTRUDABLE),
+            row(9197, "Pinalite", NOT_EXTRUDABLE),
+            row(9198, "DiduraniumTrioxide", NOT_EXTRUDABLE),
+            row(9199, "DuraniumHexafluoride", NOT_EXTRUDABLE),
+            row(9200, "DuraniumHexachloride", NOT_EXTRUDABLE),
+            row(9201, "DuraniumHexabromide", NOT_EXTRUDABLE),
+            row(9202, "DuraniumHexaiodide", NOT_EXTRUDABLE),
+            row(9203, "DuraniumHexaastatide", NOT_EXTRUDABLE),
+            row(9204, "TritaniumDioxide", NOT_EXTRUDABLE),
+            row(9205, "TritaniumHexafluoride", NOT_EXTRUDABLE),
+            row(9206, "TritaniumHexachloride", NOT_EXTRUDABLE),
+            row(9207, "TritaniumHexabromide", NOT_EXTRUDABLE),
+            row(9208, "TritaniumHexaiodide", NOT_EXTRUDABLE),
+            row(9209, "TritaniumHexaastatide", NOT_EXTRUDABLE),
+            row(9210, "Bromargyrite", NOT_EXTRUDABLE),
+            row(9211, "Smithsonite", NOT_EXTRUDABLE),
+            row(9212, "Sperrylite", NOT_EXTRUDABLE),
+            row(9213, "Kesterite", NOT_EXTRUDABLE),
+            row(9214, "Stannite", NOT_EXTRUDABLE),
+            row(9215, "Fluorite", NOT_EXTRUDABLE),
+            row(9216, "Arsenopyrite", NOT_EXTRUDABLE),
+            row(9217, "Wolframite", NOT_EXTRUDABLE),
+            row(9218, "Kimberlite", SIMPLE),
+            row(9219, "Prismarine", SIMPLE),
+            row(9220, "PrismarineDark", SIMPLE),
+            row(9221, "Bischofite", NOT_EXTRUDABLE),
+            row(9222, "Slate", SIMPLE),
+            row(9223, "Blackstone", SIMPLE),
+            row(9243, "ClayBrick", NOT_EXTRUDABLE),
+            row(9246, "Columbite", NOT_EXTRUDABLE),
+            row(9247, "Coltan", NOT_EXTRUDABLE),
+            row(9248, "Deepslate", SIMPLE),
+            row(9261, "TitanRock", SIMPLE),
+            row(9271, "Quicklime", NOT_EXTRUDABLE),
+            row(9300, "Oak", NOT_EXTRUDABLE),
+            row(9301, "Birch", NOT_EXTRUDABLE),
+            row(9302, "Spruce", NOT_EXTRUDABLE),
+            row(9303, "Junglewood", NOT_EXTRUDABLE),
+            row(9304, "Acacia", NOT_EXTRUDABLE),
+            row(9305, "DarkOak", NOT_EXTRUDABLE),
+            row(9306, "Crimsonwood", NOT_EXTRUDABLE),
+            row(9307, "Warpedwood", NOT_EXTRUDABLE),
+            row(9308, "WoodCompressed", NOT_EXTRUDABLE),
+            row(9309, "WoodDead", NOT_EXTRUDABLE),
+            row(9310, "WoodRotten", NOT_EXTRUDABLE),
+            row(9311, "WoodMossy", NOT_EXTRUDABLE),
+            row(9312, "WoodFrozen", NOT_EXTRUDABLE),
+            row(9313, "Maple", NOT_EXTRUDABLE),
+            row(9314, "Willow", NOT_EXTRUDABLE),
+            row(9315, "BlueMahoe", NOT_EXTRUDABLE),
+            row(9316, "Hazel", NOT_EXTRUDABLE),
+            row(9317, "Cinnamonwood", NOT_EXTRUDABLE),
+            row(9318, "Coconutwood", NOT_EXTRUDABLE),
+            row(9319, "Rainbowood", NOT_EXTRUDABLE),
+            row(9344, "Cherrywood", NOT_EXTRUDABLE),
+            row(9372, "Mangrove", NOT_EXTRUDABLE),
+            row(9409, "BlueSpruce", NOT_EXTRUDABLE),
+            row(9700, "MeatRaw", SIMPLE.withTarget("MeatCooked")),
+            row(9701, "MeatCooked", SIMPLE),
+            row(9702, "Wheat", NOT_EXTRUDABLE),
+            row(9703, "Sugar", NOT_EXTRUDABLE),
+            row(9705, "Rye", NOT_EXTRUDABLE),
+            row(9709, "Potato", NOT_EXTRUDABLE),
+            row(9710, "MeatRotten", SIMPLE),
+            row(9711, "FishCooked", SIMPLE),
+            row(9712, "FishRaw", SIMPLE.withTarget("FishCooked")),
+            row(9713, "FishRotten", SIMPLE),
+            row(9779, "SoylentGreen", SIMPLE),
+            row(9780, "Cheese", SIMPLE),
+            row(9781, "Chili", NOT_EXTRUDABLE),
+            row(9782, "Cocoa", NOT_EXTRUDABLE),
+            row(9783, "Chocolate", SIMPLE),
+            row(9784, "Coffee", NOT_EXTRUDABLE),
+            row(9785, "Cinnamon", NOT_EXTRUDABLE),
+            row(9790, "Milk", NOT_EXTRUDABLE),
+            row(9791, "Honey", NOT_EXTRUDABLE),
+            row(9792, "Tea", NOT_EXTRUDABLE),
+            row(9793, "Honeydew", NOT_EXTRUDABLE),
+            row(9794, "Mint", NOT_EXTRUDABLE),
+            row(9796, "Hazelnut", NOT_EXTRUDABLE),
+            row(9800, "Water", NOT_EXTRUDABLE),
+            row(9801, "Snow", NOT_EXTRUDABLE),
+            row(9802, "Ice", NOT_EXTRUDABLE),
+            row(9803, "FreshWater", NOT_EXTRUDABLE),
+            row(9804, "Saltwater", NOT_EXTRUDABLE),
+            row(9805, "HolyWater", NOT_EXTRUDABLE),
+            row(9806, "SeaWater", NOT_EXTRUDABLE),
+            row(9808, "WaterDistilled", NOT_EXTRUDABLE),
+            row(9809, "HydrogenPeroxide", NOT_EXTRUDABLE),
+            row(9810, "Lava", NOT_EXTRUDABLE),
+            row(9811, "SemiheavyWater", NOT_EXTRUDABLE),
+            row(9812, "HeavyWater", NOT_EXTRUDABLE),
+            row(9813, "TritiatedWater", NOT_EXTRUDABLE),
+            row(9814, "Steam", NOT_EXTRUDABLE),
+            row(9815, "SaltedWater", NOT_EXTRUDABLE),
+            row(9820, "NitroCarbon", NOT_EXTRUDABLE),
+            row(9821, "Glyceryl", NOT_EXTRUDABLE),
+            row(9822, "SodiumPersulfate", NOT_EXTRUDABLE),
+            row(9823, "SodiumSulfide", NOT_EXTRUDABLE),
+            row(9824, "SulfuricAcid", NOT_EXTRUDABLE),
+            row(9825, "NitricAcid", NOT_EXTRUDABLE),
+            row(9826, "HydrochloricAcid", NOT_EXTRUDABLE),
+            row(9827, "AquaRegia", NOT_EXTRUDABLE),
+            row(9828, "Glycerol", NOT_EXTRUDABLE),
+            row(9829, "HydrogenFluoride", NOT_EXTRUDABLE),
+            row(9830, "Air", NOT_EXTRUDABLE),
+            row(9831, "NitrogenDioxide", NOT_EXTRUDABLE),
+            row(9832, "Methane", NOT_EXTRUDABLE),
+            row(9833, "MethaneIce", NOT_EXTRUDABLE),
+            row(9834, "SulfurDioxide", NOT_EXTRUDABLE),
+            row(9835, "SulfurTrioxide", NOT_EXTRUDABLE),
+            row(9836, "CarbonDioxide", NOT_EXTRUDABLE),
+            row(9837, "NitrogenMonoxide", NOT_EXTRUDABLE),
+            row(9838, "CarbonMonoxide", NOT_EXTRUDABLE),
+            row(9839, "HeliumNeon", NOT_EXTRUDABLE),
+            row(9840, "Biomass", NOT_EXTRUDABLE),
+            row(9841, "BioFuel", NOT_EXTRUDABLE),
+            row(9842, "Ethanol", NOT_EXTRUDABLE),
+            row(9843, "CarbonTrioxide", NOT_EXTRUDABLE),
+            row(9844, "DisulfuricAcid", NOT_EXTRUDABLE),
+            row(9850, "Oil", NOT_EXTRUDABLE),
+            row(9851, "OilSand", NOT_EXTRUDABLE),
+            row(9852, "CrudeOil", NOT_EXTRUDABLE),
+            row(9853, "OilShale", NOT_EXTRUDABLE),
+            row(9860, "Fuel", NOT_EXTRUDABLE),
+            row(9861, "NitroFuel", NOT_EXTRUDABLE),
+            row(9862, "Kerosine", NOT_EXTRUDABLE),
+            row(9863, "Diesel", NOT_EXTRUDABLE),
+            row(9864, "Petrol", NOT_EXTRUDABLE),
+            row(9865, "Propane", NOT_EXTRUDABLE),
+            row(9866, "Butane", NOT_EXTRUDABLE),
+            row(9867, "Propylene", NOT_EXTRUDABLE),
+            row(9868, "Ethylene", NOT_EXTRUDABLE),
+            row(9870, "Creosote", NOT_EXTRUDABLE),
+            row(9871, "FishOil", NOT_EXTRUDABLE),
+            row(9872, "SeedOil", NOT_EXTRUDABLE),
+            row(9873, "HempOil", NOT_EXTRUDABLE),
+            row(9874, "LinOil", NOT_EXTRUDABLE),
+            row(9875, "SunflowerOil", NOT_EXTRUDABLE),
+            row(9876, "NutOil", NOT_EXTRUDABLE),
+            row(9877, "OliveOil", NOT_EXTRUDABLE),
+            row(9880, "FryingOilHot", NOT_EXTRUDABLE),
+            row(9881, "Glue", NOT_EXTRUDABLE),
+            row(9882, "Lubricant", NOT_EXTRUDABLE),
+            row(9883, "ConstructionFoam", NOT_EXTRUDABLE),
+            row(9886, "Latex", NOT_EXTRUDABLE));
+
+    private static Map.Entry<Integer, Row> row(int id, String name, Profile profile) {
+        return Map.entry(id, new Row(name, profile));
     }
 
     public static MaterialDefinition.Declaration apply(MaterialDefinition.Declaration declaration) {
