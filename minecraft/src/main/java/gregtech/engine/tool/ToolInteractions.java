@@ -45,11 +45,11 @@ public final class ToolInteractions {
         if (!spec.allows(state, side) || !player.mayBuild() || !level.mayInteract(player, pos)) return false;
         if (state.getBlock() instanceof ToolInteractionTarget target && !target.canUseTool(level, pos, player, tool)) return false;
         if (spec.connection() == null) return true;
-        if(!state.getValue(spec.connection().property(side))&&!gregtech.content.cover.CoverConnections.canConnect(level,pos,side))return false;
+        if (!state.getValue(spec.connection().property(side))&&!gregtech.content.cover.CoverConnections.canConnect(level,pos,side))return false;
         BlockPos otherPos = pos.relative(side);
         if (!level.hasChunkAt(otherPos) || !level.mayInteract(player, otherPos)) return false;
         BlockState other = level.getBlockState(otherPos);
-        if(spec.connection()==ToolInteractionSpec.ConnectionKind.LOGISTICS&&!state.getValue(spec.connection().property(side))
+        if (spec.connection()==ToolInteractionSpec.ConnectionKind.LOGISTICS&&!state.getValue(spec.connection().property(side))
                 &&(gregtech.content.block.machine.LogisticsWireBlock.hasBlockingCover(level,pos,otherPos,side)
                 ||!gregtech.content.block.machine.LogisticsWireBlock.canOpenToward(level,otherPos,side.getOpposite())))return false;
         var otherSpec = describe(other, tool);
@@ -75,7 +75,7 @@ public final class ToolInteractions {
         BlockState next;
         if (spec.connection() == null) {
             if (state.getValue(spec.facing()) == side) {
-                if(state.getBlock() instanceof ToolInteractionTarget target)target.toolStateChanged(level,pos,state,spec);
+                if (state.getBlock() instanceof ToolInteractionTarget target)target.toolStateChanged(level,pos,state,spec);
                 // GT6 facing clicks return 10000 even when selecting the current valid side.
                 GTToolHelper.damageForToolClickReturn(player.getItemInHand(hand), 10000, player);
                 return true;

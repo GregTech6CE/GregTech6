@@ -23,9 +23,9 @@ public final class PolymerFormingRecipes {
     private PolymerFormingRecipes() {}
     public static List<Recipe> recipes(){return Collections.unmodifiableList(RECIPES);}
     public static int register() {
-        if(!RECIPES.isEmpty())throw new IllegalStateException("Polymer recipes registered twice");
+        if (!RECIPES.isEmpty())throw new IllegalStateException("Polymer recipes registered twice");
         var latex=GTFluids.still("Latex");
-        if(latex==null||!GTFluids.isPresent(latex))throw new IllegalStateException("Missing Latex fluid");
+        if (latex==null||!GTFluids.isPresent(latex))throw new IllegalStateException("Missing Latex fluid");
         add(MachineRecipeMaps.Coagulator,new Recipe(null,new ItemStack[]{mat(MaterialPrefix.nugget,"Rubber",1)},null,
                 new FluidStack[]{new FluidStack(latex.get(),16)},null,256,0,0));
         // The shared source extrusion matrix now owns all polymer input forms and both mold families.
@@ -33,17 +33,17 @@ public final class PolymerFormingRecipes {
     }
     private static ItemStack mat(MaterialPrefix prefix,String material,int amount) {
         var stack=GTItems.getStack(prefix,GTMaterialRegistry.get(material),amount);
-        if(stack.isEmpty())throw new IllegalStateException("Missing polymer form "+prefix.getName()+"/"+material);
+        if (stack.isEmpty())throw new IllegalStateException("Missing polymer form "+prefix.getName()+"/"+material);
         return stack;
     }
     private static void add(RecipeMap map,Recipe recipe) {
-        if(map.addRecipe(recipe)!=null){RECIPES.add(recipe);return;}
-        var in=recipe.mInputs.length>0?recipe.mInputs[0]:ItemStack.EMPTY;
-        var mold=recipe.mInputs.length>1?recipe.mInputs[1]:ItemStack.EMPTY;
-        var out=recipe.mOutputs.length>0?recipe.mOutputs[0]:ItemStack.EMPTY;
+        if (map.addRecipe(recipe)!=null){RECIPES.add(recipe);return;}
+        var in=recipe.itemInputs.length>0?recipe.itemInputs[0]:ItemStack.EMPTY;
+        var mold=recipe.itemInputs.length>1?recipe.itemInputs[1]:ItemStack.EMPTY;
+        var out=recipe.itemOutputs.length>0?recipe.itemOutputs[0]:ItemStack.EMPTY;
         var collision=map.findCollision(recipe);
-        throw new IllegalStateException("Polymer recipe conflict in "+map.mNameInternal+": "+in+" + "+mold+" -> "+out
+        throw new IllegalStateException("Polymer recipe conflict in "+map.internalName+": "+in+" + "+mold+" -> "+out
                 +" collides with "+(collision==null?"nothing (validation failed)"
-                :Arrays.toString(collision.mInputs)+" -> "+Arrays.toString(collision.mOutputs)));
+                :Arrays.toString(collision.itemInputs)+" -> "+Arrays.toString(collision.itemOutputs)));
     }
 }

@@ -38,7 +38,7 @@ public final class LaserConverterBlock extends AutoToolBlock {
     public LaserSpec spec() { return spec; }
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         var stack=new net.minecraft.world.item.ItemStack(this);
-        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LaserConverterBlockEntity laser) {
+        if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LaserConverterBlockEntity laser) {
 //? if >=1.21.1 {
             /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(laser, laser.saveWithId(builder.getLevel().registryAccess()));
 *///?} else {
@@ -55,7 +55,7 @@ public final class LaserConverterBlock extends AutoToolBlock {
     }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new LaserConverterBlockEntity(pos, state); }
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : (world,pos,current,entity) -> { if(entity instanceof LaserConverterBlockEntity laser) laser.tick(); };
+        return level.isClientSide ? null : (world,pos,current,entity) -> { if (entity instanceof LaserConverterBlockEntity laser) laser.tick(); };
     }
 //? if >=1.21.1 {
     /*@Override public void appendHoverText(net.minecraft.world.item.ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,

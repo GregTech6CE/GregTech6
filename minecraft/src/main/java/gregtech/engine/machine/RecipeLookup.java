@@ -39,13 +39,13 @@ public final class RecipeLookup {
             boolean searchOutputTanks) {
         if (map == null || inventory == null) return null;
         var items = inventory.matchingSlots();
-        int inputSlots = map.mInputItemsCount + map.mInputPotionCount;
+        int inputSlots = map.itemInputSlots + map.potionInputSlots;
         Recipe direct = map.findRecipe(
                 items,
                 MachineInventory.contents(inventory.tanksInput()),
-                map.mNeedsOutputs,
+                map.requiresOutputs,
                 inputSlots,
-                map.mOutputItemsCount,
+                map.itemOutputSlots,
                 owner.getLevel(),
                 owner,
                 autocraftingProgram);
@@ -54,9 +54,9 @@ public final class RecipeLookup {
             Recipe fromOutput = map.findRecipe(
                     items,
                     MachineInventory.contents(inventory.tanksOutput()),
-                    map.mNeedsOutputs,
+                    map.requiresOutputs,
                     inputSlots,
-                    map.mOutputItemsCount,
+                    map.itemOutputSlots,
                     owner.getLevel(),
                     owner,
                     autocraftingProgram);
@@ -71,7 +71,7 @@ public final class RecipeLookup {
     private static Match usbPort(BlockEntity owner, RecipeMap map, MachineInventory inventory) {
         if (map != MachineRecipeMaps.Printer && map != MachineRecipeMaps.Replicator) return null;
         int requiredTier = map == MachineRecipeMaps.Printer ? 1 : gregtech.content.data.UsbDataRules.SCANNER_TIER;
-        for (int slot = 0; slot < map.mInputItemsCount; slot++) {
+        for (int slot = 0; slot < map.itemInputSlots; slot++) {
             ItemStack cable = inventory.items().getStackInSlot(slot);
             if (UsbDataMedia.cableTier(cable) < requiredTier) continue;
             CompoundTag data = UsbDataCable.readAdjacent(owner, cable, requiredTier);

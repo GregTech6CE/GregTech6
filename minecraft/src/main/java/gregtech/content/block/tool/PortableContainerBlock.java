@@ -44,9 +44,9 @@ public final class PortableContainerBlock extends Block implements EntityBlock, 
     public InteractionResult use(BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.getBlockEntity(pos) instanceof PortableContainerBlockEntity vessel) {
-            if(player.getItemInHand(hand).isEmpty()&&hit.getDirection().getAxis().isHorizontal()
+            if (player.getItemInHand(hand).isEmpty()&&hit.getDirection().getAxis().isHorizontal()
                     &&gregtech.content.tool.PortableContainerLimits.adjustable(spec)){
-                if(!level.isClientSide){
+                if (!level.isClientSide){
                     int limit=vessel.adjustLimit(hit.getLocation().y-pos.getY(),player.isShiftKeyDown());
                     player.displayClientMessage(gregtech.engine.fluid.FluidUnits.text("message.gt6ce.portable_fluid.limit",limit),true);
                 }

@@ -56,7 +56,7 @@ public final class OvenRecipeBridge {
         gregtech.content.recipe.MachineRecipeOverlay.restoreFurnaceBeforeMirror();
         var map=MachineRecipeMaps.Furnace;
         map.removeAll(MIRRORED);
-        for(var row:DISPLACED) if(!map.mRecipeList.contains(row)) map.add(row);
+        for (var row:DISPLACED) if (!map.recipeRows.contains(row)) map.add(row);
         // The mirror runs again on every server start; the diagnostic report must be replaced,
         // not appended to (one ItemStack per mirrored row would accumulate per world load).
         MIRRORED.clear(); DISPLACED.clear(); ADDED_TO_VANILLA.clear();
@@ -66,7 +66,7 @@ public final class OvenRecipeBridge {
     public static void apply(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
         clearMirrors();
         var originalRows=java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<gregtech.engine.recipe.Recipe,Boolean>());
-        originalRows.addAll(MachineRecipeMaps.Furnace.mRecipeList);
+        originalRows.addAll(MachineRecipeMaps.Furnace.recipeRows);
 
 //? if >=1.21.1 {
         /*List<RecipeHolder<?>> rewritten = new ArrayList<>();
@@ -155,8 +155,8 @@ public final class OvenRecipeBridge {
             }
         }
 
-        MIRRORED.addAll(MachineRecipeMaps.Furnace.mRecipeList); MIRRORED.removeAll(originalRows);
-        DISPLACED.addAll(originalRows); DISPLACED.removeAll(MachineRecipeMaps.Furnace.mRecipeList);
+        MIRRORED.addAll(MachineRecipeMaps.Furnace.recipeRows); MIRRORED.removeAll(originalRows);
+        DISPLACED.addAll(originalRows); DISPLACED.removeAll(MachineRecipeMaps.Furnace.recipeRows);
 //? if >=1.21.1 {
         /*int fuelled = mirrorIntoFurnace(rewritten, access);
         var unique = new java.util.LinkedHashMap<net.minecraft.resources.ResourceLocation, RecipeHolder<?>>();
@@ -200,14 +200,14 @@ public final class OvenRecipeBridge {
             }
         }
         int added = 0;
-        var ordered=new ArrayList<>(MachineRecipeMaps.Furnace.mRecipeList);
-        ordered.sort(java.util.Comparator.comparing((gregtech.engine.recipe.Recipe row)->sortKey(firstStack(row.mInputs), access))
-                .thenComparing(row->sortKey(firstStack(row.mOutputs), access)));
+        var ordered=new ArrayList<>(MachineRecipeMaps.Furnace.recipeRows);
+        ordered.sort(java.util.Comparator.comparing((gregtech.engine.recipe.Recipe row)->sortKey(firstStack(row.itemInputs), access))
+                .thenComparing(row->sortKey(firstStack(row.itemOutputs), access)));
         for (gregtech.engine.recipe.Recipe gt : ordered) {
-            if (!gt.mEnabled || gt.mHidden) continue;
+            if (!gt.enabled || gt.hidden) continue;
             if (hasFluidInput(gt)) continue;   // the vanilla furnace has no fluid tank
-            ItemStack input = firstStack(gt.mInputs);
-            ItemStack output = firstStack(gt.mOutputs);
+            ItemStack input = firstStack(gt.itemInputs);
+            ItemStack output = firstStack(gt.itemOutputs);
             if (input.isEmpty() || output.isEmpty() || input.getCount() != 1) continue;
             if (!covered.add(input.getItem())) continue;   // the vanilla list already covers this input
             var cooking = gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem());
@@ -246,19 +246,19 @@ public final class OvenRecipeBridge {
     private static void mirrorClayMoldBlasting(List<Recipe<?>> recipes) {
 //?}
         var covered=new java.util.HashSet<Item>();
-        for(var holder:recipes) {
+        for (var holder:recipes) {
 //? if >=1.21.1 {
             /*var recipe=holder.value();
 *///?} else {
             var recipe=holder;
 //?}
-            if(recipe.getType()!=RecipeType.BLASTING)continue;
-            for(var ingredient:recipe.getIngredients())for(var stack:ingredient.getItems())covered.add(stack.getItem());
+            if (recipe.getType()!=RecipeType.BLASTING)continue;
+            for (var ingredient:recipe.getIngredients())for (var stack:ingredient.getItems())covered.add(stack.getItem());
         }
         int added=0;
-        for(var raw:gregtech.content.recipe.ClayMoldCatalog.RAW) {
+        for (var raw:gregtech.content.recipe.ClayMoldCatalog.RAW) {
             var input=gregtech.content.recipe.ClayMoldRecipes.input(raw);
-            if(!covered.add(input.getItem()))continue;
+            if (!covered.add(input.getItem()))continue;
             var output=gregtech.content.recipe.ClayMoldRecipes.output(raw);
             var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","clay_molds/blast_"+raw.id());
 //? if >=1.21.1 {
@@ -280,9 +280,9 @@ public final class OvenRecipeBridge {
     private static void preferMaterialRows(List<Recipe<?>> recipes) {
 //?}
         var source = new java.util.HashSet<Item>();
-        for (var row : MachineRecipeMaps.Furnace.mRecipeList) {
-            if (!row.mEnabled || row.mHidden) continue;
-            var input = firstStack(row.mInputs);
+        for (var row : MachineRecipeMaps.Furnace.recipeRows) {
+            if (!row.enabled || row.hidden) continue;
+            var input = firstStack(row.itemInputs);
             if (input.is(net.minecraft.world.item.Items.COBBLESTONE) || input.is(net.minecraft.world.item.Items.STONE)) continue;
             if (!input.isEmpty() && input.getCount() == 1
                     && gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem()).isPresent()) source.add(input.getItem());
@@ -362,10 +362,10 @@ public final class OvenRecipeBridge {
             for (var ingredient : recipe.getIngredients()) for (var stack : ingredient.getItems()) covered.add(stack.getItem());
         }
         int added = 0;
-        for (var row : MachineRecipeMaps.Furnace.mRecipeList) {
-            if (!row.mEnabled || row.mHidden) continue;
+        for (var row : MachineRecipeMaps.Furnace.recipeRows) {
+            if (!row.enabled || row.hidden) continue;
             if (hasFluidInput(row)) continue;   // the vanilla smoker/blast furnace has no fluid tank
-            var input = firstStack(row.mInputs); var output = firstStack(row.mOutputs);
+            var input = firstStack(row.itemInputs); var output = firstStack(row.itemOutputs);
             if (input.isEmpty() || output.isEmpty() || input.getCount() != 1) continue;
             var metadata = gregtech.content.recipe.FurnaceSmeltingRecipes.cooking(input.getItem());
             if (metadata.isEmpty()) metadata = SourceFurnaceNativeAdapter.cooking(row);
@@ -414,7 +414,7 @@ public final class OvenRecipeBridge {
 
     /** A row that consumes a fluid cannot live in the vanilla furnace or smoker/blast furnace. */
     private static boolean hasFluidInput(gregtech.engine.recipe.Recipe row) {
-        for (var fluid : row.mFluidInputs) if (fluid != null && !fluid.isEmpty()) return true;
+        for (var fluid : row.fluidInputs) if (fluid != null && !fluid.isEmpty()) return true;
         return false;
     }
 
@@ -506,10 +506,10 @@ public final class OvenRecipeBridge {
     /** A foreign cooking row is removable only when a concrete GT furnace row covers the same item. */
     private static boolean hasPublishedCookingReplacement(ItemStack input) {
         if (input == null || input.isEmpty()) return false;
-        for (var row : MachineRecipeMaps.Furnace.mRecipeList) {
-            if (!row.mEnabled || row.mHidden || hasFluidInput(row)) continue;
-            ItemStack candidate = firstStack(row.mInputs);
-            ItemStack output = firstStack(row.mOutputs);
+        for (var row : MachineRecipeMaps.Furnace.recipeRows) {
+            if (!row.enabled || row.hidden || hasFluidInput(row)) continue;
+            ItemStack candidate = firstStack(row.itemInputs);
+            ItemStack output = firstStack(row.itemOutputs);
             if (!candidate.isEmpty() && candidate.getCount() == 1 && candidate.is(input.getItem())
                     && !output.isEmpty()) return true;
         }

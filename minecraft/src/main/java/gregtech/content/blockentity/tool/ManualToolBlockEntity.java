@@ -302,8 +302,8 @@ public class ManualToolBlockEntity extends BlockEntity {
     private Recipe recipe(ItemStack input) {
         if (input.isEmpty()) return null;
         Recipe recipe = map().findRecipe(List.of(input), List.<FluidStack>of(), false, 1, 12);
-        return recipe != null && !recipe.mFakeRecipe && recipe.mEUt >= -gregtech.engine.tool.ManualWorkRules.MAX_GU
-                && recipe.mEUt <= gregtech.engine.tool.ManualWorkRules.MAX_GU && recipe.mInputs.length == 1 ? recipe : null;
+        return recipe != null && !recipe.fakeRecipe && recipe.energyPerTick >= -gregtech.engine.tool.ManualWorkRules.MAX_GU
+                && recipe.energyPerTick <= gregtech.engine.tool.ManualWorkRules.MAX_GU && recipe.itemInputs.length == 1 ? recipe : null;
     }
 
     private void craft(Player player, ItemStack input, boolean retainOutputs) {
@@ -314,8 +314,8 @@ public class ManualToolBlockEntity extends BlockEntity {
             return;
         }
         // Installed sifter input is inventory, even when its current operator is creative.
-        if (retainOutputs || !player.getAbilities().instabuild) input.shrink(recipe.mInputs[0].getCount());
-        for (int i = 0; i < recipe.mOutputs.length; i++) {
+        if (retainOutputs || !player.getAbilities().instabuild) input.shrink(recipe.itemInputs[0].getCount());
+        for (int i = 0; i < recipe.itemOutputs.length; i++) {
             long count = recipe.rollOutputCount(i, 1, level.random::nextInt);
             if (count == 0) continue;
             ItemStack out = recipe.getOutput(i);
@@ -325,7 +325,7 @@ public class ManualToolBlockEntity extends BlockEntity {
         }
         if (kind == Kind.GRINDSTONE && !player.getAbilities().instabuild) stoneUses--;
         double divisor = gregtech.engine.tool.ManualWorkRules.exhaustionDivisor(kind.name());
-        player.causeFoodExhaustion((float) (Math.abs((double) recipe.mEUt) * recipe.mDuration / divisor));
+        player.causeFoodExhaustion((float) (Math.abs((double) recipe.energyPerTick) * recipe.durationTicks / divisor));
         level.playSound(null, worldPosition, kind == Kind.SIFTING ? SoundEvents.SAND_BREAK : SoundEvents.STONE_HIT,
                 SoundSource.BLOCKS, 1F, 1F);
         markUpdated();

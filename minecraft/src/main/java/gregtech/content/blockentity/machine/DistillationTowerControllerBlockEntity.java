@@ -14,17 +14,17 @@ public class DistillationTowerControllerBlockEntity extends LargeRecipeMachineBl
     }
     @Override public void setSpec(gregtech.engine.machine.BasicMachineSpec spec) {
         super.setSpec(spec);
-        for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
+        for (var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }
     protected boolean cryogenic() {return false;}
     @Override protected void beforeMachineTick() {
         // Source onTick2 outputs fluids before doWork, even without energy or while stopped.
-        if(faceConfig().fluidAutoOutput()<0
+        if (faceConfig().fluidAutoOutput()<0
                 || !automaticTransferEnabled(gregtech.engine.machine.MachineToolSettings.Transfer.FLUID_OUTPUT))return;
         var tanks = getTanksOutput();
-        for(int index = 0; index < tanks.length; index++) {
+        for (int index = 0; index < tanks.length; index++) {
             var tank = tanks[index];
-            var offer=tank.getFluid();if(offer.isEmpty())continue;
+            var offer=tank.getFluid();if (offer.isEmpty())continue;
             var entry=gregtech.content.registry.GTFluids.entryForFluid(offer.getFluid());
             String name=entry==null?net.minecraft.core.registries.BuiltInRegistries.FLUID.getKey(offer.getFluid()).getPath():entry.registryName();
             StructureOutputs.fluid(this, OriginalMultiblockOutputRules.towerFluid(cryogenic(), name),
@@ -44,6 +44,6 @@ public class DistillationTowerControllerBlockEntity extends LargeRecipeMachineBl
     @Override public void load(net.minecraft.nbt.CompoundTag tag) {
         super.load(tag);
 //?}
-        for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
+        for (var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }
 }

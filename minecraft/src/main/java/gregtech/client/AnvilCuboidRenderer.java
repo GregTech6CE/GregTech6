@@ -33,9 +33,9 @@ final class AnvilCuboidRenderer {
         face(pose,out,u0,u1,v0,v1,rgb,light,Direction.EAST,new float[]{x1,y0,z0,x1,y1,z0,x1,y1,z1,x1,y0,z1});
     }
     static void face(PoseStack.Pose pose, VertexConsumer out, float u0,float u1,float v0,float v1, int rgb, int light, Direction side, float[] vertices) {
-        for(int i=0;i<12;i+=3) {
+        for (int i=0;i<12;i+=3) {
             float x=vertices[i],y=vertices[i+1],z=vertices[i+2];
-            float u=switch(side) {case WEST->z;case EAST->1-z;case SOUTH->1-x;default->x;};
+            float u=switch (side) {case WEST->z;case EAST->1-z;case SOUTH->1-x;default->x;};
             float v=side==Direction.UP?z:side==Direction.DOWN?1-z:1-y;
 //? if >=1.21.1 {
             /*out.addVertex(pose.pose(),x,y,z).setColor((rgb>>16)&255,(rgb>>8)&255,rgb&255,255)

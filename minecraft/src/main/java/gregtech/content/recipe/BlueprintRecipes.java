@@ -113,9 +113,9 @@ public final class BlueprintRecipes {
     }
 
     private static Recipe exact(Recipe recipe) {
-        recipe.mExactItemInputs = true;
-        recipe.mExplicitCatalystsOnly = true;
-        recipe.mCanBeBuffered = false;
+        recipe.exactItemInputs = true;
+        recipe.explicitCatalystsOnly = true;
+        recipe.canBeBuffered = false;
         return recipe;
     }
 

@@ -12,7 +12,7 @@ public final class AnvilWorkInputs {
     }
 
     public static ItemStack[] consume(ItemStack[] work, gregtech.engine.recipe.Recipe recipe) {
-        return consume(work, recipe.mInputs, recipe::matchesItemInput);
+        return consume(work, recipe.itemInputs, recipe::matchesItemInput);
     }
 
     private static ItemStack[] consume(

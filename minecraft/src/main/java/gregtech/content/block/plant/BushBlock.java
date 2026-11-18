@@ -187,10 +187,10 @@ public class BushBlock extends Block implements EntityBlock, SimpleWaterloggedBl
 
     /** New drops are ordinary variant items. Decode old stacks only at the legacy boundary. */
     private ItemStack packed(@Nullable BlockEntity entity) {
-        if(berryId.isEmpty() && entity instanceof BushBlockEntity bush) {
+        if (berryId.isEmpty() && entity instanceof BushBlockEntity bush) {
             var variant=gregtech.content.registry.GTBushes.byBerry(bush.berryId());
-            if(variant!=null)return new ItemStack(variant);
-            if(!bush.berryId().isEmpty()) {
+            if (variant!=null)return new ItemStack(variant);
+            if (!bush.berryId().isEmpty()) {
                 // Preserve an unmapped legacy/external output rather than silently changing it.
                 var data=new CompoundTag();data.putString("berry",bush.berryId());
 //? if >=1.21.1 {

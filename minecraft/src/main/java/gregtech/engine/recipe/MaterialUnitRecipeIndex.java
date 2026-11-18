@@ -34,14 +34,14 @@ final class MaterialUnitRecipeIndex {
         sourceKeys.put(rule, items);
         for (Item item : items) byItem.computeIfAbsent(item, ignored -> new ArrayList<>()).add(rule);
         byMaterial.computeIfAbsent(rule.material, ignored -> new ArrayList<>()).add(rule);
-        for (int i = 0; i < rule.template.mInputs.length; i++) if (i != rule.inputIndex)
-            catalysts.computeIfAbsent(rule.template.mInputs[i].getItem(), ignored -> new ArrayList<>()).add(rule);
+        for (int i = 0; i < rule.template.itemInputs.length; i++) if (i != rule.inputIndex)
+            catalysts.computeIfAbsent(rule.template.itemInputs[i].getItem(), ignored -> new ArrayList<>()).add(rule);
     }
     static void discardUnregistered() {
         for (var entry : MAPS.entrySet()) {
             var rules = new java.util.HashSet<MaterialUnitRecipe>();
             entry.getValue().byMaterial.values().forEach(rules::addAll);
-            for (var rule : rules) if (!entry.getKey().mRecipeList.contains(rule.template)) entry.getValue().remove(rule);
+            for (var rule : rules) if (!entry.getKey().recipeRows.contains(rule.template)) entry.getValue().remove(rule);
         }
     }
     void remove(MaterialUnitRecipe rule) {
@@ -52,8 +52,8 @@ final class MaterialUnitRecipeIndex {
         }
         var materialRules = byMaterial.get(rule.material);
         if (materialRules != null) { materialRules.remove(rule); if (materialRules.isEmpty()) byMaterial.remove(rule.material); }
-        for (int i = 0; i < rule.template.mInputs.length; i++) if (i != rule.inputIndex) {
-            var item = rule.template.mInputs[i].getItem();
+        for (int i = 0; i < rule.template.itemInputs.length; i++) if (i != rule.inputIndex) {
+            var item = rule.template.itemInputs[i].getItem();
             var list = catalysts.get(item);
             if (list != null) { list.remove(rule); if (list.isEmpty()) catalysts.remove(item); }
         }
@@ -69,7 +69,7 @@ final class MaterialUnitRecipeIndex {
     private boolean accepts(ItemStack stack) {
         for (var rule : candidates(stack)) if (rule.accepts(stack)) return true;
         for (var rule : catalysts.getOrDefault(stack.getItem(), List.of())) if (rule.active())
-            for (int i = 0; i < rule.template.mInputs.length; i++)
+            for (int i = 0; i < rule.template.itemInputs.length; i++)
                 if (i != rule.inputIndex && rule.template.matchesItemInput(i, stack)) return true;
         return false;
     }
@@ -77,7 +77,7 @@ final class MaterialUnitRecipeIndex {
         var index = MAPS.get(map);
         if (index == null) return false;
         for (var rules : index.byMaterial.values()) for (var rule : rules) if (rule.active())
-            for (int i = 0; i < rule.template.mFluidInputs.length; i++)
+            for (int i = 0; i < rule.template.fluidInputs.length; i++)
                 if (rule.template.matchesFluidInput(i, fluid)) return true;
         return false;
     }
@@ -89,7 +89,7 @@ final class MaterialUnitRecipeIndex {
         for (ItemStack stack : items) if (!stack.isEmpty()) for (var rule : candidates(stack)) {
             if (!rule.accepts(stack)) continue;
             boolean otherInputs = true;
-            for (int i = 0; i < rule.template.mInputs.length; i++) if (i != rule.inputIndex && !rule.template.mInputs[i].isEmpty()) {
+            for (int i = 0; i < rule.template.itemInputs.length; i++) if (i != rule.inputIndex && !rule.template.itemInputs[i].isEmpty()) {
                 final int slot = i;
                 if (items.stream().noneMatch(item -> rule.template.matchesItemInput(slot, item))) { otherInputs = false; break; }
             }
@@ -107,7 +107,7 @@ final class MaterialUnitRecipeIndex {
             }
             boolean runtime = stack.isDamaged() && rule.template.hasRuntimeResolver();
             if (row != null && (runtime || matcher.matches(row, 1))
-                    && (best == null || row.mPriority > best.mPriority)) best = row;
+                    && (best == null || row.priority > best.priority)) best = row;
         }
         return best;
     }

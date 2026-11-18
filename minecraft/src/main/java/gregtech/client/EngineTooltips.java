@@ -116,7 +116,7 @@ public final class EngineTooltips {
     private static void appendDiesel(EngineBlock block, List<Component> lines) {
         DieselEngineSpec spec = block.engineSpec(DieselEngineSpec.class);
         lines.add(label("gt.lang.recipes", ChatFormatting.AQUA)
-                .append(Component.translatable(FuelRecipeMaps.Engine.mNameInternal)
+                .append(Component.translatable(FuelRecipeMaps.Engine.internalName)
                         .withStyle(ChatFormatting.WHITE)));
         appendEfficiency(10000, lines);
         lines.add(energyRate(true, spec.outputRate(), spec.outputRate(), spec.outputRate(), "RU", FRONT));

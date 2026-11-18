@@ -45,10 +45,10 @@ public final class RecipeMapRegistrationTests {
                     .itemInputs(input)
                     .itemOutputs(stack(Items.GOLD_INGOT, 4), ItemStack.EMPTY)
                     .optimize(true));
-            helper.assertTrue(optimized != null && optimized.mDuration == 16 && optimized.mEUt == 16,
+            helper.assertTrue(optimized != null && optimized.durationTicks == 16 && optimized.energyPerTick == 16,
                     "optimization divides time and counts and keeps power");
-            helper.assertTrue(optimized.mInputs[0].getCount() == 1 && input.getCount() == 4
-                    && optimized.mOutputs.length == 1 && optimized.mOutputs[0].getCount() == 1,
+            helper.assertTrue(optimized.itemInputs[0].getCount() == 1 && input.getCount() == 4
+                    && optimized.itemOutputs.length == 1 && optimized.itemOutputs[0].getCount() == 1,
                     "normalization copies stacks and trims trailing empty outputs");
 
             var display = map.register(RecipeBuilder.of(16, 64)
@@ -57,9 +57,9 @@ public final class RecipeMapRegistrationTests {
                             stack(Items.DIAMOND, 4), ItemStack.EMPTY)
                     .chances(10000, 0, 2500, 10000)
                     .optimize(true), RecipeMap.Registration.DISPLAY.withHidden(true));
-            helper.assertTrue(display != null && display.mHidden && display.mFakeRecipe && display.mDuration == 64,
+            helper.assertTrue(display != null && display.hidden && display.fakeRecipe && display.durationTicks == 64,
                     "display and hidden flags survive registration, and a chance output prevents optimization");
-            helper.assertTrue(display.mOutputs.length == 3 && display.mOutputs[1].isEmpty()
+            helper.assertTrue(display.itemOutputs.length == 3 && display.itemOutputs[1].isEmpty()
                     && display.getOutputChance(2) == 2500, "interior empty slots preserve chance alignment");
             helper.assertTrue(map.findRecipe(List.of(stack(Items.COPPER_INGOT, 4)), List.of(), false, 9, 9) == null,
                     "a display row cannot run in a machine");
@@ -86,13 +86,13 @@ public final class RecipeMapRegistrationTests {
             var fluidRow = row(new ItemStack[] {stack(Items.COPPER_INGOT, 1)}, new FluidStack[] {fluid(Fluids.WATER, 100)});
             helper.assertTrue(map.addRecipe(itemRow) == itemRow, "item row registered");
             helper.assertTrue(map.addRecipe(fluidRow) == fluidRow, "fluid row registered");
-            helper.assertTrue(map.mRecipeItemMap.get(Items.IRON_INGOT).contains(itemRow), "item index holds the row");
-            helper.assertTrue(map.mRecipeFluidMap.get(waterKey()).contains(fluidRow), "fluid index holds the row");
+            helper.assertTrue(map.recipesByInputItem.get(Items.IRON_INGOT).contains(itemRow), "item index holds the row");
+            helper.assertTrue(map.recipesByInputFluid.get(waterKey()).contains(fluidRow), "fluid index holds the row");
 
             helper.assertTrue(map.removeAll(List.of(itemRow, fluidRow)) == 2, "both rows removed");
-            helper.assertTrue(map.mRecipeList.isEmpty(), "no stored rows remain");
-            helper.assertTrue(map.mRecipeItemMap.isEmpty(), "item index is empty");
-            helper.assertTrue(map.mRecipeFluidMap.isEmpty(), "fluid index is empty");
+            helper.assertTrue(map.recipeRows.isEmpty(), "no stored rows remain");
+            helper.assertTrue(map.recipesByInputItem.isEmpty(), "item index is empty");
+            helper.assertTrue(map.recipesByInputFluid.isEmpty(), "fluid index is empty");
             helper.assertTrue(map.removeAll(List.of(itemRow)) == 0, "a second removal is a no-op");
             helper.assertFalse(map.unlink(itemRow), "unlink reports a missing row");
         } finally {
@@ -111,9 +111,9 @@ public final class RecipeMapRegistrationTests {
             var row = row(NO_ITEMS, new FluidStack[] {zero});
             helper.assertTrue(map.addRecipe(row) == row, "catalyst row registered");
             if (zero.getFluid() != Fluids.EMPTY)
-                helper.assertTrue(map.mRecipeFluidMap.get(waterKey()) != null, "indexed by its fluid");
+                helper.assertTrue(map.recipesByInputFluid.get(waterKey()) != null, "indexed by its fluid");
             helper.assertTrue(map.removeAll(List.of(row)) == 1, "row removed");
-            helper.assertTrue(map.mRecipeFluidMap.isEmpty(), "no fluid index entry survives the removal");
+            helper.assertTrue(map.recipesByInputFluid.isEmpty(), "no fluid index entry survives the removal");
         } finally {
             RecipeMap.unregister("gt.test.recipe.removal.zero");
         }
@@ -172,7 +172,7 @@ public final class RecipeMapRegistrationTests {
                 }
             });
             helper.assertTrue(foreign.isEmpty(), "another thread's row is not captured: " + foreign);
-            helper.assertTrue(map.mRecipeList.contains(other), "the other thread's row is still registered");
+            helper.assertTrue(map.recipeRows.contains(other), "the other thread's row is still registered");
         } finally {
             RecipeMap.unregister("gt.test.recipe.capture");
         }
@@ -210,7 +210,7 @@ public final class RecipeMapRegistrationTests {
             var existing = row(new ItemStack[] {stack(Items.IRON_INGOT, 1), stack(Items.GOLD_INGOT, 1)}, NO_FLUIDS);
             helper.assertTrue(map.addRecipe(existing) == existing, "base row registered");
 
-            existing.mInputs[1] = stack(Items.COPPER_INGOT, 1);
+            existing.itemInputs[1] = stack(Items.COPPER_INGOT, 1);
             map.invalidateLookup();
 
             var replaced = row(new ItemStack[] {stack(Items.IRON_INGOT, 1), stack(Items.COPPER_INGOT, 1)}, NO_FLUIDS);
@@ -416,17 +416,17 @@ public final class RecipeMapRegistrationTests {
                     .withPriority(5);
             helper.assertTrue(gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
                             map, datapack, "datapack:test") == datapack, "datapack row published");
-            helper.assertTrue("datapack:test".equals(datapack.mSource),
-                    "datapack provenance recorded: " + datapack.mSource);
-            helper.assertTrue(datapack.mPriority == 5, "datapack priority recorded");
+            helper.assertTrue("datapack:test".equals(datapack.source),
+                    "datapack provenance recorded: " + datapack.source);
+            helper.assertTrue(datapack.priority == 5, "datapack priority recorded");
 
             var addon = new Recipe(new ItemStack[] {stack(Items.IRON_INGOT, 1)},
                     new ItemStack[] {stack(Items.COPPER_INGOT, 1)}, null, NO_FLUIDS, NO_FLUIDS, 20, 16, 0);
             helper.assertTrue(gregtech.engine.recipe.MachineRecipeAdapter.addStatic(
                             map, addon, gregtech.engine.recipe.MachineRecipeAdapter.SOURCE_ADDON) == addon,
                     "an addon row with another priority is a distinct variant");
-            helper.assertTrue(gregtech.engine.recipe.MachineRecipeAdapter.SOURCE_ADDON.equals(addon.mSource),
-                    "addon provenance recorded: " + addon.mSource);
+            helper.assertTrue(gregtech.engine.recipe.MachineRecipeAdapter.SOURCE_ADDON.equals(addon.source),
+                    "addon provenance recorded: " + addon.source);
             var found = map.findRecipe(java.util.List.of(stack(Items.IRON_INGOT, 1)), java.util.List.of(),
                     false, 9, 9);
             helper.assertTrue(found == datapack, "the datapack priority outranks the neutral addon row: " + found);
@@ -496,9 +496,9 @@ public final class RecipeMapRegistrationTests {
 
     private static gregtech.engine.recipe.data.MachineRecipeMatch.RecipeView view(Recipe recipe) {
         var inputs = new java.util.ArrayList<ItemStack>();
-        for (var input : recipe.mInputs) if (input != null && !input.isEmpty()) inputs.add(input);
+        for (var input : recipe.itemInputs) if (input != null && !input.isEmpty()) inputs.add(input);
         var outputs = new java.util.ArrayList<ItemStack>();
-        for (var output : recipe.mOutputs) if (output != null && !output.isEmpty()) outputs.add(output);
+        for (var output : recipe.itemOutputs) if (output != null && !output.isEmpty()) outputs.add(output);
         return new gregtech.engine.recipe.data.MachineRecipeMatch.RecipeView() {
             public int inputItems() { return inputs.size(); }
             public String inputItem(int index) {
@@ -531,7 +531,7 @@ public final class RecipeMapRegistrationTests {
             helper.assertTrue(map.addRecipe(presence) == presence, "presence row registered");
             helper.assertTrue(map.addRecipe(consumed) == consumed,
                     "same-input consumed row is a condition variant, not a duplicate");
-            helper.assertTrue(map.mRecipeList.size() == 2, "both condition variants remain");
+            helper.assertTrue(map.recipeRows.size() == 2, "both condition variants remain");
         } finally {
             RecipeMap.unregister("gt.test.recipe.presence.consume");
         }
@@ -548,7 +548,7 @@ public final class RecipeMapRegistrationTests {
             helper.assertTrue(map.addRecipe(guarded) == guarded, "guarded row registered");
             helper.assertTrue(map.addRecipe(wide) == wide,
                     "an opaque guard does not prove the wide row is a duplicate");
-            helper.assertTrue(map.mRecipeList.size() == 2, "both rows remain");
+            helper.assertTrue(map.recipeRows.size() == 2, "both rows remain");
         } finally {
             RecipeMap.unregister("gt.test.recipe.guard.wide");
         }

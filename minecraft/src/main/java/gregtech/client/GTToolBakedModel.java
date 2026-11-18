@@ -68,10 +68,10 @@ public final class GTToolBakedModel implements BakedModel {
 
     private List<BakedQuad> buildQuads(ItemStack stack, @Nullable Direction direction, RandomSource random,
                                        @Nullable net.minecraft.client.renderer.RenderType renderType) {
-        if(stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric){
-            var spec=electric.definition();String body=switch(spec.name()){case "Drill"->"handle_electric_drill";case "Mixer"->"handle_electric_mixer";case "Trimmer"->"handle_electric_trimmer";case "BuzzSaw"->"handle_buzzsaw";case "Screwdriver"->"handle_electric_screwdriver";default->"power_unit_"+spec.tierName();};
+        if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric){
+            var spec=electric.definition();String body=switch (spec.name()){case "Drill"->"handle_electric_drill";case "Mixer"->"handle_electric_mixer";case "Trimmer"->"handle_electric_trimmer";case "BuzzSaw"->"handle_buzzsaw";case "Screwdriver"->"handle_electric_screwdriver";default->"power_unit_"+spec.tierName();};
             var out=new ArrayList<BakedQuad>();appendIconsetQuads(out,ToolIconSets.icon(body),0,direction,random,renderType);
-            if(java.util.Set.of("Drill","Mixer","Trimmer").contains(spec.name()))appendIconsetQuads(out,ToolIconSets.icon("tip_electric_"+spec.name().toLowerCase(java.util.Locale.ROOT)),1,direction,random,renderType);
+            if (java.util.Set.of("Drill","Mixer","Trimmer").contains(spec.name()))appendIconsetQuads(out,ToolIconSets.icon("tip_electric_"+spec.name().toLowerCase(java.util.Locale.ROOT)),1,direction,random,renderType);
             else appendMaterialQuads(out,electric.headMaterial(stack),gregtech.engine.prefix.PrefixRegistry.byName(spec.headPrefix()),1,direction,random,renderType);
             return out;
         }
@@ -101,7 +101,7 @@ public final class GTToolBakedModel implements BakedModel {
             }
         } else if (type.headlessIcon() != null) {
             appendIconsetQuads(quads, type.headlessIcon(), 0, direction, random, renderType);
-            if(type.definition().isGun())appendIconsetQuads(quads,type.handleIcon(),1,direction,random,renderType);
+            if (type.definition().isGun())appendIconsetQuads(quads,type.handleIcon(),1,direction,random,renderType);
         }
         return quads;
     }

@@ -58,16 +58,16 @@ public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity
     @Override protected void onProcessFinished() {ignitionTicks=OriginalCokeOvenRules.IGNITION_TICKS;}
     @Override public long onIgnite(Level level,BlockPos pos,Direction side,Player player,ItemStack igniter,
             boolean sneaking,float hitX,float hitY,float hitZ) {
-        if(!level.isClientSide) {ignitionTicks=OriginalCokeOvenRules.IGNITION_TICKS;setChanged();}
+        if (!level.isClientSide) {ignitionTicks=OriginalCokeOvenRules.IGNITION_TICKS;setChanged();}
         return 10000;
     }
     @Override protected void autoOutputFluids(Level level,BlockPos pos,int side) {
-        var tank=getTanksOutput()[0];if(tank.isEmpty())return;
-        if(fluidOutputTarget!=null && gregtech.engine.multiblock.StructureOutputs.fluid(
+        var tank=getTanksOutput()[0];if (tank.isEmpty())return;
+        if (fluidOutputTarget!=null && gregtech.engine.multiblock.StructureOutputs.fluid(
                 this,fluidOutputTarget,getTanksInput().length,tank,Integer.MAX_VALUE)>0)return;
         fluidOutputTarget=null;
-        for(var target:OriginalMultiblockOutputRules.COKE_FLUIDS) {
-            if(gregtech.engine.multiblock.StructureOutputs.fluid(this,target,getTanksInput().length,tank,Integer.MAX_VALUE)>0) {
+        for (var target:OriginalMultiblockOutputRules.COKE_FLUIDS) {
+            if (gregtech.engine.multiblock.StructureOutputs.fluid(this,target,getTanksInput().length,tank,Integer.MAX_VALUE)>0) {
                 fluidOutputTarget=target;return;
             }
         }
@@ -87,10 +87,10 @@ public class CokeOvenControllerBlockEntity extends LargeRecipeMachineBlockEntity
     @Override public void load(CompoundTag tag) {
 //?}
         // Upgrade the old two-slot implementation without creating outputs or converting its HU buffer.
-        if(!tag.contains("gt.inventory") && tag.contains("gt.items")) {
+        if (!tag.contains("gt.inventory") && tag.contains("gt.items")) {
             tag=tag.copy();var inventory=tag.getCompound("gt.items").copy();inventory.putInt("Size",10);
             tag.put("gt.inventory",inventory);
-            if(tag.contains("gt.output"))tag.put("gt.tanks_output0",tag.getCompound("gt.output").copy());
+            if (tag.contains("gt.output"))tag.put("gt.tanks_output0",tag.getCompound("gt.output").copy());
             tag.remove("gt.heat");tag.remove("gt.progress");
         }
 //? if >=1.21.1 {

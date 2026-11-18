@@ -17,10 +17,10 @@ public final class RecipeDisplayCaptions {
         boolean informational = map == gregtech.content.data.MachineRecipeMaps.ByProductList
                 || map == gregtech.content.data.MachineRecipeMaps.DidYouKnow;
         boolean showTier = !informational && !gregtech.content.recipe.CrucibleDisplayItems.isCrucible(map);
-        var stats = RecipePowerStats.of(recipe, map.mPower);
+        var stats = RecipePowerStats.of(recipe, map.powerMultiplier);
         var visibility = gregtech.engine.recipe.RecipeCaptionVisibility.of(
-                recipe.mEUt, map.mCombinePower, map.mShowVoltageAmperage);
-        if (recipe.mEUt != 0) {
+                recipe.energyPerTick, map.combinePower, map.showVoltageAmperage);
+        if (recipe.energyPerTick != 0) {
             lines.add(Component.translatable(
                     stats.generating() ? "gt6ce.jei.gain" : "gt6ce.jei.costs",
                     stats.costs().toString(),
@@ -36,16 +36,16 @@ public final class RecipeDisplayCaptions {
                 lines.add(Component.translatable("gt6ce.jei.power", stats.power()));
         }
         // Instant maps (the crucibles) convert on contact, so a duration line would be a lie.
-        if (!map.mInstantRecipes && !informational)
+        if (!map.instantRecipes && !informational)
             lines.add(Component.translatable("gt6ce.jei.time_" + stats.timeUnit(), stats.time()));
         if (map == gregtech.content.data.MachineRecipeMaps.Fusion)
-            lines.add(Component.translatable("gt6ce.fusion.startup", recipe.mSpecialValue));
-        else if (map.hasSpecialValueLabel() && recipe.mSpecialValue != 0)
+            lines.add(Component.translatable("gt6ce.fusion.startup", recipe.specialValue));
+        else if (map.hasSpecialValueLabel() && recipe.specialValue != 0)
             // GT6 NEI special value, e.g. the crucible's "Temperature: 1811 K".
             lines.add(Component.translatable(
                     "gt6ce.jei.special_value",
-                    recipe.mSpecialValue * map.mSpecialValueMultiplier,
-                    map.mSpecialValuePost.trim()));
+                    recipe.specialValue * map.specialValueMultiplier,
+                    map.specialValueSuffix.trim()));
         return java.util.List.copyOf(lines);
     }
 

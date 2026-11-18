@@ -172,11 +172,11 @@ public final class ToolBlockConversionEvents {
     /** One rolled output set of a conversion recipe, in GT6's {@code getOutputs(random)} sense. */
     private static List<ItemStack> roll(ServerLevel level, Recipe recipe) {
         List<ItemStack> result = new ArrayList<>();
-        for (int i = 0; i < recipe.mOutputs.length; i++) {
-            if (recipe.mOutputs[i] == null || recipe.mOutputs[i].isEmpty()) continue;
+        for (int i = 0; i < recipe.itemOutputs.length; i++) {
+            if (recipe.itemOutputs[i] == null || recipe.itemOutputs[i].isEmpty()) continue;
             long count = recipe.rollOutputCount(i, 1, level.random::nextInt);
             if (count > 0) result.add(gregtech.content.recipe.CraftingMaterialForms.canonical(
-                    recipe.mOutputs[i].copyWithCount((int) Math.min(count, 64))));
+                    recipe.itemOutputs[i].copyWithCount((int) Math.min(count, 64))));
         }
         return result;
     }

@@ -62,8 +62,8 @@ public abstract class OriginalRecipeBatch {
         publish(id, map, recipe);
     }
     protected final void publish(String id, RecipeMap map, Recipe recipe) {
-        for (var stack : recipe.mInputs) if (stack.isEmpty()) throw new IllegalStateException(id + ": empty input");
-        for (var stack : recipe.mOutputs) if (stack.isEmpty()) throw new IllegalStateException(id + ": empty output");
+        for (var stack : recipe.itemInputs) if (stack.isEmpty()) throw new IllegalStateException(id + ": empty input");
+        for (var stack : recipe.itemOutputs) if (stack.isEmpty()) throw new IllegalStateException(id + ": empty output");
         if (!rowIds.add(id)) throw new IllegalStateException("Duplicate source row " + id);
         if (map.addRecipe(recipe) == null) throw new IllegalStateException("Rejected " + id + " in " + map);
         entries.add(new Entry(id, map, recipe));

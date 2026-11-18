@@ -50,7 +50,7 @@ public final class FluidItemOverrideList extends ItemOverrides {
         }
         RegisteredFluids.FluidEntry flEntry = fluidItem.fluidEntry();
         ResourceLocation texKey;
-        if(gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
+        if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
 //? if >=1.21.1 {
             /*var actual=gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(stack);
 *///?} else {

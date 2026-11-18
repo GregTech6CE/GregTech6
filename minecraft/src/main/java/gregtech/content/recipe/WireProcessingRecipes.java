@@ -159,7 +159,7 @@ public final class WireProcessingRecipes {
     private static void add(RecipeMap map, long ticks, ItemStack result, ItemStack... input) {
         var recipe = new Recipe(input, new ItemStack[] {result}, null, null, null, ticks, 16, 0);
         if (map.addRecipe(recipe) == null)
-            throw new IllegalStateException("Wire recipe conflict: " + map.mNameInternal + " / " + result);
+            throw new IllegalStateException("Wire recipe conflict: " + map.internalName + " / " + result);
         ENTRIES.add(new Entry(map, recipe));
     }
 }

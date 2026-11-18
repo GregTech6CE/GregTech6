@@ -88,7 +88,7 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
     @Nullable public FluidTankGT steamTank() { return steamTank; }
     @Nullable public FluidTankGT distilledWaterTank() { return distilledWaterTank; }
     public boolean isEnabled() { return enabled; }
-    public void setEnabled(boolean v) { this.enabled = v; if(v)shutdown=false; setChanged(); }
+    public void setEnabled(boolean v) { this.enabled = v; if (v)shutdown=false; setChanged(); }
     public boolean isShutdown() { return shutdown; }
 
     /** Reset from forced shutdown, clear energy and return to off state. */
@@ -179,8 +179,8 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
 //? if >=1.21.1 {
     /*public IFluidHandler fluidHandler(@Nullable Direction side){
         FaceConfig fc=resolvedFaceConfig();
-        if(steamTank!=null&&(side==null||FaceConfig.has(fc.fluidInputs(),relativeDir(side))))return steamInput();
-        if(distilledWaterTank!=null&&(side==null||FaceConfig.has(fc.fluidOutputs(),relativeDir(side))))return new gregtech.engine.fluid.FluidPort(distilledWaterTank,false,true);
+        if (steamTank!=null&&(side==null||FaceConfig.has(fc.fluidInputs(),relativeDir(side))))return steamInput();
+        if (distilledWaterTank!=null&&(side==null||FaceConfig.has(fc.fluidOutputs(),relativeDir(side))))return new gregtech.engine.fluid.FluidPort(distilledWaterTank,false,true);
         return null;
 *///?} else {
     @Override
@@ -276,7 +276,7 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
         shutdown = tag.getBoolean("shutdown");
         engineState=Math.max(0,Math.min(31,tag.getInt("gt.engine_state")));piston=tag.getInt("gt.piston")&3;
         kuEnergy=Math.max(0,Math.min(energyCapacity(),kuEnergy));
-        if(spec!=null)steamTank.setCapacity(spec.steamCapacity());
+        if (spec!=null)steamTank.setCapacity(spec.steamCapacity());
     }
 
     // ---- Tick ---------------------------------------------------------------
@@ -288,35 +288,35 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
         // Also recognize direct tank edits, which bypass the external input port.
         if (be.steamTank.getAmount() > be.previousSteamAmount) be.ticksWithoutSteam = 0;
         else if (be.ticksWithoutSteam < 200) be.ticksWithoutSteam++;
-        if(be.enabled&&!be.shutdown&&isSteam(be.steamTank.getFluid())){
+        if (be.enabled&&!be.shutdown&&isSteam(be.steamTank.getFluid())){
             long ops=be.steamTank.getAmount()/be.spec.steamPerOp();
-            if(ops>0){
+            if (ops>0){
                 be.steamTank.remove(ops*be.spec.steamPerOp());
                 be.kuEnergy+=ops*be.spec.efficiency()/100;
                 be.addDistilledWater((int)ops);
             }
         }
-        if(be.engineTicks++%20==0)be.engineState=(int)Math.min(31,be.kuEnergy*32/cap);
+        if (be.engineTicks++%20==0)be.engineState=(int)Math.min(31,be.kuEnergy*32/cap);
         be.working=be.isReadyToOutput();be.emitted=false;
-        if(be.working){
+        if (be.working){
             long output=be.computeOutput();
-            if(be.engineTicks%(32-be.engineState)==0)be.piston=(be.piston+1)&3;
+            if (be.engineTicks%(32-be.engineState)==0)be.piston=(be.piston+1)&3;
             be.emitted=EnergyTransfer.emitEnergyToNetwork(GregTechTags.Energy.KU,be.piston>1?-output:output,1,be)>0;
             if (be.emitted) be.conversionMeter.output(level.getGameTime(), output, 1);
             be.kuEnergy-=output;
         }
-        if(be.kuEnergy>=cap){
+        if (be.kuEnergy>=cap){
             be.kuEnergy=cap-1;
-            if(be.engineState>30){
+            if (be.engineState>30){
                 be.shutdown=true;be.enabled=false;be.steamTank.setEmpty();
                 level.playSound(null, pos, net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH,
                         net.minecraft.sounds.SoundSource.BLOCKS, 1, 1);
             }
             else be.engineState=31;
         }
-        if(!be.enabled||be.shutdown){
+        if (!be.enabled||be.shutdown){
             be.kuEnergy=Math.max(0,be.kuEnergy-Math.max(1,cap/64));
-            if(be.kuEnergy==0)be.shutdown=false;
+            if (be.kuEnergy==0)be.shutdown=false;
         }
         be.previousSteamAmount = be.steamTank.getAmount();
         autoOutputDistilledWater(level,be);
@@ -333,7 +333,7 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
         for (int relDir = 0; relDir < 6; relDir++) {
             if (!FaceConfig.has(fluidOuts, relDir)) continue;
             Direction side = be.relativeToAbsolute(relDir);
-            if(!level.hasChunkAt(be.worldPosition.relative(side)))continue;
+            if (!level.hasChunkAt(be.worldPosition.relative(side)))continue;
             BlockEntity adjBe = level.getBlockEntity(be.worldPosition.relative(side));
             if (adjBe == null) continue;
 //? if >=1.21.1 {

@@ -89,7 +89,7 @@ public final class AddonLoaderServices {
 
         private MapView(RecipeMap map) { this.map = map; }
 
-        @Override public String name() { return map.mNameInternal; }
+        @Override public String name() { return map.internalName; }
 
         @Override public AddonRecipes.Line add(AddonRecipes.Line line) {
             gregtech.engine.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
@@ -190,17 +190,17 @@ public final class AddonLoaderServices {
     }
 
     private static AddonRecipes.Line line(Recipe recipe) {
-        int outputs = recipe.mOutputs == null ? 0 : recipe.mOutputs.length;
+        int outputs = recipe.itemOutputs == null ? 0 : recipe.itemOutputs.length;
         int[] chances = new int[outputs];
         for (int i = 0; i < outputs; i++)
-            chances[i] = recipe.mChances != null && i < recipe.mChances.length
-                    ? (int) recipe.mChances[i] : RecipeOutputChances.CERTAIN;
+            chances[i] = recipe.outputChances != null && i < recipe.outputChances.length
+                    ? (int) recipe.outputChances[i] : RecipeOutputChances.CERTAIN;
         var itemTags = new java.util.HashMap<Integer, net.minecraft.resources.ResourceLocation>();
         var fluidTags = new java.util.HashMap<Integer, net.minecraft.resources.ResourceLocation>();
-        for (int i = 0; i < recipe.mInputs.length; i++) if (recipe.itemTag(i) != null) itemTags.put(i, recipe.itemTag(i).location());
-        for (int i = 0; i < recipe.mFluidInputs.length; i++) if (recipe.fluidTag(i) != null) fluidTags.put(i, recipe.fluidTag(i).location());
-        var snapshot = AddonRecipes.Line.read(recipe.mInputs, recipe.mOutputs, recipe.mFluidInputs, recipe.mFluidOutputs,
-                recipe.mDuration, recipe.mEUt, recipe.mSpecialValue, chances, recipe.explicitCatalystInputs(),
+        for (int i = 0; i < recipe.itemInputs.length; i++) if (recipe.itemTag(i) != null) itemTags.put(i, recipe.itemTag(i).location());
+        for (int i = 0; i < recipe.fluidInputs.length; i++) if (recipe.fluidTag(i) != null) fluidTags.put(i, recipe.fluidTag(i).location());
+        var snapshot = AddonRecipes.Line.read(recipe.itemInputs, recipe.itemOutputs, recipe.fluidInputs, recipe.fluidOutputs,
+                recipe.durationTicks, recipe.energyPerTick, recipe.specialValue, chances, recipe.explicitCatalystInputs(),
                 recipe.explicitCatalystFluidInputs(), recipe.explicitPresenceFluidInputs()).withInputTags(itemTags, fluidTags);
         for (var declaration : recipe.materialDeclarations.entrySet()) snapshot = snapshot.withMaterialInput(declaration.getKey(), declaration.getValue());
         return snapshot;

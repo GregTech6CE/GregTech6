@@ -60,7 +60,7 @@ public final class VanillaRecoveryRecipes {
                 skip("existing-recovery-family");
                 continue;
             }
-            var plan = MaterialRecoveryRules.planShredder(data, MachineRecipeMaps.Shredder.mOutputItemsCount);
+            var plan = MaterialRecoveryRules.planShredder(data, MachineRecipeMaps.Shredder.itemOutputSlots);
             if (!plan.accepted()) {
                 skip("plan/" + plan.rejection().name().toLowerCase(Locale.ROOT));
                 continue;

@@ -73,8 +73,8 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
         if (blockEntity != null && blockEntity.inventory() != null) {
             addMachineSlots(blockEntity.inventory());
             addPotionSlot(blockEntity.autoIOInventory() == null ? null : blockEntity.autoIOInventory().potionInput());
-            int totalMachineSlots = recipeMap.mInputItemsCount + recipeMap.mOutputItemsCount + recipeMap.mInputPotionCount
-                    + recipeMap.mInputFluidCount + recipeMap.mOutputFluidCount;
+            int totalMachineSlots = recipeMap.itemInputSlots + recipeMap.itemOutputSlots + recipeMap.potionInputSlots
+                    + recipeMap.fluidInputTanks + recipeMap.fluidOutputTanks;
             addFluidSlots(new ItemStackHandler(totalMachineSlots));
         }
         if (recipeMap == MachineRecipeMaps.Autocrafter)
@@ -98,11 +98,11 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
         this.recipeMap = gregtech.engine.addon.RegisteredMachineIndex.recipeMap(machineName);
         this.progressData = new SimpleContainerData(1);
         addDataSlots(progressData);
-        int totalMachineSlots = recipeMap.mInputItemsCount + recipeMap.mOutputItemsCount + recipeMap.mInputPotionCount
-                + recipeMap.mInputFluidCount + recipeMap.mOutputFluidCount;
+        int totalMachineSlots = recipeMap.itemInputSlots + recipeMap.itemOutputSlots + recipeMap.potionInputSlots
+                + recipeMap.fluidInputTanks + recipeMap.fluidOutputTanks;
         ItemStackHandler dummy = new ItemStackHandler(totalMachineSlots);
         addMachineSlots(dummy);
-        addPotionSlot(recipeMap.mInputPotionCount > 0 ? new ItemStackHandler(1) : null);
+        addPotionSlot(recipeMap.potionInputSlots > 0 ? new ItemStackHandler(1) : null);
         addFluidSlots(dummy);
         if (recipeMap == MachineRecipeMaps.Autocrafter) addProgramSlot(new ItemStackHandler(1));
         addPlayerSlots(playerInv);
@@ -119,7 +119,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
     public void readFluidSync(FriendlyByteBuf buf) {
 //?}
 
-        int total = recipeMap.mInputFluidCount + recipeMap.mOutputFluidCount;
+        int total = recipeMap.fluidInputTanks + recipeMap.fluidOutputTanks;
         if (total == 0) return;
 
 //? if >=1.21.1 {
@@ -142,7 +142,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
         }
         for (Slot slot : slots) {
             if (slot instanceof SlotFluid sf) {
-                int globalIdx = sf.tankIndex() + (sf.isInput() ? 0 : recipeMap.mInputFluidCount);
+                int globalIdx = sf.tankIndex() + (sf.isInput() ? 0 : recipeMap.fluidInputTanks);
                 if (globalIdx >= 0 && globalIdx < total) {
                     sf.setFluid(fluids[globalIdx], amounts[globalIdx], capacities[globalIdx]);
                 }
@@ -159,12 +159,12 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
     private void addMachineSlots(net.minecraftforge.items.IItemHandler inv) {
 //?}
 
-        int inputCount  = recipeMap.mInputItemsCount;
-        int outputCount = recipeMap.mOutputItemsCount;
-        int totalFluids = recipeMap.mInputFluidCount + recipeMap.mOutputFluidCount;
+        int inputCount  = recipeMap.itemInputSlots;
+        int outputCount = recipeMap.itemOutputSlots;
+        int totalFluids = recipeMap.fluidInputTanks + recipeMap.fluidOutputTanks;
 
-        addGrid(inv,0,inputCount,true,recipeMap.mInputFluidCount, recipeMap.mInputPotionCount > 0);
-        addGrid(inv,inputCount,outputCount,false,recipeMap.mOutputFluidCount, false);
+        addGrid(inv,0,inputCount,true,recipeMap.fluidInputTanks, recipeMap.potionInputSlots > 0);
+        addGrid(inv,inputCount,outputCount,false,recipeMap.fluidOutputTanks, false);
     }
 
 //? if >=1.21.1 {
@@ -172,7 +172,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
 *///?} else {
     private void addPotionSlot(net.minecraftforge.items.IItemHandler potion) {
 //?}
-        if (recipeMap.mInputPotionCount <= 0 || potion == null) return;
+        if (recipeMap.potionInputSlots <= 0 || potion == null) return;
         potionSlot = slots.size();
         addSlot(new SlotInput(potion, 0, 53, 25, this::inventorySlotChanged));
     }
@@ -184,7 +184,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
     private void addGrid(net.minecraftforge.items.IItemHandler inv,int start,int count,boolean input,int fluids,boolean shiftForPotion) {
 //?}
 
-        for(int i=0;i<count;i++) {
+        for (int i=0;i<count;i++) {
             var point=shiftForPotion
                     ? new gregtech.engine.recipe.MachineGuiLayout.Point(35 - i * 18, 25)
                     : gregtech.engine.recipe.MachineGuiLayout.item(input,i,count,fluids);
@@ -194,18 +194,18 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
     }
 
     private void addFluidSlots(ItemStackHandler dummy) {
-        int baseIndex = recipeMap.mInputItemsCount + recipeMap.mOutputItemsCount + recipeMap.mInputPotionCount;
+        int baseIndex = recipeMap.itemInputSlots + recipeMap.itemOutputSlots + recipeMap.potionInputSlots;
         // Input fluid slots (left, X=53/35/17, Y from bottom up: 63, 45, 27)
-        for (int i = 0; i < recipeMap.mInputFluidCount; i++) {
+        for (int i = 0; i < recipeMap.fluidInputTanks; i++) {
             var point=gregtech.engine.recipe.MachineGuiLayout.fluid(true,i);
             int x=point.x(),y=point.y();
             addSlot(new SlotFluid(dummy, baseIndex + i, x, y, i, true));
         }
         // Output fluid slots (right, X=107/125/143, Y from bottom up)
-        for (int i = 0; i < recipeMap.mOutputFluidCount; i++) {
+        for (int i = 0; i < recipeMap.fluidOutputTanks; i++) {
             var point=gregtech.engine.recipe.MachineGuiLayout.fluid(false,i);
             int x=point.x(),y=point.y();
-            addSlot(new SlotFluid(dummy, baseIndex + recipeMap.mInputFluidCount + i, x, y, i, false));
+            addSlot(new SlotFluid(dummy, baseIndex + recipeMap.fluidInputTanks + i, x, y, i, false));
         }
     }
 
@@ -327,7 +327,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu implements 
             if (!moveItemStackTo(stack, potionSlot, potionSlot + 1, false)) return ItemStack.EMPTY;
         } else {
             // Player inventory → machine input slots (0..inputCount-1)
-            int inputCount = recipeMap.mInputItemsCount;
+            int inputCount = recipeMap.itemInputSlots;
             if (inputCount > 0) {
                 if (!moveItemStackTo(stack, 0, inputCount, false))
                     return ItemStack.EMPTY;

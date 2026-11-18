@@ -18,9 +18,9 @@ public final class CanvasCoverRenderer {
     private CanvasCoverRenderer() {}
     public record Face(TextureAtlasSprite sprite,int color,boolean bright) {}
     public static Face imageFace(ItemStack canvas,Direction side,BlockAndTintGetter level,BlockPos pos) {
-        var state=CanvasData.state(CanvasData.read(canvas));if(state==null)return null;
+        var state=CanvasData.state(CanvasData.read(canvas));if (state==null)return null;
         var client=Minecraft.getInstance();
-        if(!state.getFluidState().isEmpty()) {
+        if (!state.getFluidState().isEmpty()) {
 //? if >=1.21.1 {
             /*var visual=net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions.of(state.getFluidState().getType());
 *///?} else {
@@ -30,8 +30,8 @@ public final class CanvasCoverRenderer {
         }
         var model=client.getBlockRenderer().getBlockModel(state);
         var quads=model.getQuads(state,side,RandomSource.create(0));
-        if(quads.isEmpty())quads=model.getQuads(state,null,RandomSource.create(0)).stream().filter(q->q.getDirection()==side).toList();
-        if(quads.isEmpty())return new Face(model.getParticleIcon(),0xffffff,state.getLightEmission()>0);
+        if (quads.isEmpty())quads=model.getQuads(state,null,RandomSource.create(0)).stream().filter(q->q.getDirection()==side).toList();
+        if (quads.isEmpty())return new Face(model.getParticleIcon(),0xffffff,state.getLightEmission()>0);
         var quad=quads.get(0);
         int rgb=quad.isTinted()?client.getBlockColors().getColor(state,level,pos,quad.getTintIndex()):0xffffff;
         return new Face(quad.getSprite(),rgb,state.getLightEmission()>0);
@@ -40,6 +40,6 @@ public final class CanvasCoverRenderer {
         var canvas=(CanvasItem)stack.getItem();var vertices=buffers.getBuffer(RenderType.cutout());
         CoverSurfaceRenderer.draw(owner,pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machines/covers/canvas")),light,0,canvas.variant().rgb());
         var image=imageFace(stack,side,owner.getLevel(),owner.getBlockPos());
-        if(image!=null)CoverSurfaceRenderer.draw(image.bright()?null:owner,pose,buffers.getBuffer(ConfiguredAlphaModels.gtTranslucent()),side,image.sprite(),image.bright()?LightTexture.FULL_BRIGHT:light,1,image.color());
+        if (image!=null)CoverSurfaceRenderer.draw(image.bright()?null:owner,pose,buffers.getBuffer(ConfiguredAlphaModels.gtTranslucent()),side,image.sprite(),image.bright()?LightTexture.FULL_BRIGHT:light,1,image.color());
     }
 }

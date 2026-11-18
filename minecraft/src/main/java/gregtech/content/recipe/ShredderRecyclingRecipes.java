@@ -235,7 +235,7 @@ public final class ShredderRecyclingRecipes {
             skip("empty-composition");
             return null;
         }
-        var plan = MaterialRecoveryRules.planShredderStatic(data, MachineRecipeMaps.Shredder.mOutputItemsCount);
+        var plan = MaterialRecoveryRules.planShredderStatic(data, MachineRecipeMaps.Shredder.itemOutputSlots);
         if (!plan.accepted()) {
             skip("plan-" + plan.rejection().name().toLowerCase(Locale.ROOT));
             return null;
@@ -289,7 +289,7 @@ public final class ShredderRecyclingRecipes {
 
     private static Recipe publish(Planned planned, Map<ResourceLocation, Recipe> owners, boolean isolated) {
         var map = MachineRecipeMaps.Shredder;
-        var ownerKey = ownerKey(planned.probe().mInputs[0]);
+        var ownerKey = ownerKey(planned.probe().itemInputs[0]);
         RecoveryRecipePublisher.Resolution resolution;
         try {
             resolution = RecoveryRecipePublisher.inspect(map, planned.probe());
@@ -315,7 +315,7 @@ public final class ShredderRecyclingRecipes {
     private static void pruneStaticDuplicates() {
         for (var entry : List.copyOf(ENTRIES)) {
             var row = entry.recipe();
-            var ownerKey = ownerKey(row.mInputs[0]);
+            var ownerKey = ownerKey(row.itemInputs[0]);
             var owner = RecoveryRecipePublisher.matchingInputs(row, STATIC_ROWS.get(ownerKey));
             if (owner == null) continue;
             if (!RecoveryRecipePublisher.sameOutputs(owner, row))
@@ -337,14 +337,14 @@ public final class ShredderRecyclingRecipes {
     private static void refreshStaticRows() {
         STATIC_ROWS.clear();
         indexStaticRows(VanillaRecoveryRecipes.recipes());
-        indexStaticRows(MachineRecipeMaps.Shredder.mRecipeList);
+        indexStaticRows(MachineRecipeMaps.Shredder.recipeRows);
     }
 
     private static void indexStaticRows(Iterable<Recipe> rows) {
         for (var row : rows) {
-            if (!row.mEnabled || row.mFakeRecipe) continue;
+            if (!row.enabled || row.fakeRecipe) continue;
             var indexed = new java.util.HashSet<Item>();
-            for (var input : row.mInputs)
+            for (var input : row.itemInputs)
                 if (!input.isEmpty() && indexed.add(input.getItem())) {
                     var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(input.getItem());
                     STATIC_ROWS

@@ -35,7 +35,7 @@ public final class PortableContainerBlockEntity extends BlockEntity {
                 ? new ItemStack(getBlockState().getBlock()) : stack.copyWithCount(1);
         gregtech.engine.stack.BlockEntityData.remove(vessel);
 //? if >=1.21.1 {
-        /*if(level!=null)level.invalidateCapabilities(worldPosition);
+        /*if (level!=null)level.invalidateCapabilities(worldPosition);
 *///?} else {
         capability.invalidate();
         capability = capabilitiesActive ? LazyOptional.of(() -> handler) : LazyOptional.empty();
@@ -43,7 +43,7 @@ public final class PortableContainerBlockEntity extends BlockEntity {
         setChanged();
     }
     public int adjustLimit(double y,boolean precise){
-        if(vessel.isEmpty())vessel=new ItemStack(getBlockState().getBlock());
+        if (vessel.isEmpty())vessel=new ItemStack(getBlockState().getBlock());
         var spec=((gregtech.content.block.tool.PortableContainerBlock)getBlockState().getBlock()).spec();
         int limit=gregtech.content.tool.PortableContainerLimits.adjust(vessel,spec,y,precise);
         setChanged();return limit;
@@ -60,15 +60,15 @@ public final class PortableContainerBlockEntity extends BlockEntity {
         public int getTankCapacity(int slot) { return tank().getTankCapacity(slot); }
         public boolean isFluidValid(int slot, FluidStack fluid) { return tank().isFluidValid(slot, fluid); }
         public int fill(FluidStack fluid, FluidAction action) {
-            if(isRemoved())return 0;
+            if (isRemoved())return 0;
             int moved = tank().fill(fluid, action); if (action.execute() && moved > 0) setChanged(); return moved;
         }
         public FluidStack drain(FluidStack fluid, FluidAction action) {
-            if(isRemoved())return FluidStack.EMPTY;
+            if (isRemoved())return FluidStack.EMPTY;
             FluidStack moved = tank().drain(fluid, action); if (action.execute() && !moved.isEmpty()) setChanged(); return moved;
         }
         public FluidStack drain(int amount, FluidAction action) {
-            if(isRemoved())return FluidStack.EMPTY;
+            if (isRemoved())return FluidStack.EMPTY;
             FluidStack moved = tank().drain(amount, action); if (action.execute() && !moved.isEmpty()) setChanged(); return moved;
         }
     };
@@ -103,7 +103,7 @@ public final class PortableContainerBlockEntity extends BlockEntity {
 //?}
     @Override public void setChanged() {
         super.setChanged();
-        if(level!=null&&!level.isClientSide&&!isRemoved())level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),2);
+        if (level!=null&&!level.isClientSide&&!isRemoved())level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),2);
     }
 //? if >=1.21.1 {
     /*@Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) { return saveWithoutMetadata(lookup); }

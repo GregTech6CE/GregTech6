@@ -28,10 +28,10 @@ public final class MaterialUnitRecipes {
     }
 
     public static Recipe add(RecipeMap map, Recipe template, int slot, MaterialUnitIngredient ingredient) {
-        if (slot < 0 || slot >= template.mInputs.length || template.itemTag(slot) != null)
+        if (slot < 0 || slot >= template.itemInputs.length || template.itemTag(slot) != null)
             throw new IllegalArgumentException("Material input slot");
         var display = display(ingredient);
-        template.mInputs[slot] = display;
+        template.itemInputs[slot] = display;
         template.materialDeclarations = java.util.Map.of(slot, ingredient);
         var registered = GTMaterialRegistry.registeredNameIgnoringCase(ingredient.material());
         var material = (registered == null

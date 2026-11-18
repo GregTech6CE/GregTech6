@@ -20,7 +20,7 @@ public final class ChemicalBatteryBlockEntity extends BlockEntity {
     public long stored(){return charge;}
     public void setCharge(long value){
         charge=Math.max(0,Math.min(spec().capacity(),value));setChanged();
-        if(level!=null&&!level.isClientSide)level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
+        if (level!=null&&!level.isClientSide)level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
     }
     public ItemStack asItem(){
         var stack=new ItemStack(getBlockState().getBlock());

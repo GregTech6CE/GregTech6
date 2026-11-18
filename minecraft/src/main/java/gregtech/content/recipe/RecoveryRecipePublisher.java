@@ -79,7 +79,7 @@ public final class RecoveryRecipePublisher {
         if (resolution.action() == Action.REPLACE_GENERIC) {
             if (map.removeAll(List.of(resolution.existing())) == 0)
                 throw new IllegalStateException(
-                        "Could not replace generic recovery row " + resolution.existing().mSource);
+                        "Could not replace generic recovery row " + resolution.existing().source);
         }
         return map.addRecipe(
                 candidate,
@@ -87,7 +87,7 @@ public final class RecoveryRecipePublisher {
     }
 
     public static Resolution inspect(RecipeMap map, Recipe candidate) {
-        if (map == null || candidate == null || candidate.mRecoveryOwnership == null)
+        if (map == null || candidate == null || candidate.recoveryOwnership == null)
             throw new IllegalArgumentException("Recovery publication requires a map, row and ownership");
         Recipe existing = map.findCollision(candidate);
         if (existing == null) {
@@ -115,8 +115,8 @@ public final class RecoveryRecipePublisher {
 
     public static boolean generic(Recipe recipe) {
         return recipe != null
-                && recipe.mRecoveryOwnership != null
-                && recipe.mRecoveryOwnership.scope() == Recipe.RecoveryOwnership.Scope.GENERIC;
+                && recipe.recoveryOwnership != null
+                && recipe.recoveryOwnership.scope() == Recipe.RecoveryOwnership.Scope.GENERIC;
     }
 
     /** Finds an already indexed row with the same owned inputs, ignoring execution conditions. */
@@ -138,18 +138,18 @@ public final class RecoveryRecipePublisher {
     }
 
     private static boolean sameOwnedInputs(Recipe left, Recipe right) {
-        if (left.mInputs.length != right.mInputs.length || left.mFluidInputs.length != right.mFluidInputs.length)
+        if (left.itemInputs.length != right.itemInputs.length || left.fluidInputs.length != right.fluidInputs.length)
             return false;
-        for (int i = 0; i < left.mInputs.length; i++) {
-            ItemStack a = left.mInputs[i];
-            ItemStack b = right.mInputs[i];
+        for (int i = 0; i < left.itemInputs.length; i++) {
+            ItemStack a = left.itemInputs[i];
+            ItemStack b = right.itemInputs[i];
             boolean emptyA = a == null || a.isEmpty();
             boolean emptyB = b == null || b.isEmpty();
             if (emptyA != emptyB || (!emptyA && (a.getCount() != b.getCount() || !StackCompat.sameItem(a, b))))
                 return false;
         }
-        for (int i = 0; i < left.mFluidInputs.length; i++)
-            if (!StackCompat.sameFluid(left.mFluidInputs[i], right.mFluidInputs[i])) return false;
+        for (int i = 0; i < left.fluidInputs.length; i++)
+            if (!StackCompat.sameFluid(left.fluidInputs[i], right.fluidInputs[i])) return false;
         return true;
     }
 
@@ -160,10 +160,10 @@ public final class RecoveryRecipePublisher {
     private static Recipe indexedCollision(RecipeMap map, Recipe candidate) {
         Set<Recipe> checked = Collections.newSetFromMap(new IdentityHashMap<>());
         Recipe fallback = null;
-        for (ItemStack input : candidate.mInputs) {
+        for (ItemStack input : candidate.itemInputs) {
             if (input == null || input.isEmpty()) continue;
-            for (Recipe existing : map.mRecipeItemMap.getOrDefault(input.getItem(), List.of())) {
-                if (existing == candidate || !existing.mEnabled || existing.mFakeRecipe || !checked.add(existing))
+            for (Recipe existing : map.recipesByInputItem.getOrDefault(input.getItem(), List.of())) {
+                if (existing == candidate || !existing.enabled || existing.fakeRecipe || !checked.add(existing))
                     continue;
                 if (!sameExecution(existing, candidate) || !sameInputs(existing, candidate)) continue;
                 if (sameFamily(existing, candidate)) return existing;
@@ -174,62 +174,62 @@ public final class RecoveryRecipePublisher {
     }
 
     private static boolean sameExecution(Recipe left, Recipe right) {
-        return left.mSpecialValue == right.mSpecialValue
-                && left.mPriority == right.mPriority
-                && left.mEUt == right.mEUt
-                && left.mDuration == right.mDuration
-                && left.mNeedsEmptyOutput == right.mNeedsEmptyOutput
-                && left.mExactItemInputs == right.mExactItemInputs
-                && left.mExplicitCatalystsOnly == right.mExplicitCatalystsOnly
-                && left.mRequiresEmptyContainerInputs == right.mRequiresEmptyContainerInputs
-                && left.mMaterialRecovery == right.mMaterialRecovery
-                && Arrays.equals(left.mChances, right.mChances)
+        return left.specialValue == right.specialValue
+                && left.priority == right.priority
+                && left.energyPerTick == right.energyPerTick
+                && left.durationTicks == right.durationTicks
+                && left.needsEmptyOutput == right.needsEmptyOutput
+                && left.exactItemInputs == right.exactItemInputs
+                && left.explicitCatalystsOnly == right.explicitCatalystsOnly
+                && left.requiresEmptyContainerInputs == right.requiresEmptyContainerInputs
+                && left.materialRecovery == right.materialRecovery
+                && Arrays.equals(left.outputChances, right.outputChances)
                 && Arrays.equals(left.explicitCatalystInputs(), right.explicitCatalystInputs())
                 && Arrays.equals(left.explicitCatalystFluidInputs(), right.explicitCatalystFluidInputs())
                 && Arrays.equals(left.explicitPresenceFluidInputs(), right.explicitPresenceFluidInputs());
     }
 
     private static boolean sameInputs(Recipe left, Recipe right) {
-        if (left.mInputs.length != right.mInputs.length || left.mFluidInputs.length != right.mFluidInputs.length)
+        if (left.itemInputs.length != right.itemInputs.length || left.fluidInputs.length != right.fluidInputs.length)
             return false;
-        for (int i = 0; i < left.mInputs.length; i++) {
-            ItemStack a = left.mInputs[i];
-            ItemStack b = right.mInputs[i];
+        for (int i = 0; i < left.itemInputs.length; i++) {
+            ItemStack a = left.itemInputs[i];
+            ItemStack b = right.itemInputs[i];
             boolean emptyA = a == null || a.isEmpty();
             boolean emptyB = b == null || b.isEmpty();
             if (emptyA != emptyB || (!emptyA && !ItemStack.matches(a, b))) return false;
         }
-        for (int i = 0; i < left.mFluidInputs.length; i++)
-            if (!StackCompat.sameFluid(left.mFluidInputs[i], right.mFluidInputs[i])) return false;
+        for (int i = 0; i < left.fluidInputs.length; i++)
+            if (!StackCompat.sameFluid(left.fluidInputs[i], right.fluidInputs[i])) return false;
         return true;
     }
 
     public static boolean sameOutputs(Recipe left, Recipe right) {
-        if (left.mOutputs.length != right.mOutputs.length || left.mFluidOutputs.length != right.mFluidOutputs.length)
-            return false;
-        for (int i = 0; i < left.mOutputs.length; i++) {
-            var first = left.mOutputs[i];
-            var second = right.mOutputs[i];
+        if (left.itemOutputs.length != right.itemOutputs.length
+                || left.fluidOutputs.length != right.fluidOutputs.length) return false;
+        for (int i = 0; i < left.itemOutputs.length; i++) {
+            var first = left.itemOutputs[i];
+            var second = right.itemOutputs[i];
             if (first.getCount() != second.getCount() || !StackCompat.sameItem(first, second)) return false;
         }
-        for (int i = 0; i < left.mFluidOutputs.length; i++)
-            if (!StackCompat.sameFluid(left.mFluidOutputs[i], right.mFluidOutputs[i])) return false;
+        for (int i = 0; i < left.fluidOutputs.length; i++)
+            if (!StackCompat.sameFluid(left.fluidOutputs[i], right.fluidOutputs[i])) return false;
         return true;
     }
 
     private static RecoveryConflictException conflict(Recipe candidate, Recipe existing) {
         return new RecoveryConflictException("Conflicting recovery rows with the same inputs and conditions: existing "
-                + existing.mSource + " [" + family(existing) + "] and candidate " + candidate.mSource + " ["
+                + existing.source + " [" + family(existing) + "] and candidate " + candidate.source + " ["
                 + family(candidate) + "]");
     }
 
     private static boolean sameFamily(Recipe left, Recipe right) {
-        return left.mRecoveryOwnership != null
-                && right.mRecoveryOwnership != null
-                && left.mRecoveryOwnership.family().equals(right.mRecoveryOwnership.family());
+        return left.recoveryOwnership != null
+                && right.recoveryOwnership != null
+                && left.recoveryOwnership.family().equals(right.recoveryOwnership.family());
     }
 
     private static String family(Recipe recipe) {
-        return recipe.mRecoveryOwnership == null ? "unowned" : recipe.mRecoveryOwnership.family();
+        return recipe.recoveryOwnership == null ? "unowned" : recipe.recoveryOwnership.family();
     }
 }

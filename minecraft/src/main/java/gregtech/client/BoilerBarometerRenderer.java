@@ -66,7 +66,7 @@ public class BoilerBarometerRenderer implements BlockEntityRenderer<BoilerTankBl
 
         ps.pushPose();
         applyFacing(ps, facing);
-        if(be.getLevel()!=null) packedLight=net.minecraft.client.renderer.LevelRenderer.getLightColor(be.getLevel(),be.getBlockPos().relative(facing));
+        if (be.getLevel()!=null) packedLight=net.minecraft.client.renderer.LevelRenderer.getLightColor(be.getLevel(),be.getBlockPos().relative(facing));
 
         Matrix4f m = ps.last().pose();
 

@@ -24,7 +24,7 @@ public final class PowerCellBlockEntity extends BlockEntity {
     public long stored(){return charge;}
     public void setCharge(long value){
         charge=spec().usableRemainder(Math.max(0,value));setChanged();
-        if(level!=null&&!level.isClientSide) {
+        if (level!=null&&!level.isClientSide) {
             var state = getBlockState().setValue(PowerCellBlock.CHARGE_LEVEL, spec().display(charge));
             level.setBlock(worldPosition, state, 3);
             level.sendBlockUpdated(worldPosition, state, state, 3);

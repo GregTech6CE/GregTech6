@@ -351,9 +351,9 @@ public final class OriginalHandCraftingRows {
     }
     private static <T extends Block> List<RegisteredBlock<T>> blocks(Class<T> type) {
         var result=new ArrayList<RegisteredBlock<T>>();
-        for(var block:BuiltInRegistries.BLOCK){
+        for (var block:BuiltInRegistries.BLOCK){
             var key=BuiltInRegistries.BLOCK.getKey(block);
-            if(type.isInstance(block)&&key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))result.add(RegisteredBlock.wrap(key.getPath(),()->type.cast(block)));
+            if (type.isInstance(block)&&key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))result.add(RegisteredBlock.wrap(key.getPath(),()->type.cast(block)));
         }
         result.sort(Comparator.comparing(entry->entry.getId().toString()));
         return List.copyOf(result);
@@ -598,11 +598,11 @@ public final class OriginalHandCraftingRows {
 
     private static int pipes(Map<ResourceLocation,byte[]> recipes) {
         int count=0;
-        for(var row:gregtech.content.transport.TransportCraftingCatalog.rows()) {
+        for (var row:gregtech.content.transport.TransportCraftingCatalog.rows()) {
             var json=gregtech.content.recipe.TransportCraftingInputs.json(row);
-            if(json.isEmpty()) { com.mojang.logging.LogUtils.getLogger().warn("Missing original transport crafting form: {}",row.path()); continue; }
+            if (json.isEmpty()) { com.mojang.logging.LogUtils.getLogger().warn("Missing original transport crafting form: {}",row.path()); continue; }
             var location=id("recipe/"+(row.path().startsWith("magnets/")?"":"hand/")+row.path()+".json");
-            if(recipes.putIfAbsent(location,json.get().toString().getBytes(StandardCharsets.UTF_8))!=null)throw new IllegalStateException("Duplicate transport recipe "+location);
+            if (recipes.putIfAbsent(location,json.get().toString().getBytes(StandardCharsets.UTF_8))!=null)throw new IllegalStateException("Duplicate transport recipe "+location);
             count++;
         }
         return count;
@@ -850,7 +850,7 @@ public final class OriginalHandCraftingRows {
             ItemStack casing = GTBlocks.getStack(BlockMaterialPrefix.casingMachine, material);
             ItemStack chest = metalChest(spec);
             ItemStack storage = massStorage(spec);
-            if(!screw.isEmpty()){
+            if (!screw.isEmpty()){
                 ItemStack cable=GTWires.allCables().stream().map(java.util.function.Supplier::get)
                         .filter(wire->wire.spec().material()==Materials.Gold&&wire.spec().size()==4).findFirst().map(block->new ItemStack(block)).orElseThrow();
                 added += register(recipes,"storage/charging_crafting_table_"+spec.suffix(),new String[]{"WTW","dMx","WTW"},
@@ -858,7 +858,7 @@ public final class OriginalHandCraftingRows {
                                 'd',Ingredient.of(tool(GTToolType.SCREWDRIVER)),'x',Ingredient.of(tool(GTToolType.WIRE_CUTTER))),
                         new ItemStack(chargingCraftingTable(material)));
             }
-            if(!plate.isEmpty()&&!screw.isEmpty()){
+            if (!plate.isEmpty()&&!screw.isEmpty()){
                 added += register(recipes,"storage/advanced_crafting_table_"+spec.suffix(),new String[]{"PdP","TWT","PCP"},
                         Map.of('P',Ingredient.of(plate),'T',Ingredient.of(screw),'W',Ingredient.of(Items.CRAFTING_TABLE),
                                 'C',Ingredient.of(Tags.Items.CHESTS),'d',Ingredient.of(tool(GTToolType.SCREWDRIVER))),

@@ -27,7 +27,7 @@ public final class CapsuleCellRecipes {
     public static boolean simpleExtrusion(PortableFluidContainerSpec spec) {
         // Keep legacy/extension choices; the imported source profile supplies positive evidence only.
         return gregtech.content.data.generated.MaterialWorkability.hasProvenSimpleExtrusion(spec.material())
-                || spec.id().startsWith("cell_wax")||switch(spec.id()) {
+                || spec.id().startsWith("cell_wax")||switch (spec.id()) {
             case "cell_plastic","cell_tin","cell_tin_alloy","cell_aluminium"->true;default->false;
         };
     }
@@ -39,31 +39,31 @@ public final class CapsuleCellRecipes {
     /** RecipeMapShredder: an empty capcellcon recovers 1/9 U; a filled one is never recyclable. */
     public static int registerRecycling() {
         int count=0;
-        for(var spec:PortableFluidContainerSpec.values())if(spec.shapeId().equals("cell")) {
+        for (var spec:PortableFluidContainerSpec.values())if (spec.shapeId().equals("cell")) {
             var input=new ItemStack(Mc.item(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())));
             var composition=ItemMaterialRegistry.base(input.getItem()).orElse(null);
-            if(composition==null
+            if (composition==null
                     ||ItemMaterialRegistry.recoveryRejection(input)!=ItemMaterialRegistry.RecoveryRejection.ELIGIBLE
                     ||composition.components().size()!=1
                     ||composition.material().resolve()!=spec.material().resolve())continue;
             var plan=MaterialRecoveryRules.planShredderStatic(
-                    composition,MachineRecipeMaps.Shredder.mOutputItemsCount);
-            if(!plan.accepted())continue;
+                    composition,MachineRecipeMaps.Shredder.itemOutputSlots);
+            if (!plan.accepted())continue;
             var outputs=new ArrayList<ItemStack>();
-            for(var planned:plan.outputs())for(var pile:planned.dust().piles()) {
+            for (var planned:plan.outputs())for (var pile:planned.dust().piles()) {
                 var output=GTItems.getStack(pile.prefix(),planned.material(),pile.count());
-                if(output.isEmpty()) {
+                if (output.isEmpty()) {
                     outputs.clear();
                     break;
                 }
                 outputs.add(output);
             }
-            if(outputs.isEmpty())continue;
+            if (outputs.isEmpty())continue;
             var recipe=new Recipe(new ItemStack[]{input},outputs.toArray(ItemStack[]::new),null,null,null,
                     plan.duration(),16,0)
                     .withMaterialRecovery()
                     .withSource("recovery:capsule");
-            if(RecoveryRecipePublisher.publish(
+            if (RecoveryRecipePublisher.publish(
                     MachineRecipeMaps.Shredder,RecoveryRecipePublisher.explicit(recipe,"capsule-cell"))!=null)count++;
         }
         return count;

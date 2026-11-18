@@ -53,7 +53,7 @@ public class DrawerQuadBlockEntity extends BlockEntity implements BlockContents 
     public boolean sidedAccess() { return sidedAccess; }
     public void toggleSidedAccess() { sidedAccess = !sidedAccess; resetCapabilities(); setChanged(); }
 //? if >=1.21.1 {
-    /*private void resetCapabilities(){if(level!=null)level.invalidateCapabilities(worldPosition);}
+    /*private void resetCapabilities(){if (level!=null)level.invalidateCapabilities(worldPosition);}
     @Override public void setBlockState(BlockState state){super.setBlockState(state);resetCapabilities();}
     public IItemHandler itemHandler(@Nullable Direction side){return isRemoved()?null:view(accessibleSlots(side));}
 *///?} else {

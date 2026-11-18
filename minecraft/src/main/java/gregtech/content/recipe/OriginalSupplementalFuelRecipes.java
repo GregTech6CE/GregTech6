@@ -30,8 +30,8 @@ final class OriginalSupplementalFuelRecipes {
         Map<RecipeMap, Set<Fluid>> seen = new IdentityHashMap<>();
         for (var map : java.util.List.of(FuelRecipeMaps.Burn, FuelRecipeMaps.Gas)) {
             Set<Fluid> fluids = Collections.newSetFromMap(new IdentityHashMap<>());
-            for (var recipe : map.mRecipeList)
-                for (var input : recipe.mFluidInputs)
+            for (var recipe : map.recipeRows)
+                for (var input : recipe.fluidInputs)
                     if (input != null && !input.isEmpty()) fluids.add(input.getFluid());
             seen.put(map, fluids);
         }

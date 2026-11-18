@@ -7,7 +7,7 @@ import gregtech.engine.recipe.RecipeMap;
  * Fuel recipe maps, ported from GT6 {@code gregapi.data.FM}.
  *
  * <p>Fuel "recipes" hold one fluid (or item) input, optional exhaust outputs, and a
- * negative {@code mEUt} (energy produced per tick) with {@code mDuration} = burn ticks
+ * negative {@code energyPerTick} (energy produced per tick) with {@code durationTicks} = burn ticks
  * per recipe charge — total energy per charge is {@code |EUt| * duration}. Generators
  * look their fuel up here; JEI lists each non-empty map as a category.</p>
  */
@@ -21,9 +21,9 @@ public class FuelRecipeMaps {
         return name != null && FUEL_NAMES.contains(name);
     }
 
-    /** Records a map that stores produced energy as a negative {@code mEUt}. */
+    /** Records a map that stores produced energy as a negative {@code energyPerTick}. */
     public static void registerFuelMap(RecipeMap map) {
-        if (map != null && map.mNameInternal != null) FUEL_NAMES.add(map.mNameInternal);
+        if (map != null && map.internalName != null) FUEL_NAMES.add(map.internalName);
     }
 
     /**
@@ -31,7 +31,7 @@ public class FuelRecipeMaps {
      * produced per tick, stored negative so {@code FluidFuelBatch} can burn the row.
      */
     public static long storedEu(RecipeMap map, long euPerTick) {
-        if (map != null && isFuelMap(map.mNameInternal) && euPerTick > 0) return -euPerTick;
+        if (map != null && isFuelMap(map.internalName) && euPerTick > 0) return -euPerTick;
         return euPerTick;
     }
 

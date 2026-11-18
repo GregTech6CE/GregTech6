@@ -63,6 +63,6 @@ public abstract class AutoToolBlock extends DirectionalBlock implements EntityBl
     }
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level,BlockState state,BlockEntityType<T> type) {
         if (level.isClientSide) return null;
-        return (world,pos,current,entity)->{ if(entity instanceof AutoToolBlockEntity tool) tool.tick(); };
+        return (world,pos,current,entity)->{ if (entity instanceof AutoToolBlockEntity tool) tool.tick(); };
     }
 }

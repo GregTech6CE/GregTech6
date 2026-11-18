@@ -41,11 +41,11 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     private LazyOptional<IEnergyStorage> createForgeEnergy() { return LazyOptional.of(() -> new IEnergyStorage() {
 //?}
         public int receiveEnergy(int amount,boolean simulate) {
-            if(stopped || amount<=0)return 0;
+            if (stopped || amount<=0)return 0;
             int accepted=(int)Math.min(amount, spec().input()*2-energy);
-            if(!simulate && accepted>0){
+            if (!simulate && accepted>0){
                 energy+=accepted;
-                if(level!=null)conversionMeter.input(level.getGameTime(),accepted);
+                if (level!=null)conversionMeter.input(level.getGameTime(),accepted);
                 setChanged();
             }
             return accepted;
@@ -65,14 +65,14 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     public Direction front(){return getBlockState().getValue(LaserConverterBlock.FACING);}
     public void toggleStopped(){stopped=!stopped;setChanged();}
     public void tick(){
-        if(level==null||level.isClientSide)return;
+        if (level==null||level.isClientSide)return;
         long output=LaserWorkRules.converted(spec(),energy);
         boolean active=LaserWorkRules.active(spec(),output,stopped);
         emitted=active&&EnergyTransfer.emitEnergyToSide(spec().outputType(),front(),output,1,this)>0;
-        if(emitted)conversionMeter.output(level.getGameTime(),output,1);
+        if (emitted)conversionMeter.output(level.getGameTime(),output,1);
         // These four GT6 converters waste their per-tick supply even if their output is disconnected.
-        if(energy!=0){energy=0;setChanged();}
-        if(getBlockState().getValue(LaserConverterBlock.ACTIVE)!=active)
+        if (energy!=0){energy=0;setChanged();}
+        if (getBlockState().getValue(LaserConverterBlock.ACTIVE)!=active)
             level.setBlockAndUpdate(worldPosition,getBlockState().setValue(LaserConverterBlock.ACTIVE,active));
     }
     @Override public boolean isEnergyType(GregTechTags.Tag type,Direction side,boolean emitting){return type==(emitting?spec().outputType():spec().inputType());}
@@ -84,11 +84,11 @@ public final class LaserConverterBlockEntity extends GTEnergyBlockEntity impleme
     @Override public long getEnergyDemanded(GregTechTags.Tag type,Direction side,long size){return isEnergyAcceptingFrom(type,side,false)&&size>0?(spec().input()*2-energy)/size:0;}
     @Override public long getEnergyOffered(GregTechTags.Tag type,Direction side,long size){return 0;}
     @Override public long doInject(GregTechTags.Tag type,Direction side,long size,long amount,boolean execute){
-        if(size<=0||amount<=0||size>spec().input()*2||!isEnergyAcceptingFrom(type,side,false))return 0;
+        if (size<=0||amount<=0||size>spec().input()*2||!isEnergyAcceptingFrom(type,side,false))return 0;
         long accepted=LaserWorkRules.packets(spec(),energy,size,amount);
-        if(execute&&accepted>0){
+        if (execute&&accepted>0){
             energy+=size*accepted;
-            if(level!=null)conversionMeter.input(level.getGameTime(),size*accepted);
+            if (level!=null)conversionMeter.input(level.getGameTime(),size*accepted);
             setChanged();
         }
         return accepted;

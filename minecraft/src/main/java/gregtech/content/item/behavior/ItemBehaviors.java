@@ -289,7 +289,7 @@ public final class ItemBehaviors {
         String id = itemId(stack);
         if (id == null) return Outcome.refused(stack);
 //? if >=1.21.1 {
-        /*if(id.equals("remote_activator")){var o=BehaviorRemote.useInAir(level,player,stack);return new Outcome(o.acted(),o.stack());}
+        /*if (id.equals("remote_activator")){var o=BehaviorRemote.useInAir(level,player,stack);return new Outcome(o.acted(),o.stack());}
 *///?} else {
         if (id.equals("remote_activator")) return BehaviorRemote.useInAir(level, player, stack);
 //?}

@@ -53,9 +53,9 @@ public final class SpecialProcessRecipeTests {
                 new SharedSpecialProcessRows.Resolver());
         var casing = GTItems.getStack(MaterialPrefix.itemCasing, GTMaterialRegistry.get("Iron"), 1);
         helper.assertTrue(!casing.isEmpty() && result.recipe() != null, "aliased output resolves to a recipe: " + result.reason());
-        helper.assertTrue(result.recipe().mOutputs[0].getItem() == casing.getItem(), "first available canonical output wins");
+        helper.assertTrue(result.recipe().itemOutputs[0].getItem() == casing.getItem(), "first available canonical output wins");
         helper.assertTrue(SharedSpecialProcessRows.owned().stream().anyMatch(row -> sameInputs(row, result.recipe())
-                        && row.mOutputs.length == 1 && row.mOutputs[0].getItem() == casing.getItem()),
+                        && row.itemOutputs.length == 1 && row.itemOutputs[0].getItem() == casing.getItem()),
                 "the alias-based special process row is published");
         helper.succeed();
     }
@@ -79,11 +79,11 @@ public final class SpecialProcessRecipeTests {
                 new SharedSpecialProcessRows.ReagentSelector(custom, Set.of()), new SharedSpecialProcessRows.Resolver(forms));
         helper.assertTrue(result.recipe() != null, "anyForm fluid reagent resolves: " + result.reason());
         var recipe = result.recipe();
-        helper.assertTrue(recipe.mFluidInputs[0].getFluid() == Fluids.LAVA && recipe.mFluidInputs[0].getAmount() == 37,
+        helper.assertTrue(recipe.fluidInputs[0].getFluid() == Fluids.LAVA && recipe.fluidInputs[0].getAmount() == 37,
                 "reagent uses the published identity and exact mB");
-        helper.assertTrue(recipe.mFluidOutputs[0].getFluid() == Fluids.LAVA && recipe.mFluidOutputs[0].getAmount() == 123,
+        helper.assertTrue(recipe.fluidOutputs[0].getFluid() == Fluids.LAVA && recipe.fluidOutputs[0].getAmount() == 123,
                 "output uses the published identity and exact mB");
-        helper.assertTrue(recipe.mChances[0] == 5000, "item chance is preserved");
+        helper.assertTrue(recipe.outputChances[0] == 5000, "item chance is preserved");
 
         var missingOutput = new SpecialProcessValue.FluidOutput(custom,
                 List.of(new SpecialProcessValue.FormCount(new FormKey("gas"), 1)), 123);
@@ -97,7 +97,7 @@ public final class SpecialProcessRecipeTests {
         result = SharedSpecialProcessRows.build(target, input, 1, itemPlan,
                 new SharedSpecialProcessRows.ReagentSelector(new MaterialKey("SodiumPersulfate"), Set.of()),
                 new SharedSpecialProcessRows.Resolver());
-        helper.assertTrue(result.recipe() != null && result.recipe().mInputs[1].getCount() == 2,
+        helper.assertTrue(result.recipe() != null && result.recipe().itemInputs[1].getCount() == 2,
                 "anyForm also resolves a registered item reagent");
         var itemForm = new FormKey("dust");
         MaterialFormsView mixed = material -> material.equals(custom)
@@ -110,7 +110,7 @@ public final class SpecialProcessRecipeTests {
                 "mixed item/fluid anyForm rejects ambiguous units");
         result = SharedSpecialProcessRows.build(target, input, 1, itemPlan,
                 new SharedSpecialProcessRows.ReagentSelector(custom, Set.of(itemForm)), new SharedSpecialProcessRows.Resolver(mixed));
-        helper.assertTrue(result.recipe() != null && result.recipe().mInputs[1].is(Items.DIAMOND),
+        helper.assertTrue(result.recipe() != null && result.recipe().itemInputs[1].is(Items.DIAMOND),
                 "a declared item binding resolves without an internal material or prefix entry");
         var oversized = new SpecialProcessValue.Target(Map.of(input, 1), List.of(itemOutput), List.of(), 65, 256, 0);
         result = SharedSpecialProcessRows.build(target, input, 1, oversized,
@@ -121,8 +121,8 @@ public final class SpecialProcessRecipeTests {
             result = SharedSpecialProcessRows.build(target, input, 1, itemPlan,
                     new SharedSpecialProcessRows.ReagentSelector(new MaterialKey(name), Set.of(liquid)),
                     new SharedSpecialProcessRows.Resolver());
-            helper.assertTrue(result.recipe() != null && result.recipe().mFluidInputs.length == 1
-                            && result.recipe().mFluidInputs[0].getAmount() == 2,
+            helper.assertTrue(result.recipe() != null && result.recipe().fluidInputs.length == 1
+                            && result.recipe().fluidInputs[0].getAmount() == 2,
                     name + " resolves exact mB through its published native form");
         }
         helper.succeed();
@@ -146,19 +146,19 @@ public final class SpecialProcessRecipeTests {
                 new SharedSpecialProcessRows.Resolver(onlyBlockReagent));
         helper.assertTrue(result.recipe() != null, "native block forms resolve as items: " + result.reason());
         var row = result.recipe();
-        helper.assertTrue(row.mInputs[0].is(GTBlocks.getStack(BlockMaterialPrefix.ore, GTMaterialRegistry.get("Gold")).getItem()),
+        helper.assertTrue(row.itemInputs[0].is(GTBlocks.getStack(BlockMaterialPrefix.ore, GTMaterialRegistry.get("Gold")).getItem()),
                 "target uses the registered gold ore block item");
-        helper.assertTrue(row.mInputs[1].is(GTBlocks.getStack(BlockMaterialPrefix.ore, GTMaterialRegistry.get("Copper")).getItem())
-                && row.mInputs[1].getCount() == 2, "unrestricted block reagent consumes its item count");
-        helper.assertTrue(row.mOutputs[0].is(GTBlocks.getStack(BlockMaterialPrefix.ore, GTMaterialRegistry.get("Iron")).getItem())
-                && row.mOutputs[0].getCount() == 3, "output uses the registered iron ore block item");
+        helper.assertTrue(row.itemInputs[1].is(GTBlocks.getStack(BlockMaterialPrefix.ore, GTMaterialRegistry.get("Copper")).getItem())
+                && row.itemInputs[1].getCount() == 2, "unrestricted block reagent consumes its item count");
+        helper.assertTrue(row.itemOutputs[0].is(GTBlocks.getStack(BlockMaterialPrefix.ore, GTMaterialRegistry.get("Iron")).getItem())
+                && row.itemOutputs[0].getCount() == 3, "output uses the registered iron ore block item");
 
         MaterialFormsView blockAndItem = material -> material.equals(copper)
                 ? Set.of(copperOre, new MaterialFormBinding(copper, new FormKey("plate"), MaterialFormKind.ITEM, "minecraft:diamond", 0))
                 : bindings.find(material);
         result = SharedSpecialProcessRows.build(gold, ore, 1, plan,
                 new SharedSpecialProcessRows.ReagentSelector(copper, Set.of()), new SharedSpecialProcessRows.Resolver(blockAndItem));
-        helper.assertTrue(result.recipe() != null && result.recipe().mInputs[1].is(Items.DIAMOND),
+        helper.assertTrue(result.recipe() != null && result.recipe().itemInputs[1].is(Items.DIAMOND),
                 "the existing item reagent takes priority over a new block alternative");
 
         MaterialFormsView mixed = material -> material.equals(copper)
@@ -191,13 +191,13 @@ public final class SpecialProcessRecipeTests {
                         new SharedSpecialProcessRows.Resolver());
                 helper.assertTrue(result.recipe() != null, name + "/" + input.getKey() + ": " + result.reason());
                 var built = result.recipe();
-                helper.assertTrue(built.mOutputs.length == 6 && built.mFluidOutputs.length == 3, "all aqua-regia outputs resolve");
-                for (int i = 0; i < 6; i++) helper.assertTrue(built.mChances[i] == (i == 0 ? 10000 : 5000), "source output chances");
-                for (int i = 0; i < 3; i++) helper.assertTrue(built.mFluidOutputs[i].getAmount() == sourceFluidAmounts[i], "source fluid amounts");
-                var published = MachineRecipeMaps.Bath.mRecipeList.stream().filter(row -> sameInputs(row, built)).toList();
+                helper.assertTrue(built.itemOutputs.length == 6 && built.fluidOutputs.length == 3, "all aqua-regia outputs resolve");
+                for (int i = 0; i < 6; i++) helper.assertTrue(built.outputChances[i] == (i == 0 ? 10000 : 5000), "source output chances");
+                for (int i = 0; i < 3; i++) helper.assertTrue(built.fluidOutputs[i].getAmount() == sourceFluidAmounts[i], "source fluid amounts");
+                var published = MachineRecipeMaps.Bath.recipeRows.stream().filter(row -> sameInputs(row, built)).toList();
                 helper.assertTrue(published.size() == 1, name + "/" + input.getKey() + " publishes exactly once, got " + published.size());
                 helper.assertTrue(SharedSpecialProcessRows.owned().contains(published.get(0)), "declarative producer owns the published row");
-                helper.assertTrue(published.get(0).mFluidOutputs.length == 3, "published row retains every fluid output");
+                helper.assertTrue(published.get(0).fluidOutputs.length == 3, "published row retains every fluid output");
             }
         }
         helper.succeed();
@@ -237,27 +237,27 @@ public final class SpecialProcessRecipeTests {
             for (var prefix : List.of(MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny)) {
                 var stack = GTItems.getStack(prefix, GTMaterialRegistry.get(name), 1);
                 if (stack.isEmpty()) continue;
-                helper.assertTrue(MachineRecipeMaps.Bath.mRecipeList.stream().anyMatch(row -> row.mInputs.length == 1
+                helper.assertTrue(MachineRecipeMaps.Bath.recipeRows.stream().anyMatch(row -> row.itemInputs.length == 1
                         && row.itemTag(0) != null && stack.is(row.itemTag(0))
-                        && Arrays.stream(row.mOutputs).anyMatch(output -> output.is(Items.PAPER))),
+                        && Arrays.stream(row.itemOutputs).anyMatch(output -> output.is(Items.PAPER))),
                         name + "/" + prefix.getName() + " remains in the paper input tag");
             }
         }
         for (var prefix : List.of(MaterialPrefix.dust, MaterialPrefix.dustSmall, MaterialPrefix.dustTiny)) {
             var petrified = GTItems.getStack(prefix, GTMaterialRegistry.get("PetrifiedWood"), 1);
             if (petrified.isEmpty()) continue;
-            helper.assertFalse(MachineRecipeMaps.Bath.mRecipeList.stream().anyMatch(row -> row.mInputs.length == 1
+            helper.assertFalse(MachineRecipeMaps.Bath.recipeRows.stream().anyMatch(row -> row.itemInputs.length == 1
                     && row.itemTag(0) != null && petrified.is(row.itemTag(0))
-                    && Arrays.stream(row.mOutputs).anyMatch(output -> output.is(Items.PAPER))),
+                    && Arrays.stream(row.itemOutputs).anyMatch(output -> output.is(Items.PAPER))),
                     "petrified wood is excluded from paper pulp");
         }
         helper.succeed();
     }
 
     private static boolean sameInputs(Recipe row, Recipe expected) {
-        return row.mInputs.length == 1 && row.mFluidInputs.length == 1
-                && ItemStack.matches(row.mInputs[0], expected.mInputs[0])
-                && row.mFluidInputs[0].getFluid() == expected.mFluidInputs[0].getFluid()
-                && row.mFluidInputs[0].getAmount() == expected.mFluidInputs[0].getAmount();
+        return row.itemInputs.length == 1 && row.fluidInputs.length == 1
+                && ItemStack.matches(row.itemInputs[0], expected.itemInputs[0])
+                && row.fluidInputs[0].getFluid() == expected.fluidInputs[0].getFluid()
+                && row.fluidInputs[0].getAmount() == expected.fluidInputs[0].getAmount();
     }
 }

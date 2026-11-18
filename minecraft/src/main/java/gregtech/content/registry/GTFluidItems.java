@@ -17,7 +17,7 @@ import java.util.Map;
 public final class GTFluidItems {
 //? if >=1.21.1 {
  /*private GTFluidItems(){}
- public static Item get(String field){var entry=RegisteredFluids.get(field);if(entry==null)return null;var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(GTFluids.namespace(entry),"fluid_item_"+RegisteredFluids.sanitizePath(entry.registryName())));return item==Items.AIR?null:item;}
+ public static Item get(String field){var entry=RegisteredFluids.get(field);if (entry==null)return null;var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(GTFluids.namespace(entry),"fluid_item_"+RegisteredFluids.sanitizePath(entry.registryName())));return item==Items.AIR?null:item;}
 *///?} else {
     private static final Map<String, RegisteredItem<FluidItem>> BY_FIELD = new LinkedHashMap<>();
 
@@ -42,8 +42,8 @@ public final class GTFluidItems {
             BY_FLUID.put(ResourceLocation.parse("minecraft:flowing_lava"), ro);
         }
         var still=GTFluids.still(field); var flowing=GTFluids.flowing(field);
-        if(still!=null) BY_FLUID.put(still.getId(),ro);
-        if(flowing!=null) BY_FLUID.put(flowing.getId(),ro);
+        if (still!=null) BY_FLUID.put(still.getId(),ro);
+        if (flowing!=null) BY_FLUID.put(flowing.getId(),ro);
     }
 
     @org.jetbrains.annotations.Nullable

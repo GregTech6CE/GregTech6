@@ -35,8 +35,8 @@ public final class DyeProcessingRecipes {
     public static List<Entry> entries(){return Collections.unmodifiableList(ENTRIES);}
     private DyeProcessingRecipes(){}
     public static int register(){
-        if(!ENTRIES.isEmpty())throw new IllegalStateException("Dye recipes registered twice");
-        for(String color:RegisteredFluids.DYE_OREDICTS_POST){
+        if (!ENTRIES.isEmpty())throw new IllegalStateException("Dye recipes registered twice");
+        for (String color:RegisteredFluids.DYE_OREDICTS_POST){
             String vanilla=color.replace("LightBlue","light_blue").replace("LightGray","light_gray").toLowerCase(Locale.ROOT);
             var dye=item("minecraft:"+vanilla+"_dye",1);
             var waters=RecipeInputGroups.fluids("water","Water","MnWtr","DistW");
@@ -59,11 +59,11 @@ public final class DyeProcessingRecipes {
             var dyeColor = net.minecraft.world.item.DyeColor.byName(vanilla, net.minecraft.world.item.DyeColor.WHITE);
             var wet = colored("cfoam_fresh", dyeColor, 1);
             // Loader_Recipes_Other injects every registered air; spectral dew is not an air here.
-            for(String air:new String[]{"Air","Air_End","Air_Nether"})
+            for (String air:new String[]{"Air","Air_End","Air_Nether"})
                 add(MachineRecipeMaps.Injector,new Recipe(null,new ItemStack[]{colored("cfoam_fresh",dyeColor,1)},null,
                         new FluidStack[]{fluid("CFoam_Dyed_"+color,100),fluid(air,1000)},null,16,16,0));
             add(MachineRecipeMaps.Drying,new Recipe(new ItemStack[]{wet},new ItemStack[]{colored("cfoam",dyeColor,1)},null,null,null,16,16,0));
-            for(String sulfate:new String[]{"SodiumSulfate","PotassiumSulfate"}) for(int count:new int[]{1,4}) {
+            for (String sulfate:new String[]{"SodiumSulfate","PotassiumSulfate"}) for (int count:new int[]{1,4}) {
                 var powder=GTItems.getStack(count==1?MaterialPrefix.dustSmall:MaterialPrefix.dust,GTMaterialRegistry.get(sulfate),1);
                 var molten=fluid("Glass",1296*count);
                 add(MachineRecipeMaps.Mixer,new Recipe(new ItemStack[]{powder},new ItemStack[]{colored("glass_clear",dyeColor,count)},null,
@@ -71,8 +71,8 @@ public final class DyeProcessingRecipes {
             }
             add(MachineRecipeMaps.Injector,new Recipe(new ItemStack[]{new ItemStack(Items.GLOWSTONE_DUST),colored("glass_clear",dyeColor,1)},
                     new ItemStack[]{colored("glass_glow",dyeColor,1)},null,null,null,32,16,0));
-            for(String kind:new String[]{"glass_clear","glass_glow","cfoam"})
-                for(var coolant:RecipeInputGroups.coolants(false))
+            for (String kind:new String[]{"glass_clear","glass_glow","cfoam"})
+                for (var coolant:RecipeInputGroups.coolants(false))
                     add(MachineRecipeMaps.Cutter,coolant.apply(new Recipe(new ItemStack[]{colored(kind,dyeColor,1)},
                             new ItemStack[]{colored(kind+"_slab",dyeColor,2)},null,
                             new FluidStack[]{fluid(coolant.field(),5*coolant.multiplier())},null,
@@ -97,7 +97,7 @@ public final class DyeProcessingRecipes {
                 new FluidStack[]{fluid("Concrete",144)},new FluidStack[]{fluid("DistW",8)},16,16,0).withCatalystInputs(0));
         // The complete plastic-canister prefix matrix belongs to SourceExtruderRecipes.
         var co2=gregtech.content.recipe.generated.GeneratedRecipeResolver.materialFluid("CarbonDioxide",16000);
-        if(co2==null||co2.isEmpty())throw new IllegalStateException("Missing CO2");
+        if (co2==null||co2.isEmpty())throw new IllegalStateException("Missing CO2");
         add(MachineRecipeMaps.Canner,new Recipe(new ItemStack[]{item("gt6ce:empty_spray_can",1)},new ItemStack[]{item("gt6ce:fire_extinguisher_co2",1)},null,
                 new FluidStack[]{co2},null,256,16,0));
         UtilityProcessingRecipes.register();
@@ -107,10 +107,10 @@ public final class DyeProcessingRecipes {
     private static void precursors(){
         String[] seeds={"wheat_seeds","melon_seeds","pumpkin_seeds","beetroot_seeds"};
         int[] amounts={50,30,60,30};
-        for(int i=0;i<seeds.length;i++)for(var map:new RecipeMap[]{MachineRecipeMaps.Squeezer,MachineRecipeMaps.Juicer})
+        for (int i=0;i<seeds.length;i++)for (var map:new RecipeMap[]{MachineRecipeMaps.Squeezer,MachineRecipeMaps.Juicer})
             add(map,new Recipe(new ItemStack[]{item("minecraft:"+seeds[i],1)},null,null,null,
                     new FluidStack[]{fluid("Oil_Seed",amounts[i])},16,16,0));
-        for(var map:new RecipeMap[]{MachineRecipeMaps.Squeezer,MachineRecipeMaps.Juicer})
+        for (var map:new RecipeMap[]{MachineRecipeMaps.Squeezer,MachineRecipeMaps.Juicer})
             add(map,new Recipe(new ItemStack[]{new ItemStack(Items.SUNFLOWER)},new ItemStack[]{new ItemStack(Items.YELLOW_DYE,2)},null,null,
                     new FluidStack[]{fluid("Oil_Sunflower",map==MachineRecipeMaps.Squeezer?100:75)},16,16,0));
         foamFamilies();
@@ -123,10 +123,10 @@ public final class DyeProcessingRecipes {
      * recipe takes one full dust.
      */
     private static void foamFamilies(){
-        for(String[] group:FOAM_ROCKS_BY_DYE){
+        for (String[] group:FOAM_ROCKS_BY_DYE){
             String dye=group[0];
             String output=dye.isEmpty()?"CFoam":"CFoam_Dyed_"+dye;
-            for(boolean large:new boolean[]{false,true}) {
+            for (boolean large:new boolean[]{false,true}) {
                 int multiplier=large?4:1;
                 var recipe=new Recipe(new ItemStack[]{dust(group[1],6*multiplier),dust(FOAM_SANDS[0],2*multiplier),
                         GTItems.getStack(large?MaterialPrefix.dust:MaterialPrefix.dustSmall,GTMaterialRegistry.get(FOAM_CLAYS[0]),1)},
@@ -146,15 +146,15 @@ public final class DyeProcessingRecipes {
     /** Feed the built-in datapack from the same material groups used by the mixer recipes. */
     public static void foamTags(java.util.function.BiConsumer<String,ItemStack> items,
             java.util.function.BiConsumer<String,FluidStack> fluids){
-        for(String[] group:FOAM_ROCKS_BY_DYE)
-            for(int rock=1;rock<group.length;rock++) items.accept(materialTag("stone_dusts/"+
+        for (String[] group:FOAM_ROCKS_BY_DYE)
+            for (int rock=1;rock<group.length;rock++) items.accept(materialTag("stone_dusts/"+
                     (group[0].isEmpty()?"neutral":group[0].toLowerCase(Locale.ROOT))).getPath(),dust(group[rock],1));
-        for(String sand:FOAM_SANDS) items.accept(materialTag("silica_dusts").getPath(),dust(sand,1));
-        for(String clay:FOAM_CLAYS){
+        for (String sand:FOAM_SANDS) items.accept(materialTag("silica_dusts").getPath(),dust(sand,1));
+        for (String clay:FOAM_CLAYS){
             items.accept(materialTag("clay_dusts").getPath(),dust(clay,1));
             items.accept(materialTag("small_clay_dusts").getPath(),GTItems.getStack(MaterialPrefix.dustSmall,GTMaterialRegistry.get(clay),1));
         }
-        for(String water:new String[]{"Water","MnWtr","DistW"}) fluids.accept(materialTag("water").getPath(),fluid(water,1));
+        for (String water:new String[]{"Water","MnWtr","DistW"}) fluids.accept(materialTag("water").getPath(),fluid(water,1));
     }
 
     /**
@@ -164,34 +164,34 @@ public final class DyeProcessingRecipes {
      * blueberry juice for blue, cranberry juice for red). EU 0, 16 ticks.
      */
     private static void bathDyeing(){
-        for(PaintingRules.Dye dye:PaintingRules.DYES){
+        for (PaintingRules.Dye dye:PaintingRules.DYES){
             var target=net.minecraft.world.item.DyeColor.byName(dye.id(),net.minecraft.world.item.DyeColor.WHITE);
-            for(String family:new String[]{"cfoam","asphalt","concrete","concrete_reinforced"}){
+            for (String family:new String[]{"cfoam","asphalt","concrete","concrete_reinforced"}){
                 var white=colored(family,net.minecraft.world.item.DyeColor.WHITE,1);
                 var result=colored(family,target,1);
-                for(var d:dyeGroups(dye.index())) bath(white,null,d,result,24);
+                for (var d:dyeGroups(dye.index())) bath(white,null,d,result,24);
             }
             // The port has only the C-Foam slab; asphalt/concrete/reinforced slabs have no identity yet.
             var whiteSlab=colored("cfoam_slab",net.minecraft.world.item.DyeColor.WHITE,1);
             var colouredSlab=colored("cfoam_slab",target,1);
-            for(var d:dyeGroups(dye.index())) bath(whiteSlab,null,d,colouredSlab,48);
-            for(String kind:new String[]{"concrete","cfoam","asphalt"}){
+            for (var d:dyeGroups(dye.index())) bath(whiteSlab,null,d,colouredSlab,48);
+            for (String kind:new String[]{"concrete","cfoam","asphalt"}){
                 var out=item("gt6ce:panel_"+kind+"_"+dye.id(),1);
                 var panels=RecipeInputGroups.exactItems("panels/"+kind,PaintingRules.DYES.stream()
                         .map(source->item("gt6ce:panel_"+kind+"_"+source.id(),1)).toList());
-                for(var d:dyeGroups(dye.index())) bath(panels.stack(1),panels,d,out,144);
+                for (var d:dyeGroups(dye.index())) bath(panels.stack(1),panels,d,out,144);
             }
         }
     }
     /** One colour's dye fluids with their unit amounts in mB. */
     private static List<String[]> dyeFluids(int index){
         StringBuilder camel=new StringBuilder();
-        for(String part:PaintingRules.DYES.get(index).id().split("_"))
+        for (String part:PaintingRules.DYES.get(index).id().split("_"))
             camel.append(Character.toUpperCase(part.charAt(0))).append(part.substring(1));
         List<String[]> fluids=new ArrayList<>();
-        for(String kind:new String[]{"Water","Flower","Chemical"})
+        for (String kind:new String[]{"Water","Flower","Chemical"})
             fluids.add(new String[]{"Dye_"+kind+"_"+camel,"144"});
-        switch(index){
+        switch (index){
             case 0 -> fluids.add(new String[]{"InkSquid","144"});
             case 1 -> fluids.add(new String[]{"Juice_Cranberry","250"});
             case 4 -> {fluids.add(new String[]{"Juice_Blueberry","250"});}
@@ -204,7 +204,7 @@ public final class DyeProcessingRecipes {
     private static List<DyeGroup> dyeGroups(int index){
         return DYE_GROUPS.computeIfAbsent(index,key->{
             Map<Integer,List<String>> groups=new LinkedHashMap<>();
-            for(String[] dye:dyeFluids(key))groups.computeIfAbsent(Integer.parseInt(dye[1]),ignored->new ArrayList<>()).add(dye[0]);
+            for (String[] dye:dyeFluids(key))groups.computeIfAbsent(Integer.parseInt(dye[1]),ignored->new ArrayList<>()).add(dye[0]);
             return groups.entrySet().stream().map(e->new DyeGroup(e.getKey(),RecipeInputGroups.fluids(
                     "dyes/"+PaintingRules.DYES.get(key).id()+"/"+(e.getKey()==144?"standard":"juices"),
                     e.getValue().toArray(String[]::new)))).toList();
@@ -214,7 +214,7 @@ public final class DyeProcessingRecipes {
         int mb=Math.max(1,(dye.unit()+divisor-1)/divisor);
         var recipe=new Recipe(new ItemStack[]{input.copy()},new ItemStack[]{output.copy()},null,
                 new FluidStack[]{dye.fluids().stack(mb)},null,16,0,0);
-        dye.fluids().apply(recipe,0); if(items!=null)items.apply(recipe,0);
+        dye.fluids().apply(recipe,0); if (items!=null)items.apply(recipe,0);
         add(MachineRecipeMaps.Bath,recipe);
     }
 
@@ -257,22 +257,22 @@ public final class DyeProcessingRecipes {
     }
     private static ItemStack item(String id,int count){
         var item=Mc.item(ResourceLocation.parse(id));
-        if(item==null||item==Items.AIR)throw new IllegalStateException("Missing dye ingredient "+id);
+        if (item==null||item==Items.AIR)throw new IllegalStateException("Missing dye ingredient "+id);
         return new ItemStack(item,count);
     }
     public static FluidStack fluid(String field,int amount){
-        if(field.equals("Water"))return new FluidStack(Fluids.WATER,amount);
+        if (field.equals("Water"))return new FluidStack(Fluids.WATER,amount);
         var fluid=GTFluids.still(field);
-        if(fluid==null||!GTFluids.isPresent(fluid))throw new IllegalStateException("Missing dye fluid "+field);
+        if (fluid==null||!GTFluids.isPresent(fluid))throw new IllegalStateException("Missing dye fluid "+field);
         return new FluidStack(fluid.get(),amount);
     }
     private static void mixer(int ticks,ItemStack[] items,FluidStack[] inputs,FluidStack output){
         add(MachineRecipeMaps.Mixer,new Recipe(items,null,null,inputs,new FluidStack[]{output},ticks,16,0));
     }
     private static void add(RecipeMap map,Recipe recipe){
-        for(var input:recipe.mInputs)if(input.isEmpty())throw new IllegalStateException("Empty dye recipe input");
-        recipe.mExactItemInputs=true;
-        if(map.addRecipe(recipe)==null)throw new IllegalStateException("Conflicting dye recipe in "+map.mNameInternal);
+        for (var input:recipe.itemInputs)if (input.isEmpty())throw new IllegalStateException("Empty dye recipe input");
+        recipe.exactItemInputs=true;
+        if (map.addRecipe(recipe)==null)throw new IllegalStateException("Conflicting dye recipe in "+map.internalName);
         ENTRIES.add(new Entry(map,recipe));
     }
 }

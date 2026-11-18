@@ -64,7 +64,7 @@ public final class BathingEffectEvents {
     @SubscribeEvent(priority = EventPriority.LOWEST)
 //? if >=1.21.1 {
     /*public static void onLivingTick(EntityTickEvent.Pre event) {
-        if(!(event.getEntity() instanceof LivingEntity entity))return;
+        if (!(event.getEntity() instanceof LivingEntity entity))return;
 *///?} else {
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
         LivingEntity entity = event.getEntity();

@@ -24,6 +24,6 @@ public final class LongDistanceClientColors {
 //?}
     }
     private static java.util.List<Block> endpoints(){return net.minecraft.core.registries.BuiltInRegistries.BLOCK.stream().filter(block->block instanceof LongDistEndpointBlock||block instanceof LongDistanceTransformerBlock).toList();}
-    @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event){for(var block:endpoints())event.register((state,level,pos,layer)->rgb(block,layer),block);}
-    @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event){for(var block:endpoints())event.register((stack,layer)->rgb(block,layer),block.asItem());}
+    @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event){for (var block:endpoints())event.register((state,level,pos,layer)->rgb(block,layer),block);}
+    @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event){for (var block:endpoints())event.register((stack,layer)->rgb(block,layer),block.asItem());}
 }

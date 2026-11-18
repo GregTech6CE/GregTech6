@@ -31,7 +31,7 @@ final class MachineEmiIngredients {
     private final Map<net.minecraft.tags.TagKey<Item>, EmiIngredient> unitTags = new java.util.HashMap<>();
 
     EmiIngredient fluidIngredient(gregtech.engine.recipe.Recipe recipe, int index) {
-        var fluid = recipe.mFluidInputs[index];
+        var fluid = recipe.fluidInputs[index];
         java.util.List<EmiStack> aliases;
         var tag = recipe.fluidTag(index);
         if (tag != null) {
@@ -66,7 +66,7 @@ final class MachineEmiIngredients {
     EmiIngredient ingredient(gregtech.engine.recipe.Recipe recipe, int index) {
         var unit = recipe.materialInputDisplay(index);
         if (unit != null) {
-            var stack = recipe.mInputs[index];
+            var stack = recipe.itemInputs[index];
             var aliases = unitAliases.computeIfAbsent(stack.getItem(), ignored -> {
                 var all = new ArrayList<EmiStack>();
                 all.add(EmiStack.of(stack.copyWithCount(1)));
@@ -77,19 +77,19 @@ final class MachineEmiIngredients {
                     unit.tag() == null ? null : unitTags.computeIfAbsent(unit.tag(), EmiIngredient::of));
         }
         if (recipe.itemTag(index) != null)
-            return EmiIngredient.of(recipe.itemTag(index), recipe.mInputs[index].getCount());
+            return EmiIngredient.of(recipe.itemTag(index), recipe.itemInputs[index].getCount());
         var choices = recipe.viewerInputAlternatives(index);
-        if (choices.isEmpty() && (recipe.mExactItemInputs || recipe.hasItemInputGuard(index))) return EmiStack.of(recipe.mInputs[index]);
-        if (choices.isEmpty()) return ingredient(recipe.mInputs[index]);
+        if (choices.isEmpty() && (recipe.exactItemInputs || recipe.hasItemInputGuard(index))) return EmiStack.of(recipe.itemInputs[index]);
+        if (choices.isEmpty()) return ingredient(recipe.itemInputs[index]);
         var expanded = new ArrayList<ItemStack>();
         for (var stack : choices) {
-            if (!recipe.mExactItemInputs && !recipe.hasItemInputGuard(index)) {
+            if (!recipe.exactItemInputs && !recipe.hasItemInputGuard(index)) {
                 var preferred = gregtech.engine.material.MaterialUnification.canonical(stack);
                 if (preferred.getItem() != stack.getItem()) expanded.add(preferred.copyWithCount(1));
             }
             expanded.add(stack.copyWithCount(1));
         }
-        return new MachineEmiIngredient(candidates.of(expanded), recipe.mInputs[index].getCount());
+        return new MachineEmiIngredient(candidates.of(expanded), recipe.itemInputs[index].getCount());
     }
     EmiIngredient ingredient(ItemStack stack) {
 //? if >=1.21.1 {

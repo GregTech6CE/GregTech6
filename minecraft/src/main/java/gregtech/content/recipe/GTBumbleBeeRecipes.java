@@ -136,7 +136,7 @@ public final class GTBumbleBeeRecipes {
      * {@code make}): {@code [bee, tiny paper plate] + 10 mB of honey -> the scanned bee}, once per honey
      * fluid, and the same row with honeydew instead. GT6 adds them with {@code addFakeRecipe}, which is
      * why the Bumblelyzer's recipe page is never empty while the machine itself ignores them
-     * ({@code RecipeMap}, skip {@code mFakeRecipe} rows).
+     * ({@code RecipeMap}, skip {@code fakeRecipe} rows).
      *
      * <p>The rows are built from the port's own 80 species and 320 bee items, so the count is
      * {@code 80 x 3 x (honey fluids + honeydew)}; a fluid the port does not register is skipped, exactly

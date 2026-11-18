@@ -41,7 +41,7 @@ public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
             @Override public BakedModel resolve(BakedModel original,ItemStack stack,@Nullable ClientLevel level,
                                                 @Nullable LivingEntity entity,int seed) {
                 int shape=MoldItemData.shape(stack)&MoldShapes.SHAPE_MASK;
-                if(shape==0)return original;
+                if (shape==0)return original;
                 return variants.computeIfAbsent(shape,key->new MoldItemBakedModel(hull,sprite,key,true));
             }
         };
@@ -51,14 +51,14 @@ public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
     static TextureAtlasSprite gridSprite(BakedModel template) {
         var random=RandomSource.create(0);
         var quads=new ArrayList<>(template.getQuads(null,null,random));
-        for(var side:Direction.values()) quads.addAll(template.getQuads(null,side,random));
-        for(var quad:quads) if(quad.getTintIndex()==0) return quad.getSprite();
+        for (var side:Direction.values()) quads.addAll(template.getQuads(null,side,random));
+        for (var quad:quads) if (quad.getTintIndex()==0) return quad.getSprite();
         return template.getParticleIcon();
     }
 
     @Nullable
     private static BakedModel gridPass(BakedModel hull,TextureAtlasSprite sprite,int shape) {
-        if((shape&MoldShapes.SHAPE_MASK)==MoldGridGeometry.ALL_CAVITIES) return null;
+        if ((shape&MoldShapes.SHAPE_MASK)==MoldGridGeometry.ALL_CAVITIES) return null;
         var bakery=new FaceBakery();
         var bySide=new EnumMap<Direction,List<BakedQuad>>(Direction.class);
         // Existing world mold geometry: 12px square, 2.4px cells raised from 1px to 3px above the plate.
@@ -74,7 +74,7 @@ public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
 //?}
             bySide.computeIfAbsent(side,key->new ArrayList<>()).add(quad);
         });
-        if(bySide.isEmpty()) return null;
+        if (bySide.isEmpty()) return null;
         return new GridPass(hull,bySide);
     }
 
@@ -88,7 +88,7 @@ public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
     /** Keep the hull's own passes (layer render types and transforms) and append the shape grid as its own pass. */
     @Override public List<BakedModel> getRenderPasses(ItemStack stack, boolean fabulous) {
         var passes=new ArrayList<>(originalModel.getRenderPasses(stack,fabulous));
-        if(gridPass!=null) passes.add(gridPass);
+        if (gridPass!=null) passes.add(gridPass);
         return List.copyOf(passes);
     }
 

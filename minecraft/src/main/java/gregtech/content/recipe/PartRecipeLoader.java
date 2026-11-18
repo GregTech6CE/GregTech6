@@ -352,10 +352,10 @@ public class PartRecipeLoader implements InitializationStep {
             Recipe template) {
         // The optimizer may have divided the batch; use the template's surviving count so the
         // rule cannot ask for more items than the row actually consumes.
-        if (template.mInputs.length == 0
-                || template.mInputs[0].isEmpty()
-                || template.mInputs[0].getItem() != input.getItem()) return;
-        int count = template.mInputs[0].getCount();
+        if (template.itemInputs.length == 0
+                || template.itemInputs[0].isEmpty()
+                || template.itemInputs[0].getItem() != input.getItem()) return;
+        int count = template.itemInputs[0].getCount();
         ItemStack source = input.copyWithCount(count);
         long required = in.getMaterialWeight() * count;
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(

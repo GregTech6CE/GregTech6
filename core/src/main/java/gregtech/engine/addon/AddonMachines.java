@@ -421,7 +421,7 @@ public final class AddonMachines {
         for (Field field : MachineRecipeMapDefinitions.class.getFields()) {
             if (field.getType() != RecipeMapSpec.class) continue;
             try {
-                names.add(((RecipeMapSpec) field.get(null)).mNameInternal);
+                names.add(((RecipeMapSpec) field.get(null)).internalName);
             } catch (IllegalAccessException failure) {
                 throw new IllegalStateException(failure);
             }
@@ -438,8 +438,8 @@ public final class AddonMachines {
         names.addAll(builtInRecipeMapNames());
         names.addAll(builtInFuelMapNames());
         if (installed) {
-            for (AcceptedRecipeMap map : recipeMaps) names.add(map.spec().mNameInternal);
-            for (AcceptedRecipeMap map : fuelMaps) names.add(map.spec().mNameInternal);
+            for (AcceptedRecipeMap map : recipeMaps) names.add(map.spec().internalName);
+            for (AcceptedRecipeMap map : fuelMaps) names.add(map.spec().internalName);
         }
         return Set.copyOf(names);
     }
@@ -450,7 +450,7 @@ public final class AddonMachines {
         for (Field field : FuelRecipeMapDefinitions.class.getFields()) {
             if (field.getType() != RecipeMapSpec.class) continue;
             try {
-                names.add(((RecipeMapSpec) field.get(null)).mNameInternal);
+                names.add(((RecipeMapSpec) field.get(null)).internalName);
             } catch (IllegalAccessException failure) {
                 throw new IllegalStateException(failure);
             }
@@ -474,7 +474,7 @@ public final class AddonMachines {
         var acceptedMaps = new ArrayList<AcceptedRecipeMap>();
         for (Submission submission : QUEUE.values()) {
             for (RecipeMapSpec spec : submission.recipeMaps) {
-                String name = spec.mNameInternal;
+                String name = spec.internalName;
                 if (name == null || !name.matches("[a-z0-9_.]+"))
                     throw new IllegalStateException(
                             "Addon '" + submission.addonId + "' recipe map has an invalid name: " + name);
@@ -493,7 +493,7 @@ public final class AddonMachines {
         var acceptedFuelMaps = new ArrayList<AcceptedRecipeMap>();
         for (Submission submission : QUEUE.values()) {
             for (RecipeMapSpec spec : submission.fuelMaps) {
-                String name = spec.mNameInternal;
+                String name = spec.internalName;
                 if (name == null || !name.matches("[a-z0-9_.]+"))
                     throw new IllegalStateException(
                             "Addon '" + submission.addonId + "' fuel map has an invalid name: " + name);
@@ -810,12 +810,12 @@ public final class AddonMachines {
 
     private static int fuelInputs(String name, List<AcceptedRecipeMap> acceptedFuelMaps) {
         for (AcceptedRecipeMap map : acceptedFuelMaps)
-            if (name.equals(map.spec().mNameInternal)) return map.spec().mInputFluidCount;
+            if (name.equals(map.spec().internalName)) return map.spec().fluidInputTanks;
         for (Field field : FuelRecipeMapDefinitions.class.getFields()) {
             if (field.getType() != RecipeMapSpec.class) continue;
             try {
                 RecipeMapSpec spec = (RecipeMapSpec) field.get(null);
-                if (name.equals(spec.mNameInternal)) return spec.mInputFluidCount;
+                if (name.equals(spec.internalName)) return spec.fluidInputTanks;
             } catch (IllegalAccessException failure) {
                 throw new IllegalStateException(failure);
             }

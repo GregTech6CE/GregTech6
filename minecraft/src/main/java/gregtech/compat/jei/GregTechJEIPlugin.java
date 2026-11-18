@@ -85,7 +85,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
                 var map = entry.getKey();
                 var type = RecipeMapCategory.recipeType(map);
                 List<Recipe> now = new ArrayList<>();
-                for (Recipe row : map.allRecipes()) if (row.mEnabled && !row.mHidden) now.add(row);
+                for (Recipe row : map.allRecipes()) if (row.enabled && !row.hidden) now.add(row);
                 var removed = new ArrayList<>(entry.getValue());
                 removed.removeAll(now);
                 manager.hideRecipes(type, removed);
@@ -116,8 +116,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
         for (var family : MaterialUnitTagCategory.FAMILIES)
             registration.addRecipeCategories(new MaterialUnitTagCategory(guiHelper, family));
         for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
-            if (!map.mViewerAllowed
-                    || map.mRecipeList.stream().noneMatch(recipe -> recipe.mEnabled && !recipe.mHidden)
+            if (!map.viewerAllowed
+                    || map.recipeRows.stream().noneMatch(recipe -> recipe.enabled && !recipe.hidden)
                             && !map.hasDynamicEnumeration()) continue;
             var category = new RecipeMapCategory(guiHelper, map, iconFor(map));
             registration.addRecipeCategories(category);
@@ -138,8 +138,8 @@ public final class GregTechJEIPlugin implements IModPlugin {
     public void registerRecipeCatalysts(mezz.jei.api.registration.IRecipeCatalystRegistration registration) {
         for (var mold : gregtech.compat.common.MoldChiselDisplay.molds())
             registration.addRecipeCatalyst(mold, MoldChiselCategory.TYPE);
-        for(var table:net.minecraft.core.registries.BuiltInRegistries.BLOCK)
-            if(table instanceof gregtech.content.block.misc.AdvancedCraftingTableBlock)
+        for (var table:net.minecraft.core.registries.BuiltInRegistries.BLOCK)
+            if (table instanceof gregtech.content.block.misc.AdvancedCraftingTableBlock)
                 registration.addRecipeCatalyst(new ItemStack(table),mezz.jei.api.constants.RecipeTypes.CRAFTING);
         // Assembly controllers are recipe outputs, not catalysts for every structure in the category.
         // JEI indexes each controller and its construction parts in MultiblockInfoCategory.setRecipe.
@@ -154,14 +154,14 @@ public final class GregTechJEIPlugin implements IModPlugin {
     }
 
     @Override public void registerItemSubtypes(mezz.jei.api.registration.ISubtypeRegistration registration) {
-        for(var item:gregtech.engine.recipe.UsbRecipeDisplayBinding.sticks())
+        for (var item:gregtech.engine.recipe.UsbRecipeDisplayBinding.sticks())
             registration.registerSubtypeInterpreter(item,(stack,context)->gregtech.engine.recipe.UsbRecipeDisplayBinding.subtype(stack));
 
 //? if >=1.21.1 {
-/*        for(var entry:gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) if(entry.isBound())
+/*        for (var entry:gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) if (entry.isBound())
             registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> gregtech.engine.fluid.FluidDisplayBinding.subtype(net.minecraft.client.Minecraft.getInstance().level.registryAccess(),stack));
 *///?} else {
-        for(var entry:gregtech.content.registry.GTFluidItems.allEntries()) if(entry.isPresent())
+        for (var entry:gregtech.content.registry.GTFluidItems.allEntries()) if (entry.isPresent())
             registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> gregtech.engine.fluid.FluidDisplayBinding.subtype(stack));
 //?}
 
@@ -223,7 +223,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
         for (Map.Entry<RecipeMap, RecipeMapCategory> entry : categories.entrySet()) {
             List<Recipe> recipes = new ArrayList<>();
             for (Recipe recipe : entry.getKey().allRecipes()) {
-                if (recipe.mEnabled && !recipe.mHidden) recipes.add(recipe);
+                if (recipe.enabled && !recipe.hidden) recipes.add(recipe);
             }
             shownRows.put(entry.getKey(), List.copyOf(recipes));
             var known = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<Recipe, Boolean>());

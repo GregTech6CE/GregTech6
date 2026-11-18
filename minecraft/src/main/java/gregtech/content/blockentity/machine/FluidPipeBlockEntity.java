@@ -1281,9 +1281,9 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 
 //? if >=1.21.1 {
     /*private IFluidHandler faceHandler(Direction side){
-        if(faceHandlers==null)faceHandlers=new IFluidHandler[6];
+        if (faceHandlers==null)faceHandlers=new IFluidHandler[6];
         var handler=faceHandlers[side.ordinal()];
-        if(handler==null)faceHandlers[side.ordinal()]=handler=new FaceFluidHandler(this,side);
+        if (handler==null)faceHandlers[side.ordinal()]=handler=new FaceFluidHandler(this,side);
         return handler;
 *///?} else {
     /** The cached sided view, allocated on first capability request. */
@@ -1302,8 +1302,8 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 
 //? if >=1.21.1 {
     /*private void invalidateFaceHandler(Direction side){
-        if(faceHandlers!=null)faceHandlers[side.ordinal()]=null;
-        if(level!=null)level.invalidateCapabilities(worldPosition);
+        if (faceHandlers!=null)faceHandlers[side.ordinal()]=null;
+        if (level!=null)level.invalidateCapabilities(worldPosition);
 *///?} else {
     private void invalidateFaceHandler(Direction side) {
         if (faceHandlers == null) return;
@@ -1334,7 +1334,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     }
 
 //? if >=1.21.1 {
-    /*public void invalidateFluidCapabilities(){faceHandlers=null;if(level!=null)level.invalidateCapabilities(worldPosition);}
+    /*public void invalidateFluidCapabilities(){faceHandlers=null;if (level!=null)level.invalidateCapabilities(worldPosition);}
 *///?} else {
     @Override
     public void invalidateCaps() {
@@ -1436,7 +1436,7 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
 
     @Override
 //? if >=1.21.1 {
-    /*public void onDataPacket(net.minecraft.network.Connection net,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,HolderLookup.Provider lookup){if(packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);}
+    /*public void onDataPacket(net.minecraft.network.Connection net,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,HolderLookup.Provider lookup){if (packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);}
 *///?} else {
     public void onDataPacket(net.minecraft.network.Connection net,
                              net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {

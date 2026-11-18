@@ -9,9 +9,9 @@ import java.util.Collection;
  * collision and provenance handling here, so the reload lifecycle and the diagnostics observe one
  * contract instead of per-entry-point copies.
  *
- * <p>A row's {@link Recipe#mPriority} is its explicit claim on a machine input. Higher wins at
+ * <p>A row's {@link Recipe#priority} is its explicit claim on a machine input. Higher wins at
  * lookup time; equal priorities keep the row published first, never the backing collection's
- * iteration order. {@link Recipe#mSource} records which entry point published the row and is shown
+ * iteration order. {@link Recipe#source} records which entry point published the row and is shown
  * by {@link RecipeDiagnostics} and the recipe dump.</p>
  */
 public final class MachineRecipeAdapter {

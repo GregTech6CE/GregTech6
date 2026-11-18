@@ -231,16 +231,16 @@ public final class RecipeProcessor {
             // output capacity returns null too, and a row that needs empty outputs is skipped
             // while outputs are occupied: both must be re-evaluated at their usual cadence.
             boolean stable = version == stateVersion;
-            boolean outputRefusal = map.mNeedsOutputs && map.hasEmptyOutputRows() && inventory.hasItemOutput();
+            boolean outputRefusal = map.requiresOutputs && map.hasEmptyOutputRows() && inventory.hasItemOutput();
             lookupCache.record(map, now, version,
                     stable && !outputRefusal && RecipeLookup.staticAnswerFinal(map), recheckSeed());
             return null;
         }
         if (!exclusivePairOrPlain(match.recipe())) return null;
-        displayFluidOutputs = match.recipe().mFluidOutputs;
+        displayFluidOutputs = match.recipe().fluidOutputs;
         var fluids = match.outputTanks() ? inventory.outputTankFluids() : inventory.inputFluids();
         int parallel = computeParallel(match.recipe(), fluids);
-        var cost = MachineWorkCost.calculate(match.recipe().mEUt, match.recipe().mDuration, parallel,
+        var cost = MachineWorkCost.calculate(match.recipe().energyPerTick, match.recipe().durationTicks, parallel,
                 config.parallelScalesDuration(), config.efficiency(), config.inputMinimum(), config.inputMaximum(),
                 config.cheapOverclocking(), config.usesTimeEnergy());
         return new Evaluation(match.recipe(), match.outputTanks(), parallel, cost);
@@ -298,7 +298,7 @@ public final class RecipeProcessor {
             invalidate();
             return false;
         }
-        displayFluidOutputs = evaluation.recipe().mFluidOutputs;
+        displayFluidOutputs = evaluation.recipe().fluidOutputs;
         pendingOutputs = MachineWorkOutputs.roll(evaluation.recipe(), evaluation.parallel(),
                 io.level().random::nextInt, config.exclusiveOutputs());
         inventory.applyRemainingItems(remaining.items());
@@ -312,7 +312,7 @@ public final class RecipeProcessor {
         io.markJobStarted();
 
         parallel = evaluation.parallel();
-        recipeDetails = new RecipeDetails(evaluation.recipe().mEUt, evaluation.recipe().mDuration);
+        recipeDetails = new RecipeDetails(evaluation.recipe().energyPerTick, evaluation.recipe().durationTicks);
         progress = 0;
         io.setStartupEnergy(config.startupEnergyFor(evaluation.recipe()));
         invalidate();
@@ -353,7 +353,7 @@ public final class RecipeProcessor {
         MachineInventory inventory = io.inventory();
         RecipeMap map = config.recipeMap();
         if (inventory == null || map == null) return false;
-        boolean finished = pendingOutputs.flush(inventory.items(), map.mInputItemsCount, inventory.tanksOutput());
+        boolean finished = pendingOutputs.flush(inventory.items(), map.itemInputSlots, inventory.tanksOutput());
         if (finished) {
             pendingOutputs = null;
             parallel = 1;
@@ -454,18 +454,18 @@ public final class RecipeProcessor {
     /** A plain machine accepts any row. An exclusive machine accepts only a pair, and skips the rest. */
     private boolean exclusivePairOrPlain(Recipe recipe) {
         if (!config.exclusiveOutputs()) return true;
-        int declared = recipe.mOutputs == null ? 0 : recipe.mOutputs.length;
+        int declared = recipe.itemOutputs == null ? 0 : recipe.itemOutputs.length;
         return gregtech.engine.addon.ExclusiveOutputRules.isPair(declared,
-                gregtech.engine.addon.ExclusiveOutputMaps.nonEmptyItems(recipe.mOutputs));
+                gregtech.engine.addon.ExclusiveOutputMaps.nonEmptyItems(recipe.itemOutputs));
     }
 
     private int computeParallel(Recipe recipe, java.util.List<FluidStack> fluids) {
         int low = 0;
         // GT6's {@code MultiTileEntityBasicMachine} and {@code MultiTileEntityBasicMachine} cap
         // power-scaled parallel batches at the nominal input.
-        int high = ParallelFit.powerCap(config.parallelLimit(), config.nominalEnergyInput(), recipe.mEUt,
+        int high = ParallelFit.powerCap(config.parallelLimit(), config.nominalEnergyInput(), recipe.energyPerTick,
                 config.parallelScalesDuration(), config.usesTimeEnergy());
-        for (var fluid : recipe.mFluidOutputs) if (fluid != null && !fluid.isEmpty()) high = ParallelFit.amountCap(high, fluid.getAmount());
+        for (var fluid : recipe.fluidOutputs) if (fluid != null && !fluid.isEmpty()) high = ParallelFit.amountCap(high, fluid.getAmount());
         var items = io.inventory().matchingInputItems();
         var matcher = new RecipeInputs.Matcher(items, fluids);
         while (low < high) {
@@ -491,32 +491,32 @@ public final class RecipeProcessor {
         if (config.requireEmptyOutputs() && (inventory.hasItemOutput() || inventory.hasFluidOutput())) return 0;
 
         // Items: simulate the output section using the same slot rules as MachineWorkOutputs#flush.
-        int firstOutput = map.mInputItemsCount;
-        if (recipe.mOutputs.length > 0 && firstOutput < inventory.items().getSlots()) {
+        int firstOutput = map.itemInputSlots;
+        if (recipe.itemOutputs.length > 0 && firstOutput < inventory.items().getSlots()) {
             var present = new ItemStack[inventory.items().getSlots()];
             for (int i = firstOutput; i < inventory.items().getSlots(); i++)
                 present[i] = inventory.items().getStackInSlot(i).copy();
             maxParallel = Math.min(maxParallel,
-                    ItemOutputs.of(recipe.mOutputs).largestFitting(firstOutput, present, maxParallel));
+                    ItemOutputs.of(recipe.itemOutputs).largestFitting(firstOutput, present, maxParallel));
         }
 
         // Fluids: free capacity of the output tanks, filled the same way flush() does.
-        if (recipe.mFluidOutputs.length > 0 && inventory.tanksOutput().length > 0) {
+        if (recipe.fluidOutputs.length > 0 && inventory.tanksOutput().length > 0) {
             if (config.limitFluidOutputAccumulation() && fluidOutputBackedUp(recipe)) return 0;
             maxParallel = Math.min(maxParallel,
-                    FluidOutputs.of(recipe.mFluidOutputs).largestFitting(inventory.tanksOutput(), maxParallel));
+                    FluidOutputs.of(recipe.fluidOutputs).largestFitting(inventory.tanksOutput(), maxParallel));
         }
         return maxParallel;
     }
 
     private boolean fluidOutputBackedUp(Recipe recipe) {
         var tanks = io.inventory().tanksOutput();
-        if (recipe.mNeedsEmptyOutput) {
+        if (recipe.needsEmptyOutput) {
             for (var tank : tanks) if (!tank.isEmpty()) return true;
         }
         // Check matching tanks even when spare empty tanks remain. Otherwise an unlimited tank
         // keeps accepting the same product and the original accumulation stop never takes effect.
-        for (var output : recipe.mFluidOutputs) {
+        for (var output : recipe.fluidOutputs) {
             if (output == null || output.isEmpty()) continue;
             long limit = fluidOutputLimit(output, output.getAmount());
             if (limit == Long.MAX_VALUE) continue;

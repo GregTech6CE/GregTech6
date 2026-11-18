@@ -307,38 +307,38 @@ public final class FoodItemRecipes {
 
     /** Source material-unit rows: U/4 is one small dust, or 36 mB molten chocolate. */
     private static void iceCream() {
-        for (var water : SawingCoolants.variants(true)) for(int count:new int[]{1,4}) {
+        for (var water : SawingCoolants.variants(true)) for (int count:new int[]{1,4}) {
             ItemStack salt=GTItems.getStack(count==1?MaterialPrefix.dustSmall:MaterialPrefix.dust,
                     gregtech.content.data.ImportedMaterialData.NaCl,1);
             FluidStack cream=fluid("Cream",250*count), liquid=fluid(water.field(),250*count);
             ItemStack output=food("ice_cream",count);
-            if(!salt.isEmpty()&&!cream.isEmpty()&&!liquid.isEmpty()&&!output.isEmpty()
+            if (!salt.isEmpty()&&!cream.isEmpty()&&!liquid.isEmpty()&&!output.isEmpty()
                     &&MachineRecipeMaps.CryoMixer.register(RecipeBuilder.of(16, 16*count)
                             .itemInputs(salt)
                             .fluidInputs(liquid, cream)
                             .itemOutputs(output))!=null)registered++;
         }
-        for(var row:gregtech.content.food.IceCreamRecipes.DUSTS)for(int count:new int[]{1,4}) {
+        for (var row:gregtech.content.food.IceCreamRecipes.DUSTS)for (int count:new int[]{1,4}) {
             var dust=GTItems.getStack(count==1?MaterialPrefix.dustSmall:MaterialPrefix.dust,GTMaterialRegistry.get(row.material()),1);
             var input=food(row.base(),count);var output=food(row.result(),count);
-            if(dust.isEmpty()||input.isEmpty()||output.isEmpty()) {SKIPPED.add("ice cream dust flavor: "+row.material());continue;}
-            if(MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 16*count)
+            if (dust.isEmpty()||input.isEmpty()||output.isEmpty()) {SKIPPED.add("ice cream dust flavor: "+row.material());continue;}
+            if (MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 16*count)
                     .itemInputs(input, dust)
                     .itemOutputs(output))!=null)registered++;
         }
-        for(var row:gregtech.content.food.IceCreamRecipes.BLENDS){
+        for (var row:gregtech.content.food.IceCreamRecipes.BLENDS){
             var a=food(row.first(),1);var b=food(row.second(),1);var c=food(row.third(),1);var output=food(row.result(),3);
-            if(!a.isEmpty()&&!b.isEmpty()&&!c.isEmpty()&&!output.isEmpty()
+            if (!a.isEmpty()&&!b.isEmpty()&&!c.isEmpty()&&!output.isEmpty()
                     &&MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 48)
                             .itemInputs(a, b, c)
                             .itemOutputs(output))!=null)registered++;
         }
         var chocolate=fluid("Molten_Chocolate",36);
-        if(!chocolate.isEmpty()&&MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 16)
+        if (!chocolate.isEmpty()&&MachineRecipeMaps.Mixer.register(RecipeBuilder.of(16, 16)
                 .itemInputs(food("ice_cream",1))
                 .fluidInputs(chocolate)
                 .itemOutputs(food("chocolate_ice_cream",1)))!=null)registered++;
-        for(String raisins:new String[]{"green_raisins","red_raisins"})mixerPair("ice_cream",raisins,"raisin_ice_cream",1,"Loader_Recipes_Food:156");
+        for (String raisins:new String[]{"green_raisins","red_raisins"})mixerPair("ice_cream",raisins,"raisin_ice_cream",1,"Loader_Recipes_Food:156");
         mixerPair("ice_cream","grilled_bacon","bacon_ice_cream",1,"Loader_Recipes_Food:231");
     }
 

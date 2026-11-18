@@ -49,7 +49,7 @@ public final class MaterialTagPack extends AbstractPackResources {
     public MaterialTagPack(String id) { super(id,true); }
 //?}
     @SubscribeEvent public static void packs(AddPackFindersEvent event) {
-        if(event.getPackType()!=PackType.SERVER_DATA) return;
+        if (event.getPackType()!=PackType.SERVER_DATA) return;
         event.addRepositorySource(output->{
 //? if >=1.21.1 {
             /*var location=new PackLocationInfo("gt6ce:material_tags",Component.literal("GregTech material tags"),PackSource.BUILT_IN,Optional.empty());
@@ -61,11 +61,11 @@ public final class MaterialTagPack extends AbstractPackResources {
             var pack=Pack.readMetaAndCreate("gt6ce:material_tags",Component.literal("GregTech material tags"),true,
                     MaterialTagPack::new,PackType.SERVER_DATA,Pack.Position.BOTTOM,PackSource.BUILT_IN);
 //?}
-            if(pack!=null) output.accept(pack);
+            if (pack!=null) output.accept(pack);
         });
     }
     private synchronized Map<ResourceLocation,byte[]> data() {
-        if(resources!=null) return resources;
+        if (resources!=null) return resources;
         var tags=new TreeMap<String,Set<String>>();
         var preferredItems = new HashMap<String, String>();
         gregtech.content.recipe.DyeProcessingRecipes.foamTags(
@@ -123,32 +123,32 @@ public final class MaterialTagPack extends AbstractPackResources {
         var blocksByMaterial=new TreeMap<String,Set<String>>();
         // Block-form items keyed by "material|blockPrefix", for the other mods' own material tags.
         var materialBlockItems=new java.util.HashMap<String,String>();
-        for(var item:Mc.items()) {
-            var id=Mc.itemId(item); if(id==null||item==Items.AIR)continue;
+        for (var item:Mc.items()) {
+            var id=Mc.itemId(item); if (id==null||item==Items.AIR)continue;
             var preferred = gregtech.engine.material.MaterialUnification.canonical(new ItemStack(item));
             if (preferred.getItem() != item)
                 preferredItems.put(id.toString(), BuiltInRegistries.ITEM.getKey(preferred.getItem()).toString());
-            if(item instanceof BlockItem stoneItem
+            if (item instanceof BlockItem stoneItem
                     && stoneItem.getBlock() instanceof gregtech.content.block.stone.GTStoneBlock stone
                     && stone.variant() == gregtech.content.block.stone.StoneVariant.COBBLE)
                 add(tags,"minecraft","items","stone_crafting_materials",id.toString());
-            if(item instanceof BlockItem pane && (pane.getBlock() instanceof net.minecraft.world.level.block.StainedGlassPaneBlock
+            if (item instanceof BlockItem pane && (pane.getBlock() instanceof net.minecraft.world.level.block.StainedGlassPaneBlock
                     || id.toString().equals("minecraft:glass_pane")))
                 add(tags,"forge","items","glass_panes",id.toString());
             if (item instanceof DyeItem dye) add(tags,"forge","items","dyes/"+dye.getDyeColor().getName(),id.toString());
             if (id.getNamespace().equals("minecraft") && id.getPath().startsWith("music_disc_"))
                 add(tags,"minecraft","items","music_discs",id.toString());
             var form=registeredForm(item);
-            if(form!=null) {
+            if (form!=null) {
                 if (gregtech.content.recipe.TechnologyIngredients.pistonIngot(form.prefix(), form.material()))
                     add(tags,"gt6ce","items","technology/piston_ingots",id.toString());
                 if (gregtech.content.recipe.TechnologyIngredients.craftingRedstone(form.prefix(), form.material()))
                     add(tags,"gt6ce","items","technology/redstone",id.toString());
-                for(var moldForm:moldForms.getOrDefault(form.prefix().getName(),java.util.List.of()))
-                    if(moldForm.accepts(form.prefix(),form.material()))
+                for (var moldForm:moldForms.getOrDefault(form.prefix().getName(),java.util.List.of()))
+                    if (moldForm.accepts(form.prefix(),form.material()))
                         add(tags,"gt6ce","items",moldForm.tag(),id.toString());
-                for(var family:gregtech.content.recipe.TechnologyIngredients.FAMILIES)
-                    if(family.accepts(form.prefix(),form.material()))
+                for (var family:gregtech.content.recipe.TechnologyIngredients.FAMILIES)
+                    if (family.accepts(form.prefix(),form.material()))
                         add(tags,"gt6ce","items","technology/"+family.tag(),id.toString());
                 // ANY.Iron pickaxe heads for the gem-tipped pickaxe shapeless rows (GT6
                 // Loader_OreProcessing). OriginalToolMaterials keeps the source family,
@@ -157,34 +157,34 @@ public final class MaterialTagPack extends AbstractPackResources {
                     add(tags,"gt6ce","items",form.prefix()==MaterialPrefix.toolHeadRawPickaxe
                             ? "technology/any_iron_raw_pickaxe_head"
                             : "technology/any_iron_pickaxe_head", id.toString());
-                if(form.prefix()==MaterialPrefix.stick || form.prefix()==MaterialPrefix.plateTiny) {
+                if (form.prefix()==MaterialPrefix.stick || form.prefix()==MaterialPrefix.plateTiny) {
                     var material=form.material().resolve();
                     boolean wood=gregtech.content.tool.OriginalToolMaterials.inFamily(material,"Wood")
                             || java.util.stream.Stream.of(MaterialGroups.Wood, MaterialGroups.WoodNormal,
                                     MaterialGroups.WoodMagical, MaterialGroups.WoodTreated)
                             .flatMap(group -> MaterialGroups.members(group).stream()).anyMatch(member -> member.resolve() == material);
                     boolean plastic=gregtech.content.tool.OriginalToolMaterials.inFamily(material,"Plastic");
-                    if(form.prefix()==MaterialPrefix.stick && wood)
+                    if (form.prefix()==MaterialPrefix.stick && wood)
                         add(tags,"gt6ce","items","ammunition/sticks_wood",id.toString());
                     // Forge's wooden-rod convention (GT6 stickWood); sealed sticks keep their own identity.
-                    if(form.prefix()==MaterialPrefix.stick && wood && !material.getName().equals("WoodTreated"))
+                    if (form.prefix()==MaterialPrefix.stick && wood && !material.getName().equals("WoodTreated"))
                         add(tags,"forge","items","rods/wooden",id.toString());
                     // One-way convenience conversion; vanilla sticks must not match their own recipe.
-                    if(form.prefix()==MaterialPrefix.stick && wood && item != Items.STICK)
+                    if (form.prefix()==MaterialPrefix.stick && wood && item != Items.STICK)
                         add(tags,"gt6ce","items","convertible_wooden_rods",id.toString());
-                    if(plastic)
+                    if (plastic)
                         add(tags,"gt6ce","items",form.prefix()==MaterialPrefix.stick
                                 ? "ammunition/sticks_plastic" : "ammunition/tiny_plastic_plates",id.toString());
                 }
 
-                if(gregtech.content.recipe.MaterialArrowRules.isArrow(form.prefix(),form.material()))
+                if (gregtech.content.recipe.MaterialArrowRules.isArrow(form.prefix(),form.material()))
                     add(tags,"minecraft","items","arrows",id.toString());
                 // GT6's dye materials are the same sixteen colours as the vanilla dyes
                 // (LoaderOreDictReRegistrations: dust<Color> -> dyeMixable<Color> -> dye<Color>).
                 String dyeColor=dyeTagColor(form);
-                if(dyeColor!=null) add(tags,"forge","items","dyes/"+dyeColor,id.toString());
+                if (dyeColor!=null) add(tags,"forge","items","dyes/"+dyeColor,id.toString());
                 String common=MaterialEquivalence.tagPath(form);
-                if(common!=null) add(tags,"forge","items",common,id.toString());
+                if (common!=null) add(tags,"forge","items",common,id.toString());
                 addMaterial(byMaterial,form.material(),id.toString());
                 // The canonical WoodTreated plate is a placeable BlockItem. Material
                 // forms backed by blocks still need the same GT prefix tag as an item.
@@ -205,11 +205,11 @@ public final class MaterialTagPack extends AbstractPackResources {
                         ? VanillaUnificationDefinitions.blockTarget(id.getPath()) : null;
                 // A block target keeps its form material even when the item also carries a
                 // secondary component (red sand is Sand + Fe2O3).
-                if(data!=null&&(data.components().size()==1||blockTarget!=null)) {
+                if (data!=null&&(data.components().size()==1||blockTarget!=null)) {
                     var material=blockTarget!=null
                             ? gregtech.engine.material.GTMaterialRegistry.get(blockTarget.materialName()).resolve()
                             : data.components().get(0).material().resolve();
-                    if(material.isValid()) {
+                    if (material.isValid()) {
                         addMaterial(byMaterial,material,id.toString());
                         String name=MaterialEquivalence.materialName(material);
                         // Vanilla block shapes are explicit; a 2U axle/log is not an ore.
@@ -227,33 +227,33 @@ public final class MaterialTagPack extends AbstractPackResources {
                     }
                 }
             }
-            if(id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))
-                for(String tag:gregtech.content.recipe.TechnologyIngredients.usbTags(id.getPath()))
+            if (id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))
+                for (String tag:gregtech.content.recipe.TechnologyIngredients.usbTags(id.getPath()))
                     add(tags,"gt6ce","items",tag,id.toString());
-            for(var tool:gregtech.content.tool.CraftingToolDefinitions.ALL)
-                if(id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && (tool.tip().equals(id.getPath()) || tool.token().equals(id.getPath())))
-                    for(String toolKind:tool.kinds()) add(tags,"forge","items","tools/"+toolKind,id.toString());
+            for (var tool:gregtech.content.tool.CraftingToolDefinitions.ALL)
+                if (id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && (tool.tip().equals(id.getPath()) || tool.token().equals(id.getPath())))
+                    for (String toolKind:tool.kinds()) add(tags,"forge","items","tools/"+toolKind,id.toString());
             // GT tools: standard Forge convention, e.g. forge:tools/wrench, plus the extra GT6
             // identities of the same tool (a Knife is also a blade, a Monkey Wrench also a wrench).
 // Registry tags describe tool identities, before any stack receives material/durability data.
-            if(item instanceof gregtech.content.item.GTToolItem tool)
-                for(String toolKind:gregtech.content.tool.ToolTagIdentities.all(tool.toolType().id()))
+            if (item instanceof gregtech.content.item.GTToolItem tool)
+                for (String toolKind:gregtech.content.tool.ToolTagIdentities.all(tool.toolType().id()))
                     add(tags,"forge","items","tools/"+toolKind,id.toString());
             // GT6 fluid containers: one item per fluid, so a material's fluid forms belong to that
             // material's tag (RegisteredFluids knows which material a fluid was created from).
 //? if >=1.21.1 {
-            /*if(item instanceof FluidDisplayItem fluidItem) {
+            /*if (item instanceof FluidDisplayItem fluidItem) {
 *///?} else {
-            if(item instanceof FluidItem fluidItem) {
+            if (item instanceof FluidItem fluidItem) {
 //?}
                 // GT6's fluids know their material: either as the declaration's materialKey (the molten
                 // and generated entries) or through the side binding created when a generated gas/liquid
                 // reuses a dedicated fluid (RegisteredFluids.BOUND_MATERIALS).
                 String bound=fluidItem.fluidEntry().materialKey();
-                if(bound==null) bound=RegisteredFluids.boundMaterial(fluidItem.fluidEntry().registryName());
-                if(bound!=null) {
+                if (bound==null) bound=RegisteredFluids.boundMaterial(fluidItem.fluidEntry().registryName());
+                if (bound!=null) {
                     var material=gregtech.engine.material.GTMaterialRegistry.get(bound);
-                    if(material!=null&&material.isValid()) {
+                    if (material!=null&&material.isValid()) {
                         String name=MaterialEquivalence.materialName(material);
                         add(tags,"gt6ce","items","fluid/"+name,id.toString());
                         addMaterial(byMaterial,material,id.toString());
@@ -261,68 +261,68 @@ public final class MaterialTagPack extends AbstractPackResources {
                 }
                 continue;
             }
-            if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike m) {
+            if (item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike m) {
                 String name=MaterialEquivalence.materialName(m.material());
-                String group=switch(m.prefix().getName()) {
+                String group=switch (m.prefix().getName()) {
                     case "blockIngot","blockGem","blockDust" -> "storage_blocks";
                     case "blockRaw" -> "storage_blocks/raw";
                     case "ore" -> "ores";
                     default -> null;
                 };
-                for(String kind:List.of("items","blocks")) {
+                for (String kind:List.of("items","blocks")) {
                     add(tags,"gt6ce",kind,m.prefix().getRegistryName()+"/"+name,id.toString());
-                    if(group!=null) add(tags,"forge",kind,group.equals("storage_blocks/raw")?"storage_blocks/raw_"+name:group+"/"+name,id.toString());
-                    if(!m.prefix().oreDictionary().isEmpty())
+                    if (group!=null) add(tags,"forge",kind,group.equals("storage_blocks/raw")?"storage_blocks/raw_"+name:group+"/"+name,id.toString());
+                    if (!m.prefix().oreDictionary().isEmpty())
                         add(tags,"forge",kind,m.prefix().oreDictionary()+"/"+name,id.toString());
                 }
-                if(ironMaterials.contains(m.material().resolve()))
+                if (ironMaterials.contains(m.material().resolve()))
                     add(tags,"gt6ce","items",m.prefix().getRegistryName()+"/any_iron_or_steel",id.toString());
                 addMaterial(blocksByMaterial,m.material(),id.toString());
                 materialBlockItems.putIfAbsent(m.material().resolve().getName()+"|"+m.prefix().getName(),id.toString());
             }
 
-            if(item instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.BlackSandBlock sand) {
+            if (item instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.BlackSandBlock sand) {
                 String name=MaterialEquivalence.materialName(sand.material());
-                for(String kind:List.of("items","blocks")) {
+                for (String kind:List.of("items","blocks")) {
                     add(tags,"gt6ce",kind,"block_dust/"+name,id.toString());
                     add(tags,"forge",kind,"storage_blocks/"+name,id.toString());
                 }
                 add(tags,"minecraft","blocks","mineable/shovel",id.toString());
                 addMaterial(blocksByMaterial,sand.material(),id.toString());
             }
-            if(item instanceof BlockItem b) {
+            if (item instanceof BlockItem b) {
                 var block=b.getBlock();
-                if(block instanceof gregtech.content.block.machine.FluidPipeBlock pipe
+                if (block instanceof gregtech.content.block.machine.FluidPipeBlock pipe
                         && ironMaterials.contains(pipe.spec().material().resolve()))
                     add(tags,"gt6ce","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
-                if(block instanceof gregtech.content.block.machine.ItemPipeBlock pipe
+                if (block instanceof gregtech.content.block.machine.ItemPipeBlock pipe
                         && ironMaterials.contains(pipe.spec().material().resolve()) && !pipe.spec().size().restrictive())
                     add(tags,"gt6ce","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
-                if(block instanceof gregtech.engine.energy.WireMaterialLike wire) {
+                if (block instanceof gregtech.engine.energy.WireMaterialLike wire) {
                     String wireForm=(wire.spec().insulated()?"cable_":"wire_")+String.format(java.util.Locale.ROOT,"%02d",wire.spec().size());
                     String wireMaterial=MaterialEquivalence.materialName(wire.spec().material());
                     add(tags,"gt6ce","items",wireForm+"/"+wireMaterial,id.toString());
                     String sourceForm=(wire.spec().insulated()?"cable_gt":"wire_gt")+String.format(java.util.Locale.ROOT,"%02d",wire.spec().size());
                     add(tags,"gt6ce","items",sourceForm+"/"+wireMaterial,id.toString());
-                    if(copperMaterials.contains(wire.spec().material().resolve()))
+                    if (copperMaterials.contains(wire.spec().material().resolve()))
                         add(tags,"gt6ce","items",wireForm+"/any_copper",id.toString());
-                    if(ironMaterials.contains(wire.spec().material().resolve()))
+                    if (ironMaterials.contains(wire.spec().material().resolve()))
                         add(tags,"gt6ce","items",wireForm+"/any_iron_or_steel",id.toString());
                 }
-                if(block instanceof gregtech.content.block.DenseOreBlock denseOre
+                if (block instanceof gregtech.content.block.DenseOreBlock denseOre
                         && denseOre.material().isValid()) {
                     String name=MaterialEquivalence.materialName(denseOre.material());
                     // The existing block item is the GT6 oreDense form, not a new material item.
-                    for(String kind:List.of("items","blocks")) {
+                    for (String kind:List.of("items","blocks")) {
                         add(tags,"gt6ce",kind,"ore_dense/"+name,id.toString());
                         add(tags,"forge",kind,"ores/"+name,id.toString());
                     }
                     addMaterial(blocksByMaterial,denseOre.material(),id.toString());
                 }
-                if(block instanceof gregtech.content.block.VanillaOreBlock ore
+                if (block instanceof gregtech.content.block.VanillaOreBlock ore
                         && ore.material().isValid()) {
                     String name=MaterialEquivalence.materialName(ore.material());
-                    for(String kind:List.of("items","blocks")) {
+                    for (String kind:List.of("items","blocks")) {
                         add(tags,"gt6ce",kind,"ore_vanillastone/"+name,id.toString());
                         add(tags,"forge",kind,"ores/"+name,id.toString());
                     }
@@ -360,9 +360,9 @@ public final class MaterialTagPack extends AbstractPackResources {
             if (tags.containsKey(tagPath("forge:tags/items/" + path + ".json"))) ironScrews.add("#forge:" + path);
         }
         var ironDoublePlates=tags.computeIfAbsent(tagPath("gt6ce:tags/items/plate_double/any_iron_or_steel.json"),k->new TreeSet<>());
-        for(var material:MaterialGroups.members(MaterialGroups.Iron)) {
+        for (var material:MaterialGroups.members(MaterialGroups.Iron)) {
             String path="plate_double/"+MaterialEquivalence.materialName(material.resolve());
-            if(tags.containsKey(tagPath("gt6ce:tags/items/"+path+".json")))ironDoublePlates.add("#gt6ce:"+path);
+            if (tags.containsKey(tagPath("gt6ce:tags/items/"+path+".json")))ironDoublePlates.add("#gt6ce:"+path);
         }
         byMaterial.forEach((name,values)->{
             var tag=tags.computeIfAbsent(tagPath("gt6ce:tags/items/material/"+name+".json"),k->new TreeSet<>());
@@ -423,17 +423,17 @@ public final class MaterialTagPack extends AbstractPackResources {
             logItems.add("gt6ce:stripped_log_" + sp.id());
         }
         // GT6 LIST_SLABS / slabAnyWood: native slabs participate in normal slab crafting.
-        for(String wood:gregtech.content.plant.WoodSlabCatalog.WOODS){
+        for (String wood:gregtech.content.plant.WoodSlabCatalog.WOODS){
             String id="gt6ce:slab_"+wood;
-            for(String tag:new String[]{tagPath("minecraft:tags/items/wooden_slabs.json"),tagPath("minecraft:tags/items/slabs.json"),
+            for (String tag:new String[]{tagPath("minecraft:tags/items/wooden_slabs.json"),tagPath("minecraft:tags/items/slabs.json"),
                     tagPath("minecraft:tags/blocks/wooden_slabs.json"),tagPath("minecraft:tags/blocks/slabs.json")})
                 tags.computeIfAbsent(tag,k->new TreeSet<>()).add(id);
         }
         // Common spelling aliases used by Forge 1.20 packs. References keep datapack additions shared.
         var aliases=gregtech.engine.material.MaterialTagAliases.ALTERNATE_SPELLINGS;
-        for(var path:new ArrayList<>(tags.keySet())) for(var alias:aliases.entrySet()) {
+        for (var path:new ArrayList<>(tags.keySet())) for (var alias:aliases.entrySet()) {
             String suffix="/"+alias.getKey()+".json";
-            if(path.startsWith("forge:")&&path.endsWith(suffix)) {
+            if (path.startsWith("forge:")&&path.endsWith(suffix)) {
                 String alt=path.substring(0,path.length()-suffix.length())+"/"+alias.getValue()+".json";
                 // Union aliases without recursive tag references.
                 var values=tags.get(path);tags.computeIfAbsent(alt,k->new TreeSet<>()).addAll(values);
@@ -441,7 +441,7 @@ public final class MaterialTagPack extends AbstractPackResources {
         }
 //? if >=1.21.1 {
         /*for (var path:new ArrayList<>(tags.keySet())) {
-            if(path.startsWith("forge:")) tags.computeIfAbsent("c:"+path.substring(6),k->new TreeSet<>()).addAll(tags.get(path));
+            if (path.startsWith("forge:")) tags.computeIfAbsent("c:"+path.substring(6),k->new TreeSet<>()).addAll(tags.get(path));
         }
 *///?} else {
 //?}
@@ -528,7 +528,7 @@ public final class MaterialTagPack extends AbstractPackResources {
 
     /** Aggregate tag value list for one material (forms + its blocks). */
     private static void addMaterial(Map<String,Set<String>> target,gregtech.api.material.GTMaterial material,String value) {
-        if(material==null||!material.isValid())return;
+        if (material==null||!material.isValid())return;
         target.computeIfAbsent(MaterialEquivalence.materialName(material),k->new TreeSet<>()).add(value);
     }
 
@@ -576,7 +576,7 @@ public final class MaterialTagPack extends AbstractPackResources {
         addOne(tags,ns,kind,path,value);
 //? if >=1.21.1 {
         /*// NeoForge 1.21.1 reads the c: namespace for common tags; keep forge: for older consumers.
-        if(ns.equals("forge")) addOne(tags,"c",kind,path,value);
+        if (ns.equals("forge")) addOne(tags,"c",kind,path,value);
 *///?}
     }
     /** Input domains have no all-material parent: it would be huge and unusable as an ingredient. */
@@ -589,7 +589,7 @@ public final class MaterialTagPack extends AbstractPackResources {
     private static void addOne(Map<String,Set<String>> tags,String ns,String kind,String path,String value) {
         tags.computeIfAbsent(ns+":tags/"+kind+"/"+path+".json",k->new TreeSet<>()).add(value);
         int slash=path.indexOf('/');
-        if(slash>0) tags.computeIfAbsent(ns+":tags/"+kind+"/"+path.substring(0,slash)+".json",k->new TreeSet<>()).add("#"+ns+":"+path);
+        if (slash>0) tags.computeIfAbsent(ns+":tags/"+kind+"/"+path.substring(0,slash)+".json",k->new TreeSet<>()).add("#"+ns+":"+path);
     }
     /** 1.21.1 stores tags under singular directories; callers keep the 1.20.1 plural spelling. */
     private static String tagPath(String path) {
@@ -602,7 +602,7 @@ public final class MaterialTagPack extends AbstractPackResources {
 //?}
     }
     public IoSupplier<InputStream> getRootResource(String... path) {
-        if(path.length!=1||!path[0].equals("pack.mcmeta"))return null;
+        if (path.length!=1||!path[0].equals("pack.mcmeta"))return null;
 //? if >=1.21.1 {
         /*return ()->new ByteArrayInputStream("{\"pack\":{\"pack_format\":48,\"description\":\"GregTech material tags\"}}".getBytes(StandardCharsets.UTF_8));
 *///?} else {
@@ -610,7 +610,7 @@ public final class MaterialTagPack extends AbstractPackResources {
 //?}
     }
     public IoSupplier<InputStream> getResource(PackType type,ResourceLocation id) {
-        if(type!=PackType.SERVER_DATA)return null; var bytes=data().get(id);
+        if (type!=PackType.SERVER_DATA)return null; var bytes=data().get(id);
         return bytes==null?null:()->new ByteArrayInputStream(bytes);
     }
     public void listResources(PackType type,String ns,String path,ResourceOutput out) {

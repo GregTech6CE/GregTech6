@@ -161,8 +161,8 @@ final class SourceOreCrushingAdapter {
                 : new Outcome(Action.SUPPORTED, List.of(row), false, "verified-fixed-kind");
     }
     private static int capacity(Machine machine) {
-        return machine == Machine.CRUSHER ? gregtech.content.data.MachineRecipeMaps.Crusher.mOutputItemsCount
-                : gregtech.content.data.MachineRecipeMaps.Hammer.mOutputItemsCount;
+        return machine == Machine.CRUSHER ? gregtech.content.data.MachineRecipeMaps.Crusher.itemOutputSlots
+                : gregtech.content.data.MachineRecipeMaps.Hammer.itemOutputSlots;
     }
     private static Outcome unsupported(Result result) {
         if (result.status() != Status.UNSUPPORTED) return null;
@@ -186,31 +186,31 @@ final class SourceOreCrushingAdapter {
         // The source Hammer does not bindStack its one primary count. Native make otherwise clips
         // it to64; restore only that verified single-output normalization, not general recipe math.
         if (outputs.length == 1 && outputs[0].getCount() > 64) {
-            if (machine != Machine.HAMMER || result.optimize() || row.mInputs.length != 1 || row.mInputs[0].getCount() != 1
-                    || row.mOutputs.length != 1 || row.mOutputs[0].getCount() != 64
-                    || row.mFluidInputs.length != 0 || row.mFluidOutputs.length != 0) return null;
+            if (machine != Machine.HAMMER || result.optimize() || row.itemInputs.length != 1 || row.itemInputs[0].getCount() != 1
+                    || row.itemOutputs.length != 1 || row.itemOutputs[0].getCount() != 64
+                    || row.fluidInputs.length != 0 || row.fluidOutputs.length != 0) return null;
             ItemStack expected = outputs[0].copy(); expected.setCount(64);
-            if (!ItemStack.matches(expected, row.mOutputs[0])) return null;
-            row = new Recipe(row.mInputs, copies(outputs), row.mChances,
-                    row.mFluidInputs, row.mFluidOutputs, row.mDuration, row.mEUt, row.mSpecialValue);
+            if (!ItemStack.matches(expected, row.itemOutputs[0])) return null;
+            row = new Recipe(row.itemInputs, copies(outputs), row.outputChances,
+                    row.fluidInputs, row.fluidOutputs, row.durationTicks, row.energyPerTick, row.specialValue);
         }
         return row.withSameItemInputPredicate(0, predicate);
     }
 
     /** Only this complementary domain uses the old producer's normalized fields. */
     static Recipe compatibility(Candidate candidate, Recipe legacy) {
-        if (candidate.kind() != NativeKind.HOST_ORE || legacy == null || legacy.mInputs.length != 1
-                || legacy.mFluidInputs.length != 0) return null;
+        if (candidate.kind() != NativeKind.HOST_ORE || legacy == null || legacy.itemInputs.length != 1
+                || legacy.fluidInputs.length != 0) return null;
         OreBlock block = (OreBlock)((BlockItem)candidate.input().getItem()).getBlock();
         ItemStack representative = OreBlock.withStone(candidate.input(), block.stateFor(OreHostStone.TUFF));
         if (classifyHost(representative).domain() != Domain.UNKNOWN_HOST) return null;
-        var row = new Recipe(new ItemStack[]{representative}, copies(legacy.mOutputs),
-                legacy.mChances.clone(), Arrays.stream(legacy.mFluidInputs).map(FluidStack::copy).toArray(FluidStack[]::new),
-                Arrays.stream(legacy.mFluidOutputs).map(FluidStack::copy).toArray(FluidStack[]::new),
-                legacy.mDuration, legacy.mEUt, legacy.mSpecialValue);
-        row.mEnabled = legacy.mEnabled; row.mCanBeBuffered = legacy.mCanBeBuffered;
-        row.mNeedsEmptyOutput = legacy.mNeedsEmptyOutput;
-        System.arraycopy(legacy.mMaxChances, 0, row.mMaxChances, 0, legacy.mMaxChances.length);
+        var row = new Recipe(new ItemStack[]{representative}, copies(legacy.itemOutputs),
+                legacy.outputChances.clone(), Arrays.stream(legacy.fluidInputs).map(FluidStack::copy).toArray(FluidStack[]::new),
+                Arrays.stream(legacy.fluidOutputs).map(FluidStack::copy).toArray(FluidStack[]::new),
+                legacy.durationTicks, legacy.energyPerTick, legacy.specialValue);
+        row.enabled = legacy.enabled; row.canBeBuffered = legacy.canBeBuffered;
+        row.needsEmptyOutput = legacy.needsEmptyOutput;
+        System.arraycopy(legacy.maxOutputChances, 0, row.maxOutputChances, 0, legacy.maxOutputChances.length);
         return row.withSameItemInputPredicate(0, stack -> classifyHost(stack).domain() == Domain.UNKNOWN_HOST)
                 .withViewerInputNote(0, "gt6ce.jei.ore_host_legacy");
     }

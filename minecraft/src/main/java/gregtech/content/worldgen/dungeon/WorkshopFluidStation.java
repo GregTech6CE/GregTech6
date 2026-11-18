@@ -22,7 +22,7 @@ public final class WorkshopFluidStation {
     }
     private static void attachment(GTDungeonData data,int x,int y,int z,String id,Direction direction) {
         var block=Mc.block(Mc.gregtechId(id));
-        if(!(block instanceof FluidAttachmentBlock)) throw new IllegalStateException("Missing workshop attachment "+id);
+        if (!(block instanceof FluidAttachmentBlock)) throw new IllegalStateException("Missing workshop attachment "+id);
         data.set(x,y,z,block.defaultBlockState().setValue(FluidAttachmentBlock.FACING,direction));
     }
 }

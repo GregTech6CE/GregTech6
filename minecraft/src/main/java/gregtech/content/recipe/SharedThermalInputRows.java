@@ -71,15 +71,15 @@ public final class SharedThermalInputRows {
                 RecipeMap map = definition.row().map();
                 Recipe accepted;
                 if (map == gregtech.content.data.MachineRecipeMaps.Smelter && MoltenMetalUnitRecipes.collect(
-                        candidate.recipe().mInputs[0], candidate.recipe().mFluidOutputs[0],
-                        candidate.recipe().mDuration, candidate.recipe().mEUt, definition.row().inputProof()::matches)) {
+                        candidate.recipe().itemInputs[0], candidate.recipe().fluidOutputs[0],
+                        candidate.recipe().durationTicks, candidate.recipe().energyPerTick, definition.row().inputProof()::matches)) {
                     accepted = null;
                 } else {
                     accepted = RecoveryRecipePublisher.publishIsolated(
                             map,
                             RecoveryRecipePublisher.explicit(candidate.recipe(), "thermal-input"));
                 }
-                ADMISSIONS.add(new Admission(definition.material().getName(), definition.prefix(), map.mNameInternal, accepted != null));
+                ADMISSIONS.add(new Admission(definition.material().getName(), definition.prefix(), map.internalName, accepted != null));
                 if (accepted != null) OWNED.computeIfAbsent(map, ignored -> Collections.newSetFromMap(new IdentityHashMap<>())).add(accepted);
             }
         } catch (RuntimeException | Error failure) { clear(); throw failure; }

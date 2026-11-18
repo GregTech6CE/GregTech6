@@ -43,7 +43,7 @@ public final class FusionRecipeLoader implements InitializationStep {
     }
     private FluidStack fluid(String token) {
         var fields=token.split(":");var material=GeneratedRecipeResolver.material(fields[0]);
-        if(material==null){missing.add(token);return FluidStack.EMPTY;}
+        if (material==null){missing.add(token);return FluidStack.EMPTY;}
         var name=material.getName().toLowerCase(Locale.ROOT);
         // GT6 fuels the ring with the material's own gas/liquid phase (MT.D.gas(...)), not with a
         // name-prefixed fluid: the generated gas name is the material name (FL) and the
@@ -51,18 +51,18 @@ public final class FusionRecipeLoader implements InitializationStep {
         var stack="gas".equals(fields[1])
                 ? GeneratedRecipeResolver.materialFluid(material.getName(),Integer.parseInt(fields[2]))
                 : GeneratedRecipeResolver.byRegistryName("molten."+name,Integer.parseInt(fields[2]));
-        if(stack==null){missing.add(token);return FluidStack.EMPTY;}
+        if (stack==null){missing.add(token);return FluidStack.EMPTY;}
         return stack;
     }
     private void add(int circuit,long ticks,long eut,long startup,String[] inputs,String[] outputs,String dust) {
         var in=Arrays.stream(inputs).map(this::fluid).toArray(FluidStack[]::new);
         var out=Arrays.stream(outputs).map(this::fluid).toArray(FluidStack[]::new);
-        if(Arrays.stream(in).anyMatch(FluidStack::isEmpty)||Arrays.stream(out).anyMatch(FluidStack::isEmpty))return;
+        if (Arrays.stream(in).anyMatch(FluidStack::isEmpty)||Arrays.stream(out).anyMatch(FluidStack::isEmpty))return;
         ItemStack[] items=new ItemStack[0];
-        if(dust!=null) {
+        if (dust!=null) {
             var material=GeneratedRecipeResolver.material(dust);
             var stack=material==null?ItemStack.EMPTY:MaterialStackItemHelper.mat(MaterialPrefix.dust,material,1);
-            if(stack.isEmpty()){missing.add(dust);return;}items=new ItemStack[]{stack};
+            if (stack.isEmpty()){missing.add(dust);return;}items=new ItemStack[]{stack};
         }
         MachineRecipeMaps.Fusion.addRecipe(new Recipe(
                 new ItemStack[]{new ItemStack(GTTechnological.selectorTag(circuit))},

@@ -22,7 +22,7 @@ public record PacketSyncFluids(int containerId,int slotIndex,FluidStack fluid,lo
  private static void encode(RegistryFriendlyByteBuf buf,PacketSyncFluids packet){buf.writeVarInt(packet.containerId);buf.writeVarInt(packet.slotIndex);FluidStack.OPTIONAL_STREAM_CODEC.encode(buf,packet.fluid);buf.writeVarLong(packet.amount);buf.writeVarLong(packet.capacity);}
  private static PacketSyncFluids decode(RegistryFriendlyByteBuf buf){return new PacketSyncFluids(buf.readVarInt(),buf.readVarInt(),FluidStack.OPTIONAL_STREAM_CODEC.decode(buf),buf.readVarLong(),buf.readVarLong());}
  @Override public Type<PacketSyncFluids> type(){return TYPE;}
- public void apply(AbstractContainerMenu menu){if(menu instanceof BasicMachineContainerMenu&&menu.containerId==containerId&&slotIndex>=0&&slotIndex<menu.slots.size()&&menu.slots.get(slotIndex) instanceof SlotFluid slot)slot.setFluid(fluid, amount, capacity);}
+ public void apply(AbstractContainerMenu menu){if (menu instanceof BasicMachineContainerMenu&&menu.containerId==containerId&&slotIndex>=0&&slotIndex<menu.slots.size()&&menu.slots.get(slotIndex) instanceof SlotFluid slot)slot.setFluid(fluid, amount, capacity);}
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.network.NetworkEvent;

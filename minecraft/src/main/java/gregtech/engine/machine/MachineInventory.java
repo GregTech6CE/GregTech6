@@ -29,19 +29,19 @@ public final class MachineInventory implements IFluidHandler {
 
     public MachineInventory(RecipeMap recipeMap, int parallelLimit, Runnable onChanged) {
         this.recipeMap = recipeMap;
-        this.inputCount = recipeMap.mInputItemsCount;
-        this.potionCount = recipeMap.mInputPotionCount;
-        this.items = new MachineItemHandler(inputCount + recipeMap.mOutputItemsCount, inputCount, onChanged);
+        this.inputCount = recipeMap.itemInputSlots;
+        this.potionCount = recipeMap.potionInputSlots;
+        this.items = new MachineItemHandler(inputCount + recipeMap.itemOutputSlots, inputCount, onChanged);
         this.potionInput = potionCount > 0 ? new PotionInput(onChanged) : null;
         if (potionCount > 0)
             this.items.setInputFilter(stack -> !(stack.getItem() instanceof net.minecraft.world.item.PotionItem));
-        this.tanksInput = new FluidTankGT[recipeMap.mInputFluidCount];
-        this.tanksOutput = new FluidTankGT[recipeMap.mOutputFluidCount];
+        this.tanksInput = new FluidTankGT[recipeMap.fluidInputTanks];
+        this.tanksOutput = new FluidTankGT[recipeMap.fluidOutputTanks];
         // GT6's MultiTileEntityBasicMachine starts input tanks at 1000 mB and scales each fluid's
         // largest recipe amount by parallel × 2.
         for (int i = 0; i < tanksInput.length; i++) {
             tanksInput[i] = new FluidTankGT(MachineFluidRules.INPUT_BASE_CAPACITY)
-                    .setAdjustableCapacity(recipeMap.mMinInputTankSizes,
+                    .setAdjustableCapacity(recipeMap.minimumInputTankSizes,
                             MachineFluidRules.inputCapacityMultiplier(parallelLimit))
                     .setOnChanged(onChanged);
         }

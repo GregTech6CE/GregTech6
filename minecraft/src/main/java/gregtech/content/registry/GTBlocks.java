@@ -163,12 +163,12 @@ public final class GTBlocks {
     }
 
     private static int materialStackLimit(Block block) {
-        if(block instanceof gregtech.content.block.MaterialBlockLike material) {
+        if (block instanceof gregtech.content.block.MaterialBlockLike material) {
             var prefix=material.prefix();
-            if(prefix==BlockMaterialPrefix.casingMachine)return 8;
-            if(prefix==BlockMaterialPrefix.casingMachineDouble)return 4;
-            if(prefix==BlockMaterialPrefix.casingMachineQuadruple)return 2;
-            if(prefix==BlockMaterialPrefix.casingMachineDense)return 1;
+            if (prefix==BlockMaterialPrefix.casingMachine)return 8;
+            if (prefix==BlockMaterialPrefix.casingMachineDouble)return 4;
+            if (prefix==BlockMaterialPrefix.casingMachineQuadruple)return 2;
+            if (prefix==BlockMaterialPrefix.casingMachineDense)return 1;
         }
         return 64;
     }

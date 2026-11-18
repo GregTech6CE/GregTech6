@@ -578,7 +578,7 @@ public class QueueHopperBlockEntity extends BlockEntity
 
 //? if >=1.21.1 {
     /*public void invalidateItemCapabilities() {
-        sideCaps.clear();if(level!=null)level.invalidateCapabilities(worldPosition);
+        sideCaps.clear();if (level!=null)level.invalidateCapabilities(worldPosition);
 *///?} else {
     @Override
     public void invalidateCaps() {

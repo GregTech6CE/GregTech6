@@ -55,11 +55,11 @@ public final class DormantOreRows {
     public void define(GTMaterial material,String producer,RecipeMap map,boolean optimize,
                        ItemStack input,ItemStack[] outputs,long[] chances,FluidStack[] fluids,
                        FluidStack[] fluidOutputs,long duration,long eu) {
-        if(sealed)throw new IllegalStateException("Definition phase already sealed");
+        if (sealed)throw new IllegalStateException("Definition phase already sealed");
         Objects.requireNonNull(material);Objects.requireNonNull(producer);Objects.requireNonNull(map);
-        if(material.resolve()!=material||input==null||input.isEmpty())throw new IllegalArgumentException("Canonical material/input required");
+        if (material.resolve()!=material||input==null||input.isEmpty())throw new IllegalArgumentException("Canonical material/input required");
         Key key=new Key(material,producer,map);
-        if(definitions.containsKey(key))throw new IllegalStateException("Duplicate producer definition: "+producer);
+        if (definitions.containsKey(key))throw new IllegalStateException("Duplicate producer definition: "+producer);
         definitions.put(key,new Definition(key,optimize,input,outputs,chances,fluids,fluidOutputs,duration,eu));
     }
     public void seal(){sealed=true;}
@@ -78,27 +78,27 @@ public final class DormantOreRows {
      * Existing startup/external rows always win admission collisions and are never claimed.
      */
     public int reconcile(Predicate<GTMaterial> active){
-        if(!sealed)throw new IllegalStateException("Definition phase not sealed");
+        if (!sealed)throw new IllegalStateException("Definition phase not sealed");
         // Evaluate all eligibility before touching map state. No hot-lookup metadata scan.
         var enabled=new ArrayList<Definition>();
-        for(var d:definitions.values())if(active.test(d.key.material))enabled.add(d);
+        for (var d:definitions.values())if (active.test(d.key.material))enabled.add(d);
         clear();
         try {
-            for(var d:enabled){
+            for (var d:enabled){
                 Recipe row=d.admit();
-                if(row!=null)accepted.computeIfAbsent(d.key.map,k->Collections.newSetFromMap(new IdentityHashMap<>())).add(row);
+                if (row!=null)accepted.computeIfAbsent(d.key.map,k->Collections.newSetFromMap(new IdentityHashMap<>())).add(row);
             }
-        } catch(RuntimeException|Error failure){clear();throw failure;}
+        } catch (RuntimeException|Error failure){clear();throw failure;}
         return owned().size();
     }
     private static ItemStack[] copy(ItemStack[] stacks){
-        if(stacks==null)return new ItemStack[0];
+        if (stacks==null)return new ItemStack[0];
         ItemStack[] out=new ItemStack[stacks.length];
-        for(int i=0;i<out.length;i++)out[i]=stacks[i]==null?ItemStack.EMPTY:stacks[i].copy();return out;
+        for (int i=0;i<out.length;i++)out[i]=stacks[i]==null?ItemStack.EMPTY:stacks[i].copy();return out;
     }
     private static FluidStack[] copy(FluidStack[] stacks){
-        if(stacks==null)return new FluidStack[0];
+        if (stacks==null)return new FluidStack[0];
         FluidStack[] out=new FluidStack[stacks.length];
-        for(int i=0;i<out.length;i++)out[i]=stacks[i]==null?FluidStack.EMPTY:stacks[i].copy();return out;
+        for (int i=0;i<out.length;i++)out[i]=stacks[i]==null?FluidStack.EMPTY:stacks[i].copy();return out;
     }
 }

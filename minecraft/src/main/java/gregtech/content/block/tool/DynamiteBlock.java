@@ -52,7 +52,7 @@ public class DynamiteBlock extends DirectionalBlock implements RemoteActivatable
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof DynamiteBlockEntity charge
                 && charge.onIgnite(level,pos,hit.getDirection(),player,held,player.isShiftKeyDown(),0,0,0)>0
                 && !player.isCreative()) {
-            if(held.is(Items.FIRE_CHARGE)) held.shrink(1);
+            if (held.is(Items.FIRE_CHARGE)) held.shrink(1);
 //? if >=1.21.1 {
             /*else held.hurtAndBreak(1,player,hand==InteractionHand.OFF_HAND?net.minecraft.world.entity.EquipmentSlot.OFFHAND:net.minecraft.world.entity.EquipmentSlot.MAINHAND);
 *///?} else {
@@ -80,7 +80,7 @@ public class DynamiteBlock extends DirectionalBlock implements RemoteActivatable
     @Override public BlockState getStateForPlacement(BlockPlaceContext ctx) { return defaultBlockState().setValue(FACING,ctx.getClickedFace()); }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new DynamiteBlockEntity(pos,state); }
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : (l,p,s,be) -> { if(be instanceof DynamiteBlockEntity charge) charge.serverTick(); };
+        return level.isClientSide ? null : (l,p,s,be) -> { if (be instanceof DynamiteBlockEntity charge) charge.serverTick(); };
     }
     @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         Direction facing = state.getValue(FACING);
@@ -89,29 +89,29 @@ public class DynamiteBlock extends DirectionalBlock implements RemoteActivatable
             case WEST -> box(14,5,5,16,11,11); case EAST -> box(0,5,5,2,11,11);
             case DOWN -> box(5,14,5,11,16,11); case UP -> box(5,0,5,11,2,11);
         };
-        return switch(facing.getAxis()) {
+        return switch (facing.getAxis()) {
             case X -> box(0,5,5,16,11,11); case Y -> box(5,0,5,11,16,11); case Z -> box(5,5,0,11,11,16);
         };
     }
     /** Original mSunk is retained only while the back is drillable stone/ore. */
     public void refreshSupport(Level level, BlockPos pos) {
         var state=level.getBlockState(pos);
-        if(!state.is(this)||!state.getValue(SUNK)) return;
+        if (!state.is(this)||!state.getValue(SUNK)) return;
         var support=pos.relative(state.getValue(FACING).getOpposite());
         boolean drillable=gregtech.content.tool.DynamiteSubstrates.canDrill(level,support);
-        if(!drillable) level.setBlock(pos,state.setValue(SUNK,false),Block.UPDATE_ALL);
+        if (!drillable) level.setBlock(pos,state.setValue(SUNK,false),Block.UPDATE_ALL);
     }
     @Override public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean moving) {
-        if(!level.isClientSide) {
+        if (!level.isClientSide) {
             refreshSupport(level,pos);
             checkFuseInputs(level,pos);
         }
     }
     public void checkFuseInputs(Level level, BlockPos pos) {
-        if(level.getBlockEntity(pos) instanceof DynamiteBlockEntity charge) {
+        if (level.getBlockEntity(pos) instanceof DynamiteBlockEntity charge) {
             boolean burning=false;
-            for(var side:Direction.values()) if(level.getBlockState(pos.relative(side)).is(net.minecraft.tags.BlockTags.FIRE)) burning=true;
-            if(burning || charge.remainingTicks()==0 && level.hasNeighborSignal(pos)) charge.armRemote();
+            for (var side:Direction.values()) if (level.getBlockState(pos.relative(side)).is(net.minecraft.tags.BlockTags.FIRE)) burning=true;
+            if (burning || charge.remainingTicks()==0 && level.hasNeighborSignal(pos)) charge.armRemote();
         }
     }
     @Override public void onCaughtFire(BlockState state, Level level, BlockPos pos, Direction face, net.minecraft.world.entity.LivingEntity igniter) {
@@ -124,12 +124,12 @@ public class DynamiteBlock extends DirectionalBlock implements RemoteActivatable
     @Override public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) { return state.getValue(ARMED)?15:0; }
     @Override public int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) { return getSignal(state,level,pos,side); }
     @Override public boolean remoteActivate(Level level, BlockPos pos) {
-        if(!level.isClientSide && level.getBlockEntity(pos) instanceof DynamiteBlockEntity charge) charge.armRemote();
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof DynamiteBlockEntity charge) charge.armRemote();
         return false;
     }
     public void detonate(Level level, BlockPos pos) {
         var state=level.getBlockState(pos);
-        if(level.isClientSide || !state.is(this)) return;
+        if (level.isClientSide || !state.is(this)) return;
         var center=state.getValue(SUNK)?pos.relative(state.getValue(FACING).getOpposite()):pos;
         level.removeBlock(pos,false);
         DynamiteExplosion.detonate((net.minecraft.server.level.ServerLevel)level,center,maxResistance,fortune);

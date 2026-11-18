@@ -65,8 +65,8 @@ public final class RecipeGuiLayout {
 
     private static List<Slot> side(Recipe recipe, boolean input, boolean keepEmpty) {
         var result = new ArrayList<Slot>();
-        var items = input ? recipe.mInputs : recipe.mOutputs;
-        var fluids = input ? recipe.mFluidInputs : recipe.mFluidOutputs;
+        var items = input ? recipe.itemInputs : recipe.itemOutputs;
+        var fluids = input ? recipe.fluidInputs : recipe.fluidOutputs;
         for (int i = 0; i < items.length; i++)
             if (keepEmpty || items[i] != null && !items[i].isEmpty()) result.add(new Slot(input, false, i, 0, 0));
         for (int i = 0; i < fluids.length; i++)
@@ -100,16 +100,16 @@ public final class RecipeGuiLayout {
 
     private MachineGuiLayout.Point machinePoint(Slot slot) {
         if (slot.fluid()) return MachineGuiLayout.fluid(slot.input(), slot.index());
-        if (slot.input() && map.mInputPotionCount > 0) {
+        if (slot.input() && map.potionInputSlots > 0) {
             // The potion slot keeps the vanilla position; ordinary inputs shift left to make room.
-            if (slot.index() >= map.mInputItemsCount) return new MachineGuiLayout.Point(53, 25);
+            if (slot.index() >= map.itemInputSlots) return new MachineGuiLayout.Point(53, 25);
             return new MachineGuiLayout.Point(35 - slot.index() * 18, 25);
         }
         return MachineGuiLayout.item(
                 slot.input(),
                 slot.index(),
-                slot.input() ? map.mInputItemsCount : map.mOutputItemsCount,
-                slot.input() ? map.mInputFluidCount : map.mOutputFluidCount);
+                slot.input() ? map.itemInputSlots : map.itemOutputSlots,
+                slot.input() ? map.fluidInputTanks : map.fluidOutputTanks);
     }
 
     public void draw(GuiGraphics graphics) {

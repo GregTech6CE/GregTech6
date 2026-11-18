@@ -21,7 +21,7 @@ public class ChemicalBatteryItem extends BlockItem implements IItemEnergy {
     public long stored(ItemStack stack){return Math.max(0,Math.min(spec().capacity(),StackData.readOrEmpty(stack).getLong(CHARGE)));}
     public void setCharge(ItemStack stack,long energy){
         long charge=Math.max(0,Math.min(spec().capacity(),energy));
-        StackData.update(stack,tag->{if(charge==0)tag.remove(CHARGE);else tag.putLong(CHARGE,charge);});
+        StackData.update(stack,tag->{if (charge==0)tag.remove(CHARGE);else tag.putLong(CHARGE,charge);});
 //? if >=1.21.1 {
         /*stack.set(net.minecraft.core.component.DataComponents.MAX_STACK_SIZE,charge>0?1:16);
 *///?}
@@ -45,23 +45,23 @@ public class ChemicalBatteryItem extends BlockItem implements IItemEnergy {
         return canEnergyInjection(stack,type,size);
     }
     private long packet(ItemStack s,GregTechTags.Tag type,long size,long amount){
-        if(!isEnergyType(s,type)||s.getCount()!=1||amount<1||size==Long.MIN_VALUE)return 0;
+        if (!isEnergyType(s,type)||s.getCount()!=1||amount<1||size==Long.MIN_VALUE)return 0;
         size=Math.abs(size);
         return size>=spec().minimumPacket()&&size<=spec().maximumPacket()?size:0;
     }
     @Override public long doEnergyInjection(GregTechTags.Tag type,ItemStack stack,long size,long amount,Level level,BlockPos pos,boolean execute){
         long packet=packet(stack,type,size,amount),stored=stored(stack);
-        if(packet==0||stored>=spec().capacity())return 0;
+        if (packet==0||stored>=spec().capacity())return 0;
         // GT6 accepts the final packet even when it does not completely fit; excess is discarded.
         long accepted=gregtech.content.energy.ItemBatteryRules.injectionPackets(spec().capacity(),stored,spec().voltage(),packet,amount);
-        if(execute)setCharge(stack,stored+accepted*packet);
+        if (execute)setCharge(stack,stored+accepted*packet);
         return accepted;
     }
     @Override public long doEnergyExtraction(GregTechTags.Tag type,ItemStack stack,long size,long amount,Level level,BlockPos pos,boolean execute){
         long packet=packet(stack,type,size,amount);
-        if(packet==0)return 0;
+        if (packet==0)return 0;
         long accepted=gregtech.content.energy.ItemBatteryRules.extractionPackets(stored(stack),spec().voltage(),packet,amount);
-        if(execute&&accepted>0)setCharge(stack,stored(stack)-accepted*packet);
+        if (execute&&accepted>0)setCharge(stack,stored(stack)-accepted*packet);
         return accepted;
     }
     @Override public boolean isBarVisible(ItemStack stack){return stored(stack)>0;}

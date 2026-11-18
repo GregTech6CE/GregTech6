@@ -114,14 +114,14 @@ public final class RecipeDump {
         int total = 0;
         int written = 0;
         for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
-            if (map.mNameInternal.isEmpty()) continue;
-            if (!filter.isEmpty() && !filter.contains(map.mNameInternal)) continue;
+            if (map.internalName.isEmpty()) continue;
+            if (!filter.isEmpty() && !filter.contains(map.internalName)) continue;
             JsonObject json = mapJson(map);
-            String file = "maps/" + fileName(map.mNameInternal) + ".json";
-            Files.writeString(maps.resolve(fileName(map.mNameInternal) + ".json"),
+            String file = "maps/" + fileName(map.internalName) + ".json";
+            Files.writeString(maps.resolve(fileName(map.internalName) + ".json"),
                     GSON.toJson(json), StandardCharsets.UTF_8);
             JsonObject entry = new JsonObject();
-            entry.addProperty("nameInternal", map.mNameInternal);
+            entry.addProperty("nameInternal", map.internalName);
             entry.addProperty("file", file);
             entry.addProperty("recipeCount", json.get("recipeCount").getAsInt());
             indexMaps.add(entry);
@@ -140,24 +140,24 @@ public final class RecipeDump {
 
     private static JsonObject mapJson(RecipeMap map) {
         JsonObject json = new JsonObject();
-        json.addProperty("nameInternal", map.mNameInternal);
-        json.addProperty("nameLocal", map.mNameLocal);
-        json.addProperty("guiPath", map.mGUIPath);
-        json.addProperty("power", map.mPower);
-        json.addProperty("inputItemsCount", map.mInputItemsCount);
-        json.addProperty("outputItemsCount", map.mOutputItemsCount);
-        json.addProperty("inputFluidCount", map.mInputFluidCount);
-        json.addProperty("outputFluidCount", map.mOutputFluidCount);
-        json.addProperty("minimalInputItems", map.mMinimalInputItems);
-        json.addProperty("minimalInputFluids", map.mMinimalInputFluids);
-        json.addProperty("minimalInputs", map.mMinimalInputs);
-        json.addProperty("neiAllowed", map.mViewerAllowed);
-        json.addProperty("needsOutputs", map.mNeedsOutputs);
-        json.addProperty("combinePower", map.mCombinePower);
-        json.addProperty("useBucketSizeIn", map.mUseBucketSizeIn);
-        json.addProperty("useBucketSizeOut", map.mUseBucketSizeOut);
-        json.addProperty("maxFluidInputSize", map.mMaxFluidInputSize);
-        json.addProperty("maxFluidOutputSize", map.mMaxFluidOutputSize);
+        json.addProperty("nameInternal", map.internalName);
+        json.addProperty("nameLocal", map.displayName);
+        json.addProperty("guiPath", map.guiPath);
+        json.addProperty("power", map.powerMultiplier);
+        json.addProperty("inputItemsCount", map.itemInputSlots);
+        json.addProperty("outputItemsCount", map.itemOutputSlots);
+        json.addProperty("inputFluidCount", map.fluidInputTanks);
+        json.addProperty("outputFluidCount", map.fluidOutputTanks);
+        json.addProperty("minimalInputItems", map.minimumItemInputs);
+        json.addProperty("minimalInputFluids", map.minimumFluidInputs);
+        json.addProperty("minimalInputs", map.minimumInputs);
+        json.addProperty("neiAllowed", map.viewerAllowed);
+        json.addProperty("needsOutputs", map.requiresOutputs);
+        json.addProperty("combinePower", map.combinePower);
+        json.addProperty("useBucketSizeIn", map.bucketSizedFluidInputs);
+        json.addProperty("useBucketSizeOut", map.bucketSizedFluidOutputs);
+        json.addProperty("maxFluidInputSize", map.maxFluidInputSize);
+        json.addProperty("maxFluidOutputSize", map.maxFluidOutputSize);
         JsonArray rows = new JsonArray();
         int count = 0;
         for (Recipe recipe : map.allRecipes()) {
@@ -171,22 +171,22 @@ public final class RecipeDump {
 
     private static JsonObject recipeJson(Recipe recipe) {
         JsonObject json = new JsonObject();
-        json.addProperty("euPerTick", recipe.mEUt);
-        json.addProperty("duration", recipe.mDuration);
-        json.addProperty("specialValue", recipe.mSpecialValue);
-        json.addProperty("priority", recipe.mPriority);
-        if (!recipe.mSource.isEmpty()) json.addProperty("source", recipe.mSource);
-        json.addProperty("enabled", recipe.mEnabled);
-        json.addProperty("hidden", recipe.mHidden);
-        json.addProperty("fake", recipe.mFakeRecipe);
-        json.addProperty("canBeBuffered", recipe.mCanBeBuffered);
-        json.addProperty("needsEmptyOutput", recipe.mNeedsEmptyOutput);
-        json.add("inputs", itemArray(recipe.mInputs));
-        json.add("outputs", itemArray(recipe.mOutputs));
-        json.add("fluidInputs", fluidArray(recipe.mFluidInputs));
-        json.add("fluidOutputs", fluidArray(recipe.mFluidOutputs));
-        json.add("chances", longArray(recipe.mChances));
-        json.add("maxChances", longArray(recipe.mMaxChances));
+        json.addProperty("euPerTick", recipe.energyPerTick);
+        json.addProperty("duration", recipe.durationTicks);
+        json.addProperty("specialValue", recipe.specialValue);
+        json.addProperty("priority", recipe.priority);
+        if (!recipe.source.isEmpty()) json.addProperty("source", recipe.source);
+        json.addProperty("enabled", recipe.enabled);
+        json.addProperty("hidden", recipe.hidden);
+        json.addProperty("fake", recipe.fakeRecipe);
+        json.addProperty("canBeBuffered", recipe.canBeBuffered);
+        json.addProperty("needsEmptyOutput", recipe.needsEmptyOutput);
+        json.add("inputs", itemArray(recipe.itemInputs));
+        json.add("outputs", itemArray(recipe.itemOutputs));
+        json.add("fluidInputs", fluidArray(recipe.fluidInputs));
+        json.add("fluidOutputs", fluidArray(recipe.fluidOutputs));
+        json.add("chances", longArray(recipe.outputChances));
+        json.add("maxChances", longArray(recipe.maxOutputChances));
         return json;
     }
 

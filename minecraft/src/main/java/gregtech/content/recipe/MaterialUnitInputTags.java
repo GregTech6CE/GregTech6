@@ -45,23 +45,23 @@ public final class MaterialUnitInputTags {
     public static synchronized void tags(BiConsumer<String, String> output) {
         if (fixed == null) {
             var initial = new LinkedHashMap<String, Set<String>>();
-            for (Recipe row : MachineRecipeMaps.Smelter.mRecipeList) {
-                if (!row.mEnabled
-                        || row.mHidden
-                        || row.mFakeRecipe
-                        || row.mInputs.length != 1
-                        || row.mOutputs.length != 0
-                        || row.mFluidInputs.length != 0
-                        || row.mFluidOutputs.length != 1
+            for (Recipe row : MachineRecipeMaps.Smelter.recipeRows) {
+                if (!row.enabled
+                        || row.hidden
+                        || row.fakeRecipe
+                        || row.itemInputs.length != 1
+                        || row.itemOutputs.length != 0
+                        || row.fluidInputs.length != 0
+                        || row.fluidOutputs.length != 1
                         || row.hasTaggedInputs()
                         || row.isCatalystInput(0)
-                        || row.mSpecialValue != 0) continue;
-                var material = MoltenMetalUnitRecipes.inputMaterial(row.mInputs[0], row.mFluidOutputs[0]);
-                if (material != null) add(initial, smeltable(material), row.mInputs[0]);
+                        || row.specialValue != 0) continue;
+                var material = MoltenMetalUnitRecipes.inputMaterial(row.itemInputs[0], row.fluidOutputs[0]);
+                if (material != null) add(initial, smeltable(material), row.itemInputs[0]);
             }
             // Equivalent immutable input lists are shared across molds; enumerate each only once.
             Set<List<ItemStack>> seen = Collections.newSetFromMap(new IdentityHashMap<>());
-            for (var row : MachineRecipeMaps.Extruder.mRecipeList) {
+            for (var row : MachineRecipeMaps.Extruder.recipeRows) {
                 var display = row.materialInputDisplay(0);
                 if (display != null && display.tag() != null && seen.add(display.alternatives()))
                     for (var stack : display.alternatives()) add(initial, display.tag(), stack);

@@ -56,7 +56,7 @@ public final class ElectronicsRecipes {
         }
         String[] solders={"Lead","Tin","SolderingAlloy"};
         int[][] results={{0,0,0,1,2,3},{0,1,1,2,3,4},{0,1,2,3,4,5}};
-        for(int solder=0;solder<3;solder++) for(int tier=0;tier<6;tier++)
+        for (int solder=0;solder<3;solder++) for (int tier=0;tier<6;tier++)
             add(MachineRecipeMaps.Bath,new Recipe(new ItemStack[]{tech("circuit_board_"+TIERS[tier],1)},new ItemStack[]{tech("circuit_"+TIERS[results[solder][tier]],1)},
                     null,new FluidStack[]{fluid("GenMolten_",solders[solder],72)},null,64,0,0));
         for (String crystal : new String[]{"Silicon","Germanium","RedstoneAlloy","NikolineAlloy"})
@@ -72,7 +72,7 @@ public final class ElectronicsRecipes {
         // circuit chain. The rows above cover GT6's copper/gold/platinum ladder; these were the items the
         // port registered with no way to make them (see docs/items-without-recipes.json).
         String[] magicWires={"Thaumium","Manasteel","Netherite"};
-        for(String wire:magicWires) engrave("circuit_wire_magic",wire);
+        for (String wire:magicWires) engrave("circuit_wire_magic",wire);
         engrave("circuit_wire_enderium","Enderium");
         engrave("circuit_wire_signalum","Signalum");
 
@@ -80,9 +80,9 @@ public final class ElectronicsRecipes {
         press(64,tech("circuit_plate_enderium",1),tech("circuit_plate",1),tech("circuit_wire_enderium",1));
         press(64,tech("circuit_plate_signalum",1),tech("circuit_plate",1),tech("circuit_wire_signalum",1));
 
-        for(String semiconductor:new String[]{"Silicon","Germanium","RedstoneAlloy"}) {
+        for (String semiconductor:new String[]{"Silicon","Germanium","RedstoneAlloy"}) {
             var crystal=mat(MaterialPrefix.plateGemTiny,semiconductor,1);
-            for(String wire:magicWires)
+            for (String wire:magicWires)
                 press(16,tech("circuit_part_magic",1),mat(MaterialPrefix.wireFine,wire,1),mat(MaterialPrefix.wireFine,"Signalum",1),crystal.copy());
             press(16,tech("circuit_part_enderium",1),mat(MaterialPrefix.wireFine,"Enderium",1),mat(MaterialPrefix.wireFine,"Signalum",1),crystal.copy());
             press(16,tech("circuit_part_signalum",1),mat(MaterialPrefix.wireFine,"Signalum",1),mat(MaterialPrefix.dustTiny,"Redstone",1),crystal.copy());
@@ -95,7 +95,7 @@ public final class ElectronicsRecipes {
 
         bath("circuit_board_magic","circuit_magic","SolderingAlloy");
         bath("circuit_board_enderium","circuit_enderium","SolderingAlloy");
-        for(String solder:new String[]{"Lead","Tin","SolderingAlloy"}) bath("circuit_board_signalum","circuit_signalum",solder);
+        for (String solder:new String[]{"Lead","Tin","SolderingAlloy"}) bath("circuit_board_signalum","circuit_signalum",solder);
 
         // GT6 Loader_Recipes_Other + MultiItemTechnological — the crystal branch:
         // a gem plate is engraved into a crystal circuit, the socket is crafted from a platinum circuit
@@ -205,22 +205,22 @@ public final class ElectronicsRecipes {
         add(MachineRecipeMaps.Press,new Recipe(inputs,new ItemStack[]{output},null,null,null,ticks,16,0));
     }
     private static void add(RecipeMap map,Recipe recipe) {
-        if(map.addRecipe(recipe)==null) throw new IllegalStateException("Rejected electronics recipe in "+map);
+        if (map.addRecipe(recipe)==null) throw new IllegalStateException("Rejected electronics recipe in "+map);
         REGISTERED.add(recipe);
     }
     private static ItemStack tech(String id,int count) {
         var item=GTTechnological.get(id);
-        if(item==null)throw new IllegalStateException("Missing electronics item: "+id);
+        if (item==null)throw new IllegalStateException("Missing electronics item: "+id);
         return new ItemStack(item,count);
     }
     private static ItemStack mat(MaterialPrefix prefix,String material,int count) {
         var stack=GTItems.getStack(prefix,GTMaterialRegistry.get(material),count);
-        if(stack.isEmpty())throw new IllegalStateException("Missing electronics material: "+prefix.getName()+"/"+material);
+        if (stack.isEmpty())throw new IllegalStateException("Missing electronics material: "+prefix.getName()+"/"+material);
         return stack;
     }
     private static FluidStack fluid(String prefix,String material,int amount) {
         var fluid=GTFluids.still(prefix+GTMaterialRegistry.get(material).getName());
-        if(fluid==null||!GTFluids.isPresent(fluid))throw new IllegalStateException("Missing electronics fluid: "+prefix+material);
+        if (fluid==null||!GTFluids.isPresent(fluid))throw new IllegalStateException("Missing electronics fluid: "+prefix+material);
         return new FluidStack(fluid.get(),amount);
     }
 }

@@ -48,37 +48,37 @@ public final class GunToolItem extends GTToolItem {
  public GunRules.Definition definition(){return GunRules.of(toolType().id());}
 //? if >=1.21.1 {
  /*public ItemStack ammunition(ItemStack gun,Level level){var lookup=level!=null?level.registryAccess():gregtech.engine.fluid.FluidDisplayBinding.currentLookup();return lookup==null?ItemStack.EMPTY:gregtech.engine.stack.NbtCompat.readItem(StackData.readOrEmpty(gun).getCompound("gt.ammo"),lookup);}
- private void magazine(ItemStack gun,ItemStack ammo,Level level){StackData.update(gun,t->{if(ammo.isEmpty())t.remove("gt.ammo");else t.put("gt.ammo",gregtech.engine.stack.NbtCompat.saveItem(ammo,level.registryAccess()));});}
+ private void magazine(ItemStack gun,ItemStack ammo,Level level){StackData.update(gun,t->{if (ammo.isEmpty())t.remove("gt.ammo");else t.put("gt.ammo",gregtech.engine.stack.NbtCompat.saveItem(ammo,level.registryAccess()));});}
 *///?} else {
  public ItemStack ammunition(ItemStack gun,Level level){var tag=StackData.read(gun);return tag==null?ItemStack.EMPTY:gregtech.engine.stack.NbtCompat.readItem(tag.getCompound("gt.ammo"),null);}
- private void magazine(ItemStack gun,ItemStack ammo,Level level){StackData.update(gun,t->{if(ammo.isEmpty())t.remove("gt.ammo");else t.put("gt.ammo",gregtech.engine.stack.NbtCompat.saveItem(ammo,null));});}
+ private void magazine(ItemStack gun,ItemStack ammo,Level level){StackData.update(gun,t->{if (ammo.isEmpty())t.remove("gt.ammo");else t.put("gt.ammo",gregtech.engine.stack.NbtCompat.saveItem(ammo,null));});}
 //?}
  public boolean accepts(ItemStack stack){return stack.getItem() instanceof MaterialFormItem form&&form.getPrefix()==definition().ammunition()&&!form.getMaterial().getName().equals("Empty");}
- @Override public InteractionResult onItemUseFirst(ItemStack stack,UseOnContext context){var player=context.getPlayer();if(player==null)return InteractionResult.PASS;activate(context.getLevel(),player,context.getHand());return InteractionResult.sidedSuccess(context.getLevel().isClientSide);}
- @Override public InteractionResult useOn(UseOnContext context){var player=context.getPlayer();if(player==null)return InteractionResult.PASS;activate(context.getLevel(),player,context.getHand());return InteractionResult.sidedSuccess(context.getLevel().isClientSide);}
+ @Override public InteractionResult onItemUseFirst(ItemStack stack,UseOnContext context){var player=context.getPlayer();if (player==null)return InteractionResult.PASS;activate(context.getLevel(),player,context.getHand());return InteractionResult.sidedSuccess(context.getLevel().isClientSide);}
+ @Override public InteractionResult useOn(UseOnContext context){var player=context.getPlayer();if (player==null)return InteractionResult.PASS;activate(context.getLevel(),player,context.getHand());return InteractionResult.sidedSuccess(context.getLevel().isClientSide);}
  @Override public InteractionResultHolder<ItemStack> use(Level level,Player player,InteractionHand hand){activate(level,player,hand);return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand),level.isClientSide);}
  public void activate(Level level,Player player,InteractionHand hand){
-  if(level.isClientSide||player.isSpectator()||player.getCooldowns().isOnCooldown(this))return;
-  var gun=player.getItemInHand(hand);if(!GTToolHelper.isUsable(gun))return;
+  if (level.isClientSide||player.isSpectator()||player.getCooldowns().isOnCooldown(this))return;
+  var gun=player.getItemInHand(hand);if (!GTToolHelper.isUsable(gun))return;
   var ammo=ammunition(gun,level);
-  if(player.isShiftKeyDown()){
-   if(ammo.isEmpty())reload(gun,player);else {give(player,ammo);magazine(gun,ItemStack.EMPTY,level);}
+  if (player.isShiftKeyDown()){
+   if (ammo.isEmpty())reload(gun,player);else {give(player,ammo);magazine(gun,ItemStack.EMPTY,level);}
    level.playSound(null,player.blockPosition(),SoundEvents.UI_BUTTON_CLICK.value(),SoundSource.PLAYERS,.5F,1);player.getInventory().setChanged();return;
   }
-  if(ammo.isEmpty()){level.playSound(null,player.blockPosition(),SoundEvents.UI_BUTTON_CLICK.value(),SoundSource.PLAYERS,.5F,1);return;}
+  if (ammo.isEmpty()){level.playSound(null,player.blockPosition(),SoundEvents.UI_BUTTON_CLICK.value(),SoundSource.PLAYERS,.5F,1);return;}
   shoot(gun,ammo.copyWithCount(1),player);
   level.playSound(null,player.blockPosition(),SoundEvents.FIREWORK_ROCKET_BLAST_FAR,SoundSource.PLAYERS,4F,1);
-  if(!player.getAbilities().instabuild&&level.random.nextInt(1+enchantment(gun,"infinity",level))==0){ammo.shrink(1);magazine(gun,ammo,level);give(player,GTItems.getStack(MaterialPrefix.scrapGt,gregtech.content.material.Materials.Brass,definition().magic()*8));}
+  if (!player.getAbilities().instabuild&&level.random.nextInt(1+enchantment(gun,"infinity",level))==0){ammo.shrink(1);magazine(gun,ammo,level);give(player,GTItems.getStack(MaterialPrefix.scrapGt,gregtech.content.material.Materials.Brass,definition().magic()*8));}
   GTToolHelper.damageForUse(gun,100,player);player.getInventory().setChanged();
  }
- private static void give(Player player,ItemStack stack){if(!stack.isEmpty()&&!player.addItem(stack))player.drop(stack,false);}
+ private static void give(Player player,ItemStack stack){if (!stack.isEmpty()&&!player.addItem(stack))player.drop(stack,false);}
  public boolean reload(ItemStack gun,Player player){
-  if(!ammunition(gun,player.level()).isEmpty())return false;
+  if (!ammunition(gun,player.level()).isEmpty())return false;
   var inventory=player.getInventory();int selected=inventory.selected;var order=new ArrayList<Integer>();
   // Original prefers ammunition in the same inventory column, then searches backwards.
-  if(inventory.getItem(selected)==gun)for(int offset:new int[]{9,18,27})if(selected+offset<36)order.add(selected+offset);
-  for(int slot=35;slot>=0;slot--)if(!order.contains(slot))order.add(slot);
-  for(int slot:order){var stock=inventory.getItem(slot);if(!accepts(stock))continue;int count=Math.min(definition().magazine(),stock.getCount());magazine(gun,enchantedAmmo(stock.copyWithCount(count),player.level()),player.level());stock.shrink(count);inventory.setChanged();return true;}
+  if (inventory.getItem(selected)==gun)for (int offset:new int[]{9,18,27})if (selected+offset<36)order.add(selected+offset);
+  for (int slot=35;slot>=0;slot--)if (!order.contains(slot))order.add(slot);
+  for (int slot:order){var stock=inventory.getItem(slot);if (!accepts(stock))continue;int count=Math.min(definition().magazine(),stock.getCount());magazine(gun,enchantedAmmo(stock.copyWithCount(count),player.level()),player.level());stock.shrink(count);inventory.setChanged();return true;}
   return false;
  }
 //? if >=1.21.1 {
@@ -91,7 +91,7 @@ public final class GunToolItem extends GTToolItem {
   return ammo;
  }
  public void shoot(ItemStack gun,ItemStack ammo,Player player){
-  if(!(player.level() instanceof ServerLevel level)||!accepts(ammo))return;
+  if (!(player.level() instanceof ServerLevel level)||!accepts(ammo))return;
   ammo=enchantedAmmo(ammo,level);
   var form=(MaterialFormItem)ammo.getItem();var material=form.getMaterial();var primary=GTToolHelper.getHead(gun);
   Vec3 start=player.getEyePosition(),direction=player.getLookAngle(),end=start.add(direction.scale(200));
@@ -101,56 +101,56 @@ public final class GunToolItem extends GTToolItem {
   int fire=enchantment(gun,"flame",level)+Math.max(enchantment(ammo,"fire_aspect",level),MaterialToolEnchantments.ammunition(material).getOrDefault("fire_aspect",0));
   boolean water=!level.getFluidState(BlockPos.containing(start)).isEmpty();BlockPos previous=BlockPos.containing(start);
   // Traverse distinct voxels in ray order. Sampling <= 1/16 block resolves thin panes and entities.
-  for(int step=1;step<=3200&&power>0;step++){
+  for (int step=1;step<=3200&&power>0;step++){
    Vec3 point=start.add(direction.scale(step/16.0));BlockPos pos=BlockPos.containing(point);
-   if(!level.hasChunkAt(pos))break;
-   while(!targets.isEmpty()&&targets.get(0).getBoundingBox().clip(start,end).orElse(end).distanceToSqr(start)<=point.distanceToSqr(start)){
-    var target=targets.remove(0);if(hit(gun,ammo,player,target,power,direction,fire))power-=10000;if(power<=0)return;
+   if (!level.hasChunkAt(pos))break;
+   while (!targets.isEmpty()&&targets.get(0).getBoundingBox().clip(start,end).orElse(end).distanceToSqr(start)<=point.distanceToSqr(start)){
+    var target=targets.remove(0);if (hit(gun,ammo,player,target,power,direction,fire))power-=10000;if (power<=0)return;
    }
-   if(pos.equals(previous))continue;previous=pos;var state=level.getBlockState(pos);var block=state.getBlock();
-   if(!state.getFluidState().isEmpty()){if(!water)power=GunRules.water(power);water=true;continue;}water=false;
+   if (pos.equals(previous))continue;previous=pos;var state=level.getBlockState(pos);var block=state.getBlock();
+   if (!state.getFluidState().isEmpty()){if (!water)power=GunRules.water(power);water=true;continue;}water=false;
    boolean glass=block instanceof HalfTransparentBlock||block instanceof IceBlock||block instanceof RedstoneLampBlock;
    int fragile=glass?2000:block instanceof PumpkinBlock||block==Blocks.MELON||block instanceof CactusBlock?3000:block==Blocks.COCOA?2000:0;
-   if(fragile>0){if(player.mayBuild()&&level.mayInteract(player,pos)&&!state.hasBlockEntity()){
-     if(glass){level.destroyBlock(pos,false,player);giveScrap(level,pos,state);}
+   if (fragile>0){if (player.mayBuild()&&level.mayInteract(player,pos)&&!state.hasBlockEntity()){
+     if (glass){level.destroyBlock(pos,false,player);giveScrap(level,pos,state);}
      else level.destroyBlock(pos,true,player);
     }power-=fragile;continue;}
-   if(state.is(BlockTags.WOOL)||state.is(BlockTags.WOOL_CARPETS)){power-=4000;if(fire>1&&player.mayBuild()&&level.mayInteract(player,pos))level.destroyBlock(pos,false,player);continue;}
-   if(state.isAir()||state.is(BlockTags.LEAVES)||state.is(BlockTags.FENCES)||state.is(BlockTags.FENCE_GATES)||state.is(BlockTags.RAILS)||block instanceof BushBlock||block instanceof VineBlock||block instanceof IronBarsBlock||block instanceof TorchBlock||block instanceof FireBlock||block instanceof gregtech.content.block.misc.BarsBlock||block==Blocks.SPAWNER||block==Blocks.COBWEB){power-=200;continue;}
-   if(state.getCollisionShape(level,pos).clip(start,end,pos)!=null)return;
+   if (state.is(BlockTags.WOOL)||state.is(BlockTags.WOOL_CARPETS)){power-=4000;if (fire>1&&player.mayBuild()&&level.mayInteract(player,pos))level.destroyBlock(pos,false,player);continue;}
+   if (state.isAir()||state.is(BlockTags.LEAVES)||state.is(BlockTags.FENCES)||state.is(BlockTags.FENCE_GATES)||state.is(BlockTags.RAILS)||block instanceof BushBlock||block instanceof VineBlock||block instanceof IronBarsBlock||block instanceof TorchBlock||block instanceof FireBlock||block instanceof gregtech.content.block.misc.BarsBlock||block==Blocks.SPAWNER||block==Blocks.COBWEB){power-=200;continue;}
+   if (state.getCollisionShape(level,pos).clip(start,end,pos)!=null)return;
    power-=200;
   }
  }
  private static void giveScrap(ServerLevel level,BlockPos pos,net.minecraft.world.level.block.state.BlockState state){
   var data=gregtech.engine.material.ItemMaterialRegistry.get(new ItemStack(state.getBlock()));
-  if(data.isPresent())for(var component:data.get().components()){long amount=component.amount()/gregtech.api.material.GTValues.U72;while(amount>0){int count=(int)Math.min(64,amount);Block.popResource(level,pos,GTItems.getStack(MaterialPrefix.scrapGt,component.material(),count));amount-=count;}}
+  if (data.isPresent())for (var component:data.get().components()){long amount=component.amount()/gregtech.api.material.GTValues.U72;while (amount>0){int count=(int)Math.min(64,amount);Block.popResource(level,pos,GTItems.getStack(MaterialPrefix.scrapGt,component.material(),count));amount-=count;}}
  }
  private boolean hit(ItemStack gun,ItemStack ammo,Player shooter,Entity target,long power,Vec3 direction,int fire){
-  var level=shooter.level();if(target.isInvulnerable()||target instanceof Player p&&(p.getAbilities().invulnerable||!shooter.canHarmPlayer(p)))return false;
-  if(target instanceof EnderMan enderman&&!enderman.hasEffect(net.minecraft.world.effect.MobEffects.WEAKNESS)&&enchantment(ammo,"gt6ce:disjunction",level)<=0){ // Native projectile immunity also performs its teleport.
+  var level=shooter.level();if (target.isInvulnerable()||target instanceof Player p&&(p.getAbilities().invulnerable||!shooter.canHarmPlayer(p)))return false;
+  if (target instanceof EnderMan enderman&&!enderman.hasEffect(net.minecraft.world.effect.MobEffects.WEAKNESS)&&enchantment(ammo,"gt6ce:disjunction",level)<=0){ // Native projectile immunity also performs its teleport.
    return target.hurt(level.damageSources().thrown(new net.minecraft.world.entity.projectile.Snowball(level,shooter),shooter),0);
   }
-  if(!(target instanceof LivingEntity||target instanceof net.minecraft.world.entity.boss.EnderDragonPart||target instanceof net.minecraft.world.entity.boss.enderdragon.EndCrystal))return false;
+  if (!(target instanceof LivingEntity||target instanceof net.minecraft.world.entity.boss.EnderDragonPart||target instanceof net.minecraft.world.entity.boss.enderdragon.EndCrystal))return false;
   var bullet=((MaterialFormItem)ammo.getItem()).getMaterial();float damage=GunRules.damage(definition(),GTToolHelper.getHead(gun),bullet,power,target instanceof Player);
   Entity attacker=shooter;
   int looting=Math.max(enchantment(ammo,"looting",level),MaterialToolEnchantments.ammunition(bullet).getOrDefault("looting",0));
 //? if >=1.21.1 {
-  /*if(looting>0&&level instanceof ServerLevel server&&!(target instanceof Player)){var fake=net.neoforged.neoforge.common.util.FakePlayerFactory.get(server,new com.mojang.authlib.GameProfile(new java.util.UUID(0,0),shooter.getGameProfile().getName()));fake.setItemInHand(InteractionHand.MAIN_HAND,ammo);fake.moveTo(shooter.getX(),shooter.getY(),shooter.getZ());attacker=fake;}
+  /*if (looting>0&&level instanceof ServerLevel server&&!(target instanceof Player)){var fake=net.neoforged.neoforge.common.util.FakePlayerFactory.get(server,new com.mojang.authlib.GameProfile(new java.util.UUID(0,0),shooter.getGameProfile().getName()));fake.setItemInHand(InteractionHand.MAIN_HAND,ammo);fake.moveTo(shooter.getX(),shooter.getY(),shooter.getZ());attacker=fake;}
 *///?} else {
-  if(looting>0&&level instanceof ServerLevel server&&!(target instanceof Player)){var fake=net.minecraftforge.common.util.FakePlayerFactory.get(server,new com.mojang.authlib.GameProfile(new java.util.UUID(0,0),shooter.getGameProfile().getName()));fake.setItemInHand(InteractionHand.MAIN_HAND,ammo);fake.moveTo(shooter.getX(),shooter.getY(),shooter.getZ());attacker=fake;}
+  if (looting>0&&level instanceof ServerLevel server&&!(target instanceof Player)){var fake=net.minecraftforge.common.util.FakePlayerFactory.get(server,new com.mojang.authlib.GameProfile(new java.util.UUID(0,0),shooter.getGameProfile().getName()));fake.setItemInHand(InteractionHand.MAIN_HAND,ammo);fake.moveTo(shooter.getX(),shooter.getY(),shooter.getZ());attacker=fake;}
 //?}
   var key=ResourceKey.create(Registries.DAMAGE_TYPE,ResourceLocation.fromNamespaceAndPath("gt6ce",power>25000?"bullet_piercing":"bullet"));
   var source=new gregtech.content.damage.MaterialProjectileDamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key),shooter,attacker,ammo);
 //? if >=1.21.1 {
-  /*if(fire>0)target.igniteForSeconds(4*fire);
+  /*if (fire>0)target.igniteForSeconds(4*fire);
   float magic=net.minecraft.world.item.enchantment.EnchantmentHelper.modifyDamage((ServerLevel)level,ammo,target,source,0);
 *///?} else {
-  if(fire>0)target.setSecondsOnFire(4*fire);
+  if (fire>0)target.setSecondsOnFire(4*fire);
   float magic=target instanceof LivingEntity living?net.minecraft.world.item.enchantment.EnchantmentHelper.getDamageBonus(ammo,living.getMobType()):0;
 //?}
   damage+=magic*(target instanceof Player?.5F:definition().magic());
   boolean struck=target.hurt(source,damage);
-  if(struck){gregtech.engine.tool.MaterialEnchantmentStacks.postAttack(ammo,target,source);int knock=enchantment(gun,"punch",level)+Math.max(enchantment(ammo,"knockback",level),MaterialToolEnchantments.ammunition(bullet).getOrDefault("knockback",0));if(knock>0)target.push(direction.x*knock*power/50000,.05,direction.z*knock*power/50000);if(target instanceof Creeper creeper&&fire>0)creeper.ignite();}
+  if (struck){gregtech.engine.tool.MaterialEnchantmentStacks.postAttack(ammo,target,source);int knock=enchantment(gun,"punch",level)+Math.max(enchantment(ammo,"knockback",level),MaterialToolEnchantments.ammunition(bullet).getOrDefault("knockback",0));if (knock>0)target.push(direction.x*knock*power/50000,.05,direction.z*knock*power/50000);if (target instanceof Creeper creeper&&fire>0)creeper.ignite();}
   return struck||target.invulnerableTime<=0;
  }
 //? if >=1.21.1 {
@@ -161,9 +161,9 @@ public final class GunToolItem extends GTToolItem {
   tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.reload"));
   tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.caliber",net.minecraft.network.chat.Component.translatable("item.gt6ce."+definition().ammunition().getRegistryName()),definition().magazine()));
 //? if >=1.21.1 {
-  /*var ammo=ammunition(stack,context.level());tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.ammo",ammo.getCount(),definition().magazine()));if(!ammo.isEmpty())tooltip.add(ammo.getHoverName());
+  /*var ammo=ammunition(stack,context.level());tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.ammo",ammo.getCount(),definition().magazine()));if (!ammo.isEmpty())tooltip.add(ammo.getHoverName());
 *///?} else {
-  var ammo=ammunition(stack,context);tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.ammo",ammo.getCount(),definition().magazine()));if(!ammo.isEmpty())tooltip.add(ammo.getHoverName());
+  var ammo=ammunition(stack,context);tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.ammo",ammo.getCount(),definition().magazine()));if (!ammo.isEmpty())tooltip.add(ammo.getHoverName());
 //?}
  }
 }

@@ -25,22 +25,22 @@ public final class MachineWorkOutputs {
     public static MachineWorkOutputs roll(Recipe recipe,int parallel,java.util.function.IntUnaryOperator random,boolean exclusive) {
         var result=new MachineWorkOutputs();
         if (exclusive) {
-            int declared = recipe.mOutputs == null ? 0 : recipe.mOutputs.length;
+            int declared = recipe.itemOutputs == null ? 0 : recipe.itemOutputs.length;
             gregtech.engine.addon.ExclusiveOutputRules.requirePair(declared,
-                    gregtech.engine.addon.ExclusiveOutputMaps.nonEmptyItems(recipe.mOutputs));
+                    gregtech.engine.addon.ExclusiveOutputMaps.nonEmptyItems(recipe.itemOutputs));
             int index = gregtech.engine.addon.ExclusiveOutputRules.choose(recipe.getOutputChance(0), random);
-            var output = recipe.mOutputs[index];
+            var output = recipe.itemOutputs[index];
             long count = (long) output.getCount() * parallel;
             while (count > 0) {
                 int take = (int) Math.min(count, output.getMaxStackSize());
                 result.items.add(output.copyWithCount(take));
                 count -= take;
             }
-        } else for(int i=0;i<recipe.mOutputs.length;i++) {
-            var output=recipe.mOutputs[i]; long count=recipe.rollOutputCount(i,parallel,random);
-            while(count>0) { int take=(int)Math.min(count,output.getMaxStackSize()); result.items.add(output.copyWithCount(take)); count-=take; }
+        } else for (int i=0;i<recipe.itemOutputs.length;i++) {
+            var output=recipe.itemOutputs[i]; long count=recipe.rollOutputCount(i,parallel,random);
+            while (count>0) { int take=(int)Math.min(count,output.getMaxStackSize()); result.items.add(output.copyWithCount(take)); count-=take; }
         }
-        for(var output:recipe.mFluidOutputs) if(output!=null && !output.isEmpty()) {
+        for (var output:recipe.fluidOutputs) if (output!=null && !output.isEmpty()) {
             var copy=output.copy(); copy.setAmount(Math.toIntExact((long)output.getAmount()*parallel)); result.fluids.add(copy);
         }
         return result;
@@ -54,20 +54,20 @@ public final class MachineWorkOutputs {
      * </p>
      */
     public boolean flush(IItemHandlerModifiable inventory,int firstOutput,FluidTankGT[] tanks) {
-        for(var pending:items) {
-            for(int pass=0;pass<2 && !pending.isEmpty();pass++) for(int i=firstOutput;i<inventory.getSlots() && !pending.isEmpty();i++) {
+        for (var pending:items) {
+            for (int pass=0;pass<2 && !pending.isEmpty();pass++) for (int i=firstOutput;i<inventory.getSlots() && !pending.isEmpty();i++) {
                 var present=inventory.getStackInSlot(i);
-                if(present.isEmpty() ? pass==0 : !gregtech.engine.stack.StackCompat.sameItem(present,pending)) continue;
+                if (present.isEmpty() ? pass==0 : !gregtech.engine.stack.StackCompat.sameItem(present,pending)) continue;
                 int space=Math.min(inventory.getSlotLimit(i),pending.getMaxStackSize())-present.getCount();
                 int take=Math.min(Math.max(0,space),pending.getCount());
-                if(take==0) continue;
+                if (take==0) continue;
                 var combined=present.isEmpty()?pending.copyWithCount(take):present.copyWithCount(present.getCount()+take);
                 inventory.setStackInSlot(i,combined); pending.shrink(take);
             }
         }
-        for(var pending:fluids) for(int pass=0;pass<2 && !pending.isEmpty();pass++) for(var tank:tanks) {
-            if(pending.isEmpty()) break;
-            if(tank.isEmpty() ? pass==0 : !gregtech.engine.stack.StackCompat.sameFluid(tank.getFluidInTank(0),pending)) continue;
+        for (var pending:fluids) for (int pass=0;pass<2 && !pending.isEmpty();pass++) for (var tank:tanks) {
+            if (pending.isEmpty()) break;
+            if (tank.isEmpty() ? pass==0 : !gregtech.engine.stack.StackCompat.sameFluid(tank.getFluidInTank(0),pending)) continue;
             int moved=tank.fill(pending,IFluidHandler.FluidAction.EXECUTE); pending.shrink(moved);
         }
         return items.stream().allMatch(ItemStack::isEmpty) && fluids.stream().allMatch(FluidStack::isEmpty);
@@ -88,14 +88,14 @@ public final class MachineWorkOutputs {
     }
     public CompoundTag save(net.minecraft.core.HolderLookup.Provider lookup) {
         var tag=new CompoundTag(); var itemList=new ListTag(); var fluidList=new ListTag();
-        for(var stack:items) if(!stack.isEmpty()) itemList.add(gregtech.engine.stack.NbtCompat.saveItem(stack,lookup));
-        for(var stack:fluids) if(!stack.isEmpty()) fluidList.add(gregtech.engine.stack.NbtCompat.saveFluid(stack,lookup));
+        for (var stack:items) if (!stack.isEmpty()) itemList.add(gregtech.engine.stack.NbtCompat.saveItem(stack,lookup));
+        for (var stack:fluids) if (!stack.isEmpty()) fluidList.add(gregtech.engine.stack.NbtCompat.saveFluid(stack,lookup));
         tag.put("items",itemList); tag.put("fluids",fluidList); return tag;
     }
     public static MachineWorkOutputs load(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
         var result=new MachineWorkOutputs();
-        for(var data:tag.getList("items",10)) result.items.add(gregtech.engine.stack.NbtCompat.readItem((CompoundTag)data,lookup));
-        for(var data:tag.getList("fluids",10)) result.fluids.add(gregtech.engine.stack.NbtCompat.readFluid((CompoundTag)data,lookup));
+        for (var data:tag.getList("items",10)) result.items.add(gregtech.engine.stack.NbtCompat.readItem((CompoundTag)data,lookup));
+        for (var data:tag.getList("fluids",10)) result.fluids.add(gregtech.engine.stack.NbtCompat.readFluid((CompoundTag)data,lookup));
         return result;
     }
 }

@@ -55,7 +55,7 @@ public class ReactorCore2x2Block extends HorizontalDirectionalBlock implements E
             @NotNull BlockState state, @NotNull Level level,
             @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand,
             @NotNull BlockHitResult hit) {
-        if(level.getBlockEntity(pos) instanceof ReactorCore2x2BlockEntity core) return gregtech.content.nuclear.ReactorInteraction.use(core,player,hand,hit);
+        if (level.getBlockEntity(pos) instanceof ReactorCore2x2BlockEntity core) return gregtech.content.nuclear.ReactorInteraction.use(core,player,hand,hit);
         return InteractionResult.PASS;
     }
 

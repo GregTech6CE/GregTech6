@@ -30,7 +30,7 @@ public final class ExclusiveOutputMaps {
         try {
             ExclusiveOutputRules.requirePair(declared, nonEmptyItems(outputs));
         } catch (IllegalArgumentException failure) {
-            throw new IllegalStateException("Recipe map '" + map.mNameInternal + "' " + failure.getMessage(), failure);
+            throw new IllegalStateException("Recipe map '" + map.internalName + "' " + failure.getMessage(), failure);
         }
     }
 
@@ -39,12 +39,12 @@ public final class ExclusiveOutputMaps {
         for (BasicMachineSpec spec : AddonMachineRuntime.specs()) {
             if (!spec.exclusiveOutputs() || spec.recipeMap() == null) continue;
             RecipeMap map = spec.recipeMap();
-            for (Recipe recipe : map.mRecipeList) {
-                int declared = recipe.mOutputs == null ? 0 : recipe.mOutputs.length;
-                int present = nonEmptyItems(recipe.mOutputs);
+            for (Recipe recipe : map.recipeRows) {
+                int declared = recipe.itemOutputs == null ? 0 : recipe.itemOutputs.length;
+                int present = nonEmptyItems(recipe.itemOutputs);
                 if (ExclusiveOutputRules.isPair(declared, present)) continue;
                 throw new IllegalStateException("Addon '" + spec.namespace() + "' machine '" + spec.id()
-                        + "' on map '" + map.mNameInternal
+                        + "' on map '" + map.internalName
                         + "' exclusive outputs need exactly 2 item outputs: " + present);
             }
         }

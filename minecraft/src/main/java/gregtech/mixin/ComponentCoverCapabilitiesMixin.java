@@ -98,17 +98,17 @@ public abstract class ComponentCoverCapabilitiesMixin {
 //? if >=1.21.1 {
     /*@Inject(method="getCapability",at=@At("RETURN"),cancellable=true,remap=false,require=1)
     private void gregtech$gate(Level level,BlockPos pos,BlockState state,BlockEntity entity,Object context,CallbackInfoReturnable<Object> cir){
-        if(!(context instanceof Direction side)||cir.getReturnValue()==null)return;
+        if (!(context instanceof Direction side)||cir.getReturnValue()==null)return;
         var owner=entity==null?level.getBlockEntity(pos):entity;
-        if(!ComponentCoverFallback.uses(owner))return;
+        if (!ComponentCoverFallback.uses(owner))return;
         var host=(PanelCoverHost)owner;var result=cir.getReturnValue();
-        if((Object)this==Capabilities.ItemHandler.BLOCK)cir.setReturnValue(ComponentCoverAccess.items(host,side,(net.neoforged.neoforge.items.IItemHandler)result));
-        else if((Object)this==Capabilities.FluidHandler.BLOCK)cir.setReturnValue(ComponentCoverAccess.fluids(host,side,(net.neoforged.neoforge.fluids.capability.IFluidHandler)result));
+        if ((Object)this==Capabilities.ItemHandler.BLOCK)cir.setReturnValue(ComponentCoverAccess.items(host,side,(net.neoforged.neoforge.items.IItemHandler)result));
+        else if ((Object)this==Capabilities.FluidHandler.BLOCK)cir.setReturnValue(ComponentCoverAccess.fluids(host,side,(net.neoforged.neoforge.fluids.capability.IFluidHandler)result));
 *///?} else {
     @Inject(method="getCapability",at=@At("RETURN"),cancellable=true,remap=false,require=0)
     private void gregtech$gate(Capability<?> capability,Direction side,CallbackInfoReturnable<LazyOptional<?>> cir){
         var owner=(BlockEntity)(Object)this;var result=cir.getReturnValue();
-        if(side==null||result==null||!ComponentCoverFallback.uses(owner))return;
+        if (side==null||result==null||!ComponentCoverFallback.uses(owner))return;
         var host=(PanelCoverHost)owner;
         if (capability != ForgeCapabilities.ITEM_HANDLER && capability != ForgeCapabilities.FLUID_HANDLER) return;
         if (gregtech$coverCapabilityCache == null) gregtech$coverCapabilityCache = new ForgeCoverCapabilityCache();

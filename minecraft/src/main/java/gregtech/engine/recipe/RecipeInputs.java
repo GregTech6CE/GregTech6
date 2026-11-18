@@ -53,8 +53,8 @@ public final class RecipeInputs {
             Arrays.fill(retainedFluids, 0);
             if (recipe.hasTaggedInputs()) return tagged(recipe, parallel);
             // Presence requirements do not consume; they are answered against the original tanks.
-            for (int input = 0; input < recipe.mFluidInputs.length; input++) {
-                var required = recipe.mFluidInputs[input];
+            for (int input = 0; input < recipe.fluidInputs.length; input++) {
+                var required = recipe.fluidInputs[input];
                 if (required == null || !recipe.isPresenceFluidInput(input)) continue;
                 if (required.isEmpty()) return false;
                 boolean present = false;
@@ -63,8 +63,8 @@ public final class RecipeInputs {
                 if (!present) return false;
             }
             // Reserve catalysts alongside consumables; restore them only in the final consumption plan.
-            for (int input = 0; input < recipe.mInputs.length; input++) {
-                var required = recipe.mInputs[input];
+            for (int input = 0; input < recipe.itemInputs.length; input++) {
+                var required = recipe.itemInputs[input];
                 if (required == null || required.isEmpty()) continue;
                 boolean catalyst = recipe.isCatalystInput(input);
                 long needed = (long) required.getCount() * (catalyst ? 1 : parallel);
@@ -88,8 +88,8 @@ public final class RecipeInputs {
                     break;
                 }
             }
-            for (int input = 0; input < recipe.mFluidInputs.length; input++) {
-                var required = recipe.mFluidInputs[input];
+            for (int input = 0; input < recipe.fluidInputs.length; input++) {
+                var required = recipe.fluidInputs[input];
                 if (required == null || required.isEmpty() || recipe.isPresenceFluidInput(input)) continue;
                 boolean catalyst = recipe.isCatalystFluidInput(input);
                 long needed = RecipeKeptInputs.fluidDemand(catalyst, required.getAmount(), parallel);
@@ -114,10 +114,10 @@ public final class RecipeInputs {
         /** Flow re-assignment for a partially accepted requirement; the common path never reaches it. */
         private boolean allocateItems(Recipe recipe, int parallel) {
             resetItems();
-            var demand = new long[recipe.mInputs.length];
-            var accepts = new boolean[recipe.mInputs.length][items.size()];
-            for (int input = 0; input < recipe.mInputs.length; input++) {
-                var required = recipe.mInputs[input];
+            var demand = new long[recipe.itemInputs.length];
+            var accepts = new boolean[recipe.itemInputs.length][items.size()];
+            for (int input = 0; input < recipe.itemInputs.length; input++) {
+                var required = recipe.itemInputs[input];
                 if (required == null || required.isEmpty()) continue;
                 demand[input] = (long) required.getCount() * (recipe.isCatalystInput(input) ? 1 : parallel);
                 for (int slot = 0; slot < items.size(); slot++)
@@ -150,10 +150,10 @@ public final class RecipeInputs {
 
         private boolean allocateFluids(Recipe recipe, int parallel) {
             resetFluids();
-            var demand = new long[recipe.mFluidInputs.length];
-            var accepts = new boolean[recipe.mFluidInputs.length][fluids.size()];
-            for (int input = 0; input < recipe.mFluidInputs.length; input++) {
-                var required = recipe.mFluidInputs[input];
+            var demand = new long[recipe.fluidInputs.length];
+            var accepts = new boolean[recipe.fluidInputs.length][fluids.size()];
+            for (int input = 0; input < recipe.fluidInputs.length; input++) {
+                var required = recipe.fluidInputs[input];
                 if (required == null || required.isEmpty() || recipe.isPresenceFluidInput(input)) continue;
                 demand[input] = RecipeKeptInputs.fluidDemand(
                         recipe.isCatalystFluidInput(input), required.getAmount(), parallel);
@@ -172,10 +172,10 @@ public final class RecipeInputs {
 
         private boolean acceptsItem(Recipe recipe, int input, ItemStack required, ItemStack available) {
             if (!recipe.matchesItemInput(input, available)) return false;
-            if (recipe.mExactItemInputs && !sameItem(required, available)) return false;
-            if (recipe.mRequiresEmptyContainerInputs
+            if (recipe.exactItemInputs && !sameItem(required, available)) return false;
+            if (recipe.requiresEmptyContainerInputs
                     && gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(available)) return false;
-            return !recipe.mMaterialRecovery || gregtech.engine.material.ItemMaterialRegistry.canRecover(available);
+            return !recipe.materialRecovery || gregtech.engine.material.ItemMaterialRegistry.canRecover(available);
         }
 
         private void resetItems() {
@@ -189,20 +189,20 @@ public final class RecipeInputs {
         }
 
         private boolean tagged(Recipe recipe, int parallel) {
-            long[] itemDemand = new long[recipe.mInputs.length];
+            long[] itemDemand = new long[recipe.itemInputs.length];
             boolean[][] itemAccepts = new boolean[itemDemand.length][items.size()];
             boolean[] homogeneousItems = new boolean[itemDemand.length];
             Arrays.fill(homogeneousItems, true);
             for (int input = 0; input < itemDemand.length; input++) {
-                ItemStack required = recipe.mInputs[input];
+                ItemStack required = recipe.itemInputs[input];
                 if (required == null || required.isEmpty()) continue;
                 itemDemand[input] = (long) required.getCount() * (recipe.isCatalystInput(input) ? 1 : parallel);
                 for (int slot = 0; slot < items.size(); slot++) {
                     var available = items.get(slot);
                     itemAccepts[input][slot] = recipe.matchesItemInput(input, available)
-                            && (recipe.itemTag(input) != null || !recipe.mExactItemInputs || sameItem(required, available))
-                            && (!recipe.mRequiresEmptyContainerInputs || !gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(available))
-                            && (!recipe.mMaterialRecovery || gregtech.engine.material.ItemMaterialRegistry.canRecover(available));
+                            && (recipe.itemTag(input) != null || !recipe.exactItemInputs || sameItem(required, available))
+                            && (!recipe.requiresEmptyContainerInputs || !gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(available))
+                            && (!recipe.materialRecovery || gregtech.engine.material.ItemMaterialRegistry.canRecover(available));
                 }
             }
             int[] itemIdentities = new int[items.size()];
@@ -214,12 +214,12 @@ public final class RecipeInputs {
             }
             int[][] itemPlan = IngredientAllocation.plan(itemCounts, itemDemand, itemAccepts, itemIdentities, homogeneousItems);
             if (itemPlan == null) return false;
-            long[] fluidDemand = new long[recipe.mFluidInputs.length];
+            long[] fluidDemand = new long[recipe.fluidInputs.length];
             boolean[][] fluidAccepts = new boolean[fluidDemand.length][fluids.size()];
             boolean[] homogeneousFluids = new boolean[fluidDemand.length];
             Arrays.fill(homogeneousFluids, true);
             for (int input = 0; input < fluidDemand.length; input++) {
-                var required = recipe.mFluidInputs[input];
+                var required = recipe.fluidInputs[input];
                 if (required == null || required.isEmpty()) continue;
                 boolean present = false;
                 for (int tank = 0; tank < fluids.size(); tank++) {
@@ -290,14 +290,14 @@ public final class RecipeInputs {
     }
 
     public static boolean matches(ItemStack required, ItemStack available) {
-        if(available.isEmpty())return false;
+        if (available.isEmpty())return false;
         // Legacy palette items and their fixed-color replacements denote the same input.
         // Normalize the offered identity too; expanding only the requirement rejects its bare alias.
         var canonical = gregtech.content.block.misc.LegacyConstructionBlockItem.canonical(available);
         if (canonical != available) return matches(required, canonical);
         var colors = gregtech.content.block.misc.LegacyConstructionBlockItem.matchingAlternatives(required);
         if (!colors.isEmpty()) return colors.stream().anyMatch(color -> matches(color, available));
-        if(!required.is(available.getItem())) return gregtech.engine.material.MaterialEquivalence.matches(required,available);
+        if (!required.is(available.getItem())) return gregtech.engine.material.MaterialEquivalence.matches(required,available);
         if (!emptyContainerMatches(required, available)) return false;
 //? if >=1.21.1 {
         /*return required.getComponentsPatch().isEmpty() || ItemStack.isSameItemSameComponents(required, available);

@@ -39,7 +39,7 @@ public final class MachineTooltips {
         // Recipes
         var recipeMap = spec.recipeMap();
         Component recipeName = recipeMap != null
-                ? Component.translatableWithFallback(recipeMap.mNameInternal, recipeMap.mNameLocal)
+                ? Component.translatableWithFallback(recipeMap.internalName, recipeMap.displayName)
                 : Component.literal(spec.machineName());
         tooltip.add(Component.translatable("gt.lang.recipes")
                 .append(": ")

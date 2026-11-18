@@ -90,7 +90,7 @@ public final class AutoclaveRecipes {
         if (template == null) return;
         // The row consumes {@code inCount} items of the form; the rule keeps that total in
         // material units while admitting every equivalent item of the same form.
-        int count = template.mInputs[0].getCount();
+        int count = template.itemInputs[0].getCount();
         long required = row.input().getMaterialWeight() * count;
         var rule = new gregtech.engine.recipe.MaterialUnitRecipe(
                 template,

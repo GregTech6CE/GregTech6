@@ -53,30 +53,30 @@ public final class SharedOreWashingRows {
  }
  public static List<Deferred> deferred(){return List.copyOf(DEFERRED);}
  public static void initialize(){
-  if(initialized)throw new IllegalStateException("Washing initialized twice");
+  if (initialized)throw new IllegalStateException("Washing initialized twice");
   initialized=true;Set<GTMaterial> seen=Collections.newSetFromMap(new IdentityHashMap<>());
   var list=new ArrayList<GTMaterial>();
-  for(var m:GTMaterialRegistry.allMaterials())if(seen.add(m.resolve()))list.add(m.resolve());
+  for (var m:GTMaterialRegistry.allMaterials())if (seen.add(m.resolve()))list.add(m.resolve());
   materials=List.copyOf(list);rebuild();
  }
  private static void clearOwned(){OWNED.forEach((map,rows)->rows.forEach(map::unlink));OWNED.clear();}
  /** Keep the initialization snapshot for another server in this JVM, but no stale row diagnostics. */
  public static void clear(){clearOwned();DEFERRED.clear();}
  public static void rebuild(){
-  if(!initialized)return;
+  if (!initialized)return;
   var snapshot=new Snapshot();
   List<Definition> definitions=definitions(materials,snapshot);
   clearOwned();DEFERRED.clear();DEFERRED.addAll(snapshot.deferred);
   try{
-   for(var definition:definitions){
+   for (var definition:definitions){
     Recipe row=definition.admit();
-    if(row!=null)OWNED.computeIfAbsent(definition.map(),k->Collections.newSetFromMap(new IdentityHashMap<>())).add(row);
+    if (row!=null)OWNED.computeIfAbsent(definition.map(),k->Collections.newSetFromMap(new IdentityHashMap<>())).add(row);
    }
-  }catch(RuntimeException|Error failure){clear();throw failure;}
+  }catch (RuntimeException|Error failure){clear();throw failure;}
  }
  static List<Definition> definitions(Collection<GTMaterial> selected,Snapshot snapshot){
   var out=new ArrayList<Definition>();
-   for(var material:selected){
+   for (var material:selected){
     GTMaterial m=material.resolve();
     ores(m,snapshot,out);
    }
@@ -86,15 +86,15 @@ public final class SharedOreWashingRows {
                    FluidStack[] fluidInputs,FluidStack[] fluidOutputs,long duration,long power){
   Recipe admit(){
    // RecipeMap discards EMPTY fluids. Reject required unresolved bindings before it can create a free row.
-   for(var fluid:fluidInputs)if(fluid==null||fluid.isEmpty())return null;
-   for(var fluid:fluidOutputs)if(fluid==null||fluid.isEmpty())return null;
-   if(optimize&&map==MachineRecipeMaps.Bath&&hasOverlap(inputs,outputs)){
+   for (var fluid:fluidInputs)if (fluid==null||fluid.isEmpty())return null;
+   for (var fluid:fluidOutputs)if (fluid==null||fluid.isEmpty())return null;
+   if (optimize&&map==MachineRecipeMaps.Bath&&hasOverlap(inputs,outputs)){
     // Original GT6 retained the identity of an input cancelled to zero. Adapt just the exact
     // two-input reagent/main-output cancellation; never bypass the native optimizer globally.
-    if(inputs.length!=2||outputs.length==0||inputs[1].getCount()!=1
+    if (inputs.length!=2||outputs.length==0||inputs[1].getCount()!=1
         ||!ItemStack.matches(inputs[1],outputs[0]))return null;
-    for(int i=0;i<inputs.length;i++)for(int j=0;j<outputs.length;j++)
-     if(sameItem(inputs[i],outputs[j])&&(i!=1||j!=0))return null;
+    for (int i=0;i<inputs.length;i++)for (int j=0;j<outputs.length;j++)
+     if (sameItem(inputs[i],outputs[j])&&(i!=1||j!=0))return null;
     var normalized=RecipeBuilder.of(power, duration)
             .optimize(true)
             .itemInputs(inputs)
@@ -103,15 +103,15 @@ public final class SharedOreWashingRows {
             .fluidOutputs(fluidOutputs)
             .chances(chances)
             .build();
-    if(normalized==null||normalized.mInputs.length!=1||!ItemStack.matches(normalized.mInputs[0],inputs[0])
-        ||normalized.mOutputs.length!=outputs.length||!normalized.mOutputs[0].isEmpty())return null;
-    for(int j=1;j<outputs.length;j++)if(!ItemStack.matches(normalized.mOutputs[j],outputs[j]))return null;
-    if(normalized.mDuration!=duration||normalized.mEUt!=power||!sameFluids(normalized.mFluidInputs,fluidInputs)
-        ||!sameFluids(normalized.mFluidOutputs,fluidOutputs))return null;
+    if (normalized==null||normalized.itemInputs.length!=1||!ItemStack.matches(normalized.itemInputs[0],inputs[0])
+        ||normalized.itemOutputs.length!=outputs.length||!normalized.itemOutputs[0].isEmpty())return null;
+    for (int j=1;j<outputs.length;j++)if (!ItemStack.matches(normalized.itemOutputs[j],outputs[j]))return null;
+    if (normalized.durationTicks!=duration||normalized.energyPerTick!=power||!sameFluids(normalized.fluidInputs,fluidInputs)
+        ||!sameFluids(normalized.fluidOutputs,fluidOutputs))return null;
     ItemStack reagent=inputs[1].copy();reagent.setCount(1);
-    var retained=new Recipe(new ItemStack[]{normalized.mInputs[0].copy(),reagent},normalized.mOutputs,
-        normalized.mChances,normalized.mFluidInputs,normalized.mFluidOutputs,
-        normalized.mDuration,normalized.mEUt,normalized.mSpecialValue).withCatalystInputs(1);
+    var retained=new Recipe(new ItemStack[]{normalized.itemInputs[0].copy(),reagent},normalized.itemOutputs,
+        normalized.outputChances,normalized.fluidInputs,normalized.fluidOutputs,
+        normalized.durationTicks,normalized.energyPerTick,normalized.specialValue).withCatalystInputs(1);
     return map.addRecipe(retained);
    }
    var row=RecipeBuilder.of(power, duration)
@@ -126,15 +126,15 @@ public final class SharedOreWashingRows {
   }
  }
  private static boolean hasOverlap(ItemStack[] inputs,ItemStack[] outputs){
-  for(var input:inputs)for(var output:outputs)if(sameItem(input,output))return true;return false;
+  for (var input:inputs)for (var output:outputs)if (sameItem(input,output))return true;return false;
  }
  private static boolean sameItem(ItemStack a,ItemStack b){
-  if(a==null||b==null||a.isEmpty()||b.isEmpty())return false;
+  if (a==null||b==null||a.isEmpty()||b.isEmpty())return false;
   return StackCompat.sameItem(a,b);
  }
  private static boolean sameFluids(FluidStack[] a,FluidStack[] b){
-  if(a.length!=b.length)return false;
-  for(int i=0;i<a.length;i++)if(a[i].getFluid()!=b[i].getFluid()||a[i].getAmount()!=b[i].getAmount())return false;
+  if (a.length!=b.length)return false;
+  for (int i=0;i<a.length;i++)if (a[i].getFluid()!=b[i].getFluid()||a[i].getAmount()!=b[i].getAmount())return false;
   return true;
  }
  private static final String[] WATERS={"Water","MnWtr","DistW"};
@@ -143,30 +143,30 @@ public final class SharedOreWashingRows {
   NativeForm dust=s.direct(MaterialPrefix.dust,m,1),whole=s.input(MaterialPrefix.crushed,m,1),tiny=s.input(MaterialPrefix.crushedTiny,m,1);
   Availability gate=oresEligibility(m.isValid(),m.has(MaterialProperty.ANTIMATTER),m==GTMaterialRegistry.get("Bedrock"),
       dust.availability(),whole.availability(),tiny.availability());
-  if(!s.ready(m,"ores",gate))return;
+  if (!s.ready(m,"ores",gate))return;
   List<GTMaterial> by=m.getByProducts().stream().map(GTMaterial::resolve).toList();
-  for(Size size:Size.values()){
+  for (Size size:Size.values()){
    String route="water/"+size;
    NativeForm main=s.purified(size,m,1);var products=waterByproducts(m,by);
    var outputs=new ItemStack[9];outputs[0]=main.stack();boolean known=main.availability()!=Availability.UNKNOWN;
-   for(int i=0;i<8;i++){var fine=s.purified(Size.TINY,products.get(i),size.byproductCount());outputs[i+1]=fine.stack();known&=fine.availability()!=Availability.UNKNOWN;}
-   if(!known){s.defer(m,route,"unknown-output-form");continue;}
-   FluidStack sluice=s.fluid("Sluice",size.waterMb());if(!s.fluidReady(m,route,sluice))continue;
+   for (int i=0;i<8;i++){var fine=s.purified(Size.TINY,products.get(i),size.byproductCount());outputs[i+1]=fine.stack();known&=fine.availability()!=Availability.UNKNOWN;}
+   if (!known){s.defer(m,route,"unknown-output-form");continue;}
+   FluidStack sluice=s.fluid("Sluice",size.waterMb());if (!s.fluidReady(m,route,sluice))continue;
    var waters=waters(m,s,route,size.waterMb());
-   for(FluidStack fluid:waters){
+   for (FluidStack fluid:waters){
     out.add(new Definition(MachineRecipeMaps.Sluice,WATER_OPTIMIZE,new ItemStack[]{size==Size.WHOLE?whole.stack():tiny.stack()},
         copies(outputs),SLUICE_CHANCES.stream().mapToLong(Long::longValue).toArray(),new FluidStack[]{fluid},
         new FluidStack[]{sluice.copy()},size.ticks(),SLUICE_POWER));
    }
   }
-  for(var tag:SourceWashingMaterialFacts.Tag.values()){
+  for (var tag:SourceWashingMaterialFacts.Tag.values()){
    var selection=selectByproduct(m,by,candidate->s.tag(candidate,tag),candidate->s.purified(Size.TINY,candidate,1).availability());
-   if(!s.ready(m,"bath/"+tag,selection.availability()))continue;
+   if (!s.ready(m,"bath/"+tag,selection.availability()))continue;
    GTMaterial product=selection.material();
-   if(tag==SourceWashingMaterialFacts.Tag.MERCURY){
-    for(Size size:Size.values()){
-     var outputs=bathOutputs(m,product,size,s);if(outputs==null)continue;
-     var mercury=s.fluid("GenLiquid_Mercury",size.mercuryMb());if(!s.fluidReady(m,"mercury/"+size,mercury))continue;
+   if (tag==SourceWashingMaterialFacts.Tag.MERCURY){
+    for (Size size:Size.values()){
+     var outputs=bathOutputs(m,product,size,s);if (outputs==null)continue;
+     var mercury=s.fluid("GenLiquid_Mercury",size.mercuryMb());if (!s.fluidReady(m,"mercury/"+size,mercury))continue;
      out.add(new Definition(MachineRecipeMaps.Bath,BATH_OPTIMIZE,new ItemStack[]{size==Size.WHOLE?whole.stack():tiny.stack()},outputs,
          new long[0],new FluidStack[]{mercury},new FluidStack[0],size.ticks(),BATH_POWER));
     }
@@ -174,18 +174,18 @@ public final class SharedOreWashingRows {
     // Loader_Recipes_Ores names Firestone first; a retired reagent material is skipped, not fatal.
     String[] reagents=tag==SourceWashingMaterialFacts.Tag.PERSULFATE?new String[]{"SodiumPersulfate","PotassiumPersulfate"}
         :new String[]{"Firestone","Pyrotheum","Octine"};
-    for(String reagentName:reagents)for(BathShape shape:bathShapes()){
+    for (String reagentName:reagents)for (BathShape shape:bathShapes()){
      String route="bath/"+tag+"/"+reagentName+"/"+shape;
      NativeForm reagent=s.direct(shape.reagent(),GTMaterialRegistry.get(reagentName),shape.reagentCount());
-     if(!s.ready(m,route,reagent.availability()))continue;
-     var outputs=bathOutputs(m,product,shape.outputSize(),s);if(outputs==null)continue;
+     if (!s.ready(m,route,reagent.availability()))continue;
+     var outputs=bathOutputs(m,product,shape.outputSize(),s);if (outputs==null)continue;
      FluidStack[] steam=new FluidStack[0];
-     if(tag==SourceWashingMaterialFacts.Tag.FIRESTONE){
-      var fluid=s.fluid("Steam",shape.outputSize().steamMb());if(!s.fluidReady(m,route,fluid))continue;steam=new FluidStack[]{fluid};
+     if (tag==SourceWashingMaterialFacts.Tag.FIRESTONE){
+      var fluid=s.fluid("Steam",shape.outputSize().steamMb());if (!s.fluidReady(m,route,fluid))continue;steam=new FluidStack[]{fluid};
      }
-     var input=s.input(shape.input(),m,shape.inputCount());if(!s.ready(m,route,input.availability()))continue;
+     var input=s.input(shape.input(),m,shape.inputCount());if (!s.ready(m,route,input.availability()))continue;
      var waters=waters(m,s,route,shape.outputSize().waterMb());
-     for(FluidStack fluid:waters){
+     for (FluidStack fluid:waters){
       out.add(new Definition(MachineRecipeMaps.Bath,REAGENT_BATH_OPTIMIZE,new ItemStack[]{input.stack(),reagent.stack()},copies(outputs),new long[0],
           new FluidStack[]{fluid},copies(steam),shape.outputSize().ticks(),BATH_POWER));
      }
@@ -195,19 +195,19 @@ public final class SharedOreWashingRows {
  }
  private static List<FluidStack> waters(GTMaterial material,Snapshot snapshot,String route,int amount){
   var result=new ArrayList<FluidStack>();
-  for(String water:WATERS){
+  for (String water:WATERS){
    var fluid=snapshot.fluid(water,amount);
-   if(snapshot.fluidReady(material,route+"/"+water,fluid))result.add(fluid);
+   if (snapshot.fluidReady(material,route+"/"+water,fluid))result.add(fluid);
   }
   return result;
  }
  private static ItemStack[] bathOutputs(GTMaterial m,GTMaterial product,Size size,Snapshot s){
   var counts=size==Size.WHOLE?WHOLE_BATH_BYPRODUCT_COUNTS:TINY_BATH_BYPRODUCT_COUNTS;
   var outputs=new ItemStack[counts.size()+1];var main=s.purified(size,m,1);outputs[0]=main.stack();
-  if(main.availability()==Availability.UNKNOWN){s.defer(m,"bath/"+size,"unknown-primary-form");return null;}
-  for(int i=0;i<counts.size();i++){
+  if (main.availability()==Availability.UNKNOWN){s.defer(m,"bath/"+size,"unknown-primary-form");return null;}
+  for (int i=0;i<counts.size();i++){
    var fine=s.purified(Size.TINY,product,counts.get(i));outputs[i+1]=fine.stack();
-   if(fine.availability()==Availability.UNKNOWN){s.defer(m,"bath/"+size,"unknown-byproduct-form");return null;}
+   if (fine.availability()==Availability.UNKNOWN){s.defer(m,"bath/"+size,"unknown-byproduct-form");return null;}
   }
   return outputs;
  }
@@ -229,51 +229,51 @@ public final class SharedOreWashingRows {
   Snapshot(Map<String,FluidCatalog.FluidEntry> definitions,BiFunction<String,Integer,FluidStack> fluidLookup){
    this.definitions=Map.copyOf(definitions);this.fluidLookup=fluidLookup;
    continuation=NonOreContinuationEvidence.snapshot(materials);
-   for(var item:ItemMaterialRegistry.entries().keySet()){
+   for (var item:ItemMaterialRegistry.entries().keySet()){
     var stack=new ItemStack(item);var form=MaterialEquivalence.form(stack);
-    if(form!=null)explicit.computeIfAbsent(form.material().resolve(),k->new IdentityHashMap<>())
+    if (form!=null)explicit.computeIfAbsent(form.material().resolve(),k->new IdentityHashMap<>())
         .computeIfAbsent(form.prefix(),k->new ArrayList<>()).add(stack);
    }
   }
   void defer(GTMaterial m,String route,String reason){deferred.add(new Deferred(m.getName(),route,reason));}
   boolean ready(GTMaterial m,String route,Availability value){
-   if(value==Availability.UNKNOWN)defer(m,route,"unknown-binding-or-evidence");return value==Availability.PRESENT;
+   if (value==Availability.UNKNOWN)defer(m,route,"unknown-binding-or-evidence");return value==Availability.PRESENT;
   }
   boolean fluidReady(GTMaterial m,String route,FluidStack fluid){
-   if(fluid.isEmpty()){defer(m,route,"required-fluid-unavailable");return false;}return true;
+   if (fluid.isEmpty()){defer(m,route,"required-fluid-unavailable");return false;}return true;
   }
   NativeForm direct(MaterialPrefix prefix,GTMaterial m,int count){
-   if(m==null||!m.isValid()||count<1)return NativeForm.absent();m=m.resolve();
+   if (m==null||!m.isValid()||count<1)return NativeForm.absent();m=m.resolve();
    ItemStack selected=GTItems.getStack(prefix,m,count);
-   if(selected.isEmpty()){
+   if (selected.isEmpty()){
     var candidates=explicit.getOrDefault(m,Map.of()).getOrDefault(prefix,List.of());
-    if(candidates.size()>1)return NativeForm.unknown();
-    if(candidates.size()==1){selected=candidates.get(0).copy();selected.setCount(count);}
+    if (candidates.size()>1)return NativeForm.unknown();
+    if (candidates.size()==1){selected=candidates.get(0).copy();selected.setCount(count);}
    }
-   if(selected.isEmpty())return NativeForm.absent();
+   if (selected.isEmpty())return NativeForm.absent();
    var form=MaterialEquivalence.form(selected);
-   if(form==null||form.prefix()!=prefix||form.material().resolve()!=m||selected.getCount()!=count)
+   if (form==null||form.prefix()!=prefix||form.material().resolve()!=m||selected.getCount()!=count)
     return NativeForm.unknown();
    var metadata=ItemMaterialRegistry.base(selected.getItem()).orElse(null);
-   if(metadata!=null&&(metadata.prefix()!=prefix||metadata.components().size()!=1
+   if (metadata!=null&&(metadata.prefix()!=prefix||metadata.components().size()!=1
        ||metadata.material().resolve()!=m||metadata.amount()!=prefix.getMaterialWeight()))return NativeForm.unknown();
    return NativeForm.present(selected);
   }
   NativeForm input(MaterialPrefix prefix,GTMaterial m,int count){
    NativeForm direct=direct(prefix,m,count);
-   if(direct.availability()!=Availability.PRESENT)return direct;
-   if(NonOreMacerationRows.reviewed(m)&&!continuation.active(m)
+   if (direct.availability()!=Availability.PRESENT)return direct;
+   if (NonOreMacerationRows.reviewed(m)&&!continuation.active(m)
        &&!SourceOreInputForms.allowGeneratedInput(m,prefix,direct.stack(),SourceOreInputForms.Evidence.NO))return NativeForm.absent();
    return direct;
   }
   NativeForm output(MaterialPrefix prefix,GTMaterial m,int count){
    NativeForm direct=direct(prefix,m,count);
-   if(direct.availability()==Availability.UNKNOWN)return direct;
+   if (direct.availability()==Availability.UNKNOWN)return direct;
    ItemStack canonical=GTItems.getStack(prefix,m,count);
    ItemStack reviewed=SourceOreOutputRows.resolvingOutputs(()->SourceOreInputForms.reviewedOreOutput(prefix,m,count));
-   if(SourceCrushedFormAdapter.excludedBuiltin(m,prefix,canonical)){
+   if (SourceCrushedFormAdapter.excludedBuiltin(m,prefix,canonical)){
     // That helper returns the canonical legacy stack only for ambiguous/unsupported aliases.
-    if(!canonical.isEmpty()&&ItemStack.matches(canonical,reviewed))return NativeForm.unknown();
+    if (!canonical.isEmpty()&&ItemStack.matches(canonical,reviewed))return NativeForm.unknown();
     return reviewed.isEmpty()?NativeForm.absent():NativeForm.present(reviewed);
    }
    return reviewed.isEmpty()?(canonical.isEmpty()?direct:NativeForm.absent()):NativeForm.present(reviewed);
@@ -284,25 +284,25 @@ public final class SharedOreWashingRows {
        :selection.availability()==Availability.UNKNOWN?NativeForm.unknown():NativeForm.absent();
   }
   NativeForm sand(Size size,GTMaterial m){
-   for(var candidate:sandForms(size)){
+   for (var candidate:sandForms(size)){
     NativeForm form=direct(candidate.prefix(),m,candidate.count());
-    if(form.availability()!=Availability.ABSENT)return form;
+    if (form.availability()!=Availability.ABSENT)return form;
    }
    return NativeForm.absent();
   }
   NativeForm blockDust(GTMaterial m,int count){
    var stack=GTBlocks.getStack(BlockMaterialPrefix.blockDust,m);
-   if(stack.isEmpty())return NativeForm.absent();
-   if(!(stack.getItem() instanceof BlockItem item)||!(item.getBlock() instanceof MaterialBlockLike form)
+   if (stack.isEmpty())return NativeForm.absent();
+   if (!(stack.getItem() instanceof BlockItem item)||!(item.getBlock() instanceof MaterialBlockLike form)
        ||form.prefix()!=BlockMaterialPrefix.blockDust||form.prefix().getMaterialWeight()!=9*U
        ||form.material().resolve()!=m.resolve())return NativeForm.unknown();
    stack.setCount(count);return NativeForm.present(stack);
   }
   Decision tag(GTMaterial m,SourceWashingMaterialFacts.Tag tag){
-   if(m==null||!m.isValid()||!GTMaterialRegistry.isCoreMaterial(m.resolve())||AddonMaterials.owns(m.resolve()))
+   if (m==null||!m.isValid()||!GTMaterialRegistry.isCoreMaterial(m.resolve())||AddonMaterials.owns(m.resolve()))
     return Decision.UNKNOWN;
    var rule=MaterialFactKeys.value(m,MaterialFactKeys.SOURCE_WASHING).orElse(null);
-   if(rule==null)return Decision.UNKNOWN;
+   if (rule==null)return Decision.UNKNOWN;
    return rule.tags().contains(tag)?Decision.YES:Decision.NO;
   }
   FluidStack fluid(String field,int amount){return checkedFluid(field,amount,definitions,fluidLookup);}
@@ -310,30 +310,30 @@ public final class SharedOreWashingRows {
  static FluidStack checkedFluid(String field,int amount){return checkedFluid(field,amount,FluidCatalog.all(),GTFluids::stack);}
  static FluidStack checkedFluid(String field,int amount,Map<String,FluidCatalog.FluidEntry> definitions,
                                 BiFunction<String,Integer,FluidStack> lookup){
-  if(amount<=0||!FluidCatalog.canonicalField(field).equals(field))return FluidStack.EMPTY;
-  if(field.equals("Water")){
+  if (amount<=0||!FluidCatalog.canonicalField(field).equals(field))return FluidStack.EMPTY;
+  if (field.equals("Water")){
    var water=lookup.apply(field,amount);
    return water==null||water.isEmpty()||water.getAmount()!=amount||water.getFluid()!=Fluids.WATER
        ?FluidStack.EMPTY:water.copy();
   }
-  var entry=definitions.get(field);if(entry==null)return FluidStack.EMPTY;
-  var builtin=switch(field){case "MnWtr"->FluidCatalog.MnWtr;
+  var entry=definitions.get(field);if (entry==null)return FluidStack.EMPTY;
+  var builtin=switch (field){case "MnWtr"->FluidCatalog.MnWtr;
    case "DistW"->FluidCatalog.DistW;case "Sluice"->FluidCatalog.Sluice;
    case "Steam"->FluidCatalog.Steam;default->null;};
-  if(field.equals("GenLiquid_Mercury")){
-   if(!SourceGeneratedFluidAdapter.mercury(entry))return FluidStack.EMPTY;
-  }else if(entry!=builtin||!FluidCatalog.isBuiltInDefinition(entry))return FluidStack.EMPTY;
+  if (field.equals("GenLiquid_Mercury")){
+   if (!SourceGeneratedFluidAdapter.mercury(entry))return FluidStack.EMPTY;
+  }else if (entry!=builtin||!FluidCatalog.isBuiltInDefinition(entry))return FluidStack.EMPTY;
   // Reviewed original material identities determine unit conversion; names alone do not establish it.
-  var binding=switch(field){case "GenLiquid_Mercury"->MaterialFluidUnitFacts.binding(
+  var binding=switch (field){case "GenLiquid_Mercury"->MaterialFluidUnitFacts.binding(
       GTMaterialRegistry.get("Mercury"),"liquid");
 default->null;};
   boolean materialLiquid=field.equals("GenLiquid_Mercury");
-  if(materialLiquid&&(binding==null||!binding.fluidField().equals(field)
+  if (materialLiquid&&(binding==null||!binding.fluidField().equals(field)
       ||!binding.registryName().equals(entry.registryName())))return FluidStack.EMPTY;
-  var stack=lookup.apply(field,amount);if(stack==null||stack.isEmpty()||stack.getAmount()!=amount)return FluidStack.EMPTY;
+  var stack=lookup.apply(field,amount);if (stack==null||stack.isEmpty()||stack.getAmount()!=amount)return FluidStack.EMPTY;
   String expected="gt6ce:"+FluidCatalog.sanitizePath(entry.registryName());
-  if(!BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString().equals(expected))return FluidStack.EMPTY;
-  if(GTFluids.entryForFluid(stack.getFluid())!=entry)return FluidStack.EMPTY;
+  if (!BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString().equals(expected))return FluidStack.EMPTY;
+  if (GTFluids.entryForFluid(stack.getFluid())!=entry)return FluidStack.EMPTY;
   return stack.copy();
  }
 }

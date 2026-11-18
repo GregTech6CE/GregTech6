@@ -38,7 +38,7 @@ import java.util.List;
  */
 public final class GTMaterialDictionary {
 
-    /** GT6's title mapping prefix: {@code Material_Dictionary_<mNameInternal>}. */
+    /** GT6's title mapping prefix: {@code Material_Dictionary_<internalName>}. */
     public static final String MAPPING_PREFIX = "Material_Dictionary_";
 
     /** Author GT6 writes into every book ({@code Loader_Books}). */

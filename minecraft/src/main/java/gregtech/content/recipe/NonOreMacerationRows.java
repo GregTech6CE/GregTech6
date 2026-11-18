@@ -20,11 +20,11 @@ public final class NonOreMacerationRows {
  private static final Set<GTMaterial> MATERIALS=Collections.newSetFromMap(new IdentityHashMap<>());
  private static NonOreContinuationEvidence.Snapshot startup;
  public static void begin(){
-  if(startup!=null)throw new IllegalStateException("Nonore definitions initialized twice");
+  if (startup!=null)throw new IllegalStateException("Nonore definitions initialized twice");
   startup=NonOreContinuationEvidence.startupSnapshot(gregtech.engine.material.GTMaterialRegistry.allMaterials());
  }
  public static boolean reviewed(GTMaterial material){
-  if(startup==null)throw new IllegalStateException("Nonore definitions not initialized");
+  if (startup==null)throw new IllegalStateException("Nonore definitions not initialized");
   return MaterialFactKeys.value(material, MaterialFactKeys.SOURCE_ORE_INPUT)
       .orElse(MaterialFactKeys.Decision.UNKNOWN)==MaterialFactKeys.Decision.NO
       &&!startup.active(material);
@@ -36,10 +36,10 @@ public final class NonOreMacerationRows {
  public static void register(GTMaterial material,MaterialPrefix prefix,String producer,RecipeMap map,
        boolean optimize,ItemStack input,ItemStack[] outputs,long[] chances,FluidStack[] fluids,
        FluidStack[] fluidOutputs,long duration,long eu){
-  if(input==null||input.isEmpty())return; // same missing-form skip as original callsite
-  if(reviewed(material)&&!SourceOreInputForms.allowGeneratedInput(material,prefix,input,SourceOreInputForms.Evidence.NO)){
+  if (input==null||input.isEmpty())return; // same missing-form skip as original callsite
+  if (reviewed(material)&&!SourceOreInputForms.allowGeneratedInput(material,prefix,input,SourceOreInputForms.Evidence.NO)){
    MATERIALS.add(material);ROWS.define(material,producer,map,optimize,input,outputs,chances,fluids,fluidOutputs,duration,eu);
-  }else if(map==MachineRecipeMaps.Shredder||map==MachineRecipeMaps.Anvil) {
+  }else if (map==MachineRecipeMaps.Shredder||map==MachineRecipeMaps.Anvil) {
    Recipe recipe=RecipeBuilder.of(eu, duration)
            .optimize(optimize)
            .itemInputs(input)
@@ -48,7 +48,7 @@ public final class NonOreMacerationRows {
            .fluidOutputs(fluidOutputs)
            .chances(chances)
            .build();
-   if(recipe!=null)RecoveryRecipePublisher.publish(map,RecoveryRecipePublisher.explicit(
+   if (recipe!=null)RecoveryRecipePublisher.publish(map,RecoveryRecipePublisher.explicit(
        recipe,"ore-processing/"+producer));
   }else map.register(RecipeBuilder.of(eu, duration)
           .optimize(optimize)

@@ -223,11 +223,11 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
                 pos.getX()-centre.getX(),pos.getY()-centre.getY(),pos.getZ()-centre.getZ());
     }
     @Override public long useMultiblockTool(net.minecraft.world.item.context.UseOnContext context,List<Component> messages) {
-        if(level==null||level.isClientSide||isRemoved()||!containsToolPosition(context.getClickedPos()))return 0;
-        if(GTToolHelper.matchesTool(context.getItemInHand(),GTToolType.BUILDER_WAND)) {
+        if (level==null||level.isClientSide||isRemoved()||!containsToolPosition(context.getClickedPos()))return 0;
+        if (GTToolHelper.matchesTool(context.getItemInHand(),GTToolType.BUILDER_WAND)) {
             return gregtech.engine.multiblock.MultiblockTools.buildTracked(context, this);
         }
-        if(GTToolHelper.matchesTool(context.getItemInHand(),GTToolType.MAGNIFYING_GLASS)) {
+        if (GTToolHelper.matchesTool(context.getItemInHand(),GTToolType.MAGNIFYING_GLASS)) {
             messages.addAll(magnifyingGlassMessages());
             return gregtech.engine.multiblock.MultiblockToolRules.MAGNIFIER_COST;
         }
@@ -235,7 +235,7 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     }
     public List<Component> magnifyingGlassMessages() {
         boolean previous=structureOkay,formed=isStructureOk();
-        if(!previous||!formed) {
+        if (!previous||!formed) {
             var messages = new java.util.ArrayList<Component>();
             messages.add(Component.literal(
                     gregtech.engine.multiblock.MultiblockToolRules.structureMessage(previous,formed)));
@@ -362,8 +362,8 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
 
     public InteractionResult onToolUse(Player player, InteractionHand hand) {
         ItemStack held = player.getItemInHand(hand);
-        if(GTToolHelper.matchesTool(held,GTToolType.MAGNIFYING_GLASS)||GTToolHelper.matchesTool(held,GTToolType.BUILDER_WAND)) {
-            if(level.isClientSide)return InteractionResult.SUCCESS;
+        if (GTToolHelper.matchesTool(held,GTToolType.MAGNIFYING_GLASS)||GTToolHelper.matchesTool(held,GTToolType.BUILDER_WAND)) {
+            if (level.isClientSide)return InteractionResult.SUCCESS;
             return gregtech.engine.multiblock.MultiblockTools.use(new net.minecraft.world.item.context.UseOnContext(player,hand,
                     new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(worldPosition),front(),worldPosition,false)));
         }

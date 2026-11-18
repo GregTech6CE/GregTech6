@@ -44,7 +44,7 @@ public final class LaserFiberBlock extends Block implements EntityBlock,ToolInte
     public LaserFiberBlock(Properties properties){
         super(properties.noOcclusion());
         var state=defaultBlockState();
-        for(var property:ElectricWireBlock.CONNECTIONS)state=state.setValue(property,false);
+        for (var property:ElectricWireBlock.CONNECTIONS)state=state.setValue(property,false);
         registerDefaultState(state.setValue(GTWaterloggable.WATERLOGGED, false));
     }
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder){
@@ -60,26 +60,26 @@ public final class LaserFiberBlock extends Block implements EntityBlock,ToolInte
     @Override public ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool){return GTToolHelper.isWireCutter(tool)?ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LASER):null;}
     @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving){
         super.onPlace(state,level,pos,old,moving);
-        if(level.isClientSide||old.is(this))return;
+        if (level.isClientSide||old.is(this))return;
         var next=state;
-        for(var side:Direction.values()){
+        for (var side:Direction.values()){
             var neighbor=pos.relative(side);
-            if(!level.hasChunkAt(neighbor))continue;
+            if (!level.hasChunkAt(neighbor))continue;
             var entity=level.getBlockEntity(neighbor);
             var energy = EnergyBlockViews.view(entity);
-            if(energy != null && (energy.isEnergyAcceptingFrom(GregTechTags.Energy.LU,side.getOpposite(),true)
+            if (energy != null && (energy.isEnergyAcceptingFrom(GregTechTags.Energy.LU,side.getOpposite(),true)
                     || energy.isEnergyEmittingTo(GregTechTags.Energy.LU,side.getOpposite(),true)) || level.getBlockState(neighbor).getBlock() instanceof LaserFiberBlock){
                 next=next.setValue(ElectricWireBlock.propFor(side),true);
                 var other=level.getBlockState(neighbor);
-                if(other.getBlock() instanceof LaserFiberBlock)level.setBlockAndUpdate(neighbor,other.setValue(ElectricWireBlock.propFor(side.getOpposite()),true));
+                if (other.getBlock() instanceof LaserFiberBlock)level.setBlockAndUpdate(neighbor,other.setValue(ElectricWireBlock.propFor(side.getOpposite()),true));
             }
         }
-        if(next!=state)level.setBlockAndUpdate(pos,next);
+        if (next!=state)level.setBlockAndUpdate(pos,next);
     }
     @Override public VoxelShape getShape(BlockState state,BlockGetter world,BlockPos pos,CollisionContext context){
-        if(context instanceof EntityCollisionContext entity && entity.getEntity() instanceof Player player && GTToolHelper.isWireCutter(player.getMainHandItem()))return Shapes.block();
+        if (context instanceof EntityCollisionContext entity && entity.getEntity() instanceof Player player && GTToolHelper.isWireCutter(player.getMainHandItem()))return Shapes.block();
         var shape=Block.box(6,6,6,10,10,10);
-        for(var side:Direction.values())if(state.getValue(ElectricWireBlock.propFor(side)))shape=Shapes.or(shape,
+        for (var side:Direction.values())if (state.getValue(ElectricWireBlock.propFor(side)))shape=Shapes.or(shape,
                 Block.box(side==Direction.WEST?0:6,side==Direction.DOWN?0:6,side==Direction.NORTH?0:6,
                         side==Direction.EAST?16:10,side==Direction.UP?16:10,side==Direction.SOUTH?16:10));
         return shape;

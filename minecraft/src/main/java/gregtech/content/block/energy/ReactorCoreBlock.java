@@ -43,7 +43,7 @@ public class ReactorCoreBlock extends Block implements EntityBlock, gregtech.eng
 //?}
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
-        if(level.getBlockEntity(pos) instanceof ReactorCoreBlockEntity core) return gregtech.content.nuclear.ReactorInteraction.use(core,player,hand,hit);
+        if (level.getBlockEntity(pos) instanceof ReactorCoreBlockEntity core) return gregtech.content.nuclear.ReactorInteraction.use(core,player,hand,hit);
         return InteractionResult.PASS;
     }
 

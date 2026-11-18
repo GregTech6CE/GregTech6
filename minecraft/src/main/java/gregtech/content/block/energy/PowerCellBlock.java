@@ -42,9 +42,9 @@ public final class PowerCellBlock extends Block implements EntityBlock, SimpleWa
     public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
             net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
         var tool=player.getItemInHand(hand);
-        if(!gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))
+        if (!gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))
             return net.minecraft.world.InteractionResult.PASS;
-        if(!level.isClientSide&&level.getBlockEntity(pos) instanceof PowerCellBlockEntity be) {
+        if (!level.isClientSide&&level.getBlockEntity(pos) instanceof PowerCellBlockEntity be) {
             player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.electric_tool.energy",be.stored(),spec.capacity()),true);
             gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(tool,1,player,
                     hand==net.minecraft.world.InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
@@ -67,7 +67,7 @@ public final class PowerCellBlock extends Block implements EntityBlock, SimpleWa
     @Override public VoxelShape getShape(BlockState s,BlockGetter l,BlockPos p,CollisionContext c){return shape;}
     @Override public BlockEntity newBlockEntity(BlockPos p,BlockState s){return new PowerCellBlockEntity(p,s);}
     @Override public void setPlacedBy(Level l,BlockPos p,BlockState s,@javax.annotation.Nullable LivingEntity player,ItemStack stack){
-        if(l.getBlockEntity(p) instanceof PowerCellBlockEntity be&&stack.getItem() instanceof PowerCellItem item)be.setCharge(item.stored(stack));
+        if (l.getBlockEntity(p) instanceof PowerCellBlockEntity be&&stack.getItem() instanceof PowerCellItem item)be.setCharge(item.stored(stack));
     }
     @Override public List<ItemStack> getDrops(BlockState s,LootParams.Builder loot){
         if (loot.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof PowerCellBlockEntity be) return List.of(be.asItem());

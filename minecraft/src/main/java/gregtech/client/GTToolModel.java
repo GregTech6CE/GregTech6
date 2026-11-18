@@ -43,14 +43,14 @@ public final class GTToolModel {
             }
         }
 //? if >=1.21.1 {
-        /*for(var holder:gregtech.content.registry.GTElectricItems.tools()) {
+        /*for (var holder:gregtech.content.registry.GTElectricItems.tools()) {
             var id=BuiltInRegistries.ITEM.getKey(holder.get());
 *///?} else {
-        for(var holder:gregtech.content.registry.GTElectricItems.all()) {
+        for (var holder:gregtech.content.registry.GTElectricItems.all()) {
             var id=BuiltInRegistries.ITEM.getKey(holder.get());
 //?}
             var base=models.get(id, "inventory");
-            if(base!=null)models.put(id, "inventory", new GTToolBakedModel(base));
+            if (base!=null)models.put(id, "inventory", new GTToolBakedModel(base));
         }
     }
 

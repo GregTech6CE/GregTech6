@@ -52,7 +52,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
     @Override
     public void register(EmiRegistry registry) {
         gregtech.client.gui.RecipeViewerNavigation.registerEmi(map -> {
-            var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.mNameInternal.toLowerCase(Locale.ROOT));
+            var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.internalName.toLowerCase(Locale.ROOT));
             var manager = dev.emi.emi.api.EmiApi.getRecipeManager();
             for (var category : manager.getCategories()) {
                 if (id.equals(category.getId()) && !manager.getRecipes(category).isEmpty()) {
@@ -107,16 +107,16 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         long started = System.nanoTime();
         int rows = 0, categories = 0;
         for (RecipeMap map : RecipeMap.RECIPE_MAP_LIST) {
-            if (!map.mViewerAllowed
-                    || map.mRecipeList.stream().noneMatch(r -> r.mEnabled && !r.mHidden)
-                            && !map.hasDynamicEnumeration()) continue;
+            if (!map.viewerAllowed
+                    || map.recipeRows.stream().noneMatch(r -> r.enabled && !r.hidden) && !map.hasDynamicEnumeration())
+                continue;
             var workstations = machines.getOrDefault(map, java.util.List.of());
             ItemStack icon = gregtech.compat.common.RecipeViewerIcons.category(map, machines);
-            var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.mNameInternal.toLowerCase(Locale.ROOT));
+            var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.internalName.toLowerCase(Locale.ROOT));
             var category = new EmiRecipeCategory(id, EmiStack.of(icon)) {
                 @Override
                 public Component getName() {
-                    return Component.translatableWithFallback(map.mNameInternal, map.mNameLocal);
+                    return Component.translatableWithFallback(map.internalName, map.displayName);
                 }
             };
             registry.addCategory(category);
@@ -124,10 +124,10 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             int i = 0;
             int before = rows;
             long mapStarted = System.nanoTime();
-            com.mojang.logging.LogUtils.getLogger().debug("[gregtech] EMI registering {}", map.mNameInternal);
+            com.mojang.logging.LogUtils.getLogger().debug("[gregtech] EMI registering {}", map.internalName);
             for (var recipe : map.allRecipes()) {
                 int recipeIndex = i++;
-                if (!recipe.mEnabled || recipe.mHidden) continue;
+                if (!recipe.enabled || recipe.hidden) continue;
                 registry.addRecipe(new MachineEmiRecipe(
                         category,
                         map,
@@ -143,7 +143,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                         .info(
                                 "[gregtech] EMI registered {} recipes for {} in {} ms",
                                 rows - before,
-                                map.mNameInternal,
+                                map.internalName,
                                 (System.nanoTime() - mapStarted) / 1_000_000);
         }
         candidates.finish();

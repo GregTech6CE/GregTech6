@@ -34,16 +34,16 @@ public final class AxleBakedModel extends BakedModelWrapper<PipeWireBakedModel> 
     /*public AxleBakedModel(double half){this(half,net.minecraft.client.renderer.block.model.ItemTransforms.NO_TRANSFORMS);}
     public AxleBakedModel(double half,net.minecraft.client.renderer.block.model.ItemTransforms transforms) {
         super(make(half,0,0).itemTransforms(transforms));
-        for(int axis=0;axis<3;axis++)for(int rotation=0;rotation<3;rotation++)variants[axis][rotation]=make(half,axis,rotation).itemTransforms(transforms);
+        for (int axis=0;axis<3;axis++)for (int rotation=0;rotation<3;rotation++)variants[axis][rotation]=make(half,axis,rotation).itemTransforms(transforms);
 *///?} else {
     public AxleBakedModel(double half) {
         super(make(half,0,0));
-        for(int axis=0;axis<3;axis++)for(int rotation=0;rotation<3;rotation++)variants[axis][rotation]=make(half,axis,rotation);
+        for (int axis=0;axis<3;axis++)for (int rotation=0;rotation<3;rotation++)variants[axis][rotation]=make(half,axis,rotation);
 //?}
     }
     private static PipeWireBakedModel make(double half,int axis,int rotation) {
         var faces=new EnumMap<Direction,ResourceLocation>(Direction.class);
-        for(var face:Direction.values()) {
+        for (var face:Direction.values()) {
             String suffix=TEXTURES[axis][face.ordinal()][rotation];
             faces.put(face,Mc.gregtechId("block/iconsets/axle"+(suffix.isEmpty()?"":"_"+suffix)));
         }

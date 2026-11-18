@@ -48,7 +48,7 @@ public final class GTToolHelper {
 //? if >=1.21.1 {
 /*        stack.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE,computeMaxDurability(stack.getItem() instanceof GTToolItem tool?tool.toolType():getType(stack),head));
         stack.set(net.minecraft.core.component.DataComponents.DAMAGE,0);
-        if(stack.getItem() instanceof GTToolItem tool)stack.set(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,tool.getDefaultAttributeModifiers(stack).withTooltip(false));
+        if (stack.getItem() instanceof GTToolItem tool)stack.set(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,tool.getDefaultAttributeModifiers(stack).withTooltip(false));
         GTToolEnchantments.applyCurrent(stack);
 *///?} else {
         stack.setDamageValue(0);
@@ -291,7 +291,7 @@ public final class GTToolHelper {
 
     public static boolean canEffectiveHarvest(ItemStack stack, BlockState state) {
         var oreDecision=gregtech.content.data.OreHostHarvest.effectiveDecision(stack,state);
-        if(oreDecision.isPresent())return oreDecision.get();
+        if (oreDecision.isPresent())return oreDecision.get();
         if (!isUsable(stack)) {
             return false;
         }
@@ -308,7 +308,7 @@ public final class GTToolHelper {
 
     public static boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
         var oreDecision=gregtech.content.data.OreHostHarvest.decision(stack,state);
-        if(oreDecision.isPresent())return oreDecision.get();
+        if (oreDecision.isPresent())return oreDecision.get();
         if (isSpecialHarvestTool(stack, state)) return true;
         if (!isUsable(stack)) {
             return false;
@@ -435,8 +435,8 @@ public final class GTToolHelper {
 
         var id=Mc.blockId(state.getBlock());
 
-        if(id==null || !id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
-        return switch(tool) {
+        if (id==null || !id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) return false;
+        return switch (tool) {
             case SWORD -> matchesTool(stack, GTToolType.SWORD);
             case WRENCH -> isMachineWrench(stack) && (!state.requiresCorrectToolForDrops()
                     || getHarvestLevel(stack) >= requiredHarvestLevel(state));
@@ -461,11 +461,11 @@ public final class GTToolHelper {
 
     public static int requiredHarvestLevel(BlockState state) {
         var ore=gregtech.content.data.OreHostPhysics.params(state);
-        if(ore.isPresent())return ore.get().harvest();
+        if (ore.isPresent())return ore.get().harvest();
         if (state.getBlock() instanceof gregtech.content.block.misc.SpikeBlock)
             return gregtech.content.data.SpikeHarvestPolicy.level(state);
         int materialLevel=gregtech.content.data.BlockHarvestPolicy.level(state.getBlock());
-        if(materialLevel>3) return materialLevel;
+        if (materialLevel>3) return materialLevel;
         if (state.is(BlockTags.NEEDS_DIAMOND_TOOL)) {
             return 3;
         }

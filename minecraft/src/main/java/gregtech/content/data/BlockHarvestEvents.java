@@ -19,9 +19,9 @@ import net.minecraftforge.fml.common.Mod;
 //?}
 public final class BlockHarvestEvents {
  @SubscribeEvent public static void harvest(PlayerEvent.HarvestCheck event) {
-  if(event.getTargetBlock().getBlock() instanceof gregtech.content.block.machine.TankBlock){event.setCanHarvest(true);return;}
+  if (event.getTargetBlock().getBlock() instanceof gregtech.content.block.machine.TankBlock){event.setCanHarvest(true);return;}
   var oreDecision=OreHostHarvest.decision(event.getEntity().getMainHandItem(),event.getTargetBlock());
-  if(oreDecision.isPresent()){event.setCanHarvest(oreDecision.get());return;}
+  if (oreDecision.isPresent()){event.setCanHarvest(oreDecision.get());return;}
   // Spike harvest levels follow their registered material quality.
   if (event.getTargetBlock().getBlock() instanceof gregtech.content.block.misc.SpikeBlock) {
    var stack = event.getEntity().getMainHandItem();
@@ -50,26 +50,26 @@ public final class BlockHarvestEvents {
    // Their numeric source-quality parity is unknown, not a reason for a new denial.
   }
   var original=BlockHarvestPolicy.source(event.getTargetBlock().getBlock());
-  if(original.isPresent() && original.get().handHarvestable()){event.setCanHarvest(true);return;}
+  if (original.isPresent() && original.get().handHarvestable()){event.setCanHarvest(true);return;}
   var stack=event.getEntity().getMainHandItem();
   // Some port constructors lacked requiresCorrectToolForDrops. Source groups still require
   // their matching tool; a permissive native constructor must not bypass that contract.
-  if(original.isPresent()) event.setCanHarvest(stack.isCorrectToolForDrops(event.getTargetBlock()));
-  if(GTToolHelper.isSpecialHarvestTool(stack,event.getTargetBlock())) event.setCanHarvest(true);
-  if(stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric
+  if (original.isPresent()) event.setCanHarvest(stack.isCorrectToolForDrops(event.getTargetBlock()));
+  if (GTToolHelper.isSpecialHarvestTool(stack,event.getTargetBlock())) event.setCanHarvest(true);
+  if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric
       && gregtech.content.tool.ElectricWrenchHarvest.target(event.getTargetBlock()))
    event.setCanHarvest(gregtech.content.tool.ElectricWrenchHarvest.canHarvest(electric,stack,event.getTargetBlock()));
-  if(stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric
+  if (stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric
       && electric.toolName().equals("Chainsaw")
       && gregtech.content.tool.ElectricChainsawHarvest.target(event.getTargetBlock()))
    event.setCanHarvest(gregtech.content.tool.ElectricChainsawHarvest.canHarvest(electric,stack,event.getTargetBlock()));
   int level=BlockHarvestPolicy.level(event.getTargetBlock().getBlock());
   // Vanilla only supplies three tier tags; GT materials can require a higher tier.
-  if(level>3 || original.isPresent()) {
+  if (level>3 || original.isPresent()) {
    int actual=stack.getItem() instanceof gregtech.content.item.ElectricToolItem electric?electric.headMaterial(stack).getToolQuality()+(electric.toolName().equals("Chainsaw")?1:0):
      GTToolHelper.isTool(stack)?GTToolHelper.getHarvestLevel(stack):
      stack.getItem() instanceof net.minecraft.world.item.TieredItem tool?vanillaLevel(tool.getTier()):-1;
-   if(actual<level && (actual>=0 || level>3)) event.setCanHarvest(false);
+   if (actual<level && (actual>=0 || level>3)) event.setCanHarvest(false);
   }
  }
  // Same mapping as the spike path above; Tier.getLevel() no longer exists on 1.21.

@@ -40,11 +40,11 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
         setSpec(((BasicMachineBlock)state.getBlock()).basicSpec());
     }
     @Override public boolean applyStructure(PatternMatch match) {
-        if(level==null||isRemoved())return false;
+        if (level==null||isRemoved())return false;
         var candidates=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
-        for(var fixed:match.fixedCells()) {
+        for (var fixed:match.fixedCells()) {
             var cell=fixed.cell();
-            if(cell.role()!=MultiblockLayout.Role.AIR)candidates.put(fixed.pos(),cell.role());
+            if (cell.role()!=MultiblockLayout.Role.AIR)candidates.put(fixed.pos(),cell.role());
         }
         return StructureClaims.update(this,fusionBindings,candidates,
                 p->((MultiblockPortBlockEntity)level.getBlockEntity(p)).canBind(worldPosition),
@@ -68,7 +68,7 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
         fusionBindings.clear(this::releaseFusionPart);
         StructureClaims.cleared(this);
     }
-    private void releaseFusionPart(BlockPos pos){if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part)part.release(worldPosition);}
+    private void releaseFusionPart(BlockPos pos){if (level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part)part.release(worldPosition);}
     @Override public void setRemoved(){
         if (!StructureTracking.unloading(this)) fusionBindings.clear(this::releaseFusionPart);
         super.setRemoved();
@@ -115,7 +115,7 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
         for (int i = 0; i < inputSlots(); i++) items.add(inventory().getStackInSlot(i));
         var fluids = Arrays.stream(getTanksInput()).map(t -> t.getFluidInTank(0)).toList();
         var recipe = recipeMap().findRecipe(items, fluids, false, inputSlots(), 0);
-        return recipe != null && recipe.mEUt <= 0 && recipe.mEUt != Long.MIN_VALUE ? recipe : null;
+        return recipe != null && recipe.energyPerTick <= 0 && recipe.energyPerTick != Long.MIN_VALUE ? recipe : null;
     }
 
     @Override public gregtech.content.cover.MachineCoverSpec.State coverState() {
@@ -143,31 +143,31 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
     private boolean startRecipe() {
         if (!toolModeAllowsStart()) return false;
         var items=new ArrayList<ItemStack>();
-        for(int i=0;i<inputSlots();i++)items.add(inventory().getStackInSlot(i));
+        for (int i=0;i<inputSlots();i++)items.add(inventory().getStackInSlot(i));
         var fluids=Arrays.stream(getTanksInput()).map(t->t.getFluidInTank(0)).toList();
         var recipe=recipeMap().findRecipe(items,fluids,false,inputSlots(),0);
-        if(recipe==null||recipe.mEUt>0||recipe.mEUt==Long.MIN_VALUE){continuousRecipe=null;return false;}
+        if (recipe==null||recipe.energyPerTick>0||recipe.energyPerTick==Long.MIN_VALUE){continuousRecipe=null;return false;}
         var remaining=RecipeInputs.consume(recipe,items,fluids,1);
-        if(remaining==null){continuousRecipe=null;return false;}
+        if (remaining==null){continuousRecipe=null;return false;}
         products=MachineWorkOutputs.roll(recipe,1,level.random::nextInt);
-        for(int i=0;i<items.size();i++)inventory().setStackInSlot(i,remaining.items().get(i));
-        for(int i=0;i<fluids.size();i++)getTanksInput()[i].setFluid(remaining.fluids().get(i));
-        chargeTotal=Math.max(0,recipe.mSpecialValue);
+        for (int i=0;i<items.size();i++)inventory().setStackInSlot(i,remaining.items().get(i));
+        for (int i=0;i<fluids.size();i++)getTanksInput()[i].setFluid(remaining.fluids().get(i));
+        chargeTotal=Math.max(0,recipe.specialValue);
         chargeRemaining=continuousRecipe==recipe?0:chargeTotal;
-        continuousRecipe=recipe;progress=0;duration=recipe.mDuration;outputEU=-recipe.mEUt;
+        continuousRecipe=recipe;progress=0;duration=recipe.durationTicks;outputEU=-recipe.energyPerTick;
         setChanged();return true;
     }
     private void emitFusionEnergy() {
         var center=worldPosition.relative(getBlockState().getValue(BasicMachineBlock.FACING).getOpposite(),2);
-        for(var direction:Direction.Plane.HORIZONTAL) {
+        for (var direction:Direction.Plane.HORIZONTAL) {
             var port=center.relative(direction,9);
-            if(gregtech.engine.multiblock.StructurePortHandlers.emitEnergy(
+            if (gregtech.engine.multiblock.StructurePortHandlers.emitEnergy(
                     this,port,direction,GregTechTags.Energy.EU,outputEU,1)>0)break;
         }
     }
     private void updateActivity() {
         var state=getBlockState();boolean active=products!=null;
-        if(state.getValue(BasicMachineBlock.RUNNING)!=active||state.getValue(BasicMachineBlock.LIT)!=running) {
+        if (state.getValue(BasicMachineBlock.RUNNING)!=active||state.getValue(BasicMachineBlock.LIT)!=running) {
             level.setBlock(worldPosition,state.setValue(BasicMachineBlock.RUNNING,active).setValue(BasicMachineBlock.LIT,running),3);
             StructureTracking.refreshDesigns(this);
         }
@@ -197,9 +197,9 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
         return role==MultiblockLayout.Role.ENERGY_INPUT&&type==GregTechTags.Energy.LU&&size>0&&size<=16384&&chargeRemaining>0?1+(chargeRemaining-1)/size:0;
     }
     @Override public long injectPortEnergy(MultiblockLayout.Role role,GregTechTags.Tag type,long size,long amount,boolean execute) {
-        if(role!=MultiblockLayout.Role.ENERGY_INPUT||type!=GregTechTags.Energy.LU||size<1||size>16384||amount<1||chargeRemaining<1||!isStructureOk())return 0;
+        if (role!=MultiblockLayout.Role.ENERGY_INPUT||type!=GregTechTags.Energy.LU||size<1||size>16384||amount<1||chargeRemaining<1||!isStructureOk())return 0;
         long accepted=Math.min(amount,1+(chargeRemaining-1)/size);
-        if(execute){chargeRemaining=accepted>chargeRemaining/size?0:chargeRemaining-accepted*size;setChanged();}
+        if (execute){chargeRemaining=accepted>chargeRemaining/size?0:chargeRemaining-accepted*size;setChanged();}
         return accepted;
     }
 //? if >=1.21.1 {
@@ -214,7 +214,7 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
         var job=new CompoundTag();job.putLong("charge",chargeRemaining);job.putLong("totalCharge",chargeTotal);
         job.putLong("progress",progress);job.putLong("duration",duration);job.putLong("outputEU",outputEU);
         job.putBoolean("passive",passive);job.putBoolean("processing",processing);
-        if(products!=null)job.put("products",products.save(codecLookup));
+        if (products!=null)job.put("products",products.save(codecLookup));
         tag.put("gt.fusion",job);
     }
 //? if >=1.21.1 {

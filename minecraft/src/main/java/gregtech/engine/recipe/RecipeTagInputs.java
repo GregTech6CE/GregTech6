@@ -8,23 +8,20 @@ final class RecipeTagInputs {
     private RecipeTagInputs() {}
 
     static boolean covers(Recipe existing, Recipe candidate) {
-        if (existing.mFakeRecipe
+        if (existing.fakeRecipe
                 || existing.hasItemInputGuards()
                 || existing.hasSameItemInputPredicates()
                 || candidate.hasItemInputGuards()
                 || candidate.hasSameItemInputPredicates()
-                || existing.mInputs.length != candidate.mInputs.length
-                || existing.mFluidInputs.length != candidate.mFluidInputs.length) return false;
-        return pair(0, new boolean[candidate.mInputs.length], (a, b) -> itemCovers(existing, a, candidate, b))
-                && pair(
-                        0,
-                        new boolean[candidate.mFluidInputs.length],
-                        (a, b) -> fluidCovers(existing, a, candidate, b));
+                || existing.itemInputs.length != candidate.itemInputs.length
+                || existing.fluidInputs.length != candidate.fluidInputs.length) return false;
+        return pair(0, new boolean[candidate.itemInputs.length], (a, b) -> itemCovers(existing, a, candidate, b))
+                && pair(0, new boolean[candidate.fluidInputs.length], (a, b) -> fluidCovers(existing, a, candidate, b));
     }
 
     private static boolean itemCovers(Recipe a, int ai, Recipe b, int bi) {
-        var required = a.mInputs[ai];
-        var offered = b.mInputs[bi];
+        var required = a.itemInputs[ai];
+        var offered = b.itemInputs[bi];
         if (required == null || required.isEmpty() || offered == null || offered.isEmpty())
             return (required == null || required.isEmpty()) && (offered == null || offered.isEmpty());
         if (required.getCount() > offered.getCount() || a.isCatalystInput(ai) != b.isCatalystInput(bi)) return false;
@@ -44,11 +41,11 @@ final class RecipeTagInputs {
     }
 
     private static boolean fluidCovers(Recipe a, int ai, Recipe b, int bi) {
-        var required = a.mFluidInputs[ai];
-        var offered = b.mFluidInputs[bi];
+        var required = a.fluidInputs[ai];
+        var offered = b.fluidInputs[bi];
         if (required == null || required.isEmpty() || offered == null || offered.isEmpty())
             return (required == null || required.isEmpty()) && (offered == null || offered.isEmpty());
-        if (a.mFluidInputs[ai].getAmount() > b.mFluidInputs[bi].getAmount()
+        if (a.fluidInputs[ai].getAmount() > b.fluidInputs[bi].getAmount()
                 || a.isPresenceFluidInput(ai) != b.isPresenceFluidInput(bi)
                 || a.isCatalystFluidInput(ai) != b.isCatalystFluidInput(bi)) return false;
         if (a.fluidTag(ai) != null && a.fluidTag(ai).equals(b.fluidTag(bi))) return true;

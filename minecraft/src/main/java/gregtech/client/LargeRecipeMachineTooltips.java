@@ -17,7 +17,7 @@ public final class LargeRecipeMachineTooltips {
         for (var key : spec.structureKeys()) add(lines, key, ChatFormatting.WHITE);
         var recipeName = OriginalLargeRecipeMachineData.handles(spec.machineName())
                 ? Component.translatable(OriginalLargeRecipeMachineData.recipeKey(spec.machineName()))
-                : Component.literal(spec.recipeMap().mNameLocal);
+                : Component.literal(spec.recipeMap().displayName);
         add(lines, "gt.lang.recipes", ChatFormatting.AQUA)
                 .append(": ")
                 .append(recipeName.withStyle(ChatFormatting.WHITE))
@@ -56,11 +56,11 @@ public final class LargeRecipeMachineTooltips {
                             .withStyle(ChatFormatting.WHITE));
         }
         var map = spec.recipeMap();
-        if (map.mInputItemsCount > 0) io(lines, "gt.lang.item.input", false, null, ChatFormatting.GREEN);
-        if (map.mOutputItemsCount > 0)
+        if (map.itemInputSlots > 0) io(lines, "gt.lang.item.input", false, null, ChatFormatting.GREEN);
+        if (map.itemOutputSlots > 0)
             io(lines, "gt.lang.item.output", true, spec.itemOutputTarget(), ChatFormatting.RED);
-        if (map.mInputFluidCount > 0) io(lines, "gt.lang.fluid.input", false, null, ChatFormatting.GREEN);
-        if (map.mOutputFluidCount > 0)
+        if (map.fluidInputTanks > 0) io(lines, "gt.lang.fluid.input", false, null, ChatFormatting.GREEN);
+        if (map.fluidOutputTanks > 0)
             io(lines, "gt.lang.fluid.output", true, spec.fluidOutputTarget(), ChatFormatting.RED);
         add(lines, "gt.lang.use.screwdriver.to.toggle", ChatFormatting.DARK_GRAY);
         add(lines, "gt.lang.use.monkey.wrench.to.toggle.auto.outputs", ChatFormatting.DARK_GRAY);

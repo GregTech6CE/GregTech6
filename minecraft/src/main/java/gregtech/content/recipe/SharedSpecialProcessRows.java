@@ -63,7 +63,7 @@ public final class SharedSpecialProcessRows {
         for (var methodRules : methods) {
             var method = methodRules.method();
             RecipeMap map = RecipeMap.RECIPE_MAP_LIST.stream()
-                    .filter(candidate -> candidate.mNameInternal.equals(method.recipeMap()))
+                    .filter(candidate -> candidate.internalName.equals(method.recipeMap()))
                     .findFirst()
                     .orElse(null);
             if (map == null) {

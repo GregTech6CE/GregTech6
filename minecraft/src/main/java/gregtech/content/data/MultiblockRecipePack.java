@@ -120,8 +120,8 @@ public final class MultiblockRecipePack {
 
     /** Original raw utilities return their clay before firing; only firing produces ceramic parts. */
     private static void addClayUtilityRecipes(Map<ResourceLocation,byte[]> generated) {
-        for(var row:gregtech.content.recipe.ClayUtilityCatalog.ROWS) {
-            for(String type:List.of("smelting","blasting")) {
+        for (var row:gregtech.content.recipe.ClayUtilityCatalog.ROWS) {
+            for (String type:List.of("smelting","blasting")) {
                 var firing=new HashMap<String,Object>();
                 firing.put("type","minecraft:"+type);
                 firing.put("ingredient",Map.of("item","gt6ce:"+row.raw()));

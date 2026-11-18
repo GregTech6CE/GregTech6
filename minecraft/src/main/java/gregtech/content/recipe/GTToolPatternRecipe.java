@@ -352,10 +352,10 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
         if (GTToolRecipes.isWoodenRollingPin(type,pattern)&&letter=='S') {
             var sticks=new java.util.ArrayList<ItemStack>();
             sticks.add(new ItemStack(net.minecraft.world.item.Items.STICK));
-            for(var material:GTMaterialRegistry.allMaterials()) {
-                if(!material.has(gregtech.api.material.MaterialProperty.WOOD))continue;
+            for (var material:GTMaterialRegistry.allMaterials()) {
+                if (!material.has(gregtech.api.material.MaterialProperty.WOOD))continue;
                 var stack=GTItems.getStack(MaterialPrefix.stick,material,1);
-                if(!stack.isEmpty())sticks.add(stack);
+                if (!stack.isEmpty())sticks.add(stack);
             }
             return Ingredient.of(sticks.stream());
         }

@@ -443,8 +443,8 @@ public final class MachineRecipeIngredients {
 
 //? if >=1.21.1 {
     /*private static synchronized void indexWires(){
-        if(wiresBySize!=null)return;Map<String,Map<GTMaterial,Item>> index=new HashMap<>();
-        for(var block:BuiltInRegistries.BLOCK)if(block instanceof WireMaterialLike wire){var spec=wire.spec();String key=(spec.insulated()?"cable_":"wire_")+String.format("%02d",spec.size());index.computeIfAbsent(key,k->new HashMap<>()).put(spec.material(),block.asItem());}
+        if (wiresBySize!=null)return;Map<String,Map<GTMaterial,Item>> index=new HashMap<>();
+        for (var block:BuiltInRegistries.BLOCK)if (block instanceof WireMaterialLike wire){var spec=wire.spec();String key=(spec.insulated()?"cable_":"wire_")+String.format("%02d",spec.size());index.computeIfAbsent(key,k->new HashMap<>()).put(spec.material(),block.asItem());}
         wiresBySize=index;
 *///?} else {
     private static synchronized void indexWires() {

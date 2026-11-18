@@ -18,10 +18,10 @@ public final class MaterialUnitTagDisplay {
     public static List<Entry> entries() {
         var entries = new LinkedHashMap<TagKey<Item>, Entry>();
         for (var map : RecipeMap.RECIPE_MAP_LIST) {
-            if (!map.mViewerAllowed) continue;
-            for (var row : map.mRecipeList) {
-                if (!row.mEnabled || row.mHidden) continue;
-                for (int i = 0; i < row.mInputs.length; i++) {
+            if (!map.viewerAllowed) continue;
+            for (var row : map.recipeRows) {
+                if (!row.enabled || row.hidden) continue;
+                for (int i = 0; i < row.itemInputs.length; i++) {
                     var display = row.materialInputDisplay(i);
                     if (display == null || display.tag() == null || entries.containsKey(display.tag())) continue;
                     var tag = display.tag();
@@ -33,7 +33,8 @@ public final class MaterialUnitTagDisplay {
                             .ifPresent(
                                     holders -> holders.forEach(holder -> members.add(new ItemStack(holder.value()))));
                     if (!members.isEmpty())
-                        entries.put(tag, new Entry(family, tag, row.mInputs[i].copyWithCount(1), List.copyOf(members)));
+                        entries.put(
+                                tag, new Entry(family, tag, row.itemInputs[i].copyWithCount(1), List.copyOf(members)));
                 }
             }
         }

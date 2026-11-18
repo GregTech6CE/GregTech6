@@ -116,7 +116,7 @@ public class GregTechTags {
      *   <li>RF: Size = 1, Amount = RF (4 RF = 1 EU)</li>
      *   <li>MJ: Size = push size, Amount = MJ (1 MJ = 2.5 EU = 10 RF)</li>
      * </ul>
-     * GU (Greg Unit) is not an energy tag; it is the NEI/recipe cost unit ({@code Recipe.mEUt}).
+     * GU (Greg Unit) is not an energy tag; it is the NEI/recipe cost unit ({@code Recipe.energyPerTick}).
      */
     public static final class Energy {
         private Energy() {}

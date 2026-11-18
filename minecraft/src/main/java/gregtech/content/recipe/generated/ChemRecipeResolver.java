@@ -486,11 +486,11 @@ public final class ChemRecipeResolver {
 
     private static String describe(Recipe recipe) {
         StringBuilder text = new StringBuilder();
-        for (ItemStack stack : recipe.mInputs) if (!stack.isEmpty()) {
+        for (ItemStack stack : recipe.itemInputs) if (!stack.isEmpty()) {
             if (text.length() > 0) text.append(", ");
             text.append(stack.getCount()).append("x ").append(BuiltInRegistries.ITEM.getKey(stack.getItem()));
         }
-        for (FluidStack stack : recipe.mFluidInputs) if (!stack.isEmpty()) {
+        for (FluidStack stack : recipe.fluidInputs) if (!stack.isEmpty()) {
             if (text.length() > 0) text.append(", ");
             text.append(stack.getAmount()).append("mB ").append(BuiltInRegistries.FLUID.getKey(stack.getFluid()));
         }

@@ -302,14 +302,14 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
     @Override public void handleUpdateTag(CompoundTag tag) {
         load(tag); requestModelDataUpdate();
 //?}
-        if(level!=null)level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
+        if (level!=null)level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
     }
 //? if >=1.21.1 {
     /*@Override public void onDataPacket(net.minecraft.network.Connection connection,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,HolderLookup.Provider lookup) {
-        if(packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);
+        if (packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);
 *///?} else {
     @Override public void onDataPacket(net.minecraft.network.Connection connection,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
-        if(packet.getTag()!=null)handleUpdateTag(packet.getTag());
+        if (packet.getTag()!=null)handleUpdateTag(packet.getTag());
 //?}
     }
 

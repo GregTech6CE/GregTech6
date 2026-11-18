@@ -47,9 +47,9 @@ public record PacketSyncComponentCovers(BlockPos pos,ResourceLocation type,Compo
     private static PacketSyncComponentCovers decode(RegistryFriendlyByteBuf buf){return new PacketSyncComponentCovers(buf.readBlockPos(),buf.readResourceLocation(),java.util.Objects.requireNonNull(buf.readNbt()));}
     @Override public Type<PacketSyncComponentCovers> type(){return TYPE;}
     public void apply(net.minecraft.world.level.Level level){
-        if(level==null||!level.hasChunkAt(pos))return;
+        if (level==null||!level.hasChunkAt(pos))return;
         var owner=level.getBlockEntity(pos);
-        if(owner!=null&&entityType.equals(net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(owner.getType())))
+        if (owner!=null&&entityType.equals(net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(owner.getType())))
             gregtech.content.cover.ComponentCoverFallback.read(owner,tag,level.registryAccess());
 *///?} else {
     public static void encode(PacketSyncComponentCovers packet,FriendlyByteBuf buf){buf.writeBlockPos(packet.pos);buf.writeResourceLocation(packet.type);buf.writeNbt(packet.tag);}

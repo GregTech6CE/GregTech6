@@ -51,9 +51,9 @@ final class OmniMachineInfo {
             info.line("signal", JadeInspection.label(button.isActive() ? "signal_active" : "signal_idle"));
         } else if (entity instanceof ProcessingToolBlockEntity tool) {
             info.groupedInventory();
-            int inputs = tool.recipes().mInputItemsCount;
+            int inputs = tool.recipes().itemInputSlots;
             info.inventory("input", tool.inventory(), 0, inputs);
-            info.inventory("output", tool.inventory(), inputs, tool.recipes().mOutputItemsCount);
+            info.inventory("output", tool.inventory(), inputs, tool.recipes().itemOutputSlots);
             info.tanks("input", tool.inputTanksForInspection());
             info.tanks("output", tool.outputTanksForInspection());
         } else if (entity instanceof CrucibleFaucetBlockEntity faucet) {

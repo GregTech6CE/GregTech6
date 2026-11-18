@@ -205,7 +205,7 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
         if (fuelEnergy < grade().inputMaximum() && Arrays.stream(exhaust).allMatch(t -> t.getFluidAmount() < t.getCapacity() / 2)) {
             FluidStack input = fuel.getFluid();
             var candidates = FuelRecipeMaps.Gas.fluidInputCandidates(input);
-            Iterable<Recipe> rows = candidates != null ? candidates : FuelRecipeMaps.Gas.mRecipeList;
+            Iterable<Recipe> rows = candidates != null ? candidates : FuelRecipeMaps.Gas.recipeRows;
             // The exhaust contents and capacities only change when a plan is applied.
             var exhaustFluids = Arrays.stream(exhaust).map(FluidTank::getFluid).toList();
             int[] exhaustCapacities = Arrays.stream(exhaust).mapToInt(FluidTank::getCapacity).toArray();

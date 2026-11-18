@@ -308,7 +308,7 @@ public class CrucibleFaucetBlockEntity extends BlockEntity implements ITileEntit
     public CrucibleSpec spec() { return spec; }
 //? if >=1.21.1 {
     /*@Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket(){return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);}
-    @Override public void onDataPacket(net.minecraft.network.Connection connection,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,net.minecraft.core.HolderLookup.Provider lookup){if(packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);}
+    @Override public void onDataPacket(net.minecraft.network.Connection connection,net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet,net.minecraft.core.HolderLookup.Provider lookup){if (packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);}
 *///?} else {
 //?}
 }

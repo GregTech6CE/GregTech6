@@ -104,13 +104,13 @@ public final class FluidItemClientModels {
 
     @SubscribeEvent
     public static void registerColors(net.neoforged.neoforge.client.event.RegisterColorHandlersEvent.Item event) {
-        for(var entry:gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) {
-            if(!(entry.get() instanceof FluidDisplayItem item)) continue;
+        for (var entry:gregtech.platform.neoforge.fluid.FluidRegistries.allItems().toList()) {
+            if (!(entry.get() instanceof FluidDisplayItem item)) continue;
             event.register((stack,layer) -> {
-                if(layer!=0) return 0xFFFFFF;
-                if(gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
+                if (layer!=0) return 0xFFFFFF;
+                if (gregtech.engine.fluid.FluidDisplayBinding.hasPayload(stack)) {
                     var actual=gregtech.engine.fluid.FluidDisplayBinding.resolveCurrent(stack);
-                    if(!actual.isEmpty()) return net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions.of(actual.getFluid()).getTintColor(actual);
+                    if (!actual.isEmpty()) return net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions.of(actual.getFluid()).getTintColor(actual);
                 }
                 return FluidAppearance.appearance(item.fluidEntry()).tint();
             },item);
@@ -120,7 +120,7 @@ public final class FluidItemClientModels {
     public static void setup(net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) {
         gregtech.engine.fluid.FluidDisplayBinding.setClientLookup(() -> {
             var client=net.minecraft.client.Minecraft.getInstance();
-            if(client.level!=null) return client.level.registryAccess();
+            if (client.level!=null) return client.level.registryAccess();
             return client.getConnection()==null?null:client.getConnection().registryAccess();
         });
 *///?} else {

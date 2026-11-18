@@ -51,7 +51,7 @@ public final class PotionBrewingRecipes {
                     DURATION,
                     EU,
                     0);
-            recipe.mExactItemInputs = true;
+            recipe.exactItemInputs = true;
             var added = map.addRecipe(recipe, RecipeMap.Registration.DEFAULT.withCollisionCheck(false));
             if (added == null) continue;
             seen.add(row);

@@ -28,7 +28,7 @@ public final class BasicMachineSourceTooltips {
         var fc = spec.faceConfig();
         add(lines, "gt.lang.recipes", ChatFormatting.AQUA)
                 .append(": ")
-                .append(Component.translatable(map.mNameInternal).withStyle(ChatFormatting.WHITE))
+                .append(Component.translatable(map.internalName).withStyle(ChatFormatting.WHITE))
                 .append(TooltipHelper.parallel(spec.parallelLimit()).withStyle(ChatFormatting.WHITE));
         if (cheap) add(lines, "gt.lang.cheap.overclocking", ChatFormatting.YELLOW);
         if (efficiency != 10000)
@@ -57,31 +57,25 @@ public final class BasicMachineSourceTooltips {
                 line.append(")");
             }
         }
-        io(
-                lines,
-                "gt.lang.item.input",
-                map.mInputItemsCount,
-                fc.itemInputs(),
-                fc.itemAutoInput(),
-                ChatFormatting.GREEN);
+        io(lines, "gt.lang.item.input", map.itemInputSlots, fc.itemInputs(), fc.itemAutoInput(), ChatFormatting.GREEN);
         io(
                 lines,
                 "gt.lang.item.output",
-                map.mOutputItemsCount,
+                map.itemOutputSlots,
                 fc.itemOutputs(),
                 fc.itemAutoOutput(),
                 ChatFormatting.RED);
         io(
                 lines,
                 "gt.lang.fluid.input",
-                map.mInputFluidCount,
+                map.fluidInputTanks,
                 fc.fluidInputs(),
                 fc.fluidAutoInput(),
                 ChatFormatting.GREEN);
         io(
                 lines,
                 "gt.lang.fluid.output",
-                map.mOutputFluidCount,
+                map.fluidOutputTanks,
                 fc.fluidOutputs(),
                 fc.fluidAutoOutput(),
                 ChatFormatting.RED);

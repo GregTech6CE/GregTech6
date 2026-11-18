@@ -23,7 +23,7 @@ public class WoodSaplingBlock extends SaplingBlock {
  @Override public com.mojang.serialization.MapCodec<WoodSaplingBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
  public WoodSpecies species(){return species;}
  @Override public void advanceTree(ServerLevel level,BlockPos pos,BlockState state,RandomSource random){
-  if(state.getValue(STAGE)==0)level.setBlock(pos,state.cycle(STAGE),4);
+  if (state.getValue(STAGE)==0)level.setBlock(pos,state.cycle(STAGE),4);
   else gregtech.content.worldgen.GTTreeShapes.grow(level,pos,species,random);
  }
 *///?} else {

@@ -30,7 +30,7 @@ import java.util.*;
  * ordered by the explicit priority passed to {@link #addDynamicRecipes(long, DynamicRecipes)}, not
  * by the order they were registered.</p>
  *
- * <p>Static rows carry an explicit {@link Recipe#mPriority}; a lookup returns the highest-priority
+ * <p>Static rows carry an explicit {@link Recipe#priority}; a lookup returns the highest-priority
  * matching row and uses the row published first only to break a tie. Rows that share inputs but
  * differ in conditions (energy, duration, probability, special value, catalyst role, priority) are
  * legitimate variants and coexist instead of one being rejected as a duplicate; see
@@ -51,12 +51,12 @@ public class RecipeMap {
     }
 
     @javax.annotation.Nullable
-    private DynamicRecipes mDynamicRecipes;
+    private DynamicRecipes dynamicRecipes;
     private static final DynamicRecipes[] NO_ADDON_DYNAMIC_RECIPES = new DynamicRecipes[0];
     private static final long[] NO_ADDON_DYNAMIC_PRIORITIES = new long[0];
-    private DynamicRecipes[] mAddonDynamicRecipes = NO_ADDON_DYNAMIC_RECIPES;
-    /** Parallel to {@link #mAddonDynamicRecipes}; descending, ties in registration order. */
-    private long[] mAddonDynamicPriorities = NO_ADDON_DYNAMIC_PRIORITIES;
+    private DynamicRecipes[] addonDynamicRecipes = NO_ADDON_DYNAMIC_RECIPES;
+    /** Parallel to {@link #addonDynamicRecipes}; descending, ties in registration order. */
+    private long[] addonDynamicPriorities = NO_ADDON_DYNAMIC_PRIORITIES;
 
     /** Original findRecipe overrides that also need the machine world and special slot. */
     @FunctionalInterface
@@ -65,15 +65,15 @@ public class RecipeMap {
                 net.minecraft.world.level.block.entity.BlockEntity machine, ItemStack special,
                 List<ItemStack> items, List<FluidStack> fluids);
     }
-    private java.util.function.Predicate<ItemStack> mDynamicInputAdmission;
+    private java.util.function.Predicate<ItemStack> dynamicInputAdmission;
     /** Rule families can admit ingredients without enumerating every physical input/output pair. */
     public RecipeMap dynamicInputAdmission(java.util.function.Predicate<ItemStack> admission) {
-        mDynamicInputAdmission = mDynamicInputAdmission == null ? admission : mDynamicInputAdmission.or(admission);
+        dynamicInputAdmission = dynamicInputAdmission == null ? admission : dynamicInputAdmission.or(admission);
         return this;
     }
-    private ContextRecipes mContextRecipes;
+    private ContextRecipes contextRecipes;
     public RecipeMap contextualRecipes(ContextRecipes provider) {
-        mContextRecipes = provider;
+        contextRecipes = provider;
         lookupTable.invalidate();
         return this;
     }
@@ -85,7 +85,7 @@ public class RecipeMap {
      * {@link #addDynamicRecipes(DynamicRecipes)} where they are.
      */
     public RecipeMap dynamicRecipes(DynamicRecipes provider) {
-        mDynamicRecipes = provider;
+        dynamicRecipes = provider;
         lookupTable.invalidate();
         return this;
     }
@@ -106,26 +106,26 @@ public class RecipeMap {
      */
     public RecipeMap addDynamicRecipes(long priority, DynamicRecipes provider) {
         if (provider == null) throw new IllegalArgumentException("dynamic recipe provider");
-        int length = mAddonDynamicRecipes.length;
+        int length = addonDynamicRecipes.length;
         int at = 0;
-        while (at < length && mAddonDynamicPriorities[at] >= priority) at++;
+        while (at < length && addonDynamicPriorities[at] >= priority) at++;
         var providers = new DynamicRecipes[length + 1];
         var priorities = new long[length + 1];
-        System.arraycopy(mAddonDynamicRecipes, 0, providers, 0, at);
-        System.arraycopy(mAddonDynamicPriorities, 0, priorities, 0, at);
+        System.arraycopy(addonDynamicRecipes, 0, providers, 0, at);
+        System.arraycopy(addonDynamicPriorities, 0, priorities, 0, at);
         providers[at] = provider;
         priorities[at] = priority;
-        System.arraycopy(mAddonDynamicRecipes, at, providers, at + 1, length - at);
-        System.arraycopy(mAddonDynamicPriorities, at, priorities, at + 1, length - at);
-        mAddonDynamicRecipes = providers;
-        mAddonDynamicPriorities = priorities;
+        System.arraycopy(addonDynamicRecipes, at, providers, at + 1, length - at);
+        System.arraycopy(addonDynamicPriorities, at, priorities, at + 1, length - at);
+        addonDynamicRecipes = providers;
+        addonDynamicPriorities = priorities;
         lookupTable.invalidate();
         return this;
     }
 
     /** Priorities of the addon providers, in lookup order; the built-in provider is not listed. */
     public long[] dynamicProviderPriorities() {
-        return mAddonDynamicPriorities.clone();
+        return addonDynamicPriorities.clone();
     }
 
     /**
@@ -139,16 +139,16 @@ public class RecipeMap {
     }
 
     @javax.annotation.Nullable
-    private DynamicEnumeration mDynamicEnumeration;
+    private DynamicEnumeration dynamicEnumeration;
 
     public RecipeMap dynamicEnumeration(DynamicEnumeration provider) {
-        mDynamicEnumeration = provider;
+        dynamicEnumeration = provider;
         return this;
     }
 
     /** Whether this map has a rule family whose rows only exist when something enumerates them. */
     public boolean hasDynamicEnumeration() {
-        return mDynamicEnumeration != null;
+        return dynamicEnumeration != null;
     }
 
     /**
@@ -156,8 +156,8 @@ public class RecipeMap {
      * family's rows again, so only viewers and development tools should use it.
      */
     public Iterable<Recipe> allRecipes() {
-        Iterable<Recipe> statics = mRecipeList;
-        DynamicEnumeration generated = mDynamicEnumeration;
+        Iterable<Recipe> statics = recipeRows;
+        DynamicEnumeration generated = dynamicEnumeration;
         if (generated == null) return statics;
         return () -> concat(statics.iterator(), generated.rows().iterator());
     }
@@ -171,7 +171,7 @@ public class RecipeMap {
 
     /** Whether this map computes rows from input NBT (reported by the start-up log line). */
     public boolean hasDynamicRecipes() {
-        return mDynamicRecipes != null || mAddonDynamicRecipes.length != 0 || mContextRecipes != null;
+        return dynamicRecipes != null || addonDynamicRecipes.length != 0 || contextRecipes != null;
     }
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -204,67 +204,67 @@ public class RecipeMap {
     public static final FluidStack[] ZL_FS = new FluidStack[0];
 
     // ── Slot / tank counts (set by constructor, immutable) ──────────────
-    public final int mInputItemsCount, mOutputItemsCount;
+    public final int itemInputSlots, itemOutputSlots;
     /** Dedicated potion input slots; {@link MachineInventory} keeps them beside the item slots. */
-    public final int mInputPotionCount;
-    public final int mInputFluidCount, mOutputFluidCount;
-    public final int mMinimalInputItems, mMinimalInputFluids, mMinimalInputs;
+    public final int potionInputSlots;
+    public final int fluidInputTanks, fluidOutputTanks;
+    public final int minimumItemInputs, minimumFluidInputs, minimumInputs;
 
     // ── Identity ─────────────────────────────────────────────────────────
-    public final String mNameInternal;
-    public final String mNameLocal;
-    public final String mGUIPath;
+    public final String internalName;
+    public final String displayName;
+    public final String guiPath;
     /** Direct fuel converters read fluid amounts instead of presence gates. */
-    private final boolean mDirectFuelConverter;
+    private final boolean directFuelConverter;
     /** Anvil rows treat an empty input slot as a required empty work area. */
-    private final boolean mAnvilRowMap;
+    private final boolean anvilRowMap;
 
     // ── Recipe storage ───────────────────────────────────────────────────
-    public final Collection<Recipe> mRecipeList;
+    public final Collection<Recipe> recipeRows;
     private final RecipeLookupTable lookupTable;
-    /** Publication counter behind {@link Recipe#mRegistrationOrder}; survives removals and reloads. */
-    private long mNextRegistrationOrder;
+    /** Publication counter behind {@link Recipe#registrationOrder}; survives removals and reloads. */
+    private long nextRegistrationOrder;
     /** Index: input {@link Item} -> recipes using it as an input. */
-    public final Map<Item, Collection<Recipe>> mRecipeItemMap = new HashMap<>();
-    public final Map<String, Collection<Recipe>> mRecipeFluidMap = new HashMap<>();
+    public final Map<Item, Collection<Recipe>> recipesByInputItem = new HashMap<>();
+    public final Map<String, Collection<Recipe>> recipesByInputFluid = new HashMap<>();
 
     /** Minimum tank size per fluid key, populated when recipes are added. */
-    public final Map<String, Long> mMinInputTankSizes = new HashMap<>();
+    public final Map<String, Long> minimumInputTankSizes = new HashMap<>();
 
     /** Largest single fluid input amount seen so far (min 1000). */
-    public int mMaxFluidInputSize = 1000;
+    public int maxFluidInputSize = 1000;
     /** Largest single fluid output amount seen so far (min 1000). */
-    public int mMaxFluidOutputSize = 1000;
+    public int maxFluidOutputSize = 1000;
 
     /** Whether {@link #addRecipe(Recipe)} logs errors by default. */
-    public boolean mLogErrors = true;
+    public boolean logRecipeErrors = true;
 
     // ── Convenience flags ────────────────────────────────────────────────
     /** GT6 recipe power divisor; all current non-crafting maps use one. */
-    public long mPower = 1;
+    public long powerMultiplier = 1;
     /** Original NEI eligibility and caption flags; recipe lookup/storage remain independent. */
-    public final boolean mViewerAllowed, mShowVoltageAmperage;
-    public final boolean mNeedsOutputs;
-    public final boolean mCombinePower;
-    public final boolean mUseBucketSizeIn;
-    public final boolean mUseBucketSizeOut;
+    public final boolean viewerAllowed, showVoltageAmperage;
+    public final boolean requiresOutputs;
+    public final boolean combinePower;
+    public final boolean bucketSizedFluidInputs;
+    public final boolean bucketSizedFluidOutputs;
 
     // ── NEI/JEI special value labels (GT6 aNEISpecialValuePre/Multiplier/Post) ──
     /**
      * Prefix of the recipe viewer's "special value" line, e.g. {@code "Temperature: "} for the
-     * crucible maps, whose {@link Recipe#mSpecialValue} is a temperature in Kelvin
+     * crucible maps, whose {@link Recipe#specialValue} is a temperature in Kelvin
      * ({@code RM.CrucibleAlloying} / {@code RM.CrucibleSmelting} in the original). An empty
      * prefix means the map has no special value line.
      */
-    public final String mSpecialValuePre;
-    /** Multiplier applied to {@link Recipe#mSpecialValue} before display (GT6 uses 1). */
-    public final long mSpecialValueMultiplier;
+    public final String specialValuePrefix;
+    /** Multiplier applied to {@link Recipe#specialValue} before display (GT6 uses 1). */
+    public final long specialValueMultiplier;
     /** Suffix of the special value line, e.g. {@code " K"}. */
-    public final String mSpecialValuePost;
+    public final String specialValueSuffix;
 
     /** Whether this map shows a special value line for its recipes. */
     public boolean hasSpecialValueLabel() {
-        return !mSpecialValuePre.isEmpty() && mSpecialValueMultiplier != 0;
+        return !specialValuePrefix.isEmpty() && specialValueMultiplier != 0;
     }
 
     /**
@@ -275,43 +275,43 @@ public class RecipeMap {
      * process), which is why "Time: 1 tick" on the crucible recipe pages is meaningless.
      * </p>
      */
-    public final boolean mInstantRecipes;
+    public final boolean instantRecipes;
 
     /** Creates an empty recipe map and registers it under the specified internal name. */
     public RecipeMap(RecipeMapSpec spec) {
-        mNameInternal = spec.mNameInternal;
-        lookupTable = new RecipeLookupTable(new HashSet<>(), mNameInternal);
-        mRecipeList = lookupTable;
-        mDirectFuelConverter = switch (mNameInternal) {
+        internalName = spec.internalName;
+        lookupTable = new RecipeLookupTable(new HashSet<>(), internalName);
+        recipeRows = lookupTable;
+        directFuelConverter = switch (internalName) {
             case "gt.recipe.fuels.burn", "gt.recipe.fuels.gas", "gt.recipe.fuels.fluidbed",
                     "gt.recipe.fuels.engine", "gt.recipe.fuels.hot" -> true;
             default -> false;
         };
-        mAnvilRowMap = mNameInternal.startsWith("gt.recipe.anvil");
-        mNameLocal = spec.mNameLocal;
-        mGUIPath = spec.mGUIPath;
-        mInputItemsCount = spec.mInputItemsCount;
-        mOutputItemsCount = spec.mOutputItemsCount;
-        mMinimalInputItems = spec.mMinimalInputItems;
-        mInputFluidCount = spec.mInputFluidCount;
-        mOutputFluidCount = spec.mOutputFluidCount;
-        mMinimalInputFluids = spec.mMinimalInputFluids;
-        mMinimalInputs = spec.mMinimalInputs;
-        mNeedsOutputs = spec.mNeedsOutputs;
-        mCombinePower = spec.mCombinePower;
-        mUseBucketSizeIn = spec.mUseBucketSizeIn;
-        mUseBucketSizeOut = spec.mUseBucketSizeOut;
-        mViewerAllowed = spec.mViewerAllowed;
-        mShowVoltageAmperage = spec.mShowVoltageAmperage;
-        mInputPotionCount = spec.mInputPotionCount;
-        mSpecialValuePre = spec.mSpecialValuePre;
-        mSpecialValueMultiplier = spec.mSpecialValueMultiplier;
-        mSpecialValuePost = spec.mSpecialValuePost;
-        mInstantRecipes = spec.mInstantRecipes;
+        anvilRowMap = internalName.startsWith("gt.recipe.anvil");
+        displayName = spec.displayName;
+        guiPath = spec.guiPath;
+        itemInputSlots = spec.itemInputSlots;
+        itemOutputSlots = spec.itemOutputSlots;
+        minimumItemInputs = spec.minimumItemInputs;
+        fluidInputTanks = spec.fluidInputTanks;
+        fluidOutputTanks = spec.fluidOutputTanks;
+        minimumFluidInputs = spec.minimumFluidInputs;
+        minimumInputs = spec.minimumInputs;
+        requiresOutputs = spec.requiresOutputs;
+        combinePower = spec.combinePower;
+        bucketSizedFluidInputs = spec.bucketSizedFluidInputs;
+        bucketSizedFluidOutputs = spec.bucketSizedFluidOutputs;
+        viewerAllowed = spec.viewerAllowed;
+        showVoltageAmperage = spec.showVoltageAmperage;
+        potionInputSlots = spec.potionInputSlots;
+        specialValuePrefix = spec.specialValuePrefix;
+        specialValueMultiplier = spec.specialValueMultiplier;
+        specialValueSuffix = spec.specialValueSuffix;
+        instantRecipes = spec.instantRecipes;
 
-        if (RECIPE_MAPS_INTERNAL.containsKey(mNameInternal))
-            throw new IllegalArgumentException("Duplicate RecipeMap key: " + mNameInternal);
-        RECIPE_MAPS_INTERNAL.put(mNameInternal, this);
+        if (RECIPE_MAPS_INTERNAL.containsKey(internalName))
+            throw new IllegalArgumentException("Duplicate RecipeMap key: " + internalName);
+        RECIPE_MAPS_INTERNAL.put(internalName, this);
         RECIPE_MAP_LIST_INTERNAL.add(this);
     }
 
@@ -329,20 +329,20 @@ public class RecipeMap {
 
     /** Drops {@code map} from the registry when it is the map stored under its name. */
     public static void unregister(RecipeMap map) {
-        if (map != null && RECIPE_MAPS_INTERNAL.remove(map.mNameInternal, map))
+        if (map != null && RECIPE_MAPS_INTERNAL.remove(map.internalName, map))
             RECIPE_MAP_LIST_INTERNAL.remove(map);
     }
 
     /** Puts a previously unregistered map back. */
     public static void restore(RecipeMap map) {
         if (map == null) return;
-        if (RECIPE_MAPS_INTERNAL.putIfAbsent(map.mNameInternal, map) != null)
-            throw new IllegalArgumentException("Duplicate RecipeMap key: " + map.mNameInternal);
+        if (RECIPE_MAPS_INTERNAL.putIfAbsent(map.internalName, map) != null)
+            throw new IllegalArgumentException("Duplicate RecipeMap key: " + map.internalName);
         RECIPE_MAP_LIST_INTERNAL.add(map);
     }
 
     @Override
-    public String toString() { return mNameInternal; }
+    public String toString() { return internalName; }
 
     // ── Recipe registration ──────────────────────────────────────────────
 
@@ -388,7 +388,7 @@ public class RecipeMap {
 
     public Recipe register(RecipeBuilder builder, Registration registration) {
         RecipeBuilder.BuildResult result = builder.buildResult();
-        if (result.collapsed()) COLLAPSED_BY_MAP.merge(mNameInternal, 1, Integer::sum);
+        if (result.collapsed()) COLLAPSED_BY_MAP.merge(internalName, 1, Integer::sum);
         return addRecipe(result.recipe(), registration);
     }
 
@@ -400,12 +400,12 @@ public class RecipeMap {
     public Recipe addRecipe(Recipe recipe, Registration registration) {
         if (recipe == null) return null;
         canonicalInputs(recipe);
-        for (int i = 0; i < recipe.mOutputs.length; i++) {
-            recipe.mOutputs[i] = gregtech.engine.material.MaterialUnification.canonical(recipe.mOutputs[i]);
+        for (int i = 0; i < recipe.itemOutputs.length; i++) {
+            recipe.itemOutputs[i] = gregtech.engine.material.MaterialUnification.canonical(recipe.itemOutputs[i]);
         }
-        recipe.mHidden = registration.hidden;
-        recipe.mFakeRecipe = registration.fakeRecipe;
-        if (!registration.fakeRecipe && !validate(recipe, registration.logErrors && mLogErrors)) return null;
+        recipe.hidden = registration.hidden;
+        recipe.fakeRecipe = registration.fakeRecipe;
+        if (!registration.fakeRecipe && !validate(recipe, registration.logErrors && logRecipeErrors)) return null;
         if (registration.checkForCollisions) {
             Recipe collision = findCollision(recipe);
             if (collision != null) {
@@ -425,18 +425,18 @@ public class RecipeMap {
         Map<Item, List<Recipe>> anchors = new IdentityHashMap<>();
         List<Recipe> unanchored = new ArrayList<>();
         Set<Recipe> indexed = Collections.newSetFromMap(new IdentityHashMap<>());
-        for (var pool : mRecipeItemMap.values()) indexed.addAll(pool);
-        for (var pool : mRecipeFluidMap.values()) indexed.addAll(pool);
+        for (var pool : recipesByInputItem.values()) indexed.addAll(pool);
+        for (var pool : recipesByInputFluid.values()) indexed.addAll(pool);
         for (Recipe row : indexed) indexCollisionAnchor(row, anchors, unanchored);
         List<Recipe> accepted = new ArrayList<>();
         for (Recipe row : candidates) {
             if (row == null) continue;
             canonicalInputs(row);
-            for (int i = 0; i < row.mOutputs.length; i++)
-                row.mOutputs[i] = gregtech.engine.material.MaterialUnification.canonical(row.mOutputs[i]);
-            row.mHidden = false;
-            row.mFakeRecipe = false;
-            if (!validate(row, mLogErrors)) continue;
+            for (int i = 0; i < row.itemOutputs.length; i++)
+                row.itemOutputs[i] = gregtech.engine.material.MaterialUnification.canonical(row.itemOutputs[i]);
+            row.hidden = false;
+            row.fakeRecipe = false;
+            if (!validate(row, logRecipeErrors)) continue;
             if (row.hasTaggedInputs()) {
                 Recipe collision = findCollision(row);
                 if (collision != null) RecipeDiagnostics.rejected(this, collision, row);
@@ -444,7 +444,7 @@ public class RecipeMap {
                 continue;
             }
             boolean collision = false;
-            for (ItemStack input : row.mInputs) {
+            for (ItemStack input : row.itemInputs) {
                 if (empty(input)) continue;
                 var pool = anchors.get(input.getItem());
                 if (pool == null) continue;
@@ -477,10 +477,10 @@ public class RecipeMap {
     /** Unify explicit vanilla replacements before collision lookup, as viewers and live aliases do.
      * Exact recipes and identity-sensitive predicates keep their original representatives. */
     private static void canonicalInputs(Recipe recipe) {
-        if (recipe.mExactItemInputs || recipe.hasRuntimeResolver()) return;
-        for (int i = 0; i < recipe.mInputs.length; i++) {
+        if (recipe.exactItemInputs || recipe.hasRuntimeResolver()) return;
+        for (int i = 0; i < recipe.itemInputs.length; i++) {
             if (recipe.itemTag(i) == null && !recipe.hasItemInputGuard(i) && !recipe.hasSameItemInputPredicate(i))
-                recipe.mInputs[i] = gregtech.engine.material.MaterialUnification.canonical(recipe.mInputs[i]);
+                recipe.itemInputs[i] = gregtech.engine.material.MaterialUnification.canonical(recipe.itemInputs[i]);
         }
     }
 
@@ -491,7 +491,7 @@ public class RecipeMap {
             if (!row.hasItemInputGuards() && !row.hasSameItemInputPredicates()) unanchored.add(row);
             return;
         }
-        for (ItemStack required : row.mInputs) if (!empty(required)) {
+        for (ItemStack required : row.itemInputs) if (!empty(required)) {
             anchors.computeIfAbsent(required.getItem(), key -> new ArrayList<>()).add(row);
             return;
         }
@@ -500,12 +500,12 @@ public class RecipeMap {
 
     private boolean collisionReachable(Recipe existing, Recipe candidate) {
         if (existing.hasTaggedInputs() || candidate.hasTaggedInputs()) return true;
-        for (ItemStack input : candidate.mInputs) if (!empty(input)) {
-            var pool = mRecipeItemMap.get(input.getItem());
+        for (ItemStack input : candidate.itemInputs) if (!empty(input)) {
+            var pool = recipesByInputItem.get(input.getItem());
             if (pool != null && pool.contains(existing)) return true;
         }
-        for (FluidStack input : candidate.mFluidInputs) if (input != null && input.getFluid() != Fluids.EMPTY) {
-            var pool = mRecipeFluidMap.get(fluidKey(input));
+        for (FluidStack input : candidate.fluidInputs) if (input != null && input.getFluid() != Fluids.EMPTY) {
+            var pool = recipesByInputFluid.get(fluidKey(input));
             if (pool != null && pool.contains(existing)) return true;
         }
         return false;
@@ -524,20 +524,20 @@ public class RecipeMap {
 
     // ── Validation / collision / storage ─────────────────────────────────
 
-    private boolean validate(Recipe aRecipe, boolean aLogErrors) {
-        boolean tFailed = false;
-        if (aRecipe.mInputs.length + aRecipe.mFluidInputs.length <= 0) {
-            if (aLogErrors) LOGGER.error("[{}] Recipe has no Inputs!", mNameInternal);
-            tFailed = true;
+    private boolean validate(Recipe recipe, boolean logErrors) {
+        boolean invalid = false;
+        if (recipe.itemInputs.length + recipe.fluidInputs.length <= 0) {
+            if (logErrors) LOGGER.error("[{}] Recipe has no Inputs!", internalName);
+            invalid = true;
         } else {
-            if (mNeedsOutputs && aRecipe.mOutputs.length + aRecipe.mFluidOutputs.length <= 0) {if (aLogErrors) LOGGER.error("[{}] Recipe has no Outputs!", mNameInternal); tFailed = true;}
-            if (aRecipe.mInputs.length      < mMinimalInputItems)  {if (aLogErrors) LOGGER.error("[{}] Recipe has less than the minimal amount of Input ItemStacks!", mNameInternal); tFailed = true;}
-            if (aRecipe.mFluidInputs.length < mMinimalInputFluids) {if (aLogErrors) LOGGER.error("[{}] Recipe has less than the minimal amount of Input FluidStacks!", mNameInternal); tFailed = true;}
-            if (aRecipe.mInputs.length + aRecipe.mFluidInputs.length < mMinimalInputs) {if (aLogErrors) LOGGER.error("[{}] Recipe has less than the minimal amount of general Inputs!", mNameInternal); tFailed = true;}
-            if (aRecipe.mInputs.length      > mInputItemsCount + mInputPotionCount) {if (aLogErrors) LOGGER.error("[{}] Recipe has more than the maximum amount of Input ItemStacks!", mNameInternal); tFailed = true;}
-            if (aRecipe.mFluidInputs.length > mInputFluidCount)    {if (aLogErrors) LOGGER.error("[{}] Recipe has more than the maximum amount of Input FluidStacks!", mNameInternal); tFailed = true;}
+            if (requiresOutputs && recipe.itemOutputs.length + recipe.fluidOutputs.length <= 0) {if (logErrors) LOGGER.error("[{}] Recipe has no Outputs!", internalName); invalid = true;}
+            if (recipe.itemInputs.length      < minimumItemInputs)  {if (logErrors) LOGGER.error("[{}] Recipe has less than the minimal amount of Input ItemStacks!", internalName); invalid = true;}
+            if (recipe.fluidInputs.length < minimumFluidInputs) {if (logErrors) LOGGER.error("[{}] Recipe has less than the minimal amount of Input FluidStacks!", internalName); invalid = true;}
+            if (recipe.itemInputs.length + recipe.fluidInputs.length < minimumInputs) {if (logErrors) LOGGER.error("[{}] Recipe has less than the minimal amount of general Inputs!", internalName); invalid = true;}
+            if (recipe.itemInputs.length      > itemInputSlots + potionInputSlots) {if (logErrors) LOGGER.error("[{}] Recipe has more than the maximum amount of Input ItemStacks!", internalName); invalid = true;}
+            if (recipe.fluidInputs.length > fluidInputTanks)    {if (logErrors) LOGGER.error("[{}] Recipe has more than the maximum amount of Input FluidStacks!", internalName); invalid = true;}
         }
-        return !tFailed;
+        return !invalid;
     }
 
     /**
@@ -547,36 +547,36 @@ public class RecipeMap {
      * the shared input pools; rows with more identities than {@link #COLLISION_SIGNATURE_KEYS}
      * keep the pool scan. Both paths end in {@link #inputsSatisfiedBy}, which decides alone.
      */
-    public Recipe findCollision(Recipe aRecipe) {
+    public Recipe findCollision(Recipe recipe) {
         // Guarded rows narrow their domain with an opaque predicate; no other row can prove it
         // covers or is covered by that domain, so they coexist instead of one being rejected.
-        if (aRecipe.hasItemInputGuards() || aRecipe.hasSameItemInputPredicates()) return null;
-        if (aRecipe.hasTaggedInputs()) {
-            for (Recipe existing : mRecipeList)
-                if (conditionsEqual(existing, aRecipe) && RecipeTagInputs.covers(existing, aRecipe)) return existing;
+        if (recipe.hasItemInputGuards() || recipe.hasSameItemInputPredicates()) return null;
+        if (recipe.hasTaggedInputs()) {
+            for (Recipe existing : recipeRows)
+                if (conditionsEqual(existing, recipe) && RecipeTagInputs.covers(existing, recipe)) return existing;
             return null;
         }
         for (Recipe existing : lookupTable.tagged())
-            if (conditionsEqual(existing, aRecipe) && RecipeTagInputs.covers(existing, aRecipe)) return existing;
-        if (mCollisionDirty || mCollisionRows != mRecipeList.size()) rebuildCollisionIndex();
-        int[] keys = availableCollisionIds(aRecipe);
-        if (keys.length > COLLISION_SIGNATURE_KEYS) return findCollisionByPools(aRecipe);
+            if (conditionsEqual(existing, recipe) && RecipeTagInputs.covers(existing, recipe)) return existing;
+        if (collisionDirty || indexedCollisionRows != recipeRows.size()) rebuildCollisionIndex();
+        int[] keys = availableCollisionIds(recipe);
+        if (keys.length > COLLISION_SIGNATURE_KEYS) return findCollisionByPools(recipe);
         for (int mask = 1; mask < (1 << keys.length); mask++) {
             int[] subset = new int[Integer.bitCount(mask)];
             int next = 0;
             for (int bit = 0; bit < keys.length; bit++) if ((mask & (1 << bit)) != 0) subset[next++] = keys[bit];
-            var bucket = mCollisionBuckets.get(new CollisionSignature(subset));
+            var bucket = collisionBuckets.get(new CollisionSignature(subset));
             if (bucket == null) continue;
-            for (Recipe existing : bucket) if (inputsSatisfiedBy(existing, aRecipe)) return existing;
+            for (Recipe existing : bucket) if (inputsSatisfiedBy(existing, recipe)) return existing;
         }
         // A row that requires nothing is reachable only through an input the candidate also has.
-        for (Recipe existing : mCollisionDegenerate)
-            if (sharesReachKey(existing, keys) && inputsSatisfiedBy(existing, aRecipe)) return existing;
+        for (Recipe existing : collisionDegenerate)
+            if (sharesReachKey(existing, keys) && inputsSatisfiedBy(existing, recipe)) return existing;
         return null;
     }
 
     private boolean sharesReachKey(Recipe existing, int[] candidateKeys) {
-        for (FluidStack fluid : existing.mFluidInputs) {
+        for (FluidStack fluid : existing.fluidInputs) {
             if (fluid == null || fluid.getFluid() == Fluids.EMPTY) continue;
             int id = collisionFluidId(fluidKey(fluid));
             for (int key : candidateKeys) if (key == id) return true;
@@ -585,34 +585,34 @@ public class RecipeMap {
     }
 
     /** The original input-index scan, kept for candidates with too many identities. */
-    private Recipe findCollisionByPools(Recipe aRecipe) {
-        Set<Recipe> tChecked = null;
-        for (ItemStack in : aRecipe.mInputs) {
+    private Recipe findCollisionByPools(Recipe recipe) {
+        Set<Recipe> checked = null;
+        for (ItemStack in : recipe.itemInputs) {
             if (empty(in)) continue;
-            Collection<Recipe> tPool = mRecipeItemMap.get(in.getItem());
-            if (tPool == null) continue;
-            if (tChecked == null) tChecked = new it.unimi.dsi.fastutil.objects.ObjectOpenHashSet<>();
-            for (Recipe t : tPool) if (collisionItemTypesPossible(t, aRecipe)
-                    && tChecked.add(t) && inputsSatisfiedBy(t, aRecipe)) return t;
+            Collection<Recipe> pool = recipesByInputItem.get(in.getItem());
+            if (pool == null) continue;
+            if (checked == null) checked = new it.unimi.dsi.fastutil.objects.ObjectOpenHashSet<>();
+            for (Recipe t : pool) if (collisionItemTypesPossible(t, recipe)
+                    && checked.add(t) && inputsSatisfiedBy(t, recipe)) return t;
         }
-        for (FluidStack f : aRecipe.mFluidInputs) {
+        for (FluidStack f : recipe.fluidInputs) {
             if (f == null || f.getFluid() == Fluids.EMPTY) continue;
-            Collection<Recipe> tPool = mRecipeFluidMap.get(fluidKey(f));
-            if (tPool == null) continue;
-            if (tChecked == null) tChecked = new it.unimi.dsi.fastutil.objects.ObjectOpenHashSet<>();
-            for (Recipe t : tPool) if (collisionItemTypesPossible(t, aRecipe)
-                    && tChecked.add(t) && inputsSatisfiedBy(t, aRecipe)) return t;
+            Collection<Recipe> pool = recipesByInputFluid.get(fluidKey(f));
+            if (pool == null) continue;
+            if (checked == null) checked = new it.unimi.dsi.fastutil.objects.ObjectOpenHashSet<>();
+            for (Recipe t : pool) if (collisionItemTypesPossible(t, recipe)
+                    && checked.add(t) && inputsSatisfiedBy(t, recipe)) return t;
         }
         return null;
     }
 
     /** Reject unrelated mold/tool buckets before allocating entries in the collision visited set. */
-    private static boolean collisionItemTypesPossible(Recipe aExisting, Recipe aCandidate) {
-        if (aExisting.hasTaggedInputs() || aCandidate.hasTaggedInputs()) return true;
-        for (ItemStack required : aExisting.mInputs) {
+    private static boolean collisionItemTypesPossible(Recipe existingRecipe, Recipe candidateRecipe) {
+        if (existingRecipe.hasTaggedInputs() || candidateRecipe.hasTaggedInputs()) return true;
+        for (ItemStack required : existingRecipe.itemInputs) {
             if (empty(required)) continue;
             boolean present = false;
-            for (ItemStack candidate : aCandidate.mInputs) {
+            for (ItemStack candidate : candidateRecipe.itemInputs) {
                 if (!empty(candidate) && candidate.getItem() == required.getItem()) {
                     present = true;
                     break;
@@ -631,40 +631,40 @@ public class RecipeMap {
      * conditions are identical are duplicates, which is the case the collision check rejects.
      */
     static boolean conditionsEqual(Recipe a, Recipe b) {
-        return a.mSpecialValue == b.mSpecialValue
-                && a.mPriority == b.mPriority
-                && a.mEUt == b.mEUt
-                && a.mDuration == b.mDuration
-                && a.mNeedsEmptyOutput == b.mNeedsEmptyOutput
-                && a.mExactItemInputs == b.mExactItemInputs
-                && a.mExplicitCatalystsOnly == b.mExplicitCatalystsOnly
-                && a.mRequiresEmptyContainerInputs == b.mRequiresEmptyContainerInputs
-                && a.mMaterialRecovery == b.mMaterialRecovery
-                && Arrays.equals(a.mChances, b.mChances)
+        return a.specialValue == b.specialValue
+                && a.priority == b.priority
+                && a.energyPerTick == b.energyPerTick
+                && a.durationTicks == b.durationTicks
+                && a.needsEmptyOutput == b.needsEmptyOutput
+                && a.exactItemInputs == b.exactItemInputs
+                && a.explicitCatalystsOnly == b.explicitCatalystsOnly
+                && a.requiresEmptyContainerInputs == b.requiresEmptyContainerInputs
+                && a.materialRecovery == b.materialRecovery
+                && Arrays.equals(a.outputChances, b.outputChances)
                 && Arrays.equals(a.explicitCatalystInputs(), b.explicitCatalystInputs())
                 && Arrays.equals(a.explicitCatalystFluidInputs(), b.explicitCatalystFluidInputs())
                 && Arrays.equals(a.explicitPresenceFluidInputs(), b.explicitPresenceFluidInputs());
     }
 
-    /** Whether every input of {@code aExisting} is covered by the inputs of {@code aCandidate}. */
-    private boolean inputsSatisfiedBy(Recipe aExisting, Recipe aCandidate) {
-        if (aExisting.mFakeRecipe) return false;
-        if (aExisting.hasItemInputGuards() || aExisting.hasSameItemInputPredicates()) return false;
-        if (!conditionsEqual(aExisting, aCandidate)) return false;
+    /** Whether every input of {@code existingRecipe} is covered by the inputs of {@code candidateRecipe}. */
+    private boolean inputsSatisfiedBy(Recipe existingRecipe, Recipe candidateRecipe) {
+        if (existingRecipe.fakeRecipe) return false;
+        if (existingRecipe.hasItemInputGuards() || existingRecipe.hasSameItemInputPredicates()) return false;
+        if (!conditionsEqual(existingRecipe, candidateRecipe)) return false;
         // In an anvil recipe an empty entry is a required empty work area, not a wildcard.
-        if (mAnvilRowMap) {
-            long requiredEmpty = java.util.Arrays.stream(aExisting.mInputs).filter(RecipeMap::empty).count();
-            long candidateEmpty = java.util.Arrays.stream(aCandidate.mInputs).filter(RecipeMap::empty).count();
+        if (anvilRowMap) {
+            long requiredEmpty = java.util.Arrays.stream(existingRecipe.itemInputs).filter(RecipeMap::empty).count();
+            long candidateEmpty = java.util.Arrays.stream(candidateRecipe.itemInputs).filter(RecipeMap::empty).count();
             if (requiredEmpty != candidateEmpty) return false;
         }
-        if (aExisting.hasTaggedInputs() || aCandidate.hasTaggedInputs()) return RecipeTagInputs.covers(aExisting, aCandidate);
+        if (existingRecipe.hasTaggedInputs() || candidateRecipe.hasTaggedInputs()) return RecipeTagInputs.covers(existingRecipe, candidateRecipe);
         // Common inputs such as molds put many unrelated recipes in the same index bucket.
         // Reject an impossible item match before copying any stacks, while retaining the full
         // count and NBT/component comparison below for every possible match.
-        for (ItemStack required : aExisting.mInputs) {
+        for (ItemStack required : existingRecipe.itemInputs) {
             if (empty(required)) continue;
             boolean present = false;
-            for (ItemStack candidate : aCandidate.mInputs) {
+            for (ItemStack candidate : candidateRecipe.itemInputs) {
                 if (!empty(candidate) && candidate.getItem() == required.getItem()) {
                     present = true;
                     break;
@@ -672,9 +672,9 @@ public class RecipeMap {
             }
             if (!present) return false;
         }
-        var items = java.util.Arrays.stream(aCandidate.mInputs)
+        var items = java.util.Arrays.stream(candidateRecipe.itemInputs)
                 .map(s -> empty(s) ? ItemStack.EMPTY : s.copy()).toArray(ItemStack[]::new);
-        for (ItemStack in : aExisting.mInputs) {
+        for (ItemStack in : existingRecipe.itemInputs) {
             if (empty(in)) continue;
             int needed = in.getCount();
             for (ItemStack s : items) {
@@ -688,16 +688,16 @@ public class RecipeMap {
             }
             if (needed > 0) return false;
         }
-        var fluids = java.util.Arrays.stream(aCandidate.mFluidInputs)
+        var fluids = java.util.Arrays.stream(candidateRecipe.fluidInputs)
                 .map(f -> f == null ? FluidStack.EMPTY : f.copy()).toArray(FluidStack[]::new);
         // Presence representatives are identities, not one extra mB available to satisfy consumption.
-        for (int i = 0; i < fluids.length; i++) if (aCandidate.isPresenceFluidInput(i)) fluids[i] = FluidStack.EMPTY;
-        for (int inputIndex = 0; inputIndex < aExisting.mFluidInputs.length; inputIndex++) {
-            FluidStack in = aExisting.mFluidInputs[inputIndex];
+        for (int i = 0; i < fluids.length; i++) if (candidateRecipe.isPresenceFluidInput(i)) fluids[i] = FluidStack.EMPTY;
+        for (int inputIndex = 0; inputIndex < existingRecipe.fluidInputs.length; inputIndex++) {
+            FluidStack in = existingRecipe.fluidInputs[inputIndex];
             if (in == null || in.getFluid() == Fluids.EMPTY) continue;
-            if (aExisting.isPresenceFluidInput(inputIndex)) {
+            if (existingRecipe.isPresenceFluidInput(inputIndex)) {
                 boolean present = false;
-                for (FluidStack f : aCandidate.mFluidInputs) {
+                for (FluidStack f : candidateRecipe.fluidInputs) {
                     if (f != null && !f.isEmpty() && RecipeInputs.sameFluid(f, in)) { present = true; break; }
                 }
                 if (!present) return false;
@@ -725,70 +725,70 @@ public class RecipeMap {
 
     /** These builtin converters still interpret fluid input amounts directly, not as presence gates. */
     private boolean supportsFluidPresence(Recipe recipe) {
-        return !recipe.hasPresenceFluidInputs() || !mDirectFuelConverter;
+        return !recipe.hasPresenceFluidInputs() || !directFuelConverter;
     }
 
     /** Stores the recipe and updates lookup indices, rejecting unsupported presence-only fuel rows. */
-    public synchronized Recipe add(Recipe aRecipe) {
-        if (aRecipe == null) return null;
-        if (!supportsFluidPresence(aRecipe)) {
-            LOGGER.error("[{}] Presence-only fluid inputs are unsupported by this map's direct fuel converters; recipe rejected", mNameInternal);
+    public synchronized Recipe add(Recipe recipe) {
+        if (recipe == null) return null;
+        if (!supportsFluidPresence(recipe)) {
+            LOGGER.error("[{}] Presence-only fluid inputs are unsupported by this map's direct fuel converters; recipe rejected", internalName);
             return null;
         }
-        boolean inserted = mRecipeList.add(aRecipe);
+        boolean inserted = recipeRows.add(recipe);
         if (inserted) {
             // The first publication order is kept when a baseline row is put back, so an equal-priority
             // tie resolves the same way after a reload.
-            if (aRecipe.mRegistrationOrder < 0) aRecipe.mRegistrationOrder = mNextRegistrationOrder++;
-            for (var capture : mAdditionCaptures) capture.record(aRecipe);
-            indexCollision(aRecipe);
+            if (recipe.registrationOrder < 0) recipe.registrationOrder = nextRegistrationOrder++;
+            for (var capture : additionCaptures) capture.record(recipe);
+            indexCollision(recipe);
         }
         // Index by input items
-        for (ItemStack in : aRecipe.mInputs) {
+        for (ItemStack in : recipe.itemInputs) {
             if (empty(in)) continue;
-            mRecipeItemMap.computeIfAbsent(in.getItem(), k -> new HashSet<>()).add(aRecipe);
+            recipesByInputItem.computeIfAbsent(in.getItem(), k -> new HashSet<>()).add(recipe);
             for (var color : gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(in))
-                mRecipeItemMap.computeIfAbsent(color.getItem(), k -> new HashSet<>()).add(aRecipe);
+                recipesByInputItem.computeIfAbsent(color.getItem(), k -> new HashSet<>()).add(recipe);
         }
         // Index by input fluids; a 0 mB catalyst still needs the fluid present.
-        for (FluidStack f : aRecipe.mFluidInputs) {
+        for (FluidStack f : recipe.fluidInputs) {
             if (f == null || f.getFluid() == Fluids.EMPTY) continue;
             String fKey = fluidKey(f);
-            mRecipeFluidMap.computeIfAbsent(fKey, k -> new HashSet<>()).add(aRecipe);
-            mMinInputTankSizes.merge(fKey, (long) Math.max(1, f.getAmount()), Math::max);
-            mMaxFluidInputSize = Math.max(mMaxFluidInputSize, f.getAmount());
+            recipesByInputFluid.computeIfAbsent(fKey, k -> new HashSet<>()).add(recipe);
+            minimumInputTankSizes.merge(fKey, (long) Math.max(1, f.getAmount()), Math::max);
+            maxFluidInputSize = Math.max(maxFluidInputSize, f.getAmount());
         }
-        for (FluidStack f : aRecipe.mFluidOutputs) {
-            if (f != null) mMaxFluidOutputSize = Math.max(mMaxFluidOutputSize, f.getAmount());
+        for (FluidStack f : recipe.fluidOutputs) {
+            if (f != null) maxFluidOutputSize = Math.max(maxFluidOutputSize, f.getAmount());
         }
-        return aRecipe;
+        return recipe;
     }
 
-    private List<Recipe> mBaseline;
+    private List<Recipe> baseline;
 
-    public boolean hasBaseline() { return mBaseline != null; }
-    public int baselineSize() { return mBaseline == null ? 0 : mBaseline.size(); }
+    public boolean hasBaseline() { return baseline != null; }
+    public int baselineSize() { return baseline == null ? 0 : baseline.size(); }
 
     /** The first capture is kept. Rows in {@code exclude} are rebuilt from tags after every restore. */
     public synchronized void captureBaseline(Set<Recipe> exclude) {
-        if (mBaseline != null) return;
-        var rows = new ArrayList<Recipe>(mRecipeList.size());
-        for (var recipe : mRecipeList) if (exclude == null || !exclude.contains(recipe)) rows.add(recipe);
-        mBaseline = List.copyOf(rows);
+        if (baseline != null) return;
+        var rows = new ArrayList<Recipe>(recipeRows.size());
+        for (var recipe : recipeRows) if (exclude == null || !exclude.contains(recipe)) rows.add(recipe);
+        baseline = List.copyOf(rows);
     }
 
     /** Drops rows outside the baseline and puts missing baseline rows back. Returns how many rows moved. */
     public synchronized int restoreBaseline() {
-        if (mBaseline == null) throw new IllegalStateException("Recipe baseline was not captured for " + mNameInternal);
+        if (baseline == null) throw new IllegalStateException("Recipe baseline was not captured for " + internalName);
         var keep = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
-        keep.addAll(mBaseline);
+        keep.addAll(baseline);
         var drop = new ArrayList<Recipe>();
-        for (var recipe : mRecipeList) if (!keep.contains(recipe)) drop.add(recipe);
+        for (var recipe : recipeRows) if (!keep.contains(recipe)) drop.add(recipe);
         removeAll(drop);
         var present = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
-        present.addAll(mRecipeList);
+        present.addAll(recipeRows);
         int restored = 0;
-        for (var recipe : mBaseline) if (present.add(recipe)) {
+        for (var recipe : baseline) if (present.add(recipe)) {
             add(recipe);
             restored++;
         }
@@ -797,18 +797,18 @@ public class RecipeMap {
 
     /** Clears the indexes and inserts the baseline again, for timing a full rebuild. */
     public synchronized int reindexBaseline() {
-        if (mBaseline == null) throw new IllegalStateException("Recipe baseline was not captured for " + mNameInternal);
-        mRecipeList.clear();
-        mRecipeItemMap.clear();
-        mRecipeFluidMap.clear();
+        if (baseline == null) throw new IllegalStateException("Recipe baseline was not captured for " + internalName);
+        recipeRows.clear();
+        recipesByInputItem.clear();
+        recipesByInputFluid.clear();
         clearCollisionIndex();
-        for (var recipe : mBaseline) add(recipe);
-        return mBaseline.size();
+        for (var recipe : baseline) add(recipe);
+        return baseline.size();
     }
 
     /** Removes one stored row and its input indexes. */
     public synchronized boolean unlink(Recipe recipe) {
-        if (recipe == null || !mRecipeList.remove(recipe)) return false;
+        if (recipe == null || !recipeRows.remove(recipe)) return false;
         unlinkIndexes(recipe);
         return true;
     }
@@ -824,43 +824,43 @@ public class RecipeMap {
         if (rows == null || rows.isEmpty()) return 0;
         // Removing one row at a time keeps the membership test on the stored set's own hash.
         var present = new ArrayList<Recipe>(rows.size());
-        for (Recipe recipe : rows) if (recipe != null && mRecipeList.remove(recipe)) present.add(recipe);
+        for (Recipe recipe : rows) if (recipe != null && recipeRows.remove(recipe)) present.add(recipe);
         for (Recipe recipe : present) unlinkIndexes(recipe);
         return present.size();
     }
 
     /** Drops every index entry {@link #add} created for an already-unstored row. */
     private void unlinkIndexes(Recipe recipe) {
-        for (ItemStack in : recipe.mInputs) {
+        for (ItemStack in : recipe.itemInputs) {
             if (empty(in)) continue;
             removeItemIndex(in.getItem(), recipe);
             for (var color : gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(in))
                 removeItemIndex(color.getItem(), recipe);
         }
-        for (FluidStack fluid : recipe.mFluidInputs) {
+        for (FluidStack fluid : recipe.fluidInputs) {
             // add() indexes every non-empty fluid, amount 0 included; the removal must mirror it.
             if (fluid == null || fluid.getFluid() == Fluids.EMPTY) continue;
             String key = fluidKey(fluid);
-            var pool = mRecipeFluidMap.get(key);
+            var pool = recipesByInputFluid.get(key);
             if (pool == null) continue;
             pool.remove(recipe);
-            if (pool.isEmpty()) mRecipeFluidMap.remove(key);
+            if (pool.isEmpty()) recipesByInputFluid.remove(key);
         }
         unindexCollision(recipe);
     }
 
     private void removeItemIndex(Item item, Recipe recipe) {
-        var pool = mRecipeItemMap.get(item);
+        var pool = recipesByInputItem.get(item);
         if (pool == null) return;
         pool.remove(recipe);
-        if (pool.isEmpty()) mRecipeItemMap.remove(item);
+        if (pool.isEmpty()) recipesByInputItem.remove(item);
     }
 
     /** Removes all recipes that use the given item as one of their inputs. */
-    public synchronized boolean removeRecipesByInput(ItemStack aInput) {
-        if (empty(aInput)) return false;
-        var removed = new HashSet<Recipe>(mRecipeItemMap.getOrDefault(aInput.getItem(), List.of()));
-        for (Recipe recipe : lookupTable.tagged()) if (containsInput(recipe, aInput, false)) removed.add(recipe);
+    public synchronized boolean removeRecipesByInput(ItemStack input) {
+        if (empty(input)) return false;
+        var removed = new HashSet<Recipe>(recipesByInputItem.getOrDefault(input.getItem(), List.of()));
+        for (Recipe recipe : lookupTable.tagged()) if (containsInput(recipe, input, false)) removed.add(recipe);
         if (removed.isEmpty()) return false;
         removeAll(removed);
         return true;
@@ -878,7 +878,7 @@ public class RecipeMap {
         }
     }
 
-    private final List<AdditionCapture> mAdditionCaptures = new ArrayList<>();
+    private final List<AdditionCapture> additionCaptures = new ArrayList<>();
 
     /**
      * Replaces a before/after snapshot of the whole collection by the rows this thread adds to this
@@ -890,18 +890,18 @@ public class RecipeMap {
      */
     public void captureAdditions(List<Recipe> out, Runnable body) {
         var capture = new AdditionCapture();
-        synchronized (this) { mAdditionCaptures.add(capture); }
+        synchronized (this) { additionCaptures.add(capture); }
         boolean completed = false;
         try {
             body.run();
             completed = true;
         } finally {
-            synchronized (this) { mAdditionCaptures.remove(capture); }
+            synchronized (this) { additionCaptures.remove(capture); }
             out.clear();
             if (completed) {
                 var seen = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
                 for (Recipe recipe : capture.rows)
-                    if (seen.add(recipe) && mRecipeList.contains(recipe)) out.add(recipe);
+                    if (seen.add(recipe) && recipeRows.contains(recipe)) out.add(recipe);
             }
         }
     }
@@ -934,37 +934,37 @@ public class RecipeMap {
     }
 
     /** Stored rows grouped by the exact set of inputs they require. */
-    private final Map<CollisionSignature, List<Recipe>> mCollisionBuckets = new HashMap<>();
-    private final Map<Item, Integer> mCollisionItemIds = new IdentityHashMap<>();
-    private final Map<String, Integer> mCollisionFluidIds = new HashMap<>();
+    private final Map<CollisionSignature, List<Recipe>> collisionBuckets = new HashMap<>();
+    private final Map<Item, Integer> collisionItemIds = new IdentityHashMap<>();
+    private final Map<String, Integer> collisionFluidIds = new HashMap<>();
     /** Rows that require nothing but are still reachable through a zero-amount fluid. */
-    private final List<Recipe> mCollisionDegenerate = new ArrayList<>();
-    private int mCollisionNextId;
+    private final List<Recipe> collisionDegenerate = new ArrayList<>();
+    private int nextCollisionId;
     /** Rows this index has seen; a different count means the public collection was changed directly. */
-    private volatile int mCollisionRows;
+    private volatile int indexedCollisionRows;
     /** Set when registered rows may have changed identity in place; the next check rebuilds. */
-    private volatile boolean mCollisionDirty;
+    private volatile boolean collisionDirty;
 
     private int collisionItemId(Item item) {
-        return mCollisionItemIds.computeIfAbsent(item, unused -> mCollisionNextId++);
+        return collisionItemIds.computeIfAbsent(item, unused -> nextCollisionId++);
     }
 
     private int collisionFluidId(String key) {
-        Integer id = mCollisionFluidIds.get(key);
-        if (id == null) mCollisionFluidIds.put(key, id = mCollisionNextId++);
+        Integer id = collisionFluidIds.get(key);
+        if (id == null) collisionFluidIds.put(key, id = nextCollisionId++);
         return id;
     }
 
     /** Identities a stored row needs from a candidate before {@link #inputsSatisfiedBy} can pass. */
     private int[] requiredCollisionIds(Recipe recipe) {
-        int[] ids = new int[recipe.mInputs.length + recipe.mFluidInputs.length];
+        int[] ids = new int[recipe.itemInputs.length + recipe.fluidInputs.length];
         int count = 0;
-        for (ItemStack required : recipe.mInputs) {
+        for (ItemStack required : recipe.itemInputs) {
             if (empty(required)) continue;
             ids[count++] = collisionItemId(required.getItem());
         }
-        for (int index = 0; index < recipe.mFluidInputs.length; index++) {
-            FluidStack required = recipe.mFluidInputs[index];
+        for (int index = 0; index < recipe.fluidInputs.length; index++) {
+            FluidStack required = recipe.fluidInputs[index];
             if (required == null || required.getFluid() == Fluids.EMPTY) continue;
             // A zero-amount non-presence fluid is indexed by add() but not required by the matcher.
             if (!recipe.isPresenceFluidInput(index) && required.getAmount() <= 0) continue;
@@ -975,13 +975,13 @@ public class RecipeMap {
 
     /** Identities a candidate offers, matching the pools {@link #add} would index it under. */
     private int[] availableCollisionIds(Recipe recipe) {
-        int[] ids = new int[recipe.mInputs.length + recipe.mFluidInputs.length];
+        int[] ids = new int[recipe.itemInputs.length + recipe.fluidInputs.length];
         int count = 0;
-        for (ItemStack available : recipe.mInputs) {
+        for (ItemStack available : recipe.itemInputs) {
             if (empty(available)) continue;
             ids[count++] = collisionItemId(available.getItem());
         }
-        for (FluidStack available : recipe.mFluidInputs) {
+        for (FluidStack available : recipe.fluidInputs) {
             if (available == null || available.getFluid() == Fluids.EMPTY) continue;
             ids[count++] = collisionFluidId(fluidKey(available));
         }
@@ -997,45 +997,45 @@ public class RecipeMap {
     }
 
     private void indexCollision(Recipe recipe) {
-        mCollisionRows++;
+        indexedCollisionRows++;
         int[] ids = requiredCollisionIds(recipe);
         if (ids.length == 0) {
-            if (reachableFluid(recipe)) mCollisionDegenerate.add(recipe);
+            if (reachableFluid(recipe)) collisionDegenerate.add(recipe);
             return;
         }
-        mCollisionBuckets.computeIfAbsent(new CollisionSignature(ids), unused -> new ArrayList<>()).add(recipe);
+        collisionBuckets.computeIfAbsent(new CollisionSignature(ids), unused -> new ArrayList<>()).add(recipe);
     }
 
     private void unindexCollision(Recipe recipe) {
-        mCollisionRows--;
+        indexedCollisionRows--;
         int[] ids = requiredCollisionIds(recipe);
         if (ids.length == 0) {
-            mCollisionDegenerate.remove(recipe);
+            collisionDegenerate.remove(recipe);
             return;
         }
         var signature = new CollisionSignature(ids);
-        var bucket = mCollisionBuckets.get(signature);
+        var bucket = collisionBuckets.get(signature);
         if (bucket == null) return;
         bucket.remove(recipe);
-        if (bucket.isEmpty()) mCollisionBuckets.remove(signature);
+        if (bucket.isEmpty()) collisionBuckets.remove(signature);
     }
 
     private static boolean reachableFluid(Recipe recipe) {
-        for (FluidStack fluid : recipe.mFluidInputs)
+        for (FluidStack fluid : recipe.fluidInputs)
             if (fluid != null && fluid.getFluid() != Fluids.EMPTY) return true;
         return false;
     }
 
     private void clearCollisionIndex() {
-        mCollisionBuckets.clear();
-        mCollisionDegenerate.clear();
-        mCollisionRows = 0;
-        mCollisionDirty = false;
+        collisionBuckets.clear();
+        collisionDegenerate.clear();
+        indexedCollisionRows = 0;
+        collisionDirty = false;
     }
 
     private synchronized void rebuildCollisionIndex() {
         clearCollisionIndex();
-        for (Recipe recipe : mRecipeList) indexCollision(recipe);
+        for (Recipe recipe : recipeRows) indexCollision(recipe);
     }
 
     // ── Recipe lookup ────────────────────────────────────────────────────
@@ -1071,14 +1071,14 @@ public class RecipeMap {
         if (best != null) return best;
         // GT6's subclass overrides run only when the table had no answer, exactly like GT6's
         // `if (rRecipe != null) return rRecipe;` guards at the top of those findRecipe() bodies.
-        if (mDynamicRecipes != null || mAddonDynamicRecipes.length != 0) {
+        if (dynamicRecipes != null || addonDynamicRecipes.length != 0) {
             Recipe dynamic = firstMatchingDynamicRecipe(matcher, inputItems, inputFluids, needsOutputs, emptyOutputs);
             if (dynamic != null) return dynamic;
         }
-        if (mContextRecipes != null && level != null) {
-            Recipe dynamic = mContextRecipes.find(level, machine, special, inputItems, inputFluids);
-            if (dynamic != null && dynamic.mEnabled && !dynamic.mFakeRecipe && supportsFluidPresence(dynamic)
-                    && (!needsOutputs || !dynamic.mNeedsEmptyOutput
+        if (contextRecipes != null && level != null) {
+            Recipe dynamic = contextRecipes.find(level, machine, special, inputItems, inputFluids);
+            if (dynamic != null && dynamic.enabled && !dynamic.fakeRecipe && supportsFluidPresence(dynamic)
+                    && (!needsOutputs || !dynamic.needsEmptyOutput
                             || allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount))
                     && matcher.matches(dynamic, 1)) return dynamic;
         }
@@ -1103,8 +1103,8 @@ public class RecipeMap {
             ordered.sort(RecipeMap::compareSelectionOrder);
         }
         for (Recipe candidate : ordered) {
-            if (!candidate.mEnabled || candidate.mFakeRecipe || !supportsFluidPresence(candidate)) continue;
-            if (needsOutputs && candidate.mNeedsEmptyOutput && !emptyOutputs) continue;
+            if (!candidate.enabled || candidate.fakeRecipe || !supportsFluidPresence(candidate)) continue;
+            if (needsOutputs && candidate.needsEmptyOutput && !emptyOutputs) continue;
             if (!matcher.matches(candidate, 1)) continue;
             if (!candidate.hasRuntimeResolver()) return candidate;
             Recipe resolved = candidate.resolveRuntime(inputs);
@@ -1129,10 +1129,10 @@ public class RecipeMap {
     }
 
     private static int compareSelectionOrder(Recipe a, Recipe b) {
-        int byPriority = Long.compare(b.mPriority, a.mPriority);
+        int byPriority = Long.compare(b.priority, a.priority);
         if (byPriority != 0) return byPriority;
-        long first = a.mRegistrationOrder < 0 ? Long.MAX_VALUE : a.mRegistrationOrder;
-        long second = b.mRegistrationOrder < 0 ? Long.MAX_VALUE : b.mRegistrationOrder;
+        long first = a.registrationOrder < 0 ? Long.MAX_VALUE : a.registrationOrder;
+        long second = b.registrationOrder < 0 ? Long.MAX_VALUE : b.registrationOrder;
         return Long.compare(first, second);
     }
 
@@ -1146,12 +1146,12 @@ public class RecipeMap {
     private Recipe firstMatchingDynamicRecipe(RecipeInputs.Matcher matcher, List<ItemStack> inputItems,
                                               List<FluidStack> inputFluids, boolean needsOutputs,
                                               boolean emptyOutputs) {
-        if (mDynamicRecipes != null) {
-            Recipe recipe = mDynamicRecipes.find(inputItems, inputFluids);
+        if (dynamicRecipes != null) {
+            Recipe recipe = dynamicRecipes.find(inputItems, inputFluids);
             if (usableDynamicRecipe(recipe, matcher, needsOutputs, emptyOutputs)) return recipe;
         }
-        for (int i = 0; i < mAddonDynamicRecipes.length; i++) {
-            Recipe recipe = mAddonDynamicRecipes[i].find(inputItems, inputFluids);
+        for (int i = 0; i < addonDynamicRecipes.length; i++) {
+            Recipe recipe = addonDynamicRecipes[i].find(inputItems, inputFluids);
             if (usableDynamicRecipe(recipe, matcher, needsOutputs, emptyOutputs)) return recipe;
         }
         return null;
@@ -1159,14 +1159,14 @@ public class RecipeMap {
 
     private boolean usableDynamicRecipe(Recipe recipe, RecipeInputs.Matcher matcher,
                                         boolean needsOutputs, boolean emptyOutputs) {
-        return recipe != null && recipe.mEnabled && !recipe.mFakeRecipe && supportsFluidPresence(recipe)
-                && (!needsOutputs || !recipe.mNeedsEmptyOutput || emptyOutputs)
+        return recipe != null && recipe.enabled && !recipe.fakeRecipe && supportsFluidPresence(recipe)
+                && (!needsOutputs || !recipe.needsEmptyOutput || emptyOutputs)
                 && matcher.matches(recipe, 1);
     }
 
     static boolean exactItems(Recipe recipe, List<ItemStack> inputs) {
-        for (int input = 0; input < recipe.mInputs.length; input++) {
-            var required = recipe.mInputs[input];
+        for (int input = 0; input < recipe.itemInputs.length; input++) {
+            var required = recipe.itemInputs[input];
             boolean found = false;
             for (var available : inputs) if (recipe.itemTag(input) != null ? available.is(recipe.itemTag(input))
                     : required.is(available.getItem())) { found = true; break; }
@@ -1178,12 +1178,12 @@ public class RecipeMap {
     /** Call after mutating the ingredients of an already registered row in place. */
     public void invalidateLookup() {
         lookupTable.invalidate();
-        mCollisionDirty = true;
+        collisionDirty = true;
     }
 
     /** Whether a null {@link #findRecipe} answer can only come from the static row table. */
     public boolean hasOnlyStaticLookup() {
-        return mDynamicRecipes == null && mAddonDynamicRecipes.length == 0 && mContextRecipes == null;
+        return dynamicRecipes == null && addonDynamicRecipes.length == 0 && contextRecipes == null;
     }
 
     /** Whether any published row answers through a live item guard or predicate; unknown means true. */
@@ -1218,12 +1218,12 @@ public class RecipeMap {
 
     @javax.annotation.Nullable
     private Recipe firstDynamicRecipe(List<ItemStack> inputItems, List<FluidStack> inputFluids) {
-        if (mDynamicRecipes != null) {
-            Recipe recipe = mDynamicRecipes.find(inputItems, inputFluids);
+        if (dynamicRecipes != null) {
+            Recipe recipe = dynamicRecipes.find(inputItems, inputFluids);
             if (recipe != null && supportsFluidPresence(recipe)) return recipe;
         }
-        for (int i = 0; i < mAddonDynamicRecipes.length; i++) {
-            Recipe recipe = mAddonDynamicRecipes[i].find(inputItems, inputFluids);
+        for (int i = 0; i < addonDynamicRecipes.length; i++) {
+            Recipe recipe = addonDynamicRecipes[i].find(inputItems, inputFluids);
             if (recipe != null && supportsFluidPresence(recipe)) return recipe;
         }
         return null;
@@ -1246,13 +1246,13 @@ public class RecipeMap {
 
     /** Minimum recommended tank size for a given fluid, or 0 if unknown. */
     public long minTankSize(String fluidKey) {
-        long size = mMinInputTankSizes.getOrDefault(fluidKey, 0L);
+        long size = minimumInputTankSizes.getOrDefault(fluidKey, 0L);
         var id = net.minecraft.resources.ResourceLocation.tryParse(fluidKey);
         var fluid = id == null ? Fluids.EMPTY : net.minecraft.core.registries.BuiltInRegistries.FLUID.get(id);
         if (fluid != Fluids.EMPTY) for (var recipe : lookupTable.tagged())
-            for (int i = 0; i < recipe.mFluidInputs.length; i++)
+            for (int i = 0; i < recipe.fluidInputs.length; i++)
                 if (recipe.fluidTag(i) != null && fluid.builtInRegistryHolder().is(recipe.fluidTag(i)))
-                    size = Math.max(size, recipe.mFluidInputs[i].getAmount());
+                    size = Math.max(size, recipe.fluidInputs[i].getAmount());
         return size;
     }
 
@@ -1260,7 +1260,7 @@ public class RecipeMap {
     public boolean containsInput(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return false;
         // First stage: the legacy item index answers marked and unmarked rows by stack identity.
-        var recipes = mRecipeItemMap.get(stack.getItem());
+        var recipes = recipesByInputItem.get(stack.getItem());
         if (recipes != null && recipes.stream().anyMatch(r -> containsInput(r, stack, true))) return true;
         // Second stage keeps the original per-row test; the admission index only narrows the rows.
         List<Recipe> candidates = lookupTable.admissionCandidates(stack);
@@ -1278,15 +1278,15 @@ public class RecipeMap {
             found = expected;
         }
         if (found) return true;
-        if (mDynamicInputAdmission != null && mDynamicInputAdmission.test(stack)) return true;
+        if (dynamicInputAdmission != null && dynamicInputAdmission.test(stack)) return true;
         // Only a rule family with a published enumeration answers an item it has not indexed yet.
-        if (mDynamicEnumeration == null) return false;
+        if (dynamicEnumeration == null) return false;
         Recipe generated = firstDynamicRecipe(List.of(stack), List.of());
-        return generated != null && generated.mEnabled && !generated.mFakeRecipe;
+        return generated != null && generated.enabled && !generated.fakeRecipe;
     }
 
     private boolean fullAdmissionScan(ItemStack stack) {
-        for (Recipe recipe : mRecipeList) if (containsInput(recipe, stack, false)) return true;
+        for (Recipe recipe : recipeRows) if (containsInput(recipe, stack, false)) return true;
         return false;
     }
 
@@ -1296,14 +1296,14 @@ public class RecipeMap {
         if (candidates == null) return;
         boolean indexed = false;
         for (Recipe recipe : candidates) if (containsInput(recipe, stack, false)) { indexed = true; break; }
-        if (indexed != expected) RecipeLookupTable.admissionMismatch(mNameInternal, expected, indexed);
+        if (indexed != expected) RecipeLookupTable.admissionMismatch(internalName, expected, indexed);
     }
 
     private static boolean containsInput(Recipe recipe, ItemStack stack, boolean indexed) {
-        if (!recipe.mEnabled || recipe.mFakeRecipe) return false;
+        if (!recipe.enabled || recipe.fakeRecipe) return false;
         if (indexed && !recipe.hasTaggedInputs() && !recipe.hasSameItemInputPredicates() && !recipe.hasItemInputGuards()) return true;
-        for (int input = 0; input < recipe.mInputs.length; input++) {
-            ItemStack required = recipe.mInputs[input];
+        for (int input = 0; input < recipe.itemInputs.length; input++) {
+            ItemStack required = recipe.itemInputs[input];
             if (empty(required)) continue;
             if (recipe.hasTaggedInputs() || recipe.hasSameItemInputPredicate(input) || recipe.hasItemInputGuard(input) || !indexed) {
                 if (recipe.matchesItemInput(input, stack)) return true;
@@ -1322,14 +1322,14 @@ public class RecipeMap {
     public boolean containsInput(FluidStack fluid) {
         if (fluid == null || fluid.isEmpty()) return false;
         if (MaterialUnitRecipeIndex.acceptsFluid(this, fluid)) return true;
-        var recipes = mRecipeFluidMap.get(fluidKey(fluid));
+        var recipes = recipesByInputFluid.get(fluidKey(fluid));
         if (recipes != null && recipes.stream().anyMatch(r -> acceptsFluid(r, fluid))) return true;
         return lookupTable.tagged().stream().anyMatch(r -> acceptsFluid(r, fluid));
     }
 
     private static boolean acceptsFluid(Recipe recipe, FluidStack fluid) {
-        if (!recipe.mEnabled || recipe.mFakeRecipe) return false;
-        for (int i = 0; i < recipe.mFluidInputs.length; i++)
+        if (!recipe.enabled || recipe.fakeRecipe) return false;
+        for (int i = 0; i < recipe.fluidInputs.length; i++)
             if (recipe.matchesFluidInput(i, fluid)) return true;
         return false;
     }
@@ -1338,7 +1338,7 @@ public class RecipeMap {
     public Collection<Recipe> recipesForFluid(FluidStack fluid) {
         if (fluid == null || fluid.isEmpty()) return List.of();
         var rows = new LinkedHashSet<Recipe>();
-        for (var recipe : mRecipeFluidMap.getOrDefault(fluidKey(fluid), List.of()))
+        for (var recipe : recipesByInputFluid.getOrDefault(fluidKey(fluid), List.of()))
             if (acceptsFluid(recipe, fluid)) rows.add(recipe);
         for (var recipe : lookupTable.tagged()) if (acceptsFluid(recipe, fluid)) rows.add(recipe);
         return rows;

@@ -187,7 +187,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     }
     @Override public void setSpec(gregtech.engine.machine.BasicMachineSpec spec) {
         super.setSpec(spec);
-        if(sourceUnlimitedOutputs())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
+        if (sourceUnlimitedOutputs())for (var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }
     @Override protected void autoInputItems(net.minecraft.world.level.Level level,BlockPos pos,int side) {
         if (declared(spec() == null ? null : spec().itemInputSource()) != null || originalProcessingController()) return;
@@ -248,7 +248,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         super.load(tag);
 //?}
 
-        if(sourceUnlimitedOutputs())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
+        if (sourceUnlimitedOutputs())for (var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }
     @Override protected boolean usesTimeEnergy() { return spec()!=null&&spec().energyTag()==GregTechTags.Energy.TU; }
     @Override protected int efficiency() { return spec().processingEfficiency(); }
@@ -360,7 +360,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         for (AddonEnergyPartBlockEntity part : conditionParts) if (!part.satisfied()) return false;
         return true;
     }
-    private void release(BlockPos pos) { if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition); }
+    private void release(BlockPos pos) { if (level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition); }
     @Override public void onLoad() {
         super.onLoad();
         if (level != null && !level.isClientSide) StructureTracking.attach(this);

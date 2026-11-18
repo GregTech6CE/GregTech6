@@ -31,19 +31,19 @@ public final class BehaviorPlugLeak {
  public static InteractionResult use(UseOnContext context){
   var player=context.getPlayer();var level=context.getLevel();var target=context.getClickedPos().relative(context.getClickedFace());
 //? if >=1.21.1 {
-  /*if(level.isClientSide||player==null||!level.hasChunkAt(target)||!ManualToolBehaviorAccess.mayEdit(level,player,target))return InteractionResult.PASS;
+  /*if (level.isClientSide||player==null||!level.hasChunkAt(target)||!ManualToolBehaviorAccess.mayEdit(level,player,target))return InteractionResult.PASS;
 *///?} else {
-  if(level.isClientSide||player==null||!level.hasChunkAt(target)||!ItemBehaviors.mayEdit(level,player,target))return InteractionResult.PASS;
+  if (level.isClientSide||player==null||!level.hasChunkAt(target)||!ItemBehaviors.mayEdit(level,player,target))return InteractionResult.PASS;
 //?}
-  boolean liquid=!level.getFluidState(target).isEmpty();for(var side:Direction.values())liquid|=!level.getFluidState(target.relative(side)).isEmpty();if(!liquid)return InteractionResult.PASS;
-  for(int slot=player.getInventory().items.size()-1;slot>=0;slot--){
-   var stock=player.getInventory().items.get(slot);if(!(stock.getItem() instanceof BlockItem blockItem)||stock.isEmpty()||stock.getItem() instanceof gregtech.engine.material.MaterialFormItem)continue;
+  boolean liquid=!level.getFluidState(target).isEmpty();for (var side:Direction.values())liquid|=!level.getFluidState(target.relative(side)).isEmpty();if (!liquid)return InteractionResult.PASS;
+  for (int slot=player.getInventory().items.size()-1;slot>=0;slot--){
+   var stock=player.getInventory().items.get(slot);if (!(stock.getItem() instanceof BlockItem blockItem)||stock.isEmpty()||stock.getItem() instanceof gregtech.engine.material.MaterialFormItem)continue;
    var block=blockItem.getBlock();var state=block.defaultBlockState();var id=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
-   if(state.hasBlockEntity()||block instanceof InfestedBlock||!state.canOcclude()||state.getDestroySpeed(level,target)<0||state.is(BlockTags.NEEDS_DIAMOND_TOOL)||id.getNamespace().equals("thaumcraft")||!(state.is(BlockTags.MINEABLE_WITH_PICKAXE)||state.is(BlockTags.MINEABLE_WITH_SHOVEL)))continue;
-   boolean valuable=false;for(String tag:new String[]{"forge:ores","forge:storage_blocks","c:ores","c:storage_blocks"})valuable|=state.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK,net.minecraft.resources.ResourceLocation.parse(tag)));if(valuable)continue;
+   if (state.hasBlockEntity()||block instanceof InfestedBlock||!state.canOcclude()||state.getDestroySpeed(level,target)<0||state.is(BlockTags.NEEDS_DIAMOND_TOOL)||id.getNamespace().equals("thaumcraft")||!(state.is(BlockTags.MINEABLE_WITH_PICKAXE)||state.is(BlockTags.MINEABLE_WITH_SHOVEL)))continue;
+   boolean valuable=false;for (String tag:new String[]{"forge:ores","forge:storage_blocks","c:ores","c:storage_blocks"})valuable|=state.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK,net.minecraft.resources.ResourceLocation.parse(tag)));if (valuable)continue;
    var copy=stock.copy();var hit=new BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());
    var result=copy.useOn(new UseOnContext(level,player,context.getHand(),copy,hit));
-   if(result.consumesAction()&&!player.getAbilities().instabuild)stock.shrink(Math.max(0,stock.getCount()-copy.getCount()));player.getInventory().setChanged();return result;
+   if (result.consumesAction()&&!player.getAbilities().instabuild)stock.shrink(Math.max(0,stock.getCount()-copy.getCount()));player.getInventory().setChanged();return result;
   }
   return InteractionResult.PASS;
  }

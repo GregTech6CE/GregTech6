@@ -270,7 +270,7 @@ public class OreBlock extends Block implements MaterialBlockLike {
         if (isBedrockOre(state)) return Collections.emptyList();
         // GT6 broken ore is already detached from its intact host and drops as the same 2U block.
         if (isBroken(state)) return Collections.singletonList(withStone(new ItemStack(this), state));
-        if(isSmall()) {
+        if (isSmall()) {
             OreHarvest harvest=OreHarvest.from(builder);
             int fortune=harvest.fortune();
             boolean silk=harvest.silkTouch();

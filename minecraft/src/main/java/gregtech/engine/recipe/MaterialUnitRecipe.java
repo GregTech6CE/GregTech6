@@ -56,7 +56,7 @@ public final class MaterialUnitRecipe {
 
     public MaterialUnitRecipe(Recipe template, int inputIndex, GTMaterial material, long units, Rounding rounding) {
         if (template == null || material == null || units <= 0 || rounding == null
-                || inputIndex < 0 || inputIndex >= template.mInputs.length || template.isCatalystInput(inputIndex))
+                || inputIndex < 0 || inputIndex >= template.itemInputs.length || template.isCatalystInput(inputIndex))
             throw new IllegalArgumentException("Material unit recipe");
         this.template = template; this.inputIndex = inputIndex;
         this.material = material.resolve(); this.units = units; this.rounding = rounding;
@@ -96,7 +96,7 @@ public final class MaterialUnitRecipe {
         owner = null;
     }
 
-    boolean active() { return owner != null && template.mEnabled && owner.mRecipeList.contains(template); }
+    boolean active() { return owner != null && template.enabled && owner.recipeRows.contains(template); }
 
     private Source source(ItemStack stack) {
         Source direct = sources.get(stack.getItem());
@@ -109,7 +109,7 @@ public final class MaterialUnitRecipe {
     boolean accepts(ItemStack stack) {
         if (!active() || stack.isEmpty()) return false;
         if (stack.isDamaged() && template.hasRuntimeResolver())
-            return stack.getItem() == template.mInputs[inputIndex].getItem();
+            return stack.getItem() == template.itemInputs[inputIndex].getItem();
         if (ItemMaterialRegistry.hasStoredContents(stack)) return false;
         Source source = source(stack);
         return source != null && source.guard.test(stack) && RecipeInputs.matches(source.stack, stack);
@@ -121,29 +121,29 @@ public final class MaterialUnitRecipe {
         Source source = source(offered);
         try {
             var quantities = new ArrayList<Long>();
-            for (var output : template.mOutputs) if (!output.isEmpty()) quantities.add((long) output.getCount());
-            for (var output : template.mFluidOutputs) if (!output.isEmpty()) quantities.add((long) output.getAmount());
-            for (int i = 0; i < template.mInputs.length; i++)
-                if (i != inputIndex && !template.isCatalystInput(i)) quantities.add((long) template.mInputs[i].getCount());
-            for (int i = 0; i < template.mFluidInputs.length; i++)
-                if (!template.isCatalystFluidInput(i) && !template.isPresenceFluidInput(i)) quantities.add((long) template.mFluidInputs[i].getAmount());
+            for (var output : template.itemOutputs) if (!output.isEmpty()) quantities.add((long) output.getCount());
+            for (var output : template.fluidOutputs) if (!output.isEmpty()) quantities.add((long) output.getAmount());
+            for (int i = 0; i < template.itemInputs.length; i++)
+                if (i != inputIndex && !template.isCatalystInput(i)) quantities.add((long) template.itemInputs[i].getCount());
+            for (int i = 0; i < template.fluidInputs.length; i++)
+                if (!template.isCatalystFluidInput(i) && !template.isPresenceFluidInput(i)) quantities.add((long) template.fluidInputs[i].getAmount());
             MaterialUnitBatch batch = rounding == Rounding.WHOLE_OUTPUTS
                     ? MaterialUnitBatch.wholeOutputs(source.units, units)
                     : MaterialUnitBatch.exactRatio(source.units, units, quantities.stream().mapToLong(Long::longValue).toArray());
             if (batch == null) return null;
             // A reviewed thermal input can keep its original batch and rounded duration exactly.
             boolean thermal = source.fluidAmount > 0;
-            var inputs = new ItemStack[template.mInputs.length];
+            var inputs = new ItemStack[template.itemInputs.length];
             for (int i = 0; i < inputs.length; i++) {
-                var original = template.mInputs[i];
+                var original = template.itemInputs[i];
                 inputs[i] = i == inputIndex ? offered.copyWithCount(thermal ? source.stack.getCount() : batch.inputCount())
                         : original.copyWithCount(template.isCatalystInput(i) ? original.getCount()
                         : Math.toIntExact(batch.scale(original.getCount(), false)));
             }
             var outputs = new ArrayList<ItemStack>();
             var chances = new ArrayList<Long>();
-            for (int i = 0; i < template.mOutputs.length; i++) {
-                var original = template.mOutputs[i];
+            for (int i = 0; i < template.itemOutputs.length; i++) {
+                var original = template.itemOutputs[i];
                 long count = batch.scale(original.getCount(), false);
                 if (count > 128) return null;
                 while (count > 0) {
@@ -151,33 +151,33 @@ public final class MaterialUnitRecipe {
                     outputs.add(original.copyWithCount(part)); chances.add((long) template.getOutputChance(i)); count -= part;
                 }
             }
-            if (outputs.size() > owner.mOutputItemsCount) return null;
-            var fluidInputs = new FluidStack[template.mFluidInputs.length];
+            if (outputs.size() > owner.itemOutputSlots) return null;
+            var fluidInputs = new FluidStack[template.fluidInputs.length];
             for (int i = 0; i < fluidInputs.length; i++) {
-                fluidInputs[i] = template.mFluidInputs[i].copy();
+                fluidInputs[i] = template.fluidInputs[i].copy();
                 if (!template.isCatalystFluidInput(i) && !template.isPresenceFluidInput(i))
                     fluidInputs[i].setAmount(Math.toIntExact(batch.scale(fluidInputs[i].getAmount(), false)));
             }
-            var fluidOutputs = new FluidStack[template.mFluidOutputs.length];
+            var fluidOutputs = new FluidStack[template.fluidOutputs.length];
             for (int i = 0; i < fluidOutputs.length; i++) {
-                fluidOutputs[i] = template.mFluidOutputs[i].copy();
+                fluidOutputs[i] = template.fluidOutputs[i].copy();
                 fluidOutputs[i].setAmount(thermal ? source.fluidAmount
                         : Math.toIntExact(batch.scale(fluidOutputs[i].getAmount(), false)));
             }
-            long ticks = thermal ? source.ticks : Math.max(1, batch.scale(template.mDuration, true));
+            long ticks = thermal ? source.ticks : Math.max(1, batch.scale(template.durationTicks, true));
             var result = new Recipe(inputs, outputs.toArray(ItemStack[]::new),
                     chances.stream().mapToLong(Long::longValue).toArray(), fluidInputs, fluidOutputs,
-                    ticks, template.mEUt, template.mSpecialValue)
+                    ticks, template.energyPerTick, template.specialValue)
                     .withCatalystInputs(template.explicitCatalystInputs())
                     .withCatalystFluidInputs(template.explicitCatalystFluidInputs())
                     .withPresenceFluidInputs(template.explicitPresenceFluidInputs()).withEmptyContainerInputs()
-                    .withPriority(template.mPriority);
-            if (!template.mSource.isEmpty()) result.withSource(template.mSource);
-            result.mRecoveryOwnership = template.mRecoveryOwnership;
-            result.mExplicitCatalystsOnly = template.mExplicitCatalystsOnly;
-            result.mExactItemInputs = template.mExactItemInputs;
-            result.mNeedsEmptyOutput = template.mNeedsEmptyOutput;
-            result.mMaterialRecovery = template.mMaterialRecovery;
+                    .withPriority(template.priority);
+            if (!template.source.isEmpty()) result.withSource(template.source);
+            result.recoveryOwnership = template.recoveryOwnership;
+            result.explicitCatalystsOnly = template.explicitCatalystsOnly;
+            result.exactItemInputs = template.exactItemInputs;
+            result.needsEmptyOutput = template.needsEmptyOutput;
+            result.materialRecovery = template.materialRecovery;
             result.withItemInputGuard(inputIndex, stack -> active() && source.guard.test(stack)
                     && RecipeInputs.matches(source.stack, stack));
             for (int i = 0; i < inputs.length; i++) if (i != inputIndex) {

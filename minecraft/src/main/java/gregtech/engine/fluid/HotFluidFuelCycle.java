@@ -24,10 +24,10 @@ public final class HotFluidFuelCycle {
         var idleResult = new Result(heat, lastRecipe, false);
         var map = RecipeMap.RECIPE_MAPS.get(settings.fuelMap());
         if (hot.isEmpty() || map == null) return idleResult;
-        Recipe fuelRecipe = map.mRecipeList.contains(lastRecipe) && matches(lastRecipe, hot) ? lastRecipe : null;
+        Recipe fuelRecipe = map.recipeRows.contains(lastRecipe) && matches(lastRecipe, hot) ? lastRecipe : null;
         if (fuelRecipe == null) {
             var candidates = map.fluidInputCandidates(hot.getFluidLong());
-            Iterable<Recipe> rows = candidates != null ? candidates : map.mRecipeList;
+            Iterable<Recipe> rows = candidates != null ? candidates : map.recipeRows;
             for (var candidate : rows)
                 if (matches(candidate, hot)) {
                     fuelRecipe = candidate;
@@ -41,12 +41,12 @@ public final class HotFluidFuelCycle {
                 return idleResult;
             }
         }
-        var output = fuelRecipe.mFluidOutputs.length == 0 ? FluidStack.EMPTY : fuelRecipe.mFluidOutputs[0];
+        var output = fuelRecipe.fluidOutputs.length == 0 ? FluidStack.EMPTY : fuelRecipe.fluidOutputs[0];
         if (!output.isEmpty() && !cold.isEmpty() && !StackCompat.sameFluid(cold.getFluidLong(), output)) return idleResult;
-        var plan = HeatExchangerRules.charge(hot.getAmount(), fuelRecipe.mFluidInputs[0].getAmount(), cold.getAmount(),
-                output.getAmount(), heat, settings.bufferTarget(), fuelRecipe.mEUt, fuelRecipe.mDuration, settings.efficiency());
+        var plan = HeatExchangerRules.charge(hot.getAmount(), fuelRecipe.fluidInputs[0].getAmount(), cold.getAmount(),
+                output.getAmount(), heat, settings.bufferTarget(), fuelRecipe.energyPerTick, fuelRecipe.durationTicks, settings.efficiency());
         if (plan == null) {
-            if (hot.getAmount() < fuelRecipe.mFluidInputs[0].getAmount() && history == 0) hot.setEmpty();
+            if (hot.getAmount() < fuelRecipe.fluidInputs[0].getAmount() && history == 0) hot.setEmpty();
             return idleResult;
         }
         hot.remove(plan.inputUsed());
@@ -59,8 +59,8 @@ public final class HotFluidFuelCycle {
     }
 
     private static boolean matchesFluid(Recipe recipe, FluidTankGT hot) {
-        return recipe != null && recipe.mEnabled && !recipe.mFakeRecipe && recipe.mInputs.length == 0
-                && recipe.mFluidInputs.length == 1 && !recipe.mFluidInputs[0].isEmpty()
+        return recipe != null && recipe.enabled && !recipe.fakeRecipe && recipe.itemInputs.length == 0
+                && recipe.fluidInputs.length == 1 && !recipe.fluidInputs[0].isEmpty()
                 && recipe.matchesFluidInput(0, hot.getFluidLong());
     }
 }

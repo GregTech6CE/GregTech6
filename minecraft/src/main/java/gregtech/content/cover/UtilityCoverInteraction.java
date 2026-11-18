@@ -48,23 +48,23 @@ public final class UtilityCoverInteraction {
     }
 
     public static InteractionResult use(PanelCoverHost host,Player player,InteractionHand hand,BlockHitResult hit){
-        var owner=host.coverOwner();var level=owner.getLevel();if(level==null)return InteractionResult.PASS;
+        var owner=host.coverOwner();var level=owner.getLevel();if (level==null)return InteractionResult.PASS;
         var held=player.getItemInHand(hand);var side=hit.getDirection();var installed=host.getCover(side);var id=CoverItems.behavior(installed);
-        if(!player.mayBuild()||!level.mayInteract(player,owner.getBlockPos()))return InteractionResult.FAIL;
+        if (!player.mayBuild()||!level.mayInteract(player,owner.getBlockPos()))return InteractionResult.FAIL;
         // Crowbar removal belongs to the panel/cover path that runs after this one.
-        if(GTToolHelper.matchesTool(held,GTToolType.CROWBAR))return InteractionResult.PASS;
-        if(CoverPlacement.placing(player)&&installed.isEmpty()&&CoverItems.isCover(held)&&gregtech.content.logistics.LogisticsCoverType.of(held)==null){
-            if(!CoverAdmission.allowCover(owner,side,held))return InteractionResult.PASS;
-            if(!level.isClientSide&&host.attachCover(side,held)&&!player.getAbilities().instabuild)held.shrink(1);
+        if (GTToolHelper.matchesTool(held,GTToolType.CROWBAR))return InteractionResult.PASS;
+        if (CoverPlacement.placing(player)&&installed.isEmpty()&&CoverItems.isCover(held)&&gregtech.content.logistics.LogisticsCoverType.of(held)==null){
+            if (!CoverAdmission.allowCover(owner,side,held))return InteractionResult.PASS;
+            if (!level.isClientSide&&host.attachCover(side,held)&&!player.getAbilities().instabuild)held.shrink(1);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if(id==null)return InteractionResult.PASS;
-        if(GTToolHelper.matchesTool(held,GTToolType.CHISEL)&&(CoverUtilityBehaviors.designCount(id)>0||installed.getItem() instanceof gregtech.engine.material.MaterialFormItem)){
-            if(!level.isClientSide){CoverUtilityBehaviors.cycleDesign(installed,installed.getItem() instanceof gregtech.engine.material.MaterialFormItem material?MaterialCoverRules.designCount(material.getPrefix().getName(),material.getMaterial().getName()):CoverUtilityBehaviors.designCount(id));host.panels().changed();GTToolHelper.damageForUse(held,1,player);}
+        if (id==null)return InteractionResult.PASS;
+        if (GTToolHelper.matchesTool(held,GTToolType.CHISEL)&&(CoverUtilityBehaviors.designCount(id)>0||installed.getItem() instanceof gregtech.engine.material.MaterialFormItem)){
+            if (!level.isClientSide){CoverUtilityBehaviors.cycleDesign(installed,installed.getItem() instanceof gregtech.engine.material.MaterialFormItem material?MaterialCoverRules.designCount(material.getPrefix().getName(),material.getMaterial().getName()):CoverUtilityBehaviors.designCount(id));host.panels().changed();GTToolHelper.damageForUse(held,1,player);}
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         boolean item=CoverUtilityBehaviors.FILTER_ITEM.equals(id)||CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id),fluid=CoverUtilityBehaviors.FILTER_FLUID.equals(id);
-        if(item||fluid){
+        if (item||fluid){
             CoverUtilityBehaviors.FilterAction action = null;
             if (GTToolHelper.matchesTool(held, GTToolType.SOFT_HAMMER)) {
                 action = CoverUtilityBehaviors.FilterAction.CLEAR;
@@ -80,13 +80,13 @@ public final class UtilityCoverInteraction {
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
             // 两节点统一调 3 参：1.20 经 CoverUtilityBehaviors 的 provider 适配器忽略 lookup。
-            if(!host.consumesTool(held)){
-                if(!level.isClientSide){if(item)CoverUtilityBehaviors.setItemFilter(installed,held,level.registryAccess());else CoverUtilityBehaviors.setFluidFilter(installed,sample(held),level.registryAccess());host.panels().changed();}
+            if (!host.consumesTool(held)){
+                if (!level.isClientSide){if (item)CoverUtilityBehaviors.setItemFilter(installed,held,level.registryAccess());else CoverUtilityBehaviors.setFluidFilter(installed,sample(held),level.registryAccess());host.panels().changed();}
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
-        if(CoverUtilityBehaviors.CRAFTING_TABLE.equals(id)&&!host.consumesTool(held)){
-            if(!level.isClientSide)CoverUtilityBehaviors.clickCraftingCover(player,(net.minecraft.server.level.ServerLevel)level,owner.getBlockPos());
+        if (CoverUtilityBehaviors.CRAFTING_TABLE.equals(id)&&!host.consumesTool(held)){
+            if (!level.isClientSide)CoverUtilityBehaviors.clickCraftingCover(player,(net.minecraft.server.level.ServerLevel)level,owner.getBlockPos());
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return InteractionResult.PASS;

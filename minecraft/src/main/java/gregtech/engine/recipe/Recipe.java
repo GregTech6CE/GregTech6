@@ -23,7 +23,7 @@ public class Recipe {
 
     /** Representatives retain amounts/layout; the tag, not its representative, defines acceptance. */
     public Recipe withItemTagInput(int index, net.minecraft.resources.ResourceLocation id) {
-        if (index < 0 || index >= mInputs.length || mInputs[index].isEmpty()) throw new IllegalArgumentException("Item tag input " + index);
+        if (index < 0 || index >= itemInputs.length || itemInputs[index].isEmpty()) throw new IllegalArgumentException("Item tag input " + index);
         var tags = new java.util.HashMap<>(itemTags);
         tags.put(index, net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, id));
         itemTags = java.util.Map.copyOf(tags);
@@ -31,7 +31,7 @@ public class Recipe {
     }
 
     public Recipe withFluidTagInput(int index, net.minecraft.resources.ResourceLocation id) {
-        if (index < 0 || index >= mFluidInputs.length || mFluidInputs[index].isEmpty()) throw new IllegalArgumentException("Fluid tag input " + index);
+        if (index < 0 || index >= fluidInputs.length || fluidInputs[index].isEmpty()) throw new IllegalArgumentException("Fluid tag input " + index);
         var tags = new java.util.HashMap<>(fluidTags);
         tags.put(index, net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.FLUID, id));
         fluidTags = java.util.Map.copyOf(tags);
@@ -43,20 +43,20 @@ public class Recipe {
     public boolean hasTaggedInputs() { return !itemTags.isEmpty() || !fluidTags.isEmpty(); }
 
     public boolean matchesFluidInput(int index, FluidStack available) {
-        if (index < 0 || index >= mFluidInputs.length || available == null || available.isEmpty()
-                || mFluidInputs[index] == null || mFluidInputs[index].isEmpty()) return false;
+        if (index < 0 || index >= fluidInputs.length || available == null || available.isEmpty()
+                || fluidInputs[index] == null || fluidInputs[index].isEmpty()) return false;
         var tag = fluidTags.get(index);
-        return tag == null ? RecipeInputs.sameFluid(available, mFluidInputs[index])
+        return tag == null ? RecipeInputs.sameFluid(available, fluidInputs[index])
                 : available.getFluid().builtInRegistryHolder().is(tag);
     }
 
     public java.util.List<FluidStack> viewerFluidInputAlternatives(int index) {
         var tag = fluidTags.get(index);
-        if (tag == null) return java.util.List.of(mFluidInputs[index]);
+        if (tag == null) return java.util.List.of(fluidInputs[index]);
         var choices = new java.util.ArrayList<FluidStack>();
         for (var holder : net.minecraft.core.registries.BuiltInRegistries.FLUID.getTagOrEmpty(tag))
             if (holder.value() != net.minecraft.world.level.material.Fluids.EMPTY)
-                choices.add(new FluidStack(holder.value(), mFluidInputs[index].getAmount()));
+                choices.add(new FluidStack(holder.value(), fluidInputs[index].getAmount()));
         return java.util.List.copyOf(choices);
     }
     public record MaterialInputDisplay(long amount, java.util.List<ItemStack> alternatives, gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding rounding, net.minecraft.tags.TagKey<net.minecraft.world.item.Item> tag) {
@@ -71,7 +71,7 @@ public class Recipe {
     private java.util.Map<Integer, MaterialInputDisplay> materialInputDisplays = java.util.Map.of();
     /** A unit icon describes a rule; its physical input is resolved to a whole-item batch at runtime. */
     public Recipe withMaterialInputDisplay(int index, long amount, java.util.List<ItemStack> alternatives, gregtech.api.addon.recipe.MaterialUnitIngredient.Rounding rounding) {
-        if (index < 0 || index >= mInputs.length || mInputs[index].isEmpty()) throw new IllegalArgumentException("Material display slot");
+        if (index < 0 || index >= itemInputs.length || itemInputs[index].isEmpty()) throw new IllegalArgumentException("Material display slot");
         var displays = new java.util.HashMap<>(materialInputDisplays);
         displays.put(index, new MaterialInputDisplay(amount, alternatives, rounding));
         materialInputDisplays = java.util.Map.copyOf(displays);
@@ -89,25 +89,25 @@ public class Recipe {
 
     public java.util.Map<Integer, gregtech.api.addon.recipe.MaterialUnitIngredient> materialDeclarations = java.util.Map.of();
 
-    public final ItemStack[] mInputs;
-    public final ItemStack[] mOutputs;
-    public final FluidStack[] mFluidInputs;
-    public final FluidStack[] mFluidOutputs;
-    public final long[] mChances;
-    public final long[] mMaxChances;
-    public final long mDuration;
-    public final long mEUt;
-    public final long mSpecialValue;
+    public final ItemStack[] itemInputs;
+    public final ItemStack[] itemOutputs;
+    public final FluidStack[] fluidInputs;
+    public final FluidStack[] fluidOutputs;
+    public final long[] outputChances;
+    public final long[] maxOutputChances;
+    public final long durationTicks;
+    public final long energyPerTick;
+    public final long specialValue;
 
-    public boolean mEnabled = true;
-    public boolean mHidden;
-    public boolean mFakeRecipe;
-    public boolean mCanBeBuffered = true;
-    public boolean mNeedsEmptyOutput;
-    public boolean mMaterialRecovery;
-    public boolean mRequiresEmptyContainerInputs;
+    public boolean enabled = true;
+    public boolean hidden;
+    public boolean fakeRecipe;
+    public boolean canBeBuffered = true;
+    public boolean needsEmptyOutput;
+    public boolean materialRecovery;
+    public boolean requiresEmptyContainerInputs;
     /** Blueprint recipes require exact stack data and only their explicit retained inputs. */
-    public boolean mExactItemInputs, mExplicitCatalystsOnly;
+    public boolean exactItemInputs, explicitCatalystsOnly;
 
     /**
      * Explicit selection order among rows that could otherwise match the same machine input.
@@ -115,13 +115,13 @@ public class Recipe {
      * map registered first. Every row defaults to zero, so built-in content is unaffected until a
      * producer states its intent.
      */
-    public long mPriority;
+    public long priority;
 
     /**
      * Structured recovery ownership. Generic rows are fallback rows for an input family; explicit
      * rows are returned by the producer that owns the more specific receiver or form.
      */
-    public RecoveryOwnership mRecoveryOwnership;
+    public RecoveryOwnership recoveryOwnership;
 
     public record RecoveryOwnership(String family, Scope scope) {
         public enum Scope {
@@ -140,47 +140,50 @@ public class Recipe {
      * built-in content tables. Diagnostics and the recipe dump read it; it never participates in
      * matching.
      */
-    public String mSource = "";
+    public String source = "";
 
     /**
      * Map-assigned publication order. Used only as the deterministic tie-breaker between rows of
      * equal priority, replacing the accidental ordering of the backing collection.
      */
-    long mRegistrationOrder = -1L;
+    long registrationOrder = -1L;
 
-    public Recipe withMaterialRecovery() { mMaterialRecovery = true; mRequiresEmptyContainerInputs = true; return this; }
-    public Recipe withEmptyContainerInputs() { mRequiresEmptyContainerInputs = true; return this; }
+    public Recipe withMaterialRecovery() { materialRecovery = true; requiresEmptyContainerInputs = true; return this; }
+    public Recipe withEmptyContainerInputs() { requiresEmptyContainerInputs = true; return this; }
 
-    /** Marks the explicit selection order; see {@link #mPriority}. */
-    public Recipe withPriority(long priority) { mPriority = priority; return this; }
+    /** Marks the explicit selection order; see {@link #priority}. */
+    public Recipe withPriority(long priority) { this.priority = priority; return this; }
 
-    /** Marks generic or explicit recovery ownership; see {@link #mRecoveryOwnership}. */
+    /** Marks generic or explicit recovery ownership; see {@link #recoveryOwnership}. */
     public Recipe withRecoveryOwnership(String family, RecoveryOwnership.Scope scope) {
-        mRecoveryOwnership = new RecoveryOwnership(family, scope);
+        recoveryOwnership = new RecoveryOwnership(family, scope);
         return this;
     }
 
-    /** Records the producing entry point; see {@link #mSource}. */
-    public Recipe withSource(String source) { mSource = source == null ? "" : source; return this; }
+    /** Records the producing entry point; see {@link #source}. */
+    public Recipe withSource(String source) { this.source = source == null ? "" : source; return this; }
 
-    public Recipe(ItemStack[] aInputs, ItemStack[] aOutputs, long[] aChances,
-                  FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs,
-                  long aDuration, long aEUt, long aSpecialValue) {
-        mInputs       = aInputs      != null ? aInputs      : NO_ITEMS;
-        mOutputs      = aOutputs     != null ? aOutputs     : NO_ITEMS;
-        for (int i = 0; i < mOutputs.length; i++) if (mOutputs[i] != null)
-            mOutputs[i] = gregtech.content.block.misc.LegacyConstructionBlockItem.canonical(mOutputs[i]);
-        mFluidInputs  = aFluidInputs != null ? aFluidInputs : NO_FLUIDS;
-        mFluidOutputs = aFluidOutputs!= null ? aFluidOutputs: NO_FLUIDS;
-        mChances      = aChances     != null ? aChances     : mOutputs.length == 0 ? NO_CHANCES : new long[mOutputs.length];
-        mMaxChances   = mChances.length == 0 ? NO_CHANCES : new long[mChances.length];
-        for (int i = 0; i < mChances.length; i++) {
-            if (mChances[i] <= 0) mChances[i] = 10000;
-            mMaxChances[i] = 10000;
+    public Recipe(ItemStack[] itemInputs, ItemStack[] itemOutputs, long[] outputChances,
+                  FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
+                  long durationTicks, long energyPerTick, long specialValue) {
+        this.itemInputs = itemInputs != null ? itemInputs : NO_ITEMS;
+        this.itemOutputs = itemOutputs != null ? itemOutputs : NO_ITEMS;
+        for (int i = 0; i < this.itemOutputs.length; i++) {
+            if (this.itemOutputs[i] != null)
+                this.itemOutputs[i] = gregtech.content.block.misc.LegacyConstructionBlockItem.canonical(this.itemOutputs[i]);
         }
-        mDuration     = Math.max(1, aDuration);
-        mEUt          = aEUt;
-        mSpecialValue = aSpecialValue;
+        this.fluidInputs = fluidInputs != null ? fluidInputs : NO_FLUIDS;
+        this.fluidOutputs = fluidOutputs != null ? fluidOutputs : NO_FLUIDS;
+        this.outputChances = outputChances != null ? outputChances
+                : this.itemOutputs.length == 0 ? NO_CHANCES : new long[this.itemOutputs.length];
+        this.maxOutputChances = this.outputChances.length == 0 ? NO_CHANCES : new long[this.outputChances.length];
+        for (int i = 0; i < this.outputChances.length; i++) {
+            if (this.outputChances[i] <= 0) this.outputChances[i] = 10000;
+            this.maxOutputChances[i] = 10000;
+        }
+        this.durationTicks = Math.max(1, durationTicks);
+        this.energyPerTick = energyPerTick;
+        this.specialValue = specialValue;
     }
 
     /** Allocated on the first mark; unmarked recipes keep every group absent. */
@@ -223,7 +226,7 @@ public class Recipe {
      * Repeated calls for a slot compose restrictions rather than replacing an earlier guard.
      */
     public Recipe withItemInputGuard(int index, java.util.function.Predicate<ItemStack> guard) {
-        if (index < 0 || index >= mInputs.length || mInputs[index] == null || mInputs[index].isEmpty()
+        if (index < 0 || index >= itemInputs.length || itemInputs[index] == null || itemInputs[index].isEmpty()
                 || guard == null) throw new IllegalArgumentException("Item input guard " + index);
         var guards = new java.util.HashMap<>(itemInputGuards);
         guards.merge(index, guard, (previous, added) -> previous.and(added));
@@ -241,7 +244,7 @@ public class Recipe {
      * the offered stack; they are evaluated again for each candidate slot, including consumption.
      */
     public Recipe withSameItemInputPredicate(int index, java.util.function.Predicate<ItemStack> predicate) {
-        if (index < 0 || index >= mInputs.length || mInputs[index] == null || mInputs[index].isEmpty()
+        if (index < 0 || index >= itemInputs.length || itemInputs[index] == null || itemInputs[index].isEmpty()
                 || predicate == null) throw new IllegalArgumentException("Item input predicate " + index);
         var predicates = new java.util.HashMap<>(sameItemInputPredicates);
         predicates.put(index, predicate);
@@ -259,8 +262,8 @@ public class Recipe {
 
     /** Count-independent ingredient match. Exact-input, catalyst and recovery rules remain in Matcher. */
     public boolean matchesItemInput(int index, ItemStack available) {
-        if (index < 0 || index >= mInputs.length || available == null || available.isEmpty()) return false;
-        ItemStack required = mInputs[index];
+        if (index < 0 || index >= itemInputs.length || available == null || available.isEmpty()) return false;
+        ItemStack required = itemInputs[index];
         if (required == null || required.isEmpty()) return false;
         var predicate = sameItemInputPredicates.get(index);
         var tag = itemTags.get(index);
@@ -276,7 +279,7 @@ public class Recipe {
     private java.util.Map<Integer, java.util.List<ItemStack>> viewerInputAlternatives = java.util.Map.of();
     /** Informational choices for one displayed slot; this never broadens machine matching. */
     public Recipe withViewerInputAlternatives(int index, java.util.List<ItemStack> alternatives) {
-        if (index < 0 || index >= mInputs.length || alternatives.isEmpty()) throw new IllegalArgumentException("Viewer input " + index);
+        if (index < 0 || index >= itemInputs.length || alternatives.isEmpty()) throw new IllegalArgumentException("Viewer input " + index);
         if (viewerInputAlternatives.isEmpty()) viewerInputAlternatives = new java.util.HashMap<>();
         viewerInputAlternatives.put(index, alternatives.stream().map(ItemStack::copy).toList());
         return this;
@@ -287,12 +290,12 @@ public class Recipe {
             var choices = new java.util.ArrayList<ItemStack>();
             for (var holder : net.minecraft.core.registries.BuiltInRegistries.ITEM.getTagOrEmpty(tag))
                 if (holder.value() != net.minecraft.world.item.Items.AIR)
-                    choices.add(new ItemStack(holder.value(), mInputs[index].getCount()));
+                    choices.add(new ItemStack(holder.value(), itemInputs[index].getCount()));
             return java.util.List.copyOf(choices);
         }
         var stored = viewerInputAlternatives.get(index);
         if (stored == null)
-            return gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(mInputs[index]);
+            return gregtech.content.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(itemInputs[index]);
         return stored.stream().map(ItemStack::copy).toList();
     }
 
@@ -300,7 +303,7 @@ public class Recipe {
 
     /** Viewer-only translation key; never stored on an ingredient or used for matching/collisions. */
     public Recipe withViewerInputNote(int index, String translationKey) {
-        if (index < 0 || index >= mInputs.length || translationKey == null || translationKey.isBlank())
+        if (index < 0 || index >= itemInputs.length || translationKey == null || translationKey.isBlank())
             throw new IllegalArgumentException("Viewer input note " + index);
         var notes = new java.util.HashMap<>(viewerInputNotes);
         notes.put(index, translationKey);
@@ -315,7 +318,7 @@ public class Recipe {
     /** Mark non-consumable lenses/etc. before publishing this recipe to a map. */
     public Recipe withCatalystInputs(int... indices) {
         for (int index : indices) {
-            if (index < 0 || index >= mInputs.length) throw new IllegalArgumentException("Catalyst input " + index);
+            if (index < 0 || index >= itemInputs.length) throw new IllegalArgumentException("Catalyst input " + index);
             if (catalystInputs == null) catalystInputs = new RecipeInputMarks();
             catalystInputs.set(index);
         }
@@ -323,9 +326,9 @@ public class Recipe {
     }
     public boolean isCatalystInput(int index) {
         boolean marked = catalystInputs != null && catalystInputs.get(index);
-        boolean itemCatalyst = !marked && !mExplicitCatalystsOnly
-                && mInputs[index].getItem() instanceof RecipeCatalystLike tool && tool.isCatalyst();
-        return RecipeCatalystInputs.isCatalyst(mExplicitCatalystsOnly, marked, itemCatalyst);
+        boolean itemCatalyst = !marked && !explicitCatalystsOnly
+                && itemInputs[index].getItem() instanceof RecipeCatalystLike tool && tool.isCatalyst();
+        return RecipeCatalystInputs.isCatalyst(explicitCatalystsOnly, marked, itemCatalyst);
     }
 
     /** Indexes passed to {@link #withCatalystInputs(int...)}, in ascending order. Implicit catalyst items are not listed. */
@@ -338,7 +341,7 @@ public class Recipe {
     /** Mark fluid inputs that are checked at their declared amount and not drained. */
     public Recipe withCatalystFluidInputs(int... indices) {
         for (int index : indices) {
-            if (index < 0 || index >= mFluidInputs.length) throw new IllegalArgumentException("Catalyst fluid input " + index);
+            if (index < 0 || index >= fluidInputs.length) throw new IllegalArgumentException("Catalyst fluid input " + index);
             if (isPresenceFluidInput(index)) throw new IllegalArgumentException("Fluid input " + index + " is presence-only");
             if (catalystFluidInputs == null) catalystFluidInputs = new RecipeInputMarks();
             catalystFluidInputs.set(index);
@@ -347,7 +350,7 @@ public class Recipe {
     }
 
     public boolean isCatalystFluidInput(int index) {
-        return index >= 0 && index < mFluidInputs.length && catalystFluidInputs != null && catalystFluidInputs.get(index);
+        return index >= 0 && index < fluidInputs.length && catalystFluidInputs != null && catalystFluidInputs.get(index);
     }
 
     /** Indexes passed to {@link #withCatalystFluidInputs(int...)}, in ascending order. */
@@ -359,13 +362,13 @@ public class Recipe {
 
     /** Presence-only gates use positive native representatives, never zero-sized native stacks. */
     public Recipe withPresenceFluidInputs(int... indices) {
-        for (int index : RecipeKeptInputs.normalizeFluids(indices, mFluidInputs.length)) {
-            if (mFluidInputs[index] == null || mFluidInputs[index].isEmpty())
+        for (int index : RecipeKeptInputs.normalizeFluids(indices, fluidInputs.length)) {
+            if (fluidInputs[index] == null || fluidInputs[index].isEmpty())
                 throw new IllegalArgumentException("Presence fluid input " + index + " needs a positive representative");
             if (isCatalystFluidInput(index))
                 throw new IllegalArgumentException("Fluid input " + index + " cannot be both kept and presence-only");
-            mFluidInputs[index] = mFluidInputs[index].copy();
-            mFluidInputs[index].setAmount(1);
+            fluidInputs[index] = fluidInputs[index].copy();
+            fluidInputs[index].setAmount(1);
             if (presenceFluidInputs == null) presenceFluidInputs = new RecipeInputMarks();
             presenceFluidInputs.set(index);
         }
@@ -373,7 +376,7 @@ public class Recipe {
     }
 
     public boolean isPresenceFluidInput(int index) {
-        return index >= 0 && index < mFluidInputs.length && presenceFluidInputs != null && presenceFluidInputs.get(index);
+        return index >= 0 && index < fluidInputs.length && presenceFluidInputs != null && presenceFluidInputs.get(index);
     }
 
     /** Whether any fluid input is a presence-only gate. */
@@ -386,33 +389,33 @@ public class Recipe {
     // ── Output helpers ───────────────────────────────────────────────────
 
     public int getOutputChance(int idx) {
-        if (idx < 0 || idx >= mChances.length) return 10000;
-        return (int) mChances[idx];
+        if (idx < 0 || idx >= outputChances.length) return 10000;
+        return (int) outputChances[idx];
     }
 
     /** GT6 rolls each output item independently, including every parallel operation. */
     public long rollOutputCount(int index, int processes, java.util.function.IntUnaryOperator random) {
-        if (index < 0 || index >= mOutputs.length || processes <= 0) return 0;
-        ItemStack output = mOutputs[index];
+        if (index < 0 || index >= itemOutputs.length || processes <= 0) return 0;
+        ItemStack output = itemOutputs[index];
         if (output == null || output.isEmpty()) return 0;
         return RecipeChanceRules.rollOutputCount(output.getCount(),getOutputChance(index),processes,random);
     }
 
     public ItemStack getOutput(int idx) {
-        if (idx < 0 || idx >= mOutputs.length) return ItemStack.EMPTY;
-        ItemStack s = mOutputs[idx];
+        if (idx < 0 || idx >= itemOutputs.length) return ItemStack.EMPTY;
+        ItemStack s = itemOutputs[idx];
         return s != null ? s.copy() : ItemStack.EMPTY;
     }
 
     public FluidStack getFluidOutput(int idx) {
-        if (idx < 0 || idx >= mFluidOutputs.length) return FluidStack.EMPTY;
-        FluidStack f = mFluidOutputs[idx];
+        if (idx < 0 || idx >= fluidOutputs.length) return FluidStack.EMPTY;
+        FluidStack f = fluidOutputs[idx];
         return f != null ? f.copy() : FluidStack.EMPTY;
     }
 
     public FluidStack getRepresentativeFluidInput(int idx) {
-        if (idx < 0 || idx >= mFluidInputs.length) return FluidStack.EMPTY;
-        FluidStack f = mFluidInputs[idx];
+        if (idx < 0 || idx >= fluidInputs.length) return FluidStack.EMPTY;
+        FluidStack f = fluidInputs[idx];
         return f != null ? f.copy() : FluidStack.EMPTY;
     }
 }

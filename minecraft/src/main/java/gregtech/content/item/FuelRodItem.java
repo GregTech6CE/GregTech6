@@ -36,7 +36,7 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
 
     public FuelRodItem(net.minecraft.world.level.block.Block block, FuelType fuelType, int tier, Properties properties) {
         super(block, properties);
-        this.definition = gregtech.content.nuclear.ReactorRodCatalog.byOriginal(switch(fuelType) {
+        this.definition = gregtech.content.nuclear.ReactorRodCatalog.byOriginal(switch (fuelType) {
             case U_235 -> 9221; case U_238 -> 9220; case Pu_239 -> 9233; case Th_232 -> 9210;
             case Co_60 -> 9250; case Am_241 -> 9241; default -> 0;
         });
@@ -54,7 +54,7 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
     public int tier() { return tier; }
     public int maxHealth() { return maxHealth; }
     public int tintRgb() {
-        if(definition!=null)return gregtech.engine.material.GTMaterialRegistry.get(definition.material()).getColor();
+        if (definition!=null)return gregtech.engine.material.GTMaterialRegistry.get(definition.material()).getColor();
         var material = switch (fuelType) {
             case U_235 -> gregtech.content.material.Materials.Uranium235;
             case U_238 -> gregtech.content.material.Materials.Uranium;
@@ -77,7 +77,7 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
         tag.putInt(TAG_HEALTH, maxHealth);
         tag.putInt(TAG_MAX_HEALTH, maxHealth);
         tag.putBoolean(TAG_DEPLETED, false);
-        if(definition!=null)tag.putLong("gt.reactor_life",definition.life());
+        if (definition!=null)tag.putLong("gt.reactor_life",definition.life());
         StackData.write(stack, tag);
         return stack;
     }
@@ -146,10 +146,10 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
 *///?} else {
         super.appendHoverText(stack, level, tooltip, flag);
 //?}
-        if(definition!=null) {
+        if (definition!=null) {
             tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.kind." + definition.kind().name().toLowerCase(java.util.Locale.ROOT)).withStyle(ChatFormatting.GRAY));
-            if(definition.life()>0) tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.remaining", gregtech.content.nuclear.RodPhysics.life(stack)).withStyle(ChatFormatting.GREEN));
-            if(definition.kind()==gregtech.content.nuclear.ReactorRodCatalog.Kind.NUCLEAR)
+            if (definition.life()>0) tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.remaining", gregtech.content.nuclear.RodPhysics.life(stack)).withStyle(ChatFormatting.GREEN));
+            if (definition.kind()==gregtech.content.nuclear.ReactorRodCatalog.Kind.NUCLEAR)
                 tooltip.add(Component.translatable("tooltip.gt6ce.ui.rod.neutrons", definition.self(), definition.emission(), definition.maximum(), definition.divisor()));
             return;
         }

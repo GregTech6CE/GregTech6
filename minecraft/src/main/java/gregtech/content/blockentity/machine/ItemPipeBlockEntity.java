@@ -821,7 +821,7 @@ public class ItemPipeBlockEntity extends BlockEntity
 
 //? if >=1.21.1 {
     /*public IItemHandler capabilityHandler(@Nullable Direction side) {
-        if(side!=null)return coverStore.hasCovers()&&isItemCoverFace(side)?faceHandler(side):sideHandler(side);return this;
+        if (side!=null)return coverStore.hasCovers()&&isItemCoverFace(side)?faceHandler(side):sideHandler(side);return this;
 *///?} else {
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
@@ -883,7 +883,7 @@ public class ItemPipeBlockEntity extends BlockEntity
     @SuppressWarnings("unchecked")
 //? if >=1.21.1 {
     /*private IItemHandler faceHandler(Direction side) {
-        if(faceHandlers==null)faceHandlers=new IItemHandler[6];var cached=faceHandlers[side.ordinal()];if(cached==null)faceHandlers[side.ordinal()]=cached=new FaceItemHandler(side);return cached;
+        if (faceHandlers==null)faceHandlers=new IItemHandler[6];var cached=faceHandlers[side.ordinal()];if (cached==null)faceHandlers[side.ordinal()]=cached=new FaceItemHandler(side);return cached;
 *///?} else {
     private LazyOptional<IItemHandler> faceHandler(Direction side) {
         if (faceHandlers == null) faceHandlers = new LazyOptional[6];
@@ -899,7 +899,7 @@ public class ItemPipeBlockEntity extends BlockEntity
 
     private void invalidateFaceHandler(Direction side) {
 //? if >=1.21.1 {
-        /*if(faceHandlers!=null)faceHandlers[side.ordinal()]=null;if(level!=null)level.invalidateCapabilities(worldPosition);
+        /*if (faceHandlers!=null)faceHandlers[side.ordinal()]=null;if (level!=null)level.invalidateCapabilities(worldPosition);
 *///?} else {
         if (faceHandlers == null) return;
         LazyOptional<IItemHandler> cached = faceHandlers[side.ordinal()];
@@ -911,7 +911,7 @@ public class ItemPipeBlockEntity extends BlockEntity
 
 //? if >=1.21.1 {
     /*public void invalidateItemCapabilities() {
-        sideCaps.clear();faceHandlers=null;if(level!=null)level.invalidateCapabilities(worldPosition);
+        sideCaps.clear();faceHandlers=null;if (level!=null)level.invalidateCapabilities(worldPosition);
 *///?} else {
     @Override
     public void invalidateCaps() {

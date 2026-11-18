@@ -50,23 +50,23 @@ public final class CannedFoodItem extends TechItem {
     @Override public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
         boolean used=false;
         if (spec.dogFood() && entity instanceof net.minecraft.world.entity.animal.Wolf wolf && wolf.isTame()) {
-            if(wolf.getHealth()<20) { if(!player.level().isClientSide) wolf.heal(spec.food().food().level()); used=true; }
-            else if(wolf.getAge()==0 && !wolf.isInLove()) { if(!player.level().isClientSide) wolf.setInLove(player); used=true; }
-        } else if(spec.catFood() && entity instanceof net.minecraft.world.entity.animal.Cat cat && cat.isTame() && cat.getAge()==0 && !cat.isInLove()) {
-            if(!player.level().isClientSide) cat.setInLove(player); used=true;
+            if (wolf.getHealth()<20) { if (!player.level().isClientSide) wolf.heal(spec.food().food().level()); used=true; }
+            else if (wolf.getAge()==0 && !wolf.isInLove()) { if (!player.level().isClientSide) wolf.setInLove(player); used=true; }
+        } else if (spec.catFood() && entity instanceof net.minecraft.world.entity.animal.Cat cat && cat.isTame() && cat.getAge()==0 && !cat.isInLove()) {
+            if (!player.level().isClientSide) cat.setInLove(player); used=true;
         }
-        if(!used) return InteractionResult.PASS;
-        if(!player.getAbilities().instabuild) { stack.shrink(1); if(!player.level().isClientSide) GTFoodItems.deliverContainer(player,emptyCan()); }
+        if (!used) return InteractionResult.PASS;
+        if (!player.getAbilities().instabuild) { stack.shrink(1); if (!player.level().isClientSide) GTFoodItems.deliverContainer(player,emptyCan()); }
         return InteractionResult.sidedSuccess(player.level().isClientSide);
     }
     /** Preserves stack quantity and custom data, as MultiItemCans.getRotten does. */
     public ItemStack getRotten(ItemStack stack) {
-        String target=CannedFoodCatalog.rottenId(spec.id()); if(target.equals(spec.id())) return stack;
+        String target=CannedFoodCatalog.rottenId(spec.id()); if (target.equals(spec.id())) return stack;
         Item item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",target));
 //? if >=1.21.1 {
         /*return stack.transmuteCopy(item, stack.getCount());
 *///?} else {
-        var result=new ItemStack(item,stack.getCount()); if(stack.hasTag()) result.setTag(stack.getTag().copy()); return result;
+        var result=new ItemStack(item,stack.getCount()); if (stack.hasTag()) result.setTag(stack.getTag().copy()); return result;
 //?}
     }
 //? if >=1.21.1 {

@@ -67,7 +67,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
         super(type, pos, state);
         FuelGenerator declaration = declaration();
         recipes = RecipeMap.RECIPE_MAPS.get(declaration.fuelMap());
-        int outputs = recipes == null ? 0 : recipes.mOutputFluidCount;
+        int outputs = recipes == null ? 0 : recipes.fluidOutputTanks;
         fuel = new FluidTank(declaration.tankCapacity(), stack -> recipes != null && recipes.containsInput(stack)) {
             @Override protected void onContentsChanged() { setChanged(); }
         };
@@ -153,7 +153,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
         boolean matched = false;
         FluidStack input = fuel.getFluid().copy();
         var candidates = recipes.fluidInputCandidates(input);
-        Iterable<Recipe> rows = candidates != null ? candidates : recipes.mRecipeList;
+        Iterable<Recipe> rows = candidates != null ? candidates : recipes.recipeRows;
         int efficiency = declaration().efficiency();
         for (Recipe recipe : rows) {
             var plan = FluidFuelBatch.plan(recipe, input, outputs, capacities, room, efficiency);

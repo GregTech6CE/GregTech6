@@ -14,9 +14,9 @@ import net.minecraft.resources.ResourceLocation;
 public final class RadiationMedicineRecipes {
     private RadiationMedicineRecipes() {}
     public static void register() {
-        for(String gas:new String[]{"Helium","Neon","Argon"}) {
+        for (String gas:new String[]{"Helium","Neon","Argon"}) {
             var fluid=GTFluids.still(gas);
-            if(fluid==null)throw new IllegalStateException("Missing Geiger counter gas: "+gas);
+            if (fluid==null)throw new IllegalStateException("Missing Geiger counter gas: "+gas);
             MachineRecipeMaps.Canner.addRecipe(new Recipe(new ItemStack[]{item("geiger_counter_empty")},
                     new ItemStack[]{item("geiger_counter")},null,
 //? if >=1.21.1 {
@@ -37,13 +37,13 @@ public final class RadiationMedicineRecipes {
         if (output.isEmpty() || java.util.Arrays.stream(inputs).anyMatch(ItemStack::isEmpty))
             throw new IllegalStateException("Missing radiation medicine ingredient: " + java.util.Arrays.toString(inputs) + " -> " + output);
         // Food processing owns the same Radaway row. Retain one identical executable recipe.
-        for(var existing:map.mRecipeList){
-            if(!existing.mEnabled||existing.mFakeRecipe||existing.mDuration!=ticks||existing.mEUt!=16||existing.mInputs.length!=inputs.length||existing.mOutputs.length!=1||existing.mFluidInputs.length!=0||existing.mFluidOutputs.length!=0)continue;
-            if(existing.mOutputs[0].getCount()!=output.getCount()||!gregtech.engine.stack.StackCompat.sameItem(existing.mOutputs[0],output))continue;
-            boolean identical=true;for(int i=0;i<inputs.length;i++)if(existing.mInputs[i].getCount()!=inputs[i].getCount()||!gregtech.engine.stack.StackCompat.sameItem(existing.mInputs[i],inputs[i])){identical=false;break;}
-            if(identical)return;
+        for (var existing:map.recipeRows){
+            if (!existing.enabled||existing.fakeRecipe||existing.durationTicks!=ticks||existing.energyPerTick!=16||existing.itemInputs.length!=inputs.length||existing.itemOutputs.length!=1||existing.fluidInputs.length!=0||existing.fluidOutputs.length!=0)continue;
+            if (existing.itemOutputs[0].getCount()!=output.getCount()||!gregtech.engine.stack.StackCompat.sameItem(existing.itemOutputs[0],output))continue;
+            boolean identical=true;for (int i=0;i<inputs.length;i++)if (existing.itemInputs[i].getCount()!=inputs[i].getCount()||!gregtech.engine.stack.StackCompat.sameItem(existing.itemInputs[i],inputs[i])){identical=false;break;}
+            if (identical)return;
         }
-        if(map.addRecipe(new Recipe(inputs, new ItemStack[]{output}, null, null, null, ticks, 16, 0))==null)
+        if (map.addRecipe(new Recipe(inputs, new ItemStack[]{output}, null, null, null, ticks, 16, 0))==null)
             throw new IllegalStateException("Rejected radiation medicine recipe: " + java.util.Arrays.toString(inputs));
     }
 }

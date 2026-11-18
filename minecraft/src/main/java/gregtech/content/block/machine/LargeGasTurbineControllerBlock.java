@@ -57,14 +57,14 @@ public class LargeGasTurbineControllerBlock extends DirectionalBlock
     public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
             net.minecraft.world.phys.BlockHitResult hit) {
-        if(MachineRotationType.handleWrench(state,level,pos,player,hand,hit,FACING,MachineRotationType.ALL))return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
-        if(level.getBlockEntity(pos) instanceof LargeGasTurbineControllerBlockEntity machine){
-            if(level.isClientSide)return net.minecraft.world.InteractionResult.SUCCESS;
-            if(player.isShiftKeyDown()&&player.getItemInHand(hand).isEmpty()){machine.toggleStopped();return net.minecraft.world.InteractionResult.CONSUME;}
+        if (MachineRotationType.handleWrench(state,level,pos,player,hand,hit,FACING,MachineRotationType.ALL))return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
+        if (level.getBlockEntity(pos) instanceof LargeGasTurbineControllerBlockEntity machine){
+            if (level.isClientSide)return net.minecraft.world.InteractionResult.SUCCESS;
+            if (player.isShiftKeyDown()&&player.getItemInHand(hand).isEmpty()){machine.toggleStopped();return net.minecraft.world.InteractionResult.CONSUME;}
 //? if >=1.21.1 {
-            /*if(net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler(player,hand,machine))return net.minecraft.world.InteractionResult.CONSUME;
+            /*if (net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler(player,hand,machine))return net.minecraft.world.InteractionResult.CONSUME;
 *///?} else {
-            if(net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(player,hand,machine))return net.minecraft.world.InteractionResult.CONSUME;
+            if (net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(player,hand,machine))return net.minecraft.world.InteractionResult.CONSUME;
 //?}
         }
         return net.minecraft.world.InteractionResult.PASS;
@@ -89,7 +89,7 @@ public class LargeGasTurbineControllerBlock extends DirectionalBlock
     }
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){
         var stack=new net.minecraft.world.item.ItemStack(this);
-        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LargeGasTurbineControllerBlockEntity machine) {
+        if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof LargeGasTurbineControllerBlockEntity machine) {
 //? if >=1.21.1 {
             /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithId(machine.getLevel().registryAccess()));
 *///?} else {

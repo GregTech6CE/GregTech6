@@ -34,9 +34,9 @@ public final class GTGrassBlock extends IconSetBlock {
     @Override
 //? if >=1.21.1 {
     /*public net.neoforged.neoforge.common.util.TriState canSustainPlant(BlockState state,BlockGetter level,BlockPos pos,Direction side,BlockState plant){
-        if(side!=Direction.UP)return net.neoforged.neoforge.common.util.TriState.FALSE;
-        if(plant.is(Blocks.SUGAR_CANE)){for(Direction horizontal:Direction.Plane.HORIZONTAL)if(level.getFluidState(pos.relative(horizontal)).is(FluidTags.WATER))return net.neoforged.neoforge.common.util.TriState.TRUE;return net.neoforged.neoforge.common.util.TriState.FALSE;}
-        if(gregtech.content.block.plant.GTPlantSign.isPlant(plant.getBlock()))return net.neoforged.neoforge.common.util.TriState.TRUE;
+        if (side!=Direction.UP)return net.neoforged.neoforge.common.util.TriState.FALSE;
+        if (plant.is(Blocks.SUGAR_CANE)){for (Direction horizontal:Direction.Plane.HORIZONTAL)if (level.getFluidState(pos.relative(horizontal)).is(FluidTags.WATER))return net.neoforged.neoforge.common.util.TriState.TRUE;return net.neoforged.neoforge.common.util.TriState.FALSE;}
+        if (gregtech.content.block.plant.GTPlantSign.isPlant(plant.getBlock()))return net.neoforged.neoforge.common.util.TriState.TRUE;
         return net.neoforged.neoforge.common.util.TriState.DEFAULT;
 *///?} else {
     public boolean canSustainPlant(BlockState state, BlockGetter level, BlockPos pos,

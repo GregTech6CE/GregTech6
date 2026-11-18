@@ -116,7 +116,7 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
             Level level, BlockPos pos, BlockState state, KineticDieselEngineBlockEntity be) {
         if (be.spec == null) return;
         long beforeEmission=be.kuEnergy;
-        if(be.kuEnergy >= be.outputRate() && be.outputRate()>0) {
+        if (be.kuEnergy >= be.outputRate() && be.outputRate()>0) {
             long sent = gregtech.engine.energy.EnergyTransfer.emitEnergyToNetwork(
                     GregTechTags.Energy.RU,be.outputRate(),1,be);
             be.conversionMeter.output(level.getGameTime(), be.outputRate(), sent);
@@ -140,7 +140,7 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
     void burnFuel() {
         if (level == null) return;
         if (gregtech.engine.machine.LiquidFuelCycle.needsFuel(kuEnergy, outputRate(), stopped)) active = false;
-        while(gregtech.engine.machine.LiquidFuelCycle.needsFuel(kuEnergy,outputRate(),stopped) && !fuelTank.isEmpty()) {
+        while (gregtech.engine.machine.LiquidFuelCycle.needsFuel(kuEnergy,outputRate(),stopped) && !fuelTank.isEmpty()) {
             var tankFluid=fuelTank.getFluid();
             var recipe=FuelRecipeMaps.Engine.findRecipe(java.util.Collections.emptyList(),java.util.List.of(tankFluid),false,0,0);
             if (recipe == null) {
@@ -148,17 +148,17 @@ public class KineticDieselEngineBlockEntity extends EngineBaseBlockEntity implem
                 if (!FuelRecipeMaps.Engine.containsInput(tankFluid) || activityHistory == 0) fuelTank.setEmpty();
                 return;
             }
-            if(recipe.mFluidInputs==null || recipe.mFluidInputs.length!=1 || recipe.mFluidInputs[0]==null)return;
-            int amount=recipe.mFluidInputs[0].getAmount();
-            long energy=gregtech.engine.machine.LiquidFuelCycle.recipeEnergy(recipe.mEUt,recipe.mDuration);
-            if(amount<=0 || energy<=0)return;
+            if (recipe.fluidInputs==null || recipe.fluidInputs.length!=1 || recipe.fluidInputs[0]==null)return;
+            int amount=recipe.fluidInputs[0].getAmount();
+            long energy=gregtech.engine.machine.LiquidFuelCycle.recipeEnergy(recipe.energyPerTick,recipe.durationTicks);
+            if (amount<=0 || energy<=0)return;
             var requested=tankFluid.copy();requested.setAmount(amount);
-            if(fuelTank.drain(requested,IFluidHandler.FluidAction.SIMULATE).getAmount()!=amount)return;
-            var exhaust=recipe.mFluidOutputs!=null && recipe.mFluidOutputs.length>0?recipe.mFluidOutputs[0]:null;
-            if(exhaust!=null && !exhaust.isEmpty() && exhaustTank.fill(exhaust,IFluidHandler.FluidAction.SIMULATE)!=exhaust.getAmount())return;
+            if (fuelTank.drain(requested,IFluidHandler.FluidAction.SIMULATE).getAmount()!=amount)return;
+            var exhaust=recipe.fluidOutputs!=null && recipe.fluidOutputs.length>0?recipe.fluidOutputs[0]:null;
+            if (exhaust!=null && !exhaust.isEmpty() && exhaustTank.fill(exhaust,IFluidHandler.FluidAction.SIMULATE)!=exhaust.getAmount())return;
             long credited=gregtech.engine.machine.LiquidFuelCycle.credit(kuEnergy,energy);
-            if(fuelTank.drain(requested,IFluidHandler.FluidAction.EXECUTE).getAmount()!=amount)throw new IllegalStateException("Diesel fuel drain changed after simulation");
-            if(exhaust!=null && !exhaust.isEmpty())exhaustTank.fill(exhaust,IFluidHandler.FluidAction.EXECUTE);
+            if (fuelTank.drain(requested,IFluidHandler.FluidAction.EXECUTE).getAmount()!=amount)throw new IllegalStateException("Diesel fuel drain changed after simulation");
+            if (exhaust!=null && !exhaust.isEmpty())exhaustTank.fill(exhaust,IFluidHandler.FluidAction.EXECUTE);
             kuEnergy=credited;
             active = true;
             setChanged();

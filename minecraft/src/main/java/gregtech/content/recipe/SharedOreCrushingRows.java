@@ -67,18 +67,19 @@ public final class SharedOreCrushingRows {
             // These captured producers are ordinary single-input/no-fluid rows. Freeze their normalized
             // fields now, rather than recomputing legacy values with the new source planner on reload.
             group.template = new Recipe(
-                    copies(accepted.mInputs),
-                    copies(accepted.mOutputs),
-                    accepted.mChances.clone(),
-                    accepted.mFluidInputs.clone(),
-                    accepted.mFluidOutputs.clone(),
-                    accepted.mDuration,
-                    accepted.mEUt,
-                    accepted.mSpecialValue);
-            System.arraycopy(accepted.mMaxChances, 0, group.template.mMaxChances, 0, accepted.mMaxChances.length);
-            group.template.mEnabled = accepted.mEnabled;
-            group.template.mCanBeBuffered = accepted.mCanBeBuffered;
-            group.template.mNeedsEmptyOutput = accepted.mNeedsEmptyOutput;
+                    copies(accepted.itemInputs),
+                    copies(accepted.itemOutputs),
+                    accepted.outputChances.clone(),
+                    accepted.fluidInputs.clone(),
+                    accepted.fluidOutputs.clone(),
+                    accepted.durationTicks,
+                    accepted.energyPerTick,
+                    accepted.specialValue);
+            System.arraycopy(
+                    accepted.maxOutputChances, 0, group.template.maxOutputChances, 0, accepted.maxOutputChances.length);
+            group.template.enabled = accepted.enabled;
+            group.template.canBeBuffered = accepted.canBeBuffered;
+            group.template.needsEmptyOutput = accepted.needsEmptyOutput;
             ORIGINALS.add(accepted);
             remember(map, accepted);
         }
@@ -86,28 +87,28 @@ public final class SharedOreCrushingRows {
     /** These exact OPL calls never set special matching/output flags; do not clone arbitrary rows. */
     private static boolean capturable(RecipeMap map, Recipe row) {
         int outputs = map == MachineRecipeMaps.Crusher ? 2 : 1;
-        return row.mInputs.length == 1
-                && !row.mInputs[0].isEmpty()
-                && row.mInputs[0].getCount() == 1
-                && row.mOutputs.length == outputs
-                && Arrays.stream(row.mOutputs).noneMatch(ItemStack::isEmpty)
-                && row.mFluidInputs.length == 0
-                && row.mFluidOutputs.length == 0
-                && row.mSpecialValue == 0
-                && row.mEUt == 16
-                && row.mChances.length == outputs
-                && row.mMaxChances.length == outputs
-                && Arrays.stream(row.mChances).allMatch(chance -> chance == 10000)
-                && Arrays.stream(row.mMaxChances).allMatch(chance -> chance == 10000)
-                && row.mEnabled
-                && row.mCanBeBuffered
-                && !row.mNeedsEmptyOutput
-                && !row.mHidden
-                && !row.mFakeRecipe
-                && !row.mMaterialRecovery
-                && !row.mRequiresEmptyContainerInputs
-                && !row.mExactItemInputs
-                && !row.mExplicitCatalystsOnly
+        return row.itemInputs.length == 1
+                && !row.itemInputs[0].isEmpty()
+                && row.itemInputs[0].getCount() == 1
+                && row.itemOutputs.length == outputs
+                && Arrays.stream(row.itemOutputs).noneMatch(ItemStack::isEmpty)
+                && row.fluidInputs.length == 0
+                && row.fluidOutputs.length == 0
+                && row.specialValue == 0
+                && row.energyPerTick == 16
+                && row.outputChances.length == outputs
+                && row.maxOutputChances.length == outputs
+                && Arrays.stream(row.outputChances).allMatch(chance -> chance == 10000)
+                && Arrays.stream(row.maxOutputChances).allMatch(chance -> chance == 10000)
+                && row.enabled
+                && row.canBeBuffered
+                && !row.needsEmptyOutput
+                && !row.hidden
+                && !row.fakeRecipe
+                && !row.materialRecovery
+                && !row.requiresEmptyContainerInputs
+                && !row.exactItemInputs
+                && !row.explicitCatalystsOnly
                 && row.explicitCatalystInputs().length == 0
                 && !row.hasSameItemInputPredicate(0)
                 && row.viewerInputNote(0).isEmpty();
@@ -219,19 +220,19 @@ public final class SharedOreCrushingRows {
     }
 
     private static boolean unchanged(Recipe original, Recipe template) {
-        return stacksEqual(original.mInputs, template.mInputs)
-                && stacksEqual(original.mOutputs, template.mOutputs)
-                && Arrays.equals(original.mChances, template.mChances)
-                && Arrays.equals(original.mMaxChances, template.mMaxChances)
-                && original.mEnabled == template.mEnabled
-                && !original.mHidden
-                && !original.mFakeRecipe
-                && original.mCanBeBuffered == template.mCanBeBuffered
-                && original.mNeedsEmptyOutput == template.mNeedsEmptyOutput
-                && !original.mMaterialRecovery
-                && !original.mRequiresEmptyContainerInputs
-                && !original.mExactItemInputs
-                && !original.mExplicitCatalystsOnly
+        return stacksEqual(original.itemInputs, template.itemInputs)
+                && stacksEqual(original.itemOutputs, template.itemOutputs)
+                && Arrays.equals(original.outputChances, template.outputChances)
+                && Arrays.equals(original.maxOutputChances, template.maxOutputChances)
+                && original.enabled == template.enabled
+                && !original.hidden
+                && !original.fakeRecipe
+                && original.canBeBuffered == template.canBeBuffered
+                && original.needsEmptyOutput == template.needsEmptyOutput
+                && !original.materialRecovery
+                && !original.requiresEmptyContainerInputs
+                && !original.exactItemInputs
+                && !original.explicitCatalystsOnly
                 && original.explicitCatalystInputs().length == 0
                 && !original.hasSameItemInputPredicate(0);
     }
@@ -245,16 +246,16 @@ public final class SharedOreCrushingRows {
     private static Set<Key> independentInputs() {
         Set<Key> result = new HashSet<>();
         for (RecipeMap map : List.of(MachineRecipeMaps.Crusher, MachineRecipeMaps.Hammer))
-            for (Recipe row : map.mRecipeList)
-                if (!row.mFakeRecipe)
-                    for (ItemStack input : row.mInputs)
+            for (Recipe row : map.recipeRows)
+                if (!row.fakeRecipe)
+                    for (ItemStack input : row.itemInputs)
                         if (input != null && !input.isEmpty()) result.add(new Key(map, input.getItem()));
         return result;
     }
 
     private static void defer(Group group, String reason) {
         DEFERRED.add(new Deferred(
-                group.candidate.material().getName(), group.candidate.kind().name(), group.map.mNameInternal, reason));
+                group.candidate.material().getName(), group.candidate.kind().name(), group.map.internalName, reason));
     }
 
     private static void restore(Group group) {
@@ -262,8 +263,8 @@ public final class SharedOreCrushingRows {
         Recipe accepted = group.map.addRecipe(
                 group.original,
                 RecipeMap.Registration.DEFAULT
-                        .withFakeRecipe(group.original.mFakeRecipe)
-                        .withHidden(group.original.mHidden));
+                        .withFakeRecipe(group.original.fakeRecipe)
+                        .withHidden(group.original.hidden));
         if (accepted != null) remember(group.map, accepted);
         else defer(group, "legacy-readmission-rejected");
     }
@@ -287,8 +288,8 @@ public final class SharedOreCrushingRows {
                             : map.addRecipe(
                                     legacy,
                                     RecipeMap.Registration.DEFAULT
-                                            .withFakeRecipe(legacy.mFakeRecipe)
-                                            .withHidden(legacy.mHidden));
+                                            .withFakeRecipe(legacy.fakeRecipe)
+                                            .withHidden(legacy.hidden));
                     if (restored != null) accepted.add(restored);
                     return new Admission(false, accepted);
                 }
@@ -304,8 +305,8 @@ public final class SharedOreCrushingRows {
                     Recipe restored = map.addRecipe(
                             legacy,
                             RecipeMap.Registration.DEFAULT
-                                    .withFakeRecipe(legacy.mFakeRecipe)
-                                    .withHidden(legacy.mHidden));
+                                    .withFakeRecipe(legacy.fakeRecipe)
+                                    .withHidden(legacy.hidden));
                     if (restored != null) remember(map, restored);
                 } catch (RuntimeException | Error restoration) {
                     failure.addSuppressed(restoration);

@@ -22,10 +22,10 @@ public final class ZpmModuleBlock extends Block implements EntityBlock, SimpleWa
         b.add(GTWaterloggable.WATERLOGGED);b.add(CHARGE);}
     @Override public VoxelShape getShape(BlockState s,BlockGetter w,BlockPos p,CollisionContext c){return SHAPE;}
     @Override public BlockEntity newBlockEntity(BlockPos p,BlockState s){return new ZpmModuleBlockEntity(p,s);}
-    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> t){return l.isClientSide?null:(w,p,state,e)->{if(e instanceof ZpmModuleBlockEntity z)z.updateLight();};}
+    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> t){return l.isClientSide?null:(w,p,state,e)->{if (e instanceof ZpmModuleBlockEntity z)z.updateLight();};}
     @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){
         var stack=new ItemStack(this);
-        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ZpmModuleBlockEntity z)ZpmEnergy.set(stack,z.energy());
+        if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ZpmModuleBlockEntity z)ZpmEnergy.set(stack,z.energy());
         return java.util.List.of(stack);
     }
 //? if >=1.21.1 {

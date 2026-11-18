@@ -78,12 +78,12 @@ public final class CoverAttachmentBehaviors {
     }
 
     public static void walkOverDrain(Level level,BlockPos pos,IFluidHandler sink,net.minecraft.world.entity.Entity entity){
-        if(level.isClientSide||sink==null||level.getGameTime()%20!=5)return;
+        if (level.isClientSide||sink==null||level.getGameTime()%20!=5)return;
         String field=null;int amount=1;
-        if(entity instanceof net.minecraft.world.entity.animal.Squid)field="InkSquid";
-        else if(entity instanceof net.minecraft.world.entity.monster.MagmaCube slime){field="Blaze";amount=Math.max(1,slime.getSize());}
-        else if(entity instanceof net.minecraft.world.entity.monster.Slime slime){field="Slime_Green";amount=Math.max(1,slime.getSize());}
-        if(field!=null){var fluid=GTFluids.still(field);if(fluid!=null)sink.fill(new FluidStack(fluid.get(),amount),IFluidHandler.FluidAction.EXECUTE);}
+        if (entity instanceof net.minecraft.world.entity.animal.Squid)field="InkSquid";
+        else if (entity instanceof net.minecraft.world.entity.monster.MagmaCube slime){field="Blaze";amount=Math.max(1,slime.getSize());}
+        else if (entity instanceof net.minecraft.world.entity.monster.Slime slime){field="Slime_Green";amount=Math.max(1,slime.getSize());}
+        if (field!=null){var fluid=GTFluids.still(field);if (fluid!=null)sink.fill(new FluidStack(fluid.get(),amount),IFluidHandler.FluidAction.EXECUTE);}
     }
 
     /**
@@ -271,12 +271,12 @@ public final class CoverAttachmentBehaviors {
         if (!level.hasChunkAt(front)) return false;
         if (!collectableAir(level, front)) return false;
         String field=ventAirField(level.dimension());
-        if(!Level.OVERWORLD.equals(level.dimension())&&!Level.NETHER.equals(level.dimension())&&!Level.END.equals(level.dimension())){
+        if (!Level.OVERWORLD.equals(level.dimension())&&!Level.NETHER.equals(level.dimension())&&!Level.END.equals(level.dimension())){
             var biome=level.getBiome(front);
-            if(biome.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BIOME,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","no_collectable_air")))
+            if (biome.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BIOME,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","no_collectable_air")))
                     ||biome.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BIOME,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("c","is_void"))))return false;
-            if(biome.is(net.minecraft.tags.BiomeTags.IS_END))field="Air_End";
-            else if(biome.is(net.minecraft.tags.BiomeTags.IS_NETHER))field="Air_Nether";
+            if (biome.is(net.minecraft.tags.BiomeTags.IS_END))field="Air_End";
+            else if (biome.is(net.minecraft.tags.BiomeTags.IS_NETHER))field="Air_Nether";
         }
         var air = GTFluids.still(field);
         if (air == null) return false;

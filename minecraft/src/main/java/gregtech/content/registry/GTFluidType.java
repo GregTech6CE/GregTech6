@@ -79,11 +79,11 @@ public final class GTFluidType {
             var recipes = map.recipesForFluid(stack);
             BigInteger maximum = BigInteger.ZERO;
             for (var recipe : recipes) {
-                if (!recipe.mEnabled || recipe.mFluidInputs.length == 0 || recipe.mFluidInputs[0] == null) continue;
-                maximum = maximum.max(OriginalFluidDisplayRules.fuelPower(recipe.mEUt, recipe.mDuration,
-                        recipe.mFluidInputs[0].getAmount()));
+                if (!recipe.enabled || recipe.fluidInputs.length == 0 || recipe.fluidInputs[0] == null) continue;
+                maximum = maximum.max(OriginalFluidDisplayRules.fuelPower(recipe.energyPerTick, recipe.durationTicks,
+                        recipe.fluidInputs[0].getAmount()));
             }
-            if (maximum.signum() > 0) fuels.add(new Fuel(map.mNameInternal, maximum));
+            if (maximum.signum() > 0) fuels.add(new Fuel(map.internalName, maximum));
         }
         var result = new ArrayList<Component>();
         for (var line : OriginalFluidDisplayRules.describe(facts, fuels)) {

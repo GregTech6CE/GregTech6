@@ -19,16 +19,16 @@ public final class CropProcessingRecipes {
     private int registered;
     public static int register() { var recipes=new CropProcessingRecipes(); recipes.addAll(); return recipes.registered; }
     private void addAll() {
-        for(var row:CropProcessingCatalog.ROWS)crop(row.input(),row.fluid(),row.amount(),row.chance(),row.residue());
+        for (var row:CropProcessingCatalog.ROWS)crop(row.input(),row.fluid(),row.amount(),row.chance(),row.residue());
     }
     private void crop(String inputId,String fluidName,int amount,long chance,String residueId) {
         var input=Mc.item(ResourceLocation.parse(inputId));
         var residue=Mc.item(ResourceLocation.fromNamespaceAndPath("gt6ce",residueId));
         var fluid=GTFluids.still(fluidName);
 //? if >=1.21.1 {
-        /*if(input==null || input==net.minecraft.world.item.Items.AIR || residue==null || residue==net.minecraft.world.item.Items.AIR || fluid==null || !fluid.isBound()) throw new IllegalStateException("Unresolved crop recipe: "+inputId+" / "+fluidName);
+        /*if (input==null || input==net.minecraft.world.item.Items.AIR || residue==null || residue==net.minecraft.world.item.Items.AIR || fluid==null || !fluid.isBound()) throw new IllegalStateException("Unresolved crop recipe: "+inputId+" / "+fluidName);
 *///?} else {
-        if(input==null || residue==null || fluid==null || !fluid.isPresent()) throw new IllegalStateException("Unresolved crop recipe: "+inputId+" / "+fluidName);
+        if (input==null || residue==null || fluid==null || !fluid.isPresent()) throw new IllegalStateException("Unresolved crop recipe: "+inputId+" / "+fluidName);
 //?}
         add(MachineRecipeMaps.Squeezer,new ItemStack(input),new ItemStack(residue),new FluidStack(fluid.get(),amount),chance-1000);
         int pressed=CropProcessingCatalog.pressed(amount);
@@ -37,7 +37,7 @@ public final class CropProcessingRecipes {
         add(MachineRecipeMaps.Mortar,new ItemStack(input),new ItemStack(residue),FluidStack.EMPTY,chance/2);
     }
     private void add(RecipeMap map,ItemStack input,ItemStack output,FluidStack fluid,long chance) {
-        if(map.register(RecipeBuilder.of(16, 16)
+        if (map.register(RecipeBuilder.of(16, 16)
                 .itemInputs(input)
                 .itemOutputs(output)
                 .fluidOutputs(fluid)

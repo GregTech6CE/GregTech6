@@ -132,7 +132,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         public long nominalEnergyInput() { return spec == null ? 0 : spec.energyIn(); }
         public long startupEnergyFor(Recipe recipe) {
             var auxiliary = spec == null ? null : spec.auxiliaryEnergy();
-            return auxiliary != null && auxiliary.startup() && recipe.mSpecialValue > 0 ? recipe.mSpecialValue : 0;
+            return auxiliary != null && auxiliary.startup() && recipe.specialValue > 0 ? recipe.specialValue : 0;
         }
     };
     private final gregtech.engine.machine.RecipeProcessor.IO recipeIO =
@@ -160,8 +160,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private boolean sourceRequiresIgnition() {return spec!=null&&gregtech.content.machine.OriginalBasicMachineRules.requiresIgnition(spec.machineName(),spec.tier());}
     @Override public long onIgnite(Level level,BlockPos pos,Direction side,Player player,ItemStack igniter,
             boolean sneaking,float hitX,float hitY,float hitZ) {
-        if(!sourceRequiresIgnition())return 0;
-        if(!level.isClientSide) {sourceIgnitionTicks=gregtech.content.machine.OriginalBasicMachineRules.IGNITION_TICKS;mInventoryChanged=true;setChanged();}
+        if (!sourceRequiresIgnition())return 0;
+        if (!level.isClientSide) {sourceIgnitionTicks=gregtech.content.machine.OriginalBasicMachineRules.IGNITION_TICKS;mInventoryChanged=true;setChanged();}
         return 10000;
     }
     private boolean controlStopped;
@@ -198,11 +198,11 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         public boolean available(){return !isRemoved();}
         public boolean enabled(){return available()&&!controlStopped;}
         public boolean setEnabled(boolean enabled){
-            if(!available())return false;
-            if(level!=null&&level.isClientSide)return !controlStopped;
+            if (!available())return false;
+            if (level!=null&&level.isClientSide)return !controlStopped;
             boolean changed=controlStopped==enabled;controlStopped=!enabled;mInventoryChanged=true;
-            if(changed)updateAdjacentToggleableEnergySources();
-            if(!enabled){energyPort.clearStored();mActive=false;mRunning=false;onControlStopped();updateBlockStates(false,false);}
+            if (changed)updateAdjacentToggleableEnergySources();
+            if (!enabled){energyPort.clearStored();mActive=false;mRunning=false;onControlStopped();updateBlockStates(false,false);}
             setChanged();return !controlStopped;
         }
         public boolean running(){return available()&&controlRunning();}
@@ -216,8 +216,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             return available()&&side!=null?externalSignals[side.ordinal()]&15:0;
         }
         public boolean setExternalSignal(Direction side,int level){
-            if(!available()||side==null||level<0||level>15)return false;
-            if(externalSignals[side.ordinal()]==(byte)level)return true;
+            if (!available()||side==null||level<0||level>15)return false;
+            if (externalSignals[side.ordinal()]==(byte)level)return true;
             externalSignals[side.ordinal()]=(byte)level;
             setChanged();
             return true;
@@ -234,11 +234,11 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override public gregtech.api.platform.machine.MachineControl machineControl(Direction side){return control;}
     private int packedExternalSignals(){
         int packed=0;
-        for(int i=0;i<6;i++)packed|=(externalSignals[i]&15)<<(4*i);
+        for (int i=0;i<6;i++)packed|=(externalSignals[i]&15)<<(4*i);
         return packed;
     }
     private void unpackExternalSignals(int packed){
-        for(int i=0;i<6;i++)externalSignals[i]=(byte)((packed>>>(4*i))&15);
+        for (int i=0;i<6;i++)externalSignals[i]=(byte)((packed>>>(4*i))&15);
     }
     private boolean mInventoryChanged = true; // inventory changed, re-check recipe
 
@@ -329,15 +329,15 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private void tickServer(Level level, BlockPos pos) {
         if (faceConfig == null || spec == null) return;
         refreshAdjacentEnergySources();
-        if(sourceRequiresIgnition()&&sourceIgnitionTicks>0)sourceIgnitionTicks--;
+        if (sourceRequiresIgnition()&&sourceIgnitionTicks>0)sourceIgnitionTicks--;
         beforeMachineTick();
         beginCoverTick();
-        if(!structureComplete()) { successful=false;workPossible=false;if(mActive||mRunning) {mActive=false;mRunning=false;updateBlockStates(false,false);}updateCoverSignals();return; }
+        if (!structureComplete()) { successful=false;workPossible=false;if (mActive||mRunning) {mActive=false;mRunning=false;updateBlockStates(false,false);}updateCoverSignals();return; }
         refreshWorkPossible();
         boolean allowed=switchesAllowRunning();successful=false;
-        if(!allowed) {
+        if (!allowed) {
             energyPort.clearStored();
-            if(mActive||mRunning){mActive=false;mRunning=false;updateBlockStates(false,false);}
+            if (mActive||mRunning){mActive=false;mRunning=false;updateBlockStates(false,false);}
             tickCovers(level,pos);
             updateCoverSignals();
             return;
@@ -389,7 +389,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         // ── Drain buffer ─────────────────────────────────────────────────
         energyPort.drain(energyInMax);
 
-        if(successful){mInventoryChanged=true;refreshWorkPossible();}
+        if (successful){mInventoryChanged=true;refreshWorkPossible();}
         mInventoryChanged = false;
 
         // ── Cover behaviors ──────────────────────────────────────────────────
@@ -525,7 +525,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override
     public void removed(Direction side, ItemStack cover) {
         var removedSpec=MachineCoverSpec.of(cover);
-        if(removedSpec!=null&&!removedSpec.detector()||gregtech.content.cover.PanelCover.of(cover)==gregtech.content.cover.PanelCover.STATUS){controlStopped=false;updateAdjacentToggleableEnergySources();}
+        if (removedSpec!=null&&!removedSpec.detector()||gregtech.content.cover.PanelCover.of(cover)==gregtech.content.cover.PanelCover.STATUS){controlStopped=false;updateAdjacentToggleableEnergySources();}
         mInventoryChanged=true;
         invalidateSideCaps();
         setChanged();
@@ -571,7 +571,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     protected final void tickCovers(Level level, BlockPos pos) {
-        if(panels().stopped())return;
+        if (panels().stopped())return;
         for (Direction side : Direction.values()) {
             ItemStack stack = getCover(side);
             String id = getCoverId(side);
@@ -635,7 +635,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         for (Direction side : Direction.values()) {
             String id = getCoverId(side);
             var spec=MachineCoverSpec.of(getCover(side));
-            if(spec!=null&&spec.detector())return true;
+            if (spec!=null&&spec.detector())return true;
             if (gregtech.content.cover.CoverItems.REDSTONE_TORCH.equals(id)
                     || gregtech.content.cover.CoverItems.REDSTONE_REPEATER.equals(id)) return true;
         }
@@ -643,35 +643,35 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     public int getRedstoneSignal() {
-        int signal=0;for(var side:Direction.values())signal=Math.max(signal,getRedstoneSignal(side));return signal;
+        int signal=0;for (var side:Direction.values())signal=Math.max(signal,getRedstoneSignal(side));return signal;
     }
     public int getRedstoneSignal(Direction output){return gregtech.content.cover.PanelCover.of(getCover(output))!=null?panels().signal(output):coverSignals[output.ordinal()];}
     public int getStrongRedstoneSignal(Direction output){return gregtech.content.cover.PanelCover.of(getCover(output))!=null?panels().strongSignal(output):coverStrong[output.ordinal()]?getRedstoneSignal(output):0;}
     public MachineCoverSpec.State coverState(){return new MachineCoverSpec.State(workPossible||processor.totalWork()>0,mRunning,mActive,successful);}
     private void refreshWorkPossible(){
         boolean needed=false;
-        for(var stack:coverStore.faces()){var cover=MachineCoverSpec.of(stack);if(cover==MachineCoverSpec.POSSIBLE||cover==MachineCoverSpec.AUTOMATIC||gregtech.content.cover.PanelCover.of(stack)==gregtech.content.cover.PanelCover.STATUS){needed=true;break;}}
-        if(!needed){workPossible=false;return;}
-        if(processor.totalWork()>0){workPossible=true;return;}
-        if(!mInventoryChanged&&level.getGameTime()%12!=0)return;
+        for (var stack:coverStore.faces()){var cover=MachineCoverSpec.of(stack);if (cover==MachineCoverSpec.POSSIBLE||cover==MachineCoverSpec.AUTOMATIC||gregtech.content.cover.PanelCover.of(stack)==gregtech.content.cover.PanelCover.STATUS){needed=true;break;}}
+        if (!needed){workPossible=false;return;}
+        if (processor.totalWork()>0){workPossible=true;return;}
+        if (!mInventoryChanged&&level.getGameTime()%12!=0)return;
         workPossible=false;
         var evaluation=processor.evaluation();
         workPossible=evaluation!=null&&evaluation.parallel()>0&&evaluation.cost()!=null;
     }
     protected final void updateCoverSignals(){
-        if(level==null||level.isClientSide||isRemoved())return;
+        if (level==null||level.isClientSide||isRemoved())return;
         panels().afterTick();
         boolean changed=false;var state=coverState();
-        for(var side:Direction.values()){
+        for (var side:Direction.values()){
             var stack=getCover(side);var cover=MachineCoverSpec.of(stack);
             int value=cover!=null?cover.signal(state,MachineCoverSpec.inverted(stack)):redstoneCoverSignal(side);
             boolean strong=cover!=null&&cover.detector()&&MachineCoverSpec.strong(stack);
-            if(value!=coverSignals[side.ordinal()]||strong!=coverStrong[side.ordinal()]){
+            if (value!=coverSignals[side.ordinal()]||strong!=coverStrong[side.ordinal()]){
                 boolean wasStrong=coverStrong[side.ordinal()];coverSignals[side.ordinal()]=value;coverStrong[side.ordinal()]=strong;changed=true;
-                if((strong||wasStrong)&&level.hasChunkAt(worldPosition.relative(side)))level.updateNeighborsAt(worldPosition.relative(side),getBlockState().getBlock());
+                if ((strong||wasStrong)&&level.hasChunkAt(worldPosition.relative(side)))level.updateNeighborsAt(worldPosition.relative(side),getBlockState().getBlock());
             }
         }
-        if(changed)level.updateNeighborsAt(worldPosition,getBlockState().getBlock());
+        if (changed)level.updateNeighborsAt(worldPosition,getBlockState().getBlock());
     }
     /**
      * GT6's redstone torch cover is an <em>inverter</em> and its repeater a <em>follower</em>
@@ -681,10 +681,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
      * answered with the same {@code mRunning ? 15 : 0}, so the torch was inverted.
      */
     private int redstoneCoverSignal(Direction side){
-        if(coverIs(side,gregtech.content.cover.CoverItems.REDSTONE_TORCH))
+        if (coverIs(side,gregtech.content.cover.CoverItems.REDSTONE_TORCH))
             return gregtech.content.cover.CoverUtilityBehaviors.torchSignal(
                     gregtech.content.cover.CoverUtilityBehaviors.torchVisual(mRunning));
-        if(coverIs(side,gregtech.content.cover.CoverItems.REDSTONE_REPEATER))
+        if (coverIs(side,gregtech.content.cover.CoverItems.REDSTONE_REPEATER))
             return gregtech.content.cover.CoverUtilityBehaviors.torchSignal(
                     gregtech.content.cover.CoverUtilityBehaviors.repeaterVisual(mRunning));
         return 0;
@@ -692,13 +692,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     public boolean configureControlCover(Direction side,boolean cutter){
         var stack=getCover(side);var cover=MachineCoverSpec.of(stack);
-        if(cover==null||(cutter?!cover.detector():!cover.invertible()))return false;
-        if(level!=null&&level.isClientSide)return true;
+        if (cover==null||(cutter?!cover.detector():!cover.invertible()))return false;
+        if (level!=null&&level.isClientSide)return true;
         String key=cutter?"gt.cover.strong":"gt.cover.inverted";
 
         var tag=gregtech.content.cover.CoverStackData.readOrEmpty(stack);tag.putBoolean(key,!tag.getBoolean(key));gregtech.content.cover.CoverStackData.write(stack,tag);setChanged();
 
-        if(level!=null)level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
+        if (level!=null)level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
         updateCoverSignals();return true;
     }
 
@@ -735,9 +735,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (level == null) return !controlStopped;
         var state=coverState();
         boolean controlled=false,allowed=true;
-        for(var side:Direction.values()){
+        for (var side:Direction.values()){
             var stack=getCover(side);var cover=MachineCoverSpec.of(stack);
-            if(cover==null||cover.detector())continue;
+            if (cover==null||cover.detector())continue;
             controlled=true;
             var neighbor=worldPosition.relative(side);
             // An external control input feeds the same face gate as the cover's redstone reading.
@@ -745,7 +745,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                     externalSignals[side.ordinal()]&15);
             allowed=cover.allows(state,signal,MachineCoverSpec.inverted(stack),coverTicks);
         }
-        if(controlled&&controlStopped==allowed){controlStopped=!allowed;setChanged();updateAdjacentToggleableEnergySources();}
+        if (controlled&&controlStopped==allowed){controlStopped=!allowed;setChanged();updateAdjacentToggleableEnergySources();}
         return !controlStopped;
     }
 
@@ -777,7 +777,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     protected void beforeMachineTick() {}
     protected boolean recipeStartAllowed() { return !sourceRequiresIgnition()||sourceIgnitionTicks>0||mActive; }
-    protected void onProcessFinished() {if(sourceRequiresIgnition())sourceIgnitionTicks=gregtech.content.machine.OriginalBasicMachineRules.IGNITION_TICKS;}
+    protected void onProcessFinished() {if (sourceRequiresIgnition())sourceIgnitionTicks=gregtech.content.machine.OriginalBasicMachineRules.IGNITION_TICKS;}
 
     /** 1.7.10 {@code World.getBlockLightValue}: max of sky and block light, with night not subtracted. */
     private boolean lightAllowsStart() {
@@ -1168,8 +1168,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
 //? if >=1.21.1 {
 /*    public IItemHandler itemCapability(@Nullable Direction side) {
-        if(inventory==null)return null;
-        if(side==null)return machineItemView;
+        if (inventory==null)return null;
+        if (side==null)return machineItemView;
         int rel=relativeDir(side);
         boolean in=FaceConfig.has(faceConfig.itemInputs(),rel),out=FaceConfig.has(faceConfig.itemOutputs(),rel);
         return in||out?new SidedItemHandler(this,rel,machineItemView,in,out):null;
@@ -1210,8 +1210,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
 //? if >=1.21.1 {
 /*    public IFluidHandler fluidCapability(@Nullable Direction side) {
-        if(inventory==null)return null;
-        if(side==null)return this;
+        if (inventory==null)return null;
+        if (side==null)return this;
         int rel=relativeDir(side);
         boolean in=FaceConfig.has(faceConfig.fluidInputs(),rel),out=FaceConfig.has(faceConfig.fluidOutputs(),rel);
         return in||out?new SidedFluidHandler(this,rel,in,out):null;
@@ -1271,7 +1271,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         net.minecraft.core.HolderLookup.Provider codecLookup=null;
 //?}
 
-        if(sourceRequiresIgnition())tag.putByte(gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT,(byte)sourceIgnitionTicks);
+        if (sourceRequiresIgnition())tag.putByte(gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT,(byte)sourceIgnitionTicks);
         tag.putBoolean("gt.control_stopped",controlStopped);
         toolSettings.save(tag);
         tag.putInt("gt.external_signals",packedExternalSignals());
@@ -1580,11 +1580,11 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         mInventoryChanged = true;
         processor.invalidate();
     }
-    public int inputSlots() { return recipeMap != null ? recipeMap.mInputItemsCount : 0; }
-    public int potionSlots() { return recipeMap != null ? recipeMap.mInputPotionCount : 0; }
+    public int inputSlots() { return recipeMap != null ? recipeMap.itemInputSlots : 0; }
+    public int potionSlots() { return recipeMap != null ? recipeMap.potionInputSlots : 0; }
     /** Boundary of the composite item view: ordinary inputs first, then the dedicated potion inputs. */
     public int visibleInputSlots() { return inputSlots() + potionSlots(); }
-    public int outputSlots() { return recipeMap != null ? recipeMap.mOutputItemsCount : 0; }
+    public int outputSlots() { return recipeMap != null ? recipeMap.itemOutputSlots : 0; }
     /** Composite item view; its slot indices follow {@link #visibleInputSlots()}, not the raw handler. */
     public IItemHandler itemView() { return machineItemView; }
 

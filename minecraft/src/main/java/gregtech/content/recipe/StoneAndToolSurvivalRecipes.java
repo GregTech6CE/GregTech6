@@ -27,19 +27,19 @@ public final class StoneAndToolSurvivalRecipes {
         // which applies GT6's doubled ore yield. Keep this class for the stone tool chain;
         // Loader_Recipes_Handlers' sharpening rows belong to SharpeningRecipes, which also applies
         // the pulverized remainder and the quality-scaled duration.
-        for(var material:GTMaterialRegistry.sortedMaterials()) {
-            if(material.resolve()!=material||!material.isValid()||material.has(MaterialProperty.ANTIMATTER))continue;
+        for (var material:GTMaterialRegistry.sortedMaterials()) {
+            if (material.resolve()!=material||!material.isValid()||material.has(MaterialProperty.ANTIMATTER))continue;
             var rock=GTItems.getStack(MaterialPrefix.rockGt,material);
             // Original Handlers157 / W162: shredding targets pulver material, not input identity.
             var dust=GTItems.getStack(MaterialPrefix.dustSmall,material.getTargetPulverMaterial().resolve(),9);
             var composition=rock.isEmpty()?null:ItemMaterialRegistry.base(rock.getItem()).orElse(null);
-            if(!rock.isEmpty()&&!dust.isEmpty()
+            if (!rock.isEmpty()&&!dust.isEmpty()
                     &&ItemMaterialRegistry.recoveryRejection(rock)==ItemMaterialRegistry.RecoveryRejection.ELIGIBLE
                     &&composition!=null&&composition.components().size()==1
                     &&composition.material().resolve()==material.resolve()) {
                 var recipe=new Recipe(new ItemStack[]{rock,ItemStack.EMPTY},new ItemStack[]{dust},null,null,null,
                         Math.max(1,36L*(material.getToolQuality()+1L)),16,0).withMaterialRecovery();
-                if(RecoveryRecipePublisher.publish(
+                if (RecoveryRecipePublisher.publish(
                         MachineRecipeMaps.Anvil,
                         RecoveryRecipePublisher.explicit(recipe.withSource("recovery:stone-tool"),"stone-tool"))!=null)
                     ADDED.add(recipe);

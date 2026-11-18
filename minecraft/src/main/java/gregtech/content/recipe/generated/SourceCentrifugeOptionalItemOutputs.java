@@ -31,10 +31,10 @@ final class SourceCentrifugeOptionalItemOutputs {
 //?} else {
         String loader="forge";
 //?}
-        if(mods==null)return new Snapshot("",loader,false,Map.of());
+        if (mods==null)return new Snapshot("",loader,false,Map.of());
         Map<String,String> versions=new TreeMap<>();
-        for(var mod:mods.getMods()){
-            if(mod.getModId()==null||mod.getVersion()==null||versions.putIfAbsent(mod.getModId(),mod.getVersion().toString())!=null)
+        for (var mod:mods.getMods()){
+            if (mod.getModId()==null||mod.getVersion()==null||versions.putIfAbsent(mod.getModId(),mod.getVersion().toString())!=null)
                 return new Snapshot("",loader,false,Map.of());
         }
         // getMods is the complete loader list, not a filter of recognized providers.
@@ -58,13 +58,13 @@ final class SourceCentrifugeOptionalItemOutputs {
             } catch (RuntimeException failedHolder) { return ItemStack.EMPTY; }
         });
         Selection selected=SourceCentrifugeOptionalBindings.choose(plan,snapshot,id->!exact.apply(id).isEmpty());
-        if(selected.choice()==Choice.DEFER)return unresolved(plan,selected);
+        if (selected.choice()==Choice.DEFER)return unresolved(plan,selected);
         final ItemStack stack;
         try {
             stack=selected.target().kind()==TargetKind.EXACT_ITEM
                     ?exact.apply(selected.target().value()):materialLookup.apply(selected.target());
         } catch (RuntimeException failedDefault) { return unresolved(plan,selected); }
-        if(stack==null||stack.isEmpty())return unresolved(plan,selected);
+        if (stack==null||stack.isEmpty())return unresolved(plan,selected);
         // OM material fallback can legitimately be four small/nine tiny dust: do NOT force count1.
         return new Result(Action.APPEND,stack.copy(),selected);
     }
@@ -75,11 +75,11 @@ final class SourceCentrifugeOptionalItemOutputs {
     }
     private static ItemStack copyAmountOne(ItemStack stack){ItemStack copy=stack.copy();copy.setCount(1);return copy;}
     private static boolean plainNamedStack(ItemStack stack){
-        if(stack==null||stack.isEmpty()||stack.isDamaged())return false;
+        if (stack==null||stack.isEmpty()||stack.isDamaged())return false;
 //? if >=1.21.1 {
-        /*if(!stack.getComponentsPatch().isEmpty())return false;*/
+        /*if (!stack.getComponentsPatch().isEmpty())return false;*/
 //?} else {
-        if(stack.hasTag())return false;
+        if (stack.hasTag())return false;
 //?}
         // Original IL.get applies OM unification. A related explicit native material form
         // requires a reviewed target policy; defer rather than forcibly choosing the named item.
@@ -87,9 +87,9 @@ final class SourceCentrifugeOptionalItemOutputs {
     }
     private static ItemStack exactItem(String id){
         ResourceLocation key=ResourceLocation.tryParse(id);
-        if(key==null||!BuiltInRegistries.ITEM.containsKey(key))return ItemStack.EMPTY;
+        if (key==null||!BuiltInRegistries.ITEM.containsKey(key))return ItemStack.EMPTY;
         Item item=BuiltInRegistries.ITEM.get(key);
-        if(item==null||item==Items.AIR||!key.equals(BuiltInRegistries.ITEM.getKey(item)))return ItemStack.EMPTY;
+        if (item==null||item==Items.AIR||!key.equals(BuiltInRegistries.ITEM.getKey(item)))return ItemStack.EMPTY;
         return new ItemStack(item,1);
     }
 }

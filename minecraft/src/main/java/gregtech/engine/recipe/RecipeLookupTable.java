@@ -195,10 +195,10 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
         int exactMissing = 0, aliasMissing = 0, fluidMissing = 0;
         for (int row = 0; row < current.snapshot.length; row++) {
             Recipe recipe = current.snapshot[row];
-            List<ItemStack> items = Arrays.asList(recipe.mInputs);
-            if (!reachesRow(exactArrays(current, items, Arrays.asList(recipe.mFluidInputs)), row)) exactMissing++;
-            if (recipe.mInputs.length > 0 && !reachesRow(aliasArrays(current, items), row)) aliasMissing++;
-            for (FluidStack input : recipe.mFluidInputs) {
+            List<ItemStack> items = Arrays.asList(recipe.itemInputs);
+            if (!reachesRow(exactArrays(current, items, Arrays.asList(recipe.fluidInputs)), row)) exactMissing++;
+            if (recipe.itemInputs.length > 0 && !reachesRow(aliasArrays(current, items), row)) aliasMissing++;
+            for (FluidStack input : recipe.fluidInputs) {
                 if (input == null || input.getFluid() == net.minecraft.world.level.material.Fluids.EMPTY) continue;
                 int[] bucket = current.fluidInputs.get(input.getFluid());
                 if (bucket == null || !reachesRow(new int[][] {bucket}, row)) fluidMissing++;
@@ -347,7 +347,7 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
 
     /** Whether any row is skipped while output slots are occupied; such rows answer from output state. */
     private static boolean emptyOutputRows(Recipe[] snapshot) {
-        for (Recipe row : snapshot) if (row.mNeedsEmptyOutput) return true;
+        for (Recipe row : snapshot) if (row.needsEmptyOutput) return true;
         return false;
     }
 
@@ -357,11 +357,11 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
         Map<Item, Integer> itemFrequency = new IdentityHashMap<>();
         Map<Fluid, Integer> fluidFrequency = new IdentityHashMap<>();
         for (Recipe row : snapshot) {
-            for (ItemStack required : row.mInputs) {
+            for (ItemStack required : row.itemInputs) {
                 if (empty(required)) continue;
                 itemFrequency.merge(required.getItem(), 1, Integer::sum);
             }
-            for (FluidStack required : row.mFluidInputs) {
+            for (FluidStack required : row.fluidInputs) {
                 if (required == null || required.isEmpty()) continue;
                 fluidFrequency.merge(required.getFluid(), 1, Integer::sum);
             }
@@ -374,16 +374,16 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
             Recipe row = snapshot[i];
             Object anchor = null;
             int best = Integer.MAX_VALUE;
-            for (int slot = 0; slot < row.mInputs.length; slot++) {
-                ItemStack required = row.mInputs[slot];
+            for (int slot = 0; slot < row.itemInputs.length; slot++) {
+                ItemStack required = row.itemInputs[slot];
                 if (row.itemTag(slot) != null) continue;
                 if (empty(required)) continue;
                 int count = itemFrequency.get(required.getItem());
                 if (count < best) { best = count; anchor = required.getItem(); }
             }
             if (anchor == null) {
-                for (int slot = 0; slot < row.mFluidInputs.length; slot++) {
-                    FluidStack required = row.mFluidInputs[slot];
+                for (int slot = 0; slot < row.fluidInputs.length; slot++) {
+                    FluidStack required = row.fluidInputs[slot];
                     if (row.fluidTag(slot) != null) continue;
                     if (required == null || required.isEmpty()) continue;
                     int count = fluidFrequency.get(required.getFluid());
@@ -402,8 +402,8 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
         var rowKeys = new HashSet<Object>();
         for (Recipe row : snapshot) {
             rowKeys.clear();
-            for (int slot = 0; slot < row.mInputs.length; slot++) {
-                ItemStack required = row.mInputs[slot];
+            for (int slot = 0; slot < row.itemInputs.length; slot++) {
+                ItemStack required = row.itemInputs[slot];
                 if (empty(required)) continue;
                 for (Object key : keys.require(row, slot)) rowKeys.add(key);
             }
@@ -416,8 +416,8 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
             Recipe row = snapshot[i];
             Object[] anchorKeys = null;
             long bestCost = Long.MAX_VALUE;
-            for (int slot = 0; slot < row.mInputs.length; slot++) {
-                ItemStack required = row.mInputs[slot];
+            for (int slot = 0; slot < row.itemInputs.length; slot++) {
+                ItemStack required = row.itemInputs[slot];
                 if (empty(required)) continue;
                 Object[] candidate = keys.require(row, slot);
                 long cost = 0;
@@ -427,7 +427,7 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
             if (anchorKeys == null) {
                 // A row without item slots can only fail the alias stage's !exactItems test through
                 // empty declared inputs; pure-fluid rows never reach it and are left out.
-                if (row.mInputs.length > 0) aliasFallback.add(i);
+                if (row.itemInputs.length > 0) aliasFallback.add(i);
                 continue;
             }
             for (Object key : anchorKeys) aliasBuckets.computeIfAbsent(key, k -> new IntList()).add(i);
@@ -436,8 +436,8 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
         Map<Object, IntList> admissionBuckets = new HashMap<>();
         for (int i = 0; i < n; i++) {
             Recipe row = snapshot[i];
-            for (int slot = 0; slot < row.mInputs.length; slot++) {
-                ItemStack required = row.mInputs[slot];
+            for (int slot = 0; slot < row.itemInputs.length; slot++) {
+                ItemStack required = row.itemInputs[slot];
                 if (empty(required)) continue;
                 for (Object key : keys.require(row, slot))
                     admissionBuckets.computeIfAbsent(key, k -> new IntList()).add(i);
@@ -450,12 +450,12 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
         for (int i = 0; i < n; i++) {
             rowFluids.clear();
             Recipe row = snapshot[i];
-            for (int slot = 0; slot < row.mFluidInputs.length; slot++) {
+            for (int slot = 0; slot < row.fluidInputs.length; slot++) {
                 if (row.fluidTag(slot) != null) {
                     for (var holder : net.minecraft.core.registries.BuiltInRegistries.FLUID.getTagOrEmpty(row.fluidTag(slot)))
                         rowFluids.add(holder.value());
                 } else {
-                    FluidStack required = row.mFluidInputs[slot];
+                    FluidStack required = row.fluidInputs[slot];
                     if (required != null && required.getFluid() != net.minecraft.world.level.material.Fluids.EMPTY)
                         rowFluids.add(required.getFluid());
                 }
@@ -471,14 +471,14 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
 
     /** All-tag rows need one whole accepted domain as their exact-stage anchor. */
     private static boolean indexTaggedAnchor(Recipe row, int index, Map<Item, IntList> items, Map<Fluid, IntList> fluids) {
-        for (int slot = 0; slot < row.mInputs.length; slot++) {
-            if (row.itemTag(slot) == null || empty(row.mInputs[slot])) continue;
+        for (int slot = 0; slot < row.itemInputs.length; slot++) {
+            if (row.itemTag(slot) == null || empty(row.itemInputs[slot])) continue;
             for (var holder : net.minecraft.core.registries.BuiltInRegistries.ITEM.getTagOrEmpty(row.itemTag(slot)))
                 items.computeIfAbsent(holder.value(), key -> new IntList()).add(index);
             return true;
         }
-        for (int slot = 0; slot < row.mFluidInputs.length; slot++) {
-            if (row.fluidTag(slot) == null || row.mFluidInputs[slot].isEmpty()) continue;
+        for (int slot = 0; slot < row.fluidInputs.length; slot++) {
+            if (row.fluidTag(slot) == null || row.fluidInputs[slot].isEmpty()) continue;
             for (var holder : net.minecraft.core.registries.BuiltInRegistries.FLUID.getTagOrEmpty(row.fluidTag(slot)))
                 fluids.computeIfAbsent(holder.value(), key -> new IntList()).add(index);
             return true;
@@ -492,7 +492,7 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
 
         Object[] require(Recipe recipe, int slot) {
             var tag = recipe.itemTag(slot);
-            return tag == null ? require(recipe.mInputs[slot]) : new Object[] {tag};
+            return tag == null ? require(recipe.itemInputs[slot]) : new Object[] {tag};
         }
 
         Object[] require(ItemStack stack) {
@@ -715,8 +715,8 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
     }
 
     private static boolean possibleInputs(Recipe row, List<ItemStack> items, List<FluidStack> fluids) {
-        for (int input = 0; input < row.mInputs.length; input++) {
-            var required = row.mInputs[input];
+        for (int input = 0; input < row.itemInputs.length; input++) {
+            var required = row.itemInputs[input];
             if (required == null || required.isEmpty()) continue;
             boolean found = false;
             // Same-item container capabilities may depend on stack count. Keep these candidates;
@@ -729,8 +729,8 @@ final class RecipeLookupTable extends AbstractCollection<Recipe> {
             }
             if (!found) return false;
         }
-        for (int input = 0; input < row.mFluidInputs.length; input++) {
-            var required = row.mFluidInputs[input];
+        for (int input = 0; input < row.fluidInputs.length; input++) {
+            var required = row.fluidInputs[input];
             if (required == null || required.isEmpty()) continue;
             boolean found = false;
             for (var available : fluids) {

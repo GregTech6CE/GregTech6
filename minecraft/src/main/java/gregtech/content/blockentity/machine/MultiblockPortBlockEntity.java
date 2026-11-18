@@ -63,7 +63,7 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     protected MultiblockLayout.Role boundRole() { return role; }
     private MultiblockPortOwner owner() {
         BlockPos ownerPos = controllerPos();
-        if(isRemoved() || level==null || ownerPos==null || !level.hasChunkAt(ownerPos)) return null;
+        if (isRemoved() || level==null || ownerPos==null || !level.hasChunkAt(ownerPos)) return null;
         var entity = level.getBlockEntity(ownerPos);
         return entity instanceof MultiblockPortOwner owner && !entity.isRemoved() ? owner : null;
     }
@@ -87,8 +87,8 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     @Override public IFluidHandler fluidToolHandler(Direction side,boolean filling) {
         return gregtech.engine.fluid.FluidToolTarget.relay(()->{
             var host=owner();
-            if(host==null||!host.isStructureOk())return null;
-            if(host instanceof gregtech.engine.fluid.FluidToolTarget tools)
+            if (host==null||!host.isStructureOk())return null;
+            if (host instanceof gregtech.engine.fluid.FluidToolTarget tools)
                 return tools.fluidToolHandler(side,filling);
             // Preserve existing access for controllers whose original tool path is not ported yet.
 //? if >=1.21.1 {
@@ -101,12 +101,12 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
     @Override public boolean containsToolPosition(BlockPos pos) { return worldPosition.equals(pos); }
     @Override public long useMultiblockTool(net.minecraft.world.item.context.UseOnContext context,
                                            List<net.minecraft.network.chat.Component> messages) {
-        if(level==null||level.isClientSide||isRemoved())return 0;
+        if (level==null||level.isClientSide||isRemoved())return 0;
         var held=context.getItemInHand();
-        if(!gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.BUILDER_WAND)
+        if (!gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.BUILDER_WAND)
                 &&!gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))return 0;
         var host=owner();
-        if(host==null) {
+        if (host==null) {
             // Atomic structures have no transport bindings until complete. Tool lookup is read-only.
             var target = level instanceof ServerLevel server
                     ? gregtech.engine.multiblock.tracking.StructureWatchIndex.toolTarget(server, worldPosition) : null;
@@ -119,8 +119,8 @@ public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
             messages.add(net.minecraft.network.chat.Component.literal(MultiblockToolRules.NO_CONTROLLER));
             return MultiblockToolRules.MAGNIFIER_COST;
         }
-        if(host instanceof MultiblockToolTarget tools) {
-            if(tools.containsToolPosition(worldPosition)) return tools.useMultiblockTool(context,messages);
+        if (host instanceof MultiblockToolTarget tools) {
+            if (tools.containsToolPosition(worldPosition)) return tools.useMultiblockTool(context,messages);
             release(controllerPos()); // A stale binding must not route a click outside the owner's shell.
         }
         if (host instanceof gregtech.engine.multiblock.tracking.TrackedMultiblock tracked

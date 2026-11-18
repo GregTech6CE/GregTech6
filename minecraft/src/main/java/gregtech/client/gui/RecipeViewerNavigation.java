@@ -31,6 +31,6 @@ public final class RecipeViewerNavigation {
     }
 
     public static boolean open(RecipeMap map) {
-        return map != null && map.mViewerAllowed && (emi.test(map) || jei.test(map));
+        return map != null && map.viewerAllowed && (emi.test(map) || jei.test(map));
     }
 }

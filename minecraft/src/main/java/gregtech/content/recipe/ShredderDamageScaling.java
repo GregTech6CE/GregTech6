@@ -23,7 +23,7 @@ final class ShredderDamageScaling {
             var composition = ItemMaterialRegistry.get(input).orElse(null);
             if (composition == null || composition.components().isEmpty()) return null;
             var plan = MaterialRecoveryRules.planShredderDamaged(
-                    composition, MachineRecipeMaps.Shredder.mOutputItemsCount, staticPrefix);
+                    composition, MachineRecipeMaps.Shredder.itemOutputSlots, staticPrefix);
             if (!plan.accepted()) return null;
             var outputs = new ArrayList<ItemStack>();
             for (var output : plan.outputs()) {
@@ -42,20 +42,20 @@ final class ShredderDamageScaling {
                             null,
                             null,
                             plan.duration(),
-                            template.mEUt,
-                            template.mSpecialValue)
+                            template.energyPerTick,
+                            template.specialValue)
                     .withMaterialRecovery()
-                    .withPriority(template.mPriority)
+                    .withPriority(template.priority)
                     .withItemInputGuard(
                             0,
                             offered -> offered.getItem() == input.getItem()
                                     && offered.getDamageValue() == damage
                                     && ItemMaterialRegistry.canRecover(offered));
-            resolved.mRecoveryOwnership = template.mRecoveryOwnership;
-            resolved.mExplicitCatalystsOnly = template.mExplicitCatalystsOnly;
-            resolved.mExactItemInputs = template.mExactItemInputs;
-            resolved.mNeedsEmptyOutput = template.mNeedsEmptyOutput;
-            if (!template.mSource.isEmpty()) resolved.withSource(template.mSource);
+            resolved.recoveryOwnership = template.recoveryOwnership;
+            resolved.explicitCatalystsOnly = template.explicitCatalystsOnly;
+            resolved.exactItemInputs = template.exactItemInputs;
+            resolved.needsEmptyOutput = template.needsEmptyOutput;
+            if (!template.source.isEmpty()) resolved.withSource(template.source);
             return resolved;
         }
         return template;
@@ -76,7 +76,7 @@ final class ShredderDamageScaling {
             // This provider is reached only after the static lookup missed; use the dynamic rule.
             boolean staticPrefix = false;
             var plan = MaterialRecoveryRules.planShredderDamaged(
-                    composition, MachineRecipeMaps.Shredder.mOutputItemsCount, staticPrefix);
+                    composition, MachineRecipeMaps.Shredder.itemOutputSlots, staticPrefix);
             if (!plan.accepted()) return null;
             var outputs = new ArrayList<ItemStack>();
             for (var output : plan.outputs()) {

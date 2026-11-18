@@ -181,7 +181,7 @@ public class MoldBlock extends Block implements EntityBlock, GTMachineBlock, Sim
     public ItemStack getCloneItemStack(net.minecraft.world.level.BlockGetter level, BlockPos pos, BlockState state) {
 //?}
         var stack=new ItemStack(this);
-        if(level.getBlockEntity(pos) instanceof MoldBlockEntity mold)
+        if (level.getBlockEntity(pos) instanceof MoldBlockEntity mold)
             MoldItemData.withShape(stack,mold.getMoldShape());
         return stack;
     }
@@ -193,8 +193,8 @@ public class MoldBlock extends Block implements EntityBlock, GTMachineBlock, Sim
 *///?} else {
         var drops = super.getDrops(state,builder);
 //?}
-        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof MoldBlockEntity mold)
-            for(var stack:drops)if(stack.is(asItem()))MoldItemData.withShape(stack,mold.getMoldShape());
+        if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof MoldBlockEntity mold)
+            for (var stack:drops)if (stack.is(asItem()))MoldItemData.withShape(stack,mold.getMoldShape());
         return drops;
     }
 

@@ -42,9 +42,9 @@ public final class ChemicalBatteryBlock extends Block implements EntityBlock, Si
     public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
             net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
         var tool=player.getItemInHand(hand);
-        if(!gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))
+        if (!gregtech.engine.tool.GTToolHelper.matchesTool(tool,gregtech.engine.tool.GTToolType.MAGNIFYING_GLASS))
             return net.minecraft.world.InteractionResult.PASS;
-        if(!level.isClientSide&&level.getBlockEntity(pos) instanceof ChemicalBatteryBlockEntity be) {
+        if (!level.isClientSide&&level.getBlockEntity(pos) instanceof ChemicalBatteryBlockEntity be) {
             player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.portable_battery.energy",be.stored(),spec.capacity(),spec.energyType().getShortName()),true);
             gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(tool,1,player,
                     hand==net.minecraft.world.InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
@@ -66,12 +66,12 @@ public final class ChemicalBatteryBlock extends Block implements EntityBlock, Si
     @Override public VoxelShape getShape(BlockState s,BlockGetter l,BlockPos p,CollisionContext c){return shape;}
     @Override public BlockEntity newBlockEntity(BlockPos p,BlockState s){return new ChemicalBatteryBlockEntity(p,s);}
     @Override public void setPlacedBy(Level l,BlockPos p,BlockState s,@javax.annotation.Nullable LivingEntity player,ItemStack stack){
-        if(l.getBlockEntity(p) instanceof ChemicalBatteryBlockEntity be&&stack.getItem() instanceof ChemicalBatteryItem item)be.setCharge(item.stored(stack));
+        if (l.getBlockEntity(p) instanceof ChemicalBatteryBlockEntity be&&stack.getItem() instanceof ChemicalBatteryItem item)be.setCharge(item.stored(stack));
     }
     @Override public List<ItemStack> getDrops(BlockState s,LootParams.Builder loot){
         var result=super.getDrops(s,loot);
-        if(loot.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof ChemicalBatteryBlockEntity be)
-            for(var drop:result)if(drop.is(asItem()))((ChemicalBatteryItem)drop.getItem()).setCharge(drop,be.stored());
+        if (loot.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof ChemicalBatteryBlockEntity be)
+            for (var drop:result)if (drop.is(asItem()))((ChemicalBatteryItem)drop.getItem()).setCharge(drop,be.stored());
         return result;
     }
 //? if >=1.21.1 {

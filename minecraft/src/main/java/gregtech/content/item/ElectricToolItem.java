@@ -62,7 +62,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtec
         if (toolName.equals("Chainsaw") && gregtech.content.tool.ElectricChainsawHarvest.target(state))
             return gregtech.content.tool.ElectricChainsawHarvest.canHarvest(this,stack,state)
                     ? gregtech.content.tool.ElectricChainsawHarvest.speed(this,stack) : 0;
-        if(gregtech.content.tool.ElectricUtilityHarvest.target(this,state))return gregtech.content.tool.ElectricUtilityHarvest.canHarvest(this,stack,state)?gregtech.content.tool.ElectricUtilityHarvest.speed(this,stack):0;
+        if (gregtech.content.tool.ElectricUtilityHarvest.target(this,state))return gregtech.content.tool.ElectricUtilityHarvest.canHarvest(this,stack,state)?gregtech.content.tool.ElectricUtilityHarvest.speed(this,stack):0;
         return 0.0F;
     }
 
@@ -105,8 +105,8 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtec
     @Override public net.minecraft.world.InteractionResult useOn(net.minecraft.world.item.context.UseOnContext context) {
         var player = context.getPlayer();
         var stack = context.getItemInHand();
-        if(toolName.equals("Mining Drill")) {
-            if(!isPoweredUsable(stack))return net.minecraft.world.InteractionResult.PASS;
+        if (toolName.equals("Mining Drill")) {
+            if (!isPoweredUsable(stack))return net.minecraft.world.InteractionResult.PASS;
             var plugged=gregtech.content.item.behavior.BehaviorPlugLeak.use(context);
             return plugged.consumesAction()?plugged:gregtech.content.item.behavior.BehaviorPlaceWoodworkingSupplies.placeTorch(context,true);
         }
@@ -235,7 +235,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtec
                                          int slot, boolean selected) {
         super.inventoryTick(stack, level, entity, slot, selected);
 
-        if(!level.isClientSide) gregtech.engine.tool.GTToolEnchantments.apply(stack,level.registryAccess());
+        if (!level.isClientSide) gregtech.engine.tool.GTToolEnchantments.apply(stack,level.registryAccess());
 
         if (!level.isClientSide && entity instanceof net.minecraft.world.entity.LivingEntity user) finishBrokenTool(stack, user);
     }
@@ -271,8 +271,8 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtec
     }
 
     public int tint(ItemStack stack,int layer) {
-        if(layer==1) return headMaterial(stack).getColor();
-        if(layer==0) {
+        if (layer==1) return headMaterial(stack).getColor();
+        if (layer==0) {
             var handle=gregtech.engine.tool.GTToolHelper.getHandle(stack);
             return handle!=null && handle.isValid()?handle.getColor():gregtech.engine.material.GTMaterialRegistry.get(definition().handleMaterial()).getColor();
         }
@@ -294,7 +294,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtec
 
     @Override public net.minecraft.world.InteractionResult onItemUseFirst(ItemStack stack,
             net.minecraft.world.item.context.UseOnContext context) {
-        if(toolName.equals("Mixer")&&context.getClickedFace()==net.minecraft.core.Direction.UP&&context.getLevel().getBlockEntity(context.getClickedPos()) instanceof gregtech.content.blockentity.tool.ProcessingToolBlockEntity bowl){if(!context.getLevel().isClientSide&&bowl.processMixer(context.getPlayer(),stack))return net.minecraft.world.InteractionResult.SUCCESS;return net.minecraft.world.InteractionResult.PASS;}
+        if (toolName.equals("Mixer")&&context.getClickedFace()==net.minecraft.core.Direction.UP&&context.getLevel().getBlockEntity(context.getClickedPos()) instanceof gregtech.content.blockentity.tool.ProcessingToolBlockEntity bowl){if (!context.getLevel().isClientSide&&bowl.processMixer(context.getPlayer(),stack))return net.minecraft.world.InteractionResult.SUCCESS;return net.minecraft.world.InteractionResult.PASS;}
         return toolName.equals("Drill")
                 ? gregtech.content.item.behavior.BehaviorPlaceDynamite.use(this, stack, context)
                 : net.minecraft.world.InteractionResult.PASS;
@@ -345,12 +345,12 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtec
         return true;
     }
 
-    @Override public boolean hurtEnemy(ItemStack stack,net.minecraft.world.entity.LivingEntity target,net.minecraft.world.entity.LivingEntity attacker){if(isPoweredUsable(stack))consumeInteractionEnergy(stack,definition().attackCost(),attacker);return true;}
+    @Override public boolean hurtEnemy(ItemStack stack,net.minecraft.world.entity.LivingEntity target,net.minecraft.world.entity.LivingEntity attacker){if (isPoweredUsable(stack))consumeInteractionEnergy(stack,definition().attackCost(),attacker);return true;}
 
 //? if >=1.21.1 {
-/*    @Override public net.minecraft.world.item.component.ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack){if(!isPoweredUsable(stack))return net.minecraft.world.item.component.ItemAttributeModifiers.EMPTY;return net.minecraft.world.item.component.ItemAttributeModifiers.builder().add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,new net.minecraft.world.entity.ai.attributes.AttributeModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","powered_tool_damage"),definition().damage()+headMaterial(stack).getToolQuality(),net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND).build();}
+/*    @Override public net.minecraft.world.item.component.ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack){if (!isPoweredUsable(stack))return net.minecraft.world.item.component.ItemAttributeModifiers.EMPTY;return net.minecraft.world.item.component.ItemAttributeModifiers.builder().add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,new net.minecraft.world.entity.ai.attributes.AttributeModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","powered_tool_damage"),definition().damage()+headMaterial(stack).getToolQuality(),net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND).build();}
 *///?} else {
-    @Override public com.google.common.collect.Multimap<net.minecraft.world.entity.ai.attributes.Attribute,net.minecraft.world.entity.ai.attributes.AttributeModifier> getAttributeModifiers(net.minecraft.world.entity.EquipmentSlot slot,ItemStack stack){if(slot!=net.minecraft.world.entity.EquipmentSlot.MAINHAND||!isPoweredUsable(stack))return com.google.common.collect.ImmutableMultimap.of();return com.google.common.collect.ImmutableMultimap.of(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,new net.minecraft.world.entity.ai.attributes.AttributeModifier(java.util.UUID.fromString("CB3F55D3-645C-4FBC-A695-84CC934974"),"GT powered tool damage",definition().damage()+headMaterial(stack).getToolQuality(),net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADDITION));}
+    @Override public com.google.common.collect.Multimap<net.minecraft.world.entity.ai.attributes.Attribute,net.minecraft.world.entity.ai.attributes.AttributeModifier> getAttributeModifiers(net.minecraft.world.entity.EquipmentSlot slot,ItemStack stack){if (slot!=net.minecraft.world.entity.EquipmentSlot.MAINHAND||!isPoweredUsable(stack))return com.google.common.collect.ImmutableMultimap.of();return com.google.common.collect.ImmutableMultimap.of(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,new net.minecraft.world.entity.ai.attributes.AttributeModifier(java.util.UUID.fromString("CB3F55D3-645C-4FBC-A695-84CC934974"),"GT powered tool damage",definition().damage()+headMaterial(stack).getToolQuality(),net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADDITION));}
 //?}
 
 
@@ -361,7 +361,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy, gregtec
 
     @Override
     public long getEnergyCapacity(ItemStack stack, GregTechTags.Tag energyType) {
-        if(energyType!=GregTechTags.Energy.EU) return 0;
+        if (energyType!=GregTechTags.Energy.EU) return 0;
 
         long configured=StackData.readOrEmpty(stack).getLong("gt.capacity");
 

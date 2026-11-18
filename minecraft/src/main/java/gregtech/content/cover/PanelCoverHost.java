@@ -13,9 +13,9 @@ public interface PanelCoverHost {
     PanelCoverRuntime panels();
     /** Both native cover stores share the original single all-covers stop lifetime. */
     default boolean hasAttachedCovers(){
-        for(var face:Direction.values())if(!getCover(face).isEmpty())return true;
-        if(coverOwner() instanceof gregtech.content.logistics.LogisticsCoverHost logistics)
-            for(var face:Direction.values())if(!logistics.logisticsCovers().get(face).isEmpty())return true;
+        for (var face:Direction.values())if (!getCover(face).isEmpty())return true;
+        if (coverOwner() instanceof gregtech.content.logistics.LogisticsCoverHost logistics)
+            for (var face:Direction.values())if (!logistics.logisticsCovers().get(face).isEmpty())return true;
         return false;
     }
     default boolean componentTicks() { return true; }

@@ -36,7 +36,7 @@ public final class MaterialReloadTests {
         var packs = List.copyOf(server.getPackRepository().getSelectedIds());
         int applications = MachineRecipeOverlay.applications();
         int owned = SharedSpecialProcessRows.owned().size();
-        int bath = MachineRecipeMaps.Bath.mRecipeList.size();
+        int bath = MachineRecipeMaps.Bath.recipeRows.size();
         var previous = MaterialPublication.current();
         var done = new AtomicBoolean();
         var failure = new AtomicReference<Throwable>();
@@ -55,7 +55,7 @@ public final class MaterialReloadTests {
         assertAddonProcessTags(helper);
         helper.assertTrue(MachineRecipeOverlay.applications() >= applications + 2, "both real overlays applied");
         helper.assertTrue(SharedSpecialProcessRows.owned().size() == owned, "special-process rows do not accumulate");
-        helper.assertTrue(MachineRecipeMaps.Bath.mRecipeList.size() == bath, "Bath recipe count remains stable");
+        helper.assertTrue(MachineRecipeMaps.Bath.recipeRows.size() == bath, "Bath recipe count remains stable");
         var current = MaterialPublication.current();
         helper.assertTrue(current.revision() > previous.revision(), "successful reload advances publication");
         helper.assertTrue(current.recipeRevision() == MachineRecipeOverlay.generation(), "stamp names the committed overlay");
@@ -66,7 +66,7 @@ public final class MaterialReloadTests {
             var failed = MachineRecipeOverlay.apply(null);
             helper.assertTrue(failed.failed(), "invalid overlay fails through the real recovery path");
             helper.assertTrue(MaterialPublication.current() == current, "failed overlay preserves the prior stamp");
-            helper.assertTrue(MachineRecipeMaps.Bath.mRecipeList.size() == MachineRecipeMaps.Bath.baselineSize(),
+            helper.assertTrue(MachineRecipeMaps.Bath.recipeRows.size() == MachineRecipeMaps.Bath.baselineSize(),
                     "failure restores the Bath baseline instead of a partial overlay");
         } finally {
             var restored = MachineRecipeOverlay.apply(server.getRecipeManager());

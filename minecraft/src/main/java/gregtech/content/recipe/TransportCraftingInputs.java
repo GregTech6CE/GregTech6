@@ -14,19 +14,19 @@ import java.util.*;
 public final class TransportCraftingInputs {
     private TransportCraftingInputs() {}
     public static Ingredient resolve(TransportCraftingCatalog.Input input){
-        if(input.kind().equals("tag"))return Ingredient.of(net.minecraft.tags.ItemTags.create(ResourceLocation.parse(input.name())));
-        if(input.kind().equals("item")){
+        if (input.kind().equals("tag"))return Ingredient.of(net.minecraft.tags.ItemTags.create(ResourceLocation.parse(input.name())));
+        if (input.kind().equals("item")){
             var item=BuiltInRegistries.ITEM.get(ResourceLocation.parse(input.name()));
             return item==Items.AIR?Ingredient.EMPTY:Ingredient.of(item);
         }
-        if(input.kind().equals("casing")) {
+        if (input.kind().equals("casing")) {
             var prefix=input.name().equals("casingMachineDouble") ? gregtech.engine.prefix.BlockMaterialPrefix.casingMachineDouble : gregtech.engine.prefix.BlockMaterialPrefix.casingMachine;
             var material=input.material();
             var materials=material.getId()<0?gregtech.content.data.MaterialGroups.members(material):Set.of(material);
             var stacks=materials.stream().map(m -> gregtech.content.registry.GTBlocks.getStack(prefix,m)).filter(stack -> !stack.isEmpty()).toList();
             return stacks.isEmpty()?Ingredient.EMPTY:Ingredient.of(stacks.stream());
         }
-        if(input.kind().equals("wire") || input.kind().equals("cable")) {
+        if (input.kind().equals("wire") || input.kind().equals("cable")) {
             boolean insulated=input.kind().equals("cable");
             int size=Integer.parseInt(input.name());
             var material=input.material();
@@ -36,7 +36,7 @@ public final class TransportCraftingInputs {
             return wires.isEmpty()?Ingredient.EMPTY:Ingredient.of(wires.stream());
         }
         var prefix=PrefixRegistry.byName(input.name());
-        if(prefix==null)return Ingredient.EMPTY;
+        if (prefix==null)return Ingredient.EMPTY;
         var material=input.material();
         var materials=material.getId()<0?gregtech.content.data.MaterialGroups.members(material):Set.of(material);
         var stacks=materials.stream().map(m->GTItems.getStack(prefix,m)).filter(s->!s.isEmpty()).toList();
@@ -45,16 +45,16 @@ public final class TransportCraftingInputs {
     public static Optional<JsonObject> json(TransportCraftingCatalog.Row row){
         var key=new JsonObject();
         var ingredients=new JsonArray();
-        for(var entry:row.key().entrySet()){
-            if(!row.unpack()&&row.pattern().stream().noneMatch(p->p.indexOf(entry.getKey())>=0))continue;
+        for (var entry:row.key().entrySet()){
+            if (!row.unpack()&&row.pattern().stream().noneMatch(p->p.indexOf(entry.getKey())>=0))continue;
             var ingredient=resolve(entry.getValue());
-            if(ingredient==Ingredient.EMPTY)return Optional.empty();
+            if (ingredient==Ingredient.EMPTY)return Optional.empty();
 //? if >=1.21.1 {
             /*var encoded=Ingredient.CODEC.encodeStart(com.mojang.serialization.JsonOps.INSTANCE,ingredient).getOrThrow();
 *///?} else {
             var encoded=ingredient.toJson();
 //?}
-            if(row.unpack())ingredients.add(encoded);else key.add(entry.getKey().toString(),encoded);
+            if (row.unpack())ingredients.add(encoded);else key.add(entry.getKey().toString(),encoded);
         }
 //? if >=1.21.1 {
         /*var result=new JsonObject(); result.addProperty("id",row.output()); result.addProperty("count",row.count());
@@ -64,7 +64,7 @@ public final class TransportCraftingInputs {
         var json=new JsonObject(); json.addProperty("type",row.unpack()?"gt6ce:tool_shapeless":"gt6ce:tool_shaped");
         json.addProperty("group","gt.hand");json.addProperty("allow_mirror",false);
         json.addProperty("require_empty_fluid_containers",row.empty());
-        if(row.unpack())json.add("ingredients",ingredients);else {var pattern=new JsonArray();row.pattern().forEach(pattern::add);json.add("pattern",pattern);json.add("key",key);}
+        if (row.unpack())json.add("ingredients",ingredients);else {var pattern=new JsonArray();row.pattern().forEach(pattern::add);json.add("pattern",pattern);json.add("key",key);}
         json.add("result",result);return Optional.of(json);
     }
 }

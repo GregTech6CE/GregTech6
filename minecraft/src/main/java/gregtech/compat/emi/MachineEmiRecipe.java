@@ -28,8 +28,8 @@ public final class MachineEmiRecipe implements EmiRecipe {
         this.category = category; this.map = map; this.recipe = recipe; this.id = id; this.ingredients = ingredients;
         var inputs = new ArrayList<EmiIngredient>(); var catalysts = new ArrayList<EmiIngredient>();
         var outputs = new ArrayList<EmiStack>();
-        for (int i = 0; i < recipe.mInputs.length; i++) {
-            var stack = recipe.mInputs[i];
+        for (int i = 0; i < recipe.itemInputs.length; i++) {
+            var stack = recipe.itemInputs[i];
             if (stack == null || stack.isEmpty()) continue;
             var ingredient = ingredients.ingredient(recipe,i);
             if (gregtech.content.recipe.CrucibleDisplayItems.isCrucible(map)) {
@@ -40,21 +40,21 @@ public final class MachineEmiRecipe implements EmiRecipe {
             }
             (recipe.isCatalystInput(i) ? catalysts : inputs).add(ingredient);
         }
-        for (int i = 0; i < recipe.mFluidInputs.length; i++) {
-            var fluid = recipe.mFluidInputs[i];
+        for (int i = 0; i < recipe.fluidInputs.length; i++) {
+            var fluid = recipe.fluidInputs[i];
             if (fluid == null || fluid.isEmpty()) continue;
             ((recipe.isCatalystFluidInput(i) || recipe.isPresenceFluidInput(i)) ? catalysts : inputs)
                     .add(ingredients.fluidIngredient(recipe, i));
         }
-        for (int i = 0; i < recipe.mOutputs.length; i++) {
-            var stack = recipe.mOutputs[i];
+        for (int i = 0; i < recipe.itemOutputs.length; i++) {
+            var stack = recipe.itemOutputs[i];
             if (stack != null && !stack.isEmpty()) {
                 outputs.add(EmiStack.of(stack).setChance(recipe.getOutputChance(i) / 10000f));
                 if (gregtech.content.recipe.CrucibleDisplayItems.isCrucible(map))
                     for (var alias : gregtech.content.recipe.CrucibleDisplayItems.aliases(stack)) outputs.add(EmiStack.of(alias));
             }
         }
-        for (var fluid : recipe.mFluidOutputs) if (fluid != null && !fluid.isEmpty()) outputs.add(fluid(fluid));
+        for (var fluid : recipe.fluidOutputs) if (fluid != null && !fluid.isEmpty()) outputs.add(fluid(fluid));
         this.inputs = List.copyOf(inputs); this.catalysts = List.copyOf(catalysts); this.outputs = List.copyOf(outputs);
     }
 //? if >=1.21.1 {
@@ -86,7 +86,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
     @Override public List<EmiIngredient> getInputs() { return inputs; }
     @Override public List<EmiIngredient> getCatalysts() { return catalysts; }
     @Override public List<EmiStack> getOutputs() { return outputs; }
-    @Override public boolean supportsRecipeTree() { return !recipe.mFakeRecipe; }
+    @Override public boolean supportsRecipeTree() { return !recipe.fakeRecipe; }
     @Override public int getDisplayWidth() { return new RecipeGuiLayout(map,recipe).width(); }
     @Override public int getDisplayHeight() { return new RecipeGuiLayout(map,recipe).height(); }
     @Override public void addWidgets(WidgetHolder widgets) {
@@ -101,8 +101,8 @@ public final class MachineEmiRecipe implements EmiRecipe {
                 layout.draw(graphics);
             } finally {graphics.pose().popPose();}
         });
-        side(widgets, true, recipe.mInputs, recipe.mFluidInputs,scale,offset,layout);
-        side(widgets, false, recipe.mOutputs, recipe.mFluidOutputs,scale,offset,layout);
+        side(widgets, true, recipe.itemInputs, recipe.fluidInputs,scale,offset,layout);
+        side(widgets, false, recipe.itemOutputs, recipe.fluidOutputs,scale,offset,layout);
     }
     /** Retain SlotWidget identity, recipe context, shortcuts and tooltips at the fitted coordinates. */
     private static final class FittedSlot extends dev.emi.emi.api.widget.SlotWidget {
@@ -112,7 +112,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
             super(ingredient,x,y);this.scale=scale;this.offset=offset;drawBack(false);
         }
         @Override public dev.emi.emi.api.widget.Bounds getBounds() {
-            var raw=super.getBounds();if(drawing)return raw;
+            var raw=super.getBounds();if (drawing)return raw;
             int left=(int)Math.floor(offset+raw.x()*scale),top=(int)Math.floor(raw.y()*scale);
             return new dev.emi.emi.api.widget.Bounds(left,top,(int)Math.ceil(offset+raw.right()*scale)-left,(int)Math.ceil(raw.bottom()*scale)-top);
         }

@@ -28,14 +28,14 @@ import net.minecraft.world.InteractionResult;
 public final class PocketToolItem extends GTToolItem {
  public PocketToolItem(Properties properties,GTToolType type){super(properties,type);}
  public static final GTToolType[] MODES={GTToolType.POCKET_MULTITOOL,GTToolType.POCKET_KNIFE,GTToolType.POCKET_SAW,GTToolType.POCKET_FILE,GTToolType.POCKET_SCREWDRIVER,GTToolType.POCKET_WIRE_CUTTER,GTToolType.POCKET_SCISSORS,GTToolType.POCKET_CHISEL};
- public GTToolType activeType(){return switch(toolType()){case POCKET_KNIFE->GTToolType.KNIFE;case POCKET_SAW->GTToolType.SAW;case POCKET_FILE->GTToolType.FILE;case POCKET_SCREWDRIVER->GTToolType.SCREWDRIVER;case POCKET_WIRE_CUTTER->GTToolType.WIRE_CUTTER;case POCKET_SCISSORS->GTToolType.SCISSORS;case POCKET_CHISEL->GTToolType.CHISEL;default->GTToolType.POCKET_MULTITOOL;};}
+ public GTToolType activeType(){return switch (toolType()){case POCKET_KNIFE->GTToolType.KNIFE;case POCKET_SAW->GTToolType.SAW;case POCKET_FILE->GTToolType.FILE;case POCKET_SCREWDRIVER->GTToolType.SCREWDRIVER;case POCKET_WIRE_CUTTER->GTToolType.WIRE_CUTTER;case POCKET_SCISSORS->GTToolType.SCISSORS;case POCKET_CHISEL->GTToolType.CHISEL;default->GTToolType.POCKET_MULTITOOL;};}
  @Override public InteractionResult onItemUseFirst(ItemStack stack,UseOnContext context){
   var player=context.getPlayer();var level=context.getLevel();
-  if(player!=null&&player.isShiftKeyDown()&&GTToolHelper.isUsable(stack)&&player.mayBuild()){
+  if (player!=null&&player.isShiftKeyDown()&&GTToolHelper.isUsable(stack)&&player.mayBuild()){
    var pos=context.getClickedPos();var key=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(level.getBlockState(pos).getBlock());
-   if(activeType()==GTToolType.SCREWDRIVER&&level.getBlockState(pos).getBlock() instanceof gregtech.content.block.energy.SignalWireBlock)return InteractionResult.PASS;
-   if(!level.mayInteract(player,pos)||level.getBlockEntity(pos)!=null&&!key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))return InteractionResult.PASS;
-   if(!level.isClientSide){
+   if (activeType()==GTToolType.SCREWDRIVER&&level.getBlockState(pos).getBlock() instanceof gregtech.content.block.energy.SignalWireBlock)return InteractionResult.PASS;
+   if (!level.mayInteract(player,pos)||level.getBlockEntity(pos)!=null&&!key.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))return InteractionResult.PASS;
+   if (!level.isClientSide){
     int index=java.util.Arrays.asList(MODES).indexOf(toolType());var next=new ItemStack(GTToolItems.get(MODES[(index+1)%MODES.length]));
 
 //? if >=1.21.1 {
@@ -50,27 +50,27 @@ public final class PocketToolItem extends GTToolItem {
   }
   return super.onItemUseFirst(stack,context);
  }
- @Override public InteractionResult useOn(UseOnContext context){if(activeType()==GTToolType.SAW)return gregtech.content.item.behavior.BehaviorPlaceWoodworkingSupplies.use(context);if(activeType()==GTToolType.SCREWDRIVER){var state=context.getLevel().getBlockState(context.getClickedPos());
+ @Override public InteractionResult useOn(UseOnContext context){if (activeType()==GTToolType.SAW)return gregtech.content.item.behavior.BehaviorPlaceWoodworkingSupplies.use(context);if (activeType()==GTToolType.SCREWDRIVER){var state=context.getLevel().getBlockState(context.getClickedPos());
 //? if >=1.21.1 {
-/*    if(state.getBlock() instanceof gregtech.engine.tool.ScrewdriverUseTarget target){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return target.useScrewdriver(state,context.getLevel(),context.getClickedPos(),context.getPlayer(),context.getHand(),hit);}}
+/*    if (state.getBlock() instanceof gregtech.engine.tool.ScrewdriverUseTarget target){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return target.useScrewdriver(state,context.getLevel(),context.getClickedPos(),context.getPlayer(),context.getHand(),hit);}}
 *///?} else {
-    if(state.getBlock() instanceof gregtech.content.block.machine.HopperBlock||state.getBlock() instanceof gregtech.content.block.machine.QueueHopperBlock){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return state.use(context.getLevel(),context.getPlayer(),context.getHand(),hit);}}
+    if (state.getBlock() instanceof gregtech.content.block.machine.HopperBlock||state.getBlock() instanceof gregtech.content.block.machine.QueueHopperBlock){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return state.use(context.getLevel(),context.getPlayer(),context.getHand(),hit);}}
 //?}
    return super.useOn(context);}
  @Override public net.minecraft.world.InteractionResult interactLivingEntity(ItemStack stack,net.minecraft.world.entity.player.Player player,net.minecraft.world.entity.LivingEntity entity,net.minecraft.world.InteractionHand hand){
-  if(activeType()!=GTToolType.SCISSORS||!GTToolHelper.isUsable(stack)||player.isSpectator())return net.minecraft.world.InteractionResult.PASS;
+  if (activeType()!=GTToolType.SCISSORS||!GTToolHelper.isUsable(stack)||player.isSpectator())return net.minecraft.world.InteractionResult.PASS;
   var result=net.minecraft.world.item.Items.SHEARS.interactLivingEntity(stack.copy(),player,entity,hand);
-  if(result.consumesAction()&&!player.level().isClientSide)GTToolHelper.damageForUse(stack,20,player);return result;
+  if (result.consumesAction()&&!player.level().isClientSide)GTToolHelper.damageForUse(stack,20,player);return result;
  }
  public boolean onBlockStartBreak(ItemStack stack,net.minecraft.core.BlockPos pos,net.minecraft.world.entity.player.Player player){
   var level=player.level();var state=level.getBlockState(pos);
-  if(activeType()!=GTToolType.SAW||!GTToolHelper.isUsable(stack)||level.isClientSide||player.getAbilities().instabuild||!player.mayBuild()||!level.mayInteract(player,pos)||state.hasBlockEntity()||state.getDestroySpeed(level,pos)<0)return false;
-  if(!state.is(net.minecraft.tags.BlockTags.LEAVES)&&!(state.getBlock() instanceof net.minecraft.world.level.block.IceBlock)&&state.getBlock()!=net.minecraft.world.level.block.Blocks.PACKED_ICE)return false;
-  if(!state.onDestroyedByPlayer(level,pos,player,true,state.getFluidState()))return true;
+  if (activeType()!=GTToolType.SAW||!GTToolHelper.isUsable(stack)||level.isClientSide||player.getAbilities().instabuild||!player.mayBuild()||!level.mayInteract(player,pos)||state.hasBlockEntity()||state.getDestroySpeed(level,pos)<0)return false;
+  if (!state.is(net.minecraft.tags.BlockTags.LEAVES)&&!(state.getBlock() instanceof net.minecraft.world.level.block.IceBlock)&&state.getBlock()!=net.minecraft.world.level.block.Blocks.PACKED_ICE)return false;
+  if (!state.onDestroyedByPlayer(level,pos,player,true,state.getFluidState()))return true;
   state.getBlock().destroy(level,pos,state);mineBlock(stack,level,state,pos,player);
   net.minecraft.world.level.block.Block.popResource(level,pos,new ItemStack(state.getBlock()));player.awardStat(net.minecraft.stats.Stats.BLOCK_MINED.get(state.getBlock()));player.causeFoodExhaustion(.005F);level.levelEvent(player,2001,pos,net.minecraft.world.level.block.Block.getId(state));return true;
  }
- private boolean specialHarvest(net.minecraft.world.level.block.state.BlockState state){return switch(activeType()){
+ private boolean specialHarvest(net.minecraft.world.level.block.state.BlockState state){return switch (activeType()){
   case FILE -> state.getBlock() instanceof net.minecraft.world.level.block.IronBarsBlock||state.getBlock() instanceof gregtech.content.block.misc.BarsBlock;
   case SCISSORS -> state.is(net.minecraft.tags.BlockTags.WOOL)||state.is(net.minecraft.tags.BlockTags.WOOL_CARPETS)||state.getBlock()==net.minecraft.world.level.block.Blocks.COBWEB||state.getBlock() instanceof net.minecraft.world.level.block.VineBlock;
   case SAW -> state.is(net.minecraft.tags.BlockTags.LEAVES)||state.getBlock() instanceof net.minecraft.world.level.block.VineBlock||state.getBlock() instanceof net.minecraft.world.level.block.IceBlock||state.getBlock()==net.minecraft.world.level.block.Blocks.PACKED_ICE||state.getBlock() instanceof net.minecraft.world.level.block.IronBarsBlock;

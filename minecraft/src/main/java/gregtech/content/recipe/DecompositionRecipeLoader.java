@@ -125,7 +125,7 @@ public final class DecompositionRecipeLoader implements InitializationStep {
             MaterialDecompositionRule.Route route) {
         var rule = declaration.value();
         var result = MaterialDecompositionPlanner.plan(
-                material, rule, route, map.mOutputItemsCount, map.mOutputFluidCount);
+                material, rule, route, map.itemOutputSlots, map.fluidOutputTanks);
         if (!result.planned()) {
             LOGGER.warn(
                     "[gregtech] Decomposition {} for {}: {} ({})",
@@ -149,7 +149,7 @@ public final class DecompositionRecipeLoader implements InitializationStep {
 
         boolean addedAny = false;
         boolean fluidInputAdded = false;
-        if (map.mInputFluidCount > 0) {
+        if (map.fluidInputTanks > 0) {
             for (var input : plan.fluidInputs()) {
                 FluidStack fluid = DecompositionNativeAdapter.fluid(
                         input.fluid(), input.millibuckets(), input.declared(), material.getName());
@@ -169,7 +169,7 @@ public final class DecompositionRecipeLoader implements InitializationStep {
             }
         }
 
-        if ((!fluidInputAdded || rule.keepSolidInput()) && map.mInputItemsCount > 0) {
+        if ((!fluidInputAdded || rule.keepSolidInput()) && map.itemInputSlots > 0) {
             if (allows(declaration, "dust")) {
                 ItemStack dust = MaterialStackItemHelper.mat(MaterialPrefix.dust, material, (int) plan.divider());
                 if (!dust.isEmpty()) addedAny |= add(map, dust, null, itemOutputs, fluidOutputs, plan);
@@ -276,18 +276,18 @@ public final class DecompositionRecipeLoader implements InitializationStep {
         if (plan.electrolyserCatalyst()) {
             Item selector = GTTechnological.selectorTag(0);
             if (selector == null) return false;
-            ItemStack[] gated = new ItemStack[recipe.mInputs.length + 1];
+            ItemStack[] gated = new ItemStack[recipe.itemInputs.length + 1];
             gated[0] = new ItemStack(selector);
-            System.arraycopy(recipe.mInputs, 0, gated, 1, recipe.mInputs.length);
+            System.arraycopy(recipe.itemInputs, 0, gated, 1, recipe.itemInputs.length);
             recipe = new Recipe(
                     gated,
-                    recipe.mOutputs,
-                    recipe.mChances,
-                    recipe.mFluidInputs,
-                    recipe.mFluidOutputs,
-                    recipe.mDuration,
-                    recipe.mEUt,
-                    recipe.mSpecialValue)
+                    recipe.itemOutputs,
+                    recipe.outputChances,
+                    recipe.fluidInputs,
+                    recipe.fluidOutputs,
+                    recipe.durationTicks,
+                    recipe.energyPerTick,
+                    recipe.specialValue)
                     .withCatalystInputs(0);
         }
 

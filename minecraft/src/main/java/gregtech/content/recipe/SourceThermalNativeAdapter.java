@@ -47,7 +47,7 @@ final class SourceThermalNativeAdapter {
  static List<Diagnostic> diagnostics(){return List.copyOf(DIAGNOSTICS);}
  static void begin(){DIAGNOSTICS.clear();}
  static void note(GTMaterial material,Outcome outcome){
-  if(outcome.action()==Action.DEFERRED_NO_ROW||outcome.action()==Action.LEGACY_UNSUPPORTED)
+  if (outcome.action()==Action.DEFERRED_NO_ROW||outcome.action()==Action.LEGACY_UNSUPPORTED)
    DIAGNOSTICS.add(new Diagnostic(material.getId(),material.getName(),outcome.action(),outcome.reason()));
  }
  enum Action { ROWS, SOURCE_NO_ROW, DEFERRED_NO_ROW, LEGACY_UNSUPPORTED }
@@ -61,7 +61,7 @@ final class SourceThermalNativeAdapter {
  }
  record NativeRow(RecipeMap map,ItemStack input,FluidStack output,long ticks,long power,RecoveryInputProof inputProof) {
   Recipe admit(){
-   if(input.isEmpty()||output.isEmpty())return null;
+   if (input.isEmpty()||output.isEmpty())return null;
    var recipe=RecipeBuilder.of(power, ticks)
            .optimize(true)
            .itemInputs(input.copy())
@@ -86,57 +86,57 @@ final class SourceThermalNativeAdapter {
   */
  static Outcome inspectForm(MaterialPrefix prefix,GTMaterial raw,ItemStack selected,Snapshot snapshot){
   var permission=SourceThermalInputRules.prefixDecision(prefix);
-  if(permission==SourceThermalRecyclingRules.Truth.NO)return no(Reason.SOURCE_PREFIX_EXCLUDED);
-  if(permission!=SourceThermalRecyclingRules.Truth.YES)return unsupported(Reason.UNSUPPORTED_INPUT_PREFIX);
+  if (permission==SourceThermalRecyclingRules.Truth.NO)return no(Reason.SOURCE_PREFIX_EXCLUDED);
+  if (permission!=SourceThermalRecyclingRules.Truth.YES)return unsupported(Reason.UNSUPPORTED_INPUT_PREFIX);
   return inspect(raw,selected,snapshot,prefix);
  }
  private static Outcome inspect(GTMaterial raw,ItemStack selected,Snapshot snapshot,MaterialPrefix prefix){
-  if(raw==null)return unsupported(Reason.UNKNOWN_SOURCE_IDENTITY);
-  if(selected==null||selected.isEmpty())return deferred(Reason.INPUT_ABSENT);
+  if (raw==null)return unsupported(Reason.UNKNOWN_SOURCE_IDENTITY);
+  if (selected==null||selected.isEmpty())return deferred(Reason.INPUT_ABSENT);
   GTMaterial material=raw.resolve();Facts source=MaterialFactKeys.sourceRecycling(material).orElse(null);
-  if(!identity(material,source==null?null:source.identity()))return unsupported(Reason.UNKNOWN_SOURCE_IDENTITY);
-  if(!source.inputEligible())return unsupported(Reason.UNKNOWN_SOURCE_FACT);
+  if (!identity(material,source==null?null:source.identity()))return unsupported(Reason.UNKNOWN_SOURCE_IDENTITY);
+  if (!source.inputEligible())return unsupported(Reason.UNKNOWN_SOURCE_FACT);
   Reason changed=snapshot.materialOverride(material,source);
-  if(changed!=null)return unsupported(changed);
+  if (changed!=null)return unsupported(changed);
   long inputUnits=U;
-  if(prefix==null){
-   if(!snapshot.input(material,selected))return unsupported(Reason.ITEM_COMPOSITION_OVERRIDE);
+  if (prefix==null){
+   if (!snapshot.input(material,selected))return unsupported(Reason.ITEM_COMPOSITION_OVERRIDE);
   }else{
-   if(SourceThermalInputRules.isAdditional(prefix)&&!snapshot.ingredable(selected))
+   if (SourceThermalInputRules.isAdditional(prefix)&&!snapshot.ingredable(selected))
     return deferred(Reason.UNVERIFIED_INPUT_BEHAVIOR);
    inputUnits=snapshot.inputUnits(material,prefix,selected);
-   if(inputUnits!=SourceThermalInputRules.form(prefix).sourceUnits())return unsupported(Reason.ITEM_COMPOSITION_OVERRIDE);
+   if (inputUnits!=SourceThermalInputRules.form(prefix).sourceUnits())return unsupported(Reason.ITEM_COMPOSITION_OVERRIDE);
   }
-  if(source.melting()==Decision.NO)return no(Reason.SOURCE_NOT_MELTING);
-  if(source.blacklistedSmelter()==Decision.YES)return no(Reason.SOURCE_BLACKLISTED);
-  if(source.targetUnitsPerU()==0)return no(Reason.SOURCE_ZERO_TARGET);
-  if(source.melting()!=Decision.YES||source.blacklistedSmelter()!=Decision.NO||source.targetUnitsPerU()<0)
+  if (source.melting()==Decision.NO)return no(Reason.SOURCE_NOT_MELTING);
+  if (source.blacklistedSmelter()==Decision.YES)return no(Reason.SOURCE_BLACKLISTED);
+  if (source.targetUnitsPerU()==0)return no(Reason.SOURCE_ZERO_TARGET);
+  if (source.melting()!=Decision.YES||source.blacklistedSmelter()!=Decision.NO||source.targetUnitsPerU()<0)
    return unsupported(Reason.UNKNOWN_SOURCE_FACT);
   GTMaterial target=GTMaterialRegistry.get(source.target().name());
   Facts targetSource=MaterialFactKeys.sourceRecycling(target).orElse(null);
-  if(!identity(target,source.target())||targetSource==null)return unsupported(Reason.UNKNOWN_SOURCE_IDENTITY);
+  if (!identity(target,source.target())||targetSource==null)return unsupported(Reason.UNKNOWN_SOURCE_IDENTITY);
   changed=snapshot.materialOverride(target,targetSource);
-  if(changed!=null)return unsupported(changed);
+  if (changed!=null)return unsupported(changed);
   Phase phase=targetSource.phase();
-  if(phase.kind()==PhaseKind.UNKNOWN||phase.kind()==PhaseKind.OPTIONAL_EXTERNAL)
+  if (phase.kind()==PhaseKind.UNKNOWN||phase.kind()==PhaseKind.OPTIONAL_EXTERNAL)
    return unsupported(Reason.UNKNOWN_SOURCE_FACT);
-  if(phase.kind()==PhaseKind.NO_DEFAULT_PHASE){
+  if (phase.kind()==PhaseKind.NO_DEFAULT_PHASE){
    return snapshot.defaultNoPhase(target,targetSource)?no(Reason.SOURCE_NO_DEFAULT_PHASE)
        :unsupported(Reason.FLUID_BINDING_OVERRIDE);
   }
   Binding sourceBinding=phase.binding();
-  if(sourceBinding==null)return unsupported(Reason.UNKNOWN_SOURCE_FACT);
+  if (sourceBinding==null)return unsupported(Reason.UNKNOWN_SOURCE_FACT);
   NativeBinding binding=nativeBinding(target,sourceBinding);
-  if(binding==null)return deferred(Reason.REQUIRED_NATIVE_FLUID_ABSENT);
+  if (binding==null)return deferred(Reason.REQUIRED_NATIVE_FLUID_ABSENT);
   var entry=snapshot.definition(binding.field());
-  if(entry==null)return deferred(Reason.REQUIRED_NATIVE_FLUID_ABSENT);
-  if(!snapshot.owned(target,binding,entry)||!snapshot.noExternalPhase(target,targetSource,binding.field()))
+  if (entry==null)return deferred(Reason.REQUIRED_NATIVE_FLUID_ABSENT);
+  if (!snapshot.owned(target,binding,entry)||!snapshot.noExternalPhase(target,targetSource,binding.field()))
    return unsupported(Reason.FLUID_BINDING_OVERRIDE);
   FluidStack fluid=snapshot.fluid(binding.field(),1);
-  if(fluid==null||fluid.isEmpty())return deferred(Reason.REQUIRED_NATIVE_FLUID_ABSENT);
-  if(!snapshot.holder(binding,entry,fluid))return unsupported(Reason.FLUID_BINDING_OVERRIDE);
+  if (fluid==null||fluid.isEmpty())return deferred(Reason.REQUIRED_NATIVE_FLUID_ABSENT);
+  if (!snapshot.holder(binding,entry,fluid))return unsupported(Reason.FLUID_BINDING_OVERRIDE);
   boolean calcite=targetSource.target().id()==9107&&targetSource.target().name().equals("Calcite");
-  if(!calcite&&targetSource.furnace()==Decision.UNKNOWN)return unsupported(Reason.UNKNOWN_SOURCE_FACT);
+  if (!calcite&&targetSource.furnace()==Decision.UNKNOWN)return unsupported(Reason.UNKNOWN_SOURCE_FACT);
   var facts=new SourceThermalRecyclingRules.Facts(truth(source.melting()),truth(source.blacklistedSmelter()),
       source.targetUnitsPerU(),truth(targetSource.furnace()),calcite?SourceThermalRecyclingRules.Truth.YES:SourceThermalRecyclingRules.Truth.NO);
   var stats=snapshot.stats(material,target);
@@ -145,19 +145,19 @@ final class SourceThermalNativeAdapter {
   var plan=prefix==null
       ?SourceThermalRecyclingRules.plan(SourceThermalRecyclingRules.InputProof.VERIFIED_SELF_ONE_UNIT,facts,stats,proof)
       :SourceThermalInputRules.plan(prefix,SourceThermalInputRules.InputProof.VERIFIED_SINGLE_COMPONENT,inputUnits,facts,stats,proof);
-  if(plan.decision()==SourceThermalRecyclingRules.Decision.UNSUPPORTED)return deferred(Reason.INVALID_RUNTIME_STATS);
-  if(plan.decision()==SourceThermalRecyclingRules.Decision.SUPPORTED_NO_ROW)return no(Reason.SOURCE_ZERO_VOLUME);
+  if (plan.decision()==SourceThermalRecyclingRules.Decision.UNSUPPORTED)return deferred(Reason.INVALID_RUNTIME_STATS);
+  if (plan.decision()==SourceThermalRecyclingRules.Decision.SUPPORTED_NO_ROW)return no(Reason.SOURCE_ZERO_VOLUME);
   var output=fluid.copy();output.setAmount(plan.row().millibuckets());
   var composition=ItemMaterialRegistry.base(selected.getItem()).orElse(null);
   var inputProof=composition==null?null:RecoveryInputProof.capture(selected,material,composition.prefix(),inputUnits);
-  if(inputProof==null)return deferred(Reason.UNVERIFIED_INPUT_BEHAVIOR);
+  if (inputProof==null)return deferred(Reason.UNVERIFIED_INPUT_BEHAVIOR);
   var rows=new ArrayList<NativeRow>();
-  if(plan.row().melter())rows.add(new NativeRow(MachineRecipeMaps.Melter,selected.copy(),output.copy(),plan.row().ticks(),plan.row().power(),inputProof));
+  if (plan.row().melter())rows.add(new NativeRow(MachineRecipeMaps.Melter,selected.copy(),output.copy(),plan.row().ticks(),plan.row().power(),inputProof));
   rows.add(new NativeRow(MachineRecipeMaps.Smelter,selected.copy(),output.copy(),plan.row().ticks(),plan.row().power(),inputProof));
   return new Outcome(Action.ROWS,Reason.VERIFIED,rows);
  }
  private static SourceThermalRecyclingRules.Truth truth(Decision decision){
-  return switch(decision){case YES->SourceThermalRecyclingRules.Truth.YES;case NO->SourceThermalRecyclingRules.Truth.NO;case UNKNOWN->SourceThermalRecyclingRules.Truth.UNKNOWN;};
+  return switch (decision){case YES->SourceThermalRecyclingRules.Truth.YES;case NO->SourceThermalRecyclingRules.Truth.NO;case UNKNOWN->SourceThermalRecyclingRules.Truth.UNKNOWN;};
  }
  private static boolean identity(GTMaterial m,Identity source){
   return m!=null&&source!=null&&m.isValid()&&m.resolve()==m&&m.getId()==source.id()&&m.getName().equals(source.name())
@@ -167,14 +167,14 @@ final class SourceThermalNativeAdapter {
  /** Explicit native spellings are bindings, not newly registered aliases or material-name guesses. */
  static NativeBinding nativeBinding(GTMaterial target,Binding source){
   var exact=MaterialFluidUnitFacts.binding(target,source.accessor().name().toLowerCase(Locale.ROOT));
-  if(exact!=null){
+  if (exact!=null){
    var declaration=FluidCatalog.all().get(exact.fluidField());
    return new NativeBinding(exact.fluidField(),exact.registryName(),declaration,
        exact.fluidField().startsWith("GenMolten_"));
   }
   String lower=target.getName().toLowerCase(Locale.ROOT),path=source.sourceRegistryPath();
-  if(path.equals("molten."+lower))return new NativeBinding("GenMolten_"+target.getName(),path,null,false);
-  if(path.equals(lower))return new NativeBinding(FluidCatalog.canonicalField("GenLiquid_"+target.getName()),path,null,false);
+  if (path.equals("molten."+lower))return new NativeBinding("GenMolten_"+target.getName(),path,null,false);
+  if (path.equals(lower))return new NativeBinding(FluidCatalog.canonicalField("GenLiquid_"+target.getName()),path,null,false);
   return null;
  }
 
@@ -189,25 +189,25 @@ final class SourceThermalNativeAdapter {
   }
   /** Fluid definitions looked up by the material they bind and by registry name, built once per snapshot. */
   private void indexDefinitions(){
-   if(boundDefinitions!=null)return;
+   if (boundDefinitions!=null)return;
    var byMaterial=new IdentityHashMap<GTMaterial,Map<String,FluidCatalog.FluidEntry>>();
    var byRegistry=new HashMap<String,Map<String,FluidCatalog.FluidEntry>>();
-   for(var definition:definitions.entrySet()){
+   for (var definition:definitions.entrySet()){
     String field=definition.getKey();var entry=definition.getValue();
     String key=entry.materialKey()!=null?entry.materialKey():FluidCatalog.boundMaterial(entry.registryName());
-    if(key!=null){
+    if (key!=null){
      GTMaterial bound=GTMaterialRegistry.get(key);
-     if(bound.isValid())byMaterial.computeIfAbsent(bound.resolve(),ignored->new LinkedHashMap<>()).putIfAbsent(field,entry);
+     if (bound.isValid())byMaterial.computeIfAbsent(bound.resolve(),ignored->new LinkedHashMap<>()).putIfAbsent(field,entry);
     }
     String registryName=entry.registryName();
-    if(registryName!=null)
+    if (registryName!=null)
      byRegistry.computeIfAbsent(registryName,ignored->new LinkedHashMap<>()).putIfAbsent(field,entry);
    }
    boundDefinitions=byMaterial;registryDefinitions=byRegistry;
   }
   private void putDefinition(Map<String,FluidCatalog.FluidEntry> target,String field){
    var entry=definitions.get(field);
-   if(entry!=null)target.putIfAbsent(field,entry);
+   if (entry!=null)target.putIfAbsent(field,entry);
   }
   FluidCatalog.FluidEntry definition(String field){return definitions.get(field);}
   FluidStack fluid(String field,int amount){return fluids.apply(field,amount);}
@@ -217,9 +217,9 @@ final class SourceThermalNativeAdapter {
   }
   Reason materialOverride(GTMaterial material,Facts source){
    PortDefaults defaults=source.portDefaults();
-   if(material.has(MaterialProperty.MELTING)!=defaults.melting())return Reason.MATERIAL_ELIGIBILITY_OVERRIDE;
+   if (material.has(MaterialProperty.MELTING)!=defaults.melting())return Reason.MATERIAL_ELIGIBILITY_OVERRIDE;
    var target=PublishedMaterialFacts.targetMaterial(material, MaterialProcessKeys.SMELTING);
-   if(target==null||!target.isValid())return Reason.MATERIAL_TARGET_OVERRIDE;target=target.resolve();
+   if (target==null||!target.isValid())return Reason.MATERIAL_TARGET_OVERRIDE;target=target.resolve();
    return defaults.matches(material.has(MaterialProperty.MELTING),target.getId(),target.getName(),PublishedMaterialFacts.target(material, MaterialProcessKeys.SMELTING).amount())
        ?null:Reason.MATERIAL_TARGET_OVERRIDE;
   }
@@ -233,53 +233,53 @@ final class SourceThermalNativeAdapter {
    * Only a local copy is queried; an unavailable or invalid capability/remainder defers.
    */
   boolean ingredable(ItemStack stack){
-   if(stack==null||stack.isEmpty()||stack.getItem().getClass()!=MaterialItem.class
+   if (stack==null||stack.isEmpty()||stack.getItem().getClass()!=MaterialItem.class
        ||stack.isDamageableItem()||stack.getMaxDamage()!=0
        ||stack.getItem() instanceof gregtech.engine.recipe.RecipeCatalystLike
        ||stack.getItem() instanceof gregtech.engine.inventory.ContainerShapeLike)return false;
    try{
     ItemStack copy=stack.copyWithCount(1);
-    if(copy.hasCraftingRemainingItem()||!copy.getCraftingRemainingItem().isEmpty())return false;
+    if (copy.hasCraftingRemainingItem()||!copy.getCraftingRemainingItem().isEmpty())return false;
     var handler=StackCompat.fluidHandler(copy);
-    if(handler!=null){
-     int tanks=handler.getTanks();if(tanks<0)return false;
-     for(int tank=0;tank<tanks;tank++)if(handler.getTankCapacity(tank)!=0)return false;
+    if (handler!=null){
+     int tanks=handler.getTanks();if (tanks<0)return false;
+     for (int tank=0;tank<tanks;tank++)if (handler.getTankCapacity(tank)!=0)return false;
     }
     return true;
-   }catch(RuntimeException|LinkageError unavailableBehavior){return false;}
+   }catch (RuntimeException|LinkageError unavailableBehavior){return false;}
   }
   /** Do not rescale the stack to a synthetic1U. Prefix and explicit original composition must
    * describe this actual single selected item, including clean-ore fractions greater than1U. */
   long inputUnits(GTMaterial material,MaterialPrefix prefix,ItemStack stack){
    var source=SourceThermalInputRules.form(prefix);
-   if(source==null||stack==null||stack.isEmpty()||stack.getCount()!=1)return -1;
+   if (source==null||stack==null||stack.isEmpty()||stack.getCount()!=1)return -1;
    long amount=validatedUnits(material,stack,Set.of(prefix));
    return amount==source.sourceUnits()?amount:-1;
   }
   private long validatedUnits(GTMaterial material,ItemStack stack,Set<MaterialPrefix> allowed){
-   if(stack.isEmpty()||stack.isDamaged()||ItemMaterialRegistry.hasStoredContents(stack)
+   if (stack.isEmpty()||stack.isDamaged()||ItemMaterialRegistry.hasStoredContents(stack)
        ||!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))return -1;
 //? if >=1.21.1 {
-   /*if(!stack.getComponentsPatch().isEmpty())return -1;
+   /*if (!stack.getComponentsPatch().isEmpty())return -1;
 *///?} else {
-   if(stack.hasTag())return -1;
+   if (stack.hasTag())return -1;
 //?}
-   if(!(stack.getItem() instanceof MaterialFormItem form)||form.getMaterial().resolve()!=material)return -1;
-   if(!allowed.contains(form.getPrefix())
+   if (!(stack.getItem() instanceof MaterialFormItem form)||form.getMaterial().resolve()!=material)return -1;
+   if (!allowed.contains(form.getPrefix())
        ||GTItems.getStack(form.getPrefix(),material,stack.getCount()).getItem()!=stack.getItem())return -1;
    var data=ItemMaterialRegistry.base(stack.getItem()).orElse(null);
-   if(data==null||data.prefix()!=form.getPrefix()||data.components().size()!=1
+   if (data==null||data.prefix()!=form.getPrefix()||data.components().size()!=1
        ||data.material().resolve()!=material||data.amount()!=form.getPrefix().getMaterialWeight())return -1;
    try{return Math.multiplyExact((long)stack.getCount(),data.amount());}
-   catch(ArithmeticException invalid){return -1;}
+   catch (ArithmeticException invalid){return -1;}
   }
   boolean owned(GTMaterial material,NativeBinding binding,FluidCatalog.FluidEntry entry){
    String field=binding.field();
-   if(entry!=FluidCatalog.get(field)||!FluidCatalog.canonicalField(field).equals(field)
+   if (entry!=FluidCatalog.get(field)||!FluidCatalog.canonicalField(field).equals(field)
        ||!entry.registryName().equals(binding.registry()))return false;
-   if(binding.declaration()!=null){
-    if(!FluidCatalog.isBuiltInDefinition(entry))return false;
-    if(!binding.finalized())return entry==binding.declaration();
+   if (binding.declaration()!=null){
+    if (!FluidCatalog.isBuiltInDefinition(entry))return false;
+    if (!binding.finalized())return entry==binding.declaration();
     int melting=PublishedMaterialFacts.scalar(material, MaterialProperties.MELTING_POINT);
     int temperature=melting<=0?1000:melting<300?Math.min(300,PublishedMaterialFacts.scalar(material, MaterialProperties.BOILING_POINT)-1):melting;
     // Static createMolten declarations are immutable; preparation copies only these two fields.
@@ -289,8 +289,8 @@ final class SourceThermalNativeAdapter {
        &&(FluidCatalog.isGeneratedMoltenDefinition(field,entry)||FluidCatalog.isGeneratedGasLiquidDefinition(field,entry));
   }
   boolean holder(NativeBinding binding,FluidCatalog.FluidEntry entry,FluidStack stack){
-   if(stack.getAmount()!=1)return false;
-   if(entry.isVanillaLava())return stack.getFluid()==Fluids.LAVA;
+   if (stack.getAmount()!=1)return false;
+   if (entry.isVanillaLava())return stack.getFluid()==Fluids.LAVA;
    return BuiltInRegistries.FLUID.getKey(stack.getFluid()).toString().equals("gt6ce:"+FluidCatalog.sanitizePath(binding.registry()))
        &&GTFluids.entryForFluid(stack.getFluid())==entry;
   }
@@ -302,23 +302,23 @@ final class SourceThermalNativeAdapter {
    indexDefinitions();
    var related=new LinkedHashMap<String,FluidCatalog.FluidEntry>();
    var bound=boundDefinitions.get(material.resolve());
-   if(bound!=null)related.putAll(bound);
+   if (bound!=null)related.putAll(bound);
    putDefinition(related,moltenField);putDefinition(related,liquidField);putDefinition(related,gasField);
    var lowerEntries=registryDefinitions.get(lower);
-   if(lowerEntries!=null)related.putAll(lowerEntries);
+   if (lowerEntries!=null)related.putAll(lowerEntries);
    var moltenEntries=registryDefinitions.get(moltenName);
-   if(moltenEntries!=null)related.putAll(moltenEntries);
-   for(var definition:related.entrySet()){
+   if (moltenEntries!=null)related.putAll(moltenEntries);
+   for (var definition:related.entrySet()){
     String field=definition.getKey();var entry=definition.getValue();
-    if(field.equals(selectedField))continue;
+    if (field.equals(selectedField))continue;
     // A proven source NO may coexist with the port's known over-broad molten factory artifact.
-    if(defaultMolten(material,source,field,entry))continue;
+    if (defaultMolten(material,source,field,entry))continue;
     // Loader_Fluids145-153: redstone's optional liquid is superseded by molten.redstone;
     // glowstone's optional entry is gas-only. These unchanged directory aliases are not overrides.
-    if(material.getId()==8333&&field.equals("Redstone")&&entry==FluidCatalog.Redstone
+    if (material.getId()==8333&&field.equals("Redstone")&&entry==FluidCatalog.Redstone
         ||material.getId()==8341&&field.equals("GenMolten_Glowstone")&&entry==FluidCatalog.get("GenMolten_Glowstone"))continue;
     // ConstructionFoam's old port gas is a known default artifact; thermal uses the source CFoam.
-    if(material.getId()==9883&&field.equals("GenGas_ConstructionFoam")
+    if (material.getId()==9883&&field.equals("GenGas_ConstructionFoam")
         &&FluidCatalog.isGeneratedGasLiquidDefinition(field,entry)&&"ConstructionFoam".equals(entry.materialKey()))continue;
     return false;
    }

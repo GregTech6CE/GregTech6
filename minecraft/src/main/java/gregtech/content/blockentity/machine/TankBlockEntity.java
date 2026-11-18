@@ -269,8 +269,8 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, gregt
 //? if >=1.21.1 {
     /*/^* Handle player right-click interaction: fill tank fully from fluid container, or drain tank into container. ^/
     public net.minecraft.world.InteractionResult handleUse(net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand) {
-        if(level==null||level.isClientSide||player.getItemInHand(hand).isEmpty())return net.minecraft.world.InteractionResult.PASS;
-        if(!gregtech.platform.neoforge.transport.FluidContainerInteraction.use(player,hand,this))return net.minecraft.world.InteractionResult.PASS;
+        if (level==null||level.isClientSide||player.getItemInHand(hand).isEmpty())return net.minecraft.world.InteractionResult.PASS;
+        if (!gregtech.platform.neoforge.transport.FluidContainerInteraction.use(player,hand,this))return net.minecraft.world.InteractionResult.PASS;
         setChanged();return net.minecraft.world.InteractionResult.CONSUME;
 *///?} else {
     /** Use the platform transaction so replacement containers, stacks and creative mode stay consistent. */

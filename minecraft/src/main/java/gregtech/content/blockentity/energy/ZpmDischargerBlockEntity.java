@@ -53,21 +53,21 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
     private Direction front(){return getBlockState().getValue(ZpmDischargerBlock.FACING);}
     public long totalEnergy(){return buffer+ZpmEnergy.stored(inventory.getStackInSlot(0));}
     public void tick(){
-        if(level==null||level.isClientSide)return;
+        if (level==null||level.isClientSide)return;
         emitted=false;
         var module=inventory.getStackInSlot(0);
         boolean loaded=ZpmEnergy.isModule(module)&&module.getCount()==1;
-        if(tick++%20==0&&loaded&&buffer<ZpmEnergy.PACKET*80){
+        if (tick++%20==0&&loaded&&buffer<ZpmEnergy.PACKET*80){
             long taken=gregtech.engine.energy.ZpmWorkRules.refillAmount(buffer,ZpmEnergy.stored(module));
-            if(taken>0){ZpmEnergy.set(module,ZpmEnergy.stored(module)-taken);buffer+=taken;setChanged();}
+            if (taken>0){ZpmEnergy.set(module,ZpmEnergy.stored(module)-taken);buffer+=taken;setChanged();}
         }
-        if(!stopped&&loaded&&buffer>=ZpmEnergy.PACKET){
+        if (!stopped&&loaded&&buffer>=ZpmEnergy.PACKET){
             long used=EnergyTransfer.emitEnergyToSide(outputType(),front(),ZpmEnergy.PACKET,1,this);
-            if(used>0){emitted=true;buffer-=ZpmEnergy.PACKET;setChanged();}
+            if (used>0){emitted=true;buffer-=ZpmEnergy.PACKET;setChanged();}
         }
         boolean active=!stopped&&loaded&&buffer>=ZpmEnergy.PACKET;
         var state=getBlockState();
-        if(state.getValue(ZpmDischargerBlock.ACTIVE)!=active||state.getValue(ZpmDischargerBlock.LOADED)!=loaded)
+        if (state.getValue(ZpmDischargerBlock.ACTIVE)!=active||state.getValue(ZpmDischargerBlock.LOADED)!=loaded)
             level.setBlockAndUpdate(worldPosition,state.setValue(ZpmDischargerBlock.ACTIVE,active).setValue(ZpmDischargerBlock.LOADED,loaded));
     }
     @Override public boolean isEnergyType(GregTechTags.Tag t,Direction side,boolean emitting){return emitting&&t==outputType();}
@@ -99,7 +99,7 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
         t.putBoolean("gt.stopped",stopped);
     }
     private void loadData(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){
-        if(t.contains("gt.zpm.inventory"))gregtech.engine.stack.HandlerNbt.load(inventory, t.getCompound("gt.zpm.inventory"), lookup);
+        if (t.contains("gt.zpm.inventory"))gregtech.engine.stack.HandlerNbt.load(inventory, t.getCompound("gt.zpm.inventory"), lookup);
         buffer=gregtech.engine.energy.ZpmWorkRules.savedBuffer(t.getLong("gt.zpm.buffer"));
         stopped=t.getBoolean("gt.stopped");
     }

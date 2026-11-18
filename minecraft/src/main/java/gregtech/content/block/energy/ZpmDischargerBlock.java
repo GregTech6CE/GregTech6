@@ -16,14 +16,14 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
     @Override
     public InteractionResult use(BlockState s, Level l, BlockPos p, Player player,
             InteractionHand hand, BlockHitResult hit) {
-        if(hand!=InteractionHand.MAIN_HAND)return InteractionResult.PASS;
-        if(ToolInteractions.use(s,l,p,player,hand,hit))return InteractionResult.sidedSuccess(l.isClientSide);
-        if(!(l.getBlockEntity(p) instanceof ZpmDischargerBlockEntity z))return InteractionResult.PASS;
-        if(!l.isClientSide){
+        if (hand!=InteractionHand.MAIN_HAND)return InteractionResult.PASS;
+        if (ToolInteractions.use(s,l,p,player,hand,hit))return InteractionResult.sidedSuccess(l.isClientSide);
+        if (!(l.getBlockEntity(p) instanceof ZpmDischargerBlockEntity z))return InteractionResult.PASS;
+        if (!l.isClientSide){
             var held=player.getItemInHand(hand);
-            if(held.isEmpty()&&player.isShiftKeyDown())z.toggleStopped();
-            else if(ZpmEnergy.isModule(held))player.setItemInHand(hand,z.inventory().insertItem(0,held,false));
-            else if(held.isEmpty()){var extracted=z.inventory().extractItem(0,1,false);if(!player.addItem(extracted))player.drop(extracted,false);}
+            if (held.isEmpty()&&player.isShiftKeyDown())z.toggleStopped();
+            else if (ZpmEnergy.isModule(held))player.setItemInHand(hand,z.inventory().insertItem(0,held,false));
+            else if (held.isEmpty()){var extracted=z.inventory().extractItem(0,1,false);if (!player.addItem(extracted))player.drop(extracted,false);}
             player.displayClientMessage(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.status",z.totalEnergy(),net.minecraft.network.chat.Component.translatable(z.stopped()?"gui.gt6ce.behavior.off":"gui.gt6ce.behavior.on"),z.outputType().getShortName()),true);
         }
         return InteractionResult.sidedSuccess(l.isClientSide);
@@ -36,10 +36,10 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
     public boolean electric(){return electric;}
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState>b){super.createBlockStateDefinition(b);b.add(ACTIVE,LOADED);}
     @Override public BlockEntity newBlockEntity(BlockPos p,BlockState s){return new ZpmDischargerBlockEntity(p,s);}
-    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> t){return l.isClientSide?null:(w,p,state,e)->{if(e instanceof ZpmDischargerBlockEntity z)z.tick();};}
+    @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l,BlockState s,BlockEntityType<T> t){return l.isClientSide?null:(w,p,state,e)->{if (e instanceof ZpmDischargerBlockEntity z)z.tick();};}
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState s,net.minecraft.world.level.storage.loot.LootParams.Builder b){
         var stack=new net.minecraft.world.item.ItemStack(asItem());
-        if(b.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ZpmDischargerBlockEntity z) {
+        if (b.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ZpmDischargerBlockEntity z) {
 //? if >=1.21.1 {
             /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(z, z.saveWithId(b.getLevel().registryAccess()));
 *///?} else {

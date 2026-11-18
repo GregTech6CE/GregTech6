@@ -26,24 +26,24 @@ public final class BottleMachineRecipes {
     public static int register() {
         MISSING.clear();
         int count=0;
-        for(int i=0;i<GTBottlesGen.ENTRIES.length;i+=3){
+        for (int i=0;i<GTBottlesGen.ENTRIES.length;i+=3){
             String id=GTBottlesGen.ENTRIES[i];
             var item=gregtech.content.food.GTFoodItems.itemOrNull(id);
-            if(item==null){MISSING.add(id);continue;}
+            if (item==null){MISSING.add(id);continue;}
             var filled=new ItemStack(item);
             var liquid=gregtech.engine.fluid.PotionBottleHandler.contents(filled);
-            if(liquid.isEmpty()){MISSING.add(id);continue;}
+            if (liquid.isEmpty()){MISSING.add(id);continue;}
             var empty=item==Items.HONEY_BOTTLE?new ItemStack(Items.GLASS_BOTTLE):BottleItem.emptyBottle();
-            if(MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
+            if (MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
                     .itemInputs(empty)
                     .fluidInputs(liquid)
                     .itemOutputs(filled))!=null)count++;
-            if(MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
+            if (MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
                     .itemInputs(filled)
                     .itemOutputs(empty)
                     .fluidOutputs(liquid))!=null)count++;
             var gtEmpty=BottleItem.emptyBottle();
-            if(item==Items.HONEY_BOTTLE&&!gtEmpty.is(empty.getItem())
+            if (item==Items.HONEY_BOTTLE&&!gtEmpty.is(empty.getItem())
                     &&MachineRecipeMaps.Canner.register(RecipeBuilder.of(16, 16)
                             .itemInputs(gtEmpty)
                             .fluidInputs(liquid)
@@ -73,7 +73,7 @@ public final class BottleMachineRecipes {
                         .itemOutputs(filled)) != null) count++;
         var drain = new Recipe(new ItemStack[] {filled}, new ItemStack[] {empty},
                 null, null, new FluidStack[] {water}, 16, 16, 0);
-        drain.mExactItemInputs = true;
+        drain.exactItemInputs = true;
         if (MachineRecipeMaps.Canner.addRecipe(drain) != null) count++;
         return count;
     }

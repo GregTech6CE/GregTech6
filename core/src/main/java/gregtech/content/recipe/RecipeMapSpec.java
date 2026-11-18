@@ -5,43 +5,43 @@ package gregtech.content.recipe;
  * Addon declarations use {@link gregtech.api.addon.recipe.RecipeTable}.
  */
 public final class RecipeMapSpec {
-    public final String mNameInternal, mNameLocal, mGUIPath;
-    public final int mInputItemsCount,
-            mOutputItemsCount,
-            mMinimalInputItems,
-            mInputFluidCount,
-            mOutputFluidCount,
-            mMinimalInputFluids,
-            mMinimalInputs;
-    public final boolean mNeedsOutputs, mCombinePower, mUseBucketSizeIn, mUseBucketSizeOut;
-    public final String mSpecialValuePre, mSpecialValuePost;
-    public final long mSpecialValueMultiplier;
-    public final boolean mInstantRecipes;
-    public final int mInputPotionCount;
-    public final boolean mViewerAllowed, mShowVoltageAmperage;
+    public final String internalName, displayName, guiPath;
+    public final int itemInputSlots,
+            itemOutputSlots,
+            minimumItemInputs,
+            fluidInputTanks,
+            fluidOutputTanks,
+            minimumFluidInputs,
+            minimumInputs;
+    public final boolean requiresOutputs, combinePower, bucketSizedFluidInputs, bucketSizedFluidOutputs;
+    public final String specialValuePrefix, specialValueSuffix;
+    public final long specialValueMultiplier;
+    public final boolean instantRecipes;
+    public final int potionInputSlots;
+    public final boolean viewerAllowed, showVoltageAmperage;
 
     private RecipeMapSpec(Builder builder) {
-        mNameInternal = builder.name;
-        mNameLocal = builder.title;
-        mGUIPath = builder.gui.endsWith(".png") ? builder.gui : builder.gui + ".png";
-        mInputItemsCount = Math.max(builder.inputItems, builder.minimumInputItems);
-        mOutputItemsCount = builder.outputItems;
-        mMinimalInputItems = builder.minimumInputItems;
-        mInputFluidCount = Math.max(builder.inputFluids, builder.minimumInputFluids);
-        mOutputFluidCount = builder.outputFluids;
-        mMinimalInputFluids = builder.minimumInputFluids;
-        mMinimalInputs = builder.minimumInputs;
-        mNeedsOutputs = builder.needsOutputs;
-        mCombinePower = builder.combinePower;
-        mUseBucketSizeIn = builder.bucketInput;
-        mUseBucketSizeOut = builder.bucketOutput;
-        mSpecialValuePre = builder.specialValuePrefix;
-        mSpecialValuePost = builder.specialValueSuffix;
-        mSpecialValueMultiplier = builder.specialValueMultiplier;
-        mInstantRecipes = builder.instantRecipes;
-        mInputPotionCount = builder.potionInputs;
-        mViewerAllowed = builder.viewerAllowed;
-        mShowVoltageAmperage = builder.showVoltageAmperage;
+        internalName = builder.name;
+        displayName = builder.title;
+        guiPath = builder.gui.endsWith(".png") ? builder.gui : builder.gui + ".png";
+        itemInputSlots = Math.max(builder.inputItems, builder.minimumInputItems);
+        itemOutputSlots = builder.outputItems;
+        minimumItemInputs = builder.minimumInputItems;
+        fluidInputTanks = Math.max(builder.inputFluids, builder.minimumInputFluids);
+        fluidOutputTanks = builder.outputFluids;
+        minimumFluidInputs = builder.minimumInputFluids;
+        minimumInputs = builder.minimumInputs;
+        requiresOutputs = builder.needsOutputs;
+        combinePower = builder.combinePower;
+        bucketSizedFluidInputs = builder.bucketInput;
+        bucketSizedFluidOutputs = builder.bucketOutput;
+        specialValuePrefix = builder.specialValuePrefix;
+        specialValueSuffix = builder.specialValueSuffix;
+        specialValueMultiplier = builder.specialValueMultiplier;
+        instantRecipes = builder.instantRecipes;
+        potionInputSlots = builder.potionInputs;
+        viewerAllowed = builder.viewerAllowed;
+        showVoltageAmperage = builder.showVoltageAmperage;
     }
 
     public static Builder builder(String name, String title, String gui) {

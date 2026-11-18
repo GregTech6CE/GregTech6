@@ -34,7 +34,7 @@ import org.spongepowered.asm.mixin.injection.callback.*;
 public abstract class ComponentCoverHostMixin implements FallbackCoverHost {
     @Unique private ComponentCoverStorage gregtech$components;
     @Override public ComponentCoverStorage gregtechComponentStorage(boolean create) {
-        if(gregtech$components==null&&create)gregtech$components=new ComponentCoverStorage(this);
+        if (gregtech$components==null&&create)gregtech$components=new ComponentCoverStorage(this);
         return gregtech$components;
     }
 //? if >=1.21.1 {
@@ -43,13 +43,13 @@ public abstract class ComponentCoverHostMixin implements FallbackCoverHost {
     @Override public net.minecraftforge.items.IItemHandler componentItems(Direction side){
 //?}
         var owner=(BlockEntity)(Object)this;
-        if(!ComponentCoverFallback.uses(owner)){
+        if (!ComponentCoverFallback.uses(owner)){
 //? if >=1.21.1 {
-            /*if(owner instanceof net.neoforged.neoforge.items.IItemHandler handler)return handler;
+            /*if (owner instanceof net.neoforged.neoforge.items.IItemHandler handler)return handler;
 *///?} else {
-            if(owner instanceof net.minecraftforge.items.IItemHandler handler)return handler;
+            if (owner instanceof net.minecraftforge.items.IItemHandler handler)return handler;
 //?}
-            if(owner.getLevel()==null)return null;
+            if (owner.getLevel()==null)return null;
 //? if >=1.21.1 {
             /*return owner.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,owner.getBlockPos(),null);
 *///?} else {
@@ -68,13 +68,13 @@ public abstract class ComponentCoverHostMixin implements FallbackCoverHost {
     @Override public net.minecraftforge.fluids.capability.IFluidHandler componentFluids(Direction side){
 //?}
         var owner=(BlockEntity)(Object)this;
-        if(!ComponentCoverFallback.uses(owner)){
+        if (!ComponentCoverFallback.uses(owner)){
 //? if >=1.21.1 {
-            /*if(owner instanceof net.neoforged.neoforge.fluids.capability.IFluidHandler handler)return handler;
+            /*if (owner instanceof net.neoforged.neoforge.fluids.capability.IFluidHandler handler)return handler;
 *///?} else {
-            if(owner instanceof net.minecraftforge.fluids.capability.IFluidHandler handler)return handler;
+            if (owner instanceof net.minecraftforge.fluids.capability.IFluidHandler handler)return handler;
 //?}
-            if(owner.getLevel()==null)return null;
+            if (owner.getLevel()==null)return null;
 //? if >=1.21.1 {
             /*return owner.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,owner.getBlockPos(),null);
 *///?} else {
@@ -91,9 +91,9 @@ public abstract class ComponentCoverHostMixin implements FallbackCoverHost {
     @Override public PanelCoverRuntime panels(){return gregtechComponentStorage(true).panels();}
     @Override public boolean componentTicks(){return ComponentCoverFallback.eligible((BlockEntity)(Object)this);}
     @Override public boolean attachCover(Direction side,ItemStack stack){
-        if(!componentTicks())return false;
+        if (!componentTicks())return false;
         boolean attached=gregtechComponentStorage(true).attach(side,stack);
-        if(attached)ComponentCoverFallback.track((BlockEntity)(Object)this);
+        if (attached)ComponentCoverFallback.track((BlockEntity)(Object)this);
         return attached;
     }
     @Override public ItemStack removeCover(Direction side){return gregtech$components==null?ItemStack.EMPTY:gregtech$components.remove(side);}
@@ -115,7 +115,7 @@ public abstract class ComponentCoverHostMixin implements FallbackCoverHost {
 //?}
     @Inject(method="clearRemoved",at=@At("RETURN"),require=1)
     private void gregtech$revive(CallbackInfo ci){
-        if(gregtech$components!=null&&gregtech$components.hasCovers())ComponentCoverFallback.track((BlockEntity)(Object)this);
+        if (gregtech$components!=null&&gregtech$components.hasCovers())ComponentCoverFallback.track((BlockEntity)(Object)this);
     }
     @Inject(method="setRemoved",at=@At("HEAD"),require=1)
     private void gregtech$remove(CallbackInfo ci){ComponentCoverFallback.removing((BlockEntity)(Object)this);}

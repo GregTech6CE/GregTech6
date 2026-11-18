@@ -557,7 +557,7 @@ public final class SourceExtruderRecipes {
                     "unit",
                     rule.outputForm,
                     rule.moldId.startsWith("low_heat_extruder_shape_"),
-                    template.mEUt == 16,
+                    template.energyPerTick == 16,
                     rule.units,
                     rule.units,
                     template));

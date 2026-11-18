@@ -37,9 +37,9 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements gregt
         @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             if (!isItemValid(slot,stack) || !work[slot].isEmpty() && !StackCompat.sameItem(stack,work[slot])) return stack.copy();
             int count=Math.min(stack.getCount(),Math.min(64,stack.getMaxStackSize())-work[slot].getCount());
-            if(count<=0)return stack.copy();
-            if(!simulate) {
-                if(work[slot].isEmpty())work[slot]=stack.copyWithCount(count);else work[slot].grow(count);
+            if (count<=0)return stack.copy();
+            if (!simulate) {
+                if (work[slot].isEmpty())work[slot]=stack.copyWithCount(count);else work[slot].grow(count);
                 markUpdated();
             }
             return stack.copyWithCount(stack.getCount()-count);
@@ -124,7 +124,7 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements gregt
         markUpdated();
     }
     @Override public long usePoweredHammer(Direction side,long budget,int quality) {
-        if(level==null || level.isClientSide) return 0;
+        if (level==null || level.isClientSide) return 0;
         return hammer(null,ItemStack.EMPTY,getBlockState().getValue(MaterialAnvilBlock.FACING),side,.5,budget);
     }
     private long hammer(Player player, ItemStack hammer, Direction facing, Direction side, double half, long budget) {
@@ -132,13 +132,13 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements gregt
         RecipeMap map = switch (gregtech.content.tool.AnvilRules.surface(facing, side, half, player==null)) {
             case TOP -> MachineRecipeMaps.Anvil; case SMALL -> MachineRecipeMaps.AnvilBendSmall; case BIG -> MachineRecipeMaps.AnvilBendBig;
         };
-        for (Recipe recipe : map.mRecipeList) {
-            if (!recipe.mEnabled || recipe.mFakeRecipe || recipe.mFluidInputs.length != 0 || recipe.mFluidOutputs.length != 0) continue;
-            if(gregtech.content.tool.AnvilRules.wear(recipe.mEUt,recipe.mDuration,0,0)>budget) continue;
+        for (Recipe recipe : map.recipeRows) {
+            if (!recipe.enabled || recipe.fakeRecipe || recipe.fluidInputs.length != 0 || recipe.fluidOutputs.length != 0) continue;
+            if (gregtech.content.tool.AnvilRules.wear(recipe.energyPerTick,recipe.durationTicks,0,0)>budget) continue;
             ItemStack[] remaining = consume(recipe);
             if (remaining == null) continue;
             work[0] = remaining[0]; work[1] = remaining[1];
-            for (int i = 0; i < recipe.mOutputs.length; i++) {
+            for (int i = 0; i < recipe.itemOutputs.length; i++) {
                 long count = recipe.rollOutputCount(i, 1, level.random::nextInt);
                 if (count == 0) continue;
                 ItemStack output = recipe.getOutput(i);
@@ -147,12 +147,12 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements gregt
             }
             var fatigue = player==null?null:player.getEffect(net.minecraft.world.effect.MobEffects.DIG_SLOWDOWN);
             var haste = player==null?null:player.getEffect(net.minecraft.world.effect.MobEffects.DIG_SPEED);
-            double power = Math.abs((double) recipe.mEUt) * recipe.mDuration;
-            long wear = gregtech.content.tool.AnvilRules.wear(recipe.mEUt, recipe.mDuration,
+            double power = Math.abs((double) recipe.energyPerTick) * recipe.durationTicks;
+            long wear = gregtech.content.tool.AnvilRules.wear(recipe.energyPerTick, recipe.durationTicks,
                     fatigue == null ? 0 : fatigue.getAmplifier() + 1, haste == null ? 0 : haste.getAmplifier() + 1);
             durability = Math.max(0, durability - Math.min(durability, wear));
-            if(player!=null) GTToolHelper.damageForUse(hammer, (int)Math.min(Integer.MAX_VALUE, Math.max(1, (wear + 9999.0) / 10000)), player);
-            if(player!=null) player.causeFoodExhaustion((float) Math.min(Float.MAX_VALUE, power / 5000));
+            if (player!=null) GTToolHelper.damageForUse(hammer, (int)Math.min(Integer.MAX_VALUE, Math.max(1, (wear + 9999.0) / 10000)), player);
+            if (player!=null) player.causeFoodExhaustion((float) Math.min(Float.MAX_VALUE, power / 5000));
             level.playSound(null, worldPosition, net.minecraft.sounds.SoundEvents.ANVIL_USE, net.minecraft.sounds.SoundSource.BLOCKS, 1, 1);
             markUpdated();
             if (durability == 0) {
@@ -191,7 +191,7 @@ public final class MaterialAnvilBlockEntity extends BlockEntity implements gregt
     private ItemStack[] consume(Recipe recipe) {
         return gregtech.content.tool.AnvilWorkInputs.consume(work, recipe);
     }
-    private void give(Player player, ItemStack item) { if(player==null) gregtech.engine.inventory.BlockContents.drop(this,item); else if (!item.isEmpty() && !player.addItem(item)) player.drop(item, false); }
+    private void give(Player player, ItemStack item) { if (player==null) gregtech.engine.inventory.BlockContents.drop(this,item); else if (!item.isEmpty() && !player.addItem(item)) player.drop(item, false); }
 //? if >=1.21.1 {
     /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup); tag.putLong("gt.durability", durability);

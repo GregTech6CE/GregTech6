@@ -135,7 +135,7 @@ public final class SmelteryInteractionHandler {
     }
 
 //? if >=1.21.1 {
-    /*public static InteractionResult interact(BlockEntity be,Player player,InteractionHand hand,BlockHitResult hit){if(be.getLevel()==null)return InteractionResult.PASS;if(be.getLevel().isClientSide)return InteractionResult.SUCCESS;var held=player.getItemInHand(hand);if(be instanceof MoldBlockEntity mold)return handleMoldInteraction(mold,player,hand,held,be.getLevel(),hit);if(be instanceof MoldBasinBlockEntity basin)return handleBasinInteraction(basin,player,hand,held,be.getLevel(),hit);if(be instanceof CrucibleFaucetBlockEntity faucet)return handleFaucetInteraction(faucet,player,hand,held,be.getLevel());return InteractionResult.PASS;}
+    /*public static InteractionResult interact(BlockEntity be,Player player,InteractionHand hand,BlockHitResult hit){if (be.getLevel()==null)return InteractionResult.PASS;if (be.getLevel().isClientSide)return InteractionResult.SUCCESS;var held=player.getItemInHand(hand);if (be instanceof MoldBlockEntity mold)return handleMoldInteraction(mold,player,hand,held,be.getLevel(),hit);if (be instanceof MoldBasinBlockEntity basin)return handleBasinInteraction(basin,player,hand,held,be.getLevel(),hit);if (be instanceof CrucibleFaucetBlockEntity faucet)return handleFaucetInteraction(faucet,player,hand,held,be.getLevel());return InteractionResult.PASS;}
 *///?} else {
 //?}
     private static InteractionResult handleMoldInteraction(MoldBlockEntity mold, Player player,

@@ -45,10 +45,10 @@ public final class SourceOreFollowonRows {
  }
  private static Recipe emit(RecipeMap map,ItemStack in,ItemStack[] out,long[] chances,
                            FluidStack[] fin,FluidStack[] fout,long ticks,long eut) {
-  if(in.isEmpty())return null;
-  for(var s:out)if(s==null||s.isEmpty())return null;
+  if (in.isEmpty())return null;
+  for (var s:out)if (s==null||s.isEmpty())return null;
   // No collision replacement: return exact accepted identity or null for caller ownership ledger.
-  if(map==MachineRecipeMaps.Shredder||map==MachineRecipeMaps.Anvil)
+  if (map==MachineRecipeMaps.Shredder||map==MachineRecipeMaps.Anvil)
    return RecoveryRecipePublisher.publish(map,RecoveryRecipePublisher.explicit(
        new Recipe(new ItemStack[]{in},out,chances,fin,fout,ticks,eut,0),
        "ore-processing/followon"));
@@ -63,22 +63,22 @@ public final class SourceOreFollowonRows {
   * Bonus material is always Cinnabar; this is a named source effect, not a generic gem heuristic.
   */
  public static Recipe rawCrusher(GTMaterial m,Facts f) {
-  if(!admitted(m,f)||f.pulverizingCinnabar(m)==Evidence.UNKNOWN)return null;
+  if (!admitted(m,f)||f.pulverizingCinnabar(m)==Evidence.UNKNOWN)return null;
   long multiplier=Math.multiplyExact((long)m.getOreMultiplier(),m.getOreProcessingMultiplier());
   int count=(int)Math.max(1,Math.min(64,Math.multiplyExact(m.getTargetCrushingAmount(),multiplier)/U));
   var target=m.getTargetCrushingMaterial().resolve();var main=f.direct(MaterialPrefix.crushed,target,count);
-  if(main.isEmpty())main=f.direct(MaterialPrefix.dust,target,count);
-  if(main.isEmpty())main=f.direct(MaterialPrefix.gem,target,count);
-  if(main.isEmpty())return null;
+  if (main.isEmpty())main=f.direct(MaterialPrefix.dust,target,count);
+  if (main.isEmpty())main=f.direct(MaterialPrefix.gem,target,count);
+  if (main.isEmpty())return null;
   long chance=f.pulverizingCinnabar(m)==Evidence.YES?2500:0;
-  for(String name:new String[]{"Mercury","Cinnabar","Redstone"}) {
+  for (String name:new String[]{"Mercury","Cinnabar","Redstone"}) {
    var identity=GTMaterialRegistry.get(name);
-   if(identity!=null&&m.getByProducts().stream().anyMatch(b->b.resolve()==identity.resolve()))
+   if (identity!=null&&m.getByProducts().stream().anyMatch(b->b.resolve()==identity.resolve()))
     chance+=name.equals("Mercury")?1000:500;
   }
   ItemStack[] outputs={main,main.copy()};long[] chances={10000,10000};
-  if(chance>0) {
-   var cinnabar=GTMaterialRegistry.get("Cinnabar");if(cinnabar==null)return null;
+  if (chance>0) {
+   var cinnabar=GTMaterialRegistry.get("Cinnabar");if (cinnabar==null)return null;
    outputs=new ItemStack[]{main,main.copy(),f.direct(MaterialPrefix.gem,cinnabar,1)};
    chances=new long[]{10000,10000,chance};
   }
@@ -91,53 +91,53 @@ public final class SourceOreFollowonRows {
  }
  /** OPL retains legacy behavior only for shapes not claimed by its bounded native producer. */
  public static List<Recipe> shredder(GTMaterial m,Facts f,Set<MaterialPrefix> claimed) {
-  if(!admitted(m,f)||f.mortar(m)==Evidence.UNKNOWN)return List.of();
+  if (!admitted(m,f)||f.mortar(m)==Evidence.UNKNOWN)return List.of();
   var accepted=new ArrayList<Recipe>();boolean mortar=f.mortar(m)==Evidence.YES;
-  for(var shape:SourceOreShreddingRules.shapes()) {
-   if(claimed.contains(shape.input()))continue;
+  for (var shape:SourceOreShreddingRules.shapes()) {
+   if (claimed.contains(shape.input()))continue;
    var out=new ItemStack[shape.outputs().size()];
-   for(int j=0;j<out.length;j++)out[j]=f.direct(shape.outputs().get(j),m.getTargetPulverMaterial().resolve(),1);
+   for (int j=0;j<out.length;j++)out[j]=f.direct(shape.outputs().get(j),m.getTargetPulverMaterial().resolve(),1);
    long ticks=SourceOreShreddingRules.duration(shape,mortar,m.getToolQuality());
    var r=emit(MachineRecipeMaps.Shredder,f.direct(shape.input(),m,1),out,new long[0],new FluidStack[0],new FluidStack[0],ticks,SourceOreShreddingRules.POWER);
-   if(r!=null)accepted.add(r);
+   if (r!=null)accepted.add(r);
   }
   return List.copyOf(accepted);
  }
  /** Source Ores464-470. Handles solid and fluid byproducts without changing slot probabilities. */
  public static List<Recipe> centrifuge(GTMaterial m,Facts f) {
-  if(!admitted(m,f))return List.of();var accepted=new ArrayList<Recipe>();
+  if (!admitted(m,f))return List.of();var accepted=new ArrayList<Recipe>();
   Environment[] env=new Environment[3];
-  for(int j=0;j<3;j++){env[j]=f.environment(by(m,j),U72);if(env[j]==null||env[j].known()!=Evidence.YES)return List.of();}
-  for(int scale:new int[]{9,1}) {
+  for (int j=0;j<3;j++){env[j]=f.environment(by(m,j),U72);if (env[j]==null||env[j].known()!=Evidence.YES)return List.of();}
+  for (int scale:new int[]{9,1}) {
    var out=new ArrayList<ItemStack>();var chances=new ArrayList<Long>();var fluids=new ArrayList<FluidStack>();
    out.add(ore(f,MaterialPrefix.crushedCentrifugedTiny,m,scale));chances.add(10000L);
-   for(int j=0;j<3;j++) {
-    if(env[j].stack()==null||env[j].stack().isEmpty()) {out.add(ore(f,MaterialPrefix.crushedCentrifugedTiny,by(m,j),scale));chances.add(1000L);}
+   for (int j=0;j<3;j++) {
+    if (env[j].stack()==null||env[j].stack().isEmpty()) {out.add(ore(f,MaterialPrefix.crushedCentrifugedTiny,by(m,j),scale));chances.add(1000L);}
     else {var fluid=env[j].stack().copy();fluid.setAmount(Math.multiplyExact(fluid.getAmount(),scale));fluids.add(fluid);}
    }
    // Compaction is safe only with aligned chances; unlike dropping just a null stack.
    var r=emit(MachineRecipeMaps.Centrifuge,f.direct(scale==9?MaterialPrefix.crushedPurified:MaterialPrefix.crushedPurifiedTiny,m,1),
     out.toArray(ItemStack[]::new),chances.stream().mapToLong(Long::longValue).toArray(),new FluidStack[0],fluids.toArray(FluidStack[]::new),scale*16L*(m.getToolQuality()+1L),16);
-   if(r!=null)accepted.add(r);
+   if (r!=null)accepted.add(r);
   }return List.copyOf(accepted);
  }
  /** Source Ores475-481; caller supplies only source ANY.Wax identities with proven liquid binding. */
  public static List<Recipe> cracking(GTMaterial m,List<GTMaterial> waxes,Facts f) {
-  if(!admitted(m,f))return List.of();var accepted=new ArrayList<Recipe>();Environment[] env=new Environment[2];
-  for(int j=0;j<2;j++){env[j]=f.environment(by(m,j),U/18);if(env[j]==null||env[j].known()!=Evidence.YES)return List.of();}
-  for(var wax:waxes)for(int scale:new int[]{9,1}) {
-   var liquid=OreFluidBindingAdapter.liquid(wax,scale==9?U:U9,true);if(liquid.isEmpty())continue;
+  if (!admitted(m,f))return List.of();var accepted=new ArrayList<Recipe>();Environment[] env=new Environment[2];
+  for (int j=0;j<2;j++){env[j]=f.environment(by(m,j),U/18);if (env[j]==null||env[j].known()!=Evidence.YES)return List.of();}
+  for (var wax:waxes)for (int scale:new int[]{9,1}) {
+   var liquid=OreFluidBindingAdapter.liquid(wax,scale==9?U:U9,true);if (liquid.isEmpty())continue;
    var steam=GTFluids.stack("Steam",scale*160);var water=GTFluids.stack("Water",scale);
-   if(steam==null||steam.isEmpty()||water==null||water.isEmpty())continue;
+   if (steam==null||steam.isEmpty()||water==null||water.isEmpty())continue;
    var out=new ArrayList<ItemStack>();var chances=new ArrayList<Long>();var fluids=new ArrayList<FluidStack>();
    out.add(f.direct(MaterialPrefix.dustTiny,m,scale));chances.add(10000L);fluids.add(water);
-   for(int j=0;j<2;j++) {
-    if(env[j].stack()==null||env[j].stack().isEmpty()) {out.add(f.direct(MaterialPrefix.dustTiny,by(m,j),scale));chances.add(4000L);}
+   for (int j=0;j<2;j++) {
+    if (env[j].stack()==null||env[j].stack().isEmpty()) {out.add(f.direct(MaterialPrefix.dustTiny,by(m,j),scale));chances.add(4000L);}
     else {var fluid=env[j].stack().copy();fluid.setAmount(Math.multiplyExact(fluid.getAmount(),scale));fluids.add(fluid);}
    }
    var r=emit(MachineRecipeMaps.SteamCracking,f.direct(scale==9?MaterialPrefix.crushedCentrifuged:MaterialPrefix.crushedCentrifugedTiny,m,1),out.toArray(ItemStack[]::new),
     chances.stream().mapToLong(Long::longValue).toArray(),new FluidStack[]{steam,liquid},fluids.toArray(FluidStack[]::new),scale*16L,16);
-   if(r!=null)accepted.add(r);
+   if (r!=null)accepted.add(r);
   }return List.copyOf(accepted);
  }
 }

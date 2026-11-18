@@ -125,13 +125,13 @@ public class OreProcessingRecipeLoader implements InitializationStep {
 
     /** Oilsands centrifuge: oreRaw → Oil fluid + sand dust + byproducts. */
     private void registerOilsandsRecipe(GTMaterial material, boolean hasOreItem, int baseMultiplier) {
-        if(hasOreItem) registerOilsandsInput(mat(MaterialPrefix.oreRaw,material,1));
+        if (hasOreItem) registerOilsandsInput(mat(MaterialPrefix.oreRaw,material,1));
     }
 
     private void registerOilsandsInput(ItemStack input) {
-        if(input.isEmpty())return;
+        if (input.isEmpty())return;
         var oil=GTFluids.still("Oil_Normal");
-        if(oil==null||!GTFluids.isPresent(oil))throw new IllegalStateException("Oilsands require registered crude oil");
+        if (oil==null||!GTFluids.isPresent(oil))throw new IllegalStateException("Oilsands require registered crude oil");
         // Preserve this special event's early return: independently wiring the generic machines
         // must not route OilSand through the standard OPL Furnace/byproduct listener.
         var candidate = SharedOilSandRows.candidate(input);
@@ -251,25 +251,25 @@ public class OreProcessingRecipeLoader implements InitializationStep {
     private void processVanillaOres() {
         // Vanilla ancient debris is a normal 2U ore for GT processing even though its material
         // deliberately has no FURNACE flag; the vanilla smelting row stays authoritative.
-        for(String[] pair:new String[][]{{"nether_quartz_ore","NetherQuartz"},{"nether_gold_ore","Gold"},{"ancient_debris","AncientDebris"}}) {
+        for (String[] pair:new String[][]{{"nether_quartz_ore","NetherQuartz"},{"nether_gold_ore","Gold"},{"ancient_debris","AncientDebris"}}) {
             GTMaterial material=lookup(pair[1]);
             var item=Mc.item(net.minecraft.resources.ResourceLocation.parse("minecraft:"+pair[0]));
-            if(material!=null&&material.isValid()&&item!=null)registerOreEntryRecipes(material,new ItemStack(item),Math.max(1,material.getOreMultiplier()*material.getOreProcessingMultiplier()));
+            if (material!=null&&material.isValid()&&item!=null)registerOreEntryRecipes(material,new ItemStack(item),Math.max(1,material.getOreMultiplier()*material.getOreProcessingMultiplier()));
         }
-        for(String[] pair : new String[][]{{"iron","Iron"},{"gold","Gold"},{"copper","Copper"},{"coal","Coal"},
+        for (String[] pair : new String[][]{{"iron","Iron"},{"gold","Gold"},{"copper","Copper"},{"coal","Coal"},
                 {"redstone","Redstone"},{"lapis","Lapis"},{"diamond","Diamond"},{"emerald","Emerald"}}) {
             GTMaterial material=lookup(pair[1]);
-            if(material==null||!material.isValid())continue;
-            if(pair[0].equals("iron")||pair[0].equals("gold")||pair[0].equals("copper")) {
-                for(String suffix:new String[]{"","_block"}) {
+            if (material==null||!material.isValid())continue;
+            if (pair[0].equals("iron")||pair[0].equals("gold")||pair[0].equals("copper")) {
+                for (String suffix:new String[]{"","_block"}) {
                     var raw=Mc.item(net.minecraft.resources.ResourceLocation.parse("minecraft:raw_"+pair[0]+suffix));
-                    if(raw!=null&&raw!=net.minecraft.world.item.Items.AIR)
+                    if (raw!=null&&raw!=net.minecraft.world.item.Items.AIR)
                         registerOreEntryRecipes(material,new ItemStack(raw),Math.max(1,material.getOreMultiplier()*material.getOreProcessingMultiplier())*(suffix.isEmpty()?1:9));
                 }
             }
-            for(String prefix:new String[]{"","deepslate_"}) {
+            for (String prefix:new String[]{"","deepslate_"}) {
                 var item=Mc.item(net.minecraft.resources.ResourceLocation.parse("minecraft:"+prefix+pair[0]+"_ore"));
-                if(item!=null&&item!=net.minecraft.world.item.Items.AIR)
+                if (item!=null&&item!=net.minecraft.world.item.Items.AIR)
                     registerOreEntryRecipes(material,new ItemStack(item),Math.max(1,material.getOreMultiplier()*material.getOreProcessingMultiplier()));
             }
         }

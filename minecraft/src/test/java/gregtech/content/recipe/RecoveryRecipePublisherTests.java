@@ -58,9 +58,9 @@ public final class RecoveryRecipePublisherTests {
         helper.assertTrue(!input.isEmpty(), "addon wood stick is registered");
         for (String name : List.of("WoodTreated", "WoodPolished")) {
             var output = GTItems.getStack(MaterialPrefix.stick, GTMaterialRegistry.get(name), 1);
-            helper.assertTrue(!output.isEmpty() && MachineRecipeMaps.Bath.mRecipeList.stream().anyMatch(
-                    row -> row.mInputs.length == 1 && row.matchesItemInput(0, input)
-                            && row.mOutputs.length == 1 && ItemStack.matches(row.mOutputs[0], output)),
+            helper.assertTrue(!output.isEmpty() && MachineRecipeMaps.Bath.recipeRows.stream().anyMatch(
+                    row -> row.itemInputs.length == 1 && row.matchesItemInput(0, input)
+                            && row.itemOutputs.length == 1 && ItemStack.matches(row.itemOutputs[0], output)),
                     "addon wood stick has a Bath recipe for " + name);
         }
         helper.succeed();
@@ -77,13 +77,13 @@ public final class RecoveryRecipePublisherTests {
         helper.assertTrue(!input.isEmpty() && !dust.isEmpty() && !tiny.isEmpty() && !fraction.isEmpty(),
                 "the source forms are registered");
         helper.assertTrue(SourceCinnabarFollowonAdapter.supports(cinnabar), "duplicate request keeps the source profile");
-        var rows = MachineRecipeMaps.Shredder.mRecipeList.stream()
-                .filter(row -> row.mInputs.length == 1 && ItemStack.matches(row.mInputs[0], input))
+        var rows = MachineRecipeMaps.Shredder.recipeRows.stream()
+                .filter(row -> row.itemInputs.length == 1 && ItemStack.matches(row.itemInputs[0], input))
                 .toList();
-        helper.assertTrue(rows.stream().anyMatch(row -> row.mOutputs.length >= 3
-                && row.mOutputs[0].getItem() == dust.getItem()
-                && row.mOutputs[1].getItem() == tiny.getItem()
-                && row.mOutputs[2].getItem() == fraction.getItem()),
+        helper.assertTrue(rows.stream().anyMatch(row -> row.itemOutputs.length >= 3
+                && row.itemOutputs[0].getItem() == dust.getItem()
+                && row.itemOutputs[1].getItem() == tiny.getItem()
+                && row.itemOutputs[2].getItem() == fraction.getItem()),
                 "crushed Cinnabar retains dust, tiny dust and 1/72 dust outputs");
         helper.succeed();
     }
@@ -117,20 +117,20 @@ public final class RecoveryRecipePublisherTests {
                             == null,
                     "an external row conflict is isolated instead of aborting the generation");
             helper.assertTrue(
-                    MachineRecipeMaps.Shredder.mRecipeList.stream()
-                            .anyMatch(row -> "test:fallback".equals(row.mSource)),
+                    MachineRecipeMaps.Shredder.recipeRows.stream()
+                            .anyMatch(row -> "test:fallback".equals(row.source)),
                     "the existing row survives an isolated candidate conflict");
 
             helper.assertTrue(
                     RecoveryRecipePublisher.publish(MachineRecipeMaps.Shredder, specific) != null,
                     "specific owner replaces a generic row");
             helper.assertTrue(
-                    MachineRecipeMaps.Shredder.mRecipeList.stream()
-                            .anyMatch(row -> "test:owner".equals(row.mSource)),
+                    MachineRecipeMaps.Shredder.recipeRows.stream()
+                            .anyMatch(row -> "test:owner".equals(row.source)),
                     "specific row is published");
             helper.assertFalse(
-                    MachineRecipeMaps.Shredder.mRecipeList.stream()
-                            .anyMatch(row -> "test:fallback".equals(row.mSource)),
+                    MachineRecipeMaps.Shredder.recipeRows.stream()
+                            .anyMatch(row -> "test:fallback".equals(row.source)),
                     "generic row is withdrawn");
         } finally {
             MachineRecipeMaps.Shredder.removeAll(List.of(generic, specific));

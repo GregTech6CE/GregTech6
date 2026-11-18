@@ -107,10 +107,10 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     }
 //? if >=1.21.1 {
     /*@Override public void onDataPacket(net.minecraft.network.Connection connection, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet, net.minecraft.core.HolderLookup.Provider lookup) {
-        if(packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);
+        if (packet.getTag()!=null)handleUpdateTag(packet.getTag(),lookup);
 *///?} else {
     @Override public void onDataPacket(net.minecraft.network.Connection connection, net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket packet) {
-        if(packet.getTag()!=null)handleUpdateTag(packet.getTag());
+        if (packet.getTag()!=null)handleUpdateTag(packet.getTag());
 //?}
     }
 //? if >=1.21.1 {

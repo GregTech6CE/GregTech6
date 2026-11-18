@@ -16,10 +16,10 @@ public final class RecipeDiagnostics {
 
     static void rejected(RecipeMap map, Recipe existing, Recipe candidate) {
         // Fake viewer rows intentionally share inputs with real recipes.
-        if (candidate.mFakeRecipe) return;
+        if (candidate.fakeRecipe) return;
         int count = REJECTED.merge(map, 1, Integer::sum);
         if (count <= DETAIL_LIMIT) LOGGER.warn("[{}] Recipe duplicate (same inputs and conditions, kept first): existing {}; skipped {}",
-                map.mNameInternal, describe(existing), describe(candidate));
+                map.internalName, describe(existing), describe(candidate));
     }
 
     /**
@@ -38,28 +38,28 @@ public final class RecipeDiagnostics {
             Map<Inputs, Recipe> variants = new HashMap<>();
             int duplicates = 0;
             int variantsRetained = 0;
-            for (Recipe recipe : map.mRecipeList) {
-                if (!recipe.mEnabled || recipe.mFakeRecipe
+            for (Recipe recipe : map.recipeRows) {
+                if (!recipe.enabled || recipe.fakeRecipe
                         || recipe.hasItemInputGuards() || recipe.hasSameItemInputPredicates()) continue;
                 Conditions conditions = conditions(recipe);
                 if (conditions.inputs().items().isEmpty() && conditions.inputs().fluids().isEmpty()) continue;
                 Recipe existing = first.putIfAbsent(conditions, recipe);
                 if (existing != null && existing != recipe) {
                     if (++duplicates <= DETAIL_LIMIT) LOGGER.warn("[{}] Duplicate machine recipe (same inputs and conditions): first {}; later {}",
-                            map.mNameInternal, describe(existing), describe(recipe));
+                            map.internalName, describe(existing), describe(recipe));
                     continue;
                 }
                 Recipe sameInputs = variants.putIfAbsent(conditions.inputs(), recipe);
                 if (sameInputs != null && sameInputs != recipe) variantsRetained++;
             }
             long[] priorities = map.dynamicProviderPriorities();
-            if (priorities.length > 0) LOGGER.info("[{}] Dynamic provider priorities: {}", map.mNameInternal,
+            if (priorities.length > 0) LOGGER.info("[{}] Dynamic provider priorities: {}", map.internalName,
                     Arrays.toString(priorities));
             int rejected = REJECTED.getOrDefault(map, 0);
             if (rejected > 0 || duplicates > 0 || variantsRetained > 0) LOGGER.warn(
                     "[{}] Recipe diagnostics: {} duplicate rows skipped, {} duplicates retained, "
                             + "{} condition variants retained; first {} details shown",
-                    map.mNameInternal, rejected, duplicates, variantsRetained, DETAIL_LIMIT);
+                    map.internalName, rejected, duplicates, variantsRetained, DETAIL_LIMIT);
             totalDuplicates += duplicates;
             totalVariants += variantsRetained;
         }
@@ -76,10 +76,10 @@ public final class RecipeDiagnostics {
 
     private static Conditions conditions(Recipe recipe) {
         Map<StackKey, Integer> items = new HashMap<>(), fluids = new HashMap<>();
-        for (int i = 0; i < recipe.mInputs.length; i++) {
-            ItemStack stack = recipe.mInputs[i];
+        for (int i = 0; i < recipe.itemInputs.length; i++) {
+            ItemStack stack = recipe.itemInputs[i];
             if (stack == null || stack.isEmpty()) continue;
-            if (!recipe.mExactItemInputs) stack = MaterialUnification.canonical(stack);
+            if (!recipe.exactItemInputs) stack = MaterialUnification.canonical(stack);
 //? if >=1.21.1 {
             /*Object data = stack.getComponentsPatch();
 *///?} else {
@@ -89,8 +89,8 @@ public final class RecipeDiagnostics {
                     recipe.isCatalystInput(i), false);
             items.merge(key, 1, Integer::sum);
         }
-        for (int i = 0; i < recipe.mFluidInputs.length; i++) {
-            var stack = recipe.mFluidInputs[i];
+        for (int i = 0; i < recipe.fluidInputs.length; i++) {
+            var stack = recipe.fluidInputs[i];
             if (stack == null || stack.getFluid() == net.minecraft.world.level.material.Fluids.EMPTY) continue;
 //? if >=1.21.1 {
             /*Object data = stack.getComponentsPatch();
@@ -101,26 +101,26 @@ public final class RecipeDiagnostics {
                     recipe.isCatalystFluidInput(i), recipe.isPresenceFluidInput(i));
             fluids.merge(key, 1, Integer::sum);
         }
-        var chances = new ArrayList<Long>(recipe.mChances.length);
-        for (long chance : recipe.mChances) chances.add(chance);
-        return new Conditions(new Inputs(items, fluids), recipe.mSpecialValue, recipe.mPriority,
-                recipe.mEUt, recipe.mDuration, recipe.mExactItemInputs,
-                recipe.mExplicitCatalystsOnly, recipe.mRequiresEmptyContainerInputs, List.copyOf(chances));
+        var chances = new ArrayList<Long>(recipe.outputChances.length);
+        for (long chance : recipe.outputChances) chances.add(chance);
+        return new Conditions(new Inputs(items, fluids), recipe.specialValue, recipe.priority,
+                recipe.energyPerTick, recipe.durationTicks, recipe.exactItemInputs,
+                recipe.explicitCatalystsOnly, recipe.requiresEmptyContainerInputs, List.copyOf(chances));
     }
 
     private static String describe(Recipe recipe) {
         List<String> inputs = new ArrayList<>(), outputs = new ArrayList<>();
-        for (ItemStack stack : recipe.mInputs) if (stack != null && !stack.isEmpty())
+        for (ItemStack stack : recipe.itemInputs) if (stack != null && !stack.isEmpty())
             inputs.add(stack.getCount() + "x " + BuiltInRegistries.ITEM.getKey(stack.getItem()));
-        for (var stack : recipe.mFluidInputs) if (stack != null && !stack.isEmpty())
+        for (var stack : recipe.fluidInputs) if (stack != null && !stack.isEmpty())
             inputs.add(stack.getAmount() + "mB " + BuiltInRegistries.FLUID.getKey(stack.getFluid()));
-        for (ItemStack stack : recipe.mOutputs) if (stack != null && !stack.isEmpty())
+        for (ItemStack stack : recipe.itemOutputs) if (stack != null && !stack.isEmpty())
             outputs.add(stack.getCount() + "x " + BuiltInRegistries.ITEM.getKey(stack.getItem()));
-        for (var stack : recipe.mFluidOutputs) if (stack != null && !stack.isEmpty())
+        for (var stack : recipe.fluidOutputs) if (stack != null && !stack.isEmpty())
             outputs.add(stack.getAmount() + "mB " + BuiltInRegistries.FLUID.getKey(stack.getFluid()));
-        return inputs + " -> " + outputs + " (power=" + recipe.mEUt + "/t, duration=" + recipe.mDuration
-                + "t, chances=" + Arrays.toString(recipe.mChances) + ", special=" + recipe.mSpecialValue
-                + ", priority=" + recipe.mPriority
-                + (recipe.mSource.isEmpty() ? "" : ", source=" + recipe.mSource) + ")";
+        return inputs + " -> " + outputs + " (power=" + recipe.energyPerTick + "/t, duration=" + recipe.durationTicks
+                + "t, chances=" + Arrays.toString(recipe.outputChances) + ", special=" + recipe.specialValue
+                + ", priority=" + recipe.priority
+                + (recipe.source.isEmpty() ? "" : ", source=" + recipe.source) + ")";
     }
 }

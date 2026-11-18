@@ -367,12 +367,12 @@ public final class MachineRecipeMaps {
      * input, so the vanilla mirror pass must not erase it while adding the plain row back.
      */
     private static void removePlainSmelting(ItemStack aInput) {
-        var pool = Furnace.mRecipeItemMap.get(aInput.getItem());
+        var pool = Furnace.recipesByInputItem.get(aInput.getItem());
         if (pool == null) return;
         var plain = new java.util.ArrayList<gregtech.engine.recipe.Recipe>();
         for (var row : pool) {
             boolean fluid = false;
-            for (var stack : row.mFluidInputs) if (stack != null && !stack.isEmpty()) { fluid = true; break; }
+            for (var stack : row.fluidInputs) if (stack != null && !stack.isEmpty()) { fluid = true; break; }
             if (!fluid) plain.add(row);
         }
         if (!plain.isEmpty()) Furnace.removeAll(plain);

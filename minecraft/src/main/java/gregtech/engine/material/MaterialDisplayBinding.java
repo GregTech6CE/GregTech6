@@ -23,7 +23,7 @@ public final class MaterialDisplayBinding {
         if (!(display.getItem() instanceof gregtech.engine.material.MaterialFormItem item) || item.getPrefix()!=MaterialPrefix.unit) return List.of();
         if (aliases==null) {
             Map<GTMaterial,List<ItemStack>> index=new IdentityHashMap<>();
-            for(Item registered:Mc.items()) {
+            for (Item registered:Mc.items()) {
                 var stack = new ItemStack(registered);
                 if (registered instanceof MaterialFormItem form && form.getPrefix() == MaterialPrefix.unit) continue;
                 var form = MaterialEquivalence.form(stack);

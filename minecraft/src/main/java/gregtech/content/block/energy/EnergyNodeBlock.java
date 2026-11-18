@@ -57,10 +57,10 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, To
         if (!(level.getBlockEntity(pos) instanceof EnergyNodeBlockEntity node)) {
             return InteractionResult.PASS;
         }
-        if(node.hasControlPanels()&&(!node.getCover(hit.getDirection()).isEmpty()
+        if (node.hasControlPanels()&&(!node.getCover(hit.getDirection()).isEmpty()
                 ||gregtech.content.cover.PanelCover.of(held)!=null)){
             var result=gregtech.content.cover.PanelCoverInteraction.use(node,player,hand,hit,true);
-            if(result.consumesAction())return result;
+            if (result.consumesAction())return result;
         }
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
             return InteractionResult.sidedSuccess(level.isClientSide);

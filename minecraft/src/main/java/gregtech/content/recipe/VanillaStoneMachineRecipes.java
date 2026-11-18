@@ -109,8 +109,8 @@ public final class VanillaStoneMachineRecipes {
     }
 
     private static void add(RecipeMap map, Recipe recipe) {
-        for (var input : recipe.mInputs) if (input.isEmpty()) return;
-        for (var output : recipe.mOutputs) if (output.isEmpty()) return;
+        for (var input : recipe.itemInputs) if (input.isEmpty()) return;
+        for (var output : recipe.itemOutputs) if (output.isEmpty()) return;
         Recipe accepted = map == MachineRecipeMaps.Smelter || map == MachineRecipeMaps.Shredder
                 ? RecoveryRecipePublisher.publish(
                         map,

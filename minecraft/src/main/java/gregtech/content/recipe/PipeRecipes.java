@@ -229,7 +229,7 @@ public final class PipeRecipes {
                 .itemOutputs(output)
                 .build();
         if (template == null) return;
-        int batchCount = template.mInputs[0].getCount();
+        int batchCount = template.itemInputs[0].getCount();
         long required = Math.multiplyExact(MaterialPrefix.plateCurved.getMaterialWeight(), batchCount);
         var rule = new MaterialUnitRecipe(template, 0, material, required, Rounding.WHOLE_OUTPUTS);
         rule.source(input.copyWithCount(batchCount), MaterialPrefix.plateCurved.getMaterialWeight());

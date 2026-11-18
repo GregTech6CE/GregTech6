@@ -21,27 +21,27 @@ public class AutoIgniterBlockEntity extends AutoToolBlockEntity {
                 gregtech.engine.energy.MachineOverload.apply(this,size,energyType());
                 return 1;
             }
-            if(cooldown==0 && energy<input()*10) energy+=size;
+            if (cooldown==0 && energy<input()*10) energy+=size;
             setChanged();
         }
         return 1;
     }
     @Override public void tick() {
-        if(level==null || level.isClientSide || !gregtech.content.tool.AutomaticToolRules.igniterDue(level.getGameTime())) return;
-        if(cooldown>0) { cooldown--;setChanged(); }
-        if(stopped || energy==0) return;
+        if (level==null || level.isClientSide || !gregtech.content.tool.AutomaticToolRules.igniterDue(level.getGameTime())) return;
+        if (cooldown>0) { cooldown--;setChanged(); }
+        if (stopped || energy==0) return;
         var target=worldPosition.relative(facing());
         long budget=gregtech.content.tool.AutomaticToolRules.igniterBudget(energy);
         boolean success=level.getBlockEntity(target) instanceof PoweredToolTarget tool && tool.usePoweredIgniter(facing().getOpposite(),budget,quality());
-        if(!success) success=gregtech.content.item.behavior.ItemBehaviors.igniteToolClick(level,target,facing().getOpposite(),null,net.minecraft.world.item.ItemStack.EMPTY,false,0.5F,0.5F,0.5F)>0;
+        if (!success) success=gregtech.content.item.behavior.ItemBehaviors.igniteToolClick(level,target,facing().getOpposite(),null,net.minecraft.world.item.ItemStack.EMPTY,false,0.5F,0.5F,0.5F)>0;
         var state=level.getBlockState(target);
-        if(!success && (CampfireBlock.canLight(state) || CandleBlock.canLight(state) || CandleCakeBlock.canLight(state))) {
+        if (!success && (CampfireBlock.canLight(state) || CandleBlock.canLight(state) || CandleCakeBlock.canLight(state))) {
             level.setBlockAndUpdate(target,state.setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT,true)); success=true;
         }
-        if(!success && state.isAir() && BaseFireBlock.canBePlacedAt(level,target,facing())) {
+        if (!success && state.isAir() && BaseFireBlock.canBePlacedAt(level,target,facing())) {
             level.setBlockAndUpdate(target,BaseFireBlock.getState(level,target));success=true;
         }
-        if(success) level.playSound(null,target,SoundEvents.FLINTANDSTEEL_USE,SoundSource.BLOCKS,1,1);
+        if (success) level.playSound(null,target,SoundEvents.FLINTANDSTEEL_USE,SoundSource.BLOCKS,1,1);
         energy=0;cooldown=gregtech.content.tool.AutomaticToolRules.RECHARGE_STEPS;setChanged();
     }
     public int cooldown() { return cooldown; }

@@ -19,94 +19,94 @@ public final class OriginCreativeContents {
 *///?}
     public static String family(Item item) {
         String id=BuiltInRegistries.ITEM.getKey(item).getPath();
-        if(item instanceof RadiationSuitItem)return "equipment";
-        if(item instanceof CanvasItem)return "equipment";
-        if(item instanceof ColoredBookItem || id.equals("dusty_guide_book") || id.equals("dusty_material_dictionary"))return "books";
-        if(item instanceof GTToolItem) return "tools";
-        if(item instanceof ElectricToolItem) return "tools";
-        if(item instanceof gregtech.content.item.PanelItemView) return "panels";
-        if(item instanceof ChemicalBatteryItem) return "batteries";
+        if (item instanceof RadiationSuitItem)return "equipment";
+        if (item instanceof CanvasItem)return "equipment";
+        if (item instanceof ColoredBookItem || id.equals("dusty_guide_book") || id.equals("dusty_material_dictionary"))return "books";
+        if (item instanceof GTToolItem) return "tools";
+        if (item instanceof ElectricToolItem) return "tools";
+        if (item instanceof gregtech.content.item.PanelItemView) return "panels";
+        if (item instanceof ChemicalBatteryItem) return "batteries";
         // Shapes are accessories, even when their translated name matches "Extruder".
-        if(id.startsWith("extruder_shape_") || id.startsWith("low_heat_extruder_shape_")) return "molds";
+        if (id.startsWith("extruder_shape_") || id.startsWith("low_heat_extruder_shape_")) return "molds";
 
         // Fluid display items are node-specific classes; both nodes register them as fluid_item_<path>.
-        if(id.startsWith("fluid_item_")) return "fluids";
+        if (id.startsWith("fluid_item_")) return "fluids";
 
-        if(item instanceof BlockItem b) {
+        if (item instanceof BlockItem b) {
             var block=b.getBlock(); String type=block.getClass().getSimpleName();
-            if(type.equals("GTStoneBlock")||type.equals("GTStoneSlabBlock")) return "stones";
+            if (type.equals("GTStoneBlock")||type.equals("GTStoneSlabBlock")) return "stones";
             // Original tabDecorations content: flowers, lilies, saplings, leaves and bales.
-            if(id.startsWith("flower_")||id.startsWith("glowtus_")||id.startsWith("sapling_")
+            if (id.startsWith("flower_")||id.startsWith("glowtus_")||id.startsWith("sapling_")
                     ||id.startsWith("leaves_")||id.startsWith("bale_")) return "iconsets";
             // Original tabBlock content that the generic icon-set registration also covers.
-            if(id.startsWith("planks_")||id.startsWith("log_")) return "woods";
-            if(id.startsWith("crystal_ore_")) return "stones";
-            if(type.equals("GTGrassBlock")) return "construction";
-            if(type.startsWith("IconSet"))return "iconsets";
-            if(type.equals("ConcreteBlock")||type.equals("ColoredConstructionBlock")||type.equals("ColoredGlassBlock")||id.startsWith("glass_")||id.startsWith("cfoam_")||id.equals("asphalt")) return "construction";
-            if(id.startsWith("safe_")||id.startsWith("key_safe_")||type.equals("SafeBlock"))return "safes";
-            if(id.startsWith("advanced_crafting_table")) return "crafting_tables";
-            if(id.contains("chest")) return "chests";
-            if(id.startsWith("drawer_")||id.startsWith("mass_storage_")||id.startsWith("locker_"))return "storage";
-            if(id.startsWith("logistics")||id.contains("storage_logistics")) return "logistics";
-            if(id.startsWith("scaffold"))return "scaffolds";
-            if(id.startsWith("sensor_"))return "sensors";
-            if(id.startsWith("panel_"))return "panels";
-            if(id.startsWith("rope"))return "ropes";
-            if(id.startsWith("reactor_")||id.startsWith("fuel_rod_")||id.startsWith("reactor_rod_"))return "reactors";
-            if(id.startsWith("long_dist_"))return "long_distance_transport";
-            if(type.equals("ZPMBlock"))return "zpm";
-            if(id.startsWith("battery_box")||id.startsWith("energy_storage_"))return "battery_boxes";
-            if(id.startsWith("solar_panel"))return "solar_panels";
-            if(id.startsWith("electric_motor")||id.startsWith("flux_motor"))return "motors";
-            if(id.startsWith("electric_generator")||id.startsWith("electric_dynamo")||id.startsWith("flux_dynamo")||id.startsWith("dynamo"))return "dynamos";
-            if(id.startsWith("electric_heater")||id.startsWith("flux_heater"))return "heaters";
-            if(id.startsWith("electric_cooler")||id.startsWith("flux_cooler"))return "coolers";
-            if(id.contains("turbine") && !id.startsWith("large_"))return "turbines";
-            if(id.startsWith("boiler_tank"))return "steam_boilers";
-            if(id.startsWith("engine_")||id.startsWith("steam_engine_")||id.startsWith("gas_engine_"))return "engines";
-            if(id.startsWith("pump_")||id.startsWith("rotational_pump"))return "pumps";
-            if(id.startsWith("magnet_"))return "magnets";
-            if(id.startsWith("transformer_"))return "transformers";
-            if(id.startsWith("axle_")||id.startsWith("gearbox_"))return "axles";
-            if(id.startsWith("pipe_")||id.startsWith("fluid_pipe_"))return "pipes";
-            if(id.startsWith("item_pipe"))return "item_pipes";
-            if(id.startsWith("hopper_")||id.startsWith("queue_hopper_"))return "hoppers";
-            if(id.startsWith("basic_machine")||type.equals("BasicMachineBlock")||type.equals("BehaviorMachineBlock")||type.equals("FuelGeneratorBlock"))return "basic_machines";
-            if(id.startsWith("usb_")||id.startsWith("hdd_"))return "computing";
+            if (id.startsWith("planks_")||id.startsWith("log_")) return "woods";
+            if (id.startsWith("crystal_ore_")) return "stones";
+            if (type.equals("GTGrassBlock")) return "construction";
+            if (type.startsWith("IconSet"))return "iconsets";
+            if (type.equals("ConcreteBlock")||type.equals("ColoredConstructionBlock")||type.equals("ColoredGlassBlock")||id.startsWith("glass_")||id.startsWith("cfoam_")||id.equals("asphalt")) return "construction";
+            if (id.startsWith("safe_")||id.startsWith("key_safe_")||type.equals("SafeBlock"))return "safes";
+            if (id.startsWith("advanced_crafting_table")) return "crafting_tables";
+            if (id.contains("chest")) return "chests";
+            if (id.startsWith("drawer_")||id.startsWith("mass_storage_")||id.startsWith("locker_"))return "storage";
+            if (id.startsWith("logistics")||id.contains("storage_logistics")) return "logistics";
+            if (id.startsWith("scaffold"))return "scaffolds";
+            if (id.startsWith("sensor_"))return "sensors";
+            if (id.startsWith("panel_"))return "panels";
+            if (id.startsWith("rope"))return "ropes";
+            if (id.startsWith("reactor_")||id.startsWith("fuel_rod_")||id.startsWith("reactor_rod_"))return "reactors";
+            if (id.startsWith("long_dist_"))return "long_distance_transport";
+            if (type.equals("ZPMBlock"))return "zpm";
+            if (id.startsWith("battery_box")||id.startsWith("energy_storage_"))return "battery_boxes";
+            if (id.startsWith("solar_panel"))return "solar_panels";
+            if (id.startsWith("electric_motor")||id.startsWith("flux_motor"))return "motors";
+            if (id.startsWith("electric_generator")||id.startsWith("electric_dynamo")||id.startsWith("flux_dynamo")||id.startsWith("dynamo"))return "dynamos";
+            if (id.startsWith("electric_heater")||id.startsWith("flux_heater"))return "heaters";
+            if (id.startsWith("electric_cooler")||id.startsWith("flux_cooler"))return "coolers";
+            if (id.contains("turbine") && !id.startsWith("large_"))return "turbines";
+            if (id.startsWith("boiler_tank"))return "steam_boilers";
+            if (id.startsWith("engine_")||id.startsWith("steam_engine_")||id.startsWith("gas_engine_"))return "engines";
+            if (id.startsWith("pump_")||id.startsWith("rotational_pump"))return "pumps";
+            if (id.startsWith("magnet_"))return "magnets";
+            if (id.startsWith("transformer_"))return "transformers";
+            if (id.startsWith("axle_")||id.startsWith("gearbox_"))return "axles";
+            if (id.startsWith("pipe_")||id.startsWith("fluid_pipe_"))return "pipes";
+            if (id.startsWith("item_pipe"))return "item_pipes";
+            if (id.startsWith("hopper_")||id.startsWith("queue_hopper_"))return "hoppers";
+            if (id.startsWith("basic_machine")||type.equals("BasicMachineBlock")||type.equals("BehaviorMachineBlock")||type.equals("FuelGeneratorBlock"))return "basic_machines";
+            if (id.startsWith("usb_")||id.startsWith("hdd_"))return "computing";
             // Per-material variants whose base id is already in the source catalog.
-            if(id.startsWith("bottle_crate")||id.startsWith("bookshelf")||id.startsWith("locker"))return "storage";
-            if(id.startsWith("advanced_crafting_table")||id.startsWith("charging_crafting_table"))return "crafting_tables";
-            if(id.startsWith("anvil")||id.equals("plant_pot")||id.equals("sap_bag"))return "tool_blocks";
-            if(id.startsWith("block_ore_"))return "stones";
-            if(id.startsWith("fluid_cell")||id.startsWith("fluid_measuring_pot")||id.startsWith("fluid_barometer")
+            if (id.startsWith("bottle_crate")||id.startsWith("bookshelf")||id.startsWith("locker"))return "storage";
+            if (id.startsWith("advanced_crafting_table")||id.startsWith("charging_crafting_table"))return "crafting_tables";
+            if (id.startsWith("anvil")||id.equals("plant_pot")||id.equals("sap_bag"))return "tool_blocks";
+            if (id.startsWith("block_ore_"))return "stones";
+            if (id.startsWith("fluid_cell")||id.startsWith("fluid_measuring_pot")||id.startsWith("fluid_barometer")
                     ||id.equals("fluid_cup")||id.equals("fluid_jug")||id.equals("fluid_thermos"))return "fluid_containers";
-            if(id.startsWith("concrete")||id.startsWith("asphalt")||id.startsWith("track")
+            if (id.startsWith("concrete")||id.startsWith("asphalt")||id.startsWith("track")
                     ||id.equals("railroad")||id.equals("mud")||id.equals("turf"))return "construction";
-            if(id.startsWith("rotation_transformer"))return "axles";
-            if(id.startsWith("laser_absorber"))return "laser_absorbers";
-            if(id.startsWith("co2_laser"))return "lasers";
-            if(id.startsWith("auto_hammer")||id.startsWith("auto_igniter"))return "automatic_tools";
-            if(id.startsWith("zpm_discharger"))return "zpm";
-            if(id.startsWith("sand_"))return "stones";
-            if(id.startsWith("clay_"))return "iconsets";
-            if(id.startsWith("bars_")||id.startsWith("spike"))return "tool_blocks";
-            if(id.startsWith("filter_"))return "sorting";
+            if (id.startsWith("rotation_transformer"))return "axles";
+            if (id.startsWith("laser_absorber"))return "laser_absorbers";
+            if (id.startsWith("co2_laser"))return "lasers";
+            if (id.startsWith("auto_hammer")||id.startsWith("auto_igniter"))return "automatic_tools";
+            if (id.startsWith("zpm_discharger"))return "zpm";
+            if (id.startsWith("sand_"))return "stones";
+            if (id.startsWith("clay_"))return "iconsets";
+            if (id.startsWith("bars_")||id.startsWith("spike"))return "tool_blocks";
+            if (id.startsWith("filter_"))return "sorting";
         }
         var source=SourceCreativeCatalog.entry(id);
-        if(source!=null && CreativeTabCatalog.FAMILIES.contains(source.family()))return source.family();
-        if(item instanceof BlockItem b) {
+        if (source!=null && CreativeTabCatalog.FAMILIES.contains(source.family()))return source.family();
+        if (item instanceof BlockItem b) {
             String idClass=b.getBlock().getClass().getSimpleName();
-            if(id.startsWith("burning_box")||idClass.contains("BurningBox"))return "burning_boxes";
-            if(id.contains("crucible")&&!id.contains("large"))return "smelting_crucibles";
-            if(id.startsWith("mold")||id.contains("casting_basin"))return "molds";
-            if(id.contains("faucet")||id.contains("crossing"))return "crucibles_faucets";
-            if(id.startsWith("large_")||idClass.contains("Controller")||idClass.equals("MultiblockPortBlock")||idClass.equals("AddonEnergyPartBlock")||idClass.equals("AddonFunctionalPartBlock"))return "multiblocks";
-            if(idClass.contains("Leaves")||idClass.contains("Sapling"))return "iconsets";
-            if(idClass.contains("Wood")||idClass.contains("Log")||id.contains("planks"))return "woods";
-            if(idClass.contains("Wire"))return id.contains("redstone")?"redstone_wires":"wires";
-            if(idClass.contains("Tank")||idClass.contains("Drum")||idClass.contains("PortableFluid"))return "fluid_containers";
-            if(idClass.contains("Tool")||idClass.contains("Crank")||idClass.contains("Processing")||idClass.contains("FluidAttachment"))return "tool_blocks";
+            if (id.startsWith("burning_box")||idClass.contains("BurningBox"))return "burning_boxes";
+            if (id.contains("crucible")&&!id.contains("large"))return "smelting_crucibles";
+            if (id.startsWith("mold")||id.contains("casting_basin"))return "molds";
+            if (id.contains("faucet")||id.contains("crossing"))return "crucibles_faucets";
+            if (id.startsWith("large_")||idClass.contains("Controller")||idClass.equals("MultiblockPortBlock")||idClass.equals("AddonEnergyPartBlock")||idClass.equals("AddonFunctionalPartBlock"))return "multiblocks";
+            if (idClass.contains("Leaves")||idClass.contains("Sapling"))return "iconsets";
+            if (idClass.contains("Wood")||idClass.contains("Log")||id.contains("planks"))return "woods";
+            if (idClass.contains("Wire"))return id.contains("redstone")?"redstone_wires":"wires";
+            if (idClass.contains("Tank")||idClass.contains("Drum")||idClass.contains("PortableFluid"))return "fluid_containers";
+            if (idClass.contains("Tool")||idClass.contains("Crank")||idClass.contains("Processing")||idClass.contains("FluidAttachment"))return "tool_blocks";
             return "untyped";
         }
         return "technology";
@@ -117,12 +117,12 @@ public final class OriginCreativeContents {
         var enchantmentRegistry = lookup == null ? null : lookup.lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
         if (pages != null && pagesEnchantmentRegistry == enchantmentRegistry) return pages;
 *///?} else {
-        if(pages!=null)return pages;
+        if (pages!=null)return pages;
 //?}
         var result=new LinkedHashMap<String,List<ItemStack>>();
-        for(String family:CreativeTabCatalog.FAMILIES)result.put(family,new ArrayList<>());
+        for (String family:CreativeTabCatalog.FAMILIES)result.put(family,new ArrayList<>());
         var items=new ArrayList<Item>();
-        for(var item:BuiltInRegistries.ITEM) {
+        for (var item:BuiltInRegistries.ITEM) {
             var itemId = BuiltInRegistries.ITEM.getKey(item);
             boolean addonMachine = item instanceof BlockItem blockItem
                     && (blockItem.getBlock() instanceof gregtech.content.block.machine.BasicMachineBlock machine
@@ -141,8 +141,8 @@ public final class OriginCreativeContents {
             boolean addonFluid = itemId.getPath().startsWith("fluid_item_");
             if ((!itemId.getNamespace().equals(REGISTRY_NAMESPACE) && !addonMachine && !addonPipe && !addonPart && !addonDrum && !addonFluid)
                     || item instanceof MaterialFormItem && !(item instanceof EnergyCrystalItem) || item instanceof CreativeTabIconItem) continue;
-            if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
-            if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
+            if (item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
+            if (java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
             // GT6 marks the used and broken lighter variants TD.Creative.HIDDEN.
             if (gregtech.content.registry.GTMultiItems.creativeHidden(itemId)) continue;
 
@@ -152,32 +152,32 @@ public final class OriginCreativeContents {
         // Source registration order within a category; newly ported entries follow by stable ID.
         items.sort(Comparator.comparingInt((Item item)->{
             // Original canvas loop immediately precedes Magic Research Paper (MultiItemRandomTools).
-            if(item instanceof CanvasItem)return SourceCreativeCatalog.entry("magic_research_paper_introduction").order();
-            if(item instanceof ColoredBookItem book)return book.variant().originalId();
-            if(item instanceof gregtech.content.item.PanelItemView panel)return panel.panelSpec().order();
-            if(item instanceof GTToolItem tool)return tool.toolType().gt6Id();
+            if (item instanceof CanvasItem)return SourceCreativeCatalog.entry("magic_research_paper_introduction").order();
+            if (item instanceof ColoredBookItem book)return book.variant().originalId();
+            if (item instanceof gregtech.content.item.PanelItemView panel)return panel.panelSpec().order();
+            if (item instanceof GTToolItem tool)return tool.toolType().gt6Id();
             var source=SourceCreativeCatalog.entry(BuiltInRegistries.ITEM.getKey(item).getPath());
             return source==null?Integer.MAX_VALUE:source.order();
         }).thenComparingInt(item->item instanceof CanvasItem canvas?canvas.variant().originalId():Integer.MAX_VALUE).thenComparing(item->BuiltInRegistries.ITEM.getKey(item).getPath()));
-        for(var item:items) {
+        for (var item:items) {
             if (item instanceof BlockItem construction && gregtech.content.registry.GTConstructionVariants.legacy(construction.getBlock())) continue;
-            if(item instanceof gregtech.content.item.PanelItemView panel&&!panel.panelSpec().canonical())continue;
+            if (item instanceof gregtech.content.item.PanelItemView panel&&!panel.panelSpec().canonical())continue;
             var page=result.get(family(item));
-            if(item instanceof GTToolItem tool) {
+            if (item instanceof GTToolItem tool) {
                 var type=tool.toolType(); var head=type==gregtech.engine.tool.GTToolType.GEM_PICK?gregtech.content.material.Materials.Diamond:gregtech.content.material.Materials.Steel;
                 page.add(GTToolItem.create(type,head,type.requiresHeadAssembly()?gregtech.content.material.generated.WoodMaterials.Wood:head));
-            } else if(item instanceof ElectricToolItem electric) {
+            } else if (item instanceof ElectricToolItem electric) {
                 // Creative convenience: fully charged with a top-quality head so testing is not gated by charge or harvest quality.
                 page.add(electric.assembledCharged(gregtech.content.material.Materials.Adamantium,electric.getEnergyCapacity(new ItemStack(item),gregtech.content.data.GregTechTags.Energy.EU)));
-            } else if(item instanceof ChemicalBatteryItem battery) {
+            } else if (item instanceof ChemicalBatteryItem battery) {
                 page.add(new ItemStack(item));var charged=new ItemStack(item);battery.setCharge(charged,battery.spec().capacity());page.add(charged);
-            } else if(item instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.misc.FixedConstructionColor) {
+            } else if (item instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.misc.FixedConstructionColor) {
                 page.add(new ItemStack(item));
-            } else if(item instanceof BlockItem b && (b.getBlock() instanceof gregtech.content.block.misc.ConcreteBlock||b.getBlock() instanceof gregtech.content.block.misc.ColoredConstructionBlock)) {
-                for(int meta=0;meta<16;meta++)page.add(gregtech.content.block.misc.ConcreteBlock.coloredItem(b.getBlock(),DyeColor.byId(15-meta)));
-            } else if(item instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.misc.ColoredGlassBlock) {
-                for(int meta=0;meta<16;meta++)page.add(gregtech.content.block.misc.ColoredGlassBlock.coloredItem(b.getBlock(),DyeColor.byId(15-meta)));
-            } else if(BuiltInRegistries.ITEM.getKey(item).getPath().equals("zpm_module"))page.add(gregtech.content.energy.ZpmEnergy.charged());
+            } else if (item instanceof BlockItem b && (b.getBlock() instanceof gregtech.content.block.misc.ConcreteBlock||b.getBlock() instanceof gregtech.content.block.misc.ColoredConstructionBlock)) {
+                for (int meta=0;meta<16;meta++)page.add(gregtech.content.block.misc.ConcreteBlock.coloredItem(b.getBlock(),DyeColor.byId(15-meta)));
+            } else if (item instanceof BlockItem b && b.getBlock() instanceof gregtech.content.block.misc.ColoredGlassBlock) {
+                for (int meta=0;meta<16;meta++)page.add(gregtech.content.block.misc.ColoredGlassBlock.coloredItem(b.getBlock(),DyeColor.byId(15-meta)));
+            } else if (BuiltInRegistries.ITEM.getKey(item).getPath().equals("zpm_module"))page.add(gregtech.content.energy.ZpmEnergy.charged());
             else page.add(new ItemStack(item));
         }
         result.replaceAll((family,stacks)->List.copyOf(stacks));pages=Collections.unmodifiableMap(result);

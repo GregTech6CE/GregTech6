@@ -116,10 +116,10 @@ public final class PipeGeometry {
     /** Half-thickness of a pipe-family neighbor (fluid/item pipes connect to each other). */
 //? if >=1.21.1 {
     /*public static double pipeHalfOf(BlockState state){
-        if(state.getBlock() instanceof FluidPipeBlock pipe)return Math.max(1,pipe.spec().diameter()*8);
-        if(state.getBlock() instanceof gregtech.engine.inventory.PipeFormLike pipe){
+        if (state.getBlock() instanceof FluidPipeBlock pipe)return Math.max(1,pipe.spec().diameter()*8);
+        if (state.getBlock() instanceof gregtech.engine.inventory.PipeFormLike pipe){
             String size=pipe.pipeSizeName().replace("RESTRICTIVE_","");
-            for(var candidate:PipeSpec.PipeSize.values())if(candidate.name().equals(size))return Math.max(1,candidate.diameter()*8);
+            for (var candidate:PipeSpec.PipeSize.values())if (candidate.name().equals(size))return Math.max(1,candidate.diameter()*8);
 *///?} else {
     public static double pipeHalfOf(BlockState state) {
         if (state.getBlock() instanceof FluidPipeBlock pipe) {
@@ -134,7 +134,7 @@ public final class PipeGeometry {
 
     /** Half-thickness of a wire-family neighbor. */
 //? if >=1.21.1 {
-    /*public static double wireHalfOf(BlockState state){if(state.getBlock() instanceof gregtech.content.block.energy.SignalWireBlock wire)return wire.halfThickness();return state.getBlock() instanceof gregtech.engine.energy.WireMaterialLike wire?wire.spec().halfThickness():NONE;}
+    /*public static double wireHalfOf(BlockState state){if (state.getBlock() instanceof gregtech.content.block.energy.SignalWireBlock wire)return wire.halfThickness();return state.getBlock() instanceof gregtech.engine.energy.WireMaterialLike wire?wire.spec().halfThickness():NONE;}
 *///?} else {
     public static double wireHalfOf(BlockState state) {
         if (state.getBlock() instanceof ElectricWireBlock wire) {

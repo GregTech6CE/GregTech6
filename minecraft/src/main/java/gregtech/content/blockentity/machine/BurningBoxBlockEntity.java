@@ -128,7 +128,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         }
         if (fuelType == BurningBoxFuelType.LIQUID || fuelType == BurningBoxFuelType.GAS || fuelType == BurningBoxFuelType.FLUIDIZED_BED) {
             fuelTank = new FluidTankGT(fuelType == BurningBoxFuelType.FLUIDIZED_BED
-                    ? Math.max(spec.outputRate(), recipeMap.mMaxFluidInputSize) : spec.outputRate() * 10);
+                    ? Math.max(spec.outputRate(), recipeMap.maxFluidInputSize) : spec.outputRate() * 10);
         }
     }
 
@@ -198,7 +198,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         List<FluidStack> fluids = List.of(tankFluid);
         Recipe recipe = recipeMap.findRecipe(Collections.emptyList(), fluids, false, 0, 0);
         if (recipe == null) return false;
-        long heat = FluidFuelChargeMath.energy(recipe.mEUt, recipe.mDuration, spec.efficiency());
+        long heat = FluidFuelChargeMath.energy(recipe.energyPerTick, recipe.durationTicks, spec.efficiency());
         if (heat <= 0 || energy > Long.MAX_VALUE - heat) return false;
         var remaining = RecipeInputs.consume(recipe, Collections.emptyList(), fluids, 1);
         // A kept-only or malformed extension row must not generate free heat or loop forever.
@@ -220,8 +220,8 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         List<FluidStack> fluids = List.of(tankFluid);
         Recipe recipe = recipeMap.findRecipe(items, fluids, false, 1, 1);
         if (recipe == null) return false;
-        if (recipe.mOutputs.length > 0 && !canStoreAsh(recipe.mOutputs[0])) return false;
-        long heat = FluidFuelChargeMath.energy(recipe.mEUt, recipe.mDuration, spec.efficiency());
+        if (recipe.itemOutputs.length > 0 && !canStoreAsh(recipe.itemOutputs[0])) return false;
+        long heat = FluidFuelChargeMath.energy(recipe.energyPerTick, recipe.durationTicks, spec.efficiency());
         if (heat <= 0 || energy > Long.MAX_VALUE - heat) return false;
         var remaining = RecipeInputs.consume(recipe, items, fluids, 1);
         if (remaining == null || remaining.items().get(0).getCount() >= fuel.getCount()
@@ -230,7 +230,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         inventory.setStackInSlot(0, remaining.items().get(0));
         energy += heat;
         // Queue ash from first output
-        ItemStack[] outputs = recipe.mOutputs;
+        ItemStack[] outputs = recipe.itemOutputs;
         if (outputs.length > 0 && outputs[0] != null && !outputs[0].isEmpty())
             queueAsh(outputs[0].copy());
         flushPendingAsh();
@@ -537,7 +537,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
             // Old saves persist the undersized rate*10 capacity. Raise its floor without
             // shrinking an existing tank or discarding any saved fluid above that floor.
             fuelTank.setCapacity(Math.max(Math.max(fuelTank.baseCapacity(), fuelTank.getAmount()),
-                    Math.max(spec.outputRate(), recipeMap.mMaxFluidInputSize)));
+                    Math.max(spec.outputRate(), recipeMap.maxFluidInputSize)));
         }
         if (inventory != null && tag.contains("gt.inv"))
             gregtech.engine.stack.HandlerNbt.load(inventory, tag.getCompound("gt.inv"), lookup);
@@ -553,13 +553,13 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
 *///?} else {
     @Override public boolean usePoweredIgniter(net.minecraft.core.Direction side,long budget,int quality) {
 //?}
-        if(level==null || level.isClientSide || budget<=0 || !(!burning && isFrontAir())) return false;
+        if (level==null || level.isClientSide || budget<=0 || !(!burning && isFrontAir())) return false;
         burning=true;
         cooldown=100;
         setChanged(); return true;
     }
     @Override public long onIgnite(Level world,BlockPos pos,Direction side,@Nullable Player player,ItemStack igniter,boolean sneaking,float hx,float hy,float hz){
-        if(side!=getFrontFacing())return 0;
+        if (side!=getFrontFacing())return 0;
         return usePoweredIgniter(side,Long.MAX_VALUE,0)?10000L:0L;
     }
 }

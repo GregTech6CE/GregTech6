@@ -219,7 +219,7 @@ public final class BathMaterialRecipes extends OriginalRecipeBatch {
         if (MachineRecipeMaps.Bath.findCollision(probe) != null) return;
         // Match the original first-registered row when canonical block forms overlap, even
         // though the grouped rows are published only after collecting all family members.
-        var inputKey = new Input(probe.mInputs[0].getItem(), fluid.getFluid());
+        var inputKey = new Input(probe.itemInputs[0].getItem(), fluid.getFluid());
         Integer previousAmount = acceptedInputs.get(inputKey);
         if (previousAmount != null && previousAmount <= mb) return;
         acceptedInputs.put(inputKey, mb);

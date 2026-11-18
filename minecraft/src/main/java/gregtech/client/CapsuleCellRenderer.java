@@ -18,13 +18,13 @@ public final class CapsuleCellRenderer implements BlockEntityRenderer<PortableCo
     public CapsuleCellRenderer(BlockEntityRendererProvider.Context context) {}
     @Override public void render(PortableContainerBlockEntity be,float partial,PoseStack pose,MultiBufferSource buffers,int light,int overlay) {
         var stack=be.contents();
-        if(!(stack.getItem() instanceof PortableFluidContainerItem item))return;
+        if (!(stack.getItem() instanceof PortableFluidContainerItem item))return;
         String shape = item.spec().shapeId();
         if (!java.util.Set.of("cell", "cup", "measuring_pot", "jug").contains(shape)) return;
         var fluid=StackCompat.fluidContained(stack);
-        if(fluid.isEmpty())return;
+        if (fluid.isEmpty())return;
         var visual=IClientFluidTypeExtensions.of(fluid.getFluid());var texture=visual.getStillTexture(fluid);
-        if(texture==null)return;
+        if (texture==null)return;
         var sprite=CrucibleRenderSprites.resolve(texture);int tint=visual.getTintColor(fluid);
         var consumer=buffers.getBuffer(ConfiguredAlphaModels.gtTranslucent());
         if (!shape.equals("cell")) {
@@ -38,12 +38,12 @@ public final class CapsuleCellRenderer implements BlockEntityRenderer<PortableCo
                     light, ConfiguredAlphaModels.gtTranslucent());
             return;
         }
-        for(int[] bounds:gregtech.content.tool.PortableContainerShapes.bounds("cell")) {
+        for (int[] bounds:gregtech.content.tool.PortableContainerShapes.bounds("cell")) {
             float x0=bounds[0]/16f+.0005f,y0=bounds[1]/16f,z0=bounds[2]/16f+.0005f;
             float x1=bounds[3]/16f-.0005f,y1=bounds[4]/16f,z1=bounds[5]/16f-.0005f;
             float[][][] faces={{{x1,y0,z0},{x0,y0,z0},{x0,y1,z0},{x1,y1,z0}},{{x0,y0,z1},{x1,y0,z1},{x1,y1,z1},{x0,y1,z1}},{{x0,y0,z0},{x0,y0,z1},{x0,y1,z1},{x0,y1,z0}},{{x1,y0,z1},{x1,y0,z0},{x1,y1,z0},{x1,y1,z1}}};
             int[][] normals={{0,0,-1},{0,0,1},{-1,0,0},{1,0,0}};
-            for(int face=0;face<4;face++)for(int v=0;v<4;v++) {
+            for (int face=0;face<4;face++)for (int v=0;v<4;v++) {
                 var point=faces[face][v];var normal=normals[face];
                 float u = switch (face) { case 0 -> 1-point[0]; case 1 -> point[0]; case 2 -> point[2]; default -> 1-point[2]; };
                 float atlasU = sprite.getU0() + (sprite.getU1()-sprite.getU0())*u;

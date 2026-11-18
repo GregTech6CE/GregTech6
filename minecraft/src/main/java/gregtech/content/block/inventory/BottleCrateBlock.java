@@ -153,8 +153,8 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
     }
 
     public static boolean isBottle(ItemStack stack) {
-        if(stack.isEmpty()) return false;
-        if(stack.is(Items.GLASS_BOTTLE) || stack.is(Items.EXPERIENCE_BOTTLE)
+        if (stack.isEmpty()) return false;
+        if (stack.is(Items.GLASS_BOTTLE) || stack.is(Items.EXPERIENCE_BOTTLE)
                 || stack.getItem() instanceof net.minecraft.world.item.PotionItem
                 || stack.getItem() instanceof gregtech.content.item.BottleItem
                 || stack.is(gregtech.content.item.BottleItem.emptyBottle().getItem())) return true;
@@ -173,12 +173,12 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
     }
 
     @Override public void onRemove(BlockState state,Level level,BlockPos pos,BlockState next,boolean moving) {
-        if(!state.is(next.getBlock()) && level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate) crate.detachInventory();
+        if (!state.is(next.getBlock()) && level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate) crate.detachInventory();
         super.onRemove(state,level,pos,next,moving);
     }
 
     @Override public List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
-        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof BottleCrateBlockEntity crate)
+        if (builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof BottleCrateBlockEntity crate)
             return List.of(crate.packedStack());
         return List.of(new ItemStack(this));
     }
@@ -188,7 +188,7 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
 *///?} else {
     @Override public void playerWillDestroy(Level level,BlockPos pos,BlockState state,Player player) {
 //?}
-        if(!level.isClientSide && player.isCreative() && level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate
+        if (!level.isClientSide && player.isCreative() && level.getBlockEntity(pos) instanceof BottleCrateBlockEntity crate
                 && !crate.contents().isEmpty()) popResource(level,pos,crate.packedStack());
 //? if >=1.21.1 {
         /*return super.playerWillDestroy(level,pos,state,player);

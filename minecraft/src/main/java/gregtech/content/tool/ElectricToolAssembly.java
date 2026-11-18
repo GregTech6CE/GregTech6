@@ -51,14 +51,14 @@ public enum ElectricToolAssembly {
         return recipe(material,new ItemStack(battery),"/"+battery.spec().id());
     }
     public ToolShapedRecipe recipe(GTMaterial material,ItemStack battery,String suffix) {
-        if(!(battery.getItem() instanceof gregtech.content.item.ChemicalBatteryItem energy)
+        if (!(battery.getItem() instanceof gregtech.content.item.ChemicalBatteryItem energy)
                 ||energy.spec().energyType()!=gregtech.content.data.GregTechTags.Energy.EU||energy.spec().tier()!=definition().tier())return null;
         if (!validMaterial(material) || GTItems.getStack(head,material,1).isEmpty()) return null;
         var ingredients=NonNullList.withSize(9,Ingredient.EMPTY);
-        for(int i=0;i<9;i++) {
+        for (int i=0;i<9;i++) {
             char symbol=rows[i/3].charAt(i%3);
             var ingredient=symbol=='V'?Ingredient.of(battery):ingredient(symbol,material);
-            if(ingredient.isEmpty()) return null; // Never turn a missing component into an empty slot.
+            if (ingredient.isEmpty()) return null; // Never turn a missing component into an empty slot.
             ingredients.set(i,ingredient);
         }
         long capacity=energy.getEnergyCapacity(battery,
@@ -75,7 +75,7 @@ public enum ElectricToolAssembly {
 //?}
     }
     private Ingredient ingredient(char symbol,GTMaterial material) {
-        return switch(symbol) {
+        return switch (symbol) {
             case 'd' -> Ingredient.of(GTToolHelper.displayTool(GTToolType.SCREWDRIVER));
             case 'h' -> Ingredient.of(GTToolHelper.displayTool(GTToolType.HARD_HAMMER));
             case 'f' -> Ingredient.of(GTToolHelper.displayTool(GTToolType.FILE));
@@ -91,7 +91,7 @@ public enum ElectricToolAssembly {
     }
     private static Ingredient form(MaterialPrefix prefix,GTMaterial material) {
         var stack=GTItems.getStack(prefix,material,1);
-        if(stack.isEmpty()) return Ingredient.EMPTY;
+        if (stack.isEmpty()) return Ingredient.EMPTY;
         // Include the concrete item and common Forge material forms (rods/screws/rings/plates).
         String common=MaterialEquivalence.tagPath(new MaterialEquivalence.Form(prefix,material));
 //? if >=1.21.1 {
@@ -103,14 +103,14 @@ public enum ElectricToolAssembly {
     }
     public static List<ToolShapedRecipe> build() {
         List<ToolShapedRecipe> result=new ArrayList<>();
-        for(var material:GTMaterialRegistry.allMaterials()) for(var spec:values()) {
-            for(var entry:GTChemicalBatteries.all())if(entry.get().spec().tier()==spec.definition().tier()) {
+        for (var material:GTMaterialRegistry.allMaterials()) for (var spec:values()) {
+            for (var entry:GTChemicalBatteries.all())if (entry.get().spec().tier()==spec.definition().tier()) {
 //? if >=1.21.1 {
                 /*var chemical=spec.recipe(material,new ItemStack(entry.get().asItem()),"/"+entry.getId().getPath());
 *///?} else {
                 var chemical=spec.recipe(material,new ItemStack(entry.get()),"/"+entry.getId().getPath());
 //?}
-                if(chemical!=null)result.add(chemical);
+                if (chemical!=null)result.add(chemical);
             }
         }
         return result;

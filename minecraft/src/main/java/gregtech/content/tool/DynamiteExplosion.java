@@ -37,27 +37,27 @@ public final class DynamiteExplosion extends Explosion {
     public static void detonate(ServerLevel world, BlockPos center, float resistance, int fortune) {
         var blast=new DynamiteExplosion(world,center,resistance,fortune);
 //? if >=1.21.1 {
-        /*if(EventHooks.onExplosionStart(world,blast)) return;
+        /*if (EventHooks.onExplosionStart(world,blast)) return;
 *///?} else {
-        if(ForgeEventFactory.onExplosionStart(world,blast)) return;
+        if (ForgeEventFactory.onExplosionStart(world,blast)) return;
 //?}
         blast.explode();
         blast.finalizeExplosion(true);
     }
     @Override public void explode() {
-        for(var candidate:BlockPos.betweenClosed(center.offset(-1,-1,-1),center.offset(1,1,1))) {
+        for (var candidate:BlockPos.betweenClosed(center.offset(-1,-1,-1),center.offset(1,1,1))) {
             var state=world.getBlockState(candidate);
-            if(state.isAir() || state.is(Blocks.SPAWNER) || state.getDestroySpeed(world,candidate)<0) continue;
-            if(state.getExplosionResistance(world,candidate,this)<=resistance) getToBlow().add(candidate.immutable());
+            if (state.isAir() || state.is(Blocks.SPAWNER) || state.getDestroySpeed(world,candidate)<0) continue;
+            if (state.getExplosionResistance(world,candidate,this)<=resistance) getToBlow().add(candidate.immutable());
         }
         var point=Vec3.atCenterOf(center);
         var entities=new ArrayList<Entity>(world.getEntities(null,new AABB(point.x-2,point.y-2,point.z-2,point.x+2,point.y+2,point.z+2)));
 //? if >=1.21.1 {
         /*EventHooks.onExplosionDetonate(world,this,entities,1);
-        for(var entity:entities) if(!(entity instanceof ItemEntity)) entity.hurt(world.damageSources().explosion(this),2*resistance);
+        for (var entity:entities) if (!(entity instanceof ItemEntity)) entity.hurt(world.damageSources().explosion(this),2*resistance);
 *///?} else {
         ForgeEventFactory.onExplosionDetonate(world,this,entities,1);
-        for(var entity:entities) if(!(entity instanceof ItemEntity)) entity.hurt(getDamageSource(),2*resistance);
+        for (var entity:entities) if (!(entity instanceof ItemEntity)) entity.hurt(getDamageSource(),2*resistance);
 //?}
     }
     @Override public void finalizeExplosion(boolean effects) {
@@ -67,7 +67,7 @@ public final class DynamiteExplosion extends Explosion {
         world.playSound(null,center,SoundEvents.GENERIC_EXPLODE,SoundSource.BLOCKS,4,
 //?}
                 (1+(world.random.nextFloat()-world.random.nextFloat())*.2f)*.7f);
-        if(effects) world.sendParticles(ParticleTypes.EXPLOSION,center.getX()+.5,center.getY()+.5,center.getZ()+.5,1,0,0,0,0);
+        if (effects) world.sendParticles(ParticleTypes.EXPLOSION,center.getX()+.5,center.getY()+.5,center.getZ()+.5,1,0,0,0,0);
         ItemStack tool=new ItemStack(Items.DIAMOND_PICKAXE);
 //? if >=1.21.1 {
         /*tool.enchant(world.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE),fortune);
@@ -75,16 +75,16 @@ public final class DynamiteExplosion extends Explosion {
         tool.enchant(Enchantments.BLOCK_FORTUNE,fortune);
 //?}
         // Snapshot the positions: chain explosions can change the world while callbacks run.
-        for(var pos:new ArrayList<>(getToBlow())) {
+        for (var pos:new ArrayList<>(getToBlow())) {
             var state=world.getBlockState(pos);
-            if(state.isAir()) continue;
+            if (state.isAir()) continue;
             var be=world.getBlockEntity(pos);
             var drops=state.canDropFromExplosion(world,pos,this)
                     ? state.getDrops(new LootParams.Builder(world).withParameter(LootContextParams.ORIGIN,Vec3.atCenterOf(pos))
                     .withParameter(LootContextParams.TOOL,tool).withOptionalParameter(LootContextParams.BLOCK_ENTITY,be))
                     : java.util.List.<ItemStack>of();
             state.onBlockExploded(world,pos,this);
-            for(var drop:drops) Block.popResource(world,pos,drop);
+            for (var drop:drops) Block.popResource(world,pos,drop);
         }
     }
 }

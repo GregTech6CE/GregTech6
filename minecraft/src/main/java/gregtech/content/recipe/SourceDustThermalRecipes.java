@@ -33,25 +33,25 @@ public final class SourceDustThermalRecipes {
   * Only this producer's old ordinary dust row is replaced. Independent/mapwide rows are untouched.
   */
  private static boolean emitWholeDustMetal(GTMaterial material){
-  if(material==null||!material.isValid())return false;
+  if (material==null||!material.isValid())return false;
   material=material.resolve();String field="GenMolten_"+material.getName();
-  if(!SourceGeneratedFluidAdapter.wholeDustMetal(material,RegisteredFluids.get(field)))return false;
+  if (!SourceGeneratedFluidAdapter.wholeDustMetal(material,RegisteredFluids.get(field)))return false;
   var input=GTItems.getStack(MaterialPrefix.dust,material,1);
   // Both native registrars install an explicit self/dust/U composition for every material item.
   // Exact equivalent compositions are harmless; changed/mixed/unrecoverable bindings still defer.
-  if(input.isEmpty()||!unchangedInput(input,MaterialPrefix.dust,material,U))return false;
+  if (input.isEmpty()||!unchangedInput(input,MaterialPrefix.dust,material,U))return false;
   var fluid=gregtech.content.registry.GTFluids.stack(field,144);
   String expected="gt6ce:molten_"+material.getName().toLowerCase(java.util.Locale.ROOT);
-  if(fluid==null||fluid.isEmpty()||fluid.getAmount()!=144
+  if (fluid==null||fluid.isEmpty()||fluid.getAmount()!=144
     ||!BuiltInRegistries.FLUID.getKey(fluid.getFluid()).toString().equals(expected))return false;
   // Independent paired original literals: floor(weight*(melting-293)/1600), density4.54/7.874.
   long ticks=material.getId()==220?519:830;
   admit(MachineRecipeMaps.Smelter,input,fluid,ticks,RecoveryInputProof.capture(input,material,MaterialPrefix.dust,U));
   // Finite extension of this reviewed Ti/Fe single-material source branch, not generic recycling.
   // Missing forms stay missing; explicit changed compositions defer independently, never deleted.
-  for(var form:METAL_FRACTIONS){
+  for (var form:METAL_FRACTIONS){
    var fraction=GTItems.getStack(form.prefix,material,1);
-   if(fraction.isEmpty()||!unchangedInput(fraction,form.prefix,material,form.amount))continue;
+   if (fraction.isEmpty()||!unchangedInput(fraction,form.prefix,material,form.amount))continue;
    long fractionTicks=material.getId()==220?form.titaniumTicks:form.ironTicks;
    var fractionFluid=fluid.copy();fractionFluid.setAmount(form.millibuckets);
   admit(MachineRecipeMaps.Smelter,fraction,fractionFluid,fractionTicks,RecoveryInputProof.capture(fraction,material,form.prefix,form.amount));
@@ -59,18 +59,18 @@ public final class SourceDustThermalRecipes {
   return true;
  }
  private static boolean unchangedInput(ItemStack stack,MaterialPrefix prefix,GTMaterial material,long amount){
-  if(stack.isEmpty())return true; // Missing forms were not registered by this producer either.
-  if(!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))return false;
-  if(!(stack.getItem() instanceof MaterialFormItem form)||form.getPrefix()!=prefix
+  if (stack.isEmpty())return true; // Missing forms were not registered by this producer either.
+  if (!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE))return false;
+  if (!(stack.getItem() instanceof MaterialFormItem form)||form.getPrefix()!=prefix
     ||form.getMaterial().resolve()!=material||prefix.getMaterialWeight()!=amount)return false;
   var composition=ItemMaterialRegistry.base(stack.getItem()).orElse(null);
-  if(composition==null)return false; // Missing ordinary item proof must not create a guessed row.
+  if (composition==null)return false; // Missing ordinary item proof must not create a guessed row.
   return composition.prefix()==prefix&&composition.components().size()==1
     &&composition.material().resolve()==material&&composition.amount()==amount
     &&RecoveryInputProof.capture(stack,material,prefix,amount)!=null;
  }
  private static Recipe admit(RecipeMap map,ItemStack input,FluidStack output,long ticks,RecoveryInputProof proof){
-  if(proof==null||input.isEmpty()||output.isEmpty())return null;
+  if (proof==null||input.isEmpty()||output.isEmpty())return null;
   var recipe=RecipeBuilder.of(16, ticks)
           .optimize(true)
           .itemInputs(input.copy())

@@ -219,7 +219,7 @@ public final class GenerifierRecipeFamily {
          * item replaces the handler's row, which is why the original dump never lists both.
          */
         private static boolean shadowed(Recipe row) {
-            var indexed = MachineRecipeMaps.Generifier.mRecipeItemMap.get(row.mInputs[0].getItem());
+            var indexed = MachineRecipeMaps.Generifier.recipesByInputItem.get(row.itemInputs[0].getItem());
             return indexed != null && !indexed.isEmpty();
         }
 

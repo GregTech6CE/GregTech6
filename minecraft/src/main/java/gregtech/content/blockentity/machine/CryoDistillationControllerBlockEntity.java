@@ -19,9 +19,9 @@ public class CryoDistillationControllerBlockEntity extends DistillationTowerCont
     @Override public void load(CompoundTag tag) {
 //?}
         // Preserve old fluids verbatim. The former HU buffer is not cold energy or a consumed recipe.
-        if(!tag.contains("gt.tanks_input0") && tag.contains("gt.input")) {
+        if (!tag.contains("gt.tanks_input0") && tag.contains("gt.input")) {
             tag=tag.copy();tag.put("gt.tanks_input0",tag.getCompound("gt.input").copy());
-            for(int i=0;i<3;i++) if(tag.contains("gt.output"+i))
+            for (int i=0;i<3;i++) if (tag.contains("gt.output"+i))
                 tag.put("gt.tanks_output"+i,tag.getCompound("gt.output"+i).copy());
             tag.remove("gt.heat");tag.remove("gt.progress");tag.remove("gt.max_progress");
         }

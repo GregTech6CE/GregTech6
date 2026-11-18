@@ -36,12 +36,12 @@ final class MoltenMetalUnitRecipes {
     static void begin() {
         clear(); collecting = true;
         var map = MachineRecipeMaps.Smelter;
-        for (Recipe row : List.copyOf(map.mRecipeList)) {
-            if (row.mFakeRecipe || !row.mEnabled || row.mHidden || row.mInputs.length != 1
-                    || row.mOutputs.length != 0 || row.mFluidInputs.length != 0 || row.mFluidOutputs.length != 1
-                    || row.hasTaggedInputs() || row.isCatalystInput(0) || row.mSpecialValue != 0) continue;
-            if (collect(row.mInputs[0], row.mFluidOutputs[0], row.mDuration, row.mEUt,
-                    stack -> row.mEnabled && row.matchesItemInput(0, stack))) map.unlink(row);
+        for (Recipe row : List.copyOf(map.recipeRows)) {
+            if (row.fakeRecipe || !row.enabled || row.hidden || row.itemInputs.length != 1
+                    || row.itemOutputs.length != 0 || row.fluidInputs.length != 0 || row.fluidOutputs.length != 1
+                    || row.hasTaggedInputs() || row.isCatalystInput(0) || row.specialValue != 0) continue;
+            if (collect(row.itemInputs[0], row.fluidOutputs[0], row.durationTicks, row.energyPerTick,
+                    stack -> row.enabled && row.matchesItemInput(0, stack))) map.unlink(row);
         }
     }
 

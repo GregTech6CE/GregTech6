@@ -363,9 +363,9 @@ public final class GTMaterialDataRecipes {
                 new ItemStack[]{withMaterialData(usb, material)},
                 null, null, null,
                 Math.max(1, nucleons * SCANNER_EU), SCANNER_EU, 0);
-        recipe.mCanBeBuffered = false;
-        recipe.mExactItemInputs = true;
-        recipe.mExplicitCatalystsOnly = true;
+        recipe.canBeBuffered = false;
+        recipe.exactItemInputs = true;
+        recipe.explicitCatalystsOnly = true;
         return recipe;
     }
 
@@ -499,9 +499,9 @@ public final class GTMaterialDataRecipes {
                 fluid.isEmpty() ? null : new FluidStack[]{fluid},
                 nucleons * REPLICATOR_TICKS_PER_NUCLEON,
                 gregtech.content.data.MaterialDataRules.REPLICATOR_POWER, 0);
-        recipe.mCanBeBuffered = false;
-        recipe.mExactItemInputs = true;
-        recipe.mExplicitCatalystsOnly = true;
+        recipe.canBeBuffered = false;
+        recipe.exactItemInputs = true;
+        recipe.explicitCatalystsOnly = true;
         return usb == null ? recipe : recipe.withCatalystInputs(0);
     }
 

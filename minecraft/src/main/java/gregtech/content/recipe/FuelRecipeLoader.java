@@ -35,7 +35,7 @@ public class FuelRecipeLoader implements InitializationStep {
         OriginalFluidBedRecipes.register();
         registerEngineFuels();
         registerTurbineFuel();
-        for(var row:gregtech.content.recipe.OriginalFuelRecipeRows.ROWS)switch(row.kind()){
+        for (var row:gregtech.content.recipe.OriginalFuelRecipeRows.ROWS)switch (row.kind()){
             case "burn"->burn(row.eut(),row.duration(),row.input());
             case "gas"->gas(row.eut(),row.duration(),row.input(),row.amount(),rowFluid(row.output(),row.outputAmount()),rowFluid(row.output2(),row.output2Amount()));
             case "hot"->hot(row);
@@ -54,26 +54,26 @@ public class FuelRecipeLoader implements InitializationStep {
         // mistaking a legacy registry name (ethanol/nitrofuel) for a Java field key.
         var seen=java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<net.minecraft.world.level.material.Fluid,Boolean>());
         var entries=new java.util.TreeMap<>(gregtech.content.data.RegisteredFluids.all());
-        for(var row:OriginalEngineFuelRows.ROWS) {
+        for (var row:OriginalEngineFuelRows.ROWS) {
             boolean resolved=false;
-            for(var entry:entries.entrySet()) {
+            for (var entry:entries.entrySet()) {
                 var definition=entry.getValue();
                 boolean matches=row.category()!=0 ? definition.hasFlag(row.category())
                     : row.registryNames().contains(definition.registryName());
-                if(!matches)continue;
+                if (!matches)continue;
                 FluidStack in=make(entry.getKey(),1);
-                if(in==null)continue;
+                if (in==null)continue;
                 resolved=true;
-                if(!seen.add(in.getFluid()))continue;
+                if (!seen.add(in.getFluid()))continue;
                 FluidStack exhaust=co2(1);
                 // Source's declared output is required; never silently turn it into fuel voiding.
-                if(exhaust==null){skipped++;continue;}
+                if (exhaust==null){skipped++;continue;}
                 record(FuelRecipeMaps.Engine.register(RecipeBuilder.of(-row.eut(), row.duration())
                         .optimize(true)
                         .fluidInputs(in)
                         .fluidOutputs(exhaust)));
             }
-            if(!resolved)skipped++;
+            if (!resolved)skipped++;
         }
     }
 

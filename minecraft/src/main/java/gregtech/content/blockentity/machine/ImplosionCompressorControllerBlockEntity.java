@@ -39,7 +39,7 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
     }
     private List<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell> structureCells(Direction front) {
         var cells=new ArrayList<gregtech.engine.multiblock.tracking.CompiledPattern.FixedCell>(LAYOUT.cells().size());
-        for(var cell:LAYOUT.cells()) {
+        for (var cell:LAYOUT.cells()) {
             int part=cell.role()==MultiblockLayout.Role.AIR?0:18023;
             var spec=new gregtech.content.multiblock.LargeMachineLayouts.Cell(cell.right(),cell.up(),cell.back(),part,cell.role());
             var offset=spec.at(BlockPos.ZERO,front);
@@ -49,11 +49,11 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
         return cells;
     }
     @Override public boolean applyStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
-        if(level==null||isRemoved())return false;
+        if (level==null||isRemoved())return false;
         var candidates=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
-        for(var fixed:match.fixedCells()) {
+        for (var fixed:match.fixedCells()) {
             var cell=fixed.cell();
-            if(cell.role()!=MultiblockLayout.Role.AIR)candidates.put(fixed.pos(),cell.role());
+            if (cell.role()!=MultiblockLayout.Role.AIR)candidates.put(fixed.pos(),cell.role());
         }
         return gregtech.engine.multiblock.tracking.StructureClaims.update(this,bindings,candidates,
                 pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
@@ -61,7 +61,7 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
                 !=gregtech.engine.multiblock.tracking.StructureClaims.Result.FAILED;
     }
     @Override public void applyIncompleteStructure(gregtech.engine.multiblock.tracking.PatternMatch match) {
-        if(level==null||isRemoved())return;
+        if (level==null||isRemoved())return;
         gregtech.engine.multiblock.tracking.StructureClaims.bindMatched(this,bindings,match,false,this::release);
     }
     @Override public void releaseStructureClaims() {
@@ -71,7 +71,7 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
     @Override public boolean isStructureOk() {
         return gregtech.engine.multiblock.tracking.StructureTracking.query(this);
     }
-    private void release(BlockPos pos) { if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition); }
+    private void release(BlockPos pos) { if (level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition); }
     @Override public void onLoad() {
         super.onLoad();
         if (level != null && !level.isClientSide) gregtech.engine.multiblock.tracking.StructureTracking.attach(this);

@@ -122,12 +122,12 @@ public final class MaterialTooltips {
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
 
-        if(flag.isAdvanced() && prefix!=null) {
+        if (flag.isAdvanced() && prefix!=null) {
             var form = new gregtech.engine.material.MaterialEquivalence.Form(prefix,mat);
             String tag = gregtech.engine.material.MaterialEquivalence.tagPath(form);
-            if(tag!=null) tooltip.add(Component.translatable("tooltip.gt6ce.material_tag","forge:"+tag).withStyle(ChatFormatting.DARK_GRAY));
+            if (tag!=null) tooltip.add(Component.translatable("tooltip.gt6ce.material_tag","forge:"+tag).withStyle(ChatFormatting.DARK_GRAY));
             GTMaterial target = prefix==MaterialPrefix.oreRaw ? mat.getTargetCrushingMaterial() : mat.getTargetPulverMaterial();
-            if(target.resolve()!=mat) tooltip.add(Component.translatable(prefix==MaterialPrefix.oreRaw ? "tooltip.gt6ce.crushing_result" : "tooltip.gt6ce.pulver_result",MaterialPresentation.name(target)).withStyle(ChatFormatting.GRAY));
+            if (target.resolve()!=mat) tooltip.add(Component.translatable(prefix==MaterialPrefix.oreRaw ? "tooltip.gt6ce.crushing_result" : "tooltip.gt6ce.pulver_result",MaterialPresentation.name(target)).withStyle(ChatFormatting.GRAY));
         }
         appendSourceModTooltip(tooltip, mat);
     }
@@ -195,7 +195,7 @@ public final class MaterialTooltips {
                                      List<Component> tooltip, TooltipFlag flag) {
         appendRecoveryState(stack, tooltip, flag);
         var form = gregtech.engine.material.MaterialEquivalence.form(stack);
-        if(form!=null) {
+        if (form!=null) {
             var weights = data.components().stream()
                     .flatMap(component -> MaterialChemistry.materialWeights(component.material(), component.amount()).stream())
                     .toList();

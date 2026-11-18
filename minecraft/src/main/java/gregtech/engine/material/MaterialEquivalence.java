@@ -25,12 +25,12 @@ public final class MaterialEquivalence {
     private MaterialEquivalence() {}
     public static Form form(ItemStack stack) {
         var data=ItemMaterialRegistry.get(stack).orElse(null);
-        if(data==null||data.prefix()==null||data.components().size()!=1||data.amount()!=data.prefix().getMaterialWeight()) return null;
+        if (data==null||data.prefix()==null||data.components().size()!=1||data.amount()!=data.prefix().getMaterialWeight()) return null;
         return new Form(data.prefix(),data.material().resolve());
     }
     public static String materialName(GTMaterial m) {
-        if(m.getName().equals("NetherQuartz")) return "quartz";
-        if(m.getName().equals("Tungstensteel")) return "tungsten_steel";
+        if (m.getName().equals("NetherQuartz")) return "quartz";
+        if (m.getName().equals("Tungstensteel")) return "tungsten_steel";
         return m.getName().replaceAll("([a-z0-9])([A-Z])","$1_$2").toLowerCase(Locale.ROOT);
     }
     /** One tag path plus the alias spellings {@link #hasForgeTag} also accepts, cached per Form. */
@@ -69,7 +69,7 @@ public final class MaterialEquivalence {
     /** Check the canonical Forge form tag and the established alternate material spellings. */
     public static boolean hasForgeTag(ItemStack candidate, String path) {
         var forms = pathForms(path);
-        if(tagged(candidate,forms.path()))return true;
+        if (tagged(candidate,forms.path()))return true;
         return (!forms.alias().equals(forms.path())&&tagged(candidate,forms.alias()))
                 ||(forms.alternate()!=null&&tagged(candidate,forms.alternate()));
     }
@@ -143,17 +143,17 @@ public final class MaterialEquivalence {
         // Common raw_materials tags do not erase the distinct ore/raw and block quantities.
         if (required.getItem() != available.getItem() && (vanillaRaw(required) || vanillaRaw(available))) return false;
 //? if >=1.21.1 {
-        /*if(!required.getComponentsPatch().isEmpty()||!available.getComponentsPatch().isEmpty()||required.isDamaged()||available.isDamaged()) return false;
+        /*if (!required.getComponentsPatch().isEmpty()||!available.getComponentsPatch().isEmpty()||required.isDamaged()||available.isDamaged()) return false;
 *///?} else {
-        if(required.hasTag()||available.hasTag()||required.isDamaged()||available.isDamaged()) return false;
+        if (required.hasTag()||available.hasTag()||required.isDamaged()||available.isDamaged()) return false;
 //?}
         var canonicalRequired = MaterialUnification.canonical(required);
         var canonicalAvailable = MaterialUnification.canonical(available);
         if (canonicalRequired.getItem() == canonicalAvailable.getItem()
                 && (canonicalRequired.getItem() != required.getItem() || canonicalAvailable.getItem() != available.getItem())) return true;
-        var expected=form(required); if(expected==null) return false;
+        var expected=form(required); if (expected==null) return false;
         var actual=form(available);
-        if(actual!=null) {
+        if (actual!=null) {
             if (expected.prefix()==actual.prefix()&&expected.material()==actual.material()) return true;
             // A secondary registration makes one vanilla item supply more than one form.
             var id=BuiltInRegistries.ITEM.getKey(available.getItem());

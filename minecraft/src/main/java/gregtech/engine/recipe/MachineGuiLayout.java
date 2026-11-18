@@ -18,7 +18,7 @@ public final class MachineGuiLayout {
     }
 
     public static ResourceLocation texture(RecipeMap map) {
-        String gui = map == null ? null : map.mGUIPath;
+        String gui = map == null ? null : map.guiPath;
         String namespace = "gt6ce";
         if (gui != null) {
             int colon = gui.indexOf(':');

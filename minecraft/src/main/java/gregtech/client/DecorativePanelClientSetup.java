@@ -16,7 +16,7 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 //?}
 public final class DecorativePanelClientSetup {
     @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event) {
-        for(var item:BuiltInRegistries.ITEM)if(item instanceof PanelItemView)
+        for (var item:BuiltInRegistries.ITEM)if (item instanceof PanelItemView)
 //? if >=1.21.1 {
             /*event.register(ItemColorARGB.opaque((stack,layer)->layer==0?((PanelItemView)stack.getItem()).panelSpec().tint():0xFFFFFF),item);
 *///?} else {

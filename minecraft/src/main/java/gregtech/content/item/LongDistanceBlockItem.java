@@ -27,7 +27,7 @@ public final class LongDistanceBlockItem extends BlockItem {
             tooltip.add(Component.translatable("tooltip.gt6ce.long_distance.wrench").withStyle(ChatFormatting.DARK_GRAY));
             tooltip.add(Component.translatable("tooltip.gt6ce.long_distance.reset").withStyle(ChatFormatting.DARK_GRAY));
             tooltip.add(Component.translatable("tooltip.gt6ce.long_distance.inspect").withStyle(ChatFormatting.DARK_GRAY));
-            if(spec.kind().equals("TRANSFORMER")) tooltip.add(Component.translatable("tooltip.gt6ce.long_distance.transformer",spec.voltage()/2,spec.voltage()*2,spec.voltage()).withStyle(ChatFormatting.AQUA));
+            if (spec.kind().equals("TRANSFORMER")) tooltip.add(Component.translatable("tooltip.gt6ce.long_distance.transformer",spec.voltage()/2,spec.voltage()*2,spec.voltage()).withStyle(ChatFormatting.AQUA));
         }
         if (spec.kind().equals("WIRE")) {
             tooltip.add(Component.translatable("tooltip.gt6ce.long_distance.voltage", spec.voltage()).withStyle(ChatFormatting.AQUA));

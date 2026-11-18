@@ -16,7 +16,7 @@ public final class SixCellDisplayRenderer {
         light=LightTexture.FULL_BRIGHT; // GT6 character overlays request constant maximum brightness.
         var pose=poses.last();
         for (int i=0;i<6;i++) {
-            var cell=cells[i]; if(cell==null) continue;
+            var cell=cells[i]; if (cell==null) continue;
             var texture=TEXTURES.computeIfAbsent(cell.texture(), name -> ResourceLocation.fromNamespaceAndPath("gt6ce","textures/block/overlays/characters/"+name+".png"));
             var vertices=buffers.getBuffer(RenderType.entityCutoutNoCull(texture));
             float left=(2+2*i)/16f-.5f, right=left+2/16f, top=.5f-2/16f, bottom=top-2/16f;

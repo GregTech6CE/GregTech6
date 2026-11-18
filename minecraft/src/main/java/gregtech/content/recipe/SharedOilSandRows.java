@@ -42,7 +42,7 @@ public final class SharedOilSandRows {
         final Recipe original, template;
         Group(Candidate candidate, Recipe original) {
             this.candidate = candidate; this.original = original;
-            this.template = original == null ? null : copy(original, original.mInputs[0]);
+            this.template = original == null ? null : copy(original, original.itemInputs[0]);
         }
     }
     private static final Map<Item, Group> GROUPS = new LinkedHashMap<>();
@@ -95,17 +95,17 @@ public final class SharedOilSandRows {
         sealed = true;
     }
     private static boolean ordinary(Recipe row) {
-        return row.mInputs.length == 1 && !row.mInputs[0].isEmpty() && row.mInputs[0].getCount() == 1
-                && row.mFluidInputs.length == 0 && row.mFluidOutputs.length == 1
-                && !row.mFluidOutputs[0].isEmpty() && row.mSpecialValue == 0
-                && row.mEUt == 16 && row.mEnabled && row.mCanBeBuffered && !row.mNeedsEmptyOutput
-                && !row.mHidden && !row.mFakeRecipe && !row.mMaterialRecovery && !row.mRequiresEmptyContainerInputs
-                && !row.mExactItemInputs && !row.mExplicitCatalystsOnly
+        return row.itemInputs.length == 1 && !row.itemInputs[0].isEmpty() && row.itemInputs[0].getCount() == 1
+                && row.fluidInputs.length == 0 && row.fluidOutputs.length == 1
+                && !row.fluidOutputs[0].isEmpty() && row.specialValue == 0
+                && row.energyPerTick == 16 && row.enabled && row.canBeBuffered && !row.needsEmptyOutput
+                && !row.hidden && !row.fakeRecipe && !row.materialRecovery && !row.requiresEmptyContainerInputs
+                && !row.exactItemInputs && !row.explicitCatalystsOnly
                 && row.explicitCatalystInputs().length == 0 && row.explicitCatalystFluidInputs().length == 0
                 && row.explicitPresenceFluidInputs().length == 0 && !row.hasSameItemInputPredicate(0)
                 && row.viewerInputNote(0).isEmpty()
-                && Arrays.stream(row.mChances).allMatch(c -> c == 10000)
-                && Arrays.stream(row.mMaxChances).allMatch(c -> c == 10000);
+                && Arrays.stream(row.outputChances).allMatch(c -> c == 10000)
+                && Arrays.stream(row.maxOutputChances).allMatch(c -> c == 10000);
     }
     public static Set<Recipe> owned() {
         Set<Recipe> result = Collections.newSetFromMap(new IdentityHashMap<>());
@@ -123,8 +123,8 @@ public final class SharedOilSandRows {
         if (!sealed) return;
         clearOwned(); DEFERRED.clear();
         Set<Item> independent = Collections.newSetFromMap(new IdentityHashMap<>());
-        for (Recipe row : MAP.mRecipeList) if (!row.mFakeRecipe)
-            for (ItemStack input : row.mInputs) if (input != null && !input.isEmpty()) independent.add(input.getItem());
+        for (Recipe row : MAP.recipeRows) if (!row.fakeRecipe)
+            for (ItemStack input : row.itemInputs) if (input != null && !input.isEmpty()) independent.add(input.getItem());
         for (Group group : GROUPS.values()) {
             if (independent.contains(group.candidate.input().getItem())) {
                 restore(group); defer(group, "independent-same-item-row"); continue;
@@ -155,7 +155,7 @@ public final class SharedOilSandRows {
     private static void restore(Group group) {
         if (group.original == null) return;
         Recipe accepted = MAP.addRecipe(group.original,
-                RecipeMap.Registration.DEFAULT.withFakeRecipe(group.original.mFakeRecipe).withHidden(group.original.mHidden));
+                RecipeMap.Registration.DEFAULT.withFakeRecipe(group.original.fakeRecipe).withHidden(group.original.hidden));
         if (accepted != null) OWNED.add(accepted); else defer(group, "legacy-readmission-rejected");
     }
     private static boolean admitGroup(List<Recipe> planned, Recipe legacy) {
@@ -166,7 +166,7 @@ public final class SharedOilSandRows {
                 if (result == null) {
                     accepted.forEach(MAP::unlink);
                     Recipe restored = legacy == null ? null : MAP.addRecipe(legacy,
-                            RecipeMap.Registration.DEFAULT.withFakeRecipe(legacy.mFakeRecipe).withHidden(legacy.mHidden));
+                            RecipeMap.Registration.DEFAULT.withFakeRecipe(legacy.fakeRecipe).withHidden(legacy.hidden));
                     if (restored != null) OWNED.add(restored);
                     return false;
                 }
@@ -177,7 +177,7 @@ public final class SharedOilSandRows {
             accepted.forEach(MAP::unlink);
             if (legacy != null) try {
                 Recipe restored = MAP.addRecipe(legacy,
-                        RecipeMap.Registration.DEFAULT.withFakeRecipe(legacy.mFakeRecipe).withHidden(legacy.mHidden));
+                        RecipeMap.Registration.DEFAULT.withFakeRecipe(legacy.fakeRecipe).withHidden(legacy.hidden));
                 if (restored != null) OWNED.add(restored);
             } catch (RuntimeException | Error restoration) { failure.addSuppressed(restoration); }
             throw failure;
@@ -256,23 +256,23 @@ public final class SharedOilSandRows {
                 .withViewerInputNote(0, "gt6ce.jei.ore_host_legacy");
     }
     private static Recipe copy(Recipe recipe, ItemStack input) {
-        Recipe copy = new Recipe(new ItemStack[]{input.copy()}, Arrays.stream(recipe.mOutputs).map(ItemStack::copy).toArray(ItemStack[]::new),
-                recipe.mChances.clone(), Arrays.stream(recipe.mFluidInputs).map(FluidStack::copy).toArray(FluidStack[]::new),
-                Arrays.stream(recipe.mFluidOutputs).map(FluidStack::copy).toArray(FluidStack[]::new),
-                recipe.mDuration, recipe.mEUt, recipe.mSpecialValue);
-        System.arraycopy(recipe.mMaxChances, 0, copy.mMaxChances, 0, recipe.mMaxChances.length);
-        copy.mEnabled = recipe.mEnabled; copy.mCanBeBuffered = recipe.mCanBeBuffered; copy.mNeedsEmptyOutput = recipe.mNeedsEmptyOutput;
+        Recipe copy = new Recipe(new ItemStack[]{input.copy()}, Arrays.stream(recipe.itemOutputs).map(ItemStack::copy).toArray(ItemStack[]::new),
+                recipe.outputChances.clone(), Arrays.stream(recipe.fluidInputs).map(FluidStack::copy).toArray(FluidStack[]::new),
+                Arrays.stream(recipe.fluidOutputs).map(FluidStack::copy).toArray(FluidStack[]::new),
+                recipe.durationTicks, recipe.energyPerTick, recipe.specialValue);
+        System.arraycopy(recipe.maxOutputChances, 0, copy.maxOutputChances, 0, recipe.maxOutputChances.length);
+        copy.enabled = recipe.enabled; copy.canBeBuffered = recipe.canBeBuffered; copy.needsEmptyOutput = recipe.needsEmptyOutput;
         return copy;
     }
     private static boolean sameFields(Recipe left, Recipe right) {
-        if (left.mInputs.length != right.mInputs.length || left.mOutputs.length != right.mOutputs.length
-                || left.mFluidInputs.length != right.mFluidInputs.length || left.mFluidOutputs.length != right.mFluidOutputs.length
-                || left.mDuration != right.mDuration || left.mEUt != right.mEUt || left.mSpecialValue != right.mSpecialValue
-                || !Arrays.equals(left.mChances, right.mChances) || !Arrays.equals(left.mMaxChances, right.mMaxChances)) return false;
-        for (int i = 0; i < left.mInputs.length; i++) if (!ItemStack.matches(left.mInputs[i], right.mInputs[i])) return false;
-        for (int i = 0; i < left.mOutputs.length; i++) if (!ItemStack.matches(left.mOutputs[i], right.mOutputs[i])) return false;
-        for (int i = 0; i < left.mFluidOutputs.length; i++) if (left.mFluidOutputs[i].getFluid() != right.mFluidOutputs[i].getFluid()
-                || left.mFluidOutputs[i].getAmount() != right.mFluidOutputs[i].getAmount()) return false;
+        if (left.itemInputs.length != right.itemInputs.length || left.itemOutputs.length != right.itemOutputs.length
+                || left.fluidInputs.length != right.fluidInputs.length || left.fluidOutputs.length != right.fluidOutputs.length
+                || left.durationTicks != right.durationTicks || left.energyPerTick != right.energyPerTick || left.specialValue != right.specialValue
+                || !Arrays.equals(left.outputChances, right.outputChances) || !Arrays.equals(left.maxOutputChances, right.maxOutputChances)) return false;
+        for (int i = 0; i < left.itemInputs.length; i++) if (!ItemStack.matches(left.itemInputs[i], right.itemInputs[i])) return false;
+        for (int i = 0; i < left.itemOutputs.length; i++) if (!ItemStack.matches(left.itemOutputs[i], right.itemOutputs[i])) return false;
+        for (int i = 0; i < left.fluidOutputs.length; i++) if (left.fluidOutputs[i].getFluid() != right.fluidOutputs[i].getFluid()
+                || left.fluidOutputs[i].getAmount() != right.fluidOutputs[i].getAmount()) return false;
         return true;
     }
     static class Snapshot extends SourceOreCrushingAdapter.Snapshot {

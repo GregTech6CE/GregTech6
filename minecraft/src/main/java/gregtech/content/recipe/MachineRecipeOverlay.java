@@ -79,7 +79,7 @@ public final class MachineRecipeOverlay {
 
     public static int staticRows() {
         int rows = 0;
-        for (var map : RecipeMap.RECIPE_MAP_LIST) rows += map.mRecipeList.size();
+        for (var map : RecipeMap.RECIPE_MAP_LIST) rows += map.recipeRows.size();
         return rows;
     }
 
@@ -227,7 +227,7 @@ public final class MachineRecipeOverlay {
     public static void restoreFurnaceBeforeMirror() {
         var furnace = gregtech.content.data.MachineRecipeMaps.Furnace;
         furnace.removeAll(furnaceAdded);
-        for (var recipe : furnaceRemoved) if (!furnace.mRecipeList.contains(recipe)) furnace.add(recipe);
+        for (var recipe : furnaceRemoved) if (!furnace.recipeRows.contains(recipe)) furnace.add(recipe);
         furnaceAdded = List.of();
         furnaceRemoved = List.of();
     }
@@ -240,10 +240,10 @@ public final class MachineRecipeOverlay {
         var tally = new Tally();
         var markers = markers(manager);
         var drop = new ArrayList<Recipe>();
-        for (var recipe : furnace.mRecipeList) {
+        for (var recipe : furnace.recipeRows) {
             var view = view(recipe);
             for (var marker : markers)
-                if (marker.removal() != null && marker.removal().map().equals(furnace.mNameInternal)
+                if (marker.removal() != null && marker.removal().map().equals(furnace.internalName)
                         && MachineRecipeMatch.matches(marker.removal(), view, TAG_QUERY)) {
                     drop.add(recipe);
                     break;
@@ -251,14 +251,14 @@ public final class MachineRecipeOverlay {
         }
         furnace.removeAll(drop);
         for (var marker : markers)
-            if (marker.addition() != null && marker.addition().map().equals(furnace.mNameInternal))
+            if (marker.addition() != null && marker.addition().map().equals(furnace.internalName))
                 install(marker.id(), marker.addition(), tally);
         rememberFurnaceChanges(before);
     }
 
     private static java.util.Set<Recipe> furnaceRows() {
         var rows = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
-        rows.addAll(gregtech.content.data.MachineRecipeMaps.Furnace.mRecipeList);
+        rows.addAll(gregtech.content.data.MachineRecipeMaps.Furnace.recipeRows);
         return rows;
     }
 
@@ -443,7 +443,7 @@ public final class MachineRecipeOverlay {
         }
         for (var entry : perMap.entrySet()) {
             var drop = new ArrayList<Recipe>();
-            for (var recipe : entry.getKey().mRecipeList) {
+            for (var recipe : entry.getKey().recipeRows) {
                 var view = view(recipe);
                 for (var marker : entry.getValue())
                     if (MachineRecipeMatch.matches(marker.removal(), view, TAG_QUERY)) {
@@ -495,8 +495,8 @@ public final class MachineRecipeOverlay {
         var items = new ArrayList<ItemStack>();
         var itemCounts = new ArrayList<Integer>();
         var itemTags = new ArrayList<String>();
-        for (int input = 0; input < recipe.mInputs.length; input++) {
-            var stack = recipe.mInputs[input];
+        for (int input = 0; input < recipe.itemInputs.length; input++) {
+            var stack = recipe.itemInputs[input];
             if (stack == null || stack.isEmpty()) continue;
             items.add(stack);
             itemCounts.add(stack.getCount());
@@ -505,8 +505,8 @@ public final class MachineRecipeOverlay {
         var fluids = new ArrayList<FluidStack>();
         var fluidAmounts = new ArrayList<Integer>();
         var fluidTags = new ArrayList<String>();
-        for (int i = 0; i < recipe.mFluidInputs.length; i++) {
-            var fluid = recipe.mFluidInputs[i];
+        for (int i = 0; i < recipe.fluidInputs.length; i++) {
+            var fluid = recipe.fluidInputs[i];
             if (fluid != null && !fluid.isEmpty()) {
                 fluids.add(fluid);
                 fluidAmounts.add(recipe.isPresenceFluidInput(i) ? 0 : fluid.getAmount());
@@ -515,14 +515,14 @@ public final class MachineRecipeOverlay {
         }
         var outputs = new ArrayList<ItemStack>();
         var chances = new ArrayList<Integer>();
-        for (int i = 0; i < recipe.mOutputs.length; i++) {
-            var stack = recipe.mOutputs[i];
+        for (int i = 0; i < recipe.itemOutputs.length; i++) {
+            var stack = recipe.itemOutputs[i];
             if (stack == null || stack.isEmpty()) continue;
             outputs.add(stack);
             chances.add(recipe.getOutputChance(i));
         }
         var fluidOutputs = new ArrayList<FluidStack>();
-        for (var fluid : recipe.mFluidOutputs) if (fluid != null && !fluid.isEmpty()) fluidOutputs.add(fluid);
+        for (var fluid : recipe.fluidOutputs) if (fluid != null && !fluid.isEmpty()) fluidOutputs.add(fluid);
         return new MachineRecipeMatch.RecipeView() {
             public int inputItems() { return items.size(); }
             public String inputItem(int index) { return BuiltInRegistries.ITEM.getKey(items.get(index).getItem()).toString(); }

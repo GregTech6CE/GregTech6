@@ -479,12 +479,12 @@ private void tickServer() {
 *///?} else {
     @Override public boolean usePoweredIgniter(net.minecraft.core.Direction side,long budget,int quality) {
 //?}
-        if(level==null || level.isClientSide || budget<=0 || !(!burning && !inventory.getStackInSlot(FUEL_SLOT).isEmpty() && isFrontAir())) return false;
+        if (level==null || level.isClientSide || budget<=0 || !(!burning && !inventory.getStackInSlot(FUEL_SLOT).isEmpty() && isFrontAir())) return false;
         burning=true;
         setChanged(); return true;
     }
     @Override public long onIgnite(Level world,BlockPos pos,Direction side,@Nullable Player player,ItemStack igniter,boolean sneaking,float hx,float hy,float hz){
-        if(side!=getFrontFacing())return 0;
+        if (side!=getFrontFacing())return 0;
         return usePoweredIgniter(side,Long.MAX_VALUE,0)?10000L:0L;
     }
 }

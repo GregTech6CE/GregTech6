@@ -43,33 +43,33 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements gr
 //?}
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
-        if(MachineRotationType.handleWrench(state,level,pos,player,hand,hit,FACING,MachineRotationType.ALL))return InteractionResult.sidedSuccess(level.isClientSide);
-        if(level.getBlockEntity(pos) instanceof AxialGeneratorBlockEntity machine) {
-            if(player.isShiftKeyDown()&&player.getItemInHand(hand).isEmpty()) {
-                if(!level.isClientSide)machine.toggleStopped();return InteractionResult.sidedSuccess(level.isClientSide);
+        if (MachineRotationType.handleWrench(state,level,pos,player,hand,hit,FACING,MachineRotationType.ALL))return InteractionResult.sidedSuccess(level.isClientSide);
+        if (level.getBlockEntity(pos) instanceof AxialGeneratorBlockEntity machine) {
+            if (player.isShiftKeyDown()&&player.getItemInHand(hand).isEmpty()) {
+                if (!level.isClientSide)machine.toggleStopped();return InteractionResult.sidedSuccess(level.isClientSide);
             }
             var held=player.getItemInHand(hand);
-            if(gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.SOFT_HAMMER)) {
-                if(!level.isClientSide) {
+            if (gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.SOFT_HAMMER)) {
+                if (!level.isClientSide) {
                     machine.toggleStopped();
                     gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(held,10000,player,hand==InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
-            if(machine instanceof gregtech.content.blockentity.machine.LargeTurbineControllerBlockEntity turbine && gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.PLUNGER)) {
-                if(!level.isClientSide)gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(held,turbine.purgeFluid(),player,hand==InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
+            if (machine instanceof gregtech.content.blockentity.machine.LargeTurbineControllerBlockEntity turbine && gregtech.engine.tool.GTToolHelper.matchesTool(held,gregtech.engine.tool.GTToolType.PLUNGER)) {
+                if (!level.isClientSide)gregtech.engine.tool.GTToolHelper.damageForToolClickReturn(held,turbine.purgeFluid(),player,hand==InteractionHand.MAIN_HAND?net.minecraft.world.entity.EquipmentSlot.MAINHAND:net.minecraft.world.entity.EquipmentSlot.OFFHAND);
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
 //? if >=1.21.1 {
-            /*if(machine instanceof net.neoforged.neoforge.fluids.capability.IFluidHandler fluids) {
+            /*if (machine instanceof net.neoforged.neoforge.fluids.capability.IFluidHandler fluids) {
 *///?} else {
-            if(machine instanceof net.minecraftforge.fluids.capability.IFluidHandler fluids) {
+            if (machine instanceof net.minecraftforge.fluids.capability.IFluidHandler fluids) {
 //?}
-                if(level.isClientSide)return InteractionResult.SUCCESS;
+                if (level.isClientSide)return InteractionResult.SUCCESS;
 //? if >=1.21.1 {
-                /*if(net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler(player,hand,fluids))return InteractionResult.CONSUME;
+                /*if (net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler(player,hand,fluids))return InteractionResult.CONSUME;
 *///?} else {
-                if(net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(player,hand,fluids))return InteractionResult.CONSUME;
+                if (net.minecraftforge.fluids.FluidUtil.interactWithFluidHandler(player,hand,fluids))return InteractionResult.CONSUME;
 //?}
             }
         }
@@ -79,7 +79,7 @@ public abstract class AxialGeneratorBlock extends DirectionalBlock implements gr
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) { return defaultBlockState().setValue(FACING,context.getNearestLookingDirection().getOpposite()); }
     @Override public List<ItemStack> getDrops(BlockState state,LootParams.Builder builder) {
         var stack=new ItemStack(this);
-        if(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AxialGeneratorBlockEntity machine) {
+        if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AxialGeneratorBlockEntity machine) {
 //? if >=1.21.1 {
             /*var data = gregtech.content.cover.ComponentCoverFallback.forItem(machine, machine.saveWithId(machine.getLevel().registryAccess()));
 *///?} else {

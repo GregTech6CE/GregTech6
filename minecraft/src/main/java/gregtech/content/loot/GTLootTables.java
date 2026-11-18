@@ -147,7 +147,7 @@ public final class GTLootTables {
         List<Row> rows = rows(table);
         if (rows.isEmpty()) return ItemStack.EMPTY;
         int index=LootRollRules.pick(rows.stream().mapToInt(Row::weight).toArray(),random::nextInt);
-        if(index>=0){var row=rows.get(index);int count=LootRollRules.count(row.min(),row.max(),random::nextInt);ItemStack stack=row.stack().copy();stack.setCount(Math.min(count,stack.getMaxStackSize()));return stack;}
+        if (index>=0){var row=rows.get(index);int count=LootRollRules.count(row.min(),row.max(),random::nextInt);ItemStack stack=row.stack().copy();stack.setCount(Math.min(count,stack.getMaxStackSize()));return stack;}
 
         return ItemStack.EMPTY;
     }

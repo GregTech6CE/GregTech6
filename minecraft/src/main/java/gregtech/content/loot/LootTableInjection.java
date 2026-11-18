@@ -118,7 +118,7 @@ public final class LootTableInjection {
                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(row.min(), row.max())));
             // Books carry their text in NBT (title/author/pages), so hand the tag to the loot item.
 //? if >=1.21.1 {
-            /*for(var component:row.stack().getComponents())entry.apply(copyComponent(component));
+            /*for (var component:row.stack().getComponents())entry.apply(copyComponent(component));
 *///?} else {
             CompoundTag tag = row.stack().getTag();
             if (tag != null) entry.apply(SetNbtFunction.setTag(tag));

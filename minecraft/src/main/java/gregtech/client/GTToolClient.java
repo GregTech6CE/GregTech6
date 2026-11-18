@@ -55,7 +55,7 @@ public final class GTToolClient {
 //?}
             }
             GTToolType type = ((GTToolItem)stack.getItem()).toolType();
-            if(type.definition().isGun())return tintIndex==0?headColor:tintIndex==1?0xFF000000|(GTToolHelper.getHandle(stack).getColor()&0xFFFFFF):0xFFFFFFFF;
+            if (type.definition().isGun())return tintIndex==0?headColor:tintIndex==1?0xFF000000|(GTToolHelper.getHandle(stack).getColor()&0xFFFFFF):0xFFFFFFFF;
             if (type == GTToolType.GEM_PICK) {
                 if (tintIndex == 0) {
                     return 0xFF000000 | (GTToolHelper.getHandle(stack).getColor() & 0xFFFFFF);

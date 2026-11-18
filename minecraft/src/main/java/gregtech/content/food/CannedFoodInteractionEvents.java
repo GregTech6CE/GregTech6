@@ -24,6 +24,6 @@ public final class CannedFoodInteractionEvents {
         var stack=event.getItemStack();
         if (!(stack.getItem() instanceof CannedFoodItem can) || !(event.getTarget() instanceof LivingEntity target)) return;
         var outcome=can.interactLivingEntity(stack,event.getEntity(),target,event.getHand());
-        if(outcome.consumesAction()) { event.setCanceled(true); event.setCancellationResult(outcome); }
+        if (outcome.consumesAction()) { event.setCanceled(true); event.setCancellationResult(outcome); }
     }
 }

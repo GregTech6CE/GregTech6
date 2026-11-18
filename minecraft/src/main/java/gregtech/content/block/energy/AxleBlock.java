@@ -102,7 +102,7 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
 
     /** Axles may only connect in a straight line: max 2 connections on the same axis. */
     public static boolean isValidConnectionState(BlockState state) {
-        int mask=0;for(var direction:Direction.values())if(state.getValue(propFor(direction)))mask|=1<<direction.ordinal();
+        int mask=0;for (var direction:Direction.values())if (state.getValue(propFor(direction)))mask|=1<<direction.ordinal();
         return gregtech.engine.energy.AxleConnectionRules.valid(mask);
     }
 
@@ -179,7 +179,7 @@ public class AxleBlock extends Block implements EntityBlock, SimpleWaterloggedBl
     @Override
     public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
             Level level,BlockState state,net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
-        if(level.isClientSide || type!=gregtech.content.registry.GTAxles.AXLE.get())return null;
+        if (level.isClientSide || type!=gregtech.content.registry.GTAxles.AXLE.get())return null;
         return (world,pos,blockState,entity)->((AxleBlockEntity)entity).serverTick();
     }
 

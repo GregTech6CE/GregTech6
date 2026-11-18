@@ -217,7 +217,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
         if (conversions <= 0) return;
 
         waterTank.remove(conversions);
-        if(efficiency>5000&&!waterTank.isEmpty()&&!isDistilledWater()&&level.random.nextInt(10)==0)
+        if (efficiency>5000&&!waterTank.isEmpty()&&!isDistilledWater()&&level.random.nextInt(10)==0)
             efficiency=(short)Math.max(5000,efficiency-conversions);
         long steam=conversions*BoilerSpec.STEAM_PER_WATER*efficiency/10000;
         steamTank.setFluid(new FluidStack(steamFluid.get(),1),steamTank.getAmount()+steam);
@@ -228,11 +228,11 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
     private void coolDown(){
         long oldHeat = heat;
         int oldCooldown = cooldown;
-        if(cooldown--<=0){
+        if (cooldown--<=0){
             cooldown=0;
             heat=Math.max(0,heat-spec.steamOutput()*32);
             steamTank.remove(spec.steamOutput()*64);
-            if(heat==0)cooldown=128;
+            if (heat==0)cooldown=128;
         }
         if (oldHeat != heat || oldCooldown != cooldown) markMachineDataChanged();
     }
@@ -247,7 +247,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
     /** GT6 boilers emit steam upward; the output keeps the lower half of its pressure buffer. */
     private void pushSteamUp() {
         if (level == null || steamTank.getAmount() <= steamTank.getCapacity() / 2) return;
-        if(!level.hasChunkAt(worldPosition.above()))return;
+        if (!level.hasChunkAt(worldPosition.above()))return;
         var above = level.getBlockEntity(worldPosition.above());
         if (above == null) return;
         IFluidHandler target = steamOutput.get(above, Direction.DOWN);
@@ -450,7 +450,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
     public <T> @org.jetbrains.annotations.NotNull LazyOptional<T> getCapability(
             @org.jetbrains.annotations.NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.FLUID_HANDLER && side==Direction.UP) {
-            if(topFluidCap==null)topFluidCap=LazyOptional.of(()->new gregtech.engine.fluid.FluidPort(fluids,false,false));
+            if (topFluidCap==null)topFluidCap=LazyOptional.of(()->new gregtech.engine.fluid.FluidPort(fluids,false,false));
             return topFluidCap.cast();
         }
         if (cap == ForgeCapabilities.FLUID_HANDLER) {
@@ -466,7 +466,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
     public void invalidateCaps() {
         super.invalidateCaps();
         if (fluidCap != null) { fluidCap.invalidate(); fluidCap = null; }
-        if(topFluidCap!=null){topFluidCap.invalidate();topFluidCap=null;}
+        if (topFluidCap!=null){topFluidCap.invalidate();topFluidCap=null;}
     }
 //?}
 
@@ -519,7 +519,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements gregte
         if (tag.contains("gt.steam")) steamTank.readFromNBT(tag.getCompound("gt.steam"));
 //?}
         waterTank.setCapacity(Math.max(4000,waterTank.getAmount()));
-        if(spec!=null)steamTank.setCapacity(spec.steamCapacity());
+        if (spec!=null)steamTank.setCapacity(spec.steamCapacity());
         efficiency=(short)Math.max(0,Math.min(10000,efficiency));
     }
 }

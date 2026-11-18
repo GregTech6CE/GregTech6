@@ -265,15 +265,15 @@ public final class TransportSchedulingTests {
 
     /** The first row whose first output is guaranteed, so the sifting result is not random. */
     private static ItemStack deterministicSiftingInput() {
-        for (var row : MachineRecipeMaps.Sifting.mRecipeList) {
-            if (!row.mEnabled || row.mFakeRecipe || row.mInputs.length != 1 || row.mInputs[0].isEmpty()
-                    || row.mInputs[0].getCount() != 1 || row.getOutputChance(0) < 10000
-                    || row.mOutputs.length == 0 || row.mOutputs[0].isEmpty()) continue;
-            ItemStack candidate = row.mInputs[0].copyWithCount(1);
+        for (var row : MachineRecipeMaps.Sifting.recipeRows) {
+            if (!row.enabled || row.fakeRecipe || row.itemInputs.length != 1 || row.itemInputs[0].isEmpty()
+                    || row.itemInputs[0].getCount() != 1 || row.getOutputChance(0) < 10000
+                    || row.itemOutputs.length == 0 || row.itemOutputs[0].isEmpty()) continue;
+            ItemStack candidate = row.itemInputs[0].copyWithCount(1);
             var match = MachineRecipeMaps.Sifting.findRecipe(
                     java.util.List.of(candidate), java.util.List.of(), false, 1, 12);
-            if (match != null && match.getOutputChance(0) >= 10000 && match.mOutputs.length > 0
-                    && !match.mOutputs[0].isEmpty()) return candidate;
+            if (match != null && match.getOutputChance(0) >= 10000 && match.itemOutputs.length > 0
+                    && !match.itemOutputs[0].isEmpty()) return candidate;
         }
         return ItemStack.EMPTY;
     }

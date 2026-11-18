@@ -47,9 +47,9 @@ public final class SharedOreSiftingRows {
  }
  public static List<Deferred> deferred(){return List.copyOf(DEFERRED);}
  public static void initialize(){
-  if(initialized)throw new IllegalStateException("Sifting rows initialized twice");initialized=true;
+  if (initialized)throw new IllegalStateException("Sifting rows initialized twice");initialized=true;
   Set<GTMaterial> seen=Collections.newSetFromMap(new IdentityHashMap<>());var list=new ArrayList<GTMaterial>();
-  for(var m:GTMaterialRegistry.allMaterials())if(seen.add(m.resolve()))list.add(m.resolve());
+  for (var m:GTMaterialRegistry.allMaterials())if (seen.add(m.resolve()))list.add(m.resolve());
   materials=List.copyOf(list);
   // Same immutable startup output policy as the old direct/dormant OPL definitions. Late crafting
   // aliases may resume an input chain but cannot silently replace its reviewed graded outputs.
@@ -59,11 +59,11 @@ public final class SharedOreSiftingRows {
  /** Keep startup definitions for the next server in this JVM, without stale accepted identities. */
  public static void clear(){clearOwned();DEFERRED.clear();}
  public static void rebuild(){
-  if(!initialized)return;
+  if (!initialized)return;
   var snapshot=new Snapshot();var planned=definitions(materials,snapshot);
   clearOwned();DEFERRED.clear();DEFERRED.addAll(snapshot.siftingDeferred);
-  try{for(var definition:planned){var row=definition.admit();if(row!=null)OWNED.add(row);}}
-  catch(RuntimeException|Error failure){clear();throw failure;}
+  try{for (var definition:planned){var row=definition.admit();if (row!=null)OWNED.add(row);}}
+  catch (RuntimeException|Error failure){clear();throw failure;}
  }
  record Definition(boolean optimize,ItemStack input,ItemStack[] outputs,long[] chances,long duration,long power,boolean special,
                    Predicate<ItemStack> inputPredicate){
@@ -79,10 +79,10 @@ public final class SharedOreSiftingRows {
            .itemOutputs(outputs)
            .chances(chances)
            .build();
-   if(row==null)return null;
+   if (row==null)return null;
    // The host-tagged representative distinguishes the row; the predicate lets a stack with the
    // same host but different stored data (or an older tag format) match at runtime.
-   if(inputPredicate!=null)row.withSameItemInputPredicate(0,inputPredicate);
+   if (inputPredicate!=null)row.withSameItemInputPredicate(0,inputPredicate);
    return MachineRecipeMaps.Sifting.addRecipe(row);
   }
  }
@@ -92,14 +92,14 @@ public final class SharedOreSiftingRows {
  }
  static Map<GTMaterial,GenericOutputs> captureGeneric(Collection<GTMaterial> selected,Snapshot snapshot){
   var captured=new IdentityHashMap<GTMaterial,GenericOutputs>();
-  for(var material:selected){
+  for (var material:selected){
    GTMaterial m=material.resolve();var gem=snapshot.direct(MaterialPrefix.gem,m,1);var dust=snapshot.direct(MaterialPrefix.dust,m,1);
    Availability availability=SourceOreWashingRules.requireAll(gem.availability(),dust.availability());
-   if(availability!=Availability.PRESENT){captured.put(m,new GenericOutputs(availability,new ItemStack[0]));continue;}
+   if (availability!=Availability.PRESENT){captured.put(m,new GenericOutputs(availability,new ItemStack[0]));continue;}
    var outputs=new ItemStack[genericOutputs().size()];
-   for(int index=0;index<outputs.length;index++){
+   for (int index=0;index<outputs.length;index++){
     var rule=genericOutputs().get(index);
-    if(rule.fallbackGemCount()>0)outputs[index]=snapshot.grade(rule.prefix(),m,rule.count(),gem.stack(),rule.fallbackGemCount());
+    if (rule.fallbackGemCount()>0)outputs[index]=snapshot.grade(rule.prefix(),m,rule.count(),gem.stack(),rule.fallbackGemCount());
     else outputs[index]=(rule.prefix()==MaterialPrefix.gem?gem.stack():dust.stack()).copy();
    }
    captured.put(m,new GenericOutputs(Availability.PRESENT,outputs));
@@ -112,15 +112,15 @@ public final class SharedOreSiftingRows {
  static List<Definition> definitions(Collection<GTMaterial> selected,Snapshot snapshot,Map<GTMaterial,GenericOutputs> captured){
   var out=new ArrayList<Definition>();
   Set<GTMaterial> candidates=Collections.newSetFromMap(new IdentityHashMap<>());
-  for(var material:selected)candidates.add(material.resolve());
+  for (var material:selected)candidates.add(material.resolve());
   var unresolved=new IdentityHashMap<GTMaterial,EnumSet<Size>>();
   // Keep the source order across all 22 fixed calls, not just per material. A known absent fixed
   // row is not a permanent blacklist. An UNKNOWN fixed binding must not become a generic guess.
-  for(var row:specialRows())for(var m:candidates)if(row.input().matches(m.getId(),m.getName())){
+  for (var row:specialRows())for (var m:candidates)if (row.input().matches(m.getId(),m.getName())){
    Availability state=special(m,row,snapshot,out);
-   if(state==Availability.UNKNOWN)unresolved.computeIfAbsent(m,k->EnumSet.noneOf(Size.class)).add(row.size());
+   if (state==Availability.UNKNOWN)unresolved.computeIfAbsent(m,k->EnumSet.noneOf(Size.class)).add(row.size());
   }
-  for(var material:selected)generic(material.resolve(),snapshot,captured,unresolved,out);
+  for (var material:selected)generic(material.resolve(),snapshot,captured,unresolved,out);
   sediment(selected,out);
   return List.copyOf(out);
  }
@@ -133,16 +133,16 @@ public final class SharedOreSiftingRows {
  private static final int DUST_ORE_TICKS=256;
 
  private static void sediment(Collection<GTMaterial> selected,List<Definition> out){
-  for(var candidate:selected){
+  for (var candidate:selected){
    GTMaterial material=candidate.resolve();
    // Oilsands has its own Centrifuge event instead of the standard ore rows. Stone has no ore
    // stack in GT6 (only the block), so it gets no DUST_ORE rows even though the port registers one.
-   if(!material.isValid()||"OilSand".equals(material.getName())||"Stone".equals(material.getName())
+   if (!material.isValid()||"OilSand".equals(material.getName())||"Stone".equals(material.getName())
        ||!MaterialPrefix.crushed.isValidFor(material))continue;
    GTMaterial target=material.getTargetCrushingMaterial().resolve();
-   if(target==null||!target.isValid())continue;
+   if (target==null||!target.isValid())continue;
    ItemStack oreStack=GTBlocks.getStack(BlockMaterialPrefix.ore,material);
-   if(oreStack.isEmpty()||!(oreStack.getItem() instanceof BlockItem item)||!(item.getBlock() instanceof OreBlock ore))continue;
+   if (oreStack.isEmpty()||!(oreStack.getItem() instanceof BlockItem item)||!(item.getBlock() instanceof OreBlock ore))continue;
    int multiplier=Math.max(1,Math.min(64,target.getOreMultiplier()*material.getOreProcessingMultiplier()));
    ItemStack purified=GTItems.getStack(MaterialPrefix.crushedPurified,target,multiplier);
    var byproducts=target.getByProducts();
@@ -151,7 +151,7 @@ public final class SharedOreSiftingRows {
    ItemStack tertiary=sedimentTiny(byproducts,2,secondary);
    ItemStack[] outputs={purified,purified.isEmpty()?ItemStack.EMPTY:purified.copy(),
        scaled(primary,multiplier),scaled(secondary,multiplier),scaled(tertiary,multiplier)};
-   for(OreHostStone host:DUST_ORE_HOSTS){
+   for (OreHostStone host:DUST_ORE_HOSTS){
     ItemStack input=OreBlock.withStone(oreStack.copy(),ore.stateFor(host));
     out.add(new Definition(OPTIMIZE,input,outputs,DUST_ORE_CHANCES,DUST_ORE_TICKS,POWER,false,stack->{
      var data=SourceOreCrushingAdapter.hostData(stack);
@@ -162,31 +162,31 @@ public final class SharedOreSiftingRows {
  }
  /** The source's first three byproducts, falling back to earlier slots (own dust first). */
  private static ItemStack sedimentTiny(List<GTMaterial> byproducts,int index,ItemStack fallback){
-  if(index<byproducts.size()){
+  if (index<byproducts.size()){
    GTMaterial material=byproducts.get(index);
-   if(material!=null&&material.isValid()){
+   if (material!=null&&material.isValid()){
     ItemStack stack=OM.dustOrIngot(material.resolve(),U9);
-    if(!stack.isEmpty())return stack;
+    if (!stack.isEmpty())return stack;
    }
   }
   return fallback;
  }
  /** Source ST.amount(multiplier, stack): keeps the form, multiplies its count. */
  private static ItemStack scaled(ItemStack stack,int multiplier){
-  if(stack==null||stack.isEmpty())return ItemStack.EMPTY;
+  if (stack==null||stack.isEmpty())return ItemStack.EMPTY;
   ItemStack copy=stack.copy();copy.setCount(Math.max(1,Math.min(64,copy.getCount()*multiplier)));return copy;
  }
  private static Availability special(GTMaterial m,SpecialRow row,Snapshot s,List<Definition> out){
-  if(!sourceIdentity(m,row.input())){s.note(m,"fixed/"+row.sourceLine(),"unverified-source-material");return Availability.UNKNOWN;}
+  if (!sourceIdentity(m,row.input())){s.note(m,"fixed/"+row.sourceLine(),"unverified-source-material");return Availability.UNKNOWN;}
   var input=s.direct(row.size().input(),m,row.inputCount());
-  if(input.availability()!=Availability.PRESENT){
-   if(input.availability()==Availability.UNKNOWN)s.note(m,"fixed/"+row.sourceLine(),"unknown-input-form");
+  if (input.availability()!=Availability.PRESENT){
+   if (input.availability()==Availability.UNKNOWN)s.note(m,"fixed/"+row.sourceLine(),"unknown-input-form");
    return input.availability();
   }
   var outputs=new ItemStack[row.outputs().size()];
-  for(int index=0;index<outputs.length;index++){
+  for (int index=0;index<outputs.length;index++){
    var form=s.specialOutput(row.outputs().get(index));
-   if(form.availability()==Availability.UNKNOWN){s.note(m,"fixed/"+row.sourceLine(),"unknown-output-slot-"+index);return Availability.UNKNOWN;}
+   if (form.availability()==Availability.UNKNOWN){s.note(m,"fixed/"+row.sourceLine(),"unknown-output-slot-"+index);return Availability.UNKNOWN;}
    outputs[index]=form.stack(); // known ABSENT keeps its indexed EMPTY slot, without OM/grade fallback
   }
   out.add(new Definition(row.optimize(),input.stack(),outputs,row.chances().stream().mapToLong(Long::longValue).toArray(),
@@ -200,19 +200,19 @@ public final class SharedOreSiftingRows {
   var whole=s.input(MaterialPrefix.crushedPurified,m,1);var tiny=s.input(MaterialPrefix.crushedPurifiedTiny,m,1);
   Availability gate=eligibility(m.isValid(),m.has(MaterialProperty.ANTIMATTER),m==GTMaterialRegistry.get("Bedrock"),
       dust.availability(),whole.availability(),tiny.availability(),gem.availability());
-  if(gate!=Availability.PRESENT){if(gate==Availability.UNKNOWN)s.note(m,"generic","unknown-input-form");return;}
+  if (gate!=Availability.PRESENT){if (gate==Availability.UNKNOWN)s.note(m,"generic","unknown-input-form");return;}
   var outputs=captured.get(m);
-  if(outputs==null||outputs.availability()!=Availability.PRESENT){
-   if(outputs==null||outputs.availability()==Availability.UNKNOWN)s.note(m,"generic","unresolved-startup-output");return;
+  if (outputs==null||outputs.availability()!=Availability.PRESENT){
+   if (outputs==null||outputs.availability()==Availability.UNKNOWN)s.note(m,"generic","unresolved-startup-output");return;
   }
-  for(Size size:Size.values()){
-   if(unresolved.getOrDefault(m,EnumSet.noneOf(Size.class)).contains(size))continue;
+  for (Size size:Size.values()){
+   if (unresolved.getOrDefault(m,EnumSet.noneOf(Size.class)).contains(size))continue;
    out.add(new Definition(OPTIMIZE,size==Size.WHOLE?whole.stack():tiny.stack(),outputs.outputs(),
        size.genericChances().stream().mapToLong(Long::longValue).toArray(),size.ticks(),POWER,false));
   }
  }
  private static boolean sourceIdentity(GTMaterial material,SourceOreSiftingRules.Material source){
-  if(material==null||!material.isValid())return false;var m=material.resolve();
+  if (material==null||!material.isValid())return false;var m=material.resolve();
   return source.matches(m.getId(),m.getName())&&GTMaterialRegistry.isCoreMaterial(m)&&!AddonMaterials.owns(m);
  }
  private static ItemStack[] copies(ItemStack[] values){return Arrays.stream(values).map(ItemStack::copy).toArray(ItemStack[]::new);}
@@ -226,19 +226,19 @@ public final class SharedOreSiftingRows {
    * supplied by a future reviewed adapter; a mod-presence check or guessed registry name is not one. */
   NativeForm fossil(int index){return NativeForm.absent();}
   NativeForm specialOutput(Output output){
-   if(output instanceof FormOutput form){
+   if (output instanceof FormOutput form){
     GTMaterial material=GTMaterialRegistry.get(form.material().name());
-    if(material==null||!material.isValid())return NativeForm.absent();
-    if(!sourceIdentity(material,form.material()))return NativeForm.unknown();
+    if (material==null||!material.isValid())return NativeForm.absent();
+    if (!sourceIdentity(material,form.material()))return NativeForm.unknown();
     return direct(form.prefix(),material.resolve(),form.count());
    }
-   if(output instanceof VanillaOutput vanilla){
-    var item=switch(vanilla.item()){case SKELETON_SKULL->Items.SKELETON_SKULL;case BONE->Items.BONE;};
+   if (output instanceof VanillaOutput vanilla){
+    var item=switch (vanilla.item()){case SKELETON_SKULL->Items.SKELETON_SKULL;case BONE->Items.BONE;};
     return NativeForm.present(new ItemStack(item,vanilla.count()));
    }
-   if(output instanceof FossilOutput fossil){
+   if (output instanceof FossilOutput fossil){
     var provider=fossil(fossil.index());
-    return switch(fossilChoice(provider.availability())){
+    return switch (fossilChoice(provider.availability())){
      case PROVIDER -> provider;
      case FALLBACK -> specialOutput(fossil.fallback());
      case DEFER -> NativeForm.unknown();

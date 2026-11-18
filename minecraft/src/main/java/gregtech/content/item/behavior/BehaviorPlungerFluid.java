@@ -94,7 +94,7 @@ public final class BehaviorPlungerFluid {
         for (Direction side : Direction.values()) {
 //? if >=1.21.1 {
             /*IFluidHandler handler=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,pos,side);
-            if(handler==null)continue;
+            if (handler==null)continue;
 *///?} else {
 //?}
             FluidStack simulated = handler.drain(DRAIN_AMOUNT, IFluidHandler.FluidAction.SIMULATE);
