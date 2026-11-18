@@ -3,104 +3,38 @@
 package gregtech.content.machine;
 
 import gregtech.api.machine.MachineFace;
-import gregtech.content.data.BasicMachineOriginalParams;
 import java.util.List;
-import java.util.Set;
 
 /** Registration flags and tooltip labels; native adapters implement machine state changes. */
 public final class OriginalBasicMachineRules {
     private OriginalBasicMachineRules() {}
 
-    private static final Set<String> FAMILIES = Set.of(
-            "autoclave",
-            "autocrafter",
-            "bath",
-            "boxinator",
-            "bumblelyzer",
-            "burnmixer",
-            "buzzsaw",
-            "canner",
-            "catalyticcracker",
-            "centrifuge",
-            "clustermill",
-            "coagulator",
-            "compressor",
-            "crusher",
-            "cryomixer",
-            "crystallisationcrucible",
-            "debarker",
-            "distillery",
-            "dryer",
-            "electricloom",
-            "electricmixer",
-            "electricsifter",
-            "electrolyzer",
-            "extruder",
-            "fermenter",
-            "freezer",
-            "generifier",
-            "injector",
-            "laminator",
-            "laserengraver",
-            "laserwelder",
-            "lathe",
-            "lightning",
-            "loom",
-            "magneticseparator",
-            "massfab",
-            "melter",
-            "mixer",
-            "nanofab",
-            "oven",
-            "plantalyzer",
-            "polarizer",
-            "press",
-            "printer",
-            "replicator",
-            "roaster",
-            "rollbender",
-            "rollformer",
-            "rollingmill",
-            "sander",
-            "scannermolecular",
-            "scannervisuals",
-            "shredder",
-            "sifter",
-            "slicer",
-            "sluice",
-            "smelter",
-            "squeezer",
-            "steamcracker",
-            "unboxinator",
-            "wiremill");
-
     public static boolean handles(String name, int tier) {
-        return FAMILIES.contains(name) && BasicMachineOriginalParams.find(name, tier) != null;
+        return BasicMachineCatalog.isOriginalBasic(name, tier);
     }
 
     public static boolean cheapOverclocking(String name, int tier) {
-        return handles(name, tier)
-                && Set.of("roaster", "distillery", "smelter", "dryer", "massfab", "replicator", "melter")
-                        .contains(name);
+        var behavior = BasicMachineCatalog.behavior(name, tier);
+        return behavior == BasicMachineCatalog.Behavior.CHEAP_OVERCLOCKING
+                || behavior == BasicMachineCatalog.Behavior.MATTER;
     }
 
     public static int efficiency(String name, int tier) {
-        if (!handles(name, tier)) return 10000;
-        return switch (name) {
-            case "electricmixer", "electricloom", "electricsifter" -> 5000;
-            case "massfab", "replicator" -> 5000 + 1250 * (tier - 1);
+        return switch (BasicMachineCatalog.behavior(name, tier)) {
+            case HALF_EFFICIENCY -> 5000;
+            case MATTER -> 5000 + 1250 * (tier - 1);
             default -> 10000;
         };
     }
 
     public static boolean requiresIgnition(String name, int tier) {
-        return handles(name, tier) && name.equals("burnmixer");
+        return BasicMachineCatalog.behavior(name, tier) == BasicMachineCatalog.Behavior.IGNITION;
     }
 
     public static boolean noConstantPower(String name, int tier) {
-        return handles(name, tier)
-                && Set.of("massfab", "replicator", "autoclave", "bath", "generifier", "coagulator")
-                        .contains(name);
+        var behavior = BasicMachineCatalog.behavior(name, tier);
+        return behavior == BasicMachineCatalog.Behavior.NO_CONSTANT_POWER
+                || behavior == BasicMachineCatalog.Behavior.MATTER;
     }
 
     public static final int IGNITION_TICKS = 40;

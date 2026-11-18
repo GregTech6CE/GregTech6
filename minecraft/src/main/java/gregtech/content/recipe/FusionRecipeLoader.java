@@ -1,72 +1,187 @@
 package gregtech.content.recipe;
 
-import gregtech.content.recipe.generated.GeneratedRecipeResolver;
-
-import gregtech.engine.recipe.Recipe;
-import gregtech.engine.material.MaterialStackItemHelper;
-import gregtech.content.data.*;
-import gregtech.content.registry.GTTechnological;
 import gregtech.bootstrap.InitializationStep;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.data.MaterialPrefix;
+import gregtech.content.recipe.generated.GeneratedRecipeResolver;
+import gregtech.content.registry.GTTechnological;
+import gregtech.engine.material.MaterialStackItemHelper;
+import gregtech.engine.recipe.Recipe;
+import gregtech.engine.recipe.RecipeBuilder;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
-import java.util.*;
 
-/** GT6 Loader_Recipes_Other: all 18 fusion reactions, including their LU startup cost.
- * Gas units are 1000 mB/U; molten metal units are 144 mB/U. Missing phases never substitute another phase. */
+/** GT6 {@code Loader_Recipes_Other} fusion reactions, with fluid quantities in mB and startup energy in LU. */
 public final class FusionRecipeLoader implements InitializationStep {
+    private enum Phase {
+        GAS,
+        MOLTEN
+    }
+
+    private record FluidAmount(String material, Phase phase, int millibuckets) {}
+
     private int added;
-    private final Set<String> missing=new TreeSet<>();
+    private final Set<String> missing = new TreeSet<>();
+
+    @Override
     public void run() {
-        add(1,730,-8192,95682560L,new String[]{"D:gas:2000"},new String[]{"He_3:gas:500","T:gas:500"},null);
-        add(1,1130,-8192,148111360L,new String[]{"T:gas:2000"},new String[]{"He:gas:1000"},null);
-        add(1,1290,-8192,169082880L,new String[]{"He_3:gas:2000"},new String[]{"He:gas:1000"},null);
-        add(1,1890,0,247726080L,new String[]{"He:gas:2000"},new String[]{"Be_8:liquid:144"},null);
-        add(1,3214,0,421265408L,new String[]{"Be_8:liquid:288"},new String[]{"O:gas:1000"},null);
-        add(2,546,-8192,1110048768L,new String[]{"H:gas:1000","B_11:liquid:144"},new String[]{"He:gas:3000"},null);
-        add(2,315,-8192,41287680L,new String[]{"H:gas:1000","C:liquid:144"},new String[]{"C_13:liquid:144"},null);
-        add(2,754,-8192,98828288L,new String[]{"H:gas:1000","C_13:liquid:144"},new String[]{"N:gas:1000"},null);
-        add(2,1404,-8192,184025088L,new String[]{"H:gas:2000","N:gas:1000"},new String[]{"He:gas:500","C:liquid:72","O:gas:500"},null);
-        add(2,455,-8192,59637760L,new String[]{"H:gas:2000","O:gas:1000"},new String[]{"He:gas:500","F:gas:500","N:gas:500"},null);
-        add(2,1760,-8192,230686720L,new String[]{"D:gas:1000","T:gas:1000"},new String[]{"He:gas:1000"},null);
-        add(2,1830,-8192,239861760L,new String[]{"D:gas:1000","He_3:gas:1000"},new String[]{"He:gas:1000"},null);
-        add(2,2640,-8192,346030080L,new String[]{"T:gas:1000","He_3:gas:1000"},new String[]{"He:gas:750","D:gas:250"},null);
-        add(2,3336,-8192,437256192L,new String[]{"D:gas:1000","Li_6:liquid:144"},new String[]{"He:gas:375","He_3:gas:125","Li:liquid:18","Be_7:liquid:18"},null);
-        add(2,1690,-8192,221511680L,new String[]{"He_3:gas:1000","Li_6:liquid:144"},new String[]{"He:gas:2000"},null);
-        add(2,736,-8192,96468992L,new String[]{"He:gas:1000","Be_8:liquid:144"},new String[]{"C:liquid:144"},null);
-        add(2,716,-8192,93847552L,new String[]{"He:gas:1000","C:liquid:144"},new String[]{"O:gas:1000"},null);
-        add(2,1956,-8192,12446072832L,new String[]{"Ad:liquid:144","Be_7:liquid:144"},new String[]{"W:liquid:144","He:gas:16000","He_3:gas:24000","T:gas:24000"},"Vb");
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Fusion recipes: {} / 18; unresolved: {}",added,missing);
+        add(
+                1,
+                powerOutput(730, 95_682_560L),
+                List.of(gas("D", 2_000)),
+                List.of(gas("He_3", 500), gas("T", 500)));
+        add(
+                1,
+                powerOutput(1130, 148_111_360L),
+                List.of(gas("T", 2_000)),
+                List.of(gas("He", 1_000)));
+        add(
+                1,
+                powerOutput(1290, 169_082_880L),
+                List.of(gas("He_3", 2_000)),
+                List.of(gas("He", 1_000)));
+        add(
+                1,
+                startupOnly(1890, 247_726_080L),
+                List.of(gas("He", 2_000)),
+                List.of(molten("Be_8", 144)));
+        add(
+                1,
+                startupOnly(3214, 421_265_408L),
+                List.of(molten("Be_8", 288)),
+                List.of(gas("O", 1_000)));
+        add(
+                2,
+                powerOutput(546, 1_110_048_768L),
+                List.of(gas("H", 1_000), molten("B_11", 144)),
+                List.of(gas("He", 3_000)));
+        add(
+                2,
+                powerOutput(315, 41_287_680L),
+                List.of(gas("H", 1_000), molten("C", 144)),
+                List.of(molten("C_13", 144)));
+        add(
+                2,
+                powerOutput(754, 98_828_288L),
+                List.of(gas("H", 1_000), molten("C_13", 144)),
+                List.of(gas("N", 1_000)));
+        add(
+                2,
+                powerOutput(1404, 184_025_088L),
+                List.of(gas("H", 2_000), gas("N", 1_000)),
+                List.of(gas("He", 500), molten("C", 72), gas("O", 500)));
+        add(
+                2,
+                powerOutput(455, 59_637_760L),
+                List.of(gas("H", 2_000), gas("O", 1_000)),
+                List.of(gas("He", 500), gas("F", 500), gas("N", 500)));
+        add(
+                2,
+                powerOutput(1760, 230_686_720L),
+                List.of(gas("D", 1_000), gas("T", 1_000)),
+                List.of(gas("He", 1_000)));
+        add(
+                2,
+                powerOutput(1830, 239_861_760L),
+                List.of(gas("D", 1_000), gas("He_3", 1_000)),
+                List.of(gas("He", 1_000)));
+        add(
+                2,
+                powerOutput(2640, 346_030_080L),
+                List.of(gas("T", 1_000), gas("He_3", 1_000)),
+                List.of(gas("He", 750), gas("D", 250)));
+        add(
+                2,
+                powerOutput(3336, 437_256_192L),
+                List.of(gas("D", 1_000), molten("Li_6", 144)),
+                List.of(gas("He", 375), gas("He_3", 125), molten("Li", 18), molten("Be_7", 18)));
+        add(
+                2,
+                powerOutput(1690, 221_511_680L),
+                List.of(gas("He_3", 1_000), molten("Li_6", 144)),
+                List.of(gas("He", 2_000)));
+        add(
+                2,
+                powerOutput(736, 96_468_992L),
+                List.of(gas("He", 1_000), molten("Be_8", 144)),
+                List.of(molten("C", 144)));
+        add(
+                2,
+                powerOutput(716, 93_847_552L),
+                List.of(gas("He", 1_000), molten("C", 144)),
+                List.of(gas("O", 1_000)));
+        add(
+                2,
+                powerOutput(1956, 12_446_072_832L),
+                List.of(molten("Ad", 144), molten("Be_7", 144)),
+                List.of(molten("W", 144), gas("He", 16_000), gas("He_3", 24_000), gas("T", 24_000)),
+                "Vb");
+
+        com.mojang.logging.LogUtils.getLogger().info(
+                "[gregtech] Fusion recipes: {} / 18; unresolved: {}", added, missing);
     }
-    private FluidStack fluid(String token) {
-        var fields=token.split(":");var material=GeneratedRecipeResolver.material(fields[0]);
-        if (material==null){missing.add(token);return FluidStack.EMPTY;}
-        var name=material.getName().toLowerCase(Locale.ROOT);
-        // GT6 fuels the ring with the material's own gas/liquid phase (MT.D.gas(...)), not with a
-        // name-prefixed fluid: the generated gas name is the material name (FL) and the
-        // molten phase keeps its "molten." prefix (FL).
-        var stack="gas".equals(fields[1])
-                ? GeneratedRecipeResolver.materialFluid(material.getName(),Integer.parseInt(fields[2]))
-                : GeneratedRecipeResolver.byRegistryName("molten."+name,Integer.parseInt(fields[2]));
-        if (stack==null){missing.add(token);return FluidStack.EMPTY;}
-        return stack;
+
+    private static FluidAmount gas(String material, int millibuckets) {
+        return new FluidAmount(material, Phase.GAS, millibuckets);
     }
-    private void add(int circuit,long ticks,long eut,long startup,String[] inputs,String[] outputs,String dust) {
-        var in=Arrays.stream(inputs).map(this::fluid).toArray(FluidStack[]::new);
-        var out=Arrays.stream(outputs).map(this::fluid).toArray(FluidStack[]::new);
-        if (Arrays.stream(in).anyMatch(FluidStack::isEmpty)||Arrays.stream(out).anyMatch(FluidStack::isEmpty))return;
-        ItemStack[] items=new ItemStack[0];
-        if (dust!=null) {
-            var material=GeneratedRecipeResolver.material(dust);
-            var stack=material==null?ItemStack.EMPTY:MaterialStackItemHelper.mat(MaterialPrefix.dust,material,1);
-            if (stack.isEmpty()){missing.add(dust);return;}items=new ItemStack[]{stack};
+
+    private static FluidAmount molten(String material, int millibuckets) {
+        return new FluidAmount(material, Phase.MOLTEN, millibuckets);
+    }
+
+    private static RecipeBuilder powerOutput(int durationTicks, long startupLu) {
+        return RecipeBuilder.of(-8192, durationTicks).specialValue(startupLu);
+    }
+
+    private static RecipeBuilder startupOnly(int durationTicks, long startupLu) {
+        return RecipeBuilder.of(0, durationTicks).specialValue(startupLu);
+    }
+
+    private FluidStack fluid(FluidAmount amount) {
+        var material = GeneratedRecipeResolver.material(amount.material());
+        if (material != null) {
+            var stack = switch (amount.phase()) {
+                case GAS -> GeneratedRecipeResolver.materialFluid(material.getName(), amount.millibuckets());
+                case MOLTEN -> GeneratedRecipeResolver.byRegistryName(
+                        "molten." + material.getName().toLowerCase(Locale.ROOT), amount.millibuckets());
+            };
+            if (stack != null) return stack;
         }
-        MachineRecipeMaps.Fusion.addRecipe(new Recipe(
-                new ItemStack[]{new ItemStack(GTTechnological.selectorTag(circuit))},
-                items, null, in, out, ticks, eut, startup));
-        added++;
+        missing.add(amount.toString());
+        return FluidStack.EMPTY;
+    }
+
+    private void add(int circuit, RecipeBuilder recipe, List<FluidAmount> inputs, List<FluidAmount> outputs) {
+        add(circuit, recipe, inputs, outputs, null);
+    }
+
+    private void add(int circuit, RecipeBuilder recipe, List<FluidAmount> inputs, List<FluidAmount> outputs, String dust) {
+        var in = inputs.stream().map(this::fluid).toArray(FluidStack[]::new);
+        var out = outputs.stream().map(this::fluid).toArray(FluidStack[]::new);
+        if (Arrays.stream(in).anyMatch(FluidStack::isEmpty) || Arrays.stream(out).anyMatch(FluidStack::isEmpty)) return;
+        if (dust != null) {
+            var material = GeneratedRecipeResolver.material(dust);
+            var stack = material == null ? ItemStack.EMPTY : MaterialStackItemHelper.mat(MaterialPrefix.dust, material, 1);
+            if (stack.isEmpty()) {
+                missing.add(dust);
+                return;
+            }
+            recipe.itemOutputs(stack);
+        }
+        Recipe candidate = recipe
+                .itemInputs(new ItemStack(GTTechnological.selectorTag(circuit)))
+                .fluidInputs(in)
+                .fluidOutputs(out)
+                .build();
+        if (MachineRecipeMaps.Fusion.addRecipe(candidate) != null) added++;
     }
 }

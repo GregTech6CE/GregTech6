@@ -1,9 +1,10 @@
 package gregtech.content.blockentity.machine;
 
 import gregtech.engine.fluid.FluidTankGT;
+import gregtech.engine.fluid.FluidHazard;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.content.blockentity.GTEnergyBlockEntity;
-import gregtech.content.multiblock.TankValveSpec;
+import gregtech.content.multiblock.TankValveParameters;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.RegisteredFluids;
 import net.minecraft.core.BlockPos;
@@ -41,7 +42,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
 
     int size = 3;
     // Selected from the placed valve block during construction.
-    private final TankValveSpec valveSpec;
+    private final TankValveParameters valveSpec;
     FluidTankGT tank = new FluidTankGT().setOnChanged(this::setChanged);
 
 //? if >=1.21.1 {
@@ -64,7 +65,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         tank.setMaxTemperature(valveSpec.meltingPoint());
     }
 
-    public TankValveSpec valveSpec() {
+    public TankValveParameters valveSpec() {
         return valveSpec;
     }
 
@@ -150,18 +151,19 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
             meltDown(fluid);
             return true;
         }
-        if (!valveSpec.magicProof() && entry != null && entry.hasFlag(RegisteredFluids.FluidFlags.MAGIC)) {
+        var protections = valveSpec.protections();
+        if (!protections.contains(FluidHazard.MAGIC) && entry != null && entry.hasFlag(RegisteredFluids.FluidFlags.MAGIC)) {
             // GT6 replaces these cells with Thaumcraft Flux Goo/Gas. No Flux block exists in this port;
             // clearing those same cells preserves the vessel loss until that integration is available.
             damageShell(Blocks.AIR.defaultBlockState());
             return true;
         }
-        if (!valveSpec.acidProof() && FluidHazards.isAcid(fluid.getFluid())) {
+        if (!protections.contains(FluidHazard.ACID) && FluidHazards.isAcid(fluid.getFluid())) {
             damageShell(Blocks.AIR.defaultBlockState());
             return true;
         }
-        if ((!valveSpec.plasmaProof() && FluidHazards.isPlasma(fluid.getFluid()))
-                || (!valveSpec.gasProof() && FluidHazards.isGas(fluid.getFluid()))
+        if ((!protections.contains(FluidHazard.PLASMA) && FluidHazards.isPlasma(fluid.getFluid()))
+                || (!protections.contains(FluidHazard.GAS) && FluidHazards.isGas(fluid.getFluid()))
                 || (entry != null && entry.hasFlag(RegisteredFluids.FluidFlags.POWER_CONDUCTING))
                 || (valveSpec.simpleOnly() && !isSimple(fluid, entry))) {
             tank.setEmpty();

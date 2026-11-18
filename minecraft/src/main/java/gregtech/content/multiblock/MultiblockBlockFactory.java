@@ -12,7 +12,7 @@ public final class MultiblockBlockFactory {
     public static gregtech.engine.multiblock.ControllerDeclaration<Block> declaration(
             SharedLargeMachineParts.Part part) {
         int id = part.originalId();
-        var valve = TankValveSpec.find(id);
+        var valve = TankValveParameters.find(id);
         if (valve != null)
             return controller(
                     part,

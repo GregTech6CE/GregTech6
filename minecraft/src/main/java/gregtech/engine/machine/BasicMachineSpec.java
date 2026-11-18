@@ -6,9 +6,9 @@ import gregtech.api.machine.MachineControllerKind;
 import gregtech.api.machine.MachineFace;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialComponent;
-import gregtech.content.data.BasicMachineOriginalParams;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.energy.OriginalAdjacentEnergyRules;
+import gregtech.content.machine.BasicMachineCatalog;
 import gregtech.content.machine.OriginalBasicMachineRules;
 import gregtech.content.multiblock.OriginalLargeRecipeMachineData;
 import gregtech.engine.energy.FaceConfig;
@@ -243,8 +243,7 @@ public record BasicMachineSpec(
     private static boolean builtInParallelScalesDuration(String machineName, int tier, String energyType) {
         var kind = builtInController(machineName);
         if (usesLargeBuiltinProcessing(machineName, kind)) return !"TU".equals(energyType);
-        var row = BasicMachineOriginalParams.find(machineName, tier);
-        return row == null || row.parallelDuration();
+        return BasicMachineCatalog.parallelScalesDuration(machineName, tier);
     }
 
     /**

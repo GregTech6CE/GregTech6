@@ -4,6 +4,7 @@
 package gregtech.content.data;
 
 import gregtech.api.material.GTMaterial;
+import gregtech.content.machine.BasicMachineCatalog;
 import gregtech.content.transport.HopperCatalog;
 import java.util.*;
 
@@ -17,18 +18,14 @@ public final class SourceBlockProperties {
         }
     }
 
-    private static final Map<String, Params> BLOCKS = new LinkedHashMap<>(), BASICS = new LinkedHashMap<>();
+    private static final Map<String, Params> BLOCKS = new LinkedHashMap<>();
 
     static {
         blocks0();
         blocks1();
         blocks2();
         blocks3();
-        basics0();
-        basics1();
-        basics2();
-        basics3();
-        basicsLargeRecipe();
+        BLOCKS.putAll(BasicMachineCatalog.controllerHarvestProperties());
         for (int i = 0; i < gregtech.content.energy.FluxRotaryCatalog.TIERS.size(); i++) {
             var tier = gregtech.content.energy.FluxRotaryCatalog.TIERS.get(i);
             BLOCKS.put("flux_motor_" + tier.tier(), new Params(11021 + i, "wrench", tier.material(), -1, false));
@@ -52,7 +49,7 @@ public final class SourceBlockProperties {
     }
 
     public static Optional<Params> basic(String machine, int tier) {
-        return Optional.ofNullable(BASICS.get(machine + "/" + tier));
+        return Optional.ofNullable(BasicMachineCatalog.harvest(machine, tier));
     }
 
     public static Map<String, Params> blocks() {
@@ -60,22 +57,7 @@ public final class SourceBlockProperties {
     }
 
     public static Map<String, Params> basics() {
-        return Collections.unmodifiableMap(BASICS);
-    }
-
-    private static void basicsLargeRecipe() {
-        BASICS.put("largecentrifuge/1", new Params(17100, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("largeelectrolyzer/1", new Params(17103, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("largecoagulator/1", new Params(17105, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("largeautoclave/1", new Params(17112, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("largebath/1", new Params(17104, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("largemixer/1", new Params(17102, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("largefermenter/1", new Params(17113, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("largeoven/1", new Params(17106, "wrench", ImportedMaterialData.Invar, -1, false));
-        BASICS.put("largesluice/1", new Params(17107, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("largecrusher/1", new Params(17108, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("largeshredder/1", new Params(17109, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("largesqueezer/1", new Params(17114, "wrench", ImportedMaterialData.Steel, -1, false));
+        return BasicMachineCatalog.harvestProperties();
     }
 
     private static void blocks0() {
@@ -345,17 +327,8 @@ public final class SourceBlockProperties {
         BLOCKS.put("bathing_pot_table", new Params(32707, "pickaxe", null, 0, true));
         BLOCKS.put("bathing_pot_wood", new Params(32721, "axe", null, 0, true));
         BLOCKS.put("bathing_pot_table_wood", new Params(32720, "axe", null, 0, true));
-        BLOCKS.put("coke_oven_main", new Params(17000, "pickaxe", ImportedMaterialData.Ceramic, -1, false));
         BLOCKS.put("logistics_core", new Params(17997, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BLOCKS.put(
-                "implosion_compressor_main",
-                new Params(17110, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BLOCKS.put("fusion_reactor_main", new Params(17198, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
         BLOCKS.put("heat_exchanger_main", new Params(17197, "wrench", ImportedMaterialData.W, -1, false));
-        BLOCKS.put(
-                "distillation_tower_main", new Params(17101, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BLOCKS.put(
-                "cryo_distillation_main", new Params(17111, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
         BLOCKS.put("fire_bricks", new Params(18000, "pickaxe", ImportedMaterialData.Ceramic, -1, false));
         BLOCKS.put("tank_wall", new Params(18002, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
         BLOCKS.put("tank_wall_dense", new Params(18022, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
@@ -1052,273 +1025,5 @@ public final class SourceBlockProperties {
                 new Params(1707, "pickaxe", ImportedMaterialData.STONES.Livingrock, -1, true));
 
         BLOCKS.put("energy_storage_xv", new Params(10099, "wrench", ImportedMaterialData.Trinaquadalloy, -1, false));
-    }
-
-    private static void basics0() {
-        BASICS.put("largemassfab/1", new Params(17199, "wrench", ImportedMaterialData.Pb, -1, false));
-        BASICS.put("oven/1", new Params(20001, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("oven/2", new Params(20002, "wrench", ImportedMaterialData.Invar, -1, false));
-        BASICS.put("oven/3", new Params(20003, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("oven/4", new Params(20004, "wrench", ImportedMaterialData.TungstenCarbide, -1, false));
-        BASICS.put("roaster/1", new Params(20171, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("roaster/2", new Params(20172, "wrench", ImportedMaterialData.Invar, -1, false));
-        BASICS.put("roaster/3", new Params(20173, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("roaster/4", new Params(20174, "wrench", ImportedMaterialData.TungstenCarbide, -1, false));
-        BASICS.put("distillery/1", new Params(20191, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("distillery/2", new Params(20192, "wrench", ImportedMaterialData.Invar, -1, false));
-        BASICS.put("distillery/3", new Params(20193, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("distillery/4", new Params(20194, "wrench", ImportedMaterialData.TungstenCarbide, -1, false));
-        BASICS.put("extruder/1", new Params(20201, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("extruder/2", new Params(20202, "wrench", ImportedMaterialData.Invar, -1, false));
-        BASICS.put("extruder/3", new Params(20203, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("extruder/4", new Params(20204, "wrench", ImportedMaterialData.TungstenCarbide, -1, false));
-        BASICS.put("smelter/1", new Params(20241, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("smelter/2", new Params(20242, "wrench", ImportedMaterialData.Invar, -1, false));
-        BASICS.put("smelter/3", new Params(20243, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("smelter/4", new Params(20244, "wrench", ImportedMaterialData.TungstenCarbide, -1, false));
-        BASICS.put("crystallisationcrucible/1", new Params(20251, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("crystallisationcrucible/2", new Params(20252, "wrench", ImportedMaterialData.Invar, -1, false));
-        BASICS.put("crystallisationcrucible/3", new Params(20253, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put(
-                "crystallisationcrucible/4",
-                new Params(20254, "wrench", ImportedMaterialData.TungstenCarbide, -1, false));
-        BASICS.put("dryer/1", new Params(20311, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("dryer/2", new Params(20312, "wrench", ImportedMaterialData.Invar, -1, false));
-        BASICS.put("dryer/3", new Params(20313, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("dryer/4", new Params(20314, "wrench", ImportedMaterialData.TungstenCarbide, -1, false));
-        BASICS.put("laminator/1", new Params(20391, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("laminator/2", new Params(20392, "wrench", ImportedMaterialData.Invar, -1, false));
-        BASICS.put("laminator/3", new Params(20393, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("laminator/4", new Params(20394, "wrench", ImportedMaterialData.TungstenCarbide, -1, false));
-        BASICS.put("catalyticcracker/1", new Params(20481, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("catalyticcracker/2", new Params(20482, "wrench", ImportedMaterialData.Invar, -1, false));
-        BASICS.put("catalyticcracker/3", new Params(20483, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("catalyticcracker/4", new Params(20484, "wrench", ImportedMaterialData.TungstenCarbide, -1, false));
-        BASICS.put("steamcracker/1", new Params(20491, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("steamcracker/2", new Params(20492, "wrench", ImportedMaterialData.Invar, -1, false));
-        BASICS.put("steamcracker/3", new Params(20493, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("steamcracker/4", new Params(20494, "wrench", ImportedMaterialData.TungstenCarbide, -1, false));
-        BASICS.put("shredder/1", new Params(20011, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("shredder/2", new Params(20012, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("shredder/3", new Params(20013, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("shredder/4", new Params(20014, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("lathe/1", new Params(20041, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("lathe/2", new Params(20042, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("lathe/3", new Params(20043, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("lathe/4", new Params(20044, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("buzzsaw/1", new Params(20061, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("buzzsaw/2", new Params(20062, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("buzzsaw/3", new Params(20063, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("buzzsaw/4", new Params(20064, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("centrifuge/1", new Params(20081, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("centrifuge/2", new Params(20082, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("centrifuge/3", new Params(20083, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("centrifuge/4", new Params(20084, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("rollingmill/1", new Params(20111, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("rollingmill/2", new Params(20112, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("rollingmill/3", new Params(20113, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("rollingmill/4", new Params(20114, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("rollbender/1", new Params(20121, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("rollbender/2", new Params(20122, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("rollbender/3", new Params(20123, "wrench", ImportedMaterialData.Ti, -1, false));
-    }
-
-    private static void basics1() {
-        BASICS.put("rollbender/4", new Params(20124, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("rollformer/1", new Params(20131, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("rollformer/2", new Params(20132, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("rollformer/3", new Params(20133, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("rollformer/4", new Params(20134, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("clustermill/1", new Params(20141, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("clustermill/2", new Params(20142, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("clustermill/3", new Params(20143, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("clustermill/4", new Params(20144, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("wiremill/1", new Params(20151, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("wiremill/2", new Params(20152, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("wiremill/3", new Params(20153, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("wiremill/4", new Params(20154, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("mixer/1", new Params(20181, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("mixer/2", new Params(20182, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("mixer/3", new Params(20183, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("mixer/4", new Params(20184, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("loom/1", new Params(20211, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("loom/2", new Params(20212, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("loom/3", new Params(20213, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("loom/4", new Params(20214, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("sluice/1", new Params(20291, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("sluice/2", new Params(20292, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("sluice/3", new Params(20293, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("sluice/4", new Params(20294, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("sander/1", new Params(20511, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("sander/2", new Params(20512, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("sander/3", new Params(20513, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("sander/4", new Params(20514, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("burnmixer/1", new Params(20521, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("burnmixer/2", new Params(20522, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("burnmixer/3", new Params(20523, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("burnmixer/4", new Params(20524, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("debarker/1", new Params(20551, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("debarker/2", new Params(20552, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("debarker/3", new Params(20553, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("debarker/4", new Params(20554, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("crusher/1", new Params(20021, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("crusher/2", new Params(20022, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("crusher/3", new Params(20023, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("crusher/4", new Params(20024, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("sifter/1", new Params(20051, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("sifter/2", new Params(20052, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("sifter/3", new Params(20053, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("sifter/4", new Params(20054, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("squeezer/1", new Params(20071, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("squeezer/2", new Params(20072, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("squeezer/3", new Params(20073, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("squeezer/4", new Params(20074, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("compressor/1", new Params(20101, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("compressor/2", new Params(20102, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("compressor/3", new Params(20103, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("compressor/4", new Params(20104, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("press/1", new Params(20231, "wrench", ImportedMaterialData.Bronze, -1, false));
-        BASICS.put("press/2", new Params(20232, "wrench", ImportedMaterialData.Steel, -1, false));
-        BASICS.put("press/3", new Params(20233, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("press/4", new Params(20234, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("electrolyzer/1", new Params(20091, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("electrolyzer/2", new Params(20092, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("electrolyzer/3", new Params(20093, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("electrolyzer/4", new Params(20094, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("electrolyzer/5", new Params(20095, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("canner/1", new Params(20161, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-    }
-
-    private static void basics2() {
-        BASICS.put("canner/2", new Params(20162, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("canner/3", new Params(20163, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("canner/4", new Params(20164, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("canner/5", new Params(20165, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("injector/1", new Params(20261, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("injector/2", new Params(20262, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("injector/3", new Params(20263, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("injector/4", new Params(20264, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("injector/5", new Params(20265, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("printer/1", new Params(20271, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("printer/2", new Params(20272, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("printer/3", new Params(20273, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("printer/4", new Params(20274, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("printer/5", new Params(20275, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("scannervisuals/1", new Params(20281, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("scannervisuals/2", new Params(20282, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("scannervisuals/3", new Params(20283, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("scannervisuals/4", new Params(20284, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("scannervisuals/5", new Params(20285, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("autocrafter/1", new Params(20341, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("autocrafter/2", new Params(20342, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("autocrafter/3", new Params(20343, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("autocrafter/4", new Params(20344, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("autocrafter/5", new Params(20345, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("electricmixer/1", new Params(20351, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("electricmixer/2", new Params(20352, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("electricmixer/3", new Params(20353, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("electricmixer/4", new Params(20354, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("electricmixer/5", new Params(20355, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("electricloom/1", new Params(20361, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("electricloom/2", new Params(20362, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("electricloom/3", new Params(20363, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("electricloom/4", new Params(20364, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("electricloom/5", new Params(20365, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("electricsifter/1", new Params(20371, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("electricsifter/2", new Params(20372, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("electricsifter/3", new Params(20373, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("electricsifter/4", new Params(20374, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("electricsifter/5", new Params(20375, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("slicer/1", new Params(20381, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("slicer/2", new Params(20382, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("slicer/3", new Params(20383, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("slicer/4", new Params(20384, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("slicer/5", new Params(20385, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("nanofab/1", new Params(20441, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("nanofab/2", new Params(20442, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("nanofab/3", new Params(20443, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("nanofab/4", new Params(20444, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("nanofab/5", new Params(20445, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("plantalyzer/1", new Params(20531, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("plantalyzer/2", new Params(20532, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("plantalyzer/3", new Params(20533, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("plantalyzer/4", new Params(20534, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("plantalyzer/5", new Params(20535, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("bumblelyzer/1", new Params(20541, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("bumblelyzer/2", new Params(20542, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("bumblelyzer/3", new Params(20543, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("bumblelyzer/4", new Params(20544, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("bumblelyzer/5", new Params(20545, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("boxinator/1", new Params(20581, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("boxinator/2", new Params(20582, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("boxinator/3", new Params(20583, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("boxinator/4", new Params(20584, "wrench", ImportedMaterialData.Cr, -1, false));
-    }
-
-    private static void basics3() {
-        BASICS.put("boxinator/5", new Params(20585, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("unboxinator/1", new Params(20591, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("unboxinator/2", new Params(20592, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("unboxinator/3", new Params(20593, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("unboxinator/4", new Params(20594, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("unboxinator/5", new Params(20595, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("polarizer/1", new Params(20221, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("polarizer/2", new Params(20222, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("polarizer/3", new Params(20223, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("polarizer/4", new Params(20224, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("polarizer/5", new Params(20225, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("magneticseparator/1", new Params(20301, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("magneticseparator/2", new Params(20302, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("magneticseparator/3", new Params(20303, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("magneticseparator/4", new Params(20304, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("magneticseparator/5", new Params(20305, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("laserengraver/1", new Params(20321, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("laserengraver/2", new Params(20322, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("laserengraver/3", new Params(20323, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("laserengraver/4", new Params(20324, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("laserengraver/5", new Params(20325, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("laserwelder/1", new Params(20331, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("laserwelder/2", new Params(20332, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("laserwelder/3", new Params(20333, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("laserwelder/4", new Params(20334, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("laserwelder/5", new Params(20335, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("freezer/1", new Params(20561, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("freezer/2", new Params(20562, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("freezer/3", new Params(20563, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("freezer/4", new Params(20564, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("freezer/5", new Params(20565, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("cryomixer/1", new Params(20571, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("cryomixer/2", new Params(20572, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("cryomixer/3", new Params(20573, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("cryomixer/4", new Params(20574, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("cryomixer/5", new Params(20575, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("massfab/1", new Params(20411, "wrench", ImportedMaterialData.Osmiridium, -1, false));
-        BASICS.put("massfab/2", new Params(20412, "wrench", ImportedMaterialData.Osmiridium, -1, false));
-        BASICS.put("massfab/3", new Params(20413, "wrench", ImportedMaterialData.Osmiridium, -1, false));
-        BASICS.put("massfab/4", new Params(20414, "wrench", ImportedMaterialData.Osmiridium, -1, false));
-        BASICS.put("massfab/5", new Params(20415, "wrench", ImportedMaterialData.Osmiridium, -1, false));
-        BASICS.put("scannermolecular/3", new Params(20423, "wrench", ImportedMaterialData.Osmiridium, -1, false));
-        BASICS.put("replicator/1", new Params(20431, "wrench", ImportedMaterialData.Osmiridium, -1, false));
-        BASICS.put("replicator/2", new Params(20432, "wrench", ImportedMaterialData.Osmiridium, -1, false));
-        BASICS.put("replicator/3", new Params(20433, "wrench", ImportedMaterialData.Osmiridium, -1, false));
-        BASICS.put("replicator/4", new Params(20434, "wrench", ImportedMaterialData.Osmiridium, -1, false));
-        BASICS.put("replicator/5", new Params(20435, "wrench", ImportedMaterialData.Osmiridium, -1, false));
-        BASICS.put("autoclave/1", new Params(22004, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("bath/1", new Params(22002, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("generifier/1", new Params(22001, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("coagulator/1", new Params(22000, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("fermenter/1", new Params(22003, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("melter/1", new Params(22010, "wrench", ImportedMaterialData.Fe, -1, false));
-        BASICS.put("lightning/1", new Params(20501, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("lightning/2", new Params(20502, "wrench", ImportedMaterialData.Al, -1, false));
-        BASICS.put("lightning/3", new Params(20503, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put("lightning/4", new Params(20504, "wrench", ImportedMaterialData.Cr, -1, false));
-        BASICS.put("lightning/5", new Params(20505, "wrench", ImportedMaterialData.Ti, -1, false));
-        BASICS.put("cokeoven/1", new Params(17000, "pickaxe", ImportedMaterialData.Ceramic, -1, false));
-        BASICS.put("implosioncompressor/1", new Params(17110, "wrench", ImportedMaterialData.TungstenSteel, -1, false));
-        BASICS.put("fusionreactor/1", new Params(17198, "wrench", ImportedMaterialData.SteelGalvanized, -1, false));
-        BASICS.put("distillationtower/1", new Params(17101, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
-        BASICS.put(
-                "cryodistillationtower/1", new Params(17111, "wrench", ImportedMaterialData.StainlessSteel, -1, false));
     }
 }

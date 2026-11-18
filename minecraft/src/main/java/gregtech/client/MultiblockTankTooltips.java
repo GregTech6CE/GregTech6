@@ -6,7 +6,8 @@ import gregtech.engine.fluid.FluidTankGT;
 import gregtech.engine.fluid.FluidHazards;
 import gregtech.engine.fluid.MultiblockTankData;
 import gregtech.content.multiblock.OriginalTankTooltipData;
-import gregtech.content.multiblock.TankValveSpec;
+import gregtech.content.multiblock.TankValveParameters;
+import gregtech.engine.fluid.FluidHazard;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -17,10 +18,10 @@ public final class MultiblockTankTooltips {
     private MultiblockTankTooltips() {
     }
 //? if >=1.21.1 {
-    /*public static void append(int size, TankValveSpec spec, ItemStack stack, net.minecraft.core.HolderLookup.Provider lookup,
+    /*public static void append(int size, TankValveParameters spec, ItemStack stack, net.minecraft.core.HolderLookup.Provider lookup,
             List<Component> lines) {
 *///?} else {
-    public static void append(int size, TankValveSpec spec, ItemStack stack, List<Component> lines) {
+    public static void append(int size, TankValveParameters spec, ItemStack stack, List<Component> lines) {
 //?}
         add(lines, "gt.lang.structure", ChatFormatting.AQUA).append(":");
         for (var key : OriginalTankTooltipData.structureKeys(size)) add(lines, key, ChatFormatting.WHITE);
@@ -48,10 +49,10 @@ public final class MultiblockTankTooltips {
         add(lines, "gt.lang.no.powerconducting.fluids", ChatFormatting.GOLD);
         if (spec != null) {
             if (spec.simpleOnly()) add(lines, "gt.lang.only.simple", ChatFormatting.GOLD);
-            if (spec.gasProof()) add(lines, "gt.lang.proof.gas", ChatFormatting.GOLD);
-            if (spec.acidProof()) add(lines, "gt.lang.proof.acid", ChatFormatting.GOLD);
-            if (spec.plasmaProof()) add(lines, "gt.lang.proof.plasma", ChatFormatting.GOLD);
-            if (spec.magicProof()) add(lines, "gt.lang.proof.magic", ChatFormatting.GOLD);
+            if (spec.protections().contains(FluidHazard.GAS)) add(lines, "gt.lang.proof.gas", ChatFormatting.GOLD);
+            if (spec.protections().contains(FluidHazard.ACID)) add(lines, "gt.lang.proof.acid", ChatFormatting.GOLD);
+            if (spec.protections().contains(FluidHazard.PLASMA)) add(lines, "gt.lang.proof.plasma", ChatFormatting.GOLD);
+            if (spec.protections().contains(FluidHazard.MAGIC)) add(lines, "gt.lang.proof.magic", ChatFormatting.GOLD);
             add(lines, "gt.lang.hazard.meltdown", ChatFormatting.DARK_RED).append(" (" + spec.meltingPoint() + " K)");
         }
         add(lines, "gt.lang.use.builder.wand.to.ease.building", ChatFormatting.DARK_GRAY);

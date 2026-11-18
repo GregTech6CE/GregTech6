@@ -1,1048 +1,917 @@
+/* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
+ * Original Loader_MultiTileEntities machine registrations. */
 package gregtech.content.machine;
 
-import static gregtech.api.machine.MachineFace.*;
+import static gregtech.api.energy.EnergyType.*;
+import static gregtech.content.data.MachineRecipeMapDefinitions.*;
+import static gregtech.content.machine.BasicMachineFaces.*;
 
 import gregtech.api.energy.EnergyType;
 import gregtech.api.machine.BasicMachineParameters;
 import gregtech.api.machine.MachineFaceMasks;
 import gregtech.api.material.GTMaterial;
-import gregtech.api.material.MaterialComponent;
+import gregtech.content.data.BasicMachineCraftingRecipes;
+import gregtech.content.data.BasicMachineCraftingRecipes.Recipe;
+import gregtech.content.data.SourceBlockProperties;
 import gregtech.content.material.Materials;
-import java.util.*;
+import gregtech.content.multiblock.OriginalAdvancedControllerData;
+import gregtech.content.multiblock.OriginalLargeRecipeMachineData;
+import gregtech.content.recipe.RecipeMapSpec;
+import gregtech.engine.definition.DefinitionCatalog;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.IntFunction;
 
-/**
- * GT6 basic machine batch registration (GT6 {@code Loader_MultiTileEntities#machines1–4}).
- * Energy types and tier materials follow the original GT6 {@code MT.DATA.Heat_T / Kinetic_T / Electric_T}.
- */
+/** Built-in machine families and their source registration metadata. */
 public final class BasicMachineCatalog {
     private BasicMachineCatalog() {}
 
-    // ── Tier material arrays ────────────────────────────────────────────────
+    private record Casing(GTMaterial material, String suffix, float strength) {}
 
-    /** GT6 {@code Heat_T}: Steel, Invar, Ti, TungstenCarbide */
-    private static final GTMaterial[] HU_TIERS = {
-        Materials.Steel, Materials.Invar, Materials.Titanium, Materials.TungstenCarbide
-    };
-    /** GT6 {@code Kinetic_T}: Bronze, Steel, Ti, TungstenSteel */
-    private static final GTMaterial[] RU_KU_TIERS = {
-        Materials.Bronze, Materials.Steel, Materials.Titanium, Materials.Tungstensteel
-    };
-    /** GT6 {@code Electric_T}: SteelGalvanized, Al, StainlessSteel, Cr, Ti */
-    private static final GTMaterial[] EU_MU_LU_CU_TIERS = {
-        Materials.SteelGalvanized, Materials.Aluminium, Materials.StainlessSteel, Materials.Chromium, Materials.Titanium
-    };
+    private record Input(long nominal, long min, long max) {}
 
-    // ── Hardness / blast resistance by tier index ───────────────────────────
-
-    private static final float[][] TIER_STATS = {
-        /* T1 */ {6.0F, 6.0F}, /* T2 */
-        {4.0F, 4.0F}, /* T3 */
-        {9.0F, 9.0F},
-        /* T4 */ {12.5F, 12.5F}, /* T5 */
-        {9.0F, 9.0F}
-    };
-
-    /** Per-machine hardness/resistance overrides from GT6 Loader_MultiTileEntities. */
-    private static final Map<String, float[]> STAT_OVERRIDES = Map.of(
-            "largecentrifuge", new float[] {12.5F, 12.5F},
-            "largecrusher", new float[] {12.5F, 12.5F},
-            "largeshredder", new float[] {12.5F, 12.5F},
-            "largesluice", new float[] {9.0F, 9.0F},
-            "implosioncompressor", new float[] {12.5F, 12.5F},
-            "fusionreactor", new float[] {12.5F, 12.5F},
-            "cokeoven", new float[] {5.0F, 5.0F});
-
-    // ── Machine type definitions ────────────────────────────────────────────
-
-    /**
-     * @param tierBase the port tier the first element of {@code tiers} is registered as. Almost every
-     *                 machine starts at tier 1; the ones GT6 numbers differently (see
-     *                 {@link #EXTRA_TIERS} and the {@code tierBase} on the Molecular Scanner row) set
-     *                 it so {@code BasicMachineOriginalParams.find(name, tier)} reads the very GT6
-     *                 registration the machine is a port of.
-     */
-    private record MachineDef(String name, String energy, GTMaterial[] tiers, int tierBase) {
-        MachineDef(String name, String energy, GTMaterial[] tiers) {
-            this(name, energy, tiers, 1);
+    private record Processing(int baseParallel, boolean doublesPerTier, boolean scalesDuration) {
+        int parallel(int tier) {
+            return doublesPerTier ? baseParallel << (tier - 1) : baseParallel;
         }
     }
 
-    private static final List<MachineDef> MACHINE_DEFS = new ArrayList<>();
-
-    /**
-     * Port tiers whose GT6 registration has no row in {@link MachineDef#tiers()} because every tier
-     * uses the same casing material ({@code MT.Osmiridium}), so the tier array cannot express them.
-     * Mirrors {@code EXTRA_TIERS} in tools/gt6_machine_map.py; the ids carry the tier suffix
-     * ({@code massfab_osmiridium_t2}) exactly like the ones already registered.
-     */
-    private static final java.util.Map<String, int[]> EXTRA_TIERS = java.util.Map.of(
-            "massfab", new int[] {2, 3, 4, 5},
-            "replicator", new int[] {2, 3, 4, 5});
-
-    /**
-     * Machines that exist in GT6 <em>only</em> as multiblocks and that this port registers as multiblock
-     * controllers too ({@code registry/GTMultiblocks}). Their {@link MachineDef} would add a second,
-     * single-block item for the same machine — the port used to show e.g. a "Distillation Tower" and a
-     * "Coke Oven" item next to the multiblock controller of the same name.
-     * <p>
-     * The {@code large*} batch machines are deliberately <em>not</em> in this set: the port has no
-     * multiblock controller for them yet (GT6 does), so their single-block definition is the only
-     * implementation and removing it would delete the machine.
-     * </p>
-     */
-    private static final Set<String> MULTIBLOCK_ONLY =
-            Set.of("distillationtower", "cryodistillationtower", "cokeoven", "fusionreactor", "implosioncompressor");
-
-    static {
-        // HU machines (4 tiers: Steel, Invar, Ti, TungstenCarbide)
-        MACHINE_DEFS.add(new MachineDef("oven", "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("roaster", "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("distillery", "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("extruder", "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("smelter", "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("crystallisationcrucible", "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("dryer", "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("laminator", "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("catalyticcracker", "HU", HU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("steamcracker", "HU", HU_TIERS));
-
-        // RU machines (4 tiers: Bronze, Steel, Ti, TungstenSteel)
-        MACHINE_DEFS.add(new MachineDef("shredder", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("lathe", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("buzzsaw", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("centrifuge", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("rollingmill", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("rollbender", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("rollformer", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("clustermill", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("wiremill", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("mixer", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("loom", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("sluice", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("sander", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("burnmixer", "RU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("debarker", "RU", RU_KU_TIERS));
-
-        // KU machines (4 tiers: Bronze, Steel, Ti, TungstenSteel)
-        MACHINE_DEFS.add(new MachineDef("crusher", "KU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("sifter", "KU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("squeezer", "KU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("compressor", "KU", RU_KU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("press", "KU", RU_KU_TIERS));
-
-        // EU machines (5 tiers: SteelGalvanized, Al, StainlessSteel, Cr, Ti)
-        MACHINE_DEFS.add(new MachineDef("electrolyzer", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("canner", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("injector", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("printer", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("scannervisuals", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("autocrafter", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("electricmixer", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("electricloom", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("electricsifter", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("slicer", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("nanofab", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("plantalyzer", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("bumblelyzer", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("boxinator", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("unboxinator", "EU", EU_MU_LU_CU_TIERS));
-
-        // MU machines (5 tiers)
-        MACHINE_DEFS.add(new MachineDef("polarizer", "MU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("magneticseparator", "MU", EU_MU_LU_CU_TIERS));
-
-        // LU machines (5 tiers)
-        MACHINE_DEFS.add(new MachineDef("laserengraver", "LU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("laserwelder", "LU", EU_MU_LU_CU_TIERS));
-
-        // CU machines (5 tiers)
-        MACHINE_DEFS.add(new MachineDef("freezer", "CU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("cryomixer", "CU", EU_MU_LU_CU_TIERS));
-
-        // QU machines — Osmium color only
-        MACHINE_DEFS.add(new MachineDef("massfab", "QU", new GTMaterial[] {Materials.OsmiumElemental}));
-        // GT6 registers the Molecular Scanner as T3 only (Loader_MultiTileEntities; T1/T2/
-        // T4/T5 are commented out) and its NBT_INPUT of 512 is exactly the scanner recipe's power
-        // (RecipeMapScannerMolecular), so the single port machine is tier 3.
-        MACHINE_DEFS.add(new MachineDef("scannermolecular", "QU", new GTMaterial[] {Materials.OsmiumElemental}, 3));
-        MACHINE_DEFS.add(new MachineDef("replicator", "QU", new GTMaterial[] {Materials.OsmiumElemental}));
-
-        // Single-tier machines (StainlessSteel color)
-        GTMaterial[] SS = {Materials.StainlessSteel};
-        MACHINE_DEFS.add(new MachineDef("autoclave", "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("bath", "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("generifier", "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("coagulator", "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("fermenter", "HU", SS));
-        MACHINE_DEFS.add(new MachineDef("melter", "HU", new GTMaterial[] {Materials.Iron}));
-        MACHINE_DEFS.add(new MachineDef("cokeoven", "HU", SS));
-        MACHINE_DEFS.add(new MachineDef("lightning", "EU", EU_MU_LU_CU_TIERS));
-        MACHINE_DEFS.add(new MachineDef("implosioncompressor", "HU", SS));
-        MACHINE_DEFS.add(new MachineDef("fusionreactor", "QU", SS));
-        MACHINE_DEFS.add(new MachineDef("cryodistillationtower", "CU", SS));
-        MACHINE_DEFS.add(new MachineDef("distillationtower", "HU", SS));
-
-        // Large batch machines (GT6 single-tier, 512 GU/t; materials per original casing)
-        MACHINE_DEFS.add(new MachineDef("largecentrifuge", "RU", new GTMaterial[] {Materials.Tungstensteel}));
-        MACHINE_DEFS.add(new MachineDef("largeelectrolyzer", "EU", SS));
-        MACHINE_DEFS.add(new MachineDef("largecoagulator", "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("largeautoclave", "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("largebath", "TU", SS));
-        MACHINE_DEFS.add(new MachineDef("largemixer", "RU", SS));
-        MACHINE_DEFS.add(new MachineDef("largefermenter", "HU", SS));
-        MACHINE_DEFS.add(new MachineDef("largeoven", "EU", new GTMaterial[] {Materials.Invar}));
-        MACHINE_DEFS.add(new MachineDef("largesluice", "RU", new GTMaterial[] {Materials.Titanium}));
-        MACHINE_DEFS.add(new MachineDef("largecrusher", "RU", new GTMaterial[] {Materials.Tungstensteel}));
-        MACHINE_DEFS.add(new MachineDef("largeshredder", "RU", new GTMaterial[] {Materials.Tungstensteel}));
-        MACHINE_DEFS.add(new MachineDef("largesqueezer", "RU", new GTMaterial[] {Materials.Steel}));
-        MACHINE_DEFS.add(new MachineDef("largemassfab", "QU", new GTMaterial[] {Materials.Lead}));
+    enum Behavior {
+        STANDARD,
+        CHEAP_OVERCLOCKING,
+        IGNITION,
+        HALF_EFFICIENCY,
+        MATTER,
+        NO_CONSTANT_POWER
     }
 
-    // ── Material short names for ID generation ──────────────────────────────
-
-    private static final Map<GTMaterial, String> MAT_SHORT = new HashMap<>();
-
-    static {
-        MAT_SHORT.put(Materials.Steel, "steel");
-        MAT_SHORT.put(Materials.Invar, "invar");
-        MAT_SHORT.put(Materials.Titanium, "titanium");
-        MAT_SHORT.put(Materials.TungstenCarbide, "tungsten_carbide");
-        MAT_SHORT.put(Materials.Bronze, "bronze");
-        MAT_SHORT.put(Materials.Tungstensteel, "tungsten_steel");
-        MAT_SHORT.put(Materials.SteelGalvanized, "galvanized_steel");
-        MAT_SHORT.put(Materials.Aluminium, "aluminium");
-        MAT_SHORT.put(Materials.StainlessSteel, "stainless_steel");
-        MAT_SHORT.put(Materials.Chromium, "chromium");
-        MAT_SHORT.put(Materials.OsmiumElemental, "osmium");
+    private enum Kind {
+        BASIC,
+        LARGE,
+        CONTROLLER
     }
 
-    // ── Batch registration ──────────────────────────────────────────────────
+    private record Family(
+            String name,
+            RecipeMapSpec recipeMap,
+            int sourceIdBase,
+            EnergyType energy,
+            int firstTier,
+            List<Casing> casings,
+            Input fixedInput,
+            Processing processing,
+            Behavior behavior,
+            MachineFaceMasks faces,
+            IntFunction<Recipe> crafting,
+            Kind kind,
+            String controllerId,
+            String tool) {
+        Casing casing(int tier) {
+            return casings.get(tier - firstTier);
+        }
 
-    /** Base energy rate (grade-0 nominal) per machine type. Defaults to 32. */
-    private static long energyBase(String machineName) {
-        return switch (machineName) {
-            // GT6 large batch machines run at 512 GU/t nominal
-            case "largecentrifuge",
-                    "largeelectrolyzer",
-                    "largecoagulator",
-                    "largeautoclave",
-                    "largebath",
-                    "largemixer",
-                    "largefermenter",
-                    "largeoven",
-                    "largesluice",
-                    "largecrusher",
-                    "largeshredder",
-                    "largesqueezer" -> 512;
-            case "largemassfab" -> 1;
-            // Most machines: 32 base → 32/128/512/2048/8192
-            default -> 32;
+        boolean hasTier(int tier) {
+            return tier >= firstTier && tier < firstTier + casings.size();
+        }
+
+        Input input(int tier) {
+            if (fixedInput != null) return fixedInput;
+            long nominal = 32L << (2 * (tier - 1));
+            return new Input(nominal, nominal / 2, nominal * 2);
+        }
+
+        SourceBlockProperties.Params harvest(int tier) {
+            return new SourceBlockProperties.Params(
+                    sourceIdBase + tier, tool, casing(tier).material(), -1, false);
+        }
+
+        String id(int tier) {
+            if (controllerId != null) return controllerId;
+            // These paths shipped before the original casing material was restored.
+            return name + "_"
+                    + switch (name) {
+                        case "melter" -> "stainless_steel";
+                        case "scannermolecular" -> "osmium";
+                        case "massfab", "replicator" -> tier == 1 ? "osmium" : "osmiridium_t" + tier;
+                        default -> casing(tier).suffix();
+                    };
+        }
+    }
+
+    private static final List<Casing> HEAT = List.of(
+            new Casing(Materials.Steel, "steel", 6), new Casing(Materials.Invar, "invar", 4),
+            new Casing(Materials.Titanium, "titanium", 9),
+                    new Casing(Materials.TungstenCarbide, "tungsten_carbide", 12.5F));
+    private static final List<Casing> KINETIC = List.of(
+            new Casing(Materials.Bronze, "bronze", 7), new Casing(Materials.Steel, "steel", 6),
+            new Casing(Materials.Titanium, "titanium", 9),
+                    new Casing(Materials.Tungstensteel, "tungsten_steel", 12.5F));
+    private static final List<Casing> ELECTRIC = List.of(
+            new Casing(Materials.SteelGalvanized, "galvanized_steel", 4),
+            new Casing(Materials.Aluminium, "aluminium", 4),
+            new Casing(Materials.StainlessSteel, "stainless_steel", 4),
+            new Casing(Materials.Chromium, "chromium", 4),
+            new Casing(Materials.Titanium, "titanium", 4));
+    private static final Casing OSMIRIDIUM = new Casing(Materials.Osmiridium, "osmiridium", 16);
+    private static final List<Casing> QUANTUM = Collections.nCopies(5, OSMIRIDIUM);
+    private static final Casing STAINLESS = new Casing(Materials.StainlessSteel, "stainless_steel", 6);
+    private static final Casing TUNGSTEN_STEEL = KINETIC.get(3);
+    private static final Casing LEAD = new Casing(Materials.Lead, "lead", 6);
+
+    private static final Input TIME_INPUT = new Input(1, 1, 16);
+    private static final Input LARGE_INPUT = new Input(512, 512, 4096);
+    private static final Input TOWER_INPUT = new Input(512, 1, 1024);
+    private static final Processing SINGLE = fixed(1, false);
+    private static final Processing PARALLEL_1 = doubling(1, true);
+    private static final Processing PARALLEL_4 = doubling(4, true);
+    private static final Processing PARALLEL_8 = doubling(8, true);
+    private static final Processing BULK_SMELTING = fixed(1000, true);
+
+    private static List<Family> families() {
+        return List.of(
+                tiered("oven", Furnace, 20000, HU, HEAT, LEFT_TO_RIGHT_BOTTOM_POWER, BasicMachineCraftingRecipes::oven),
+                tiered(
+                        "roaster",
+                        Roasting,
+                        20170,
+                        HU,
+                        HEAT,
+                        ROASTER,
+                        BasicMachineCraftingRecipes::roaster,
+                        doubling(1, false),
+                        Behavior.CHEAP_OVERCLOCKING),
+                tiered(
+                        "distillery",
+                        Distillery,
+                        20190,
+                        HU,
+                        HEAT,
+                        DISTILLERY,
+                        BasicMachineCraftingRecipes::distillery,
+                        PARALLEL_8,
+                        Behavior.CHEAP_OVERCLOCKING),
+                tiered(
+                        "extruder",
+                        Extruder,
+                        20200,
+                        HU,
+                        HEAT,
+                        LEFT_TO_RIGHT_BOTTOM_POWER,
+                        BasicMachineCraftingRecipes::extruder),
+                tiered(
+                        "smelter",
+                        Smelter,
+                        20240,
+                        HU,
+                        HEAT,
+                        SMELTER,
+                        BasicMachineCraftingRecipes::smelter,
+                        BULK_SMELTING,
+                        Behavior.CHEAP_OVERCLOCKING),
+                tiered(
+                        "crystallisationcrucible",
+                        CrystallisationCrucible,
+                        20250,
+                        HU,
+                        HEAT,
+                        CRYSTALLISATION_CRUCIBLE,
+                        BasicMachineCraftingRecipes::crystallisationCrucible),
+                tiered(
+                        "dryer",
+                        Drying,
+                        20310,
+                        HU,
+                        HEAT,
+                        ROASTER,
+                        BasicMachineCraftingRecipes::dryer,
+                        PARALLEL_8,
+                        Behavior.CHEAP_OVERCLOCKING),
+                tiered(
+                        "laminator",
+                        Laminator,
+                        20390,
+                        HU,
+                        HEAT,
+                        TOP_LEFT_TO_RIGHT_BOTTOM_POWER,
+                        BasicMachineCraftingRecipes::laminator),
+                tiered(
+                        "catalyticcracker",
+                        CatalyticCracking,
+                        20480,
+                        HU,
+                        HEAT,
+                        CRACKER,
+                        BasicMachineCraftingRecipes::catalyticCracker),
+                tiered(
+                        "steamcracker",
+                        SteamCracking,
+                        20490,
+                        HU,
+                        HEAT,
+                        CRACKER,
+                        BasicMachineCraftingRecipes::steamCracker),
+                tiered(
+                        "shredder",
+                        Shredder,
+                        20010,
+                        RU,
+                        KINETIC,
+                        TOP_TO_BOTTOM_SIDE_POWER,
+                        BasicMachineCraftingRecipes::shredder),
+                tiered(
+                        "lathe",
+                        Lathe,
+                        20040,
+                        RU,
+                        KINETIC,
+                        LEFT_TO_RIGHT_BOTTOM_POWER,
+                        BasicMachineCraftingRecipes::lathe),
+                tiered("buzzsaw", Cutter, 20060, RU, KINETIC, BUZZSAW, BasicMachineCraftingRecipes::buzzsaw),
+                tiered(
+                        "centrifuge",
+                        Centrifuge,
+                        20080,
+                        RU,
+                        KINETIC,
+                        CENTRIFUGE,
+                        BasicMachineCraftingRecipes::centrifuge,
+                        PARALLEL_1,
+                        Behavior.STANDARD),
+                tiered(
+                        "rollingmill",
+                        RollingMill,
+                        20110,
+                        RU,
+                        KINETIC,
+                        LEFT_TO_RIGHT_BACK_POWER,
+                        BasicMachineCraftingRecipes::rollingMill),
+                tiered(
+                        "rollbender",
+                        RollBender,
+                        20120,
+                        RU,
+                        KINETIC,
+                        LEFT_TO_RIGHT_BACK_POWER,
+                        BasicMachineCraftingRecipes::rollBender),
+                tiered(
+                        "rollformer",
+                        RollFormer,
+                        20130,
+                        RU,
+                        KINETIC,
+                        LEFT_TO_RIGHT_BACK_POWER,
+                        BasicMachineCraftingRecipes::rollFormer),
+                tiered(
+                        "clustermill",
+                        ClusterMill,
+                        20140,
+                        RU,
+                        KINETIC,
+                        LEFT_TO_RIGHT_BACK_POWER,
+                        BasicMachineCraftingRecipes::clusterMill),
+                tiered(
+                        "wiremill",
+                        Wiremill,
+                        20150,
+                        RU,
+                        KINETIC,
+                        LEFT_TO_RIGHT_BACK_POWER,
+                        BasicMachineCraftingRecipes::wireMill),
+                tiered(
+                        "mixer",
+                        Mixer,
+                        20180,
+                        RU,
+                        KINETIC,
+                        MIXER,
+                        BasicMachineCraftingRecipes::mixer,
+                        PARALLEL_4,
+                        Behavior.STANDARD),
+                tiered("loom", Loom, 20210, RU, KINETIC, TOP_TO_BOTTOM_SIDE_POWER, BasicMachineCraftingRecipes::loom),
+                tiered("sluice", Sluice, 20290, RU, KINETIC, CANNER, BasicMachineCraftingRecipes::sluice),
+                tiered(
+                        "sander",
+                        Sharpening,
+                        20510,
+                        RU,
+                        KINETIC,
+                        LEFT_TO_RIGHT_TOP_POWER,
+                        BasicMachineCraftingRecipes::sander),
+                tiered(
+                        "burnmixer",
+                        BurnMixer,
+                        20520,
+                        RU,
+                        KINETIC,
+                        MIXER,
+                        BasicMachineCraftingRecipes::burnMixer,
+                        PARALLEL_4,
+                        Behavior.IGNITION),
+                tiered("debarker", PressureWasher, 20550, RU, KINETIC, DEBARKER, BasicMachineCraftingRecipes::debarker),
+                tiered(
+                        "crusher",
+                        Crusher,
+                        20020,
+                        KU,
+                        KINETIC,
+                        TOP_TO_BOTTOM_BACK_POWER,
+                        BasicMachineCraftingRecipes::crusher,
+                        PARALLEL_4,
+                        Behavior.STANDARD),
+                tiered(
+                        "sifter",
+                        Sifting,
+                        20050,
+                        KU,
+                        KINETIC,
+                        TOP_TO_BOTTOM_BACK_POWER,
+                        BasicMachineCraftingRecipes::sifter,
+                        PARALLEL_4,
+                        Behavior.STANDARD),
+                tiered(
+                        "squeezer",
+                        Squeezer,
+                        20070,
+                        KU,
+                        KINETIC,
+                        SQUEEZER,
+                        BasicMachineCraftingRecipes::squeezer,
+                        PARALLEL_4,
+                        Behavior.STANDARD),
+                tiered(
+                        "compressor",
+                        Compressor,
+                        20100,
+                        KU,
+                        KINETIC,
+                        TOP_TO_BOTTOM_LEFT_POWER,
+                        BasicMachineCraftingRecipes::compressor,
+                        PARALLEL_4,
+                        Behavior.STANDARD),
+                tiered(
+                        "press",
+                        Press,
+                        20230,
+                        KU,
+                        KINETIC,
+                        LEFT_TO_RIGHT_TOP_POWER,
+                        BasicMachineCraftingRecipes::press,
+                        PARALLEL_4,
+                        Behavior.STANDARD),
+                tiered(
+                        "electrolyzer",
+                        Electrolyzer,
+                        20090,
+                        EU,
+                        ELECTRIC,
+                        ELECTROLYZER,
+                        BasicMachineCraftingRecipes::electrolyzer,
+                        PARALLEL_1,
+                        Behavior.STANDARD),
+                tiered("canner", Canner, 20160, EU, ELECTRIC, CANNER, BasicMachineCraftingRecipes::canner),
+                tiered("injector", Injector, 20260, EU, ELECTRIC, CANNER, BasicMachineCraftingRecipes::injector),
+                tiered("printer", Printer, 20270, EU, ELECTRIC, PRINTER, BasicMachineCraftingRecipes::printer),
+                tiered(
+                        "scannervisuals",
+                        ScannerVisuals,
+                        20280,
+                        EU,
+                        ELECTRIC,
+                        SCANNER,
+                        BasicMachineCraftingRecipes::scannerVisuals),
+                tiered(
+                        "autocrafter",
+                        Autocrafter,
+                        20340,
+                        EU,
+                        ELECTRIC,
+                        AUTOCRAFTER,
+                        BasicMachineCraftingRecipes::autocrafter),
+                tiered(
+                        "electricmixer",
+                        Mixer,
+                        20350,
+                        EU,
+                        ELECTRIC,
+                        MIXER,
+                        BasicMachineCraftingRecipes::electricMixer,
+                        PARALLEL_4,
+                        Behavior.HALF_EFFICIENCY),
+                tiered(
+                        "electricloom",
+                        Loom,
+                        20360,
+                        EU,
+                        ELECTRIC,
+                        TOP_TO_BOTTOM_SIDE_POWER,
+                        BasicMachineCraftingRecipes::electricLoom,
+                        SINGLE,
+                        Behavior.HALF_EFFICIENCY),
+                tiered(
+                        "electricsifter",
+                        Sifting,
+                        20370,
+                        EU,
+                        ELECTRIC,
+                        TOP_TO_BOTTOM_BACK_POWER,
+                        BasicMachineCraftingRecipes::electricSifter,
+                        SINGLE,
+                        Behavior.HALF_EFFICIENCY),
+                tiered("slicer", Slicer, 20380, EU, ELECTRIC, SCANNER, BasicMachineCraftingRecipes::slicer),
+                tiered("nanofab", Nanofab, 20440, EU, ELECTRIC, CANNER, BasicMachineCraftingRecipes::nanofab),
+                tiered(
+                        "plantalyzer",
+                        Plantalyzer,
+                        20530,
+                        EU,
+                        ELECTRIC,
+                        ANALYZER,
+                        BasicMachineCraftingRecipes::plantalyzer,
+                        fixed(64, false),
+                        Behavior.STANDARD),
+                tiered(
+                        "bumblelyzer",
+                        Bumblelyzer,
+                        20540,
+                        EU,
+                        ELECTRIC,
+                        ANALYZER,
+                        BasicMachineCraftingRecipes::bumblelyzer,
+                        fixed(64, false),
+                        Behavior.STANDARD),
+                tiered(
+                        "boxinator",
+                        Boxinator,
+                        20580,
+                        EU,
+                        ELECTRIC,
+                        TOP_LEFT_TO_RIGHT_BOTTOM_POWER,
+                        BasicMachineCraftingRecipes::boxinator),
+                tiered(
+                        "unboxinator",
+                        Unboxinator,
+                        20590,
+                        EU,
+                        ELECTRIC,
+                        TOP_LEFT_TO_RIGHT_BOTTOM_POWER,
+                        BasicMachineCraftingRecipes::unboxinator),
+                tiered("polarizer", Polarizer, 20220, MU, ELECTRIC, POLARIZER, BasicMachineCraftingRecipes::polarizer),
+                tiered(
+                        "magneticseparator",
+                        MagneticSeparator,
+                        20300,
+                        MU,
+                        ELECTRIC,
+                        MAGNETIC_SEPARATOR,
+                        BasicMachineCraftingRecipes::magneticSeparator),
+                tiered(
+                        "laserengraver",
+                        LaserEngraver,
+                        20320,
+                        LU,
+                        ELECTRIC,
+                        LEFT_TO_RIGHT_TOP_POWER,
+                        BasicMachineCraftingRecipes::laserEngraver),
+                tiered(
+                        "laserwelder",
+                        Welder,
+                        20330,
+                        LU,
+                        ELECTRIC,
+                        LASER_WELDER,
+                        BasicMachineCraftingRecipes::laserWelder),
+                tiered("freezer", Freezer, 20560, CU, ELECTRIC, CANNER, BasicMachineCraftingRecipes::freezer),
+                tiered(
+                        "cryomixer",
+                        CryoMixer,
+                        20570,
+                        CU,
+                        ELECTRIC,
+                        MIXER,
+                        BasicMachineCraftingRecipes::cryoMixer,
+                        PARALLEL_4,
+                        Behavior.STANDARD),
+                tiered(
+                        "massfab",
+                        Massfab,
+                        20410,
+                        QU,
+                        QUANTUM,
+                        CANNER,
+                        BasicMachineCraftingRecipes::massFab,
+                        SINGLE,
+                        Behavior.MATTER),
+                single(
+                        "scannermolecular",
+                        ScannerMolecular,
+                        20423,
+                        QU,
+                        OSMIRIDIUM,
+                        3,
+                        SCANNER,
+                        BasicMachineCraftingRecipes::scannerMolecular,
+                        SINGLE,
+                        Behavior.STANDARD),
+                tiered(
+                        "replicator",
+                        Replicator,
+                        20430,
+                        QU,
+                        QUANTUM,
+                        CANNER,
+                        BasicMachineCraftingRecipes::replicator,
+                        SINGLE,
+                        Behavior.MATTER),
+                single(
+                        "autoclave",
+                        Autoclave,
+                        22004,
+                        TU,
+                        STAINLESS,
+                        1,
+                        AUTOCLAVE,
+                        BasicMachineCraftingRecipes::autoclave,
+                        SINGLE,
+                        Behavior.NO_CONSTANT_POWER),
+                single(
+                        "bath",
+                        Bath,
+                        22002,
+                        TU,
+                        STAINLESS,
+                        1,
+                        BATH,
+                        BasicMachineCraftingRecipes::bath,
+                        SINGLE,
+                        Behavior.NO_CONSTANT_POWER),
+                single(
+                        "generifier",
+                        Generifier,
+                        22001,
+                        TU,
+                        STAINLESS,
+                        1,
+                        BATH,
+                        BasicMachineCraftingRecipes::generifier,
+                        fixed(100, false),
+                        Behavior.NO_CONSTANT_POWER),
+                single(
+                        "coagulator",
+                        Coagulator,
+                        22000,
+                        TU,
+                        STAINLESS,
+                        1,
+                        COAGULATOR,
+                        BasicMachineCraftingRecipes::coagulator,
+                        SINGLE,
+                        Behavior.NO_CONSTANT_POWER),
+                single(
+                        "fermenter",
+                        Fermenter,
+                        22003,
+                        HU,
+                        STAINLESS,
+                        1,
+                        ROASTER,
+                        BasicMachineCraftingRecipes::fermenter,
+                        SINGLE,
+                        Behavior.STANDARD),
+                single(
+                        "melter",
+                        Melter,
+                        22010,
+                        HU,
+                        new Casing(Materials.Iron, "iron", 6),
+                        1,
+                        SMELTER,
+                        BasicMachineCraftingRecipes::melter,
+                        BULK_SMELTING,
+                        Behavior.CHEAP_OVERCLOCKING),
+                tiered("lightning", Lightning, 20500, EU, ELECTRIC, CANNER, BasicMachineCraftingRecipes::lightning),
+                controller(
+                        "cokeoven",
+                        CokeOven,
+                        17000,
+                        TU,
+                        new Casing(Materials.Ceramic, "ceramic", 5),
+                        TIME_INPUT,
+                        16,
+                        COKE_OVEN,
+                        "coke_oven_main",
+                        "pickaxe"),
+                controller(
+                        "implosioncompressor",
+                        ImplosionCompressor,
+                        17110,
+                        TU,
+                        TUNGSTEN_STEEL,
+                        TIME_INPUT,
+                        64,
+                        OriginalAdvancedControllerData.faces("implosioncompressor"),
+                        "implosion_compressor_main",
+                        "wrench"),
+                controller(
+                        "fusionreactor",
+                        Fusion,
+                        17198,
+                        TU,
+                        new Casing(Materials.SteelGalvanized, "galvanized_steel", 12.5F),
+                        new Input(8192, 1, 16384),
+                        1,
+                        OriginalAdvancedControllerData.faces("fusionreactor"),
+                        "fusion_reactor_main",
+                        "wrench"),
+                controller(
+                        "distillationtower",
+                        DistillationTower,
+                        17101,
+                        HU,
+                        STAINLESS,
+                        TOWER_INPUT,
+                        1,
+                        DISTILLATION_TOWER,
+                        "distillation_tower_main",
+                        "wrench"),
+                controller(
+                        "cryodistillationtower",
+                        CryoDistillationTower,
+                        17111,
+                        CU,
+                        STAINLESS,
+                        TOWER_INPUT,
+                        1,
+                        DISTILLATION_TOWER,
+                        "cryo_distillation_main",
+                        "wrench"),
+                large("largecentrifuge", Centrifuge, 17100, RU, TUNGSTEN_STEEL, 16),
+                large("largeelectrolyzer", Electrolyzer, 17103, EU, STAINLESS, 16),
+                large("largecoagulator", Coagulator, 17105, TU, STAINLESS, 64),
+                large("largeautoclave", Autoclave, 17112, TU, STAINLESS, 16),
+                large("largebath", Bath, 17104, TU, STAINLESS, 64),
+                large("largemixer", Mixer, 17102, RU, STAINLESS, 256),
+                large("largefermenter", Fermenter, 17113, HU, STAINLESS, 256),
+                large("largeoven", Furnace, 17106, EU, new Casing(Materials.Invar, "invar", 6), 64),
+                large("largesluice", Sluice, 17107, RU, KINETIC.get(2), 64),
+                large("largecrusher", Crusher, 17108, RU, TUNGSTEN_STEEL, 64),
+                large("largeshredder", Shredder, 17109, RU, TUNGSTEN_STEEL, 64),
+                large("largesqueezer", Squeezer, 17114, RU, KINETIC.get(1), 64),
+                large("largemassfab", Massfab, 17199, QU, LEAD, 64));
+    }
+
+    private static Family tiered(
+            String name,
+            RecipeMapSpec map,
+            int sourceIdBase,
+            EnergyType energy,
+            List<Casing> casings,
+            MachineFaceMasks faces,
+            IntFunction<Recipe> crafting) {
+        return tiered(name, map, sourceIdBase, energy, casings, faces, crafting, SINGLE, Behavior.STANDARD);
+    }
+
+    private static Family tiered(
+            String name,
+            RecipeMapSpec map,
+            int sourceIdBase,
+            EnergyType energy,
+            List<Casing> casings,
+            MachineFaceMasks faces,
+            IntFunction<Recipe> crafting,
+            Processing processing,
+            Behavior behavior) {
+        return new Family(
+                name,
+                map,
+                sourceIdBase,
+                energy,
+                1,
+                casings,
+                null,
+                processing,
+                behavior,
+                faces,
+                crafting,
+                Kind.BASIC,
+                null,
+                "wrench");
+    }
+
+    private static Family single(
+            String name,
+            RecipeMapSpec map,
+            int sourceId,
+            EnergyType energy,
+            Casing casing,
+            int tier,
+            MachineFaceMasks faces,
+            IntFunction<Recipe> crafting,
+            Processing processing,
+            Behavior behavior) {
+        return new Family(
+                name,
+                map,
+                sourceId - tier,
+                energy,
+                tier,
+                List.of(casing),
+                energy.equals(TU) ? TIME_INPUT : null,
+                processing,
+                behavior,
+                faces,
+                crafting,
+                Kind.BASIC,
+                null,
+                "wrench");
+    }
+
+    private static Family controller(
+            String name,
+            RecipeMapSpec map,
+            int sourceId,
+            EnergyType energy,
+            Casing casing,
+            Input input,
+            int parallel,
+            MachineFaceMasks faces,
+            String id,
+            String tool) {
+        return new Family(
+                name,
+                map,
+                sourceId - 1,
+                energy,
+                1,
+                List.of(casing),
+                input,
+                fixed(parallel, false),
+                Behavior.STANDARD,
+                faces,
+                null,
+                Kind.CONTROLLER,
+                id,
+                tool);
+    }
+
+    private static Family large(
+            String name, RecipeMapSpec map, int sourceId, EnergyType energy, Casing casing, int parallel) {
+        Input input = switch (energy.name()) {
+            case "TU" -> TIME_INPUT;
+            case "HU" -> new Input(512, 1, 4096);
+            case "QU" -> new Input(1, 1, 2097152);
+            default -> LARGE_INPUT;
         };
+        var faces = energy.equals(QU)
+                ? OriginalAdvancedControllerData.faces(name)
+                : OriginalLargeRecipeMachineData.faces(name);
+        return new Family(
+                name,
+                map,
+                sourceId - 1,
+                energy,
+                1,
+                List.of(casing),
+                input,
+                fixed(parallel, !energy.equals(TU)),
+                Behavior.STANDARD,
+                faces,
+                null,
+                Kind.LARGE,
+                null,
+                "wrench");
     }
 
-    /** Every built-in machine type name, including controllers that are not registered as basic machines. */
+    private static Processing fixed(int parallel, boolean scalesDuration) {
+        return new Processing(parallel, false, scalesDuration);
+    }
+
+    private static Processing doubling(int parallel, boolean scalesDuration) {
+        return new Processing(parallel, true, scalesDuration);
+    }
+
+    private static final List<Family> FAMILIES = families();
+    private static final Map<String, Family> BY_NAME =
+            FAMILIES.stream().collect(java.util.stream.Collectors.toUnmodifiableMap(Family::name, family -> family));
+
+    /** Includes dedicated controllers, whose family names are also reserved for built-ins. */
     public static Set<String> machineTypeNames() {
-        var names = new LinkedHashSet<String>();
-        for (MachineDef def : MACHINE_DEFS) names.add(def.name());
-        return Set.copyOf(names);
+        return BY_NAME.keySet();
     }
 
-    /** GT6 parallel limits for the large batch machines; an ordinary basic machine keeps 1. */
-    private static int legacyParallelLimit(String machineName) {
-        return switch (machineName) {
-            case "largemixer", "largefermenter" -> 256;
-            case "largecoagulator",
-                    "largebath",
-                    "largeoven",
-                    "largesluice",
-                    "largecrusher",
-                    "largeshredder",
-                    "largesqueezer",
-                    "largemassfab" -> 64;
-            case "largecentrifuge", "largeelectrolyzer", "largeautoclave" -> 16;
-            default -> 1;
+    public static RecipeMapSpec recipeMap(String name) {
+        return switch (name) {
+            case "pressurewasher" -> PressureWasher;
+            case "heatmixer" -> Mixer;
+            case "default" -> DidYouKnow;
+            default -> requireFamily(name).recipeMap();
         };
     }
 
-    /** Build a complete, validated batch before registering any blocks. */
+    public static GTMaterial casing(String name, int tier) {
+        return requireVariant(name, tier).casing(tier).material();
+    }
+
+    static GTMaterial electricTierMaterial(int tier) {
+        return ELECTRIC.get(tier - 1).material();
+    }
+
+    public static int sourceId(String name, int tier) {
+        return requireVariant(name, tier).sourceIdBase() + tier;
+    }
+
+    public static Recipe crafting(String name, int tier) {
+        var family = findVariant(name, tier);
+        return family == null || family.crafting() == null
+                ? null
+                : family.crafting().apply(tier);
+    }
+
+    public static SourceBlockProperties.Params harvest(String name, int tier) {
+        var family = findVariant(name, tier);
+        return family == null ? null : family.harvest(tier);
+    }
+
+    public static Map<String, SourceBlockProperties.Params> harvestProperties() {
+        var result = new LinkedHashMap<String, SourceBlockProperties.Params>();
+        for (var family : FAMILIES) {
+            for (int tier = family.firstTier(); family.hasTier(tier); tier++) {
+                result.put(family.name() + "/" + tier, family.harvest(tier));
+            }
+        }
+        return Collections.unmodifiableMap(result);
+    }
+
+    public static Map<String, SourceBlockProperties.Params> controllerHarvestProperties() {
+        var result = new LinkedHashMap<String, SourceBlockProperties.Params>();
+        for (var family : FAMILIES) {
+            if (family.kind() == Kind.CONTROLLER) result.put(family.controllerId(), family.harvest(1));
+        }
+        return Collections.unmodifiableMap(result);
+    }
+
+    static boolean isOriginalBasic(String name, int tier) {
+        var family = findVariant(name, tier);
+        return family != null && family.kind() == Kind.BASIC;
+    }
+
+    static Behavior behavior(String name, int tier) {
+        var family = findVariant(name, tier);
+        return family == null ? Behavior.STANDARD : family.behavior();
+    }
+
+    public static boolean parallelScalesDuration(String name, int tier) {
+        var family = findVariant(name, tier);
+        return family == null || family.processing().scalesDuration();
+    }
+
     public static List<BasicMachineParameters> specifications() {
-        List<BasicMachineParameters> result = new ArrayList<>();
-        for (MachineDef def : MACHINE_DEFS) {
-            if (MULTIBLOCK_ONLY.contains(def.name())) continue;
-            long baseEnergy = energyBase(def.name());
-            for (int t = 0; t < def.tiers().length; t++) {
-                GTMaterial mat = def.tiers()[t];
-                String matName = MAT_SHORT.getOrDefault(mat, mat.getName().toLowerCase(java.util.Locale.ROOT));
-                String id = def.name() + "_" + matName;
-                // Preserve the shipped registry identity while correcting the original iron casing.
-                if (def.name().equals("melter")) id = "melter_stainless_steel";
-                int tierNumber = t + def.tierBase();
-                if (def.name().equals("massfab")) mat = gregtech.engine.material.GTMaterialRegistry.get("Osmiridium");
-                // Original GT6 per-machine/per-tier registration values; the synthetic
-                // tables below remain only as the fallback for machines GT6 has no
-                // "Basic Machines" row for (the large* batch machines).
-                var original = gregtech.content.data.BasicMachineOriginalParams.find(def.name(), tierNumber);
-                float[] stats = original != null
-                        ? new float[] {original.hardness(), original.resistance()}
-                        : STAT_OVERRIDES.getOrDefault(def.name(), TIER_STATS[Math.min(t, TIER_STATS.length - 1)]);
-                String energyName = original != null ? original.energyType() : def.energy();
-                long energyIn = original != null
-                        ? original.energyInput()
-                        : (def.energy().equals("TU") ? 1 : baseEnergy << (2 * t)); // x4 per tier
-                int parallel = original != null ? original.parallel() : legacyParallelLimit(def.name());
-                List<MaterialComponent> materials = OriginalMachineMaterialData.weights(def.name(), tierNumber);
-                var energyType = gregtech.content.data.GregTechTags.Energy.ALL.stream()
-                        .filter(type -> type.getShortName().equals(energyName))
-                        .findFirst()
-                        .orElseThrow();
-                BasicMachineParameters spec = BasicMachineParameters.builder(id, mat)
-                        .machineType(def.name())
-                        .energy(EnergyType.of(energyType.getShortName()), energyIn)
-                        .tier(tierNumber)
-                        // GT6 NBT_INPUT_MIN/MAX; without an explicit range GT6 itself uses
-                        // input/2..input*2 (MultiTileEntityBasicMachine.readFromNBT2).
-                        .energyRange(
-                                original != null
-                                        ? original.energyInputMin()
-                                        : BasicMachineParameters.defaultEnergyInMin(
-                                                EnergyType.of(energyName), energyIn),
-                                original != null
-                                        ? original.energyInputMax()
-                                        : BasicMachineParameters.defaultEnergyInMax(
-                                                EnergyType.of(energyName), energyIn))
-                        .parallel(parallel)
-                        .strength(
-                                def.name().equals("massfab") ? 16 : stats[0],
-                                def.name().equals("massfab") ? 16 : stats[1])
-                        .faces(defaultMachineFaceMasks(def.name(), tierNumber))
-                        .constructionMaterials(materials)
-                        .build();
-                result.add(spec);
-            }
+        var result = new ArrayList<BasicMachineParameters>();
+        for (var family : FAMILIES) {
+            if (family.kind() == Kind.CONTROLLER) continue;
+            for (int tier = family.firstTier(); family.hasTier(tier); tier++) result.add(parameters(family, tier));
         }
-        // Tiers GT6 registers with the same Osmiridium casing as tier 1, so the per-machine tier
-        // array above cannot express them (massfab T2..T5, replicator T2..T5).
-        for (var extra : EXTRA_TIERS.entrySet()) {
-            String name = extra.getKey();
-            for (int tier : extra.getValue()) {
-                var original = gregtech.content.data.BasicMachineOriginalParams.find(name, tier);
-                String energyName = original != null ? original.energyType() : "QU";
-                long energyIn = original != null ? original.energyInput() : 32L << (2 * (tier - 1));
-                var energyType = gregtech.content.data.GregTechTags.Energy.ALL.stream()
-                        .filter(type -> type.getShortName().equals(energyName))
-                        .findFirst()
-                        .orElseThrow();
-                result.add(BasicMachineParameters.builder(
-                                name + "_osmiridium_t" + tier,
-                                gregtech.engine.material.GTMaterialRegistry.get("Osmiridium"))
-                        .machineType(name)
-                        .energy(EnergyType.of(energyType.getShortName()), energyIn)
-                        .tier(tier)
-                        .parallel(original != null ? original.parallel() : 1)
-                        .energyRange(
-                                original != null ? original.energyInputMin() : energyIn,
-                                original != null ? original.energyInputMax() : energyIn)
-                        .strength(
-                                original != null ? original.hardness() : 16,
-                                original != null ? original.resistance() : 16)
-                        .faces(defaultMachineFaceMasks(name, tier))
-                        .constructionMaterials(OriginalMachineMaterialData.weights(name, tier))
-                        .build());
-            }
-        }
-        return gregtech.engine.definition.DefinitionCatalog.validated(result, BasicMachineParameters::id);
+        return DefinitionCatalog.validated(result, BasicMachineParameters::id);
     }
 
-    /** Per-machine MachineFaceMasks matching original GT6 {@code Loader_MultiTileEntities} NBT side bitmasks.
-     *  Uses machine-relative directions: TOP/BOTTOM/LEFT/RIGHT/FRONT/BACK.
-     *  Auto I/O pulls from / pushes to the adjacent block on the specified relative face
-     *  every server tick when enabled. */
-    private static MachineFaceMasks defaultMachineFaceMasks(String machineName, int tier) {
-        if (gregtech.content.multiblock.OriginalAdvancedControllerData.handles(machineName))
-            return gregtech.content.multiblock.OriginalAdvancedControllerData.faces(machineName);
-        if (OriginalBasicMachineRules.handles(machineName, tier))
-            return OriginalBasicMachineFaces.defaults(machineName);
-        if (gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(machineName))
-            return gregtech.content.multiblock.OriginalLargeRecipeMachineData.faces(machineName);
-        // ── HU heat machines ──────────────────────────────────────────
-        return switch (machineName) {
-            case "oven" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
+    public static BasicMachineParameters controller(String name) {
+        var family = requireFamily(name);
+        if (family.kind() != Kind.CONTROLLER) throw new IllegalArgumentException("Not a dedicated controller: " + name);
+        return parameters(family, 1);
+    }
 
-            case "roaster" ->
-                MachineFaceMasks.builder()
-                        .itemIn(BACK, LEFT)
-                        .itemOut(RIGHT)
-                        .fluidIn(BACK, LEFT)
-                        .fluidOut(TOP)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(TOP)
-                        .build();
+    private static BasicMachineParameters parameters(Family family, int tier) {
+        Casing casing = family.casing(tier);
+        Input input = family.input(tier);
+        return BasicMachineParameters.builder(family.id(tier), casing.material())
+                .machineType(family.name())
+                .tier(tier)
+                .energy(family.energy(), input.nominal())
+                .energyRange(input.min(), input.max())
+                .parallel(family.processing().parallel(tier))
+                .strength(casing.strength(), casing.strength())
+                .faces(family.faces())
+                .constructionMaterials(MachineConstructionMaterials.machineWeights(family.name(), tier))
+                .build();
+    }
 
-            case "distillery" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(RIGHT)
-                        .fluidIn(TOP, LEFT)
-                        .fluidOut(BACK)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(BACK)
-                        .build();
+    private static Family requireFamily(String name) {
+        var family = BY_NAME.get(name);
+        if (family == null) throw new IllegalArgumentException("Unknown machine family: " + name);
+        return family;
+    }
 
-            case "extruder" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
+    private static Family requireVariant(String name, int tier) {
+        var family = requireFamily(name);
+        if (!family.hasTier(tier)) throw new IllegalArgumentException("Unknown machine tier: " + name + "/" + tier);
+        return family;
+    }
 
-            case "smelter" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP)
-                        .itemOut(LEFT)
-                        .fluidIn(TOP)
-                        .fluidOut(RIGHT)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(TOP)
-                        .itemAutoOut(LEFT)
-                        .fluidAutoIn(TOP)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            case "crystallisationcrucible" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, BACK, TOP)
-                        .itemOut(RIGHT)
-                        .fluidIn(LEFT, BACK, TOP)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .build();
-
-            case "dryer" ->
-                MachineFaceMasks.builder()
-                        .itemIn(BACK, LEFT)
-                        .itemOut(RIGHT)
-                        .fluidIn(BACK, LEFT)
-                        .fluidOut(TOP)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(TOP)
-                        .build();
-
-            case "laminator" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, TOP)
-                        .itemOut(RIGHT)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            case "catalyticcracker", "steamcracker" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(RIGHT, BACK)
-                        .fluidIn(TOP, LEFT)
-                        .fluidOut(RIGHT, BACK)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            // ── RU rotation machines ────────────────────────────────────
-            case "shredder" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP)
-                        .itemOut(BOTTOM)
-                        .energyIn(LEFT, RIGHT)
-                        .itemAutoIn(TOP)
-                        .itemAutoOut(BOTTOM)
-                        .build();
-
-            case "lathe" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            case "buzzsaw" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT)
-                        .fluidIn(TOP, BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(TOP)
-                        .build();
-
-            case "centrifuge" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP)
-                        .itemOut(RIGHT)
-                        .fluidIn(TOP)
-                        .fluidOut(LEFT)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(TOP)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(TOP)
-                        .fluidAutoOut(LEFT)
-                        .build();
-
-            case "rollingmill", "rollbender", "rollformer", "clustermill", "wiremill" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            case "mixer", "burnmixer" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, TOP)
-                        .itemOut(RIGHT, BACK)
-                        .fluidIn(LEFT, TOP)
-                        .fluidOut(RIGHT, BACK)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            case "loom" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP)
-                        .itemOut(BOTTOM)
-                        .energyIn(LEFT, RIGHT)
-                        .itemAutoIn(TOP)
-                        .itemAutoOut(BOTTOM)
-                        .build();
-
-            case "sluice" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, TOP)
-                        .itemOut(RIGHT, BOTTOM)
-                        .fluidIn(LEFT, TOP)
-                        .fluidOut(RIGHT, BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            case "sander" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT)
-                        .energyIn(TOP)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            case "debarker" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT)
-                        .fluidIn(TOP, BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(TOP)
-                        .build();
-
-            // ── KU kinetic machines ─────────────────────────────────────
-            case "crusher", "sifter" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP)
-                        .itemOut(BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(TOP)
-                        .itemAutoOut(BOTTOM)
-                        .build();
-
-            case "squeezer" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT)
-                        .fluidOut(BOTTOM)
-                        .energyIn(TOP)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoOut(BOTTOM)
-                        .build();
-
-            case "compressor" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP)
-                        .itemOut(BOTTOM)
-                        .energyIn(LEFT)
-                        .itemAutoIn(TOP)
-                        .itemAutoOut(BOTTOM)
-                        .build();
-
-            case "press" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT)
-                        .energyIn(TOP)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            // ── EU electric machines ────────────────────────────────────
-            case "electrolyzer" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, FRONT, BACK)
-                        .itemOut(RIGHT, LEFT)
-                        .fluidIn(TOP, FRONT, BACK)
-                        .fluidOut(RIGHT, LEFT)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(TOP)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(TOP)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            case "canner" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(RIGHT, BOTTOM)
-                        .fluidIn(TOP, LEFT)
-                        .fluidOut(RIGHT, BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            case "injector" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(RIGHT, BOTTOM)
-                        .fluidIn(TOP, LEFT)
-                        .fluidOut(RIGHT, BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            case "printer" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(RIGHT, BOTTOM)
-                        .fluidIn(TOP, LEFT)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .build();
-
-            case "scannervisuals" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(RIGHT, BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            case "autocrafter" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(RIGHT, BOTTOM)
-                        .energyIn(TOP, BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            case "electricmixer" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, TOP)
-                        .itemOut(RIGHT, BACK)
-                        .fluidIn(LEFT, TOP)
-                        .fluidOut(RIGHT, BACK)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            case "electricloom" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP)
-                        .itemOut(BOTTOM)
-                        .energyIn(LEFT, RIGHT)
-                        .itemAutoIn(TOP)
-                        .itemAutoOut(BOTTOM)
-                        .build();
-
-            case "electricsifter" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP)
-                        .itemOut(BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(TOP)
-                        .itemAutoOut(BOTTOM)
-                        .build();
-
-            case "slicer" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, TOP)
-                        .itemOut(RIGHT, BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            case "nanofab" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, TOP)
-                        .itemOut(RIGHT, BOTTOM)
-                        .fluidIn(LEFT, TOP)
-                        .fluidOut(RIGHT, BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            case "plantalyzer", "bumblelyzer" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(RIGHT, BOTTOM)
-                        .fluidIn(TOP, BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(TOP)
-                        .build();
-
-            case "boxinator", "unboxinator" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, TOP)
-                        .itemOut(RIGHT)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            // ── MU magnetic machines ────────────────────────────────────
-            case "polarizer" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT)
-                        .energyIn(TOP, BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            case "magneticseparator" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT, BOTTOM)
-                        .fluidIn(LEFT)
-                        .fluidOut(RIGHT, BOTTOM)
-                        .energyIn(TOP)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            // ── LU laser machines ───────────────────────────────────────
-            case "laserengraver" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT)
-                        .energyIn(TOP)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            case "laserwelder" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT)
-                        .itemOut(RIGHT)
-                        .fluidIn(BOTTOM, LEFT)
-                        .energyIn(TOP)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .build();
-
-            // ── CU cryo machines ────────────────────────────────────────
-            case "freezer" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(RIGHT, BOTTOM)
-                        .fluidIn(TOP, LEFT)
-                        .fluidOut(RIGHT, BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            case "cryomixer" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, TOP)
-                        .itemOut(RIGHT, BACK)
-                        .fluidIn(LEFT, TOP)
-                        .fluidOut(RIGHT, BACK)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            // ── QU quantum machines ─────────────────────────────────────
-            case "massfab" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, TOP)
-                        .itemOut(BOTTOM, RIGHT)
-                        .fluidIn(LEFT, TOP)
-                        .fluidOut(BOTTOM, RIGHT)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(TOP)
-                        .fluidAutoOut(BOTTOM)
-                        .build();
-
-            case "replicator" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, TOP)
-                        .itemOut(BOTTOM, RIGHT)
-                        .fluidIn(LEFT, TOP)
-                        .fluidOut(BOTTOM, RIGHT)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            case "scannermolecular" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, TOP)
-                        .itemOut(BOTTOM, RIGHT)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            // ── TU single-tier machines ─────────────────────────────────
-            case "autoclave" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(BACK, RIGHT)
-                        .fluidIn(BOTTOM, LEFT)
-                        .fluidOut(BACK, RIGHT)
-                        .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(BACK)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(BACK)
-                        .build();
-
-            case "bath", "generifier" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(BOTTOM, RIGHT)
-                        .fluidIn(TOP, LEFT)
-                        .fluidOut(BOTTOM, RIGHT)
-                        .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            case "coagulator" ->
-                MachineFaceMasks.builder()
-                        .itemOut(BOTTOM, RIGHT)
-                        .fluidIn(TOP, LEFT)
-                        .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .build();
-
-            case "fermenter" ->
-                MachineFaceMasks.builder()
-                        .itemIn(BACK, LEFT)
-                        .itemOut(RIGHT)
-                        .fluidIn(BACK, LEFT)
-                        .fluidOut(TOP)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(TOP)
-                        .build();
-
-            case "melter" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP)
-                        .itemOut(LEFT)
-                        .fluidIn(TOP)
-                        .fluidOut(RIGHT)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(TOP)
-                        .itemAutoOut(LEFT)
-                        .fluidAutoIn(TOP)
-                        .fluidAutoOut(RIGHT)
-                        .build();
-
-            // ── special / multiblock machines ───────────────────────────
-            case "cokeoven" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP)
-                        .itemOut(BOTTOM)
-                        .fluidOut(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
-                        .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
-                        .itemAutoIn(TOP)
-                        .itemAutoOut(BOTTOM)
-                        .fluidAutoOut(BOTTOM)
-                        .build();
-
-            case "lightning" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(RIGHT, BOTTOM)
-                        .fluidIn(TOP, LEFT)
-                        .fluidOut(RIGHT, BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .fluidAutoIn(TOP)
-                        .fluidAutoOut(BOTTOM)
-                        .build();
-
-            case "implosioncompressor" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP)
-                        .itemOut(BOTTOM)
-                        .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
-                        .itemAutoIn(TOP)
-                        .itemAutoOut(BOTTOM)
-                        .build();
-
-            case "fusionreactor" ->
-                MachineFaceMasks.builder()
-                        .itemIn(LEFT, TOP)
-                        .itemOut(RIGHT, BOTTOM)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(RIGHT)
-                        .build();
-
-            case "cryodistillationtower" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(BACK)
-                        .fluidOut(BACK)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(BACK)
-                        .fluidAutoOut(BACK)
-                        .build();
-
-            case "distillationtower" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT)
-                        .itemOut(BACK)
-                        .fluidOut(BACK)
-                        .energyIn(BOTTOM)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(BACK)
-                        .fluidAutoOut(BACK)
-                        .build();
-
-            case "largemassfab" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT, FRONT, BACK, RIGHT)
-                        .itemOut(BOTTOM)
-                        .fluidIn(TOP, LEFT, FRONT, BACK, RIGHT)
-                        .fluidOut(BOTTOM)
-                        .energyIn(TOP, LEFT, FRONT, BACK, RIGHT, BOTTOM)
-                        .itemAutoOut(BOTTOM)
-                        .fluidAutoOut(BOTTOM)
-                        .build();
-
-            // ── large batch machines: GT6 auto-output bottom, inputs around ──
-            case "largecentrifuge", "largemixer", "largesluice", "largecrusher", "largeshredder", "largesqueezer" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT, FRONT)
-                        .itemOut(BOTTOM, RIGHT)
-                        .fluidIn(TOP, LEFT, FRONT)
-                        .fluidOut(BOTTOM, RIGHT)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(BOTTOM)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(BOTTOM)
-                        .build();
-
-            case "largeelectrolyzer", "largeoven", "largefermenter" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT, FRONT)
-                        .itemOut(BOTTOM, RIGHT)
-                        .fluidIn(TOP, LEFT, FRONT)
-                        .fluidOut(BOTTOM, RIGHT)
-                        .energyIn(BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(BOTTOM)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(BOTTOM)
-                        .build();
-
-            case "largecoagulator", "largeautoclave", "largebath" ->
-                MachineFaceMasks.builder()
-                        .itemIn(TOP, LEFT, FRONT)
-                        .itemOut(BOTTOM, RIGHT)
-                        .fluidIn(TOP, LEFT, FRONT)
-                        .fluidOut(BOTTOM, RIGHT)
-                        .energyIn(BOTTOM, TOP, LEFT, FRONT, RIGHT, BACK)
-                        .itemAutoIn(LEFT)
-                        .itemAutoOut(BOTTOM)
-                        .fluidAutoIn(LEFT)
-                        .fluidAutoOut(BOTTOM)
-                        .build();
-
-            default -> MachineFaceMasks.ALL_SIDES;
-        };
+    private static Family findVariant(String name, int tier) {
+        var family = BY_NAME.get(name);
+        return family != null && family.hasTier(tier) ? family : null;
     }
 }

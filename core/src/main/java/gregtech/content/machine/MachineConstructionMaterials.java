@@ -46,6 +46,17 @@ public final class MachineConstructionMaterials {
         return original.isPresent() ? original : OriginalDeviceMaterialData.block(path);
     }
 
+    public static Optional<ItemComposition> machine(String name, int tier) {
+        var recipe = BasicMachineCatalog.crafting(name, tier);
+        if (recipe == null) return OriginalMachineMaterialData.multiblock(name, tier);
+        return Optional.of(BasicMachineRecycling.derive(
+                recipe, BasicMachineCatalog.casing(name, tier), BasicMachineCatalog.sourceId(name, tier)));
+    }
+
+    static List<MaterialComponent> machineWeights(String name, int tier) {
+        return machine(name, tier).map(ItemComposition::components).orElse(List.of());
+    }
+
     public static Map<String, ItemComposition> blocks() {
         var blocks = new HashMap<>(OriginalMachineMaterialData.blocks());
         blocks.putAll(HOPPERS);

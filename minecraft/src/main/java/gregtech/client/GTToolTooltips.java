@@ -68,7 +68,7 @@ public final class GTToolTooltips {
                                 .withStyle(ChatFormatting.LIGHT_PURPLE))
                 .withStyle(ChatFormatting.WHITE));
 
-        long craftingUses = GTCodeFormat.divUp(remaining, statsType.damagePerCraft());
+        long craftingUses = GTCodeFormat.divUp(remaining, GTToolHelper.craftDamage(stack));
         tooltip.add(Component.translatable(
                         "tooltip." + GregTechIdentity.REGISTRY_NAMESPACE + ".tool_crafting_uses",
                         Component.literal(GTCodeFormat.makeString(craftingUses)).withStyle(ChatFormatting.GREEN))

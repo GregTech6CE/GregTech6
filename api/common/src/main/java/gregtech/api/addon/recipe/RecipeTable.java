@@ -5,49 +5,78 @@ package gregtech.api.addon.recipe;
 import gregtech.api.addon.AddonNames;
 
 /**
- * A machine recipe table or a fuel table. The fields match. The two factories do not share
- * a name space: a machine table and a fuel table with the same fields are not equal.
+ * An immutable recipe table declaration. {@link #machine(String)} and {@link #fuel(String)}
+ * create builders for tables in separate namespaces.
  *
  * @param fuel true for a fuel table
- * @param name the registry name
- * @param title the display title
- * @param gui the gui texture path
- * @param inputItems item input slots
- * @param outputItems item output slots
- * @param minimalInputItems item inputs a recipe must use
- * @param inputFluids fluid input tanks
- * @param outputFluids fluid output tanks
- * @param minimalInputFluids fluid inputs a recipe must use
- * @param minimalInputs total inputs a recipe must use
- * @param needsOutputs true when a recipe needs room for its outputs
- * @param combinePower true when parallel recipes share one energy charge
- * @param bucketIn true when a bucket fills an input tank
- * @param bucketOut true when a bucket drains an output tank
+ * @param name registry name within the machine or fuel namespace
+ * @param presentation display title and GUI texture path
+ * @param itemSlots item input and output slots and the minimum item inputs
+ * @param fluidTanks fluid input and output tanks and the minimum fluid inputs
+ * @param rules total minimum inputs and processing options
  */
-public record RecipeTable(boolean fuel, String name, String title, String gui, int inputItems, int outputItems,
-                          int minimalInputItems, int inputFluids, int outputFluids, int minimalInputFluids,
-                          int minimalInputs, boolean needsOutputs, boolean combinePower, boolean bucketIn,
-                          boolean bucketOut) {
+public record RecipeTable(
+        boolean fuel,
+        String name,
+        Presentation presentation,
+        SlotCounts itemSlots,
+        SlotCounts fluidTanks,
+        Rules rules
+) {
     public RecipeTable {
         if (!AddonNames.matches(AddonNames.RECIPE_MAP, name))
             throw new IllegalArgumentException((fuel ? "Invalid fuel map name: " : "Invalid recipe map name: ") + name);
-        if (title == null) throw new IllegalArgumentException("Missing recipe table title");
-        if (!AddonNames.matches(AddonNames.TEXTURE, gui))
-            throw new IllegalArgumentException("Invalid recipe table gui texture: " + gui);
-        if (inputItems < 0 || outputItems < 0 || minimalInputItems < 0
-                || inputFluids < 0 || outputFluids < 0 || minimalInputFluids < 0 || minimalInputs < 0)
+        if (presentation == null || presentation.title() == null)
+            throw new IllegalArgumentException("Missing recipe table title");
+        if (!AddonNames.matches(AddonNames.TEXTURE, presentation.gui()))
+            throw new IllegalArgumentException("Invalid recipe table gui texture: " + presentation.gui());
+        if (itemSlots == null || fluidTanks == null || rules == null)
+            throw new IllegalArgumentException("Missing recipe table slot counts or rules on " + name);
+        if (itemSlots.hasNegativeCount() || fluidTanks.hasNegativeCount() || rules.minimalInputs() < 0)
             throw new IllegalArgumentException("Negative slot count on " + name);
-        if (minimalInputItems > inputItems)
+        if (itemSlots.minimumInputs() > itemSlots.inputs())
             throw new IllegalArgumentException("Minimal item inputs exceed the input slots on " + name);
-        if (minimalInputFluids > inputFluids)
+        if (fluidTanks.minimumInputs() > fluidTanks.inputs())
             throw new IllegalArgumentException("Minimal fluid inputs exceed the input tanks on " + name);
     }
 
     public boolean machine() { return !fuel; }
+    public String title() { return presentation.title(); }
+    public String gui() { return presentation.gui(); }
+    public int inputItems() { return itemSlots.inputs(); }
+    public int outputItems() { return itemSlots.outputs(); }
+    public int minimalInputItems() { return itemSlots.minimumInputs(); }
+    public int inputFluids() { return fluidTanks.inputs(); }
+    public int outputFluids() { return fluidTanks.outputs(); }
+    public int minimalInputFluids() { return fluidTanks.minimumInputs(); }
+    public int minimalInputs() { return rules.minimalInputs(); }
+    public boolean needsOutputs() { return rules.needsOutputs(); }
+    public boolean combinePower() { return rules.combinePower(); }
+    public boolean bucketIn() { return rules.bucketIn(); }
+    public boolean bucketOut() { return rules.bucketOut(); }
 
     public static Builder machine(String name) { return new Builder(false, name); }
 
     public static Builder fuel(String name) { return new Builder(true, name); }
+
+    public record Presentation(String title, String gui) {}
+
+    /** Input and output capacity and the minimum number of inputs a recipe must use. */
+    public record SlotCounts(int inputs, int outputs, int minimumInputs) {
+        private boolean hasNegativeCount() {
+            return inputs < 0 || outputs < 0 || minimumInputs < 0;
+        }
+    }
+
+    /**
+     * @param minimalInputs total inputs a recipe must use
+     * @param needsOutputs true when a recipe needs room for its outputs
+     * @param combinePower true when parallel recipes share one energy charge
+     * @param bucketIn true when a bucket fills an input tank
+     * @param bucketOut true when a bucket drains an output tank
+     */
+    public record Rules(int minimalInputs, boolean needsOutputs, boolean combinePower, boolean bucketIn,
+                        boolean bucketOut) {}
 
     public static final class Builder {
         private final boolean fuel;
@@ -86,9 +115,10 @@ public record RecipeTable(boolean fuel, String name, String title, String gui, i
         public Builder bucketOut(boolean value) { bucketOut = value; return this; }
 
         public RecipeTable build() {
-            return new RecipeTable(fuel, name, title, gui, inputItems, outputItems, minimalInputItems,
-                    inputFluids, outputFluids, minimalInputFluids, minimalInputs,
-                    needsOutputs, combinePower, bucketIn, bucketOut);
+            return new RecipeTable(fuel, name, new Presentation(title, gui),
+                    new SlotCounts(inputItems, outputItems, minimalInputItems),
+                    new SlotCounts(inputFluids, outputFluids, minimalInputFluids),
+                    new Rules(minimalInputs, needsOutputs, combinePower, bucketIn, bucketOut));
         }
     }
 }

@@ -1,4056 +1,1059 @@
+/* GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later.
+ * Shaped patterns from the original Loader_MultiTileEntities. */
 package gregtech.content.data;
 
+import static gregtech.content.data.BasicMachineCraftingRecipes.Casing.*;
+import static gregtech.content.data.BasicMachineCraftingRecipes.ComponentType.*;
+import static gregtech.content.data.BasicMachineCraftingRecipes.ItemRef.*;
+import static gregtech.content.data.BasicMachineCraftingRecipes.TagRef.*;
+import static gregtech.content.data.MaterialPrefix.*;
+import static gregtech.engine.machine.PipeSpec.PipeSize.*;
+
+import gregtech.api.material.GTMaterial;
+import gregtech.content.material.Materials;
+import gregtech.content.material.generated.OreMaterials;
+import gregtech.engine.machine.CrucibleSpec;
+import gregtech.engine.machine.OriginalSmelteryDefinitions;
+import gregtech.engine.machine.PipeSpec.PipeSize;
+import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.tool.ToolDefinition;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-/**
- * Crafting-recipe table for the single-block machines, copied from the original
- * GregTech 6 {@code Loader_MultiTileEntities} "Basic Machines" registrations.
- * <p>
- * Maintained by hand; each entry keeps the original pattern rows and key symbols verbatim.
- * Ingredient
- * translation to 1.20.1 registry objects happens in {@link MachineRecipeIngredients}.
- * </p>
- *
- * @see MachineRecipeIngredients
- */
+/** Shaped crafting from GT6 Loader_MultiTileEntities, shared across each machine family's tiers. */
 public final class BasicMachineCraftingRecipes {
-    /** One machine variant: port machine type, port tier, pattern rows joined by '|' and key symbols. */
-    public record Entry(String machine, int tier, String pattern, Map<Character, String> keys) {
-        public String[] rows() {
-            return pattern.split("\\|", -1);
-        }
-    }
-
-    public static final List<Entry> ENTRIES = List.of(
-            new Entry(
-                    "oven",
-                    1,
-                    "wMh|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "oven",
-                    2,
-                    "wMh|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "oven",
-                    3,
-                    "wMh|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "oven",
-                    4,
-                    "wMh|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "roaster",
-                    1,
-                    "wPh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "roaster",
-                    2,
-                    "wPh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "roaster",
-                    3,
-                    "wPh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "roaster",
-                    4,
-                    "wPh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "distillery",
-                    1,
-                    "GPG|WMW|hCw",
-                    Map.of(
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'G',
-                            "tag:gt6ce:glass_colorless",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:tiny@StainlessSteel",
-                            'W',
-                            "wire:2@Constantan",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "distillery",
-                    2,
-                    "GPG|WMW|hCw",
-                    Map.of(
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'G',
-                            "tag:gt6ce:glass_colorless",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:small@StainlessSteel",
-                            'W',
-                            "wire:4@Kanthal",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "distillery",
-                    3,
-                    "GPG|WMW|hCw",
-                    Map.of(
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'G',
-                            "tag:gt6ce:glass_colorless",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium@StainlessSteel",
-                            'W',
-                            "wire:8@Nichrome",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "distillery",
-                    4,
-                    "GPG|WMW|hCw",
-                    Map.of(
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'G',
-                            "tag:gt6ce:glass_colorless",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:large@StainlessSteel",
-                            'W',
-                            "wire:16@Carborundum",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "extruder",
-                    1,
-                    "GPw|PMS|GPD",
-                    Map.of(
-                            'D',
-                            "mat:dust@Diamond",
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plate@Steel",
-                            'S',
-                            "mat:toolHeadBuzzSaw@Steel",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "extruder",
-                    2,
-                    "GPw|PMS|GPD",
-                    Map.of(
-                            'D',
-                            "mat:dust@Diamond",
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateDouble@TungstenCarbide",
-                            'S',
-                            "mat:toolHeadBuzzSaw@TungstenCarbide",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "extruder",
-                    3,
-                    "GPw|PMS|GPD",
-                    Map.of(
-                            'D',
-                            "mat:dust@Diamond",
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateTriple@TungstenCarbide",
-                            'S',
-                            "mat:toolHeadBuzzSaw@TungstenCarbide",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "extruder",
-                    4,
-                    "GPw|PMS|GPD",
-                    Map.of(
-                            'D',
-                            "mat:dust@Diamond",
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateQuadruple@TungstenCarbide",
-                            'S',
-                            "mat:toolHeadBuzzSaw@TungstenCarbide",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "smelter",
-                    1,
-                    "wUh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium",
-                            'U',
-                            "item:gt6ce:smelting_crucible_tungsten",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "smelter",
-                    2,
-                    "wUh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium",
-                            'U',
-                            "item:gt6ce:smelting_crucible_carbon",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "smelter",
-                    3,
-                    "wUh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium",
-                            'U',
-                            "item:gt6ce:smelting_crucible_carbon",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "smelter",
-                    4,
-                    "wUh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium",
-                            'U',
-                            "item:gt6ce:smelting_crucible_ta4hfc5",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "crystallisationcrucible",
-                    1,
-                    "wUh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "pipe:medium",
-                            'U',
-                            "item:gt6ce:smelting_crucible_quartz",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "crystallisationcrucible",
-                    2,
-                    "wUh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "pipe:medium",
-                            'U',
-                            "item:gt6ce:smelting_crucible_iridium",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "crystallisationcrucible",
-                    3,
-                    "wUh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "pipe:medium",
-                            'U',
-                            "item:gt6ce:smelting_crucible_iridium",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "crystallisationcrucible",
-                    4,
-                    "wUh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "pipe:medium",
-                            'U',
-                            "item:gt6ce:smelting_crucible_iridium",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "dryer",
-                    1,
-                    "wPh|BMB|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "dryer",
-                    2,
-                    "wPh|BMB|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "dryer",
-                    3,
-                    "wPh|BMB|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "dryer",
-                    4,
-                    "wPh|BMB|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "laminator",
-                    1,
-                    "SwS|GMG|SCS",
-                    Map.of(
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stick",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "laminator",
-                    2,
-                    "SwS|GMG|SCS",
-                    Map.of(
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stick",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "laminator",
-                    3,
-                    "SwS|GMG|SCS",
-                    Map.of(
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stick",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "laminator",
-                    4,
-                    "SwS|GMG|SCS",
-                    Map.of(
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stick",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "catalyticcracker",
-                    1,
-                    "IPI|ZMZ|ICI",
-                    Map.of(
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'I',
-                            "mat:plateDouble@Invar",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "pipe:quadruple",
-                            'Z',
-                            "mat:dust@Zeolite")),
-            new Entry(
-                    "catalyticcracker",
-                    2,
-                    "IPI|ZMZ|ICI",
-                    Map.of(
-                            'C',
-                            "mat:plateTriple@Copper",
-                            'I',
-                            "mat:plateTriple@Invar",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "pipe:quadruple",
-                            'Z',
-                            "mat:dust@Zeolite")),
-            new Entry(
-                    "catalyticcracker",
-                    3,
-                    "IPI|ZMZ|ICI",
-                    Map.of(
-                            'C',
-                            "mat:plateQuadruple@Copper",
-                            'I',
-                            "mat:plateQuadruple@Invar",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "pipe:quadruple",
-                            'Z',
-                            "mat:dust@Zeolite")),
-            new Entry(
-                    "catalyticcracker",
-                    4,
-                    "IPI|ZMZ|ICI",
-                    Map.of(
-                            'C',
-                            "mat:plateQuintuple@Copper",
-                            'I',
-                            "mat:plateQuintuple@Invar",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "pipe:quadruple",
-                            'Z',
-                            "mat:dust@Zeolite")),
-            new Entry(
-                    "steamcracker",
-                    1,
-                    "IwI|PMP|ICI",
-                    Map.of(
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'I',
-                            "mat:plateDouble@Invar",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "pipe:medium",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "steamcracker",
-                    2,
-                    "IwI|PMP|ICI",
-                    Map.of(
-                            'C',
-                            "mat:plateTriple@Copper",
-                            'I',
-                            "mat:plateTriple@Invar",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "pipe:medium",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "steamcracker",
-                    3,
-                    "IwI|PMP|ICI",
-                    Map.of(
-                            'C',
-                            "mat:plateQuadruple@Copper",
-                            'I',
-                            "mat:plateQuadruple@Invar",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "pipe:medium",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "steamcracker",
-                    4,
-                    "IwI|PMP|ICI",
-                    Map.of(
-                            'C',
-                            "mat:plateQuintuple@Copper",
-                            'I',
-                            "mat:plateQuintuple@Invar",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "pipe:medium",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "shredder",
-                    1,
-                    "GDG|hMw",
-                    Map.of(
-                            'D',
-                            "mat:plateGem@Diamond",
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "shredder",
-                    2,
-                    "GDG|hMw",
-                    Map.of(
-                            'D',
-                            "mat:plateGem@Diamond",
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "shredder",
-                    3,
-                    "GDG|hMw",
-                    Map.of(
-                            'D',
-                            "mat:plateGem@Diamond",
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "shredder",
-                    4,
-                    "GDG|hMw",
-                    Map.of(
-                            'D',
-                            "mat:plateGem@Diamond",
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "lathe",
-                    1,
-                    "TDS|dMG",
-                    Map.of(
-                            'D',
-                            "mat:plateGemTiny@Diamond",
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver")),
-            new Entry(
-                    "lathe",
-                    2,
-                    "TDS|dMG",
-                    Map.of(
-                            'D',
-                            "mat:plateGemTiny@Diamond",
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver")),
-            new Entry(
-                    "lathe",
-                    3,
-                    "TDS|dMG",
-                    Map.of(
-                            'D',
-                            "mat:plateGemTiny@Diamond",
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver")),
-            new Entry(
-                    "lathe",
-                    4,
-                    "TDS|dMG",
-                    Map.of(
-                            'D',
-                            "mat:plateGemTiny@Diamond",
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver")),
-            new Entry(
-                    "buzzsaw",
-                    1,
-                    "DGS|wMS",
-                    Map.of(
-                            'D',
-                            "mat:dust@Diamond",
-                            'G',
-                            "mat:toolHeadBuzzSaw@Steel",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "buzzsaw",
-                    2,
-                    "DGS|wMS",
-                    Map.of(
-                            'D',
-                            "mat:dust@Diamond",
-                            'G',
-                            "mat:toolHeadBuzzSaw@CobaltBrass",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "buzzsaw",
-                    3,
-                    "DGS|wMS",
-                    Map.of(
-                            'D',
-                            "mat:dust@Diamond",
-                            'G',
-                            "mat:toolHeadBuzzSaw@CobaltBrass",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "buzzsaw",
-                    4,
-                    "DGS|wMS",
-                    Map.of(
-                            'D',
-                            "mat:dust@Diamond",
-                            'G',
-                            "mat:toolHeadBuzzSaw@CobaltBrass",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "centrifuge",
-                    1,
-                    "Gw|SM|Gh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "centrifuge",
-                    2,
-                    "Gw|SM|Gh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "centrifuge",
-                    3,
-                    "Gw|SM|Gh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "centrifuge",
-                    4,
-                    "Gw|SM|Gh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "rollingmill",
-                    1,
-                    "Gh|M |Gw",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "rollingmill",
-                    2,
-                    "Gh|M |Gw",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "rollingmill",
-                    3,
-                    "Gh|M |Gw",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "rollingmill",
-                    4,
-                    "Gh|M |Gw",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "rollbender",
-                    1,
-                    "wS |GMG| Sh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "rollbender",
-                    2,
-                    "wS |GMG| Sh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "rollbender",
-                    3,
-                    "wS |GMG| Sh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "rollbender",
-                    4,
-                    "wS |GMG| Sh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "rollformer",
-                    1,
-                    "wG |GMG| Gh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "rollformer",
-                    2,
-                    "wG |GMG| Gh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "rollformer",
-                    3,
-                    "wG |GMG| Gh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "rollformer",
-                    4,
-                    "wG |GMG| Gh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "clustermill",
-                    1,
-                    "SSS|wGh|SMS",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineQuadruple",
-                            'S',
-                            "mat:gearGtSmall",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "clustermill",
-                    2,
-                    "SSS|wGh|SMS",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineQuadruple",
-                            'S',
-                            "mat:gearGtSmall",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "clustermill",
-                    3,
-                    "SSS|wGh|SMS",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineQuadruple",
-                            'S',
-                            "mat:gearGtSmall",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "clustermill",
-                    4,
-                    "SSS|wGh|SMS",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineQuadruple",
-                            'S',
-                            "mat:gearGtSmall",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "wiremill",
-                    1,
-                    "SGS|wMh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:gearGtSmall",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "wiremill",
-                    2,
-                    "SGS|wMh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:gearGtSmall",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "wiremill",
-                    3,
-                    "SGS|wMh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:gearGtSmall",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "wiremill",
-                    4,
-                    "SGS|wMh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:gearGtSmall",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "mixer",
-                    1,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "mat:stick",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "mixer",
-                    2,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateDouble@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "mat:stick",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "mixer",
-                    3,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateTriple@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "mat:stick",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "mixer",
-                    4,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateQuadruple@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "mat:stick",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "loom",
-                    1,
-                    "ShS|GMG|SwS",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "loom",
-                    2,
-                    "ShS|GMG|SwS",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "loom",
-                    3,
-                    "ShS|GMG|SwS",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "loom",
-                    4,
-                    "ShS|GMG|SwS",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "sluice",
-                    1,
-                    "PPP|RGR|GMG",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateDouble",
-                            'R',
-                            "mat:rotor")),
-            new Entry(
-                    "sluice",
-                    2,
-                    "PPP|RGR|GMG",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateDouble",
-                            'R',
-                            "mat:rotor")),
-            new Entry(
-                    "sluice",
-                    3,
-                    "PPP|RGR|GMG",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateDouble",
-                            'R',
-                            "mat:rotor")),
-            new Entry(
-                    "sluice",
-                    4,
-                    "PPP|RGR|GMG",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateDouble",
-                            'R',
-                            "mat:rotor")),
-            new Entry(
-                    "sander",
-                    1,
-                    "SGS|XXX|wMh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'X',
-                            "tag:forge:sandstone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "sander",
-                    2,
-                    "SGS|XXX|wMh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'X',
-                            "tag:forge:sandstone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "sander",
-                    3,
-                    "SGS|XXX|wMh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'X',
-                            "tag:forge:sandstone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "sander",
-                    4,
-                    "SGS|XXX|wMh",
-                    Map.of(
-                            'G',
-                            "mat:gearGt",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:gearGtSmall",
-                            'X',
-                            "tag:forge:sandstone",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "burnmixer",
-                    1,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate@Invar",
-                            'R',
-                            "mat:rotor@Invar",
-                            'S',
-                            "mat:stick",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "burnmixer",
-                    2,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateDouble@Invar",
-                            'R',
-                            "mat:rotor@Invar",
-                            'S',
-                            "mat:stick",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "burnmixer",
-                    3,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateTriple@Invar",
-                            'R',
-                            "mat:rotor@Invar",
-                            'S',
-                            "mat:stick",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "burnmixer",
-                    4,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateQuadruple@Invar",
-                            'R',
-                            "mat:rotor@Invar",
-                            'S',
-                            "mat:stick",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "debarker",
-                    1,
-                    "RPG|wMG",
-                    Map.of(
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:small@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "debarker",
-                    2,
-                    "RPG|wMG",
-                    Map.of(
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "debarker",
-                    3,
-                    "RPG|wMG",
-                    Map.of(
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:large@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "debarker",
-                    4,
-                    "RPG|wMG",
-                    Map.of(
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:huge@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "crusher",
-                    1,
-                    "DMD|hSw",
-                    Map.of(
-                            'D',
-                            "mat:gem@Diamond",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:spring",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "crusher",
-                    2,
-                    "DMD|hSw",
-                    Map.of(
-                            'D',
-                            "mat:gem@Diamond",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:spring",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "crusher",
-                    3,
-                    "DMD|hSw",
-                    Map.of(
-                            'D',
-                            "mat:gem@Diamond",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:spring",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "crusher",
-                    4,
-                    "DMD|hSw",
-                    Map.of(
-                            'D',
-                            "mat:gem@Diamond",
-                            'M',
-                            "block:casingMachineDouble",
-                            'S',
-                            "mat:spring",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "sifter",
-                    1,
-                    "WxW|RMR|SwS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'W',
-                            "mat:wireFine",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "sifter",
-                    2,
-                    "WxW|RMR|SwS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'W',
-                            "mat:wireFine",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "sifter",
-                    3,
-                    "WxW|RMR|SwS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'W',
-                            "mat:wireFine",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "sifter",
-                    4,
-                    "WxW|RMR|SwS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'W',
-                            "mat:wireFine",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "squeezer",
-                    1,
-                    "RS|PM|Pw",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateTriple",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "squeezer",
-                    2,
-                    "RS|PM|Pw",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateTriple",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "squeezer",
-                    3,
-                    "RS|PM|Pw",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateTriple",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "squeezer",
-                    4,
-                    "RS|PM|Pw",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateTriple",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "compressor",
-                    1,
-                    "PPR|wMS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateQuintuple",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "compressor",
-                    2,
-                    "PPR|wMS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateQuintuple",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "compressor",
-                    3,
-                    "PPR|wMS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateQuintuple",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "compressor",
-                    4,
-                    "PPR|wMS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'P',
-                            "mat:plateQuintuple",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "press",
-                    1,
-                    "RS|PM|Pw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "press",
-                    2,
-                    "RS|PM|Pw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "press",
-                    3,
-                    "RS|PM|Pw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "press",
-                    4,
-                    "RS|PM|Pw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "mat:spring",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electrolyzer",
-                    1,
-                    "SMS|WwW",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "wire:1@Platinum",
-                            'W',
-                            "cabletier:1",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electrolyzer",
-                    2,
-                    "SMS|WwW",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "wire:1@Platinum",
-                            'W',
-                            "cabletier:2",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electrolyzer",
-                    3,
-                    "SMS|WwW",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "wire:1@Platinum",
-                            'W',
-                            "cabletier:3",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electrolyzer",
-                    4,
-                    "SMS|WwW",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "wire:1@Platinum",
-                            'W',
-                            "cabletier:4",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electrolyzer",
-                    5,
-                    "SMS|WwW",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "wire:1@Platinum",
-                            'W',
-                            "cabletier:5",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "canner",
-                    1,
-                    "wPh|XMX|CPW",
-                    Map.of(
-                            'C',
-                            "circuit:1",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:tiny@StainlessSteel",
-                            'W',
-                            "cabletier:1",
-                            'X',
-                            "il:PUMPS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "canner",
-                    2,
-                    "wPh|XMX|CPW",
-                    Map.of(
-                            'C',
-                            "circuit:2",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:small@StainlessSteel",
-                            'W',
-                            "cabletier:2",
-                            'X',
-                            "il:PUMPS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "canner",
-                    3,
-                    "wPh|XMX|CPW",
-                    Map.of(
-                            'C',
-                            "circuit:3",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium@StainlessSteel",
-                            'W',
-                            "cabletier:3",
-                            'X',
-                            "il:PUMPS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "canner",
-                    4,
-                    "wPh|XMX|CPW",
-                    Map.of(
-                            'C',
-                            "circuit:4",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:large@StainlessSteel",
-                            'W',
-                            "cabletier:4",
-                            'X',
-                            "il:PUMPS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "canner",
-                    5,
-                    "wPh|XMX|CPW",
-                    Map.of(
-                            'C',
-                            "circuit:5",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:huge@StainlessSteel",
-                            'W',
-                            "cabletier:5",
-                            'X',
-                            "il:PUMPS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "injector",
-                    1,
-                    "XPw|CMW",
-                    Map.of(
-                            'C',
-                            "circuit:1",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:tiny@StainlessSteel",
-                            'W',
-                            "cabletier:1",
-                            'X',
-                            "il:PISTONS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "injector",
-                    2,
-                    "XPw|CMW",
-                    Map.of(
-                            'C',
-                            "circuit:2",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:small@StainlessSteel",
-                            'W',
-                            "cabletier:2",
-                            'X',
-                            "il:PISTONS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "injector",
-                    3,
-                    "XPw|CMW",
-                    Map.of(
-                            'C',
-                            "circuit:3",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:medium@StainlessSteel",
-                            'W',
-                            "cabletier:3",
-                            'X',
-                            "il:PISTONS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "injector",
-                    4,
-                    "XPw|CMW",
-                    Map.of(
-                            'C',
-                            "circuit:4",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:large@StainlessSteel",
-                            'W',
-                            "cabletier:4",
-                            'X',
-                            "il:PISTONS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "injector",
-                    5,
-                    "XPw|CMW",
-                    Map.of(
-                            'C',
-                            "circuit:5",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:huge@StainlessSteel",
-                            'W',
-                            "cabletier:5",
-                            'X',
-                            "il:PISTONS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "printer",
-                    1,
-                    "CPC|wXh|WMW",
-                    Map.of(
-                            'C',
-                            "circuit:1",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:tiny@StainlessSteel",
-                            'W',
-                            "cabletier:1",
-                            'X',
-                            "il:CONVEYERS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "printer",
-                    2,
-                    "CPC|wXh|WMW",
-                    Map.of(
-                            'C',
-                            "circuit:2",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:tiny@StainlessSteel",
-                            'W',
-                            "cabletier:2",
-                            'X',
-                            "il:CONVEYERS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "printer",
-                    3,
-                    "CPC|wXh|WMW",
-                    Map.of(
-                            'C',
-                            "circuit:3",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:tiny@StainlessSteel",
-                            'W',
-                            "cabletier:3",
-                            'X',
-                            "il:CONVEYERS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "printer",
-                    4,
-                    "CPC|wXh|WMW",
-                    Map.of(
-                            'C',
-                            "circuit:4",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:tiny@StainlessSteel",
-                            'W',
-                            "cabletier:4",
-                            'X',
-                            "il:CONVEYERS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "printer",
-                    5,
-                    "CPC|wXh|WMW",
-                    Map.of(
-                            'C',
-                            "circuit:5",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:tiny@StainlessSteel",
-                            'W',
-                            "cabletier:5",
-                            'X',
-                            "il:CONVEYERS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "scannervisuals",
-                    1,
-                    "CPC|wXh|WMW",
-                    Map.of(
-                            'C',
-                            "circuit:1",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate@Lumium",
-                            'W',
-                            "cabletier:1",
-                            'X',
-                            "il:CONVEYERS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "scannervisuals",
-                    2,
-                    "CPC|wXh|WMW",
-                    Map.of(
-                            'C',
-                            "circuit:2",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate@Lumium",
-                            'W',
-                            "cabletier:2",
-                            'X',
-                            "il:CONVEYERS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "scannervisuals",
-                    3,
-                    "CPC|wXh|WMW",
-                    Map.of(
-                            'C',
-                            "circuit:3",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate@Lumium",
-                            'W',
-                            "cabletier:3",
-                            'X',
-                            "il:CONVEYERS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "scannervisuals",
-                    4,
-                    "CPC|wXh|WMW",
-                    Map.of(
-                            'C',
-                            "circuit:4",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate@Lumium",
-                            'W',
-                            "cabletier:4",
-                            'X',
-                            "il:CONVEYERS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "scannervisuals",
-                    5,
-                    "CPC|wXh|WMW",
-                    Map.of(
-                            'C',
-                            "circuit:5",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate@Lumium",
-                            'W',
-                            "cabletier:5",
-                            'X',
-                            "il:CONVEYERS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "autocrafter",
-                    1,
-                    "WRW|RwR|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:1",
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "il:ROBOT_ARMS",
-                            'W',
-                            "cabletier:1",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "autocrafter",
-                    2,
-                    "WRW|RwR|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:2",
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "il:ROBOT_ARMS",
-                            'W',
-                            "cabletier:2",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "autocrafter",
-                    3,
-                    "WRW|RwR|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:3",
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "il:ROBOT_ARMS",
-                            'W',
-                            "cabletier:3",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "autocrafter",
-                    4,
-                    "WRW|RwR|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:4",
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "il:ROBOT_ARMS",
-                            'W',
-                            "cabletier:4",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "autocrafter",
-                    5,
-                    "WRW|RwR|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:5",
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "il:ROBOT_ARMS",
-                            'W',
-                            "cabletier:5",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electricmixer",
-                    1,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "il:MOTORS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electricmixer",
-                    2,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateDouble@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "il:MOTORS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electricmixer",
-                    3,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateTriple@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "il:MOTORS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electricmixer",
-                    4,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateQuadruple@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "il:MOTORS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electricmixer",
-                    5,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateQuadruple@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "il:MOTORS",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electricloom",
-                    1,
-                    "ShS|GMG|SwS",
-                    Map.of(
-                            'G',
-                            "il:MOTORS",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electricloom",
-                    2,
-                    "ShS|GMG|SwS",
-                    Map.of(
-                            'G',
-                            "il:MOTORS",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electricloom",
-                    3,
-                    "ShS|GMG|SwS",
-                    Map.of(
-                            'G',
-                            "il:MOTORS",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electricloom",
-                    4,
-                    "ShS|GMG|SwS",
-                    Map.of(
-                            'G',
-                            "il:MOTORS",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electricloom",
-                    5,
-                    "ShS|GMG|SwS",
-                    Map.of(
-                            'G',
-                            "il:MOTORS",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "mat:stickLong",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "electricsifter",
-                    1,
-                    "WxW|RMR|SwS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "il:PISTONS",
-                            'W',
-                            "mat:wireFine",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "electricsifter",
-                    2,
-                    "WxW|RMR|SwS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "il:PISTONS",
-                            'W',
-                            "mat:wireFine",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "electricsifter",
-                    3,
-                    "WxW|RMR|SwS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "il:PISTONS",
-                            'W',
-                            "mat:wireFine",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "electricsifter",
-                    4,
-                    "WxW|RMR|SwS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "il:PISTONS",
-                            'W',
-                            "mat:wireFine",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "electricsifter",
-                    5,
-                    "WxW|RMR|SwS",
-                    Map.of(
-                            'M',
-                            "block:casingMachineDouble",
-                            'R',
-                            "mat:stick",
-                            'S',
-                            "il:PISTONS",
-                            'W',
-                            "mat:wireFine",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "slicer",
-                    1,
-                    "PRw|YMC",
-                    Map.of(
-                            'C',
-                            "circuit:1",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'R',
-                            "mat:stick",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "slicer",
-                    2,
-                    "PRw|YMC",
-                    Map.of(
-                            'C',
-                            "circuit:2",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'R',
-                            "mat:stick",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "slicer",
-                    3,
-                    "PRw|YMC",
-                    Map.of(
-                            'C',
-                            "circuit:3",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'R',
-                            "mat:stick",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "slicer",
-                    4,
-                    "PRw|YMC",
-                    Map.of(
-                            'C',
-                            "circuit:4",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'R',
-                            "mat:stick",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "slicer",
-                    5,
-                    "PRw|YMC",
-                    Map.of(
-                            'C',
-                            "circuit:5",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'R',
-                            "mat:stick",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "nanofab",
-                    1,
-                    "KAX|ZMY|CSC",
-                    Map.of(
-                            'A',
-                            "item:gt6ce:laser_emitter_argon",
-                            'C',
-                            "circuit:6",
-                            'K',
-                            "item:gt6ce:laser_emitter_krypton",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire",
-                            'X',
-                            "item:gt6ce:laser_emitter_xenon",
-                            'Y',
-                            "il:EMITTERS",
-                            'Z',
-                            "il:SENSORS")),
-            new Entry(
-                    "nanofab",
-                    2,
-                    "KAX|ZMY|CSC",
-                    Map.of(
-                            'A',
-                            "item:gt6ce:laser_emitter_argon",
-                            'C',
-                            "circuit:6",
-                            'K',
-                            "item:gt6ce:laser_emitter_krypton",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire",
-                            'X',
-                            "item:gt6ce:laser_emitter_xenon",
-                            'Y',
-                            "il:EMITTERS",
-                            'Z',
-                            "il:SENSORS")),
-            new Entry(
-                    "nanofab",
-                    3,
-                    "KAX|ZMY|CSC",
-                    Map.of(
-                            'A',
-                            "item:gt6ce:laser_emitter_argon",
-                            'C',
-                            "circuit:6",
-                            'K',
-                            "item:gt6ce:laser_emitter_krypton",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire",
-                            'X',
-                            "item:gt6ce:laser_emitter_xenon",
-                            'Y',
-                            "il:EMITTERS",
-                            'Z',
-                            "il:SENSORS")),
-            new Entry(
-                    "nanofab",
-                    4,
-                    "KAX|ZMY|CSC",
-                    Map.of(
-                            'A',
-                            "item:gt6ce:laser_emitter_argon",
-                            'C',
-                            "circuit:6",
-                            'K',
-                            "item:gt6ce:laser_emitter_krypton",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire",
-                            'X',
-                            "item:gt6ce:laser_emitter_xenon",
-                            'Y',
-                            "il:EMITTERS",
-                            'Z',
-                            "il:SENSORS")),
-            new Entry(
-                    "nanofab",
-                    5,
-                    "KAX|ZMY|CSC",
-                    Map.of(
-                            'A',
-                            "item:gt6ce:laser_emitter_argon",
-                            'C',
-                            "circuit:6",
-                            'K',
-                            "item:gt6ce:laser_emitter_krypton",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire",
-                            'X',
-                            "item:gt6ce:laser_emitter_xenon",
-                            'Y',
-                            "il:EMITTERS",
-                            'Z',
-                            "il:SENSORS")),
-            new Entry(
-                    "plantalyzer",
-                    1,
-                    "WXW|ZMP|CYC",
-                    Map.of(
-                            'C',
-                            "circuit:1",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "item:gt6ce:crystal_processor_diamond",
-                            'W',
-                            "cabletier:1",
-                            'X',
-                            "il:EMITTERS",
-                            'Y',
-                            "il:SENSORS",
-                            'Z',
-                            "tag:gt6ce:saplings")),
-            new Entry(
-                    "plantalyzer",
-                    2,
-                    "WXW|ZMP|CYC",
-                    Map.of(
-                            'C',
-                            "circuit:2",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "item:gt6ce:crystal_processor_diamond",
-                            'W',
-                            "cabletier:2",
-                            'X',
-                            "il:EMITTERS",
-                            'Y',
-                            "il:SENSORS",
-                            'Z',
-                            "tag:gt6ce:saplings")),
-            new Entry(
-                    "plantalyzer",
-                    3,
-                    "WXW|ZMP|CYC",
-                    Map.of(
-                            'C',
-                            "circuit:3",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "item:gt6ce:crystal_processor_diamond",
-                            'W',
-                            "cabletier:3",
-                            'X',
-                            "il:EMITTERS",
-                            'Y',
-                            "il:SENSORS",
-                            'Z',
-                            "tag:gt6ce:saplings")),
-            new Entry(
-                    "plantalyzer",
-                    4,
-                    "WXW|ZMP|CYC",
-                    Map.of(
-                            'C',
-                            "circuit:4",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "item:gt6ce:crystal_processor_diamond",
-                            'W',
-                            "cabletier:4",
-                            'X',
-                            "il:EMITTERS",
-                            'Y',
-                            "il:SENSORS",
-                            'Z',
-                            "tag:gt6ce:saplings")),
-            new Entry(
-                    "plantalyzer",
-                    5,
-                    "WXW|ZMP|CYC",
-                    Map.of(
-                            'C',
-                            "circuit:5",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "item:gt6ce:crystal_processor_diamond",
-                            'W',
-                            "cabletier:5",
-                            'X',
-                            "il:EMITTERS",
-                            'Y',
-                            "il:SENSORS",
-                            'Z',
-                            "tag:gt6ce:saplings")),
-            new Entry(
-                    "bumblelyzer",
-                    1,
-                    "WXW|ZMP|CYC",
-                    Map.of(
-                            'C',
-                            "circuit:1",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "item:gt6ce:crystal_processor_diamond",
-                            'W',
-                            "cabletier:1",
-                            'X',
-                            "il:EMITTERS",
-                            'Y',
-                            "il:SENSORS",
-                            'Z',
-                            "item:minecraft:honey_bottle;container1000:Honey")),
-            new Entry(
-                    "bumblelyzer",
-                    2,
-                    "WXW|ZMP|CYC",
-                    Map.of(
-                            'C',
-                            "circuit:2",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "item:gt6ce:crystal_processor_diamond",
-                            'W',
-                            "cabletier:2",
-                            'X',
-                            "il:EMITTERS",
-                            'Y',
-                            "il:SENSORS",
-                            'Z',
-                            "item:minecraft:honey_bottle;container1000:Honey")),
-            new Entry(
-                    "bumblelyzer",
-                    3,
-                    "WXW|ZMP|CYC",
-                    Map.of(
-                            'C',
-                            "circuit:3",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "item:gt6ce:crystal_processor_diamond",
-                            'W',
-                            "cabletier:3",
-                            'X',
-                            "il:EMITTERS",
-                            'Y',
-                            "il:SENSORS",
-                            'Z',
-                            "item:minecraft:honey_bottle;container1000:Honey")),
-            new Entry(
-                    "bumblelyzer",
-                    4,
-                    "WXW|ZMP|CYC",
-                    Map.of(
-                            'C',
-                            "circuit:4",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "item:gt6ce:crystal_processor_diamond",
-                            'W',
-                            "cabletier:4",
-                            'X',
-                            "il:EMITTERS",
-                            'Y',
-                            "il:SENSORS",
-                            'Z',
-                            "item:minecraft:honey_bottle;container1000:Honey")),
-            new Entry(
-                    "bumblelyzer",
-                    5,
-                    "WXW|ZMP|CYC",
-                    Map.of(
-                            'C',
-                            "circuit:5",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "item:gt6ce:crystal_processor_diamond",
-                            'W',
-                            "cabletier:5",
-                            'X',
-                            "il:EMITTERS",
-                            'Y',
-                            "il:SENSORS",
-                            'Z',
-                            "item:minecraft:honey_bottle;container1000:Honey")),
-            new Entry(
-                    "boxinator",
-                    1,
-                    "wP|CY|CM",
-                    Map.of(
-                            'C',
-                            "circuit:1",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "boxinator",
-                    2,
-                    "wP|CY|CM",
-                    Map.of(
-                            'C',
-                            "circuit:2",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "boxinator",
-                    3,
-                    "wP|CY|CM",
-                    Map.of(
-                            'C',
-                            "circuit:3",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "boxinator",
-                    4,
-                    "wP|CY|CM",
-                    Map.of(
-                            'C',
-                            "circuit:4",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "boxinator",
-                    5,
-                    "wP|CY|CM",
-                    Map.of(
-                            'C',
-                            "circuit:5",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "unboxinator",
-                    1,
-                    "Pw|YC|MC",
-                    Map.of(
-                            'C',
-                            "circuit:1",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "unboxinator",
-                    2,
-                    "Pw|YC|MC",
-                    Map.of(
-                            'C',
-                            "circuit:2",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "unboxinator",
-                    3,
-                    "Pw|YC|MC",
-                    Map.of(
-                            'C',
-                            "circuit:3",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "unboxinator",
-                    4,
-                    "Pw|YC|MC",
-                    Map.of(
-                            'C',
-                            "circuit:4",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "unboxinator",
-                    5,
-                    "Pw|YC|MC",
-                    Map.of(
-                            'C',
-                            "circuit:5",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "il:PISTONS",
-                            'Y',
-                            "il:CONVEYERS",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "polarizer",
-                    1,
-                    "TwT|PMP|TdT",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "polarizer",
-                    2,
-                    "TwT|PMP|TdT",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "polarizer",
-                    3,
-                    "TwT|PMP|TdT",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "polarizer",
-                    4,
-                    "TwT|PMP|TdT",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "polarizer",
-                    5,
-                    "TwT|PMP|TdT",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "magneticseparator",
-                    1,
-                    "TwT|TdT|PMP",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "magneticseparator",
-                    2,
-                    "TwT|TdT|PMP",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "magneticseparator",
-                    3,
-                    "TwT|TdT|PMP",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "magneticseparator",
-                    4,
-                    "TwT|TdT|PMP",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "magneticseparator",
-                    5,
-                    "TwT|TdT|PMP",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "laserengraver",
-                    1,
-                    "TdT|GPG|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:1",
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "tag:gt6ce:crafting_hardened_clay",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver")),
-            new Entry(
-                    "laserengraver",
-                    2,
-                    "TdT|GPG|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:2",
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "tag:gt6ce:crafting_hardened_clay",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver")),
-            new Entry(
-                    "laserengraver",
-                    3,
-                    "TdT|GPG|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:3",
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "tag:gt6ce:crafting_hardened_clay",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver")),
-            new Entry(
-                    "laserengraver",
-                    4,
-                    "TdT|GPG|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:4",
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "tag:gt6ce:crafting_hardened_clay",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver")),
-            new Entry(
-                    "laserengraver",
-                    5,
-                    "TdT|GPG|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:5",
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "tag:gt6ce:crafting_hardened_clay",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver")),
-            new Entry(
-                    "laserwelder",
-                    1,
-                    "TLT|GPG|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:1",
-                            'G',
-                            "mat:gearGtSmall",
-                            'L',
-                            "tag:gt6ce:lens",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "tag:gt6ce:crafting_hardened_clay",
-                            'T',
-                            "mat:screw")),
-            new Entry(
-                    "laserwelder",
-                    2,
-                    "TLT|GPG|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:2",
-                            'G',
-                            "mat:gearGtSmall",
-                            'L',
-                            "tag:gt6ce:lens",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "tag:gt6ce:crafting_hardened_clay",
-                            'T',
-                            "mat:screw")),
-            new Entry(
-                    "laserwelder",
-                    3,
-                    "TLT|GPG|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:3",
-                            'G',
-                            "mat:gearGtSmall",
-                            'L',
-                            "tag:gt6ce:lens",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "tag:gt6ce:crafting_hardened_clay",
-                            'T',
-                            "mat:screw")),
-            new Entry(
-                    "laserwelder",
-                    4,
-                    "TLT|GPG|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:4",
-                            'G',
-                            "mat:gearGtSmall",
-                            'L',
-                            "tag:gt6ce:lens",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "tag:gt6ce:crafting_hardened_clay",
-                            'T',
-                            "mat:screw")),
-            new Entry(
-                    "laserwelder",
-                    5,
-                    "TLT|GPG|CMC",
-                    Map.of(
-                            'C',
-                            "circuit:5",
-                            'G',
-                            "mat:gearGtSmall",
-                            'L',
-                            "tag:gt6ce:lens",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "tag:gt6ce:crafting_hardened_clay",
-                            'T',
-                            "mat:screw")),
-            new Entry(
-                    "freezer",
-                    1,
-                    "hPw|PMP|PSP",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate@StainlessSteel",
-                            'S',
-                            "mat:plate@Silicon",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "freezer",
-                    2,
-                    "hPw|PMP|PSP",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateDouble@StainlessSteel",
-                            'S',
-                            "mat:plateDouble@Silicon",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "freezer",
-                    3,
-                    "hPw|PMP|PSP",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateTriple@StainlessSteel",
-                            'S',
-                            "mat:plateTriple@Silicon",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "freezer",
-                    4,
-                    "hPw|PMP|PSP",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateQuadruple@StainlessSteel",
-                            'S',
-                            "mat:plateQuadruple@Silicon",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "freezer",
-                    5,
-                    "hPw|PMP|PSP",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateQuadruple@StainlessSteel",
-                            'S',
-                            "mat:plateQuintuple@Silicon",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "cryomixer",
-                    1,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "mat:plate@Silicon",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "cryomixer",
-                    2,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateDouble@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "mat:plateDouble@Silicon",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "cryomixer",
-                    3,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateTriple@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "mat:plateTriple@Silicon",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "cryomixer",
-                    4,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateQuadruple@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "mat:plateQuadruple@Silicon",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "cryomixer",
-                    5,
-                    "PMP|PRP|hSw",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plateQuadruple@StainlessSteel",
-                            'R',
-                            "mat:rotor@StainlessSteel",
-                            'S',
-                            "mat:plateQuintuple@Silicon",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "massfab",
-                    1,
-                    "RFS|FMF|RFS",
-                    Map.of(
-                            'F',
-                            "il:FIELD_GENERATORS",
-                            'M',
-                            "block:casingMachine",
-                            'R',
-                            "item:gt6ce:crystal_processor_ruby",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire")),
-            new Entry(
-                    "massfab",
-                    2,
-                    "RFS|FMF|RFS",
-                    Map.of(
-                            'F',
-                            "il:FIELD_GENERATORS",
-                            'M',
-                            "block:casingMachine",
-                            'R',
-                            "item:gt6ce:crystal_processor_ruby",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire")),
-            new Entry(
-                    "massfab",
-                    3,
-                    "RFS|FMF|RFS",
-                    Map.of(
-                            'F',
-                            "il:FIELD_GENERATORS",
-                            'M',
-                            "block:casingMachine",
-                            'R',
-                            "item:gt6ce:crystal_processor_ruby",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire")),
-            new Entry(
-                    "massfab",
-                    4,
-                    "RFS|FMF|RFS",
-                    Map.of(
-                            'F',
-                            "il:FIELD_GENERATORS",
-                            'M',
-                            "block:casingMachine",
-                            'R',
-                            "item:gt6ce:crystal_processor_ruby",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire")),
-            new Entry(
-                    "massfab",
-                    5,
-                    "RFS|FMF|RFS",
-                    Map.of(
-                            'F',
-                            "il:FIELD_GENERATORS",
-                            'M',
-                            "block:casingMachine",
-                            'R',
-                            "item:gt6ce:crystal_processor_ruby",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire")),
-            new Entry(
-                    "scannermolecular",
-                    3,
-                    "DXE|FMF|RYS",
-                    Map.of(
-                            'D',
-                            "item:gt6ce:crystal_processor_diamond",
-                            'E',
-                            "item:gt6ce:crystal_processor_emerald",
-                            'F',
-                            "il:FIELD_GENERATORS",
-                            'M',
-                            "block:casingMachine",
-                            'R',
-                            "item:gt6ce:crystal_processor_ruby",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire",
-                            'X',
-                            "il:EMITTERS",
-                            'Y',
-                            "il:SENSORS")),
-            new Entry(
-                    "replicator",
-                    1,
-                    "EXE|FMF|SXS",
-                    Map.of(
-                            'E',
-                            "item:gt6ce:crystal_processor_emerald",
-                            'F',
-                            "il:FIELD_GENERATORS",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire",
-                            'X',
-                            "il:EMITTERS")),
-            new Entry(
-                    "replicator",
-                    2,
-                    "EXE|FMF|SXS",
-                    Map.of(
-                            'E',
-                            "item:gt6ce:crystal_processor_emerald",
-                            'F',
-                            "il:FIELD_GENERATORS",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire",
-                            'X',
-                            "il:EMITTERS")),
-            new Entry(
-                    "replicator",
-                    3,
-                    "EXE|FMF|SXS",
-                    Map.of(
-                            'E',
-                            "item:gt6ce:crystal_processor_emerald",
-                            'F',
-                            "il:FIELD_GENERATORS",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire",
-                            'X',
-                            "il:EMITTERS")),
-            new Entry(
-                    "replicator",
-                    4,
-                    "EXE|FMF|SXS",
-                    Map.of(
-                            'E',
-                            "item:gt6ce:crystal_processor_emerald",
-                            'F',
-                            "il:FIELD_GENERATORS",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire",
-                            'X',
-                            "il:EMITTERS")),
-            new Entry(
-                    "replicator",
-                    5,
-                    "EXE|FMF|SXS",
-                    Map.of(
-                            'E',
-                            "item:gt6ce:crystal_processor_emerald",
-                            'F',
-                            "il:FIELD_GENERATORS",
-                            'M',
-                            "block:casingMachine",
-                            'S',
-                            "item:gt6ce:crystal_processor_sapphire",
-                            'X',
-                            "il:EMITTERS")),
-            new Entry(
-                    "autoclave",
-                    1,
-                    "CwC|PMP|GPG",
-                    Map.of(
-                            'C',
-                            "mat:itemCasing",
-                            'G',
-                            "mat:gearGtSmall",
-                            'M',
-                            "block:casingMachineQuadruple",
-                            'P',
-                            "pipe:small",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "bath",
-                    1,
-                    "CwC|PMP|PPP",
-                    Map.of(
-                            'C',
-                            "mat:itemCasing",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "mat:plate",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "generifier",
-                    1,
-                    "ChC|CMC|CwC",
-                    Map.of(
-                            'C',
-                            "mat:itemCasing",
-                            'M',
-                            "block:casingMachine",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "coagulator",
-                    1,
-                    "T T|hMw|TdT",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'T',
-                            "mat:screw",
-                            'd',
-                            "item:gt6ce:tool_screwdriver",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "fermenter",
-                    1,
-                    "wMh|PPP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "block:casingMachine",
-                            'P',
-                            "pipe:large",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "melter",
-                    1,
-                    "wUh|PMP|BCB",
-                    Map.of(
-                            'B',
-                            "item:minecraft:bricks",
-                            'C',
-                            "mat:plateDouble@Copper",
-                            'M',
-                            "tag:gt6ce:casing_machine/any_iron_or_steel",
-                            'P',
-                            "tag:gt6ce:pipe_medium/any_iron_or_steel",
-                            'U',
-                            "item:gt6ce:smelting_crucible_ceramic",
-                            'h',
-                            "item:gt6ce:tool_hammer",
-                            'w',
-                            "item:gt6ce:tool_wrench")),
-            new Entry(
-                    "lightning",
-                    1,
-                    "XxX|WwW|XMX",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'W',
-                            "wiretier:1",
-                            'X',
-                            "tag:gt6ce:wire_01/any_iron_or_steel",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "lightning",
-                    2,
-                    "XxX|WwW|XMX",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'W',
-                            "wiretier:2",
-                            'X',
-                            "tag:gt6ce:wire_02/any_iron_or_steel",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "lightning",
-                    3,
-                    "XxX|WwW|XMX",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'W',
-                            "wiretier:3",
-                            'X',
-                            "tag:gt6ce:wire_04/any_iron_or_steel",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "lightning",
-                    4,
-                    "XxX|WwW|XMX",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'W',
-                            "wiretier:4",
-                            'X',
-                            "tag:gt6ce:wire_08/any_iron_or_steel",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "lightning",
-                    5,
-                    "XxX|WwW|XMX",
-                    Map.of(
-                            'M',
-                            "block:casingMachine",
-                            'W',
-                            "wiretier:5",
-                            'X',
-                            "tag:gt6ce:wire_16/any_iron_or_steel",
-                            'w',
-                            "item:gt6ce:tool_wrench",
-                            'x',
-                            "item:gt6ce:tool_wire_cutter")),
-            new Entry(
-                    "cokeoven",
-                    1,
-                    "hRT|PMR|dRT",
-                    Map.of(
-                            'M',
-                            "part:18000",
-                            'P',
-                            "mat:plate@Iron",
-                            'R',
-                            "mat:stick@Iron",
-                            'T',
-                            "mat:screw@Iron",
-                            'd',
-                            "item:gt6ce:tool_screwdriver",
-                            'h',
-                            "item:gt6ce:tool_hammer")),
-            new Entry(
-                    "implosioncompressor",
-                    1,
-                    "CPC|PAP|RMR",
-                    Map.of(
-                            'A',
-                            "item:gt6ce:compact_robot_arm_mv",
-                            'C',
-                            "circuit:6",
-                            'M',
-                            "part:18023",
-                            'P',
-                            "mat:plateDense",
-                            'R',
-                            "item:gt6ce:crystal_processor_ruby")));
-
-    /** The original recipe for one port machine type and tier, or {@code null} if GT6 has none. */
-    public static Entry find(String machine, int tier) {
-        for (Entry entry : ENTRIES) {
-            if (entry.machine().equals(machine) && entry.tier() == tier) return entry;
-        }
-        return null;
-    }
-
-    /** Machine types covered by this table. */
-    public static java.util.Set<String> machines() {
-        java.util.Set<String> names = new java.util.TreeSet<>();
-        for (Entry entry : ENTRIES) names.add(entry.machine());
-        return java.util.Collections.unmodifiableSet(names);
-    }
-
     private BasicMachineCraftingRecipes() {}
+
+    public record Recipe(List<String> rows, Map<Character, Ingredient> keys) {
+        public Recipe {
+            rows = List.copyOf(rows);
+            keys = Map.copyOf(keys);
+            if (rows.isEmpty() || rows.size() > 3)
+                throw new IllegalArgumentException("Invalid basic machine crafting height: " + rows);
+            int width = rows.get(0).length();
+            var symbols = new HashSet<Character>();
+            for (String row : rows) {
+                if (width == 0 || width > 3 || row.length() != width)
+                    throw new IllegalArgumentException("Invalid basic machine crafting width: " + rows);
+                for (int i = 0; i < width; i++) {
+                    char symbol = row.charAt(i);
+                    if (symbol != ' ') symbols.add(symbol);
+                }
+            }
+            if (symbols.isEmpty() || !symbols.equals(keys.keySet()))
+                throw new IllegalArgumentException("Invalid basic machine crafting keys for " + rows);
+        }
+    }
+
+    public sealed interface Ingredient
+            permits Form,
+                    BlockForm,
+                    Casing,
+                    Pipe,
+                    Wire,
+                    TierWire,
+                    Component,
+                    ItemRef,
+                    TagRef,
+                    RegistryItem,
+                    RegistryTag,
+                    Circuit,
+                    Tool,
+                    Crucible,
+                    Alternatives,
+                    FluidContainer {}
+
+    /** Null material means the source casing material. An ANY group recovers its canonical material. */
+    public record Form(MaterialPrefix prefix, GTMaterial material, GTMaterial group) implements Ingredient {}
+
+    public record BlockForm(BlockMaterialPrefix prefix, GTMaterial material) implements Ingredient {}
+
+    public enum Casing implements Ingredient {
+        STANDARD,
+        ROBUST,
+        REINFORCED;
+
+        public BlockMaterialPrefix prefix() {
+            return switch (this) {
+                case STANDARD -> MaterialPrefixes.casingMachine.getBlockDelegate();
+                case ROBUST -> MaterialPrefixes.casingMachineDouble.getBlockDelegate();
+                case REINFORCED -> MaterialPrefixes.casingMachineQuadruple.getBlockDelegate();
+            };
+        }
+    }
+
+    /** Null material means the source casing material. */
+    public record Pipe(PipeSize size, GTMaterial material) implements Ingredient {}
+
+    public record Wire(int size, GTMaterial material) implements Ingredient {}
+
+    public record TierWire(int tier, boolean cable) implements Ingredient {}
+
+    public record Component(ComponentType type, int tier) implements Ingredient {}
+
+    public record Circuit(int tier) implements Ingredient {}
+
+    public record Tool(ToolDefinition type) implements Ingredient {}
+
+    public record RegistryItem(String id) implements Ingredient {}
+
+    public record RegistryTag(String id) implements Ingredient {}
+
+    public record Crucible(CrucibleSpec spec) implements Ingredient {}
+
+    public record Alternatives(List<Ingredient> options) implements Ingredient {
+        public Alternatives {
+            options = List.copyOf(options);
+            if (options.isEmpty()) throw new IllegalArgumentException("Missing basic machine crafting alternatives");
+        }
+    }
+
+    public enum FluidContainer implements Ingredient {
+        HONEY;
+
+        public String fluidField() {
+            return "Honey";
+        }
+    }
+
+    public enum ItemRef implements Ingredient {
+        BRICKS("minecraft:bricks"),
+        HONEY_BOTTLE("minecraft:honey_bottle"),
+        CRYSTAL_PROCESSOR_DIAMOND("gt6ce:crystal_processor_diamond"),
+        CRYSTAL_PROCESSOR_EMERALD("gt6ce:crystal_processor_emerald"),
+        CRYSTAL_PROCESSOR_RUBY("gt6ce:crystal_processor_ruby"),
+        CRYSTAL_PROCESSOR_SAPPHIRE("gt6ce:crystal_processor_sapphire"),
+        LASER_EMITTER_ARGON("gt6ce:laser_emitter_argon"),
+        LASER_EMITTER_KRYPTON("gt6ce:laser_emitter_krypton"),
+        LASER_EMITTER_XENON("gt6ce:laser_emitter_xenon");
+
+        private final String id;
+
+        ItemRef(String id) {
+            this.id = id;
+        }
+
+        public String id() {
+            return id;
+        }
+    }
+
+    public enum TagRef implements Ingredient {
+        SANDSTONE("forge:sandstone"),
+        GLASS_COLORLESS("gt6ce:glass_colorless"),
+        HARDENED_CLAY("gt6ce:crafting_hardened_clay"),
+        LENS("gt6ce:lens"),
+        SAPLINGS("gt6ce:saplings"),
+        IRON_MACHINE_CASING("gt6ce:casing_machine/any_iron_or_steel"),
+        IRON_PIPE_MEDIUM("gt6ce:pipe_medium/any_iron_or_steel"),
+        IRON_WIRE_01("gt6ce:wire_01/any_iron_or_steel"),
+        IRON_WIRE_02("gt6ce:wire_02/any_iron_or_steel"),
+        IRON_WIRE_04("gt6ce:wire_04/any_iron_or_steel"),
+        IRON_WIRE_08("gt6ce:wire_08/any_iron_or_steel"),
+        IRON_WIRE_16("gt6ce:wire_16/any_iron_or_steel");
+
+        private final String id;
+
+        TagRef(String id) {
+            this.id = id;
+        }
+
+        public String id() {
+            return id;
+        }
+    }
+
+    public enum ComponentType {
+        MOTORS("compact_electric_motor_"),
+        PUMPS("compact_electric_pump_"),
+        PISTONS("compact_electric_piston_"),
+        EMITTERS("compact_signal_emitter_"),
+        CONVEYERS("compact_electric_conveyor_"),
+        SENSORS("compact_sensor_"),
+        ROBOT_ARMS("compact_robot_arm_"),
+        FIELD_GENERATORS("compact_force_field_emitter_");
+
+        private final String itemPrefix;
+
+        ComponentType(String itemPrefix) {
+            this.itemPrefix = itemPrefix;
+        }
+
+        public String itemPrefix() {
+            return itemPrefix;
+        }
+    }
+
+    private static final Tool HAMMER = new Tool(ToolDefinition.HARD_HAMMER);
+    private static final Tool WRENCH = new Tool(ToolDefinition.WRENCH);
+    private static final Tool SCREWDRIVER = new Tool(ToolDefinition.SCREWDRIVER);
+    private static final Tool WIRE_CUTTER = new Tool(ToolDefinition.WIRE_CUTTER);
+
+    public static Recipe oven(int tier) {
+        return new Recipe(
+                List.of("wMh", "BCB"),
+                Map.of(
+                        'B', BRICKS,
+                        'C', anyCopper(plateDouble),
+                        'M', STANDARD,
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe roaster(int tier) {
+        return new Recipe(
+                List.of("wPh", "PMP", "BCB"),
+                Map.of(
+                        'B', BRICKS,
+                        'C', anyCopper(plateDouble),
+                        'M', STANDARD,
+                        'P', new Pipe(MEDIUM, null),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe distillery(int tier) {
+        return new Recipe(
+                List.of("GPG", "WMW", "hCw"),
+                Map.of(
+                        'C', anyCopper(plateDouble),
+                        'G', GLASS_COLORLESS,
+                        'M', STANDARD,
+                        'P', new Pipe(pipeRank(tier), Materials.StainlessSteel),
+                        'W',
+                                switch (tier) {
+                                    case 1 -> new Wire(2, Materials.Constantan);
+                                    case 2 -> new Wire(4, Materials.Kanthal);
+                                    case 3 -> new Wire(8, Materials.Nichrome);
+                                    default -> new Wire(16, Materials.Carborundum);
+                                },
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe extruder(int tier) {
+        return new Recipe(
+                List.of("GPw", "PMS", "GPD"),
+                Map.of(
+                        'D',
+                        anyDiamond(dust),
+                        'G',
+                        form(gearGt),
+                        'M',
+                        ROBUST,
+                        'P',
+                        tier == 1 ? anySteel(plate) : form(plateRank(tier), Materials.TungstenCarbide),
+                        'S',
+                        tier == 1 ? anySteel(toolHeadBuzzSaw) : form(toolHeadBuzzSaw, Materials.TungstenCarbide),
+                        'w',
+                        WRENCH));
+    }
+
+    public static Recipe smelter(int tier) {
+        return new Recipe(
+                List.of("wUh", "PMP", "BCB"),
+                Map.of(
+                        'B', BRICKS,
+                        'C', anyCopper(plateDouble),
+                        'M', STANDARD,
+                        'P', new Pipe(MEDIUM, null),
+                        'U',
+                                switch (tier) {
+                                    case 1 -> crucible(1024);
+                                    case 2, 3 -> crucible(1019);
+                                    default -> crucible(1043);
+                                },
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe crystallisationCrucible(int tier) {
+        return new Recipe(
+                List.of("wUh", "PMP", "BCB"),
+                Map.of(
+                        'B', BRICKS,
+                        'C', anyCopper(plateDouble),
+                        'M', ROBUST,
+                        'P', new Pipe(MEDIUM, null),
+                        'U', tier == 1 ? crucible(1018) : crucible(1039),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe dryer(int tier) {
+        return new Recipe(
+                List.of("wPh", "BMB", "BCB"),
+                Map.of(
+                        'B', BRICKS,
+                        'C', anyCopper(plateDouble),
+                        'M', STANDARD,
+                        'P', new Pipe(MEDIUM, null),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe laminator(int tier) {
+        return new Recipe(
+                List.of("SwS", "GMG", "SCS"),
+                Map.of(
+                        'C', anyCopper(plateDouble),
+                        'G', form(gearGtSmall),
+                        'M', STANDARD,
+                        'S', form(stick),
+                        'w', WRENCH));
+    }
+
+    public static Recipe catalyticCracker(int tier) {
+        return new Recipe(
+                List.of("IPI", "ZMZ", "ICI"),
+                Map.of(
+                        'C', anyCopper(plateRank(tier + 1)),
+                        'I', form(plateRank(tier + 1), Materials.Invar),
+                        'M', ROBUST,
+                        'P', new Pipe(QUADRUPLE, null),
+                        'Z', form(dust, OreMaterials.Zeolite)));
+    }
+
+    public static Recipe steamCracker(int tier) {
+        return new Recipe(
+                List.of("IwI", "PMP", "ICI"),
+                Map.of(
+                        'C',
+                        anyCopper(plateRank(tier + 1)),
+                        'I',
+                        form(plateRank(tier + 1), Materials.Invar),
+                        'M',
+                        ROBUST,
+                        'P',
+                        new Pipe(MEDIUM, null),
+                        'w',
+                        WRENCH));
+    }
+
+    public static Recipe shredder(int tier) {
+        return new Recipe(
+                List.of("GDG", "hMw"),
+                Map.of(
+                        'D', anyDiamond(plateGem),
+                        'G', form(gearGt),
+                        'M', ROBUST,
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe lathe(int tier) {
+        return new Recipe(
+                List.of("TDS", "dMG"),
+                Map.of(
+                        'D', anyDiamond(plateGemTiny),
+                        'G', form(gearGt),
+                        'M', ROBUST,
+                        'S', form(gearGtSmall),
+                        'T', form(screw),
+                        'd', SCREWDRIVER));
+    }
+
+    public static Recipe buzzsaw(int tier) {
+        return new Recipe(
+                List.of("DGS", "wMS"),
+                Map.of(
+                        'D',
+                        anyDiamond(dust),
+                        'G',
+                        tier == 1 ? anySteel(toolHeadBuzzSaw) : form(toolHeadBuzzSaw, Materials.CobaltBrass),
+                        'M',
+                        ROBUST,
+                        'S',
+                        form(gearGtSmall),
+                        'w',
+                        WRENCH));
+    }
+
+    public static Recipe centrifuge(int tier) {
+        return new Recipe(
+                List.of("Gw", "SM", "Gh"),
+                Map.of(
+                        'G', form(gearGt),
+                        'M', ROBUST,
+                        'S', form(stickLong),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe rollingMill(int tier) {
+        return new Recipe(
+                List.of("Gh", "M ", "Gw"),
+                Map.of(
+                        'G', form(gearGt),
+                        'M', ROBUST,
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe rollBender(int tier) {
+        return new Recipe(
+                List.of("wS ", "GMG", " Sh"),
+                Map.of(
+                        'G', form(gearGt),
+                        'M', ROBUST,
+                        'S', form(gearGtSmall),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe rollFormer(int tier) {
+        return new Recipe(
+                List.of("wG ", "GMG", " Gh"),
+                Map.of(
+                        'G', form(gearGt),
+                        'M', ROBUST,
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe clusterMill(int tier) {
+        return new Recipe(
+                List.of("SSS", "wGh", "SMS"),
+                Map.of(
+                        'G', form(gearGt),
+                        'M', REINFORCED,
+                        'S', form(gearGtSmall),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe wireMill(int tier) {
+        return new Recipe(
+                List.of("SGS", "wMh"),
+                Map.of(
+                        'G', form(gearGt),
+                        'M', STANDARD,
+                        'S', form(gearGtSmall),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe mixer(int tier) {
+        return new Recipe(
+                List.of("PMP", "PRP", "hSw"),
+                Map.of(
+                        'M',
+                        STANDARD,
+                        'P',
+                        form(plateRank(tier), Materials.StainlessSteel),
+                        'R',
+                        form(rotor, Materials.StainlessSteel),
+                        'S',
+                        form(stick),
+                        'h',
+                        HAMMER,
+                        'w',
+                        WRENCH));
+    }
+
+    public static Recipe loom(int tier) {
+        return new Recipe(
+                List.of("ShS", "GMG", "SwS"),
+                Map.of(
+                        'G', form(gearGt),
+                        'M', STANDARD,
+                        'S', form(stickLong),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe sluice(int tier) {
+        return new Recipe(
+                List.of("PPP", "RGR", "GMG"),
+                Map.of(
+                        'G', form(gearGt),
+                        'M', ROBUST,
+                        'P', form(plateDouble),
+                        'R', form(rotor)));
+    }
+
+    public static Recipe sander(int tier) {
+        return new Recipe(
+                List.of("SGS", "XXX", "wMh"),
+                Map.of(
+                        'G', form(gearGt),
+                        'M', ROBUST,
+                        'S', form(gearGtSmall),
+                        'X', SANDSTONE,
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe burnMixer(int tier) {
+        return new Recipe(
+                List.of("PMP", "PRP", "hSw"),
+                Map.of(
+                        'M',
+                        STANDARD,
+                        'P',
+                        form(plateRank(tier), Materials.Invar),
+                        'R',
+                        form(rotor, Materials.Invar),
+                        'S',
+                        form(stick),
+                        'h',
+                        HAMMER,
+                        'w',
+                        WRENCH));
+    }
+
+    public static Recipe debarker(int tier) {
+        return new Recipe(
+                List.of("RPG", "wMG"),
+                Map.of(
+                        'G',
+                        form(gearGtSmall),
+                        'M',
+                        STANDARD,
+                        'P',
+                        new Pipe(pipeRank(tier + 1), Materials.StainlessSteel),
+                        'R',
+                        form(rotor, Materials.StainlessSteel),
+                        'w',
+                        WRENCH));
+    }
+
+    public static Recipe crusher(int tier) {
+        return new Recipe(
+                List.of("DMD", "hSw"),
+                Map.of(
+                        'D', anyDiamond(gem),
+                        'M', ROBUST,
+                        'S', form(spring),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe sifter(int tier) {
+        return new Recipe(
+                List.of("WxW", "RMR", "SwS"),
+                Map.of(
+                        'M',
+                        ROBUST,
+                        'R',
+                        form(stick),
+                        'S',
+                        form(spring),
+                        'W',
+                        form(wireFine),
+                        'w',
+                        WRENCH,
+                        'x',
+                        WIRE_CUTTER));
+    }
+
+    public static Recipe squeezer(int tier) {
+        return new Recipe(
+                List.of("RS", "PM", "Pw"),
+                Map.of(
+                        'M', ROBUST,
+                        'P', form(plateTriple),
+                        'R', form(stick),
+                        'S', form(spring),
+                        'w', WRENCH));
+    }
+
+    public static Recipe compressor(int tier) {
+        return new Recipe(
+                List.of("PPR", "wMS"),
+                Map.of(
+                        'M', ROBUST,
+                        'P', form(plateQuintuple),
+                        'R', form(stick),
+                        'S', form(spring),
+                        'w', WRENCH));
+    }
+
+    public static Recipe press(int tier) {
+        return new Recipe(
+                List.of("RS", "PM", "Pw"),
+                Map.of(
+                        'M', STANDARD,
+                        'P', form(plateDouble),
+                        'R', form(stick),
+                        'S', form(spring),
+                        'w', WRENCH));
+    }
+
+    public static Recipe electrolyzer(int tier) {
+        return new Recipe(
+                List.of("SMS", "WwW"),
+                Map.of(
+                        'M',
+                        STANDARD,
+                        'S',
+                        new Wire(1, Materials.Platinum),
+                        'W',
+                        new TierWire(tier, true),
+                        'w',
+                        WRENCH));
+    }
+
+    public static Recipe canner(int tier) {
+        return new Recipe(
+                List.of("wPh", "XMX", "CPW"),
+                Map.of(
+                        'C', new Circuit(tier),
+                        'M', STANDARD,
+                        'P', new Pipe(pipeRank(tier), Materials.StainlessSteel),
+                        'W', new TierWire(tier, true),
+                        'X', new Component(PUMPS, tier),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe injector(int tier) {
+        return new Recipe(
+                List.of("XPw", "CMW"),
+                Map.of(
+                        'C', new Circuit(tier),
+                        'M', STANDARD,
+                        'P', new Pipe(pipeRank(tier), Materials.StainlessSteel),
+                        'W', new TierWire(tier, true),
+                        'X', new Component(PISTONS, tier),
+                        'w', WRENCH));
+    }
+
+    public static Recipe printer(int tier) {
+        return new Recipe(
+                List.of("CPC", "wXh", "WMW"),
+                Map.of(
+                        'C', new Circuit(tier),
+                        'M', STANDARD,
+                        'P', new Pipe(TINY, Materials.StainlessSteel),
+                        'W', new TierWire(tier, true),
+                        'X', new Component(CONVEYERS, tier),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe scannerVisuals(int tier) {
+        return new Recipe(
+                List.of("CPC", "wXh", "WMW"),
+                Map.of(
+                        'C',
+                        new Circuit(tier),
+                        'M',
+                        STANDARD,
+                        'P',
+                        form(plate, Materials.Lumium),
+                        'W',
+                        new TierWire(tier, true),
+                        'X',
+                        new Component(CONVEYERS, tier),
+                        'h',
+                        HAMMER,
+                        'w',
+                        WRENCH));
+    }
+
+    public static Recipe autocrafter(int tier) {
+        return new Recipe(
+                List.of("WRW", "RwR", "CMC"),
+                Map.of(
+                        'C', new Circuit(tier),
+                        'M', ROBUST,
+                        'R', new Component(ROBOT_ARMS, tier),
+                        'W', new TierWire(tier, true),
+                        'w', WRENCH));
+    }
+
+    public static Recipe electricMixer(int tier) {
+        return new Recipe(
+                List.of("PMP", "PRP", "hSw"),
+                Map.of(
+                        'M',
+                        STANDARD,
+                        'P',
+                        form(plateRank(Math.min(tier, 4)), Materials.StainlessSteel),
+                        'R',
+                        form(rotor, Materials.StainlessSteel),
+                        'S',
+                        new Component(MOTORS, tier),
+                        'h',
+                        HAMMER,
+                        'w',
+                        WRENCH));
+    }
+
+    public static Recipe electricLoom(int tier) {
+        return new Recipe(
+                List.of("ShS", "GMG", "SwS"),
+                Map.of(
+                        'G', new Component(MOTORS, tier),
+                        'M', STANDARD,
+                        'S', form(stickLong),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe electricSifter(int tier) {
+        return new Recipe(
+                List.of("WxW", "RMR", "SwS"),
+                Map.of(
+                        'M',
+                        ROBUST,
+                        'R',
+                        form(stick),
+                        'S',
+                        new Component(PISTONS, tier),
+                        'W',
+                        form(wireFine),
+                        'w',
+                        WRENCH,
+                        'x',
+                        WIRE_CUTTER));
+    }
+
+    public static Recipe slicer(int tier) {
+        return new Recipe(
+                List.of("PRw", "YMC"),
+                Map.of(
+                        'C',
+                        new Circuit(tier),
+                        'M',
+                        STANDARD,
+                        'P',
+                        new Component(PISTONS, tier),
+                        'R',
+                        form(stick),
+                        'Y',
+                        new Component(CONVEYERS, tier),
+                        'w',
+                        WRENCH));
+    }
+
+    public static Recipe nanofab(int tier) {
+        return new Recipe(
+                List.of("KAX", "ZMY", "CSC"),
+                Map.of(
+                        'A', LASER_EMITTER_ARGON,
+                        'C', new Circuit(6),
+                        'K', LASER_EMITTER_KRYPTON,
+                        'M', STANDARD,
+                        'S', CRYSTAL_PROCESSOR_SAPPHIRE,
+                        'X', LASER_EMITTER_XENON,
+                        'Y', new Component(EMITTERS, tier),
+                        'Z', new Component(SENSORS, tier)));
+    }
+
+    public static Recipe plantalyzer(int tier) {
+        return new Recipe(
+                List.of("WXW", "ZMP", "CYC"),
+                Map.of(
+                        'C', new Circuit(tier),
+                        'M', STANDARD,
+                        'P', CRYSTAL_PROCESSOR_DIAMOND,
+                        'W', new TierWire(tier, true),
+                        'X', new Component(EMITTERS, tier),
+                        'Y', new Component(SENSORS, tier),
+                        'Z', SAPLINGS));
+    }
+
+    public static Recipe bumblelyzer(int tier) {
+        return new Recipe(
+                List.of("WXW", "ZMP", "CYC"),
+                Map.of(
+                        'C', new Circuit(tier),
+                        'M', STANDARD,
+                        'P', CRYSTAL_PROCESSOR_DIAMOND,
+                        'W', new TierWire(tier, true),
+                        'X', new Component(EMITTERS, tier),
+                        'Y', new Component(SENSORS, tier),
+                        'Z', new Alternatives(List.of(HONEY_BOTTLE, FluidContainer.HONEY))));
+    }
+
+    public static Recipe boxinator(int tier) {
+        return new Recipe(
+                List.of("wP", "CY", "CM"),
+                Map.of(
+                        'C', new Circuit(tier),
+                        'M', STANDARD,
+                        'P', new Component(PISTONS, tier),
+                        'Y', new Component(CONVEYERS, tier),
+                        'w', WRENCH));
+    }
+
+    public static Recipe unboxinator(int tier) {
+        return new Recipe(
+                List.of("Pw", "YC", "MC"),
+                Map.of(
+                        'C', new Circuit(tier),
+                        'M', STANDARD,
+                        'P', new Component(PISTONS, tier),
+                        'Y', new Component(CONVEYERS, tier),
+                        'w', WRENCH));
+    }
+
+    public static Recipe polarizer(int tier) {
+        return new Recipe(
+                List.of("TwT", "PMP", "TdT"),
+                Map.of(
+                        'M', STANDARD,
+                        'P', form(plate),
+                        'T', form(screw),
+                        'd', SCREWDRIVER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe magneticSeparator(int tier) {
+        return new Recipe(
+                List.of("TwT", "TdT", "PMP"),
+                Map.of(
+                        'M', STANDARD,
+                        'P', form(plate),
+                        'T', form(screw),
+                        'd', SCREWDRIVER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe laserEngraver(int tier) {
+        return new Recipe(
+                List.of("TdT", "GPG", "CMC"),
+                Map.of(
+                        'C',
+                        new Circuit(tier),
+                        'G',
+                        form(gearGtSmall),
+                        'M',
+                        STANDARD,
+                        'P',
+                        HARDENED_CLAY,
+                        'T',
+                        form(screw),
+                        'd',
+                        SCREWDRIVER));
+    }
+
+    public static Recipe laserWelder(int tier) {
+        return new Recipe(
+                List.of("TLT", "GPG", "CMC"),
+                Map.of(
+                        'C',
+                        new Circuit(tier),
+                        'G',
+                        form(gearGtSmall),
+                        'L',
+                        LENS,
+                        'M',
+                        STANDARD,
+                        'P',
+                        HARDENED_CLAY,
+                        'T',
+                        form(screw)));
+    }
+
+    public static Recipe freezer(int tier) {
+        return new Recipe(
+                List.of("hPw", "PMP", "PSP"),
+                Map.of(
+                        'M', STANDARD,
+                        'P', form(plateRank(Math.min(tier, 4)), Materials.StainlessSteel),
+                        'S', form(plateRank(tier), Materials.Silicon),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe cryoMixer(int tier) {
+        return new Recipe(
+                List.of("PMP", "PRP", "hSw"),
+                Map.of(
+                        'M',
+                        STANDARD,
+                        'P',
+                        form(plateRank(Math.min(tier, 4)), Materials.StainlessSteel),
+                        'R',
+                        form(rotor, Materials.StainlessSteel),
+                        'S',
+                        form(plateRank(tier), Materials.Silicon),
+                        'h',
+                        HAMMER,
+                        'w',
+                        WRENCH));
+    }
+
+    public static Recipe massFab(int tier) {
+        return new Recipe(
+                List.of("RFS", "FMF", "RFS"),
+                Map.of(
+                        'F', new Component(FIELD_GENERATORS, tier),
+                        'M', STANDARD,
+                        'R', CRYSTAL_PROCESSOR_RUBY,
+                        'S', CRYSTAL_PROCESSOR_SAPPHIRE));
+    }
+
+    public static Recipe scannerMolecular(int tier) {
+        if (tier != 3) return null;
+        return new Recipe(
+                List.of("DXE", "FMF", "RYS"),
+                Map.of(
+                        'D', CRYSTAL_PROCESSOR_DIAMOND,
+                        'E', CRYSTAL_PROCESSOR_EMERALD,
+                        'F', new Component(FIELD_GENERATORS, tier),
+                        'M', STANDARD,
+                        'R', CRYSTAL_PROCESSOR_RUBY,
+                        'S', CRYSTAL_PROCESSOR_SAPPHIRE,
+                        'X', new Component(EMITTERS, tier),
+                        'Y', new Component(SENSORS, tier)));
+    }
+
+    public static Recipe replicator(int tier) {
+        return new Recipe(
+                List.of("EXE", "FMF", "SXS"),
+                Map.of(
+                        'E', CRYSTAL_PROCESSOR_EMERALD,
+                        'F', new Component(FIELD_GENERATORS, tier),
+                        'M', STANDARD,
+                        'S', CRYSTAL_PROCESSOR_SAPPHIRE,
+                        'X', new Component(EMITTERS, tier)));
+    }
+
+    public static Recipe autoclave(int tier) {
+        if (tier != 1) return null;
+        return new Recipe(
+                List.of("CwC", "PMP", "GPG"),
+                Map.of(
+                        'C',
+                        form(itemCasing),
+                        'G',
+                        form(gearGtSmall),
+                        'M',
+                        REINFORCED,
+                        'P',
+                        new Pipe(SMALL, null),
+                        'w',
+                        WRENCH));
+    }
+
+    public static Recipe bath(int tier) {
+        if (tier != 1) return null;
+        return new Recipe(
+                List.of("CwC", "PMP", "PPP"),
+                Map.of('C', form(itemCasing), 'M', STANDARD, 'P', form(plate), 'w', WRENCH));
+    }
+
+    public static Recipe generifier(int tier) {
+        if (tier != 1) return null;
+        return new Recipe(
+                List.of("ChC", "CMC", "CwC"),
+                Map.of(
+                        'C', form(itemCasing),
+                        'M', STANDARD,
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe coagulator(int tier) {
+        if (tier != 1) return null;
+        return new Recipe(
+                List.of("T T", "hMw", "TdT"),
+                Map.of(
+                        'M', STANDARD,
+                        'T', form(screw),
+                        'd', SCREWDRIVER,
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe fermenter(int tier) {
+        if (tier != 1) return null;
+        return new Recipe(
+                List.of("wMh", "PPP", "BCB"),
+                Map.of(
+                        'B', BRICKS,
+                        'C', anyCopper(plateDouble),
+                        'M', STANDARD,
+                        'P', new Pipe(LARGE, null),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe melter(int tier) {
+        if (tier != 1) return null;
+        return new Recipe(
+                List.of("wUh", "PMP", "BCB"),
+                Map.of(
+                        'B', BRICKS,
+                        'C', anyCopper(plateDouble),
+                        'M', IRON_MACHINE_CASING,
+                        'P', IRON_PIPE_MEDIUM,
+                        'U', crucible(1005),
+                        'h', HAMMER,
+                        'w', WRENCH));
+    }
+
+    public static Recipe lightning(int tier) {
+        return new Recipe(
+                List.of("XxX", "WwW", "XMX"),
+                Map.of(
+                        'M', STANDARD,
+                        'W', new TierWire(tier, false),
+                        'X',
+                                switch (tier) {
+                                    case 1 -> IRON_WIRE_01;
+                                    case 2 -> IRON_WIRE_02;
+                                    case 3 -> IRON_WIRE_04;
+                                    case 4 -> IRON_WIRE_08;
+                                    default -> IRON_WIRE_16;
+                                },
+                        'w', WRENCH,
+                        'x', WIRE_CUTTER));
+    }
+
+    private static Form form(MaterialPrefix prefix) {
+        return form(prefix, null);
+    }
+
+    private static Form form(MaterialPrefix prefix, GTMaterial material) {
+        return new Form(prefix, material, null);
+    }
+
+    private static Form form(MaterialPrefix prefix, GTMaterial material, GTMaterial group) {
+        return new Form(prefix, material, group);
+    }
+
+    private static Form anyCopper(MaterialPrefix prefix) {
+        return form(prefix, Materials.Copper, MaterialGroups.Cu);
+    }
+
+    private static Form anyDiamond(MaterialPrefix prefix) {
+        return form(prefix, Materials.Diamond, MaterialGroups.Diamond);
+    }
+
+    private static Form anySteel(MaterialPrefix prefix) {
+        return form(prefix, Materials.Steel, MaterialGroups.Steel);
+    }
+
+    private static MaterialPrefix plateRank(int rank) {
+        return switch (rank) {
+            case 1 -> plate;
+            case 2 -> plateDouble;
+            case 3 -> plateTriple;
+            case 4 -> plateQuadruple;
+            case 5 -> plateQuintuple;
+            default -> throw new IllegalArgumentException("Unknown plate rank: " + rank);
+        };
+    }
+
+    private static PipeSize pipeRank(int rank) {
+        return switch (rank) {
+            case 1 -> TINY;
+            case 2 -> SMALL;
+            case 3 -> MEDIUM;
+            case 4 -> LARGE;
+            case 5 -> HUGE;
+            default -> throw new IllegalArgumentException("Unknown pipe rank: " + rank);
+        };
+    }
+
+    private static Crucible crucible(int sourceId) {
+        return new Crucible(Objects.requireNonNull(OriginalSmelteryDefinitions.get(sourceId)));
+    }
 }

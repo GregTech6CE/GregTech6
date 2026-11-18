@@ -1,7 +1,7 @@
 package gregtech.content.tool;
 
-import gregtech.api.material.*;
-import gregtech.engine.material.*;
+import gregtech.api.material.GTMaterial;
+import gregtech.api.material.MaterialProperty;
 import java.util.List;
 
 /** GT6 Loader_Tools and inherited electric ToolStats, shared by both loaders. */
@@ -53,35 +53,192 @@ public final class ElectricToolCatalog {
         }
     }
 
-    private static Definition row(
-            String id,
-            String name,
-            int tier,
-            String head,
-            String pattern,
-            float speed,
-            int quality,
-            int block,
-            int attack,
-            float damage) {
-        return new Definition(id, name, tier, head, List.of(pattern.split("/")), speed, quality, block, attack, damage);
+    private static Definition tool(
+            String id, String name, int tier, String headPrefix, List<String> rows, StatsBuilder stats) {
+        return new Definition(
+                id,
+                name,
+                tier,
+                headPrefix,
+                rows,
+                stats.speed,
+                stats.quality,
+                stats.blockCost,
+                stats.attackCost,
+                stats.damage);
     }
 
+    private static final List<String> STANDARD_ASSEMBLY = List.of("dAT", "XWX", "XVX");
+
     public static final List<Definition> ALL = List.of(
-            row("electric_drill", "Drill", 1, "toolHeadDrill", "fSY/TXW/dVZ", 1, 0, 200, 400, 1.5F),
-            row("electric_chainsaw", "Chainsaw", 1, "toolHeadChainsaw", "dAT/XWX/XVX", 2, 1, 50, 400, 3),
-            row("electric_wrench", "Wrench", 1, "toolHeadWrench", "dAT/XWX/XVX", 2, 0, 50, 200, 1),
-            row("electric_screwdriver", "Screwdriver", 1, "toolHeadScrewdriver", "XdA/TWY/VYX", 1, 0, 100, 100, 1),
-            row("electric_mining_drill", "Mining Drill", 1, "toolHeadDrill", "dAT/XWX/XVX", 3, 0, 25, 200, 2),
-            row("electric_mixer", "Mixer", 1, "toolHeadDrill", "SSY/SXW/hVZ", 1, 0, 200, 400, 1.5F),
-            row("electric_buzzsaw", "BuzzSaw", 1, "toolHeadBuzzSaw", "YXV/TWX/AdY", 1, 0, 50, 300, 1),
-            row("electric_trimmer", "Trimmer", 1, "toolHeadSword", "XAT/ZYA/VWd", .25F, 0, 100, 100, 2),
-            row("electric_wrench_mv", "Wrench", 2, "toolHeadWrench", "dAT/XWX/XVX", 3, 1, 200, 800, 1.5F),
-            row("electric_mining_drill_mv", "Mining Drill", 2, "toolHeadDrill", "dAT/XWX/XVX", 6, 1, 100, 800, 2.5F),
-            row("electric_chainsaw_mv", "Chainsaw", 2, "toolHeadChainsaw", "dAT/XWX/XVX", 3, 1, 200, 1600, 3.5F),
-            row("electric_wrench_hv", "Wrench", 3, "toolHeadWrench", "dAT/XWX/XVX", 4, 1, 800, 3200, 2),
-            row("electric_mining_drill_hv", "Mining Drill", 3, "toolHeadDrill", "dAT/XWX/XVX", 9, 1, 400, 3200, 3),
-            row("electric_chainsaw_hv", "Chainsaw", 3, "toolHeadChainsaw", "dAT/XWX/XVX", 4, 1, 800, 6400, 4));
+            tool(
+                    "electric_drill",
+                    "Drill",
+                    1,
+                    "toolHeadDrill",
+                    List.of("fSY", "TXW", "dVZ"),
+                    new StatsBuilder()
+                            .speed(1.0F)
+                            .quality(0)
+                            .blockCost(200)
+                            .attackCost(400)
+                            .damage(1.5F)),
+            tool(
+                    "electric_chainsaw",
+                    "Chainsaw",
+                    1,
+                    "toolHeadChainsaw",
+                    STANDARD_ASSEMBLY,
+                    new StatsBuilder()
+                            .speed(2.0F)
+                            .quality(1)
+                            .blockCost(50)
+                            .attackCost(400)
+                            .damage(3.0F)),
+            tool(
+                    "electric_wrench",
+                    "Wrench",
+                    1,
+                    "toolHeadWrench",
+                    STANDARD_ASSEMBLY,
+                    new StatsBuilder()
+                            .speed(2.0F)
+                            .quality(0)
+                            .blockCost(50)
+                            .attackCost(200)
+                            .damage(1.0F)),
+            tool(
+                    "electric_screwdriver",
+                    "Screwdriver",
+                    1,
+                    "toolHeadScrewdriver",
+                    List.of("XdA", "TWY", "VYX"),
+                    new StatsBuilder()
+                            .speed(1.0F)
+                            .quality(0)
+                            .blockCost(100)
+                            .attackCost(100)
+                            .damage(1.0F)),
+            tool(
+                    "electric_mining_drill",
+                    "Mining Drill",
+                    1,
+                    "toolHeadDrill",
+                    STANDARD_ASSEMBLY,
+                    new StatsBuilder()
+                            .speed(3.0F)
+                            .quality(0)
+                            .blockCost(25)
+                            .attackCost(200)
+                            .damage(2.0F)),
+            tool(
+                    "electric_mixer",
+                    "Mixer",
+                    1,
+                    "toolHeadDrill",
+                    List.of("SSY", "SXW", "hVZ"),
+                    new StatsBuilder()
+                            .speed(1.0F)
+                            .quality(0)
+                            .blockCost(200)
+                            .attackCost(400)
+                            .damage(1.5F)),
+            tool(
+                    "electric_buzzsaw",
+                    "BuzzSaw",
+                    1,
+                    "toolHeadBuzzSaw",
+                    List.of("YXV", "TWX", "AdY"),
+                    new StatsBuilder()
+                            .speed(1.0F)
+                            .quality(0)
+                            .blockCost(50)
+                            .attackCost(300)
+                            .damage(1.0F)),
+            tool(
+                    "electric_trimmer",
+                    "Trimmer",
+                    1,
+                    "toolHeadSword",
+                    List.of("XAT", "ZYA", "VWd"),
+                    new StatsBuilder()
+                            .speed(0.25F)
+                            .quality(0)
+                            .blockCost(100)
+                            .attackCost(100)
+                            .damage(2.0F)),
+            tool(
+                    "electric_wrench_mv",
+                    "Wrench",
+                    2,
+                    "toolHeadWrench",
+                    STANDARD_ASSEMBLY,
+                    new StatsBuilder()
+                            .speed(3.0F)
+                            .quality(1)
+                            .blockCost(200)
+                            .attackCost(800)
+                            .damage(1.5F)),
+            tool(
+                    "electric_mining_drill_mv",
+                    "Mining Drill",
+                    2,
+                    "toolHeadDrill",
+                    STANDARD_ASSEMBLY,
+                    new StatsBuilder()
+                            .speed(6.0F)
+                            .quality(1)
+                            .blockCost(100)
+                            .attackCost(800)
+                            .damage(2.5F)),
+            tool(
+                    "electric_chainsaw_mv",
+                    "Chainsaw",
+                    2,
+                    "toolHeadChainsaw",
+                    STANDARD_ASSEMBLY,
+                    new StatsBuilder()
+                            .speed(3.0F)
+                            .quality(1)
+                            .blockCost(200)
+                            .attackCost(1600)
+                            .damage(3.5F)),
+            tool(
+                    "electric_wrench_hv",
+                    "Wrench",
+                    3,
+                    "toolHeadWrench",
+                    STANDARD_ASSEMBLY,
+                    new StatsBuilder()
+                            .speed(4.0F)
+                            .quality(1)
+                            .blockCost(800)
+                            .attackCost(3200)
+                            .damage(2.0F)),
+            tool(
+                    "electric_mining_drill_hv",
+                    "Mining Drill",
+                    3,
+                    "toolHeadDrill",
+                    STANDARD_ASSEMBLY,
+                    new StatsBuilder()
+                            .speed(9.0F)
+                            .quality(1)
+                            .blockCost(400)
+                            .attackCost(3200)
+                            .damage(3.0F)),
+            tool(
+                    "electric_chainsaw_hv",
+                    "Chainsaw",
+                    3,
+                    "toolHeadChainsaw",
+                    STANDARD_ASSEMBLY,
+                    new StatsBuilder()
+                            .speed(4.0F)
+                            .quality(1)
+                            .blockCost(800)
+                            .attackCost(6400)
+                            .damage(4.0F)));
 
     public static Definition get(String id) {
         return ALL.stream().filter(d -> d.id().equals(id)).findFirst().orElseThrow();
@@ -104,5 +261,38 @@ public final class ElectricToolCatalog {
                 && !material.has(MaterialProperty.ANTIMATTER)
                 && !OriginalToolMaterials.inFamily(material, "Rubber")
                 && !OriginalToolMaterials.inFamily(material, "Plastic");
+    }
+
+    private static final class StatsBuilder {
+        private float speed;
+        private int quality;
+        private int blockCost;
+        private int attackCost;
+        private float damage;
+
+        private StatsBuilder speed(float speed) {
+            this.speed = speed;
+            return this;
+        }
+
+        private StatsBuilder quality(int quality) {
+            this.quality = quality;
+            return this;
+        }
+
+        private StatsBuilder blockCost(int blockCost) {
+            this.blockCost = blockCost;
+            return this;
+        }
+
+        private StatsBuilder attackCost(int attackCost) {
+            this.attackCost = attackCost;
+            return this;
+        }
+
+        private StatsBuilder damage(float damage) {
+            this.damage = damage;
+            return this;
+        }
     }
 }
