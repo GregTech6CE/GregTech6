@@ -15,6 +15,7 @@ import gregtech.content.transport.TransportMaterialRules;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ReversibleCraftingData;
+import gregtech.engine.mod.GregTechIdentity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,8 @@ final class BasicMachineRecycling {
     private static List<MaterialComponent> parts(Ingredient ingredient, GTMaterial casing) {
         if (ingredient instanceof Form form)
             return List.of(part(form.material() == null ? casing : form.material(), form.prefix()));
+        if (ingredient instanceof BlockForm block)
+            return List.of(MaterialComponent.of(block.material(), block.prefix().getMaterialWeight()));
         if (ingredient instanceof Casing shell)
             return List.of(MaterialComponent.of(casing, shell.prefix().getMaterialWeight()));
         if (ingredient instanceof Pipe pipe)
@@ -52,6 +55,15 @@ final class BasicMachineRecycling {
             return originalBlock(crucible.spec().id());
         if (ingredient instanceof ItemRef item) return itemParts(item);
         if (ingredient instanceof TagRef tag) return tagParts(tag);
+        if (ingredient instanceof RegistryItem item) {
+            String namespace = GregTechIdentity.MOD_ID + ":";
+            if (!item.id().startsWith(namespace)) return List.of();
+            return MachineConstructionMaterials.block(item.id().substring(namespace.length()))
+                    .map(ItemComposition::components)
+                    .orElseGet(List::of);
+        }
+        // A registry tag can accept items with different material compositions.
+        if (ingredient instanceof RegistryTag) return List.of();
         if (ingredient instanceof Component component) return componentParts(component.type(), component.tier());
         if (ingredient instanceof Alternatives alternatives) {
             var first = parts(alternatives.options().get(0), casing);
