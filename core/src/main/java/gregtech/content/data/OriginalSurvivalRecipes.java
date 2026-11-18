@@ -10,8 +10,8 @@ public final class OriginalSurvivalRecipes {
     private OriginalSurvivalRecipes() {}
 
     public record Row(String id, int count, GTMaterial material, String pattern, Map<Character, String> keys) {
-        public MultiblockCraftingRecipes.Entry entry() {
-            return new MultiblockCraftingRecipes.Entry(id, id, pattern, keys);
+        public String[] rows() {
+            return pattern.split("\\|", -1);
         }
     }
 

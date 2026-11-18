@@ -87,6 +87,15 @@ public final class ChemRecipeResolver {
         return count;
     }
 
+    /** Resolves one typed ingredient for callers that own their row registration and diagnostics. */
+    public static ItemStack resolveItem(ChemIngredient ingredient) {
+        try {
+            return item(ingredient);
+        } catch (MissingContent missing) {
+            return ItemStack.EMPTY;
+        }
+    }
+
     /** Resolves and submits one source row. Never throws for absent content or a map collision. */
     public static ChemResult publish(ChemRecipe row) {
         try {

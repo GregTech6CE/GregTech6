@@ -49,6 +49,7 @@ public final class BasicMachineCraftingRecipes {
 
     public sealed interface Ingredient
             permits Form,
+                    BlockForm,
                     Casing,
                     Pipe,
                     Wire,
@@ -56,6 +57,8 @@ public final class BasicMachineCraftingRecipes {
                     Component,
                     ItemRef,
                     TagRef,
+                    RegistryItem,
+                    RegistryTag,
                     Circuit,
                     Tool,
                     Crucible,
@@ -64,6 +67,8 @@ public final class BasicMachineCraftingRecipes {
 
     /** Null material means the source casing material. An ANY group recovers its canonical material. */
     public record Form(MaterialPrefix prefix, GTMaterial material, GTMaterial group) implements Ingredient {}
+
+    public record BlockForm(BlockMaterialPrefix prefix, GTMaterial material) implements Ingredient {}
 
     public enum Casing implements Ingredient {
         STANDARD,
@@ -91,6 +96,10 @@ public final class BasicMachineCraftingRecipes {
     public record Circuit(int tier) implements Ingredient {}
 
     public record Tool(ToolDefinition type) implements Ingredient {}
+
+    public record RegistryItem(String id) implements Ingredient {}
+
+    public record RegistryTag(String id) implements Ingredient {}
 
     public record Crucible(CrucibleSpec spec) implements Ingredient {}
 

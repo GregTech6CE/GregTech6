@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * Crafting recipes for the multiblock machines and their structural parts, generated from the
@@ -65,7 +66,10 @@ public final class MultiblockRecipePack {
             if (item == net.minecraft.world.item.Items.AIR) continue;
 
             GTMaterial material = materialOf(block);
-            Map<String, Object> recipe = buildRecipe(entry, material, item);
+            Map<Character, Object> ingredients = new TreeMap<>();
+            entry.recipe().keys().forEach((symbol, ingredient) ->
+                    ingredients.put(symbol, MachineRecipeIngredients.resolve(ingredient, material)));
+            Map<String, Object> recipe = buildRecipe(entry.recipe().rows(), ingredients, item);
             if (recipe == null) continue;
 
             generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce",
@@ -88,7 +92,12 @@ public final class MultiblockRecipePack {
             if (item == null || item == net.minecraft.world.item.Items.AIR)
                 throw new IllegalStateException("Unregistered original recipe output " + row.id());
             if (!concreteInputsAvailable(row)) continue;
-            var recipe = buildRecipe(row.entry(), row.material(), item);
+            var pattern = new ArrayList<>(List.of(row.rows()));
+            while (!pattern.isEmpty() && pattern.get(pattern.size() - 1).isBlank()) {
+                pattern.remove(pattern.size() - 1);
+            }
+            var ingredients = MachineRecipeIngredients.resolveAll(row.keys(), row.material(), 1);
+            var recipe = buildRecipe(pattern, ingredients, item);
             if (recipe == null) throw new IllegalStateException("Unresolved original recipe " + row.id());
 //? if >=1.21.1 {
             /*recipe.put("result", Map.of("id", row.id().contains(":") ? row.id() : "gt6ce:" + row.id(), "count", row.count()));
@@ -176,27 +185,13 @@ public final class MultiblockRecipePack {
         return GTMaterialRegistry.get(DEFAULT_MATERIAL);
     }
 
-    private static Map<String, Object> buildRecipe(MultiblockCraftingRecipes.Entry entry, GTMaterial material,
-                                                   Item resultItem) {
-        Map<Character, String> specs = entry.keys();
-        if (entry.blockId().equals("coke_oven_main")) {
-            specs = new HashMap<>(specs);
-            specs.put('P', "tag:gt6ce:technology/any_iron_plate");
-            specs.put('R', "tag:gt6ce:technology/any_iron_rod");
-            specs.put('T', "tag:gt6ce:technology/any_iron_screw");
-        }
-        Map<Character, Object> ingredients = MachineRecipeIngredients.resolveAll(specs, material, 1);
-        if (ingredients.isEmpty()) return null;
+    private static Map<String, Object> buildRecipe(
+            List<String> pattern, Map<Character, Object> ingredients, Item resultItem) {
+        if (ingredients.isEmpty() || pattern.isEmpty()) return null;
         Map<String, Object> key = new HashMap<>();
         for (var pair : ingredients.entrySet()) {
             key.put(String.valueOf(pair.getKey()), pair.getValue());
         }
-
-        List<String> pattern = new ArrayList<>(List.of(entry.rows()));
-        while (!pattern.isEmpty() && pattern.get(pattern.size() - 1).isBlank()) {
-            pattern.remove(pattern.size() - 1);
-        }
-        if (pattern.isEmpty()) return null;
 
         ResourceLocation resultId = Mc.itemId(resultItem);
         if (resultId == null) return null;

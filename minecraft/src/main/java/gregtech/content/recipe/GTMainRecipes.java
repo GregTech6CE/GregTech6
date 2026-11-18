@@ -1,12 +1,14 @@
 package gregtech.content.recipe;
 
-import gregtech.engine.recipe.Recipe;
+import gregtech.content.data.MachineRecipeMaps;
+import gregtech.content.recipe.generated.ChemRecipeResolver;
+import gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import gregtech.engine.recipe.RecipeBuilder;
 import gregtech.engine.recipe.RecipeMap;
-import gregtech.content.data.MachineRecipeMaps;
-import gregtech.content.recipe.generated.GeneratedRecipeResolver;
+import gregtech.engine.recipe.chem.ChemFluid.NativeFluid;
+import gregtech.engine.recipe.chem.ChemIngredient;
 import gregtech.platform.Mc;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -46,105 +48,262 @@ import java.util.List;
  */
 public final class GTMainRecipes {
 
-    /** {@code map|fake|eu|ticks|inputs|outputs|fluids in|fluids out}; specs use the chem spec grammar. */
-    private record Row(String map, boolean fake, int eu, int ticks, String inputs, String outputs,
-                       String fluidIn, String fluidOut, String source) {}
+    private record Target(String name, RecipeMap map) {}
+
+    private record StackSpec(ChemIngredient ingredient, String label, boolean catalyst) {
+        private StackSpec labelled(String text) {
+            return new StackSpec(ingredient, text, catalyst);
+        }
+
+        private StackSpec kept() {
+            return new StackSpec(ingredient, label, true);
+        }
+    }
+
+    private record Row(
+            Target target,
+            String source,
+            int energyPerTick,
+            int duration,
+            boolean displayOnly,
+            List<StackSpec> itemInputs,
+            List<StackSpec> itemOutputs,
+            List<NativeFluid> fluidInputs,
+            List<NativeFluid> fluidOutputs) {}
+
+    private static final Target BATH = new Target("Bath", MachineRecipeMaps.Bath);
+    private static final Target PRINTER = new Target("Printer", MachineRecipeMaps.Printer);
+    private static final Target BOXINATOR = new Target("Boxinator", MachineRecipeMaps.Boxinator);
+    private static final Target UNBOXINATOR = new Target("Unboxinator", MachineRecipeMaps.Unboxinator);
+    private static final Target SCANNER_VISUALS = new Target("ScannerVisuals", MachineRecipeMaps.ScannerVisuals);
+    private static final Target DID_YOU_KNOW = new Target("DidYouKnow", MachineRecipeMaps.DidYouKnow);
 
     private static final List<Row> ROWS = List.of(
             // ---- real recipes (the machine consumes them) ----
 
-            new Row("Bath", false, 0, 16, "v:paper:1", "tech:empty_blueprint:1",
-                    "f:Dye_Water_Blue:144", "", "MultiItemRandomTools:436-437"),
-            new Row("Bath", false, 0, 16, "v:paper:1", "tech:empty_blueprint:1",
-                    "f:Dye_Flower_Blue:144", "", "MultiItemRandomTools:436-437"),
-            new Row("Bath", false, 0, 16, "v:paper:1", "tech:empty_blueprint:1",
-                    "f:Dye_Chemical_Blue:144", "", "MultiItemRandomTools:436-437"),
-            new Row("ScannerVisuals", true, 16, 64, "tech:blueprint:1;tech:usb1_stick:1",
-                    "tech:usb1_stick:1|Containing scanned Blueprint;tech:blueprint:1", "", "", "GT6_Main:339"),
-            new Row("Printer", true, 16, 32, "tech:empty_blueprint:1;tech:usb1_stick:1",
-                    "tech:blueprint:1", "f:Dye_Chemical_White:16", "", "GT6_Main:357"),
-            new Row("Printer", true, 16, 128, "v:paper:1;tech:usb1_stick:1",
-                    "tech:blueprint:1", "f:Dye_Chemical_Blue:144", "", "GT6_Main:358"),
-            new Row("Printer", false, 16, 256, "v:book:1", "book:Manual_Printer",
-                    "f:Dye_Chemical_Black:144", "", "GT6_Main:352"),
-            new Row("Boxinator", false, 16, 16, "v:paper:8;v:compass:1", "v:map:1", "", "",
-                    "GT6_Main:351"),
+            recipe(BATH, "MultiItemRandomTools:436-437", 0, 16)
+                    .itemInputs(vanilla("paper", 1))
+                    .itemOutputs(tech("empty_blueprint", 1))
+                    .fluidInputs(fluid("Dye_Water_Blue", 144))
+                    .build(),
+            recipe(BATH, "MultiItemRandomTools:436-437", 0, 16)
+                    .itemInputs(vanilla("paper", 1))
+                    .itemOutputs(tech("empty_blueprint", 1))
+                    .fluidInputs(fluid("Dye_Flower_Blue", 144))
+                    .build(),
+            recipe(BATH, "MultiItemRandomTools:436-437", 0, 16)
+                    .itemInputs(vanilla("paper", 1))
+                    .itemOutputs(tech("empty_blueprint", 1))
+                    .fluidInputs(fluid("Dye_Chemical_Blue", 144))
+                    .build(),
+            display(SCANNER_VISUALS, "GT6_Main:339", 16, 64)
+                    .itemInputs(
+                            tech("blueprint", 1),
+                            tech("usb1_stick", 1))
+                    .itemOutputs(
+                            tech("usb1_stick", 1).labelled("Containing scanned Blueprint"),
+                            tech("blueprint", 1))
+                    .build(),
+            display(PRINTER, "GT6_Main:357", 16, 32)
+                    .itemInputs(
+                            tech("empty_blueprint", 1),
+                            tech("usb1_stick", 1).kept())
+                    .itemOutputs(tech("blueprint", 1))
+                    .fluidInputs(fluid("Dye_Chemical_White", 16))
+                    .build(),
+            display(PRINTER, "GT6_Main:358", 16, 128)
+                    .itemInputs(
+                            vanilla("paper", 1),
+                            tech("usb1_stick", 1).kept())
+                    .itemOutputs(tech("blueprint", 1))
+                    .fluidInputs(fluid("Dye_Chemical_Blue", 144))
+                    .build(),
+            recipe(PRINTER, "GT6_Main:352", 16, 256)
+                    .itemInputs(vanilla("book", 1))
+                    .itemOutputs(book("Manual_Printer"))
+                    .fluidInputs(fluid("Dye_Chemical_Black", 144))
+                    .build(),
+            recipe(BOXINATOR, "GT6_Main:351", 16, 16)
+                    .itemInputs(
+                            vanilla("paper", 8),
+                            vanilla("compass", 1))
+                    .itemOutputs(vanilla("map", 1))
+                    .build(),
 
             // ---- GT6's "Did you know...?" hint pages (Loader_Recipes_Hints) ----
             // The labels name the GT6 machines; the shown stacks are the materials, books and
             // fluids the port registers (several GT6 machine blocks have different ids here).
-            new Row("DidYouKnow", true, 0, 0,
-                    "i:dust:Cinnabar:3|Throw three Units of Cinnabar into the Crucible;"
-                            + "tech:clay_crucible:1|Wait until it melts into Mercury;"
-                            + "v:glass_bottle:1|Rightclick the Crucible with an Empty Bottle;"
-                            + "v:redstone_ore:1|Mine Vanilla Redstone Ore with a Club for Cinnabar",
-                    "tech:mercury_bottle:1|A Bottle of Mercury", "", "", "Loader_Recipes_Hints:38"),
-            new Row("DidYouKnow", true, 0, 0,
-                    "i:ingot:Fe:1|Throw some Iron into the Crucible (leave room for Air);"
-                            + "tech:clay_crucible:1|Blow Air in with a running Engine;"
-                            + "i:ingot:WroughtIron:1|Wrought Iron works too",
-                    "i:ingot:Steel:1|Wait until it all turns into Steel;i:dust:Steel:1;i:plate:Steel:1;"
-                            + "i:stick:Steel:1;i:gearGt:Steel:1",
-                    "", "", "Loader_Recipes_Hints:44"),
-            new Row("DidYouKnow", true, 0, 0,
-                    "i:ingot:Zn:1|Dump some Zinc into the Crucible;"
-                            + "tech:clay_faucet:1|Pour the Zinc with a Faucet on the Crucible;"
-                            + "i:plate:Steel:1|Put your Steel object into the Bathing Pot below it",
-                    "i:plate:SteelGalvanized:1|Galvanized Steel Plate;"
-                            + "i:stick:SteelGalvanized:1;i:screw:SteelGalvanized:1",
-                    "f:GenMolten_Zinc:144", "f:GenMolten_Zinc:144", "Loader_Recipes_Hints:50"),
-            new Row("DidYouKnow", true, 0, 0,
-                    "v:book:1|Insert a basic empty Book into the Printer to get a Manual",
-                    "book:Manual_Printer", "f:Dye_Chemical_Black:144", "", "Loader_Recipes_Hints:56"),
-            new Row("ScannerVisuals", true, 16, 64, "v:filled_map:1;tech:usb1_stick:1",
-                    "v:filled_map:1;tech:usb1_stick:1", "", "", "GT6_Main:332"),
-            new Row("ScannerVisuals", true, 16, 64, "v:crafting_table:1;tech:usb1_stick:1",
-                    "v:crafting_table:1;tech:usb1_stick:1", "", "", "GT6_Main:331"),
+            display(DID_YOU_KNOW, "Loader_Recipes_Hints:38", 0, 0)
+                    .itemInputs(
+                            form("dust", "Cinnabar", 3).labelled("Throw three Units of Cinnabar into the Crucible"),
+                            tech("clay_crucible", 1).labelled("Wait until it melts into Mercury"),
+                            vanilla("glass_bottle", 1).labelled("Rightclick the Crucible with an Empty Bottle"),
+                            vanilla("redstone_ore", 1).labelled("Mine Vanilla Redstone Ore with a Club for Cinnabar"))
+                    .itemOutputs(tech("mercury_bottle", 1).labelled("A Bottle of Mercury"))
+                    .build(),
+            display(DID_YOU_KNOW, "Loader_Recipes_Hints:44", 0, 0)
+                    .itemInputs(
+                            form("ingot", "Fe", 1).labelled("Throw some Iron into the Crucible (leave room for Air)"),
+                            tech("clay_crucible", 1).labelled("Blow Air in with a running Engine"),
+                            form("ingot", "WroughtIron", 1).labelled("Wrought Iron works too"))
+                    .itemOutputs(
+                            form("ingot", "Steel", 1).labelled("Wait until it all turns into Steel"),
+                            form("dust", "Steel", 1),
+                            form("plate", "Steel", 1),
+                            form("stick", "Steel", 1),
+                            form("gearGt", "Steel", 1))
+                    .build(),
+            display(DID_YOU_KNOW, "Loader_Recipes_Hints:50", 0, 0)
+                    .itemInputs(
+                            form("ingot", "Zn", 1).labelled("Dump some Zinc into the Crucible"),
+                            tech("clay_faucet", 1).labelled("Pour the Zinc with a Faucet on the Crucible"),
+                            form("plate", "Steel", 1).labelled("Put your Steel object into the Bathing Pot below it"))
+                    .itemOutputs(
+                            form("plate", "SteelGalvanized", 1).labelled("Galvanized Steel Plate"),
+                            form("stick", "SteelGalvanized", 1),
+                            form("screw", "SteelGalvanized", 1))
+                    .fluidInputs(fluid("GenMolten_Zinc", 144))
+                    .fluidOutputs(fluid("GenMolten_Zinc", 144))
+                    .build(),
+            display(DID_YOU_KNOW, "Loader_Recipes_Hints:56", 0, 0)
+                    .itemInputs(vanilla("book", 1).labelled("Insert a basic empty Book into the Printer to get a Manual"))
+                    .itemOutputs(book("Manual_Printer"))
+                    .fluidInputs(fluid("Dye_Chemical_Black", 144))
+                    .build(),
+            display(SCANNER_VISUALS, "GT6_Main:332", 16, 64)
+                    .itemInputs(
+                            vanilla("filled_map", 1),
+                            tech("usb1_stick", 1))
+                    .itemOutputs(
+                            vanilla("filled_map", 1),
+                            tech("usb1_stick", 1))
+                    .build(),
+            display(SCANNER_VISUALS, "GT6_Main:331", 16, 64)
+                    .itemInputs(
+                            vanilla("crafting_table", 1),
+                            tech("usb1_stick", 1))
+                    .itemOutputs(
+                            vanilla("crafting_table", 1),
+                            tech("usb1_stick", 1))
+                    .build(),
 
-            new Row("ScannerVisuals", true, 16, 512, "v:written_book:1;tech:usb1_stick:1",
-                    "tech:usb1_stick:1|Containing scanned Book;v:written_book:1", "", "", "GT6_Main:326"),
-            new Row("ScannerVisuals", true, 16, 512, "tech:printed_pages:1;tech:usb1_stick:1",
-                    "tech:usb1_stick:1|Containing scanned Book;tech:printed_pages:1", "", "", "GT6_Main:327"),
-            new Row("ScannerVisuals", true, 16, 512, "tech:many_printed_pages:1;tech:usb1_stick:1",
-                    "tech:usb1_stick:1|Containing large scanned Book;tech:many_printed_pages:1", "", "", "GT6_Main:328"),
-            new Row("Printer", true, 16, 512, "v:paper:3;tech:usb1_stick:1|Containing scanned Book",
-                    "tech:printed_pages:1", "f:Dye_Chemical_Black:72", "", "GT6_Main:359"),
-            new Row("Printer", true, 16, 1024, "v:paper:6;tech:usb1_stick:1|Containing large scanned Book",
-                    "tech:many_printed_pages:1", "f:Dye_Chemical_Black:144", "", "GT6_Main:360"),
+            display(SCANNER_VISUALS, "GT6_Main:326", 16, 512)
+                    .itemInputs(
+                            vanilla("written_book", 1),
+                            tech("usb1_stick", 1))
+                    .itemOutputs(
+                            tech("usb1_stick", 1).labelled("Containing scanned Book"),
+                            vanilla("written_book", 1))
+                    .build(),
+            display(SCANNER_VISUALS, "GT6_Main:327", 16, 512)
+                    .itemInputs(
+                            tech("printed_pages", 1),
+                            tech("usb1_stick", 1))
+                    .itemOutputs(
+                            tech("usb1_stick", 1).labelled("Containing scanned Book"),
+                            tech("printed_pages", 1))
+                    .build(),
+            display(SCANNER_VISUALS, "GT6_Main:328", 16, 512)
+                    .itemInputs(
+                            tech("many_printed_pages", 1),
+                            tech("usb1_stick", 1))
+                    .itemOutputs(
+                            tech("usb1_stick", 1).labelled("Containing large scanned Book"),
+                            tech("many_printed_pages", 1))
+                    .build(),
+            display(PRINTER, "GT6_Main:359", 16, 512)
+                    .itemInputs(
+                            vanilla("paper", 3),
+                            tech("usb1_stick", 1).labelled("Containing scanned Book").kept())
+                    .itemOutputs(tech("printed_pages", 1))
+                    .fluidInputs(fluid("Dye_Chemical_Black", 72))
+                    .build(),
+            display(PRINTER, "GT6_Main:360", 16, 1024)
+                    .itemInputs(
+                            vanilla("paper", 6),
+                            tech("usb1_stick", 1).labelled("Containing large scanned Book").kept())
+                    .itemOutputs(tech("many_printed_pages", 1))
+                    .fluidInputs(fluid("Dye_Chemical_Black", 144))
+                    .build(),
 
             // ---- display rows: the printer reproduces what a scanned USB stick carries ----
             // GT6 prints a map of one dye unit per colour divided by nine (16 mB per colour) and one
             // unit of black for a scanned block (GT6_Main /).
-            new Row("Printer", true, 16, 64, "v:map:1;tech:usb1_stick:1", "v:filled_map:1",
-                    "f:Dye_Chemical_Yellow:16;f:Dye_Chemical_Magenta:16;f:Dye_Chemical_Cyan:16;"
-                            + "f:Dye_Chemical_Black:16", "", "GT6_Main:361"),
-            new Row("Printer", true, 16, 64, "v:crafting_table:1;tech:usb1_stick:1",
-                    "v:crafting_table:1",
-                    "f:Dye_Chemical_Yellow:16;f:Dye_Chemical_Magenta:16;f:Dye_Chemical_Cyan:16;"
-                            + "f:Dye_Chemical_Black:16",
-                    "", "GT6_Main:355"),
+            display(PRINTER, "GT6_Main:361", 16, 64)
+                    .itemInputs(
+                            vanilla("map", 1),
+                            tech("usb1_stick", 1).kept())
+                    .itemOutputs(vanilla("filled_map", 1))
+                    .fluidInputs(
+                            fluid("Dye_Chemical_Yellow", 16),
+                            fluid("Dye_Chemical_Magenta", 16),
+                            fluid("Dye_Chemical_Cyan", 16),
+                            fluid("Dye_Chemical_Black", 16))
+                    .build(),
+            display(PRINTER, "GT6_Main:355", 16, 64)
+                    .itemInputs(
+                            vanilla("crafting_table", 1),
+                            tech("usb1_stick", 1))
+                    .itemOutputs(vanilla("crafting_table", 1))
+                    .fluidInputs(
+                            fluid("Dye_Chemical_Yellow", 16),
+                            fluid("Dye_Chemical_Magenta", 16),
+                            fluid("Dye_Chemical_Cyan", 16),
+                            fluid("Dye_Chemical_Black", 16))
+                    .build(),
 
             // ---- display rows: opening a GT loot bag / book / bottle ----
-            new Row("Unboxinator", true, 16, 16, "tech:dusty_guide_book:1",
-                    "book:Manual_Steam;book:Manual_Random;book:Manual_Printer;book:Manual_Enchantments",
-                    "", "", "GT6_Main:387"),
-            new Row("Unboxinator", true, 16, 16, "tech:loot_bottle:1",
-                    "v:experience_bottle:1;tech:holy_water:1;tech:green_slime_bottle:1;tech:purple_drink:1;"
-                            + "tech:ink_bottle:1",
-                    "", "", "GT6_Main:389"),
-            new Row("Unboxinator", true, 16, 16, "tech:gem_pouch:1",
-                    "i:gemFlawless:Diamond:1;i:gem:Emerald:1", "", "", "GT6_Main:392"),
-            new Row("Unboxinator", true, 16, 16, "tech:bagged_sapling:1",
-                    "v:oak_sapling:1;v:spruce_sapling:1;v:birch_sapling:1;v:jungle_sapling:1", "", "",
-                    "GT6_Main:390"),
-            new Row("Unboxinator", true, 16, 16, "tech:seed_pouch:1",
-                    "v:wheat_seeds:1;v:pumpkin_seeds:1;v:melon_seeds:1", "", "", "GT6_Main:391"),
-            new Row("Unboxinator", true, 16, 16, "tech:loot_pouch:1",
-                    "tech:dynamite:1;tech:modeled_porcelain_cup:1;"
-                            + "i:dust:Zeolite:1",
-                    "", "", "GT6_Main:393"),
-            new Row("Unboxinator", true, 16, 16, "g:loot_crate:1",
-                    "g:loot_crate:1|1 Vanilla Loot Table Stack;g:crate:1", "", "", "GT6_Main:386"));
+            display(UNBOXINATOR, "GT6_Main:387", 16, 16)
+                    .itemInputs(tech("dusty_guide_book", 1))
+                    .itemOutputs(
+                            book("Manual_Steam"),
+                            book("Manual_Random"),
+                            book("Manual_Printer"),
+                            book("Manual_Enchantments"))
+                    .build(),
+            display(UNBOXINATOR, "GT6_Main:389", 16, 16)
+                    .itemInputs(tech("loot_bottle", 1))
+                    .itemOutputs(
+                            vanilla("experience_bottle", 1),
+                            tech("holy_water", 1),
+                            tech("green_slime_bottle", 1),
+                            tech("purple_drink", 1),
+                            tech("ink_bottle", 1))
+                    .build(),
+            display(UNBOXINATOR, "GT6_Main:392", 16, 16)
+                    .itemInputs(tech("gem_pouch", 1))
+                    .itemOutputs(
+                            form("gemFlawless", "Diamond", 1),
+                            form("gem", "Emerald", 1))
+                    .build(),
+            display(UNBOXINATOR, "GT6_Main:390", 16, 16)
+                    .itemInputs(tech("bagged_sapling", 1))
+                    .itemOutputs(
+                            vanilla("oak_sapling", 1),
+                            vanilla("spruce_sapling", 1),
+                            vanilla("birch_sapling", 1),
+                            vanilla("jungle_sapling", 1))
+                    .build(),
+            display(UNBOXINATOR, "GT6_Main:391", 16, 16)
+                    .itemInputs(tech("seed_pouch", 1))
+                    .itemOutputs(
+                            vanilla("wheat_seeds", 1),
+                            vanilla("pumpkin_seeds", 1),
+                            vanilla("melon_seeds", 1))
+                    .build(),
+            display(UNBOXINATOR, "GT6_Main:393", 16, 16)
+                    .itemInputs(tech("loot_pouch", 1))
+                    .itemOutputs(
+                            tech("dynamite", 1),
+                            tech("modeled_porcelain_cup", 1),
+                            form("dust", "Zeolite", 1))
+                    .build(),
+            display(UNBOXINATOR, "GT6_Main:386", 16, 16)
+                    .itemInputs(registered("loot_crate", 1))
+                    .itemOutputs(
+                            registered("loot_crate", 1).labelled("1 Vanilla Loot Table Stack"),
+                            registered("crate", 1))
+                    .build());
 
     /** Rows GT6 has that the port cannot show (their content is not registered), with the reason. */
     private static final List<String> SKIPPED = new ArrayList<>();
@@ -158,58 +317,16 @@ public final class GTMainRecipes {
 
     public static List<String> skipped() { return List.copyOf(SKIPPED); }
 
-    private static RecipeMap map(String name) {
-        return switch (name) {
-            case "Bath" -> MachineRecipeMaps.Bath;
-            case "Printer" -> MachineRecipeMaps.Printer;
-            case "Boxinator" -> MachineRecipeMaps.Boxinator;
-            case "Unboxinator" -> MachineRecipeMaps.Unboxinator;
-            case "ScannerVisuals" -> MachineRecipeMaps.ScannerVisuals;
-            case "DidYouKnow" -> MachineRecipeMaps.DidYouKnow;
-            default -> null;
-        };
-    }
-
     /** Registers the portable rows; idempotent. */
     public static int register() {
         if (registered) return ENTRIES.size();
         registered = true;
         for (Row row : ROWS) {
-            RecipeMap target = map(row.map());
-            if (target == null) {
-                SKIPPED.add(row.map() + " (" + row.source() + "): recipe map is not ported");
-                continue;
+            try {
+                register(row);
+            } catch (MissingContent missing) {
+                SKIPPED.add(row.source() + ": content not registered in the port (" + missing.getMessage() + ")");
             }
-            ItemStack[] inputs = items(row.inputs());
-            ItemStack[] outputs = items(row.outputs());
-            FluidStack[] fluidsIn = fluids(row.fluidIn());
-            FluidStack[] fluidsOut = fluids(row.fluidOut());
-            if (inputs == null || outputs == null || fluidsIn == null || fluidsOut == null) {
-                SKIPPED.add(row.source() + ": content not registered in the port ("
-                        + firstMissing(row) + ")");
-                continue;
-            }
-            Recipe recipe = row.fake()
-                    ? target.register(RecipeBuilder.of(row.eu(), row.ticks())
-                            .itemInputs(inputs)
-                            .fluidInputs(fluidsIn)
-                            .itemOutputs(outputs)
-                            .fluidOutputs(fluidsOut),
-                            RecipeMap.Registration.DISPLAY_CHECKED)
-                    : target.register(RecipeBuilder.of(row.eu(), row.ticks())
-                            .optimize(true)
-                            .itemInputs(inputs)
-                            .fluidInputs(fluidsIn)
-                            .itemOutputs(outputs)
-                            .fluidOutputs(fluidsOut)
-                            .chances(new long[outputs.length]));
-            if (recipe == null) {
-                SKIPPED.add(row.source() + ": rejected by " + row.map());
-                continue;
-            }
-            if (row.source().equals("GT6_Main:357") || row.source().equals("GT6_Main:358") || row.source().equals("GT6_Main:359")
-                    || row.source().equals("GT6_Main:360") || row.source().equals("GT6_Main:361")) recipe.withCatalystInputs(1);
-            ENTRIES.add(row.map() + "|" + (row.fake() ? "display" : "recipe") + "|" + row.source());
         }
         // GT6_Main rows whose content the port does not register, kept as a checklist.
         for (String reason : new String[]{
@@ -226,75 +343,140 @@ public final class GTMainRecipes {
         return ENTRIES.size();
     }
 
-    private static ItemStack[] items(String specs) {
-        if (specs == null || specs.isEmpty()) return new ItemStack[0];
-        List<ItemStack> out = new ArrayList<>();
-        for (String spec : specs.split(";")) {
-            ItemStack stack = resolve(stripLabel(spec));
-            if (stack == null || stack.isEmpty()) return null;
-            String label = labelOf(spec);
-            if (label != null) {
-                // GT6 labels hint ingredients with ST.make(stack, "text") for the recipe viewer.
+    private static void register(Row row) {
+        ItemStack[] inputs = items(row.itemInputs(), "input");
+        ItemStack[] outputs = items(row.itemOutputs(), "output");
+        var builder = RecipeBuilder.of(row.energyPerTick(), row.duration())
+                .itemInputs(inputs)
+                .fluidInputs(fluids(row.fluidInputs(), "fluid input"))
+                .itemOutputs(outputs)
+                .fluidOutputs(fluids(row.fluidOutputs(), "fluid output"));
+
+        var target = row.target();
+        var recipe = row.displayOnly()
+                ? target.map().register(builder, RecipeMap.Registration.DISPLAY_CHECKED)
+                : target.map().register(builder.optimize(true).chances(new long[outputs.length]));
+        if (recipe == null) {
+            SKIPPED.add(row.source() + ": rejected by " + target.name());
+            return;
+        }
+
+        for (int slot = 0; slot < row.itemInputs().size(); slot++) {
+            if (row.itemInputs().get(slot).catalyst()) recipe.withCatalystInputs(slot);
+        }
+        ENTRIES.add(target.name() + "|" + (row.displayOnly() ? "display" : "recipe") + "|" + row.source());
+    }
+
+    private static ItemStack[] items(List<StackSpec> specs, String side) {
+        var stacks = new ItemStack[specs.size()];
+        for (int index = 0; index < stacks.length; index++) {
+            var spec = specs.get(index);
+            ItemStack stack = ChemRecipeResolver.resolveItem(spec.ingredient());
+            if (stack == null || stack.isEmpty()) throw new MissingContent(side + " " + spec.ingredient());
+            if (spec.label() != null) {
+                Component name = Component.literal(spec.label());
 //? if >=1.21.1 {
-                /*stack.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,net.minecraft.network.chat.Component.literal(label));
+                /*stack.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME, name);
 *///?} else {
-                stack.setHoverName(net.minecraft.network.chat.Component.literal(label));
+                stack.setHoverName(name);
 //?}
             }
-            out.add(stack);
+            stacks[index] = stack;
         }
-        return out.toArray(ItemStack[]::new);
+        return stacks;
     }
 
-    /** Item specs plus {@code g:<path>:<count>} for the port's own blocks that are not GT technological items. */
-    private static ItemStack resolve(String spec) {
-        if (!spec.startsWith("g:")) return GeneratedRecipeResolver.resolveSpec(spec);
-        String[] parts = spec.split(":");
-        if (parts.length != 3) return null;
-        var item = Mc.item(
-                ResourceLocation.fromNamespaceAndPath("gt6ce", parts[1]));
-        return item == null || item == net.minecraft.world.item.Items.AIR
-                ? null : new ItemStack(item, Integer.parseInt(parts[2]));
+    private static FluidStack[] fluids(List<NativeFluid> specs, String side) {
+        var stacks = new FluidStack[specs.size()];
+        for (int index = 0; index < stacks.length; index++) {
+            var spec = specs.get(index);
+            FluidStack stack = GeneratedRecipeResolver.namedFluid(spec.key(), spec.millibuckets());
+            if (stack == null || stack.isEmpty()) throw new MissingContent(side + " " + spec.key());
+            stacks[index] = stack;
+        }
+        return stacks;
     }
 
-    /** A spec may carry a display label after a {@code |} (the port's form of GT6's named stacks). */
-    private static String stripLabel(String spec) {
-        int pipe = spec.indexOf('|');
-        return pipe < 0 ? spec : spec.substring(0, pipe);
+    private static StackSpec vanilla(String path, int count) {
+        return new StackSpec(new ChemIngredient.RegistryItem("minecraft:" + path, count), null, false);
     }
 
-    private static String labelOf(String spec) {
-        int pipe = spec.indexOf('|');
-        return pipe < 0 ? null : spec.substring(pipe + 1);
+    private static StackSpec registered(String path, int count) {
+        return new StackSpec(new ChemIngredient.RegistryItem("gt6ce:" + path, count), null, false);
     }
 
-    /** The first spec of a row that does not resolve — the reason a row is skipped. */
-    private static String firstMissing(Row row) {
-        for (String spec : row.inputs().split(";")) {
-            if (!spec.isEmpty() && resolve(stripLabel(spec)) == null) return "input " + spec;
-        }
-        for (String spec : row.outputs().split(";")) {
-            if (!spec.isEmpty() && resolve(stripLabel(spec)) == null) return "output " + spec;
-        }
-        for (String spec : row.fluidIn().split(";")) {
-            if (!spec.isEmpty() && GeneratedRecipeResolver.resolveFluidSpec(stripLabel(spec)) == null) return "fluid " + spec;
-        }
-        for (String spec : row.fluidOut().split(";")) {
-            if (!spec.isEmpty() && GeneratedRecipeResolver.resolveFluidSpec(stripLabel(spec)) == null) {
-                return "fluid out " + spec;
-            }
-        }
-        return "unknown";
+    private static StackSpec tech(String name, int count) {
+        return new StackSpec(new ChemIngredient.TechnologyItem(name, count), null, false);
     }
 
-    private static FluidStack[] fluids(String specs) {
-        if (specs == null || specs.isEmpty()) return new FluidStack[0];
-        List<FluidStack> out = new ArrayList<>();
-        for (String spec : specs.split(";")) {
-            FluidStack stack = GeneratedRecipeResolver.resolveFluidSpec(spec);
-            if (stack == null || stack.isEmpty()) return null;
-            out.add(stack);
+    private static StackSpec form(String prefix, String material, int count) {
+        return new StackSpec(new ChemIngredient.ItemForm(prefix, material, count), null, false);
+    }
+
+    private static StackSpec book(String name) {
+        return new StackSpec(new ChemIngredient.Book(name), null, false);
+    }
+
+    private static NativeFluid fluid(String key, int millibuckets) {
+        return new NativeFluid(key, millibuckets);
+    }
+
+    private static RowBuilder recipe(Target target, String source, int energyPerTick, int duration) {
+        return new RowBuilder(target, source, energyPerTick, duration, false);
+    }
+
+    private static RowBuilder display(Target target, String source, int energyPerTick, int duration) {
+        return new RowBuilder(target, source, energyPerTick, duration, true);
+    }
+
+    private static final class RowBuilder {
+        private final Target target;
+        private final String source;
+        private final int energyPerTick;
+        private final int duration;
+        private final boolean displayOnly;
+        private List<StackSpec> itemInputs = List.of();
+        private List<StackSpec> itemOutputs = List.of();
+        private List<NativeFluid> fluidInputs = List.of();
+        private List<NativeFluid> fluidOutputs = List.of();
+
+        private RowBuilder(Target target, String source, int energyPerTick, int duration, boolean displayOnly) {
+            this.target = target;
+            this.source = source;
+            this.energyPerTick = energyPerTick;
+            this.duration = duration;
+            this.displayOnly = displayOnly;
         }
-        return out.toArray(FluidStack[]::new);
+
+        private RowBuilder itemInputs(StackSpec... inputs) {
+            itemInputs = List.of(inputs);
+            return this;
+        }
+
+        private RowBuilder itemOutputs(StackSpec... outputs) {
+            itemOutputs = List.of(outputs);
+            return this;
+        }
+
+        private RowBuilder fluidInputs(NativeFluid... inputs) {
+            fluidInputs = List.of(inputs);
+            return this;
+        }
+
+        private RowBuilder fluidOutputs(NativeFluid... outputs) {
+            fluidOutputs = List.of(outputs);
+            return this;
+        }
+
+        private Row build() {
+            return new Row(target, source, energyPerTick, duration, displayOnly, itemInputs, itemOutputs,
+                    fluidInputs, fluidOutputs);
+        }
+    }
+
+    private static final class MissingContent extends RuntimeException {
+        private MissingContent(String message) {
+            super(message);
+        }
     }
 }

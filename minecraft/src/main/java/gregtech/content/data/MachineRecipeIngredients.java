@@ -180,13 +180,14 @@ public final class MachineRecipeIngredients {
         return result;
     }
 
-    /** Resolves a typed GT6 key from the basic machine's source casing and tier. */
+    /** Resolves a typed GT6 key with the machine's source casing. */
     public static Object resolve(Ingredient key, GTMaterial casing) {
         if (key instanceof Form form) {
             GTMaterial material = form.material() == null ? casing : form.material();
             if (form.group() != null) return groupIngredient(form.prefix(), form.group(), material, casing);
             return materialIngredient(form.prefix(), material, casing);
         }
+        if (key instanceof BlockForm block) return blockIngredient(block.prefix(), block.material());
         if (key instanceof Casing block) return blockIngredient(block.prefix(), casing);
         if (key instanceof Pipe pipe) {
             GTMaterial material = pipe.material() == null ? casing : pipe.material();
@@ -198,9 +199,11 @@ public final class MachineRecipeIngredients {
             return componentIngredient(component.type(), component.type().name(), component.tier(), casing);
         if (key instanceof Circuit circuit) return circuitIngredient(circuit.tier());
         if (key instanceof ItemRef item) return itemIngredient(item.id(), casing);
+        if (key instanceof RegistryItem item) return itemIngredient(item.id(), casing);
         if (key instanceof Tool tool) return itemIngredient("gt6ce:tool_" + tool.type().id(), casing);
         if (key instanceof Crucible crucible) return itemIngredient("gt6ce:" + crucible.spec().id(), casing);
         if (key instanceof TagRef tag) return Map.of("tag", tag.id());
+        if (key instanceof RegistryTag tag) return Map.of("tag", tag.id());
         if (key instanceof FluidContainer fluid)
             return Map.of("type", "gt6ce:finite_fluid_container_1000", "fluid", fluid.fluidField());
         if (key instanceof Alternatives alternatives)
