@@ -6,40 +6,36 @@
 
 Minecraft 1.20.1 · Forge | Minecraft 1.21.1 · NeoForge
 
-## ⚠️ Development Build Notice
+## ⚠️ Version & Compatibility Notice
 
-**GT6CE is under rapid development and has not yet reached a stable release. Updates may introduce major architectural changes alongside new content and bug fixes.**
+**GT6CE has released its `v1.0` baseline and is currently in the `v1.0 ~ v1.1` rapid iteration phase. Updates during this window may introduce breaking architectural and content changes alongside feature additions and bug fixes.**
 
-Item and block IDs, save data formats, material and recipe systems, machine behavior, world generation, the addon API, and scripting interfaces are all subject to change. **Cross-build compatibility is not guaranteed for existing worlds, addons, or modpacks, and automatic migration may not cover all older data.**
+Item and block IDs, save data formats, material and recipe registries, machine behavior, world generation, the Addon API, and scripting contracts are actively being finalized. **Save and addon compatibility across builds is not guaranteed prior to the conclusion of `v1.1`** (after which a 1–2 version migration window will be maintained for structural changes).
 
-After updating, existing production lines, addons, and scripts may need adjustments, and older worlds may encounter missing registries or incompatible machine data. In some cases, a new world may be required.
-
-- Test development builds in a separate instance rather than on long-term worlds or production servers.
-- **Back up your worlds, configs, and scripts before updating, and keep matching previous mod files.** Do not rely on downgrading the mod to recover a world already saved on a newer build.
-- When building a modpack or addon, pin a specific build and verify compatibility before upgrading.
+- Use a dedicated instance when testing early builds rather than long-term worlds or production servers.
+- **Back up your worlds, configs, and scripts before updating, and keep matching previous mod JARs.** Worlds saved on a newer build cannot be recovered by downgrading the mod.
+- Modpack and addon authors should pin a specific build and verify compatibility before upgrading.
 
 ## Welcome to GT6CE
 
-**GregTech 6 Community Edition** (**GT6CE**) is a community port of GregTech 6 to modern Minecraft. It brings GT6's material processing, hands-on metallurgy, and industrial progression to **1.20.1 Forge** and **1.21.1 NeoForge**.
+**GregTech 6 Community Edition** (**GT6CE**) is a community port and evolution of GregTech 6 for modern Minecraft, bringing hands-on thermodynamics, material processing, and multi-energy industrial engineering to **1.20.1 Forge** and **1.21.1 NeoForge**.
 
-GregTech 6 puts production details directly in your hands—regulating crucible temperatures, casting parts, refining new materials, and supplying power to each machine. Your factory grows step by step:
+In GregTech 6, production lives in the physical world rather than behind abstract progress bars—regulating crucible temperatures, carving molds, forging parts on anvils, and routing specialized energy forms to each machine:
 
-- Start with **tools and manual processing**, melting metals in crucibles and casting them into molds.
-- Harness **steam and mechanical power** through boilers, turbines, and engines.
-- Connect **processing machines, generators, and multiblocks** with pipes, cables, and storage into automated lines.
-
-Original GT6 serves as the primary reference for materials, recipes, and machine behavior, adapted for modern Minecraft and its modding ecosystem.
+- Start in the **Stone, Pottery, and Bronze Ages**, prospecting surface rocks, firing clay crucibles, and casting molten alloys into hand-carved `5×5` molds.
+- Harness **steam, rotational, and kinetic power** through boilers, turbines, engines, axles, and gearboxes to drive mechanical workshops.
+- Expand into **electrification, chemical engineering, optics, and nuclear power**, linking machines, multiblocks, pipes, hoppers, and covers into self-consistent automated factories.
 
 ## Features
 
-- **Crucibles, alloys, and casting**: Work with molten metals, alloy ratios, molds, and casting channels where temperature and material properties drive the process.
-- **Material-driven tools and parts**: Craft metals, alloys, and minerals into tools and components with distinct stats and roles.
-- **Diverse power systems**: Generate, convert, and consume heat, steam, rotational power, kinetic power, and electricity.
-- **Pipes, cables, and covers**: Transport items and fluids, route power networks, and customize machine faces with covers.
-- **Multiblock machinery**: Construct coke ovens, distillation towers, large tanks, and heavy industrial structures.
-- **World prospecting**: Locate ore veins, stone layers, and surface deposits to feed your industry.
-- **Recipe and machine integration**: Browse recipes and multiblock previews via JEI / EMI, and inspect blocks and machines with Jade.
-- **Extensibility**: Add custom recipes, materials, and machines through KubeJS and the Addon API.
+- **Thermodynamic Crucible Metallurgy**: Melt, alloy, and cast metals driven by real Kelvin melting points, boiling points, and heat capacities—evolving from manual clay crucibles to dual-track small-batch and multiblock industrial automation.
+- **Multi-Energy Synergy**: Generate, convert, and coordinate heat (`HU`), cooling (`CU`), steam (`SU`), rotational (`RU`), kinetic (`KU`), electrical (`EU`), magnetic (`MU`), laser (`LU`), and quantum (`QU`) energy rather than stacking a single voltage tier.
+- **In-World Crafting & Tooling**: Carve `5×5` bitmask molds, hammer heated ingots on two-slot anvils, read physical sensor dials, and maintain modular tools with replaceable heads.
+- **Covers, Hoppers, and Piping**: Route items, fluids, and power while turning any machine face into a programmable I/O controller with conveyors, pumps, regulators, and redstone sensors.
+- **Multiblock Industrial Facilities**: Build coke ovens, distillation towers, large crucibles, heat exchangers, nuclear reactors, and logistics cores.
+- **Geological Prospecting**: Trace surface rocks, indicator flowers, and bedrock springs to uncover layered rock formations and ore veins.
+- **Viewer & Telemetry Integration**: Inspect recipes, ore processing trees, and multiblock layouts via JEI / EMI, with real-time machine and thermal telemetry built into Jade and GUIs.
+- **Extensibility**: Customize recipes, materials, energy tiers, worldgen, and reskinned machines through KubeJS, datapacks, and the dual-platform Addon SDK.
 
 ## Supported Versions
 
@@ -52,17 +48,17 @@ Place the matching GT6CE JAR into your instance's `mods` folder.
 
 ## Development Status
 
-GT6CE is **in active development**. The port is still in progress, with recipes, interactions, rendering, and mod compatibility actively being refined. Full parity with original GT6 and a complete survival playthrough have not yet been verified.
+GT6CE has reached its **`v1.0` playable baseline** on both target platforms, with single-source material and recipe registries, initial resource slimming, and core survival workflows in place. Development is now advancing through the [`v1.0 ~ v1.4` Roadmap](docs/roadmap/README.md)—stabilizing the narrow-contract Addon API, internalizing telemetry, overhauling world generation and transport networks, and deepening crucible metallurgy and native logistics. Track recent changes in the [v1.0 Changelog](docs/changelog/v1.0.md).
 
 ## Get Involved
 
-**Report issues on our [Issue Tracker](https://github.com/GregTech6CE/GregTech6/issues).** Please include your Minecraft and loader versions, GT6CE build filename or commit hash, reproduction steps, and relevant logs or screenshots.
+**Report bugs and submit proposals on our [Issue Tracker](https://github.com/GregTech6CE/GregTech6/issues).** Please include your Minecraft and loader versions, GT6CE build filename or commit hash, reproduction steps, and relevant logs or screenshots.
 
-Suggestions, pull requests, translations, documentation, textures, and playtest feedback are all welcome. For code contributions, describe the changes and specify which platforms were verified.
+Pull requests, RFC discussions, translations, documentation, textures, and playtest feedback are all welcome. For code contributions, describe the motivation, scope, and verified platforms.
 
 ## Developers
 
-Both target platforms are maintained in a single repository using **[Stonecutter](https://stonecutter.kikugie.dev/)**: `api` defines public extension contracts, `core` holds platform-agnostic logic and shared resources, and `minecraft` holds shared Minecraft code alongside version-specific adapters.
+Both target platforms are maintained in a single repository using **[Stonecutter](https://stonecutter.kikugie.dev/)**: `api` defines public extension contracts, `core` holds platform-agnostic rules and shared assets, and `minecraft` houses shared Minecraft runtime code alongside version-specific adapters.
 
 Run the Gradle task for your target build from the repository root (`./gradlew` on Linux/macOS, `.\gradlew.bat` on Windows):
 
@@ -81,11 +77,11 @@ Built mod JARs are placed under `minecraft/versions/<version-loader>/build/libs/
 
 | Resource | Purpose |
 | --- | --- |
-| [Developer Documentation](docs/README.md) · [Agent Guide](AGENTS.md) | Documentation entry, engineering rules, and repository layout (Chinese) |
-| [Getting Started](docs/development/getting-started.md) · [Validation](docs/development/validation/README.md) | Toolchain setup, build tasks, dev runs, and verification checks (Chinese) |
+| [Developer Documentation](docs/README.md) · [Agent Guide](AGENTS.md) | Documentation index, engineering workflow, and repository layout (Chinese) |
+| [Getting Started](docs/development/getting-started.md) · [Validation](docs/development/validation/README.md) | Toolchain setup, build tasks, dev runs, and verification gates (Chinese) |
 | [Architecture & Packages](docs/architecture/README.md) | Source layers, platform adapters, and package responsibilities (Chinese) |
 | [Addon API & KubeJS](docs/addon/README.md) | Extension contracts, SDK artifacts, and KubeJS integration (Chinese) |
-| [Roadmap](docs/roadmap/v1.0.md) | Guiding principles, architecture, milestones, and contribution workflow (Chinese) |
+| [Roadmap](docs/roadmap/README.md) · [Policies](docs/decisions/policies.md) · [Progression](docs/decisions/progression.md) | Design principles, seven-era tech tree, and version milestones (Chinese) |
 | [Changelog](docs/changelog/v1.0.md) | Versioned user-facing release notes |
 
 ## License
