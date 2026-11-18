@@ -4,30 +4,35 @@ package gregtech.api.addon.recipe;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RecipeTableTest {
     @Test
-    void toStringIncludesEveryDeclarationField() {
+    void builderPreservesGroupedDeclarationFields() {
         RecipeTable table = RecipeTable.machine("test_map")
                 .title("Test")
                 .gui("gt6ce:textures/gui/test.png")
                 .inputItems(3)
+                .outputItems(4)
+                .minimalInputItems(1)
+                .inputFluids(5)
+                .outputFluids(6)
+                .minimalInputFluids(2)
                 .minimalInputs(2)
                 .needsOutputs(true)
                 .combinePower(true)
                 .bucketIn(true)
                 .bucketOut(true)
                 .build();
-        String text = table.toString();
-        assertTrue(text.contains("title=Test"));
-        assertTrue(text.contains("gui=gt6ce:textures/gui/test.png"));
-        assertTrue(text.contains("minimalInputs=2"));
-        assertTrue(text.contains("needsOutputs=true"));
-        assertTrue(text.contains("combinePower=true"));
-        assertTrue(text.contains("bucketIn=true"));
-        assertTrue(text.contains("bucketOut=true"));
+
+        assertEquals("test_map", table.name());
+        assertEquals(new RecipeTable.Presentation("Test", "gt6ce:textures/gui/test.png"), table.presentation());
+        assertEquals(new RecipeTable.SlotCounts(3, 4, 1), table.itemSlots());
+        assertEquals(new RecipeTable.SlotCounts(5, 6, 2), table.fluidTanks());
+        assertEquals(new RecipeTable.Rules(2, true, true, true, true), table.rules());
     }
 
     @Test
@@ -36,6 +41,8 @@ class RecipeTableTest {
                 .gui("gt6ce:textures/gui/test.png").build();
         RecipeTable fuel = RecipeTable.fuel("test_map").title("Test")
                 .gui("gt6ce:textures/gui/test.png").build();
+        assertFalse(machine.fuel());
+        assertTrue(fuel.fuel());
         assertNotEquals(machine, fuel);
     }
 }

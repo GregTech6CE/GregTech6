@@ -5,6 +5,7 @@ package gregtech.api.addon.machine;
 import gregtech.api.energy.EnergyInput;
 import gregtech.api.energy.EnergyType;
 import gregtech.api.machine.MachineCasing;
+import gregtech.api.machine.MachineFace;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -98,7 +99,7 @@ class BehaviorMachineTest {
         EnergyInput auxiliary = EnergyInput.builder(EnergyType.EU, 32)
                 .range(1, 64)
                 .capacity(100)
-                .faces(gregtech.api.machine.MachineFace.BOTTOM)
+                .faces(MachineFace.BOTTOM)
                 .build();
         assertThrows(IllegalArgumentException.class, () -> builder("test_machine")
                 .energy(main)
