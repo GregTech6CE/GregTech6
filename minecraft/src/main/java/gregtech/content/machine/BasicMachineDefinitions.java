@@ -3,7 +3,6 @@ package gregtech.content.machine;
 import gregtech.api.machine.BasicMachineParameters;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.engine.addon.MachineTuningRules;
-import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.machine.BasicMachineSpec;
 import java.util.List;
 
@@ -60,70 +59,43 @@ public final class BasicMachineDefinitions {
         if (energyIn < energyInMin || energyIn > energyInMax)
             throw new IllegalStateException("Tuned energy for " + key + " sits outside its effective range: " + energyIn
                     + " not in " + energyInMin + ".." + energyInMax);
-        var tuned = new BasicMachineSpec(
-                base.id(),
-                base.material(),
-                base.machineName(),
-                base.energyType(),
-                base.tier(),
-                energyIn,
-                base.energyOut(),
-                base.hardness(),
-                base.blastResistance(),
-                base.faceConfig(),
-                base.constructionMaterials(),
-                base.recipeMap(),
-                parallel,
+        var originalEnergy = base.energy();
+        var range = new BasicMachineSpec.InputRange(
                 energyInMin,
                 energyInMax,
+                originalEnergy.range().declared() || tuning.energyInMin() != null || tuning.energyInMax() != null);
+        var energy = new BasicMachineSpec.Energy(
+                originalEnergy.type(), originalEnergy.tier(), energyIn, originalEnergy.outputPerTick(), range);
+        var originalProcessing = base.processing();
+        var processing = new BasicMachineSpec.Processing(
+                parallel,
+                tuning.processingEfficiency() != null ? tuning.processingEfficiency() : originalProcessing.efficiency(),
+                tuning.constantEnergy() != null ? tuning.constantEnergy() : originalProcessing.constantEnergy(),
+                tuning.cheapOverclocking() != null
+                        ? tuning.cheapOverclocking()
+                        : originalProcessing.cheapOverclocking(),
+                originalProcessing.cheapOverclockingDeclared() || tuning.cheapOverclocking() != null,
+                originalProcessing.parallelScalesDuration(),
+                originalProcessing.minimumLightAbove(),
+                originalProcessing.searchOutputTanks(),
+                originalProcessing.exclusiveOutputs());
+        var tuned = new BasicMachineSpec(
+                base.id(),
                 base.namespace(),
-                base.controllerKind(),
-                tuning.processingEfficiency() != null ? tuning.processingEfficiency() : base.processingEfficiency(),
-                tuning.constantEnergy() != null ? tuning.constantEnergy() : base.constantEnergy(),
-                base.structureKeys(),
-                tuning.cheapOverclocking() != null ? tuning.cheapOverclocking() : base.cheapOverclocking(),
-                base.cheapOverclockingDeclared() || tuning.cheapOverclocking() != null,
-                base.minimumLightAbove(),
-                base.searchOutputTanks(),
-                base.exclusiveOutputs(),
-                base.itemOutputTarget(),
-                base.fluidOutputTarget(),
-                base.itemInputSource(),
-                base.fluidInputSource(),
-                base.energyRangeDeclared() || tuning.energyInMin() != null || tuning.energyInMax() != null,
-                base.parallelScalesDuration(),
-                base.energySources(),
-                base.suppressSideAutoInput(),
-                base.unlimitedOutputTanks(),
-                base.auxiliaryEnergyType(),
-                base.auxiliaryEnergyIn(),
-                base.auxiliaryEnergyMin(),
-                base.auxiliaryEnergyMax(),
-                base.auxiliaryEnergyCapacity(),
-                base.auxiliaryFaceMask(),
-                base.startupEnergy());
+                base.machineName(),
+                base.casing(),
+                base.recipeMap(),
+                energy,
+                processing,
+                base.layout(),
+                base.auxiliaryEnergy());
         logApplied(applied, base, tuned);
         gregtech.engine.addon.RegisteredMachineIndex.bind(tuned);
         return tuned;
     }
 
     private static BasicMachineSpec raw(BasicMachineParameters p) {
-        return new BasicMachineSpec(
-                p.id(),
-                p.material(),
-                p.machineName(),
-                p.energy().type().name(),
-                p.energy().tier(),
-                p.energy().energyIn(),
-                p.energy().energyOut(),
-                p.hardness(),
-                p.blastResistance(),
-                FaceConfig.from(p.faceConfig()),
-                p.constructionMaterials(),
-                MachineRecipeMaps.byMachineName(p.machineName()),
-                p.options().parallelLimit(),
-                p.energy().energyInMin(),
-                p.energy().energyInMax());
+        return BasicMachineSpec.builtIn(p, MachineRecipeMaps.byMachineName(p.machineName()));
     }
 
     private static void logApplied(MachineTuningRules.Merged applied, BasicMachineSpec base, BasicMachineSpec tuned) {

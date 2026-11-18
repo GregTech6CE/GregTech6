@@ -60,12 +60,20 @@ public final class GTFluidType {
                 || fluid == net.minecraft.world.level.material.Fluids.FLOWING_WATER
                 || fluid == net.minecraft.world.level.material.Fluids.LAVA
                 || fluid == net.minecraft.world.level.material.Fluids.FLOWING_LAVA ? Owner.VANILLA : Owner.OTHER;
-        var facts = new Facts(registry, advanced, (flags & RegisteredFluids.FluidFlags.NONSTANDARD) != 0,
-                amount, gregtech.GregTechConfig.chemicalFormulas() && material.isValid() ? material.getResolvedTooltipChemical() : "",
-                type.getTemperature(stack), GTFluids.isGas(stack), FluidHazards.isPlasma(fluid), type.isLighterThanAir(),
-                material.isValid() && !MaterialStackItemHelper.mat(MaterialPrefix.ingot, material, 1).isEmpty(),
-                type.getDensity(stack), type.getLightLevel(stack), type.getViscosity(stack), flags,
-                FluidHazards.isAcid(fluid), FluidHazards.isMagic(fluid), industrial, owner);
+        String formula = gregtech.GregTechConfig.chemicalFormulas() && material.isValid()
+                ? material.getResolvedTooltipChemical() : "";
+        var physical = new PhysicalProperties(
+                type.getTemperature(stack),
+                type.getDensity(stack),
+                type.getLightLevel(stack),
+                type.getViscosity(stack),
+                type.isLighterThanAir());
+        boolean gas = GTFluids.isGas(stack);
+        var phase = FluidHazards.isPlasma(fluid) ? Phase.PLASMA : gas ? Phase.GAS : Phase.LIQUID;
+        boolean castable = material.isValid() && !MaterialStackItemHelper.mat(MaterialPrefix.ingot, material, 1).isEmpty();
+        var traits =
+                new Traits(phase, flags, castable, FluidHazards.isAcid(fluid), FluidHazards.isMagic(fluid), industrial);
+        var facts = new Facts(registry, formula, owner, amount, advanced, physical, traits);
         var fuels = new ArrayList<Fuel>();
         if (!industrial) for (var map : FuelRecipeMaps.FUEL_MAP_LIST) {
             var recipes = map.recipesForFluid(stack);

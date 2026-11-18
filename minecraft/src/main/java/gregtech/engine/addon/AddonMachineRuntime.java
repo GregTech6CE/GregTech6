@@ -1,8 +1,10 @@
 package gregtech.engine.addon;
 
-import gregtech.api.machine.BasicMachineParameters;
+import gregtech.api.machine.BasicMachineParameters.Options.CheapOverclocking;
 import gregtech.api.machine.EnergyRange;
+import gregtech.api.machine.MachineControllerKind;
 import gregtech.content.data.FuelRecipeMaps;
+import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.machine.BasicMachineCatalog;
 import gregtech.content.multiblock.SharedLargeMachineLayouts;
@@ -12,6 +14,7 @@ import gregtech.engine.recipe.RecipeMap;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 /** Turns the core machine queue into platform recipe maps and specs. Idempotent. */
 public final class AddonMachineRuntime {
@@ -50,61 +53,69 @@ public final class AddonMachineRuntime {
         if (recipes == null)
             throw new IllegalStateException("Addon '" + accepted.addonId() + "' machine '" + parameters.machineName()
                     + "' uses unknown recipe map '" + definition.recipeMapName() + "'");
-        var spec = BasicMachineSpec.builder(parameters.id(), parameters.material())
-                .machineType(parameters.machineName())
-                .recipes(recipes)
-                .energy(
-                        AddonPlatformServices.tag(parameters.energy().type().name()),
-                        parameters.energy().energyIn())
-                .energyOutput(parameters.energy().energyOut())
-                .tier(parameters.energy().tier())
-                .parallel(parameters.options().parallelLimit())
-                .strength(parameters.hardness(), parameters.blastResistance())
-                .faces(FaceConfig.from(parameters.faceConfig()))
-                .constructionMaterials(parameters.constructionMaterials())
-                .namespace(accepted.addonId())
-                .controllerKind(definition.kind())
-                .processingEfficiency(definition.efficiency())
-                .constantEnergy(definition.constantEnergy())
-                .structureKeys(definition.structureKeys())
-                .minimumLightAbove(parameters.options().minimumLightAbove())
-                .searchOutputTanks(parameters.options().searchOutputTanks())
-                .exclusiveOutputs(parameters.options().exclusiveOutputs())
-                .itemOutputTarget(parameters.io().itemOutputTarget())
-                .fluidOutputTarget(parameters.io().fluidOutputTarget())
-                .itemInputSource(parameters.io().itemInputSource())
-                .fluidInputSource(parameters.io().fluidInputSource());
-        if (parameters.energy().range() instanceof EnergyRange.Declared)
-            spec.energyRange(
-                    parameters.energy().energyInMin(), parameters.energy().energyInMax());
-        else if (definition.kind() == gregtech.api.machine.MachineControllerKind.LARGE_RECIPE)
-            spec.implicitEnergyRange(
-                    parameters.energy().acceptedEnergyInMin(true),
-                    parameters.energy().acceptedEnergyInMax(true));
-        else if (parameters.energy().energyInMin() > 0)
-            spec.implicitEnergyRange(
-                    parameters.energy().energyInMin(), parameters.energy().energyInMax());
-        if (definition.kind() == gregtech.api.machine.MachineControllerKind.BASIC
-                || parameters.options().cheapOverclocking()
-                        != BasicMachineParameters.Options.CheapOverclocking.UNSPECIFIED)
-            spec.cheapOverclocking(parameters.options().cheapOverclocking()
-                    == BasicMachineParameters.Options.CheapOverclocking.ENABLED);
-        if (definition.auxiliaryEnergyType() != null) {
-            var tag = gregtech.content.data.GregTechTags.Energy.ALL.stream()
-                    .filter(candidate -> candidate.getShortName().equalsIgnoreCase(definition.auxiliaryEnergyType()))
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalStateException("Addon '" + accepted.addonId()
-                            + "' machine '" + parameters.machineName() + "' uses unknown auxiliary energy type '"
-                            + definition.auxiliaryEnergyType() + "'"));
-            spec.auxiliaryEnergy(
-                    tag,
-                    definition.auxiliaryEnergyIn(),
-                    definition.auxiliaryEnergyMin(),
-                    definition.auxiliaryEnergyMax(),
-                    definition.auxiliaryEnergyCapacity(),
-                    definition.auxiliaryFaceMask());
-            if (definition.startupEnergy()) spec.startupEnergy(true);
-        }
-        return spec.build();
+        var profile = parameters.energy();
+        String energyType = AddonPlatformServices.tag(profile.type().name()).getShortName();
+        boolean large = definition.kind() == MachineControllerKind.LARGE_RECIPE;
+        var range = new BasicMachineSpec.InputRange(
+                profile.acceptedEnergyInMin(large),
+                profile.acceptedEnergyInMax(large),
+                profile.range() instanceof EnergyRange.Declared);
+        var energy =
+                new BasicMachineSpec.Energy(energyType, profile.tier(), profile.energyIn(), profile.energyOut(), range);
+
+        var options = parameters.options();
+        var cheap = options.cheapOverclocking();
+        boolean timed = "TU".equals(energyType);
+        boolean cheapOverclocking =
+                cheap == CheapOverclocking.ENABLED || (cheap == CheapOverclocking.UNSPECIFIED && large && !timed);
+        var processing = new BasicMachineSpec.Processing(
+                options.parallelLimit(),
+                definition.efficiency(),
+                definition.constantEnergy(),
+                cheapOverclocking,
+                !large || cheap != CheapOverclocking.UNSPECIFIED,
+                !large || !timed,
+                options.minimumLightAbove(),
+                options.searchOutputTanks(),
+                options.exclusiveOutputs());
+        var layout = new BasicMachineSpec.Layout(
+                definition.kind(),
+                FaceConfig.from(parameters.faceConfig()),
+                definition.structureKeys(),
+                parameters.io(),
+                List.of(),
+                false,
+                false);
+        return new BasicMachineSpec(
+                parameters.id(),
+                accepted.addonId(),
+                parameters.machineName(),
+                BasicMachineSpec.Casing.from(parameters),
+                recipes,
+                energy,
+                processing,
+                layout,
+                auxiliaryEnergy(accepted));
+    }
+
+    private static BasicMachineSpec.@Nullable AuxiliaryEnergy auxiliaryEnergy(AddonMachines.AcceptedMachine accepted) {
+        var definition = accepted.definition();
+        String type = definition.auxiliaryEnergyType();
+        if (type == null) return null;
+        var tag = GregTechTags.Energy.ALL.stream()
+                .filter(candidate -> candidate.getShortName().equalsIgnoreCase(type))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Addon '" + accepted.addonId()
+                        + "' machine '" + definition.parameters().machineName()
+                        + "' uses unknown auxiliary energy type '"
+                        + type + "'"));
+        return new BasicMachineSpec.AuxiliaryEnergy(
+                tag,
+                definition.auxiliaryEnergyIn(),
+                definition.auxiliaryEnergyMin(),
+                definition.auxiliaryEnergyMax(),
+                definition.auxiliaryEnergyCapacity(),
+                definition.auxiliaryFaceMask(),
+                definition.startupEnergy());
     }
 }

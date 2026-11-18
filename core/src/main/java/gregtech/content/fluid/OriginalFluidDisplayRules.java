@@ -66,25 +66,29 @@ public final class OriginalFluidDisplayRules {
         }
     }
 
+    public enum Phase {
+        LIQUID,
+        GAS,
+        PLASMA
+    }
+
+    public record PhysicalProperties(long kelvin, int density, int luminosity, int viscosity, boolean lighterThanAir) {}
+
+    public record Traits(
+            Phase phase, long flags, boolean castable, boolean acid, boolean magic, boolean industrialLubricant) {
+        private boolean hasFlag(long flag) {
+            return (flags & flag) != 0;
+        }
+    }
+
     public record Facts(
             String registry,
-            boolean advanced,
-            boolean nonstandard,
-            long amount,
             String formula,
-            long kelvin,
-            boolean gas,
-            boolean plasma,
-            boolean nativeGas,
-            boolean castable,
-            int density,
-            int luminosity,
-            int viscosity,
-            long flags,
-            boolean acid,
-            boolean magic,
-            boolean industrialLubricant,
-            Owner owner) {}
+            Owner owner,
+            long amount,
+            boolean advanced,
+            PhysicalProperties physical,
+            Traits traits) {}
 
     public record Fuel(String nameKey, BigInteger scaledPower) {}
 
@@ -100,40 +104,47 @@ public final class OriginalFluidDisplayRules {
 
     public static List<Line> describe(Facts f, List<Fuel> fuels) {
         var lines = new ArrayList<Line>();
+        var physical = f.physical();
+        var traits = f.traits();
+        var phase = traits.phase();
         if (f.advanced()) add(lines, "registry", Color.DEFAULT, f.registry());
-        if (f.nonstandard()) add(lines, "nonstandard", Color.RED);
+        if (traits.hasFlag(FluidFlags.NONSTANDARD)) add(lines, "nonstandard", Color.RED);
         if (f.amount() > 0) add(lines, "amount", Color.BLUE, number(BigInteger.valueOf(f.amount())));
         if (!f.formula().isEmpty()) lines.add(new Line(List.of(literal(f.formula(), Color.YELLOW))));
-        add(lines, "temperature", Color.RED, Long.toString(f.kelvin()), Long.toString(f.kelvin() - 273));
+        add(lines, "temperature", Color.RED, Long.toString(physical.kelvin()), Long.toString(physical.kelvin() - 273));
 
         var state = new ArrayList<Part>();
         state.add(part("state", Color.GREEN));
-        state.add(part(
-                f.plasma() ? "plasma" : f.gas() ? "gas" : "liquid",
-                f.plasma() ? Color.YELLOW : f.gas() ? Color.AQUA : Color.BLUE));
-        if (f.plasma() || f.gas()) {
-            if (!f.nativeGas()) state.add(part("native_liquid", Color.RED));
-            else if (f.plasma()) state.add(part("native_gas_note", Color.GOLD));
-        } else if (f.castable()) state.add(part("castable", Color.AQUA));
+        state.add(
+                switch (phase) {
+                    case LIQUID -> part("liquid", Color.BLUE);
+                    case GAS -> part("gas", Color.AQUA);
+                    case PLASMA -> part("plasma", Color.YELLOW);
+                });
+        if (phase != Phase.LIQUID) {
+            if (!physical.lighterThanAir()) state.add(part("native_liquid", Color.RED));
+            else if (phase == Phase.PLASMA) state.add(part("native_gas_note", Color.GOLD));
+        } else if (traits.castable()) state.add(part("castable", Color.AQUA));
         lines.add(new Line(state));
-        if (!f.plasma() && !f.gas() && f.nativeGas()) add(lines, "native_gas_warning", Color.RED);
+        if (phase == Phase.LIQUID && physical.lighterThanAir()) add(lines, "native_gas_warning", Color.RED);
 
+        int density = physical.density();
         add(
                 lines,
-                f.density() > 0 ? "density_heavier" : f.density() < 0 ? "density_lighter" : "density_equal",
+                density > 0 ? "density_heavier" : density < 0 ? "density_lighter" : "density_equal",
                 Color.GREEN,
-                Integer.toString(f.density()));
-        if (f.luminosity() != 0) add(lines, "luminosity", Color.YELLOW, Integer.toString(f.luminosity()));
-        if (f.viscosity() != 0) add(lines, "viscosity", Color.BLUE, Integer.toString(f.viscosity()));
-        if ((f.flags() & FluidFlags.COOKING_OIL) != 0) add(lines, "cooking_oil", Color.DARK_GREEN);
-        if ((f.flags() & FluidFlags.SIMPLE) != 0) add(lines, "simple", Color.DARK_GREEN);
-        if ((f.flags() & FluidFlags.POWER_CONDUCTING) != 0) {
+                Integer.toString(density));
+        if (physical.luminosity() != 0) add(lines, "luminosity", Color.YELLOW, Integer.toString(physical.luminosity()));
+        if (physical.viscosity() != 0) add(lines, "viscosity", Color.BLUE, Integer.toString(physical.viscosity()));
+        if (traits.hasFlag(FluidFlags.COOKING_OIL)) add(lines, "cooking_oil", Color.DARK_GREEN);
+        if (traits.hasFlag(FluidFlags.SIMPLE)) add(lines, "simple", Color.DARK_GREEN);
+        if (traits.hasFlag(FluidFlags.POWER_CONDUCTING)) {
             add(lines, "conducting", Color.DARK_GREEN);
             add(lines, "no_tanks", Color.GOLD);
         }
-        if (f.acid()) add(lines, "acid", Color.GOLD);
-        if (f.magic()) add(lines, "magic", Color.GOLD);
-        if (f.industrialLubricant()) {
+        if (traits.acid()) add(lines, "acid", Color.GOLD);
+        if (traits.magic()) add(lines, "magic", Color.GOLD);
+        if (traits.industrialLubricant()) {
             add(lines, "industrial", Color.GOLD);
             add(lines, "not_flammable", Color.RED);
         } else

@@ -160,10 +160,10 @@ public final class MachineEnergyPort {
             return 0;
         long sizeAbs = Math.abs(size);
         if (host.usesAuxiliaryInput(energyType, side)) {
-            BasicMachineSpec spec = host.spec();
-            long capacity = spec.auxiliaryEnergyCapacity();
-            if (sizeAbs < spec.auxiliaryEnergyMin()) return 0;
-            if (sizeAbs > spec.auxiliaryEnergyMax()) {
+            var auxiliary = host.spec().auxiliaryEnergy();
+            long capacity = auxiliary.capacity();
+            if (sizeAbs < auxiliary.min()) return 0;
+            if (sizeAbs > auxiliary.max()) {
                 if (execute) host.overloadEnergy(sizeAbs, energyType);
                 return amount;
             }
@@ -196,7 +196,8 @@ public final class MachineEnergyPort {
     public long getEnergyDemanded(Host host, GregTechTags.Tag energyType, @Nullable Direction side, long size) {
         if (size == 0 || size == Long.MIN_VALUE || !host.isEnergyAcceptingFrom(energyType, side, false)) return 0;
         if (host.usesAuxiliaryInput(energyType, side))
-            return BasicMachineEnergy.demanded(auxStored, host.spec().auxiliaryEnergyCapacity(), size);
+            return BasicMachineEnergy.demanded(
+                    auxStored, host.spec().auxiliaryEnergy().capacity(), size);
         return BasicMachineEnergy.demanded(stored, host.energyInputMaximum(), size);
     }
 
@@ -205,17 +206,20 @@ public final class MachineEnergyPort {
     }
 
     public long getEnergySizeInputRecommended(Host host, GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (host.usesAuxiliaryInput(energyType, side)) return host.spec().auxiliaryEnergyIn();
+        if (host.usesAuxiliaryInput(energyType, side))
+            return host.spec().auxiliaryEnergy().inputPerTick();
         return host.spec() != null ? host.spec().energyIn() : 1;
     }
 
     public long getEnergySizeInputMin(Host host, GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (host.usesAuxiliaryInput(energyType, side)) return host.spec().auxiliaryEnergyMin();
+        if (host.usesAuxiliaryInput(energyType, side))
+            return host.spec().auxiliaryEnergy().min();
         return host.spec() != null ? host.spec().energyInMin() : 1;
     }
 
     public long getEnergySizeInputMax(Host host, GregTechTags.Tag energyType, @Nullable Direction side) {
-        if (host.usesAuxiliaryInput(energyType, side)) return host.spec().auxiliaryEnergyMax();
+        if (host.usesAuxiliaryInput(energyType, side))
+            return host.spec().auxiliaryEnergy().max();
         return host.spec() != null ? host.energyInputMaximum() : 1;
     }
 

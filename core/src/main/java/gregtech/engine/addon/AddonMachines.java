@@ -17,8 +17,9 @@ import gregtech.api.addon.recipe.RecipeTable;
 import gregtech.api.energy.EnergyInput;
 import gregtech.api.energy.EnergyType;
 import gregtech.api.machine.BasicMachineParameters;
+import gregtech.api.machine.BasicMachineParameters.IoPorts;
+import gregtech.api.machine.BasicMachineParameters.Options.CheapOverclocking;
 import gregtech.api.machine.EnergyRange;
-import gregtech.api.machine.IoTarget;
 import gregtech.api.machine.MachineControllerKind;
 import gregtech.api.machine.MachineFace;
 import gregtech.api.machine.MachineFaceMasks;
@@ -107,22 +108,42 @@ public final class AddonMachines {
     private record Signature(
             String recipeMapName,
             MachineControllerKind kind,
-            int efficiency,
-            boolean constantEnergy,
             List<String> structureKeys,
             MachineFaceMasks faces,
-            boolean cheapOverclocking,
-            boolean cheapOverclockingSpecified,
-            int minimumLightAbove,
-            boolean searchOutputTanks,
-            boolean exclusiveOutputs,
-            IoTarget itemOutputTarget,
-            IoTarget fluidOutputTarget,
-            IoTarget itemInputSource,
-            IoTarget fluidInputSource,
-            boolean energyRangeSpecified,
-            long energyInMin,
-            long energyInMax) {}
+            Processing processing,
+            IoPorts ports,
+            EnergyRange energyRange) {
+        private record Processing(
+                int efficiency,
+                boolean constantEnergy,
+                CheapOverclocking cheapOverclocking,
+                int minimumLightAbove,
+                boolean searchOutputTanks,
+                boolean exclusiveOutputs) {}
+
+        private static Signature of(AddonMachineDefinition definition) {
+            var parameters = definition.parameters();
+            var options = parameters.options();
+            // Parallelism can vary between variants of the same machine.
+            var processing = new Processing(
+                    definition.efficiency(),
+                    definition.constantEnergy(),
+                    options.cheapOverclocking(),
+                    options.minimumLightAbove(),
+                    options.searchOutputTanks(),
+                    options.exclusiveOutputs());
+            // Both undeclared range states share one signature value.
+            var range = parameters.energy().range();
+            return new Signature(
+                    definition.recipeMapName(),
+                    definition.kind(),
+                    definition.structureKeys(),
+                    parameters.faceConfig(),
+                    processing,
+                    parameters.io(),
+                    range instanceof EnergyRange.Declared ? range : EnergyRange.omitted());
+        }
+    }
 
     private record FuelSignature(
             String fuelMap,
@@ -580,32 +601,7 @@ public final class AddonMachines {
                 if (parameters.energy().type().time() && parameters.energy().range() instanceof EnergyRange.Declared)
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' cannot declare an energy range for TU");
-                var machineOptions = parameters.options();
-                var machineIo = parameters.io();
-                var signature = new Signature(
-                        definition.recipeMapName(),
-                        definition.kind(),
-                        definition.efficiency(),
-                        definition.constantEnergy(),
-                        definition.structureKeys(),
-                        parameters.faceConfig(),
-                        machineOptions.cheapOverclocking() == BasicMachineParameters.Options.CheapOverclocking.ENABLED,
-                        machineOptions.cheapOverclocking()
-                                != BasicMachineParameters.Options.CheapOverclocking.UNSPECIFIED,
-                        machineOptions.minimumLightAbove(),
-                        machineOptions.searchOutputTanks(),
-                        machineOptions.exclusiveOutputs(),
-                        machineIo.itemOutputTarget(),
-                        machineIo.fluidOutputTarget(),
-                        machineIo.itemInputSource(),
-                        machineIo.fluidInputSource(),
-                        parameters.energy().range() instanceof EnergyRange.Declared,
-                        parameters.energy().range() instanceof EnergyRange.Declared
-                                ? parameters.energy().energyInMin()
-                                : 0,
-                        parameters.energy().range() instanceof EnergyRange.Declared
-                                ? parameters.energy().energyInMax()
-                                : 0);
+                var signature = Signature.of(definition);
                 Signature existing = machineSignature.putIfAbsent(machineName, signature);
                 if (existing != null && !existing.equals(signature))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName

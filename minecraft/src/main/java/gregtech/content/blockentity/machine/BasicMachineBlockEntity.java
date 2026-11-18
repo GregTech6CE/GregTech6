@@ -131,7 +131,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         public long inputMaximum() { return BasicMachineBlockEntity.this.inputMaximum(); }
         public long nominalEnergyInput() { return spec == null ? 0 : spec.energyIn(); }
         public long startupEnergyFor(Recipe recipe) {
-            return spec != null && spec.startupEnergy() && recipe.mSpecialValue > 0 ? recipe.mSpecialValue : 0;
+            var auxiliary = spec == null ? null : spec.auxiliaryEnergy();
+            return auxiliary != null && auxiliary.startup() && recipe.mSpecialValue > 0 ? recipe.mSpecialValue : 0;
         }
     };
     private final gregtech.engine.machine.RecipeProcessor.IO recipeIO =
@@ -153,7 +154,6 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     };
     private final gregtech.engine.machine.RecipeProcessor processor =
             new gregtech.engine.machine.RecipeProcessor(recipeConfig, recipeIO, recipeGate);
-    private GregTechTags.Tag auxTag;
     private boolean mActive;        // currently processing a recipe
     private boolean mRunning;       // machine is in running state (energy present)
     private int sourceIgnitionTicks;
@@ -266,10 +266,6 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     public void setSpec(BasicMachineSpec spec) {
         this.spec = spec;
-        this.auxTag = spec == null || spec.auxiliaryEnergyType() == null ? null
-                : GregTechTags.Energy.ALL.stream()
-                        .filter(tag -> tag.getShortName().equalsIgnoreCase(spec.auxiliaryEnergyType()))
-                        .findFirst().orElse(null);
         adjacentEnergySourcesChanged();
         this.recipeMap = spec.recipeMap();
         processor.invalidate();
@@ -445,11 +441,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             long extracted = source.doEnergyExtraction(energyTag(), absDir.getOpposite(), size, requested, true);
             if (extracted > 0) energyPort.addReceived(size, extracted, inputMaximum(), level);
         }
-        if (auxTag == null || spec.auxiliaryFaceMask() == 0) return;
-        long auxSize = spec.auxiliaryEnergyIn();
-        long auxCap = spec.auxiliaryEnergyCapacity();
+        var auxiliary = spec.auxiliaryEnergy();
+        if (auxiliary == null) return;
+        var auxTag = auxiliary.type();
+        long auxSize = auxiliary.inputPerTick();
+        long auxCap = auxiliary.capacity();
         for (int dir = 0; dir <= 5; dir++) {
-            if (!FaceConfig.has(spec.auxiliaryFaceMask(), dir)) continue;
+            if (!FaceConfig.has(auxiliary.faceMask(), dir)) continue;
             Direction absDir = relativeToAbsolute(dir);
             BlockPos adj = pos.relative(absDir);
             if (!level.hasChunkAt(adj)) continue;
@@ -1089,11 +1087,16 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** Disjoint faces distinguish two inputs of the same type; unsided calls retain auxiliary priority. */
     @Override
     public boolean usesAuxiliaryInput(GregTechTags.Tag energyType, @Nullable Direction side) {
-        return auxTag != null && auxTag == energyType
-                && (side == null || FaceConfig.has(spec.auxiliaryFaceMask(), relativeDir(side)));
+        var auxiliary = spec == null ? null : spec.auxiliaryEnergy();
+        return auxiliary != null && auxiliary.type() == energyType
+                && (side == null || FaceConfig.has(auxiliary.faceMask(), relativeDir(side)));
     }
 
-    @Override public GregTechTags.Tag auxiliaryTag() { return auxTag; }
+    @Override
+    public GregTechTags.@Nullable Tag auxiliaryTag() {
+        var auxiliary = spec == null ? null : spec.auxiliaryEnergy();
+        return auxiliary == null ? null : auxiliary.type();
+    }
     @Override public long energyInputMaximum() { return inputMaximum(); }
     @Override public void markEnergyDataChanged() { markMachineDataChanged(); }
 
@@ -1284,7 +1287,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
         tag.putLong(NBT_ENERGY, energyPort.stored());
         processor.save(tag, codecLookup);
-        if (auxTag != null) {
+        if (spec != null && spec.auxiliaryEnergy() != null) {
             tag.putLong("gt.aux_energy", energyPort.auxStored());
             tag.putLong("gt.startup_energy", energyPort.startup());
         }
@@ -1412,9 +1415,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         coverTicks=Math.max(0,tag.getLong("gt.cover_ticks"));successful=false;workPossible=false;mInventoryChanged=true;
         if (tag.contains(NBT_ENERGY)) energyPort.setStored(tag.getLong(NBT_ENERGY));
         processor.load(tag, codecLookup);
-        energyPort.setAuxStored(auxTag == null ? 0
-                : Math.max(0, Math.min(spec.auxiliaryEnergyCapacity(), tag.getLong("gt.aux_energy"))));
-        energyPort.setStartup(auxTag == null ? 0 : Math.max(0, tag.getLong("gt.startup_energy")));
+        var auxiliary = spec == null ? null : spec.auxiliaryEnergy();
+        energyPort.setAuxStored(auxiliary == null ? 0
+                : Math.max(0, Math.min(auxiliary.capacity(), tag.getLong("gt.aux_energy"))));
+        energyPort.setStartup(auxiliary == null ? 0 : Math.max(0, tag.getLong("gt.startup_energy")));
         if (processor.totalWork() <= 0) energyPort.clearStartup();
         if (inventory == null) {
             // Called before setSpec — defer
