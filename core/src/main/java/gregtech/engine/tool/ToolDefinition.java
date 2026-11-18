@@ -4,825 +4,448 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
 import java.util.Locale;
 
-/** GregTech meta-tool kinds (GT6 {@code CS.ToolsGT} manual tools, user list order). */
+/** Shared manual tool definitions, with wear measured in GT6 durability units. */
 public enum ToolDefinition {
     SWORD(
             0,
             "sword",
-            MaterialPrefix.toolHeadSword,
-            null,
-            "gt6ce:item/iconsets/handle_sword",
-            1.0F,
-            4.0F,
-            0,
-            1.0F,
-            100,
-            1,
-            null,
-            true,
-            false,
-            false,
-            null),
+            headed(MaterialPrefix.toolHeadSword)
+                    .handleIcon("gt6ce:item/iconsets/handle_sword")
+                    .baseDamage(4.0F)
+                    .damagePerBlockBreak(200)),
     PICKAXE(
             2,
             "pickaxe",
-            MaterialPrefix.toolHeadPickaxe,
-            null,
-            null,
-            1.0F,
-            3.0F,
-            0,
-            1.0F,
-            100,
-            1,
-            "minecraft:mineable/pickaxe",
-            true,
-            true,
-            false,
-            null),
+            headed(MaterialPrefix.toolHeadPickaxe)
+                    .baseDamage(3.0F)
+                    .damagePerBlockBreak(25)
+                    .damagePerEntityAttack(200)
+                    .harvestTag("minecraft:mineable/pickaxe")
+                    .penetratesArmor()),
     SHOVEL(
             4,
             "shovel",
-            MaterialPrefix.toolHeadShovel,
-            null,
-            null,
-            1.0F,
-            2.0F,
-            0,
-            1.0F,
-            100,
-            1,
-            "minecraft:mineable/shovel",
-            true,
-            false,
-            false,
-            null),
+            headed(MaterialPrefix.toolHeadShovel)
+                    .baseDamage(1.5F)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .harvestTag("minecraft:mineable/shovel")),
     AXE(
             6,
             "axe",
-            MaterialPrefix.toolHeadAxe,
-            null,
-            null,
-            1.0F,
-            3.0F,
-            0,
-            1.0F,
-            100,
-            1,
-            "minecraft:mineable/axe",
-            true,
-            false,
-            false,
-            null),
+            headed(MaterialPrefix.toolHeadAxe)
+                    .baseDamage(3.0F)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .harvestTag("minecraft:mineable/axe")),
     HOE(
             8,
             "hoe",
-            MaterialPrefix.toolHeadHoe,
-            null,
-            null,
-            1.0F,
-            0.0F,
-            0,
-            1.0F,
-            100,
-            1,
-            "minecraft:mineable/hoe",
-            true,
-            false,
-            false,
-            null),
+            headed(MaterialPrefix.toolHeadHoe)
+                    .baseDamage(1.5F)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .harvestTag("minecraft:mineable/hoe")),
     SAW(
             10,
             "saw",
-            MaterialPrefix.toolHeadSaw,
-            null,
-            "gt6ce:item/iconsets/handle_saw",
-            1.0F,
-            2.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            "minecraft:mineable/axe",
-            true,
-            false,
-            true,
-            null),
+            headed(MaterialPrefix.toolHeadSaw)
+                    .handleIcon("gt6ce:item/iconsets/handle_saw")
+                    .baseDamage(1.75F)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)
+                    .harvestTag("minecraft:mineable/axe")
+                    .collectsDrops()),
     HARD_HAMMER(
             12,
             "hammer",
-            MaterialPrefix.toolHeadHammer,
-            null,
-            null,
-            1.0F,
-            5.0F,
-            0,
-            1.0F,
-            400,
-            1,
-            "minecraft:mineable/pickaxe",
-            true,
-            false,
-            false,
-            "hard_hammer"),
+            headed(MaterialPrefix.toolHeadHammer)
+                    .baseDamage(5.0F)
+                    .speedMultiplier(0.75F)
+                    .damagePerCraft(400)
+                    .damagePerBlockBreak(25)
+                    .damagePerEntityAttack(200)
+                    .harvestTag("minecraft:mineable/pickaxe")
+                    .tooltipKey("hard_hammer")),
     SOFT_HAMMER(
             14,
             "soft_hammer",
-            MaterialPrefix.toolHeadHammer,
-            null,
-            null,
-            1.0F,
-            2.0F,
-            0,
-            1.0F,
-            100,
-            1,
-            null,
-            false,
-            false,
-            false,
-            "soft_hammer"),
+            headed(MaterialPrefix.toolHeadHammer)
+                    .durabilityMultiplier(8.0F)
+                    .baseDamage(3.0F)
+                    .speedMultiplier(0.1F)
+                    .damagePerCraft(800)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .tooltipKey("soft_hammer")),
     WRENCH(
             16,
             "wrench",
-            null,
-            "gt6ce:item/iconsets/wrench",
-            null,
-            1.0F,
-            5.0F,
-            0,
-            1.0F,
-            800,
-            2,
-            null,
-            false,
-            false,
-            true,
-            "wrench"),
+            headless("gt6ce:item/iconsets/wrench")
+                    .baseDamage(5.0F)
+                    .damagePerCraft(800)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)
+                    .collectsDrops()
+                    .tooltipKey("wrench")),
     FILE(
             18,
             "file",
-            MaterialPrefix.toolHeadFile,
-            null,
-            "gt6ce:item/iconsets/handle_file",
-            1.0F,
-            2.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headed(MaterialPrefix.toolHeadFile)
+                    .handleIcon("gt6ce:item/iconsets/handle_file")
+                    .baseDamage(1.5F)
+                    .damagePerCraft(400)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     CROWBAR(
             20,
             "crowbar",
-            null,
-            "gt6ce:item/iconsets/crowbar",
-            null,
-            1.0F,
-            2.0F,
-            0,
-            1.0F,
-            100,
-            1,
-            null,
-            false,
-            false,
-            true,
-            "crowbar"),
+            headless("gt6ce:item/iconsets/crowbar")
+                    .baseDamage(2.0F)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .collectsDrops()
+                    .tooltipKey("crowbar")),
     SCREWDRIVER(
             22,
             "screwdriver",
-            MaterialPrefix.toolHeadScrewdriver,
-            null,
-            "gt6ce:item/iconsets/handle_screwdriver",
-            1.0F,
-            1.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headed(MaterialPrefix.toolHeadScrewdriver)
+                    .handleIcon("gt6ce:item/iconsets/handle_screwdriver")
+                    .baseDamage(1.5F)
+                    .damagePerCraft(400)
+                    .damagePerBlockBreak(200)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     CLUB(
             24,
             "club",
-            null,
-            "gt6ce:item/iconsets/club",
-            null,
-            1.0F,
-            6.0F,
-            0,
-            1.0F,
-            800,
-            1,
-            "minecraft:mineable/pickaxe",
-            true,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/club")
+                    .baseDamage(5.0F)
+                    .speedMultiplier(0.5F)
+                    .damagePerCraft(800)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(50)
+                    .harvestTag("minecraft:mineable/pickaxe")),
     WIRE_CUTTER(
             26,
             "wire_cutter",
-            null,
-            "gt6ce:item/iconsets/wire_cutter",
-            null,
-            1.0F,
-            1.25F,
-            0,
-            1.0F,
-            400,
-            2,
-            null,
-            false,
-            false,
-            true,
-            null),
+            headless("gt6ce:item/iconsets/wire_cutter")
+                    .baseDamage(1.25F)
+                    .damagePerCraft(400)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)
+                    .collectsDrops()),
     SCOOP(
             28,
             "scoop",
-            null,
-            "gt6ce:item/iconsets/scoop",
-            null,
-            1.0F,
-            1.0F,
-            0,
-            1.0F,
-            100,
-            1,
-            null,
-            false,
-            false,
-            true,
-            null),
+            headless("gt6ce:item/iconsets/scoop")
+                    .baseDamage(1.0F)
+                    .damagePerBlockBreak(200)
+                    .damagePerEntityAttack(200)
+                    .collectsDrops()),
     BRANCH_CUTTER(
             30,
             "branch_cutter",
-            null,
-            "gt6ce:item/iconsets/grafter",
-            null,
-            1.0F,
-            1.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            true,
-            null),
+            headless("gt6ce:item/iconsets/grafter")
+                    .durabilityMultiplier(0.25F)
+                    .baseDamage(2.5F)
+                    .speedMultiplier(0.25F)
+                    .minToolTypes(2)
+                    .collectsDrops()),
     UNIVERSAL_SPADE(
             32,
             "universal_spade",
-            MaterialPrefix.toolHeadUniversalSpade,
-            null,
-            null,
-            1.0F,
-            2.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            "minecraft:mineable/shovel",
-            true,
-            false,
-            true,
-            null),
+            headed(MaterialPrefix.toolHeadUniversalSpade)
+                    .baseDamage(3.0F)
+                    .speedMultiplier(0.75F)
+                    .damagePerCraft(400)
+                    .minToolTypes(2)
+                    .harvestTag("minecraft:mineable/shovel")
+                    .collectsDrops()),
     KNIFE(
             34,
             "knife",
-            null,
-            "gt6ce:item/iconsets/knife",
-            null,
-            1.0F,
-            1.5F,
-            0,
-            1.0F,
-            100,
-            1,
-            null,
-            false,
-            false,
-            true,
-            null),
+            headless("gt6ce:item/iconsets/knife")
+                    .baseDamage(2.0F)
+                    .speedMultiplier(0.5F)
+                    .damagePerEntityAttack(200)
+                    .collectsDrops()),
     BUTCHERY_KNIFE(
             36,
             "butchery_knife",
-            null,
-            "gt6ce:item/iconsets/butcheryknife",
-            null,
-            1.0F,
-            3.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/butcheryknife")
+                    .baseDamage(1.0F)
+                    .speedMultiplier(0.1F)
+                    .damagePerBlockBreak(200)
+                    .damagePerEntityAttack(400)
+                    .minToolTypes(2)),
     SENSE(
             40,
             "sense",
-            MaterialPrefix.toolHeadSense,
-            null,
-            null,
-            1.0F,
-            1.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            true,
-            null),
+            headed(MaterialPrefix.toolHeadSense)
+                    .durabilityMultiplier(4.0F)
+                    .baseDamage(3.0F)
+                    .minToolTypes(2)
+                    .collectsDrops()),
     PLOW(
             42,
             "plow",
-            MaterialPrefix.toolHeadPlow,
-            null,
-            null,
-            1.0F,
-            1.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            true,
-            null),
+            headed(MaterialPrefix.toolHeadPlow).baseDamage(1.0F).minToolTypes(2).collectsDrops()),
     PLUNGER(
             44,
             "plunger",
-            null,
-            "gt6ce:item/iconsets/plunger",
-            null,
-            1.0F,
-            1.0F,
-            0,
-            1.0F,
-            100,
-            1,
-            null,
-            false,
-            false,
-            true,
-            null),
+            headless("gt6ce:item/iconsets/plunger")
+                    .durabilityMultiplier(0.25F)
+                    .baseDamage(1.25F)
+                    .collectsDrops()),
     ROLLING_PIN(
             46,
             "rolling_pin",
-            null,
-            "gt6ce:item/iconsets/rolling_pin",
-            null,
-            1.0F,
-            2.0F,
-            0,
-            1.0F,
-            50,
-            1,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/rolling_pin")
+                    .baseDamage(2.0F)
+                    .damagePerCraft(50)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)),
     CHISEL(
             48,
             "chisel",
-            MaterialPrefix.toolHeadChisel,
-            null,
-            "gt6ce:item/iconsets/handle_chisel",
-            1.0F,
-            1.5F,
-            0,
-            1.0F,
-            400,
-            2,
-            null,
-            false,
-            false,
-            true,
-            null),
+            headed(MaterialPrefix.toolHeadChisel)
+                    .handleIcon("gt6ce:item/iconsets/handle_chisel")
+                    .baseDamage(1.5F)
+                    .damagePerCraft(400)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)
+                    .collectsDrops()),
     FLINT_AND_TINDER(
             50,
             "flint_and_tinder",
-            null,
-            "gt6ce:item/iconsets/flint_tinder",
-            null,
-            1.0F,
-            0.0F,
-            0,
-            1.0F,
-            100,
-            1,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/flint_tinder")
+                    .durabilityMultiplier(0.25F)
+                    .baseDamage(1.0F)),
     MONKEY_WRENCH(
             52,
             "monkey_wrench",
-            null,
-            "gt6ce:item/iconsets/monkeywrench",
-            null,
-            1.0F,
-            5.0F,
-            0,
-            1.0F,
-            800,
-            2,
-            null,
-            false,
-            false,
-            true,
-            "monkey_wrench"),
+            headless("gt6ce:item/iconsets/monkeywrench")
+                    .baseDamage(5.0F)
+                    .damagePerCraft(800)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)
+                    .collectsDrops()
+                    .tooltipKey("monkey_wrench")),
     BENDING_CYLINDER(
             54,
             "bending_cylinder",
-            null,
-            "gt6ce:item/iconsets/bending_cylinder",
-            null,
-            1.0F,
-            2.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/bending_cylinder")
+                    .baseDamage(2.0F)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     BENDING_CYLINDER_SMALL(
             56,
             "small_bending_cylinder",
-            null,
-            "gt6ce:item/iconsets/bending_cylinder_small",
-            null,
-            1.0F,
-            1.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/bending_cylinder_small")
+                    .baseDamage(1.5F)
+                    .damagePerCraft(25)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     DOUBLE_AXE(
             58,
             "double_axe",
-            MaterialPrefix.toolHeadAxeDouble,
-            null,
-            null,
-            1.5F,
-            4.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            "minecraft:mineable/axe",
-            true,
-            false,
-            false,
-            "double_axe"),
+            headed(MaterialPrefix.toolHeadAxeDouble)
+                    .durabilityMultiplier(1.5F)
+                    .baseDamage(6.0F)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)
+                    .harvestTag("minecraft:mineable/axe")
+                    .tooltipKey("double_axe")),
     CONSTRUCTION_PICK(
             60,
             "construction_pick",
-            MaterialPrefix.toolHeadConstructionPickaxe,
-            null,
-            null,
-            1.0F,
-            3.0F,
-            0,
-            2.0F,
-            100,
-            1,
-            "minecraft:mineable/pickaxe",
-            true,
-            true,
-            false,
-            "construction_pick"),
+            headed(MaterialPrefix.toolHeadConstructionPickaxe)
+                    .baseDamage(3.0F)
+                    .speedMultiplier(2.0F)
+                    .damagePerBlockBreak(25)
+                    .damagePerEntityAttack(200)
+                    .harvestTag("minecraft:mineable/pickaxe")
+                    .penetratesArmor()
+                    .tooltipKey("construction_pick")),
     MAGNIFYING_GLASS(
             62,
             "magnifying_glass",
-            null,
-            "gt6ce:item/iconsets/magnifying_glass",
-            null,
-            1.0F,
-            1.0F,
-            0,
-            1.0F,
-            400,
-            1,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/magnifying_glass")
+                    .baseDamage(1.0F)
+                    .damagePerCraft(400)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)),
     SCISSORS(
             64,
             "scissors",
-            null,
-            "gt6ce:item/iconsets/scissors",
-            null,
-            1.0F,
-            2.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            true,
-            null),
+            headless("gt6ce:item/iconsets/scissors")
+                    .baseDamage(1.0F)
+                    .damagePerBlockBreak(200)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)
+                    .collectsDrops()),
     PINCERS(
             66,
             "pincers",
-            null,
-            "gt6ce:item/iconsets/pincers",
-            null,
-            1.0F,
-            1.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            true,
-            null),
+            headless("gt6ce:item/iconsets/pincers")
+                    .baseDamage(2.0F)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)
+                    .collectsDrops()),
     SPADE(
             68,
             "spade",
-            MaterialPrefix.toolHeadSpade,
-            null,
-            null,
-            1.0F,
-            2.0F,
-            0,
-            1.0F,
-            100,
-            1,
-            "minecraft:mineable/shovel",
-            true,
-            false,
-            false,
-            "spade"),
+            headed(MaterialPrefix.toolHeadSpade)
+                    .baseDamage(1.5F)
+                    .speedMultiplier(1.5F)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .harvestTag("minecraft:mineable/shovel")
+                    .tooltipKey("spade")),
     GEM_PICK(
             70,
             "gem_tipped_pickaxe",
-            MaterialPrefix.toolHeadPickaxeGem,
-            null,
-            null,
-            0.25F,
-            3.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            "minecraft:mineable/pickaxe",
-            true,
-            true,
-            false,
-            "gem_pick"),
+            headed(MaterialPrefix.toolHeadPickaxeGem)
+                    .durabilityMultiplier(0.25F)
+                    .baseDamage(3.0F)
+                    .damagePerBlockBreak(25)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)
+                    .harvestTag("minecraft:mineable/pickaxe")
+                    .penetratesArmor()
+                    .tooltipKey("gem_pick")),
     HAND_DRILL(
             72,
             "hand_drill",
-            null,
-            "gt6ce:item/iconsets/hand_drill",
-            null,
-            0.25F,
-            0.5F,
-            0,
-            0.5F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            true,
-            null),
+            headless("gt6ce:item/iconsets/hand_drill")
+                    .durabilityMultiplier(0.25F)
+                    .baseDamage(0.5F)
+                    .speedMultiplier(0.5F)
+                    .minToolTypes(2)
+                    .collectsDrops()),
     BUILDER_WAND(
             74,
             "builder_wand",
-            MaterialPrefix.toolHeadBuilderwand,
-            null,
-            null,
-            0.1F,
-            1.0F,
-            0,
-            1.0F,
-            100,
-            1,
-            null,
-            false,
-            false,
-            true,
-            "builder_wand"),
+            headed(MaterialPrefix.toolHeadBuilderwand)
+                    .durabilityMultiplier(0.1F)
+                    .baseDamage(1.0F)
+                    .damagePerBlockBreak(1)
+                    .collectsDrops()
+                    .tooltipKey("builder_wand")),
     PISTOL(
             5000,
             "pistol",
-            null,
-            "gt6ce:item/iconsets/pistol",
-            "gt6ce:item/iconsets/handle_pistol",
-            1.0F,
-            0.0F,
-            0,
-            0.25F,
-            200,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/pistol")
+                    .handleIcon("gt6ce:item/iconsets/handle_pistol")
+                    .baseDamage(1.0F)
+                    .speedMultiplier(0.25F)
+                    .damagePerCraft(200)
+                    .damagePerBlockBreak(200)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     CARBINE(
             5002,
             "carbine",
-            null,
-            "gt6ce:item/iconsets/carbine",
-            "gt6ce:item/iconsets/handle_carbine",
-            1.0F,
-            0.0F,
-            0,
-            0.25F,
-            200,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/carbine")
+                    .handleIcon("gt6ce:item/iconsets/handle_carbine")
+                    .baseDamage(1.0F)
+                    .speedMultiplier(0.25F)
+                    .damagePerCraft(200)
+                    .damagePerBlockBreak(200)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     RIFLE(
             5004,
             "rifle",
-            null,
-            "gt6ce:item/iconsets/rifle",
-            "gt6ce:item/iconsets/handle_rifle",
-            1.0F,
-            0.0F,
-            0,
-            0.25F,
-            200,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/rifle")
+                    .handleIcon("gt6ce:item/iconsets/handle_rifle")
+                    .baseDamage(1.0F)
+                    .speedMultiplier(0.25F)
+                    .damagePerCraft(200)
+                    .damagePerBlockBreak(200)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     POCKET_MULTITOOL(
             1000,
             "pocket_multitool",
-            null,
-            "gt6ce:item/iconsets/pocket_multitool_closed",
-            null,
-            4.0F,
-            0.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/pocket_multitool_closed")
+                    .durabilityMultiplier(4.0F)
+                    .minToolTypes(2)),
     POCKET_KNIFE(
             1002,
             "pocket_knife",
-            null,
-            "gt6ce:item/iconsets/pocket_multitool_knife",
-            null,
-            4.0F,
-            2F,
-            0,
-            0.5F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/pocket_multitool_knife")
+                    .durabilityMultiplier(4.0F)
+                    .baseDamage(2.0F)
+                    .speedMultiplier(0.5F)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     POCKET_SAW(
             1004,
             "pocket_saw",
-            null,
-            "gt6ce:item/iconsets/pocket_multitool_saw",
-            null,
-            4.0F,
-            1.75F,
-            0,
-            1F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/pocket_multitool_saw")
+                    .durabilityMultiplier(4.0F)
+                    .baseDamage(1.75F)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     POCKET_FILE(
             1006,
             "pocket_file",
-            null,
-            "gt6ce:item/iconsets/pocket_multitool_file",
-            null,
-            4.0F,
-            1.5F,
-            0,
-            1F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/pocket_multitool_file")
+                    .durabilityMultiplier(4.0F)
+                    .baseDamage(1.5F)
+                    .damagePerCraft(400)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     POCKET_SCREWDRIVER(
             1008,
             "pocket_screwdriver",
-            null,
-            "gt6ce:item/iconsets/pocket_multitool_screwdriver",
-            null,
-            4.0F,
-            1.5F,
-            0,
-            1F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/pocket_multitool_screwdriver")
+                    .durabilityMultiplier(4.0F)
+                    .baseDamage(1.5F)
+                    .damagePerCraft(400)
+                    .damagePerBlockBreak(200)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     POCKET_WIRE_CUTTER(
             1010,
             "pocket_wire_cutter",
-            null,
-            "gt6ce:item/iconsets/pocket_multitool_cutter",
-            null,
-            4.0F,
-            1.25F,
-            0,
-            1.0F,
-            400,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/pocket_multitool_cutter")
+                    .durabilityMultiplier(4.0F)
+                    .baseDamage(1.25F)
+                    .damagePerCraft(400)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     POCKET_SCISSORS(
             1012,
             "pocket_scissors",
-            null,
-            "gt6ce:item/iconsets/pocket_multitool_scissors",
-            null,
-            4.0F,
-            1.0F,
-            0,
-            1.0F,
-            100,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
+            headless("gt6ce:item/iconsets/pocket_multitool_scissors")
+                    .durabilityMultiplier(4.0F)
+                    .baseDamage(1.0F)
+                    .damagePerBlockBreak(200)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2)),
     POCKET_CHISEL(
             1014,
             "pocket_chisel",
-            null,
-            "gt6ce:item/iconsets/pocket_multitool_chisel",
-            null,
-            4.0F,
-            1.5F,
-            0,
-            1.0F,
-            400,
-            2,
-            null,
-            false,
-            false,
-            false,
-            null),
-    ;
+            headless("gt6ce:item/iconsets/pocket_multitool_chisel")
+                    .durabilityMultiplier(4.0F)
+                    .baseDamage(1.5F)
+                    .damagePerCraft(400)
+                    .damagePerBlockBreak(50)
+                    .damagePerEntityAttack(200)
+                    .minToolTypes(2));
 
     private final int gt6Id;
     private final String id;
@@ -834,51 +457,43 @@ public enum ToolDefinition {
     private final String handleIcon;
     private final float durabilityMultiplier;
     private final float baseDamage;
-    private final int baseQuality;
     private final float speedMultiplier;
     private final int damagePerCraft;
+    private final int damagePerBlockBreak;
+    private final int damagePerEntityAttack;
     private final int minToolTypes;
 
     private final String harvestTag;
-    private final boolean miningTool;
     private final boolean canPenetrate;
     private final boolean canCollect;
 
     private final String tooltipKey;
 
-    ToolDefinition(
-            int gt6Id,
-            String id,
-            MaterialPrefix headPrefix,
-            String headlessIcon,
-            String handleIcon,
-            float durabilityMultiplier,
-            float baseDamage,
-            int baseQuality,
-            float speedMultiplier,
-            int damagePerCraft,
-            int minToolTypes,
-            String harvestTag,
-            boolean miningTool,
-            boolean canPenetrate,
-            boolean canCollect,
-            String tooltipKey) {
+    ToolDefinition(int gt6Id, String id, Builder builder) {
         this.gt6Id = gt6Id;
         this.id = id;
-        this.headPrefix = headPrefix;
-        this.headlessIcon = headlessIcon;
-        this.handleIcon = handleIcon;
-        this.durabilityMultiplier = durabilityMultiplier;
-        this.baseDamage = baseDamage;
-        this.baseQuality = baseQuality;
-        this.speedMultiplier = speedMultiplier;
-        this.damagePerCraft = damagePerCraft;
-        this.minToolTypes = minToolTypes;
-        this.harvestTag = harvestTag;
-        this.miningTool = miningTool;
-        this.canPenetrate = canPenetrate;
-        this.canCollect = canCollect;
-        this.tooltipKey = tooltipKey;
+        this.headPrefix = builder.headPrefix;
+        this.headlessIcon = builder.headlessIcon;
+        this.handleIcon = builder.handleIcon;
+        this.durabilityMultiplier = builder.durabilityMultiplier;
+        this.baseDamage = builder.baseDamage;
+        this.speedMultiplier = builder.speedMultiplier;
+        this.damagePerCraft = builder.damagePerCraft;
+        this.damagePerBlockBreak = builder.damagePerBlockBreak;
+        this.damagePerEntityAttack = builder.damagePerEntityAttack;
+        this.minToolTypes = builder.minToolTypes;
+        this.harvestTag = builder.harvestTag;
+        this.canPenetrate = builder.canPenetrate;
+        this.canCollect = builder.canCollect;
+        this.tooltipKey = builder.tooltipKey;
+    }
+
+    private static Builder headed(MaterialPrefix headPrefix) {
+        return new Builder(headPrefix, null);
+    }
+
+    private static Builder headless(String icon) {
+        return new Builder(null, icon);
     }
 
     public int gt6Id() {
@@ -910,7 +525,7 @@ public enum ToolDefinition {
     }
 
     public int baseQuality() {
-        return baseQuality;
+        return 0;
     }
 
     public float speedMultiplier() {
@@ -918,7 +533,7 @@ public enum ToolDefinition {
     }
 
     public int damagePerCraft() {
-        return ToolCraftingRules.damage(id);
+        return damagePerCraft;
     }
 
     public int minToolTypes() {
@@ -968,35 +583,12 @@ public enum ToolDefinition {
         };
     }
 
-    /** GT6 {@code getToolDamagePerBlockBreak} default is 100; mining tools often use 25; wrench is 50. */
     public int damagePerBlockBreak() {
-        return switch (this) {
-            case POCKET_SAW, POCKET_FILE, POCKET_CHISEL -> 50;
-            case POCKET_SCREWDRIVER, POCKET_SCISSORS -> 200;
-            case POCKET_MULTITOOL, POCKET_KNIFE, POCKET_WIRE_CUTTER -> 100;
-            case AXE, DOUBLE_AXE -> 50;
-            case WRENCH,
-                    MONKEY_WRENCH,
-                    WIRE_CUTTER,
-                    CROWBAR,
-                    CLUB,
-                    PLUNGER,
-                    SCOOP,
-                    BRANCH_CUTTER,
-                    KNIFE,
-                    SCISSORS,
-                    PINCERS,
-                    HAND_DRILL,
-                    BUILDER_WAND -> 50;
-            default -> harvestTag != null && miningTool ? 25 : 100;
-        };
+        return damagePerBlockBreak;
     }
 
-    /** GT6 default {@code getToolDamagePerEntityAttack}; the wrench overrides it to 200. */
     public int damagePerEntityAttack() {
-        return this == WRENCH || this == MONKEY_WRENCH
-                ? 200
-                : isGun() || isPocket() && this != POCKET_MULTITOOL ? 200 : 100;
+        return damagePerEntityAttack;
     }
 
     /** GT6 default {@code getExhaustionPerAttack}; the wrench overrides it to 0.6. */
@@ -1047,5 +639,87 @@ public enum ToolDefinition {
     @Override
     public String toString() {
         return id.toUpperCase(Locale.ROOT);
+    }
+
+    private static final class Builder {
+        private final MaterialPrefix headPrefix;
+        private final String headlessIcon;
+        private String handleIcon;
+        private float durabilityMultiplier = 1.0F;
+        private float baseDamage;
+        private float speedMultiplier = 1.0F;
+        private int damagePerCraft = 100;
+        private int damagePerBlockBreak = 100;
+        private int damagePerEntityAttack = 100;
+        private int minToolTypes = 1;
+        private String harvestTag;
+        private boolean canPenetrate;
+        private boolean canCollect;
+        private String tooltipKey;
+
+        private Builder(MaterialPrefix headPrefix, String headlessIcon) {
+            this.headPrefix = headPrefix;
+            this.headlessIcon = headlessIcon;
+        }
+
+        private Builder handleIcon(String handleIcon) {
+            this.handleIcon = handleIcon;
+            return this;
+        }
+
+        private Builder durabilityMultiplier(float durabilityMultiplier) {
+            this.durabilityMultiplier = durabilityMultiplier;
+            return this;
+        }
+
+        private Builder baseDamage(float baseDamage) {
+            this.baseDamage = baseDamage;
+            return this;
+        }
+
+        private Builder speedMultiplier(float speedMultiplier) {
+            this.speedMultiplier = speedMultiplier;
+            return this;
+        }
+
+        private Builder damagePerCraft(int damagePerCraft) {
+            this.damagePerCraft = damagePerCraft;
+            return this;
+        }
+
+        private Builder damagePerBlockBreak(int damagePerBlockBreak) {
+            this.damagePerBlockBreak = damagePerBlockBreak;
+            return this;
+        }
+
+        private Builder damagePerEntityAttack(int damagePerEntityAttack) {
+            this.damagePerEntityAttack = damagePerEntityAttack;
+            return this;
+        }
+
+        private Builder minToolTypes(int minToolTypes) {
+            this.minToolTypes = minToolTypes;
+            return this;
+        }
+
+        private Builder harvestTag(String harvestTag) {
+            this.harvestTag = harvestTag;
+            return this;
+        }
+
+        private Builder penetratesArmor() {
+            canPenetrate = true;
+            return this;
+        }
+
+        private Builder collectsDrops() {
+            canCollect = true;
+            return this;
+        }
+
+        private Builder tooltipKey(String tooltipKey) {
+            this.tooltipKey = tooltipKey;
+            return this;
+        }
     }
 }

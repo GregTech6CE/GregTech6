@@ -10,6 +10,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.api.material.MaterialProperty;
 import gregtech.engine.stack.StackData;
+import gregtech.content.block.tool.DustFunnelBlock;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.GTToolItem;
 import gregtech.platform.Mc;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
@@ -171,15 +173,12 @@ public final class GTToolHelper {
         }
     }
 
-    /** Gem tip / tool head  - sole material used for combat and mining stats. */
-
-    /** GT tool crafting damage; non-tools cost nothing. Uses the item's base type, not a pocket tool's active mode. */
+    /** Crafting wear comes from the item's registered tool definition, including pocket variants. */
     public static int craftDamage(ItemStack stack) {
-        return ToolCraftingRules.damage(isTool(stack)
-                ? ((GTToolItem) stack.getItem()).toolType().id()
-                : "");
+        return isTool(stack) ? ((GTToolItem) stack.getItem()).toolType().damagePerCraft() : 0;
     }
 
+    /** Gem tip / tool head: sole material used for combat and mining stats. */
     public static GTMaterial getHead(ItemStack stack) {
         CompoundTag stats = stats(stack);
         if (stats == null) {
@@ -431,6 +430,11 @@ public final class GTToolHelper {
             return electric.canHarvest(stack, state);
 
         if (!isUsable(stack)) return false;
+        // GT6 soft hammers can harvest redstoneLight blocks despite their mining-tool classification.
+        if (getType(stack) == GTToolType.SOFT_HAMMER
+                && (state.is(Blocks.REDSTONE_LAMP) || state.getBlock() instanceof DustFunnelBlock)) {
+            return true;
+        }
         var tool=gregtech.content.data.BlockHarvestPolicy.tool(state.getBlock());
 
         var id=Mc.blockId(state.getBlock());

@@ -282,10 +282,13 @@ if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEnt
 
 
 //? if >=1.21.1 {
-/*    @Override public net.minecraft.world.item.component.ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack){
+/*    public static final net.minecraft.resources.ResourceLocation ATTACK_DAMAGE_MODIFIER_ID =
+            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "tool_attack_damage");
+
+    @Override public net.minecraft.world.item.component.ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack){
         if (!GTToolHelper.isUsable(stack))return net.minecraft.world.item.component.ItemAttributeModifiers.EMPTY;
         return net.minecraft.world.item.component.ItemAttributeModifiers.builder()
-          .add(Attributes.ATTACK_DAMAGE,new AttributeModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","tool_attack_damage"),GTToolHelper.getCombatDamage(stack),AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
+          .add(Attributes.ATTACK_DAMAGE,new AttributeModifier(ATTACK_DAMAGE_MODIFIER_ID,GTToolHelper.getCombatDamage(stack),AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
           .add(Attributes.ATTACK_SPEED,new AttributeModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","tool_attack_speed"),toolType.attackSpeed()-4.0F,AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND).build().withTooltip(false);
 *///?} else {
     @Override

@@ -10,7 +10,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 //? if >=1.21.1 {
-/*import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+/*import gregtech.content.item.GTToolItem;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 *///?} else {
@@ -29,6 +34,30 @@ public final class GTToolCombatEvents {
 
 //? if >=1.21.1 {
 /*    @SubscribeEvent
+    public static void refreshSavedDamageModifier(ItemAttributeModifierEvent event) {
+        ItemStack stack = event.getItemStack();
+        if (!GTToolHelper.isTool(stack)) return;
+
+        // Saved stacks can carry the attack value from an older tool definition.
+        for (var entry : event.getModifiers()) {
+            var modifier = entry.modifier();
+            if (!entry.attribute().equals(Attributes.ATTACK_DAMAGE) || entry.slot() != EquipmentSlotGroup.MAINHAND
+                    || !modifier.id().equals(GTToolItem.ATTACK_DAMAGE_MODIFIER_ID)) continue;
+
+            if (!GTToolHelper.isUsable(stack)) {
+                event.removeModifier(entry.attribute(), modifier.id());
+                return;
+            }
+            float damage = GTToolHelper.getCombatDamage(stack);
+            if (modifier.amount() != damage) {
+                event.replaceModifier(entry.attribute(),
+                        new AttributeModifier(modifier.id(), damage, modifier.operation()), entry.slot());
+            }
+            return;
+        }
+    }
+
+    @SubscribeEvent
     public static void wrenchHit(LivingIncomingDamageEvent event) {
         GTToolType type = wrenchType(event.getSource());
         if (type == null) return;
