@@ -9,9 +9,9 @@
 | 开发流程与规范 | [开发指南](development/README.md) | 环境搭建、文件归属、Java 注释、GUI 制作与验证验收 |
 | 源码架构与跨版本 | [架构总览](architecture/README.md) | 源码分层、包职责边界、资源与 Stonecutter 跨版本维护 |
 | 跨模组兼容与联动 | [兼容与联动](integration/README.md) | 联动内容、配方协调与冲突审计结论 |
-| 长期设计决策 | [长期决策](decisions/README.md) | 材料系统设计、跨平台边界与原版 GT6 特性差异 |
+| 长期设计决策 | [长期决策](decisions/README.md) | 设计方针、科技演进路线、材料系统设计、跨平台边界与原版特性差异 |
 | 附属与脚本开发 | [附属 API](addon/README.md) | 公开扩展契约、SDK 构建与 KubeJS 集成 |
-| 项目路线与协作 | [v1.0 路线图](roadmap/v1.0.md) | 开发方针、版本里程碑与问题/PR/RFC 协作方式 |
+| 项目路线与协作 | [整体路线图](roadmap/README.md) | 各阶段版本主题、里程碑边界、否决提案与远期构想池 |
 | 更新日志 | [更新日志](changelog/README.md) | `v1.0` 系列中英更新记录与版本索引 |
 
 ## 文档维护
