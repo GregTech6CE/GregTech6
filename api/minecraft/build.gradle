@@ -82,6 +82,9 @@ tasks.withType(Jar).configureEach {
     includeEmptyDirs = false
     preserveFileTimestamps = false
     reproducibleFileOrder = true
+    from(rootProject.files('api/LICENSE', 'api/NOTICE', 'api/GPL-3.0.txt')) {
+        into 'META-INF/gt6ce-api'
+    }
 }
 tasks.named('sourcesJar').configure { dependsOn 'stonecutterGenerate' }
 tasks.named('javadoc', Javadoc).configure {

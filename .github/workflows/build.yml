@@ -89,6 +89,7 @@ jobs:
         run: >-
           ./gradlew --no-daemon --stacktrace
           :api:jar
+          ":api-platform:${{ matrix.node }}:test"
           ":minecraft:${{ matrix.node }}:assemble"
           ":minecraft:${{ matrix.node }}:compileTestJava"
           ":minecraft:${{ matrix.node }}:spotlessCheck"
