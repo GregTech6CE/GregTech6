@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shapeless",
+  "type": "gt6ce:tape_repack",
   "ingredients": [
     {
       "item": "gt6ce:braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2"

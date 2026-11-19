@@ -1,11 +1,11 @@
 package gregtech.content.recipe;
 
-import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
 
 public final class NeoRecipeSerializers {
     private NeoRecipeSerializers() {}
@@ -48,6 +48,7 @@ public final class NeoRecipeSerializers {
     static {
         SERIALIZERS.register("tool_repair", () -> GTToolRepairRecipe.SERIALIZER);
         SERIALIZERS.register("spike_conversion", () -> SpikeConversionRecipe.SERIALIZER);
+        SERIALIZERS.register("tape_repack", () -> TapeRepackRecipe.SERIALIZER);
         SERIALIZERS.register("book_binding", () -> BookBindingRecipe.SERIALIZER);
         SERIALIZERS.register("tool_shapeless", () -> ToolShapelessRecipe.SERIALIZER);
         SERIALIZERS.register("creosote_axle", () -> CreosoteAxleRecipe.SERIALIZER);

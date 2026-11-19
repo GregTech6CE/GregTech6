@@ -109,9 +109,9 @@ public final class GTWires {
         if (ALL_WIRES.isEmpty()) throw new IllegalStateException("GTWires failed to initialize");
     }
 
-    /** Registers each wire and cable item's composition; call after item registration. */
+    /** Registers bare conductors before insulated compositions are derived from recipes. */
     public static void registerCompositions() {
-        for (var holder : ALL) {
+        for (var holder : ALL_WIRES) {
             ElectricWireBlock block = holder.get();
             WireSpec spec = block.spec();
             if (spec.material() == null || !spec.material().isValid()) continue;

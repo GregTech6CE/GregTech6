@@ -1,5 +1,6 @@
 package gregtech.content.recipe;
 
+import gregtech.content.material.CraftingItemCompositions;
 import gregtech.engine.material.MaterialDisplayBinding;
 import gregtech.engine.recipe.Recipe;
 import gregtech.engine.recipe.RecipeMap;
@@ -51,10 +52,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Restores the startup rows, rebuilds tag-owned rows, then applies datapack removals and finally
- * additions. The order is the published contract: a removal can only target a baseline or
- * producer row, and an addition always sees the final static set. Additions carry an explicit
- * priority, so two additions never depend on a datapack's file order.
+ * Restores startup rows and rebuilds tag-owned rows before applying each map's removals and additions.
+ * Manufacturing maps are finalized before composition and recovery are derived from them.
  */
 public final class MachineRecipeOverlay {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -101,12 +100,12 @@ public final class MachineRecipeOverlay {
         return millis;
     }
 
-    public static Result apply(RecipeManager manager) {
+    public static Result apply(RecipeManager manager, RegistryAccess access) {
         long current = ++generation;
         ItemMaterialRegistry.TagGenerationCheckpoint checkpoint = null;
         try {
             checkpoint = ItemMaterialRegistry.beginTagGeneration();
-            return applyGeneration(manager, current);
+            return applyGeneration(manager, access, current);
         } catch (RuntimeException failure) {
             // A half-applied overlay would leave some maps restored and others still carrying the
             // previous world's rows. Restore every map and drop the tag-owned producers instead of
@@ -118,7 +117,7 @@ public final class MachineRecipeOverlay {
         }
     }
 
-    private static Result applyGeneration(RecipeManager manager, long current) {
+    private static Result applyGeneration(RecipeManager manager, RegistryAccess access, long current) {
         clearFurnace();
         ensureBaseline();
         long started = System.nanoTime();
@@ -127,12 +126,25 @@ public final class MachineRecipeOverlay {
         gregtech.engine.recipe.MaterialUnitRecipes.discardUnregistered();
         long producersStarted = System.nanoTime();
         DynamicMachineRecipeProducers.rebuild();
-        long producersMillis = (System.nanoTime() - producersStarted) / 1_000_000L;
-        MaterialDisplayBinding.invalidate();
         logged = 0;
         var markers = markers(manager);
+        var productionMaps = CraftingItemCompositions.machineMaps();
+        var production = new ArrayList<Marker>();
+        var remaining = new ArrayList<Marker>();
+        for (var marker : markers) {
+            var map = RecipeMap.RECIPE_MAPS.get(marker.mapName());
+            if (map != null && productionMaps.contains(map)) production.add(marker);
+            else remaining.add(marker);
+        }
+        // Derive from the final manufacturing rows, then let recovery markers target the derived rows.
+        var tally = applyMarkers(production);
+        CraftingItemCompositions.rebuild(manager, access);
+        DynamicMachineRecipeProducers.rebuildRecovery();
+        long producersMillis = (System.nanoTime() - producersStarted) / 1_000_000L
+                - tally.removeMillis - tally.installMillis;
+        MaterialDisplayBinding.invalidate();
         var furnaceBefore = furnaceRows();
-        var tally = applyMarkers(markers);
+        tally.merge(applyMarkers(remaining));
         furnaceOverlay = FurnaceChanges.since(furnaceBefore);
         LOGGER.info("[gregtech] Machine recipe overlay baseline {} rows, restore {} ms, producers {} ms, moved {}, "
                         + "removed {} ({} ms), added {} ({} ms), prioritized {}, rejected {}",
@@ -643,5 +655,14 @@ public final class MachineRecipeOverlay {
         private int priority;
         private long removeMillis;
         private long installMillis;
+
+        private void merge(Tally other) {
+            removed += other.removed;
+            added += other.added;
+            rejected += other.rejected;
+            priority += other.priority;
+            removeMillis += other.removeMillis;
+            installMillis += other.installMillis;
+        }
     }
 }

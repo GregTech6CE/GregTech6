@@ -30,10 +30,6 @@ final class DynamicMachineRecipeProducers {
                     ExternalOreProcessing::rebuild,
                     ExternalOreProcessing::owned,
                     ExternalOreProcessing::clearOwnedRows),
-            new Producer(
-                    ShredderRecyclingRecipes::rebuildTagRows,
-                    ShredderRecyclingRecipes::owned,
-                    ShredderRecyclingRecipes::clearTagRows),
             new Producer(NonOreMacerationRows::rebuild, NonOreMacerationRows::owned, NonOreMacerationRows::clear),
             new Producer(SourceOreOutputRows::rebuild, SourceOreOutputRows::owned, SourceOreOutputRows::clear),
             new Producer(
@@ -59,7 +55,6 @@ final class DynamicMachineRecipeProducers {
                     SharedSpecialProcessRows::rebuild,
                     SharedSpecialProcessRows::owned,
                     SharedSpecialProcessRows::clear),
-            thermal(),
             // The brewing probe is staged independently; restore it even after overlay failure.
             new Producer(
                     PotionBrewingRecipes::rebuildStaged,
@@ -67,24 +62,42 @@ final class DynamicMachineRecipeProducers {
                     PotionBrewingRecipes::clear,
                     PotionBrewingRecipes::rebuildStaged));
 
+    private static final List<Producer> RECOVERY = List.of(
+            new Producer(
+                    ShredderRecyclingRecipes::rebuildTagRows,
+                    ShredderRecyclingRecipes::owned,
+                    ShredderRecyclingRecipes::clearTagRows),
+            new Producer(
+                    VanillaRecoveryRecipes::rebuildCraftingRows,
+                    VanillaRecoveryRecipes::craftingRows,
+                    VanillaRecoveryRecipes::clearCraftingRows),
+            thermal());
+
+    private static final List<Producer> ALL = java.util.stream.Stream.concat(PRODUCERS.stream(), RECOVERY.stream())
+            .toList();
+
     private DynamicMachineRecipeProducers() {}
 
     static void rebuild() {
         for (var producer : PRODUCERS) producer.rebuild().run();
     }
 
+    static void rebuildRecovery() {
+        for (var producer : RECOVERY) producer.rebuild().run();
+    }
+
     static Set<Recipe> baselineExclusions() {
         var rows = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
-        for (var producer : PRODUCERS) rows.addAll(producer.baselineExclusions().get());
+        for (var producer : ALL) rows.addAll(producer.baselineExclusions().get());
         return rows;
     }
 
     static void recover() {
-        for (var producer : PRODUCERS) producer.recover().run();
+        for (var producer : ALL) producer.recover().run();
     }
 
     static void clear() {
-        for (var producer : PRODUCERS) producer.clear().run();
+        for (var producer : ALL) producer.clear().run();
     }
 
     private static Producer thermal() {

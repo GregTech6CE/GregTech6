@@ -48,6 +48,7 @@ KNOWN_TYPES = {
     "gt6ce:tool_shapeless",
     "gt6ce:book_binding",
     "gt6ce:spike_conversion",
+    "gt6ce:tape_repack",
     "gt6ce:tool_repair",
 }
 
@@ -73,7 +74,7 @@ KNOWN_FIELDS = {
 DOC_FIELDS = {"_comment", "_mirror_flags", "_autocrafting_source"}
 
 SHAPED_TYPES = {"minecraft:crafting_shaped", "gt6ce:tool_shaped"}
-SHAPELESS_TYPES = {"minecraft:crafting_shapeless", "gt6ce:tool_shapeless"}
+SHAPELESS_TYPES = {"minecraft:crafting_shapeless", "gt6ce:tool_shapeless", "gt6ce:tape_repack"}
 
 # Items that stand in for GT6's cumulative OD_CIRCUITS[n] and must be tags in recipes.
 CIRCUIT_FAMILY = re.compile(

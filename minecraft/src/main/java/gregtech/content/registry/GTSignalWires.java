@@ -53,12 +53,13 @@ public final class GTSignalWires {
         }
     }
 
-    /** Registers each signal wire's composition; call after item registration. */
+    /** Registers bare signal conductors before insulated compositions are derived from recipes. */
     public static void registerCompositions() {
         for (var holder : ALL) {
             SignalWireBlock block = holder.get();
             if (block.material() == null || !block.material().isValid()) continue;
-            ItemMaterialRegistry.register(block.asItem(), null, block.material(), GTValues.U / 2);
+            if (!block.insulated())
+                ItemMaterialRegistry.register(block.asItem(), null, block.material(), GTValues.U / 2);
         }
     }
 }

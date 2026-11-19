@@ -12,13 +12,14 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Runtime binding for the one effective item-composition snapshot.
  *
- * <p>Explicit producers submit candidates; tag producers replace a complete staged generation.
+ * <p>Explicit producers submit candidates; tag and crafting producers replace their candidates per generation.
  * Effective traversal and single-item lookup read the same immutable snapshot.</p>
  */
 public final class ItemMaterialRegistry {
     private static final Object LOCK = new Object();
     private static final Map<Item, List<ItemCompositionCandidate>> EXPLICIT_SUBMISSIONS = new IdentityHashMap<>();
     private static final Map<Item, List<ItemCompositionCandidate>> TAG_SUBMISSIONS = new IdentityHashMap<>();
+    private static final Map<Item, ItemCompositionCandidate> RECIPE_SUBMISSIONS = new IdentityHashMap<>();
     private static final AtomicLong COMPOSITION_REVISION = new AtomicLong();
     private static boolean tagInputReady;
     private static volatile boolean explicitClosed;
@@ -45,6 +46,7 @@ public final class ItemMaterialRegistry {
      */
     public static final class TagGenerationCheckpoint {
         private final Map<Item, List<ItemCompositionCandidate>> tagSubmissions;
+        private final Map<Item, ItemCompositionCandidate> recipeSubmissions;
         private final Map<Item, ItemComposition> effective;
         private final Map<Item, ItemCompositionResolution> diagnostics;
         private final long revision;
@@ -55,6 +57,7 @@ public final class ItemMaterialRegistry {
 
         private TagGenerationCheckpoint(
                 Map<Item, List<ItemCompositionCandidate>> tagSubmissions,
+                Map<Item, ItemCompositionCandidate> recipeSubmissions,
                 Map<Item, ItemComposition> effective,
                 Map<Item, ItemCompositionResolution> diagnostics,
                 long revision,
@@ -62,6 +65,7 @@ public final class ItemMaterialRegistry {
                 boolean tagInputReady,
                 ItemMaterialForms.TaggedIndex tagFormIndex) {
             this.tagSubmissions = tagSubmissions;
+            this.recipeSubmissions = recipeSubmissions;
             this.effective = effective;
             this.diagnostics = diagnostics;
             this.revision = revision;
@@ -192,6 +196,8 @@ public final class ItemMaterialRegistry {
                 if (explicit != null) itemCandidates.addAll(explicit);
                 var tags = staged.get(item);
                 if (tags != null) itemCandidates.addAll(tags);
+                var recipe = RECIPE_SUBMISSIONS.get(item);
+                if (recipe != null) itemCandidates.add(recipe);
                 if (itemCandidates.isEmpty()) continue;
                 var resolution = ItemCompositionResolver.resolveDetailed(Map.of(item, itemCandidates))
                         .get(item);
@@ -231,19 +237,43 @@ public final class ItemMaterialRegistry {
         publishTagCandidates(Map.of());
     }
 
+    /** Replaces the recipe-derived fallback within the current tag and recipe generation. */
+    public static void publishRecipeCandidates(Map<Item, ItemComposition> compositions) {
+        var staged = new IdentityHashMap<Item, ItemCompositionCandidate>();
+        compositions.forEach((item, data) -> {
+            var candidate = new ItemCompositionCandidate(data, null);
+            if (data.sources().get(0).kind() != ItemCompositionSource.Kind.RECIPE_REVERSE)
+                throw new IllegalArgumentException(
+                        "Expected a recipe-derived composition for " + implementationId(item));
+            staged.put(item, candidate);
+        });
+        boolean changed;
+        synchronized (LOCK) {
+            long before = COMPOSITION_REVISION.get();
+            var affected = new HashSet<>(RECIPE_SUBMISSIONS.keySet());
+            affected.addAll(staged.keySet());
+            RECIPE_SUBMISSIONS.clear();
+            RECIPE_SUBMISSIONS.putAll(staged);
+            for (Item item : affected) updateItemLocked(item, true);
+            changed = COMPOSITION_REVISION.get() != before;
+        }
+        if (changed) MaterialFormContent.publish();
+    }
+
     /**
-     * Starts a new external-tag generation. Explicit definitions remain process-static, while the
-     * previous session's tag candidates stop being observable until their replacement is published.
+     * Starts a new reload generation without the previous session's tag and crafting candidates.
      */
     public static TagGenerationCheckpoint beginTagGeneration() {
         TagGenerationCheckpoint checkpoint;
         boolean refresh;
         synchronized (LOCK) {
             long before = COMPOSITION_REVISION.get();
-            boolean hadGeneration = tagInputReady || !TAG_SUBMISSIONS.isEmpty();
+            boolean hadGeneration = tagInputReady || !TAG_SUBMISSIONS.isEmpty() || !RECIPE_SUBMISSIONS.isEmpty();
             var affected = new HashSet<>(TAG_SUBMISSIONS.keySet());
+            affected.addAll(RECIPE_SUBMISSIONS.keySet());
             checkpoint = new TagGenerationCheckpoint(
                     copyTagSubmissions(TAG_SUBMISSIONS),
+                    new IdentityHashMap<>(RECIPE_SUBMISSIONS),
                     new IdentityHashMap<>(EFFECTIVE),
                     new IdentityHashMap<>(DIAGNOSTICS),
                     before,
@@ -252,6 +282,7 @@ public final class ItemMaterialRegistry {
                     tagFormIndex);
             tagFormIndex = null;
             TAG_SUBMISSIONS.clear();
+            RECIPE_SUBMISSIONS.clear();
             tagInputReady = false;
             tagGeneration++;
             for (Item item : affected) updateItemLocked(item, true);
@@ -263,7 +294,7 @@ public final class ItemMaterialRegistry {
     }
 
     /**
-     * Restores the complete tag-dependent state when an enclosing platform generation fails.
+     * Restores tag and crafting candidates when an enclosing platform generation fails.
      * Explicit declarations are process-static and intentionally remain outside this checkpoint.
      */
     public static void restoreTagGeneration(TagGenerationCheckpoint checkpoint) {
@@ -276,6 +307,8 @@ public final class ItemMaterialRegistry {
             checkpoint.restored = true;
             TAG_SUBMISSIONS.clear();
             TAG_SUBMISSIONS.putAll(copyTagSubmissions(checkpoint.tagSubmissions));
+            RECIPE_SUBMISSIONS.clear();
+            RECIPE_SUBMISSIONS.putAll(checkpoint.recipeSubmissions);
             EFFECTIVE.clear();
             EFFECTIVE.putAll(checkpoint.effective);
             DIAGNOSTICS.clear();
@@ -339,6 +372,19 @@ public final class ItemMaterialRegistry {
         }
     }
 
+    /** Effective input data for recipe derivation, excluding the previous generation's recipes. */
+    public static Optional<ItemComposition> baseBeforeRecipeGeneration(Item item) {
+        synchronized (LOCK) {
+            var effective = EFFECTIVE.get(item);
+            if (RECIPE_SUBMISSIONS.containsKey(item)
+                    && effective != null
+                    && effective.sources().stream()
+                            .anyMatch(source -> source.kind() == ItemCompositionSource.Kind.RECIPE_REVERSE))
+                return Optional.ofNullable(EXPLICIT.get(item));
+            return Optional.ofNullable(effective);
+        }
+    }
+
     /** Effective composition whose winner is not an external resource-tag import. */
     public static Optional<ItemComposition> declared(Item item) {
         return base(item)
@@ -383,11 +429,10 @@ public final class ItemMaterialRegistry {
     public static Optional<ItemComposition> get(ItemStack stack) {
         if (stack.isEmpty()) return Optional.empty();
         var data = base(stack.getItem()).orElse(null);
-        if (data == null || !stack.isDamaged()) return Optional.ofNullable(data);
-        int maximum = stack.getMaxDamage();
-        if (maximum <= 0) return Optional.of(data);
-        int remaining = Math.max(0, Math.min(maximum, maximum - stack.getDamageValue()));
-        return Optional.of(ItemCompositionScaling.scale(data, remaining, maximum));
+        if (data == null) return Optional.empty();
+        var durability = ItemMaterialRuntimeFacts.compositionDurability(stack);
+        if (durability == null || durability.remaining() == durability.maximum()) return Optional.of(data);
+        return Optional.of(ItemCompositionScaling.scale(data, durability.remaining(), durability.maximum()));
     }
 
     /** GT6 {@code OM.anydata_} admission for the melting crucible. */
@@ -486,6 +531,9 @@ public final class ItemMaterialRegistry {
         var tags = TAG_SUBMISSIONS.get(item);
         if (tags != null)
             combined.computeIfAbsent(item, ignored -> new ArrayList<>()).addAll(tags);
+        var recipe = RECIPE_SUBMISSIONS.get(item);
+        if (recipe != null)
+            combined.computeIfAbsent(item, ignored -> new ArrayList<>()).add(recipe);
         var resolution = (requireReplacementTargets
                         ? ItemCompositionResolver.resolveDetailed(combined)
                         : ItemCompositionResolver.resolveDetailedLenient(combined))

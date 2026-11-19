@@ -36,8 +36,7 @@ public final class MachineRecipeLifecycle {
         for (var map : gregtech.engine.recipe.RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         if (server == null) return;
-        MachineRecipeOverlay.apply(server.getRecipeManager());
-        prebuild(server);
+        RecipePublication.publish(server, true);
     }
 
     /**
@@ -65,8 +64,7 @@ public final class MachineRecipeLifecycle {
      */
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void started(ServerStartedEvent event) {
-        MachineRecipeOverlay.apply(event.getServer().getRecipeManager());
-        prebuild(event.getServer());
+        RecipePublication.publish(event.getServer());
     }
 
     @SubscribeEvent

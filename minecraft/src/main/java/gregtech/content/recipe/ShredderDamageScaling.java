@@ -4,6 +4,7 @@ import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.ItemMaterialRegistry;
+import gregtech.engine.material.ItemMaterialRuntimeFacts;
 import gregtech.engine.prefix.PrefixRegistry;
 import gregtech.engine.recipe.Recipe;
 import java.util.ArrayList;
@@ -17,8 +18,7 @@ final class ShredderDamageScaling {
     static Recipe resolve(List<ItemStack> inputs, Recipe template, boolean staticPrefix) {
         for (ItemStack input : inputs) {
             if (input.isEmpty()
-                    || !input.isDamageableItem()
-                    || !input.isDamaged()
+                    || ItemMaterialRuntimeFacts.compositionDurability(input) == null
                     || !template.matchesItemInput(0, input)) continue;
             var composition = ItemMaterialRegistry.get(input).orElse(null);
             if (composition == null || composition.components().isEmpty()) return null;
@@ -34,7 +34,6 @@ final class ShredderDamageScaling {
                 }
             }
             if (outputs.isEmpty()) return null;
-            int damage = input.getDamageValue();
             var resolved = new Recipe(
                             new ItemStack[] {input.copyWithCount(1)},
                             outputs.toArray(ItemStack[]::new),
@@ -49,8 +48,10 @@ final class ShredderDamageScaling {
                     .withItemInputGuard(
                             0,
                             offered -> offered.getItem() == input.getItem()
-                                    && offered.getDamageValue() == damage
-                                    && ItemMaterialRegistry.canRecover(offered));
+                                    && ItemMaterialRegistry.canRecover(offered)
+                                    && ItemMaterialRegistry.get(offered)
+                                            .filter(composition::equals)
+                                            .isPresent());
             resolved.recoveryOwnership = template.recoveryOwnership;
             resolved.explicitCatalystsOnly = template.explicitCatalystsOnly;
             resolved.exactItemInputs = template.exactItemInputs;
@@ -66,7 +67,7 @@ final class ShredderDamageScaling {
      */
     static Recipe findDamaged(List<ItemStack> inputs) {
         for (ItemStack input : inputs) {
-            if (input.isEmpty() || !input.isDamageableItem() || !input.isDamaged()) continue;
+            if (input.isEmpty() || ItemMaterialRuntimeFacts.compositionDurability(input) == null) continue;
             var composition = ItemMaterialRegistry.get(input).orElse(null);
             if (composition == null || composition.components().isEmpty()) return null;
             MaterialPrefix prefix = composition.prefix();
@@ -87,7 +88,6 @@ final class ShredderDamageScaling {
                 }
             }
             if (outputs.isEmpty()) return null;
-            int damage = input.getDamageValue();
             return new Recipe(
                             new ItemStack[] {input.copyWithCount(1)},
                             outputs.toArray(ItemStack[]::new),
@@ -103,8 +103,10 @@ final class ShredderDamageScaling {
                     .withItemInputGuard(
                             0,
                             offered -> offered.getItem() == input.getItem()
-                                    && offered.getDamageValue() == damage
-                                    && ItemMaterialRegistry.canRecover(offered));
+                                    && ItemMaterialRegistry.canRecover(offered)
+                                    && ItemMaterialRegistry.get(offered)
+                                            .filter(composition::equals)
+                                            .isPresent());
         }
         return null;
     }

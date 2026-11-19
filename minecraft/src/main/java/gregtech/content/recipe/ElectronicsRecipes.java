@@ -21,6 +21,30 @@ import java.util.*;
  */
 public final class ElectronicsRecipes {
     public static final String[] TIERS = {"basic", "good", "advanced", "elite", "master", "ultimate"};
+    private record CircuitCrystal(String name, GTMaterial group, List<String> variants) {}
+
+    private static List<CircuitCrystal> circuitCrystals() {
+        return List.of(
+                new CircuitCrystal("Diamond", MaterialGroups.Diamond, List.of("Diamond", "BlueDiamond",
+                        "GreenDiamond", "RedDiamond", "YellowDiamond", "PinkDiamond", "DiamondIndustrial",
+                        "ManaDiamond", "Diamantine")),
+                new CircuitCrystal("Emerald", MaterialGroups.Emerald, List.of("Emerald", "Aquamarine", "Morganite",
+                        "Heliodor", "Goshenite", "Bixbite", "Maxixe", "Emeradic")),
+                new CircuitCrystal("Sapphire", MaterialGroups.Sapphire, List.of("Sapphire", "BlueSapphire",
+                        "GreenSapphire", "PurpleSapphire", "YellowSapphire", "OrangeSapphire")),
+                new CircuitCrystal("Ruby", null, List.of("Ruby")));
+    }
+
+    /** Original reversing targets for the gem families accepted by the engraver. */
+    public static Map<GTMaterial, GTMaterial> circuitCrystalRecoveryMaterials() {
+        var result = new HashMap<GTMaterial, GTMaterial>();
+        for (var family : circuitCrystals()) {
+            var target = GTMaterialRegistry.get(family.name());
+            for (var gem : circuitGems(family)) result.put(gem, target);
+        }
+        return result;
+    }
+
     private static final List<Recipe> REGISTERED = new ArrayList<>();
     private ElectronicsRecipes() {}
     public static List<Recipe> recipes() { return Collections.unmodifiableList(REGISTERED); }
@@ -103,14 +127,7 @@ public final class ElectronicsRecipes {
         // socket + circuit into a processor.
         // MT diamond/emerald/sapphire factories and ANY.init.
         // Keep explicit native factory members: not all port ANY groups carry their original registrations.
-        crystal("crystal_circuit_diamond", new String[]{"Diamond", "BlueDiamond", "GreenDiamond",
-                "RedDiamond", "YellowDiamond", "PinkDiamond", "DiamondIndustrial", "ManaDiamond",
-                "Diamantine"}, gregtech.content.data.MaterialGroups.Diamond);
-        crystal("crystal_circuit_emerald", new String[]{"Emerald", "Aquamarine", "Morganite", "Heliodor",
-                "Goshenite", "Bixbite", "Maxixe", "Emeradic"}, gregtech.content.data.MaterialGroups.Emerald);
-        crystal("crystal_circuit_sapphire", new String[]{"Sapphire", "BlueSapphire", "GreenSapphire",
-                "PurpleSapphire", "YellowSapphire", "OrangeSapphire"}, gregtech.content.data.MaterialGroups.Sapphire);
-        crystal("crystal_circuit_ruby", new String[]{"Ruby"}, null);   // GT6: plateGem(MT.Ruby) only
+        for (var crystal : circuitCrystals()) crystal(crystal);
         for (String gem : new String[]{"Diamond", "Ruby", "Emerald", "Sapphire"}) {
             press(16, tech("crystal_processor_" + gem.toLowerCase(Locale.ROOT), 1),
                     tech("crystal_processor_socket", 1), tech("crystal_circuit_" + gem.toLowerCase(Locale.ROOT), 1));
@@ -162,19 +179,24 @@ public final class ElectronicsRecipes {
      * to the gem group ({@code ANY.Diamond.mToThis} and friends); the port names those materials
      * directly and adds the group's re-registrations on top.
      */
-    private static void crystal(String circuit, String[] names,
-                                gregtech.api.material.GTMaterial group) {
-        java.util.Set<gregtech.api.material.GTMaterial> gems = new java.util.LinkedHashSet<>();
-        for (String name : names) {
+    private static Set<GTMaterial> circuitGems(CircuitCrystal crystal) {
+        var gems = new LinkedHashSet<GTMaterial>();
+        for (String name : crystal.variants()) {
             var material = GTMaterialRegistry.get(name);
             if (material != null && material.isValid()) gems.add(material.resolve());
         }
-        if (group != null) {
-            gems.add(group.resolve());
-            gems.addAll(MaterialGroups.members(group));
+        if (crystal.group() != null) {
+            var resolved = crystal.group().resolve();
+            if (resolved.isValid()) gems.add(resolved);
+            gems.addAll(MaterialGroups.members(crystal.group()));
         }
-        for (var gem : gems) {
-            if (gem == null || !gem.isValid() || (group == MaterialGroups.Sapphire && gem.resolve() == Materials.Ruby.resolve())) continue;
+        if (crystal.group() == MaterialGroups.Sapphire) gems.remove(Materials.Ruby.resolve());
+        return gems;
+    }
+
+    private static void crystal(CircuitCrystal crystal) {
+        String circuit = "crystal_circuit_" + crystal.name().toLowerCase(Locale.ROOT);
+        for (var gem : circuitGems(crystal)) {
             ItemStack plate = GTItems.getStack(MaterialPrefix.plateGem, gem, 1);
             if (plate.isEmpty()) continue;
             for (var lens : SourceLensRecipeItems.lenses(Color.GREEN))
