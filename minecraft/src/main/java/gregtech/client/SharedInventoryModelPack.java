@@ -50,12 +50,13 @@ import java.util.function.Predicate;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Virtual client pack: the item references, shared material models, machine blockstates and machine
- * item models are generated at runtime instead of shipped as static JSON.
+ * Virtual client pack: the item references, layered wooden-bucket models, shared material models,
+ * machine blockstates, machine item models, and palette-synthesized container/fluid sprites (with
+ * their {@code .mcmeta}) are served at runtime instead of shipped as redundant static files.
  *
  * <p>The pack is hidden and sits at the bottom position, so an installed resource pack overrides any
- * file it serves, blockstates, table row models and item models included. Machine geometry comes
- * from {@code machine_models.tsv} through {@link OrthogonalMachineModelLoader}, whose loader
+ * file it serves, blockstates, table row models, item models and textures included. Machine geometry
+ * comes from {@code machine_models.tsv} through {@link OrthogonalMachineModelLoader}, whose loader
  * delegates to ModelBaker's existing cache instead of baking 56,000 copies.
  *
  * <p>Material icons are resolved against the packs the resource manager currently mounts, so an
@@ -116,16 +117,14 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         return BUILD_DEPTH.get() > 0;
     }
 
-    static boolean isServedAssetPath(String path) {
-        return path.startsWith("models/") || path.startsWith("blockstates/");
-    }
-
     static boolean servesAssetDirectory(String directory) {
         return directory.isEmpty()
                 || "models".equals(directory)
                 || directory.startsWith("models/")
                 || "blockstates".equals(directory)
-                || directory.startsWith("blockstates/");
+                || directory.startsWith("blockstates/")
+                || "textures".equals(directory)
+                || directory.startsWith("textures/");
     }
 
     private synchronized Map<ResourceLocation, byte[]> data() {
@@ -180,6 +179,14 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                         ("{\"variants\":{\"\":{\"model\":\"gt6ce:" + model + "\"}}}").getBytes(StandardCharsets.UTF_8));
                 result.put(location("models/item/" + id.getPath() + ".json"),
                         ("{\"parent\":\"gt6ce:" + model + "\"}").getBytes(StandardCharsets.UTF_8));
+                continue;
+            }
+            if (id.getNamespace().equals(GregTechIdentity.REGISTRY_NAMESPACE)
+                    && item instanceof gregtech.content.item.WoodenBucketItem bucket) {
+                result.put(
+                        itemModel(id),
+                        gregtech.engine.tool.WoodenBucketVisuals.modelJson(bucket.content())
+                                .getBytes(StandardCharsets.UTF_8));
                 continue;
             }
             boolean materialForm = item instanceof gregtech.engine.material.MaterialFormItem material
@@ -611,7 +618,12 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
 
     @Override
     public IoSupplier<InputStream> getResource(PackType type, ResourceLocation id) {
-        if (type != PackType.CLIENT_RESOURCES || !isServedAssetPath(id.getPath()) || isBuilding()) return null;
+        if (type != PackType.CLIENT_RESOURCES || isBuilding()) return null;
+        String path = id.getPath();
+        if (GregTechIdentity.MOD_ID.equals(id.getNamespace()) && DynamicTextureSynthesis.containsAssetPath(path)) {
+            return () -> DynamicTextureSynthesis.open(path);
+        }
+        if (!path.startsWith("models/") && !path.startsWith("blockstates/")) return null;
         byte[] json = data().get(id);
         return json == null ? null : () -> new ByteArrayInputStream(json);
     }
@@ -619,11 +631,20 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     @Override
     public void listResources(PackType type, String namespace, String path, ResourceOutput output) {
         if (type != PackType.CLIENT_RESOURCES || !servesAssetDirectory(path) || isBuilding()) return;
+        if ("textures".equals(path) || path.startsWith("textures/")) {
+            if (GregTechIdentity.MOD_ID.equals(namespace)) {
+                DynamicTextureSynthesis.listResources(path, output);
+            }
+            return;
+        }
         String prefix = path.isEmpty() ? "" : path + "/";
         data().forEach((id, json) -> {
             if (id.getNamespace().equals(namespace) && id.getPath().startsWith(prefix))
                 output.accept(id, () -> new ByteArrayInputStream(json));
         });
+        if (path.isEmpty() && GregTechIdentity.MOD_ID.equals(namespace)) {
+            DynamicTextureSynthesis.listResources(path, output);
+        }
     }
 
     @Override
