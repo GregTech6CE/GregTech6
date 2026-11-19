@@ -13,6 +13,7 @@ import gregtech.content.block.stone.GTStoneSlabBlock;
 import gregtech.content.block.stone.StoneMaterialWeights;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.machine.MachineConstructionMaterials;
+import gregtech.content.plant.BedrockFlowers;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.fluid.PortableFluidContainerSpec;
@@ -20,6 +21,7 @@ import gregtech.engine.material.ItemComposition;
 import gregtech.engine.material.ItemCompositionSource;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.ItemMaterialRuntimeFacts;
+import gregtech.engine.mod.GregTechIdentity;
 import java.util.List;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -38,6 +40,7 @@ public final class MaterialItemCompositions {
         registerBlockWeights();
         registerMachineConstruction();
         registerSingleItemMaterials();
+        registerBedrockFlowerCompositions();
         registerCapsuleCells();
         registerDiggableMaterials();
         WoodMaterialCompositions.register();
@@ -53,6 +56,14 @@ public final class MaterialItemCompositions {
         ModMaterialUnificationLoader.register();
         VanillaCompositionLoader.register();
         VanillaMaterialCorrections.register();
+    }
+
+    private static void registerBedrockFlowerCompositions() {
+        for (var flower : BedrockFlowers.ALL) {
+            if (flower.material() == null) continue;
+            ItemMaterialRegistry.register(
+                    item(GregTechIdentity.REGISTRY_NAMESPACE + ":" + flower.id()), null, flower.material(), GTValues.U);
+        }
     }
 
     private static void registerMaterialItemForms() {

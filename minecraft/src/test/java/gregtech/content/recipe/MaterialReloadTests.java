@@ -1,11 +1,15 @@
 package gregtech.content.recipe;
 
+import gregtech.api.material.GTValues;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.generated.WoodMaterials;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.material.ItemMaterialRegistry;
+import gregtech.engine.material.MaterialMass;
 import gregtech.engine.material.MaterialPublication;
+import gregtech.engine.sensor.PhysicalItemMass;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -15,6 +19,7 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -28,6 +33,22 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class MaterialReloadTests {
     private MaterialReloadTests() {}
+
+    @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
+    public static void bedrockFlowerHasItsDeclaredPhysicalMass(GameTestHelper helper) {
+        var sagebrush = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "flower_sagebrush"));
+        var composition = ItemMaterialRegistry.base(sagebrush).orElseThrow();
+        helper.assertTrue(composition.components().size() == 1, "sagebrush has one material component");
+        var component = composition.components().get(0);
+        helper.assertTrue(
+                component.material() == WoodMaterials.Acacia && component.amount() == GTValues.U,
+                "sagebrush contains one unit of Acacia");
+        double expected = 2 * MaterialMass.kilograms(WoodMaterials.Acacia, GTValues.U);
+        helper.assertTrue(
+                expected > 0 && PhysicalItemMass.kilograms(new ItemStack(sagebrush, 2)) == expected,
+                "the weight sensor uses the declared material for each flower");
+        helper.succeed();
+    }
 
     @GameTest(template = "test_empty", batch = "material_reload", timeoutTicks = 6000)
     public static void twoRealReloadsPreserveOwnedRecipes(GameTestHelper helper) {
