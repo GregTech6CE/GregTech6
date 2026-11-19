@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import gregtech.api.material.*;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.ExternalMaterialForms;
 import gregtech.engine.material.*;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.recipe.Recipe;
@@ -60,10 +61,9 @@ public final class ExternalOreProcessing {
 
     public static synchronized int rebuild() {
         clearOwnedRows();
-        CraftingMaterialForms.rebuild(false);
-        var forms = CraftingMaterialForms.nativeAliases();
+        var forms = ItemMaterialForms.nativeAliases();
         var materialData = new IdentityHashMap<Item, List<ItemComposition>>();
-        for (var prefix : ExternalOreProcessingRules.COMPOSITION_FORMS)
+        for (var prefix : ExternalMaterialForms.COMPOSITION_FORMS)
             for (var entry : forms.entrySet()) {
                 if (!entry.getKey().prefix().equals(prefix.getName())) continue;
                 var material = GTMaterialRegistry.get(entry.getKey().material()).resolve();
@@ -87,8 +87,8 @@ public final class ExternalOreProcessing {
         taggedCompositions = bindTaggedForms(materialData);
         ItemMaterialRegistry.publishTagCandidates(materialData);
         publishedCompositions = materialData.size();
-        CraftingMaterialForms.rebuild(true);
-        forms = CraftingMaterialForms.nativeAliases();
+        ItemMaterialForms.refreshTaggedAliases();
+        forms = ItemMaterialForms.aliases();
         int added = 0;
         for (var route : ExternalOreProcessingRules.ROUTES) {
             var map = map(route.map());
@@ -226,9 +226,9 @@ public final class ExternalOreProcessing {
     /** Resolve every imported form together so aliases merge and conflicting tags are diagnosed once. */
     private static int bindTaggedForms(Map<Item, List<ItemComposition>> materialData) {
         var allowed = new HashSet<String>();
-        allowed.add(ExternalOreProcessingRules.TAGGED_ORE_FORM);
-        for (var prefix : ExternalOreProcessingRules.COMPOSITION_FORMS) allowed.add(prefix.getName());
-        for (var prefix : ExternalOreProcessingRules.TAGGED_MATERIAL_FORMS) allowed.add(prefix.getName());
+        allowed.add(ExternalMaterialForms.TAGGED_ORE_FORM);
+        for (var prefix : ExternalMaterialForms.COMPOSITION_FORMS) allowed.add(prefix.getName());
+        for (var prefix : ExternalMaterialForms.TAGGED_MATERIAL_FORMS) allowed.add(prefix.getName());
         int added = 0;
         int ambiguous = 0;
         for (var item : BuiltInRegistries.ITEM) {
@@ -239,14 +239,14 @@ public final class ExternalOreProcessing {
             if (ItemMaterialRegistry.declared(item).isPresent() || materialData.containsKey(item)) continue;
             var candidates = new ArrayList<ItemCompositionCandidate>();
             var stack = new ItemStack(item);
-            for (var form : CraftingMaterialForms.taggedForms(stack)) {
+            for (var form : ItemMaterialForms.taggedForms(stack)) {
                 if (!allowed.contains(form.prefix())) continue;
                 var material = GTMaterialRegistry.get(form.material()).resolve();
                 if (!material.isValid()) continue;
                 var sourceId = "gt6ce:external-tag/" + id + "/" + form.prefix() + "/" + material.getName();
                 var source = new ItemCompositionSource(
                         ItemCompositionSource.Kind.FORM_TAG, sourceId, TAGGED_COMPOSITION_SOURCE, "", "");
-                if (ExternalOreProcessingRules.TAGGED_ORE_FORM.equals(form.prefix())) {
+                if (ExternalMaterialForms.TAGGED_ORE_FORM.equals(form.prefix())) {
                     if (BlockMaterialPrefix.ore == null) continue;
                     candidates.add(new ItemCompositionCandidate(
                             new ItemComposition(
@@ -276,10 +276,10 @@ public final class ExternalOreProcessing {
                 if (slash < 0) continue;
                 String group = path.substring(0, slash);
                 long amount;
-                if (group.equals(ExternalOreProcessingRules.TAGGED_STORAGE_BLOCK_GROUP)) amount = 9 * GTValues.U;
-                else if (group.equals(ExternalOreProcessingRules.TAGGED_CABLE_GROUP)) amount = GTValues.U / 2;
+                if (group.equals(ExternalMaterialForms.TAGGED_STORAGE_BLOCK_GROUP)) amount = 9 * GTValues.U;
+                else if (group.equals(ExternalMaterialForms.TAGGED_CABLE_GROUP)) amount = GTValues.U / 2;
                 else continue;
-                String materialName = CraftingMaterialForms.tagMaterial(tag);
+                String materialName = ItemMaterialForms.tagMaterial(tag);
                 if (materialName == null || !seenSpecialTags.add(group + "/" + materialName)) continue;
                 var material = GTMaterialRegistry.get(materialName).resolve();
                 if (!material.isValid()) continue;
@@ -338,6 +338,6 @@ public final class ExternalOreProcessing {
 
     private static ItemStack output(MaterialPrefix prefix, GTMaterial material, int count) {
         var output = gregtech.content.registry.GTItems.getStack(prefix, material, count);
-        return output.isEmpty() ? CraftingMaterialForms.stack(prefix.getName(), material, count) : output;
+        return output.isEmpty() ? ItemMaterialForms.stack(prefix.getName(), material, count) : output;
     }
 }

@@ -220,7 +220,7 @@ public final class MaterialTagPack extends AbstractPackResources {
                         } else if (item instanceof BlockItem && data.components().size()==1
                                 && (id.getPath().endsWith("_ore") || id.getPath().equals("ancient_debris"))) {
                             add(tags,"forge","items","ores/"+name,id.toString());
-                            // CraftingMaterialForms exposes native ores through this GT form too.
+                            // ItemMaterialForms exposes native ores through this GT form too.
                             add(tags,"gt6ce","items",MaterialPrefix.camelToSnake(
                                     VanillaUnificationDefinitions.vanillaOreForm(id.getPath()))+"/"+name,id.toString());
                         }

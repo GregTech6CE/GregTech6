@@ -111,7 +111,7 @@ public class LootCrateBlock extends Block {
                         .create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.CHEST);
         var candidates = table.getRandomItems(params).stream().filter(stack -> !stack.isEmpty()).toList();
         // GT6 returns one generated stack, rather than all contents of a chest.
-        return candidates.isEmpty() ? List.of() : List.of(gregtech.content.recipe.CraftingMaterialForms.canonical(
+        return candidates.isEmpty() ? List.of() : List.of(gregtech.engine.material.ItemMaterialForms.canonical(
                 candidates.get(random.nextInt(candidates.size()))));
     }
 

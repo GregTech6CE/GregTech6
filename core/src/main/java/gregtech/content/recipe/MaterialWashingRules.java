@@ -3,6 +3,7 @@ package gregtech.content.recipe;
 
 import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
+import gregtech.content.material.ExternalMaterialForms;
 import java.util.List;
 
 /** OP / OreDictListenerItem_Washing: one item and one water level per server tick. */
@@ -19,8 +20,11 @@ public final class MaterialWashingRules {
         }
     }
 
-    public static final List<Row> ROWS = List.of(
-            new Row(MaterialPrefix.crushed, MaterialPrefix.crushedPurified, MaterialPrefix.crushedPurifiedTiny, 2));
+    public static final List<Row> ROWS = List.of(new Row(
+            ExternalMaterialForms.WASHING_INPUT,
+            MaterialPrefix.crushedPurified,
+            MaterialPrefix.crushedPurifiedTiny,
+            2));
 
     public static Row row(MaterialPrefix prefix) {
         for (var row : ROWS) if (row.input() == prefix) return row;

@@ -7,6 +7,8 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.material.generated.WoodMaterials;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.ItemMaterialForm;
+import gregtech.engine.material.ItemMaterialForms;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.MaterialMass;
 import gregtech.engine.material.MaterialPublication;
@@ -22,6 +24,7 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -64,21 +67,23 @@ public final class MaterialReloadTests {
         int owned = SharedSpecialProcessRows.owned().size();
         int bath = MachineRecipeMaps.Bath.recipeRows.size();
         var previous = MaterialPublication.current();
+        var nativeForms = ItemMaterialForms.nativeAliases();
         var done = new AtomicBoolean();
         var failure = new AtomicReference<Throwable>();
         server.reloadResources(packs).thenCompose(ignored -> server.reloadResources(packs))
                 .whenComplete((ignored, error) -> { failure.set(error); done.set(true); });
-        await(helper, applications, owned, bath, previous, done, failure);
+        await(helper, applications, owned, bath, previous, nativeForms, done, failure);
     }
 
     private static void await(GameTestHelper helper, int applications, int owned, int bath,
-            MaterialPublication.Stamp previous, AtomicBoolean done, AtomicReference<Throwable> failure) {
+            MaterialPublication.Stamp previous, Map<ItemMaterialForm, List<Item>> nativeForms, AtomicBoolean done, AtomicReference<Throwable> failure) {
         if (!done.get()) {
-            helper.runAfterDelay(1, () -> await(helper, applications, owned, bath, previous, done, failure));
+            helper.runAfterDelay(1, () -> await(helper, applications, owned, bath, previous, nativeForms, done, failure));
             return;
         }
         if (failure.get() != null) { helper.fail("resource reload failed: " + failure.get()); return; }
         assertAddonProcessTags(helper);
+        helper.assertTrue(ItemMaterialForms.nativeAliases() == nativeForms, "reloads reuse the native form index");
         helper.assertTrue(MachineRecipeOverlay.applications() >= applications + 2, "both real overlays applied");
         helper.assertTrue(SharedSpecialProcessRows.owned().size() == owned, "special-process rows do not accumulate");
         helper.assertTrue(MachineRecipeMaps.Bath.recipeRows.size() == bath, "Bath recipe count remains stable");
@@ -88,9 +93,11 @@ public final class MaterialReloadTests {
         helper.assertTrue(current.compositionRevision() == ItemMaterialRegistry.compositionRevision(),
                 "stamp names the composition used by the overlay");
         var server = helper.getLevel().getServer();
+        var tagAliases = ItemMaterialForms.aliases();
         try {
             var failed = MachineRecipeOverlay.apply(null);
             helper.assertTrue(failed.failed(), "invalid overlay fails through the real recovery path");
+            helper.assertTrue(ItemMaterialForms.aliases() == tagAliases, "failed overlay restores tagged form aliases");
             helper.assertTrue(MaterialPublication.current() == current, "failed overlay preserves the prior stamp");
             helper.assertTrue(MachineRecipeMaps.Bath.recipeRows.size() == MachineRecipeMaps.Bath.baselineSize(),
                     "failure restores the Bath baseline instead of a partial overlay");

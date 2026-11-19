@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import gregtech.api.material.GTValues;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.data.generated.RecyclablePrefixes;
+import gregtech.content.material.ExternalMaterialForms;
 import gregtech.engine.machine.PipeSpec;
 import gregtech.engine.recipe.chem.MaterialAmount;
 import java.util.List;
@@ -133,12 +134,12 @@ final class FamilyRowTablesTest {
 
     @Test
     void externalTagFormsCoverVariableCommonMaterialShapes() {
-        var names = ExternalOreProcessingRules.TAGGED_MATERIAL_FORMS.stream()
+        var names = ExternalMaterialForms.TAGGED_MATERIAL_FORMS.stream()
                 .map(MaterialPrefix::getName)
                 .toList();
         assertTrue(names.containsAll(List.of("gearGt", "ring", "bolt", "screw", "foil")));
-        assertEquals("storage_blocks", ExternalOreProcessingRules.TAGGED_STORAGE_BLOCK_GROUP);
-        assertEquals("cables", ExternalOreProcessingRules.TAGGED_CABLE_GROUP);
+        assertEquals("storage_blocks", ExternalMaterialForms.TAGGED_STORAGE_BLOCK_GROUP);
+        assertEquals("cables", ExternalMaterialForms.TAGGED_CABLE_GROUP);
     }
 
     @Test
@@ -172,7 +173,7 @@ final class FamilyRowTablesTest {
                         && c.output().equals("nugget")
                         && c.inputCount() == 1
                         && c.outputCount() == 9));
-        assertTrue(ExternalOreProcessingRules.isCompositionForm(ExternalOreProcessingRules.TAGGED_ORE_FORM));
+        assertTrue(ExternalMaterialForms.isCompositionForm(ExternalMaterialForms.TAGGED_ORE_FORM));
     }
 
     @Test

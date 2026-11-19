@@ -11,25 +11,6 @@ import java.util.List;
 /** Loader_Recipes_Handlers external-prefix rows; RecipeMapHandlerPrefix:getCosts and Shredding targets. */
 public final class ExternalOreProcessingRules {
     private ExternalOreProcessingRules() {}
-    /** Foreign ore blocks are tags rather than a GT item prefix, but still participate in hand conversion. */
-    public static final String TAGGED_ORE_FORM = "ore";
-    /** Common groups without a one-to-one {@link MaterialPrefix} item identity. */
-    public static final String TAGGED_STORAGE_BLOCK_GROUP = "storage_blocks";
-
-    public static final String TAGGED_CABLE_GROUP = "cables";
-    /** Explicit external metadata forms; this list never registers GT-owned items. */
-    public static final List<MaterialPrefix> EXTERNAL_FORMS = List.of(
-            MaterialPrefix.rawOreChunk,
-            MaterialPrefix.chunk,
-            MaterialPrefix.rubble,
-            MaterialPrefix.pebbles,
-            MaterialPrefix.clump,
-            MaterialPrefix.reduced,
-            MaterialPrefix.crystalline,
-            MaterialPrefix.cleanGravel,
-            MaterialPrefix.cluster,
-            MaterialPrefix.dirtyGravel,
-            MaterialPrefix.crystal);
     /** RecipeMapCrucible:getNEIRecipes lists these eight external ore forms, not clump/crystal/rawOreChunk. */
     public static final List<MaterialPrefix> CRUCIBLE_FORMS = List.of(
             MaterialPrefix.chunk,
@@ -40,34 +21,6 @@ public final class ExternalOreProcessingRules {
             MaterialPrefix.dirtyGravel,
             MaterialPrefix.crystalline,
             MaterialPrefix.reduced);
-    /** Include tagged crushed ore so world listeners also recognize foreign items. */
-    public static final List<MaterialPrefix> COMPOSITION_FORMS = java.util.stream.Stream.concat(
-                    EXTERNAL_FORMS.stream(), MaterialWashingRules.ROWS.stream().map(MaterialWashingRules.Row::input))
-            .distinct()
-            .toList();
-    /** Common item forms other mods publish under forge/c tags with quantity-stable GT6 weights. */
-    public static final List<MaterialPrefix> TAGGED_MATERIAL_FORMS = List.of(
-            MaterialPrefix.ingot,
-            MaterialPrefix.nugget,
-            MaterialPrefix.gem,
-            MaterialPrefix.dust,
-            MaterialPrefix.dustSmall,
-            MaterialPrefix.dustTiny,
-            MaterialPrefix.plate,
-            MaterialPrefix.stick,
-            MaterialPrefix.gearGt,
-            MaterialPrefix.gearGtSmall,
-            MaterialPrefix.ring,
-            MaterialPrefix.bolt,
-            MaterialPrefix.screw,
-            MaterialPrefix.foil);
-
-    public static boolean isCompositionForm(String form) {
-        if (TAGGED_ORE_FORM.equals(form)) return true;
-        for (var prefix : COMPOSITION_FORMS) if (prefix.getName().equals(form)) return true;
-        for (var prefix : TAGGED_MATERIAL_FORMS) if (prefix.getName().equals(form)) return true;
-        return false;
-    }
 
     public record Route(String map, MaterialPrefix input, MaterialPrefix output, int count, long multiplier) {
         public long duration(int toolQuality) {

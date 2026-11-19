@@ -1,6 +1,10 @@
 /* Gregorius Techneticies / GregTech-6 Team source data, LGPL-3.0-or-later. */
 package gregtech.content.recipe;
 
+import static gregtech.engine.material.ItemMaterialForm.DENSE_ORES;
+import static gregtech.engine.material.ItemMaterialForm.STANDARD_ORES;
+
+import gregtech.engine.material.ItemMaterialForm;
 import java.util.*;
 
 /** Hand-transcribed from {@code Loader_Recipes_Handlers} and {@code OP}; no generator is kept. */
@@ -9,13 +13,7 @@ public final class OriginalFormConversions {
 
     public record Conversion(String input, int inputCount, String output, int outputCount, boolean single) {}
 
-    public record Form(String prefix, String material) {
-        public Form {
-            prefix = gregtech.engine.prefix.PrefixRegistry.sourceName(prefix);
-        }
-    }
-
-    public static final Form UNKNOWN = new Form("", "");
+    public static final ItemMaterialForm UNKNOWN = new ItemMaterialForm("", "");
     public static final List<Conversion> FIXED = List.of(
             new Conversion("oreRaw", 1, "gem", 1, true),
             new Conversion("oreRaw", 1, "rawOreChunk", 3, true),
@@ -77,67 +75,6 @@ public final class OriginalFormConversions {
             new Conversion("plateTiny", 9, "casingSmall", 2, false),
             new Conversion("plateGemTiny", 5, "casingSmall", 1, false),
             new Conversion("plateGemTiny", 9, "casingSmall", 2, false));
-    public static final Set<String> STANDARD_ORES = Set.of(
-            "ore",
-            "oreBlackgranite",
-            "oreRedgranite",
-            "oreVanillastone",
-            "oreVanillagranite",
-            "oreAndesite",
-            "oreDiorite",
-            "oreDeepslate",
-            "oreBlackstone",
-            "oreMoon",
-            "oreMars",
-            "oreSpace",
-            "orePhobos",
-            "oreDeimos",
-            "oreVenus",
-            "oreMercury",
-            "oreCeres",
-            "oreJupiter",
-            "oreIo",
-            "oreEuropa",
-            "oreGanymede",
-            "oreCallisto",
-            "oreSaturn",
-            "oreRhea",
-            "oreTitan",
-            "oreOberon",
-            "oreIapetus",
-            "oreUranus",
-            "oreTitania",
-            "oreNeptune",
-            "oreTriton",
-            "orePluto",
-            "oreEris",
-            "oreKepler22b",
-            "oreHolystone",
-            "oreLivingrock",
-            "oreDeadrock",
-            "oreBetweenstone",
-            "orePitstone",
-            "oreUmberstone",
-            "oreKomatiite",
-            "oreBasalt",
-            "oreMarble",
-            "oreLimestone",
-            "oreSiltstone",
-            "oreShale",
-            "oreSlate",
-            "oreGreenschist",
-            "oreBlueschist",
-            "orePinkschist",
-            "oreGrayschist",
-            "oreGneiss",
-            "oreLightprismarine",
-            "oreDarkprismarine",
-            "oreKimberlite",
-            "oreQuartzite",
-            "oreNetherrack",
-            "oreEndstone",
-            "oreSandstone");
-    public static final Set<String> DENSE_ORES = Set.of("oreNether", "oreDense", "oreEnd");
 
     public static FormConversionSelector selector(Conversion conversion) {
         if (!conversion.single()) return FormConversionSelector.NONE;
@@ -169,11 +106,16 @@ public final class OriginalFormConversions {
 
     /** The source constructors replace plain shaped/shapeless recipes; their output count is irrelevant. */
     public static boolean replaces(
-            List<Form> grid, int width, int height, boolean shapeless, boolean gtOwned, Form output) {
+            List<ItemMaterialForm> grid,
+            int width,
+            int height,
+            boolean shapeless,
+            boolean gtOwned,
+            ItemMaterialForm output) {
         if (gtOwned || output == null || output.material().isEmpty()) return false;
         var occupied = grid.stream().filter(Objects::nonNull).toList();
         if (occupied.isEmpty()) return false;
-        Form input = occupied.get(0);
+        ItemMaterialForm input = occupied.get(0);
         if (input.material().isEmpty()) return false;
         for (Conversion rule : RULES) {
             if (occupied.size() != rule.inputCount()

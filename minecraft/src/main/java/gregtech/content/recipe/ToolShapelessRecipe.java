@@ -4,6 +4,7 @@ package gregtech.content.recipe;
 //?} else {
 import com.google.gson.JsonObject;
 //?}
+import gregtech.engine.material.ItemMaterialForms;
 import gregtech.engine.stack.StackCompat;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.content.item.GTToolItem;
@@ -108,7 +109,7 @@ public final class ToolShapelessRecipe extends ShapelessRecipe implements gregte
             }
 //?}
             if (!stack.isEmpty() && !conversionInput.isEmpty()
-                    && !CraftingMaterialForms.matches(conversionInput, conversionMaterial, stack)) return false;
+                    && !ItemMaterialForms.matches(conversionInput, conversionMaterial, stack)) return false;
             if (requireEmptyFluidContainers && (gregtech.engine.material.ItemMaterialRegistry.hasStoredContents(stack)
                     || !StackCompat.fluidContained(stack).isEmpty())) return false;
             if (stack.getItem() instanceof GTToolItem && !GTToolHelper.isUsable(stack)) return false;

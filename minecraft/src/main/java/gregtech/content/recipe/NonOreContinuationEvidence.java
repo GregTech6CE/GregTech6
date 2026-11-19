@@ -43,7 +43,7 @@ public final class NonOreContinuationEvidence {
         Set<GTMaterial> defer = Collections.newSetFromMap(new IdentityHashMap<>());
         defer.addAll(startupSnapshot(reviewed).defer());
         Set<String> triggers = triggers();
-        for (var entry : CraftingMaterialForms.nativeAliases().entrySet()) {
+        for (var entry : ItemMaterialForms.aliases().entrySet()) {
             if (!triggers.contains(entry.getKey().prefix())) continue;
             GTMaterial material =
                     GTMaterialRegistry.get(entry.getKey().material()).resolve();

@@ -5,7 +5,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.content.recipe.MaterialWashingRules;
 import gregtech.content.data.MaterialPrefix;
-import gregtech.content.recipe.CraftingMaterialForms;
+import gregtech.engine.material.ItemMaterialForms;
 import gregtech.content.registry.GTItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -83,7 +83,7 @@ public final class MaterialWashingHandler {
     }
     private static ItemStack output(MaterialPrefix prefix, GTMaterial material) {
         var result = GTItems.getStack(prefix, material, 1);
-        return result.isEmpty() ? CraftingMaterialForms.stack(prefix.getName(), material, 1) : result;
+        return result.isEmpty() ? ItemMaterialForms.stack(prefix.getName(), material, 1) : result;
     }
     private static void drop(ServerLevel level, ItemEntity input, ItemStack output) {
         level.addFreshEntity(new ItemEntity(level, input.getX(), input.getY(), input.getZ(), output.copy()));

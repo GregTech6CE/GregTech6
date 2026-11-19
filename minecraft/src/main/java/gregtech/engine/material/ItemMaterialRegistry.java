@@ -21,8 +21,9 @@ public final class ItemMaterialRegistry {
     private static final Map<Item, List<ItemCompositionCandidate>> TAG_SUBMISSIONS = new IdentityHashMap<>();
     private static final AtomicLong COMPOSITION_REVISION = new AtomicLong();
     private static boolean tagInputReady;
-    private static boolean explicitClosed;
+    private static volatile boolean explicitClosed;
     private static long tagGeneration;
+    private static volatile ItemMaterialForms.TaggedIndex tagFormIndex;
 
     private static final Map<Item, ItemComposition> EFFECTIVE = new IdentityHashMap<>();
     private static final Map<Item, ItemComposition> EXPLICIT = new IdentityHashMap<>();
@@ -49,6 +50,7 @@ public final class ItemMaterialRegistry {
         private final long revision;
         private final long tagGeneration;
         private final boolean tagInputReady;
+        private final ItemMaterialForms.TaggedIndex tagFormIndex;
         private boolean restored;
 
         private TagGenerationCheckpoint(
@@ -57,13 +59,15 @@ public final class ItemMaterialRegistry {
                 Map<Item, ItemCompositionResolution> diagnostics,
                 long revision,
                 long tagGeneration,
-                boolean tagInputReady) {
+                boolean tagInputReady,
+                ItemMaterialForms.TaggedIndex tagFormIndex) {
             this.tagSubmissions = tagSubmissions;
             this.effective = effective;
             this.diagnostics = diagnostics;
             this.revision = revision;
             this.tagGeneration = tagGeneration;
             this.tagInputReady = tagInputReady;
+            this.tagFormIndex = tagFormIndex;
         }
     }
 
@@ -215,6 +219,7 @@ public final class ItemMaterialRegistry {
             }
             TAG_SUBMISSIONS.clear();
             TAG_SUBMISSIONS.putAll(staged);
+            tagFormIndex = null;
             tagInputReady = true;
             if (changed || readinessChanged) COMPOSITION_REVISION.incrementAndGet();
             refreshForms = changed || readinessChanged;
@@ -243,7 +248,9 @@ public final class ItemMaterialRegistry {
                     new IdentityHashMap<>(DIAGNOSTICS),
                     before,
                     tagGeneration,
-                    tagInputReady);
+                    tagInputReady,
+                    tagFormIndex);
+            tagFormIndex = null;
             TAG_SUBMISSIONS.clear();
             tagInputReady = false;
             tagGeneration++;
@@ -276,10 +283,27 @@ public final class ItemMaterialRegistry {
             COMPOSITION_REVISION.set(checkpoint.revision);
             tagGeneration = checkpoint.tagGeneration;
             tagInputReady = checkpoint.tagInputReady;
+            tagFormIndex = checkpoint.tagFormIndex;
             effectiveSnapshot = Map.of();
             effectiveSnapshotRevision = Long.MIN_VALUE;
         }
         MaterialFormContent.publish();
+    }
+
+    static ItemMaterialForms.TaggedIndex tagFormIndex() {
+        return tagFormIndex;
+    }
+
+    static void installTagFormIndex(CompositionState state, ItemMaterialForms.TaggedIndex index) {
+        synchronized (LOCK) {
+            if (tagInputReady
+                    && state.tagGeneration() == tagGeneration
+                    && state.revision() == COMPOSITION_REVISION.get()) tagFormIndex = index;
+        }
+    }
+
+    static boolean explicitClosed() {
+        return explicitClosed;
     }
 
     /** Candidate caches depend on the complete effective composition snapshot. */

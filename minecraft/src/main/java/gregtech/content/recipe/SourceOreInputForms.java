@@ -4,6 +4,7 @@ import gregtech.api.material.GTMaterial;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.addon.AddonMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
+import gregtech.engine.material.ItemMaterialForms;
 import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.MaterialEquivalence;
 import gregtech.engine.material.MaterialFormItem;
@@ -106,8 +107,7 @@ public final class SourceOreInputForms {
         }
         if (excluded) {
             // This branch runs only inside the after-tag ledger admission, never during initial OPL generation.
-            for (var entry : gregtech.content.recipe.CraftingMaterialForms.nativeAliases()
-                    .entrySet()) {
+            for (var entry : ItemMaterialForms.aliases().entrySet()) {
                 if (!entry.getKey().prefix().equals(prefix.getName())
                         || !entry.getKey().material().equals(name)) continue;
                 for (var item : entry.getValue()) {
@@ -127,7 +127,7 @@ public final class SourceOreInputForms {
                                     || explicit.material().resolve() != material
                                     || explicit.amount() != prefix.getMaterialWeight())) return canonical;
                     if (explicit == null && !(item instanceof MaterialFormItem)) {
-                        var tagged = gregtech.content.recipe.CraftingMaterialForms.taggedForms(stack);
+                        var tagged = ItemMaterialForms.taggedForms(stack);
                         if (tagged.size() != 1
                                 || !tagged.get(0).prefix().equals(prefix.getName())
                                 || !tagged.get(0).material().equals(name)) return canonical;
