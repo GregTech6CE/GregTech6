@@ -38,6 +38,8 @@ final class DynamicTextureSynthesis {
             if (templateStream == null) {
                 throw new IOException("Missing template texture on classpath: " + templateResource);
             }
+            // Identity entries have no remapping rules and stream the template bytes directly (bypassing mapAbgr's
+            // alpha == 0 normalization; any legacy pixel differences are confined to alpha == 0 transparent RGB).
             if (entry.ruleCount() == 0) {
                 return new ByteArrayInputStream(templateStream.readAllBytes());
             }

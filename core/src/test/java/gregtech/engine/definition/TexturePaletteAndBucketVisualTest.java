@@ -4,31 +4,39 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gregtech.content.data.FluidCatalog;
 import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.material.MaterialTestFixture;
 import gregtech.content.tool.WoodenBucketCatalog;
+import gregtech.engine.recipe.data.JsonMaps;
 import gregtech.engine.tool.WoodenBucketVisuals;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.zip.CRC32;
 import javax.imageio.ImageIO;
 import org.junit.jupiter.api.Test;
 
 /**
- * Verifies {@link TexturePaletteTable} rules, kept template PNGs, dead fluid exclusions, and
- * layered {@link WoodenBucketVisuals} integrity without Minecraft client dependencies.
+ * Verifies {@link TexturePaletteTable} rules, pixel CRC32 hashes against pre-compression outputs,
+ * model texture resolution, retired fluid exclusions, and layered {@link WoodenBucketVisuals}.
  */
 final class TexturePaletteAndBucketVisualTest {
+    private static final String HASH_RESOURCE = "/gregtech/texture-palette-hashes.tsv";
     private static final Set<String> RETIRED_FLUID_TEXTURES = Set.of(
             "beer",
             "binnie.juiceapricot",
@@ -118,6 +126,111 @@ final class TexturePaletteAndBucketVisualTest {
     }
 
     @Test
+    void allSynthesizedTexturesMatchBaselinePixelHashes() throws IOException {
+        TexturePaletteTable table = TexturePaletteTable.load();
+        Map<String, String> expected = new HashMap<>();
+        try (InputStream in = TexturePaletteAndBucketVisualTest.class.getResourceAsStream(HASH_RESOURCE)) {
+            assertNotNull(in, "Missing baseline hash table: " + HASH_RESOURCE);
+            for (String line : new String(in.readAllBytes(), StandardCharsets.UTF_8).split("\\R")) {
+                if (line.isEmpty() || line.startsWith("#")) continue;
+                String[] parts = line.split("\t");
+                assertEquals(3, parts.length, "Malformed hash row: " + line);
+                expected.put(parts[0], parts[1] + "\t" + parts[2]);
+            }
+        }
+        assertEquals(expected.size(), table.entries().size(), "Baseline hash count must match palette table");
+
+        Path assets = coreAssets();
+        Map<String, BufferedImage> templateCache = new HashMap<>();
+        for (var entry : table.entries()) {
+            BufferedImage tpl = templateCache.get(entry.templatePath());
+            if (tpl == null) {
+                try (InputStream in = Files.newInputStream(assets.resolve(entry.templatePath()))) {
+                    tpl = ImageIO.read(in);
+                }
+                assertNotNull(tpl);
+                templateCache.put(entry.templatePath(), tpl);
+            }
+            int w = tpl.getWidth();
+            int h = tpl.getHeight();
+            ByteBuffer buf = ByteBuffer.allocate(8 + w * h * 4);
+            buf.putInt(w).putInt(h);
+            for (int y = 0; y < h; y++) {
+                for (int x = 0; x < w; x++) {
+                    int argb = tpl.getRGB(x, y);
+                    int a = (argb >>> 24) & 0xFF;
+                    int r = (argb >>> 16) & 0xFF;
+                    int g = (argb >>> 8) & 0xFF;
+                    int b = argb & 0xFF;
+                    int abgr = (a << 24) | (b << 16) | (g << 8) | r;
+                    int mapped = entry.mapAbgr(abgr);
+                    if ((mapped >>> 24) == 0) mapped = 0;
+                    buf.putInt(mapped);
+                }
+            }
+            CRC32 crc = new CRC32();
+            crc.update(buf.array());
+            String actual = w + "x" + h + "\t" + String.format("%08x", crc.getValue());
+            assertEquals(expected.get(entry.assetPath()), actual, "Pixel hash mismatch for " + entry.assetPath());
+        }
+    }
+
+    @Test
+    void bottleCanAndFluidModelTexturesResolve() throws IOException {
+        TexturePaletteTable table = TexturePaletteTable.load();
+        Path assets = coreAssets();
+        try (var stream = Files.walk(assets.resolve("models"))) {
+            for (Path modelFile :
+                    stream.filter(p -> p.toString().endsWith(".json")).toList()) {
+                Map<String, Object> root = JsonMaps.object(Files.readString(modelFile, StandardCharsets.UTF_8));
+                Object texObj = root.get("textures");
+                if (!(texObj instanceof Map<?, ?> textures)) continue;
+                for (Object rawVal : textures.values()) {
+                    if (!(rawVal instanceof String val) || !val.startsWith("gt6ce:")) continue;
+                    String rel = val.substring("gt6ce:".length());
+                    if (rel.startsWith("item/bottles/")
+                            || rel.startsWith("item/cans/")
+                            || rel.startsWith("block/fluids/")) {
+                        String texPath = "textures/" + rel + ".png";
+                        assertTrue(
+                                Files.isRegularFile(assets.resolve(texPath)) || table.entry(texPath) != null,
+                                "Unresolved container/fluid texture " + texPath + " referenced in " + modelFile);
+                    }
+                }
+            }
+        }
+        for (String group : List.of(
+                "stack_groups/material_forms/functional_drinks.json",
+                "stack_groups/material_forms/functional_chemical_bottles.json")) {
+            Map<String, Object> root = JsonMaps.object(Files.readString(assets.resolve(group), StandardCharsets.UTF_8));
+            assertTrue(root.get("contents") instanceof List<?>);
+            for (Object itemObj : (List<?>) root.get("contents")) {
+                String id = ((String) itemObj).replace("item:gt6ce:", "");
+                assertTrue(
+                        Files.isRegularFile(assets.resolve("models/item/" + id + ".json")),
+                        "Missing item model for stack group entry " + id);
+            }
+        }
+    }
+
+    @Test
+    void texturePaletteTableParseSupportsAnyRowOrderAndRejectsBadHex() throws IOException {
+        String reversed = """
+                tex\ttextures/block/fluids/test.png\ttextures/block/fluids/steam.png\tm2\tff000000:ff112233
+                mcmeta\tm2\t{"animation":{"frametime":2}}
+                """;
+        TexturePaletteTable parsed =
+                TexturePaletteTable.parse(new ByteArrayInputStream(reversed.getBytes(StandardCharsets.UTF_8)));
+        assertNotNull(parsed.mcmetaBytes("textures/block/fluids/test.png.mcmeta"));
+        assertEquals(0xFF112233, parsed.entry("textures/block/fluids/test.png").mapAbgr(0xFF000000));
+
+        String badHex = "tex\ttextures/block/fluids/bad.png\ttextures/block/fluids/steam.png\t-\tzzzzzzzz:ff000000\n";
+        assertThrows(
+                IOException.class,
+                () -> TexturePaletteTable.parse(new ByteArrayInputStream(badHex.getBytes(StandardCharsets.UTF_8))));
+    }
+
+    @Test
     void retiredFluidTexturesDoNotMatchRegisteredFluids() {
         MaterialTestFixture.ensureInitialized();
         FluidDefinitions.prepare();
@@ -161,6 +274,12 @@ final class TexturePaletteAndBucketVisualTest {
             assertNotEquals(
                     0xFFFFFF, bandColor, "Bucket band material must resolve a concrete non-white color: " + band.id());
             for (var content : WoodenBucketCatalog.CONTENTS) {
+                if (!content.empty() && !"rainbow_sap".equals(content.id())) {
+                    assertNotEquals(
+                            0xFFFFFF,
+                            WoodenBucketVisuals.liquidRgb(content),
+                            "Filled wooden bucket content must define an explicit non-white tint: " + content.id());
+                }
                 String id = WoodenBucketCatalog.itemId(band, content);
                 Path staticModel = assets.resolve("models/item/" + id + ".json");
                 assertFalse(
@@ -175,6 +294,7 @@ final class TexturePaletteAndBucketVisualTest {
                     assertEquals(0xFFFFFF, WoodenBucketVisuals.tintRgb(band, content, 2));
                 } else {
                     assertTrue(json.contains("\"layer2\":\"" + WoodenBucketVisuals.LIQUID_OVERLAY_TEXTURE + "\""));
+                    assertEquals(content.liquidRgb(), WoodenBucketVisuals.tintRgb(band, content, 2));
                 }
                 assertEquals(0xFFFFFF, WoodenBucketVisuals.tintRgb(band, content, 0));
                 assertEquals(bandColor, WoodenBucketVisuals.tintRgb(band, content, 1));

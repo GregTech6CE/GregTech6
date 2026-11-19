@@ -43,22 +43,10 @@ public final class WoodenBucketVisuals {
     }
 
     /**
-     * Representative flat RGB tint per bucket liquid, sampled from the legacy pre-baked bucket sprites.
+     * Representative flat RGB tint per bucket liquid, stored on {@link WoodenBucketCatalog.Content}.
      */
     public static int liquidRgb(WoodenBucketCatalog.Content content) {
-        return switch (content.id()) {
-            case "water" -> 0x4174FF;
-            case "milk", "spoiled_milk" -> 0xFCFDFD;
-            case "latex", "rubber_sap" -> 0xDADADA;
-            case "creosote" -> 0xCAB823;
-            case "spruce_resin" -> 0xFFF2B1;
-            case "honey" -> 0xF4D229;
-            case "lubricant" -> 0xDFD18F;
-            case "maple_sap" -> 0xD00000;
-            case "glue" -> 0xFFC084;
-            case "seed_oil" -> 0xE8E8D5;
-            default -> 0xFFFFFF;
-        };
+        return content.liquidRgb();
     }
 
     /**

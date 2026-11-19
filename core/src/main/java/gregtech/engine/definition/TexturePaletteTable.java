@@ -7,10 +7,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import org.jspecify.annotations.Nullable;
 
@@ -44,14 +46,9 @@ public final class TexturePaletteTable {
             if (current != null) return current;
             try (InputStream stream = TexturePaletteTable.class.getResourceAsStream(RESOURCE_PATH)) {
                 if (stream == null) {
-                    System.getLogger("gt6ce.resources")
-                            .log(
-                                    System.Logger.Level.WARNING,
-                                    "Missing dynamic palette table resource: " + RESOURCE_PATH);
-                    current = new TexturePaletteTable(Map.of(), Map.of(), Map.of());
-                } else {
-                    current = parse(stream);
+                    throw new IOException("Missing dynamic palette table resource: " + RESOURCE_PATH);
                 }
+                current = parse(stream);
             } catch (IOException e) {
                 throw new UncheckedIOException("Failed to load " + RESOURCE_PATH, e);
             }
@@ -61,9 +58,15 @@ public final class TexturePaletteTable {
     }
 
     public static TexturePaletteTable parse(InputStream stream) throws IOException {
+        record PendingRow(
+                int lineNo,
+                String target,
+                String template,
+                @Nullable String mcmetaId,
+                String pairsSpec) {}
+
         Map<String, byte[]> presets = new LinkedHashMap<>();
-        Map<String, Entry> entries = new LinkedHashMap<>();
-        Map<String, byte[]> mcmetaByPath = new LinkedHashMap<>();
+        List<PendingRow> rows = new ArrayList<>();
         try (var reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))) {
             String line;
             int lineNo = 0;
@@ -81,23 +84,26 @@ public final class TexturePaletteTable {
                     if (parts.length != 5) {
                         throw new IOException("Malformed tex row at line " + lineNo);
                     }
-                    String target = parts[1];
-                    String template = parts[2];
                     String mcmetaId = "-".equals(parts[3]) ? null : parts[3];
-                    Entry entry = Entry.create(target, template, mcmetaId, parts[4]);
-                    if (entries.putIfAbsent(target, entry) != null) {
-                        throw new IOException("Duplicate dynamic texture path at line " + lineNo + ": " + target);
-                    }
-                    if (mcmetaId != null) {
-                        byte[] preset = presets.get(mcmetaId);
-                        if (preset == null) {
-                            throw new IOException("Unknown mcmeta preset at line " + lineNo + ": " + mcmetaId);
-                        }
-                        mcmetaByPath.put(target + ".mcmeta", preset);
-                    }
+                    rows.add(new PendingRow(lineNo, parts[1], parts[2], mcmetaId, parts[4]));
                 } else {
                     throw new IOException("Unknown row kind at line " + lineNo + ": " + kind);
                 }
+            }
+        }
+        Map<String, Entry> entries = new LinkedHashMap<>(rows.size() * 2);
+        Map<String, byte[]> mcmetaByPath = new LinkedHashMap<>();
+        for (PendingRow row : rows) {
+            Entry entry = Entry.create(row.target(), row.template(), row.mcmetaId(), row.pairsSpec());
+            if (entries.putIfAbsent(row.target(), entry) != null) {
+                throw new IOException("Duplicate dynamic texture path at line " + row.lineNo() + ": " + row.target());
+            }
+            if (row.mcmetaId() != null) {
+                byte[] preset = presets.get(row.mcmetaId());
+                if (preset == null) {
+                    throw new IOException("Unknown mcmeta preset at line " + row.lineNo() + ": " + row.mcmetaId());
+                }
+                mcmetaByPath.put(row.target() + ".mcmeta", preset);
             }
         }
         return new TexturePaletteTable(entries, presets, mcmetaByPath);
@@ -216,6 +222,7 @@ public final class TexturePaletteTable {
         }
 
         public int mapAbgr(int abgr) {
+            // Unify all alpha == 0 pixels to canonical 0 (transparent).
             if ((abgr & 0xFF000000) == 0) return 0;
             if (ruleCount == 0) return abgr;
             int slot = mix(abgr) & mask;
