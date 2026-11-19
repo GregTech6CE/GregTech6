@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "gt6ce:block/machines/covers/buttonselector/underlay",
-    "layer1": "gt6ce:block/machines/covers/buttonselector/0",
-    "particle": "gt6ce:block/machines/covers/buttonselector/underlay"
-  }
-}

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gt6ce:block/stones/gt.stone.quartzite/tiles",
-    "top": "gt6ce:block/stones/gt.stone.quartzite/tiles",
-    "side": "gt6ce:block/stones/gt.stone.quartzite/tiles"
-  }
-}

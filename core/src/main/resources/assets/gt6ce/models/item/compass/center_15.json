@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "gt6ce:item/randomtools/compass_center",
-    "layer1": "gt6ce:item/iconsets/compass_nnw"
-  }
-}

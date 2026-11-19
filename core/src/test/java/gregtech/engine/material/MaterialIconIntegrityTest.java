@@ -15,7 +15,9 @@ import gregtech.content.material.Materials;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.BlockMaterialPrefix;
 import gregtech.engine.prefix.BlockPrefixRegistry;
+import gregtech.engine.resource.VirtualModelCatalog;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -439,8 +441,8 @@ class MaterialIconIntegrityTest {
     }
 
     /**
-     * Sprite ids the static models name directly, so a file an ancestor also ships cannot simply be
-     * dropped: the model would point at art nothing mounts.
+     * Sprite ids that static or virtual models name directly, so a file an ancestor also ships
+     * cannot simply be dropped: the model would point at art nothing mounts.
      */
     private static Set<String> staticMaterialIconReferences() throws IOException {
         Set<String> references = new LinkedHashSet<>();
@@ -452,14 +454,21 @@ class MaterialIconIntegrityTest {
             try (Stream<Path> entries = Files.walk(root)) {
                 for (Path path :
                         (Iterable<Path>) entries.filter(file -> file.toString().endsWith(".json"))::iterator) {
-                    Matcher matcher = STATIC_ICON_REFERENCE.matcher(Files.readString(path));
-                    while (matcher.find()) {
-                        references.add(matcher.group(1) + "/" + matcher.group(2) + "/" + matcher.group(3));
-                    }
+                    collectMaterialIconReferences(Files.readString(path), references);
                 }
             }
         }
+        VirtualModelCatalog.emitAll(
+                "neoforge:composite",
+                (path, bytes) -> collectMaterialIconReferences(new String(bytes, StandardCharsets.UTF_8), references));
         return references;
+    }
+
+    private static void collectMaterialIconReferences(String json, Set<String> references) {
+        Matcher matcher = STATIC_ICON_REFERENCE.matcher(json);
+        while (matcher.find()) {
+            references.add(matcher.group(1) + "/" + matcher.group(2) + "/" + matcher.group(3));
+        }
     }
 
     /**

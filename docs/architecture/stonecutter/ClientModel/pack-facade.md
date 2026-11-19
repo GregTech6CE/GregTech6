@@ -53,7 +53,7 @@ public static void registerGeometryLoader(ModelEvent.RegisterGeometryLoaders eve
 }
 ```
 
-pack 类的构造分支仍保留在 `SharedInventoryModelPack`，因为它继承加载器专属的 `AbstractPackResources`；工厂和 key 差异收进门面。
+pack 类的构造分支及运行期虚拟模型所需的复合加载器标识（`forge:composite` / `neoforge:composite`，经 `COMPOSITE_LOADER` 提供给 `VirtualModelCatalog` 与 `ProceduralModels`）留在 `SharedInventoryModelPack`，因为它继承加载器专属的 `AbstractPackResources`；工厂和 geometry loader key 差异收进门面。
 
 ### 为什么这么修复
 

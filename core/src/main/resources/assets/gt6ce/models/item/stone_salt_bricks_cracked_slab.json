@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gt6ce:block/stones/gt.stone.salt/bricks_cracked",
-    "top": "gt6ce:block/stones/gt.stone.salt/bricks_cracked",
-    "side": "gt6ce:block/stones/gt.stone.salt/bricks_cracked"
-  }
-}

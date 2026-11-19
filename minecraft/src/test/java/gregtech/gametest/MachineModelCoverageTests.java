@@ -139,14 +139,14 @@ public final class MachineModelCoverageTests {
         helper.assertTrue(
                 blocks.contains(GTMultiblocks.COKE_OVEN_MAIN.get()),
                 "The coke-oven controller is a basic machine registered with the multiblocks");
-        for (String asset : new String[] {
-            "/assets/gt6ce/blockstates/cryo_distillation_main.json",
-            "/assets/gt6ce/models/item/cryo_distillation_main.json"
-        }) {
-            helper.assertTrue(
-                    MachineModelCoverageTests.class.getResource(asset) != null,
-                    "The cryogenic distillation controller keeps its static model: " + asset);
-        }
+        helper.assertTrue(
+                gregtech.engine.resource.VirtualBlockstateCatalog.renderJson("cryo_distillation_main") != null,
+                "The cryogenic distillation controller must resolve a virtual blockstate");
+        helper.assertTrue(
+                gregtech.engine.resource.VirtualModelCatalog.renderJson(
+                                "item/cryo_distillation_main", compositeLoader())
+                        != null,
+                "The cryogenic distillation controller must resolve a virtual item model");
         System.out.println("MACHINE_MODEL_COVERAGE basics=" + basics + " boxes=" + boxes + " nodes=" + nodes);
         helper.succeed();
     }
@@ -263,13 +263,25 @@ public final class MachineModelCoverageTests {
         return blocks;
     }
 
-    /** The block item's static model JSON, or null when the block ships none in this pack. */
+    /** The block item's model JSON (static or virtual), or null when the block ships none in this pack. */
     private static String itemModelJson(Block block) {
-        String path = "/assets/gt6ce/models/item/" + BuiltInRegistries.BLOCK.getKey(block).getPath() + ".json";
+        String modelPath = "item/" + BuiltInRegistries.BLOCK.getKey(block).getPath();
+        String path = "/assets/gt6ce/models/" + modelPath + ".json";
         try (InputStream stream = MachineModelCoverageTests.class.getResourceAsStream(path)) {
-            return stream == null ? null : new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+            if (stream != null) {
+                return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+            }
         } catch (IOException e) {
             throw new AssertionError("Cannot read " + path, e);
         }
+        return gregtech.engine.resource.VirtualModelCatalog.renderJson(modelPath, compositeLoader());
+    }
+
+    private static String compositeLoader() {
+//? if >=1.21.1 {
+        /*return "neoforge:composite";
+*///?} else {
+        return "forge:composite";
+//?}
     }
 }

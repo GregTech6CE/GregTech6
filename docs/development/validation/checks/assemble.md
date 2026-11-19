@@ -44,9 +44,9 @@
 资源 JAR 检查：
 
 ```bash
-python tools/resources/check_compact_model_json.py <发行JAR> --resources core/build/resources/main minecraft/versions/<node>/build/resources/main
+python tools/resources/check_packaged_resources.py <发行JAR> --resources core/build/resources/main minecraft/versions/<node>/build/resources/main
 python tools/resources/check_png_metadata.py <发行JAR> --strict
 python tools/resources/check_png_metadata.py core/build/resources/main minecraft/versions/<node>/build/resources/main --strict
 ```
 
-`processResources` 复制贴图时剥离元数据块，`build/resources/main` 与发行 JAR 因此只含 `IHDR`、`PLTE`、`tRNS`、`IDAT`、`IEND`，两者逐字节相同且都不等于提交树中的原始贴图；`check_compact_model_json.py` 比较的正是这两份处理后产物。`-PdirectCoreResources=true` 跳过 core 的 `processResources`，该优化下没有块过滤，只能用于本地运行，不能作为打包验收依据。审计工具的参数与判定见 [发行资源检查](../../../../tools/resources/README.md)。
+`processResources` 复制贴图时剥离元数据块，`build/resources/main` 与发行 JAR 因此只含 `IHDR`、`PLTE`、`tRNS`、`IDAT`、`IEND`，两者逐字节相同且都不等于提交树中的原始贴图；`check_packaged_resources.py` 校验两者在静态模型、静态方块状态、顶层 TSV 表与 PNG 贴图上的逐字节一致性，确认包内不含已退役模板索引与运行期 `stack_groups/`，且静态模型与方块状态总数不超过预算（默认 450）。`-PdirectCoreResources=true` 跳过 core 的 `processResources`，该优化下没有块过滤，只能用于本地运行，不能作为打包验收依据。审计工具的参数与判定见 [发行资源检查](../../../../tools/resources/README.md)。

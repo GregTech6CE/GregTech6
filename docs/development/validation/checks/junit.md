@@ -36,7 +36,7 @@ issue  source  kind  target  expected
 - `:minecraft:<node>:test` 存在，但 GameTest 没有接入该任务；运行时行为必须使用 [gametest](gametest.md) 的 `runGameTestServer`。
 - core JUnit 随 `:core:check` 生命周期执行。
 - 配方根目录由 `core/build.gradle` 的 `gt6ce.recipeRoot` 系统属性提供；从 IDE 直接运行时回退到 `core/src/main/resources/data/gt6ce/recipes`。
-- 材料、机器与动态贴图资源完整性测试（`MaterialIconIntegrityTest`、`MachineModelIntegrityTest`、`TexturePaletteAndBucketVisualTest`）由 `core/build.gradle` 的 `gt6ce.coreAssets`、`gt6ce.minecraftAssets`、`gt6ce.forgeAssets`、`gt6ce.neoforgeAssets` 系统属性提供各模块资产目录。
+- 材料、机器、虚拟资源目录与动态贴图资源完整性测试（`MaterialIconIntegrityTest`、`MachineModelIntegrityTest`、`VirtualResourcesIntegrityTest`、`TexturePaletteAndBucketVisualTest`）由 `core/build.gradle` 的 `gt6ce.coreAssets`、`gt6ce.minecraftAssets`、`gt6ce.forgeAssets`、`gt6ce.neoforgeAssets` 系统属性提供各模块资产目录。
 - 不为通过而放宽断言、跳过测试或把测试改为空实现。
 
 ## 运行命令

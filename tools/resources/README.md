@@ -2,25 +2,25 @@
 
 本目录提供发行包资源完整性检查脚本，均使用 Python 3 标准库只读运行。
 
-## check_compact_model_json.py
+## check_packaged_resources.py
 
-核对模板化模型、方块状态 JSON 与 PNG 资源在发行 JAR 中的语义和字节一致性。
+核对发行 JAR 与处理后资源目录在静态模型、方块状态 JSON、顶层 TSV 表与 PNG 资源上的完整性和字节一致性。
 
 输入是当前构建的发行 JAR，以及同一次构建的 core 和平台资源输出目录。先完成对应平台的发行构建，再在仓库根目录执行，例如：
 
 ```powershell
-python tools/resources/check_compact_model_json.py minecraft/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-<version>.jar --resources core/build/resources/main minecraft/versions/1.21.1-neoforge/build/resources/main
+python tools/resources/check_packaged_resources.py minecraft/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-<version>.jar --resources core/build/resources/main minecraft/versions/1.21.1-neoforge/build/resources/main
 ```
 
-按当前版本号调整 JAR 文件名。Forge 使用 `distributionJar` 的 `build/libs` 产物，不使用中间 JAR。
+按当前版本号调整 JAR 文件名。Forge 使用 `distributionJar` 的 `build/libs` 产物，不使用中间 JAR；可通过 `--max-static-json` 调整静态模型与方块状态总数上限（默认 `450`）。
 
 检查内容：
 
-- 模板生成的模型和方块状态 JSON 与打包前定义语义一致。
-- 静态保留的 JSON 路径不变，全部 PNG 与 `build/resources/main` 中的处理后字节一致。
-- 模板索引没有重复路径、参数数量错误或资源缺失。
+- 包内不存在已退役的 `META-INF/gt6ce/model-json-aliases.json`，无重复 ZIP 条目或空目录条目。
+- 处理后资源目录与发行 JAR 均不携带 `assets/gt6ce/stack_groups/` 静态 JSON（改由运行期从 `stack_groups.tsv` 延迟提供）。
+- 静态模型、静态方块状态、`assets/gt6ce/` 顶层 `.tsv` 表（`model_definitions.tsv`、`blockstate_definitions.tsv`、`stack_groups.tsv`、`machine_models.tsv`、`texture_palettes.tsv` 等）与全部 PNG 与 `build/resources/main` 逐字节一致，跨输入根无重复声明，且静态模型与方块状态总数不超过 `--max-static-json`。
 
-PNG 比较的是处理后产物：`processResources` 在复制时剥离贴图元数据块，JAR 与 `build/resources/main` 因此逐字节相同，两者都不同于提交树里的原始贴图。成功时输出资源数量、JAR 大小和粗略节省量；不匹配时以非零退出码结束。节省量不包含 ZIP 写入器特有的附加字段，不能作为精确构建前后差值。
+PNG 比较的是处理后产物：`processResources` 在复制时剥离贴图元数据块，JAR 与 `build/resources/main` 因此逐字节相同，两者都不同于提交树里的原始贴图。成功时输出 JAR 大小、条目数及各类资源数量；不匹配时以非零退出码结束。
 
 ## check_png_metadata.py
 

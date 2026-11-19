@@ -9,12 +9,18 @@ import gregtech.content.item.CreativeTabIconItem;
 import gregtech.content.registry.AddonPipeRegistration;
 import gregtech.content.registry.GTAxles;
 import gregtech.content.registry.GTFluidPipes;
+import gregtech.content.registry.GTHoppers;
 import gregtech.content.registry.GTItemPipes;
 import gregtech.content.registry.GTSignalWires;
+import gregtech.content.registry.GTSmeltery;
 import gregtech.content.registry.GTWires;
+import gregtech.content.registry.RegisteredBlock;
 import gregtech.engine.machine.OrthogonalMachineModels;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.resource.StackGroupCatalog;
+import gregtech.engine.resource.VirtualBlockstateCatalog;
+import gregtech.engine.resource.VirtualModelCatalog;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.core.Direction;
@@ -46,18 +52,25 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * Virtual client pack: the item references, layered wooden-bucket models, shared material models,
- * machine blockstates, machine item models, and palette-synthesized container/fluid sprites (with
- * their {@code .mcmeta}) are served at runtime instead of shipped as redundant static files.
+ * machine blockstates, machine item models, virtual model and blockstate catalogs, stack-group
+ * definitions, and palette-synthesized container/fluid sprites (with their {@code .mcmeta}) are
+ * served at runtime instead of shipped as redundant static files.
  *
  * <p>The pack is hidden and sits at the bottom position, so an installed resource pack overrides any
  * file it serves, blockstates, table row models, item models and textures included. Machine geometry
  * comes from {@code machine_models.tsv} through {@link OrthogonalMachineModelLoader}, whose loader
  * delegates to ModelBaker's existing cache instead of baking 56,000 copies.
+ *
+ * <p>Stack-group definitions live in their own lazily built map: a creative-tab probe reads only
+ * {@code stack_groups/} and never materializes the model tree, and the model tree never rebuilds the
+ * group definitions.
  *
  * <p>Material icons are resolved against the packs the resource manager currently mounts, so an
  * external icon set is honoured by the first bake rather than after the next reload.
@@ -77,7 +90,13 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     /** Material sprites, relative to {@code assets/<namespace>/}. */
     private static final String[] MATERIAL_ICON_DIRECTORIES = {
             "textures/item/material_icons", "textures/block/material_icons"};
+//? if >=1.21.1 {
+    /*private static final String COMPOSITE_LOADER = "neoforge:composite";
+*///?} else {
+    private static final String COMPOSITE_LOADER = "forge:composite";
+//?}
     private Map<ResourceLocation, byte[]> resources;
+    private Map<ResourceLocation, byte[]> stackGroups;
     private Set<String> namespaces;
 
     /** Internal model references remain loaded without appearing as a user-selectable pack. */
@@ -123,6 +142,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                 || directory.startsWith("models/")
                 || "blockstates".equals(directory)
                 || directory.startsWith("blockstates/")
+                || "stack_groups".equals(directory)
+                || directory.startsWith("stack_groups/")
                 || "textures".equals(directory)
                 || directory.startsWith("textures/");
     }
@@ -139,6 +160,18 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             else BUILD_DEPTH.set(depth);
         }
         return resources;
+    }
+
+    /**
+     * Creative-tab stack definitions, built on first use. Kept apart from {@link #data()} so a tab
+     * listing never materializes the model tree and a model request never rebuilds the definitions.
+     */
+    private synchronized Map<ResourceLocation, byte[]> stackGroups() {
+        if (stackGroups != null) return stackGroups;
+        Map<ResourceLocation, byte[]> groups = new HashMap<>();
+        StackGroupCatalog.buildAllResources().forEach((path, bytes) -> groups.put(location(path), bytes));
+        stackGroups = Collections.unmodifiableMap(groups);
+        return stackGroups;
     }
 
     private Map<ResourceLocation, byte[]> buildResources() {
@@ -197,8 +230,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             boolean fluidDisplay = item instanceof gregtech.content.item.FluidItem;
 //?}
             if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE) && !materialForm && !fluidDisplay) continue;
-            if (JsonResourceAliases.contains("/assets/" + id.getNamespace()
-                    + "/models/item/" + id.getPath() + ".json")) continue;
+            if (staticOrVirtualItemModel(id)) continue;
             ResourceLocation parent = null;
             if (item instanceof gregtech.engine.material.MaterialFormItem material) {
                 parent = MaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.getMaterial()), material.getPrefix());
@@ -234,8 +266,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                     MaterialIconDefinitions.sharedInventoryJson(key.toString()).getBytes(StandardCharsets.UTF_8));
             result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), json);
         }
-        // Registration gained material forms after the original static data generation.
-        // Supply only absent states, using the same real template as the existing alias hook.
+        // Material blocks without a static blockstate get one generated from the same template
+        // their shared model uses.
         int states = 0;
         for (var block : BuiltInRegistries.BLOCK) {
             if (!(block instanceof MaterialBlockLike material)) continue;
@@ -243,7 +275,9 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
             if (!id.getNamespace().equals(gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE)) continue;
             String statePath = "blockstates/" + id.getPath() + ".json";
-            if (JsonResourceAliases.contains("/assets/gt6ce/" + statePath) || result.containsKey(location(statePath))) continue;
+            if (VirtualBlockstateCatalog.contains(id.getPath())
+                    || staticResourceExists("/assets/" + GregTechIdentity.REGISTRY_NAMESPACE + "/" + statePath)
+                    || result.containsKey(location(statePath))) continue;
             ResourceLocation parent = block instanceof OreBlock
                     ? STONE_TEMPLATE
                     : BlockMaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.material()), material.prefix());
@@ -252,26 +286,41 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             result.put(location(statePath), json);
             states++;
         }
-        // Keep aliases at the same low priority as the original mod assets. Each path
-        // serves its original bytes, so a user pack can override aliases independently.
-        JsonResourceAliases.resources().forEach((path, bytes) ->
-                result.put(location(path.substring("/assets/gt6ce/".length())), bytes));
-        // Spec models come last: a row is the generated replacement for the static file the
-        // aliases above still carry, so the generated one has to win inside this pack.
+        // Catalogs follow the generated item and blockstate passes at the same low priority as the
+        // assets they replace, so a user pack can still override any single path.
+        int virtualModels =
+                emitVirtual(result, "models", sink -> VirtualModelCatalog.emitAll(COMPOSITE_LOADER, sink));
+        int virtualBlockstates = emitVirtual(result, "blockstates", VirtualBlockstateCatalog::emitAll);
+        // Spec models come last: a row is the generated replacement for the catalog model above, so
+        // the generated one has to win inside this pack.
         int specs = emitMachineModelSpecs(result);
-        // Emitted after the aliases so a generated template can never shadow a transport placeholder.
-        int beforePlaceholders = result.size();
-        emitTransportPlaceholders(result);
-        int placeholders = result.size() - beforePlaceholders;
+        // Emitted after the catalogs so a generated template can never shadow a placeholder.
+        Placeholder placeholders = Placeholder.stone();
+        int transportPlaceholders = emitTransportPlaceholders(result, placeholders);
+        int smelteryPlaceholders = emitSmelteryAndHopperPlaceholders(result, placeholders);
         int machines = emitMachineBlockstatesAndItems(result);
         com.mojang.logging.LogUtils.getLogger()
                 .info("[gregtech] Shared inventory resources: {} files, {} templates, {} shared material models,"
                         + " {} smeltery hull models, {} metal bookshelf models,"
+                        + " {} virtual models, {} virtual blockstates,"
                         + " {} missing static blockstates, {} machine model specs, {} machines,"
-                        + " {} transport placeholders",
+                        + " {} transport placeholders, {} smeltery and hopper placeholders",
                         result.size(), references.size(), sharedModels, smelteryModels, metalBookshelves,
-                        states, specs, machines, placeholders);
+                        virtualModels, virtualBlockstates,
+                        states, specs, machines, transportPlaceholders, smelteryPlaceholders);
         return Collections.unmodifiableMap(result);
+    }
+
+    /**
+     * Copies a virtual catalog into the pack under {@code directory}, returning how many files it
+     * contributed. Catalog paths are relative to that directory and carry no extension.
+     */
+    private static int emitVirtual(Map<ResourceLocation, byte[]> result, String directory,
+                                   Consumer<BiConsumer<String, byte[]>> catalog) {
+        Map<ResourceLocation, byte[]> files = new HashMap<>();
+        catalog.accept((path, bytes) -> files.put(location(directory + "/" + path + ".json"), bytes));
+        result.putAll(files);
+        return files.size();
     }
 
     /**
@@ -446,15 +495,29 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         return icons;
     }
 
-    /** A model reference resolves when this pack serves it, as an alias, or as vanilla stone. */
+    /** A model reference resolves when this pack serves it, as a catalog model, or as vanilla stone. */
     private static boolean hasTemplate(
             Map<ResourceLocation, byte[]> result, Map<ResourceLocation, Boolean> aliases, ResourceLocation parent) {
         if (parent.equals(STONE_TEMPLATE)) return true;
         if (result.containsKey(named(parent.getNamespace(), "models/" + parent.getPath() + ".json"))) return true;
         return aliases.computeIfAbsent(
                 parent,
-                key -> JsonResourceAliases.contains(
-                        "/assets/" + key.getNamespace() + "/models/" + key.getPath() + ".json"));
+                key -> (GregTechIdentity.REGISTRY_NAMESPACE.equals(key.getNamespace())
+                                && VirtualModelCatalog.contains(key.getPath()))
+                        || staticResourceExists(
+                                "/assets/" + key.getNamespace() + "/models/" + key.getPath() + ".json"));
+    }
+
+    /** An item model this pack serves, either from the virtual catalog or as a static classpath file. */
+    private static boolean staticOrVirtualItemModel(ResourceLocation id) {
+        return (GregTechIdentity.REGISTRY_NAMESPACE.equals(id.getNamespace())
+                        && VirtualModelCatalog.contains("item/" + id.getPath()))
+                || staticResourceExists("/assets/" + id.getNamespace() + "/models/item/" + id.getPath() + ".json");
+    }
+
+    /** Whether the classpath carries a static resource at {@code absolutePath}. */
+    private static boolean staticResourceExists(String absolutePath) {
+        return SharedInventoryModelPack.class.getResource(absolutePath) != null;
     }
 
     private static void emitStructureParts(Map<ResourceLocation, byte[]> result) {
@@ -534,32 +597,65 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         }
     }
 
+    /** The stone blockstate and item JSON every generated-geometry block resolves to. */
+    private record Placeholder(byte[] blockstate, byte[] item) {
+        static Placeholder stone() {
+            return new Placeholder(
+                    ("{\"variants\":{\"\":{\"model\":\"" + STONE_TEMPLATE + "\"}}}").getBytes(StandardCharsets.UTF_8),
+                    ("{\"parent\":\"" + STONE_TEMPLATE + "\"}").getBytes(StandardCharsets.UTF_8));
+        }
+    }
+
     /**
      * Transport blocks, wires, cables and axles are baked into generated geometry, so their static
      * blockstate and inventory JSON only has to hand the bakery a loaded model. The stone template is
      * already registered as a shared model and needs no per-block file on disk.
      */
-    private static void emitTransportPlaceholders(Map<ResourceLocation, byte[]> result) {
-        byte[] blockstate = ("{\"variants\":{\"\":{\"model\":\"" + STONE_TEMPLATE + "\"}}}")
-                .getBytes(StandardCharsets.UTF_8);
-        byte[] item = ("{\"parent\":\"" + STONE_TEMPLATE + "\"}").getBytes(StandardCharsets.UTF_8);
-        for (var entry : GTFluidPipes.all()) {
-            if (entry.isPresent()) emitPlaceholder(result, entry.get(), blockstate, item);
+    private static int emitTransportPlaceholders(Map<ResourceLocation, byte[]> result, Placeholder placeholders) {
+        int emitted = emitPlaceholders(result, GTFluidPipes.all(), placeholders);
+        emitted += emitPlaceholders(result, AddonPipeRegistration.fluidBlocks(), placeholders);
+        emitted += emitPlaceholders(result, GTItemPipes.all(), placeholders);
+        emitted += emitPlaceholders(result, AddonPipeRegistration.itemBlocks(), placeholders);
+        emitted += emitPlaceholders(result, GTWires.all(), placeholders);
+        emitted += emitPlaceholders(result, GTSignalWires.all(), placeholders);
+        emitted += emitPlaceholders(result, GTAxles.all(), placeholders);
+        return emitted;
+    }
+
+    /**
+     * Smeltery hulls, molds and hoppers are drawn from the shared hull models and generated geometry,
+     * so their static blockstate and inventory JSON only has to hand the bakery a loaded model.
+     */
+    private static int emitSmelteryAndHopperPlaceholders(Map<ResourceLocation, byte[]> result,
+                                                         Placeholder placeholders) {
+        int emitted = emitPlaceholders(result, GTSmeltery.crucibles(), placeholders);
+        emitted += emitPlaceholders(result, GTSmeltery.basins(), placeholders);
+        emitted += emitPlaceholders(result, GTSmeltery.molds(), placeholders);
+        emitted += emitPlaceholders(result, GTSmeltery.crossings(), placeholders);
+        emitted += emitPlaceholders(result, GTSmeltery.faucets(), placeholders);
+        emitted += emitPlaceholders(result, GTHoppers.hoppers(), placeholders);
+        emitted += emitPlaceholders(result, GTHoppers.queues(), placeholders);
+        return emitted;
+    }
+
+    /** Emits a placeholder for every registered entry of {@code entries}; returns how many were written. */
+    private static <T extends Block> int emitPlaceholders(Map<ResourceLocation, byte[]> result,
+                                                          List<RegisteredBlock<T>> entries,
+                                                          Placeholder placeholders) {
+        int emitted = 0;
+        for (RegisteredBlock<T> entry : entries) {
+            if (!entry.isPresent()) continue;
+            emitPlaceholder(result, entry.get(), placeholders);
+            emitted++;
         }
-        for (var block : AddonPipeRegistration.fluidBlocks()) emitPlaceholder(result, block, blockstate, item);
-        for (var entry : GTItemPipes.all()) {
-            if (entry.isPresent()) emitPlaceholder(result, entry.get(), blockstate, item);
-        }
-        for (var block : AddonPipeRegistration.itemBlocks()) emitPlaceholder(result, block, blockstate, item);
-        for (var entry : GTWires.all()) {
-            if (entry.isPresent()) emitPlaceholder(result, entry.get(), blockstate, item);
-        }
-        for (var entry : GTSignalWires.all()) {
-            if (entry.isPresent()) emitPlaceholder(result, entry.get(), blockstate, item);
-        }
-        for (var entry : GTAxles.all()) {
-            if (entry.isPresent()) emitPlaceholder(result, entry.get(), blockstate, item);
-        }
+        return emitted;
+    }
+
+    /** Emits a placeholder for every block of {@code blocks}; returns how many were written. */
+    private static int emitPlaceholders(Map<ResourceLocation, byte[]> result, Collection<? extends Block> blocks,
+                                        Placeholder placeholders) {
+        for (Block block : blocks) emitPlaceholder(result, block, placeholders);
+        return blocks.size();
     }
 
     /**
@@ -567,10 +663,10 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
      * resource pack still wins, and the bakery replaces both entries before anything renders.
      */
     private static void emitPlaceholder(Map<ResourceLocation, byte[]> result, Block block,
-                                        byte[] blockstate, byte[] item) {
+                                        Placeholder placeholders) {
         ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
-        result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), blockstate);
-        result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), item);
+        result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), placeholders.blockstate());
+        result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), placeholders.item());
     }
 
     private static ResourceLocation location(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
@@ -623,6 +719,10 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         if (GregTechIdentity.MOD_ID.equals(id.getNamespace()) && DynamicTextureSynthesis.containsAssetPath(path)) {
             return () -> DynamicTextureSynthesis.open(path);
         }
+        if (GregTechIdentity.MOD_ID.equals(id.getNamespace()) && path.startsWith("stack_groups/")) {
+            byte[] group = stackGroups().get(id);
+            return group == null ? null : () -> new ByteArrayInputStream(group);
+        }
         if (!path.startsWith("models/") && !path.startsWith("blockstates/")) return null;
         byte[] json = data().get(id);
         return json == null ? null : () -> new ByteArrayInputStream(json);
@@ -637,6 +737,16 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             }
             return;
         }
+        if ("stack_groups".equals(path) || path.startsWith("stack_groups/")) {
+            if (GregTechIdentity.MOD_ID.equals(namespace)) {
+                String groupPrefix = path + "/";
+                stackGroups().forEach((id, json) -> {
+                    if (id.getPath().startsWith(groupPrefix))
+                        output.accept(id, () -> new ByteArrayInputStream(json));
+                });
+            }
+            return;
+        }
         String prefix = path.isEmpty() ? "" : path + "/";
         data().forEach((id, json) -> {
             if (id.getNamespace().equals(namespace) && id.getPath().startsWith(prefix))
@@ -644,6 +754,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         });
         if (path.isEmpty() && GregTechIdentity.MOD_ID.equals(namespace)) {
             DynamicTextureSynthesis.listResources(path, output);
+            stackGroups().forEach((id, json) -> output.accept(id, () -> new ByteArrayInputStream(json)));
         }
     }
 
@@ -668,7 +779,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     }
 
     @Override
-    public synchronized void close() { resources = null; namespaces = null; }
+    public synchronized void close() { resources = null; stackGroups = null; namespaces = null; }
 
     record Reference(ResourceLocation parent) implements IUnbakedGeometry<Reference> {
         @Override

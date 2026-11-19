@@ -14,6 +14,9 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.BlockMaterialPrefix;
+import gregtech.engine.resource.StackGroupCatalog;
+import gregtech.engine.resource.VirtualBlockstateCatalog;
+import gregtech.engine.resource.VirtualModelCatalog;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -262,6 +265,86 @@ public final class ResourceFilterPackTests {
         helper.succeed();
     }
 
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    public static void virtualCatalogPackSupportsOverrideAndFilter(GameTestHelper helper) throws IOException {
+        PackResources virtualPack = virtualCatalogPack();
+        byte[] overrideModel = "{\"parent\":\"minecraft:block/stone\"}".getBytes(StandardCharsets.UTF_8);
+        PackResources highPack = memoryPack(
+                "test_virtual_override_filter",
+                filterMcmeta(
+                        "^stack_groups/material_forms/functional_drinks\\.json$",
+                        "^models/item/compass_center\\.json$"),
+                Map.of("models/item/cryo_distillation_main.json", overrideModel));
+
+        try (var manager = new MultiPackResourceManager(PackType.CLIENT_RESOURCES, List.of(virtualPack, highPack))) {
+            ResourceLocation bsId = ResourceLocation.fromNamespaceAndPath(
+                    GregTechIdentity.REGISTRY_NAMESPACE, "blockstates/stone_andesite_bricks.json");
+            var bsRes = manager.getResource(bsId);
+            helper.assertTrue(bsRes.isPresent(), "Virtual blockstate stone_andesite_bricks must resolve");
+            try (InputStream in = bsRes.get().open()) {
+                String bsJson = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+                helper.assertTrue(JsonParser.parseString(bsJson).isJsonObject(), "Invalid virtual blockstate JSON");
+            }
+
+            ResourceLocation overrideId = ResourceLocation.fromNamespaceAndPath(
+                    GregTechIdentity.REGISTRY_NAMESPACE, "models/item/cryo_distillation_main.json");
+            var overrideRes = manager.getResource(overrideId);
+            helper.assertTrue(overrideRes.isPresent(), "Overridden item/cryo_distillation_main must resolve");
+            try (InputStream in = overrideRes.get().open()) {
+                String actual = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+                helper.assertTrue(
+                        actual.contains("minecraft:block/stone"),
+                        "Higher pack override must win over virtual catalog, got: " + actual);
+            }
+
+            ResourceLocation filteredModelId = ResourceLocation.fromNamespaceAndPath(
+                    GregTechIdentity.REGISTRY_NAMESPACE, "models/item/compass_center.json");
+            helper.assertTrue(
+                    manager.getResource(filteredModelId).isEmpty(),
+                    "Filter rule must block virtual models/item/compass_center.json");
+
+            ResourceLocation blockedGroup = ResourceLocation.fromNamespaceAndPath(
+                    GregTechIdentity.REGISTRY_NAMESPACE, "stack_groups/material_forms/functional_drinks.json");
+            ResourceLocation visibleGroup = ResourceLocation.fromNamespaceAndPath(
+                    GregTechIdentity.REGISTRY_NAMESPACE,
+                    "stack_groups/material_forms/functional_chemical_bottles.json");
+            helper.assertTrue(
+                    manager.getResource(blockedGroup).isEmpty(),
+                    "Filter rule must block virtual stack_groups functional_drinks");
+            helper.assertTrue(
+                    manager.getResource(visibleGroup).isPresent(),
+                    "Sibling virtual stack_group functional_chemical_bottles must remain readable");
+            try (InputStream in = visibleGroupJson(manager, visibleGroup)) {
+                String groupJson = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+                helper.assertTrue(JsonParser.parseString(groupJson).isJsonObject(), "Invalid virtual stack_group JSON");
+            }
+
+            var listedGroups = manager.listResources(
+                    "stack_groups/material_forms",
+                    id -> GregTechIdentity.REGISTRY_NAMESPACE.equals(id.getNamespace()));
+            helper.assertTrue(
+                    !listedGroups.containsKey(blockedGroup) && listedGroups.containsKey(visibleGroup),
+                    "listResources must omit filtered stack groups and retain unfiltered ones");
+        }
+        helper.succeed();
+    }
+
+    private static InputStream visibleGroupJson(ResourceManager manager, ResourceLocation id) throws IOException {
+        return manager.getResourceOrThrow(id).open();
+    }
+
+    private static PackResources virtualCatalogPack() {
+//? if >=1.21.1 {
+        /*return new VirtualCatalogPack(new PackLocationInfo(
+                "test_virtual_catalog",
+                Component.literal("test_virtual_catalog"),
+                PackSource.BUILT_IN,
+                Optional.empty()));
+*///?} else {
+        return new VirtualCatalogPack("test_virtual_catalog");
+//?}
+    }
+
     private static Set<String> collectPngPaths(ResourceManager manager, String directory) {
         Set<String> icons = new HashSet<>();
         manager.listResources(
@@ -365,5 +448,121 @@ public final class ResourceFilterPackTests {
 
         @Override
         public void close() {}
+    }
+
+    /** Dedicated-server-safe virtual pack mirror wrapping core's client-free resource catalogs. */
+    private static final class VirtualCatalogPack extends AbstractPackResources {
+        private static final String MODELS_PREFIX = "models/";
+        private static final String BLOCKSTATES_PREFIX = "blockstates/";
+        private static final String STACK_GROUPS_PREFIX = "stack_groups/material_forms/";
+        private static final String JSON_SUFFIX = ".json";
+        private static final String COMPOSITE_LOADER =
+//? if >=1.21.1 {
+                /*"neoforge:composite";
+*///?} else {
+                "forge:composite";
+//?}
+
+//? if >=1.21.1 {
+        /*private VirtualCatalogPack(PackLocationInfo info) {
+            super(info);
+        }
+*///?} else {
+        private VirtualCatalogPack(String id) {
+            super(id, true);
+        }
+//?}
+
+        @Override
+        @Nullable
+        public IoSupplier<InputStream> getRootResource(String... paths) {
+            return null;
+        }
+
+        @Override
+        @Nullable
+        public IoSupplier<InputStream> getResource(PackType type, ResourceLocation id) {
+            if (type != PackType.CLIENT_RESOURCES
+                    || !GregTechIdentity.REGISTRY_NAMESPACE.equals(id.getNamespace())) {
+                return null;
+            }
+            String rel = id.getPath();
+            if (!rel.endsWith(JSON_SUFFIX)) {
+                return null;
+            }
+            String stem = rel.substring(0, rel.length() - JSON_SUFFIX.length());
+            if (stem.startsWith(MODELS_PREFIX)) {
+                String json = VirtualModelCatalog.renderJson(
+                        stem.substring(MODELS_PREFIX.length()), COMPOSITE_LOADER);
+                return json == null ? null : utf8Supplier(json);
+            }
+            if (stem.startsWith(BLOCKSTATES_PREFIX)) {
+                String json = VirtualBlockstateCatalog.renderJson(stem.substring(BLOCKSTATES_PREFIX.length()));
+                return json == null ? null : utf8Supplier(json);
+            }
+            if (stem.startsWith(STACK_GROUPS_PREFIX)) {
+                StackGroupCatalog.Entry entry = StackGroupCatalog.entry(stem.substring(STACK_GROUPS_PREFIX.length()));
+                return entry == null ? null : utf8Supplier(StackGroupCatalog.renderJson(entry));
+            }
+            return null;
+        }
+
+        @Override
+        public void listResources(PackType type, String namespace, String path, ResourceOutput output) {
+            if (type != PackType.CLIENT_RESOURCES
+                    || !GregTechIdentity.REGISTRY_NAMESPACE.equals(namespace)) {
+                return;
+            }
+            if (path.isEmpty() || "models".equals(path) || path.startsWith(MODELS_PREFIX)) {
+                String prefix = path.isEmpty() ? "" : path + "/";
+                VirtualModelCatalog.emitAll(COMPOSITE_LOADER, (modelPath, bytes) -> {
+                    String rel = MODELS_PREFIX + modelPath + JSON_SUFFIX;
+                    if (rel.startsWith(prefix)) {
+                        output.accept(
+                                ResourceLocation.fromNamespaceAndPath(namespace, rel),
+                                () -> new ByteArrayInputStream(bytes));
+                    }
+                });
+            }
+            if (path.isEmpty() || "blockstates".equals(path) || path.startsWith(BLOCKSTATES_PREFIX)) {
+                String prefix = path.isEmpty() ? "" : path + "/";
+                VirtualBlockstateCatalog.emitAll((stem, bytes) -> {
+                    String rel = BLOCKSTATES_PREFIX + stem + JSON_SUFFIX;
+                    if (rel.startsWith(prefix)) {
+                        output.accept(
+                                ResourceLocation.fromNamespaceAndPath(namespace, rel),
+                                () -> new ByteArrayInputStream(bytes));
+                    }
+                });
+            }
+            if (path.isEmpty()
+                    || "stack_groups".equals(path)
+                    || "stack_groups/material_forms".equals(path)
+                    || path.startsWith(STACK_GROUPS_PREFIX)) {
+                String prefix = path.isEmpty() ? "" : path + "/";
+                StackGroupCatalog.buildAllResources().forEach((rel, bytes) -> {
+                    if (rel.startsWith(prefix)) {
+                        output.accept(
+                                ResourceLocation.fromNamespaceAndPath(namespace, rel),
+                                () -> new ByteArrayInputStream(bytes));
+                    }
+                });
+            }
+        }
+
+        @Override
+        public Set<String> getNamespaces(PackType type) {
+            return type == PackType.CLIENT_RESOURCES
+                    ? Set.of(GregTechIdentity.REGISTRY_NAMESPACE)
+                    : Set.of();
+        }
+
+        @Override
+        public void close() {}
+
+        private static IoSupplier<InputStream> utf8Supplier(String json) {
+            byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
+            return () -> new ByteArrayInputStream(bytes);
+        }
     }
 }

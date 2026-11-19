@@ -12,6 +12,8 @@ import gregtech.content.fluid.FluidDefinitions;
 import gregtech.content.material.MaterialTestFixture;
 import gregtech.content.tool.WoodenBucketCatalog;
 import gregtech.engine.recipe.data.JsonMaps;
+import gregtech.engine.resource.StackGroupCatalog;
+import gregtech.engine.resource.VirtualModelCatalog;
 import gregtech.engine.tool.WoodenBucketVisuals;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -182,33 +184,47 @@ final class TexturePaletteAndBucketVisualTest {
         try (var stream = Files.walk(assets.resolve("models"))) {
             for (Path modelFile :
                     stream.filter(p -> p.toString().endsWith(".json")).toList()) {
-                Map<String, Object> root = JsonMaps.object(Files.readString(modelFile, StandardCharsets.UTF_8));
-                Object texObj = root.get("textures");
-                if (!(texObj instanceof Map<?, ?> textures)) continue;
-                for (Object rawVal : textures.values()) {
-                    if (!(rawVal instanceof String val) || !val.startsWith("gt6ce:")) continue;
-                    String rel = val.substring("gt6ce:".length());
-                    if (rel.startsWith("item/bottles/")
-                            || rel.startsWith("item/cans/")
-                            || rel.startsWith("block/fluids/")) {
-                        String texPath = "textures/" + rel + ".png";
-                        assertTrue(
-                                Files.isRegularFile(assets.resolve(texPath)) || table.entry(texPath) != null,
-                                "Unresolved container/fluid texture " + texPath + " referenced in " + modelFile);
-                    }
-                }
+                checkContainerAndFluidTextures(
+                        table, assets, modelFile.toString(), Files.readString(modelFile, StandardCharsets.UTF_8));
             }
         }
-        for (String group : List.of(
-                "stack_groups/material_forms/functional_drinks.json",
-                "stack_groups/material_forms/functional_chemical_bottles.json")) {
-            Map<String, Object> root = JsonMaps.object(Files.readString(assets.resolve(group), StandardCharsets.UTF_8));
+        VirtualModelCatalog.emitAll(
+                "neoforge:composite",
+                (path, bytes) -> checkContainerAndFluidTextures(
+                        table, assets, "virtual:" + path, new String(bytes, StandardCharsets.UTF_8)));
+
+        for (String stem : List.of("functional_drinks", "functional_chemical_bottles")) {
+            StackGroupCatalog.Entry entry = StackGroupCatalog.entry(stem);
+            assertNotNull(entry, "Missing stack group entry: " + stem);
+            Map<String, Object> root = JsonMaps.object(StackGroupCatalog.renderJson(entry));
             assertTrue(root.get("contents") instanceof List<?>);
             for (Object itemObj : (List<?>) root.get("contents")) {
                 String id = ((String) itemObj).replace("item:gt6ce:", "");
                 assertTrue(
-                        Files.isRegularFile(assets.resolve("models/item/" + id + ".json")),
+                        Files.isRegularFile(assets.resolve("models/item/" + id + ".json"))
+                                || VirtualModelCatalog.contains("item/" + id),
                         "Missing item model for stack group entry " + id);
+            }
+        }
+    }
+
+    private static void checkContainerAndFluidTextures(
+            TexturePaletteTable table, Path assets, String sourceLabel, String json) {
+        Map<String, Object> root = JsonMaps.object(json);
+        Object texObj = root.get("textures");
+        if (!(texObj instanceof Map<?, ?> textures)) {
+            return;
+        }
+        for (Object rawVal : textures.values()) {
+            if (!(rawVal instanceof String val) || !val.startsWith("gt6ce:")) {
+                continue;
+            }
+            String rel = val.substring("gt6ce:".length());
+            if (rel.startsWith("item/bottles/") || rel.startsWith("item/cans/") || rel.startsWith("block/fluids/")) {
+                String texPath = "textures/" + rel + ".png";
+                assertTrue(
+                        Files.isRegularFile(assets.resolve(texPath)) || table.entry(texPath) != null,
+                        "Unresolved container/fluid texture " + texPath + " referenced in " + sourceLabel);
             }
         }
     }

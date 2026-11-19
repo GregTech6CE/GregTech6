@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "gt6ce:block/iconsets/grass_top_rotten",
-    "side": "gt6ce:block/iconsets/grass_side_rotten"
-  }
-}

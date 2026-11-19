@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "gt6ce:item/material_icons/dull/toolheadsword",
-    "layer1": "gt6ce:item/iconsets/handle_sword",
-    "layer2": "gt6ce:item/iconsets/handle_sword_overlay"
-  }
-}

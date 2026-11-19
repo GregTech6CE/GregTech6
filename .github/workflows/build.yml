@@ -111,7 +111,7 @@ jobs:
             fi
           done
           test -n "$jar"
-          python tools/resources/check_compact_model_json.py "$jar" \
+          python tools/resources/check_packaged_resources.py "$jar" \
             --resources core/build/resources/main minecraft/versions/${{ matrix.node }}/build/resources/main
           python tools/resources/check_png_metadata.py "$jar" --strict
           python tools/resources/check_png_metadata.py core/build/resources/main \

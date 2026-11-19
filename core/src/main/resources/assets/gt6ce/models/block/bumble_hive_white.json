@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "bottom": "gt6ce:block/nature/bumblehive/white/bottom",
-    "top": "gt6ce:block/nature/bumblehive/white/top",
-    "side": "gt6ce:block/nature/bumblehive/white/side"
-  }
-}
