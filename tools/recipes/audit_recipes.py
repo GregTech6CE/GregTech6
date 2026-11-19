@@ -14,7 +14,7 @@ Checks:
   * static publish exclusions exist and name a shipped recipe
   * `--converted DIR`: one native output per published recipe and item tag, no stale or
     legacy-shaped file, and every converted tag keeps its source values
-  * gt6ce: item ids that have no item model or blockstate (warning only)
+  * gt6ce: item ids that have no shipped or procedurally generated model or blockstate (warning only)
 
 Exit code is 0 unless --strict is given and errors were found.
 """
@@ -39,6 +39,15 @@ ASSET_ROOTS = [
     Path("core/src/main/resources"),
     Path("minecraft/src/main/resources"),
 ]
+
+# Virtual model and blockstate tables served by SharedInventoryModelPack.
+MODEL_DEFINITIONS = Path("core/src/main/resources/assets/gt6ce/model_definitions.tsv")
+BLOCKSTATE_DEFINITIONS = Path("core/src/main/resources/assets/gt6ce/blockstate_definitions.tsv")
+
+# Java tables that drive the models and blockstates ProceduralModels renders at runtime.
+PROCEDURAL_MODELS = Path("core/src/main/java/gregtech/engine/resource/ProceduralModels.java")
+STONE_VARIANTS = Path("core/src/main/java/gregtech/content/block/stone/StoneVariant.java")
+BATTERY_SPECS = Path("core/src/main/java/gregtech/content/energy/ChemicalBatterySpec.java")
 
 KNOWN_TYPES = {
     "minecraft:crafting_shaped",
@@ -117,6 +126,7 @@ def tag_ids():
 
 
 def model_ids():
+    """Item ids with a shipped or procedurally generated model or blockstate."""
     ids = set()
     for root in ASSET_ROOTS:
         for namespace in (REPO / root / "assets").glob("*"):
@@ -130,7 +140,157 @@ def model_ids():
             if states.is_dir():
                 for path in states.rglob("*.json"):
                     ids.add(f"{namespace.name}:{path.relative_to(states).with_suffix('').as_posix()}")
+    return ids | virtual_model_ids()
+
+
+def definition_rows(relative: Path):
+    """Non-comment, tab-separated rows of a virtual definition table."""
+    path = REPO / relative
+    if not path.is_file():
+        raise RuntimeError(f"missing virtual definition table: {relative.as_posix()}")
+    rows = [
+        line.split("\t")
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    ]
+    if not rows:
+        raise RuntimeError(f"no rows in virtual definition table: {relative.as_posix()}")
+    return rows
+
+
+def java_section(text: str, marker: str, delimiters: str = "()"):
+    """Text inside the first delimiter pair that follows `marker`."""
+    start = text.find(marker)
+    if start < 0:
+        raise RuntimeError(f"Java source no longer declares {marker!r}")
+    opening = text.find(delimiters[0], start + len(marker))
+    if opening < 0:
+        raise RuntimeError(f"Java declaration {marker!r} has no {delimiters} body")
+    depth = 0
+    for index in range(opening, len(text)):
+        char = text[index]
+        if char == delimiters[0]:
+            depth += 1
+        elif char == delimiters[1]:
+            depth -= 1
+            if depth == 0:
+                return text[opening + 1 : index]
+    raise RuntimeError(f"unbalanced {delimiters} after {marker!r}")
+
+
+def java_source(relative: Path) -> str:
+    path = REPO / relative
+    if not path.is_file():
+        raise RuntimeError(f"missing Java source: {relative.as_posix()}")
+    return path.read_text(encoding="utf-8")
+
+
+def java_strings(block: str):
+    return re.findall(r'"([^"]*)"', block)
+
+
+def require_entries(values, family: str):
+    """Rejects an empty extraction so a renamed table fails the audit instead of passing it."""
+    if not values:
+        raise RuntimeError(f"no entries extracted for {family}")
+    return values
+
+
+def procedural_model_ids():
+    """Item ids whose models and blockstates ProceduralModels renders from its family tables.
+
+    The renderer tables are the source of truth, so a family that stops being emitted or a table
+    that loses its entries fails the audit instead of silently dropping the check.
+    """
+    text = java_source(PROCEDURAL_MODELS)
+    ids = set()
+
+    stones = require_entries(
+        re.findall(r'new StoneSpec\(\s*"([a-z0-9_]+)"', java_section(text, "STONE_SPECS")),
+        "STONE_SPECS",
+    )
+    for stem in require_entries(
+        java_strings(java_section(text, "private static void forEachPileBlockstateStem", "{}")),
+        "forEachPileBlockstateStem",
+    ):
+        ids.add(f"gt6ce:{stem}")
+    filter_literals = require_entries(
+        java_strings(java_section(text, "FILTER_BLOCKSTATES")), "FILTER_BLOCKSTATES"
+    )
+    if len(filter_literals) % 2 != 0:
+        raise RuntimeError(f"odd number of string literals in FILTER_BLOCKSTATES: {len(filter_literals)}")
+    filters = filter_literals[::2]
+    if any(not stem.startswith("filter_") for stem in filters):
+        raise RuntimeError(f"unexpected FILTER_BLOCKSTATES key(s): {filters!r}")
+    for stem in filters:
+        ids.add(f"gt6ce:{stem}")
+    extenders = require_entries(
+        java_strings(java_section(text, "EXTENDER_BLOCKSTATES")), "EXTENDER_BLOCKSTATES"
+    )
+    for stem in extenders:
+        ids.add(f"gt6ce:{stem}")
+    modes = require_entries(java_strings(java_section(text, "COMPASS_MODES")), "COMPASS_MODES")
+    frames = len(
+        require_entries(java_strings(java_section(text, "COMPASS_DIRECTIONS")), "COMPASS_DIRECTIONS")
+    )
+    for mode in modes:
+        ids.add(f"gt6ce:compass_{mode}")
+        for frame in range(1, frames + 1):
+            ids.add(f"gt6ce:compass/{mode}_{frame}")
+    for size in require_entries(java_strings(java_section(text, "REACTOR_SIZES")), "REACTOR_SIZES"):
+        if size == "1x1":
+            ids.add("gt6ce:reactor_core")
+        elif size == "2x2":
+            ids.add("gt6ce:reactor_core_2x2")
+        else:
+            raise RuntimeError(f"unknown reactor core size: {size}")
+
+    variants = require_entries(
+        re.findall(
+            r'^\s*[A-Z][A-Z0-9_]*\(\s*\d+\s*,\s*"([a-z0-9_]+)"',
+            java_section(java_source(STONE_VARIANTS), "public enum StoneVariant", "{}"),
+            re.MULTILINE,
+        ),
+        "StoneVariant",
+    )
+    for stone in stones:
+        for variant in variants:
+            base = f"{stone}_{variant}"
+            ids.add(f"gt6ce:{base}")
+            ids.add(f"gt6ce:{base}_slab")
+
+    battery = java_source(BATTERY_SPECS)
+    chemistries = require_entries(
+        re.findall(
+            r'^\s*[A-Z][A-Z0-9_]*\(\s*"([a-z0-9_]+)"',
+            java_section(battery, "public enum Chemistry", "{}"),
+            re.MULTILINE,
+        ),
+        "Chemistry",
+    )
+    tier_array = re.search(
+        r"new String\[\]\s*\{([^}]*)\}", java_section(battery, "public String id()", "{}")
+    )
+    if tier_array is None:
+        raise RuntimeError("ChemicalBatterySpec.id() no longer lists its tier names")
+    tiers = require_entries(java_strings(tier_array.group(1)), "battery tiers")
+    for chemistry in chemistries:
+        for tier in tiers:
+            ids.add(f"gt6ce:battery_{chemistry}_{tier}")
     return ids
+
+
+def virtual_model_ids():
+    """Item ids whose models and blockstates are generated instead of shipped as JSON."""
+    models = {
+        "gt6ce:" + row[0][len("item/") :]
+        for row in definition_rows(MODEL_DEFINITIONS)
+        if row[0].startswith("item/")
+    }
+    if not models:
+        raise RuntimeError(f"no item rows in {MODEL_DEFINITIONS.as_posix()}")
+    states = {"gt6ce:" + row[0] for row in definition_rows(BLOCKSTATE_DEFINITIONS)}
+    return models | states | procedural_model_ids()
 
 
 def camel_to_snake(name: str) -> str:

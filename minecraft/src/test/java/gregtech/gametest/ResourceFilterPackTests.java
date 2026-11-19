@@ -14,9 +14,7 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.engine.material.MaterialIconDefinitions;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.BlockMaterialPrefix;
-import gregtech.engine.resource.StackGroupCatalog;
-import gregtech.engine.resource.VirtualBlockstateCatalog;
-import gregtech.engine.resource.VirtualModelCatalog;
+import gregtech.engine.resource.VirtualAssetPackResources;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +34,7 @@ import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraft.server.packs.resources.MultiPackResourceManager;
+import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceFilterSection;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.level.block.Block;
@@ -54,12 +53,15 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Verifies resource-manager mounting, pack overrides, and {@code pack.mcmeta} {@code filter}
- * handling for material sprites and bottle-crate frames on the dedicated server.
+ * handling for material sprites, bottle-crate frames and the virtual asset catalogs on the dedicated
+ * server.
  */
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class ResourceFilterPackTests {
     private static final String BATCH = "resource_filter_pack";
+    private static final String VIRTUAL_PACK_ID = "test_virtual_catalog";
+    private static final String HIGH_PACK_ID = "test_virtual_override_filter";
     private static final byte[] DUMMY_PNG = new byte[] {1};
 
     private ResourceFilterPackTests() {}
@@ -265,83 +267,189 @@ public final class ResourceFilterPackTests {
         helper.succeed();
     }
 
-    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 20)
+    @GameTest(template = "test_empty", batch = BATCH, timeoutTicks = 100)
     public static void virtualCatalogPackSupportsOverrideAndFilter(GameTestHelper helper) throws IOException {
         PackResources virtualPack = virtualCatalogPack();
         byte[] overrideModel = "{\"parent\":\"minecraft:block/stone\"}".getBytes(StandardCharsets.UTF_8);
+        byte[] overrideBlockstate =
+                "{\"variants\":{\"\":{\"model\":\"minecraft:block/stone\"}}}".getBytes(StandardCharsets.UTF_8);
+        byte[] overrideGroup =
+                "{\"type\":\"remi:group\",\"name\":\"override\",\"priority\":1}".getBytes(StandardCharsets.UTF_8);
         PackResources highPack = memoryPack(
-                "test_virtual_override_filter",
+                HIGH_PACK_ID,
                 filterMcmeta(
-                        "^stack_groups/material_forms/functional_drinks\\.json$",
-                        "^models/item/compass_center\\.json$"),
-                Map.of("models/item/cryo_distillation_main.json", overrideModel));
+                        "^models/item/compass_center\\.json$",
+                        "^blockstates/stone_granite_bricks\\.json$",
+                        "^stack_groups/material_forms/functional_drinks\\.json$"),
+                Map.of(
+                        "models/item/cryo_distillation_main.json", overrideModel,
+                        "blockstates/stone_basalt_bricks.json", overrideBlockstate,
+                        "stack_groups/material_forms/functional_co2_laser.json", overrideGroup));
 
         try (var manager = new MultiPackResourceManager(PackType.CLIENT_RESOURCES, List.of(virtualPack, highPack))) {
-            ResourceLocation bsId = ResourceLocation.fromNamespaceAndPath(
-                    GregTechIdentity.REGISTRY_NAMESPACE, "blockstates/stone_andesite_bricks.json");
-            var bsRes = manager.getResource(bsId);
-            helper.assertTrue(bsRes.isPresent(), "Virtual blockstate stone_andesite_bricks must resolve");
-            try (InputStream in = bsRes.get().open()) {
-                String bsJson = new String(in.readAllBytes(), StandardCharsets.UTF_8);
-                helper.assertTrue(JsonParser.parseString(bsJson).isJsonObject(), "Invalid virtual blockstate JSON");
-            }
+            Predicate<ResourceLocation> gtNamespace =
+                    id -> GregTechIdentity.REGISTRY_NAMESPACE.equals(id.getNamespace());
 
-            ResourceLocation overrideId = ResourceLocation.fromNamespaceAndPath(
-                    GregTechIdentity.REGISTRY_NAMESPACE, "models/item/cryo_distillation_main.json");
-            var overrideRes = manager.getResource(overrideId);
-            helper.assertTrue(overrideRes.isPresent(), "Overridden item/cryo_distillation_main must resolve");
-            try (InputStream in = overrideRes.get().open()) {
-                String actual = new String(in.readAllBytes(), StandardCharsets.UTF_8);
-                helper.assertTrue(
-                        actual.contains("minecraft:block/stone"),
-                        "Higher pack override must win over virtual catalog, got: " + actual);
-            }
-
-            ResourceLocation filteredModelId = ResourceLocation.fromNamespaceAndPath(
-                    GregTechIdentity.REGISTRY_NAMESPACE, "models/item/compass_center.json");
+            // Models: a procedural catalog model, its composite sibling, one override and one
+            // filtered path.
+            var itemModels = manager.listResources("models/item", gtNamespace);
+            ResourceLocation plainModel = gtResource("models/item/compass_north.json");
+            String plainModelJson = readResource(helper, manager, plainModel);
             helper.assertTrue(
-                    manager.getResource(filteredModelId).isEmpty(),
+                    JsonParser.parseString(plainModelJson).isJsonObject(), "Invalid virtual model JSON");
+            helper.assertTrue(
+                    VIRTUAL_PACK_ID.equals(listedPackId(itemModels, plainModel)),
+                    "Virtual model compass_north must come from the catalog pack");
+            assertEnumeratedMatches(helper, itemModels, plainModel, plainModelJson);
+
+            var machineModels = manager.listResources("models/block/machine/energy", gtNamespace);
+            ResourceLocation compositeModel = gtResource("models/block/machine/energy/reactor_core.json");
+            String compositeJson = readResource(helper, manager, compositeModel);
+            var compositeObject = JsonParser.parseString(compositeJson).getAsJsonObject();
+            helper.assertTrue(
+                    compositeObject.has("loader")
+                            && VirtualAssetPackResources.COMPOSITE_LOADER.equals(
+                                    compositeObject.get("loader").getAsString()),
+                    "Composite model must carry the active version's loader, got: " + compositeJson);
+            helper.assertTrue(
+                    VIRTUAL_PACK_ID.equals(listedPackId(machineModels, compositeModel)),
+                    "Composite model must come from the catalog pack");
+            assertEnumeratedMatches(helper, machineModels, compositeModel, compositeJson);
+
+            ResourceLocation overriddenModel = gtResource("models/item/cryo_distillation_main.json");
+            String overriddenModelJson = readResource(helper, manager, overriddenModel);
+            helper.assertTrue(
+                    overriddenModelJson.contains("minecraft:block/stone"),
+                    "Higher pack override must win over the virtual model, got: " + overriddenModelJson);
+            helper.assertTrue(
+                    HIGH_PACK_ID.equals(listedPackId(itemModels, overriddenModel)),
+                    "Enumerated model override must report the higher pack as its source");
+            assertEnumeratedMatches(helper, itemModels, overriddenModel, overriddenModelJson);
+
+            ResourceLocation filteredModel = gtResource("models/item/compass_center.json");
+            helper.assertTrue(
+                    manager.getResource(filteredModel).isEmpty(),
                     "Filter rule must block virtual models/item/compass_center.json");
-
-            ResourceLocation blockedGroup = ResourceLocation.fromNamespaceAndPath(
-                    GregTechIdentity.REGISTRY_NAMESPACE, "stack_groups/material_forms/functional_drinks.json");
-            ResourceLocation visibleGroup = ResourceLocation.fromNamespaceAndPath(
-                    GregTechIdentity.REGISTRY_NAMESPACE,
-                    "stack_groups/material_forms/functional_chemical_bottles.json");
             helper.assertTrue(
-                    manager.getResource(blockedGroup).isEmpty(),
+                    listedPackId(itemModels, filteredModel) == null,
+                    "Filter rule must keep models/item/compass_center.json out of the listing");
+
+            // Blockstates: a procedural catalog state, one override and one filtered path.
+            var blockstates = manager.listResources("blockstates", gtNamespace);
+            ResourceLocation keptState = gtResource("blockstates/stone_andesite_bricks.json");
+            String keptStateJson = readResource(helper, manager, keptState);
+            helper.assertTrue(
+                    JsonParser.parseString(keptStateJson).isJsonObject(), "Invalid virtual blockstate JSON");
+            helper.assertTrue(
+                    VIRTUAL_PACK_ID.equals(listedPackId(blockstates, keptState)),
+                    "Virtual blockstate must come from the catalog pack");
+            assertEnumeratedMatches(helper, blockstates, keptState, keptStateJson);
+
+            ResourceLocation overriddenState = gtResource("blockstates/stone_basalt_bricks.json");
+            String overriddenStateJson = readResource(helper, manager, overriddenState);
+            helper.assertTrue(
+                    overriddenStateJson.contains("minecraft:block/stone"),
+                    "Higher pack override must win over the virtual blockstate, got: " + overriddenStateJson);
+            helper.assertTrue(
+                    HIGH_PACK_ID.equals(listedPackId(blockstates, overriddenState)),
+                    "Enumerated blockstate override must report the higher pack as its source");
+            assertEnumeratedMatches(helper, blockstates, overriddenState, overriddenStateJson);
+
+            ResourceLocation filteredState = gtResource("blockstates/stone_granite_bricks.json");
+            helper.assertTrue(
+                    manager.getResource(filteredState).isEmpty(),
+                    "Filter rule must block virtual blockstates/stone_granite_bricks.json");
+            helper.assertTrue(
+                    listedPackId(blockstates, filteredState) == null,
+                    "Filter rule must keep blockstates/stone_granite_bricks.json out of the listing");
+
+            // Stack groups: one kept definition, one override and one filtered path, listed from the
+            // family directory and from the stack_groups root alike.
+            var groups = manager.listResources("stack_groups/material_forms", gtNamespace);
+            var allGroups = manager.listResources("stack_groups", gtNamespace);
+            ResourceLocation keptGroup =
+                    gtResource("stack_groups/material_forms/functional_chemical_bottles.json");
+            String keptGroupJson = readResource(helper, manager, keptGroup);
+            helper.assertTrue(
+                    JsonParser.parseString(keptGroupJson).isJsonObject(), "Invalid virtual stack group JSON");
+            helper.assertTrue(
+                    VIRTUAL_PACK_ID.equals(listedPackId(groups, keptGroup))
+                            && VIRTUAL_PACK_ID.equals(listedPackId(allGroups, keptGroup)),
+                    "Virtual stack group must come from the catalog pack in both listings");
+            assertEnumeratedMatches(helper, groups, keptGroup, keptGroupJson);
+            assertEnumeratedMatches(helper, allGroups, keptGroup, keptGroupJson);
+
+            ResourceLocation overriddenGroup =
+                    gtResource("stack_groups/material_forms/functional_co2_laser.json");
+            String overriddenGroupJson = readResource(helper, manager, overriddenGroup);
+            helper.assertTrue(
+                    overriddenGroupJson.contains("\"name\":\"override\""),
+                    "Higher pack override must win over the virtual stack group, got: " + overriddenGroupJson);
+            helper.assertTrue(
+                    HIGH_PACK_ID.equals(listedPackId(groups, overriddenGroup))
+                            && HIGH_PACK_ID.equals(listedPackId(allGroups, overriddenGroup)),
+                    "Enumerated stack group override must report the higher pack as its source");
+            assertEnumeratedMatches(helper, groups, overriddenGroup, overriddenGroupJson);
+            assertEnumeratedMatches(helper, allGroups, overriddenGroup, overriddenGroupJson);
+
+            ResourceLocation filteredGroup =
+                    gtResource("stack_groups/material_forms/functional_drinks.json");
+            helper.assertTrue(
+                    manager.getResource(filteredGroup).isEmpty(),
                     "Filter rule must block virtual stack_groups functional_drinks");
             helper.assertTrue(
-                    manager.getResource(visibleGroup).isPresent(),
-                    "Sibling virtual stack_group functional_chemical_bottles must remain readable");
-            try (InputStream in = visibleGroupJson(manager, visibleGroup)) {
-                String groupJson = new String(in.readAllBytes(), StandardCharsets.UTF_8);
-                helper.assertTrue(JsonParser.parseString(groupJson).isJsonObject(), "Invalid virtual stack_group JSON");
-            }
-
-            var listedGroups = manager.listResources(
-                    "stack_groups/material_forms",
-                    id -> GregTechIdentity.REGISTRY_NAMESPACE.equals(id.getNamespace()));
-            helper.assertTrue(
-                    !listedGroups.containsKey(blockedGroup) && listedGroups.containsKey(visibleGroup),
-                    "listResources must omit filtered stack groups and retain unfiltered ones");
+                    listedPackId(groups, filteredGroup) == null
+                            && listedPackId(allGroups, filteredGroup) == null,
+                    "Filter rule must keep functional_drinks out of both stack group listings");
         }
         helper.succeed();
     }
 
-    private static InputStream visibleGroupJson(ResourceManager manager, ResourceLocation id) throws IOException {
-        return manager.getResourceOrThrow(id).open();
+    /** Resource location in the GregTech asset namespace. */
+    private static ResourceLocation gtResource(String path) {
+        return ResourceLocation.fromNamespaceAndPath(GregTechIdentity.REGISTRY_NAMESPACE, path);
+    }
+
+    /** Pack id that serves {@code id} in a listing, or {@code null} when the listing omits it. */
+    @Nullable
+    private static String listedPackId(Map<ResourceLocation, Resource> listed, ResourceLocation id) {
+        Resource resource = listed.get(id);
+        return resource == null ? null : resource.sourcePackId();
+    }
+
+    /** Reads {@code id} through the manager, failing when no pack in the chain serves it. */
+    private static String readResource(GameTestHelper helper, ResourceManager manager, ResourceLocation id)
+            throws IOException {
+        var resource = manager.getResource(id);
+        helper.assertTrue(resource.isPresent(), "Missing resource: " + id);
+        try (InputStream in = resource.get().open()) {
+            return new String(in.readAllBytes(), StandardCharsets.UTF_8);
+        }
+    }
+
+    /** Asserts that the enumerated body of {@code id} matches the body read directly. */
+    private static void assertEnumeratedMatches(
+            GameTestHelper helper, Map<ResourceLocation, Resource> listed, ResourceLocation id, String expected)
+            throws IOException {
+        Resource resource = listed.get(id);
+        helper.assertTrue(resource != null, "Listing must contain " + id);
+        if (resource == null) return;
+        try (InputStream in = resource.open()) {
+            helper.assertTrue(
+                    expected.equals(new String(in.readAllBytes(), StandardCharsets.UTF_8)),
+                    "Enumerated " + id + " must match the direct read");
+        }
     }
 
     private static PackResources virtualCatalogPack() {
 //? if >=1.21.1 {
-        /*return new VirtualCatalogPack(new PackLocationInfo(
-                "test_virtual_catalog",
-                Component.literal("test_virtual_catalog"),
+        /*return VirtualAssetPackResources.catalogOnly(new PackLocationInfo(
+                VIRTUAL_PACK_ID,
+                Component.literal(VIRTUAL_PACK_ID),
                 PackSource.BUILT_IN,
                 Optional.empty()));
 *///?} else {
-        return new VirtualCatalogPack("test_virtual_catalog");
+        return VirtualAssetPackResources.catalogOnly(VIRTUAL_PACK_ID);
 //?}
     }
 
@@ -448,121 +556,5 @@ public final class ResourceFilterPackTests {
 
         @Override
         public void close() {}
-    }
-
-    /** Dedicated-server-safe virtual pack mirror wrapping core's client-free resource catalogs. */
-    private static final class VirtualCatalogPack extends AbstractPackResources {
-        private static final String MODELS_PREFIX = "models/";
-        private static final String BLOCKSTATES_PREFIX = "blockstates/";
-        private static final String STACK_GROUPS_PREFIX = "stack_groups/material_forms/";
-        private static final String JSON_SUFFIX = ".json";
-        private static final String COMPOSITE_LOADER =
-//? if >=1.21.1 {
-                /*"neoforge:composite";
-*///?} else {
-                "forge:composite";
-//?}
-
-//? if >=1.21.1 {
-        /*private VirtualCatalogPack(PackLocationInfo info) {
-            super(info);
-        }
-*///?} else {
-        private VirtualCatalogPack(String id) {
-            super(id, true);
-        }
-//?}
-
-        @Override
-        @Nullable
-        public IoSupplier<InputStream> getRootResource(String... paths) {
-            return null;
-        }
-
-        @Override
-        @Nullable
-        public IoSupplier<InputStream> getResource(PackType type, ResourceLocation id) {
-            if (type != PackType.CLIENT_RESOURCES
-                    || !GregTechIdentity.REGISTRY_NAMESPACE.equals(id.getNamespace())) {
-                return null;
-            }
-            String rel = id.getPath();
-            if (!rel.endsWith(JSON_SUFFIX)) {
-                return null;
-            }
-            String stem = rel.substring(0, rel.length() - JSON_SUFFIX.length());
-            if (stem.startsWith(MODELS_PREFIX)) {
-                String json = VirtualModelCatalog.renderJson(
-                        stem.substring(MODELS_PREFIX.length()), COMPOSITE_LOADER);
-                return json == null ? null : utf8Supplier(json);
-            }
-            if (stem.startsWith(BLOCKSTATES_PREFIX)) {
-                String json = VirtualBlockstateCatalog.renderJson(stem.substring(BLOCKSTATES_PREFIX.length()));
-                return json == null ? null : utf8Supplier(json);
-            }
-            if (stem.startsWith(STACK_GROUPS_PREFIX)) {
-                StackGroupCatalog.Entry entry = StackGroupCatalog.entry(stem.substring(STACK_GROUPS_PREFIX.length()));
-                return entry == null ? null : utf8Supplier(StackGroupCatalog.renderJson(entry));
-            }
-            return null;
-        }
-
-        @Override
-        public void listResources(PackType type, String namespace, String path, ResourceOutput output) {
-            if (type != PackType.CLIENT_RESOURCES
-                    || !GregTechIdentity.REGISTRY_NAMESPACE.equals(namespace)) {
-                return;
-            }
-            if (path.isEmpty() || "models".equals(path) || path.startsWith(MODELS_PREFIX)) {
-                String prefix = path.isEmpty() ? "" : path + "/";
-                VirtualModelCatalog.emitAll(COMPOSITE_LOADER, (modelPath, bytes) -> {
-                    String rel = MODELS_PREFIX + modelPath + JSON_SUFFIX;
-                    if (rel.startsWith(prefix)) {
-                        output.accept(
-                                ResourceLocation.fromNamespaceAndPath(namespace, rel),
-                                () -> new ByteArrayInputStream(bytes));
-                    }
-                });
-            }
-            if (path.isEmpty() || "blockstates".equals(path) || path.startsWith(BLOCKSTATES_PREFIX)) {
-                String prefix = path.isEmpty() ? "" : path + "/";
-                VirtualBlockstateCatalog.emitAll((stem, bytes) -> {
-                    String rel = BLOCKSTATES_PREFIX + stem + JSON_SUFFIX;
-                    if (rel.startsWith(prefix)) {
-                        output.accept(
-                                ResourceLocation.fromNamespaceAndPath(namespace, rel),
-                                () -> new ByteArrayInputStream(bytes));
-                    }
-                });
-            }
-            if (path.isEmpty()
-                    || "stack_groups".equals(path)
-                    || "stack_groups/material_forms".equals(path)
-                    || path.startsWith(STACK_GROUPS_PREFIX)) {
-                String prefix = path.isEmpty() ? "" : path + "/";
-                StackGroupCatalog.buildAllResources().forEach((rel, bytes) -> {
-                    if (rel.startsWith(prefix)) {
-                        output.accept(
-                                ResourceLocation.fromNamespaceAndPath(namespace, rel),
-                                () -> new ByteArrayInputStream(bytes));
-                    }
-                });
-            }
-        }
-
-        @Override
-        public Set<String> getNamespaces(PackType type) {
-            return type == PackType.CLIENT_RESOURCES
-                    ? Set.of(GregTechIdentity.REGISTRY_NAMESPACE)
-                    : Set.of();
-        }
-
-        @Override
-        public void close() {}
-
-        private static IoSupplier<InputStream> utf8Supplier(String json) {
-            byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
-            return () -> new ByteArrayInputStream(bytes);
-        }
     }
 }

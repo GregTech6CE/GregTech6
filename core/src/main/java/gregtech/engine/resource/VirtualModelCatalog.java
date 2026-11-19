@@ -20,7 +20,8 @@ import org.jspecify.annotations.Nullable;
  *
  * <p>Rows of {@link #RESOURCE_PATH} describe models that are not shipped as JSON files on disk: a parent
  * model, an optional render type, an optional ambient occlusion opt-out and optional texture slots. Models
- * whose parent is {@code @scaffold1} are generated procedurally from their {@code rod} texture.
+ * whose parent is {@code @scaffold1} are generated procedurally from their {@code rod} texture, so a row
+ * that omits that texture is rejected while parsing.
  */
 public final class VirtualModelCatalog {
     public static final String RESOURCE_PATH = "/assets/gt6ce/model_definitions.tsv";
@@ -125,7 +126,11 @@ public final class VirtualModelCatalog {
             case "0" -> true;
             default -> throw new IOException("Invalid ambient occlusion flag at line " + lineNo + ": " + parts[3]);
         };
-        return new Entry(path, parent, parts[2], disableAo, parseTextures(parts[4], path, lineNo));
+        Map<String, String> textures = parseTextures(parts[4], path, lineNo);
+        if (SCAFFOLD_PARENT.equals(parent) && !textures.containsKey("rod")) {
+            throw new IOException("Scaffold model missing rod texture at line " + lineNo + ": " + path);
+        }
+        return new Entry(path, parent, parts[2], disableAo, textures);
     }
 
     private static Map<String, String> parseTextures(String spec, String path, int lineNo) throws IOException {

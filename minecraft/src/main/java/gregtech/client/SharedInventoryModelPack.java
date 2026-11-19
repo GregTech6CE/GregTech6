@@ -18,7 +18,7 @@ import gregtech.content.registry.RegisteredBlock;
 import gregtech.engine.machine.OrthogonalMachineModels;
 import gregtech.engine.mod.GregTechIdentity;
 import gregtech.engine.prefix.BlockMaterialPrefix;
-import gregtech.engine.resource.StackGroupCatalog;
+import gregtech.engine.resource.VirtualAssetPackResources;
 import gregtech.engine.resource.VirtualBlockstateCatalog;
 import gregtech.engine.resource.VirtualModelCatalog;
 import net.minecraft.client.Minecraft;
@@ -48,12 +48,9 @@ import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 //?}
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 import org.jetbrains.annotations.Nullable;
 
@@ -80,7 +77,7 @@ import org.jetbrains.annotations.Nullable;
 *///?} else {
 @net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID, bus = net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
-public final class SharedInventoryModelPack extends AbstractPackResources {
+public final class SharedInventoryModelPack extends VirtualAssetPackResources {
     /** Pack id shared with the loader wiring and the item-override probe. */
     public static final String PACK_ID = "gt6ce:shared_inventory";
 
@@ -90,25 +87,13 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     /** Material sprites, relative to {@code assets/<namespace>/}. */
     private static final String[] MATERIAL_ICON_DIRECTORIES = {
             "textures/item/material_icons", "textures/block/material_icons"};
-//? if >=1.21.1 {
-    /*private static final String COMPOSITE_LOADER = "neoforge:composite";
-*///?} else {
-    private static final String COMPOSITE_LOADER = "forge:composite";
-//?}
     private Map<ResourceLocation, byte[]> resources;
-    private Map<ResourceLocation, byte[]> stackGroups;
     private Set<String> namespaces;
-
-    /** Internal model references remain loaded without appearing as a user-selectable pack. */
-    @Override
-    public boolean isHidden() {
-        return true;
-    }
 
 //? if >=1.21.1 {
     /*public SharedInventoryModelPack(PackLocationInfo info) { super(info); }
 *///?} else {
-    public SharedInventoryModelPack(String id) { super(id, true); }
+    public SharedInventoryModelPack(String id) { super(id); }
 //?}
 
     @SubscribeEvent
@@ -132,20 +117,14 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
      */
     private static final ThreadLocal<Integer> BUILD_DEPTH = ThreadLocal.withInitial(() -> 0);
 
-    static boolean isBuilding() {
+    @Override
+    protected boolean isBuilding() {
         return BUILD_DEPTH.get() > 0;
     }
 
-    static boolean servesAssetDirectory(String directory) {
-        return directory.isEmpty()
-                || "models".equals(directory)
-                || directory.startsWith("models/")
-                || "blockstates".equals(directory)
-                || directory.startsWith("blockstates/")
-                || "stack_groups".equals(directory)
-                || directory.startsWith("stack_groups/")
-                || "textures".equals(directory)
-                || directory.startsWith("textures/");
+    @Override
+    protected Map<ResourceLocation, byte[]> modelResources() {
+        return data();
     }
 
     private synchronized Map<ResourceLocation, byte[]> data() {
@@ -160,18 +139,6 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             else BUILD_DEPTH.set(depth);
         }
         return resources;
-    }
-
-    /**
-     * Creative-tab stack definitions, built on first use. Kept apart from {@link #data()} so a tab
-     * listing never materializes the model tree and a model request never rebuilds the definitions.
-     */
-    private synchronized Map<ResourceLocation, byte[]> stackGroups() {
-        if (stackGroups != null) return stackGroups;
-        Map<ResourceLocation, byte[]> groups = new HashMap<>();
-        StackGroupCatalog.buildAllResources().forEach((path, bytes) -> groups.put(location(path), bytes));
-        stackGroups = Collections.unmodifiableMap(groups);
-        return stackGroups;
     }
 
     private Map<ResourceLocation, byte[]> buildResources() {
@@ -288,9 +255,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         }
         // Catalogs follow the generated item and blockstate passes at the same low priority as the
         // assets they replace, so a user pack can still override any single path.
-        int virtualModels =
-                emitVirtual(result, "models", sink -> VirtualModelCatalog.emitAll(COMPOSITE_LOADER, sink));
-        int virtualBlockstates = emitVirtual(result, "blockstates", VirtualBlockstateCatalog::emitAll);
+        int virtualModels = emitVirtualModels(result);
+        int virtualBlockstates = emitVirtualBlockstates(result);
         // Spec models come last: a row is the generated replacement for the catalog model above, so
         // the generated one has to win inside this pack.
         int specs = emitMachineModelSpecs(result);
@@ -309,18 +275,6 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                         virtualModels, virtualBlockstates,
                         states, specs, machines, transportPlaceholders, smelteryPlaceholders);
         return Collections.unmodifiableMap(result);
-    }
-
-    /**
-     * Copies a virtual catalog into the pack under {@code directory}, returning how many files it
-     * contributed. Catalog paths are relative to that directory and carry no extension.
-     */
-    private static int emitVirtual(Map<ResourceLocation, byte[]> result, String directory,
-                                   Consumer<BiConsumer<String, byte[]>> catalog) {
-        Map<ResourceLocation, byte[]> files = new HashMap<>();
-        catalog.accept((path, bytes) -> files.put(location(directory + "/" + path + ".json"), bytes));
-        result.putAll(files);
-        return files.size();
     }
 
     /**
@@ -703,59 +657,13 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     }
 
     @Override
-    public IoSupplier<InputStream> getRootResource(String... path) {
-        if (path.length != 1 || !path[0].equals("pack.mcmeta")) return null;
-//? if >=1.21.1 {
-        /*return () -> new ByteArrayInputStream("{\"pack\":{\"pack_format\":34,\"description\":\"GregTech shared inventory models\"}}".getBytes(StandardCharsets.UTF_8));
-*///?} else {
-        return () -> new ByteArrayInputStream("{\"pack\":{\"pack_format\":15,\"description\":\"GregTech shared inventory models\"}}".getBytes(StandardCharsets.UTF_8));
-//?}
+    protected @Nullable IoSupplier<InputStream> openDynamicTexture(String path) {
+        return DynamicTextureSynthesis.containsAssetPath(path) ? () -> DynamicTextureSynthesis.open(path) : null;
     }
 
     @Override
-    public IoSupplier<InputStream> getResource(PackType type, ResourceLocation id) {
-        if (type != PackType.CLIENT_RESOURCES || isBuilding()) return null;
-        String path = id.getPath();
-        if (GregTechIdentity.MOD_ID.equals(id.getNamespace()) && DynamicTextureSynthesis.containsAssetPath(path)) {
-            return () -> DynamicTextureSynthesis.open(path);
-        }
-        if (GregTechIdentity.MOD_ID.equals(id.getNamespace()) && path.startsWith("stack_groups/")) {
-            byte[] group = stackGroups().get(id);
-            return group == null ? null : () -> new ByteArrayInputStream(group);
-        }
-        if (!path.startsWith("models/") && !path.startsWith("blockstates/")) return null;
-        byte[] json = data().get(id);
-        return json == null ? null : () -> new ByteArrayInputStream(json);
-    }
-
-    @Override
-    public void listResources(PackType type, String namespace, String path, ResourceOutput output) {
-        if (type != PackType.CLIENT_RESOURCES || !servesAssetDirectory(path) || isBuilding()) return;
-        if ("textures".equals(path) || path.startsWith("textures/")) {
-            if (GregTechIdentity.MOD_ID.equals(namespace)) {
-                DynamicTextureSynthesis.listResources(path, output);
-            }
-            return;
-        }
-        if ("stack_groups".equals(path) || path.startsWith("stack_groups/")) {
-            if (GregTechIdentity.MOD_ID.equals(namespace)) {
-                String groupPrefix = path + "/";
-                stackGroups().forEach((id, json) -> {
-                    if (id.getPath().startsWith(groupPrefix))
-                        output.accept(id, () -> new ByteArrayInputStream(json));
-                });
-            }
-            return;
-        }
-        String prefix = path.isEmpty() ? "" : path + "/";
-        data().forEach((id, json) -> {
-            if (id.getNamespace().equals(namespace) && id.getPath().startsWith(prefix))
-                output.accept(id, () -> new ByteArrayInputStream(json));
-        });
-        if (path.isEmpty() && GregTechIdentity.MOD_ID.equals(namespace)) {
-            DynamicTextureSynthesis.listResources(path, output);
-            stackGroups().forEach((id, json) -> output.accept(id, () -> new ByteArrayInputStream(json)));
-        }
+    protected void listDynamicTextures(String path, ResourceOutput output) {
+        DynamicTextureSynthesis.listResources(path, output);
     }
 
     @Override
@@ -779,7 +687,11 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     }
 
     @Override
-    public synchronized void close() { resources = null; stackGroups = null; namespaces = null; }
+    public synchronized void close() {
+        super.close();
+        resources = null;
+        namespaces = null;
+    }
 
     record Reference(ResourceLocation parent) implements IUnbakedGeometry<Reference> {
         @Override

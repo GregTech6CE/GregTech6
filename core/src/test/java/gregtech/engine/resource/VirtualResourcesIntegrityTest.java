@@ -1,5 +1,6 @@
 package gregtech.engine.resource;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -17,10 +18,12 @@ import gregtech.engine.recipe.data.JsonMaps;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -77,6 +80,10 @@ final class VirtualResourcesIntegrityTest {
                 IOException.class,
                 () -> VirtualModelCatalog.parse(utf8Stream(
                         "item/dup\tminecraft:item/generated\t\t\t\n" + "item/dup\tminecraft:item/generated\t\t\t\n")));
+        assertThrows(
+                IOException.class,
+                () -> VirtualModelCatalog.parse(
+                        utf8Stream("block/tool/scaffold_x\t@scaffold1\t\t\tparticle=gt6ce:block/iconsets/plate\n")));
 
         assertThrows(
                 IOException.class,
@@ -224,6 +231,112 @@ final class VirtualResourcesIntegrityTest {
             verifyBlockstateModels("static_bs:" + entry.getKey(), doc, allKnownModels, missingModels);
         }
         assertTrue(missingModels.isEmpty(), "Blockstates reference missing models: " + missingModels);
+    }
+
+    /**
+     * Verifies that {@code contains} and {@code renderJson} agree for every catalog entry and for the
+     * malformed paths a caller may probe, and that every variant of every blockstate kind stays inside
+     * the model list of its row.
+     */
+    @Test
+    void virtualCatalogRenderJsonMatchesContainsAndRejectsUnknownPaths() {
+        List<String> unknownModels = Arrays.asList(
+                null,
+                "",
+                "item/",
+                "item/compass",
+                "item/compassX",
+                "item/compassXnorth",
+                "item/compassXdeath",
+                "item/compass/",
+                "item/compass/north",
+                "item/compass/north_",
+                "item/compass/north_0",
+                "item/compass/north_01",
+                "item/compass/north_16",
+                "item/compass_north/",
+                "item//compass_north",
+                "ITEM/COMPASS_NORTH",
+                "block/stones/",
+                "item/stone_",
+                "block/decoration/pile/",
+                "block/decoration/pile/ingot_",
+                "block/decoration/pile/ingot_007",
+                "block/decoration/pile/ingot_65",
+                "block/logistics/",
+                "block/logistics/filter_slots/",
+                "block/machine/energy/reactor_core_",
+                "block/machine/energy/reactor_coreX",
+                "block/machine/energy/reactor_core_down_down",
+                "block/machine/energy/reactor_core_2x2_down_down",
+                "block/chemical_battery/",
+                "block/chemical_battery/standard_8_00",
+                "block/chemical_battery/standard_8_5",
+                "item/battery_");
+        for (String loader : List.of(FORGE_COMPOSITE, NEOFORGE_COMPOSITE)) {
+            for (String path : unknownModels) {
+                assertDoesNotThrow(() -> VirtualModelCatalog.contains(path), "contains must not throw on " + path);
+                assertDoesNotThrow(
+                        () -> VirtualModelCatalog.renderJson(path, loader), "renderJson must not throw on " + path);
+                assertFalse(VirtualModelCatalog.contains(path), "Unknown model must not be contained: " + path);
+                assertNull(VirtualModelCatalog.renderJson(path, loader), "Unknown model must not render: " + path);
+            }
+        }
+
+        for (String loader : List.of(FORGE_COMPOSITE, NEOFORGE_COMPOSITE)) {
+            Map<String, String> emitted = new LinkedHashMap<>();
+            VirtualModelCatalog.emitAll(
+                    loader, (path, bytes) -> emitted.put(path, new String(bytes, StandardCharsets.UTF_8)));
+            assertFalse(emitted.isEmpty(), "No models emitted for " + loader);
+            for (var entry : emitted.entrySet()) {
+                assertTrue(
+                        VirtualModelCatalog.contains(entry.getKey()),
+                        "Emitted model must be contained: " + entry.getKey());
+                assertEquals(
+                        entry.getValue(),
+                        VirtualModelCatalog.renderJson(entry.getKey(), loader),
+                        "Rendered model differs from the emitted document: " + entry.getKey());
+            }
+        }
+
+        Map<String, String> emittedBlockstates = new LinkedHashMap<>();
+        VirtualBlockstateCatalog.emitAll(
+                (stem, bytes) -> emittedBlockstates.put(stem, new String(bytes, StandardCharsets.UTF_8)));
+        assertFalse(emittedBlockstates.isEmpty(), "No blockstates emitted");
+        for (var entry : emittedBlockstates.entrySet()) {
+            assertTrue(
+                    VirtualBlockstateCatalog.contains(entry.getKey()),
+                    "Emitted blockstate must be contained: " + entry.getKey());
+            assertEquals(
+                    entry.getValue(),
+                    VirtualBlockstateCatalog.renderJson(entry.getKey()),
+                    "Rendered blockstate differs from the emitted document: " + entry.getKey());
+        }
+        for (String stem : Arrays.asList(
+                null,
+                "",
+                "stone_",
+                "stone_granite_black_stone_slab_side",
+                "ingot_piles",
+                "filter_other",
+                "battery_unknown",
+                "reactor_core_3x3",
+                "reactor_core_down_down")) {
+            assertFalse(VirtualBlockstateCatalog.contains(stem), "Unknown blockstate must not be contained: " + stem);
+            assertNull(VirtualBlockstateCatalog.renderJson(stem), "Unknown blockstate must not render: " + stem);
+        }
+
+        for (VirtualBlockstateCatalog.Kind kind : VirtualBlockstateCatalog.Kind.values()) {
+            for (Object variant : variantsOf(kind)) {
+                for (Object reference : modelsOf(variant)) {
+                    int model = modelIndexOf(reference);
+                    assertTrue(
+                            model >= 0 && model < kind.modelCount(),
+                            "Model index " + model + " out of range for " + kind + " with " + kind.modelCount()
+                                    + " models");
+                }
+            }
+        }
     }
 
     @Test
@@ -402,6 +515,40 @@ final class VirtualResourcesIntegrityTest {
             for (Object item : list) {
                 collectVariantModels(label, item, allKnownModels, missing);
             }
+        }
+    }
+
+    /**
+     * Variant table of {@code kind}. The variant and model-reference records stay private to the catalog,
+     * so the index invariant reads them through their accessors.
+     */
+    private static List<?> variantsOf(VirtualBlockstateCatalog.Kind kind) {
+        try {
+            Method variants = VirtualBlockstateCatalog.Kind.class.getDeclaredMethod("variants");
+            variants.setAccessible(true);
+            return (List<?>) variants.invoke(kind);
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionError("Cannot read variants of " + kind, e);
+        }
+    }
+
+    private static List<?> modelsOf(Object variant) {
+        try {
+            Method models = variant.getClass().getDeclaredMethod("models");
+            models.setAccessible(true);
+            return (List<?>) models.invoke(variant);
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionError("Cannot read model references of " + variant, e);
+        }
+    }
+
+    private static int modelIndexOf(Object reference) {
+        try {
+            Method model = reference.getClass().getDeclaredMethod("model");
+            model.setAccessible(true);
+            return (Integer) model.invoke(reference);
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionError("Cannot read model index of " + reference, e);
         }
     }
 

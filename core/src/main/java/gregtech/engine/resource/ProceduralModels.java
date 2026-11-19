@@ -5,7 +5,6 @@ import gregtech.content.energy.ChemicalBatterySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -94,6 +93,8 @@ public final class ProceduralModels {
 
     private static volatile @Nullable Set<String> cachedModelPaths;
 
+    private static volatile @Nullable Set<String> cachedBlockstateStems;
+
     private ProceduralModels() {}
 
     /**
@@ -112,21 +113,20 @@ public final class ProceduralModels {
         }
     }
 
-    /** Emits every procedural blockstate to {@code sink}, keyed by blockstate stem and encoded as UTF-8. */
+    /**
+     * Emits every procedural blockstate to {@code sink}, keyed by blockstate stem and encoded as UTF-8.
+     *
+     * <p>The stem table is the single source of truth, so a stem that has no renderer fails the build
+     * instead of silently dropping a blockstate.
+     */
     public static void emitBlockstates(BiConsumer<String, byte[]> sink) {
-        Set<String> emitted = new HashSet<>(2048);
-        BiConsumer<String, String> collector = (stem, json) -> {
-            if (!emitted.add(stem)) {
-                throw new IllegalStateException("Duplicate procedural blockstate: " + stem);
+        for (String stem : blockstateStems()) {
+            String json = renderBlockstateJson(stem);
+            if (json == null) {
+                throw new IllegalStateException("Procedural blockstate has no renderer: " + stem);
             }
             sink.accept(stem, json.getBytes(StandardCharsets.UTF_8));
-        };
-        forEachStoneBlockstate(collector);
-        forEachPileBlockstate(collector);
-        forEachFilterBlockstate(collector);
-        forEachExtenderBlockstate(collector);
-        forEachReactorCoreBlockstate(collector);
-        forEachBatteryBlockstate(collector);
+        }
     }
 
     /** Renders the first scaffold design, whose rods take the material's solid block sprite. */
@@ -182,13 +182,15 @@ public final class ProceduralModels {
         }
         if (modelPath.startsWith("block/chemical_battery/")) return renderBatteryBlockModel(modelPath);
         if (modelPath.startsWith("item/battery_")) return renderBatteryItemModel(modelPath);
-        if (modelPath.startsWith("item/compass")) return renderCompassModel(modelPath);
+        if (modelPath.startsWith("item/compass_") || modelPath.startsWith("item/compass/")) {
+            return renderCompassModel(modelPath);
+        }
         return null;
     }
 
     /** Reports whether {@code stem} is one of the procedural blockstates. */
     public static boolean containsBlockstate(String stem) {
-        return stem != null && renderBlockstateJson(stem) != null;
+        return stem != null && blockstateStems().contains(stem);
     }
 
     /** Renders the blockstate named {@code stem}, or returns {@code null} when it is not procedural. */
@@ -219,6 +221,32 @@ public final class ProceduralModels {
                 forEachCompassModelPath(paths::add);
                 current = Collections.unmodifiableSet(paths);
                 cachedModelPaths = current;
+            }
+            return current;
+        }
+    }
+
+    /** Every procedural blockstate stem, collected once from the tables that also drive rendering. */
+    private static Set<String> blockstateStems() {
+        Set<String> current = cachedBlockstateStems;
+        if (current != null) return current;
+        synchronized (ProceduralModels.class) {
+            current = cachedBlockstateStems;
+            if (current == null) {
+                Set<String> stems = new LinkedHashSet<>(4096);
+                Consumer<String> collector = stem -> {
+                    if (!stems.add(stem)) {
+                        throw new IllegalStateException("Duplicate procedural blockstate: " + stem);
+                    }
+                };
+                forEachStoneBlockstateStem(collector);
+                forEachPileBlockstateStem(collector);
+                forEachFilterBlockstateStem(collector);
+                forEachExtenderBlockstateStem(collector);
+                forEachReactorCoreBlockstateStem(collector);
+                forEachBatteryBlockstateStem(collector);
+                current = Collections.unmodifiableSet(stems);
+                cachedBlockstateStems = current;
             }
             return current;
         }
@@ -320,12 +348,12 @@ public final class ProceduralModels {
         return null;
     }
 
-    private static void forEachStoneBlockstate(BiConsumer<String, String> sink) {
+    private static void forEachStoneBlockstateStem(Consumer<String> sink) {
         for (StoneSpec type : STONE_SPECS) {
             for (StoneVariant variant : StoneVariant.values()) {
                 String base = type.registryId() + "_" + variant.registrySuffix();
-                sink.accept(base, stoneBlockstateJson(base));
-                sink.accept(base + "_slab", stoneSlabBlockstateJson(base));
+                sink.accept(base);
+                sink.accept(base + "_slab");
             }
         }
     }
@@ -448,10 +476,10 @@ public final class ProceduralModels {
         return count < 0 ? null : pileJson(kind, count);
     }
 
-    private static void forEachPileBlockstate(BiConsumer<String, String> sink) {
-        sink.accept("ingot_pile", pileBlockstateJson("ingot"));
-        sink.accept("plate_pile", pileBlockstateJson("plate"));
-        sink.accept("plate_gem_pile", pileBlockstateJson("gem_plate"));
+    private static void forEachPileBlockstateStem(Consumer<String> sink) {
+        sink.accept("ingot_pile");
+        sink.accept("plate_pile");
+        sink.accept("plate_gem_pile");
     }
 
     private static String pileBlockstateJson(String kind) {
@@ -591,8 +619,8 @@ public final class ProceduralModels {
         return logisticsJson(compositeLoader, family, facing, secondary);
     }
 
-    private static void forEachFilterBlockstate(BiConsumer<String, String> sink) {
-        FILTER_BLOCKSTATES.forEach((stem, family) -> sink.accept(stem, filterBlockstateJson(family)));
+    private static void forEachFilterBlockstateStem(Consumer<String> sink) {
+        FILTER_BLOCKSTATES.keySet().forEach(sink);
     }
 
     /**
@@ -619,10 +647,8 @@ public final class ProceduralModels {
         return family == null ? null : filterBlockstateJson(family);
     }
 
-    private static void forEachExtenderBlockstate(BiConsumer<String, String> sink) {
-        for (String stem : EXTENDER_BLOCKSTATES) {
-            sink.accept(stem, extenderBlockstateJson(stem));
-        }
+    private static void forEachExtenderBlockstateStem(Consumer<String> sink) {
+        EXTENDER_BLOCKSTATES.forEach(sink);
     }
 
     private static String extenderBlockstateJson(String family) {
@@ -774,12 +800,13 @@ public final class ProceduralModels {
         String[] parts = rest.substring(1).split("_", -1);
         if (parts.length != 2) return null;
         if (!ALL_FACINGS.contains(parts[0]) || !ALL_FACINGS.contains(parts[1])) return null;
+        if ("down".equals(parts[0]) && "down".equals(parts[1])) return null;
         return reactorCoreJson(compositeLoader, size, parts[0], parts[1]);
     }
 
-    private static void forEachReactorCoreBlockstate(BiConsumer<String, String> sink) {
-        sink.accept("reactor_core", reactorCoreBlockstateJson("1x1"));
-        sink.accept("reactor_core_2x2", reactorCoreBlockstateJson("2x2"));
+    private static void forEachReactorCoreBlockstateStem(Consumer<String> sink) {
+        sink.accept("reactor_core");
+        sink.accept("reactor_core_2x2");
     }
 
     private static String reactorCoreBlockstateJson(String size) {
@@ -905,9 +932,9 @@ public final class ProceduralModels {
         return null;
     }
 
-    private static void forEachBatteryBlockstate(BiConsumer<String, String> sink) {
+    private static void forEachBatteryBlockstateStem(Consumer<String> sink) {
         for (ChemicalBatterySpec spec : ChemicalBatterySpec.all()) {
-            sink.accept(spec.id(), batteryBlockstateJson(spec));
+            sink.accept(spec.id());
         }
     }
 
@@ -964,6 +991,7 @@ public final class ProceduralModels {
             if (!COMPASS_MODES.contains(mode) || frame < 1) return null;
             return compassNeedleJson(mode, frame);
         }
+        if (!modelPath.startsWith("item/compass_")) return null;
         String mode = modelPath.substring("item/compass_".length());
         return COMPASS_MODES.contains(mode) ? compassItemJson(mode) : null;
     }
@@ -1048,6 +1076,7 @@ public final class ProceduralModels {
     /** Parses a decimal index in {@code [0, max]}, or returns {@code -1} when the text is not one. */
     private static int parseIndex(String text, int max) {
         if (text.isEmpty() || text.length() > 9) return -1;
+        if (text.length() > 1 && text.charAt(0) == '0') return -1;
         int value = 0;
         for (int index = 0; index < text.length(); index++) {
             char digit = text.charAt(index);

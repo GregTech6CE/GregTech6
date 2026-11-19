@@ -53,11 +53,11 @@ public static void registerGeometryLoader(ModelEvent.RegisterGeometryLoaders eve
 }
 ```
 
-pack 类的构造分支及运行期虚拟模型所需的复合加载器标识（`forge:composite` / `neoforge:composite`，经 `COMPOSITE_LOADER` 提供给 `VirtualModelCatalog` 与 `ProceduralModels`）留在 `SharedInventoryModelPack`，因为它继承加载器专属的 `AbstractPackResources`；工厂和 geometry loader key 差异收进门面。
+pack 类的构造分支及运行期虚拟模型所需的复合加载器标识（`forge:composite` / `neoforge:composite`，经 `COMPOSITE_LOADER` 提供给 `VirtualModelCatalog` 与 `ProceduralModels`）收敛在 client-free 基类 `VirtualAssetPackResources` 中，由 `SharedInventoryModelPack` 继承并供专用服务端测试复用同一套资源路由；工厂和 geometry loader key 差异收进门面 `ClientPackFacade`。
 
 ### 为什么这么修复
 
-- 构造差异无法完全消除（基类签名不同），但可以限制在 pack 类内部。
+- 构造差异无法完全消除（基类签名不同），但可以限制在 pack 基类内部。
 - 工厂和 geometry loader key 是调用点差异，收进 `ClientPackFacade` 后调用点不再分支。
 - 事件归属与顺序见 [events.md](events.md)。
 
