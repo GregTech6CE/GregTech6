@@ -64,6 +64,8 @@
     "BlockPaintColorMixin",
     "ColoredBookLecternScreenMixin",
     "ColoredBookOpenPacketMixin",
+    "CreativeTabSearchMixin",
+    "EmiCreativeTabCollectionMixin",
     "EmiMaterialUsesMixin",
     "EmiStructureFocusMixin",
     "FluidAlphaConfigMixin",
@@ -76,6 +78,7 @@
     "PacketFrameDecoderMixin",
     "ReliableEmiNamespaceMixin",
     "SpectatorBlockOutlineMixin",
-    "SpectatorCrosshairMixin"
+    "SpectatorCrosshairMixin",
+    "SuffixArrayMixin"
   ]
 }

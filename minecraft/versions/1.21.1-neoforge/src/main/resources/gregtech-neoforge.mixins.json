@@ -73,6 +73,7 @@
     "OreTerrainParticleMixin",
     "ReliableEmiNamespaceMixin",
     "SpectatorBlockOutlineMixin",
-    "SpectatorCrosshairMixin"
+    "SpectatorCrosshairMixin",
+    "SuffixArrayMixin"
   ]
 }

@@ -5,12 +5,15 @@ import gregtech.content.data.MaterialPrefix;
 import gregtech.content.item.GTToolItem;
 import gregtech.content.item.MaterialItem;
 import gregtech.content.registry.GTItems;
+import gregtech.content.tool.OriginalToolMaterials;
 import gregtech.engine.material.GTMaterialRegistry;
 import gregtech.engine.stack.StackCompat;
 import gregtech.engine.tool.GTToolHelper;
 import gregtech.engine.tool.GTToolType;
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -51,29 +54,57 @@ public final class ToolAssemblyCatalog {
 
     /** Every tool the port can assemble, in GT6 id order. */
     public static List<ToolAssemblyInfo> build() {
+        var handles = new HandleCandidates();
         List<ToolAssemblyInfo> out = new ArrayList<>();
         for (GTToolType type : GTToolType.values()) {
-            ToolAssemblyInfo info = build(type);
-            if (info != null) out.addAll(materialRows(info));
+            ToolAssemblyInfo info = build(type, handles);
+            if (info != null) out.addAll(materialRows(info, handles));
         }
         return out;
     }
 
+    private record AssemblyHandles(GTMaterial defaultMaterial, List<ItemStack> templates) {}
+
+    /** Candidate templates belong to one build, and rows receive their own mutable stacks. */
+    private static final class HandleCandidates {
+        private final List<ItemStack> sticks = ToolAssemblyCatalog.sticks();
+        private final Map<GTMaterial, AssemblyHandles> byHead = new IdentityHashMap<>();
+
+        private AssemblyHandles forHead(GTMaterial head) {
+            return byHead.computeIfAbsent(head, material -> {
+                GTMaterial defaultHandle = OriginalToolMaterials.defaultHandle(material);
+                if (defaultHandle == null) return new AssemblyHandles(null, List.of());
+                var accepted = new ArrayList<>(sticks);
+                accepted.removeIf(
+                        stack -> !OriginalToolMaterials.acceptsHandle(material, MaterialItem.getMaterial(stack)));
+                listsHandle(accepted, defaultHandle);
+                return new AssemblyHandles(defaultHandle, accepted);
+            });
+        }
+    }
+
+    private static List<ItemStack> copyStacks(List<ItemStack> templates) {
+        var copies = new ArrayList<ItemStack>(templates.size());
+        for (var template : templates) copies.add(template.copy());
+        return copies;
+    }
+
     /** Keep the body material fixed in each viewer row, just as GT6 registers per material. */
-    private static List<ToolAssemblyInfo> materialRows(ToolAssemblyInfo info) {
+    private static List<ToolAssemblyInfo> materialRows(ToolAssemblyInfo info, HandleCandidates candidates) {
         var out = new ArrayList<ToolAssemblyInfo>();
         var type = info.type();
         if (info.headAssembly()) {
             for (var headStack : info.inputs().get(0)) {
                 var head = MaterialItem.getMaterial(headStack);
-                var handle = gregtech.content.tool.OriginalToolMaterials.defaultHandle(head);
+                var handles = candidates.forHead(head);
+                var handle = handles.defaultMaterial();
                 if (handle == null) continue;
-                var handles = sticks();
-                handles.removeIf(stack -> !gregtech.content.tool.OriginalToolMaterials.acceptsHandle(
-                        head, MaterialItem.getMaterial(stack)));
-                listsHandle(handles, handle);
                 out.add(new ToolAssemblyInfo(
-                        type, List.of(List.of(headStack), handles), GTToolItem.create(type, head, handle), true, null));
+                        type,
+                        List.of(List.of(headStack), copyStacks(handles.templates())),
+                        GTToolItem.create(type, head, handle),
+                        true,
+                        null));
             }
             return out;
         }
@@ -139,48 +170,45 @@ public final class ToolAssemblyCatalog {
         return out;
     }
 
-    private static ToolAssemblyInfo build(GTToolType type) {
+    private static ToolAssemblyInfo build(GTToolType type, HandleCandidates candidates) {
         if (type == GTToolType.FLINT_AND_TINDER) return flintAndTinder(type);
         // Tools GT6 registers with AdvancedCraftingTool show their head + handle row; the shaped
         // early rows (rock or flint plus a stick) are the recipes JEI lists next to it. The
         // universal spade has a head prefix but only its own shaped row, so it falls through.
-        if (GTToolRecipes.isHeadAssembly(type)) return headAndHandle(type);
+        if (GTToolRecipes.isHeadAssembly(type)) return headAndHandle(type, candidates);
         // GT6's shaped rows for one-piece tools: list every material that satisfies each slot.
         var patterns = GTToolRecipes.shaped(type);
-        if (!patterns.isEmpty()) return shaped(type, patterns.get(0));
+        if (!patterns.isEmpty()) return shaped(type, patterns.get(0), candidates);
         return null;
     }
 
     /** GT6's head + handle assembly (the shapeless {@code AdvancedCraftingTool} row). */
-    private static ToolAssemblyInfo headAndHandle(GTToolType type) {
+    private static ToolAssemblyInfo headAndHandle(GTToolType type, HandleCandidates candidates) {
         List<ItemStack> heads =
                 stacksOf(type == GTToolType.MAGNIFYING_GLASS ? MaterialPrefix.lens : type.headPrefix(), type);
-        heads.removeIf(stack -> !gregtech.content.tool.OriginalToolMaterials.acceptsAssemblyHead(
-                        type.definition(), MaterialItem.getMaterial(stack))
-                || gregtech.content.tool.OriginalToolMaterials.defaultHandle(MaterialItem.getMaterial(stack)) == null);
+        heads.removeIf(stack -> {
+            var material = MaterialItem.getMaterial(stack);
+            return !OriginalToolMaterials.acceptsAssemblyHead(type.definition(), material)
+                    || candidates.forHead(material).defaultMaterial() == null;
+        });
         if (heads.isEmpty()) return null;
         GTMaterial head = MaterialItem.getMaterial(heads.get(0));
-        var handles = sticks();
-        handles.removeIf(stack ->
-                !gregtech.content.tool.OriginalToolMaterials.acceptsHandle(head, MaterialItem.getMaterial(stack)));
-        GTMaterial handle = gregtech.content.tool.OriginalToolMaterials.defaultHandle(head);
-        var sample = GTItems.getStack(MaterialPrefix.stick, handle, 1);
-        handles.removeIf(stack -> stack.getItem() == sample.getItem());
-        handles.add(0, sample);
-        ItemStack output = GTToolItem.create(type, head, handle);
+        var handles = candidates.forHead(head);
+        ItemStack output = GTToolItem.create(type, head, handles.defaultMaterial());
         if (output.isEmpty()) return null;
-        return new ToolAssemblyInfo(type, List.of(heads, handles), output, true, null);
+        return new ToolAssemblyInfo(type, List.of(heads, copyStacks(handles.templates())), output, true, null);
     }
 
     /** One slot per pattern cell, each listing every item that fits there. */
-    private static ToolAssemblyInfo shaped(GTToolType type, GTToolRecipes.Pattern pattern) {
+    private static ToolAssemblyInfo shaped(
+            GTToolType type, GTToolRecipes.Pattern pattern, HandleCandidates candidates) {
         List<Character> letters = new ArrayList<>();
         List<List<ItemStack>> inputs = new ArrayList<>();
         for (int y = 0; y < pattern.height(); y++) {
             for (int x = 0; x < pattern.width(); x++) {
                 char letter = pattern.at(x, y);
                 if (letter == ' ') continue;
-                List<ItemStack> options = optionsFor(type, pattern, letter);
+                List<ItemStack> options = optionsFor(type, pattern, letter, candidates);
                 if (options.isEmpty()) return null;
                 letters.add(letter);
                 inputs.add(new ArrayList<>(options));
@@ -262,7 +290,8 @@ public final class ToolAssemblyCatalog {
     }
 
     /** Every item that satisfies one pattern letter. */
-    private static List<ItemStack> optionsFor(GTToolType type, GTToolRecipes.Pattern pattern, char letter) {
+    private static List<ItemStack> optionsFor(
+            GTToolType type, GTToolRecipes.Pattern pattern, char letter, HandleCandidates candidates) {
         var special = GTToolPatternRecipe.specialIngredient(type, pattern, letter);
         if (special != null) return java.util.Arrays.asList(special.getItems());
         GTToolType tool = pattern.tools().get(letter);
@@ -274,7 +303,7 @@ public final class ToolAssemblyCatalog {
         if (letter == 'F') return List.of(new ItemStack(Items.FLINT));
         var fixed = pattern.gate().items().get(letter);
         if (fixed != null) return List.of(new ItemStack(fixed));
-        if (letter == 'H') return sticks();
+        if (letter == 'H') return copyStacks(candidates.sticks);
         MaterialPrefix prefix = letter == 'A' && type.headPrefix() != null
                 ? type.headPrefix()
                 : pattern.forms().get(letter);
