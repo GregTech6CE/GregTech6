@@ -37,6 +37,7 @@ API `1.10.0` 移除了旧材料句柄及其注册重载，并更改了模具浇�
 | `Material.mass()` | 在冻结的 `MaterialView` 上读取 `property(MaterialProperties.MASS)`，结果为 `Optional<Long>`，单位为核子数 |
 | 接受旧 `Material` 句柄的 `MaterialInfoTool.Registrar` 重载 | 在 `materialInfo(Registrar)` 中使用接受 `MaterialKey` 的重载 |
 | `CrucibleMold.fillMold(Material, ...)` | 给 `fillMold` 传入 `MaterialKey`，可从材料名解析得到 |
+| `BehaviorMachineMenuView.energy()` | 自 1.10.0 起已弃用。改用 `storedEnergy()`，以 `long` 读取完整储能 |
 | `MaterialDeclaration.centrifuge()`／`electrolyzer()` | [类型化分解规则](materials.md#分解规则api-18) |
 | `AddonMachineContributor.structureLayouts()`、KubeJS `addLayout()` | [显式 `controller.withStructure(layout)` 绑定](multiblocks.md#显式绑定) |
 | `StructureLayout` 三参数、`LayoutCell` 六参数构造器 | [布局 builder 或完整构造器](multiblocks.md#世界匹配约束) |

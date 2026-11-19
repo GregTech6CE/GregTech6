@@ -17,15 +17,14 @@
 | `api.addon.worldgen` | 矿脉与小矿生成声明及命名规则 | `OreVeinDeclaration`、`SmallOreDeclaration` |
 | `api.material` | 材料公共模型、成分、性质、原子属性和数量常量 | `GTMaterial`、`MaterialComponent`、`GTValues`；不可引入物品栈 |
 | `api.energy` | 能源类型、输入输出与转移契约 | `EnergyType`、`EnergyInput`、`EnergyOutput`、`GTVoltageTiers` |
-| `api.machine` | 机器面、方向掩码、基础参数、热处理等协议 | `MachineFace`、`MachineFaceMasks`、`BasicMachineParameters` |
+| `api.machine` | 机器面、方向掩码、输入输出、能源范围和热处理契约 | `MachineFace`、`MachineFaceMasks`、`MachineIo`、`EnergyRange`、`HeatHandler` |
 | `api.multiblock` | 布局、单元、角色、重复段、匹配约束和位置端口规则 | `StructureLayout`、`StructurePattern`、`StructureConstraint`、`CellMatch`、`StructurePorts`；不直接查询世界 |
-| `api.recipe` | 配方包入口说明 | 仅 `package-info.java`；`RecipeMapSpec` 属于宿主 `gregtech.content.recipe` |
 | `api.sensor` | 压力、温度、重量和进度等观测源 | `TemperatureSource`、`ProgressSensorSource` |
 | `api.signal` | GT 信号的发送、接收和承载契约 | `GtSignalSource`、`GtSignalReceiver`、`GtSignalCarrier` |
 | `api.crop` | 作物扫描协议 | `CropScanSource` |
 | `api.mod` | 模组存在性等公共信息接口 | `ModData`；具体加载器绑定在启动阶段 |
 
-`StructureGrid` 与 `RecipeMapSpec` 已移回宿主，分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`；它们不属于附属契约。
+`StructureGrid` 与 `RecipeMapSpec` 已移回宿主，分别位于 `gregtech.content.multiblock` 与 `gregtech.content.recipe`；它们不属于附属契约。`BasicMachineParameters` 和 `MachineControllerKind` 由宿主的 `gregtech.engine.machine` 管理。
 
 `MachineRecipeDocuments` 只处理 `Map<String,Object>` 形式的 JSON 树并写出 canonical JSON；文件解析由宿主或附属的 JSON 库完成。自定义文档类型通过 `MachineRecipeDocumentTypes` 注册，在 `dispatchRecipesReady` 开始时关闭。
 
