@@ -46,8 +46,12 @@ public final class GTMultiblocks {
         IMPLOSION_COMPRESSOR_WALL = findPart(18023); LARGE_NIOBIUM_TITANIUM_COIL = findPart(18041);
         LARGE_COPPER_COIL = findPart(18040); LARGE_IRIDIUM_COIL = findPart(18045);
         DENSE_TITANIUM_WALL = findPart(18026); TUNGSTEN_WALL = findPart(18004); LIGHTNING_ROD = findPart(18104);
-        COKE_OVEN_MAIN = controller(registrar, "coke_oven_main", () -> new CokeOvenControllerBlock(properties(6)), ControllerDeclarations.COKE_OVEN);
-        CRYO_DISTILLATION_MAIN = controller(registrar, "cryo_distillation_main", () -> new CryoDistillationControllerBlock(properties(6)), ControllerDeclarations.CRYO_DISTILLATION);
+        COKE_OVEN_MAIN = controller(
+                registrar, "coke_oven_main", () -> new CokeOvenControllerBlock(properties(6)),
+                ControllerDeclarations.COKE_OVEN.binding());
+        CRYO_DISTILLATION_MAIN = controller(
+                registrar, "cryo_distillation_main", () -> new CryoDistillationControllerBlock(properties(6)),
+                ControllerDeclarations.CRYO_DISTILLATION.binding());
         HEAT_EXCHANGER_MAIN = controller(registrar, "heat_exchanger_main", () -> new LargeHeatExchangerControllerBlock(properties(6)), ControllerDeclarations.HEAT_EXCHANGER);
         LOGISTICS_CORE = controller(registrar, "logistics_core", () -> new LogisticsCoreControllerBlock(properties(6)), ControllerDeclarations.LOGISTICS);
     }

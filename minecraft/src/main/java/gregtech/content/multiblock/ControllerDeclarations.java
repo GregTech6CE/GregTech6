@@ -1,5 +1,10 @@
 package gregtech.content.multiblock;
 
+import static gregtech.engine.mod.GregTechIdentity.REGISTRY_NAMESPACE;
+
+import gregtech.api.machine.MachineControllerKind;
+import gregtech.content.block.machine.BasicMachineBlock;
+import gregtech.content.block.machine.MultiblockControllerBlock;
 import gregtech.content.blockentity.machine.*;
 import gregtech.engine.addon.AddonMachines;
 import gregtech.engine.machine.BasicMachineSpec;
@@ -12,25 +17,30 @@ import java.util.function.Supplier;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 
 /** Controller families bind their entity type and structure here; loaders only register the declaration. */
 public final class ControllerDeclarations {
     private ControllerDeclarations() {}
 
-    public static final ControllerBinding<CokeOvenControllerBlockEntity> COKE_OVEN = binding(
-            "gt6ce",
-            "coke_oven",
-            "cokeoven",
-            CokeOvenControllerBlockEntity.class,
-            CokeOvenControllerBlockEntity::createStructureDefinition,
-            () -> cells(OriginalCokeOvenRules.cells()));
-    public static final ControllerBinding<CryoDistillationControllerBlockEntity> CRYO_DISTILLATION = binding(
-            "gt6ce",
-            "cryo_distillation",
-            "cryodistillationtower",
-            CryoDistillationControllerBlockEntity.class,
-            CryoDistillationControllerBlockEntity::createStructureDefinition,
-            ControllerDeclarations::distillation);
+    public static final RecipeControllerFamily COKE_OVEN = RecipeControllerFamily.multiblock(
+            binding(
+                    REGISTRY_NAMESPACE,
+                    "coke_oven",
+                    "cokeoven",
+                    CokeOvenControllerBlockEntity.class,
+                    CokeOvenControllerBlockEntity::createStructureDefinition,
+                    () -> cells(OriginalCokeOvenRules.cells())),
+            (type, pos, state) -> new CokeOvenControllerBlockEntity(pos, state));
+    public static final RecipeControllerFamily CRYO_DISTILLATION = RecipeControllerFamily.multiblock(
+            binding(
+                    REGISTRY_NAMESPACE,
+                    "cryo_distillation",
+                    "cryodistillationtower",
+                    CryoDistillationControllerBlockEntity.class,
+                    CryoDistillationControllerBlockEntity::createStructureDefinition,
+                    ControllerDeclarations::distillation),
+            (type, pos, state) -> new CryoDistillationControllerBlockEntity(pos, state));
     public static final ControllerBinding<LargeHeatExchangerControllerBlockEntity> HEAT_EXCHANGER = fixed(
             "large_heat_exchanger",
             "heatexchanger",
@@ -86,10 +96,10 @@ public final class ControllerDeclarations {
             "bedrockdrill",
             BedrockDrillControllerBlockEntity.class,
             BedrockDrillControllerBlockEntity::createStructureDefinition);
-    public static final ControllerBinding<ImplosionCompressorControllerBlockEntity> IMPLOSION =
-            implosion("gt6ce", "implosion_compressor");
-    public static final ControllerBinding<FusionReactorControllerBlockEntity> FUSION =
-            fusion("gt6ce", "fusion_reactor");
+    private static final RecipeControllerFamily BASIC =
+            RecipeControllerFamily.single(BasicMachineBlockEntity.class, BasicMachineBlockEntity::new);
+    private static final RecipeControllerFamily COMPACT_MATTER = RecipeControllerFamily.single(
+            CompactMatterFabricatorBlockEntity.class, CompactMatterFabricatorBlockEntity::new);
 
     private static LargeMachineLayouts.Layout cells(List<SharedLargeMachineLayouts.Cell> cells) {
         return new LargeMachineLayouts.Layout(LargeMachineLayouts.fromShared(cells), List.of());
@@ -112,73 +122,85 @@ public final class ControllerDeclarations {
 
     private static <E extends BlockEntity & TrackedMultiblock> ControllerBinding<E> fixed(
             String entity, String name, Class<E> type, Function<E, StructureDefinition.Declarative> factory) {
-        return binding("gt6ce", entity, name, type, factory, null);
+        return binding(REGISTRY_NAMESPACE, entity, name, type, factory, null);
     }
 
-    private static ControllerBinding<ImplosionCompressorControllerBlockEntity> implosion(
-            String namespace, String entity) {
-        return binding(
-                namespace,
-                entity,
-                "implosioncompressor",
-                ImplosionCompressorControllerBlockEntity.class,
-                ImplosionCompressorControllerBlockEntity::createStructureDefinition,
-                null);
+    public static ControllerDeclaration<BasicMachineBlock> recipe(
+            BasicMachineSpec spec, Supplier<BlockBehaviour.Properties> properties) {
+        var family = recipeFamily(spec);
+        Supplier<BasicMachineBlock> block = () -> spec.controllerKind() == MachineControllerKind.DISTILLATION
+                ? new MultiblockControllerBlock(spec, properties.get(), family)
+                : new BasicMachineBlock(spec, properties.get(), family);
+        var binding = family.binding();
+        return binding == null
+                ? ControllerDeclaration.single(spec.namespace(), spec.id(), block)
+                : ControllerDeclaration.multiblock(spec.namespace(), spec.id(), block, binding);
     }
 
-    private static ControllerBinding<FusionReactorControllerBlockEntity> fusion(String namespace, String entity) {
-        return binding(
-                namespace,
-                entity,
-                "fusionreactor",
-                FusionReactorControllerBlockEntity.class,
-                FusionReactorControllerBlockEntity::createStructureDefinition,
-                () -> FusionStructure.LAYOUT);
-    }
-
-    public static <B extends Block> ControllerDeclaration<B> recipe(BasicMachineSpec spec, Supplier<B> block) {
+    private static RecipeControllerFamily recipeFamily(BasicMachineSpec spec) {
         String namespace = spec.namespace(), path = spec.id(), entity = "be_" + path;
-        ControllerBinding<?> structure;
-        // NeoForge's basic-machine catalog also owns these two specialized controllers.
-        if (namespace.equals("gt6ce") && spec.machineName().equals("fusionreactor"))
-            structure = fusion(namespace, entity);
-        else if (namespace.equals("gt6ce") && spec.machineName().equals("implosioncompressor"))
-            structure = implosion(namespace, entity);
-        else
-            structure = switch (spec.controllerKind()) {
-                case DISTILLATION ->
+        boolean builtIn = REGISTRY_NAMESPACE.equals(namespace);
+        if (builtIn && spec.machineName().equals("fusionreactor"))
+            return RecipeControllerFamily.multiblock(
                     binding(
                             namespace,
                             entity,
-                            "distillationtower",
-                            DistillationTowerControllerBlockEntity.class,
-                            DistillationTowerControllerBlockEntity::createStructureDefinition,
-                            ControllerDeclarations::distillation);
-                case MATTER ->
+                            "fusionreactor",
+                            FusionReactorControllerBlockEntity.class,
+                            FusionReactorControllerBlockEntity::createStructureDefinition,
+                            () -> FusionStructure.LAYOUT),
+                    FusionReactorControllerBlockEntity::new,
+                    FusionReactorControllerBlockEntity::serverTick);
+        if (builtIn && spec.machineName().equals("implosioncompressor"))
+            return RecipeControllerFamily.multiblock(
                     binding(
                             namespace,
                             entity,
-                            "largemassfab",
-                            MatterFabricatorBlockEntity.class,
-                            MatterFabricatorBlockEntity::createStructureDefinition,
-                            () -> LargeMachineLayouts.layout("largemassfab"));
-                case LARGE_RECIPE -> {
-                    String name = namespace.equals("gt6ce")
-                            ? RecipeControllerFamilies.requireStructure(spec.machineName())
-                            : requiredAddonStructure(namespace, path);
-                    yield binding(
-                            namespace,
-                            entity,
-                            name,
-                            LargeRecipeMachineBlockEntity.class,
-                            LayoutStructures::recipe,
-                            () -> LargeMachineLayouts.layout(name));
-                }
-                default -> null;
-            };
-        return structure == null
-                ? ControllerDeclaration.single(namespace, path, block)
-                : ControllerDeclaration.multiblock(namespace, path, block, structure);
+                            "implosioncompressor",
+                            ImplosionCompressorControllerBlockEntity.class,
+                            ImplosionCompressorControllerBlockEntity::createStructureDefinition,
+                            null),
+                    ImplosionCompressorControllerBlockEntity::new);
+        return switch (spec.controllerKind()) {
+            case DISTILLATION ->
+                RecipeControllerFamily.multiblock(
+                        binding(
+                                namespace,
+                                entity,
+                                "distillationtower",
+                                DistillationTowerControllerBlockEntity.class,
+                                DistillationTowerControllerBlockEntity::createStructureDefinition,
+                                ControllerDeclarations::distillation),
+                        DistillationTowerControllerBlockEntity::new);
+            case MATTER ->
+                RecipeControllerFamily.multiblock(
+                        binding(
+                                namespace,
+                                entity,
+                                "largemassfab",
+                                MatterFabricatorBlockEntity.class,
+                                MatterFabricatorBlockEntity::createStructureDefinition,
+                                () -> LargeMachineLayouts.layout("largemassfab")),
+                        MatterFabricatorBlockEntity::new);
+            case LARGE_RECIPE -> {
+                String name = builtIn
+                        ? RecipeControllerFamilies.requireStructure(spec.machineName())
+                        : requiredAddonStructure(namespace, path);
+                yield RecipeControllerFamily.multiblock(
+                        binding(
+                                namespace,
+                                entity,
+                                name,
+                                LargeRecipeMachineBlockEntity.class,
+                                LayoutStructures::recipe,
+                                () -> LargeMachineLayouts.layout(name)),
+                        LargeRecipeMachineBlockEntity::new);
+            }
+            case BASIC -> BASIC;
+            case COMPACT_MATTER -> COMPACT_MATTER;
+            case BEHAVIOR ->
+                throw new IllegalStateException("Behavior machines are not recipe controllers: " + spec.machineName());
+        };
     }
 
     public static <B extends Block> ControllerDeclaration<B> behavior(

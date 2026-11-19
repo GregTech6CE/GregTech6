@@ -2,27 +2,24 @@
  * Original 17111 CU controller, using the native basic-machine tools, menu and recipe engine. */
 package gregtech.content.block.machine;
 
+import gregtech.content.multiblock.ControllerDeclarations;
 import gregtech.engine.machine.BasicMachineSpec;
-import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 
 public class CryoDistillationControllerBlock extends BasicMachineBlock {
     public CryoDistillationControllerBlock(Properties properties) {
-        super(makeSpec(),properties.strength(6,6).requiresCorrectToolForDrops());
+        super(
+                makeSpec(),
+                properties.strength(6, 6).requiresCorrectToolForDrops(),
+                ControllerDeclarations.CRYO_DISTILLATION);
         setBeTypeSupplier(()->gregtech.content.registry.GTBlockEntities.CRYO_DISTILLATION.get());
     }
     public static BasicMachineSpec makeSpec() {
         var p=gregtech.content.multiblock.OriginalMultiblockMachineParameters.cryoDistillationTower();
         return BasicMachineSpec.builtIn(p, gregtech.content.data.MachineRecipeMaps.CryoDistillationTower);
-    }
-    @Override public BasicMachineBlockEntity createBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state) {
-        return new gregtech.content.blockentity.machine.CryoDistillationControllerBlockEntity(pos,state);
     }
 //? if >=1.21.1 {
     /*@Override public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context,List<Component> tooltip,TooltipFlag flag) {

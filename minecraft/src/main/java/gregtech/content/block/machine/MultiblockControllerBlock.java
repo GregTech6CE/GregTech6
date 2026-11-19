@@ -1,15 +1,11 @@
 package gregtech.content.block.machine;
 
+import gregtech.content.multiblock.RecipeControllerFamily;
 import gregtech.engine.machine.BasicMachineSpec;
-import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
-import gregtech.content.blockentity.machine.DistillationTowerControllerBlockEntity;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -17,13 +13,9 @@ import java.util.List;
 /** Distillation Tower controller block — basic machine wiring + structure gate. */
 public class MultiblockControllerBlock extends BasicMachineBlock {
 
-    public MultiblockControllerBlock(BasicMachineSpec spec, Properties properties) {
-        super(spec, properties);
-    }
-
-    @Override
-    public BasicMachineBlockEntity createBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-        return new DistillationTowerControllerBlockEntity(type, pos, state);
+    public MultiblockControllerBlock(
+            BasicMachineSpec spec, Properties properties, RecipeControllerFamily controllerFamily) {
+        super(spec, properties, controllerFamily);
     }
 
     @Override

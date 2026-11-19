@@ -63,7 +63,7 @@ public final class MultiblockDeclarationTests {
         var furnace = new net.minecraft.world.level.block.entity.FurnaceBlockEntity(
                 BlockPos.ZERO, net.minecraft.world.level.block.Blocks.FURNACE.defaultBlockState());
         try {
-            ControllerDeclarations.COKE_OVEN.bind(furnace);
+            ControllerDeclarations.COKE_OVEN.binding().bind(furnace);
             throw new AssertionError("A furnace was accepted as a coke-oven controller");
         } catch (IllegalStateException expected) {
             helper.assertTrue(expected.getMessage().contains("cokeoven"), "Error must identify the structure");

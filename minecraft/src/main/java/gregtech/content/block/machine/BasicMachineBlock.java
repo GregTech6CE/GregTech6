@@ -16,6 +16,7 @@ import gregtech.engine.tool.ToolInteractions;
 
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.cover.CoverUtilityBehaviors.FilterAction;
+import gregtech.content.multiblock.RecipeControllerFamily;
 
 import net.minecraft.core.BlockPos;
 
@@ -101,6 +102,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
     public static final BooleanProperty RUNNING = BooleanProperty.create("running");
 
     private final BasicMachineSpec basicSpec;
+    private final RecipeControllerFamily controllerFamily;
 
     private Supplier<BlockEntityType<?>> beTypeSupplier = () -> null;
 
@@ -218,7 +220,8 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
         return useRemainder(state, level, pos, player, hand, be);
     }
 
-    public BasicMachineBlock(BasicMachineSpec basicSpec, Properties properties) {
+    public BasicMachineBlock(
+            BasicMachineSpec basicSpec, Properties properties, RecipeControllerFamily controllerFamily) {
 
         super(new MachineSpec(basicSpec.id(), basicSpec.material().getLocalName(), basicSpec.material().getColor(),
 
@@ -227,6 +230,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
                 properties);
 
         this.basicSpec = basicSpec;
+        this.controllerFamily = controllerFamily;
 
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH)
 
@@ -273,75 +277,14 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements gregtech.
     @Override
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-
-        if (level.isClientSide) return null;
-
-        BlockEntityType<?> ourType = beTypeSupplier.get();
-
-        if (type != ourType) return null;
-
-
-
-        if (basicSpec.machineName().equals("fusionreactor"))return (lvl,pos,st,be)->gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity.serverTick(lvl,pos,st,(gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity)be);
-
-
-        @SuppressWarnings("unchecked")
-
-        BlockEntityTicker<T> ticker = (lvl, pos, st, be) ->
-
-                BasicMachineBlockEntity.serverTick(lvl, pos, st, (BasicMachineBlockEntity) be);
-
-        return ticker;
-
+        return level.isClientSide || type != beType() ? null : controllerFamily.serverTicker();
     }
-
-
-
-    /** Factory hook so subclasses (multiblock controllers) can supply their own BE. */
-
-    public BasicMachineBlockEntity createBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-
-
-        if (basicSpec.machineName().equals("fusionreactor"))return new gregtech.content.blockentity.machine.FusionReactorControllerBlockEntity(type,pos,state);
-
-        if (basicSpec.machineName().equals("implosioncompressor"))return new gregtech.content.blockentity.machine.ImplosionCompressorControllerBlockEntity(type,pos,state);
-
-        return switch (basicSpec.controllerKind()) {
-            case COMPACT_MATTER -> new gregtech.content.blockentity.machine.CompactMatterFabricatorBlockEntity(type,pos,state);
-
-            case MATTER -> new gregtech.content.blockentity.machine.MatterFabricatorBlockEntity(type,pos,state);
-
-            case DISTILLATION -> new gregtech.content.blockentity.machine.DistillationTowerControllerBlockEntity(type,pos,state);
-
-            case LARGE_RECIPE -> new gregtech.content.blockentity.machine.LargeRecipeMachineBlockEntity(type,pos,state);
-
-            case BASIC -> new BasicMachineBlockEntity(type, pos, state);
-
-            case BEHAVIOR -> throw new IllegalStateException(
-
-                    "Behavior machines are not recipe controllers: " + basicSpec.machineName());
-
-        };
-
-
-    }
-
-
-
-    @Nullable
 
     @Override
-
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-
-        BlockEntityType<?> type = beTypeSupplier.get();
-
-        BasicMachineBlockEntity be = createBlockEntity(type, pos, state);
-
+    public BasicMachineBlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        BasicMachineBlockEntity be = controllerFamily.createEntity(beType(), pos, state);
         be.setSpec(basicSpec);
-
         return be;
-
     }
 
     /**

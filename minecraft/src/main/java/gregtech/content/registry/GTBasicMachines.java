@@ -1,16 +1,13 @@
 package gregtech.content.registry;
 
-import gregtech.api.machine.MachineControllerKind;
 import gregtech.content.block.machine.BasicMachineBlock;
 import gregtech.content.block.machine.BasicMachineItem;
-import gregtech.content.block.machine.MultiblockControllerBlock;
 import gregtech.content.blockentity.machine.BasicMachineBlockEntity;
 import gregtech.content.machine.BasicMachineDefinitions;
 import gregtech.content.multiblock.ControllerDeclarations;
 import gregtech.engine.machine.BasicMachineSpec;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -34,11 +31,7 @@ public final class GTBasicMachines {
     public static void registerAll(ContentRegistrar registrar) {
         for (BasicMachineSpec spec : BasicMachineDefinitions.specifications()) {
             var block = MultiblockRegistration.register(
-                    ControllerDeclarations.recipe(
-                            spec,
-                            () -> spec.controllerKind() == MachineControllerKind.DISTILLATION
-                                    ? new MultiblockControllerBlock(spec, properties(spec))
-                                    : new BasicMachineBlock(spec, properties(spec))),
+                    ControllerDeclarations.recipe(spec, () -> properties(spec)),
                     (path, factory) -> registrar.block(
                             spec.namespace(),
                             path,
@@ -46,17 +39,10 @@ public final class GTBasicMachines {
                             bare -> new BasicMachineItem(bare, new Item.Properties().stacksTo(16))));
             ALL.add(block);
             var type = registrar.<BasicMachineBlockEntity>blockEntity(spec.namespace(), "be_" + spec.id(), () -> {
-                AtomicReference<BlockEntityType<BasicMachineBlockEntity>> ref = new AtomicReference<>();
-                var built = BlockEntityType.Builder.of(
-                                (pos, state) -> {
-                                    var be = block.get().createBlockEntity(ref.get(), pos, state);
-                                    be.setSpec(spec);
-                                    return be;
-                                },
-                                block.get())
+                var registeredBlock = block.get();
+                var built = BlockEntityType.Builder.of(registeredBlock::newBlockEntity, registeredBlock)
                         .build(null);
-                ref.set(built);
-                block.get().setBeTypeSupplier(() -> built);
+                registeredBlock.setBeTypeSupplier(() -> built);
                 return built;
             });
             TYPES.add(type);
