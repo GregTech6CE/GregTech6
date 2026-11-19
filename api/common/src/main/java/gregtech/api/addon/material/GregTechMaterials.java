@@ -5,6 +5,7 @@ package gregtech.api.addon.material;
 import gregtech.api.addon.AddonRuntime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Material catalog entry. Materials are declared through {@link MaterialDeclaration} and read
@@ -16,6 +17,17 @@ public final class GregTechMaterials {
     /** Immutable definition view. Requires completed material bootstrap. */
     public static MaterialCatalogView catalog() {
         return AddonRuntime.services().materialCatalog();
+    }
+
+    /**
+     * Resolves a registered name or alias to its canonical material key. Unknown names,
+     * substitution groups and sentinel materials return empty.
+     * Available from {@link AddonMaterialContributor#link()} and after material bootstrap.
+     *
+     * @throws IllegalStateException if the material registry is unavailable
+     */
+    public static Optional<MaterialKey> resolve(String name) {
+        return AddonRuntime.services().resolveMaterial(name);
     }
 
     /** Immutable process rules from the current definition view. */

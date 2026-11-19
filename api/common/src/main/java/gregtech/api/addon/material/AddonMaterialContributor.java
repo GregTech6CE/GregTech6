@@ -79,6 +79,9 @@ public interface AddonMaterialContributor {
      */
     default void materialInfo(MaterialInfoTool.Registrar registrar) {}
 
-    /** Other cross-material links. New materials still belong in {@link #materials()}. */
+    /**
+     * Other cross-material links. Use {@link GregTechMaterials#resolve(String)} to resolve material
+     * names during this callback. New materials belong in {@link #materials()}.
+     */
     default void link() {}
 }

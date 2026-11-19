@@ -10,4 +10,7 @@ public final class MaterialProperties {
     public static final PropertyKey<Integer> BOILING_POINT = key("boiling_point_kelvin", Integer.class);
     public static final PropertyKey<Float> DENSITY = key("density", Float.class);
     public static final PropertyKey<String> FORMULA = key("formula", String.class);
+
+    /** Material-table mass in nucleons. */
+    public static final PropertyKey<Long> MASS = key("mass_nucleons", Long.class);
 }

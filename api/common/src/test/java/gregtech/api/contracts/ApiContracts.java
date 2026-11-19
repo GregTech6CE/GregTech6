@@ -3,7 +3,6 @@
 package gregtech.api.contracts;
 
 import gregtech.api.addon.AddonLimits;
-import gregtech.api.addon.AddonRuntime;
 import gregtech.api.addon.GregTechAddon;
 import gregtech.api.addon.GregTechAddons;
 import gregtech.api.addon.InstalledService;
@@ -85,7 +84,7 @@ public final class ApiContracts {
         checkMachineRecipeContracts();
         checkLocaleContracts();
         try {
-            AddonRuntime.services();
+            GregTechMaterials.resolve("Iron");
             throw new AssertionError("Host queries must fail before the runtime is bound");
         } catch (IllegalStateException expected) {
             check(expected.getMessage().contains("not installed"), "Missing host diagnostic");

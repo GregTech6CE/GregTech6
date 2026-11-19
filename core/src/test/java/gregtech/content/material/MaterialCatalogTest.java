@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import gregtech.api.addon.material.GregTechMaterials;
 import gregtech.api.addon.material.MaterialKey;
+import gregtech.api.addon.material.MaterialProperties;
 import gregtech.api.addon.material.MaterialTarget;
 import gregtech.api.addon.material.OreProcessingRule;
 import gregtech.api.material.CrushingMaterialHelper;
@@ -18,6 +19,13 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class MaterialCatalogTest {
+    @Test
+    void catalogPublishesMaterialTableMassInNucleons() {
+        MaterialTestFixture.ensureInitialized();
+        var iron = GregTechMaterials.catalog().find(new MaterialKey("Iron")).orElseThrow();
+        assertEquals(56L, iron.property(MaterialProperties.MASS).orElseThrow());
+    }
+
     @Test
     void materialHelpersReadPublishedRulesByCanonicalKey() {
         MaterialTestFixture.ensureInitialized();
