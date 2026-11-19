@@ -18,7 +18,8 @@ public abstract class EmiCreativeTabCollectionMixin {
             at =
                     @At(
                             value = "INVOKE",
-                            target = "Lnet/minecraft/client/Minecraft;submit(Ljava/util/function/Supplier;)Ljava/util/concurrent/CompletableFuture;",
+                            target =
+                                    "Lnet/minecraft/client/Minecraft;submit(Ljava/util/function/Supplier;)Ljava/util/concurrent/CompletableFuture;",
                             remap = true),
             require = 0,
             remap = false)

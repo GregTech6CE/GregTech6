@@ -20,7 +20,8 @@ public final class ForgeEmiCreativeTabs {
             if (previous == null) RESTORATIONS.remove();
             else RESTORATIONS.set(previous);
             // The combined search tab needs all category contents until collection finishes.
-            for (int i = restorations.size() - 1; i >= 0; i--) restorations.get(i).run();
+            for (int i = restorations.size() - 1; i >= 0; i--)
+                restorations.get(i).run();
         }
     }
 
