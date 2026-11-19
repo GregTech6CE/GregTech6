@@ -1,13 +1,19 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later */
 
-package gregtech.api.machine;
+package gregtech.engine.machine;
 
 import gregtech.api.addon.AddonLimits;
 import gregtech.api.addon.AddonNames;
 import gregtech.api.energy.EnergyType;
+import gregtech.api.machine.EnergyRange;
+import gregtech.api.machine.IoTarget;
+import gregtech.api.machine.MachineFace;
+import gregtech.api.machine.MachineFaceMasks;
+import gregtech.api.machine.MachineIo;
 import gregtech.api.material.GTMaterial;
 import gregtech.api.material.MaterialComponent;
 import java.util.List;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -19,6 +25,7 @@ import org.jspecify.annotations.Nullable;
  * @param options parallelism, overclocking, light and tank settings
  * @param io automatically pushed or pulled item and fluid targets
  */
+@NullMarked
 public record BasicMachineParameters(
         String id,
         GTMaterial material,
@@ -29,8 +36,7 @@ public record BasicMachineParameters(
         MachineFaceMasks faceConfig,
         List<MaterialComponent> constructionMaterials,
         Options options,
-        IoPorts io
-) {
+        IoPorts io) {
     public BasicMachineParameters {
         if (!AddonNames.matches(AddonNames.RESOURCE_PATH, id))
             throw new IllegalArgumentException("Invalid machine ID: " + id);
@@ -52,8 +58,8 @@ public record BasicMachineParameters(
         rejectAutomaticFace(id, "fluid input", io.fluidInputSource(), faceConfig.fluidAutoInput());
     }
 
-    private static void rejectAutomaticFace(String id, String channel, @Nullable IoTarget target,
-                                            @Nullable MachineFace automatic) {
+    private static void rejectAutomaticFace(
+            String id, String channel, @Nullable IoTarget target, @Nullable MachineFace automatic) {
         if (target != null && automatic != null)
             throw new IllegalArgumentException(channel + " target conflicts with an automatic face: " + id);
     }
@@ -73,13 +79,7 @@ public record BasicMachineParameters(
     }
 
     /** Energy type, tier and transfer of one machine, plus its accepted input range. */
-    public record EnergyProfile(
-            EnergyType type,
-            int tier,
-            long energyIn,
-            long energyOut,
-            EnergyRange range
-    ) {
+    public record EnergyProfile(EnergyType type, int tier, long energyIn, long energyOut, EnergyRange range) {
         private static final long TIME_MIN_INPUT = 1;
         private static final long TIME_MAX_INPUT = 16;
         private static final PacketBounds LARGE_RECIPE_GENERAL = new PacketBounds(512, 4096);
@@ -98,8 +98,8 @@ public record BasicMachineParameters(
                 long min = defaultEnergyInMin(type, energyIn);
                 long max = defaultEnergyInMax(type, energyIn);
                 if (min < 1 || max < min)
-                    throw new IllegalArgumentException("Invalid default energy range for " + type
-                            + ": " + min + ".." + max);
+                    throw new IllegalArgumentException(
+                            "Invalid default energy range for " + type + ": " + min + ".." + max);
             }
         }
 
@@ -155,15 +155,17 @@ public record BasicMachineParameters(
             CheapOverclocking cheapOverclocking,
             int minimumLightAbove,
             boolean searchOutputTanks,
-            boolean exclusiveOutputs
-    ) {
+            boolean exclusiveOutputs) {
         /** Whether a machine declared cheap overclocking, and which way. */
-        public enum CheapOverclocking { UNSPECIFIED, ENABLED, DISABLED }
+        public enum CheapOverclocking {
+            UNSPECIFIED,
+            ENABLED,
+            DISABLED
+        }
 
         public Options {
             if (parallelLimit < 1) throw new IllegalArgumentException("Invalid parallel limit: " + parallelLimit);
-            if (cheapOverclocking == null)
-                throw new IllegalArgumentException("Missing cheap overclocking setting");
+            if (cheapOverclocking == null) throw new IllegalArgumentException("Missing cheap overclocking setting");
             if (minimumLightAbove < 0 || minimumLightAbove > AddonLimits.MAX_LIGHT_LEVEL)
                 throw new IllegalArgumentException("Invalid light requirement: " + minimumLightAbove);
         }
@@ -177,12 +179,13 @@ public record BasicMachineParameters(
             @Nullable IoTarget itemOutputTarget,
             @Nullable IoTarget fluidOutputTarget,
             @Nullable IoTarget itemInputSource,
-            @Nullable IoTarget fluidInputSource
-    ) {
+            @Nullable IoTarget fluidInputSource) {
         public static final IoPorts NONE = new IoPorts(null, null, null, null);
     }
 
-    public static Builder builder(String id, GTMaterial casing) { return new Builder(id, casing); }
+    public static Builder builder(String id, GTMaterial casing) {
+        return new Builder(id, casing);
+    }
 
     public static final class Builder {
         private final String id;
@@ -208,47 +211,126 @@ public record BasicMachineParameters(
         private @Nullable IoTarget fluidInputSource;
 
         private Builder(String id, GTMaterial casing) {
-            this.id = id; material = casing; machineType = id;
+            this.id = id;
+            material = casing;
+            machineType = id;
             construction = List.of(); // No guessed material amount for definitions without source data.
         }
-        public Builder machineType(String value) { machineType = value; return this; }
-        public Builder energy(EnergyType type, long inputPerTick) { energy = type; energyIn = inputPerTick; return this; }
-        public Builder energyOutput(long outputPerTick) { energyOut = outputPerTick; return this; }
+
+        public Builder machineType(String value) {
+            machineType = value;
+            return this;
+        }
+
+        public Builder energy(EnergyType type, long inputPerTick) {
+            energy = type;
+            energyIn = inputPerTick;
+            return this;
+        }
+
+        public Builder energyOutput(long outputPerTick) {
+            energyOut = outputPerTick;
+            return this;
+        }
         /** GT6 {@code NBT_INPUT_MIN} / {@code NBT_INPUT_MAX}: the accepted input range. */
         public Builder energyRange(long inputMin, long inputMax) {
-            range = EnergyRange.declared(inputMin, inputMax); return this;
+            range = EnergyRange.declared(inputMin, inputMax);
+            return this;
         }
         /** Keep both bounds at 0 so a large recipe machine is recorded as undeclared. A declared range still wins. */
         public Builder omitEnergyRange() {
             if (!(range instanceof EnergyRange.Declared)) range = EnergyRange.omitted();
             return this;
         }
-        public Builder tier(int value) { tier = value; return this; }
-        public Builder parallel(int value) { parallel = value; return this; }
-        public Builder strength(float hardness, float resistance) { this.hardness = hardness; this.resistance = resistance; return this; }
-        public Builder faces(MachineFaceMasks value) { faces = value; return this; }
-        public Builder constructionMaterials(List<MaterialComponent> value) { construction = List.copyOf(value); return this; }
+
+        public Builder tier(int value) {
+            tier = value;
+            return this;
+        }
+
+        public Builder parallel(int value) {
+            parallel = value;
+            return this;
+        }
+
+        public Builder strength(float hardness, float resistance) {
+            this.hardness = hardness;
+            this.resistance = resistance;
+            return this;
+        }
+
+        public Builder faces(MachineFaceMasks value) {
+            faces = value;
+            return this;
+        }
+
+        public Builder constructionMaterials(List<MaterialComponent> value) {
+            construction = List.copyOf(value);
+            return this;
+        }
+
         public Builder cheapOverclocking(boolean value) {
             cheapOverclocking = value ? Options.CheapOverclocking.ENABLED : Options.CheapOverclocking.DISABLED;
             return this;
         }
-        public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
-        public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
-        public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
-        public Builder itemOutputTarget(@Nullable IoTarget value) { itemOutputTarget = value; return this; }
-        public Builder fluidOutputTarget(@Nullable IoTarget value) { fluidOutputTarget = value; return this; }
-        public Builder itemInputSource(@Nullable IoTarget value) { itemInputSource = value; return this; }
-        public Builder fluidInputSource(@Nullable IoTarget value) { fluidInputSource = value; return this; }
+
+        public Builder minimumLightAbove(int value) {
+            minimumLightAbove = value;
+            return this;
+        }
+
+        public Builder searchOutputTanks(boolean value) {
+            searchOutputTanks = value;
+            return this;
+        }
+
+        public Builder exclusiveOutputs(boolean value) {
+            exclusiveOutputs = value;
+            return this;
+        }
+
+        public Builder itemOutputTarget(@Nullable IoTarget value) {
+            itemOutputTarget = value;
+            return this;
+        }
+
+        public Builder fluidOutputTarget(@Nullable IoTarget value) {
+            fluidOutputTarget = value;
+            return this;
+        }
+
+        public Builder itemInputSource(@Nullable IoTarget value) {
+            itemInputSource = value;
+            return this;
+        }
+
+        public Builder fluidInputSource(@Nullable IoTarget value) {
+            fluidInputSource = value;
+            return this;
+        }
+
         public BasicMachineParameters build() {
             if (energy == null) throw new IllegalArgumentException("Choose the machine energy type explicitly");
-            EnergyProfile profile = new EnergyProfile(energy, tier, energyIn, energyOut,
-                    range == null ? EnergyRange.defaulted() : range);
-            Options machineOptions = new Options(parallel, cheapOverclocking, minimumLightAbove,
-                    searchOutputTanks, exclusiveOutputs);
+            EnergyProfile profile = new EnergyProfile(
+                    energy, tier, energyIn, energyOut, range == null ? EnergyRange.defaulted() : range);
+            Options machineOptions =
+                    new Options(parallel, cheapOverclocking, minimumLightAbove, searchOutputTanks, exclusiveOutputs);
             IoPorts ports = new IoPorts(itemOutputTarget, fluidOutputTarget, itemInputSource, fluidInputSource);
-            return new BasicMachineParameters(id, material, machineType, profile, hardness, resistance,
-                    faces, construction, machineOptions, ports);
+            return new BasicMachineParameters(
+                    id,
+                    material,
+                    machineType,
+                    profile,
+                    hardness,
+                    resistance,
+                    faces,
+                    construction,
+                    machineOptions,
+                    ports);
         }
     }
-    public String textureFolder() { return machineName; }
+
+    public String textureFolder() {
+        return machineName;
+    }
 }

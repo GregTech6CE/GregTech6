@@ -2,7 +2,7 @@
 
 package gregtech.api.addon.recipe;
 
-import gregtech.api.addon.material.GregTechMaterials;
+import gregtech.api.addon.material.MaterialKey;
 import gregtech.api.machine.BlockFace;
 
 /**
@@ -17,7 +17,7 @@ public interface CrucibleMold {
     /**
      * Offers molten material to this mold.
      *
-     * @param material    GregTech material to pour; an invalid material is rejected
+     * @param material    material key to pour; an unknown material is rejected
      * @param amount      available material amount in GT units
      * @param temperature temperature of the material in Kelvin
      * @param side        absolute face of the mold receiving the pour.
@@ -25,5 +25,5 @@ public interface CrucibleMold {
      *                    the host maps it to {@link BlockFace}
      * @return amount actually consumed
      */
-    long fillMold(GregTechMaterials.Material material, long amount, long temperature, BlockFace side);
+    long fillMold(MaterialKey material, long amount, long temperature, BlockFace side);
 }

@@ -14,7 +14,8 @@ import net.minecraftforge.fluids.FluidStack;
  * Tanks are indexed in declaration order. Toggles use the declaration order too.
  */
 public interface BehaviorMachineMenuView {
-    /** Legacy int view. Use {@link #storedEnergy()} for the full stored amount. */
+    /** @deprecated Use {@link #storedEnergy()} for the full stored amount. */
+    @Deprecated(since = "1.10.0")
     int energy();
 
     /** Full stored energy; older menu implementations retain their existing int behavior. */

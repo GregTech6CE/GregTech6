@@ -1,7 +1,7 @@
 package gregtech.engine.addon;
 
-import gregtech.api.machine.BasicMachineParameters;
-import gregtech.api.machine.MachineControllerKind;
+import gregtech.engine.machine.BasicMachineParameters;
+import gregtech.engine.machine.MachineControllerKind;
 import java.util.List;
 import java.util.Objects;
 

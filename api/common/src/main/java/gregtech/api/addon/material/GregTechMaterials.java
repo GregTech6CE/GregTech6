@@ -3,44 +3,31 @@
 package gregtech.api.addon.material;
 
 import gregtech.api.addon.AddonRuntime;
-import gregtech.api.material.MaterialToolHelper;
-import gregtech.api.material.MaterialToolProfile;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
- * Material catalog entry. Immutable definition snapshots through {@link #catalog()} are the
- * recommended read path; the legacy {@link Material} handles remain for compatibility. Materials
- * are declared through {@link MaterialDeclaration}.
+ * Material catalog entry. Materials are declared through {@link MaterialDeclaration} and read
+ * through immutable definition snapshots from {@link #catalog()}.
  */
 public final class GregTechMaterials {
     private GregTechMaterials() {}
 
-    /** The named material, or {@link #invalid()} when the name is unknown. Never null. */
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    public static Material find(String name) {
-        return AddonRuntime.services().materials().find(name);
-    }
-
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    public static Material find(int id) {
-        return AddonRuntime.services().materials().find(id);
-    }
-
-    /** The sentinel returned for an unknown name or id. {@link Material#valid()} is false. */
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    public static Material invalid() {
-        return AddonRuntime.services().materials().invalid();
-    }
-
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    public static Iterable<Material> all() {
-        return AddonRuntime.services().materials().all();
-    }
-
-    /** Immutable definition view. Requires a host supporting API 1.5 and completed material bootstrap. */
+    /** Immutable definition view. Requires completed material bootstrap. */
     public static MaterialCatalogView catalog() {
-        return AddonRuntime.services().materials().catalog();
+        return AddonRuntime.services().materialCatalog();
+    }
+
+    /**
+     * Resolves a registered name or alias to its canonical material key. Unknown names,
+     * substitution groups and sentinel materials return empty.
+     * Available from {@link AddonMaterialContributor#link()} and after material bootstrap.
+     *
+     * @throws IllegalStateException if the material registry is unavailable
+     */
+    public static Optional<MaterialKey> resolve(String name) {
+        return AddonRuntime.services().resolveMaterial(name);
     }
 
     /** Immutable process rules from the current definition view. */
@@ -56,81 +43,6 @@ public final class GregTechMaterials {
     /** Native item, block and fluid bindings from the most recently published content generation. */
     public static MaterialFormsView formBindings() {
         return catalog().formBindings();
-    }
-
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    public interface Catalog {
-        /** Old hosts fail explicitly, preserving source and binary compatibility for implementers. */
-        default MaterialCatalogView catalog() {
-            throw new UnsupportedOperationException("Material definition views require a supporting host");
-        }
-
-        Material find(String name);
-
-        Material find(int id);
-
-        Material invalid();
-
-        Iterable<Material> all();
-    }
-
-    /**
-     * Compatibility material handle after aliases and links have resolved.
-     *
-     * @deprecated New reads use {@link MaterialCatalogView} and {@link MaterialView}.
-     */
-    @Deprecated(since = "1.7.0", forRemoval = false)
-    public interface Material {
-        String name();
-
-        default MaterialKey key() {
-            return new MaterialKey(name());
-        }
-
-        int id();
-
-        boolean valid();
-
-        int color();
-
-        int meltingPoint();
-
-        int boilingPoint();
-
-        float density();
-
-        /** Tooltip formula, from the composition when the material has one. */
-        String formula();
-
-        String translationKey();
-
-        /** Material-table mass, in nucleons. Not converted. */
-        long mass();
-
-        /** Material-table tool quality. Not converted. */
-        int toolQuality();
-
-        /** Material-table tool speed. Not converted. */
-        float toolSpeed();
-
-        /** Material-table tool durability. Not converted. */
-        long toolDurability();
-
-        @Deprecated(since = "1.7.0", forRemoval = false)
-        default MaterialToolProfile tool() {
-            return MaterialToolHelper.profile(key()).orElseGet(() -> new MaterialToolProfile(0, 1F, 0, 0));
-        }
-
-        List<Component> composition();
-
-        /**
-         * Ore-processing byproduct names after {@link #resolve()}, in wash order.
-         * Empty when this material has none. Read this from {@code onRecipesReady}.
-         * A call before materials link returns the names stored then and does not throw.
-         */
-        List<String> byproducts();
-
-        Material resolve();
     }
 
     /**

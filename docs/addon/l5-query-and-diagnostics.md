@@ -1,14 +1,15 @@
 # L5：查询与诊断
 
-本页用于读取宿主就绪后的材料、物品、流体与配方视图，并通过显式结构诊断排查失败。
+本页介绍材料名称解析、材料与游戏内容查询，以及按需进行的结构诊断。
 
 返回[附属编写指南](README.md)。
 
-查询接口在宿主就绪后读取当前会话的快照。旧宿主不支持的新服务会抛出 `UnsupportedOperationException`，未知 map/selector 会抛出 `IllegalArgumentException`；不要用空集合或默认值掩盖这些失败。
+查询应在相应的服务就绪后执行。未知配方表、越界或未注册的电路编号会抛出 `IllegalArgumentException`。
 
 | 查询 | 用途 |
 | --- | --- |
-| `GregTechMaterials.catalog()` | 读取不可变材料目录；`resolve` 解析名称和别名，`find` 只返回真实材料，`forms` / `formBindings` / `processes` / `specialProcesses` 提供分域视图 |
+| `GregTechMaterials.resolve(name)` | 在 `AddonMaterialContributor.link()` 中或材料就绪后，将规范名或别名解析为 `Optional<MaterialKey>` |
+| `GregTechMaterials.catalog()` | 材料就绪后读取不可变目录。用 `find(key)` 查询材料属性，用 `forms` / `formBindings` / `processes` / `specialProcesses` 读取形态和加工视图 |
 | `AddonItems.stack(prefix, material, count)` | 取得材料形态物品；未知前缀或材料返回 `ItemStack.EMPTY`，不是 null |
 | `AddonItems.composition(stack)` | 读取宿主已保存的前缀和材料单元；未知物品返回空组合 |
 | `AddonItems.selectorTag(n)` | 取得程序化电路；范围 0..24 之外或未注册时抛出 |
@@ -21,7 +22,9 @@
 
 ## 材料目录
 
-材料和 metadata 仍通过 `AddonMaterialContributor` 提交。材料初始化 READY 后，`GregTechMaterials.catalog()` 返回当前会话的不可变 `MaterialCatalogView`：`resolve(name)` 解析规范名和别名，`find(MaterialKey)` 只返回真实材料，材料组不会伪装成可加工材料。旧宿主没有该服务时明确抛出 `UnsupportedOperationException`，未就绪时明确报告阶段，不以空集合掩盖失败。
+材料和 metadata 通过 `AddonMaterialContributor` 提交。在 `link()` 回调中可用 `GregTechMaterials.resolve(name)` 解析规范名和别名。未知名称、替代组和哨兵返回 `Optional.empty()`。
+
+材料初始化达到 `READY` 后，`GregTechMaterials.catalog()` 返回当前会话的不可变 `MaterialCatalogView`。`find(key)` 查询真实材料的 `MaterialView`，`view.property(MaterialProperties.MASS)` 返回 `Optional<Long>`，单位为核子数。材料未就绪时，读取目录会抛出 `IllegalStateException` 并报告初始化阶段。
 
 `catalog().forms()` 返回冻结的 item／block／fluid 定义期规则，`MaterialFormRule` 区分种类、默认材料量和显式附属请求；平台完成注册后，`catalog().formBindings()` 返回实际 item／block／fluid 绑定，并包含 `ItemMaterialRegistry` 的显式统一物品。规则允许不等于实际注册，实际绑定也不推导配方或获取来源。
 

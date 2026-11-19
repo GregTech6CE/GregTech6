@@ -42,6 +42,31 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 public final class MaterialReloadTests {
     private MaterialReloadTests() {}
 
+//? if >=1.21.1 {
+/*    @GameTest(template = "test_empty", batch = "material_reload", timeoutTicks = 200)
+    public static void machineDatapackPriorityRequiresAnExactLong(GameTestHelper helper) {
+        String json = """
+                {"type":"gt6ce:machine","map":"gt.recipe.crusher",
+                 "item_inputs":[{"item":"minecraft:stone"}],
+                 "item_outputs":[{"item":"minecraft:gravel"}],
+                 "eu_per_tick":16,"duration":20,"priority":%s}
+                """;
+        var ops = helper.getLevel().registryAccess().createSerializationContext(com.mojang.serialization.JsonOps.INSTANCE);
+        var codec = net.minecraft.world.item.crafting.Recipe.CODEC;
+        var recipe = codec.parse(ops, com.google.gson.JsonParser.parseString(json.formatted("9223372036854775807.0")))
+                .getOrThrow();
+        helper.assertTrue(recipe instanceof MachineDatapackRecipe machine
+                        && machine.addition().priority() == Long.MAX_VALUE,
+                "The largest signed priority is preserved through the recipe codec");
+        for (String invalid : List.of("9007199254740992.5", "-9223372036854775809")) {
+            var result = codec.parse(ops, com.google.gson.JsonParser.parseString(json.formatted(invalid)));
+            helper.assertTrue(result.error().map(error -> error.message().contains("priority")).orElse(false),
+                    "The recipe codec rejects invalid priority " + invalid);
+        }
+        helper.succeed();
+    }
+
+*///?}
     @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
     public static void bedrockFlowerHasItsDeclaredPhysicalMass(GameTestHelper helper) {
         var sagebrush = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "flower_sagebrush"));

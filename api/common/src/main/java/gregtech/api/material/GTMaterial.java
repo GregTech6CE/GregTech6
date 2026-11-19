@@ -12,12 +12,9 @@ import java.util.*;
 /**
  * Core material definition, analogous to GregTech {@code OreDictMaterial}.
  * <p>
- * Host-side mutable runtime model. Addons declare materials through
- * {@link gregtech.api.addon.material.MaterialDeclaration} and read them through
- * {@link gregtech.api.addon.material.GregTechMaterials.Material}.
- * <p>
- * Internal compatibility model. The canonical authoring model is
- * {@code MaterialDefinition}; new addon reads use immutable catalog views. The setters are for host
+ * Host-side mutable runtime model. The canonical host authoring model is {@code MaterialDefinition}.
+ * Addons declare materials through {@link MaterialDeclaration} and query them through
+ * {@link GregTechMaterials#catalog() immutable catalog views}. The setters are for host
  * initialization and are not thread-safe. Every material is frozen before the registry becomes
  * READY, and a frozen instance rejects every mutator with {@link IllegalStateException}.
  * <p>

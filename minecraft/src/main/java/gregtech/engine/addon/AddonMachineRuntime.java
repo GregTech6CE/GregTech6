@@ -1,15 +1,15 @@
 package gregtech.engine.addon;
 
-import gregtech.api.machine.BasicMachineParameters.Options.CheapOverclocking;
 import gregtech.api.machine.EnergyRange;
-import gregtech.api.machine.MachineControllerKind;
 import gregtech.content.data.FuelRecipeMaps;
 import gregtech.content.data.GregTechTags;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.machine.BasicMachineCatalog;
 import gregtech.content.multiblock.SharedLargeMachineLayouts;
 import gregtech.engine.energy.FaceConfig;
+import gregtech.engine.machine.BasicMachineParameters.Options.CheapOverclocking;
 import gregtech.engine.machine.BasicMachineSpec;
+import gregtech.engine.machine.MachineControllerKind;
 import gregtech.engine.recipe.RecipeMap;
 import java.util.ArrayList;
 import java.util.HashSet;

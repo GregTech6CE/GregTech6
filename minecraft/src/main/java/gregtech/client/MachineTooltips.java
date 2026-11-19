@@ -2,6 +2,7 @@ package gregtech.client;
 
 import gregtech.engine.energy.FaceConfig;
 import gregtech.engine.machine.BasicMachineSpec;
+import gregtech.engine.machine.MachineControllerKind;
 import gregtech.engine.machine.MachineSpec;
 import gregtech.engine.mod.GregTechIdentity;
 import java.util.List;
@@ -20,7 +21,7 @@ public final class MachineTooltips {
             return;
         }
         if (gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(spec.machineName())
-                || spec.controllerKind() == gregtech.api.machine.MachineControllerKind.LARGE_RECIPE) {
+                || spec.controllerKind() == MachineControllerKind.LARGE_RECIPE) {
             if (!CommonBlockTooltips.containsKey(tooltip, "gt.lang.recipes"))
                 LargeRecipeMachineTooltips.append(spec, tooltip);
             return;

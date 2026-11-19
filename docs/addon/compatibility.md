@@ -26,16 +26,24 @@ GT6CE 仍处于开发阶段，`public` 不等于长期二进制、源码或数�
 
 ## 旧入口迁移
 
+API `1.10.0` 移除了旧材料句柄及其注册重载，并更改了模具浇铸接口。使用受影响接口的附属需要更新源代码，再用 1.10.0 公共 API 和目标平台 SDK 重新编译。
+
 | 旧入口 | 新代码使用 |
 | --- | --- |
 | `GregTechMaterialContributor` | [材料贡献接口](materials.md#材料与材料信息)中的 `AddonMaterialContributor` |
 | `forms()`、`compositions()`、`metadata()`、`materialTags()`、`materialGroups()`、`processes()`、`MaterialInfoTool.forAddon()` | [材料信息](materials.md#材料与材料信息)中的 `materialInfo(Registrar)` |
+| `GregTechMaterials.find(String)`、`Material.resolve()` | 在 `AddonMaterialContributor.link()` 中用 `GregTechMaterials.resolve(name)` 解析规范名或别名，返回 `Optional<MaterialKey>`。材料初始化达到 `READY` 后，可通过 `catalog().find(key)` 读取 `MaterialView` |
+| `GregTechMaterials.find(int)`、`all()`、`invalid()` | 材料就绪后通过 `catalog().materials()` 枚举，旧整数 ID 可比对 `MaterialView.info().id()`。查询不到材料时处理 `Optional.empty()` |
+| `Material.mass()` | 在冻结的 `MaterialView` 上读取 `property(MaterialProperties.MASS)`，结果为 `Optional<Long>`，单位为核子数 |
+| 接受旧 `Material` 句柄的 `MaterialInfoTool.Registrar` 重载 | 在 `materialInfo(Registrar)` 中使用接受 `MaterialKey` 的重载 |
+| `CrucibleMold.fillMold(Material, ...)` | 给 `fillMold` 传入 `MaterialKey`，可从材料名解析得到 |
+| `BehaviorMachineMenuView.energy()` | 自 1.10.0 起已弃用。改用 `storedEnergy()`，以 `long` 读取完整储能 |
 | `MaterialDeclaration.centrifuge()`／`electrolyzer()` | [类型化分解规则](materials.md#分解规则api-18) |
 | `AddonMachineContributor.structureLayouts()`、KubeJS `addLayout()` | [显式 `controller.withStructure(layout)` 绑定](multiblocks.md#显式绑定) |
 | `StructureLayout` 三参数、`LayoutCell` 六参数构造器 | [布局 builder 或完整构造器](multiblocks.md#世界匹配约束) |
 | 内部 `gregtech.engine.recipe.data` 文档类型 | [公开 `gregtech.api.addon.recipe` 文档模型](recipe-data.md#java-api) |
 
-`GregTechMaterialContributor` 已不在当前公共 API 源码中；其余入口的具体兼容行为及旧默认值见对应专题，不能将弃用或保留推断为新增能力。
+`link()` 在 `READY` 前执行。链接回调通过 `GregTechMaterials.resolve(name)` 查询材料身份，冻结的完整目录和质量等定义属性在 `READY` 后可读。其余入口的兼容行为及旧默认值见对应专题。
 
 ## 示例状态
 

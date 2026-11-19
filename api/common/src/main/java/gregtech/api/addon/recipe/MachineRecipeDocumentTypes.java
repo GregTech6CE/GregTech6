@@ -3,6 +3,7 @@
 package gregtech.api.addon.recipe;
 
 import gregtech.api.addon.AddonNames;
+import gregtech.api.addon.GregTechAddons;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -14,42 +15,35 @@ import org.jspecify.annotations.Nullable;
  * handled by the host directly and are not part of this registry.
  *
  * <p>Registration closes when
- * {@link gregtech.api.addon.GregTechAddons#dispatchRecipesReady(gregtech.api.addon.GregTechAddon.Context)}
- * starts, matching the addon lifecycle. Production code has no reset entry; the testing hook
- * serves the API test suite.</p>
+ * {@link GregTechAddons#dispatchRecipesReady(gregtech.api.addon.GregTechAddon.Context)} starts.</p>
  */
 public final class MachineRecipeDocumentTypes {
     private static final Map<String, MachineRecipeDocumentType> TYPES = new TreeMap<>();
-    private static boolean closed;
 
     private MachineRecipeDocumentTypes() {}
 
-    public static synchronized void register(MachineRecipeDocumentType type) {
+    public static void register(MachineRecipeDocumentType type) {
         Objects.requireNonNull(type, "type");
         String id = requireId(type.id());
-        if (closed) throw new IllegalStateException("Machine recipe document type registration closed: " + id);
-        if (TYPES.putIfAbsent(id, type) != null)
-            throw new IllegalStateException("Duplicate machine recipe document type: " + id);
+        synchronized (GregTechAddons.class) {
+            if (GregTechAddons.phase() != GregTechAddons.Phase.COLLECTING)
+                throw new IllegalStateException("Machine recipe document type registration closed: " + id);
+            if (TYPES.putIfAbsent(id, type) != null)
+                throw new IllegalStateException("Duplicate machine recipe document type: " + id);
+        }
     }
 
     /** The registered type, or null when the host does not know this id. */
-    public static synchronized @Nullable MachineRecipeDocumentType find(String id) {
-        return id == null ? null : TYPES.get(id);
+    public static @Nullable MachineRecipeDocumentType find(String id) {
+        synchronized (GregTechAddons.class) {
+            return id == null ? null : TYPES.get(id);
+        }
     }
 
-    public static synchronized List<String> registeredIds() {
-        return List.copyOf(TYPES.keySet());
-    }
-
-    /** Closes registration for the current lifecycle. Called by the host when recipe dispatch starts. */
-    public static synchronized void close() {
-        closed = true;
-    }
-
-    /** Clears registered types and reopens registration. */
-    public static synchronized void resetForTesting() {
-        TYPES.clear();
-        closed = false;
+    public static List<String> registeredIds() {
+        synchronized (GregTechAddons.class) {
+            return List.copyOf(TYPES.keySet());
+        }
     }
 
     private static String requireId(String id) {
