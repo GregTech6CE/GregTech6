@@ -45,8 +45,7 @@ public final class RecipePublication {
         Collection<?> current = manager.getRecipes();
         var applied = APPLIED.get(manager);
         if (applied != null && applied.size() == current.size() && applied.containsAll(current)) {
-            if (MachineRecipeOverlay.generation() > 0 && !MachineRecipeOverlay.lastResult().failed())
-                gregtech.engine.material.MaterialPublication.commit(MachineRecipeOverlay.lastPublication());
+            commitOverlay();
             return;
         }
         RegistryAccess access = server.registryAccess();
@@ -58,11 +57,10 @@ public final class RecipePublication {
         working.replaceRecipes(manager.getRecipes());
         for (var contribution : CONTRIBUTIONS) contribution.apply(working, access);
         // The furnace bridge also adds rows; deduplicate only after every producer ran.
-        OvenRecipeBridge.apply(working, access);
+        MachineRecipeOverlay.publishFurnace(working, access);
         dedup(working, access);
         manager.replaceRecipes(working.getRecipes());
-        if (MachineRecipeOverlay.generation() > 0 && !MachineRecipeOverlay.lastResult().failed())
-            gregtech.engine.material.MaterialPublication.commit(MachineRecipeOverlay.lastPublication());
+        commitOverlay();
 //? if >=1.21.1 {
         /*ShapelessRecipeTooltipIndex.rebuild(manager, access);
 *///?} else {
@@ -73,9 +71,15 @@ public final class RecipePublication {
         APPLIED.put(manager, snapshot);
         // Indexes, previews and viewers read the committed generation, never a half-applied table.
         for (var map : gregtech.engine.recipe.RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
-        server.execute(gregtech.engine.recipe.RecipeMap::prebuildLookupIndexes);
+        MachineRecipeLifecycle.prebuild(server);
         com.mojang.logging.LogUtils.getLogger()
                 .info("[gregtech] Published GT runtime recipes: {} rows", manager.getRecipes().size());
+    }
+
+    private static void commitOverlay() {
+        var result = MachineRecipeOverlay.lastResult();
+        if (!result.skipped() && !result.failed())
+            gregtech.engine.material.MaterialPublication.commit(MachineRecipeOverlay.lastPublication());
     }
 
     /** Drops source rows that a generated row already covers; input rows keep the first identity. */
@@ -103,7 +107,7 @@ public final class RecipePublication {
 //?}
 
     /** Drops the generation snapshot after the server stops; the next world starts fresh. */
-    public static void clear() {
+    static void clear() {
         APPLIED.clear();
     }
 }

@@ -28,6 +28,10 @@ final class MoltenMetalUnitRecipes {
     private static boolean collecting;
     private MoltenMetalUnitRecipes() {}
 
+    static List<Recipe> owned() {
+        return OWNED.stream().map(rule -> rule.template).toList();
+    }
+
     static void clear() {
         for (var rule : OWNED) rule.remove();
         OWNED.clear(); GROUPS.clear(); collecting = false;

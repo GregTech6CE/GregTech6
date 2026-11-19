@@ -2,7 +2,6 @@ package gregtech.client;
 import gregtech.engine.mod.GregTechIdentity;
 
 import gregtech.content.recipe.MachineRecipeOverlay;
-import gregtech.content.recipe.OvenRecipeBridge;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.crafting.RecipeManager;
 //? if >=1.21.1 {
@@ -55,7 +54,7 @@ public final class MachineRecipeClient {
         var overlay = MachineRecipeOverlay.apply(recipes);
         // Like the server, mirror vanilla smelting even after reverting the machine overlay to its baseline.
         var connection = Minecraft.getInstance().getConnection();
-        if (connection != null) OvenRecipeBridge.apply(recipes, connection.registryAccess());
+        if (connection != null) MachineRecipeOverlay.publishFurnace(recipes, connection.registryAccess());
         if (overlay.failed()) {
             refresh("jei", "gregtech.compat.jei.GregTechJEIPlugin", "overlayFailed");
             refresh("emi", "gregtech.compat.emi.GregTechEMIPlugin", "overlayFailed");

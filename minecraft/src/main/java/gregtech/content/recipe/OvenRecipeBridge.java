@@ -48,26 +48,12 @@ import java.util.List;
  */
 public final class OvenRecipeBridge {
     private OvenRecipeBridge() {}
-    private static final java.util.Set<gregtech.engine.recipe.Recipe> MIRRORED = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
-    private static final java.util.Set<gregtech.engine.recipe.Recipe> DISPLACED = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
 
-    /** Undo only this loader's previous mirror, preserving independently registered machine recipes. */
-    public static void clearMirrors() {
-        gregtech.content.recipe.MachineRecipeOverlay.restoreFurnaceBeforeMirror();
-        var map=MachineRecipeMaps.Furnace;
-        map.removeAll(MIRRORED);
-        for (var row:DISPLACED) if (!map.recipeRows.contains(row)) map.add(row);
-        // The mirror runs again on every server start; the diagnostic report must be replaced,
-        // not appended to (one ItemStack per mirrored row would accumulate per world load).
-        MIRRORED.clear(); DISPLACED.clear(); ADDED_TO_VANILLA.clear();
+    static void clearReport() {
+        ADDED_TO_VANILLA.clear();
     }
 
-
-    public static void apply(RecipeManager manager, net.minecraft.core.RegistryAccess access) {
-        clearMirrors();
-        var originalRows=java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<gregtech.engine.recipe.Recipe,Boolean>());
-        originalRows.addAll(MachineRecipeMaps.Furnace.recipeRows);
-
+    static void mirror(RecipeManager manager, RegistryAccess access) {
 //? if >=1.21.1 {
         /*List<RecipeHolder<?>> rewritten = new ArrayList<>();
 *///?} else {
@@ -155,8 +141,6 @@ public final class OvenRecipeBridge {
             }
         }
 
-        MIRRORED.addAll(MachineRecipeMaps.Furnace.recipeRows); MIRRORED.removeAll(originalRows);
-        DISPLACED.addAll(originalRows); DISPLACED.removeAll(MachineRecipeMaps.Furnace.recipeRows);
 //? if >=1.21.1 {
         /*int fuelled = mirrorIntoFurnace(rewritten, access);
         var unique = new java.util.LinkedHashMap<net.minecraft.resources.ResourceLocation, RecipeHolder<?>>();
@@ -170,7 +154,6 @@ public final class OvenRecipeBridge {
 //?}
                 + " (NEVER_FURNACE materials yield scrap instead); {} material rows dropped; {} GT"
                 + " furnace rows added to the vanilla furnace.", mirrored, unsmelted, dropped, fuelled);
-        gregtech.content.recipe.MachineRecipeOverlay.reapplyFurnace(manager);
     }
 
     /**

@@ -7,7 +7,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -39,12 +38,6 @@ public final class RuntimeRecipeLifecycle {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void syncing(OnDatapackSyncEvent event) {
         RecipePublication.publish(event.getPlayerList().getServer());
-    }
-
-    @SubscribeEvent
-    public static void stopped(ServerStoppedEvent event) {
-        OvenRecipeBridge.clearMirrors();
-        RecipePublication.clear();
     }
 
     /** Input rows precede generated rows. Existing data-pack IDs win instead of throwing duplicates. */

@@ -1,5 +1,7 @@
 package gregtech.content.recipe;
 
+import gregtech.engine.material.ItemMaterialForm;
+import gregtech.engine.material.ItemMaterialForms;
 import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefix;
 import gregtech.content.registry.GTItems;
@@ -176,10 +178,10 @@ public final class RecoveryRecipePublisherTests {
 
     @GameTest(template = "test_empty", batch = "material_baseline", timeoutTicks = 200)
     public static void mixedTagsIgnoreNonCompositionForms(GameTestHelper helper) {
-        var ore = new OriginalFormConversions.Form("ore", "Tin");
-        var raw = new OriginalFormConversions.Form("oreRaw", "Tin");
+        var ore = new ItemMaterialForm("ore", "Tin");
+        var raw = new ItemMaterialForm("oreRaw", "Tin");
         helper.assertTrue(
-                ore.equals(CraftingMaterialForms.compositionTagForm(List.of(raw, ore))),
+                ore.equals(ItemMaterialForms.compositionTagForm(List.of(raw, ore))),
                 "an allowed ore tag survives an unrelated recognized tag");
         helper.succeed();
     }

@@ -5,7 +5,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
-import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
 /** NeoForge lifecycle adapter; the publication sequence itself lives in {@link RecipePublication}. */
 @EventBusSubscriber(modid = gregtech.engine.mod.GregTechIdentity.MOD_ID)
@@ -29,11 +28,5 @@ public final class OvenRecipeLifecycle {
     public static void sync(OnDatapackSyncEvent event) {
         if (event.getPlayer() == null)
             RecipePublication.publish(event.getPlayerList().getServer());
-    }
-
-    @SubscribeEvent
-    public static void stopped(ServerStoppedEvent event) {
-        OvenRecipeBridge.clearMirrors();
-        RecipePublication.clear();
     }
 }

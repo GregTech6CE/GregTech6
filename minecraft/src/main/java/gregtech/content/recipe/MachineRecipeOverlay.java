@@ -11,9 +11,8 @@ import gregtech.api.addon.recipe.MachineRecipeDocumentTypes;
 import gregtech.api.addon.recipe.MachineRecipeRemovalDocument;
 import gregtech.api.addon.platform.MachineRecipeDocumentProvider;
 import gregtech.engine.recipe.data.MachineRecipeMatch;
-import gregtech.compat.common.CompatRecipes;
+import gregtech.content.data.MachineRecipeMaps;
 import gregtech.content.data.MaterialPrefixes;
-import gregtech.content.recipe.ExternalOreProcessing;
 import gregtech.content.registry.GTBlocks;
 import gregtech.content.registry.GTItems;
 import gregtech.engine.material.GTMaterialRegistry;
@@ -21,6 +20,7 @@ import gregtech.engine.material.ItemMaterialRegistry;
 import gregtech.engine.material.MaterialPublication;
 import gregtech.platform.Mc;
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -48,6 +48,7 @@ import java.util.Comparator;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Restores the startup rows, rebuilds tag-owned rows, then applies datapack removals and finally
@@ -62,8 +63,8 @@ public final class MachineRecipeOverlay {
     private static boolean overlayDumped;
     private static Result lastResult = Result.unchanged();
     private static volatile MaterialPublication.Stamp lastPublication = MaterialPublication.current();
-    private static List<Recipe> furnaceAdded = List.of();
-    private static List<Recipe> furnaceRemoved = List.of();
+    private static FurnaceChanges furnaceOverlay = FurnaceChanges.EMPTY;
+    private static FurnaceChanges furnaceMirror = FurnaceChanges.EMPTY;
     /** Bumped for every applied overlay; queued index builds compare it so an old pass cannot publish. */
     private static long generation;
 
@@ -118,54 +119,25 @@ public final class MachineRecipeOverlay {
     }
 
     private static Result applyGeneration(RecipeManager manager, long current) {
-        // Undo the previous overlay before clearing mirrors: DISPLACED may otherwise
-        // restore a previous world's datapack row after the baseline was restored.
-        gregtech.content.recipe.OvenRecipeBridge.clearMirrors();
+        clearFurnace();
         ensureBaseline();
         long started = System.nanoTime();
-        int moved = 0;
-        for (var map : RecipeMap.RECIPE_MAP_LIST) moved += map.restoreBaseline();
+        int moved = restoreBaselines();
         long restoreMillis = (System.nanoTime() - started) / 1_000_000L;
         gregtech.engine.recipe.MaterialUnitRecipes.discardUnregistered();
         long producersStarted = System.nanoTime();
-        DecompositionRecipeLoader.rebuild();
-        ExternalOreProcessing.rebuild();
-        ShredderRecyclingRecipes.rebuildTagRows();
-        gregtech.content.recipe.NonOreMacerationRows.rebuild();
-        gregtech.content.recipe.SourceOreOutputRows.rebuild();
-        SharedPurifiedCentrifugeRows.rebuild();
-        SharedMineralSteamCrackingRows.rebuild();
-        SharedOreWashingRows.rebuild();
-        SharedOreMagneticRows.rebuild();
-        SharedOreSiftingRows.rebuild();
-        CompatRecipes.rebuild();
-        // OPL capture waits until static/addon and tag-owned producers can retain their independent rows.
-        SharedOreCrushingRows.rebuild();
-        SharedOilSandRows.rebuild();
-        // New purified-acid calls do not displace the earlier imported/static Bath producers.
-        SharedSpecialProcessRows.rebuild();
-        MoltenMetalUnitRecipes.begin();
-        SharedThermalInputRows.rebuild();
-        SharedThermalRecyclingRows.rebuild();
-        MoltenMetalUnitRecipes.finish();
-        PotionBrewingRecipes.rebuildStaged();
+        DynamicMachineRecipeProducers.rebuild();
         long producersMillis = (System.nanoTime() - producersStarted) / 1_000_000L;
         MaterialDisplayBinding.invalidate();
         logged = 0;
-        var tally = new Tally();
         var markers = markers(manager);
         var furnaceBefore = furnaceRows();
-        var removeStarted = System.nanoTime();
-        removeMarkers(markers, tally);
-        long removeMillis = (System.nanoTime() - removeStarted) / 1_000_000L;
-        var installStarted = System.nanoTime();
-        for (var marker : markers) if (marker.addition() != null) install(marker.id(), marker.addition(), tally);
-        long installMillis = (System.nanoTime() - installStarted) / 1_000_000L;
-        rememberFurnaceChanges(furnaceBefore);
+        var tally = applyMarkers(markers);
+        furnaceOverlay = FurnaceChanges.since(furnaceBefore);
         LOGGER.info("[gregtech] Machine recipe overlay baseline {} rows, restore {} ms, producers {} ms, moved {}, "
                         + "removed {} ({} ms), added {} ({} ms), prioritized {}, rejected {}",
-                baselineRows(), restoreMillis, producersMillis, moved, tally.removed, removeMillis, tally.added,
-                installMillis, tally.priority, tally.rejected);
+                baselineRows(), restoreMillis, producersMillis, moved, tally.removed, tally.removeMillis, tally.added,
+                tally.installMillis, tally.priority, tally.rejected);
         if (generation != current) return lastResult;
         lastPublication = MaterialPublication.candidatePlatformGeneration(
                 ItemMaterialRegistry.compositionRevision(), current);
@@ -181,27 +153,11 @@ public final class MachineRecipeOverlay {
     /** Drops every overlay-owned row and returns the maps to their captured baseline. */
     private static void recover(ItemMaterialRegistry.TagGenerationCheckpoint checkpoint) {
         try {
-            for (var map : RecipeMap.RECIPE_MAP_LIST) if (map.hasBaseline()) map.restoreBaseline();
-            ExternalOreProcessing.clearOwnedRows();
-            DecompositionRecipeLoader.clear();
-            ShredderRecyclingRecipes.clearTagRows();
-            gregtech.content.recipe.NonOreMacerationRows.clear();
-            gregtech.content.recipe.SourceOreOutputRows.clear();
-            SharedPurifiedCentrifugeRows.clear();
-            SharedMineralSteamCrackingRows.clear();
-            SharedOreWashingRows.clear();
-            SharedOreMagneticRows.clear();
-            SharedOreSiftingRows.clear();
-            SharedOreCrushingRows.clear();
-            SharedOilSandRows.clear();
-            SharedSpecialProcessRows.clear();
-            SharedThermalInputRows.clear();
-            SharedThermalRecyclingRows.clear();
-            MoltenMetalUnitRecipes.clear();
-            CompatRecipes.clear();
-            PotionBrewingRecipes.rebuildStaged();
-            MaterialDisplayBinding.invalidate();
-            for (var map : RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
+            clearFurnace();
+            restoreBaselines();
+            gregtech.engine.recipe.MaterialUnitRecipes.discardUnregistered();
+            DynamicMachineRecipeProducers.recover();
+            invalidateLookups();
         } catch (RuntimeException secondary) {
             LOGGER.error("[gregtech] Machine recipe overlay recovery failed", secondary);
         } finally {
@@ -219,83 +175,94 @@ public final class MachineRecipeOverlay {
     public static Result lastResult() { return lastResult; }
     public static MaterialPublication.Stamp lastPublication() { return lastPublication; }
 
-    /**
-     * Return only Furnace to its state before the last overlay. The oven bridge calls this
-     * before tracking displaced rows, so its bookkeeping never owns a datapack addition.
-     * Repeating the call is a no-op; providers and every other recipe map stay untouched.
-     */
-    public static void restoreFurnaceBeforeMirror() {
-        var furnace = gregtech.content.data.MachineRecipeMaps.Furnace;
-        furnace.removeAll(furnaceAdded);
-        for (var recipe : furnaceRemoved) if (!furnace.recipeRows.contains(recipe)) furnace.add(recipe);
-        furnaceAdded = List.of();
-        furnaceRemoved = List.of();
+    static void clear() {
+        ++generation;
+        clearFurnace();
+        restoreBaselines();
+        gregtech.engine.recipe.MaterialUnitRecipes.discardUnregistered();
+        DynamicMachineRecipeProducers.clear();
+        ItemMaterialRegistry.beginTagGeneration();
+        lastResult = Result.unchanged();
+        invalidateLookups();
     }
 
-    /** The oven has finished importing vanilla smelting; its rows now obey the same Furnace markers. */
-    public static void reapplyFurnace(RecipeManager manager) {
-        restoreFurnaceBeforeMirror();
-        var furnace = gregtech.content.data.MachineRecipeMaps.Furnace;
-        var before = furnaceRows();
-        var tally = new Tally();
-        var markers = markers(manager);
-        var drop = new ArrayList<Recipe>();
-        for (var recipe : furnace.recipeRows) {
-            var view = view(recipe);
-            for (var marker : markers)
-                if (marker.removal() != null && marker.removal().map().equals(furnace.internalName)
-                        && MachineRecipeMatch.matches(marker.removal(), view, TAG_QUERY)) {
-                    drop.add(recipe);
-                    break;
-                }
+    /** Imports and exports smelting before applying machine-only Furnace markers to the imported rows. */
+    public static void publishFurnace(RecipeManager manager, RegistryAccess access) {
+        clearFurnace();
+        var beforeMirror = furnaceRows();
+        try {
+            OvenRecipeBridge.mirror(manager, access);
+            furnaceMirror = FurnaceChanges.since(beforeMirror);
+            if (lastResult.failed()) return;
+            var beforeMarkers = furnaceRows();
+            String furnace = MachineRecipeMaps.Furnace.internalName;
+            applyMarkers(markers(manager).stream().filter(marker -> furnace.equals(marker.mapName())).toList());
+            furnaceOverlay = FurnaceChanges.since(beforeMarkers);
+        } catch (RuntimeException failure) {
+            FurnaceChanges.since(beforeMirror).restore();
+            furnaceMirror = FurnaceChanges.EMPTY;
+            OvenRecipeBridge.clearReport();
+            throw failure;
         }
-        furnace.removeAll(drop);
-        for (var marker : markers)
-            if (marker.addition() != null && marker.addition().map().equals(furnace.internalName))
-                install(marker.id(), marker.addition(), tally);
-        rememberFurnaceChanges(before);
     }
 
-    private static java.util.Set<Recipe> furnaceRows() {
+    private static void clearFurnace() {
+        // Undo in reverse order so mirror recovery cannot resurrect an old datapack row.
+        furnaceOverlay.restore();
+        furnaceOverlay = FurnaceChanges.EMPTY;
+        furnaceMirror.restore();
+        furnaceMirror = FurnaceChanges.EMPTY;
+        OvenRecipeBridge.clearReport();
+    }
+
+    private static Set<Recipe> furnaceRows() {
         var rows = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
-        rows.addAll(gregtech.content.data.MachineRecipeMaps.Furnace.recipeRows);
+        rows.addAll(MachineRecipeMaps.Furnace.recipeRows);
         return rows;
     }
 
-    private static void rememberFurnaceChanges(java.util.Set<Recipe> before) {
-        var after = furnaceRows();
-        var removed = new ArrayList<Recipe>();
-        for (var recipe : before) if (!after.contains(recipe)) removed.add(recipe);
-        var added = new ArrayList<Recipe>();
-        for (var recipe : after) if (!before.contains(recipe)) added.add(recipe);
-        furnaceRemoved = List.copyOf(removed);
-        furnaceAdded = List.copyOf(added);
+    private record FurnaceChanges(List<Recipe> added, List<Recipe> removed) {
+        private static final FurnaceChanges EMPTY = new FurnaceChanges(List.of(), List.of());
+
+        static FurnaceChanges since(Set<Recipe> before) {
+            var after = furnaceRows();
+            var added = new ArrayList<Recipe>();
+            for (var recipe : after) if (!before.contains(recipe)) added.add(recipe);
+            var removed = new ArrayList<Recipe>();
+            for (var recipe : before) if (!after.contains(recipe)) removed.add(recipe);
+            return new FurnaceChanges(added, removed);
+        }
+
+        void restore() {
+            var furnace = MachineRecipeMaps.Furnace;
+            furnace.removeAll(added);
+            for (var recipe : removed) if (!furnace.recipeRows.contains(recipe)) furnace.add(recipe);
+        }
     }
 
     private static void ensureBaseline() {
-        var exclude = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
-        exclude.addAll(CompatRecipes.owned());
-        exclude.addAll(PotionBrewingRecipes.owned());
-        exclude.addAll(ExternalOreProcessing.owned());
-        exclude.addAll(DecompositionRecipeLoader.owned());
-        exclude.addAll(ShredderRecyclingRecipes.owned());
-        exclude.addAll(gregtech.content.recipe.NonOreMacerationRows.owned());
-        exclude.addAll(gregtech.content.recipe.SourceOreOutputRows.owned());
-        exclude.addAll(SharedPurifiedCentrifugeRows.owned());
-        exclude.addAll(SharedMineralSteamCrackingRows.owned());
-        exclude.addAll(SharedOreWashingRows.owned());
-        exclude.addAll(SharedOreMagneticRows.owned());
-        exclude.addAll(SharedOreSiftingRows.owned());
-        exclude.addAll(SharedOreCrushingRows.baselineExcluded());
-        exclude.addAll(SharedOilSandRows.baselineExcluded());
-        exclude.addAll(SharedSpecialProcessRows.owned());
-        exclude.addAll(SharedThermalInputRows.owned());
-        exclude.addAll(SharedThermalRecyclingRows.owned());
+        if (RecipeMap.RECIPE_MAP_LIST.stream().allMatch(RecipeMap::hasBaseline)) return;
+        var exclude = DynamicMachineRecipeProducers.baselineExclusions();
         // Maps created after the first reload still get one baseline. A captured map keeps its first snapshot.
         for (var map : RecipeMap.RECIPE_MAP_LIST) map.captureBaseline(exclude);
     }
 
-    private record Marker(String id, MachineRecipeDocument addition, MachineRecipeRemovalDocument removal) {}
+    private static int restoreBaselines() {
+        int moved = 0;
+        for (var map : RecipeMap.RECIPE_MAP_LIST) if (map.hasBaseline()) moved += map.restoreBaseline();
+        return moved;
+    }
+
+    private static void invalidateLookups() {
+        MaterialDisplayBinding.invalidate();
+        for (var map : RecipeMap.RECIPE_MAP_LIST) map.invalidateLookup();
+    }
+
+    private record Marker(String id, MachineRecipeDocument addition, MachineRecipeRemovalDocument removal) {
+        String mapName() {
+            return addition != null ? addition.map() : removal.map();
+        }
+    }
 
     private static List<Marker> markers(RecipeManager manager) {
         var markers = new ArrayList<Marker>();
@@ -334,6 +301,17 @@ public final class MachineRecipeOverlay {
         } catch (RuntimeException failure) {
             problem(provider.documentId() + " " + failure.getMessage());
         }
+    }
+
+    private static Tally applyMarkers(List<Marker> markers) {
+        var tally = new Tally();
+        long start = System.nanoTime();
+        removeMarkers(markers, tally);
+        tally.removeMillis = (System.nanoTime() - start) / 1_000_000L;
+        start = System.nanoTime();
+        for (var marker : markers) if (marker.addition() != null) install(marker.id(), marker.addition(), tally);
+        tally.installMillis = (System.nanoTime() - start) / 1_000_000L;
+        return tally;
     }
 
     private static void install(String id, MachineRecipeDocument spec, Tally tally) {
@@ -663,5 +641,7 @@ public final class MachineRecipeOverlay {
         private int added;
         private int rejected;
         private int priority;
+        private long removeMillis;
+        private long installMillis;
     }
 }
